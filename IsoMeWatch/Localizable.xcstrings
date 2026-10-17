@@ -1,6 +1,86 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Sync Now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Now"
+          }
+        }
+      }
+    },
+    "Nothing to sync.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to sync."
+          }
+        }
+      }
+    },
+    "iPhone sync is unavailable.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone sync is unavailable."
+          }
+        }
+      }
+    },
+    "Connecting to iPhone…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecting to iPhone…"
+          }
+        }
+      }
+    },
+    "Sync queued. Open iso.me on your iPhone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync queued. Open iso.me on your iPhone."
+          }
+        }
+      }
+    },
+    "Sync failed. Please try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync failed. Please try again."
+          }
+        }
+      }
+    },
+    "Synced with iPhone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synced with iPhone."
+          }
+        }
+      }
+    },
+    "Couldn’t connect. Please try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t connect. Please try again."
+          }
+        }
+      }
+    },
     "--:--": {
       "localizations": {
         "en": {

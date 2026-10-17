@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var tracker = WatchLocationTracker()
+    @ObservedObject private var syncClient = WatchLocationSyncClient.shared
+    @Environment(\.scenePhase) private var scenePhase
 
     private var locationData: SharedLocationData {
         tracker.locationData
@@ -18,6 +20,7 @@ struct ContentView: View {
                     statusPanel
                     permissionView
                     trackingButton
+                    syncSection
                     todaySection
                     currentLocationSection
                     errorView
@@ -34,6 +37,33 @@ struct ContentView: View {
         }
         .onAppear {
             tracker.refresh()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                syncClient.syncPending(force: true)
+            }
+        }
+    }
+
+    private var syncSection: some View {
+        VStack(spacing: 6) {
+            Button {
+                syncClient.syncPending(force: true)
+            } label: {
+                Label("Sync Now", systemImage: "arrow.triangle.2.circlepath")
+                    .font(WatchTE.rounded(.caption, weight: .semibold))
+                    .frame(maxWidth: .infinity, minHeight: 36)
+            }
+            .buttonStyle(WatchInlineButtonStyle())
+            .accessibilityIdentifier("watchSyncNow")
+
+            if let status = syncClient.syncStatus {
+                Text(status)
+                    .font(WatchTE.rounded(.caption2, weight: .medium))
+                    .foregroundStyle(WatchTE.textMuted)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 

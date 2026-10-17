@@ -141,6 +141,9 @@
 		C0DE0302212F000100000302 /* CountryDayResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0302212F000000000302 /* CountryDayResolver.swift */; };
 		C0DE0303212F000100000303 /* CountryDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0303212F000000000303 /* CountryDaysView.swift */; };
 		C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0304212F000000000304 /* CountryDayTests.swift */; };
+		C0DE04010000000000000002 /* WatchLocationSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04010000000000000001 /* WatchLocationSyncState.swift */; };
+		C0DE04010000000000000003 /* WatchLocationSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04010000000000000001 /* WatchLocationSyncState.swift */; };
+		C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04020000000000000001 /* WatchLocationSyncTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -344,6 +347,8 @@
 		C0DE0302212F000000000302 /* CountryDayResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDayResolver.swift; sourceTree = "<group>"; };
 		C0DE0303212F000000000303 /* CountryDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDaysView.swift; sourceTree = "<group>"; };
 		C0DE0304212F000000000304 /* CountryDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDayTests.swift; sourceTree = "<group>"; };
+		C0DE04010000000000000001 /* WatchLocationSyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncState.swift; sourceTree = "<group>"; };
+		C0DE04020000000000000001 /* WatchLocationSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -635,6 +640,7 @@
 				A100001C212F00000000001C /* SharedLocationData.swift */,
 				A100001D212F00000000001E /* DistanceFormatter.swift */,
 				C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */,
+				C0DE04010000000000000001 /* WatchLocationSyncState.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -643,6 +649,7 @@
 			isa = PBXGroup;
 			children = (
 				C0DE0304212F000000000304 /* CountryDayTests.swift */,
+				C0DE04020000000000000001 /* WatchLocationSyncTests.swift */,
 				E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */,
 				EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */,
 				3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */,
@@ -935,6 +942,7 @@
 				A100001C212F00010000001C /* SharedLocationData.swift in Sources */,
 				A100001E212F00010000001E /* DistanceFormatter.swift in Sources */,
 				C0DE0202212F000100000202 /* WatchLocationSyncPayload.swift in Sources */,
+				C0DE04010000000000000002 /* WatchLocationSyncState.swift in Sources */,
 				C0DE0207212F000100000207 /* WatchLocationSyncReceiver.swift in Sources */,
 				90802146303082A8BE935D64 /* SessionPathMapView.swift in Sources */,
 				5F000001212F000100000001 /* ExportFolderManager.swift in Sources */,
@@ -988,6 +996,7 @@
 				A3000004212F000100000004 /* SharedLocationData.swift in Sources */,
 				A300001E212F00010000001E /* DistanceFormatter.swift in Sources */,
 				C0DE0203212F000100000203 /* WatchLocationSyncPayload.swift in Sources */,
+				C0DE04010000000000000003 /* WatchLocationSyncState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1016,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */,
+				C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */,
 				34314394A69B4C38B941108A /* VisitMapOpenerTests.swift in Sources */,
 				A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */,
 				54EC7C2E1B7D4635BF1F1422 /* SavedPlaceManagementTests.swift in Sources */,

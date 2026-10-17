@@ -47,6 +47,7 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
             var importedSessionCount = 0
             var importedPointCount = 0
             var importedVisitCount = 0
+            var updatedVisit = false
 
             for sessionDTO in payload.sessions {
                 if let session = try recordingSession(withID: sessionDTO.id, in: modelContext) {
@@ -95,15 +96,18 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
                 if let visit = try visit(withID: visitDTO.id, in: modelContext) {
                     if visit.arrivedAt > visitDTO.arrivedAt {
                         visit.arrivedAt = visitDTO.arrivedAt
+                        updatedVisit = true
                     }
                     if let departedAt = visitDTO.departedAt {
                         let normalizedDeparture = max(visit.arrivedAt, departedAt)
                         if let currentDeparture = visit.departedAt {
                             if normalizedDeparture > currentDeparture {
                                 visit.departedAt = normalizedDeparture
+                                updatedVisit = true
                             }
                         } else {
                             visit.departedAt = normalizedDeparture
+                            updatedVisit = true
                         }
                     }
                 } else {
@@ -123,7 +127,7 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
 
             try modelContext.save()
 
-            if importedSessionCount > 0 || importedPointCount > 0 || importedVisitCount > 0 {
+            if importedSessionCount > 0 || importedPointCount > 0 || importedVisitCount > 0 || updatedVisit {
                 LocationManager.shared?.syncDataToWatch()
                 WidgetCenter.shared.reloadAllTimelines()
                 NotificationCenter.default.post(name: .watchLocationDataImported, object: nil)

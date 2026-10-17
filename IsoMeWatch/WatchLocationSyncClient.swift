@@ -1,4 +1,5 @@
 import CoreLocation
+import Combine
 import Foundation
 import WatchConnectivity
 
@@ -6,8 +7,10 @@ import WatchConnectivity
 /// every accepted point locally first, then opportunistically transfers batches
 /// to the iPhone. Batches stay queued until the phone acknowledges a successful
 /// import, so recording can happen while the phone is unavailable.
-final class WatchLocationSyncClient: NSObject {
+final class WatchLocationSyncClient: NSObject, ObservableObject {
     static let shared = WatchLocationSyncClient()
+
+    @Published private(set) var syncStatus: String?
 
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -53,6 +56,8 @@ final class WatchLocationSyncClient: NSObject {
     }
 
     func endActiveSession(endedAt: Date = Date()) {
+        state.endVisit(at: endedAt)
+        saveState()
         guard let activeSessionID = state.activeSessionID else {
             syncPending(force: true)
             return
@@ -66,7 +71,8 @@ final class WatchLocationSyncClient: NSObject {
         syncPending(force: true)
     }
 
-    func recordLocation(_ location: CLLocation) {
+    @discardableResult
+    func recordLocation(_ location: CLLocation) -> Bool {
         let sessionID = ensureActiveSession(startedAt: location.timestamp)
         let point = WatchLocationSyncPoint(
             id: UUID(),
@@ -79,19 +85,33 @@ final class WatchLocationSyncClient: NSObject {
             horizontalAccuracy: location.horizontalAccuracy
         )
 
-        state.points.append(point)
+        let createdVisit = state.recordPoint(point)
         saveState()
 
-        if state.points.count % liveBatchPointInterval == 0 {
-            syncPending(force: false)
+        if createdVisit || state.points.count % liveBatchPointInterval == 0 {
+            // Send place changes immediately, even when the session-start
+            // payload was just sent and no more movement follows.
+            syncPending(force: createdVisit)
         }
+        return createdVisit
     }
 
     func syncPending(force: Bool = false) {
-        guard !state.sessions.isEmpty || !state.points.isEmpty || !state.visits.isEmpty else { return }
-        guard WCSession.isSupported() else { return }
+        guard !state.sessions.isEmpty || !state.points.isEmpty || !state.visits.isEmpty else {
+            syncStatus = String(localized: "Nothing to sync.")
+            return
+        }
+        guard WCSession.isSupported() else {
+            syncStatus = String(localized: "iPhone sync is unavailable.")
+            return
+        }
 
         activate()
+        let session = WCSession.default
+        guard session.activationState == .activated else {
+            syncStatus = String(localized: "Connecting to iPhone…")
+            return
+        }
 
         if !force,
            let lastTransferDate = state.lastTransferDate,
@@ -111,16 +131,16 @@ final class WatchLocationSyncClient: NSObject {
                 sessionIDs: selectedSessionIDs,
                 pointIDs: selectedPointIDs,
                 visitIDs: selectedVisitIDs,
-                createdAt: payload.generatedAt
+                createdAt: payload.generatedAt,
+                visits: payload.visits,
+                endedSessionIDs: Set(payload.sessions.filter { $0.endedAt != nil }.map(\.id))
             )
         )
         state.nextSequence += 1
         state.lastTransferDate = payload.generatedAt
         saveState()
 
-        let session = WCSession.default
-        guard session.activationState == .activated else { return }
-
+        syncStatus = String(localized: "Sync queued. Open iso.me on your iPhone.")
         session.transferUserInfo([
             WatchLocationSyncTransport.payloadUserInfoKey: payloadData
         ])
@@ -164,31 +184,25 @@ final class WatchLocationSyncClient: NSObject {
     }
 
     private func handleAck(_ ack: WatchLocationSyncAck) {
-        guard ack.succeeded, ack.deviceID == state.deviceID else { return }
+        guard ack.deviceID == state.deviceID else { return }
+        guard ack.succeeded else {
+            syncStatus = String(localized: "Sync failed. Please try again.")
+            return
+        }
         guard let transfer = state.pendingTransfers.first(where: { $0.sequence == ack.sequence }) else {
             state.lastAckedSequence = max(state.lastAckedSequence ?? ack.sequence, ack.sequence)
             saveState()
             return
         }
 
-        state.points.removeAll { transfer.pointIDs.contains($0.id) }
-        state.visits.removeAll { visit in
-            transfer.visitIDs.contains(visit.id) && visit.departedAt != nil
-        }
-
-        let remainingPointSessionIDs = Set(state.points.map(\.sessionID))
-        state.sessions.removeAll { session in
-            guard transfer.sessionIDs.contains(session.id) else { return false }
-            guard session.endedAt != nil else { return false }
-            return !remainingPointSessionIDs.contains(session.id)
-        }
-
-        state.pendingTransfers.removeAll { $0.sequence <= ack.sequence }
-        state.lastAckedSequence = max(state.lastAckedSequence ?? ack.sequence, ack.sequence)
+        state.acknowledge(transfer)
         saveState()
 
-        if !state.points.isEmpty || state.sessions.contains(where: { $0.endedAt != nil }) || state.visits.contains(where: { $0.departedAt != nil }) {
+        let hasUnsentVisit = state.visits.contains { !(transfer.visits ?? []).contains($0) }
+        if !state.points.isEmpty || state.sessions.contains(where: { $0.endedAt != nil }) || state.visits.contains(where: { $0.departedAt != nil }) || hasUnsentVisit {
             syncPending(force: true)
+        } else {
+            syncStatus = String(localized: "Synced with iPhone.")
         }
     }
 
@@ -224,7 +238,12 @@ final class WatchLocationSyncClient: NSObject {
 
 extension WatchLocationSyncClient: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        guard activationState == .activated, error == nil else { return }
+        guard activationState == .activated, error == nil else {
+            DispatchQueue.main.async { [weak self] in
+                self?.syncStatus = String(localized: "Couldn’t connect. Please try again.")
+            }
+            return
+        }
         DispatchQueue.main.async { [weak self] in
             self?.syncPending(force: true)
         }
@@ -248,79 +267,5 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.handleAckData(data)
         }
-    }
-}
-
-private struct WatchLocationSyncState: Codable {
-    var deviceID: UUID
-    var nextSequence: Int = 1
-    var sessions: [WatchLocationSyncSession] = []
-    var points: [WatchLocationSyncPoint] = []
-    var visits: [WatchLocationSyncVisit] = []
-    var activeSessionID: UUID?
-    var pendingTransfers: [WatchLocationPendingTransfer] = []
-    var lastTransferDate: Date?
-    var lastAckedSequence: Int?
-
-    init(deviceID: UUID) {
-        self.deviceID = deviceID
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case deviceID
-        case nextSequence
-        case sessions
-        case points
-        case visits
-        case activeSessionID
-        case pendingTransfers
-        case lastTransferDate
-        case lastAckedSequence
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        deviceID = try container.decode(UUID.self, forKey: .deviceID)
-        nextSequence = try container.decodeIfPresent(Int.self, forKey: .nextSequence) ?? 1
-        sessions = try container.decodeIfPresent([WatchLocationSyncSession].self, forKey: .sessions) ?? []
-        points = try container.decodeIfPresent([WatchLocationSyncPoint].self, forKey: .points) ?? []
-        visits = try container.decodeIfPresent([WatchLocationSyncVisit].self, forKey: .visits) ?? []
-        activeSessionID = try container.decodeIfPresent(UUID.self, forKey: .activeSessionID)
-        pendingTransfers = try container.decodeIfPresent([WatchLocationPendingTransfer].self, forKey: .pendingTransfers) ?? []
-        lastTransferDate = try container.decodeIfPresent(Date.self, forKey: .lastTransferDate)
-        lastAckedSequence = try container.decodeIfPresent(Int.self, forKey: .lastAckedSequence)
-    }
-}
-
-private struct WatchLocationPendingTransfer: Codable {
-    var sequence: Int
-    var sessionIDs: Set<UUID>
-    var pointIDs: Set<UUID>
-    var visitIDs: Set<UUID>
-    var createdAt: Date
-
-    private enum CodingKeys: String, CodingKey {
-        case sequence
-        case sessionIDs
-        case pointIDs
-        case visitIDs
-        case createdAt
-    }
-
-    init(sequence: Int, sessionIDs: Set<UUID>, pointIDs: Set<UUID>, visitIDs: Set<UUID>, createdAt: Date) {
-        self.sequence = sequence
-        self.sessionIDs = sessionIDs
-        self.pointIDs = pointIDs
-        self.visitIDs = visitIDs
-        self.createdAt = createdAt
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        sequence = try container.decode(Int.self, forKey: .sequence)
-        sessionIDs = try container.decodeIfPresent(Set<UUID>.self, forKey: .sessionIDs) ?? []
-        pointIDs = try container.decodeIfPresent(Set<UUID>.self, forKey: .pointIDs) ?? []
-        visitIDs = try container.decodeIfPresent(Set<UUID>.self, forKey: .visitIDs) ?? []
-        createdAt = try container.decode(Date.self, forKey: .createdAt)
     }
 }
