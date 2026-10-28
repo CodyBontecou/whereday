@@ -1,0 +1,35 @@
+steps:
+  - await: { visible: { text: "Distance filter" } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Geographic data and licenses }, direction: down }
+  - tap:
+      text: Geographic data and licenses
+  - await: { visible: { text: "Geometry engine license" } }
+  - await: { idle: true }
+  - tap:
+      text: Geometry engine license
+  - await: { visible: { text: "Back to geographic data" } }
+  - await: { idle: true }
+  - await: { visible: { text: "Apache License" } }
+  - await: { idle: true }
+  - tap:
+      text: Back to geographic data
+  - await: { visible: { text: "Geometry engine license" } }
+  - await: { idle: true }
+  - tap:
+      text: Time-zone data license
+  - await: { visible: { text: "Back to geographic data" } }
+  - await: { idle: true }
+  - await: { visible: { text: "Open Database License" } }
+  - await: { idle: true }
+  - tap:
+      text: Back to geographic data
+  - await: { visible: { text: "Geometry engine license" } }
+  - await: { idle: true }
+  - tap:
+      text: Back to settings
+  - await: { visible: { text: "Distance filter" } }
+  - await: { idle: true }
+executionPrerequisite: The onboarded app is at the top of Settings. Recording
+  and country analysis are idle. This read-only path opens packaged geographic
+  licenses and returns to Settings.

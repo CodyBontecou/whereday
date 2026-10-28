@@ -213,12 +213,12 @@ final class Visit {
             parts.append(address)
         }
 
-        parts.append(String(format: "Latitude %.4f, longitude %.4f", latitude, longitude))
+        parts.append(String(format: String(localized: "Latitude %.4f, longitude %.4f"), locale: .current, latitude, longitude))
         return parts.joined(separator: ". ")
     }
 
     var accessibilityHint: String {
-        "Opens visit details."
+        String(localized: "Opens visit details.")
     }
 }
 

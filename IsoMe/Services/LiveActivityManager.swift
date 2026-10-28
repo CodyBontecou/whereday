@@ -51,7 +51,7 @@ final class LiveActivityManager: ObservableObject {
         guard areActivitiesEnabled else {
             #if DEBUG
             print("❌ Live Activities are not enabled in device Settings")
-            print("   Go to Settings > iso.me > Live Activities")
+            print("   Go to Settings > Whereday > Live Activities")
             #endif
             return
         }
@@ -158,7 +158,7 @@ final class LiveActivityManager: ObservableObject {
         guard let activity = currentActivity else { return }
 
         let finalState = LocationActivityAttributes.ContentState(
-            locationName: "Tracking Stopped",
+            locationName: String(localized: "Tracking stopped."),
             locationsRecorded: locationsRecorded,
             distanceTraveled: totalDistance,
             remainingSeconds: nil,

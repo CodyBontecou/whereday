@@ -8,7 +8,7 @@ import ExportAutomationKit
 import UIKit
 #endif
 
-/// Bridges iso.me's daily export schedule to the scheduled-notifications worker.
+/// Bridges Whereday's daily export schedule to the scheduled-notifications worker.
 ///
 /// The worker only stores routing/timing metadata (stable install id, APNs token,
 /// bundle id, timezone, hour/minute, and next fire time). It never receives

@@ -122,7 +122,7 @@ struct WebhookSettingsView: View {
                         .accessibilityLabel("Dismiss warning")
                     }
 
-                    Text("Enabling webhook delivery sends your location data to an external server you configure. iso.me does not have access to this server or the transmitted data.")
+                    Text("Enabling webhook delivery sends your location data to an external server you configure. Whereday does not have access to this server or the transmitted data.")
                         .font(TE.mono(.caption2, weight: .regular))
                         .foregroundStyle(TE.textMuted)
                         .lineSpacing(2)
@@ -577,7 +577,7 @@ struct WebhookSettingsView: View {
 
     @ViewBuilder
     private func webhookButtonLabel(
-        _ title: String,
+        _ title: LocalizedStringKey,
         systemImage: String,
         showsTrailingArrow: Bool = true,
         isLoading: Bool = false

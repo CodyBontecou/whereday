@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Record an iPhone Route and Export GPX — Whereday</title>
+  <meta name="description" content="Record a route in Whereday, preview GPS points, export GPX to Files, and check the result. Includes a synthetic sample and clear free and paid limits.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/record-iphone-route-gpx/">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="How to Record an iPhone Route and Export GPX — Whereday">
+  <meta property="og:description" content="Record a route in Whereday, preview GPS points, export GPX to Files, and check the result. Includes a synthetic sample and clear free and paid limits.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/record-iphone-route-gpx/">
+  <meta property="og:image" content="https://whereday.com/screenshots/export.png">
+  <meta property="og:image:alt" content="Whereday export interface with data types and file format choices">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Record an iPhone Route and Export GPX — Whereday">
+  <meta name="twitter:description" content="Record a route in Whereday, preview GPS points, export GPX to Files, and check the result. Includes a synthetic sample and clear free and paid limits.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/export.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1f1f1f;
+  --muted: #5f5d59;
+  --rule: #d2cfca;
+  --accent: #1c57ca;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Geist", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.brand img { border-radius: 4px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.button { display: inline-flex; justify-content: center; align-items: center; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: white; font-size: 16px; line-height: 24px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #1748a8; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 64px; }
+.breadcrumbs { font-size: 14px; line-height: 20px; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+h1 { max-width: 680px; font-size: 48px; line-height: 1; margin: 16px 0 24px; font-weight: 600; background: linear-gradient(to right, #000, #666); color: transparent; background-clip: text; -webkit-background-clip: text; }
+h2 { font-size: 30px; line-height: 36px; font-weight: 600; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 28px; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 28px; }
+header { padding-bottom: 40px; }
+section { margin-top: 48px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+caption { text-align: left; font-weight: 600; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border: 1px solid var(--rule); min-width: 160px; }
+thead { background: #ecebe4; }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--rule); }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 32px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.closing h2 { font-size: 36px; line-height: 40px; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: white; margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; background: white; overflow-x: auto; font-size: 14px; line-height: 20px; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 36px; line-height: 40px; }
+  h2 { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/record-iphone-route-gpx/",
+      "url": "https://whereday.com/blog/record-iphone-route-gpx/",
+      "name": "How to Record an iPhone Route and Export GPX — Whereday",
+      "description": "Record a route in Whereday, preview GPS points, export GPX to Files, and check the result. Includes a synthetic sample and clear free and paid limits.",
+      "inLanguage": "en",
+      "dateModified": "2026-10-26",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "How to record an iPhone route and export a GPX file",
+      "datePublished": "2026-10-26",
+      "mainEntityOfPage": "https://whereday.com/blog/record-iphone-route-gpx/",
+      "image": "https://whereday.com/screenshots/export.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Record and export GPX",
+          "item": "https://whereday.com/blog/record-iphone-route-gpx/"
+        }
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
+    <div class="nav-links"><a href="/blog/" aria-current="true">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div>
+  </nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Record and export GPX</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">How to record an iPhone route and export a GPX file</h1><p class="lede">Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Recording and preview are free; saving the file requires the optional unlock.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p></header>
+    <section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Record first, then export the points</h2>
+  <p>To record an iPhone route as GPX with Whereday, start tracking before your trip, stop when you finish, then choose <strong>Points</strong> and <strong>GPX</strong> in Export. Select the right date range, preview the result, and save the file to Files or share it with a compatible route viewer.</p>
+  <p>Recording is free. Previewing the export is free. Writing the GPX file requires the optional one-time unlock. This workflow exports a route recorded in Whereday; it does not extract old Apple Maps or Google Timeline history.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>From recording to file</strong><ol><li><a href="#record">Record and check a route</a></li><li><a href="#export">Select points and export GPX</a></li><li><a href="#verify">Check the saved file</a></li><li><a href="#sample">Inspect a synthetic GPX example</a></li><li><a href="#problems">Fix an empty or incomplete export</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="record">
+  <h2 id="record">1. Record a short route</h2>
+  <ol>
+    <li>Open Whereday and complete permission setup. Choose Always location access if you want recording to continue in the background.</li>
+    <li>On the Map tab, start recording before you leave. Start enables GPS recording, visit monitoring, and significant location changes together.</li>
+    <li>After a short walk or trip, stop recording. Stop ends both GPS and visit monitoring.</li>
+    <li>Open Timeline and check the outing’s date, start and end times, and map. Confirm that it contains the part of the trip you intend to export.</li>
+  </ol>
+  <p>Try this with a short session before relying on it for a full day. GPS can be noisy or unavailable, and permission changes or a stopped session can leave gaps. There is no separate passive visit-only switch. The <a href="/docs/tracking/">recording reference</a> explains distance filtering and auto-stop.</p>
+  <p>For a longer trip, choose an auto-stop duration that will not end early. Stop when you finish. Detailed GPS uses battery, and a larger distance filter trades route detail for fewer captured points; check the result before settling on a setting. Use the <a href="/blog/iphone-location-tracking-battery/">battery comparison checklist</a> to compare your own recordings.</p>
+</section>
+
+<section aria-labelledby="export">
+  <h2 id="export">2. Choose Points and GPX</h2>
+  <ol>
+    <li>Open <strong>Export</strong> and choose <strong>Points</strong> as the data type. These are the recorded GPS locations that make up a path.</li>
+    <li>Select <strong>GPX</strong>. If other formats are also selected, the export can produce additional files.</li>
+    <li>Choose the date range for your recording. Review any time-of-day, accuracy, and GPS-glitch filters that could exclude points.</li>
+    <li>Open <strong>Preview</strong>. Check the intended date and file contents before paying for or writing an export.</li>
+    <li>Export. With a default folder configured, look there for the saved file; otherwise use the share sheet to save it in Files.</li>
+  </ol>
+  <p>You can also open a specific outing in Timeline and use its Export action with GPX selected. For a full reference on filenames, date filters, and saving destinations, see <a href="/docs/export-import/">export and restore compatibility</a>.</p>
+  <div class="table-scroll" role="region" aria-label="GPX export data choices" tabindex="0"><table>
+    <caption>Choose the data you actually need</caption>
+    <thead><tr><th scope="col">Choice</th><th scope="col">GPX result</th><th scope="col">Use it for</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Points</th><td>Track points grouped into track segments</td><td>The recorded path over a selected period</td></tr>
+      <tr><th scope="row">Visits</th><td>Waypoints, when visit coordinates are included</td><td>Stops rather than a continuous path</td></tr>
+      <tr><th scope="row">Outings</th><td>The selected outing’s route points</td><td>A particular recorded trip</td></tr>
+    </tbody>
+  </table></div>
+  <p>A GPX export with only visits can be valid but show pins instead of a line. Pick Points or an outing if the path is the part you want to keep.</p>
+</section>
+
+<figure class="product-example"><img src="/screenshots/export-480.webp" srcset="/screenshots/export-480.webp 480w, /screenshots/export-720.webp 720w, /screenshots/export.webp 900w" sizes="240px" width="1206" height="2622" alt="Example Whereday export interface with data types and file format choices" loading="lazy" decoding="async"><figcaption>The export interface. This screenshot illustrates the workflow and may show sample data or earlier labels.</figcaption></figure>
+
+<section aria-labelledby="verify">
+  <h2 id="verify">3. Check the file in Files and your viewer</h2>
+  <p>Find the exported <code>.gpx</code> file in the folder you chose. Confirm the filename and date before sending it elsewhere. If your destination application accepts GPX tracks, use its import or open-file action to select the file.</p>
+  <ul>
+    <li>Check that the track covers the expected start and end locations.</li>
+    <li>Check timestamps against the trip. GPX times may be shown in UTC or converted to the viewer’s local timezone.</li>
+    <li>Look for gaps and separate segments instead of assuming every straight line represents captured movement.</li>
+    <li>Keep the original file if another tool rewrites or converts it.</li>
+  </ul>
+  <p>GPX describes geographic data; it does not include a street map or guarantee that every app offers the same display. Files preview may show text or a file icon rather than drawing a route. A viewer that supports waypoints alone may not display a track.</p>
+  <p>Whereday exports recorded points. Do not assume the file follows the same road-matched line shown in a map preview. When consecutive points are more than ten minutes apart, the current exporter starts a new GPX track segment.</p>
+</section>
+
+<section aria-labelledby="sample">
+  <h2 id="sample">What a GPX track looks like</h2>
+  <p><a href="/samples/synthetic-route.gpx" download>Download a synthetic GPX example</a> to inspect before sharing your own data. It contains three invented points near latitude zero and longitude zero, with fixed example timestamps. It is not a real trip or a captured Whereday export.</p>
+  <pre aria-label="Example GPX track point"><code>&lt;trkpt lat="0.0001000" lon="0.0001000"&gt;
+  &lt;time&gt;2000-01-01T12:01:00Z&lt;/time&gt;
+&lt;/trkpt&gt;</code></pre>
+  <p>The coordinates identify a point. Its time helps a viewer place it in sequence; <code>Z</code> denotes UTC. Track points sit inside a track segment. For the same invented coordinates in Whereday’s importable JSON structure, see the <a href="/blog/back-up-iphone-location-history/#sample">backup file examples</a>. The sample uses the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 format</a>, but does not include every optional extension Whereday can export.</p>
+</section>
+
+<section aria-labelledby="problems">
+  <h2 id="problems">If the export is empty or the line looks wrong</h2>
+  <p>For an incomplete Whereday day, use the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> to distinguish recording, display, Watch sync, and export issues.</p>
+  <ul>
+    <li><strong>No points in Preview:</strong> check the selected dates and filters, then open the same day in Timeline. Export cannot create a path that was not recorded.</li>
+    <li><strong>Pins instead of a line:</strong> check whether you exported Visits rather than Points.</li>
+    <li><strong>The path has gaps:</strong> check recording state, permission, and auto-stop. Inspect the original points before changing filters to include less accurate fixes.</li>
+    <li><strong>File saved somewhere unexpected:</strong> check the default export folder before repeating the export. Some exports produce more than one file.</li>
+    <li><strong>A viewer rejects the file:</strong> confirm it supports GPX 1.1 tracks and that the file was completely saved. Keep the original while checking the error.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="restore">
+  <h2 id="restore">Keep a separate copy for restoring your journal</h2>
+  <p>GPX is a portable map format, but Whereday does not import GPX. To retain records you can import later, export visits and route points separately as supported Whereday JSON files and keep both. A map file is not a complete backup of every journal setting or outing edit. Follow <a href="/blog/back-up-iphone-location-history/">the backup and restore checklist</a> for a transferable copy of supported records.</p>
+  <p>For spreadsheet rows, CSV may suit your next task better. Read <a href="/docs/export-import/">the format and restore matrix</a> before choosing an archive format. For automatic copies, see <a href="/docs/automatic-exports/">scheduled exports</a>; background execution is best effort.</p>
+  <p>Exported coordinates and times can reveal your movements. A file saved in cloud storage or sent to another app follows that destination’s privacy rules. Check the file before sharing it.</p>
+</section>
+
+<section class="closing" aria-labelledby="try-recording">
+  <h2 id="try-recording">Record the route.<br>Choose how to keep it.</h2>
+  <p>Try free recording and export preview. The optional purchase unlocks writing files; see <a href="/#pricing">current pricing</a>.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+
+<p class="source-note">Reviewed October 26, 2026. Steps reflect Whereday’s recording and export controls; labels can vary by app version. For setup, read <a href="/blog/private-location-journal-iphone/">the private journal guide</a>; for existing Apple or Google records, see <a href="/blog/view-location-history-iphone/">how to view iPhone location history</a>.</p>
+
+    </article>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/back-up-iphone-location-history/">Keep a restorable copy</a><p>GPX is a map file; retain supported visits and points separately for import.</p></li><li><a href="/blog/missing-location-history-iphone/">Investigate an incomplete route</a><p>Check recording state and filters before repeating the export.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

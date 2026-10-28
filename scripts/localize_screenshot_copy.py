@@ -16,11 +16,24 @@ LOCALE_MAP = {
     "fr-FR": "fr",
     "hi": "hi",
     "ja": "ja",
+    "pl": "pl",
     "pt-BR": "pt-BR",
     "ru": "ru",
     "zh-Hans": "zh-Hans",
 }
 OVERRIDES = {
+    "pl": {
+        (0, "title"): "Spokojna mapa Twoich dni",
+        (0, "subtitle"): "Automatycznie wykrywaj wizyty i rejestruj dokładne trasy — wszystko na urządzeniu.",
+        (1, "title"): "Jeden panel. Pełna kontrola.",
+        (1, "subtitle"): "Dostosuj śledzenie, filtry odległości, automatyczne zatrzymywanie i nazwy miejsc.",
+        (2, "title"): "Eksport w otwartych formatach.",
+        (2, "subtitle"): "Zabierz swoją historię w formacie JSON, CSV, Markdown, GPX, OwnTracks lub Overland.",
+        (3, "title"): "Wybierz, co eksportować.",
+        (3, "subtitle"): "Filtruj według dat, pory dnia, zakończonych wizyt i czasu trwania.",
+        (4, "title"): "Twoje dane. Twój serwer.",
+        (4, "subtitle"): "Wysyłaj lokalizację do własnego API na bieżąco lub partiami.",
+    },
     "ar-SA": {
         (0, "subtitle"): "اكتشف الزيارات تلقائيًا وسجّل المسارات بالتفصيل — كل ذلك على جهازك.",
         (1, "subtitle"): "اضبط التتبع وفلاتر المسافة والتوقف التلقائي وأسماء المواقع في ثوانٍ.",

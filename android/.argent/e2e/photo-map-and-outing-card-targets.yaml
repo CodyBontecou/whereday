@@ -1,0 +1,215 @@
+steps:
+- echo: Isolated com.bontecou.whereday.mapqa only. Requires onboarded idle QA app with zero history/photo
+    refs, date 2026-10-27 and default inference. Stage photo-map-route.csv as Downloads/whereday-photo-map-qa-20261027.csv
+    and the two generated JPEGs as whereday-public-photo-qa-a.jpg/b.jpg. No owner package data, personal
+    photos or clear-history actions. Exercises map grouping/chooser/pager, outing strip/pager, then removes
+    only the synthetic outing and selected refs; restore Photo markers off. Original staged files remain
+    until separate cleanup.
+- launch: com.bontecou.whereday.mapqa
+- run: photo-map-fixture-setup.yaml
+- scroll-to:
+    target:
+      text: Back to timeline
+    within:
+      id: outing-detail-scroll-margin
+    direction: up
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Show on map
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Show on map
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Refresh matched photos
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Refresh matched photos
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:05
+- await:
+    visible:
+      text: Photo 2 of 2
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Close photo
+- await:
+    visible:
+      text: 2 matched photos
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Delete outing
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Delete outing
+- await:
+    idle: true
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: Delete this outing?
+- await:
+    idle: true
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: 0 outings
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      text: 2 saved photo references
+- await:
+    idle: true
+- echo: Only isolated com.bontecou.whereday.mapqa, with the two generated photo refs at Oct 27 10:00/10:05
+    and no synthetic outing remaining. Remove only these refs; originals remain. Restore Photo markers
+    off. Never run against the owner app or select other photos.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Photos
+    direction: down
+- await:
+    visible:
+      text: Photos
+- await:
+    idle: true
+- tap:
+    text: Photos
+- await:
+    visible:
+      text: 2 saved photo references
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:00.
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:00. No location match
+- await:
+    visible:
+      text: Photo 1 of 2
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: 1 saved photo reference
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Photo taken at Oct 27, 10:00.
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:05.
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:05. No location match
+- await:
+    visible:
+      text: Photo 1 of 1
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- await:
+    visible:
+      text: 0 saved photo references
+- await:
+    idle: true
+- tap:
+    text: Map
+- await:
+    visible:
+      text: Map layers
+- await:
+    idle: true
+- tap:
+    text: Map layers
+- await:
+    visible:
+      text: Photo markers
+- await:
+    idle: true
+- tap:
+    text: Photo markers
+- await:
+    idle: true
+- tap:
+    text: Done map layers
+- await:
+    visible:
+      text: Fit route
+- await:
+    idle: true

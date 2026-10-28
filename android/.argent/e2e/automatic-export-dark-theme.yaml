@@ -1,0 +1,27 @@
+steps:
+  - echo: Requires completed onboarding, idle recording and System app theme. Inspects automatic exports in Dark theme and restores System. Does not enable a schedule or write a destination.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^System$' } }, direction: down }
+  - tap: { text: { matches: '^System$' } }
+  - await: { visible: { text: { matches: '^Dark$' } } }
+  - tap: { text: { matches: '^Dark$' } }
+  - await: { visible: { text: { matches: '^Dark$' } } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
+  - tap: { text: { matches: '^Automatic exports$' } }
+  - await: { visible: { text: Enable automatic exports } }
+  - await: { idle: true }
+  - tool: screenshot
+    args: {scale: 0.5}
+  - tap: { text: Back to settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^Dark$' } }, direction: down }
+  - tap: { text: { matches: '^Dark$' } }
+  - await: { visible: { text: { matches: '^System$' } } }
+  - tap: { text: { matches: '^System$' } }
+  - await: { visible: { text: { matches: '^System$' } } }
+  - await: { idle: true }

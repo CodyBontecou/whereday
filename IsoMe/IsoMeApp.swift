@@ -1,3 +1,6 @@
+#if DEBUG
+import ScrawlKit
+#endif
 import SwiftUI
 import SwiftData
 import StoreKit
@@ -8,6 +11,12 @@ struct IsoMeApp: App {
     @StateObject private var watchSyncReceiver = WatchLocationSyncReceiver()
     @State private var showingMyselfClaim = false
 
+    init() {
+        #if DEBUG && os(iOS)
+        DebugSelfie.install()
+        #endif
+    }
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Visit.self,
@@ -17,11 +26,18 @@ struct IsoMeApp: App {
             SavedPlace.self,
             CountryStay.self
         ])
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false,
-            allowsSave: true
-        )
+        let modelConfiguration: ModelConfiguration
+        #if DEBUG && targetEnvironment(simulator)
+        if ProcessInfo.processInfo.arguments.contains("--watch-sync-replay") {
+            let directory = URL.documentsDirectory.appendingPathComponent("WatchSyncReplay")
+            try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            modelConfiguration = ModelConfiguration(schema: schema, url: directory.appendingPathComponent("phone.store"))
+        } else {
+            modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, allowsSave: true)
+        }
+        #else
+        modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, allowsSave: true)
+        #endif
 
         do {
             let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -36,10 +52,16 @@ struct IsoMeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                #if DEBUG
+                .scrawl()
+                #endif
                 .sheet(isPresented: $showingMyselfClaim) {
                     MyselfClaimView(app: "iso.me")
                 }
                 .onOpenURL { url in
+                    #if DEBUG
+                    if url.host == "scrawl" || url.host == "tether" { return }
+                    #endif
                     handleDeepLink(url)
                 }
                 .task {
@@ -68,7 +90,7 @@ struct IsoMeApp: App {
     }
     
     private func handleDeepLink(_ url: URL) {
-        guard url.scheme == "isome" else { return }
+        guard let scheme = url.scheme, ["isome", "whereday"].contains(scheme) else { return }
 
         if url.host == "myself", url.path == "/claim", url.user == nil,
            url.password == nil, url.port == nil, url.query == nil, url.fragment == nil {

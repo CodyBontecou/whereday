@@ -1,0 +1,120 @@
+[
+  {
+    "name": "empty",
+    "days": []
+  },
+  {
+    "name": "provenance",
+    "days": [
+      {
+        "country": "US",
+        "day": "2026-01-01",
+        "recorded": true,
+        "manual": false
+      },
+      {
+        "country": "US",
+        "day": "2026-01-02",
+        "recorded": false,
+        "manual": true
+      },
+      {
+        "country": "US",
+        "day": "2026-01-03",
+        "recorded": true,
+        "manual": true
+      }
+    ]
+  },
+  {
+    "name": "country-date-order",
+    "days": [
+      {
+        "country": "US",
+        "day": "2026-12-31",
+        "recorded": true,
+        "manual": false
+      },
+      {
+        "country": "CA",
+        "day": "2026-03-01",
+        "recorded": false,
+        "manual": true
+      },
+      {
+        "country": "US",
+        "day": "2026-01-01",
+        "recorded": false,
+        "manual": true
+      },
+      {
+        "country": "CA",
+        "day": "2026-02-28",
+        "recorded": true,
+        "manual": true
+      }
+    ]
+  },
+  {
+    "name": "travel-day",
+    "days": [
+      {
+        "country": "JP",
+        "day": "2026-10-27",
+        "recorded": true,
+        "manual": false
+      },
+      {
+        "country": "US",
+        "day": "2026-10-27",
+        "recorded": true,
+        "manual": false
+      }
+    ]
+  },
+  {
+    "name": "leap-day",
+    "days": [
+      {
+        "country": "CA",
+        "day": "2020-03-01",
+        "recorded": false,
+        "manual": true
+      },
+      {
+        "country": "CA",
+        "day": "2020-02-29",
+        "recorded": false,
+        "manual": true
+      },
+      {
+        "country": "CA",
+        "day": "2020-02-28",
+        "recorded": false,
+        "manual": true
+      }
+    ]
+  },
+  {
+    "name": "manual-future",
+    "days": [
+      {
+        "country": "NZ",
+        "day": "2029-01-01",
+        "recorded": false,
+        "manual": true
+      }
+    ]
+  },
+  {
+    "name": "older-year",
+    "days": [
+      {
+        "country": "GB",
+        "day": "1969-12-31",
+        "recorded": true,
+        "manual": false
+      }
+    ]
+  }
+]

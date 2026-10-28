@@ -8,6 +8,12 @@
             "state": "translated",
             "value": "Sync Now"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizuj teraz"
+          }
         }
       }
     },
@@ -17,6 +23,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nothing to sync."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak danych do synchronizacji."
           }
         }
       }
@@ -28,6 +40,12 @@
             "state": "translated",
             "value": "iPhone sync is unavailable."
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja z iPhonem jest niedostępna."
+          }
         }
       }
     },
@@ -38,15 +56,27 @@
             "state": "translated",
             "value": "Connecting to iPhone…"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Łączenie z iPhonem…"
+          }
         }
       }
     },
-    "Sync queued. Open iso.me on your iPhone.": {
+    "Sync queued. Open Whereday on your iPhone.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sync queued. Open iso.me on your iPhone."
+            "value": "Sync queued. Open Whereday on your iPhone."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja oczekuje. Otwórz Whereday na iPhonie."
           }
         }
       }
@@ -58,6 +88,12 @@
             "state": "translated",
             "value": "Sync failed. Please try again."
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja nie powiodła się. Spróbuj ponownie."
+          }
         }
       }
     },
@@ -68,6 +104,12 @@
             "state": "translated",
             "value": "Synced with iPhone."
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zsynchronizowano z iPhonem."
+          }
         }
       }
     },
@@ -77,6 +119,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn’t connect. Please try again."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się połączyć. Spróbuj ponownie."
           }
         }
       }
@@ -138,6 +186,12 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "--:--"
+          }
+        },
+        "pl": {
           "stringUnit": {
             "state": "translated",
             "value": "--:--"
@@ -206,6 +260,12 @@
             "state": "translated",
             "value": "%@左边"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POZOSTAŁO %@"
+          }
         }
       }
     },
@@ -266,6 +326,12 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        },
+        "pl": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld"
@@ -334,6 +400,12 @@
             "state": "translated",
             "value": "%1$lld小时%2$lld米"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld godz. %2$lld min"
+          }
         }
       }
     },
@@ -397,6 +469,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lldm"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
           }
         }
       }
@@ -462,6 +540,12 @@
             "state": "translated",
             "value": "捕获观察路径"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REJESTROWANIE TRASY Z ZEGARKA"
+          }
         }
       }
     },
@@ -525,6 +609,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "检查权限"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SPRAWDŹ UPRAWNIENIA"
           }
         }
       }
@@ -590,6 +680,12 @@
             "state": "translated",
             "value": "距离"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DYSTANS"
+          }
         }
       }
     },
@@ -653,6 +749,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用位置"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WŁĄCZ LOKALIZACJĘ"
           }
         }
       }
@@ -718,133 +820,151 @@
             "state": "translated",
             "value": "启用位置以直接在 Apple Watch 上进行跟踪。"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włącz śledzenie lokalizacji bezpośrednio na Apple Watch."
+          }
         }
       }
     },
-    "iso.me": {
+    "Whereday": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday"
           }
         }
       }
     },
-    "ISO.ME": {
+    "WHEREDAY": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "ISO.ME"
+            "value": "WHEREDAY"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
           }
         }
       }
@@ -910,6 +1030,12 @@
             "state": "translated",
             "value": "居住"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NA ŻYWO"
+          }
         }
       }
     },
@@ -973,6 +1099,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "地点"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LOKALIZACJA"
           }
         }
       }
@@ -1038,6 +1170,12 @@
             "state": "translated",
             "value": "位置被拒绝。在“设置”中启用它以从 Apple Watch 进行跟踪。"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lokalizacja została odrzucona. Włącz tę opcję w Ustawieniach, aby śledzić z Apple Watch."
+          }
         }
       }
     },
@@ -1101,6 +1239,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "此 Apple Watch 上的位置受到限制。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lokalizacja na tym zegarku Apple Watch jest ograniczona."
           }
         }
       }
@@ -1166,6 +1310,12 @@
             "state": "translated",
             "value": "需要位置"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WYMAGANA LOKALIZACJA"
+          }
         }
       }
     },
@@ -1229,6 +1379,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "位置权限不可用。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pozwolenie na lokalizację jest niedostępne."
           }
         }
       }
@@ -1294,6 +1450,12 @@
             "state": "translated",
             "value": "离开"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyłączone"
+          }
         }
       }
     },
@@ -1357,6 +1519,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "积分"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PUNKTY"
           }
         }
       }
@@ -1422,6 +1590,12 @@
             "state": "translated",
             "value": "准备追踪"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GOTOWE DO REJESTROWANIA"
+          }
         }
       }
     },
@@ -1485,6 +1659,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日重置"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WYZERUJ DZISIEJSZE DANE"
           }
         }
       }
@@ -1550,6 +1730,12 @@
             "state": "translated",
             "value": "支持"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GOTOWOŚĆ"
+          }
         }
       }
     },
@@ -1613,6 +1799,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "开始"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "START"
           }
         }
       }
@@ -1678,6 +1870,12 @@
             "state": "translated",
             "value": "开始追踪"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozpocznij śledzenie"
+          }
         }
       }
     },
@@ -1741,6 +1939,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "停止"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STOP"
           }
         }
       }
@@ -1806,6 +2010,12 @@
             "state": "translated",
             "value": "停止追踪"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zatrzymaj śledzenie"
+          }
         }
       }
     },
@@ -1869,6 +2079,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今天"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DZISIAJ"
           }
         }
       }
@@ -1934,6 +2150,12 @@
             "state": "translated",
             "value": "追踪"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Śledzenie"
+          }
         }
       }
     },
@@ -1997,6 +2219,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "追踪"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ŚLEDZENIE"
           }
         }
       }
@@ -2062,6 +2290,12 @@
             "state": "translated",
             "value": "未知"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieznany"
+          }
         }
       }
     },
@@ -2125,6 +2359,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "访问量"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WIZYTY"
           }
         }
       }

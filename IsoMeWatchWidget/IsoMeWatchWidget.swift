@@ -60,7 +60,7 @@ struct IsoMeWatchWidget: Widget {
             IsoMeWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("iso.me")
+        .configurationDisplayName("Whereday")
         .description("View your tracking status and today's stats.")
         .supportedFamilies([
             .accessoryCircular,

@@ -62,6 +62,12 @@
             "state": "translated",
             "value": "%lld"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
         }
       }
     },
@@ -125,6 +131,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%1$lld小时%2$lld米"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld godz. %2$lld min"
           }
         }
       }
@@ -190,6 +202,12 @@
             "state": "translated",
             "value": "%lldm"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
         }
       }
     },
@@ -253,6 +271,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "停止"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zatrzymywać się"
           }
         }
       }
@@ -318,6 +342,12 @@
             "state": "translated",
             "value": "Monitorando"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Śledzenie"
+          }
         }
       }
     },
@@ -381,6 +411,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "自%@开始追踪"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Śledzenie od %@"
           }
         }
       }

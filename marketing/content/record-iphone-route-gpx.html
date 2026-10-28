@@ -1,0 +1,91 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Record first, then export the points</h2>
+  <p>To record an iPhone route as GPX with Whereday, start tracking before your trip, stop when you finish, then choose <strong>Points</strong> and <strong>GPX</strong> in Export. Select the right date range, preview the result, and save the file to Files or share it with a compatible route viewer.</p>
+  <p>Recording is free. Previewing the export is free. Writing the GPX file requires the optional one-time unlock. This workflow exports a route recorded in Whereday; it does not extract old Apple Maps or Google Timeline history.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>From recording to file</strong><ol><li><a href="#record">Record and check a route</a></li><li><a href="#export">Select points and export GPX</a></li><li><a href="#verify">Check the saved file</a></li><li><a href="#sample">Inspect a synthetic GPX example</a></li><li><a href="#problems">Fix an empty or incomplete export</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="record">
+  <h2 id="record">1. Record a short route</h2>
+  <ol>
+    <li>Open Whereday and complete permission setup. Choose Always location access if you want recording to continue in the background.</li>
+    <li>On the Map tab, start recording before you leave. Start enables GPS recording, visit monitoring, and significant location changes together.</li>
+    <li>After a short walk or trip, stop recording. Stop ends both GPS and visit monitoring.</li>
+    <li>Open Timeline and check the outing’s date, start and end times, and map. Confirm that it contains the part of the trip you intend to export.</li>
+  </ol>
+  <p>Try this with a short session before relying on it for a full day. GPS can be noisy or unavailable, and permission changes or a stopped session can leave gaps. There is no separate passive visit-only switch. The <a href="/docs/tracking/">recording reference</a> explains distance filtering and auto-stop.</p>
+  <p>For a longer trip, choose an auto-stop duration that will not end early. Stop when you finish. Detailed GPS uses battery, and a larger distance filter trades route detail for fewer captured points; check the result before settling on a setting. Use the <a href="/blog/iphone-location-tracking-battery/">battery comparison checklist</a> to compare your own recordings.</p>
+</section>
+
+<section aria-labelledby="export">
+  <h2 id="export">2. Choose Points and GPX</h2>
+  <ol>
+    <li>Open <strong>Export</strong> and choose <strong>Points</strong> as the data type. These are the recorded GPS locations that make up a path.</li>
+    <li>Select <strong>GPX</strong>. If other formats are also selected, the export can produce additional files.</li>
+    <li>Choose the date range for your recording. Review any time-of-day, accuracy, and GPS-glitch filters that could exclude points.</li>
+    <li>Open <strong>Preview</strong>. Check the intended date and file contents before paying for or writing an export.</li>
+    <li>Export. With a default folder configured, look there for the saved file; otherwise use the share sheet to save it in Files.</li>
+  </ol>
+  <p>You can also open a specific outing in Timeline and use its Export action with GPX selected. For a full reference on filenames, date filters, and saving destinations, see <a href="/docs/export-import/">export and restore compatibility</a>.</p>
+  <div class="table-scroll" role="region" aria-label="GPX export data choices" tabindex="0"><table>
+    <caption>Choose the data you actually need</caption>
+    <thead><tr><th scope="col">Choice</th><th scope="col">GPX result</th><th scope="col">Use it for</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Points</th><td>Track points grouped into track segments</td><td>The recorded path over a selected period</td></tr>
+      <tr><th scope="row">Visits</th><td>Waypoints, when visit coordinates are included</td><td>Stops rather than a continuous path</td></tr>
+      <tr><th scope="row">Outings</th><td>The selected outing’s route points</td><td>A particular recorded trip</td></tr>
+    </tbody>
+  </table></div>
+  <p>A GPX export with only visits can be valid but show pins instead of a line. Pick Points or an outing if the path is the part you want to keep.</p>
+</section>
+
+<figure class="product-example"><img src="/screenshots/export-480.webp" srcset="/screenshots/export-480.webp 480w, /screenshots/export-720.webp 720w, /screenshots/export.webp 900w" sizes="240px" width="1206" height="2622" alt="Example Whereday export interface with data types and file format choices" loading="lazy" decoding="async"><figcaption>The export interface. This screenshot illustrates the workflow and may show sample data or earlier labels.</figcaption></figure>
+
+<section aria-labelledby="verify">
+  <h2 id="verify">3. Check the file in Files and your viewer</h2>
+  <p>Find the exported <code>.gpx</code> file in the folder you chose. Confirm the filename and date before sending it elsewhere. If your destination application accepts GPX tracks, use its import or open-file action to select the file.</p>
+  <ul>
+    <li>Check that the track covers the expected start and end locations.</li>
+    <li>Check timestamps against the trip. GPX times may be shown in UTC or converted to the viewer’s local timezone.</li>
+    <li>Look for gaps and separate segments instead of assuming every straight line represents captured movement.</li>
+    <li>Keep the original file if another tool rewrites or converts it.</li>
+  </ul>
+  <p>GPX describes geographic data; it does not include a street map or guarantee that every app offers the same display. Files preview may show text or a file icon rather than drawing a route. A viewer that supports waypoints alone may not display a track.</p>
+  <p>Whereday exports recorded points. Do not assume the file follows the same road-matched line shown in a map preview. When consecutive points are more than ten minutes apart, the current exporter starts a new GPX track segment.</p>
+</section>
+
+<section aria-labelledby="sample">
+  <h2 id="sample">What a GPX track looks like</h2>
+  <p><a href="/samples/synthetic-route.gpx" download>Download a synthetic GPX example</a> to inspect before sharing your own data. It contains three invented points near latitude zero and longitude zero, with fixed example timestamps. It is not a real trip or a captured Whereday export.</p>
+  <pre aria-label="Example GPX track point"><code>&lt;trkpt lat="0.0001000" lon="0.0001000"&gt;
+  &lt;time&gt;2000-01-01T12:01:00Z&lt;/time&gt;
+&lt;/trkpt&gt;</code></pre>
+  <p>The coordinates identify a point. Its time helps a viewer place it in sequence; <code>Z</code> denotes UTC. Track points sit inside a track segment. For the same invented coordinates in Whereday’s importable JSON structure, see the <a href="/blog/back-up-iphone-location-history/#sample">backup file examples</a>. The sample uses the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 format</a>, but does not include every optional extension Whereday can export.</p>
+</section>
+
+<section aria-labelledby="problems">
+  <h2 id="problems">If the export is empty or the line looks wrong</h2>
+  <p>For an incomplete Whereday day, use the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> to distinguish recording, display, Watch sync, and export issues.</p>
+  <ul>
+    <li><strong>No points in Preview:</strong> check the selected dates and filters, then open the same day in Timeline. Export cannot create a path that was not recorded.</li>
+    <li><strong>Pins instead of a line:</strong> check whether you exported Visits rather than Points.</li>
+    <li><strong>The path has gaps:</strong> check recording state, permission, and auto-stop. Inspect the original points before changing filters to include less accurate fixes.</li>
+    <li><strong>File saved somewhere unexpected:</strong> check the default export folder before repeating the export. Some exports produce more than one file.</li>
+    <li><strong>A viewer rejects the file:</strong> confirm it supports GPX 1.1 tracks and that the file was completely saved. Keep the original while checking the error.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="restore">
+  <h2 id="restore">Keep a separate copy for restoring your journal</h2>
+  <p>GPX is a portable map format, but Whereday does not import GPX. To retain records you can import later, export visits and route points separately as supported Whereday JSON files and keep both. A map file is not a complete backup of every journal setting or outing edit. Follow <a href="/blog/back-up-iphone-location-history/">the backup and restore checklist</a> for a transferable copy of supported records.</p>
+  <p>For spreadsheet rows, CSV may suit your next task better. Read <a href="/docs/export-import/">the format and restore matrix</a> before choosing an archive format. For automatic copies, see <a href="/docs/automatic-exports/">scheduled exports</a>; background execution is best effort.</p>
+  <p>Exported coordinates and times can reveal your movements. A file saved in cloud storage or sent to another app follows that destination’s privacy rules. Check the file before sharing it.</p>
+</section>
+
+<section class="closing" aria-labelledby="try-recording">
+  <h2 id="try-recording">Record the route.<br>Choose how to keep it.</h2>
+  <p>Try free recording and export preview. The optional purchase unlocks writing files; see <a href="/#pricing">current pricing</a>.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+
+<p class="source-note">Reviewed October 26, 2026. Steps reflect Whereday’s recording and export controls; labels can vary by app version. For setup, read <a href="/blog/private-location-journal-iphone/">the private journal guide</a>; for existing Apple or Google records, see <a href="/blog/view-location-history-iphone/">how to view iPhone location history</a>.</p>

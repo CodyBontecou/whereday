@@ -41,10 +41,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  APP_NAME: iso.me
-  APP_SLUG: iso-me
+  APP_NAME: Whereday
+  APP_SLUG: whereday
   ASC_APP_ID: '6761960794'
-  APP_STORE_URL: https://apps.apple.com/us/app/iso-me/id6761960794
+  APP_STORE_URL: https://apps.apple.com/app/id6761960794
   BUNDLE_ID: com.bontecou.isome
 
 jobs:
@@ -109,7 +109,7 @@ jobs:
           DELIVERY_KEY="${PAYLOAD_DELIVERY_KEY:-manual:${GITHUB_REPOSITORY}:${VERSION}:${PLATFORM}}"
           EVENT_TIMESTAMP="${PAYLOAD_EVENT_TIMESTAMP:-}"
           if [[ "$PLATFORM" != "IOS" ]]; then
-            echo "::notice::Ignoring non-iOS platform for iso.me: $PLATFORM"
+            echo "::notice::Ignoring non-iOS platform for Whereday: $PLATFORM"
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi

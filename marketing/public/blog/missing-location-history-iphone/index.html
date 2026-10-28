@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missing Visits or GPS Points in Whereday? iPhone Checks</title>
+  <meta name="description" content="Diagnose an empty Whereday day, incomplete GPS route, missing visit, pending Watch sync, or filtered export. Preserve existing records before retrying.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/missing-location-history-iphone/">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="Missing Visits or GPS Points in Whereday? iPhone Checks">
+  <meta property="og:description" content="Diagnose an empty Whereday day, incomplete GPS route, missing visit, pending Watch sync, or filtered export. Preserve existing records before retrying.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/missing-location-history-iphone/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map.png">
+  <meta property="og:image:alt" content="Whereday map interface showing visits and route points">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Missing Visits or GPS Points in Whereday? iPhone Checks">
+  <meta name="twitter:description" content="Diagnose an empty Whereday day, incomplete GPS route, missing visit, pending Watch sync, or filtered export. Preserve existing records before retrying.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1f1f1f;
+  --muted: #5f5d59;
+  --rule: #d2cfca;
+  --accent: #1c57ca;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Geist", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.brand img { border-radius: 4px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.button { display: inline-flex; justify-content: center; align-items: center; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: white; font-size: 16px; line-height: 24px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #1748a8; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 64px; }
+.breadcrumbs { font-size: 14px; line-height: 20px; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+h1 { max-width: 680px; font-size: 48px; line-height: 1; margin: 16px 0 24px; font-weight: 600; background: linear-gradient(to right, #000, #666); color: transparent; background-clip: text; -webkit-background-clip: text; }
+h2 { font-size: 30px; line-height: 36px; font-weight: 600; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 28px; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 28px; }
+header { padding-bottom: 40px; }
+section { margin-top: 48px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+caption { text-align: left; font-weight: 600; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border: 1px solid var(--rule); min-width: 160px; }
+thead { background: #ecebe4; }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--rule); }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 32px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.closing h2 { font-size: 36px; line-height: 40px; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: white; margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; background: white; overflow-x: auto; font-size: 14px; line-height: 20px; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 36px; line-height: 40px; }
+  h2 { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/missing-location-history-iphone/",
+      "url": "https://whereday.com/blog/missing-location-history-iphone/",
+      "name": "Missing Visits or GPS Points in Whereday? iPhone Checks",
+      "description": "Diagnose an empty Whereday day, incomplete GPS route, missing visit, pending Watch sync, or filtered export. Preserve existing records before retrying.",
+      "inLanguage": "en",
+      "dateModified": "2026-10-26",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "What to check when visits or route points are missing in Whereday",
+      "datePublished": "2026-10-26",
+      "mainEntityOfPage": "https://whereday.com/blog/missing-location-history-iphone/",
+      "image": "https://whereday.com/screenshots/map.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Missing visits and route points",
+          "item": "https://whereday.com/blog/missing-location-history-iphone/"
+        }
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
+    <div class="nav-links"><a href="/blog/" aria-current="true">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div>
+  </nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Missing visits and route points</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">What to check when visits or route points are missing in Whereday</h1><p class="lede">Check the date and recording state, then separate missing points, missing visits, pending Watch transfers, and export filters. Keep existing records while you investigate.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p></header>
+    <section aria-labelledby="start-here">
+  <h2 id="start-here">Find out which part is missing</h2>
+  <p>If an Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.</p>
+  <p>This guide is for an existing Whereday journal. For Apple Maps or Google Timeline records, use <a href="/blog/view-location-history-iphone/">the iPhone location-history guide</a>. Installing Whereday cannot recover a route that another app never recorded.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>Choose the symptom</strong><ol><li><a href="#symptoms">Match what you see</a></li><li><a href="#recording">Check recording and permission</a></li><li><a href="#points">Inspect route points and filters</a></li><li><a href="#visits">Check visits and place names</a></li><li><a href="#watch">Check Watch transfer</a></li><li><a href="#preserve">Preserve records and ask for help</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="symptoms">
+  <h2 id="symptoms">Match the symptom before changing anything</h2>
+  <div class="table-scroll" role="region" aria-label="Missing history checks" tabindex="0"><table>
+    <caption>Start with the closest match</caption>
+    <thead><tr><th scope="col">What you see</th><th scope="col">First check</th><th scope="col">Next step</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">The whole day is empty</th><td>Timeline date and Map date range</td><td>Confirm whether recording was running during that period.</td></tr>
+      <tr><th scope="row">A path ends partway through</th><td>Stop time and Stop after setting</td><td>Inspect the last recorded point and check permission.</td></tr>
+      <tr><th scope="row">A route exists but a stop is missing</th><td>Route points at the expected stop</td><td>Review visit detection separately; a path is not a list of confirmed visits.</td></tr>
+      <tr><th scope="row">Watch recorded, phone looks empty</th><td>Watch sync message and recording date</td><td>Open both apps, check transfer, then inspect the phone’s day.</td></tr>
+      <tr><th scope="row">Timeline has data, export is empty</th><td>Export data type, dates, and filters</td><td>Check Preview before writing another file.</td></tr>
+      <tr><th scope="row">A visit has coordinates but no useful name</th><td>Location names setting and place correction</td><td>Review or rename the visit instead of treating it as absent.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Note the date and approximate time of the gap. Compare Map and Timeline for that same period. A Map range excluding yesterday and a Timeline opened on today can make retained history look missing.</p>
+</section>
+
+<section aria-labelledby="recording">
+  <h2 id="recording">1. Check whether the session was recording</h2>
+  <p>Start enables GPS recording, visit monitoring, and significant location changes together. Stop ends those services. A location permission alone does not mean a recording was active. The app’s current recording state also cannot prove that it was running throughout yesterday’s trip.</p>
+  <ol>
+    <li>Open the expected day in Timeline and inspect any outing’s start and end times.</li>
+    <li>Check <strong>Settings → Location tracking → Stop after</strong>. A timer shorter than the trip can explain why its later section was not recorded.</li>
+    <li>For a new short test, tap Start and confirm the recording state changes. After a permission prompt, check the state again rather than assuming the session began.</li>
+    <li>Finish the test with Stop, then inspect its route and times in Timeline.</li>
+  </ol>
+  <p>Review the app’s permission under <strong>iPhone Settings → Privacy &amp; Security → Location Services</strong>. Whereday offers Always access for background visit monitoring; an active manual session and automatic visit detection have different permission needs. Follow <a href="https://support.apple.com/en-us/102515">Apple’s Location Services instructions</a> if the controls on your iOS version differ.</p>
+  <p>Changing permission can help a future recording. It does not fill an earlier gap. See the <a href="/docs/tracking/">tracking reference</a> for the shared Start/Stop controls.</p>
+</section>
+
+<section aria-labelledby="points">
+  <h2 id="points">2. Separate missing points from hidden points</h2>
+  <p>A sparse route can come from the chosen distance filter, rejected GPS fixes, or points hidden as glitches. These are different from a session that never ran.</p>
+  <ul>
+    <li><strong>Distance filter:</strong> a larger value requests updates after more movement. Compare the setting with a short route before relying on it for detail such as small turns.</li>
+    <li><strong>Rejected fixes:</strong> Whereday saves incoming route locations only when reported accuracy is between zero and 100 meters. A fix outside that range is not a hidden point you can reveal later.</li>
+    <li><strong>Hidden glitches:</strong> some saved points are flagged as outliers. Enable <strong>Settings → Map display → Show GPS glitches</strong> to inspect them. A newly visible spike is not evidence that you travelled along it.</li>
+  </ul>
+  <p>If the route is visible in Whereday but absent from a file, choose <strong>Points</strong> in Export, select the same dates, and review accuracy and glitch filters in Preview. A Visits GPX contains stops rather than the continuous path. Follow the <a href="/blog/record-iphone-route-gpx/">GPX export walkthrough</a> for file checks.</p>
+  <p>If you are changing settings to manage energy use, use the <a href="/blog/iphone-location-tracking-battery/">battery comparison checklist</a>. A larger distance filter still requests high-accuracy GPS and cannot recreate points from before the change.</p>
+</section>
+
+<section aria-labelledby="visits">
+  <h2 id="visits">3. Check visits separately from the path</h2>
+  <p>A route passing a building does not establish that a visit was detected there. Visit arrivals and departures are separate records, and they may not appear as an immediate check-in at every stop.</p>
+  <p>If the visit exists but the label is wrong, review its coordinates and use place corrections or a saved place. Turning Location names off prevents the naming request to Apple’s geocoding service; it does not switch off the route recorder.</p>
+  <p>You can add a past visit manually when you know where and when you stopped. That adds a journal entry; it does not recover a measured route or prove an automatic detection occurred. The <a href="/docs/places/">places and manual-entry reference</a> explains the available corrections.</p>
+</section>
+
+<section aria-labelledby="watch">
+  <h2 id="watch">4. If the recording came from Apple Watch</h2>
+  <p>Check the Watch before assuming the phone lost its copy. Bring the paired devices together, open Whereday on the iPhone and Watch, and use Sync Now if your app version offers it.</p>
+  <p><strong>Sync queued</strong> means delivery is pending; it does not confirm the phone imported every record. <strong>Synced with iPhone</strong> reports an acknowledgement. After either message, inspect the recording date on the phone and check both points and visits. <strong>Nothing to sync</strong> describes the pending queue, not the completeness of your journal.</p>
+  <p>Keep the Watch app installed while checking pending records. Its queue is not a complete backup of everything previously transferred. Follow the <a href="/docs/apple-watch/">Watch recording and sync guide</a> for the detailed status checks.</p>
+</section>
+
+<section aria-labelledby="preserve">
+  <h2 id="preserve">Preserve what remains before retrying</h2>
+  <p>Do not clear history, delete the outing, or reinstall as an initial troubleshooting step. Deleting an outing can also delete its route points. Keep supported exports you already have, and use the <a href="/blog/back-up-iphone-location-history/">backup checklist</a> if you need a separate copy of the retained records.</p>
+  <p>Import adds records without a duplicate check. Repeatedly importing an overlapping file is not a way to refresh the display. A backup can only restore the records it actually contains; Restore Purchases restores an eligible entitlement, not a server copy of your journal.</p>
+  <h3>What to include when asking for help</h3>
+  <ul>
+    <li>App and iOS versions, plus whether the recording came from iPhone or Watch.</li>
+    <li>The affected date, approximate time, and timezone.</li>
+    <li>Whether the problem is missing points, visits, names, sync, or an export.</li>
+    <li>The recording state, Stop after value, and any exact error or sync message.</li>
+  </ul>
+  <p>Describe the symptom before sending a route file. You can <a href="mailto:cody.bontecou@gmail.com">contact support</a> without including your coordinates or a full location archive.</p>
+</section>
+
+<section class="closing" aria-labelledby="test-next-route">
+  <h2 id="test-next-route">Check a short route.<br>Then trust a longer day.</h2>
+  <p>Recording and reviewing history are free. Check one finished session before relying on a new setup for a long trip.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+<p class="source-note">Reviewed October 26, 2026 against Whereday’s recording, filtering, import, and Watch-sync source. This is a diagnostic checklist, not a guarantee of recovering deleted or unrecorded movement. Controls can vary by version.</p>
+
+    </article>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/back-up-iphone-location-history/">Preserve the records you have</a><p>Keep supported visit and point files before changing your setup.</p></li><li><a href="/docs/apple-watch/">Check Watch recording and sync</a><p>Read the status messages and verify the transferred day on your phone.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

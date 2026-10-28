@@ -3,27 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iso.me — Private Location Journal for iPhone</title>
-  <meta name="description" content="iso.me is a private location journal for iPhone and Apple Watch. Automatically record visits and routes on-device, with no account, no iso.me location servers, and optional export in eight formats when you need your history.">
+  <title>Private iPhone Location History &amp; Route Journal — Whereday</title>
+  <meta name="description" content="Whereday is a private location journal for iPhone and Apple Watch. Automatically record visits and routes on-device, with no account, no Whereday location servers, and optional export in eight formats when you need your history.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://isome.isolated.tech/">
+  <link rel="canonical" href="https://whereday.com/">
   <meta name="theme-color" content="#f5f4ef">
-  <meta name="application-name" content="iso.me">
+  <meta name="application-name" content="Whereday">
+  <meta name="is-agentic-site-type" content="business">
+  <link rel="service-desc" type="application/vnd.oai.openapi+json" href="/openapi.json">
+  <link rel="alternate" type="text/markdown" href="https://whereday.com/" title="Whereday as Markdown">
+  <link rel="help" type="text/plain" href="/llms.txt" title="Whereday agent guide">
 
-  <meta property="og:title" content="iso.me — Private Location Journal for iPhone">
-  <meta property="og:description" content="Automatically build a private timeline of places and routes. No account, no iso.me location server, no ads. Export your location history when needed.">
+  <meta property="og:title" content="Private iPhone Location History &amp; Route Journal — Whereday">
+  <meta property="og:description" content="Automatically build a private timeline of places and routes. No account, no Whereday location server, no ads. Export your location history when needed.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://isome.isolated.tech/">
-  <meta property="og:site_name" content="iso.me">
-  <meta property="og:image" content="https://isome.isolated.tech/screenshots/map.png">
-  <meta property="og:image:width" content="1206">
-  <meta property="og:image:height" content="2622">
-  <meta property="og:image:alt" content="iso.me map screen showing private visits and routes">
+  <meta property="og:url" content="https://whereday.com/">
+  <meta property="og:site_name" content="Whereday">
+  <meta property="og:image" content="https://whereday.com/assets/whereday-field-notes-v1/social-preview-1200x630.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Whereday illustrated location journal with a real map screen">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="iso.me — Private Location Journal for iPhone">
+  <meta name="twitter:title" content="Private iPhone Location History &amp; Route Journal — Whereday">
   <meta name="twitter:description" content="A calm Google Timeline alternative that keeps your location journal on your iPhone.">
-  <meta name="twitter:image" content="https://isome.isolated.tech/screenshots/map.png">
+  <meta name="twitter:image" content="https://whereday.com/assets/whereday-field-notes-v1/social-preview-1200x630.png">
 
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -32,153 +36,159 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
+{
+  "@context": "https://schema.org",
+  "@graph": [
       {
-        "@type": "SoftwareApplication",
-        "@id": "https://isome.isolated.tech/#app",
-        "name": "iso.me",
-        "url": "https://isome.isolated.tech/",
-        "downloadUrl": "https://apps.apple.com/us/app/iso-me/id6761960794",
-        "operatingSystem": "iOS, watchOS",
-        "applicationCategory": "LifestyleApplication",
-        "description": "A private location journal for iPhone that automatically records visits and routes on-device, with no account required and optional export.",
-        "softwareVersion": "Updated August 2026",
-        "author": {
-          "@type": "Person",
-          "name": "Cody Bontecou",
-          "url": "https://isolated.tech"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "isolated.tech",
-          "url": "https://isolated.tech"
-        },
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-          "description": "Free download and free tracking. Optional one-time Pro unlock for export is available in the app."
-        },
-        "featureList": [
-          "Automatic visit detection",
-          "Daily timeline with outings and route replay",
-          "On-device location history",
-          "JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland export",
-          "Round-trip import for backups",
-          "Independent Apple Watch tracking with offline sync",
-          "Watch complications, Live Activity, and Dynamic Island",
-          "Siri and Shortcuts automation",
-          "Optional scheduled automatic exports",
-          "Optional webhook delivery to OwnTracks, Overland, and Dawarich"
-        ],
-        "isAccessibleForFree": true
+        "@type": "Organization",
+        "@id": "https://isolated.tech/#organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech",
+        "contactPoint": {"@type": "ContactPoint", "email": "cody.bontecou@gmail.com", "contactType": "customer support", "url": "https://whereday.com/contact"}
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://isome.isolated.tech/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Will iso.me drain my battery?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "iso.me is built around iOS location services and gives you controls such as tracking modes, distance filters, and auto-shutoff timers. High-accuracy route recording uses more battery, so it is best for intentional trips, walks, hikes, or sessions you want recorded in detail."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Where is my location data stored?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Your visits and routes are stored locally on your iPhone. iso.me does not require an account and does not store your location history on iso.me servers."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does iso.me use Apple geocoding?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The app can optionally use Apple's geocoding service to turn coordinates into readable place names or addresses. That request is handled by Apple and is governed by Apple's privacy policies."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I delete my location history?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. You can delete your data from the app settings. Because iso.me does not keep a server copy, deleting the app also removes the local data from that device unless you exported or backed it up first."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I export or import my history?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Export supports JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland for visits, route points, and outings. Import can restore a prior export, and importing is free."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does iso.me work with Apple Watch?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does iso.me sync with iCloud?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. iso.me stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is free and what is Pro?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The app is free to download; tracking, the timeline, the Watch app, widgets, and import are free. Lifetime export access is a one-time $10 Individual or $20 Family purchase in the U.S. App Store. Individual owners can upgrade to Family Sharing later for $10. Regional pricing and taxes are handled by Apple."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does iso.me work with OwnTracks, Overland, or Dawarich?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. The optional webhook feature can POST your points and visits in OwnTracks or Overland formats — plus JSON, CSV, Markdown, GeoJSON, GPX, and KML — to any endpoint you configure, with API-key, bearer, or basic authentication. It is a Pro feature, off by default, and nothing is sent until you set it up."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What can Siri and Shortcuts do?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "iso.me exposes nine actions: start and stop tracking, rename the current outing, ask for today's distance, tracking duration, or visit count, and export today's or yesterday's data as a file. They work in the Shortcuts app, from Siri, and from automations such as the Action Button."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can exports run automatically?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is iso.me a Google Timeline alternative?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. iso.me is a privacy-first Google Timeline alternative for people who want a personal location history without a Google account, ad profile, or server-side location archive."
-            }
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://whereday.com/#app",
+      "name": "Whereday",
+      "url": "https://whereday.com/",
+      "downloadUrl": "https://apps.apple.com/app/id6761960794",
+      "operatingSystem": "iOS, watchOS",
+      "applicationCategory": "LifestyleApplication",
+      "description": "A private location journal for iPhone that automatically records visits and routes on-device, with no account required and optional export.",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free download and free tracking. Optional one-time Pro unlock for export is available in the app."
+      },
+      "featureList": [
+        "Automatic visit detection",
+        "Daily timeline with outings and route replay",
+        "On-device location history",
+        "JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland export",
+        "Round-trip import for backups",
+        "Independent Apple Watch tracking with offline sync",
+        "Watch complications, Live Activity, and Dynamic Island",
+        "Siri and Shortcuts automation",
+        "Optional scheduled automatic exports",
+        "Optional webhook delivery in OwnTracks and Overland formats"
+      ],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://whereday.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Will Whereday drain my battery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whereday is built around iOS location services and gives you controls such as Start and Stop, distance filters, and auto-stop timers. High-accuracy route recording uses more battery, so it is best for intentional trips, walks, hikes, or sessions you want recorded in detail."
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is my location data stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your visits and routes are stored locally on your iPhone. Whereday does not require an account and does not store your location history on Whereday servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Whereday use Apple geocoding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The app can optionally use Apple's geocoding service to turn coordinates into readable place names or addresses. That request is handled by Apple and is governed by Apple's privacy policies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I delete my location history?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can delete your data from the app settings. Because Whereday does not keep a server copy, deleting the app also removes the local data from that device unless you exported or backed it up first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I export or import my history?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Export supports JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland for visits, route points, and outings. Import can restore a prior export, and importing is free."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Whereday work with Apple Watch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Whereday sync with iCloud?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Whereday stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is free and what is Pro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The app is free to download; tracking, the timeline, the Watch app, widgets, and import are free. Lifetime export access is a one-time $19.99 Individual or $39.99 Family purchase in the U.S. App Store. Individual owners can upgrade to Family Sharing later for $19.99. Local prices reflect purchasing power and may vary by storefront."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Whereday work with OwnTracks, Overland, or Dawarich?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whereday can POST records in OwnTracks or Overland formats to a configured receiver. Compatibility depends on that receiver’s payload schema and authentication. Verify the protocol before enabling delivery; the Dawarich workflow is not yet verified here. Webhooks require Pro and are off by default."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What can Siri and Shortcuts do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whereday exposes nine actions: start and stop tracking, rename the current outing, ask for today's distance, tracking duration, or visit count, and export today's or yesterday's data as a file. They work in the Shortcuts app, from Siri, and from automations such as the Action Button."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can exports run automatically?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Whereday a Google Timeline alternative?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Whereday records your own visits and routes without a Google account. Google Timeline also stores history on your device and offers encrypted backup; Whereday differs in account requirements, export formats, and recording workflow. It does not import Google Timeline archives. Read the comparison."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 
   <style>
@@ -1177,17 +1187,26 @@
       .faq-list details p { padding: 0 20px 20px; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
     }
+
+    /* Approved Field notes artwork. Mobile uses the legible square composition. */
+    .field-notes-banner { margin-block: 64px; }
+    .field-notes-banner picture, .field-notes-banner img { display: block; width: 100%; }
+    .field-notes-banner img { height: auto; }
+    @media (max-width: 640px) { .field-notes-banner { margin-block: 32px; } }
   </style>
+<link rel="alternate" hreflang="en" href="https://whereday.com/">
+<link rel="alternate" hreflang="zh-Hans" href="https://whereday.com/zh-hans/">
+<link rel="alternate" hreflang="x-default" href="https://whereday.com/">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <nav class="top" aria-label="Primary navigation">
     <div class="nav-inner">
-      <a href="/" class="brand" aria-label="iso.me home">
-        <img src="/app-icon-28.png" srcset="/app-icon-28.png 1x, /app-icon-84.png 3x" alt="" width="26" height="26">
+      <a href="/" class="brand" aria-label="Whereday home">
+        <img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" alt="" width="26" height="26">
         <span class="brand-dot" aria-hidden="true"></span>
-        ISO.ME
+        WHEREDAY
       </a>
       <div class="nav-links">
         <a href="#features">Features</a>
@@ -1196,7 +1215,7 @@
         <a href="/blog/">Blog</a>
         <a href="/docs/">Docs</a>
         <a href="#faq">FAQ</a>
-        <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn btn-primary">Download</a>
+        <a href="https://apps.apple.com/app/id6761960794" class="btn btn-primary">Download</a>
       </div>
     </div>
   </nav>
@@ -1205,15 +1224,15 @@
     <header class="hero">
       <div class="wrap hero-inner">
         <div class="hero-copy">
-          <span class="eyebrow">Updated August 2026 · iOS &amp; Apple Watch</span>
+          <span class="eyebrow">Reviewed October 2026 · iOS &amp; Apple Watch</span>
           <h1>
-            Your <span class="accent">private location journal</span>, built automatically.
+            Remember <span class="accent">where you went.</span><br>Keep your history on your iPhone.
           </h1>
           <p class="lede">
-            iso.me quietly records the places you visit and the routes you choose, then keeps that history on your iPhone. No account. No iso.me location server. No ads. Export your timeline whenever you need a copy.
+            Start tracking to record your own routes and detect visits, then review the day on your iPhone. No account. No Whereday location server. Recording is free; portable exports are an optional purchase.
           </p>
           <div class="hero-actions">
-            <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn btn-primary">
+            <a href="https://apps.apple.com/app/id6761960794" class="btn btn-primary">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
               </svg>
@@ -1222,9 +1241,9 @@
             <a href="#inside" class="btn btn-ghost">See how it works</a>
           </div>
           <p class="hero-note">
-            Free download and free tracking. Lifetime export access is $10 Individual or $20 with Apple Family Sharing in the U.S. App Store; regional pricing is handled by Apple.
+            Free download and free tracking. Lifetime export access is $19.99 Individual or $39.99 with Apple Family Sharing in the U.S. App Store; local prices reflect purchasing power.
           </p>
-          <div class="hero-stats" aria-label="iso.me product facts">
+          <div class="hero-stats" aria-label="Whereday product facts">
             <div class="hero-stat">
               <div class="v">Free</div>
               <div class="k">Tracking</div>
@@ -1234,29 +1253,29 @@
               <div class="k">Accounts</div>
             </div>
             <div class="hero-stat">
-              <div class="v">$10 / $20</div>
+              <div class="v">$19.99 / $39.99</div>
               <div class="k">Lifetime plans</div>
             </div>
           </div>
         </div>
 
-        <div class="phone-stage" aria-label="iso.me app screenshots">
+        <div class="phone-stage" aria-label="Whereday app screenshots">
           <div class="phone phone--left">
             <span class="phone-tag">ROUTES · 03</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/routes.webp" alt="iso.me route detail screen" width="900" height="1957" loading="lazy" decoding="async" fetchpriority="low"></div>
+            <div class="screen"><img src="/screenshots/routes-480.webp" srcset="/screenshots/routes-480.webp 480w, /screenshots/routes-720.webp 720w, /screenshots/routes.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday route detail screen" width="900" height="1957" loading="lazy" decoding="async" fetchpriority="low"></div>
           </div>
 
           <div class="phone phone--main">
             <span class="phone-tag">MAP · LIVE</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/map.webp" alt="iso.me map screen showing visits and routes" width="900" height="1957" fetchpriority="high" decoding="async"></div>
+            <div class="screen"><img src="/screenshots/map-480.webp" srcset="/screenshots/map-480.webp 480w, /screenshots/map-720.webp 720w, /screenshots/map.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday map screen showing visits and routes" width="900" height="1957" fetchpriority="high" decoding="async"></div>
           </div>
 
           <div class="phone phone--right">
             <span class="phone-tag">EXPORT · 04</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/export.webp" alt="iso.me export screen" width="900" height="1957" loading="lazy" decoding="async" fetchpriority="low"></div>
+            <div class="screen"><img src="/screenshots/export-480.webp" srcset="/screenshots/export-480.webp 480w, /screenshots/export-720.webp 720w, /screenshots/export.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday export screen" width="900" height="1957" loading="lazy" decoding="async" fetchpriority="low"></div>
           </div>
 
           <div class="chip chip--top">
@@ -1282,7 +1301,7 @@
         <span>Private location journal</span>
         <span>Google Timeline alternative</span>
         <span>No accounts</span>
-        <span>No iso.me location servers</span>
+        <span>No Whereday location servers</span>
         <span>Daily timeline &amp; outings</span>
         <span>Eight export formats</span>
         <span>Independent Apple Watch tracking</span>
@@ -1291,7 +1310,7 @@
         <span>Private location journal</span>
         <span>Google Timeline alternative</span>
         <span>No accounts</span>
-        <span>No iso.me location servers</span>
+        <span>No Whereday location servers</span>
         <span>Daily timeline &amp; outings</span>
         <span>Eight export formats</span>
         <span>Independent Apple Watch tracking</span>
@@ -1299,6 +1318,13 @@
         <span>Scheduled auto-exports</span>
       </div>
     </div>
+
+    <section class="field-notes-banner wrap" aria-label="Whereday illustrated location journal">
+      <picture>
+        <source media="(max-width: 640px)" srcset="/assets/whereday-field-notes-v1/launch-card-640.webp 640w, /assets/whereday-field-notes-v1/launch-card-1080.webp 1080w" sizes="calc(100vw - 48px)" width="1080" height="1080">
+        <img src="/assets/whereday-field-notes-v1/product-banner-1600.webp" srcset="/assets/whereday-field-notes-v1/product-banner-768.webp 768w, /assets/whereday-field-notes-v1/product-banner-1280.webp 1280w, /assets/whereday-field-notes-v1/product-banner-1600.webp 1600w" sizes="(max-width: 640px) calc(100vw - 48px), 1200px" width="1600" height="600" alt="Whereday: a private journal of your visits and routes, illustrated in blue ink on warm paper." loading="lazy" decoding="async">
+      </picture>
+    </section>
 
     <section class="features wrap" id="features">
       <div class="section-head">
@@ -1318,8 +1344,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <h3>Automatic visit journal</h3>
-          <p>iso.me can recognize arrivals and departures so your private timeline fills in without manual check-ins.</p>
-          <div class="feature-tag">● Passive</div>
+          <p>While tracking is on, Whereday monitors arrivals and departures alongside GPS route recording. Always location permission allows background recording.</p>
+          <div class="feature-tag">● While tracking</div>
         </div>
 
         <div class="feature">
@@ -1338,7 +1364,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
           <h3>Private by default</h3>
-          <p>No iso.me account, no server-side location archive, no ads, and no third-party analytics SDKs. The optional first-party telemetry is spelled out in the privacy policy.</p>
+          <p>No Whereday account, no server-side location archive, no ads, and no third-party analytics SDKs. First-party onboarding and purchase telemetry is on by default and is explained in the privacy policy.</p>
           <div class="feature-tag">● Local</div>
         </div>
 
@@ -1348,7 +1374,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="11" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/><line x1="6" y1="11" x2="14" y2="11"/></svg>
           </div>
           <h3>Battery-aware controls</h3>
-          <p>Use distance filters, tracking modes, and auto-shutoff timers so precision sessions do not run longer than intended.</p>
+          <p>Use Start and Stop, distance filters, and auto-stop timers so precision sessions do not run longer than intended.</p>
           <div class="feature-tag">● Control</div>
         </div>
 
@@ -1357,7 +1383,7 @@
           <div class="feature-icon" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
-          <h3>Export and import</h3>
+          <h3><a href="/docs/export-import/">Export and import</a></h3>
           <p>Export visits, points, and outings as JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, or Overland — split per day, named by template, or scheduled to run automatically. Importing a prior export is free.</p>
           <div class="feature-tag">● Portable</div>
         </div>
@@ -1367,7 +1393,7 @@
           <div class="feature-icon" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           </div>
-          <h3>Glanceable on Apple devices</h3>
+          <h3><a href="/docs/apple-watch/">Record with Apple Watch</a></h3>
           <p>The Watch app records routes on its own — even without your phone nearby — while Live Activity with a live map snapshot, Dynamic Island, watch complications, and nine Shortcuts actions keep status glanceable.</p>
           <div class="feature-tag">● iOS</div>
         </div>
@@ -1401,6 +1427,18 @@
           <p>Optionally connect your Photos library to place geotagged pictures on the map and link them to visits and outings. Photo files never leave your library.</p>
           <div class="feature-tag">● Opt-in</div>
         </div>
+      </div>
+    </section>
+
+    <section class="features wrap" id="guides" aria-labelledby="guides-title">
+      <div class="section-head"><div><span class="eyebrow">Practical guides</span><h2 id="guides-title">Start with what you need.</h2></div></div>
+      <div class="features-grid">
+        <article class="feature"><div class="feature-num">01</div><h3><a href="/blog/private-location-journal-iphone/">Keep a private location journal</a></h3><p>Set permissions, record your first route, review the timeline, and keep a portable copy.</p></article>
+        <article class="feature"><div class="feature-num">02</div><h3><a href="/compare/google-maps-timeline/">Compare Whereday and Google Timeline</a></h3><p>Understand the differences in accounts, storage, backups, formats, and moving your history.</p></article>
+        <article class="feature"><div class="feature-num">03</div><h3><a href="/blog/record-iphone-route-gpx/">Record a route and export GPX</a></h3><p>Choose GPS points, preview the file, and keep a portable route. Includes a synthetic example.</p></article>
+        <article class="feature"><div class="feature-num">04</div><h3><a href="/blog/view-location-history-iphone/">Find your iPhone location history</a></h3><p>Check Apple Maps, Google Timeline, and your existing recordings before starting a new journal.</p></article>
+        <article class="feature"><div class="feature-num">05</div><h3><a href="/blog/back-up-iphone-location-history/">Back up your location history</a></h3><p>Keep separate visits and points, verify the saved files, and restore supported records later.</p></article>
+        <article class="feature"><div class="feature-num">06</div><h3><a href="/docs/apple-watch/">Record without your iPhone nearby</a></h3><p>Use Apple Watch GPS recording and transfer the queued points to your phone when it reconnects.</p></article>
       </div>
     </section>
 
@@ -1441,7 +1479,7 @@
           <div>
             <div class="label">Alternative</div>
             <h3>A calmer Google Timeline alternative.</h3>
-            <p>Useful if you miss automatic location history but do not want your timeline tied to an ad profile.</p>
+            <p>Record visits and routes without a Google account. <a href="/compare/google-maps-timeline/">Compare storage, backups, exports, and tradeoffs</a>.</p>
           </div>
         </article>
       </div>
@@ -1473,7 +1511,7 @@
           <div class="phone">
             <span class="phone-tag">MAP · 01</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/map.webp" alt="iso.me map screen" width="900" height="1957" loading="lazy" decoding="async"></div>
+            <div class="screen"><img src="/screenshots/map-480.webp" srcset="/screenshots/map-480.webp 480w, /screenshots/map-720.webp 720w, /screenshots/map.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday map screen" width="900" height="1957" loading="lazy" decoding="async"></div>
           </div>
         </div>
       </div>
@@ -1493,7 +1531,7 @@
           <div class="phone">
             <span class="phone-tag">ROUTES · 02</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/routes.webp" alt="iso.me routes screen showing recorded path details" width="900" height="1957" loading="lazy" decoding="async"></div>
+            <div class="screen"><img src="/screenshots/routes-480.webp" srcset="/screenshots/routes-480.webp 480w, /screenshots/routes-720.webp 720w, /screenshots/routes.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday routes screen showing recorded path details" width="900" height="1957" loading="lazy" decoding="async"></div>
           </div>
         </div>
       </div>
@@ -1514,7 +1552,7 @@
           <div class="phone">
             <span class="phone-tag">EXPORT · 03</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/export.webp" alt="iso.me export screen with JSON CSV and Markdown options" width="900" height="1957" loading="lazy" decoding="async"></div>
+            <div class="screen"><img src="/screenshots/export-480.webp" srcset="/screenshots/export-480.webp 480w, /screenshots/export-720.webp 720w, /screenshots/export.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday export screen with JSON CSV and Markdown options" width="900" height="1957" loading="lazy" decoding="async"></div>
           </div>
         </div>
       </div>
@@ -1523,9 +1561,9 @@
         <div class="showcase-copy">
           <span class="showcase-tag">▌ SETTINGS &nbsp;·&nbsp; 04</span>
           <h3>Control the tradeoffs.</h3>
-          <p>Location apps should be explicit about power and privacy. iso.me puts tracking mode, precision, naming, and shutoff controls in one place so you can choose the right level for the day.</p>
+          <p>Location apps should be explicit about power and privacy. Whereday puts recording, distance filtering, place naming, and auto-stop controls in one place. Check them before starting a session.</p>
           <ul class="checklist">
-            <li>High-accuracy mode for precise routes</li>
+            <li>GPS recording with a distance filter</li>
             <li>Per-session auto-shutoff options</li>
             <li>Optional Apple geocoding for readable names</li>
           </ul>
@@ -1534,7 +1572,7 @@
           <div class="phone">
             <span class="phone-tag">SETTINGS · 04</span>
             <div class="notch"></div>
-            <div class="screen"><img src="/screenshots/settings.webp" alt="iso.me settings screen with tracking controls" width="900" height="1957" loading="lazy" decoding="async"></div>
+            <div class="screen"><img src="/screenshots/settings-480.webp" srcset="/screenshots/settings-480.webp 480w, /screenshots/settings-720.webp 720w, /screenshots/settings.webp 900w" sizes="(max-width: 640px) 264px, 280px" alt="Whereday settings screen with tracking controls" width="900" height="1957" loading="lazy" decoding="async"></div>
           </div>
         </div>
       </div>
@@ -1545,12 +1583,12 @@
             <span class="lcd-pill">On-device by design</span>
             <h2>Your location history is not a growth dataset.</h2>
             <p>
-              iso.me stores visits and routes locally on your iPhone. There is no required account, no iso.me server copy of your location history, and no analytics SDK watching how you move through the app. If you enable readable place names, geocoding is handled through Apple's system service.
+              Your recorded visits and routes live on your iPhone, with no Whereday account or server archive of that history. Apple services provide place names and map features. First-party onboarding telemetry is on by default; optional exports and webhooks send data only where you choose. <a href="/privacy">Read the network and storage details</a>.
             </p>
           </div>
           <div class="privacy-readout">
             <div class="readout-row">
-              <span class="k">iso.me location uploads</span>
+              <span class="k">Whereday location uploads</span>
               <span class="v off">None</span>
             </div>
             <div class="readout-row">
@@ -1558,8 +1596,8 @@
               <span class="v off">No</span>
             </div>
             <div class="readout-row">
-              <span class="k">Analytics SDKs</span>
-              <span class="v off">None listed</span>
+              <span class="k">Onboarding telemetry</span>
+              <span class="v">On by default</span>
             </div>
             <div class="readout-row">
               <span class="k">Apple geocoding</span>
@@ -1602,7 +1640,7 @@
         <div class="readout-row" role="listitem"><span class="k">Export — eight formats incl. GPX &amp; OwnTracks</span><span class="v pro">Pro</span></div>
         <div class="readout-row" role="listitem"><span class="k">Per-day files &amp; filename templates</span><span class="v pro">Pro</span></div>
         <div class="readout-row" role="listitem"><span class="k">Scheduled auto-exports — daily or 1–23 h</span><span class="v pro">Pro</span></div>
-        <div class="readout-row" role="listitem"><span class="k">Webhooks — OwnTracks · Overland · Dawarich</span><span class="v pro">Pro</span></div>
+        <div class="readout-row" role="listitem"><span class="k">Webhooks — OwnTracks · Overland formats</span><span class="v pro">Pro</span></div>
       </div>
     </section>
 
@@ -1612,7 +1650,7 @@
           <span class="eyebrow">§ 04 &nbsp;Trust and support</span>
           <h2>Built by Cody Bontecou at isolated.tech.</h2>
           <p>
-            iso.me is an independent app, not a data broker product. The site makes no fabricated ratings claims; the honest proof is simpler: a current App Store listing, visible support, a privacy policy that spells out every network request the app can make, and an export path for your data.
+            Whereday is an independent app, not a data broker product. The site makes no fabricated ratings claims; the honest proof is simpler: a current App Store listing, visible support, a privacy policy that spells out every network request the app can make, and an export path for your data.
           </p>
           <p style="margin-top:16px;">
             Need help, want to report a bug, or have a question before installing? Email <a href="mailto:cody.bontecou@gmail.com">cody.bontecou@gmail.com</a>.
@@ -1625,7 +1663,7 @@
           </div>
           <div class="readout-row">
             <span class="k">Freshness</span>
-            <span class="v on">Updated August 2026</span>
+            <span class="v on">Reviewed October 2026</span>
           </div>
           <div class="readout-row">
             <span class="k">Ratings claim</span>
@@ -1654,7 +1692,7 @@
         <div class="pricing-side">
           <h2>Install it first. Unlock export only when it matters.</h2>
           <p>
-            iso.me is free to download, and private visit and route tracking is free. Lifetime export access covers all eight formats, scheduled auto-exports, and webhook delivery. Choose Individual for $10 or Family Sharing for $20 in the U.S. App Store; Individual owners can upgrade later for $10. Apple adjusts final pricing by region, tax, and storefront.
+            Whereday is free to download, and private visit and route tracking is free. Lifetime export access covers all eight formats, scheduled auto-exports, and webhook delivery. Choose Individual for $19.99 or Family Sharing for $39.99 in the U.S. App Store; Individual owners can upgrade later for $19.99. Local prices reflect purchasing power and applicable taxes.
           </p>
           <ul class="anti-features">
             <li>No subscription required for tracking</li>
@@ -1666,12 +1704,12 @@
 
         <div class="pricing-card">
           <div class="pc-head">
-            <span class="pc-label">ISO.ME PRO</span>
+            <span class="pc-label">WHEREDAY PRO</span>
             <span class="pc-badge">● Optional unlock</span>
           </div>
           <div class="pc-price">
-            <div class="amount"><sup>$</sup>10</div>
-            <div class="note">Individual Lifetime. Family Lifetime is $20, and the later Family Upgrade is $10. One-time U.S. prices; regional pricing may vary.</div>
+            <div class="amount"><sup>$</sup>19.99</div>
+            <div class="note">Individual Lifetime. Family Lifetime is $39.99, and the later Family Upgrade is $19.99. One-time U.S. prices; regional pricing may vary.</div>
           </div>
           <ul class="pc-features">
             <li><span class="k">Download the app</span><span class="v">Free</span></li>
@@ -1681,13 +1719,13 @@
             <li><span class="k">Export — all eight formats</span><span class="v">Pro</span></li>
             <li><span class="k">Scheduled auto-exports</span><span class="v">Pro</span></li>
             <li><span class="k">Webhook delivery</span><span class="v">Pro</span></li>
-            <li><span class="k">Individual Lifetime</span><span class="v">$10 once</span></li>
-            <li><span class="k">Family Lifetime</span><span class="v">$20 once</span></li>
-            <li><span class="k">Individual → Family upgrade</span><span class="v">$10 once</span></li>
+            <li><span class="k">Individual Lifetime</span><span class="v">$19.99 once</span></li>
+            <li><span class="k">Family Lifetime</span><span class="v">$39.99 once</span></li>
+            <li><span class="k">Individual → Family upgrade</span><span class="v">$19.99 once</span></li>
             <li><span class="k">Apple payments</span><span class="v">Handled by App Store</span></li>
           </ul>
           <div class="pc-cta">
-            <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn btn-primary">Get iso.me on the App Store</a>
+            <a href="https://apps.apple.com/app/id6761960794" class="btn btn-primary">Get Whereday on the App Store</a>
           </div>
         </div>
       </div>
@@ -1704,52 +1742,52 @@
         </div>
         <div class="faq-list">
           <details open>
-            <summary>Will iso.me drain my battery?</summary>
-            <p>iso.me uses iOS location services and gives you controls such as tracking modes, distance filters, and auto-shutoff timers. High-accuracy route recording uses more battery, so use it for intentional sessions like trips, walks, hikes, or site visits.</p>
+            <summary>Will Whereday drain my battery?</summary>
+            <p>Whereday uses iOS location services and gives you controls such as Start and Stop, distance filters, and auto-stop timers. High-accuracy route recording uses more battery, so use it for intentional sessions like trips, walks, hikes, or site visits.</p>
           </details>
           <details>
             <summary>Where is my location data stored?</summary>
-            <p>Your visits and routes are stored locally on your iPhone. iso.me does not require an account and does not store your location history on iso.me servers.</p>
+            <p>Your visits and routes are stored locally on your iPhone. Whereday does not require an account and does not store your location history on Whereday servers.</p>
           </details>
           <details>
-            <summary>Does iso.me use Apple geocoding?</summary>
-            <p>It can, if you choose features that turn coordinates into readable place names or addresses. Those geocoding requests go through Apple's system service and are governed by Apple's privacy policies, not an iso.me location database.</p>
+            <summary>Does Whereday use Apple geocoding?</summary>
+            <p>It can, if you choose features that turn coordinates into readable place names or addresses. Those geocoding requests go through Apple's system service and are governed by Apple's privacy policies, not an Whereday location database.</p>
           </details>
           <details>
             <summary>Can I delete my location history?</summary>
-            <p>Yes. Delete data from the app settings. Since iso.me does not keep a server copy, deleting the app also removes the local data from that device unless you exported or backed it up first.</p>
+            <p>Yes. Delete data from the app settings. Since Whereday does not keep a server copy, deleting the app also removes the local data from that device unless you exported or backed it up first.</p>
           </details>
           <details>
             <summary>Can I export or import my history?</summary>
             <p>Yes. Export supports JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, and Overland for visits, route points, and outings. Import can restore a prior export, and importing is free.</p>
           </details>
           <details>
-            <summary>Does iso.me work with Apple Watch?</summary>
+            <summary>Does Whereday work with Apple Watch?</summary>
             <p>Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status.</p>
           </details>
           <details>
-            <summary>Does iso.me sync with iCloud?</summary>
-            <p>No. iso.me stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud.</p>
+            <summary>Does Whereday sync with iCloud?</summary>
+            <p>No. Whereday stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud.</p>
           </details>
           <details>
             <summary>What is free and what is Pro?</summary>
-            <p>The app is free to download; tracking, the timeline, the Watch app, widgets, and import are free. Lifetime export access covers all eight formats, scheduled automatic exports, and webhook delivery. It costs $10 for Individual or $20 for Family in the U.S. App Store, with a $10 Family Upgrade available to Individual owners. Regional pricing and taxes are handled by Apple.</p>
+            <p>The app is free to download; tracking, the timeline, the Watch app, widgets, and import are free. Lifetime export access covers all eight formats, scheduled automatic exports, and webhook delivery. It costs $19.99 for Individual or $39.99 for Family in the U.S. App Store, with a $19.99 Family Upgrade available to Individual owners. Local prices reflect purchasing power and may vary by storefront.</p>
           </details>
           <details>
-            <summary>Does iso.me work with OwnTracks, Overland, or Dawarich?</summary>
-            <p>Yes. The optional webhook feature can POST your points and visits in OwnTracks or Overland formats — plus JSON, CSV, Markdown, GeoJSON, GPX, and KML — to any endpoint you configure, with API-key, bearer, or basic authentication. It is a Pro feature, off by default, and nothing is sent until you set it up.</p>
+            <summary>Does Whereday work with OwnTracks, Overland, or Dawarich?</summary>
+            <p>Whereday can POST records in OwnTracks or Overland formats to a configured receiver. Compatibility depends on that receiver’s payload schema and authentication. Verify the protocol before enabling delivery; the Dawarich workflow is not yet verified here. Webhooks require Pro and are off by default. <a href="/docs/webhooks/">Read the receiver requirements</a>.</p>
           </details>
           <details>
             <summary>What can Siri and Shortcuts do?</summary>
-            <p>iso.me exposes nine actions: start and stop tracking, rename the current outing, ask for today's distance, tracking duration, or visit count, and export today's or yesterday's data as a file. They work in the Shortcuts app, from Siri, and from automations such as the Action Button.</p>
+            <p>Whereday exposes nine actions: start and stop tracking, rename the current outing, ask for today's distance, tracking duration, or visit count, and export today's or yesterday's data as a file. They work in the Shortcuts app, from Siri, and from automations such as the Action Button.</p>
           </details>
           <details>
             <summary>Can exports run automatically?</summary>
             <p>Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location.</p>
           </details>
           <details>
-            <summary>Is iso.me a Google Timeline alternative?</summary>
-            <p>Yes. iso.me is a privacy-first Google Timeline alternative for people who want a personal location history without a Google account, ad profile, or server-side location archive.</p>
+            <summary>Is Whereday a Google Timeline alternative?</summary>
+            <p>Yes. Whereday records your own visits and routes without a Google account. Google Timeline also stores history on your device and offers encrypted backup; Whereday differs in account requirements, export formats, and recording workflow. It does not import Google Timeline archives. <a href="/compare/google-maps-timeline/">Read the comparison</a>.</p>
           </details>
         </div>
       </div>
@@ -1760,17 +1798,19 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="dot"></span>
-        © 2026 ISO.ME · BUILT BY ISOLATED.TECH
+        © 2026 WHEREDAY · BUILT BY ISOLATED.TECH
       </div>
       <div class="footer-links">
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
         <a href="/blog/">Blog</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
         <a href="mailto:cody.bontecou@gmail.com">Support</a>
-        <a href="https://apps.apple.com/us/app/iso-me/id6761960794">App Store</a>
+        <a href="https://apps.apple.com/app/id6761960794">App Store</a>
       </div>
     </div>
-  </footer>
+  <a href="/zh-hans/" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></footer>
 <!-- Cloudflare Web Analytics -->
 <script>
 (function () {
@@ -1778,7 +1818,7 @@
     'instareply.isolated.tech': true,
     'voxboard.isolated.tech': true,
     'healthmd.isolated.tech': true,
-    'isome.isolated.tech': true,
+    'whereday.com': true,
     'gitsyncmd.isolated.tech': true,
     'timemd.isolated.tech': true,
     'imghost.isolated.tech': true

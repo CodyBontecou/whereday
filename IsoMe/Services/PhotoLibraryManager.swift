@@ -39,11 +39,11 @@ enum PhotoLibraryAccessState: String, Equatable {
     var explanation: String {
         switch self {
         case .notDetermined:
-            return String(localized: "Connect Photos to show pictures on your map and outings. iso.me stores only local photo metadata.")
+            return String(localized: "Connect Photos to show pictures on your map and outings. Whereday stores only local photo metadata.")
         case .authorized:
-            return String(localized: "Photos from your library can appear on the map using photo GPS or nearby iso.me route/visit matches. Photo files stay in Photos.")
+            return String(localized: "Photos from your library can appear on the map using photo GPS or nearby Whereday route/visit matches. Photo files stay in Photos.")
         case .limited:
-            return String(localized: "Only photos you selected for iso.me can appear. Add more in iOS Photos privacy settings.")
+            return String(localized: "Only photos you selected for Whereday can appear. Add more in iOS Photos privacy settings.")
         case .denied:
             return String(localized: "Photo access is off. Enable it in Settings to show photo pins on the map.")
         case .restricted:

@@ -1,5 +1,6 @@
 import XCTest
 import CoreLocation
+import MapKit
 import SwiftData
 @testable import IsoMe
 
@@ -620,6 +621,30 @@ final class LocationViewModelPointScalingTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(RouteReplayCalculator.playbackStepSize(pointCount: 2_500), 2)
     }
 
+    func testDisabledRoadSnappingDoesNotEvaluatePointQuery() {
+        var queryCount = 0
+        func query() -> [LocationPoint] {
+            queryCount += 1
+            return []
+        }
+        _ = RoadSnappedRouteBuilder.taskFingerprint(for: query(), isEnabled: false)
+        XCTAssertEqual(queryCount, 0)
+        _ = RoadSnappedRouteBuilder.taskFingerprint(for: query(), isEnabled: true)
+        XCTAssertEqual(queryCount, 1)
+    }
+
+    func testDisabledRoadSnappingTaskDoesNotRestartWhenPointDataChanges() {
+        let point = LocationPoint(latitude: 37, longitude: -122, timestamp: Date(timeIntervalSince1970: 1_790_000_000), horizontalAccuracy: 5)
+        let disabled = RoadSnappedRouteBuilder.taskFingerprint(for: [point], isEnabled: false)
+        let enabled = RoadSnappedRouteBuilder.taskFingerprint(for: [point], isEnabled: true)
+        point.latitude += 0.001
+        point.isOutlier = true
+        XCTAssertEqual(disabled, RoadSnappedRouteBuilder.taskFingerprint(for: [point], isEnabled: false))
+        XCTAssertEqual(disabled, RoadSnappedRouteBuilder.taskFingerprint(for: [], isEnabled: false))
+        XCTAssertNotEqual(enabled, RoadSnappedRouteBuilder.taskFingerprint(for: [point], isEnabled: true))
+        XCTAssertNotEqual(disabled, enabled)
+    }
+
     func testRoadSnappedRouteBuilderCoalescesShortSegmentsWithoutDirections() async throws {
         let start = fixtureDate(dayOffset: 8)
         let points = [
@@ -798,5 +823,96 @@ final class LocationViewModelPointScalingTests: XCTestCase {
 
         XCTAssertEqual(actual.latitude, expected.latitude, accuracy: 0.000001, file: file, line: line)
         XCTAssertEqual(actual.longitude, expected.longitude, accuracy: 0.000001, file: file, line: line)
+    }
+}
+
+
+@MainActor
+final class MapPointMarkerSamplerTests: XCTestCase {
+    private let viewport = CGSize(width: 400, height: 800)
+    private var origin: MKMapPoint { MKMapPoint(CLLocationCoordinate2D(latitude: 0, longitude: 0)) }
+    private var rect: MKMapRect {
+        MKMapRect(x: origin.x, y: origin.y, width: 100_000, height: 100_000)
+    }
+
+    func testLargeVisibleHistoryHasBoundedStableAnnotations() {
+        let points = (0..<5_000).map { index in
+            point(x: Double(index % 100) * 990 + 100, y: Double(index / 100) * 1_980 + 100)
+        }
+        let sampled = MapPointMarkerSampler.sample(points, in: rect, viewportSize: viewport)
+        XCTAssertFalse(sampled.isEmpty)
+        XCTAssertLessThanOrEqual(sampled.count, MapPointMarkerSampler.maximumMarkerCount)
+        XCTAssertEqual(sampled.map(\.id), MapPointMarkerSampler.sample(points, in: rect, viewportSize: viewport).map(\.id))
+        XCTAssertEqual(Set(sampled.map(\.id)).count, sampled.count)
+        XCTAssertEqual(points.count, 5_000, "Rendering must not discard source points.")
+    }
+
+    func testPanningReplacesOffscreenPointsWithVisiblePoints() {
+        let first = point(x: 1_000, y: 1_000)
+        let second = point(x: 201_000, y: 1_000)
+        let points = [first, second]
+        XCTAssertEqual(MapPointMarkerSampler.sample(points, in: rect, viewportSize: viewport).map(\.id), [first.id])
+        let panned = MKMapRect(x: rect.minX + 200_000, y: rect.minY, width: rect.width, height: rect.height)
+        XCTAssertEqual(MapPointMarkerSampler.sample(points, in: panned, viewportSize: viewport).map(\.id), [second.id])
+    }
+
+    func testZoomingInRevealsPreviouslyCollapsedDetail() {
+        let points = (0..<40).map { point(x: 100 + Double($0) * 100, y: 1_000) }
+        let overview = MapPointMarkerSampler.sample(points, in: rect, viewportSize: viewport)
+        let zoomedRect = MKMapRect(x: rect.minX, y: rect.minY, width: 5_000, height: 5_000)
+        let detail = MapPointMarkerSampler.sample(points, in: zoomedRect, viewportSize: viewport)
+        XCTAssertGreaterThan(detail.count, overview.count)
+    }
+
+    func testSelectedVisiblePointWinsItsCellWithoutExceedingBudget() {
+        let first = point(x: 1_000, y: 1_000)
+        let selected = point(x: 1_001, y: 1_001)
+        let sampled = MapPointMarkerSampler.sample([first, selected], in: rect, viewportSize: viewport, selectedPointID: selected.id)
+        XCTAssertEqual(sampled.map(\.id), [selected.id])
+        let outside = point(x: 201_000, y: 1_000)
+        XCTAssertTrue(MapPointMarkerSampler.sample([outside], in: rect, viewportSize: viewport, selectedPointID: outside.id).isEmpty)
+    }
+
+    func testViewportCrossingDateLineIncludesBothSides() {
+        let world = MKMapRect.world
+        let crossing = MKMapRect(x: world.width - 1_000, y: origin.y, width: 2_000, height: 10_000)
+        let west = makePoint(MKMapPoint(x: world.width - 500, y: origin.y + 500))
+        let east = makePoint(MKMapPoint(x: 500, y: origin.y + 500))
+        let outside = point(x: 1_000, y: 1_000)
+        let sampled = MapPointMarkerSampler.sample([west, east, outside], in: crossing, viewportSize: viewport)
+        XCTAssertEqual(sampled.map(\.id), [west.id, east.id])
+    }
+
+    func testSparsePointsKeepTheirOriginalObjectsAndOrder() {
+        let points = [point(x: 1_000, y: 1_000), point(x: 90_000, y: 90_000), point(x: 1_000, y: 90_000)]
+        let sampled = MapPointMarkerSampler.sample(points, in: rect, viewportSize: viewport)
+        XCTAssertEqual(sampled.map(\.id), points.map(\.id))
+        for (actual, expected) in zip(sampled, points) { XCTAssertTrue(actual === expected) }
+    }
+
+    func testEmptyAndUnknownViewportsNeverRenderUnboundedHistory() {
+        let points = [point(x: 1_000, y: 1_000)]
+        XCTAssertTrue(MapPointMarkerSampler.sample(points, in: nil, viewportSize: viewport).isEmpty)
+        XCTAssertTrue(MapPointMarkerSampler.sample(points, in: .null, viewportSize: viewport).isEmpty)
+        XCTAssertTrue(MapPointMarkerSampler.sample(points, in: rect, viewportSize: .zero).isEmpty)
+        XCTAssertTrue(MapPointMarkerSampler.sample([], in: rect, viewportSize: viewport).isEmpty)
+        XCTAssertTrue(MapPointMarkerSampler.sample(points, in: MKMapRect(x: 0, y: 0, width: 0, height: 1), viewportSize: viewport).isEmpty)
+    }
+
+    func testLargeViewportStillHonorsAnnotationBudget() {
+        let points = (0..<5_000).map { index in
+            point(x: Double(index % 100) * 990 + 100, y: Double(index / 100) * 1_980 + 100)
+        }
+        let sampled = MapPointMarkerSampler.sample(points, in: rect, viewportSize: CGSize(width: 10_000, height: 10_000))
+        XCTAssertLessThanOrEqual(sampled.count, MapPointMarkerSampler.maximumMarkerCount)
+    }
+
+    private func point(x: Double, y: Double) -> LocationPoint {
+        makePoint(MKMapPoint(x: origin.x + x, y: origin.y + y))
+    }
+
+    private func makePoint(_ projected: MKMapPoint) -> LocationPoint {
+        let coordinate = projected.coordinate
+        return LocationPoint(latitude: coordinate.latitude, longitude: coordinate.longitude, timestamp: Date(timeIntervalSince1970: 1_790_000_000), horizontalAccuracy: 5)
     }
 }

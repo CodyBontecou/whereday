@@ -230,7 +230,7 @@ final class ExportRoundTripTests: XCTestCase {
         let collection = try XCTUnwrap(try JSONSerialization.jsonObject(with: data) as? [String: Any])
         XCTAssertEqual(Set(collection.keys), ["exportDate", "features", "generator", "type"])
         XCTAssertEqual(try XCTUnwrap(collection["type"] as? String), "FeatureCollection")
-        XCTAssertEqual(try XCTUnwrap(collection["generator"] as? String), "iso.me")
+        XCTAssertEqual(try XCTUnwrap(collection["generator"] as? String), "Whereday")
 
         let features = try XCTUnwrap(collection["features"] as? [[String: Any]])
         var visits: [NormalizedVisit] = []
@@ -337,7 +337,7 @@ final class ExportRoundTripTests: XCTestCase {
 
     private func parseCombinedMarkdown(_ data: Data) throws -> (visits: [NormalizedVisit], points: [NormalizedPoint]) {
         let text = try XCTUnwrap(String(data: data, encoding: .utf8))
-        XCTAssertTrue(text.contains("# iso.me Complete Export"))
+        XCTAssertTrue(text.contains("# Whereday Complete Export"))
         XCTAssertTrue(text.contains("# Visits"))
         XCTAssertTrue(text.contains("# Location Points"))
 
@@ -384,7 +384,7 @@ final class ExportRoundTripTests: XCTestCase {
         XCTAssertTrue(xmlParser.parse(), xmlParser.parserError?.localizedDescription ?? "GPX parse failed")
 
         XCTAssertEqual(parser.rootAttributes["version"], "1.1")
-        XCTAssertEqual(parser.rootAttributes["creator"], "iso.me")
+        XCTAssertEqual(parser.rootAttributes["creator"], "Whereday")
         XCTAssertEqual(parser.rootAttributes["xmlns"], "http://www.topografix.com/GPX/1/1")
         XCTAssertEqual(parser.rootAttributes["xmlns:isome"], "https://isome.isolated.tech/gpx/1.0")
 

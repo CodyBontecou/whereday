@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "whereday-android-purchases",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "secrets": { "required": ["GOOGLE_SERVICE_ACCOUNT_JSON", "LEASE_PRIVATE_KEY_PKCS8", "VOIDED_CURSOR_KEY"] },
+  "observability": { "enabled": true, "head_sampling_rate": 1, "traces": { "enabled": false } },
+  "vars": {
+    "PACKAGE_NAME": "com.bontecou.whereday",
+    "PRODUCT_ID": "whereday_export_lifetime",
+    "PLAY_CERTIFICATE_SHA256": "",
+    "MIN_VERSION_CODE": "1",
+    "RTDN_ENABLED": "false",
+    "RTDN_AUDIENCE": "",
+    "RTDN_PUSH_EMAIL": "",
+    "RTDN_PUSH_SUBJECT": "",
+    "RTDN_SUBSCRIPTION": "",
+    "VOIDED_RECONCILIATION_ENABLED": "false"
+  },
+  "d1_databases": [{
+    "binding": "PURCHASES",
+    "database_name": "whereday-android-purchases",
+    "database_id": "00000000-0000-0000-0000-000000000000",
+    "migrations_dir": "migrations"
+  }],
+  "triggers": { "crons": ["17 * * * *"] }
+}

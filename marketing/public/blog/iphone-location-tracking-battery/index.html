@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone GPS Tracking and Battery Use: Whereday Settings</title>
+  <meta name="description" content="Check iPhone battery activity, choose Whereday distance filters and auto-stop settings, and compare route detail without assuming a guaranteed battery saving.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/iphone-location-tracking-battery/">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="iPhone GPS Tracking and Battery Use: Whereday Settings">
+  <meta property="og:description" content="Check iPhone battery activity, choose Whereday distance filters and auto-stop settings, and compare route detail without assuming a guaranteed battery saving.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/iphone-location-tracking-battery/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map.png">
+  <meta property="og:image:alt" content="Whereday map interface showing visits and route points">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="iPhone GPS Tracking and Battery Use: Whereday Settings">
+  <meta name="twitter:description" content="Check iPhone battery activity, choose Whereday distance filters and auto-stop settings, and compare route detail without assuming a guaranteed battery saving.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1f1f1f;
+  --muted: #5f5d59;
+  --rule: #d2cfca;
+  --accent: #1c57ca;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Geist", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.brand img { border-radius: 4px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.button { display: inline-flex; justify-content: center; align-items: center; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: white; font-size: 16px; line-height: 24px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #1748a8; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 64px; }
+.breadcrumbs { font-size: 14px; line-height: 20px; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+h1 { max-width: 680px; font-size: 48px; line-height: 1; margin: 16px 0 24px; font-weight: 600; background: linear-gradient(to right, #000, #666); color: transparent; background-clip: text; -webkit-background-clip: text; }
+h2 { font-size: 30px; line-height: 36px; font-weight: 600; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 28px; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 28px; }
+header { padding-bottom: 40px; }
+section { margin-top: 48px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+caption { text-align: left; font-weight: 600; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border: 1px solid var(--rule); min-width: 160px; }
+thead { background: #ecebe4; }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--rule); }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 32px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.closing h2 { font-size: 36px; line-height: 40px; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: white; margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; background: white; overflow-x: auto; font-size: 14px; line-height: 20px; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 36px; line-height: 40px; }
+  h2 { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/iphone-location-tracking-battery/",
+      "url": "https://whereday.com/blog/iphone-location-tracking-battery/",
+      "name": "iPhone GPS Tracking and Battery Use: Whereday Settings",
+      "description": "Check iPhone battery activity, choose Whereday distance filters and auto-stop settings, and compare route detail without assuming a guaranteed battery saving.",
+      "inLanguage": "en",
+      "dateModified": "2026-10-26",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "How to manage battery use while recording iPhone routes",
+      "datePublished": "2026-10-26",
+      "mainEntityOfPage": "https://whereday.com/blog/iphone-location-tracking-battery/",
+      "image": "https://whereday.com/screenshots/map.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Location tracking and battery",
+          "item": "https://whereday.com/blog/iphone-location-tracking-battery/"
+        }
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
+    <div class="nav-links"><a href="/blog/" aria-current="true">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div>
+  </nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Location tracking and battery</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">How to manage battery use while recording iPhone routes</h1><p class="lede">Check whether recording is still running, review iPhone’s battery report, and compare one setting at a time. A larger distance filter still uses high-accuracy GPS.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p></header>
+    <section aria-labelledby="first-check">
+  <h2 id="first-check">Check the recording before changing settings</h2>
+  <p>If Whereday uses more battery than you expected, first check whether a recording is still running. Tap <strong>Stop</strong> when the trip is finished, then confirm the app has left its recording state. In Whereday, Start enables detailed GPS recording, visit monitoring, and significant location changes together. There is no separate visits-only recording mode.</p>
+  <p>This guide explains the controls you can change and how to compare the result on your own phone. It does not promise a number of recording hours or a percentage saving. Recording and reviewing the route are free; exporting a file requires the optional unlock.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>Battery and route checklist</strong><ol><li><a href="#usage">Read the iPhone battery report</a></li><li><a href="#controls">Choose the recording controls</a></li><li><a href="#compare">Compare a short route</a></li><li><a href="#gaps">Check gaps before relying on the result</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="usage">
+  <h2 id="usage">1. Look at the battery report for the recording period</h2>
+  <p>Open <strong>iPhone Settings → Battery</strong> and inspect app usage for the period when you recorded. The available charts and labels depend on your iOS version. Open the app details to distinguish screen activity from background activity.</p>
+  <p>Apple includes location tracking among the tasks that can appear as background activity. Its battery guide also identifies weak signal and work after a software update as possible contributors. A busy recording day needs different context from a day when the phone was mostly idle. See <a href="https://support.apple.com/en-us/120745">Apple’s battery-use instructions</a> for the controls on your version.</p>
+  <p>Note the recording duration, starting and ending charge, screen use, and whether you charged the phone during the period. Those observations make the next comparison more useful. One app percentage in isolation does not establish how long your next route will last.</p>
+</section>
+
+<section aria-labelledby="controls">
+  <h2 id="controls">2. Change the controls that affect your recording</h2>
+  <div class="table-scroll" role="region" aria-label="Recording controls and tradeoffs" tabindex="0"><table>
+    <caption>What each control changes in Whereday</caption>
+    <thead><tr><th scope="col">Control</th><th scope="col">What changes</th><th scope="col">What to check</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Stop recording</th><td>Ends the active recording and stops its GPS, visit, and significant-change monitoring.</td><td>Confirm the tracking state changed. Future movement will not be captured by that stopped session.</td></tr>
+      <tr><th scope="row">Distance filter</th><td>Changes the movement threshold requested for location updates. Options are 5, 10, 25, 50, 100, and 200 meters.</td><td>Larger values can mean fewer points and less route detail. They do not switch off high-accuracy GPS.</td></tr>
+      <tr><th scope="row">Stop after</th><td>Adds an automatic stopping timer: 1, 2, 4, 8, or 12 hours, or Never.</td><td>Choose enough time for the intended route, and still check the final recording state.</td></tr>
+      <tr><th scope="row">Location names</th><td>Controls sending coordinates to Apple’s geocoding service to name visits.</td><td>Turning names off does not stop GPS recording or create a visits-only mode.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Find these options under <strong>Settings → Location tracking</strong>. For a longer outing, you could try a 25 or 50 meter distance filter on a short, familiar route before using it for a full day. That is a starting point for comparison, not a measured battery recommendation.</p>
+  <p>Whereday continues to request its best location accuracy while recording at any of these filter settings. Apple recommends matching accuracy and distance thresholds to the task because location acquisition consumes energy; changing the threshold does not guarantee a particular saving. See <a href="https://developer.apple.com/documentation/xcode/accessing-the-device-s-location-efficiently">Apple’s location-efficiency guidance</a>.</p>
+  <p>Use Stop after as a fallback for a forgotten session. If the timer expires during an outing, the remaining movement will not be recorded. It is not a substitute for checking that the session ended when you wanted it to.</p>
+</section>
+
+<section aria-labelledby="compare">
+  <h2 id="compare">3. Compare one change on a familiar route</h2>
+  <ol>
+    <li>Choose a short route with turns and stops you can recognize later. Note the current distance filter and intended recording duration.</li>
+    <li>Start recording and check that the app shows an active session. Keep screen use representative of how you normally record.</li>
+    <li>Stop at the end. In Timeline, open the outing and inspect the path, times, turns, and gaps.</li>
+    <li>On another comparable trip, change only the distance filter. Note differences in charge use and route detail rather than assuming the setting is better because it is larger.</li>
+    <li>Keep the setting that preserves the detail you need. Repeat if the two trips had substantially different conditions.</li>
+  </ol>
+  <p>A route with fewer points may be adequate for remembering a journey but miss a short detour you care about. An export contains the recorded points; exporting GPX cannot add detail that was never captured. Use the <a href="/blog/record-iphone-route-gpx/">GPX walkthrough</a> when you want to inspect a saved route in another tool.</p>
+</section>
+
+<section aria-labelledby="gaps">
+  <h2 id="gaps">If battery use improves but the route has gaps</h2>
+  <p>For an incomplete Whereday day, use the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> to distinguish recording, display, Watch sync, and export issues.</p>
+  <p>Check the recording state, whether the stopping timer elapsed, and the app’s location permission. Confirm you are viewing the intended date and outing. Then inspect whether the filter removed detail you expected to see. A larger movement threshold should not be treated as a promise of evenly spaced points.</p>
+  <p>Whereday also rejects fixes with reported accuracy worse than 100 meters and filters obvious GPS glitches from its usual map and distance views. Fewer visible points can therefore have several causes. The <a href="/docs/tracking/">tracking reference</a> explains the recording and quality controls.</p>
+  <p>Keep existing records while diagnosing a problem. Reinstalling or deleting history is not needed for this comparison. If you need a separate copy, follow the <a href="/blog/back-up-iphone-location-history/">backup and restore checklist</a> first.</p>
+</section>
+
+<section aria-labelledby="questions">
+  <h2 id="questions">Common questions</h2>
+  <h3>Can I record only visits to save battery?</h3>
+  <p>Whereday currently starts GPS, visits, and significant-change monitoring together. The distance filter changes update spacing; it does not create an independent passive mode.</p>
+  <h3>Does turning off the Live Activity stop recording?</h3>
+  <p>No. The Live Activity is a status display and control surface. Use Stop and confirm the app’s state when you want to end recording.</p>
+  <h3>How many hours can I record?</h3>
+  <p>There is no verified universal duration for Whereday. Device condition, recording time, screen use, and other activity vary. Check your own short recording before relying on a longer trip.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-deliberately">
+  <h2 id="record-deliberately">Keep the route you need.<br>Check where it ends.</h2>
+  <p>Try free recording and review your first short outing before choosing settings for a longer day.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+<p class="source-note">Reviewed October 26, 2026 against Whereday’s recording controls and Apple’s linked guidance. No new device battery benchmark was performed. Controls can vary by app and iOS version.</p>
+
+    </article>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/missing-location-history-iphone/">Check a gap in your recording</a><p>Separate missing records from hidden glitches and incomplete transfers.</p></li><li><a href="/blog/record-iphone-route-gpx/">Save the route you recorded</a><p>Preview points and write a portable GPX file.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -162,7 +162,7 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "pencil",
                             title: "Rename outings from Shortcuts",
-                            description: "While a route is recording, use the new Rename Current Outing action in Shortcuts or Siri to name the trip without opening iso.me."
+                            description: "While a route is recording, use the new Rename Current Outing action in Shortcuts or Siri to name the trip without opening Whereday."
                         ),
                         .init(
                             symbolSystemName: "doc.text.magnifyingglass",
@@ -182,7 +182,7 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "calendar.badge.clock",
                             title: "Find past days faster",
-                            description: "When today has no timeline events, iso.me now opens the most recent day with saved visits or movement so your history is easier to review."
+                            description: "When today has no timeline events, Whereday now opens the most recent day with saved visits or movement so your history is easier to review."
                         ),
                         .init(
                             symbolSystemName: "calendar",
@@ -243,7 +243,7 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "applewatch",
                             title: "Track from your wrist",
-                            description: "Start or stop iso.me tracking directly on Apple Watch without opening your iPhone."
+                            description: "Start or stop Whereday tracking directly on Apple Watch without opening your iPhone."
                         ),
                         .init(
                             symbolSystemName: "figure.walk",
@@ -253,7 +253,7 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "rectangle.on.rectangle",
                             title: "Watch face complications",
-                            description: "Add iso.me to supported watch faces for quick tracking status and today’s totals."
+                            description: "Add Whereday to supported watch faces for quick tracking status and today’s totals."
                         )
                     ]
                 ),
@@ -261,7 +261,7 @@ enum IsoMeReleaseNotes {
                     kind: .video,
                     url: releaseNoteVideoURL("multi-format-export"),
                     title: "Export multiple formats",
-                    description: "Tap several export formats at once — JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks, and Overland — and iso.me prepares a separate file for each."
+                    description: "Tap several export formats at once — JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks, and Overland — and Whereday prepares a separate file for each."
                 ),
                 .media(
                     kind: .video,
@@ -286,7 +286,7 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "tag",
                             title: "Filenames can use outing names",
-                            description: "Use {title} or {name} in export paths, and iso.me keeps one-file-per-outing exports distinct automatically."
+                            description: "Use {title} or {name} in export paths, and Whereday keeps one-file-per-outing exports distinct automatically."
                         ),
                         .init(
                             symbolSystemName: "point.topleft.down.curvedto.point.bottomright.up",
@@ -336,7 +336,7 @@ enum IsoMeReleaseNotes {
             version: "1.5.0",
             items: [
                 .list(
-                    title: "What’s new in iso.me",
+                    title: "What’s new in Whereday",
                     rows: [
                         .init(
                             symbolSystemName: "eye",
@@ -361,7 +361,7 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "sparkles",
                             title: "A fresh coat of polish",
-                            description: "iso.me has a refreshed app icon and updated release polish across the app experience."
+                            description: "Whereday has a refreshed app icon and updated release polish across the app experience."
                         )
                     ]
                 )

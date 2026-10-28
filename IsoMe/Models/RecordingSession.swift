@@ -55,7 +55,7 @@ struct RecordingSessionSummary: Identifiable {
     }
 
     var defaultTitle: String {
-        "Outing \(sequenceNumber)"
+        String(localized: "Outing \(sequenceNumber)")
     }
 
     var effectiveEndDate: Date {
@@ -287,7 +287,7 @@ enum RecordingSessionMinimumPointCountPreset: Int, CaseIterable, Identifiable {
     var id: Int { rawValue }
 
     var label: String {
-        rawValue == 1 ? "1+ point" : "\(rawValue)+ points"
+        rawValue == 1 ? String(localized: "1+ point") : String(localized: "\(rawValue)+ points")
     }
 }
 

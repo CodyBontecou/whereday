@@ -1,0 +1,53 @@
+steps:
+  - echo: Requires onboarded idle app, unconfigured lifetime access, JSON/All data, no splitting or extra formats, and one historical outing. Previews outing summaries, checks delivery gates, changes split/extra CSV across restart, then restores every choice and returns to Map.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Export }
+  - await: { visible: { text: "Your history, in your format" } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^All$' } }
+  - await: { visible: { text: { matches: '^Outings$' } } }
+  - tap: { text: { matches: '^Outings$' } }
+  - await: { visible: { text: { matches: '^Outings$' } } }
+  - await: { idle: true }
+  - tap: { text: Preview export }
+  - scroll-to: { target: { text: { matches: '"totalOutings":\s*1' } }, direction: down }
+  - await: { visible: { text: { matches: '"totalOutings":\s*1' } } }
+  - scroll-to: { target: { text: Share export }, direction: up }
+  - tap: { text: Share export }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - tap: { text: Save export as… }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
+  - tap: { text: { matches: '^Filters and fields$' } }
+  - scroll-to: { target: { text: { matches: '^One file per outing$' } }, direction: down }
+  - tap: { text: { matches: '^One file per outing$' } }
+  - scroll-to: { target: { text: { matches: '^csv$' } }, direction: down }
+  - tap: { text: { matches: '^csv$' } }
+  - await: { idle: true }
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Export }
+  - await: { visible: { text: { matches: '^Outings$' } } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
+  - tap: { text: { matches: '^Filters and fields$' } }
+  - scroll-to: { target: { text: { matches: '^One file per outing$' } }, direction: down }
+  - tap: { text: { matches: '^One file per outing$' } }
+  - scroll-to: { target: { text: { matches: '^csv$' } }, direction: down }
+  - tap: { text: { matches: '^csv$' } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Save export as… }, direction: up }
+  - tap: { text: Save export as… }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - scroll-to: { target: { text: { matches: '^Outings$' } }, direction: up }
+  - tap: { text: { matches: '^Outings$' } }
+  - await: { visible: { text: { matches: '^All$' } } }
+  - tap: { text: { matches: '^All$' } }
+  - await: { visible: { text: { matches: '^All$' } } }
+  - await: { idle: true }
+  - tap: { text: Map }
+  - await: { visible: { text: Your location journal } }
+  - await: { idle: true }

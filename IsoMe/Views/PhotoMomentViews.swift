@@ -89,7 +89,7 @@ struct PhotoMomentCluster: Identifiable {
     }
 
     var accessibilityLabel: String {
-        "\(count) photos taken here"
+        String(localized: "\(count) photos taken here")
     }
 
     var accessibilityValue: String {
@@ -497,7 +497,7 @@ struct PhotoMomentQuickView: View {
                     }
                     .padding(.horizontal, 16)
 
-                    TESectionFooter(text: "iso.me stores only this photo's local identifier, timestamp, and coordinates. The photo file stays in your Photos library.")
+                    TESectionFooter(text: "Whereday stores only this photo's local identifier, timestamp, and coordinates. The photo file stays in your Photos library.")
                 }
                 .padding(.bottom, 28)
             }

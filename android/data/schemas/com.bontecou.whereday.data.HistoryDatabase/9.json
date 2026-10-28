@@ -1,0 +1,1109 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 9,
+    "identityHash": "3cdcea6f388a46974aa89ca9973ca777",
+    "entities": [
+      {
+        "tableName": "points",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` TEXT, `value_id` TEXT NOT NULL, `value_coordinate` TEXT NOT NULL, `value_time` INTEGER NOT NULL, `value_accuracy` REAL NOT NULL, `value_altitude` REAL, `value_speed` REAL, `value_outlier` INTEGER NOT NULL, `value_countryCode` TEXT, `value_timeZone` TEXT, `value_countryResolutionAttemptedAt` INTEGER, PRIMARY KEY(`value_id`))",
+        "fields": [
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.id",
+            "columnName": "value_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.coordinate",
+            "columnName": "value_coordinate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.time",
+            "columnName": "value_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.accuracy",
+            "columnName": "value_accuracy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.altitude",
+            "columnName": "value_altitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "value.speed",
+            "columnName": "value_speed",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "value.outlier",
+            "columnName": "value_outlier",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.countryCode",
+            "columnName": "value_countryCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.timeZone",
+            "columnName": "value_timeZone",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.countryResolutionAttemptedAt",
+            "columnName": "value_countryResolutionAttemptedAt",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "value_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_points_value_time",
+            "unique": false,
+            "columnNames": [
+              "value_time"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_points_value_time` ON `${TABLE_NAME}` (`value_time`)"
+          },
+          {
+            "name": "index_points_sessionId",
+            "unique": false,
+            "columnNames": [
+              "sessionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_points_sessionId` ON `${TABLE_NAME}` (`sessionId`)"
+          },
+          {
+            "name": "index_points_value_time_value_id",
+            "unique": false,
+            "columnNames": [
+              "value_time",
+              "value_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_points_value_time_value_id` ON `${TABLE_NAME}` (`value_time`, `value_id`)"
+          },
+          {
+            "name": "index_points_sessionId_value_time_value_id",
+            "unique": false,
+            "columnNames": [
+              "sessionId",
+              "value_time",
+              "value_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_points_sessionId_value_time_value_id` ON `${TABLE_NAME}` (`sessionId`, `value_time`, `value_id`)"
+          }
+        ]
+      },
+      {
+        "tableName": "visits",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`value_id` TEXT NOT NULL, `value_coordinate` TEXT NOT NULL, `value_arrivedAt` INTEGER NOT NULL, `value_departedAt` INTEGER, `value_name` TEXT, `value_address` TEXT, `value_notes` TEXT, `value_source` TEXT NOT NULL, `value_confirmation` TEXT NOT NULL, `value_originalCoordinate` TEXT, `value_originalName` TEXT, `value_originalAddress` TEXT, `value_detectedCoordinate` TEXT, `value_detectedName` TEXT, `value_detectedAddress` TEXT, `value_confirmedAt` INTEGER, `value_updatedAt` INTEGER, `value_placeSource` TEXT, `value_placeDistanceMeters` REAL, `value_countryCode` TEXT, `value_timeZone` TEXT, `value_departureInferred` INTEGER NOT NULL, `value_countryResolutionAttemptedAt` INTEGER, PRIMARY KEY(`value_id`))",
+        "fields": [
+          {
+            "fieldPath": "value.id",
+            "columnName": "value_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.coordinate",
+            "columnName": "value_coordinate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.arrivedAt",
+            "columnName": "value_arrivedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.departedAt",
+            "columnName": "value_departedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "value_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.address",
+            "columnName": "value_address",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.notes",
+            "columnName": "value_notes",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.source",
+            "columnName": "value_source",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.confirmation",
+            "columnName": "value_confirmation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.originalCoordinate",
+            "columnName": "value_originalCoordinate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.originalName",
+            "columnName": "value_originalName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.originalAddress",
+            "columnName": "value_originalAddress",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.detectedCoordinate",
+            "columnName": "value_detectedCoordinate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.detectedName",
+            "columnName": "value_detectedName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.detectedAddress",
+            "columnName": "value_detectedAddress",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.confirmedAt",
+            "columnName": "value_confirmedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "value.updatedAt",
+            "columnName": "value_updatedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "value.placeSource",
+            "columnName": "value_placeSource",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.placeDistanceMeters",
+            "columnName": "value_placeDistanceMeters",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "value.countryCode",
+            "columnName": "value_countryCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.timeZone",
+            "columnName": "value_timeZone",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.departureInferred",
+            "columnName": "value_departureInferred",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.countryResolutionAttemptedAt",
+            "columnName": "value_countryResolutionAttemptedAt",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "value_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_visits_value_arrivedAt",
+            "unique": false,
+            "columnNames": [
+              "value_arrivedAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_visits_value_arrivedAt` ON `${TABLE_NAME}` (`value_arrivedAt`)"
+          },
+          {
+            "name": "index_visits_value_departedAt",
+            "unique": false,
+            "columnNames": [
+              "value_departedAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_visits_value_departedAt` ON `${TABLE_NAME}` (`value_departedAt`)"
+          }
+        ]
+      },
+      {
+        "tableName": "sessions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`value_id` TEXT NOT NULL, `value_startedAt` INTEGER NOT NULL, `value_endedAt` INTEGER, `value_name` TEXT, `value_notes` TEXT, PRIMARY KEY(`value_id`))",
+        "fields": [
+          {
+            "fieldPath": "value.id",
+            "columnName": "value_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.startedAt",
+            "columnName": "value_startedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.endedAt",
+            "columnName": "value_endedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "value_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.notes",
+            "columnName": "value_notes",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "value_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_sessions_value_startedAt",
+            "unique": false,
+            "columnNames": [
+              "value_startedAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sessions_value_startedAt` ON `${TABLE_NAME}` (`value_startedAt`)"
+          }
+        ]
+      },
+      {
+        "tableName": "places",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`value_id` TEXT NOT NULL, `value_name` TEXT NOT NULL, `value_coordinate` TEXT NOT NULL, `value_address` TEXT, `value_radius` REAL NOT NULL, PRIMARY KEY(`value_id`))",
+        "fields": [
+          {
+            "fieldPath": "value.id",
+            "columnName": "value_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.name",
+            "columnName": "value_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.coordinate",
+            "columnName": "value_coordinate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.address",
+            "columnName": "value_address",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.radius",
+            "columnName": "value_radius",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "value_id"
+          ]
+        }
+      },
+      {
+        "tableName": "country_stays",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`value_id` TEXT NOT NULL, `value_countryCode` TEXT NOT NULL, `value_firstDay` TEXT NOT NULL, `value_lastDay` TEXT NOT NULL, PRIMARY KEY(`value_id`))",
+        "fields": [
+          {
+            "fieldPath": "value.id",
+            "columnName": "value_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.countryCode",
+            "columnName": "value_countryCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.firstDay",
+            "columnName": "value_firstDay",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.lastDay",
+            "columnName": "value_lastDay",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "value_id"
+          ]
+        }
+      },
+      {
+        "tableName": "recording",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `requested` INTEGER NOT NULL, `sessionId` TEXT, `deadline` INTEGER, `lastFix` INTEGER, `interruption` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requested",
+            "columnName": "requested",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deadline",
+            "columnName": "deadline",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastFix",
+            "columnName": "lastFix",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "interruption",
+            "columnName": "interruption",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "dwell",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `state_anchor` TEXT, `state_candidateSince` INTEGER, `state_lastTime` INTEGER, `state_visitId` TEXT, `state_departureSince` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state.anchor",
+            "columnName": "state_anchor",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "state.candidateSince",
+            "columnName": "state_candidateSince",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "state.lastTime",
+            "columnName": "state_lastTime",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "state.visitId",
+            "columnName": "state_visitId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "state.departureSince",
+            "columnName": "state_departureSince",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "photo_moments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uri` TEXT NOT NULL, `capturedAt` INTEGER NOT NULL, `coordinate` TEXT NOT NULL, `coordinateSource` TEXT NOT NULL, `lastSyncedAt` INTEGER NOT NULL, PRIMARY KEY(`uri`))",
+        "fields": [
+          {
+            "fieldPath": "uri",
+            "columnName": "uri",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coordinate",
+            "columnName": "coordinate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coordinateSource",
+            "columnName": "coordinateSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSyncedAt",
+            "columnName": "lastSyncedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "uri"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_photo_moments_capturedAt",
+            "unique": false,
+            "columnNames": [
+              "capturedAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_photo_moments_capturedAt` ON `${TABLE_NAME}` (`capturedAt`)"
+          },
+          {
+            "name": "index_photo_moments_capturedAt_uri",
+            "unique": false,
+            "columnNames": [
+              "capturedAt",
+              "uri"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_photo_moments_capturedAt_uri` ON `${TABLE_NAME}` (`capturedAt`, `uri`)"
+          }
+        ]
+      },
+      {
+        "tableName": "photo_assets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uri` TEXT NOT NULL, `capturedAt` INTEGER, `gps` TEXT, `selected` INTEGER NOT NULL, `available` INTEGER NOT NULL, `lastCheckedAt` INTEGER NOT NULL, `identity` TEXT, PRIMARY KEY(`uri`))",
+        "fields": [
+          {
+            "fieldPath": "uri",
+            "columnName": "uri",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "gps",
+            "columnName": "gps",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "selected",
+            "columnName": "selected",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "available",
+            "columnName": "available",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastCheckedAt",
+            "columnName": "lastCheckedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "identity",
+            "columnName": "identity",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "uri"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_photo_assets_capturedAt_uri",
+            "unique": false,
+            "columnNames": [
+              "capturedAt",
+              "uri"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_photo_assets_capturedAt_uri` ON `${TABLE_NAME}` (`capturedAt`, `uri`)"
+          },
+          {
+            "name": "index_photo_assets_identity_available_selected_uri",
+            "unique": false,
+            "columnNames": [
+              "identity",
+              "available",
+              "selected",
+              "uri"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_photo_assets_identity_available_selected_uri` ON `${TABLE_NAME}` (`identity`, `available`, `selected`, `uri`)"
+          }
+        ]
+      },
+      {
+        "tableName": "export_runs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`occurrence` TEXT NOT NULL, `destination` TEXT NOT NULL, `fireAt` INTEGER NOT NULL, `state` TEXT NOT NULL, `completedAt` INTEGER, `cursor` INTEGER, `error` TEXT, PRIMARY KEY(`occurrence`))",
+        "fields": [
+          {
+            "fieldPath": "occurrence",
+            "columnName": "occurrence",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "destination",
+            "columnName": "destination",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fireAt",
+            "columnName": "fireAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completedAt",
+            "columnName": "completedAt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cursor",
+            "columnName": "cursor",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "error",
+            "columnName": "error",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "occurrence"
+          ]
+        }
+      },
+      {
+        "tableName": "webhook_outbox",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `payload` TEXT NOT NULL, `attempts` INTEGER NOT NULL, `nextAttempt` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payload",
+            "columnName": "payload",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attempts",
+            "columnName": "attempts",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextAttempt",
+            "columnName": "nextAttempt",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_webhook_outbox_createdAt",
+            "unique": false,
+            "columnNames": [
+              "createdAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_webhook_outbox_createdAt` ON `${TABLE_NAME}` (`createdAt`)"
+          }
+        ]
+      },
+      {
+        "tableName": "country_lookup_cache",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coordinate` TEXT NOT NULL, `countryCode` TEXT NOT NULL, `timeZone` TEXT NOT NULL, `version` TEXT NOT NULL, PRIMARY KEY(`coordinate`))",
+        "fields": [
+          {
+            "fieldPath": "coordinate",
+            "columnName": "coordinate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "countryCode",
+            "columnName": "countryCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeZone",
+            "columnName": "timeZone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "coordinate"
+          ]
+        }
+      },
+      {
+        "tableName": "country_analysis",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `runId` TEXT NOT NULL, `nextLookupAt` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "runId",
+            "columnName": "runId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextLookupAt",
+            "columnName": "nextLookupAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "webhook_policy",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `revision` TEXT NOT NULL, `enabled` INTEGER NOT NULL, `capture` INTEGER NOT NULL, `includeOutliers` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `lastSuccess` INTEGER, `lastStatus` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "enabled",
+            "columnName": "enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capture",
+            "columnName": "capture",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "includeOutliers",
+            "columnName": "includeOutliers",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSuccess",
+            "columnName": "lastSuccess",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastStatus",
+            "columnName": "lastStatus",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "webhook_batches",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `revision` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `pointCount` INTEGER NOT NULL, `kind` TEXT NOT NULL, `visitCount` INTEGER NOT NULL, `bodyId` TEXT, `bodyFormat` TEXT, `bodyBytes` INTEGER, `bodySha256` TEXT, `attempts` INTEGER NOT NULL, `nextAttempt` INTEGER, `stopped` INTEGER NOT NULL, `attemptToken` TEXT, `leaseUntil` INTEGER, `lastStatus` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointCount",
+            "columnName": "pointCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "visitCount",
+            "columnName": "visitCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bodyId",
+            "columnName": "bodyId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bodyFormat",
+            "columnName": "bodyFormat",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bodyBytes",
+            "columnName": "bodyBytes",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "bodySha256",
+            "columnName": "bodySha256",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "attempts",
+            "columnName": "attempts",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextAttempt",
+            "columnName": "nextAttempt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "stopped",
+            "columnName": "stopped",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attemptToken",
+            "columnName": "attemptToken",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "leaseUntil",
+            "columnName": "leaseUntil",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastStatus",
+            "columnName": "lastStatus",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_webhook_batches_revision_createdAt_id",
+            "unique": false,
+            "columnNames": [
+              "revision",
+              "createdAt",
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_webhook_batches_revision_createdAt_id` ON `${TABLE_NAME}` (`revision`, `createdAt`, `id`)"
+          },
+          {
+            "name": "index_webhook_batches_bodyId",
+            "unique": false,
+            "columnNames": [
+              "bodyId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_webhook_batches_bodyId` ON `${TABLE_NAME}` (`bodyId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "webhook_points",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`revision` TEXT NOT NULL, `queuedAt` INTEGER NOT NULL, `batchId` TEXT, `value_id` TEXT NOT NULL, `value_coordinate` TEXT NOT NULL, `value_time` INTEGER NOT NULL, `value_accuracy` REAL NOT NULL, `value_altitude` REAL, `value_speed` REAL, `value_outlier` INTEGER NOT NULL, `value_countryCode` TEXT, `value_timeZone` TEXT, `value_countryResolutionAttemptedAt` INTEGER, PRIMARY KEY(`revision`, `value_id`), FOREIGN KEY(`batchId`) REFERENCES `webhook_batches`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "queuedAt",
+            "columnName": "queuedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "batchId",
+            "columnName": "batchId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.id",
+            "columnName": "value_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.coordinate",
+            "columnName": "value_coordinate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.time",
+            "columnName": "value_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.accuracy",
+            "columnName": "value_accuracy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.altitude",
+            "columnName": "value_altitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "value.speed",
+            "columnName": "value_speed",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "value.outlier",
+            "columnName": "value_outlier",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value.countryCode",
+            "columnName": "value_countryCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.timeZone",
+            "columnName": "value_timeZone",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value.countryResolutionAttemptedAt",
+            "columnName": "value_countryResolutionAttemptedAt",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "revision",
+            "value_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_webhook_points_revision_batchId_value_time_value_id",
+            "unique": false,
+            "columnNames": [
+              "revision",
+              "batchId",
+              "value_time",
+              "value_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_webhook_points_revision_batchId_value_time_value_id` ON `${TABLE_NAME}` (`revision`, `batchId`, `value_time`, `value_id`)"
+          },
+          {
+            "name": "index_webhook_points_batchId_value_time_value_id",
+            "unique": false,
+            "columnNames": [
+              "batchId",
+              "value_time",
+              "value_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_webhook_points_batchId_value_time_value_id` ON `${TABLE_NAME}` (`batchId`, `value_time`, `value_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "webhook_batches",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "batchId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [
+      {
+        "viewName": "visible_photo_assets",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT a.* FROM photo_assets a WHERE a.identity IS NULL OR NOT EXISTS (SELECT 1 FROM photo_assets b WHERE b.identity=a.identity AND ((b.available*8+(b.capturedAt IS NOT NULL)*4+(b.gps IS NOT NULL)*2+b.selected)>(a.available*8+(a.capturedAt IS NOT NULL)*4+(a.gps IS NOT NULL)*2+a.selected) OR ((b.available*8+(b.capturedAt IS NOT NULL)*4+(b.gps IS NOT NULL)*2+b.selected)=(a.available*8+(a.capturedAt IS NOT NULL)*4+(a.gps IS NOT NULL)*2+a.selected) AND b.uri<a.uri)))"
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3cdcea6f388a46974aa89ca9973ca777')"
+    ]
+  }
+}

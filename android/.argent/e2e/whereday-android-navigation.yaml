@@ -1,0 +1,37 @@
+steps:
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Fit route
+- await:
+    idle: true
+- echo: Open Export and render a free JSON preview without changing recording or purchasing.
+- tap:
+    text: Export
+- await:
+    visible:
+      text: Your history, in your format
+- await:
+    idle: true
+- tap:
+    text: Preview export
+- scroll-to: { target: { text: '"exportDate"' }, direction: down }
+- await:
+    visible:
+      text: '"exportDate"'
+- await:
+    idle: true
+- tap:
+    text: Timeline
+- await:
+    visible:
+      text: Add past visit
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true

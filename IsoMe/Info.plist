@@ -14,6 +14,7 @@
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>isome</string>
+                <string>whereday</string>
             </array>
             <key>CFBundleURLName</key>
             <string>com.bontecou.isome</string>
@@ -21,13 +22,13 @@
     </array>
     
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>iso.me needs always-on location access to automatically record the places you visit throughout the day, even when the app is in the background. This enables visit detection and travel tracking.</string>
+    <string>Whereday needs always-on location access to automatically record the places you visit throughout the day, even when the app is in the background. This enables visit detection and travel tracking.</string>
 
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>iso.me needs location access to show your current location and record visits when the app is open.</string>
+    <string>Whereday needs location access to show your current location and record visits when the app is open.</string>
 
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>iso.me can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; iso.me stores only local metadata on-device.</string>
+    <string>Whereday can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; Whereday stores only local metadata on-device.</string>
 
     <key>UIBackgroundModes</key>
     <array>
@@ -41,5 +42,14 @@
         <string>com.bontecou.isome.refresh</string>
         <string>com.bontecou.isome.dailyexport</string>
     </array>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Record narration when you start a Scrawl development capture.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Send Scrawl development recordings to your paired Mac.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

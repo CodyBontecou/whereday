@@ -343,7 +343,7 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 16)
 
-            TESectionFooter(text: "When exact start/stop sessions don't exist, iso.me can infer outings from saved GPS points. These settings only affect auto-generated inferred outings; recorded sessions stay intact.")
+            TESectionFooter(text: "When exact start/stop sessions don't exist, Whereday can infer outings from saved GPS points. These settings only affect auto-generated inferred outings; recorded sessions stay intact.")
         }
     }
 
@@ -465,7 +465,7 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 16)
 
-            TESectionFooter(text: "Visit suggestions show a compact Save Place prompt on the map when iso.me finds a nearby place. GPS glitches are hidden by default; turn on to inspect raw data.")
+            TESectionFooter(text: "Visit suggestions show a compact Save Place prompt on the map when Whereday finds a nearby place. GPS glitches are hidden by default; turn on to inspect raw data.")
         }
     }
 
@@ -725,11 +725,11 @@ struct SettingsView: View {
     // MARK: - Feedback Email
 
     private func sendFeedbackEmail() {
-        let subject = String(localized: "iso.me Feedback")
+        let subject = String(localized: "Whereday Feedback")
         let footer = """
 
         ---
-        App: iso.me \(AppInfo.versionDisplay)
+        App: Whereday \(AppInfo.versionDisplay)
         Platform: \(AppInfo.platformDisplay)
         Device: \(AppInfo.deviceModel)
         """

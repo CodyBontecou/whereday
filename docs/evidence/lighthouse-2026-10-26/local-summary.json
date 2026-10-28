@@ -1,0 +1,716 @@
+[
+  {
+    "path": "/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 780.8395,
+      "largest-contentful-paint": 1576.679,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 780.8395
+    }
+  },
+  {
+    "path": "/blog/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 632.52745,
+      "largest-contentful-paint": 901.0549000000001,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 632.52745
+    }
+  },
+  {
+    "path": "/blog/private-location-journal-iphone/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 637.02545,
+      "largest-contentful-paint": 977.0509,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 637.02545
+    }
+  },
+  {
+    "path": "/blog/record-iphone-route-gpx/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.3317999999999,
+      "largest-contentful-paint": 1051.3318,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.3317999999999
+    }
+  },
+  {
+    "path": "/blog/view-location-history-iphone/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.5409999999999,
+      "largest-contentful-paint": 1051.541,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.5409999999999
+    }
+  },
+  {
+    "path": "/compare/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.3679999999999,
+      "largest-contentful-paint": 1051.368,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.3679999999999
+    }
+  },
+  {
+    "path": "/compare/google-maps-timeline/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.5012999999999,
+      "largest-contentful-paint": 1051.5013,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.5012999999999
+    }
+  },
+  {
+    "path": "/docs/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.2801999999999,
+      "largest-contentful-paint": 1051.2802,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.2801999999999
+    }
+  },
+  {
+    "path": "/docs/apple-watch/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.2428,
+      "largest-contentful-paint": 1051.2428,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.2428
+    }
+  },
+  {
+    "path": "/docs/automatic-exports/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.1497999999999,
+      "largest-contentful-paint": 1051.1498,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.1497999999999
+    }
+  },
+  {
+    "path": "/docs/export-import/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.6026999999999,
+      "largest-contentful-paint": 1051.6027,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.6026999999999
+    }
+  },
+  {
+    "path": "/docs/getting-started/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.3906,
+      "largest-contentful-paint": 1051.3906,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.3906
+    }
+  },
+  {
+    "path": "/docs/photos/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.3624,
+      "largest-contentful-paint": 1051.3624,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.3624
+    }
+  },
+  {
+    "path": "/docs/places/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.8891000000001,
+      "largest-contentful-paint": 1051.8891,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.8891000000001
+    }
+  },
+  {
+    "path": "/docs/privacy-data/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 752.0908999999999,
+      "largest-contentful-paint": 1052.0909,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 752.0908999999999
+    }
+  },
+  {
+    "path": "/docs/siri-shortcuts/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.6682000000001,
+      "largest-contentful-paint": 1051.6682,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.6682000000001
+    }
+  },
+  {
+    "path": "/docs/timeline-outings/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.5879,
+      "largest-contentful-paint": 1051.5879,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.5879
+    }
+  },
+  {
+    "path": "/docs/tracking/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.7783999999999,
+      "largest-contentful-paint": 1051.7784,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.7783999999999
+    }
+  },
+  {
+    "path": "/docs/webhooks/",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.5274999999999,
+      "largest-contentful-paint": 1051.5275,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.5274999999999
+    }
+  },
+  {
+    "path": "/privacy",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 624.5556,
+      "largest-contentful-paint": 901.1112,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 624.5556
+    }
+  },
+  {
+    "path": "/terms",
+    "device": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 622.5705,
+      "largest-contentful-paint": 901.1410000000001,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 622.5705
+    }
+  },
+  {
+    "path": "/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 205.82635,
+      "largest-contentful-paint": 401.6527,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 205.82635
+    }
+  },
+  {
+    "path": "/blog/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 169.4144,
+      "largest-contentful-paint": 240.8288,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 169.4144
+    }
+  },
+  {
+    "path": "/blog/private-location-journal-iphone/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 170.2768,
+      "largest-contentful-paint": 242.55360000000002,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 170.2768
+    }
+  },
+  {
+    "path": "/blog/record-iphone-route-gpx/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.44799999999998,
+      "largest-contentful-paint": 281.448,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.44799999999998
+    }
+  },
+  {
+    "path": "/blog/view-location-history-iphone/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.32,
+      "largest-contentful-paint": 281.32,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.32
+    }
+  },
+  {
+    "path": "/compare/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.64120000000003,
+      "largest-contentful-paint": 281.6412,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.64120000000003
+    }
+  },
+  {
+    "path": "/compare/google-maps-timeline/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.5464,
+      "largest-contentful-paint": 281.5464,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.5464
+    }
+  },
+  {
+    "path": "/docs/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 202.05599999999998,
+      "largest-contentful-paint": 282.056,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 202.05599999999998
+    }
+  },
+  {
+    "path": "/docs/apple-watch/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 202.1751,
+      "largest-contentful-paint": 282.1751,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 202.1751
+    }
+  },
+  {
+    "path": "/docs/automatic-exports/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.5983,
+      "largest-contentful-paint": 281.5983,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.5983
+    }
+  },
+  {
+    "path": "/docs/export-import/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.76319999999998,
+      "largest-contentful-paint": 281.7632,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.76319999999998
+    }
+  },
+  {
+    "path": "/docs/getting-started/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.86239999999998,
+      "largest-contentful-paint": 281.8624,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.86239999999998
+    }
+  },
+  {
+    "path": "/docs/photos/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 202.08120000000002,
+      "largest-contentful-paint": 282.0812,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 202.08120000000002
+    }
+  },
+  {
+    "path": "/docs/places/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.98880000000003,
+      "largest-contentful-paint": 281.9888,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.98880000000003
+    }
+  },
+  {
+    "path": "/docs/privacy-data/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 202.3505,
+      "largest-contentful-paint": 282.3505,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 202.3505
+    }
+  },
+  {
+    "path": "/docs/siri-shortcuts/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.59769999999997,
+      "largest-contentful-paint": 281.5977,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.59769999999997
+    }
+  },
+  {
+    "path": "/docs/timeline-outings/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.71429999999998,
+      "largest-contentful-paint": 281.7143,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.71429999999998
+    }
+  },
+  {
+    "path": "/docs/tracking/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.8274,
+      "largest-contentful-paint": 281.8274,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.8274
+    }
+  },
+  {
+    "path": "/docs/webhooks/",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 201.8136,
+      "largest-contentful-paint": 281.8136,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 201.8136
+    }
+  },
+  {
+    "path": "/privacy",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 167.50775,
+      "largest-contentful-paint": 241.01549999999997,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 167.50775
+    }
+  },
+  {
+    "path": "/terms",
+    "device": "desktop",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 167.43135,
+      "largest-contentful-paint": 240.86270000000002,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 167.43135
+    }
+  }
+]

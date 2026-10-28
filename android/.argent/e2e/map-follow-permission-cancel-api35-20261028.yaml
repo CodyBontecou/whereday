@@ -1,0 +1,33 @@
+steps:
+  - echo: Disposable onboarded English API35 mapQa, empty journal and location denied. Open the map location explanation, cancel it, and verify recording stays idle and following remains off.
+  - launch: com.bontecou.whereday.mapqa
+  - await:
+      visible:
+        text: Start recording
+  - await:
+      idle: true
+  - await:
+      visible:
+        id: map-follow-location
+  - tap:
+      id: map-follow-location
+  - await:
+      visible:
+        text: Follow your location?
+  - await:
+      idle: true
+  - tap:
+      text: Not now
+  - await:
+      hidden:
+        text: Follow your location?
+  - await:
+      visible:
+        text: Start recording
+  - await:
+      idle: true
+  - assert:
+      text:
+        in:
+          id: map-follow-location
+        equals: Follow my location

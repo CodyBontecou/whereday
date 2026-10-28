@@ -14,7 +14,7 @@ enum IntentSupport {
         do {
             return try ModelContainer(for: schema, configurations: [config])
         } catch {
-            fatalError("Could not open IsoMe model container in intent: \(error)")
+            fatalError("Could not open Whereday model container in intent: \(error)")
         }
     }()
 
@@ -41,9 +41,9 @@ enum IntentSupport {
         let total = Int(seconds)
         let h = total / 3600
         let m = (total % 3600) / 60
-        if h > 0 && m > 0 { return "\(h)h \(m)m" }
-        if h > 0 { return "\(h)h" }
-        return "\(m)m"
+        if h > 0 && m > 0 { return String(localized: "\(h)h \(m)m") }
+        if h > 0 { return String(localized: "\(h)h") }
+        return String(localized: "\(m)m")
     }
 }
 
@@ -60,17 +60,17 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     var localizedStringResource: LocalizedStringResource {
         switch self {
         case .noLocationPermission:
-            return "IsoMe needs location permission. Open the app to enable it."
+            return "Whereday needs location permission. Open the app to enable it."
         case .emptyOutingName:
             return "Enter a name for the current outing."
         case .noActiveOuting:
-            return "IsoMe is not currently recording an outing."
+            return "Whereday is not currently recording an outing."
         case .invalidDateRange:
             return "The start date must be before the end date."
         case .emptyName:
             return "Enter a name."
         case .itemNotFound:
-            return "That IsoMe item couldn't be found."
+            return "That Whereday item couldn't be found."
         }
     }
 }
@@ -79,7 +79,7 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
 
 struct StartTrackingIntent: AppIntent {
     static var title: LocalizedStringResource = "Start Tracking"
-    static var description = IntentDescription("Begin recording your route in IsoMe.")
+    static var description = IntentDescription("Begin recording your route in Whereday.")
     static var openAppWhenRun: Bool = false
 
     @MainActor
@@ -95,7 +95,7 @@ struct StartTrackingIntent: AppIntent {
 
 struct StopTrackingIntent: AppIntent {
     static var title: LocalizedStringResource = "Stop Tracking"
-    static var description = IntentDescription("Stop the current IsoMe tracking session.")
+    static var description = IntentDescription("Stop the current Whereday tracking session.")
     static var openAppWhenRun: Bool = false
 
     @MainActor
@@ -115,7 +115,7 @@ struct StopTrackingIntent: AppIntent {
 
 struct RenameCurrentOutingIntent: AppIntent {
     static var title: LocalizedStringResource = "Rename Current Outing"
-    static var description = IntentDescription("Set the name of the IsoMe outing currently being recorded.")
+    static var description = IntentDescription("Set the name of the Whereday outing currently being recorded.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Name")
@@ -132,7 +132,7 @@ struct RenameCurrentOutingIntent: AppIntent {
 
 struct TodayDistanceIntent: AppIntent {
     static var title: LocalizedStringResource = "Today's Distance"
-    static var description = IntentDescription("How far you've moved today, according to IsoMe.")
+    static var description = IntentDescription("How far you've moved today, according to Whereday.")
     static var openAppWhenRun: Bool = false
 
     @MainActor
@@ -150,7 +150,7 @@ struct TodayDistanceIntent: AppIntent {
 
 struct TodayTrackingDurationIntent: AppIntent {
     static var title: LocalizedStringResource = "Today's Tracking Duration"
-    static var description = IntentDescription("How long the current IsoMe tracking session has been running.")
+    static var description = IntentDescription("How long the current Whereday tracking session has been running.")
     static var openAppWhenRun: Bool = false
 
     @MainActor
@@ -163,7 +163,7 @@ struct TodayTrackingDurationIntent: AppIntent {
             dialog = "You've been tracking for \(IntentSupport.formatDuration(seconds))."
         } else {
             seconds = 0
-            dialog = "IsoMe isn't tracking right now."
+            dialog = "Whereday isn't tracking right now."
         }
         return .result(
             value: Measurement(value: seconds, unit: UnitDuration.seconds),
@@ -174,7 +174,7 @@ struct TodayTrackingDurationIntent: AppIntent {
 
 struct TodayVisitCountIntent: AppIntent {
     static var title: LocalizedStringResource = "Today's Visits"
-    static var description = IntentDescription("Number of visits IsoMe has logged today.")
+    static var description = IntentDescription("Number of visits Whereday has logged today.")
     static var openAppWhenRun: Bool = false
 
     @MainActor

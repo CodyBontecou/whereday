@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://isome.isolated.tech/sitemap.xml
+Sitemap: https://whereday.com/sitemap.xml

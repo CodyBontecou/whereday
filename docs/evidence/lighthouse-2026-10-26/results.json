@@ -1,0 +1,291 @@
+{
+  "lighthouseVersion": "13.5.0",
+  "productionURL": "https://isome.isolated.tech",
+  "finalDeploymentURL": "https://9fc41322.spotted-8ez.pages.dev",
+  "liveVerification": [
+    {
+      "path": "/",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1094.854,
+        "largest-contentful-paint": 1094.854,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 1094.854
+      }
+    },
+    {
+      "path": "/docs/",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 890.8935,
+        "largest-contentful-paint": 890.8935,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 909.9957580167295
+      }
+    },
+    {
+      "path": "/privacy",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 873.361,
+        "largest-contentful-paint": 873.361,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 873.361
+      }
+    },
+    {
+      "path": "/terms",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 892.8175,
+        "largest-contentful-paint": 892.8175,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 892.8175
+      }
+    },
+    {
+      "path": "/blog/",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 799.5475,
+        "largest-contentful-paint": 799.5475,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 947.5731200127007
+      }
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 948.9965,
+        "largest-contentful-paint": 948.9965,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 955.1665299992322
+      }
+    },
+    {
+      "path": "/compare/google-maps-timeline/",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 885.5360000000001,
+        "largest-contentful-paint": 885.5360000000001,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 885.5360000000001
+      }
+    },
+    {
+      "path": "/blog/back-up-iphone-location-history/",
+      "device": "mobile",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 877.0825,
+        "largest-contentful-paint": 1766.3615,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 2418.965892012477
+      }
+    },
+    {
+      "path": "/",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 301.663,
+        "largest-contentful-paint": 301.663,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 352.3716061562012
+      }
+    },
+    {
+      "path": "/docs/",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 314.748,
+        "largest-contentful-paint": 314.748,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 380.09423826628773
+      }
+    },
+    {
+      "path": "/privacy",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 303.5375,
+        "largest-contentful-paint": 303.5375,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 303.5375
+      }
+    },
+    {
+      "path": "/terms",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 304.265,
+        "largest-contentful-paint": 304.265,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 335.95535534200565
+      }
+    },
+    {
+      "path": "/blog/",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 290.374,
+        "largest-contentful-paint": 290.374,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 389.13854767416944
+      }
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 295.38300000000004,
+        "largest-contentful-paint": 295.38300000000004,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 305.87969651123734
+      }
+    },
+    {
+      "path": "/compare/google-maps-timeline/",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 324.595,
+        "largest-contentful-paint": 324.595,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 363.1661856779108
+      }
+    },
+    {
+      "path": "/blog/back-up-iphone-location-history/",
+      "device": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 334.54200000000003,
+        "largest-contentful-paint": 334.54200000000003,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "speed-index": 403.31186675885465
+      }
+    }
+  ],
+  "localVerification": {
+    "pages": 21,
+    "runs": 42,
+    "allCategories100": true,
+    "summary": "local-summary.json"
+  },
+  "notes": [
+    "Local audits used gzip compression and clean legal URLs matching production behavior. Production analytics remain gated and unchanged.",
+    "The backup guide was added in the shared workspace during the audit and was included in live mobile and desktop verification.",
+    "Docs and SEO pages inline their shared stylesheets at build time following the initial live audit; the final verification replaces those results.",
+    "Scores are measurements from these runs, not a guarantee against network or device variability."
+  ]
+}

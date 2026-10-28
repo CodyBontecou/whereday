@@ -1,4 +1,4 @@
-# iso.me
+# Whereday
 
 > **Open source, privacy-first iOS location tracking — your data stays on your device.**
 
@@ -6,9 +6,9 @@
 [![Platform](https://img.shields.io/badge/platform-iOS%2017%2B%20%7C%20watchOS%2010%2B-lightgrey)](#tech-stack)
 [![Swift](https://img.shields.io/badge/swift-5-orange)](#tech-stack)
 
-iso.me is a location tracking app for iOS and watchOS. It automatically records the places you visit throughout the day, tracks routes with continuous GPS logging, and **keeps every byte of your data on-device**. No accounts. No cloud sync. No third-party dependencies. No analytics. Just you, your phone, and your history.
+Whereday is a location tracking app for iOS and watchOS. It automatically records the places you visit throughout the day, tracks routes with continuous GPS logging, and **keeps every byte of your data on-device**. No accounts. No cloud sync. No third-party dependencies. No analytics. Just you, your phone, and your history.
 
-**[🌐 isome.isolated.tech](https://isome.isolated.tech)** · **[📲 Download on the App Store](https://apps.apple.com/app/id6761960794)** · **[🛠 Contribute](CONTRIBUTING.md)** · **[💬 Discussions](https://github.com/CodyBontecou/isome/discussions)** · **[👥 Discord](https://discord.gg/jNRWSSSz4N)** · **[⭐ Star this repo](https://github.com/CodyBontecou/isome)**
+**[🌐 whereday.com](https://whereday.com)** · **[📲 Download on the App Store](https://apps.apple.com/app/id6761960794)** · **[🛠 Contribute](CONTRIBUTING.md)** · **[💬 Discussions](https://github.com/CodyBontecou/whereday/discussions)** · **[👥 Discord](https://discord.gg/jNRWSSSz4N)** · **[⭐ Star this repo](https://github.com/CodyBontecou/whereday)**
 
 ## Screenshots
 
@@ -38,7 +38,7 @@ Real-time tracking status on the lock screen and Dynamic Island. Shows current l
 ### Export & Import
 Export visits and location points as JSON, CSV, or Markdown. Choose a date range, time-of-day window, and per-format field toggles, and either condense everything into a single file or split the export into **one file per day** for easier downstream slicing. Customize filenames and dated subfolders with tokens (for example, Markdown can use `{year}/{year}-{month}/Daily Track - {date}.md`). Optionally set a default export folder for one-tap saves and schedule an automatic export — once per day, or **repeated every 1–23 hours** from a start time. Automatic exports always keep one consistent dated file per local day; interval runs can either fully rewrite that day's file or append only new records. Scheduled exports use a routing-only APNs worker to wake the app near each occurrence; your location records, files, folder paths, and filename templates stay on-device. Import previously exported data back into the app. Export is the one paid feature — see [Pricing](#pricing).
 
-Exports drop in cleanly to the [iso.me Maps Obsidian plugin](https://github.com/CodyBontecou/obsidian-iso-me-maps), which renders visits, routes, heatmaps, and outliers as Leaflet maps inline in your notes — point a code block at a single condensed export, a folder of per-day files, or a filename glob.
+Exports drop in cleanly to the [Whereday Maps Obsidian plugin](https://github.com/CodyBontecou/obsidian-iso-me-maps), which renders visits, routes, heatmaps, and outliers as Leaflet maps inline in your notes — point a code block at a single condensed export, a folder of per-day files, or a filename glob.
 
 ### Watch App
 Companion watchOS app showing today's visit count, distance traveled, and tracking status. Syncs with the main app via shared App Groups.
@@ -50,11 +50,11 @@ iOS lock screen widget via Live Activities and watchOS complications for quick t
 
 Tracking is free and unlimited — visits, continuous routes, watch app, Live Activities, widgets. No subscription, no ads, no usage caps.
 
-The one paid feature is **export**, offered as lifetime purchases with no recurring charge:
+The one paid feature is **export**, offered as lifetime purchases with no recurring charge. These are US prices; regional prices reflect purchasing power:
 
-- **Individual Lifetime — $10** for one Apple ID
-- **Family Lifetime — $20** with Apple Family Sharing for up to five family members
-- **Family Upgrade — $10** for Individual Lifetime owners who later want Family Sharing
+- **Individual Lifetime — $19.99** for one Apple ID
+- **Family Lifetime — $39.99** with Apple Family Sharing for up to five family members
+- **Family Upgrade — $19.99** for Individual Lifetime owners who later want Family Sharing
 
 Everyone who bought the original `com.bontecou.isome.lifetime` unlock is grandfathered into Family Lifetime automatically. The split is on purpose: tracking is the commodity, but a clean, lossless export of your full history is the part that's worth paying for once. It also keeps the privacy promise free at the door — you never have to pay to keep your data on your device.
 
@@ -170,10 +170,10 @@ The app registers the `isome://` URL scheme. Currently supports:
 
 ## Contributing
 
-Contributions are welcome — bug reports, feature ideas, and pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full setup guide (Xcode, signing, TestFlight) and a list of [good first issues](https://github.com/CodyBontecou/isome/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+Contributions are welcome — bug reports, feature ideas, and pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full setup guide (Xcode, signing, TestFlight) and a list of [good first issues](https://github.com/CodyBontecou/whereday/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
-If you want to chat about the project, design decisions, or what to build next, jump into [GitHub Discussions](https://github.com/CodyBontecou/isome/discussions).
+If you want to chat about the project, design decisions, or what to build next, jump into [GitHub Discussions](https://github.com/CodyBontecou/whereday/discussions).
 
 ## License
 
-iso.me is licensed under the [GNU Affero General Public License v3.0](LICENSE). The AGPL ensures that any modified version of iso.me — including ones run as a hosted service — must also be open source. This protects the privacy-first promise: nobody can take iso.me, bolt on tracking, and ship it as a closed product.
+Whereday is licensed under the [GNU Affero General Public License v3.0](LICENSE). The AGPL ensures that any modified version of Whereday — including ones run as a hosted service — must also be open source. This protects the privacy-first promise: nobody can take Whereday, bolt on tracking, and ship it as a closed product.

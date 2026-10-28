@@ -1,14 +1,14 @@
-# Contributing to iso.me
+# Contributing to Whereday
 
-Thanks for your interest in contributing! iso.me is open source under the [AGPL-3.0](LICENSE), and we welcome bug reports, feature ideas, design feedback, and pull requests.
+Thanks for your interest in contributing! Whereday is open source under the [AGPL-3.0](LICENSE), and we welcome bug reports, feature ideas, design feedback, and pull requests.
 
 ## Ways to contribute
 
-- **Pick up a [good first issue](https://github.com/CodyBontecou/isome/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** — these are scoped and labelled to be approachable.
+- **Pick up a [good first issue](https://github.com/CodyBontecou/whereday/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** — these are scoped and labelled to be approachable.
 - **File a bug** — open an issue with reproduction steps, iOS version, and device.
-- **Propose a feature** — start a thread in [GitHub Discussions](https://github.com/CodyBontecou/isome/discussions) before opening a large PR, so we can align on scope.
+- **Propose a feature** — start a thread in [GitHub Discussions](https://github.com/CodyBontecou/whereday/discussions) before opening a large PR, so we can align on scope.
 - **Improve docs** — typo fixes and clearer explanations are always appreciated.
-- **Hang out** — join the [Isolated Tech Discord](https://discord.gg/jNRWSSSz4N) and say hi in `#iso-me-chat`. Pick the **iso.me** option in onboarding to unlock the channel.
+- **Hang out** — join the [Isolated Tech Discord](https://discord.gg/jNRWSSSz4N) and say hi in `#iso-me-chat`. Pick the **Whereday** option in onboarding to unlock the channel.
 
 ## Development setup
 
@@ -21,8 +21,8 @@ Thanks for your interest in contributing! iso.me is open source under the [AGPL-
 ### Clone and open
 
 ```bash
-git clone https://github.com/CodyBontecou/isome.git iso.me
-cd iso.me
+git clone https://github.com/CodyBontecou/whereday.git whereday
+cd whereday
 open IsoMe.xcodeproj
 ```
 
@@ -130,4 +130,4 @@ Be kind. Assume good faith. Disagree with ideas, not people. If something feels 
 
 ## License
 
-By contributing to iso.me you agree that your contribution will be licensed under the [AGPL-3.0](LICENSE).
+By contributing to Whereday you agree that your contribution will be licensed under the [AGPL-3.0](LICENSE).

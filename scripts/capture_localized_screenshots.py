@@ -18,7 +18,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "IsoMe.xcodeproj"
 COPY_PATH = ROOT / "screenshots/localized-copy.json"
-OUTPUT_ROOT = ROOT / "screenshots/localized"
+OUTPUT_ROOT = ROOT / "screenshots/whereday"
 BUNDLE_ID = "com.bontecou.isome"
 WATCH_BUNDLE_ID = "com.bontecou.isome.watchkitapp"
 
@@ -30,6 +30,7 @@ LOCALES = {
     "fr-FR": ("fr", "fr_FR"),
     "hi": ("hi", "hi_IN"),
     "ja": ("ja", "ja_JP"),
+    "pl": ("pl", "pl_PL"),
     "pt-BR": ("pt-BR", "pt_BR"),
     "ru": ("ru", "ru_RU"),
     "zh-Hans": ("zh-Hans", "zh_CN"),

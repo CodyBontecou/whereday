@@ -1,4 +1,4 @@
-/* iso.me docs — shared styles (adapted from the site's doc template) */
+/* Whereday docs — shared styles (adapted from the site's doc template) */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --paper: #f5f4ef;
@@ -6,12 +6,12 @@
   --card: #ffffff;
   --ink: #1f1f1f;
   --ink-soft: #3a3a38;
-  --mute: #85827e;
+  --mute: #5f5d59;
   --rule: #d2cfca;
   --rule-soft: #e3e0db;
-  --accent: #3274f4;
+  --accent: #1c57ca;
   --accent-soft: rgba(50, 116, 244, 0.10);
-  --lcd: #00c773;
+  --lcd: #006f46;
   --lcd-bg: #e0e6d9;
   --warn-bg: #fdf3e4;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -227,7 +227,7 @@ td strong { color: var(--ink); }
   font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--mute);
 }
-.guide-card h3 {
+.guide-card h2 {
   font-family: var(--display); font-size: 1.08rem; font-weight: 750;
   color: var(--ink); margin: 0; letter-spacing: -0.01em;
 }
@@ -298,3 +298,8 @@ footer {
   .guides { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
 }
+
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.doc-card a { text-decoration: underline; text-underline-offset: 4px; }

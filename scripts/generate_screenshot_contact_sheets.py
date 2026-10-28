@@ -10,8 +10,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "screenshots/localized/appstore"
-OUTPUT = ROOT / "screenshots/localized/contact-sheets"
+SOURCE = ROOT / "screenshots/whereday/ready"
+OUTPUT = ROOT / "screenshots/whereday/contact-sheets"
 FONT = "/System/Library/Fonts/SFNSMono.ttf"
 
 
@@ -39,7 +39,7 @@ def main() -> int:
         root = SOURCE / locale
         canvas = Image.new("RGB", (1500, 1120), "#EAE7DF")
         draw = ImageDraw.Draw(canvas)
-        draw.text((30, 20), f"iso.me localization QA — {locale}", fill="#202020", font=font)
+        draw.text((30, 20), f"Whereday localization QA — {locale}", fill="#202020", font=font)
 
         for index, path in enumerate(sorted((root / "iphone-67").glob("*.png"))):
             paste_thumbnail(canvas, path, (25 + index * 290, 75, 270, 585))

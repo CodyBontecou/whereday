@@ -159,12 +159,150 @@ import SwiftData
 
 @MainActor
 final class WatchLocationSyncImportTests: XCTestCase {
+    private func snapshotData() throws -> Data {
+        let url = try XCTUnwrap(Bundle(for: Self.self).url(
+            forResource: "watch-offline-route", withExtension: "json", subdirectory: "Fixtures"
+        ))
+        return try Data(contentsOf: url)
+    }
+
+    private func snapshotContainer() throws -> ModelContainer {
+        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self,
+                             PhotoMoment.self, SavedPlace.self, CountryStay.self])
+        return try ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    }
+
+    func testOfflineWatchSnapshotReplaysAllBatchesAndSurvivesLostAck() throws {
+        var queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: snapshotData())
+        let container = try snapshotContainer()
+        let receiver = WatchLocationSyncReceiver()
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
+        let first = try XCTUnwrap(queue.makePayload())
+        XCTAssertEqual(first.points.count, 500)
+        queue.registerTransfer(first)
+        let wireData = try JSONEncoder().encode(first)
+        let firstAck = try XCTUnwrap(receiver.importPayloadData(wireData))
+        XCTAssertTrue(firstAck.succeeded)
+        XCTAssertEqual(firstAck.importedPointCount, 500)
+        XCTAssertEqual(firstAck.importedVisitCount, 2)
+
+        // The phone saved the batch, but its acknowledgement was lost. Restart
+        // the Watch from its persisted queue and deliver the same data again.
+        queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: JSONEncoder().encode(queue))
+        let retryAck = try XCTUnwrap(receiver.importPayloadData(wireData))
+        XCTAssertTrue(retryAck.succeeded)
+        XCTAssertEqual(retryAck.importedPointCount, 0)
+        XCTAssertEqual(retryAck.importedVisitCount, 0)
+        let transfer = try XCTUnwrap(queue.pendingTransfers.first)
+        queue.acknowledge(transfer)
+        XCTAssertTrue(queue.needsFollowup(after: transfer))
+        // An ended session must remain queued until its final point batch arrives.
+        XCTAssertEqual(queue.sessions.count, 1)
+        XCTAssertEqual(queue.points.count, 3)
+
+        let last = try XCTUnwrap(queue.makePayload())
+        queue.registerTransfer(last)
+        XCTAssertTrue(try XCTUnwrap(receiver.importPayloadData(JSONEncoder().encode(last))).succeeded)
+        queue.acknowledge(try XCTUnwrap(queue.pendingTransfers.first))
+        XCTAssertTrue(queue.points.isEmpty)
+        XCTAssertTrue(queue.visits.isEmpty)
+        XCTAssertTrue(queue.sessions.isEmpty)
+        XCTAssertNil(queue.makePayload())
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 503)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 2)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 1)
+
+        // Delayed durable delivery after the queue drained is still idempotent.
+        XCTAssertTrue(try XCTUnwrap(receiver.importPayloadData(wireData)).succeeded)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 503)
+    }
+
+    func testSnapshotRejectedBeforePhoneReadyCanRetryWithoutDataLoss() throws {
+        var queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: snapshotData())
+        let payload = try XCTUnwrap(queue.makePayload())
+        queue.registerTransfer(payload)
+        let receiver = WatchLocationSyncReceiver()
+        let data = try JSONEncoder().encode(payload)
+        XCTAssertFalse(try XCTUnwrap(receiver.importPayloadData(data)).succeeded)
+        XCTAssertEqual(queue.points.count, 503)
+        let container = try snapshotContainer()
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
+        XCTAssertTrue(try XCTUnwrap(receiver.importPayloadData(data)).succeeded)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 500)
+    }
+
+    func testLegacyWatchSnapshotRecoversMissingVisitsAndImportsThem() throws {
+        var json = try XCTUnwrap(JSONSerialization.jsonObject(with: snapshotData()) as? [String: Any])
+        json.removeValue(forKey: "visits")
+        json.removeValue(forKey: "visitRecordingVersion")
+        let queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: JSONSerialization.data(withJSONObject: json))
+        XCTAssertEqual(queue.visits.count, 2)
+        let receiver = WatchLocationSyncReceiver()
+        let container = try snapshotContainer()
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
+        // 1.7.13 appended route points but never populated visits. Recreate that
+        // wire payload first: the phone receives points but shows no places.
+        let legacyPayload = WatchLocationSyncPayload(
+            deviceID: queue.deviceID, sequence: 1, isTrackingEnabled: false,
+            activeSessionID: nil, sessions: queue.sessions, points: queue.points
+        )
+        XCTAssertTrue(try XCTUnwrap(receiver.importPayloadData(JSONEncoder().encode(legacyPayload))).succeeded)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 503)
+
+        // An upgraded Watch decodes its still-queued points, reconstructs visits,
+        // and resends. Existing phone points must not be duplicated.
+        let payload = try XCTUnwrap(queue.makePayload())
+        XCTAssertTrue(try XCTUnwrap(receiver.importPayloadData(JSONEncoder().encode(payload))).succeeded)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 2)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 503)
+    }
+
+    func testInvalidWireDataDoesNotImportAnything() throws {
+        let receiver = WatchLocationSyncReceiver()
+        let container = try snapshotContainer()
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
+        XCTAssertNil(receiver.importPayloadData(Data("invalid".utf8)))
+        var payload = try XCTUnwrap(JSONDecoder().decode(WatchLocationSyncState.self, from: snapshotData()).makePayload())
+        payload.version = 999
+        XCTAssertFalse(try XCTUnwrap(receiver.importPayloadData(JSONEncoder().encode(payload))).succeeded)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+    }
+
+    func testSessionOnlyCompletionRefreshesPhoneWithoutNewPointsOrVisits() throws {
+        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self,
+                             PhotoMoment.self, SavedPlace.self, CountryStay.self])
+        let container = try ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let receiver = WatchLocationSyncReceiver()
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
+        let start = Date(timeIntervalSince1970: 1_800_000_000)
+        let sessionID = UUID()
+        var payload = WatchLocationSyncPayload(
+            deviceID: UUID(), sequence: 1, isTrackingEnabled: true,
+            activeSessionID: sessionID,
+            sessions: [.init(id: sessionID, startedAt: start, endedAt: nil)], points: []
+        )
+        XCTAssertTrue(receiver.importPayload(payload).succeeded)
+        // The point/visit batches were already delivered; stopping only changes the session.
+        payload.sequence = 2
+        payload.isTrackingEnabled = false
+        payload.activeSessionID = nil
+        payload.sessions[0].endedAt = start.addingTimeInterval(60)
+        let refreshed = expectation(forNotification: .watchLocationDataImported, object: nil)
+        let ack = receiver.importPayload(payload)
+        XCTAssertTrue(ack.succeeded)
+        XCTAssertEqual(ack.importedSessionCount, 0)
+        wait(for: [refreshed], timeout: 1)
+        let session = try XCTUnwrap(container.mainContext.fetch(FetchDescriptor<RecordingSession>()).first)
+        XCTAssertEqual(session.endedAt, start.addingTimeInterval(60))
+    }
+
     func testWatchPlacesImportOnceAndDepartureRefreshesTimeline() throws {
         let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self,
                              PhotoMoment.self, SavedPlace.self, CountryStay.self])
         let container = try ModelContainer(for: schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         let receiver = WatchLocationSyncReceiver()
-        receiver.configure(modelContainer: container)
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
         var queue = WatchLocationSyncState(deviceID: UUID())
         let start = Date(timeIntervalSince1970: 1_800_000_000)
         let sessionID = UUID()

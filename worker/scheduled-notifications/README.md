@@ -1,4 +1,4 @@
-# iso.me Scheduled Notifications Worker
+# Whereday Scheduled Notifications Worker
 
 Cloudflare Worker that stores routing-only schedule metadata and sends silent APNs pushes for due scheduled exports (once daily or multiple times per day on a fixed interval).
 

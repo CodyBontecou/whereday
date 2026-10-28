@@ -1,0 +1,83 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Export a note, then place it in your vault</h2>
+  <p>To read Whereday location history in Obsidian, export <strong>Visits</strong> as <strong>Markdown</strong>, save the <code>.md</code> file, and copy it into a folder inside your Obsidian vault. Open the note and check the dates and visit table. No Whereday-specific Obsidian plugin is needed for this manual file workflow.</p>
+  <p>This guide covers a manual handoff to an existing desktop vault. Recording and export preview are free; writing the Markdown file requires Whereday’s optional unlock. It does not set up automatic iPhone-to-vault sync.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>From location history to a readable note</strong><ol><li><a href="#choose">Choose visits or route points</a></li><li><a href="#export">Export a Markdown file</a></li><li><a href="#vault">Add the file to a desktop vault</a></li><li><a href="#sample">Try the synthetic example</a></li><li><a href="#updates">Keep updates separate from your writing</a></li><li><a href="#schedule">Understand scheduling and mobile limits</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="choose">
+  <h2 id="choose">Choose Visits for a readable daily journal</h2>
+  <p>A visit export is a practical starting point when you want to remember stops rather than inspect every GPS point. Its Markdown contains date headings and a table with arrival and departure times. Optional columns include duration, coordinates, place name, address, and notes; source and confirmation status are also included.</p>
+  <p>A Points export is different: it lists recorded locations with times and optional speed, altitude, accuracy, and outlier information. A long recording can produce a large table. Markdown does not turn those rows into a route map in Obsidian.</p>
+  <div class="table-scroll" role="region" aria-label="Choose an export for your note" tabindex="0"><table>
+    <caption>Match the file to the task</caption>
+    <thead><tr><th scope="col">What you want</th><th scope="col">Choose</th><th scope="col">Check before saving</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">A list of places and stops</th><td>Visits → Markdown</td><td>Date range, names, notes, and the columns you need</td></tr>
+      <tr><th scope="row">Timestamped GPS rows</th><td>Points → Markdown</td><td>Point count, accuracy filters, and file size</td></tr>
+      <tr><th scope="row">A route for a map viewer</th><td>Points → GPX</td><td>Use the <a href="/blog/record-iphone-route-gpx/">GPX walkthrough</a>; this guide does not add a map plugin</td></tr>
+      <tr><th scope="row">A copy for restoring supported records</th><td>Separate Visits and Points JSON files</td><td>Use the <a href="/blog/back-up-iphone-location-history/">backup checklist</a> alongside your readable notes</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="export">
+  <h2 id="export">1. Export the date range as Markdown</h2>
+  <ol>
+    <li>In Whereday, open Export and select <strong>Visits</strong>.</li>
+    <li>Select <strong>Markdown</strong>. Deselect other formats if you only want the note file.</li>
+    <li>Choose the day or date range. Review duration, completion, and time filters so they do not remove visits you wanted to keep.</li>
+    <li>Choose the visit fields. For a readable note, names and notes may matter more than coordinates. Keep a separate supported backup if you need restoration later.</li>
+    <li>Open Preview. Check a known stop and its date before writing the file.</li>
+    <li>Export to your chosen folder, or use the share sheet to save in Files. Confirm that the <code>.md</code> file exists.</li>
+  </ol>
+  <p>For one file per day, enable the daily output layout and inspect the resolved filename preview. A template such as <code>{date}-visits</code> can make files easier to recognize. Treat it as an example; check the actual generated filename before copying it into your vault.</p>
+  <p>Visit table dates and times are formatted using the device’s calendar and locale. Keep timezone context in a separate note when a trip crosses timezones; do not assume these human-readable times carry the same explicit UTC timestamps as a GPX file.</p>
+</section>
+
+<section aria-labelledby="vault">
+  <h2 id="vault">2. Copy the file into your desktop vault</h2>
+  <p>Make the saved export available on the computer where you use Obsidian. Use a transfer destination you control. This step moves location records outside Whereday’s local journal, so the destination’s storage and sharing settings apply.</p>
+  <ol>
+    <li>Find the folder for the Obsidian vault you intend to use.</li>
+    <li>Create a subfolder such as <code>Location</code> for generated exports.</li>
+    <li>Copy the Markdown file into that subfolder. Keep the original until you have checked the copy.</li>
+    <li>In Obsidian’s file explorer, open the note. Switch to Reading view if you want to inspect the rendered table.</li>
+    <li>Verify the date heading, number of visits, names, and times against Whereday’s Preview.</li>
+  </ol>
+  <p>Obsidian documents both copying Markdown directly into a vault folder and dragging it into the file explorer in its <a href="https://obsidian.md/help/import/markdown">Markdown import guide</a>. Its <a href="https://obsidian.md/help/Files%2Band%2Bfolders/How%2BObsidian%2Bstores%2Bdata">storage guide</a> explains that a vault is a folder of local files and reflects external file changes.</p>
+  <p>If the note is missing, confirm you copied it into the currently open vault rather than a nearby folder. Check that the file extension is <code>.md</code>. If the table is difficult to read, review fewer dates or export fewer optional columns instead of treating the file as a map.</p>
+</section>
+
+<section aria-labelledby="sample">
+  <h2 id="sample">Try a synthetic note without sharing your history</h2>
+  <p><a href="/samples/synthetic-location-journal.md" download>Download the synthetic Markdown journal</a>. It uses two invented stops near latitude zero and longitude zero on January 1, 2000. It is hand-authored to illustrate Whereday’s visit-table structure, not a captured app export.</p>
+  <pre aria-label="Example vault folder layout"><code>Your vault/
+  Location/
+    2000-01-01-visits.md
+  Trip reflections.md</code></pre>
+  <p>The example was copied into a separate temporary desktop vault and opened in Obsidian 1.14.4. Both visit rows, date heading, names, and times rendered in Reading view. That verifies the sample’s desktop Markdown rendering; it does not verify an iPhone export, cloud transfer, mobile folder access, or a scheduled run.</p>
+  <p>Inspect the sample in a separate folder or test vault. It is not needed to import or restore your actual journal.</p>
+</section>
+
+<section aria-labelledby="updates">
+  <h2 id="updates">Keep your writing outside generated files</h2>
+  <p>Use generated location notes as a source you can link to from your own reflections. For example, a separate trip note can contain <code>[[Location/2000-01-01-visits]]</code> alongside your comments. Keep that handwritten note separate from any file an export process may replace.</p>
+  <p>Before adding a newer export for the same day, compare filenames and content. Manual exports can create suffixed filenames instead of replacing an existing file. Two similarly named notes may be two snapshots, not two different journeys.</p>
+  <p>If you intentionally replace a generated note, retain the earlier copy until you have checked the new one. Editing a note in Obsidian does not automatically update the visit in Whereday. This workflow has no bidirectional edit sync.</p>
+</section>
+
+<section aria-labelledby="schedule">
+  <h2 id="schedule">Scheduled files and mobile vaults need separate checks</h2>
+  <p>Whereday’s paid Auto Export feature writes the current local day to a selected folder. A selected folder is not proof that Obsidian can see it, that a cloud service has transferred it, or that the background run succeeded. Start with the manual file handoff above.</p>
+  <p>Auto Export’s Rewrite mode can replace the day’s file. Keep personal writing elsewhere. An update runs on the current day, so enabling it today is not an initial archive of earlier history. Check the latest file and the recorded run result; see the <a href="/docs/automatic-exports/">automatic-export reference</a> for scheduling behavior.</p>
+  <p>For iPhone and iPad vaults, follow <a href="https://obsidian.md/help/sync-notes">Obsidian’s current sync instructions</a>. Its iCloud guidance uses <code>iCloud Drive/Obsidian/[Your Vault Name]</code> and warns against mixing sync services for the same vault. This guide has not verified Whereday’s folder picker or scheduled writes into that mobile vault location.</p>
+  <p>For restorable location records, keep the original supported exports separately. A readable note with omitted coordinates or edited fields may no longer be suitable for Whereday import, even though Obsidian still displays it correctly.</p>
+</section>
+
+<section class="closing" aria-labelledby="keep-readable">
+  <h2 id="keep-readable">Keep the stops readable.<br>Add your own context.</h2>
+  <p>Try free recording and Markdown preview. See <a href="/#pricing">current pricing</a> for the optional file-export unlock.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+<p class="source-note">Reviewed October 26, 2026 against Whereday’s Markdown exporter and Obsidian’s linked documentation. A synthetic note was rendered in a temporary desktop vault. Mobile handoff and scheduled vault delivery remain untested.</p>

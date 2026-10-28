@@ -1,0 +1,42 @@
+executionPrerequisite: Whereday phone app is open on its first Your days, remembered onboarding page. Reuses the recorded five-page onboarding steps; marks onboarding complete without requesting location or notification permissions. Never reset owner data to rerun this fragment.
+steps:
+- await:
+    visible:
+      text: Your days, remembered
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: A journal of where you go
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Record in the background
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Keep recording within reach
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Ready for your next outing
+- await:
+    idle: true
+- tap:
+    text: Open Whereday
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

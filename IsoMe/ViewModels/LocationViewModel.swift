@@ -799,7 +799,7 @@ final class LocationViewModel {
         }
 
         var parts = [
-            String(localized: "\(pointCount) \(pointCount == 1 ? "point" : "points")"),
+            pointCount == 1 ? String(localized: "1 point") : String(localized: "\(pointCount) points"),
             String(localized: "Duration \(formattedSessionTrackingDuration)"),
             String(localized: "Distance \(formattedSessionDistance)")
         ]

@@ -1,0 +1,61 @@
+steps:
+- echo: Disposable mapQa only, fresh onboarding/permission state. Registers the real
+    fused provider and may record temporary GPS points. Never target the owner package.
+    Remove QA app afterward; no export or online map.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Your days, remembered
+- await:
+    idle: true
+- run: map-qa-onboarding.yaml
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    text: Start recording
+- await:
+    visible:
+      text: While using the app
+- await:
+    idle: true
+- tap:
+    id: com.android.permissioncontroller:id/permission_allow_foreground_only_button
+- await:
+    visible:
+      id: com.android.permissioncontroller:id/permission_allow_button
+- await:
+    idle: true
+- tap:
+    id: com.android.permissioncontroller:id/permission_allow_button
+- await:
+    visible:
+      text: Stop recording
+- await:
+    idle: true
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Stop recording
+- await:
+    idle: true
+- tap:
+    text: Stop recording
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

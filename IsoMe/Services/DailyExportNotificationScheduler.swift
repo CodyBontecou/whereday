@@ -81,7 +81,7 @@ struct UserNotificationDailyExportScheduler: DailyExportNotificationScheduling {
 
         let content = makeContent(
             title: String(localized: "Daily Export Ready"),
-            body: String(localized: "Tap to run your scheduled iso.me export if it hasn't completed."),
+            body: String(localized: "Tap to run your scheduled Whereday export if it hasn't completed."),
             fireDate: fireDate,
             reason: nil
         )
@@ -101,9 +101,9 @@ struct UserNotificationDailyExportScheduler: DailyExportNotificationScheduling {
 
         let body: String
         if let reason, !reason.isEmpty {
-            body = String(localized: "Tap to retry your scheduled iso.me export. \(reason)")
+            body = String(localized: "Tap to retry your scheduled Whereday export. \(reason)")
         } else {
-            body = String(localized: "Tap to retry your scheduled iso.me export.")
+            body = String(localized: "Tap to retry your scheduled Whereday export.")
         }
 
         let request = UNNotificationRequest(

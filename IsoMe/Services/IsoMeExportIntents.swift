@@ -4,7 +4,7 @@ import Foundation
 // MARK: - Flexible Export
 
 /// App-intent mirror of `ExportOptions.DataKind` so Shortcuts can pick which
-/// slice of IsoMe data a custom-range export includes.
+/// slice of Whereday data a custom-range export includes.
 enum IsoMeExportDataKind: String, AppEnum {
     case visits
     case points
@@ -50,7 +50,7 @@ enum ExportDataParameterResolution {
 
 struct ExportDataIntent: AppIntent {
     static var title: LocalizedStringResource = "Export Data"
-    static var description = IntentDescription("Export IsoMe visits, points, or outings for a chosen date range as a file.")
+    static var description = IntentDescription("Export Whereday visits, points, or outings for a chosen date range as a file.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Start Date")

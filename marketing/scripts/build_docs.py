@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
-"""Generate the iso.me docs section (marketing/public/docs/*.html)."""
+"""Generate the Whereday docs section (marketing/public/docs/*.html)."""
 import pathlib, html
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "public" / "docs"
-BASE = "https://isome.isolated.tech/docs/"
-UPDATED = "August 22, 2026"
+BASE = "https://whereday.com/docs/"
+UPDATED = "October 26, 2026"
+REVIEWED = {"getting-started", "tracking", "export-import", "privacy-data", "apple-watch", "webhooks", "timeline-outings"}
 
 GUIDES = [
     # (slug, title, short, lede, platform, minutes, tag)
     ("getting-started", "Getting started",
      "Install, onboarding, permissions, and your first tracking session.",
-     "Everything from installing iso.me to your first recorded day — what each permission is for and where your data lives from minute one.",
+     "Everything from installing Whereday to your first recorded day — what each permission is for and where your data lives from minute one.",
      "iOS 17+", 3, None),
     ("tracking", "Visits, routes & battery",
      "How automatic visit detection and route recording work, and the settings that control them.",
-     "iso.me records two kinds of history: places you visit automatically, and routes you record deliberately. Here is how each works and how to tune accuracy, battery, and auto-stop.",
+     "Start records GPS routes and monitors visits together. Learn the shared controls, permissions, distance filter, and auto-stop timer.",
      "iOS 17+", 4, None),
     ("timeline-outings", "Timeline & outings",
      "The daily timeline, inferred outings, route replay, and editing or deleting sessions.",
@@ -26,27 +27,27 @@ GUIDES = [
      "iOS 17+", 3, None),
     ("photos", "Photos on the map",
      "Optionally connect your Photos library to place pictures on your map and outings.",
-     "An opt-in connection between your photo library and your location journal. Photo files never leave your library — iso.me only matches metadata.",
+     "An opt-in connection between your photo library and your location journal. Photo files never leave your library — Whereday only matches metadata.",
      "iOS 17+", 2, None),
-    ("export-import", "Export & import",
+    ("export-import", "Export and restore location history",
      "Eight export formats, filters, filename templates, and free import for restores.",
-     "Your journal is yours. Export visits, points, and outings in eight formats with precise filtering, split per-day files and templated names — then import a prior export back, for free.",
+     "Export recorded visits, route points, and outings in eight formats. Preview is free; writing files requires Pro. Import supported Whereday visit and point files for free.",
      "iOS 17+", 5, "PRO"),
     ("automatic-exports", "Automatic exports",
      "Schedule exports once a day or every few hours, keeping one file per day.",
      "Auto Export writes your day to a folder you choose, on a schedule you choose — daily or as often as every hour — with rewrite and append modes that keep each day's file consistent.",
      "iOS 17+", 4, "PRO"),
     ("webhooks", "Webhooks & self-hosting",
-     "Stream points and visits to OwnTracks, Overland, Dawarich, or any endpoint.",
+     "Configure optional delivery and verify your receiver’s payload and authentication requirements.",
      "The optional webhook feature posts your data, in your chosen format, to a server you control. Off by default, fully configurable, and nothing is sent until you set it up.",
      "iOS 17+", 4, "PRO"),
     ("siri-shortcuts", "Siri & Shortcuts",
      "Nine actions for tracking, stats, renaming, and exports.",
-     "iso.me exposes nine App Intents that work in the Shortcuts app, from Siri, and from automations like the Action Button — including exports handed straight to other apps.",
+     "Whereday exposes nine App Intents that work in the Shortcuts app, from Siri, and from automations like the Action Button — including exports handed straight to other apps.",
      "iOS 17+", 3, None),
-    ("apple-watch", "Apple Watch",
+    ("apple-watch", "Record Apple Watch GPS routes without your iPhone",
      "Independent watch tracking, offline sync, and complications.",
-     "The Watch app records routes with its own GPS session — no iPhone required — and syncs them back automatically. Complications keep today's stats on your watch face.",
+     "Start a route on Apple Watch, record without your iPhone nearby, then check the transfer back to your phone. Learn the recording controls, sync status, and recovery checks.",
      "watchOS 10+", 3, None),
     ("privacy-data", "Privacy & your data",
      "What stays on your device, what can leave it, and how deletion works.",
@@ -58,19 +59,19 @@ BODIES = {}
 
 BODIES["getting-started"] = """
 <h2>Install and open</h2>
-<p>iso.me is a free download on the App Store. There is no account to create and nothing to sign up for — the first thing you see is a five-step introduction.</p>
+<p>Whereday is a free download on the App Store. There is no account to create and nothing to sign up for — the first thing you see is a five-step introduction.</p>
 
 <h2>The onboarding steps</h2>
 <ol>
-<li><strong>Welcome</strong> — a short overview of what iso.me records and where it keeps it.</li>
+<li><strong>Welcome</strong> — a short overview of what Whereday records and where it keeps it.</li>
 <li><strong>Core features</strong> — visit timeline, route recording, and exports at a glance.</li>
-<li><strong>Permission setup</strong> — iso.me asks for <em>While Using</em> location access first, then offers <em>Always</em>. <strong>Always</strong> is what enables automatic visit detection while the app is in the background; you can decline and still use manual tracking. If permission is denied, the app links you straight to iOS Settings.</li>
+<li><strong>Permission setup</strong> — Whereday asks for <em>While Using</em> location access first, then offers <em>Always</em>. <strong>Always</strong> is what enables automatic visit detection while the app is in the background; you can decline and still use manual tracking. If permission is denied, the app links you straight to iOS Settings.</li>
 <li><strong>Connect Photos (optional)</strong> — you can enable photo moments now or skip entirely. Skipping changes nothing else.</li>
-<li><strong>You're all set</strong> — optionally tick <em>Start tracking immediately</em> and iso.me begins recording the moment onboarding finishes.</li>
+<li><strong>You're all set</strong> — optionally tick <em>Start tracking immediately</em> and Whereday begins recording the moment onboarding finishes.</li>
 </ol>
 
 <h2>After onboarding</h2>
-<p>You land on the <strong>Map</strong> tab. The other tabs are <strong>Timeline</strong> (your day, visit by visit), <strong>Export</strong>, and <strong>Settings</strong>. The floating pill on the map starts and stops route recording; visits are detected automatically whenever <em>Always</em> location permission is granted and tracking is on.</p>
+<p>You land on the <strong>Map</strong> tab. The other tabs are <strong>Timeline</strong> (your day, visit by visit), <strong>Export</strong>, and <strong>Settings</strong>. The floating pill on the map starts and stops both GPS recording and visit monitoring. With <em>Always</em> permission, recording can continue in the background. Installing the app does not reconstruct earlier history.</p>
 
 <h2>Your first day</h2>
 <ul>
@@ -87,19 +88,20 @@ BODIES["getting-started"] = """
 
 BODIES["tracking"] = """
 <h2>Two kinds of history</h2>
-<p>iso.me records <strong>visits</strong> (places you arrive at and depart from — automatic) and <strong>routes</strong> (continuous GPS paths — recorded while tracking is on). Both run from a single Start button.</p>
+<p>Whereday records <strong>visits</strong> (arrivals and departures) and <strong>routes</strong> (GPS paths). <strong>Start enables visit monitoring, significant location changes, and detailed GPS together; Stop ends all three.</strong> There is no separate passive visit-only recording mode. Always location permission allows background recording.</p>
 
 <h2>Starting and stopping</h2>
 <ul>
 <li><strong>Map pill</strong> — the floating control on the Map tab shows live duration and distance while recording.</li>
 <li><strong>Live Activity</strong> — lock screen and Dynamic Island show progress and include a Stop button.</li>
-<li><strong>Siri / Shortcuts</strong> — “Start iso.me” and “Stop tracking with iso.me” phrases work hands-free.</li>
+<li><strong>Siri / Shortcuts</strong> — “Start Whereday” and “Stop tracking with Whereday” phrases work hands-free.</li>
 <li><strong>Auto-stop timer</strong> — optional safety net that ends tracking automatically.</li>
 </ul>
-<p>Tracking state survives relaunches: if iso.me was recording when you last used your phone, it resumes when you open it again. If iOS relaunches the app in the background for a location event, recording continues without you touching anything.</p>
+<p>For a walkthrough, see <a href="/blog/private-location-journal-iphone/">how to keep a private location journal</a> or <a href="/blog/record-iphone-route-gpx/">record an iPhone route and export GPX</a>.</p>
+<p>Tracking state survives relaunches: if Whereday was recording when you last used your phone, it resumes when you open it again. If iOS relaunches the app in the background for a location event, recording continues without you touching anything.</p>
 
 <h2>Visit detection</h2>
-<p>Visits use iOS visit monitoring plus significant-location-change triggers. When you arrive somewhere, iso.me creates a visit; when you leave, it closes it. Behind the scenes iso.me also merges duplicate detections of the same stop (within roughly 100 meters and half an hour) and closes any visit left open when a new arrival makes it clearly stale — so you don't accumulate phantom “current” pins.</p>
+<p>Visits use iOS visit monitoring plus significant-location-change triggers. When you arrive somewhere, Whereday creates a visit; when you leave, it closes it. Behind the scenes Whereday also merges duplicate detections of the same stop (within roughly 100 meters and half an hour) and closes any visit left open when a new arrival makes it clearly stale — so you don't accumulate phantom “current” pins.</p>
 <p>New visits are reverse-geocoded to a name and address automatically, unless you've turned <strong>Settings → Location tracking → Location names</strong> off (this toggle controls whether coordinates are sent to Apple's geocoding service).</p>
 
 <h2>Route recording quality</h2>
@@ -111,22 +113,24 @@ BODIES["tracking"] = """
 <h2>Tracking settings reference</h2>
 <table>
 <tr><th>Setting</th><th>Options</th><th>Default</th><th>What it does</th></tr>
-<tr><td><strong>Distance filter</strong></td><td>5 / 10 / 25 / 50 / 100 / 200 m</td><td>5 m</td><td>How far you must move before a new route point is recorded. Higher values save battery and shrink files.</td></tr>
+<tr><td><strong>Distance filter</strong></td><td>5 / 10 / 25 / 50 / 100 / 200 m</td><td>5 m</td><td>Movement threshold requested for location updates. Larger values may reduce point density and detail; high-accuracy GPS remains active.</td></tr>
 <tr><td><strong>Stop after</strong></td><td>Never / 1 / 2 / 4 / 8 / 12 h</td><td>Never</td><td>Automatically ends tracking after this long, so a forgotten session can't run all day.</td></tr>
 <tr><td><strong>Location names</strong></td><td>On / Off</td><td>On</td><td>Whether coordinates are sent to Apple's geocoding service to name visits.</td></tr>
 <tr><td><strong>Live Activity</strong></td><td>On / Off</td><td>On</td><td>Lock screen / Dynamic Island status while tracking.</td></tr>
 <tr><td><strong>Units</strong></td><td>Metric / US</td><td>Metric</td><td>Applies everywhere: app, widgets, Live Activity, watch.</td></tr>
 </table>
 
-<div class="callout"><p><strong>Battery.</strong> High-accuracy route recording uses real GPS and costs real battery — that's why it's a deliberate Start/Stop action rather than always-on. Visit detection alone is comparatively light. For long days, consider a 25–50 m distance filter and the auto-stop timer.</p></div>
+<div class="callout"><p><strong>Battery.</strong> Tracking includes detailed GPS as well as visit monitoring, so it uses battery for as long as recording stays on. Stop when you finish, consider a 25–50 m distance filter, and set an auto-stop timer. Check the resulting route before relying on a larger filter; no battery duration is guaranteed. Follow the <a href="/blog/iphone-location-tracking-battery/">battery-use comparison checklist</a> to check the tradeoff on your own phone.</p></div>
+<p>If a recorded day looks incomplete, follow the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> before deleting records or retrying an import.</p>
+
 """
 
 BODIES["timeline-outings"] = """
 <h2>The day view</h2>
-<p>The <strong>Timeline</strong> tab shows one day at a time: visits and movement sessions interleaved in order, with a day summary of moves, visits, and total distance. Step through days with the arrows, jump straight to Today, or pick any date. If today is empty, iso.me automatically opens your most recent day with data.</p>
+<p>The <strong>Timeline</strong> tab shows one day at a time: visits and movement sessions interleaved in order, with a day summary of moves, visits, and total distance. Step through days with the arrows, jump straight to Today, or pick any date. If today is empty, Whereday automatically opens your most recent day with data.</p>
 
 <h2>Recorded vs inferred outings</h2>
-<p>A movement session (<em>outing</em>) is <strong>recorded</strong> when you pressed Start, and <strong>inferred</strong> when iso.me notices a stretch of GPS points that clearly forms a trip — including older data recorded before outings existed, or imported from your Watch. Inferred outings wear an <code>INFERRED</code> badge; the live one wears <code>LIVE</code>.</p>
+<p>A movement session (<em>outing</em>) is <strong>recorded</strong> when you pressed Start, and <strong>inferred</strong> when Whereday notices a stretch of GPS points that clearly forms a trip — including older data recorded before outings existed, or imported from your Watch. Inferred outings wear an <code>INFERRED</code> badge; the live one wears <code>LIVE</code>.</p>
 <p>Inference is configurable in <strong>Settings → Inferred outings</strong>:</p>
 <table>
 <tr><th>Setting</th><th>Options</th><th>Default</th></tr>
@@ -149,11 +153,13 @@ BODIES["timeline-outings"] = """
 
 <h2>Sorting</h2>
 <p>Outing lists can be sorted by newest, oldest, longest duration, distance, or point count.</p>
+<p>If a recorded day looks incomplete, follow the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> before deleting records or retrying an import.</p>
+
 """
 
 BODIES["places"] = """
 <h2>The visit lifecycle</h2>
-<p>Every visit carries a status: <strong>unconfirmed</strong> (as detected), <strong>confirmed</strong> (you approved it), or <strong>corrected</strong> (you changed the name, address, or location). iso.me never lets automatic geocoding overwrite a visit you've touched — your edits are final until you undo them.</p>
+<p>Every visit carries a status: <strong>unconfirmed</strong> (as detected), <strong>confirmed</strong> (you approved it), or <strong>corrected</strong> (you changed the name, address, or location). Whereday never lets automatic geocoding overwrite a visit you've touched — your edits are final until you undo them.</p>
 
 <h2>Confirming and correcting</h2>
 <ul>
@@ -185,19 +191,19 @@ BODIES["places"] = """
 
 BODIES["photos"] = """
 <h2>What it does</h2>
-<p>With photo moments enabled, iso.me can show geotagged photos from your library as markers on the map — clustered when they're close together — and attach them to the outings and visits they belong to. It's an entirely optional layer: off until you turn it on.</p>
+<p>With photo moments enabled, Whereday can show geotagged photos from your library as markers on the map — clustered when they're close together — and attach them to the outings and visits they belong to. It's an entirely optional layer: off until you turn it on.</p>
 
 <h2>How photos are placed</h2>
 <p>Each photo is matched to a location using the first source that works:</p>
 <ol>
 <li><strong>The photo's own GPS</strong> — geotagged photos are placed exactly where they were taken.</li>
-<li><strong>Your route</strong> — otherwise iso.me looks for the nearest recorded GPS point within about 15 minutes of the capture time.</li>
+<li><strong>Your route</strong> — otherwise Whereday looks for the nearest recorded GPS point within about 15 minutes of the capture time.</li>
 <li><strong>A visit</strong> — otherwise, if the capture time falls inside a visit (with a little grace), the photo attaches to that place.</li>
 </ol>
 <p>Photos that match none of these are simply skipped.</p>
 
 <h2>Privacy mechanics</h2>
-<div class="callout"><p><strong>Photo files never leave your Photos library.</strong> iso.me stores only each photo's local identifier and match metadata on-device. Nothing is uploaded, and limited-access mode is fully supported — only the photos you've selected for iso.me will appear.</p></div>
+<div class="callout"><p><strong>Photo files never leave your Photos library.</strong> Whereday stores only each photo's local identifier and match metadata on-device. Nothing is uploaded, and limited-access mode is fully supported — only the photos you've selected for Whereday will appear.</p></div>
 
 <h2>Controls</h2>
 <ul>
@@ -206,7 +212,7 @@ BODIES["photos"] = """
 <li><strong>Thumbnails on markers</strong> can be turned off if you prefer plain pins.</li>
 <li>Tap any marker for a quick view, or open it full-screen to swipe through the day's photos.</li>
 </ul>
-<p>If a photo disappears from your library (with full access), iso.me cleans up its record automatically.</p>
+<p>If a photo disappears from your library (with full access), Whereday cleans up its record automatically.</p>
 """
 
 BODIES["export-import"] = """
@@ -215,7 +221,7 @@ BODIES["export-import"] = """
 <h2>Eight formats</h2>
 <table>
 <tr><th>Format</th><th>Best for</th></tr>
-<tr><td><strong>JSON</strong></td><td>Lossless backups, scripts, and tooling.</td></tr>
+<tr><td><strong>JSON</strong></td><td>Structured visit and point records, scripts, and tooling.</td></tr>
 <tr><td><strong>CSV</strong></td><td>Spreadsheets and analysis.</td></tr>
 <tr><td><strong>Markdown</strong></td><td>Human-readable journals — single outings export as a front-matter page with visits and route points.</td></tr>
 <tr><td><strong>GeoJSON</strong></td><td>Mapping tools and GIS.</td></tr>
@@ -241,7 +247,7 @@ BODIES["export-import"] = """
 <p><code>{date}</code> <code>{year}</code> <code>{month}</code> <code>{dayNumber}</code> <code>{weekday}</code> <code>{monthName}</code> <code>{quarter}</code> <code>{datetime}</code> <code>{time}</code> <code>{day}</code> <code>{type}</code> <code>{title}</code> <code>{name}</code> <code>{format}</code></p>
 <ul>
 <li>Use <code>/</code> in a template to build dated subfolders.</li>
-<li>Built-in presets: <em>Readable</em> (default) <code>iso.me - {day} {date} - {type}</code>, <em>Compact</em>, and <em>Dated</em> <code>{year}/{year}-{month}/Daily Track - {date}</code>.</li>
+<li>Built-in presets: <em>Readable</em> (default) <code>Whereday - {day} {date} - {type}</code>, <em>Compact</em>, and <em>Dated</em> <code>{year}/{year}-{month}/Daily Track - {date}</code>.</li>
 <li>A live preview shows the resolved path as you type.</li>
 </ul>
 
@@ -256,7 +262,26 @@ BODIES["export-import"] = """
 <p>Pick a <strong>default folder</strong> (with auto-save on by default) and exports land there silently with a confirmation toast; otherwise the standard share sheet appears. The <strong>Preview</strong> button renders everything without writing — free, and a good way to sanity-check filters. Single outings can also be exported straight from their detail page.</p>
 
 <h2>Import</h2>
-<p>Settings → <strong>Import file</strong> restores a prior export. JSON, CSV, and Markdown round-trip fully, including correction history and glitch flags. GPX, KML, and GeoJSON are one-way <em>map</em> formats and can't be imported. Importing is free.</p>
+<p>Settings → <strong>Import file</strong> accepts visit and point files exported from Whereday as JSON, CSV, or Markdown. Importing is free. A matching file extension alone does not make another app's file compatible: Google Timeline archives are not supported.</p>
+<table>
+<caption>Choose a file for the next task</caption>
+<tr><th scope="col">Format</th><th scope="col">Useful for</th><th scope="col">Import into Whereday</th></tr>
+<tr><th scope="row">Whereday JSON</th><td>Structured visit or point records</td><td>Supported visit and point exports</td></tr>
+<tr><th scope="row">Whereday CSV / Markdown</th><td>Spreadsheets / readable records</td><td>Supported visit and point exports; required fields must remain</td></tr>
+<tr><th scope="row">GPX / KML / GeoJSON</th><td>Mapping tools and route viewers</td><td>No</td></tr>
+<tr><th scope="row">OwnTracks / Overland</th><td>Compatible location tools</td><td>No</td></tr>
+</table>
+<h2>Keep a copy and check it</h2>
+<ol>
+<li>Select visits or route points, JSON, and the dates you want to retain. Export each data type you need; keep all generated files.</li>
+<li>Preview the result. Check that filters, field choices, and dates have not excluded required records.</li>
+<li>Export to a folder you control and confirm the files exist in Files before deleting or replacing anything.</li>
+<li>When importing later, keep the originals and inspect several dates, visits, and points after the import. Do not assume every setting, photo association, or edited outing is restored.</li>
+</ol>
+<p><a href="/docs/automatic-exports/">Automatic exports</a> can keep scheduled copies, subject to iOS background execution. For the recording workflow, see <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>. For a route file, follow <a href="/blog/record-iphone-route-gpx/">the GPX recording walkthrough</a>. For restorable records, use <a href="/blog/back-up-iphone-location-history/">the backup and restore checklist</a>. Comparing apps? Read <a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a>.</p>
+<p>Import adds supported records; do not assume overlapping files are merged or deduplicated. Import each intended file once, then check the result before retrying. The <a href="/blog/back-up-iphone-location-history/#sample">synthetic JSON examples</a> show the visit and point structures without using private history.</p>
+<p>For a readable note in a desktop vault, follow the <a href="/blog/iphone-location-journal-obsidian/">Markdown-to-Obsidian workflow</a>. It covers manual file placement and keeps generated notes separate from personal writing.</p>
+
 """
 
 BODIES["automatic-exports"] = """
@@ -283,7 +308,7 @@ BODIES["automatic-exports"] = """
 <p>iOS never guarantees background execution, so Auto Export layers its chances:</p>
 <ul>
 <li><strong>Background refresh</strong> — iOS schedules the app to wake near each run.</li>
-<li><strong>A silent push</strong> — iso.me's scheduling service nudges the app at the fire time. The service only ever holds timing metadata (your time zone, the schedule, a push token) — never location records, file contents, or folder names.</li>
+<li><strong>A silent push</strong> — Whereday's scheduling service nudges the app at the fire time. The service only ever holds timing metadata (your time zone, the schedule, a push token) — never location records, file contents, or folder names.</li>
 <li><strong>A fallback notification</strong> — if nothing ran by a minute after the scheduled time, you get a tappable “Daily Export Ready” notification; tapping runs it.</li>
 <li><strong>Catch-up</strong> — opening the app runs any overdue occurrence automatically.</li>
 </ul>
@@ -297,14 +322,15 @@ BODIES["webhooks"] = """
 <div class="callout pro"><p><strong>Pro feature, off by default.</strong> Webhooks can send your location data off your device — to a server <em>you</em> choose. Nothing is sent until you configure an endpoint, and the settings screen leads with a prominent warning card.</p></div>
 
 <h2>What it's for</h2>
-<p>If you run your own location infrastructure — <a href="https://dawarich.app" rel="noopener">Dawarich</a>, an OwnTracks recorder, Traccar, or anything that accepts HTTP posts — webhooks turn iso.me into a source for it. Known-good endpoint patterns:</p>
+<p>Webhooks deliver records to a receiver you choose, but the payload must match that receiver's API. An endpoint accepting HTTP POST is not enough to establish compatibility. Verify a dedicated test destination before enabling delivery of your history.</p>
 <table>
 <tr><th>Service</th><th>Endpoint shape</th><th>Format</th></tr>
-<tr><td>Dawarich</td><td><code>…/api/v1/owntracks/points</code></td><td>OwnTracks</td></tr>
-<tr><td>OwnTracks recorder</td><td><code>…/pub</code></td><td>OwnTracks</td></tr>
-<tr><td>Traccar</td><td>per your installation</td><td>JSON / OwnTracks</td></tr>
-<tr><td>Anything else</td><td>any HTTPS URL</td><td>any of the 8 formats</td></tr>
+<tr><td>Dawarich batch receiver</td><td><code>…/api/v1/overland/batches</code></td><td>Overland; verify against your instance before use</td></tr>
+<tr><td>OwnTracks receiver</td><td>per your installation</td><td>Verify it accepts arrays of location messages</td></tr>
+<tr><td>Other receiver</td><td>its documented HTTPS endpoint</td><td>Use its required schema and authentication</td></tr>
 </table>
+
+<p>Whereday encodes OwnTracks points as an array, including a single point. Dawarich's current OwnTracks receiver expects individual point fields, so do not assume those two shapes are interchangeable. Its Overland batch receiver is a different protocol. Check <a href="https://dawarich.app/docs/getting-started/track-your-location/">Dawarich's receiver documentation</a> and confirm actual imported points; a completed Whereday-to-Dawarich walkthrough is not yet verified here.</p>
 
 <h2>Configuration</h2>
 <ul>
@@ -321,25 +347,25 @@ BODIES["webhooks"] = """
 <tr><td><strong>By time</strong></td><td>Queued points flush every 1–60 minutes.</td></tr>
 <tr><td><strong>Manual</strong></td><td>Nothing sends automatically; <strong>Send now</strong> posts your entire saved history (visits and points).</td></tr>
 </table>
-<p>Batch modes show a live queue count with a <strong>Flush queue</strong> button. Failed sends retry automatically with backoff on network errors and server hiccups (5xx, timeouts, rate limits); authentication failures don't retry — they surface as an error. <strong>Test connection</strong> posts a single harmless sample point so you can verify an endpoint before committing.</p>
+<p>Batch modes show a live queue count with a <strong>Flush queue</strong> button. Failed sends retry automatically with backoff on network errors and server hiccups (5xx, timeouts, rate limits); authentication failures don't retry — they surface as an error. <strong>Test connection</strong> POSTs a synthetic point at latitude 0, longitude 0, with a current timestamp. A receiver can store it. A successful HTTP response confirms acceptance of that request, not that a real route was correctly imported.</p>
 
 <div class="callout warn"><p><strong>Know your destination.</strong> This is the one feature that transmits your location data off-device. Use endpoints you trust (ideally your own servers), and remember queued-but-unsent points in batch modes are lost if iOS terminates the app before a flush.</p></div>
 """
 
 BODIES["siri-shortcuts"] = """
 <h2>Nine actions</h2>
-<p>Every action runs without opening the app. Find them in the Shortcuts app under iso.me, or just talk to Siri.</p>
+<p>Every action runs without opening the app. Find them in the Shortcuts app under Whereday, or just talk to Siri.</p>
 <table>
 <tr><th>Action</th><th>What it does</th><th>Siri phrase example</th></tr>
-<tr><td><strong>Start Tracking</strong></td><td>Begins a recording session.</td><td>“Start iso.me”</td></tr>
-<tr><td><strong>Stop Tracking</strong></td><td>Ends the session — even if the app isn't running.</td><td>“Stop tracking with iso.me”</td></tr>
-<tr><td><strong>Rename Current Outing</strong></td><td>Sets the active outing's name (parameter: name).</td><td>“Name my iso.me outing”</td></tr>
-<tr><td><strong>Today's Distance</strong></td><td>Returns how far you've moved today.</td><td>“How far have I gone with iso.me?”</td></tr>
-<tr><td><strong>Today's Tracking Duration</strong></td><td>Returns how long the session has run.</td><td>“iso.me tracking duration”</td></tr>
-<tr><td><strong>Today's Visits</strong></td><td>Returns today's visit count.</td><td>“How many visits today in iso.me?”</td></tr>
-<tr><td><strong>Export Today's Data</strong></td><td>Produces a file of today's visits and route (parameter: format, default JSON).</td><td>“Export today's data from iso.me”</td></tr>
-<tr><td><strong>Export Today's Outings</strong></td><td>Same, for outings.</td><td>“Export today's iso.me outings”</td></tr>
-<tr><td><strong>Export Yesterday's Data</strong></td><td>Yesterday's visits and route as a file.</td><td>“Export yesterday's iso.me tracks”</td></tr>
+<tr><td><strong>Start Tracking</strong></td><td>Begins a recording session.</td><td>“Start Whereday”</td></tr>
+<tr><td><strong>Stop Tracking</strong></td><td>Ends the session — even if the app isn't running.</td><td>“Stop tracking with Whereday”</td></tr>
+<tr><td><strong>Rename Current Outing</strong></td><td>Sets the active outing's name (parameter: name).</td><td>“Name my Whereday outing”</td></tr>
+<tr><td><strong>Today's Distance</strong></td><td>Returns how far you've moved today.</td><td>“How far have I gone with Whereday?”</td></tr>
+<tr><td><strong>Today's Tracking Duration</strong></td><td>Returns how long the session has run.</td><td>“Whereday tracking duration”</td></tr>
+<tr><td><strong>Today's Visits</strong></td><td>Returns today's visit count.</td><td>“How many visits today in Whereday?”</td></tr>
+<tr><td><strong>Export Today's Data</strong></td><td>Produces a file of today's visits and route (parameter: format, default JSON).</td><td>“Export today's data from Whereday”</td></tr>
+<tr><td><strong>Export Today's Outings</strong></td><td>Same, for outings.</td><td>“Export today's Whereday outings”</td></tr>
+<tr><td><strong>Export Yesterday's Data</strong></td><td>Yesterday's visits and route as a file.</td><td>“Export yesterday's Whereday tracks”</td></tr>
 </table>
 
 <h2>Automation ideas</h2>
@@ -347,57 +373,77 @@ BODIES["siri-shortcuts"] = """
 <li>Bind <strong>Start Tracking</strong> to the <strong>Action Button</strong> for one-press recording.</li>
 <li>An automation that runs <strong>Export Today's Data</strong> every evening and hands the file to another shortcut — your own export pipeline.</li>
 <li>Ask Siri for <strong>Today's Visits</strong> or <strong>Distance</strong> as a daily digest.</li>
-<li>Rename an outing mid-hike: “Name my iso.me outing Ridge Trail.”</li>
+<li>Rename an outing mid-hike: “Name my Whereday outing Ridge Trail.”</li>
 </ul>
 <p>Export actions produce a file in your chosen format that Shortcuts can save, message, or pass to other apps.</p>
 """
 
 BODIES["apple-watch"] = """
-<h2>An independent recorder</h2>
-<p>The iso.me Watch app isn't a remote control — it's a full tracker with its own GPS session. It installs and runs on its own (no iPhone required nearby), records routes with fitness-grade accuracy, and queues everything <strong>offline</strong> until it can sync.</p>
+<h2>Record on the Watch, then check the phone copy</h2>
+<p>Whereday can record GPS points on Apple Watch without the iPhone nearby. The Watch keeps a local queue for transfer to the companion iPhone. Recording and reviewing history are free; writing export files on the phone requires the optional unlock.</p>
+<p>Install the Watch app and allow its location request. The phone app is needed to review transferred records in its journal and use its export workflow. Controls can vary by version; if a control described below is missing, check the available app update.</p>
 
-<h2>On the watch</h2>
-<ul>
-<li><strong>Start / Stop</strong> — one button; permission is requested on first start.</li>
-<li><strong>Status card</strong> — live elapsed timer (plus remaining auto-stop time when one is set from the phone).</li>
-<li><strong>Today card</strong> — visits, distance, and points recorded today, with a <strong>Reset today</strong> button for a fresh start.</li>
-<li><strong>Location card</strong> — current coordinates and last update time.</li>
-</ul>
-<p>Watch-recorded distance uses sensible heuristics: fixes must be accurate (≤ 100 m), movement under 10 m doesn't accumulate, and a new “visit” is counted after about 100 m of displacement. Day counters roll over automatically at local midnight.</p>
+<h2>Before your first route</h2>
+<ol>
+<li>Open Whereday on the Watch. If it asks for location access, respond to the permission prompt. If access was denied, review the Watch's location settings.</li>
+<li>Tap <strong>Start</strong> and confirm the status changes from standby to tracking. After an initial permission request, check the state rather than assuming a recording began.</li>
+<li>Try a short route first. Look for the elapsed time and point count to change before relying on a longer session.</li>
+<li>When finished, tap <strong>Stop</strong> on the Watch. Confirm it has left the tracking state.</li>
+</ol>
+<p>Recording away from the phone is separate from syncing to it. You do not need an active phone connection for the Watch to collect points, but the phone must be available later for transfer. GPS conditions, permission, battery, and watchOS behavior can affect the recording.</p>
 
-<h2>Sync back to the iPhone</h2>
-<p>Recorded points are queued durably on the watch and transferred automatically — every 25 points, at session start and end, and whenever the phone is reachable — then merged into your iPhone history. The merge is idempotent: re-syncing never duplicates anything, and the phone reverse-geocodes the imported visits so they get proper names. Recording works fully offline; sync catches up whenever it can.</p>
-
-<h2>Complications</h2>
-<p>Four watch-face families show today's status at a glance:</p>
+<h2>Sync and verify the result</h2>
+<ol>
+<li>Bring the paired Watch and iPhone together and open Whereday on the iPhone.</li>
+<li>Open Whereday on the Watch. If available in your version, tap <strong>Sync Now</strong> and read the status.</li>
+<li>In the phone app, open Timeline for the day of the recording. Check the outing and use its map to inspect the expected points and times.</li>
+<li>Check both route points and visits. A transferred route is not proof that every stop was detected or named correctly.</li>
+</ol>
 <table>
-<tr><th>Family</th><th>Shows</th></tr>
-<tr><td><strong>Circular</strong></td><td>Tracking status icon + today's visit count.</td></tr>
-<tr><td><strong>Rectangular</strong></td><td>Status, current place, visits, distance, auto-off time remaining.</td></tr>
-<tr><td><strong>Inline</strong></td><td>One line: “N visits • distance” or “Tracking Off”.</td></tr>
-<tr><td><strong>Corner</strong></td><td>Status icon with a visit-count label.</td></tr>
+<caption>Read the sync state before retrying</caption>
+<tr><th scope="col">Watch status</th><th scope="col">What to do next</th></tr>
+<tr><th scope="row">Connecting to iPhone</th><td>Keep the paired devices available and open the phone app.</td></tr>
+<tr><th scope="row">Sync queued</th><td>The request is queued. Check the phone result; this is not confirmation that every record is imported.</td></tr>
+<tr><th scope="row">Synced with iPhone</th><td>The phone acknowledged the delivered data. Still check the intended day and route.</td></tr>
+<tr><th scope="row">Nothing to sync</th><td>Check the phone's existing history and the selected day. An empty pending queue is not a full history report.</td></tr>
 </table>
-<p>Complication data refreshes about every 5 minutes while tracking and 15 minutes otherwise, and immediately after each sync.</p>
+<p>Completed transfers are acknowledged by the phone; points remain in the Watch queue until acknowledged. This helps retry delivery, but the queue is not a full backup of history already transferred. Do not uninstall the Watch app as a first troubleshooting step.</p>
 
-<div class="callout"><p><strong>Units:</strong> the watch follows your iPhone's Metric / US setting where available; on its own it derives units from the watch's locale.</p></div>
+<h2>If the route is missing or incomplete</h2>
+<ul>
+<li><strong>Nothing recorded:</strong> check the Watch's location permission, tracking state, and whether the point count advanced during the session.</li>
+<li><strong>Watch has data, phone looks empty:</strong> check the recording date, open both apps, and read the Watch sync status before starting another route.</li>
+<li><strong>Points arrived but visits differ:</strong> Watch visits are derived from recorded movement and are not identical to the iPhone's automatic visit detection. Check the route itself and correct places where needed.</li>
+<li><strong>Older app version:</strong> an update can change sync behavior, but cannot recreate every record that is no longer retained. Keep existing data while diagnosing a gap.</li>
+</ul>
+<p>If a retry does not resolve it, contact support with the app versions, recording date, and exact sync message. You can describe the missing period without sending your private route.</p>
+
+<h2>Daily counters and complications</h2>
+<p>The Watch shows tracking state, elapsed time, coordinates, distance, points, and a movement-based visit count. Its visit counter is not a count of named places confirmed by the iPhone. <strong>Reset today</strong> resets the Watch's daily counters; it does not restore missing records or delete the iPhone's imported history.</p>
+<p>Circular, rectangular, inline, and corner complications offer glanceable status. A complication is a snapshot, so open the Watch app to inspect the current recording and sync state.</p>
+
+<h2>Keep a portable copy after syncing</h2>
+<p>Once the route is visible on the phone, follow <a href="/blog/record-iphone-route-gpx/">the GPX walkthrough</a> to open it in another route tool, or <a href="/blog/back-up-iphone-location-history/">back up supported visits and points</a> for later import. See <a href="/docs/timeline-outings/">Timeline and outings</a> for reviewing the transferred day.</p>
+<p>If a recorded day looks incomplete, follow the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> before deleting records or retrying an import.</p>
+
 """
 
 BODIES["privacy-data"] = """
 <h2>The short version</h2>
-<p>Your location history — visits, routes, outings, saved places, photo matches — is stored in the app's on-device database and <strong>nowhere else</strong>. There is no iso.me account, no cloud sync, and no iso.me server holding your location data. The full legal text is the <a href="/privacy">Privacy Policy</a>; this guide is the plain-language version.</p>
+<p>Your location history — visits, routes, outings, saved places, photo matches — is stored in the app's on-device database and <strong>nowhere else</strong>. There is no Whereday account, no cloud sync, and no Whereday server holding your location data. The full legal text is the <a href="/privacy">Privacy Policy</a>; this guide is the plain-language version.</p>
 
 <h2>Everything that can leave your device</h2>
 <table>
 <tr><th>Where</th><th>What's sent</th><th>When</th><th>Off switch</th></tr>
 <tr><td><strong>Apple geocoding</strong></td><td>Coordinates of a visit (to fetch its name/address)</td><td>When naming visits</td><td>Settings → Location names</td></tr>
 <tr><td><strong>Apple Maps</strong></td><td>Search terms / route segment endpoints (place search, suggestions, road-matched lines, lock-screen map images)</td><td>When you use those features</td><td>Features are opt-in per use; road-matching toggle in map filters</td></tr>
-<tr><td><strong>iso.me analytics</strong> (first-party, on by default)</td><td>Which onboarding steps were viewed, permission choices, purchase outcomes, app version, and a random install ID — <strong>never</strong> coordinates, visits, routes, or anything you type</td><td>During onboarding and purchases</td><td>None in-app today; deleting the app removes the install ID</td></tr>
+<tr><td><strong>Whereday analytics</strong> (first-party, on by default)</td><td>Which onboarding steps were viewed, permission choices, purchase outcomes, app version, and a random install ID — <strong>never</strong> coordinates, visits, routes, or anything you type</td><td>During onboarding and purchases</td><td>None in-app today; deleting the app removes the install ID</td></tr>
 <tr><td><strong>Export scheduler</strong></td><td>Time zone, schedule times, push token, random install ID — <strong>timing metadata only</strong>, no location or file contents</td><td>Only if you enable Auto Export</td><td>Turn Auto Export off</td></tr>
 <tr><td><strong>Your webhook</strong></td><td>Location points and visits, in your chosen format</td><td>Only after you configure an endpoint</td><td>Disable webhooks (off by default)</td></tr>
 </table>
 
 <h2>Photos</h2>
-<p>The photo feature reads your library on-device to match pictures to places. Photo files are never copied or uploaded; iso.me keeps only local identifiers and match metadata, and respects limited-access mode.</p>
+<p>The photo feature reads your library on-device to match pictures to places. Photo files are never copied or uploaded; Whereday keeps only local identifiers and match metadata, and respects limited-access mode.</p>
 
 <h2>Deleting your data</h2>
 <ul>
@@ -407,9 +453,9 @@ BODIES["privacy-data"] = """
 </ul>
 
 <h2>Backups are your job (by design)</h2>
-<p>Because nothing is synced to a cloud, there is no server copy to fall back on. Export regularly — JSON round-trips losslessly through import, and Auto Export can do it for you every day. See <a href="/docs/export-import">Export &amp; import</a>.</p>
+<p>Because nothing is synced to a cloud, there is no server copy to fall back on. Export regularly — supported Whereday JSON files can restore visit and point records, and Auto Export can do it for you every day. See <a href="/docs/export-import">Export &amp; import</a>.</p>
 
-<h2>Permissions iso.me requests</h2>
+<h2>Permissions Whereday requests</h2>
 <table>
 <tr><th>Permission</th><th>Why</th></tr>
 <tr><td><strong>Location — Always</strong></td><td>Automatic visit detection in the background (While-Using still works for manual sessions).</td></tr>
@@ -423,7 +469,7 @@ SHELL = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>__TITLE__ — iso.me Docs</title>
+  <title>__TITLE__ — Whereday Docs</title>
   <meta name="description" content="__DESC__">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="__CANONICAL__">
@@ -432,35 +478,40 @@ SHELL = """<!DOCTYPE html>
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/docs/docs.css">
+  <style>__DOCS_CSS__</style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <nav class="top" aria-label="Primary navigation">
     <div class="nav-inner">
-      <a href="/" class="brand" aria-label="iso.me home">
-        <img src="/app-icon-28.png" srcset="/app-icon-28.png 1x, /app-icon-84.png 3x" alt="" width="26" height="26">
+      <a href="/" class="brand" aria-label="Whereday home">
+        <img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" alt="" width="26" height="26">
         <span class="brand-dot" aria-hidden="true"></span>
-        ISO.ME
+        WHEREDAY
       </a>
       <div class="nav-links">
         <a href="/#features">Features</a>
         <a href="/#pricing">Pricing</a>
-        <a href="/docs/"__DOCS_CURRENT__>Docs</a>
+        <a href="/docs/" aria-current="page">Docs</a>
         <a href="/terms">Terms</a>
-        <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn">Download</a>
+        <a href="https://apps.apple.com/app/id6761960794" class="btn">Download</a>
       </div>
     </div>
   </nav>
 
+<main id="main">
 __BODY__
+  </main>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="dot"></span>
-        © 2026 ISO.ME · BUILT WITH CARE
+        © 2026 WHEREDAY · BUILT WITH CARE
       </div>
       <div class="footer-links">
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
         <a href="/privacy">Privacy</a>
@@ -475,7 +526,7 @@ __BODY__
     'instareply.isolated.tech': true,
     'voxboard.isolated.tech': true,
     'healthmd.isolated.tech': true,
-    'isome.isolated.tech': true,
+    'whereday.com': true,
     'gitsyncmd.isolated.tech': true,
     'timemd.isolated.tech': true,
     'imghost.isolated.tech': true
@@ -520,6 +571,8 @@ __BODY__
 </html>
 """
 
+SHELL = SHELL.replace("__DOCS_CSS__", (OUT / "docs.css").read_text())
+
 GUIDE_PAGE = """
   <header class="doc-head">
     <span class="eyebrow">§ Docs · Guide __NUM__ of __TOTAL__</span>
@@ -546,13 +599,13 @@ __NEXT__
 
 INDEX_PAGE = """
   <header class="doc-head">
-    <span class="eyebrow">§ Docs · iso.me handbook</span>
+    <span class="eyebrow">§ Docs · Whereday handbook</span>
     <h1>Documentation</h1>
-    <p class="lede">Practical guides for every corner of iso.me — tracking, timelines, exports, automation, the Watch app, and privacy. Written against the shipping app, updated with it.</p>
+    <p class="lede">Practical guides for every corner of Whereday — tracking, timelines, exports, automation, the Watch app, and privacy. Written against the shipping app, updated with it.</p>
     <div class="meta-strip">
       <div><div class="k">Guides</div><div class="v">__TOTAL__</div></div>
       <div><div class="k">Updated</div><div class="v">__UPDATED__</div></div>
-      <div><div class="k">Covers</div><div class="v">iso.me 1.7 · iOS 17+ · watchOS 10+</div></div>
+      <div><div class="k">Covers</div><div class="v">Whereday 1.7 · iOS 17+ · watchOS 10+</div></div>
       <div><div class="k">Questions</div><div class="v"><a href="mailto:cody.bontecou@gmail.com">Email us</a></div></div>
     </div>
   </header>
@@ -589,7 +642,7 @@ def build():
         body = body.replace("__TITLE__", html.escape(title))
         body = body.replace("__LEDE__", html.escape(lede))
         body = body.replace("__PLATFORM__", html.escape(platform))
-        body = body.replace("__UPDATED__", UPDATED)
+        body = body.replace("__UPDATED__", UPDATED if slug in REVIEWED else "August 22, 2026")
         body = body.replace("__MINUTES__", str(minutes))
         body = body.replace("__CONTENT__", BODIES[slug].strip())
         body = body.replace("__PREV__", pager_link("prev", prev_g))
@@ -599,8 +652,7 @@ def build():
                 .replace("__TITLE__", html.escape(title))
                 .replace("__DESC__", html.escape(short))
                 .replace("__CANONICAL__", BASE + slug + "/")
-                .replace("__BODY__", body)
-                .replace(' href="/docs/"', ' href="/docs/" aria-current="page"'))
+                .replace("__BODY__", body))
         (OUT / slug).mkdir(exist_ok=True)
         (OUT / slug / "index.html").write_text(page)
         print(f"wrote docs/{slug}/index.html")
@@ -613,19 +665,18 @@ def build():
             f'      <a class="guide-card" href="/docs/{slug}/">\n'
             f'        {tag_html}\n'
             f'        <span class="num">{"%02d" % (i + 1)}</span>\n'
-            f'        <h3>{html.escape(title)}</h3>\n'
+            f'        <h2>{html.escape(title)}</h2>\n'
             f'        <p>{html.escape(short)}</p>\n'
             f'      </a>')
     index = (SHELL
              .replace("__TITLE__", "Documentation")
-             .replace("__DESC__", "Practical guides for every corner of iso.me: tracking, timelines, exports, automation, the Apple Watch app, and privacy.")
+             .replace("__DESC__", "Practical guides for every corner of Whereday: tracking, timelines, exports, automation, the Apple Watch app, and privacy.")
              .replace("__CANONICAL__", BASE)
              .replace("__BODY__",
                       INDEX_PAGE
                       .replace("__TOTAL__", str(total))
                       .replace("__UPDATED__", UPDATED)
-                      .replace("__CARDS__", "\n".join(cards)))
-             .replace(' href="/docs/"', ' href="/docs/" aria-current="page"'))
+                      .replace("__CARDS__", "\n".join(cards))))
     (OUT / "index.html").write_text(index)
     print("wrote docs/index.html")
 

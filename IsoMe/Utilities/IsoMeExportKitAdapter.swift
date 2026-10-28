@@ -1,9 +1,9 @@
 import Foundation
 import ExportKit
 
-/// App-local bridge from iso.me's SwiftData models and export settings into the
+/// App-local bridge from Whereday's SwiftData models and export settings into the
 /// domain-free ExportKit primitives. ExportKit never sees `Visit`,
-/// `LocationPoint`, or iso.me's UI/settings copy except through this adapter.
+/// `LocationPoint`, or Whereday's UI/settings copy except through this adapter.
 struct IsoMeExportSnapshot: ExportRecord {
     let id: String
     let exportDate: Date
@@ -778,7 +778,7 @@ enum IsoMeExportKitAdapter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyyMMdd-HHmmss"
-        return "iso.me-outing-\(outing.sequenceNumber)-\(formatter.string(from: outing.startedAt))"
+        return "Whereday-outing-\(outing.sequenceNumber)-\(formatter.string(from: outing.startedAt))"
     }
 
     private static func outingFilenameSuffix(for outing: RecordingSessionSummary, includesTimeToken: Bool) -> String {
@@ -820,7 +820,7 @@ enum IsoMeExportKitAdapter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd"
-        return "iso.me-\(dataKind.rawValue)-\(formatter.string(from: day))"
+        return "Whereday-\(dataKind.rawValue)-\(formatter.string(from: day))"
     }
 
     private static func uniqueFilename(

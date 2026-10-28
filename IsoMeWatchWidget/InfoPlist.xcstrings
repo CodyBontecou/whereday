@@ -7,61 +7,67 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday"
           }
         }
       }
@@ -128,6 +134,12 @@
             "state": "translated",
             "value": "IsoMeWatchWidgetExtension"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IsoMeWatchWidgetExtension"
+          }
         }
       }
     },
@@ -189,6 +201,12 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ""
+          }
+        },
+        "pl": {
           "stringUnit": {
             "state": "translated",
             "value": ""

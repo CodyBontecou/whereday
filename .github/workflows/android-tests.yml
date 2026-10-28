@@ -1,0 +1,187 @@
+name: Android tests
+
+on:
+  pull_request:
+    paths: ['android/**', 'worker/android-purchases/**', 'worker/onboarding-analytics/**', 'shared-fixtures/**', 'IsoMe/Services/IntervalExportScheduleDateMath.swift', 'IsoMe/Models/CountryStay.swift', 'IsoMe/Models/FilenameTemplate.swift', 'IsoMe/Models/Visit.swift', 'IsoMe/Utilities/SavedPlaceImportService.swift', 'IsoMe/Utilities/SavedPlaceManagement.swift', 'IsoMe/Models/RecordingSession.swift', 'IsoMe/Models/LocationPoint.swift', 'IsoMe/Utilities/ExportService.swift', 'IsoMe/Utilities/ImportService.swift', 'IsoMe/Services/LocationManager.swift', 'IsoMe/Utilities/ScheduledExportMergeStrategies.swift', 'IsoMe.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', '.github/workflows/android-tests.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Verify domains, formats and Android build
+        run: ./gradlew :domain:test :export:test :export:streamingImportBudgetTest :export:streamingGpxBudgetTest :billing:test :platform:testDebugUnitTest :geography:test :geography-assets:test :app:lintDebug :app:assembleDebug --no-daemon
+      - name: Verify iOS schedule fixture provenance
+        run: python3 scripts/generate_schedule_fixtures.py --check-source
+      - name: Verify iOS merge fixture provenance
+        run: python3 scripts/generate_merge_fixtures.py --check-source
+      - name: Verify iOS country CSV fixture provenance
+        run: python3 scripts/generate_country_csv_fixtures.py --check-source
+      - name: Verify iOS outing fixture provenance
+        run: python3 scripts/generate_outing_fixtures.py --check-source
+      - name: Verify iOS history import fixture provenance
+        run: python3 scripts/generate_history_import_fixtures.py --check-source
+      - name: Verify iOS visit reconciliation fixture provenance
+        run: python3 scripts/generate_visit_reconciliation_fixtures.py --check-source
+      - name: Verify iOS GPX fixture provenance
+        run: python3 scripts/generate_gpx_fixtures.py --check-source
+      - name: Verify iOS filename fixture provenance
+        run: python3 scripts/generate_filename_fixtures.py --check-source
+      - name: Verify iOS saved-place fixture provenance
+        run: |
+          python3 scripts/generate_saved_place_csv_fixtures.py --check-source
+          python3 scripts/generate_saved_place_plan_fixtures.py --check-source
+          python3 scripts/generate_replay_fixtures.py --check-source
+          python3 scripts/generate_photo_fixtures.py --check-source
+          python3 scripts/generate_photo_cluster_fixtures.py --check-source
+      - name: Verify native 16 KB page alignment
+        run: python3 scripts/verify_native_page_sizes.py app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-build-reports
+          path: |
+            android/app/build/reports/lint-results-debug.*
+            android/domain/build/reports/tests/
+            android/export/build/reports/tests/
+            android/export/build/test-results/streamingImportBudgetTest/
+            android/export/build/test-results/streamingGpxBudgetTest/
+            android/export/build/history-interop/
+            android/billing/build/reports/tests/
+            android/platform/build/reports/tests/
+            android/geography/build/reports/tests/
+            android/geography-assets/build/reports/tests/
+            android/platform/build/generated/geography-assets/timezones/provenance.json
+
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Run synthetic persistence, migration and country-analysis regressions
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: |
+            ./gradlew :automation-client:assembleDebug --no-daemon
+            adb install -r automation-client/build/outputs/apk/debug/automation-client-debug.apk
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.PhotoMapRenderingTest,com.bontecou.whereday.PhotoStripInteractionTest,com.bontecou.whereday.PhotoPagingInteractionTest,com.bontecou.whereday.PhotoPickerContractTest,com.bontecou.whereday.WebhookGraphIntegrationTest,com.bontecou.whereday.WebhookScreenTest,com.bontecou.whereday.WebhookNavigationIntegrationTest,com.bontecou.whereday.EditorBackGuardTest,com.bontecou.whereday.AutomationClearIntegrationTest,com.bontecou.whereday.AutomationScreenTest,com.bontecou.whereday.AutomationTransportTest,com.bontecou.whereday.LauncherShortcutsTest,com.bontecou.whereday.LauncherLifecycleTest,com.bontecou.whereday.OnboardingReadyTest,com.bontecou.whereday.HistoryImportScreenTest,com.bontecou.whereday.MapFollowTest,com.bontecou.whereday.SupportScreenTest,com.bontecou.whereday.SupportNavigationTest,com.bontecou.whereday.UsageAnalyticsScreenTest,com.bontecou.whereday.UsageAnalyticsNavigationTest,com.bontecou.whereday.UsageAnalyticsConsentIntegrationTest --no-daemon
+            adb uninstall com.bontecou.whereday.automationclient
+            ./gradlew :data:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.notClass=com.bontecou.whereday.data.HistoryScalingTest --no-daemon
+            ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.PhotoLibraryControllerTest,com.bontecou.whereday.platform.PhotoSyncSpoolTest,com.bontecou.whereday.platform.PhotoLibraryAccessTest,com.bontecou.whereday.platform.AutomaticPhotoSyncTest,com.bontecou.whereday.platform.PhotoSourceTest,com.bontecou.whereday.platform.PhotoIdentityTest,com.bontecou.whereday.platform.RecordingNotificationTest,com.bontecou.whereday.platform.RecordingCommandsTest,com.bontecou.whereday.platform.FusedLocationSourceTest,com.bontecou.whereday.platform.MapLocationSourceTest,com.bontecou.whereday.platform.CurrentVisitLocationSourceTest,com.bontecou.whereday.platform.SystemPlaceLookupTest,com.bontecou.whereday.platform.PurchaseIdentityTest,com.bontecou.whereday.platform.PurchaseUsageIntegrationTest,com.bontecou.whereday.platform.AutomationControllerTest,com.bontecou.whereday.platform.AutomationExecutorTest,com.bontecou.whereday.platform.AutomationAccessTest,com.bontecou.whereday.platform.AutomationProtocolTest,com.bontecou.whereday.platform.UsageAnalyticsStoreTest,com.bontecou.whereday.platform.UsageAnalyticsWorkTest,com.bontecou.whereday.platform.AutomationResultsTest,com.bontecou.whereday.platform.AutomationResultProviderTest,com.bontecou.whereday.platform.WebhookSettingsStoreTest,com.bontecou.whereday.platform.WebhookDeliveryTest,com.bontecou.whereday.platform.WebhookCoordinatorTest,com.bontecou.whereday.platform.WebhookWorkTest,com.bontecou.whereday.platform.WebhookControllerTest,com.bontecou.whereday.platform.ReviewMilestoneStoreTest,com.bontecou.whereday.platform.PlayReviewHostTest,com.bontecou.whereday.platform.ExportFilesTest,com.bontecou.whereday.platform.LegacyMarkdownPersistenceTest,com.bontecou.whereday.platform.HistoryImportTargetTest,com.bontecou.whereday.platform.DiskHistoryImportTest,com.bontecou.whereday.platform.ImportResourceBoundsTest,com.bontecou.whereday.platform.CountryFileExportTest,com.bontecou.whereday.platform.OutingFileExportTest,com.bontecou.whereday.platform.BulkOutingFileExportTest,com.bontecou.whereday.platform.ExportRecoveryTest,com.bontecou.whereday.platform.ExportSettingsTest,com.bontecou.whereday.platform.ScheduledMergeTest,com.bontecou.whereday.platform.ScheduledDocumentWriterTest,com.bontecou.whereday.platform.ScheduledExportCoordinatorTest,com.bontecou.whereday.platform.ScheduledExportWorkTest --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-database-reports
+          path: |
+            android/app/build/reports/androidTests/
+            android/app/build/outputs/androidTest-results/
+            android/data/build/reports/androidTests/
+            android/data/build/outputs/androidTest-results/
+            android/platform/build/reports/androidTests/
+            android/platform/build/outputs/androidTest-results/
+
+  purchase-verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: worker/android-purchases
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: worker/android-purchases/package-lock.json
+      - run: npm ci
+      - run: npm run types
+      - run: npm run check
+      - run: npm test
+      - run: npm run dry-run
+
+
+  analytics-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: worker/onboarding-analytics
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: worker/onboarding-analytics/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  import-scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Review, import, deduplicate and clear one million records per format
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.DiskHistoryImportScaleTest --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-import-scale-reports
+          path: |
+            android/platform/build/reports/androidTests/
+            android/platform/build/outputs/androidTest-results/

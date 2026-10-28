@@ -60,7 +60,7 @@ struct VisitEntity: AppEntity {
     }
 
     static func displayName(customName: String?, locationName: String?, address: String?) -> String {
-        normalized(customName) ?? normalized(locationName) ?? normalized(address) ?? "Visit"
+        normalized(customName) ?? normalized(locationName) ?? normalized(address) ?? String(localized: "Visit")
     }
 
     /// Same trim/nil guarding as `Visit.normalizedCustomName` in

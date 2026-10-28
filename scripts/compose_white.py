@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-iso.me App Store Screenshot Composer — white bg / black text variant.
+Whereday App Store Screenshot Composer — white bg / black text variant.
 
 Ported from ~/.claude-personal/skills/aso-appstore-screenshots/compose.py
 with text fill flipped to black, default background to white, and optional
@@ -72,9 +72,9 @@ def hex_to_rgb(h):
 
 def load_font(font_path, size, ttc_index=0, variation=None):
     try:
-        font = ImageFont.truetype(font_path, size, index=ttc_index)
+        font = ImageFont.truetype(font_path, size, index=ttc_index, layout_engine=ImageFont.Layout.BASIC if font_path == FONT_OVERRIDES["ar"] else None)
     except (TypeError, OSError):
-        font = ImageFont.truetype(font_path, size)
+        font = ImageFont.truetype(font_path, size, layout_engine=ImageFont.Layout.BASIC if font_path == FONT_OVERRIDES["ar"] else None)
     if variation:
         try:
             font.set_variation_by_name(variation)
@@ -193,7 +193,7 @@ def compose(
     )
 
     brand_font = load_font(DEFAULT_FONT, 48)
-    draw_centered(draw, 92, "iso.me", brand_font, text_color)
+    draw_centered(draw, 92, "Whereday", brand_font, text_color)
 
     y = 190
     y = draw_centered(
@@ -255,7 +255,7 @@ def compose(
 
 
 def main():
-    p = argparse.ArgumentParser(description="iso.me App Store screenshot composer")
+    p = argparse.ArgumentParser(description="Whereday App Store screenshot composer")
     p.add_argument("--verb", required=True)
     p.add_argument("--desc", required=True)
     p.add_argument("--screenshot", required=True)

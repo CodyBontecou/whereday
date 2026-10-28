@@ -8,7 +8,7 @@ enum ImportError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unsupportedFormat:
-            return String(localized: "Unsupported file format. Import currently supports JSON, CSV, or Markdown files exported from iso.me. KML, GPX, and GeoJSON exports are one-way map files.")
+            return String(localized: "Unsupported file format. Import currently supports JSON, CSV, or Markdown files exported from Whereday. KML, GPX, and GeoJSON exports are one-way map files.")
         case .invalidData(let detail):
             return String(format: String(localized: "Invalid data: %@"), detail)
         case .parsingFailed(let detail):
@@ -173,8 +173,10 @@ struct ImportService {
             }
         case .markdown:
             if let text = String(data: data, encoding: .utf8) {
-                if text.contains("# iso.me Location Points Export") { return .locationPoints }
-                if text.contains("# iso.me Export") { return .visits }
+                let headers = markdownHeaders(text)
+                if !headers.visits && headers.points { return .locationPoints }
+                if (text.contains("# Whereday Location Points Export") || text.contains("# iso.me Location Points Export")) { return .locationPoints }
+                if (text.contains("# Whereday Export") || text.contains("# iso.me Export")) { return .visits }
             }
         case .owntracks, .overland, .gpx, .kml, .geojson:
             return .locationPoints
@@ -185,6 +187,24 @@ struct ImportService {
     // MARK: - Unified Import
 
     static func importFile(data: Data, format: ExportFormat) throws -> (visits: [ImportedVisit], points: [ImportedLocationPoint]) {
+        // Combined history files are one import operation, not a choice between their subjects.
+        if format == .json,
+           let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+           root["visits"] != nil, root["points"] != nil {
+            return (try importVisits(data: data, format: format), try importLocationPoints(data: data, format: format))
+        }
+        if format == .markdown, let text = String(data: data, encoding: .utf8) {
+            let headers = markdownHeaders(text)
+            if headers.visits && headers.points {
+                return (headers.visitRows == 0 ? [] : try importVisits(data: data, format: format),
+                        headers.pointRows == 0 ? [] : try importLocationPoints(data: data, format: format))
+            }
+        }
+        if format == .csv, let text = String(data: data, encoding: .utf8),
+           let sections = combinedCSVSections(text) {
+            return (sections.visitRows == 0 ? [] : try importVisits(data: sections.visits, format: format),
+                    sections.pointRows == 0 ? [] : try importLocationPoints(data: sections.points, format: format))
+        }
         let dataType = detectDataType(from: data, format: format)
 
         switch dataType {
@@ -195,6 +215,54 @@ struct ImportService {
             let points = try importLocationPoints(data: data, format: format)
             return (visits: [], points: points)
         }
+    }
+
+    private static func markdownHeaders(_ text: String) -> (visits: Bool, points: Bool, visitRows: Int, pointRows: Int) {
+        var visits = false
+        var points = false
+        var visitRows = 0
+        var pointRows = 0
+        var subject: ImportDataType?
+        for line in text.components(separatedBy: "\n") {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if trimmed.hasPrefix("## ") { subject = nil; continue }
+            guard trimmed.hasPrefix("|") else { continue }
+            let cells = parseMarkdownTableCells(trimmed)
+            if isMarkdownSeparator(cells) { continue }
+            if cells.first == "Arrived" { visits = true; subject = .visits }
+            else if cells.first == "Time" { points = true; subject = .locationPoints }
+            else {
+                switch subject {
+                case .visits: visitRows += 1
+                case .locationPoints: pointRows += 1
+                case nil: break
+                }
+            }
+        }
+        return (visits, points, visitRows, pointRows)
+    }
+
+    // Split logical CSV rows, so a quoted multiline note cannot create a false section boundary.
+    private static func combinedCSVSections(_ text: String) -> (visits: Data, points: Data, visitRows: Int, pointRows: Int)? {
+        let rows = parseCSVRows(text)
+        guard rows.contains(where: { $0.first == "arrived_at" }), rows.contains(where: { $0.first == "timestamp" }) else { return nil }
+        var visits: [[String]] = []
+        var points: [[String]] = []
+        var subject: ImportDataType?
+        for row in rows {
+            if row.first == "arrived_at" { subject = .visits }
+            else if row.first == "timestamp" { subject = .locationPoints }
+            else if row.allSatisfy({ $0.isEmpty }) || (row.count == 1 && row[0].hasPrefix("#")) { continue }
+            switch subject {
+            case .visits: visits.append(row)
+            case .locationPoints: points.append(row)
+            case nil: break
+            }
+        }
+        func encode(_ rows: [[String]]) -> Data {
+            Data((rows.map { row in row.map { "\"" + $0.replacingOccurrences(of: "\"", with: "\"\"") + "\"" }.joined(separator: ",") }.joined(separator: "\n") + "\n").utf8)
+        }
+        return (encode(visits), encode(points), max(0, visits.count - 1), max(0, points.count - 1))
     }
 
     // MARK: - Visit Import
@@ -486,7 +554,10 @@ struct ImportService {
             throw ImportError.invalidData(String(localized: "Could not read file as UTF-8 text"))
         }
 
-        if content.contains("| Arrived | Departed |") {
+        if content.components(separatedBy: "\n").contains(where: { line in
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            return trimmed.hasPrefix("|") && parseMarkdownTableCells(trimmed).first == "Arrived"
+        }) {
             return try importVisitTableFromMarkdown(content)
         }
 
@@ -589,80 +660,63 @@ struct ImportService {
 
     private static func importVisitTableFromMarkdown(_ content: String) throws -> [ImportedVisit] {
         var visits: [ImportedVisit] = []
-        let lines = content.components(separatedBy: "\n")
-
         var currentDate: Date?
         var header: [String] = []
-
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .full
         dateFormatter.timeStyle = .none
-
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .none
         timeFormatter.timeStyle = .short
 
-        for line in lines {
+        for line in content.components(separatedBy: "\n") {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
-
             if trimmed.hasPrefix("## ") {
-                let dateStr = String(trimmed.dropFirst(3))
-                if let date = dateFormatter.date(from: dateStr) {
-                    currentDate = date
-                }
+                currentDate = dateFormatter.date(from: String(trimmed.dropFirst(3)))
                 header = []
                 continue
             }
-
             guard trimmed.hasPrefix("|") else { continue }
-            if trimmed.contains("---") { continue }
-
             let cells = parseMarkdownTableCells(trimmed)
+            if isMarkdownSeparator(cells) { continue }
             if cells.first == "Arrived" {
                 header = cells
                 continue
             }
-
-            guard let date = currentDate, !header.isEmpty, cells.count >= header.count else { continue }
-            let colIndex = Dictionary(uniqueKeysWithValues: header.enumerated().map { ($1, $0) })
-
-            guard let arrivedCol = colIndex["Arrived"],
-                  let latCol = colIndex["Lat"],
-                  let lonCol = colIndex["Lon"] else {
+            // A combined file may contain point tables; never treat them as visits.
+            if cells.first == "Time" { header = []; continue }
+            guard !header.isEmpty, cells.count == header.count else { continue }
+            let columns = try markdownColumns(header)
+            guard let arrivedCol = columns["Arrived"], let latCol = columns["Lat"], let lonCol = columns["Lon"] else {
                 throw ImportError.invalidData(String(localized: "Markdown visit table is missing required columns"))
             }
-
-            guard let arrivalTime = timeFormatter.date(from: cells[arrivedCol]) else {
+            guard let arrivedAt = markdownTimestamp(cells[arrivedCol], date: currentDate, formatter: timeFormatter) else {
                 throw ImportError.invalidData(String(localized: "Invalid Markdown visit arrival time"))
             }
-            guard let latitude = Double(cells[latCol]),
-                  let longitude = Double(cells[lonCol]) else {
+            guard let latitude = Double(cells[latCol]), let longitude = Double(cells[lonCol]) else {
                 throw ImportError.invalidData(String(localized: "Invalid Markdown visit coordinates"))
             }
-
-            let departedAt: Date? = colIndex["Departed"].flatMap { col in
-                let value = cells[col]
-                guard value != "-", let time = timeFormatter.date(from: value) else { return nil }
-                return combineDateAndTime(date: date, time: time)
+            let departedAt: Date?
+            if let value = columns["Departed"].flatMap({ optionalMarkdownCell(cells[$0]) }) {
+                guard let departure = markdownTimestamp(value, date: currentDate, formatter: timeFormatter) else {
+                    throw ImportError.invalidData(String(localized: "Invalid Markdown visit departure time"))
+                }
+                departedAt = departure
+            } else {
+                departedAt = nil
             }
-
             visits.append(ImportedVisit(
-                latitude: latitude,
-                longitude: longitude,
-                arrivedAt: combineDateAndTime(date: date, time: arrivalTime),
-                departedAt: departedAt,
-                locationName: optionalMarkdownCell(colIndex["Location"].map { cells[$0] }),
-                address: optionalMarkdownCell(colIndex["Address"].map { cells[$0] }),
-                notes: optionalMarkdownCell(colIndex["Notes"].map { cells[$0] }),
-                sourceRaw: optionalMarkdownCell(colIndex["Source"].map { cells[$0] })?.lowercased(),
-                confirmationStatusRaw: optionalMarkdownCell(colIndex["Status"].map { cells[$0] })?.lowercased()
+                latitude: latitude, longitude: longitude, arrivedAt: arrivedAt, departedAt: departedAt,
+                locationName: optionalMarkdownCell(columns["Location"].map { cells[$0] }),
+                address: optionalMarkdownCell(columns["Address"].map { cells[$0] }),
+                notes: optionalMarkdownCell(columns["Notes"].map { cells[$0] }),
+                sourceRaw: optionalMarkdownCell(columns["Source"].map { cells[$0] })?.lowercased(),
+                confirmationStatusRaw: optionalMarkdownCell(columns["Status"].map { cells[$0] })?.lowercased()
             ))
         }
-
-        if visits.isEmpty {
+        guard !visits.isEmpty else {
             throw ImportError.invalidData(String(localized: "No visits found in Markdown file"))
         }
-
         return visits
     }
 
@@ -672,80 +726,75 @@ struct ImportService {
         guard let content = String(data: data, encoding: .utf8) else {
             throw ImportError.invalidData(String(localized: "Could not read file as UTF-8 text"))
         }
-
         var points: [ImportedLocationPoint] = []
-        let lines = content.components(separatedBy: "\n")
-
         var currentDate: Date?
-
+        var header: [String]?
+        var visitingTable = false
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .full
         dateFormatter.timeStyle = .none
-
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .none
         timeFormatter.timeStyle = .medium
+        let legacyColumns = ["Time", "Lat", "Lon", "Speed", "Altitude", "Accuracy", "Outlier"]
 
-        for line in lines {
+        for line in content.components(separatedBy: "\n") {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
-
-            // Date header: ## Thursday, April 7, 2026
             if trimmed.hasPrefix("## ") {
-                let dateStr = String(trimmed.dropFirst(3))
-                if let date = dateFormatter.date(from: dateStr) {
-                    currentDate = date
-                }
+                currentDate = dateFormatter.date(from: String(trimmed.dropFirst(3)))
+                header = nil
+                visitingTable = false
                 continue
             }
-
-            // Table row: | 9:00:15 AM | 37.775000 | -122.419400 | 1.5 m/s | 10.5 m |
-            if trimmed.hasPrefix("|") && !trimmed.contains("---") && !trimmed.contains("Time") {
-                guard let date = currentDate else { continue }
-                let cells = trimmed.components(separatedBy: "|")
-                    .map { $0.trimmingCharacters(in: .whitespaces) }
-                    .filter { !$0.isEmpty }
-
-                guard cells.count >= 3 else { continue }
-
-                guard let time = timeFormatter.date(from: cells[0]) else { continue }
-                guard let lat = Double(cells[1]), let lon = Double(cells[2]) else { continue }
-
-                let timestamp = combineDateAndTime(date: date, time: time)
-
-                let speed: Double? = cells.count >= 4 ? {
-                    let val = cells[3].replacingOccurrences(of: " m/s", with: "")
-                    return val == "-" ? nil : Double(val)
-                }() : nil
-
-                let altitude: Double? = cells.count >= 5 ? {
-                    let val = cells[4].replacingOccurrences(of: " m", with: "")
-                    return val == "-" ? nil : Double(val)
-                }() : nil
-
-                let horizontalAccuracy: Double = cells.count >= 6 ? {
-                    let val = cells[5].replacingOccurrences(of: " m", with: "")
-                    return Double(val) ?? 0
-                }() : 0
-
-                let isOutlier: Bool = cells.count >= 7 && cells[6].lowercased() == "yes"
-
-                points.append(ImportedLocationPoint(
-                    latitude: lat,
-                    longitude: lon,
-                    timestamp: timestamp,
-                    altitude: altitude,
-                    speed: speed,
-                    horizontalAccuracy: horizontalAccuracy,
-                    isOutlier: isOutlier
-                ))
+            guard trimmed.hasPrefix("|") else { continue }
+            let cells = parseMarkdownTableCells(trimmed)
+            if isMarkdownSeparator(cells) { continue }
+            if cells.first == "Arrived" { visitingTable = true; header = nil; continue }
+            if cells.first == "Time" { header = cells; visitingTable = false; continue }
+            guard !visitingTable, cells.count >= 3 else { continue }
+            let columns = try markdownColumns(header ?? Array(legacyColumns.prefix(cells.count)))
+            if let header, cells.count != header.count { continue }
+            guard let timeCol = columns["Time"], let latCol = columns["Lat"], let lonCol = columns["Lon"],
+                  let timestamp = markdownTimestamp(cells[timeCol], date: currentDate, formatter: timeFormatter),
+                  let latitude = Double(cells[latCol]), let longitude = Double(cells[lonCol]) else { continue }
+            func number(_ key: String, suffix: String) -> Double? {
+                guard let index = columns[key], let value = optionalMarkdownCell(cells[index]) else { return nil }
+                let raw = value.hasSuffix(suffix) ? String(value.dropLast(suffix.count)) : value
+                return Double(raw)
             }
+            points.append(ImportedLocationPoint(
+                latitude: latitude, longitude: longitude, timestamp: timestamp,
+                altitude: number("Altitude", suffix: " m"), speed: number("Speed", suffix: " m/s"),
+                horizontalAccuracy: number("Accuracy", suffix: " m") ?? 0,
+                isOutlier: columns["Outlier"].map { cells[$0].lowercased() == "yes" } ?? false
+            ))
         }
-
-        if points.isEmpty {
+        guard !points.isEmpty else {
             throw ImportError.invalidData(String(localized: "No location points found in Markdown file"))
         }
-
         return points
+    }
+
+    // ISO table timestamps are absolute; legacy clock cells still use the original device context.
+    private static func markdownTimestamp(_ raw: String, date: Date?, formatter: DateFormatter) -> Date? {
+        if let instant = parseISO8601Date(raw) { return instant }
+        guard let date, let time = formatter.date(from: raw) else { return nil }
+        return combineDateAndTime(date: date, time: time)
+    }
+
+    private static func markdownColumns(_ header: [String]) throws -> [String: Int] {
+        var columns: [String: Int] = [:]
+        for (index, name) in header.enumerated() {
+            let key = name == "Latitude" ? "Lat" : name == "Longitude" ? "Lon" : name
+            guard columns.updateValue(index, forKey: key) == nil else {
+                throw ImportError.invalidData(String(localized: "Duplicate Markdown columns"))
+            }
+        }
+        return columns
+    }
+
+    private static func isMarkdownSeparator(_ cells: [String]) -> Bool {
+        !cells.isEmpty && cells.allSatisfy { !$0.isEmpty && $0.allSatisfy { $0 == "-" || $0 == ":" || $0 == " " } }
     }
 
     // MARK: - Helpers
@@ -771,15 +820,29 @@ struct ImportService {
     }
 
     private static func parseMarkdownTableCells(_ line: String) -> [String] {
-        line.split(separator: "|", omittingEmptySubsequences: false)
-            .dropFirst()
-            .dropLast()
-            .map { cell in
-                cell.trimmingCharacters(in: .whitespaces)
-                    .replacingOccurrences(of: "\\|", with: "|")
-                    .replacingOccurrences(of: "<br>", with: "\n")
-                    .replacingOccurrences(of: "\\\\", with: "\\")
+        var cells: [String] = []
+        var cell = ""
+        var index = line.startIndex
+        while index < line.endIndex {
+            let character = line[index]
+            let next = line.index(after: index)
+            if character == "\\", next < line.endIndex, line[next] == "\\" || line[next] == "|" {
+                cell.append(line[next])
+                index = line.index(after: next)
+                continue
             }
+            if character == "|" {
+                cells.append(cell)
+                cell = ""
+            } else {
+                cell.append(character)
+            }
+            index = next
+        }
+        cells.append(cell)
+        if cells.first?.trimmingCharacters(in: .whitespaces).isEmpty == true { cells.removeFirst() }
+        if cells.last?.trimmingCharacters(in: .whitespaces).isEmpty == true { cells.removeLast() }
+        return cells.map { $0.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "<br>", with: "\n") }
     }
 
     private static func optionalCSVField(_ value: String) -> String? {

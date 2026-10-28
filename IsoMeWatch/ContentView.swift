@@ -73,7 +73,7 @@ struct ContentView: View {
                 .fill(locationData.isTrackingEnabled ? WatchTE.success : WatchTE.border)
                 .frame(width: 5, height: 5)
 
-            Text("ISO.ME")
+            Text("WHEREDAY")
                 .font(WatchTE.mono(.caption2, weight: .bold))
                 .tracking(2.4)
                 .foregroundStyle(WatchTE.textMuted)
@@ -85,7 +85,7 @@ struct ContentView: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 0)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("iso.me")
+        .accessibilityLabel("Whereday")
     }
 
     private var statusPanel: some View {

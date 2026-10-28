@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to See Your Location History on iPhone — Whereday</title>
+  <meta name="description" content="Find your own visited places in Apple Maps, check Google Timeline, and understand missing records before starting a new iPhone location journal.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/view-location-history-iphone/">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="How to See Your Location History on iPhone — Whereday">
+  <meta property="og:description" content="Find your own visited places in Apple Maps, check Google Timeline, and understand missing records before starting a new iPhone location journal.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/view-location-history-iphone/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map.png">
+  <meta property="og:image:alt" content="Whereday map interface showing visits and route points">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to See Your Location History on iPhone — Whereday">
+  <meta name="twitter:description" content="Find your own visited places in Apple Maps, check Google Timeline, and understand missing records before starting a new iPhone location journal.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1f1f1f;
+  --muted: #5f5d59;
+  --rule: #d2cfca;
+  --accent: #1c57ca;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Geist", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.brand img { border-radius: 4px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.button { display: inline-flex; justify-content: center; align-items: center; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: white; font-size: 16px; line-height: 24px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #1748a8; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 64px; }
+.breadcrumbs { font-size: 14px; line-height: 20px; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+h1 { max-width: 680px; font-size: 48px; line-height: 1; margin: 16px 0 24px; font-weight: 600; background: linear-gradient(to right, #000, #666); color: transparent; background-clip: text; -webkit-background-clip: text; }
+h2 { font-size: 30px; line-height: 36px; font-weight: 600; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 28px; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 28px; }
+header { padding-bottom: 40px; }
+section { margin-top: 48px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+caption { text-align: left; font-weight: 600; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border: 1px solid var(--rule); min-width: 160px; }
+thead { background: #ecebe4; }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--rule); }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 32px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.closing h2 { font-size: 36px; line-height: 40px; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: white; margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; background: white; overflow-x: auto; font-size: 14px; line-height: 20px; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 36px; line-height: 40px; }
+  h2 { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/view-location-history-iphone/",
+      "url": "https://whereday.com/blog/view-location-history-iphone/",
+      "name": "How to See Your Location History on iPhone — Whereday",
+      "description": "Find your own visited places in Apple Maps, check Google Timeline, and understand missing records before starting a new iPhone location journal.",
+      "inLanguage": "en",
+      "dateModified": "2026-10-26",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "How to see your location history on iPhone",
+      "datePublished": "2026-10-26",
+      "mainEntityOfPage": "https://whereday.com/blog/view-location-history-iphone/",
+      "image": "https://whereday.com/screenshots/map.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "View location history",
+          "item": "https://whereday.com/blog/view-location-history-iphone/"
+        }
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
+    <div class="nav-links"><a href="/blog/" aria-current="true">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div>
+  </nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>View location history</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">How to see your location history on iPhone</h1><p class="lede">Check Apple Maps Visited Places, Google Maps Timeline, or a journal you already enabled. A new recorder can capture future trips, but cannot recover movement it never recorded.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p></header>
+    <section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Check the recorder you already used</h2>
+  <p>To see where you have been on iPhone, check Apple Maps Visited Places, Google Maps Timeline, or a location journal you had already enabled. There is no single history screen that combines every app’s records. An empty day may mean nothing was recorded.</p>
+  <p>This guide covers your own visits and routes. If you want a record of future trips, you can start one in Whereday, but installing it cannot reconstruct earlier movement.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>Choose your next step</strong><ol><li><a href="#apple">Look for Apple’s visited places</a></li><li><a href="#google">Open your Google Timeline</a></li><li><a href="#missing">Check why a day is missing</a></li><li><a href="#future">Record future visits and routes</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="which-history">
+  <h2 id="which-history">Which history are you looking for?</h2>
+  <div class="table-scroll" role="region" aria-label="Ways to view your own iPhone location history" tabindex="0"><table>
+    <caption>Start with the service that recorded the day</caption>
+    <thead><tr><th scope="col">What you used</th><th scope="col">Where to look</th><th scope="col">What to check</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Apple Maps</th><td>Places → Visited Places, where available</td><td>Whether the feature was enabled and the visit is retained</td></tr>
+      <tr><th scope="row">Google Maps</th><td>Profile picture → Your Timeline</td><td>The account, selected device history, and date</td></tr>
+      <tr><th scope="row">Whereday</th><td>Timeline or the date range on Map</td><td>Whether tracking was enabled for that period</td></tr>
+      <tr><th scope="row">No enabled recorder</th><td>There may be no route record to open</td><td>Start a new recording before the next trip</td></tr>
+    </tbody>
+  </table></div>
+  <p>Directions you requested, places you searched for, and a recorded visit are different kinds of information. A search for a restaurant does not by itself establish when you arrived or how you travelled there.</p>
+</section>
+
+<section aria-labelledby="apple">
+  <h2 id="apple">Find visited places in Apple Maps</h2>
+  <ol>
+    <li>Open Maps, then open <strong>Places</strong>.</li>
+    <li>Choose <strong>Visited Places</strong>, if it is available.</li>
+    <li>Search for a place or filter by date, category, or city. Use <strong>All Visits</strong> to browse.</li>
+  </ol>
+  <p>Apple says this feature needs to be enabled before visits appear, is unavailable in some regions, and keeps visits encrypted so Apple cannot read them. Retention settings can also remove older entries. Menus vary with iOS version; use <a href="https://support.apple.com/guide/iphone/view-visited-places-iph0c2597c4f/ios">Apple’s Visited Places instructions</a> for your version.</p>
+  <p>If you are looking for a setting called Significant Locations rather than a Maps list, check <a href="https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios">Apple’s Maps location settings</a>. Do not expect every location-related setting to contain the same records.</p>
+</section>
+
+<section aria-labelledby="google">
+  <h2 id="google">Open Google Maps Timeline</h2>
+  <ol>
+    <li>Open Google Maps and tap your profile picture or initial.</li>
+    <li>Choose <strong>Your Timeline</strong>, then use the calendar to select a day.</li>
+    <li>If history is missing, confirm which account and device you used. Check your backup and deletion settings before making changes.</li>
+  </ol>
+  <p>Google Timeline stores history on the device and can keep an encrypted backup. To save an independent archive, Google’s iPhone instructions use <strong>Settings → Location &amp; Privacy → Export Timeline data</strong>, then <strong>Save to Files</strong>. Settings are changing, so follow <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s current Timeline guide</a> if your menus differ.</p>
+  <p>Keep that archive separately. Whereday does not import Google Timeline files; the <a href="/compare/google-maps-timeline/">Google Timeline comparison</a> explains the tradeoffs before you change your recording setup.</p>
+</section>
+
+<section aria-labelledby="missing">
+  <h2 id="missing">Why a day can be empty</h2>
+  <p>First check the date, account, and app rather than assuming the history is gone. A map showing today may simply be the wrong view for last month’s trip. In Whereday, use Timeline’s date controls or change the Map date range.</p>
+  <ul>
+    <li><strong>Recording was off.</strong> A location permission lets an app request locations; it is not proof that the app recorded that day.</li>
+    <li><strong>The record was removed.</strong> Look for retained files or supported backups before clearing more data or replacing a device.</li>
+    <li><strong>The device missed part of the trip.</strong> Permission changes, a stopped session, GPS conditions, or a flat battery can leave gaps.</li>
+    <li><strong>A visit has not appeared.</strong> Detected arrivals and departures are not an immediate check-in at every stop. A route can contain points even when a visit is missing.</li>
+  </ul>
+  <p>For an incomplete Whereday day, use the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> to distinguish recording, display, Watch sync, and export issues.</p>
+  <p>Photos, receipts, and calendar entries may help you remember a day, but they are not a recovered GPS trace. A newly installed recorder cannot recreate coordinates it never captured.</p>
+</section>
+
+<section aria-labelledby="future">
+  <h2 id="future">Record your next day with Whereday</h2>
+  <p>If you want a separate journal without an Whereday account, try a short recording before a longer trip:</p>
+  <ol>
+    <li>Install Whereday and complete permission setup. Always location access allows recording in the background.</li>
+    <li>On Map, tap the recording control before you leave. Start enables GPS recording and visit monitoring together.</li>
+    <li>Stop when you finish. Open Timeline and check the date, route, and times.</li>
+    <li>If you need a portable route file, follow <a href="/blog/record-iphone-route-gpx/">the iPhone route and GPX guide</a>.</li>
+  </ol>
+  <p>Recording and reviewing your journal are free. Writing export files requires the optional one-time unlock; preview is free. Read <a href="/blog/private-location-journal-iphone/">the setup walkthrough</a> for permissions, battery controls, and keeping supported copies.</p>
+  <p>Core records are stored on your phone. Apple services supply place names and map features; default-on first-party onboarding telemetry excludes location records. Optional webhooks send records to your chosen endpoint. The <a href="/privacy">privacy policy</a> explains those boundaries.</p>
+</section>
+
+<figure class="product-example"><img src="/screenshots/map-480.webp" srcset="/screenshots/map-480.webp 480w, /screenshots/map-720.webp 720w, /screenshots/map.webp 900w" sizes="240px" width="1206" height="2622" alt="Example Whereday map showing visit markers and recorded route points" loading="lazy" decoding="async"><figcaption>Whereday’s map interface. This illustrative screenshot may contain sample data or earlier labels.</figcaption></figure>
+
+<section class="closing" aria-labelledby="next-day">
+  <h2 id="next-day">Remember your next trip.<br>Start recording before you go.</h2>
+  <p>Try Whereday’s free recording, then review the route and visits on your iPhone.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+
+<p class="source-note">Reviewed October 26, 2026 against Apple and Google documentation and Whereday’s product source. Platform instructions can vary by version and region. Written by Whereday’s developer; the screenshots are interface examples.</p>
+
+    </article>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/missing-location-history-iphone/">Check missing Whereday records</a><p>Diagnose recording gaps, hidden points, Watch transfers, and export filters.</p></li><li><a href="/blog/private-location-journal-iphone/">Start a journal for future trips</a><p>Set up recording before the next trip you want to remember.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
