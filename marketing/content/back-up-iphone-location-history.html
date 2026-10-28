@@ -1,0 +1,105 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Keep the files before changing phones</h2>
+  <p>To keep a restorable copy of Whereday location history, export <strong>Visits</strong> and <strong>Points</strong> separately as Whereday JSON files. Include the dates and fields you need, confirm both files exist, and retain the originals when importing them on another iPhone.</p>
+  <p>Recording, preview, and importing supported files are free. Writing export files requires the optional one-time unlock. This guide covers Whereday records; it is not a way to restore Apple Maps or Google Timeline archives.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>Backup and restore checklist</strong><ol><li><a href="#scope">Decide what the files must preserve</a></li><li><a href="#export">Export visits and points</a></li><li><a href="#check">Verify and keep the copies</a></li><li><a href="#sample">Inspect synthetic JSON examples</a></li><li><a href="#restore">Import on the destination iPhone</a></li><li><a href="#scheduled">Understand scheduled exports</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="scope">
+  <h2 id="scope">Choose records, not just a file extension</h2>
+  <p>A GPX track can be useful in a map viewer without being a journal backup. Whereday’s importer accepts supported Whereday visit and point exports in JSON, CSV, or Markdown. It does not accept every file that happens to have one of those extensions.</p>
+  <div class="table-scroll" role="region" aria-label="Location history backup choices" tabindex="0"><table>
+    <caption>What you are trying to keep</caption>
+    <thead><tr><th scope="col">Your goal</th><th scope="col">What to save</th><th scope="col">What to verify</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Restore visit records</th><td>Visits exported as Whereday JSON</td><td>Dates, coordinates, names, and the optional fields you need</td></tr>
+      <tr><th scope="row">Restore the recorded path</th><td>Points exported as Whereday JSON</td><td>The whole date range and required point fields</td></tr>
+      <tr><th scope="row">Open a route elsewhere</th><td>GPX, KML, or GeoJSON as appropriate for the viewer</td><td>Viewer compatibility; these formats cannot be imported into Whereday</td></tr>
+      <tr><th scope="row">Keep every app preference or edit</th><td>A record of important settings alongside the exported files</td><td>Do not assume an import restores settings, photo associations, or edited outing summaries</td></tr>
+    </tbody>
+  </table></div>
+  <p>For restoration, choose Visits and Points individually. An outing summary is a different export from the visit and point records the importer expects. The <a href="/docs/export-import/">export reference</a> lists supported formats and fields.</p>
+</section>
+
+<section aria-labelledby="export">
+  <h2 id="export">1. Export your visits</h2>
+  <ol>
+    <li>Open Export and select <strong>Visits</strong>.</li>
+    <li>Select <strong>JSON</strong>. Deselect other formats if you only want this file.</li>
+    <li>Choose the date range. For the full available visit archive, choose all history rather than Today or a recent period.</li>
+    <li>Review time, duration, completion, and accuracy filters. A filter can omit records even when the date range is correct.</li>
+    <li>Keep coordinates and the other fields you want to restore. Open Preview and check representative dates.</li>
+    <li>Export to a folder you control. Note whether the settings produce one file or several dated files.</li>
+  </ol>
+  <h3>Then export your route points</h3>
+  <p>Repeat the process with <strong>Points</strong> and <strong>JSON</strong>. Use the intended full date range and review its filters too. Keep both sets of files. Exporting visits alone does not preserve all of the GPS points between stops.</p>
+  <p>Stop an active recording before taking a final transfer copy if you want the session to be finished first. New records captured after an export will not be in that earlier file.</p>
+</section>
+
+<figure class="product-example"><img src="/screenshots/export.webp" width="1206" height="2622" alt="Example Whereday Export screen with data types and file format controls" loading="lazy" decoding="async"><figcaption>The Export screen illustrates the workflow. The screenshot may contain sample data or earlier labels.</figcaption></figure>
+
+<section aria-labelledby="check">
+  <h2 id="check">2. Confirm what was saved</h2>
+  <p>Open Files and find the destination you selected. Confirm that you have a visit export and a point export, not just two copies of one type. If you chose daily splitting, retain every file needed for the period.</p>
+  <ul>
+    <li>Check the filenames and that the files are not empty.</li>
+    <li>Use Preview or a text viewer to check early and recent dates from the intended archive.</li>
+    <li>Keep an additional copy somewhere you will still be able to reach after changing phones.</li>
+    <li>Preserve the originals while transferring or importing them. Check the destination copy before relying on it.</li>
+  </ul>
+  <p>A folder stored only on the old phone does not help if you erase that phone before transferring the files. If you choose a cloud folder or another service, that exported copy follows the destination’s storage and privacy rules. Location records can reveal detailed movements, so choose the destination deliberately.</p>
+</section>
+
+<section aria-labelledby="sample">
+  <h2 id="sample">Inspect the two JSON structures before using your own files</h2>
+  <p>These examples contain invented coordinates near zero and fixed dates on January 1, 2000. They are documentation fixtures, not a real trip or captured app exports:</p>
+  <ul>
+    <li><a href="/samples/synthetic-visits.json" download>Download the synthetic Visits JSON</a>: two named stops with arrival and departure times.</li>
+    <li><a href="/samples/synthetic-points.json" download>Download the synthetic Points JSON</a>: three timestamped locations matching the <a href="/samples/synthetic-route.gpx" download>synthetic GPX example</a>.</li>
+  </ul>
+  <pre aria-label="Minimal Whereday visit JSON structure"><code>{
+  "visits": [{
+    "latitude": 0.0,
+    "longitude": 0.0,
+    "arrivedAt": "2000-01-01T11:45:00Z",
+    "departedAt": "2000-01-01T12:00:00Z"
+  }]
+}</code></pre>
+  <p>The visit file has a <code>visits</code> array; the route file has a <code>points</code> array. Visits need coordinates and an arrival time. Points need coordinates and a supported timestamp. A valid JSON file can still be unsuitable for import if those fields are missing.</p>
+  <p>Both downloadable fixtures were parsed with Whereday’s current Swift importer: two visits and three points, with their expected names, coordinates, and times. This checks file compatibility; it does not verify persistence, merging, or a complete device restore.</p>
+  <p>Open the samples as text to inspect them. Importing them into your everyday journal would add invented records dated January 1, 2000. They are not needed to back up your own data.</p>
+</section>
+
+<section aria-labelledby="restore">
+  <h2 id="restore">3. Import the supported files on the destination</h2>
+  <ol>
+    <li>Make the saved visit and point files available in Files on the destination iPhone.</li>
+    <li>Open Whereday, then choose <strong>Settings → Import file</strong>.</li>
+    <li>Select a supported Whereday file and read the import result. Repeat for the other data type and any additional dated files.</li>
+    <li>Check several dates on Map and Timeline. Look for both visits and route points, including the earliest and most recent records you expected.</li>
+    <li>Keep your originals until you have checked the result. An import cannot restore records that were excluded from the export.</li>
+  </ol>
+  <p>Import adds records; do not assume it merges an overlapping archive or skips duplicates. Import each intended file once and inspect the result before retrying. If a file fails, retain it and read the reported format or field error before editing it. A JSON archive from Google Timeline has a different structure and is not a supported Whereday restore file.</p>
+  <p><strong>Restore Purchases is separate.</strong> It restores an eligible paid entitlement through the App Store; it does not download a copy of your location history. Whereday does not provide an account-based server archive or built-in iCloud journal sync.</p>
+</section>
+
+<section aria-labelledby="scheduled">
+  <h2 id="scheduled">Scheduled exports are ongoing copies, not an initial full archive</h2>
+  <p>Auto Export writes the <strong>current local day</strong> to the chosen folder. It can help keep future records, but turning it on today does not by itself back up every earlier day. Make your initial full exports separately.</p>
+  <p>Background execution is best effort. Check the latest saved file, use Run Now or open the app if a scheduled copy is overdue, and confirm the records you need are present. A configured schedule is not proof that the last file was written successfully.</p>
+  <p>See <a href="/docs/automatic-exports/">the automatic export reference</a> for timing, rewrite/append behavior, and how the scheduling service works.</p>
+</section>
+
+<section aria-labelledby="different-task">
+  <h2 id="different-task">Need a readable note or a route file?</h2>
+  <p>For a readable visit table, follow the <a href="/blog/iphone-location-journal-obsidian/">Markdown-to-Obsidian workflow</a>. Keep a separate supported backup when omitting fields for readability.</p>
+  <p>Follow <a href="/blog/record-iphone-route-gpx/">the GPX route walkthrough</a> for a path you want to open in another tool. If you are still trying to find old Apple or Google records, start with <a href="/blog/view-location-history-iphone/">how to view your iPhone location history</a>. For the recording setup, use <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>.</p>
+</section>
+
+<section class="closing" aria-labelledby="keep-records">
+  <h2 id="keep-records">Keep the records.<br>Check the copy.</h2>
+  <p>Try free recording and export preview. See <a href="/#pricing">current pricing</a> for the optional file-export unlock.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+
+<p class="source-note">Reviewed October 26, 2026 against Whereday’s export, import, and scheduling behavior. Importing restores supported records; it is not a promise to reproduce every app setting or edited view.</p>

@@ -268,5 +268,32 @@
       "title": "你的数据，你的端点",
       "subtitle": "将位置更新实时或分批发送到你自己的 API。"
     }
+  ],
+  "pl": [
+    {
+      "name": "01-quiet-map",
+      "title": "Spokojna mapa Twoich dni",
+      "subtitle": "Automatycznie wykrywaj wizyty i rejestruj dokładne trasy — wszystko na urządzeniu."
+    },
+    {
+      "name": "02-total-control",
+      "title": "Jeden panel. Pełna kontrola.",
+      "subtitle": "Dostosuj śledzenie, filtry odległości, automatyczne zatrzymywanie i nazwy miejsc."
+    },
+    {
+      "name": "03-open-formats",
+      "title": "Eksport w otwartych formatach.",
+      "subtitle": "Zabierz swoją historię w formacie JSON, CSV, Markdown, GPX, OwnTracks lub Overland."
+    },
+    {
+      "name": "04-exact-export",
+      "title": "Wybierz, co eksportować.",
+      "subtitle": "Filtruj według dat, pory dnia, zakończonych wizyt i czasu trwania."
+    },
+    {
+      "name": "05-your-endpoint",
+      "title": "Twoje dane. Twój serwer.",
+      "subtitle": "Wysyłaj lokalizację do własnego API na bieżąco lub partiami."
+    }
   ]
 }

@@ -1,0 +1,87 @@
+[
+  {
+    "name": "live-home-mobile",
+    "url": "https://isome.isolated.tech/",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1093.378,
+      "largest-contentful-paint": 2092.3779999999997,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 1819.0016660276171
+    }
+  },
+  {
+    "name": "local-home-mobile",
+    "url": "http://127.0.0.1:8879/",
+    "scores": {
+      "performance": 98,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1081.8507,
+      "largest-contentful-paint": 2326.7014,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 1081.8507
+    }
+  },
+  {
+    "name": "local-docs-mobile",
+    "url": "http://127.0.0.1:8879/docs/",
+    "scores": {
+      "performance": 100,
+      "accessibility": 90,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 751.0476000000001,
+      "largest-contentful-paint": 1051.0476,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 751.0476000000001
+    }
+  },
+  {
+    "name": "local-guide-mobile",
+    "url": "http://127.0.0.1:8879/blog/private-location-journal-iphone/",
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 789.7955,
+      "largest-contentful-paint": 3151.591,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 789.7955
+    }
+  },
+  {
+    "name": "local-terms-mobile",
+    "url": "http://127.0.0.1:8879/terms.html",
+    "scores": {
+      "performance": 99,
+      "accessibility": 83,
+      "best-practices": 96,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1734.6644000000001,
+      "largest-contentful-paint": 1734.6644000000001,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0,
+      "speed-index": 1734.6644000000001
+    }
+  }
+]

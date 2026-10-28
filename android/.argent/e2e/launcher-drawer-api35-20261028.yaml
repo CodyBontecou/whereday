@@ -1,0 +1,25 @@
+steps:
+  - echo: Onboarded idle disposable mapQa only, English Pixel Launcher API35. App drawer must contain Whereday Map QA. No recording, permission grant or owner package interaction.
+  - launch: com.bontecou.whereday.mapqa
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}
+  - tool: button
+    args: {button: home}
+  - await: {visible: {id: 'com.google.android.apps.nexuslauncher:id/workspace'}}
+  - await: {idle: true}
+  - swipe:
+      from: {text: Home}
+      by: {y: -0.4155}
+      duration: 350
+  - await: {visible: {id: 'com.google.android.apps.nexuslauncher:id/apps_list_view'}}
+  - await: {idle: true}
+  - long-press: {id: 'com.google.android.apps.nexuslauncher:id/icon', text: Whereday Map QA}
+  - await: {visible: {text: Start recording}}
+  - await: {idle: true}
+  - tap: {id: 'com.google.android.apps.nexuslauncher:id/bubble_text', text: Start recording}
+  - await: {visible: {text: 'Start recording?'}}
+  - await: {idle: true}
+  - tap: {text: Cancel}
+  - await: {hidden: {text: 'Start recording?'}}
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}

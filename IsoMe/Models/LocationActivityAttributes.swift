@@ -2,9 +2,9 @@ import ActivityKit
 import Foundation
 
 enum IsoMeURLs {
-    static let stopTracking = URL(string: "isome://stop")
-    static let privacyPolicy = URL(string: "https://isome.isolated.tech/privacy")
-    static let termsOfService = URL(string: "https://isome.isolated.tech/terms")
+    static let stopTracking = URL(string: "whereday://stop")
+    static let privacyPolicy = URL(string: "https://whereday.com/privacy")
+    static let termsOfService = URL(string: "https://whereday.com/terms")
     static let discordInvite = URL(string: "https://discord.gg/RaQYS4t6gn")
 }
 

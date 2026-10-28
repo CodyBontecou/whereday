@@ -3,64 +3,371 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Getting started — iso.me Docs</title>
+  <title>Getting started — Whereday Docs</title>
   <meta name="description" content="Install, onboarding, permissions, and your first tracking session.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://isome.isolated.tech/docs/getting-started/">
+  <link rel="canonical" href="https://whereday.com/docs/getting-started/">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/docs/docs.css">
+  <style>/* Whereday docs — shared styles (adapted from the site's doc template) */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --paper: #f5f4ef;
+  --paper-deep: #ecebe4;
+  --card: #ffffff;
+  --ink: #1f1f1f;
+  --ink-soft: #3a3a38;
+  --mute: #5f5d59;
+  --rule: #d2cfca;
+  --rule-soft: #e3e0db;
+  --accent: #1c57ca;
+  --accent-soft: rgba(50, 116, 244, 0.10);
+  --lcd: #006f46;
+  --lcd-bg: #e0e6d9;
+  --warn-bg: #fdf3e4;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --display: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --radius: 4px;
+}
+body {
+  font-family: var(--mono);
+  background: var(--paper); color: var(--ink);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p a { text-decoration: underline; text-underline-offset: 0.18em; }
+img { max-width: 100%; }
+
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(245, 244, 239, 0.92);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-inner {
+  max-width: 880px; margin: 0 auto;
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-weight: 700;
+  font-size: 0.95rem; letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.brand img {
+  width: 26px; height: 26px;
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+}
+.brand-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--lcd);
+  box-shadow: 0 0 6px rgba(0, 199, 115, 0.6);
+}
+.nav-links { display: flex; align-items: center; gap: 22px; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+}
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--ink); text-decoration: none; }
+.nav-links a[aria-current="page"] { color: var(--ink); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid var(--ink);
+  background: var(--ink); color: var(--paper) !important;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); text-decoration: none; }
+
+.doc-head { max-width: 880px; margin: 0 auto; padding: 70px 28px 30px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--mute); display: inline-block; }
+h1 {
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.lede { color: var(--ink-soft); font-size: 1rem; max-width: 640px; margin-bottom: 8px; }
+.meta-strip {
+  display: flex; gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-top: 28px;
+}
+.meta-strip > div { padding: 14px 18px; border-right: 1px solid var(--rule); flex: 1; }
+.meta-strip > div:last-child { border-right: 0; }
+.meta-strip .k {
+  font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--mute); margin-bottom: 4px;
+}
+.meta-strip .v { font-size: 0.85rem; color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
+
+.content { max-width: 880px; margin: 0 auto; padding: 30px 28px 80px; }
+.doc-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 48px 44px;
+}
+.doc-card h2 {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 38px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.doc-card h2:first-child { margin-top: 0; }
+.doc-card h3 {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 26px 0 8px;
+  color: var(--ink);
+}
+.doc-card p, .doc-card li {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+  line-height: 1.7;
+}
+.doc-card ul, .doc-card ol { list-style: none; padding-left: 0; margin-bottom: 14px; }
+.doc-card li { padding-left: 22px; position: relative; margin-bottom: 8px; }
+.doc-card li::before {
+  content: '·'; color: var(--accent); font-weight: 700;
+  position: absolute; left: 8px; top: -2px; font-size: 1.4rem;
+}
+.doc-card ol { counter-reset: item; }
+.doc-card ol li::before {
+  content: counter(item) '.'; counter-increment: item;
+  color: var(--accent); font-weight: 700; font-size: 0.85rem;
+  position: absolute; left: 0; top: 2px;
+}
+.doc-card strong { color: var(--ink); font-weight: 700; }
+.doc-card code {
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 0.82em;
+  color: var(--ink);
+}
+
+/* Callouts */
+.callout {
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 18px 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.callout strong { color: var(--ink); }
+.callout.warn { border-left-color: #c47f17; background: var(--warn-bg); }
+.callout.pro {
+  border-left-color: var(--lcd);
+  background: var(--lcd-bg);
+}
+.callout p { margin-bottom: 0; font-size: 0.85rem; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.82rem; }
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-soft);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+th {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  border-bottom: 1px solid var(--rule);
+}
+td strong { color: var(--ink); }
+
+/* Docs index grid */
+.guides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 8px; }
+.guide-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 22px 24px;
+  display: flex; flex-direction: column; gap: 8px;
+  position: relative;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.guide-card:hover { border-color: var(--accent); transform: translateY(-1px); text-decoration: none; }
+.guide-card .num {
+  font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--mute);
+}
+.guide-card h2 {
+  font-family: var(--display); font-size: 1.08rem; font-weight: 750;
+  color: var(--ink); margin: 0; letter-spacing: -0.01em;
+}
+.guide-card p { font-size: 0.8rem; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+.guide-card .tag {
+  position: absolute; top: 18px; right: 18px;
+  font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--lcd); font-weight: 600;
+}
+.guide-card .tag.pro { color: var(--accent); }
+
+/* Prev / next pager */
+.pager {
+  display: flex; justify-content: space-between; gap: 14px;
+  margin-top: 26px;
+}
+.pager a {
+  flex: 1;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 14px 18px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.pager a:hover { border-color: var(--accent); text-decoration: none; }
+.pager .dir {
+  display: block;
+  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--mute); margin-bottom: 4px;
+}
+.pager .title { color: var(--ink); font-weight: 600; }
+.pager a.next { text-align: right; }
+
+footer {
+  border-top: 1px solid var(--rule);
+  background: var(--paper-deep);
+  padding: 32px 0;
+}
+.footer-inner {
+  max-width: 880px; margin: 0 auto; padding: 0 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-brand {
+  font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--mute); display: flex; align-items: center; gap: 10px;
+}
+.footer-brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lcd); }
+.footer-links { display: flex; gap: 22px; }
+.footer-links a {
+  font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--mute);
+}
+.footer-links a:hover { color: var(--ink); text-decoration: none; }
+
+@media (max-width: 640px) {
+  .doc-head { padding: 50px 20px 20px; }
+  .content { padding: 20px 20px 60px; }
+  .doc-card { padding: 28px 22px; }
+  .meta-strip { flex-direction: column; }
+  .meta-strip > div { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .meta-strip > div:last-child { border-bottom: 0; }
+  .nav-links a:not(.btn) { display: none; }
+  .nav-links .btn { padding: 8px 12px; font-size: 0.7rem; letter-spacing: 0.1em; }
+  .brand { font-size: 0.85rem; letter-spacing: 0.06em; }
+  .brand img { width: 22px; height: 22px; }
+  .guides { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.doc-card a { text-decoration: underline; text-underline-offset: 4px; }
+</style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <nav class="top" aria-label="Primary navigation">
     <div class="nav-inner">
-      <a href="/" class="brand" aria-label="iso.me home">
-        <img src="/app-icon-28.png" srcset="/app-icon-28.png 1x, /app-icon-84.png 3x" alt="" width="26" height="26">
+      <a href="/" class="brand" aria-label="Whereday home">
+        <img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" alt="" width="26" height="26">
         <span class="brand-dot" aria-hidden="true"></span>
-        ISO.ME
+        WHEREDAY
       </a>
       <div class="nav-links">
         <a href="/#features">Features</a>
         <a href="/#pricing">Pricing</a>
-        <a href="/docs/" aria-current="page"__DOCS_CURRENT__>Docs</a>
+        <a href="/docs/" aria-current="page">Docs</a>
         <a href="/terms">Terms</a>
-        <a href="https://apps.apple.com/us/app/iso-me/id6761960794" class="btn">Download</a>
+        <a href="https://apps.apple.com/app/id6761960794" class="btn">Download</a>
       </div>
     </div>
   </nav>
 
+<main id="main">
 
   <header class="doc-head">
     <span class="eyebrow">§ Docs · Guide 1 of 11</span>
     <h1>Getting started</h1>
-    <p class="lede">Everything from installing iso.me to your first recorded day — what each permission is for and where your data lives from minute one.</p>
+    <p class="lede">Everything from installing Whereday to your first recorded day — what each permission is for and where your data lives from minute one.</p>
     <div class="meta-strip">
       <div><div class="k">Platform</div><div class="v">iOS 17+</div></div>
-      <div><div class="k">Updated</div><div class="v">August 22, 2026</div></div>
+      <div><div class="k">Updated</div><div class="v">October 26, 2026</div></div>
       <div><div class="k">Reading</div><div class="v">3 min</div></div>
-      <div><div class="k">Back to</div><div class="v"><a href="/docs/" aria-current="page">All docs</a></div></div>
+      <div><div class="k">Back to</div><div class="v"><a href="/docs/">All docs</a></div></div>
     </div>
   </header>
 
   <div class="content">
     <div class="doc-card">
 <h2>Install and open</h2>
-<p>iso.me is a free download on the App Store. There is no account to create and nothing to sign up for — the first thing you see is a five-step introduction.</p>
+<p>Whereday is a free download on the App Store. There is no account to create and nothing to sign up for — the first thing you see is a five-step introduction.</p>
 
 <h2>The onboarding steps</h2>
 <ol>
-<li><strong>Welcome</strong> — a short overview of what iso.me records and where it keeps it.</li>
+<li><strong>Welcome</strong> — a short overview of what Whereday records and where it keeps it.</li>
 <li><strong>Core features</strong> — visit timeline, route recording, and exports at a glance.</li>
-<li><strong>Permission setup</strong> — iso.me asks for <em>While Using</em> location access first, then offers <em>Always</em>. <strong>Always</strong> is what enables automatic visit detection while the app is in the background; you can decline and still use manual tracking. If permission is denied, the app links you straight to iOS Settings.</li>
+<li><strong>Permission setup</strong> — Whereday asks for <em>While Using</em> location access first, then offers <em>Always</em>. <strong>Always</strong> is what enables automatic visit detection while the app is in the background; you can decline and still use manual tracking. If permission is denied, the app links you straight to iOS Settings.</li>
 <li><strong>Connect Photos (optional)</strong> — you can enable photo moments now or skip entirely. Skipping changes nothing else.</li>
-<li><strong>You're all set</strong> — optionally tick <em>Start tracking immediately</em> and iso.me begins recording the moment onboarding finishes.</li>
+<li><strong>You're all set</strong> — optionally tick <em>Start tracking immediately</em> and Whereday begins recording the moment onboarding finishes.</li>
 </ol>
 
 <h2>After onboarding</h2>
-<p>You land on the <strong>Map</strong> tab. The other tabs are <strong>Timeline</strong> (your day, visit by visit), <strong>Export</strong>, and <strong>Settings</strong>. The floating pill on the map starts and stops route recording; visits are detected automatically whenever <em>Always</em> location permission is granted and tracking is on.</p>
+<p>You land on the <strong>Map</strong> tab. The other tabs are <strong>Timeline</strong> (your day, visit by visit), <strong>Export</strong>, and <strong>Settings</strong>. The floating pill on the map starts and stops both GPS recording and visit monitoring. With <em>Always</em> permission, recording can continue in the background. Installing the app does not reconstruct earlier history.</p>
 
 <h2>Your first day</h2>
 <ul>
@@ -80,16 +387,19 @@
     </nav>
   </div>
 
+  </main>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="dot"></span>
-        © 2026 ISO.ME · BUILT WITH CARE
+        © 2026 WHEREDAY · BUILT WITH CARE
       </div>
       <div class="footer-links">
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
         <a href="/">Home</a>
-        <a href="/docs/" aria-current="page">Docs</a>
+        <a href="/docs/">Docs</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
       </div>
@@ -102,7 +412,7 @@
     'instareply.isolated.tech': true,
     'voxboard.isolated.tech': true,
     'healthmd.isolated.tech': true,
-    'isome.isolated.tech': true,
+    'whereday.com': true,
     'gitsyncmd.isolated.tech': true,
     'timemd.isolated.tech': true,
     'imghost.isolated.tech': true

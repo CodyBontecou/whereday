@@ -1,0 +1,21 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://whereday.com/",
+      "service-desc": [
+        {
+          "href": "https://whereday.com/openapi.json",
+          "type": "application/vnd.oai.openapi+json",
+          "title": "Whereday public product metadata API"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://whereday.com/docs/",
+          "type": "text/html",
+          "title": "Native app documentation"
+        }
+      ]
+    }
+  ]
+}

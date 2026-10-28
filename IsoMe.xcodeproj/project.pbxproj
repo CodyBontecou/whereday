@@ -7,50 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0DE05010000000000000002 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = C0DE05010000000000000001 /* Fixtures */; };
 		CC1090010000000000000001 /* MyselfClaimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1090010000000000000002 /* MyselfClaimView.swift */; };
-		AA110001212F000100000001 /* CloudflareOnboardingAnalyticsTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110001212F000000000001 /* CloudflareOnboardingAnalyticsTransport.swift */; };
-		AA110002212F000100000002 /* OnboardingAnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110002212F000000000002 /* OnboardingAnalyticsClient.swift */; };
-		AA110003212F000100000003 /* OnboardingAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110003212F000000000003 /* OnboardingAnalyticsEvent.swift */; };
-		AA110004212F000100000004 /* OnboardingAnalyticsFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110004212F000000000004 /* OnboardingAnalyticsFunnel.swift */; };
-		AA110005212F000100000005 /* OnboardingAnalyticsTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110005212F000000000005 /* OnboardingAnalyticsTransport.swift */; };
-		C0DE0001212F000100000001 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0001212F000000000001 /* RecordingSession.swift */; };
-		C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0101212F000000000101 /* PhotoMoment.swift */; };
-		C0DE0102212F000100000102 /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0102212F000000000102 /* PhotoLibraryManager.swift */; };
-		C0DE0103212F000100000103 /* PhotoMomentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0103212F000000000103 /* PhotoMomentViews.swift */; };
-		C0DE0002212F000100000002 /* OutingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0002212F000000000002 /* OutingsView.swift */; };
-		E9A100000000000000000002 /* IsoMeExportKitAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A100000000000000000001 /* IsoMeExportKitAdapter.swift */; };
-		E9A100000000000000000004 /* ExportKitIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A100000000000000000003 /* ExportKitIntegrationTests.swift */; };
-		E9A100000000000000000008 /* ExportKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000006 /* ExportKit */; };
-		E9A100000000000000000009 /* ExportAutomationKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000007 /* ExportAutomationKit */; };
-		E9A10000000000000000000A /* ExportKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000006 /* ExportKit */; };
-		E9A10000000000000000000B /* ExportAutomationKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000007 /* ExportAutomationKit */; };
-		BEE50012212F000100000012 /* Notelet in Frameworks */ = {isa = PBXBuildFile; productRef = BEE50011212F000000000011 /* Notelet */; };
-		BEE50001212F000100000001 /* ReleaseNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE50001212F000000000001 /* ReleaseNotes.swift */; };
 		4362F7285B97503148012780 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DB4D5F4E2D01FCD4E9169E /* Foundation.framework */; };
+		47B033577E4B1712A002C33E /* SelfieOverlayKit in Frameworks */ = {isa = PBXBuildFile; productRef = C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */; };
 		5F000001212F000100000001 /* ExportFolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000001212F000000000001 /* ExportFolderManager.swift */; };
-		F1000001212F000100000001 /* FilenameTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001212F000000000001 /* FilenameTemplate.swift */; };
 		5F000002212F000100000001 /* DailyExportScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000002212F000000000001 /* DailyExportScheduler.swift */; };
 		5F000005212F000100000001 /* IntervalExportScheduleDateMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */; };
 		5F000006212F000100000001 /* ScheduledExportMergeStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */; };
 		5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000007212F000000000001 /* IntervalScheduledExportTests.swift */; };
 		5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000008212F000000000001 /* IntervalPickerCrashReproTests.swift */; };
-		D6000001212F000100000001 /* PushRegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6000001212F000000000001 /* PushRegistrationManager.swift */; };
-		D6000002212F000100000002 /* DailyExportNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */; };
+		6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */; };
+		9038E89D0D7D984DC89F365B /* DebugSelfie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */; };
 		90802146303082A8BE935D64 /* SessionPathMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE47A9C94C8FC4C2E32835B /* SessionPathMapView.swift */; };
-		D15C04D0BA000000000000A1 /* DiscordPromoBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */; };
-		AF000001212F000100000001 /* DailyDistanceTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF000001212F000000000001 /* DailyDistanceTracker.swift */; };
 		A1000001212F000100000001 /* IsoMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001212F000000000001 /* IsoMeApp.swift */; };
 		A1000002212F000100000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002212F000000000002 /* ContentView.swift */; };
 		A1000003212F000100000003 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003212F000000000003 /* Visit.swift */; };
 		A1000004212F000100000004 /* LocationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004212F000000000004 /* LocationPoint.swift */; };
 		A1000005212F000100000005 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005212F000000000005 /* LocationManager.swift */; };
 		A1000006212F000100000006 /* GeocodingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006212F000000000006 /* GeocodingService.swift */; };
-		D2A10001212F000100000001 /* PlaceSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10001212F000000000001 /* PlaceSearchService.swift */; };
-		D2A10002212F000100000002 /* PlaceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10002212F000000000002 /* PlaceSelectionView.swift */; };
 		A1000007212F000100000007 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007212F000000000007 /* ExportService.swift */; };
-		A1000030212F000100000030 /* ExportOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000030212F000000000030 /* ExportOptions.swift */; };
-		A1000031212F000100000031 /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000031212F000000000031 /* ExportView.swift */; };
-		A1000020212F000100000020 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000020212F000000000020 /* ImportService.swift */; };
 		A1000008212F000100000008 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008212F000000000008 /* LocationViewModel.swift */; };
 		A100000B212F00010000000B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000B212F00000000000B /* MapView.swift */; };
 		A100000C212F00010000000C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C212F00000000000C /* SettingsView.swift */; };
@@ -58,58 +34,49 @@
 		A100000E212F00010000000E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000E212F00000000000E /* Assets.xcassets */; };
 		A100000F212F00010000000F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000F212F00000000000F /* Preview Assets.xcassets */; };
 		A1000019212F000100000019 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000019212F000000000019 /* AppDelegate.swift */; };
-		A100001F212F00010000001F /* TEDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001F212F00000000001F /* TEDesign.swift */; };
 		A100001A212F00010000001A /* LocationActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001A212F00000000001A /* LocationActivityAttributes.swift */; };
 		A100001B212F00010000001B /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001B212F00000000001B /* LiveActivityManager.swift */; };
 		A100001C212F00010000001C /* SharedLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001C212F00000000001C /* SharedLocationData.swift */; };
 		A100001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
-		C0DE0202212F000100000202 /* WatchLocationSyncPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */; };
-		C0DE0203212F000100000203 /* WatchLocationSyncPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */; };
-		C0DE0205212F000100000205 /* WatchLocationSyncClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0204212F000000000204 /* WatchLocationSyncClient.swift */; };
-		C0DE0207212F000100000207 /* WatchLocationSyncReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0206212F000000000206 /* WatchLocationSyncReceiver.swift */; };
-		A300001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
-		A400001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
-		A200001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
+		A100001F212F00010000001F /* TEDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001F212F00000000001F /* TEDesign.swift */; };
+		A1000020212F000100000020 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000020212F000000000020 /* ImportService.swift */; };
+		A1000030212F000100000030 /* ExportOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000030212F000000000030 /* ExportOptions.swift */; };
+		A1000031212F000100000031 /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000031212F000000000031 /* ExportView.swift */; };
+		A1178698C9FA49F18135BC6B /* WebhookManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F078A773745EF8CE42F37 /* WebhookManagerTests.swift */; };
 		A2000001212F000100000001 /* IsoMeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001212F000000000001 /* IsoMeWidgetBundle.swift */; };
 		A2000002212F000100000002 /* IsoMeLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002212F000000000002 /* IsoMeLiveActivity.swift */; };
 		A2000003212F000100000003 /* LocationActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001A212F00000000001A /* LocationActivityAttributes.swift */; };
 		A2000004212F000100000004 /* IsoMeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A2000000212F000000000000 /* IsoMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2000005212F000100000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000005212F000000000005 /* Assets.xcassets */; };
+		A200001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
 		A3000001212F000100000001 /* IsoMeWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3000001212F000000000001 /* IsoMeWatchApp.swift */; };
 		A3000002212F000100000002 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3000002212F000000000002 /* WatchContentView.swift */; };
 		A3000003212F000100000003 /* WatchAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3000003212F000000000003 /* WatchAssets.xcassets */; };
 		A3000004212F000100000004 /* SharedLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001C212F00000000001C /* SharedLocationData.swift */; };
 		A3000005212F000100000005 /* IsoMeWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A3000000212F000000000000 /* IsoMeWatch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A300001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
 		A3000101212F000100000101 /* WatchLocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3000101212F000000000101 /* WatchLocationTracker.swift */; };
 		A4000001212F000100000001 /* IsoMeWatchWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4000001212F000000000001 /* IsoMeWatchWidgetBundle.swift */; };
 		A4000002212F000100000002 /* IsoMeWatchWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4000002212F000000000002 /* IsoMeWatchWidget.swift */; };
 		A4000003212F000100000003 /* SharedLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001C212F00000000001C /* SharedLocationData.swift */; };
 		A4000004212F000100000004 /* IsoMeWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A4000000212F000000000000 /* IsoMeWatchWidgetExtension.appex */; platformFilter = watchos; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		BC063EB88C436E8BF576E318 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */; };
-		CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */; };
-		D5E7A1580000000000000158 /* ExportRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E7A1580000000000000058 /* ExportRoundTripTests.swift */; };
-		DC2E3601C25B2712AD33AE98 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397DEAA02FEF6A5B6FA476 /* PaywallView.swift */; };
-		E1000001212F000100000001 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001212F000000000001 /* AppInfo.swift */; };
-		E1000002212F000100000002 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002212F000000000002 /* LogManager.swift */; };
-		E1000003212F000100000003 /* LogViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003212F000000000003 /* LogViewerView.swift */; };
+		A400001E212F00010000001E /* DistanceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001D212F00000000001E /* DistanceFormatter.swift */; };
+		AA110001212F000100000001 /* CloudflareOnboardingAnalyticsTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110001212F000000000001 /* CloudflareOnboardingAnalyticsTransport.swift */; };
+		AA110002212F000100000002 /* OnboardingAnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110002212F000000000002 /* OnboardingAnalyticsClient.swift */; };
+		AA110003212F000100000003 /* OnboardingAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110003212F000000000003 /* OnboardingAnalyticsEvent.swift */; };
+		AA110004212F000100000004 /* OnboardingAnalyticsFunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110004212F000000000004 /* OnboardingAnalyticsFunnel.swift */; };
+		AA110005212F000100000005 /* OnboardingAnalyticsTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA110005212F000000000005 /* OnboardingAnalyticsTransport.swift */; };
 		AB000001212F000100000001 /* IsoMeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F000000000001 /* IsoMeIntents.swift */; };
-		AB000001212F0EE1000000E1 /* IsoMeEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E1 /* IsoMeEntities.swift */; };
-		AB000001212F0DD1000000D1 /* IsoMeExportIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */; };
 		AB000001212F0AA1000000A1 /* IsoMeReadIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */; };
-		AB000001212F0BB100000B1 /* IsoMeRenameIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */; };
-		C5F68C85D33E49FB8E0846D5 /* WebhookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E900BDC375415EB884300D /* WebhookManager.swift */; };
-		B4BEE4EDDABA4EBEA161EC3D /* WebhookSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */; };
-		F3601C83F23A13A26444AD47 /* SharedLocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */; };
-		E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */; };
-		A1178698C9FA49F18135BC6B /* WebhookManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F078A773745EF8CE42F37 /* WebhookManagerTests.swift */; };
-		FA110002212F000100000002 /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110001212F000000000001 /* StoreManagerTests.swift */; };
-		AB000001212F0EE1000000E2 /* IsoMeEntityQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E2 /* IsoMeEntityQueryTests.swift */; };
-		AB000001212F0DD1000000D2 /* ExportDataIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */; };
 		AB000001212F0AA1000000A2 /* GetCurrentOutingNameIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0AA0000000A2 /* GetCurrentOutingNameIntentTests.swift */; };
-		AB000001212F0CC100000C2 /* GetVisitsGetMovementsIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */; };
+		AB000001212F0BB100000B1 /* IsoMeRenameIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */; };
 		AB000001212F0BB100000B2 /* RenameIntentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B2 /* RenameIntentsTests.swift */; };
-		6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */; };
-		D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10003212F000000000003 /* RemotePastVisitTests.swift */; };
+		AB000001212F0CC100000C2 /* GetVisitsGetMovementsIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */; };
+		AB000001212F0DD1000000D1 /* IsoMeExportIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */; };
+		AB000001212F0DD1000000D2 /* ExportDataIntentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */; };
+		AB000001212F0EE1000000E1 /* IsoMeEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E1 /* IsoMeEntities.swift */; };
+		AB000001212F0EE1000000E2 /* IsoMeEntityQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E2 /* IsoMeEntityQueryTests.swift */; };
+		AF000001212F000100000001 /* DailyDistanceTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF000001212F000000000001 /* DailyDistanceTracker.swift */; };
 		B2000005212F000100000005 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000001212F000000000001 /* Localizable.xcstrings */; };
 		B2000006212F000100000006 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000002212F000000000002 /* InfoPlist.xcstrings */; };
 		B2000007212F000100000007 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000003212F000000000003 /* Localizable.xcstrings */; };
@@ -119,6 +86,42 @@
 		B200000B212F00010000000B /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000007212F000000000007 /* AppShortcuts.xcstrings */; };
 		B200000C212F00010000000C /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000008212F000000000008 /* InfoPlist.xcstrings */; };
 		B200000D212F00010000000D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000009212F000000000009 /* InfoPlist.xcstrings */; };
+		B4BEE4EDDABA4EBEA161EC3D /* WebhookSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */; };
+		BC063EB88C436E8BF576E318 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */; };
+		BEE50001212F000100000001 /* ReleaseNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE50001212F000000000001 /* ReleaseNotes.swift */; };
+		BEE50012212F000100000012 /* Notelet in Frameworks */ = {isa = PBXBuildFile; productRef = BEE50011212F000000000011 /* Notelet */; };
+		C0DE0001212F000100000001 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0001212F000000000001 /* RecordingSession.swift */; };
+		C0DE0002212F000100000002 /* OutingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0002212F000000000002 /* OutingsView.swift */; };
+		C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0101212F000000000101 /* PhotoMoment.swift */; };
+		C0DE0102212F000100000102 /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0102212F000000000102 /* PhotoLibraryManager.swift */; };
+		C0DE0103212F000100000103 /* PhotoMomentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0103212F000000000103 /* PhotoMomentViews.swift */; };
+		C0DE0202212F000100000202 /* WatchLocationSyncPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */; };
+		C0DE0203212F000100000203 /* WatchLocationSyncPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */; };
+		C0DE0205212F000100000205 /* WatchLocationSyncClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0204212F000000000204 /* WatchLocationSyncClient.swift */; };
+		C0DE0207212F000100000207 /* WatchLocationSyncReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0206212F000000000206 /* WatchLocationSyncReceiver.swift */; };
+		C5F68C85D33E49FB8E0846D5 /* WebhookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E900BDC375415EB884300D /* WebhookManager.swift */; };
+		CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */; };
+		D15C04D0BA000000000000A1 /* DiscordPromoBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */; };
+		D2A10001212F000100000001 /* PlaceSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10001212F000000000001 /* PlaceSearchService.swift */; };
+		D2A10002212F000100000002 /* PlaceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10002212F000000000002 /* PlaceSelectionView.swift */; };
+		D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10003212F000000000003 /* RemotePastVisitTests.swift */; };
+		D5E7A1580000000000000158 /* ExportRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E7A1580000000000000058 /* ExportRoundTripTests.swift */; };
+		D6000001212F000100000001 /* PushRegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6000001212F000000000001 /* PushRegistrationManager.swift */; };
+		D6000002212F000100000002 /* DailyExportNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */; };
+		DC2E3601C25B2712AD33AE98 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397DEAA02FEF6A5B6FA476 /* PaywallView.swift */; };
+		E1000001212F000100000001 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001212F000000000001 /* AppInfo.swift */; };
+		E1000002212F000100000002 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002212F000000000002 /* LogManager.swift */; };
+		E1000003212F000100000003 /* LogViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003212F000000000003 /* LogViewerView.swift */; };
+		E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */; };
+		E9A100000000000000000002 /* IsoMeExportKitAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A100000000000000000001 /* IsoMeExportKitAdapter.swift */; };
+		E9A100000000000000000004 /* ExportKitIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A100000000000000000003 /* ExportKitIntegrationTests.swift */; };
+		E9A100000000000000000008 /* ExportKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000006 /* ExportKit */; };
+		E9A100000000000000000009 /* ExportAutomationKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000007 /* ExportAutomationKit */; };
+		E9A10000000000000000000A /* ExportKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000006 /* ExportKit */; };
+		E9A10000000000000000000B /* ExportAutomationKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9A100000000000000000007 /* ExportAutomationKit */; };
+		F1000001212F000100000001 /* FilenameTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001212F000000000001 /* FilenameTemplate.swift */; };
+		F3601C83F23A13A26444AD47 /* SharedLocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */; };
+		FA110002212F000100000002 /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110001212F000000000001 /* StoreManagerTests.swift */; };
 		FEC10001212F000100000001 /* outings-dashboard.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FEC10001212F000000000001 /* outings-dashboard.mp4 */; };
 		FEC10002212F000100000002 /* route-replay.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FEC10002212F000000000002 /* route-replay.mp4 */; };
 		FEC10003212F000100000003 /* map-focus.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FEC10003212F000000000003 /* map-focus.mp4 */; };
@@ -144,6 +147,9 @@
 		C0DE04010000000000000002 /* WatchLocationSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04010000000000000001 /* WatchLocationSyncState.swift */; };
 		C0DE04010000000000000003 /* WatchLocationSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04010000000000000001 /* WatchLocationSyncState.swift */; };
 		C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04020000000000000001 /* WatchLocationSyncTests.swift */; };
+		E5A546658B9E479D8364CF00 /* ScrawlKit in Frameworks */ = {isa = PBXBuildFile; productRef = 11AB94AF57A54AF190F5E84D /* ScrawlKit */; };
+		CA1E00860000000000000001 /* CalendarEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E00860000000000000002 /* CalendarEventEditor.swift */; };
+		CA1E00860000000000000003 /* CalendarEventDraftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E00860000000000000004 /* CalendarEventDraftTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,87 +220,49 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C0DE05010000000000000001 /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = "<group>"; };
 		CC1090010000000000000002 /* MyselfClaimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyselfClaimView.swift; sourceTree = "<group>"; };
-		AA110001212F000000000001 /* CloudflareOnboardingAnalyticsTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudflareOnboardingAnalyticsTransport.swift; sourceTree = "<group>"; };
-		AA110002212F000000000002 /* OnboardingAnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsClient.swift; sourceTree = "<group>"; };
-		AA110003212F000000000003 /* OnboardingAnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsEvent.swift; sourceTree = "<group>"; };
-		AA110004212F000000000004 /* OnboardingAnalyticsFunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsFunnel.swift; sourceTree = "<group>"; };
-		AA110005212F000000000005 /* OnboardingAnalyticsTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsTransport.swift; sourceTree = "<group>"; };
-		C0DE0001212F000000000001 /* RecordingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSession.swift; sourceTree = "<group>"; };
-		C0DE0101212F000000000101 /* PhotoMoment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMoment.swift; sourceTree = "<group>"; };
-		C0DE0102212F000000000102 /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryManager.swift; sourceTree = "<group>"; };
-		C0DE0103212F000000000103 /* PhotoMomentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMomentViews.swift; sourceTree = "<group>"; };
-		C0DE0002212F000000000002 /* OutingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutingsView.swift; sourceTree = "<group>"; };
-		E9A100000000000000000001 /* IsoMeExportKitAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeExportKitAdapter.swift; sourceTree = "<group>"; };
-		E9A100000000000000000003 /* ExportKitIntegrationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportKitIntegrationTests.swift; sourceTree = "<group>"; };
+		24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookSettingsView.swift; sourceTree = "<group>"; };
 		2E1B75491004BD3A7D223DB3 /* IsoMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IsoMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA110003212F000000000003 /* IsoMe.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IsoMe.storekit; sourceTree = "<group>"; };
 		32DB4D5F4E2D01FCD4E9169E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		59397DEAA02FEF6A5B6FA476 /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		5F000001212F000000000001 /* ExportFolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFolderManager.swift; sourceTree = "<group>"; };
-		F1000001212F000000000001 /* FilenameTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameTemplate.swift; sourceTree = "<group>"; };
 		5F000002212F000000000001 /* DailyExportScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportScheduler.swift; sourceTree = "<group>"; };
 		5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalExportScheduleDateMath.swift; sourceTree = "<group>"; };
 		5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledExportMergeStrategies.swift; sourceTree = "<group>"; };
 		5F000007212F000000000001 /* IntervalScheduledExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalScheduledExportTests.swift; sourceTree = "<group>"; };
 		5F000008212F000000000001 /* IntervalPickerCrashReproTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalPickerCrashReproTests.swift; sourceTree = "<group>"; };
-		D6000001212F000000000001 /* PushRegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRegistrationManager.swift; sourceTree = "<group>"; };
-		D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportNotificationScheduler.swift; sourceTree = "<group>"; };
+		6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationViewModelPointScalingTests.swift; sourceTree = "<group>"; };
 		76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManagerTrackingTests.swift; sourceTree = "<group>"; };
-		D5E7A1580000000000000058 /* ExportRoundTripTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportRoundTripTests.swift; sourceTree = "<group>"; };
+		779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugSelfie.swift; sourceTree = "<group>"; };
 		7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
-		E1000001212F000000000001 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
-		E1000002212F000000000002 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
-		E1000003212F000000000003 /* LogViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerView.swift; sourceTree = "<group>"; };
-		AB000001212F000000000001 /* IsoMeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeIntents.swift; sourceTree = "<group>"; };
-		AB000001212F0EE0000000E1 /* IsoMeEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeEntities.swift; sourceTree = "<group>"; };
-		AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeExportIntents.swift; sourceTree = "<group>"; };
-		AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeReadIntents.swift; sourceTree = "<group>"; };
-		AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeRenameIntents.swift; sourceTree = "<group>"; };
+		8F7F078A773745EF8CE42F37 /* WebhookManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebhookManagerTests.swift; sourceTree = "<group>"; };
 		9DE47A9C94C8FC4C2E32835B /* SessionPathMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionPathMapView.swift; sourceTree = "<group>"; };
-		E4E900BDC375415EB884300D /* WebhookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookManager.swift; sourceTree = "<group>"; };
-		24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookSettingsView.swift; sourceTree = "<group>"; };
-		D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscordPromoBanner.swift; sourceTree = "<group>"; };
 		A1000000212F000000000000 /* IsoMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsoMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000001212F000000000001 /* IsoMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeApp.swift; sourceTree = "<group>"; };
 		A1000002212F000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		BEE50001212F000000000001 /* ReleaseNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotes.swift; sourceTree = "<group>"; };
 		A1000003212F000000000003 /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		A1000004212F000000000004 /* LocationPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPoint.swift; sourceTree = "<group>"; };
 		A1000005212F000000000005 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A1000006212F000000000006 /* GeocodingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingService.swift; sourceTree = "<group>"; };
-		D2A10001212F000000000001 /* PlaceSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchService.swift; sourceTree = "<group>"; };
-		D2A10002212F000000000002 /* PlaceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionView.swift; sourceTree = "<group>"; };
 		A1000007212F000000000007 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
-		A1000030212F000000000030 /* ExportOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportOptions.swift; sourceTree = "<group>"; };
-		A1000031212F000000000031 /* ExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
-		A1000020212F000000000020 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
 		A1000008212F000000000008 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		A100000B212F00000000000B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		A100000C212F00000000000C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A100000D212F00000000000D /* VisitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitDetailView.swift; sourceTree = "<group>"; };
 		A100000E212F00000000000E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A100000F212F00000000000F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		FEC10001212F000000000001 /* outings-dashboard.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "outings-dashboard.mp4"; sourceTree = "<group>"; };
-		FEC10002212F000000000002 /* route-replay.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "route-replay.mp4"; sourceTree = "<group>"; };
-		FEC10003212F000000000003 /* map-focus.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "map-focus.mp4"; sourceTree = "<group>"; };
-		FEC10005212F000000000005 /* visit-renaming.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "visit-renaming.mp4"; sourceTree = "<group>"; };
-		FEC10006212F000000000006 /* inferred-rules.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "inferred-rules.mp4"; sourceTree = "<group>"; };
-		FEC10007212F000000000007 /* outings-export.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "outings-export.mp4"; sourceTree = "<group>"; };
-		FEC10008212F000000000008 /* outing-detail-export.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "outing-detail-export.mp4"; sourceTree = "<group>"; };
-		FEC10009212F000000000009 /* apple-watch-tracking.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "apple-watch-tracking.mp4"; sourceTree = "<group>"; };
-		FEC1000A212F00000000000A /* multi-format-export.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "multi-format-export.mp4"; sourceTree = "<group>"; };
-		FEC1000B212F00000000000B /* remote-past-visits.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "remote-past-visits.mp4"; sourceTree = "<group>"; };
 		A1000010212F000000000010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1000019212F000000000019 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A100001F212F00000000001F /* TEDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TEDesign.swift; sourceTree = "<group>"; };
 		A100001A212F00000000001A /* LocationActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationActivityAttributes.swift; sourceTree = "<group>"; };
 		A100001B212F00000000001B /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		A100001C212F00000000001C /* SharedLocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationData.swift; sourceTree = "<group>"; };
-		A100001D212F00000000001E /* DistanceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceFormatter.swift; sourceTree = "<group>"; };
-		C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncPayload.swift; sourceTree = "<group>"; };
-		C0DE0206212F000000000206 /* WatchLocationSyncReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncReceiver.swift; sourceTree = "<group>"; };
 		A100001D212F00000000001D /* IsoMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IsoMe.entitlements; sourceTree = "<group>"; };
+		A100001D212F00000000001E /* DistanceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceFormatter.swift; sourceTree = "<group>"; };
+		A100001F212F00000000001F /* TEDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TEDesign.swift; sourceTree = "<group>"; };
+		A1000020212F000000000020 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
+		A1000030212F000000000030 /* ExportOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportOptions.swift; sourceTree = "<group>"; };
+		A1000031212F000000000031 /* ExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
 		A2000000212F000000000000 /* IsoMeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IsoMeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000001212F000000000001 /* IsoMeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeWidgetBundle.swift; sourceTree = "<group>"; };
 		A2000002212F000000000002 /* IsoMeLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeLiveActivity.swift; sourceTree = "<group>"; };
@@ -308,24 +276,27 @@
 		A3000004212F000000000004 /* WatchInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = WatchInfo.plist; path = Info.plist; sourceTree = "<group>"; };
 		A3000005212F000000000005 /* IsoMeWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IsoMeWatch.entitlements; sourceTree = "<group>"; };
 		A3000101212F000000000101 /* WatchLocationTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationTracker.swift; sourceTree = "<group>"; };
-		C0DE0204212F000000000204 /* WatchLocationSyncClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncClient.swift; sourceTree = "<group>"; };
 		A4000000212F000000000000 /* IsoMeWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IsoMeWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4000001212F000000000001 /* IsoMeWatchWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeWatchWidgetBundle.swift; sourceTree = "<group>"; };
 		A4000002212F000000000002 /* IsoMeWatchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeWatchWidget.swift; sourceTree = "<group>"; };
 		A4000003212F000000000003 /* WatchWidgetInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = WatchWidgetInfo.plist; path = Info.plist; sourceTree = "<group>"; };
 		A4000004212F000000000004 /* IsoMeWatchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IsoMeWatchWidget.entitlements; sourceTree = "<group>"; };
-		AF000001212F000000000001 /* DailyDistanceTracker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DailyDistanceTracker.swift; sourceTree = "<group>"; };
-		F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedLocationDataTests.swift; sourceTree = "<group>"; };
-		E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportServiceRoundTripTests.swift; sourceTree = "<group>"; };
-		8F7F078A773745EF8CE42F37 /* WebhookManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebhookManagerTests.swift; sourceTree = "<group>"; };
-		FA110001212F000000000001 /* StoreManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManagerTests.swift; sourceTree = "<group>"; };
-		AB000001212F0EE0000000E2 /* IsoMeEntityQueryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IsoMeEntityQueryTests.swift; sourceTree = "<group>"; };
-		AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportDataIntentTests.swift; sourceTree = "<group>"; };
+		AA110001212F000000000001 /* CloudflareOnboardingAnalyticsTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudflareOnboardingAnalyticsTransport.swift; sourceTree = "<group>"; };
+		AA110002212F000000000002 /* OnboardingAnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsClient.swift; sourceTree = "<group>"; };
+		AA110003212F000000000003 /* OnboardingAnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsEvent.swift; sourceTree = "<group>"; };
+		AA110004212F000000000004 /* OnboardingAnalyticsFunnel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsFunnel.swift; sourceTree = "<group>"; };
+		AA110005212F000000000005 /* OnboardingAnalyticsTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnalyticsTransport.swift; sourceTree = "<group>"; };
+		AB000001212F000000000001 /* IsoMeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeIntents.swift; sourceTree = "<group>"; };
+		AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeReadIntents.swift; sourceTree = "<group>"; };
 		AB000001212F0AA0000000A2 /* GetCurrentOutingNameIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetCurrentOutingNameIntentTests.swift; sourceTree = "<group>"; };
-		AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetVisitsGetMovementsIntentTests.swift; sourceTree = "<group>"; };
+		AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeRenameIntents.swift; sourceTree = "<group>"; };
 		AB000001212F0BB000000B2 /* RenameIntentsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RenameIntentsTests.swift; sourceTree = "<group>"; };
-		6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationViewModelPointScalingTests.swift; sourceTree = "<group>"; };
-		D2A10003212F000000000003 /* RemotePastVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemotePastVisitTests.swift; sourceTree = "<group>"; };
+		AB000001212F0CC000000C2 /* GetVisitsGetMovementsIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetVisitsGetMovementsIntentTests.swift; sourceTree = "<group>"; };
+		AB000001212F0DD0000000D1 /* IsoMeExportIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeExportIntents.swift; sourceTree = "<group>"; };
+		AB000001212F0DD0000000D2 /* ExportDataIntentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportDataIntentTests.swift; sourceTree = "<group>"; };
+		AB000001212F0EE0000000E1 /* IsoMeEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeEntities.swift; sourceTree = "<group>"; };
+		AB000001212F0EE0000000E2 /* IsoMeEntityQueryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IsoMeEntityQueryTests.swift; sourceTree = "<group>"; };
+		AF000001212F000000000001 /* DailyDistanceTracker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DailyDistanceTracker.swift; sourceTree = "<group>"; };
 		B1000001212F000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B1000002212F000000000002 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B1000003212F000000000003 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -335,6 +306,43 @@
 		B1000007212F000000000007 /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
 		B1000008212F000000000008 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = InfoPlist.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B1000009212F000000000009 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = InfoPlist.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		BEE50001212F000000000001 /* ReleaseNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotes.swift; sourceTree = "<group>"; };
+		C0DE0001212F000000000001 /* RecordingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSession.swift; sourceTree = "<group>"; };
+		C0DE0002212F000000000002 /* OutingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutingsView.swift; sourceTree = "<group>"; };
+		C0DE0101212F000000000101 /* PhotoMoment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMoment.swift; sourceTree = "<group>"; };
+		C0DE0102212F000000000102 /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryManager.swift; sourceTree = "<group>"; };
+		C0DE0103212F000000000103 /* PhotoMomentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMomentViews.swift; sourceTree = "<group>"; };
+		C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncPayload.swift; sourceTree = "<group>"; };
+		C0DE0204212F000000000204 /* WatchLocationSyncClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncClient.swift; sourceTree = "<group>"; };
+		C0DE0206212F000000000206 /* WatchLocationSyncReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncReceiver.swift; sourceTree = "<group>"; };
+		D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscordPromoBanner.swift; sourceTree = "<group>"; };
+		D2A10001212F000000000001 /* PlaceSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchService.swift; sourceTree = "<group>"; };
+		D2A10002212F000000000002 /* PlaceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionView.swift; sourceTree = "<group>"; };
+		D2A10003212F000000000003 /* RemotePastVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemotePastVisitTests.swift; sourceTree = "<group>"; };
+		D5E7A1580000000000000058 /* ExportRoundTripTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportRoundTripTests.swift; sourceTree = "<group>"; };
+		D6000001212F000000000001 /* PushRegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRegistrationManager.swift; sourceTree = "<group>"; };
+		D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportNotificationScheduler.swift; sourceTree = "<group>"; };
+		E1000001212F000000000001 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
+		E1000002212F000000000002 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		E1000003212F000000000003 /* LogViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerView.swift; sourceTree = "<group>"; };
+		E4E900BDC375415EB884300D /* WebhookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookManager.swift; sourceTree = "<group>"; };
+		E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportServiceRoundTripTests.swift; sourceTree = "<group>"; };
+		E9A100000000000000000001 /* IsoMeExportKitAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeExportKitAdapter.swift; sourceTree = "<group>"; };
+		E9A100000000000000000003 /* ExportKitIntegrationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportKitIntegrationTests.swift; sourceTree = "<group>"; };
+		F1000001212F000000000001 /* FilenameTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameTemplate.swift; sourceTree = "<group>"; };
+		F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedLocationDataTests.swift; sourceTree = "<group>"; };
+		FA110001212F000000000001 /* StoreManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManagerTests.swift; sourceTree = "<group>"; };
+		FA110003212F000000000003 /* IsoMe.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = IsoMe.storekit; sourceTree = "<group>"; };
+		FEC10001212F000000000001 /* outings-dashboard.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "outings-dashboard.mp4"; sourceTree = "<group>"; };
+		FEC10002212F000000000002 /* route-replay.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "route-replay.mp4"; sourceTree = "<group>"; };
+		FEC10003212F000000000003 /* map-focus.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "map-focus.mp4"; sourceTree = "<group>"; };
+		FEC10005212F000000000005 /* visit-renaming.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "visit-renaming.mp4"; sourceTree = "<group>"; };
+		FEC10006212F000000000006 /* inferred-rules.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "inferred-rules.mp4"; sourceTree = "<group>"; };
+		FEC10007212F000000000007 /* outings-export.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "outings-export.mp4"; sourceTree = "<group>"; };
+		FEC10008212F000000000008 /* outing-detail-export.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "outing-detail-export.mp4"; sourceTree = "<group>"; };
+		FEC10009212F000000000009 /* apple-watch-tracking.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "apple-watch-tracking.mp4"; sourceTree = "<group>"; };
+		FEC1000A212F00000000000A /* multi-format-export.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "multi-format-export.mp4"; sourceTree = "<group>"; };
+		FEC1000B212F00000000000B /* remote-past-visits.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "remote-past-visits.mp4"; sourceTree = "<group>"; };
 		A117468AA8E34CF7907B6A48 /* SavedLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLocationsView.swift; sourceTree = "<group>"; };
 		BC7E16B16123499F8142E3B2 /* SavedPlaceEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPlaceEditorView.swift; sourceTree = "<group>"; };
 		1C057B2D2A02472C821730A8 /* SavedPlaceManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPlaceManagement.swift; sourceTree = "<group>"; };
@@ -349,6 +357,8 @@
 		C0DE0304212F000000000304 /* CountryDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDayTests.swift; sourceTree = "<group>"; };
 		C0DE04010000000000000001 /* WatchLocationSyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncState.swift; sourceTree = "<group>"; };
 		C0DE04020000000000000001 /* WatchLocationSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncTests.swift; sourceTree = "<group>"; };
+		CA1E00860000000000000002 /* CalendarEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventEditor.swift; sourceTree = "<group>"; };
+		CA1E00860000000000000004 /* CalendarEventDraftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventDraftTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,9 +366,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5A546658B9E479D8364CF00 /* ScrawlKit in Frameworks */,
 				E9A100000000000000000008 /* ExportKit in Frameworks */,
 				E9A100000000000000000009 /* ExportAutomationKit in Frameworks */,
 				BEE50012212F000100000012 /* Notelet in Frameworks */,
+				47B033577E4B1712A002C33E /* SelfieOverlayKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,16 +408,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA110000212F000000000000 /* Analytics */ = {
+		1BA2485DED589D6221766197 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
-				AA110001212F000000000001 /* CloudflareOnboardingAnalyticsTransport.swift */,
-				AA110002212F000000000002 /* OnboardingAnalyticsClient.swift */,
-				AA110003212F000000000003 /* OnboardingAnalyticsEvent.swift */,
-				AA110004212F000000000004 /* OnboardingAnalyticsFunnel.swift */,
-				AA110005212F000000000005 /* OnboardingAnalyticsTransport.swift */,
+				779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */,
 			);
-			path = Analytics;
+			name = Debug;
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		5D13E0A973DE83648CCDCF76 /* iOS */ = {
@@ -459,23 +468,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FEC10000212F000000000000 /* ReleaseNoteVideos */ = {
-			isa = PBXGroup;
-			children = (
-				FEC10001212F000000000001 /* outings-dashboard.mp4 */,
-				FEC10002212F000000000002 /* route-replay.mp4 */,
-				FEC10003212F000000000003 /* map-focus.mp4 */,
-				FEC10005212F000000000005 /* visit-renaming.mp4 */,
-				FEC10006212F000000000006 /* inferred-rules.mp4 */,
-				FEC10009212F000000000009 /* apple-watch-tracking.mp4 */,
-				FEC1000A212F00000000000A /* multi-format-export.mp4 */,
-				FEC10007212F000000000007 /* outings-export.mp4 */,
-				FEC10008212F000000000008 /* outing-detail-export.mp4 */,
-				FEC1000B212F00000000000B /* remote-past-visits.mp4 */,
-			);
-			path = ReleaseNoteVideos;
-			sourceTree = "<group>";
-		};
 		A1FFFFFA212EFFFFFFFF0001 /* IsoMe */ = {
 			isa = PBXGroup;
 			children = (
@@ -495,6 +487,7 @@
 				B1000001212F000000000001 /* Localizable.xcstrings */,
 				B1000002212F000000000002 /* InfoPlist.xcstrings */,
 				B1000007212F000000000007 /* AppShortcuts.xcstrings */,
+				1BA2485DED589D6221766197 /* Debug */,
 			);
 			path = IsoMe;
 			sourceTree = "<group>";
@@ -556,6 +549,7 @@
 				C0DE0002212F000000000002 /* OutingsView.swift */,
 				A100000C212F00000000000C /* SettingsView.swift */,
 				CC1090010000000000000002 /* MyselfClaimView.swift */,
+				CA1E00860000000000000002 /* CalendarEventEditor.swift */,
 				A100000D212F00000000000D /* VisitDetailView.swift */,
 				9DE47A9C94C8FC4C2E32835B /* SessionPathMapView.swift */,
 				59397DEAA02FEF6A5B6FA476 /* PaywallView.swift */,
@@ -645,11 +639,25 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		AA110000212F000000000000 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				AA110001212F000000000001 /* CloudflareOnboardingAnalyticsTransport.swift */,
+				AA110002212F000000000002 /* OnboardingAnalyticsClient.swift */,
+				AA110003212F000000000003 /* OnboardingAnalyticsEvent.swift */,
+				AA110004212F000000000004 /* OnboardingAnalyticsFunnel.swift */,
+				AA110005212F000000000005 /* OnboardingAnalyticsTransport.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		AD8A47404A1FA6D94EF61780 /* IsoMeTests */ = {
 			isa = PBXGroup;
 			children = (
+				C0DE05010000000000000001 /* Fixtures */,
 				C0DE0304212F000000000304 /* CountryDayTests.swift */,
 				C0DE04020000000000000001 /* WatchLocationSyncTests.swift */,
+				CA1E00860000000000000004 /* CalendarEventDraftTests.swift */,
 				E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */,
 				EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */,
 				3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */,
@@ -674,6 +682,23 @@
 			path = IsoMeTests;
 			sourceTree = "<group>";
 		};
+		FEC10000212F000000000000 /* ReleaseNoteVideos */ = {
+			isa = PBXGroup;
+			children = (
+				FEC10001212F000000000001 /* outings-dashboard.mp4 */,
+				FEC10002212F000000000002 /* route-replay.mp4 */,
+				FEC10003212F000000000003 /* map-focus.mp4 */,
+				FEC10005212F000000000005 /* visit-renaming.mp4 */,
+				FEC10006212F000000000006 /* inferred-rules.mp4 */,
+				FEC10009212F000000000009 /* apple-watch-tracking.mp4 */,
+				FEC1000A212F00000000000A /* multi-format-export.mp4 */,
+				FEC10007212F000000000007 /* outings-export.mp4 */,
+				FEC10008212F000000000008 /* outing-detail-export.mp4 */,
+				FEC1000B212F00000000000B /* remote-past-visits.mp4 */,
+			);
+			path = ReleaseNoteVideos;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -695,9 +720,11 @@
 			);
 			name = IsoMe;
 			packageProductDependencies = (
+				11AB94AF57A54AF190F5E84D /* ScrawlKit */,
 				E9A100000000000000000006 /* ExportKit */,
 				E9A100000000000000000007 /* ExportAutomationKit */,
 				BEE50011212F000000000011 /* Notelet */,
+				C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */,
 			);
 			productName = IsoMe;
 			productReference = A1000000212F000000000000 /* IsoMe.app */;
@@ -818,11 +845,14 @@
 				ru,
 				ja,
 				fr,
+				pl,
 			);
 			mainGroup = A1FFFFF8212EFFFFFFFF0000;
 			packageReferences = (
+				4DF553D1EF1C48318F884DAB /* XCRemoteSwiftPackageReference "scrawl" */,
 				E9A100000000000000000005 /* XCRemoteSwiftPackageReference "ExportKit" */,
 				BEE50010212F000000000010 /* XCRemoteSwiftPackageReference "notelet" */,
+				1E96CF14AA94224BABF0E1D4 /* XCRemoteSwiftPackageReference "SelfieOverlayKit" */,
 			);
 			productRefGroup = A1FFFFF9212EFFFFFFFF0002 /* Products */;
 			projectDirPath = "";
@@ -893,6 +923,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0DE05010000000000000002 /* Fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -936,6 +967,7 @@
 				C0DE0002212F000100000002 /* OutingsView.swift in Sources */,
 				A100000C212F00010000000C /* SettingsView.swift in Sources */,
 				CC1090010000000000000001 /* MyselfClaimView.swift in Sources */,
+				CA1E00860000000000000001 /* CalendarEventEditor.swift in Sources */,
 				A100000D212F00010000000D /* VisitDetailView.swift in Sources */,
 				A100001A212F00010000001A /* LocationActivityAttributes.swift in Sources */,
 				A100001B212F00010000001B /* LiveActivityManager.swift in Sources */,
@@ -971,6 +1003,7 @@
 				AA110005212F000100000005 /* OnboardingAnalyticsTransport.swift in Sources */,
 				C5F68C85D33E49FB8E0846D5 /* WebhookManager.swift in Sources */,
 				B4BEE4EDDABA4EBEA161EC3D /* WebhookSettingsView.swift in Sources */,
+				9038E89D0D7D984DC89F365B /* DebugSelfie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,6 +1050,7 @@
 			files = (
 				C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */,
 				C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */,
+				CA1E00860000000000000003 /* CalendarEventDraftTests.swift in Sources */,
 				34314394A69B4C38B941108A /* VisitMapOpenerTests.swift in Sources */,
 				A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */,
 				54EC7C2E1B7D4635BF1F1422 /* SavedPlaceManagementTests.swift in Sources */,
@@ -1094,7 +1128,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isomeTests;
 				PRODUCT_NAME = IsoMeTests;
 				SDKROOT = iphoneos;
@@ -1229,6 +1263,7 @@
 		A1000017212F000000000017 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1239,8 +1274,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMe/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me";
+				INFOPLIST_KEY_CFBundleDisplayName = Whereday;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Shows the debug selfie overlay bubble (debug builds only).";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Records audio with the debug selfie overlay (debug builds only).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1272,7 +1309,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMe/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me";
+				INFOPLIST_KEY_CFBundleDisplayName = Whereday;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1302,7 +1339,7 @@
 				CURRENT_PROJECT_VERSION = 40;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMeWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me Widget";
+				INFOPLIST_KEY_CFBundleDisplayName = "Whereday Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1329,7 +1366,7 @@
 				CURRENT_PROJECT_VERSION = 40;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMeWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me Widget";
+				INFOPLIST_KEY_CFBundleDisplayName = "Whereday Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1356,7 +1393,7 @@
 				CURRENT_PROJECT_VERSION = 40;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMeWatch/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me";
+				INFOPLIST_KEY_CFBundleDisplayName = Whereday;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bontecou.isome;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1385,7 +1422,7 @@
 				CURRENT_PROJECT_VERSION = 40;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMeWatch/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me";
+				INFOPLIST_KEY_CFBundleDisplayName = Whereday;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bontecou.isome;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1414,7 +1451,7 @@
 				CURRENT_PROJECT_VERSION = 40;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMeWatchWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me";
+				INFOPLIST_KEY_CFBundleDisplayName = Whereday;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1443,7 +1480,7 @@
 				CURRENT_PROJECT_VERSION = 40;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IsoMeWatchWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "iso.me";
+				INFOPLIST_KEY_CFBundleDisplayName = Whereday;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1522,11 +1559,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E9A100000000000000000005 /* XCRemoteSwiftPackageReference "ExportKit" */ = {
+		1E96CF14AA94224BABF0E1D4 /* XCRemoteSwiftPackageReference "SelfieOverlayKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CodyBontecou/ExportKit";
+			repositoryURL = "https://github.com/CodyBontecou/SelfieOverlayKit.git";
 			requirement = {
-				branch = main;
+				branch = "debug-only";
 				kind = branch;
 			};
 		};
@@ -1538,9 +1575,35 @@
 				kind = branch;
 			};
 		};
+		E9A100000000000000000005 /* XCRemoteSwiftPackageReference "ExportKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CodyBontecou/ExportKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		4DF553D1EF1C48318F884DAB /* XCRemoteSwiftPackageReference "scrawl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kitlangton/scrawl";
+			requirement = {
+				kind = revision;
+				revision = 6d4fa333475ef5170c4df683e306480f8618b95a;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BEE50011212F000000000011 /* Notelet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BEE50010212F000000000010 /* XCRemoteSwiftPackageReference "notelet" */;
+			productName = Notelet;
+		};
+		C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E96CF14AA94224BABF0E1D4 /* XCRemoteSwiftPackageReference "SelfieOverlayKit" */;
+			productName = SelfieOverlayKit;
+		};
 		E9A100000000000000000006 /* ExportKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E9A100000000000000000005 /* XCRemoteSwiftPackageReference "ExportKit" */;
@@ -1551,13 +1614,12 @@
 			package = E9A100000000000000000005 /* XCRemoteSwiftPackageReference "ExportKit" */;
 			productName = ExportAutomationKit;
 		};
-		BEE50011212F000000000011 /* Notelet */ = {
+		11AB94AF57A54AF190F5E84D /* ScrawlKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BEE50010212F000000000010 /* XCRemoteSwiftPackageReference "notelet" */;
-			productName = Notelet;
+			package = 4DF553D1EF1C48318F884DAB /* XCRemoteSwiftPackageReference "scrawl" */;
+			productName = ScrawlKit;
 		};
 /* End XCSwiftPackageProductDependency section */
-
 	};
 	rootObject = A1FFFFF9212EFFFFFFFF0001 /* Project object */;
 }

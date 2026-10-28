@@ -7,61 +7,67 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me القطعة"
+            "value": "Whereday القطعة"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me উইজেট"
+            "value": "Whereday উইজেট"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me Widget"
+            "value": "Whereday Widget"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Widget de iso.me"
+            "value": "Widget de Whereday"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Widget iso.me"
+            "value": "Widget Whereday"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me विजेट"
+            "value": "Whereday विजेट"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.meウィジェット"
+            "value": "Wheredayウィジェット"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Widget iso.me"
+            "value": "Widget Whereday"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Виджет iso.me"
+            "value": "Виджет Whereday"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me小部件"
+            "value": "Whereday小部件"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widżet Whereday"
           }
         }
       }
@@ -128,6 +134,12 @@
             "state": "translated",
             "value": "IsoMeWidgetExtension"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IsoMeWidgetExtension"
+          }
         }
       }
     },
@@ -189,6 +201,12 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ""
+          }
+        },
+        "pl": {
           "stringUnit": {
             "state": "translated",
             "value": ""

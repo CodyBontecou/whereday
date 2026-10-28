@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>iso.me uses your Apple Watch location to track visits and distance directly on the watch.</string>
+    <string>Whereday uses your Apple Watch location to track visits and distance directly on the watch.</string>
     <key>UIBackgroundModes</key>
     <array>
         <string>location</string>

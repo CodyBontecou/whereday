@@ -119,28 +119,13 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
             return
         }
 
-        guard let payload = makePayload() else { return }
+        guard let payload = state.makePayload(maxPoints: maxPointsPerPayload) else { return }
         guard let payloadData = try? encoder.encode(payload) else { return }
 
-        let selectedPointIDs = Set(payload.points.map(\.id))
-        let selectedSessionIDs = Set(payload.sessions.map(\.id))
-        let selectedVisitIDs = Set(payload.visits.map(\.id))
-        state.pendingTransfers.append(
-            WatchLocationPendingTransfer(
-                sequence: payload.sequence,
-                sessionIDs: selectedSessionIDs,
-                pointIDs: selectedPointIDs,
-                visitIDs: selectedVisitIDs,
-                createdAt: payload.generatedAt,
-                visits: payload.visits,
-                endedSessionIDs: Set(payload.sessions.filter { $0.endedAt != nil }.map(\.id))
-            )
-        )
-        state.nextSequence += 1
-        state.lastTransferDate = payload.generatedAt
+        state.registerTransfer(payload)
         saveState()
 
-        syncStatus = String(localized: "Sync queued. Open iso.me on your iPhone.")
+        syncStatus = String(localized: "Sync queued. Open Whereday on your iPhone.")
         session.transferUserInfo([
             WatchLocationSyncTransport.payloadUserInfoKey: payloadData
         ])
@@ -154,28 +139,6 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
                 // Durable transferUserInfo above remains queued for later delivery.
             }
         }
-    }
-
-    private func makePayload() -> WatchLocationSyncPayload? {
-        let points = Array(state.points.prefix(maxPointsPerPayload))
-        let visits = state.visits
-        let pointSessionIDs = Set(points.map(\.sessionID))
-        let activeSessionID = state.activeSessionID
-        let sessions = state.sessions.filter { session in
-            pointSessionIDs.contains(session.id) || session.id == activeSessionID || session.endedAt != nil || points.isEmpty
-        }
-
-        guard !sessions.isEmpty || !points.isEmpty || !visits.isEmpty else { return nil }
-
-        return WatchLocationSyncPayload(
-            deviceID: state.deviceID,
-            sequence: state.nextSequence,
-            isTrackingEnabled: activeSessionID != nil,
-            activeSessionID: activeSessionID,
-            sessions: sessions,
-            points: points,
-            visits: visits
-        )
     }
 
     private func handleAckData(_ data: Data) {
@@ -198,8 +161,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         state.acknowledge(transfer)
         saveState()
 
-        let hasUnsentVisit = state.visits.contains { !(transfer.visits ?? []).contains($0) }
-        if !state.points.isEmpty || state.sessions.contains(where: { $0.endedAt != nil }) || state.visits.contains(where: { $0.departedAt != nil }) || hasUnsentVisit {
+        if state.needsFollowup(after: transfer) {
             syncPending(force: true)
         } else {
             syncStatus = String(localized: "Synced with iPhone.")

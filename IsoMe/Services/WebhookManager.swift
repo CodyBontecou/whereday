@@ -341,7 +341,7 @@ final class WebhookManager: ObservableObject {
         request.httpMethod = "POST"
         request.httpBody = body
         request.setValue(format.mimeType, forHTTPHeaderField: "Content-Type")
-        request.setValue("iso.me/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
+        request.setValue("Whereday/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
         applyAuth(to: &request)
 
         let (_, response) = try await urlSession.data(for: request)
@@ -373,7 +373,7 @@ final class WebhookManager: ObservableObject {
         request.httpMethod = "POST"
         request.httpBody = body
         request.setValue(format.mimeType, forHTTPHeaderField: "Content-Type")
-        request.setValue("iso.me/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
+        request.setValue("Whereday/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
         applyAuth(to: &request)
 
         let (_, response) = try await sendRequestWithRetry(request)

@@ -60,23 +60,23 @@ struct SessionPathMapView: View {
             
             // Start marker (first point)
             if let firstPoint = points.first {
-                Annotation("Start", coordinate: firstPoint.coordinate) {
+                Annotation(String(localized: "Path start"), coordinate: firstPoint.coordinate) {
                     StartMarker(
-                        accessibilityLabel: "Session path start",
+                        accessibilityLabel: String(localized: "Path start"),
                         accessibilityValue: firstPoint.accessibilityValue
                     )
                 }
             }
 
             if let replaySnapshot {
-                Annotation("Replay Position", coordinate: replaySnapshot.currentPoint.coordinate) {
+                Annotation(String(localized: "Route replay position"), coordinate: replaySnapshot.currentPoint.coordinate) {
                     RouteReplayMarker(snapshot: replaySnapshot)
                 }
             } else if let lastPoint = points.last, points.count > 1 {
                 // End/Current marker (last point)
-                Annotation("Current", coordinate: lastPoint.coordinate) {
+                Annotation(String(localized: "Current location"), coordinate: lastPoint.coordinate) {
                     CurrentLocationMarker(
-                        accessibilityLabel: "Session path current location",
+                        accessibilityLabel: String(localized: "Current location"),
                         accessibilityValue: lastPoint.accessibilityValue
                     )
                 }
@@ -201,12 +201,14 @@ struct SessionPathMapView: View {
     }
 
     private func formattedDistance(_ meters: Double) -> String {
-        if meters >= 1_000 {
-            let value = String(format: "%.1f", locale: Locale.current, meters / 1_000)
-            return String(localized: "\(value) kilometers")
-        }
-        let value = String(format: "%.0f", locale: Locale.current, meters)
-        return String(localized: "\(value) meters")
+        let formatter = MeasurementFormatter()
+        formatter.unitStyle = .long
+        formatter.unitOptions = .providedUnit
+        formatter.numberFormatter.maximumFractionDigits = meters >= 1_000 ? 1 : 0
+        let distance = meters >= 1_000
+            ? Measurement(value: meters / 1_000, unit: UnitLength.kilometers)
+            : Measurement(value: meters, unit: UnitLength.meters)
+        return formatter.string(from: distance)
     }
 }
 

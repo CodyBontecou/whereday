@@ -1,0 +1,101 @@
+{
+  "visits": [
+    {
+      "id": "59de3799-7945-50e8-a0d9-516991dc0cae",
+      "arrivedAt": "2026-10-27T14:02:00Z",
+      "departedAt": "2026-10-27T14:06:00Z",
+      "latitude": 48.85895,
+      "longitude": 2.29455,
+      "locationName": "QA linked public visit",
+      "address": "Public synthetic fixture",
+      "notes": "Only synthetic QA content",
+      "source": "imported"
+    }
+  ],
+  "points": [
+    {
+      "id": "51a8d47b-fe7b-5a15-8cf7-4e7c78ac0bf3",
+      "timestamp": "2026-10-27T14:00:00Z",
+      "latitude": 48.8584,
+      "longitude": 2.2945,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "4645bfcb-8aaa-5608-9e07-d5dc8d90d2bc",
+      "timestamp": "2026-10-27T14:01:00Z",
+      "latitude": 48.85850000000001,
+      "longitude": 2.2946000000000004,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "ae8eda82-2810-5c1b-8cc1-bd64f4af2f64",
+      "timestamp": "2026-10-27T14:02:00Z",
+      "latitude": 48.8586,
+      "longitude": 2.2945,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "a3ca3324-7b51-53c7-933f-479351a8b4c3",
+      "timestamp": "2026-10-27T14:03:00Z",
+      "latitude": 48.858700000000006,
+      "longitude": 2.2946000000000004,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "06a4b075-ac28-5ccc-a587-596dda71a5fc",
+      "timestamp": "2026-10-27T14:04:00Z",
+      "latitude": 48.8588,
+      "longitude": 2.2945,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "74c468ed-1348-50e4-bd5c-b013dd824687",
+      "timestamp": "2026-10-27T14:05:00Z",
+      "latitude": 48.858900000000006,
+      "longitude": 2.2946000000000004,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "ae08e722-1937-5c30-b2db-c1ac48c4a6dd",
+      "timestamp": "2026-10-27T14:06:00Z",
+      "latitude": 48.859,
+      "longitude": 2.2945,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "8f7f4c7b-f94c-5de0-8a70-cd4fc65982ed",
+      "timestamp": "2026-10-27T14:07:00Z",
+      "latitude": 48.859100000000005,
+      "longitude": 2.2946000000000004,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "4cf24572-0191-5f66-953d-ef243a3bc76e",
+      "timestamp": "2026-10-27T14:08:00Z",
+      "latitude": 48.8592,
+      "longitude": 2.2945,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "ea12a9f3-3bba-506a-91ae-a310ad5d7981",
+      "timestamp": "2026-10-27T14:09:00Z",
+      "latitude": 48.859300000000005,
+      "longitude": 2.2946000000000004,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "5a9a5223-82f9-5e57-b80a-76ff2dc08d04",
+      "timestamp": "2026-10-27T14:10:00Z",
+      "latitude": 48.8594,
+      "longitude": 2.2945,
+      "horizontalAccuracy": 5
+    },
+    {
+      "id": "682e70e8-0a96-520f-be97-2098e275d89e",
+      "timestamp": "2026-10-27T14:11:00Z",
+      "latitude": 48.859500000000004,
+      "longitude": 2.2946000000000004,
+      "horizontalAccuracy": 5
+    }
+  ]
+}

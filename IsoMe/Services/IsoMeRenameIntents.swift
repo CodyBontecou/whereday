@@ -4,7 +4,7 @@ import SwiftData
 
 // MARK: - Rename Support (injectable seam)
 
-/// Shared seam for renaming IsoMe items (visits, movements/outings).
+/// Shared seam for renaming Whereday items (visits, movements/outings).
 ///
 /// Split out of the intents themselves so that:
 /// (a) unit tests can inject an in-memory `ModelContext` instead of the
@@ -65,7 +65,7 @@ enum RenameSupport {
     }
 
     /// The extracted logic of `RenameCurrentOutingIntent`: rename the outing
-    /// IsoMe is currently recording. The active session (one open session,
+    /// Whereday is currently recording. The active session (one open session,
     /// newest `startedAt` first, limit 1) comes from the shared
     /// `CurrentOutingReader.activeSession(context:)` helper. Returns the
     /// trimmed name for the dialog.
@@ -90,7 +90,7 @@ enum RenameSupport {
 
 struct RenameVisitIntent: AppIntent {
     static var title: LocalizedStringResource = "Rename Visit"
-    static var description = IntentDescription("Set the name of a visit saved in IsoMe.")
+    static var description = IntentDescription("Set the name of a visit saved in Whereday.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Visit")
@@ -108,7 +108,7 @@ struct RenameVisitIntent: AppIntent {
 
 struct RenameMovementIntent: AppIntent {
     static var title: LocalizedStringResource = "Rename Movement"
-    static var description = IntentDescription("Set the name of a movement recorded in IsoMe.")
+    static var description = IntentDescription("Set the name of a movement recorded in Whereday.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Movement")

@@ -956,9 +956,9 @@ struct ExportView: View {
                                 Spacer()
                                 Picker("", selection: $options.minVisitDurationMinutes) {
                                     Text("None").tag(0.0)
-                                    Text("5m").tag(5.0)
-                                    Text("15m").tag(15.0)
-                                    Text("30m").tag(30.0)
+                                    Text("5 min").tag(5.0)
+                                    Text("15 min").tag(15.0)
+                                    Text("30 min").tag(30.0)
                                     Text("1h").tag(60.0)
                                 }
                                 .labelsHidden()
@@ -1547,7 +1547,7 @@ struct IsoMeExportPreviewView: View {
                     HStack(alignment: .top, spacing: 6) {
                         Image(systemName: "info.circle")
                             .font(.caption2)
-                        Text("Previewing the \(records.count) most recent file\(records.count == 1 ? "" : "s") with data. Export will process every selected file.")
+                        Text("Recent files with data in this preview: \(records.count). Export will process every selected file.")
                             .font(TE.mono(.caption2, weight: .medium))
                     }
                     .foregroundStyle(TE.textMuted)
@@ -1732,7 +1732,7 @@ private struct IsoMePreviewFile: Identifiable {
         if let format = exportFormat {
             return format.displayName
         }
-        return plannedFile.displayName ?? "Export File"
+        return plannedFile.displayName ?? String(localized: "Export file")
     }
 
     var iconName: String {

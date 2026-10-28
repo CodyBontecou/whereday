@@ -1,0 +1,1 @@
+{"installId":"00000000-0000-4000-8000-000000000001","events":[{"eventId":"00000000-0000-4000-8000-000000000905","eventName":"onboarding_location_authorization_completed","properties":{"appVersion":"0.1.0","buildNumber":"1","platform":"android","onboardingStep":"notifications","authorizationStatus":"authorized","authorizationRequestKind":"notifications"}}]}

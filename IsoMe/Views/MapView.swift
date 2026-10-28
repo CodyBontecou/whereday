@@ -37,6 +37,8 @@ struct LocationMapView: View {
     @State private var routeReplayProgress: Double = 1.0
     @State private var cameraPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var visibleMapRegion: MKCoordinateRegion?
+    @State private var visibleMapRect: MKMapRect?
+    @State private var mapViewportSize: CGSize = .zero
     @State private var pendingSessionAutoFocus = false
     @State private var appliedMapFocusRequestID: UUID?
     @State private var activePreset: MapDatePreset? = .today
@@ -60,8 +62,6 @@ struct LocationMapView: View {
         locationManager.isTrackingEnabled
     }
 
-    // Minimum distance in meters between points to show as markers
-    private let minimumPointDistance: Double = 50
     private let routeReplayTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
 
     var filteredVisits: [Visit] {
@@ -192,21 +192,12 @@ struct LocationMapView: View {
     }
     
     var spacedPoints: [LocationPoint] {
-        let pathPoints = displayedTravelPathPoints
-        guard !pathPoints.isEmpty else { return [] }
-        
-        var result: [LocationPoint] = [pathPoints[0]]
-        
-        for point in pathPoints.dropFirst() {
-            if let lastPoint = result.last {
-                let distance = lastPoint.distance(to: point)
-                if distance >= minimumPointDistance {
-                    result.append(point)
-                }
-            }
-        }
-        
-        return result
+        MapPointMarkerSampler.sample(
+            displayedTravelPathPoints,
+            in: visibleMapRect,
+            viewportSize: mapViewportSize,
+            selectedPointID: selectedPointID
+        )
     }
 
     var body: some View {
@@ -274,7 +265,7 @@ struct LocationMapView: View {
                     }
 
                     if isRouteReplayEnabled, let routeReplaySnapshot {
-                        Annotation("Replay Position", coordinate: routeReplaySnapshot.currentPoint.coordinate) {
+                        Annotation(String(localized: "Route replay position"), coordinate: routeReplaySnapshot.currentPoint.coordinate) {
                             RouteReplayMarker(snapshot: routeReplaySnapshot)
                         }
                     }
@@ -287,9 +278,9 @@ struct LocationMapView: View {
                     }
                     
                     if showSessionPath, let firstSessionPoint = activeSessionPoints.first {
-                        Annotation("Session Start", coordinate: firstSessionPoint.coordinate) {
+                        Annotation(String(localized: "Path start"), coordinate: firstSessionPoint.coordinate) {
                             StartMarker(
-                                accessibilityLabel: "Active session start",
+                                accessibilityLabel: String(localized: "Active session start"),
                                 accessibilityValue: firstSessionPoint.accessibilityValue
                             )
                         }
@@ -298,9 +289,9 @@ struct LocationMapView: View {
                     if showSessionPath,
                        let lastSessionPoint = activeSessionPoints.last,
                        activeSessionPoints.count > 1 {
-                        Annotation("Current", coordinate: lastSessionPoint.coordinate) {
+                        Annotation(String(localized: "Current location"), coordinate: lastSessionPoint.coordinate) {
                             CurrentLocationMarker(
-                                accessibilityLabel: "Active session current location",
+                                accessibilityLabel: String(localized: "Active session current location"),
                                 accessibilityValue: lastSessionPoint.accessibilityValue
                             )
                         }
@@ -393,6 +384,16 @@ struct LocationMapView: View {
                 }
                 .onMapCameraChange(frequency: .onEnd) { context in
                     visibleMapRegion = context.region
+                    visibleMapRect = context.rect
+                }
+                .background {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .onAppear { mapViewportSize = geometry.size }
+                            .onChange(of: geometry.size) { _, size in
+                                mapViewportSize = size
+                            }
+                    }
                 }
                 .simultaneousGesture(
                     TapGesture().onEnded(handleMapTap)
@@ -988,27 +989,27 @@ struct LocationMapView: View {
 
     private var mapAccessibilitySummary: String {
         var parts: [String] = []
-        parts.append("\(filteredVisits.count) \(filteredVisits.count == 1 ? "visit" : "visits")")
+        parts.append(String(localized: "\(filteredVisits.count) visits"))
         if viewModel.mapLocationPointCount > filteredPoints.count {
-            parts.append("Showing \(filteredPoints.count) of \(viewModel.mapLocationPointCount) path points")
+            parts.append(String(localized: "Showing \(filteredPoints.count) of \(viewModel.mapLocationPointCount) path points"))
         } else {
-            parts.append("\(filteredPoints.count) \(filteredPoints.count == 1 ? "path point" : "path points")")
+            parts.append(String(localized: "\(filteredPoints.count) path points"))
         }
 
         if showPhotoMarkers {
             if viewModel.mapPhotoMomentCount > filteredPhotoMoments.count {
-                parts.append("Showing \(filteredPhotoMoments.count) of \(viewModel.mapPhotoMomentCount) matched photos")
+                parts.append(String(localized: "Showing \(filteredPhotoMoments.count) of \(viewModel.mapPhotoMomentCount) matched photos"))
             } else {
-                parts.append("\(filteredPhotoMoments.count) \(filteredPhotoMoments.count == 1 ? "matched photo" : "matched photos")")
+                parts.append(String(localized: "\(filteredPhotoMoments.count) matched photos"))
             }
         }
 
         if isRouteReplayEnabled, let routeReplaySnapshot {
-            parts.append("Route replay: \(routeReplaySnapshot.accessibilitySummary)")
+            parts.append(String(localized: "Route replay: \(routeReplaySnapshot.accessibilitySummary)"))
         }
 
         if !activeSessionPoints.isEmpty {
-            parts.append("Active session: \(viewModel.sessionAccessibilitySummary)")
+            parts.append(String(localized: "Active session: \(viewModel.sessionAccessibilitySummary)"))
         }
 
         return parts.joined(separator: ". ")
@@ -1168,7 +1169,7 @@ struct MapTrackingControlPill: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(isTracking ? "Stop tracking" : "Start tracking")
-        .accessibilityValue(isTracking ? viewModel.sessionAccessibilitySummary : "Tracking is off.")
+        .accessibilityValue(isTracking ? viewModel.sessionAccessibilitySummary : String(localized: "Tracking is off."))
         .accessibilityHint(isTracking ? "Stops the active session." : "Starts a new location tracking session.")
         .sensoryFeedback(.impact(flexibility: .solid), trigger: isTracking)
     }
@@ -1420,9 +1421,9 @@ struct PathPointTooltip: View {
 
     private func formattedSpeed(_ metersPerSecond: Double) -> String {
         if usesMetricDistanceUnits {
-            return String(format: "%.1f km/h", metersPerSecond * 3.6)
+            return String(format: "%.1f km/h", locale: .current, metersPerSecond * 3.6)
         }
-        return String(format: "%.1f mph", metersPerSecond * 2.23693629)
+        return String(format: "%.1f mph", locale: .current, metersPerSecond * 2.23693629)
     }
 }
 
@@ -2985,7 +2986,7 @@ struct LayerToggleHelp: Identifiable, Equatable {
     static let visitMarkers = LayerToggleHelp(
         id: "visit-markers",
         title: "Visit markers",
-        message: "Shows places iso.me detected as stops in the selected date range. Hide them when you want an uncluttered route-only map."
+        message: "Shows places Whereday detected as stops in the selected date range. Hide them when you want an uncluttered route-only map."
     )
 
     static let travelPath = LayerToggleHelp(
@@ -2997,7 +2998,7 @@ struct LayerToggleHelp: Identifiable, Equatable {
     static let photoMarkers = LayerToggleHelp(
         id: "photo-markers",
         title: "Photo markers",
-        message: "Shows Photos library pictures for the selected date range. iso.me uses photo GPS when available, otherwise the nearest route point or visit; photo files stay in Photos."
+        message: "Shows Photos library pictures for the selected date range. Whereday uses photo GPS when available, otherwise the nearest route point or visit; photo files stay in Photos."
     )
 
     static let photoImages = LayerToggleHelp(
@@ -3479,10 +3480,12 @@ enum RoadSnappedRouteBuilder {
         return hasher.finalize()
     }
 
-    static func taskFingerprint(for points: [LocationPoint], isEnabled: Bool) -> Int {
+    static func taskFingerprint(for points: @autoclosure () -> [LocationPoint], isEnabled: Bool) -> Int {
+        // Keep point filtering and hashing lazy while road snapping is disabled.
+        guard isEnabled else { return 0 }
         var hasher = Hasher()
         hasher.combine(isEnabled)
-        hasher.combine(fingerprint(for: points))
+        hasher.combine(fingerprint(for: points()))
         return hasher.finalize()
     }
 
@@ -3760,4 +3763,64 @@ extension MKCoordinateRegion {
         modelContext: try! ModelContainer(for: Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self).mainContext,
         locationManager: LocationManager()
     ))
+}
+
+
+/// Bounds interactive GPS annotations independently of the stored route detail.
+/// Camera rectangles are projected map bounds, so longitude wraps at the date line.
+@MainActor
+enum MapPointMarkerSampler {
+    static let maximumMarkerCount = 160
+    private static let cellSize: Double = 48
+
+    static func sample(
+        _ points: [LocationPoint],
+        in rect: MKMapRect?,
+        viewportSize: CGSize,
+        selectedPointID: UUID? = nil
+    ) -> [LocationPoint] {
+        guard let rect, !rect.isNull,
+              rect.origin.x.isFinite, rect.origin.y.isFinite,
+              rect.width.isFinite, rect.height.isFinite,
+              rect.width > 0, rect.height > 0,
+              viewportSize.width.isFinite, viewportSize.height.isFinite,
+              viewportSize.width > 0, viewportSize.height > 0 else {
+            // Wait for the first camera/layout update rather than creating an
+            // unbounded annotation set before the viewport is known.
+            return []
+        }
+
+        var columns = max(1, Int(min(Double(maximumMarkerCount), viewportSize.width / cellSize)))
+        var rows = max(1, Int(min(Double(maximumMarkerCount), viewportSize.height / cellSize)))
+        if columns * rows > maximumMarkerCount {
+            let scale = sqrt(Double(maximumMarkerCount) / Double(columns * rows))
+            columns = max(1, Int(Double(columns) * scale))
+            rows = max(1, Int(Double(rows) * scale))
+        }
+
+        let worldWidth = MKMapRect.world.width
+        let width = min(rect.width, worldWidth)
+        var cells: [Int: (index: Int, point: LocationPoint)] = [:]
+        cells.reserveCapacity(columns * rows)
+
+        for (index, point) in points.enumerated() {
+            guard point.latitude.isFinite, point.longitude.isFinite,
+                  abs(point.latitude) <= 90, abs(point.longitude) <= 180 else { continue }
+            let projected = MKMapPoint(point.coordinate)
+            var x = (projected.x - rect.minX).truncatingRemainder(dividingBy: worldWidth)
+            if x < 0 { x += worldWidth }
+            let y = projected.y - rect.minY
+            guard x.isFinite, y.isFinite, x <= width, y >= 0, y <= rect.height else { continue }
+
+            let column = min(columns - 1, Int(x / width * Double(columns)))
+            let row = min(rows - 1, Int(y / rect.height * Double(rows)))
+            let cell = row * columns + column
+            if cells[cell] == nil || point.id == selectedPointID {
+                cells[cell] = (index, point)
+            }
+        }
+
+        // Keep route order and model identities stable across view updates.
+        return cells.values.sorted { $0.index < $1.index }.map(\.point)
+    }
 }

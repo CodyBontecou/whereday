@@ -1,0 +1,626 @@
+[
+  {
+    "name": "stored-and-file-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Home",
+        "latitude": 38,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": " home ",
+        "latitude": 38.0001,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Park",
+        "latitude": 38.5,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 11"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000012",
+        "name": "park",
+        "latitude": 38.5001,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 12"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "stored-and-file-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Home",
+        "latitude": 38,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": " home ",
+        "latitude": 38.0001,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Park",
+        "latitude": 38.5,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 11"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000012",
+        "name": "park",
+        "latitude": 38.5001,
+        "longitude": -9,
+        "radius": 150,
+        "address": "Address 12"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "nearest-sequential-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 250,
+        "address": "Address 1"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.002,
+        "radius": 250,
+        "address": "Address 2"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.0019,
+        "radius": 250,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.004,
+        "radius": 250,
+        "address": "Address 11"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000012",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.006,
+        "radius": 250,
+        "address": "Address 12"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "nearest-sequential-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 250,
+        "address": "Address 1"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.002,
+        "radius": 250,
+        "address": "Address 2"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.0019,
+        "radius": 250,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.004,
+        "radius": 250,
+        "address": "Address 11"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000012",
+        "name": "Coffee",
+        "latitude": 0,
+        "longitude": 0.006,
+        "radius": 250,
+        "address": "Address 12"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "tie-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Tie",
+        "latitude": 0,
+        "longitude": 0.001,
+        "radius": 250,
+        "address": "Address 2"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Tie",
+        "latitude": 0,
+        "longitude": -0.001,
+        "radius": 250,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Tie",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 250,
+        "address": "Address 10"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "tie-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Tie",
+        "latitude": 0,
+        "longitude": 0.001,
+        "radius": 250,
+        "address": "Address 2"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Tie",
+        "latitude": 0,
+        "longitude": -0.001,
+        "radius": 250,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Tie",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 250,
+        "address": "Address 10"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "date-line-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Harbor",
+        "latitude": 0,
+        "longitude": 179.999,
+        "radius": 600,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": " harbor ",
+        "latitude": 0,
+        "longitude": -179.997,
+        "radius": 150,
+        "address": "Address 10"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "date-line-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Harbor",
+        "latitude": 0,
+        "longitude": 179.999,
+        "radius": 600,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": " harbor ",
+        "latitude": 0,
+        "longitude": -179.997,
+        "radius": 150,
+        "address": "Address 10"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "pole-89.999-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Polar station",
+        "latitude": 89.999,
+        "longitude": -170,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Polar station",
+        "latitude": 89.999,
+        "longitude": 170,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Polar station",
+        "latitude": 89.999,
+        "longitude": 10,
+        "radius": 150,
+        "address": "Address 11"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "pole-89.999-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Polar station",
+        "latitude": 89.999,
+        "longitude": -170,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Polar station",
+        "latitude": 89.999,
+        "longitude": 170,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Polar station",
+        "latitude": 89.999,
+        "longitude": 10,
+        "radius": 150,
+        "address": "Address 11"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "pole--89.999-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Polar station",
+        "latitude": -89.999,
+        "longitude": -170,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Polar station",
+        "latitude": -89.999,
+        "longitude": 170,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Polar station",
+        "latitude": -89.999,
+        "longitude": 10,
+        "radius": 150,
+        "address": "Address 11"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "pole--89.999-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Polar station",
+        "latitude": -89.999,
+        "longitude": -170,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Polar station",
+        "latitude": -89.999,
+        "longitude": 170,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Polar station",
+        "latitude": -89.999,
+        "longitude": 10,
+        "radius": 150,
+        "address": "Address 11"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "unicode-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Café",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 1"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Straße",
+        "latitude": 1,
+        "longitude": 1,
+        "radius": 150,
+        "address": "Address 2"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "café",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "STRASSE",
+        "latitude": 1,
+        "longitude": 1,
+        "radius": 150,
+        "address": "Address 11"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "unicode-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Café",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 1"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Straße",
+        "latitude": 1,
+        "longitude": 1,
+        "radius": 150,
+        "address": "Address 2"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "café",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "STRASSE",
+        "latitude": 1,
+        "longitude": 1,
+        "radius": 150,
+        "address": "Address 11"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "ellipsoid-threshold-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Equator",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Equator",
+        "latitude": 0.00135,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 10"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "ellipsoid-threshold-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Equator",
+        "latitude": 0,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Equator",
+        "latitude": 0.00135,
+        "longitude": 0,
+        "radius": 150,
+        "address": "Address 10"
+      }
+    ],
+    "policy": "updateExisting"
+  },
+  {
+    "name": "latitude-bucket-move-keepExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Trail",
+        "latitude": 0.099,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Trail",
+        "latitude": 0.1005,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Trail",
+        "latitude": 0.102,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 11"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000012",
+        "name": "Trail",
+        "latitude": 0.0989,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 12"
+      }
+    ],
+    "policy": "keepExisting"
+  },
+  {
+    "name": "latitude-bucket-move-updateExisting",
+    "existing": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Trail",
+        "latitude": 0.099,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 1"
+      }
+    ],
+    "incoming": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "name": "Trail",
+        "latitude": 0.1005,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 10"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000011",
+        "name": "Trail",
+        "latitude": 0.102,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 11"
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000012",
+        "name": "Trail",
+        "latitude": 0.0989,
+        "longitude": 0,
+        "radius": 200,
+        "address": "Address 12"
+      }
+    ],
+    "policy": "updateExisting"
+  }
+]

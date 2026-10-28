@@ -1,0 +1,91 @@
+steps:
+- echo: Use only the onboarded idle mapQa app with reset webhook settings and unconfigured
+    Play purchases. Uses a public .invalid URL; never starts recording or sends a
+    request. Ends reset at Map.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- run: webhook-settings-entry-qa.yaml
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      text: Discard unsaved webhook edits?
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    hidden:
+      text: Discard unsaved webhook edits?
+- await:
+    visible:
+      text: Unsaved changes
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      text: Discard unsaved webhook edits?
+- await:
+    idle: true
+- tap:
+    text: Discard edits
+- await:
+    visible:
+      id: settings-screen
+- await:
+    idle: true
+- tap:
+    text: Map
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- run: webhook-settings-open-qa.yaml
+- await:
+    visible:
+      text: Currently disabled
+- scroll-to:
+    target:
+      text: Reset webhook settings
+    direction: down
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Reset webhook settings
+- await:
+    idle: true
+- tap:
+    text: Reset webhook settings
+- await:
+    visible:
+      text: Reset webhook settings?
+- await:
+    idle: true
+- tap:
+    text: Reset webhooks
+- await:
+    visible:
+      text: Webhook settings and queued data reset.
+- await:
+    idle: true
+- tap:
+    text: Map
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

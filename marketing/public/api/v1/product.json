@@ -1,0 +1,68 @@
+{
+  "name": "Whereday",
+  "summary": "An open source location journal for iPhone and Apple Watch, with on-device visits, GPS routes, and optional portable export.",
+  "homepage": "https://whereday.com/",
+  "appStore": "https://apps.apple.com/app/id6761960794",
+  "sourceRepository": "https://github.com/CodyBontecou/whereday",
+  "platforms": [
+    "iOS 17 or later",
+    "watchOS 10 or later"
+  ],
+  "capabilities": [
+    "Visit detection during tracking",
+    "GPS route recording",
+    "Timeline and outings",
+    "Independent Apple Watch recording",
+    "Portable export",
+    "Supported import",
+    "Siri and Shortcuts",
+    "Optional outbound webhooks"
+  ],
+  "exportFormats": [
+    "JSON",
+    "CSV",
+    "Markdown",
+    "GeoJSON",
+    "GPX",
+    "KML",
+    "OwnTracks",
+    "Overland"
+  ],
+  "pricingURL": "https://whereday.com/#pricing",
+  "privacyURL": "https://whereday.com/privacy",
+  "privateJournalAPI": false,
+  "documentation": [
+    {
+      "title": "Getting started",
+      "url": "https://whereday.com/docs/getting-started/"
+    },
+    {
+      "title": "Tracking",
+      "url": "https://whereday.com/docs/tracking/"
+    },
+    {
+      "title": "Export and import",
+      "url": "https://whereday.com/docs/export-import/"
+    },
+    {
+      "title": "Automatic exports",
+      "url": "https://whereday.com/docs/automatic-exports/"
+    },
+    {
+      "title": "Webhooks",
+      "url": "https://whereday.com/docs/webhooks/"
+    },
+    {
+      "title": "Siri and Shortcuts",
+      "url": "https://whereday.com/docs/siri-shortcuts/"
+    },
+    {
+      "title": "Apple Watch",
+      "url": "https://whereday.com/docs/apple-watch/"
+    },
+    {
+      "title": "Privacy and data",
+      "url": "https://whereday.com/docs/privacy-data/"
+    }
+  ]
+}

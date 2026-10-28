@@ -1,7 +1,7 @@
 import Foundation
 
 struct FilenameTemplate {
-    static let readablePattern = "iso.me - {day} {date} - {type}"
+    static let readablePattern = "Whereday - {day} {date} - {type}"
     static let compactPattern = "isome_{type}_{datetime}"
     static let datedFoldersPattern = "{year}/{year}-{month}/Daily Track - {date}"
     static let defaultPattern = readablePattern
@@ -150,7 +150,7 @@ struct FilenameTemplate {
     static func appendingFormatExtensionIfNeeded(
         to rawPath: String,
         format: ExportFormat,
-        fallbackBasename: String = "iso.me-export"
+        fallbackBasename: String = "Whereday-export"
     ) -> String {
         let trimmedPath = rawPath.trimmingCharacters(in: .whitespacesAndNewlines)
         let normalizedExtension = format.fileExtension.trimmingCharacters(in: CharacterSet(charactersIn: "."))
@@ -194,12 +194,12 @@ struct FilenameTemplate {
             .map { sanitizePathComponent($0) }
             .filter { !$0.isEmpty }
 
-        return cleanedComponents.isEmpty ? "iso.me-export" : cleanedComponents.joined(separator: "/")
+        return cleanedComponents.isEmpty ? "Whereday-export" : cleanedComponents.joined(separator: "/")
     }
 
     static func sanitize(_ raw: String) -> String {
         let cleaned = sanitizeComponent(raw, preservingSlash: false)
-        return cleaned.isEmpty ? "iso.me-export" : cleaned
+        return cleaned.isEmpty ? "Whereday-export" : cleaned
     }
 
     private static func sanitizePathComponent(_ raw: String) -> String {

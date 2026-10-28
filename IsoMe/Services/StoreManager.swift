@@ -1,7 +1,7 @@
 import Foundation
 import StoreKit
 
-/// The one-time purchase options offered by iso.me.
+/// The one-time purchase options offered by Whereday.
 ///
 /// `family` deliberately uses the original lifetime product ID. That product already
 /// has Family Sharing enabled in App Store Connect, so every owner from before the
@@ -67,7 +67,7 @@ nonisolated enum StoreRestoreOutcome: Equatable, Sendable {
 
 /// Manages Individual Lifetime, Family Lifetime, and Family Upgrade purchases
 /// through StoreKit 2. Apple stores transaction history, so entitlements survive
-/// deletion and reinstall without a separate iso.me account or server.
+/// deletion and reinstall without a separate Whereday account or server.
 @MainActor
 final class StoreManager: ObservableObject {
     static let shared = StoreManager()
@@ -116,7 +116,7 @@ final class StoreManager: ObservableObject {
     private init() {
         #if DEBUG
         // Preserve deterministic development and screenshot behavior. Pass
-        // `--use-storekit` when running from Xcode to exercise IsoMe.storekit.
+        // `--use-storekit` when running from Xcode to exercise Whereday.storekit.
         if !ProcessInfo.processInfo.arguments.contains("--use-storekit") {
             let debugProductID = ProcessInfo.processInfo.arguments.contains("--review-upgrade-paywall")
                 ? Self.individualProductID

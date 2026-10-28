@@ -1,0 +1,21 @@
+steps:
+- echo: Requires onboarded idle app, network geocoding enabled and a working system provider/network. Looks up only the public
+    Eiffel Tower coordinate in an unsaved draft, verifies exact pin coordinates and discards the draft.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Fit route
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Add saved place
+    direction: down
+- run: pin-address-public-coordinate.yaml

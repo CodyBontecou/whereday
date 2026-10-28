@@ -213,7 +213,7 @@ struct ExportService {
     // MARK: - Markdown Export
 
     static func exportToMarkdown(visits: [Visit], options: ExportOptions = ExportOptions()) -> Data {
-        var md = "# iso.me Export\n\n"
+        var md = "# Whereday Export\n\n"
         md += "**Export Date:** \(formattedDateReadable())\n\n"
         md += "**Total Visits:** \(visits.count)\n\n"
         md += "---\n\n"
@@ -597,7 +597,7 @@ extension ExportService {
     static func exportLocationPointsToMarkdown(points: [LocationPoint], options: ExportOptions = ExportOptions()) -> Data {
         let sortedPoints = points.sorted { $0.timestamp < $1.timestamp }
 
-        var md = "# iso.me Location Points Export\n\n"
+        var md = "# Whereday Location Points Export\n\n"
         md += "**Export Date:** \(formattedDateReadable())\n\n"
         md += "**Total Points:** \(sortedPoints.count)\n\n"
 
@@ -895,7 +895,7 @@ extension ExportService {
     }
 
     static func exportCombinedToCSV(visits: [Visit], points: [LocationPoint], options: ExportOptions = ExportOptions()) -> Data {
-        var csvString = "# iso.me Combined Export\n"
+        var csvString = "# Whereday Combined Export\n"
         csvString.append("# Generated: \(iso8601Formatter.string(from: Date()))\n\n")
 
         csvString.append("# VISITS (\(visits.count))\n")
@@ -910,19 +910,19 @@ extension ExportService {
     }
 
     static func exportCombinedToMarkdown(visits: [Visit], points: [LocationPoint], options: ExportOptions = ExportOptions()) -> Data {
-        var md = "# iso.me Complete Export\n\n"
+        var md = "# Whereday Complete Export\n\n"
         md += "**Export Date:** \(formattedDateReadable())\n\n"
         md += "**Total Visits:** \(visits.count)\n\n"
         md += "**Total Location Points:** \(points.count)\n\n"
         md += "---\n\n"
 
         md += String(data: exportToMarkdown(visits: visits, options: options), encoding: .utf8)?
-            .replacingOccurrences(of: "# iso.me Export\n\n", with: "# Visits\n\n") ?? ""
+            .replacingOccurrences(of: "# Whereday Export\n\n", with: "# Visits\n\n") ?? ""
 
         md += "\n---\n\n"
 
         md += String(data: exportLocationPointsToMarkdown(points: points, options: options), encoding: .utf8)?
-            .replacingOccurrences(of: "# iso.me Location Points Export\n\n", with: "# Location Points\n\n") ?? ""
+            .replacingOccurrences(of: "# Whereday Location Points Export\n\n", with: "# Location Points\n\n") ?? ""
 
         return md.data(using: .utf8) ?? Data()
     }
@@ -1101,7 +1101,7 @@ extension ExportService {
             ).data(using: .utf8) ?? Data()
         }
 
-        var md = "# iso.me Outings Export\n\n"
+        var md = "# Whereday Outings Export\n\n"
         md += "**Export Date:** \(formattedDateReadable())\n\n"
         md += "**Total Outings:** \(sortedOutings.count)\n\n"
         md += "---\n\n"
@@ -1158,7 +1158,7 @@ extension ExportService {
     ) -> String {
         var md = "---\n"
         md += yamlString("type", "outing")
-        md += yamlString("app", "iso.me")
+        md += yamlString("app", "Whereday")
         md += yamlString("id", outing.id)
         md += yamlString("title", outing.title)
         md += "sequence: \(outing.sequenceNumber)\n"
@@ -1370,9 +1370,9 @@ extension ExportService {
         let now = iso8601Formatter.string(from: Date())
         return """
         <?xml version="1.0" encoding="UTF-8"?>
-        <gpx version="1.1" creator="iso.me" xmlns="http://www.topografix.com/GPX/1/1" xmlns:isome="\(gpxNamespace)">
+        <gpx version="1.1" creator="Whereday" xmlns="http://www.topografix.com/GPX/1/1" xmlns:isome="\(gpxNamespace)">
           <metadata>
-            <name>iso.me export</name>
+            <name>Whereday export</name>
             <time>\(now)</time>
           </metadata>
         """
@@ -1423,7 +1423,7 @@ extension ExportService {
         guard !points.isEmpty else { return "" }
         let sorted = points.sorted { $0.timestamp < $1.timestamp }
 
-        var xml = "  <trk>\n    <name>iso.me track</name>\n"
+        var xml = "  <trk>\n    <name>Whereday track</name>\n"
         xml += "    <trkseg>\n"
 
         var previous: LocationPoint?
@@ -1520,10 +1520,10 @@ extension ExportService {
         <?xml version="1.0" encoding="UTF-8"?>
         <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:isome="\(gpxNamespace)">
           <Document>
-            <name>iso.me export</name>
+            <name>Whereday export</name>
             <open>1</open>
             <ExtendedData>
-              <Data name="generator"><value>iso.me</value></Data>
+              <Data name="generator"><value>Whereday</value></Data>
               <Data name="exportDate"><value>\(now)</value></Data>
             </ExtendedData>
         """
@@ -1619,7 +1619,7 @@ extension ExportService {
         let last = points.last ?? first
 
         var xml = "    <Placemark>\n"
-        xml += "      <name>iso.me session \(index)</name>\n"
+        xml += "      <name>Whereday session \(index)</name>\n"
         xml += "      <TimeSpan><begin>\(iso8601Formatter.string(from: first.timestamp))</begin><end>\(iso8601Formatter.string(from: last.timestamp))</end></TimeSpan>\n"
         xml += "      <ExtendedData>\n"
         xml += "        <Data name=\"kind\"><value>trackingSession</value></Data>\n"
@@ -1769,7 +1769,7 @@ extension ExportService {
     private static func encodeGeoJSON(_ features: [GeoJSONFeature]) throws -> Data {
         let collection = GeoJSONFeatureCollection(
             features: features,
-            generator: "iso.me",
+            generator: "Whereday",
             exportDate: iso8601Formatter.string(from: Date())
         )
         let encoder = JSONEncoder()

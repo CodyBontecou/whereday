@@ -1,0 +1,1 @@
+https://search.google.com/search-console/performance/search-analytics?resource_id=sc-domain%3Aisolated.tech&num_of_days=28&page=~%5Ehttps%3A%2F%2Fisome%5C.isolated%5C.tech%2F&metrics=CLICKS%2CIMPRESSIONS%2CCTR%2CPOSITION

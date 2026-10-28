@@ -1,0 +1,79 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Check the recorder you already used</h2>
+  <p>To see where you have been on iPhone, check Apple Maps Visited Places, Google Maps Timeline, or a location journal you had already enabled. There is no single history screen that combines every app’s records. An empty day may mean nothing was recorded.</p>
+  <p>This guide covers your own visits and routes. If you want a record of future trips, you can start one in Whereday, but installing it cannot reconstruct earlier movement.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>Choose your next step</strong><ol><li><a href="#apple">Look for Apple’s visited places</a></li><li><a href="#google">Open your Google Timeline</a></li><li><a href="#missing">Check why a day is missing</a></li><li><a href="#future">Record future visits and routes</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="which-history">
+  <h2 id="which-history">Which history are you looking for?</h2>
+  <div class="table-scroll" role="region" aria-label="Ways to view your own iPhone location history" tabindex="0"><table>
+    <caption>Start with the service that recorded the day</caption>
+    <thead><tr><th scope="col">What you used</th><th scope="col">Where to look</th><th scope="col">What to check</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Apple Maps</th><td>Places → Visited Places, where available</td><td>Whether the feature was enabled and the visit is retained</td></tr>
+      <tr><th scope="row">Google Maps</th><td>Profile picture → Your Timeline</td><td>The account, selected device history, and date</td></tr>
+      <tr><th scope="row">Whereday</th><td>Timeline or the date range on Map</td><td>Whether tracking was enabled for that period</td></tr>
+      <tr><th scope="row">No enabled recorder</th><td>There may be no route record to open</td><td>Start a new recording before the next trip</td></tr>
+    </tbody>
+  </table></div>
+  <p>Directions you requested, places you searched for, and a recorded visit are different kinds of information. A search for a restaurant does not by itself establish when you arrived or how you travelled there.</p>
+</section>
+
+<section aria-labelledby="apple">
+  <h2 id="apple">Find visited places in Apple Maps</h2>
+  <ol>
+    <li>Open Maps, then open <strong>Places</strong>.</li>
+    <li>Choose <strong>Visited Places</strong>, if it is available.</li>
+    <li>Search for a place or filter by date, category, or city. Use <strong>All Visits</strong> to browse.</li>
+  </ol>
+  <p>Apple says this feature needs to be enabled before visits appear, is unavailable in some regions, and keeps visits encrypted so Apple cannot read them. Retention settings can also remove older entries. Menus vary with iOS version; use <a href="https://support.apple.com/guide/iphone/view-visited-places-iph0c2597c4f/ios">Apple’s Visited Places instructions</a> for your version.</p>
+  <p>If you are looking for a setting called Significant Locations rather than a Maps list, check <a href="https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios">Apple’s Maps location settings</a>. Do not expect every location-related setting to contain the same records.</p>
+</section>
+
+<section aria-labelledby="google">
+  <h2 id="google">Open Google Maps Timeline</h2>
+  <ol>
+    <li>Open Google Maps and tap your profile picture or initial.</li>
+    <li>Choose <strong>Your Timeline</strong>, then use the calendar to select a day.</li>
+    <li>If history is missing, confirm which account and device you used. Check your backup and deletion settings before making changes.</li>
+  </ol>
+  <p>Google Timeline stores history on the device and can keep an encrypted backup. To save an independent archive, Google’s iPhone instructions use <strong>Settings → Location &amp; Privacy → Export Timeline data</strong>, then <strong>Save to Files</strong>. Settings are changing, so follow <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s current Timeline guide</a> if your menus differ.</p>
+  <p>Keep that archive separately. Whereday does not import Google Timeline files; the <a href="/compare/google-maps-timeline/">Google Timeline comparison</a> explains the tradeoffs before you change your recording setup.</p>
+</section>
+
+<section aria-labelledby="missing">
+  <h2 id="missing">Why a day can be empty</h2>
+  <p>First check the date, account, and app rather than assuming the history is gone. A map showing today may simply be the wrong view for last month’s trip. In Whereday, use Timeline’s date controls or change the Map date range.</p>
+  <ul>
+    <li><strong>Recording was off.</strong> A location permission lets an app request locations; it is not proof that the app recorded that day.</li>
+    <li><strong>The record was removed.</strong> Look for retained files or supported backups before clearing more data or replacing a device.</li>
+    <li><strong>The device missed part of the trip.</strong> Permission changes, a stopped session, GPS conditions, or a flat battery can leave gaps.</li>
+    <li><strong>A visit has not appeared.</strong> Detected arrivals and departures are not an immediate check-in at every stop. A route can contain points even when a visit is missing.</li>
+  </ul>
+  <p>For an incomplete Whereday day, use the <a href="/blog/missing-location-history-iphone/">missing visits and route points checklist</a> to distinguish recording, display, Watch sync, and export issues.</p>
+  <p>Photos, receipts, and calendar entries may help you remember a day, but they are not a recovered GPS trace. A newly installed recorder cannot recreate coordinates it never captured.</p>
+</section>
+
+<section aria-labelledby="future">
+  <h2 id="future">Record your next day with Whereday</h2>
+  <p>If you want a separate journal without an Whereday account, try a short recording before a longer trip:</p>
+  <ol>
+    <li>Install Whereday and complete permission setup. Always location access allows recording in the background.</li>
+    <li>On Map, tap the recording control before you leave. Start enables GPS recording and visit monitoring together.</li>
+    <li>Stop when you finish. Open Timeline and check the date, route, and times.</li>
+    <li>If you need a portable route file, follow <a href="/blog/record-iphone-route-gpx/">the iPhone route and GPX guide</a>.</li>
+  </ol>
+  <p>Recording and reviewing your journal are free. Writing export files requires the optional one-time unlock; preview is free. Read <a href="/blog/private-location-journal-iphone/">the setup walkthrough</a> for permissions, battery controls, and keeping supported copies.</p>
+  <p>Core records are stored on your phone. Apple services supply place names and map features; default-on first-party onboarding telemetry excludes location records. Optional webhooks send records to your chosen endpoint. The <a href="/privacy">privacy policy</a> explains those boundaries.</p>
+</section>
+
+<figure class="product-example"><img src="/screenshots/map-480.webp" srcset="/screenshots/map-480.webp 480w, /screenshots/map-720.webp 720w, /screenshots/map.webp 900w" sizes="240px" width="1206" height="2622" alt="Example Whereday map showing visit markers and recorded route points" loading="lazy" decoding="async"><figcaption>Whereday’s map interface. This illustrative screenshot may contain sample data or earlier labels.</figcaption></figure>
+
+<section class="closing" aria-labelledby="next-day">
+  <h2 id="next-day">Remember your next trip.<br>Start recording before you go.</h2>
+  <p>Try Whereday’s free recording, then review the route and visits on your iPhone.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>
+
+<p class="source-note">Reviewed October 26, 2026 against Apple and Google documentation and Whereday’s product source. Platform instructions can vary by version and region. Written by Whereday’s developer; the screenshots are interface examples.</p>

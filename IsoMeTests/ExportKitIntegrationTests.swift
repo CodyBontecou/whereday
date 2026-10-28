@@ -456,7 +456,7 @@ final class ExportKitIntegrationTests: XCTestCase {
         let file = try XCTUnwrap(preview.records.first?.files.first)
         XCTAssertEqual(file.format?.id, ExportFormat.markdown.exportKitFormatID)
         XCTAssertEqual(String(file.relativePath.suffix(7)), "-all.md")
-        XCTAssertTrue(file.displayContent().text.contains("# iso.me Complete Export"))
+        XCTAssertTrue(file.displayContent().text.contains("# Whereday Complete Export"))
     }
 
     func testAdapterPlansMultipleSelectedFormats() async throws {

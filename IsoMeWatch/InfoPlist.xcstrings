@@ -7,61 +7,67 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me"
+            "value": "Whereday"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday"
           }
         }
       }
@@ -128,6 +134,12 @@
             "state": "translated",
             "value": "IsoMeWatch"
           }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IsoMeWatch"
+          }
         }
       }
     },
@@ -137,61 +149,67 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يستخدم iso.me موقع Apple Watch لتتبع الزيارات والمسافة مباشرة على الساعة."
+            "value": "يستخدم Whereday موقع Apple Watch لتتبع الزيارات والمسافة مباشرة على الساعة."
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me আপনার Apple Watch-এর লোকেশন ব্যবহার করে সরাসরি ঘড়িতে ভিজিট ও দূরত্ব ট্র্যাক করে।"
+            "value": "Whereday আপনার Apple Watch-এর লোকেশন ব্যবহার করে সরাসরি ঘড়িতে ভিজিট ও দূরত্ব ট্র্যাক করে।"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me uses your Apple Watch location to track visits and distance directly on the watch."
+            "value": "Whereday uses your Apple Watch location to track visits and distance directly on the watch."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me usa la ubicación de tu Apple Watch para registrar visitas y distancia directamente en el reloj."
+            "value": "Whereday usa la ubicación de tu Apple Watch para registrar visitas y distancia directamente en el reloj."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me utilise la position de votre Apple Watch pour suivre les visites et la distance directement sur la montre."
+            "value": "Whereday utilise la position de votre Apple Watch pour suivre les visites et la distance directement sur la montre."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me आपकी Apple Watch की लोकेशन का उपयोग करके सीधे घड़ी पर विज़िट और दूरी ट्रैक करता है।"
+            "value": "Whereday आपकी Apple Watch की लोकेशन का उपयोग करके सीधे घड़ी पर विज़िट और दूरी ट्रैक करता है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.meはApple Watchの位置情報を使って、訪問と距離をWatch上で直接記録します。"
+            "value": "WheredayはApple Watchの位置情報を使って、訪問と距離をWatch上で直接記録します。"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O iso.me usa a localização do Apple Watch para registrar visitas e distância diretamente no relógio."
+            "value": "O Whereday usa a localização do Apple Watch para registrar visitas e distância diretamente no relógio."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me использует геопозицию Apple Watch, чтобы записывать посещения и расстояние прямо на часах."
+            "value": "Whereday использует геопозицию Apple Watch, чтобы записывать посещения и расстояние прямо на часах."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "iso.me 使用 Apple Watch 的位置在手表上直接记录访问和距离。"
+            "value": "Whereday 使用 Apple Watch 的位置在手表上直接记录访问和距离。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday używa lokalizacji Apple Watch do rejestrowania wizyt i dystansu bezpośrednio na zegarku."
           }
         }
       }

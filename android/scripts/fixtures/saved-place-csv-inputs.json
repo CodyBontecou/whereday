@@ -1,0 +1,66 @@
+[
+  {
+    "name": "reordered-bom",
+    "csv": "﻿ LONGITUDE ,name,latitude,radius_meters,address,extra\r\n-9.1393, Home ,38.7223,,  Lisbon  ,ignored\r\n-9.14,Office,38.73,25,,ignored"
+  },
+  {
+    "name": "quoted-multiline",
+    "csv": "name,latitude,longitude,address\r\n\"Café, \"\"Rue\"\"\",38,-9,\"Floor 1\r\n10 Example Street, Lisbon\"\r\nPark,39,-8,Green\r\n"
+  },
+  {
+    "name": "invalid-neighbors",
+    "csv": "name,latitude,longitude,radius_meters\nValid,90,-180,10000\n,38,-9,150\nBad latitude,91,-9,150\nBad longitude,38,-181,150\nShort,38,-9\nLong,38,-9,150,unexpected\nAnother valid,-90,180,25"
+  },
+  {
+    "name": "malformed-records",
+    "csv": "name,latitude,longitude\n\"Bad\"suffix,38,-9\nUn\"escaped,38,-9\nGood,38,-9\n\"Unclosed,38,-9"
+  },
+  {
+    "name": "blank-lines",
+    "csv": "name,latitude,longitude\n\n   \nGood,38,-9\n,,\n\nAnother,39,-8\n"
+  },
+  {
+    "name": "empty-quoted",
+    "csv": "name,latitude,longitude\n\"\"\nGood,38,-9"
+  },
+  {
+    "name": "duplicates",
+    "csv": "name,latitude,longitude\nHome,38,-9\nHome,38,-9"
+  },
+  {
+    "name": "numeric-grammar",
+    "csv": "name,latitude,longitude\nNumber 0,1f,0\nNumber 1,1D,0\nNumber 2,0x1p0,0\nNumber 3,+1.2,0\nNumber 4,.5,0\nNumber 5,1.,0\nNumber 6,1e1,0\nNumber 7,nan,0\nNumber 8,inf,0\nNumber 9,1e309,0\nNumber 10,１２,0\nHex 0,0x1,0\nHex 1,0X1.8p+1,0\nHex 2,+0x1p0,0\nHex 3,-0x1p0,0\nHex 4,0x.p0,0\nHex 5,01,0\nHex 6,0x1.2,0\nHex 7,.e0,0"
+  },
+  {
+    "name": "invalid-file-0",
+    "csv": "name,latitude\nPlace,38"
+  },
+  {
+    "name": "invalid-file-1",
+    "csv": "name,latitude,longitude,name\nPlace,38,-9,Other"
+  },
+  {
+    "name": "invalid-file-2",
+    "csv": "name,latitude,longitude, LATITUDE \nPlace,38,-9,38"
+  },
+  {
+    "name": "invalid-file-3",
+    "csv": "name,latitude,longitude,\nPlace,38,-9,"
+  },
+  {
+    "name": "invalid-file-4",
+    "csv": "\"name\"junk,latitude,longitude\nPlace,38,-9"
+  },
+  {
+    "name": "invalid-file-5",
+    "csv": "\"name,latitude,longitude\nPlace,38,-9"
+  },
+  {
+    "name": "invalid-file-6",
+    "csv": ""
+  },
+  {
+    "name": "invalid-file-7",
+    "csv": "name,latitude,longitude\n"
+  }
+]

@@ -123,6 +123,19 @@ final class ExportServiceRoundTripTests: XCTestCase {
         }
     }
 
+    func testMarkdownTypeDetectionAcceptsBothBrands() {
+        for brand in ["iso.me", "Whereday"] {
+            let points = "# \(brand) Location Points Export\n".data(using: .utf8)!
+            let visits = "# \(brand) Export\n".data(using: .utf8)!
+            if case .locationPoints = ImportService.detectDataType(from: points, format: .markdown) {} else {
+                XCTFail("Expected location points for \(brand)")
+            }
+            if case .visits = ImportService.detectDataType(from: visits, format: .markdown) {} else {
+                XCTFail("Expected visits for \(brand)")
+            }
+        }
+    }
+
     func testMalformedMarkdownThrowsClearError() {
         let corruptMarkdown = """
         # iso.me Export

@@ -5,13 +5,13 @@
   ],
   "products" : [
     {
-      "displayPrice" : "10.00",
+      "displayPrice" : "19.99",
       "familyShareable" : false,
       "internalID" : "A50A1E75-7217-443E-8CF5-E36B64D1D64F",
       "localizations" : [
         {
-          "description" : "Unlock iso.me data export forever for your Apple ID.",
-          "displayName" : "iso.me Individual Lifetime",
+          "description" : "Unlock Whereday data export forever for your Apple ID.",
+          "displayName" : "Whereday Individual Lifetime",
           "locale" : "en_US"
         }
       ],
@@ -20,13 +20,13 @@
       "type" : "NonConsumable"
     },
     {
-      "displayPrice" : "20.00",
+      "displayPrice" : "39.99",
       "familyShareable" : true,
       "internalID" : "86F588B9-F970-4411-A550-487F4E68195D",
       "localizations" : [
         {
-          "description" : "Unlock iso.me data export forever and share it with your Apple Family.",
-          "displayName" : "iso.me Family Lifetime",
+          "description" : "Unlock Whereday data export forever and share it with your Apple Family.",
+          "displayName" : "Whereday Family Lifetime",
           "locale" : "en_US"
         }
       ],
@@ -35,13 +35,13 @@
       "type" : "NonConsumable"
     },
     {
-      "displayPrice" : "10.00",
+      "displayPrice" : "19.99",
       "familyShareable" : true,
       "internalID" : "D081C3E1-934A-46E2-9952-13609560B334",
       "localizations" : [
         {
           "description" : "Upgrade an Individual Lifetime purchase to Apple Family Sharing.",
-          "displayName" : "iso.me Family Upgrade",
+          "displayName" : "Whereday Family Upgrade",
           "locale" : "en_US"
         }
       ],

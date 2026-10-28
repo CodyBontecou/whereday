@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Complete and audit iso.me String Catalogs without touching App Store Connect."""
+"""Complete and audit Whereday String Catalogs without touching App Store Connect."""
 
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ CATALOGS = (
     Path("IsoMeWatchWidget/Localizable.xcstrings"),
     Path("IsoMeWatchWidget/InfoPlist.xcstrings"),
 )
-LOCALES = ("ar", "bn", "en", "es", "fr", "hi", "ja", "pt-BR", "ru", "zh-Hans")
+LOCALES = ("ar", "bn", "en", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans")
 GOOGLE_LOCALES = {
     "ar": "ar",
     "bn": "bn",
@@ -36,6 +36,7 @@ GOOGLE_LOCALES = {
     "fr": "fr",
     "hi": "hi",
     "ja": "ja",
+    "pl": "pl",
     "pt-BR": "pt",
     "ru": "ru",
     "zh-Hans": "zh-CN",
@@ -51,11 +52,11 @@ PROTECTED_RE = re.compile(
     r"|%(?:\d+\$)?[-+ #0']*\d*(?:\.\d+)?(?:hh|h|ll|l|L|z|j|t|q)?[diuoxXfFeEgGaAcCsSp@]"
     r"|\$\{[A-Za-z][A-Za-z0-9_]*\}"
     r"|\{[A-Za-z][A-Za-z0-9_]*\}"
-    r"|(?<![A-Za-z0-9_.])(?:iso\.me|Apple Watch|Apple Maps|App Store|Live Activity|OwnTracks|Overland|GeoJSON|Markdown|JSON|CSV|GPX|KML|GPS|HTTP|API|URL|YAML|iPhone|iOS|Siri|Shortcuts)(?![A-Za-z0-9_.])"
+    r"|(?<![A-Za-z0-9_.])(?:Whereday|Apple Watch|Apple Maps|App Store|Live Activity|OwnTracks|Overland|GeoJSON|Markdown|JSON|CSV|GPX|KML|GPS|HTTP|API|URL|YAML|iPhone|iOS|Siri|Shortcuts)(?![A-Za-z0-9_.])"
 )
 EXACT_EQUIVALENTS = {
     "",
-    "iso.me",
+    "Whereday",
     "IsoMe",
     "IsoMeWatch",
     "IsoMeWidgetExtension",
@@ -80,7 +81,7 @@ EXACT_EQUIVALENTS = {
     "OVERLAND",
     "Apple Maps",
     "api_key",
-    "ISO.ME",
+    "WHEREDAY",
     "TOKEN",
     "BEARER TOKEN",
     "ENDPOINT",
@@ -94,6 +95,7 @@ EXACT_EQUIVALENTS = {
     "••••••••",
 }
 NATURAL_EQUIVALENTS = {
+    *(("pl", value) for value in ("Core Location", "Format", "FORMAT", "Import", "START", "STOP", "STATUS", "X-API-Key", "Plan", "m", "MYSELF.MD")),
     ("es", "MANUAL"),
     ("es", "Manual"),
     ("fr", "%lld PHOTOS"),
@@ -138,59 +140,59 @@ NATURAL_EQUIVALENTS = {
 
 SOURCE_OVERRIDES = {
     ("IsoMe/InfoPlist.xcstrings", "NSLocationAlwaysAndWhenInUseUsageDescription"):
-        "iso.me needs always-on location access to automatically record the places you visit throughout the day, even when the app is in the background. This enables visit detection and travel tracking.",
+        "Whereday needs always-on location access to automatically record the places you visit throughout the day, even when the app is in the background. This enables visit detection and travel tracking.",
     ("IsoMe/InfoPlist.xcstrings", "NSLocationWhenInUseUsageDescription"):
-        "iso.me needs location access to show your current location and record visits when the app is open.",
+        "Whereday needs location access to show your current location and record visits when the app is open.",
     ("IsoMe/InfoPlist.xcstrings", "NSPhotoLibraryUsageDescription"):
-        "iso.me can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; iso.me stores only local metadata on-device.",
+        "Whereday can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; Whereday stores only local metadata on-device.",
     ("IsoMeWatch/InfoPlist.xcstrings", "NSLocationWhenInUseUsageDescription"):
-        "iso.me uses your Apple Watch location to track visits and distance directly on the watch.",
+        "Whereday uses your Apple Watch location to track visits and distance directly on the watch.",
 }
 
 MANUAL_OVERRIDES = {
-    "iso.me needs always-on location access to automatically record the places you visit throughout the day, even when the app is in the background. This enables visit detection and travel tracking.": {
-        "ar": "يحتاج iso.me إلى الوصول الدائم إلى موقعك لتسجيل الأماكن التي تزورها تلقائيًا طوال اليوم، حتى عندما يكون التطبيق في الخلفية. يتيح ذلك اكتشاف الزيارات وتتبع التنقل.",
-        "bn": "আপনি সারাদিন যেসব স্থানে যান, অ্যাপটি ব্যাকগ্রাউন্ডে থাকলেও সেগুলো স্বয়ংক্রিয়ভাবে রেকর্ড করতে iso.me-এর সর্বদা লোকেশন অ্যাক্সেস প্রয়োজন। এটি ভিজিট শনাক্তকরণ ও যাত্রাপথ ট্র্যাকিং সক্ষম করে।",
-        "es": "iso.me necesita acceso permanente a tu ubicación para registrar automáticamente los lugares que visitas durante el día, incluso cuando la app está en segundo plano. Esto permite detectar visitas y registrar tus desplazamientos.",
-        "fr": "iso.me a besoin d’un accès permanent à votre position pour enregistrer automatiquement les lieux que vous visitez au cours de la journée, même lorsque l’app est en arrière-plan. Cela permet de détecter les visites et de suivre vos déplacements.",
-        "hi": "पूरे दिन आपके द्वारा देखी गई जगहों को अपने-आप रिकॉर्ड करने के लिए iso.me को हमेशा स्थान की अनुमति चाहिए, भले ही ऐप बैकग्राउंड में हो। इससे विज़िट का पता लगाने और यात्रा को ट्रैक करने की सुविधा मिलती है।",
-        "ja": "iso.meは、アプリがバックグラウンドにあるときも、1日を通して訪れた場所を自動的に記録するために、位置情報への常時アクセスを必要とします。これにより、訪問の検出と移動の記録が可能になります。",
-        "pt-BR": "O iso.me precisa de acesso contínuo à sua localização para registrar automaticamente os lugares que você visita ao longo do dia, mesmo quando o app está em segundo plano. Isso permite detectar visitas e acompanhar seus deslocamentos.",
-        "ru": "iso.me требуется постоянный доступ к геопозиции, чтобы автоматически записывать места, которые вы посещаете в течение дня, даже когда приложение работает в фоновом режиме. Это позволяет определять посещения и отслеживать перемещения.",
-        "zh-Hans": "iso.me 需要始终访问您的位置，以便全天自动记录您到访的地点，即使应用在后台运行也可以。此权限用于检测访问记录和跟踪出行。",
+    "Whereday needs always-on location access to automatically record the places you visit throughout the day, even when the app is in the background. This enables visit detection and travel tracking.": {
+        "ar": "يحتاج Whereday إلى الوصول الدائم إلى موقعك لتسجيل الأماكن التي تزورها تلقائيًا طوال اليوم، حتى عندما يكون التطبيق في الخلفية. يتيح ذلك اكتشاف الزيارات وتتبع التنقل.",
+        "bn": "আপনি সারাদিন যেসব স্থানে যান, অ্যাপটি ব্যাকগ্রাউন্ডে থাকলেও সেগুলো স্বয়ংক্রিয়ভাবে রেকর্ড করতে Whereday-এর সর্বদা লোকেশন অ্যাক্সেস প্রয়োজন। এটি ভিজিট শনাক্তকরণ ও যাত্রাপথ ট্র্যাকিং সক্ষম করে।",
+        "es": "Whereday necesita acceso permanente a tu ubicación para registrar automáticamente los lugares que visitas durante el día, incluso cuando la app está en segundo plano. Esto permite detectar visitas y registrar tus desplazamientos.",
+        "fr": "Whereday a besoin d’un accès permanent à votre position pour enregistrer automatiquement les lieux que vous visitez au cours de la journée, même lorsque l’app est en arrière-plan. Cela permet de détecter les visites et de suivre vos déplacements.",
+        "hi": "पूरे दिन आपके द्वारा देखी गई जगहों को अपने-आप रिकॉर्ड करने के लिए Whereday को हमेशा स्थान की अनुमति चाहिए, भले ही ऐप बैकग्राउंड में हो। इससे विज़िट का पता लगाने और यात्रा को ट्रैक करने की सुविधा मिलती है।",
+        "ja": "Wheredayは、アプリがバックグラウンドにあるときも、1日を通して訪れた場所を自動的に記録するために、位置情報への常時アクセスを必要とします。これにより、訪問の検出と移動の記録が可能になります。",
+        "pt-BR": "O Whereday precisa de acesso contínuo à sua localização para registrar automaticamente os lugares que você visita ao longo do dia, mesmo quando o app está em segundo plano. Isso permite detectar visitas e acompanhar seus deslocamentos.",
+        "ru": "Whereday требуется постоянный доступ к геопозиции, чтобы автоматически записывать места, которые вы посещаете в течение дня, даже когда приложение работает в фоновом режиме. Это позволяет определять посещения и отслеживать перемещения.",
+        "zh-Hans": "Whereday 需要始终访问您的位置，以便全天自动记录您到访的地点，即使应用在后台运行也可以。此权限用于检测访问记录和跟踪出行。",
     },
-    "iso.me needs location access to show your current location and record visits when the app is open.": {
-        "ar": "يحتاج iso.me إلى الوصول إلى موقعك لعرض موقعك الحالي وتسجيل الزيارات عندما يكون التطبيق مفتوحًا.",
-        "bn": "অ্যাপ খোলা থাকলে আপনার বর্তমান অবস্থান দেখাতে এবং ভিজিট রেকর্ড করতে iso.me-এর লোকেশন অ্যাক্সেস প্রয়োজন।",
-        "es": "iso.me necesita acceso a tu ubicación para mostrar tu posición actual y registrar visitas cuando la app está abierta.",
-        "fr": "iso.me a besoin d’accéder à votre position pour afficher votre emplacement actuel et enregistrer les visites lorsque l’app est ouverte.",
-        "hi": "ऐप खुला होने पर आपका वर्तमान स्थान दिखाने और विज़िट रिकॉर्ड करने के लिए iso.me को स्थान की अनुमति चाहिए।",
-        "ja": "iso.meは、アプリを開いているときに現在地を表示し、訪問を記録するために位置情報へのアクセスを必要とします。",
-        "pt-BR": "O iso.me precisa acessar sua localização para mostrar sua posição atual e registrar visitas quando o app está aberto.",
-        "ru": "iso.me требуется доступ к геопозиции, чтобы показывать ваше текущее местоположение и записывать посещения, когда приложение открыто.",
-        "zh-Hans": "iso.me 需要访问您的位置，以便在应用打开时显示当前位置并记录访问。",
+    "Whereday needs location access to show your current location and record visits when the app is open.": {
+        "ar": "يحتاج Whereday إلى الوصول إلى موقعك لعرض موقعك الحالي وتسجيل الزيارات عندما يكون التطبيق مفتوحًا.",
+        "bn": "অ্যাপ খোলা থাকলে আপনার বর্তমান অবস্থান দেখাতে এবং ভিজিট রেকর্ড করতে Whereday-এর লোকেশন অ্যাক্সেস প্রয়োজন।",
+        "es": "Whereday necesita acceso a tu ubicación para mostrar tu posición actual y registrar visitas cuando la app está abierta.",
+        "fr": "Whereday a besoin d’accéder à votre position pour afficher votre emplacement actuel et enregistrer les visites lorsque l’app est ouverte.",
+        "hi": "ऐप खुला होने पर आपका वर्तमान स्थान दिखाने और विज़िट रिकॉर्ड करने के लिए Whereday को स्थान की अनुमति चाहिए।",
+        "ja": "Wheredayは、アプリを開いているときに現在地を表示し、訪問を記録するために位置情報へのアクセスを必要とします。",
+        "pt-BR": "O Whereday precisa acessar sua localização para mostrar sua posição atual e registrar visitas quando o app está aberto.",
+        "ru": "Whereday требуется доступ к геопозиции, чтобы показывать ваше текущее местоположение и записывать посещения, когда приложение открыто.",
+        "zh-Hans": "Whereday 需要访问您的位置，以便在应用打开时显示当前位置并记录访问。",
     },
-    "iso.me can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; iso.me stores only local metadata on-device.": {
-        "ar": "يمكن لـ iso.me ربط الصور ذات الموقع الجغرافي بخريطتك الخاصة ونزهاتك. تبقى ملفات الصور في مكتبة الصور، ولا يخزن iso.me على الجهاز سوى البيانات الوصفية المحلية.",
-        "bn": "iso.me জিওট্যাগ করা ছবি আপনার ব্যক্তিগত মানচিত্র ও আউটিংয়ের সঙ্গে যুক্ত করতে পারে। ছবির ফাইল Photos লাইব্রেরিতেই থাকে; iso.me ডিভাইসে শুধু স্থানীয় মেটাডেটা সংরক্ষণ করে।",
-        "es": "iso.me puede vincular las fotos con ubicación a tu mapa privado y a tus salidas. Los archivos permanecen en tu fototeca; iso.me solo guarda metadatos locales en el dispositivo.",
-        "fr": "iso.me peut associer les photos géolocalisées à votre carte privée et à vos sorties. Les fichiers restent dans votre photothèque ; iso.me ne stocke que des métadonnées locales sur l’appareil.",
-        "hi": "iso.me जियोटैग की गई फ़ोटो को आपके निजी मानचित्र और आउटिंग से जोड़ सकता है। फ़ोटो फ़ाइलें आपकी Photos लाइब्रेरी में ही रहती हैं; iso.me डिवाइस पर केवल स्थानीय मेटाडेटा सहेजता है।",
-        "ja": "iso.meは、位置情報付きの写真をプライベートマップや外出記録に関連付けることができます。写真ファイルは写真ライブラリに残り、iso.meがデバイス上に保存するのはローカルのメタデータだけです。",
-        "pt-BR": "O iso.me pode associar fotos com localização ao seu mapa privado e aos seus passeios. Os arquivos continuam na fototeca; o iso.me armazena no dispositivo apenas metadados locais.",
-        "ru": "iso.me может связывать фотографии с геометками с вашей личной картой и прогулками. Файлы остаются в медиатеке «Фото»; iso.me хранит на устройстве только локальные метаданные.",
-        "zh-Hans": "iso.me 可以将带有位置信息的照片关联到您的私人地图和出行记录。照片文件仍保留在照片图库中；iso.me 只在设备上存储本地元数据。",
+    "Whereday can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; Whereday stores only local metadata on-device.": {
+        "ar": "يمكن لـ Whereday ربط الصور ذات الموقع الجغرافي بخريطتك الخاصة ونزهاتك. تبقى ملفات الصور في مكتبة الصور، ولا يخزن Whereday على الجهاز سوى البيانات الوصفية المحلية.",
+        "bn": "Whereday জিওট্যাগ করা ছবি আপনার ব্যক্তিগত মানচিত্র ও আউটিংয়ের সঙ্গে যুক্ত করতে পারে। ছবির ফাইল Photos লাইব্রেরিতেই থাকে; Whereday ডিভাইসে শুধু স্থানীয় মেটাডেটা সংরক্ষণ করে।",
+        "es": "Whereday puede vincular las fotos con ubicación a tu mapa privado y a tus salidas. Los archivos permanecen en tu fototeca; Whereday solo guarda metadatos locales en el dispositivo.",
+        "fr": "Whereday peut associer les photos géolocalisées à votre carte privée et à vos sorties. Les fichiers restent dans votre photothèque ; Whereday ne stocke que des métadonnées locales sur l’appareil.",
+        "hi": "Whereday जियोटैग की गई फ़ोटो को आपके निजी मानचित्र और आउटिंग से जोड़ सकता है। फ़ोटो फ़ाइलें आपकी Photos लाइब्रेरी में ही रहती हैं; Whereday डिवाइस पर केवल स्थानीय मेटाडेटा सहेजता है।",
+        "ja": "Wheredayは、位置情報付きの写真をプライベートマップや外出記録に関連付けることができます。写真ファイルは写真ライブラリに残り、Wheredayがデバイス上に保存するのはローカルのメタデータだけです。",
+        "pt-BR": "O Whereday pode associar fotos com localização ao seu mapa privado e aos seus passeios. Os arquivos continuam na fototeca; o Whereday armazena no dispositivo apenas metadados locais.",
+        "ru": "Whereday может связывать фотографии с геометками с вашей личной картой и прогулками. Файлы остаются в медиатеке «Фото»; Whereday хранит на устройстве только локальные метаданные.",
+        "zh-Hans": "Whereday 可以将带有位置信息的照片关联到您的私人地图和出行记录。照片文件仍保留在照片图库中；Whereday 只在设备上存储本地元数据。",
     },
-    "iso.me uses your Apple Watch location to track visits and distance directly on the watch.": {
-        "ar": "يستخدم iso.me موقع Apple Watch لتتبع الزيارات والمسافة مباشرة على الساعة.",
-        "bn": "iso.me আপনার Apple Watch-এর লোকেশন ব্যবহার করে সরাসরি ঘড়িতে ভিজিট ও দূরত্ব ট্র্যাক করে।",
-        "es": "iso.me usa la ubicación de tu Apple Watch para registrar visitas y distancia directamente en el reloj.",
-        "fr": "iso.me utilise la position de votre Apple Watch pour suivre les visites et la distance directement sur la montre.",
-        "hi": "iso.me आपकी Apple Watch की लोकेशन का उपयोग करके सीधे घड़ी पर विज़िट और दूरी ट्रैक करता है।",
-        "ja": "iso.meはApple Watchの位置情報を使って、訪問と距離をWatch上で直接記録します。",
-        "pt-BR": "O iso.me usa a localização do Apple Watch para registrar visitas e distância diretamente no relógio.",
-        "ru": "iso.me использует геопозицию Apple Watch, чтобы записывать посещения и расстояние прямо на часах.",
-        "zh-Hans": "iso.me 使用 Apple Watch 的位置在手表上直接记录访问和距离。",
+    "Whereday uses your Apple Watch location to track visits and distance directly on the watch.": {
+        "ar": "يستخدم Whereday موقع Apple Watch لتتبع الزيارات والمسافة مباشرة على الساعة.",
+        "bn": "Whereday আপনার Apple Watch-এর লোকেশন ব্যবহার করে সরাসরি ঘড়িতে ভিজিট ও দূরত্ব ট্র্যাক করে।",
+        "es": "Whereday usa la ubicación de tu Apple Watch para registrar visitas y distancia directamente en el reloj.",
+        "fr": "Whereday utilise la position de votre Apple Watch pour suivre les visites et la distance directement sur la montre.",
+        "hi": "Whereday आपकी Apple Watch की लोकेशन का उपयोग करके सीधे घड़ी पर विज़िट और दूरी ट्रैक करता है।",
+        "ja": "WheredayはApple Watchの位置情報を使って、訪問と距離をWatch上で直接記録します。",
+        "pt-BR": "O Whereday usa a localização do Apple Watch para registrar visitas e distância diretamente no relógio.",
+        "ru": "Whereday использует геопозицию Apple Watch, чтобы записывать посещения и расстояние прямо на часах.",
+        "zh-Hans": "Whereday 使用 Apple Watch 的位置在手表上直接记录访问和距离。",
     },
     "ACTIONS": {"fr": "ACTIONS"},
     "Allow": {"hi": "अनुमति दें", "ja": "許可"},
@@ -222,8 +224,8 @@ MANUAL_OVERRIDES = {
     "TRACKING": {"ar": "التتبع"},
     "%lld MATCHED %@": {"ru": "СОПОСТАВЛЕНО: %1$lld %2$@"},
     "LIVE": {"ru": "АКТИВНО"},
-    "iso.me Feedback": {"pt-BR": "Feedback do iso.me"},
-    "iso.me Widget": {"es": "Widget de iso.me", "fr": "Widget iso.me"},
+    "Whereday Feedback": {"pt-BR": "Feedback do Whereday"},
+    "Whereday Widget": {"es": "Widget de Whereday", "fr": "Widget Whereday"},
     "user": {"es": "usuario"},
     "VISIT": {"hi": "विज़िट"},
     "VISITS": {"hi": "विज़िट"},
@@ -296,7 +298,7 @@ def translation_prompt(value: str) -> str:
 
 def preserve_display_case(source: str, translated: str, locale: str) -> str:
     ascii_letters = [character for character in source if character.isascii() and character.isalpha()]
-    if ascii_letters and all(character.isupper() for character in ascii_letters) and locale in {"es", "fr", "pt-BR", "ru"}:
+    if ascii_letters and all(character.isupper() for character in ascii_letters) and locale in {"es", "fr", "pl", "pt-BR", "ru"}:
         return translated.upper()
     return translated
 
@@ -309,7 +311,8 @@ def source_values(key: str, entry: dict) -> tuple[str, list[str]]:
     english = entry.setdefault("localizations", {}).get("en", {})
     if "stringSet" in english:
         return "stringSet", list(english["stringSet"].get("values", []))
-    value = english.get("stringUnit", {}).get("value", key)
+    unit = english.get("stringUnit") or english.get("variations", {}).get("plural", {}).get("other", {}).get("stringUnit", {})
+    value = unit.get("value", key)
     return "stringUnit", [value]
 
 
@@ -318,7 +321,9 @@ def locale_values(entry: dict, locale: str, kind: str) -> list[str] | None:
     if kind == "stringSet":
         values = localized.get("stringSet", {}).get("values")
         return list(values) if isinstance(values, list) else None
-    value = localized.get("stringUnit", {}).get("value")
+    # A plural catalog entry represents the same source value with count-specific forms.
+    unit = localized.get("stringUnit") or localized.get("variations", {}).get("plural", {}).get("other", {}).get("stringUnit", {})
+    value = unit.get("value")
     return [value] if isinstance(value, str) else None
 
 
@@ -360,7 +365,7 @@ def google_translate_batch(locale: str, values: list[str]) -> list[str]:
     last_error: Exception | None = None
     for attempt in range(5):
         try:
-            request = urllib.request.Request(endpoint, data=body, headers={"User-Agent": "iso.me-localization-audit/1"})
+            request = urllib.request.Request(endpoint, data=body, headers={"User-Agent": "Whereday-localization-audit/1"})
             with urllib.request.urlopen(request, timeout=45) as response:
                 data = json.load(response)
             parts = data if isinstance(data, list) else []
@@ -435,7 +440,8 @@ def fill(overwrite: bool = False) -> int:
                 raise RuntimeError(f"{relative}: {key!r} has no English source values")
             kinds[(relative, key)] = kind
             sources[(relative, key)] = values
-            set_locale_values(entry, "en", kind, values)
+            if "variations" not in entry["localizations"].get("en", {}):
+                set_locale_values(entry, "en", kind, values)
 
             for locale in LOCALES:
                 if locale == "en":
@@ -510,10 +516,38 @@ def fill(overwrite: bool = False) -> int:
     return audit()
 
 
-def audit() -> int:
+def audit_extracted(build_root: Path) -> int:
+    """Check compiler-discovered keys for every app target, including shared sources."""
+    targets = {
+        "IsoMe": Path("IsoMe/Localizable.xcstrings"),
+        "IsoMeWatch": Path("IsoMeWatch/Localizable.xcstrings"),
+        "IsoMeWidgetExtension": Path("IsoMeWidget/Localizable.xcstrings"),
+        "IsoMeWatchWidgetExtension": Path("IsoMeWatchWidget/Localizable.xcstrings"),
+    }
+    failures = []
+    for target, catalog in targets.items():
+        files = list(build_root.glob(f"**/{target}.build/Objects-normal/*/*.stringsdata"))
+        if not files:
+            failures.append(f"no compiler extraction data for {target}")
+            continue
+        keys = json.loads((ROOT / catalog).read_text())["strings"]
+        missing = set()
+        for path in files:
+            tables = json.loads(path.read_text()).get("tables", {})
+            missing.update(item["key"] for item in tables.get("Localizable", []) if item["key"] not in keys)
+        failures.extend(f"missing extracted key {catalog}:{key!r}" for key in sorted(missing))
+        print(f"  {target}: {len(files)} extraction files, {len(missing)} missing keys")
+    if failures:
+        print("\n".join(failures), file=sys.stderr)
+        return 1
+    print("PASS: all four targets' extracted keys are cataloged")
+    return 0
+
+
+def audit(locales: tuple[str, ...] = LOCALES) -> int:
     failures: list[str] = []
     total = 0
-    identical: dict[str, list[str]] = {locale: [] for locale in LOCALES if locale != "en"}
+    identical: dict[str, list[str]] = {locale: [] for locale in locales if locale != "en"}
     for relative in CATALOGS:
         document = json.loads((ROOT / relative).read_text())
         for key, entry in document.get("strings", {}).items():
@@ -521,7 +555,7 @@ def audit() -> int:
                 continue
             total += 1
             kind, source = source_values(key, entry)
-            for locale in LOCALES:
+            for locale in locales:
                 target = locale_values(entry, locale, kind)
                 label = f"{relative}:{key!r}:{locale}"
                 if target is None or len(target) != len(source) or any(value == "" and src != "" for src, value in zip(source, target)):
@@ -532,8 +566,16 @@ def audit() -> int:
                         failures.append(f"placeholder mismatch {label}")
                     if locale != "en" and source_value == target_value and not is_intentional_equivalent(source_value, locale):
                         identical[locale].append(f"{relative}:{key}")
+                plural = entry.get("localizations", {}).get(locale, {}).get("variations", {}).get("plural")
+                if plural is not None:
+                    if locale == "pl" and not {"one", "few", "many", "other"}.issubset(plural):
+                        failures.append(f"missing Polish plural forms {label}")
+                    for category, form in plural.items():
+                        value = form.get("stringUnit", {}).get("value")
+                        if not value or placeholders(source[0]) != placeholders(value):
+                            failures.append(f"invalid plural form {label}:{category}")
 
-    print(f"Audited {total} active catalog keys across {len(CATALOGS)} catalogs and {len(LOCALES)} locales.")
+    print(f"Audited {total} active catalog keys across {len(CATALOGS)} catalogs and {len(locales)} locales.")
     for locale, values in identical.items():
         print(f"  {locale}: {len(values)} non-allowlisted values identical to English")
     if failures:
@@ -548,8 +590,17 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("fill", "audit"))
     parser.add_argument("--overwrite", action="store_true", help="regenerate all non-manual, non-allowlisted translations")
+    parser.add_argument("--locale", choices=LOCALES, action="append", help="audit only this locale (repeatable; audit command only)")
+    parser.add_argument("--extracted-from", type=Path, help="also audit compiler .stringsdata under this build directory")
     args = parser.parse_args()
-    return fill(overwrite=args.overwrite) if args.command == "fill" else audit()
+    if args.command == "fill":
+        if args.locale or args.extracted_from:
+            parser.error("--locale and --extracted-from are supported only by audit")
+        return fill(overwrite=args.overwrite)
+    result = audit(tuple(args.locale) if args.locale else LOCALES)
+    if args.extracted_from:
+        result = max(result, audit_extracted(args.extracted_from))
+    return result
 
 
 if __name__ == "__main__":

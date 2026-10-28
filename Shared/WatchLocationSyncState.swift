@@ -54,6 +54,41 @@ struct WatchLocationSyncState: Codable {
         lastAckedSequence = max(lastAckedSequence ?? transfer.sequence, transfer.sequence)
     }
 
+    /// Shared by WatchConnectivity and the simulator replay so batching and
+    /// acknowledgement behavior are exercised without a physical watch.
+    func makePayload(maxPoints: Int = 500, generatedAt: Date = Date()) -> WatchLocationSyncPayload? {
+        precondition(maxPoints > 0)
+        let points = Array(points.prefix(maxPoints))
+        let pointSessionIDs = Set(points.map(\.sessionID))
+        let sessions = sessions.filter { session in
+            pointSessionIDs.contains(session.id) || session.id == activeSessionID ||
+            session.endedAt != nil || points.isEmpty
+        }
+        guard !sessions.isEmpty || !points.isEmpty || !visits.isEmpty else { return nil }
+        return WatchLocationSyncPayload(
+            deviceID: deviceID, sequence: nextSequence, generatedAt: generatedAt,
+            isTrackingEnabled: activeSessionID != nil, activeSessionID: activeSessionID,
+            sessions: sessions, points: points, visits: visits
+        )
+    }
+
+    mutating func registerTransfer(_ payload: WatchLocationSyncPayload) {
+        pendingTransfers.append(WatchLocationPendingTransfer(
+            sequence: payload.sequence, sessionIDs: Set(payload.sessions.map(\.id)),
+            pointIDs: Set(payload.points.map(\.id)), visitIDs: Set(payload.visits.map(\.id)),
+            createdAt: payload.generatedAt, visits: payload.visits,
+            endedSessionIDs: Set(payload.sessions.filter { $0.endedAt != nil }.map(\.id))
+        ))
+        nextSequence += 1
+        lastTransferDate = payload.generatedAt
+    }
+
+    func needsFollowup(after transfer: WatchLocationPendingTransfer) -> Bool {
+        let hasUnsentVisit = visits.contains { !(transfer.visits ?? []).contains($0) }
+        return !points.isEmpty || sessions.contains(where: { $0.endedAt != nil }) ||
+            visits.contains(where: { $0.departedAt != nil }) || hasUnsentVisit
+    }
+
     init(deviceID: UUID) {
         self.deviceID = deviceID
     }

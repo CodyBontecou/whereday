@@ -92,6 +92,15 @@
               "从${applicationName}导出数据"
             ]
           }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Eksportuj dane z ${applicationName}",
+              "Wyeksportuj dane ${applicationName}"
+            ]
+          }
         }
       }
     },
@@ -184,6 +193,15 @@
             "values": [
               "我在${applicationName}上已经走了多远",
               "今天${applicationName}距离"
+            ]
+          }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Jaki dystans pokonano dzisiaj z ${applicationName}",
+              "Dzisiejszy dystans w ${applicationName}"
             ]
           }
         }
@@ -280,6 +298,15 @@
               "${applicationName}跟踪持续时间"
             ]
           }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Jak długo trwa śledzenie w ${applicationName}",
+              "Czas śledzenia w ${applicationName}"
+            ]
+          }
         }
       }
     },
@@ -372,6 +399,15 @@
             "values": [
               "${applicationName}今天有多少次访问",
               "${applicationName}访问计数"
+            ]
+          }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Ile wizyt dzisiaj w ${applicationName}",
+              "Liczba wizyt w ${applicationName}"
             ]
           }
         }
@@ -468,6 +504,15 @@
               "为我的${applicationName}行程命名"
             ]
           }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Zmień nazwę przemieszczenia w ${applicationName}",
+              "Nazwij przemieszczenie w ${applicationName}"
+            ]
+          }
         }
       }
     },
@@ -562,6 +607,15 @@
               "为我的${applicationName}访问命名"
             ]
           }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Zmień nazwę wizyty w ${applicationName}",
+              "Nazwij wizytę w ${applicationName}"
+            ]
+          }
         }
       }
     },
@@ -654,6 +708,15 @@
             "values": [
               "重命名${applicationName}中当前的出行记录",
               "为我的${applicationName}出行记录命名"
+            ]
+          }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Zmień nazwę bieżącej podróży w ${applicationName}",
+              "Nazwij podróż w ${applicationName}"
             ]
           }
         }
@@ -760,6 +823,16 @@
               "使用${applicationName}记录路线"
             ]
           }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Uruchom ${applicationName}",
+              "Rozpocznij rejestrowanie w ${applicationName}",
+              "Rejestruj trasę z ${applicationName}"
+            ]
+          }
         }
       }
     },
@@ -852,6 +925,15 @@
             "values": [
               "停止使用${applicationName}进行跟踪",
               "停止${applicationName}跟踪"
+            ]
+          }
+        },
+        "pl": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
+              "Zatrzymaj śledzenie w ${applicationName}",
+              "Zakończ śledzenie w ${applicationName}"
             ]
           }
         }

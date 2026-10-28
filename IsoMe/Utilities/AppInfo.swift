@@ -22,6 +22,6 @@ enum AppInfo {
     }
 
     static var fullDeviceInfo: String {
-        String(localized: "App: iso.me \(versionDisplay)\nPlatform: \(platformDisplay)\nDevice: \(deviceModel)")
+        String(localized: "App: Whereday \(versionDisplay)\nPlatform: \(platformDisplay)\nDevice: \(deviceModel)")
     }
 }

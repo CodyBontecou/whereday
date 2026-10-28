@@ -1,0 +1,20 @@
+{
+  "installId": "00000000-0000-4000-8000-000000000001",
+  "events": [{
+    "eventId": "00000000-0000-4000-8000-000000000901",
+    "eventName": "onboarding_purchase_finished",
+    "properties": {
+      "appVersion": "0.1.0",
+      "buildNumber": "1",
+      "platform": "android",
+      "onboardingStep": "notifications",
+      "authorizationStatus": "when_in_use",
+      "authorizationRequestKind": "notifications",
+      "trackingIntent": "later",
+      "paywallContext": "export",
+      "productId": "whereday_export_lifetime",
+      "purchaseOutcome": "pending",
+      "errorCategory": "payment_pending"
+    }
+  }]
+}

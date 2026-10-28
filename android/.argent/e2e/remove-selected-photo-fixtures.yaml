@@ -1,0 +1,59 @@
+executionPrerequisite: Photos gallery is foregrounded with exactly the two generated
+  public-photo-qa fixtures at Oct 27 10:00 and 10:05. Removes only their Whereday
+  references; originals remain.
+steps:
+- tap:
+    text: Oct 27, 10:00
+- await:
+    visible:
+      text: Close photo
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: 1 saved photo reference
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Oct 27, 10:00
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:05
+- await:
+    visible:
+      text: Photo 1 of 1 on this page
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- await:
+    visible:
+      text: 0 saved photo references
+- await:
+    idle: true

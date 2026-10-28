@@ -1,0 +1,10 @@
+<resources>
+    <string name="onboarding_start_now">Start recording immediately</string>
+    <string name="onboarding_location_allowed">Location access is allowed.</string>
+    <string name="onboarding_location_missing">Location access is not granted.</string>
+    <string name="onboarding_allow_later">You can allow location later in Settings. You can use the rest of Whereday without starting a recording.</string>
+    <string name="onboarding_start_finish">Start recording and open Whereday</string>
+    <string name="onboarding_finish">Open Whereday</string>
+    <string name="onboarding_start_error">Recording could not start. Try again, or turn off immediate recording to finish setup.</string>
+    <string name="onboarding_save_error">Setup could not be saved. Try again. If you requested recording, it may already be active.</string>
+</resources>

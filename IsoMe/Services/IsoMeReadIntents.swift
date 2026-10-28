@@ -4,7 +4,7 @@ import SwiftData
 
 // MARK: - Current Outing Reads
 
-/// Shared seam for reading the name of the outing IsoMe is currently recording.
+/// Shared seam for reading the name of the outing Whereday is currently recording.
 ///
 /// Split out of the intent itself so that:
 /// (a) unit tests can inject an in-memory `ModelContext` instead of the on-disk store, and
@@ -13,7 +13,7 @@ import SwiftData
 ///     duplicating the fetch.
 @MainActor
 enum CurrentOutingReader {
-    /// The outing IsoMe is currently recording: the one open
+    /// The outing Whereday is currently recording: the one open
     /// (`endedAt == nil`) session, newest `startedAt` first, limit 1.
     ///
     /// The single active-session lookup shared by `currentOutingName` and
@@ -53,7 +53,7 @@ enum CurrentOutingReader {
 
 struct GetCurrentOutingNameIntent: AppIntent {
     static var title: LocalizedStringResource = "Get Current Outing Name"
-    static var description = IntentDescription("The name of the outing IsoMe is currently recording.")
+    static var description = IntentDescription("The name of the outing Whereday is currently recording.")
     static var openAppWhenRun: Bool = false
 
     @MainActor
@@ -100,7 +100,7 @@ enum ReadIntentsDialogs {
 
 struct GetVisitsIntent: AppIntent {
     static var title: LocalizedStringResource = "Get Visits"
-    static var description = IntentDescription("The visits IsoMe logged in a chosen date range. Defaults to today.")
+    static var description = IntentDescription("The visits Whereday logged in a chosen date range. Defaults to today.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Start Date")
@@ -119,7 +119,7 @@ struct GetVisitsIntent: AppIntent {
 
 struct GetMovementsIntent: AppIntent {
     static var title: LocalizedStringResource = "Get Movements"
-    static var description = IntentDescription("The movements, i.e. outings, IsoMe logged in a chosen date range. Defaults to today.")
+    static var description = IntentDescription("The movements, i.e. outings, Whereday logged in a chosen date range. Defaults to today.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Start Date")

@@ -1,0 +1,23 @@
+{
+  "exportDate": "2000-01-02T00:00:00Z",
+  "visits": [
+    {
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "arrivedAt": "2000-01-01T11:45:00Z",
+      "departedAt": "2000-01-01T12:00:00Z",
+      "durationMinutes": 15.0,
+      "locationName": "Synthetic stop A",
+      "notes": "Invented documentation example; not a real visit."
+    },
+    {
+      "latitude": 0.0002,
+      "longitude": 0.0001,
+      "arrivedAt": "2000-01-01T12:02:00Z",
+      "departedAt": "2000-01-01T12:17:00Z",
+      "durationMinutes": 15.0,
+      "locationName": "Synthetic stop B",
+      "notes": "Invented documentation example; not a real visit."
+    }
+  ]
+}

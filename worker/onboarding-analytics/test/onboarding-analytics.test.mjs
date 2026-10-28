@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 
 import worker from "../src/index.ts";
 
@@ -195,4 +196,66 @@ test("enforces max batch size", async () => {
 
   assert.equal(response.status, 400);
   assert.equal(json.error, "batch_too_large");
+});
+
+test("accepts Android consent-scoped onboarding and individual purchase properties", async () => {
+  const { db, response } = await postEvents({ installId, events: [{
+    eventId: "00000000-0000-4000-8000-000000000901",
+    eventName: "onboarding_purchase_finished",
+    properties: baseProperties({platform: "android", onboardingStep: "notifications", authorizationRequestKind: "notifications", productId: "whereday_export_lifetime", purchaseOutcome: "pending"}),
+  }] });
+  assert.equal(response.status, 200);
+  const payload = JSON.parse(db.statements[0].values.at(-1));
+  assert.equal(payload.properties.platform, "android");
+  assert.equal(payload.properties.productId, "whereday_export_lifetime");
+});
+
+test("rejects cross-platform products and Android-only properties without Android identity", async () => {
+  for (const properties of [
+    baseProperties({platform: "android", productId: "com.bontecou.isome.lifetime.individual"}),
+    baseProperties({productId: "whereday_export_lifetime"}),
+    baseProperties({onboardingStep: "notifications"}),
+    baseProperties({authorizationRequestKind: "notifications"}),
+  ]) {
+    const { db, response } = await postEvents({installId,eventId:"00000000-0000-4000-8000-000000000902",eventName:"onboarding_step_viewed",properties});
+    assert.equal(response.status,400);assert.equal(db.statements.length,0);
+  }
+});
+
+test("Android properties still reject raw identifiers, coordinates and user text", async () => {
+  for (const extra of [{deviceModel:"QA phone"},{latitude:1},{visitName:"Private place"},{webhookURL:"https://example.invalid"},{advertisingId:installId}]) {
+    const { db, response } = await postEvents({installId,eventId:"00000000-0000-4000-8000-000000000903",eventName:"onboarding_step_viewed",properties:baseProperties({platform:"android",...extra})});
+    assert.equal(response.status,400);assert.equal(db.statements.length,0);
+  }
+});
+
+test("oversized chunked bodies are cancelled before full materialization", async () => {
+  let cancelled=false;
+  const stream=new ReadableStream({pull(controller) {controller.enqueue(new Uint8Array(8192));},cancel() {cancelled=true;}});
+  const db=new FakeD1Database();
+  const response=await worker.fetch(new Request("https://example.com/v1/events",{method:"POST",body:stream,duplex:"half"}),{DB:db});
+  assert.equal(response.status,413);assert.equal(cancelled,true);assert.equal(db.statements.length,0);
+});
+
+
+test("accepts the exact fixture checked by the production Android encoder", async () => {
+  for (const filename of ["usage-analytics-android.json","usage-analytics-android-notification.json"]) {
+    const body=JSON.parse(readFileSync(new URL(`../../../android/platform/src/test/resources/${filename}`,import.meta.url),"utf8"));
+    const { db,response,json }=await postEvents(body);
+    assert.equal(response.status,200);assert.equal(json.accepted,1);
+    assert.deepEqual(JSON.parse(db.statements[0].values.at(-1)).properties,body.events[0].properties);
+  }
+});
+
+
+test("notification authorization is accepted only for explicit Android notification requests", async () => {
+  for (const [properties, status] of [
+    [baseProperties({platform:"android",authorizationRequestKind:"notifications",authorizationStatus:"authorized"}),200],
+    [baseProperties({platform:"android",authorizationStatus:"authorized"}),400],
+    [baseProperties({authorizationStatus:"authorized"}),400],
+    [baseProperties({platform:"android",authorizationRequestKind:"when_in_use",authorizationStatus:"authorized"}),400],
+  ]) {
+    const {response}=await postEvents({installId,eventId:"00000000-0000-4000-8000-000000000905",eventName:"onboarding_location_authorization_completed",properties});
+    assert.equal(response.status,status);
+  }
 });

@@ -1,0 +1,35 @@
+{
+  "exportDate": "2000-01-02T00:00:00Z",
+  "totalPoints": 3,
+  "dateRange": {
+    "earliest": "2000-01-01T12:00:00Z",
+    "latest": "2000-01-01T12:02:00Z",
+    "durationSeconds": 120.0
+  },
+  "points": [
+    {
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "timestamp": "2000-01-01T12:00:00Z",
+      "timestampUnix": 946728000.0,
+      "horizontalAccuracy": 5.0,
+      "isOutlier": false
+    },
+    {
+      "latitude": 0.0001,
+      "longitude": 0.0001,
+      "timestamp": "2000-01-01T12:01:00Z",
+      "timestampUnix": 946728060.0,
+      "horizontalAccuracy": 5.0,
+      "isOutlier": false
+    },
+    {
+      "latitude": 0.0002,
+      "longitude": 0.0001,
+      "timestamp": "2000-01-01T12:02:00Z",
+      "timestampUnix": 946728120.0,
+      "horizontalAccuracy": 5.0,
+      "isOutlier": false
+    }
+  ]
+}
