@@ -1,0 +1,33 @@
+<resources>
+    <string name="support_title">Support and about</string>
+    <string name="support_back">Back</string>
+    <string name="support_cancel">Cancel</string>
+    <string name="support_version">Whereday %1$s</string>
+    <string name="support_platform">Android API %1$d</string>
+    <string name="support_view_logs">View activity logs</string>
+    <string name="support_release_notes">Release notes</string>
+    <string name="support_send_feedback">Send feedback</string>
+    <string name="support_feedback_description">Feedback opens your email app with the app version, Android version and device model. Review and send it when ready. Your journal and logs are not attached.</string>
+    <string name="support_copy_email">Copy support email address</string>
+    <string name="support_email_copied">Support email address copied.</string>
+    <string name="support_no_handler">No app could open this link. For feedback, copy the support email address and use your preferred mail app.</string>
+    <string name="support_community">Join the community</string>
+    <string name="support_website">Whereday website</string>
+    <string name="support_privacy">Privacy policy</string>
+    <string name="support_terms">Terms of service</string>
+    <string name="support_logs_title">Activity logs</string>
+    <string name="support_logs_privacy">Up to 500 recent app events are kept in memory and reset when the app process ends. Times are in UTC. Logs contain fixed status messages without coordinates, names, URLs or credentials. Copying includes app and device details; clipboard contents can be shared with other apps.</string>
+    <string name="support_copy_logs">Copy logs</string>
+    <string name="support_clear_logs">Clear logs</string>
+    <string name="support_logs_copied">Logs copied to clipboard.</string>
+    <string name="support_logs_empty">No log entries.</string>
+    <string name="support_clear_logs_question">Clear activity logs?</string>
+    <string name="support_clear_logs_description">This removes recent diagnostic events from memory. Your journal stays on this phone. Previously copied logs remain on the clipboard or wherever you shared them.</string>
+    <string name="support_preview_title">Android development preview</string>
+    <string name="support_preview_notice">This build is still being validated for an Android release.</string>
+    <string name="support_preview_journal">Record outings, review your map and timeline, edit visits and saved places, and explore Country Days and photo moments.</string>
+    <string name="support_preview_portability">Preview eight export formats and import supported history files. File exports, scheduled exports and webhooks require verified lifetime access; purchases are not available in this preview.</string>
+    <string name="support_preview_automation">Use launcher shortcuts for recording controls, Timeline and Export. Settings includes per-action automation access for Automate; Automate support is experimental.</string>
+    <string name="support_rate_app">Rate Whereday on Google Play</string>
+    <string name="support_review_unavailable">Google Play reviews are unavailable for this build.</string>
+</resources>

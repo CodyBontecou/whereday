@@ -158,6 +158,9 @@
 		76CE00000000000000000002 /* manual-visit-shortcuts.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 76CE00000000000000000001 /* manual-visit-shortcuts.mp4 */; };
 		CA1E00860000000000000001 /* CalendarEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E00860000000000000002 /* CalendarEventEditor.swift */; };
 		CA1E00860000000000000003 /* CalendarEventDraftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E00860000000000000004 /* CalendarEventDraftTests.swift */; };
+		9038E89D0D7D984DC89F365B /* DebugSelfie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */; };
+		47B033577E4B1712A002C33E /* SelfieOverlayKit in Frameworks */ = {isa = PBXBuildFile; productRef = C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */; };
+		E5A546658B9E479D8364CF00 /* ScrawlKit in Frameworks */ = {isa = PBXBuildFile; productRef = 11AB94AF57A54AF190F5E84D /* ScrawlKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -377,6 +380,7 @@
 		76CE00000000000000000001 /* manual-visit-shortcuts.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "manual-visit-shortcuts.mp4"; sourceTree = "<group>"; };
 		CA1E00860000000000000002 /* CalendarEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventEditor.swift; sourceTree = "<group>"; };
 		CA1E00860000000000000004 /* CalendarEventDraftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventDraftTests.swift; sourceTree = "<group>"; };
+		779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugSelfie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,9 +388,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5A546658B9E479D8364CF00 /* ScrawlKit in Frameworks */,
 				E9A100000000000000000008 /* ExportKit in Frameworks */,
 				E9A100000000000000000009 /* ExportAutomationKit in Frameworks */,
 				BEE50012212F000100000012 /* Notelet in Frameworks */,
+				47B033577E4B1712A002C33E /* SelfieOverlayKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +530,7 @@
 				B1000001212F000000000001 /* Localizable.xcstrings */,
 				B1000002212F000000000002 /* InfoPlist.xcstrings */,
 				B1000007212F000000000007 /* AppShortcuts.xcstrings */,
+				1BA2485DED589D6221766197 /* Debug */,
 			);
 			path = IsoMe;
 			sourceTree = "<group>";
@@ -716,6 +723,15 @@
 			path = IsoMeTests;
 			sourceTree = "<group>";
 		};
+		1BA2485DED589D6221766197 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */,
+			);
+			name = Debug;
+			path = Debug;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -737,9 +753,11 @@
 			);
 			name = IsoMe;
 			packageProductDependencies = (
+				11AB94AF57A54AF190F5E84D /* ScrawlKit */,
 				E9A100000000000000000006 /* ExportKit */,
 				E9A100000000000000000007 /* ExportAutomationKit */,
 				BEE50011212F000000000011 /* Notelet */,
+				C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */,
 			);
 			productName = IsoMe;
 			productReference = A1000000212F000000000000 /* IsoMe.app */;
@@ -864,8 +882,10 @@
 			);
 			mainGroup = A1FFFFF8212EFFFFFFFF0000;
 			packageReferences = (
+				4DF553D1EF1C48318F884DAB /* XCRemoteSwiftPackageReference "scrawl" */,
 				E9A100000000000000000005 /* XCRemoteSwiftPackageReference "ExportKit" */,
 				BEE50010212F000000000010 /* XCRemoteSwiftPackageReference "notelet" */,
+				1E96CF14AA94224BABF0E1D4 /* XCRemoteSwiftPackageReference "SelfieOverlayKit" */,
 			);
 			productRefGroup = A1FFFFF9212EFFFFFFFF0002 /* Products */;
 			projectDirPath = "";
@@ -1023,6 +1043,7 @@
 				AA110005212F000100000005 /* OnboardingAnalyticsTransport.swift in Sources */,
 				C5F68C85D33E49FB8E0846D5 /* WebhookManager.swift in Sources */,
 				B4BEE4EDDABA4EBEA161EC3D /* WebhookSettingsView.swift in Sources */,
+				9038E89D0D7D984DC89F365B /* DebugSelfie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,7 +1172,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bontecou.isomeTests;
 				PRODUCT_NAME = IsoMeTests;
 				SDKROOT = iphoneos;
@@ -1286,6 +1307,7 @@
 		A1000017212F000000000017 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1298,6 +1320,8 @@
 				INFOPLIST_FILE = IsoMe/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Whereday";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Shows the debug selfie overlay bubble (debug builds only).";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Records audio with the debug selfie overlay (debug builds only).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1595,6 +1619,22 @@
 				kind = branch;
 			};
 		};
+		1E96CF14AA94224BABF0E1D4 /* XCRemoteSwiftPackageReference "SelfieOverlayKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CodyBontecou/SelfieOverlayKit.git";
+			requirement = {
+				branch = "debug-only";
+				kind = branch;
+			};
+		};
+		4DF553D1EF1C48318F884DAB /* XCRemoteSwiftPackageReference "scrawl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kitlangton/scrawl";
+			requirement = {
+				kind = revision;
+				revision = 6d4fa333475ef5170c4df683e306480f8618b95a;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1612,6 +1652,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BEE50010212F000000000010 /* XCRemoteSwiftPackageReference "notelet" */;
 			productName = Notelet;
+		};
+		11AB94AF57A54AF190F5E84D /* ScrawlKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4DF553D1EF1C48318F884DAB /* XCRemoteSwiftPackageReference "scrawl" */;
+			productName = ScrawlKit;
+		};
+		C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E96CF14AA94224BABF0E1D4 /* XCRemoteSwiftPackageReference "SelfieOverlayKit" */;
+			productName = SelfieOverlayKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -1,0 +1,50 @@
+steps:
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Your days, remembered
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: A journal of where you go
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Record in the background
+- await:
+    idle: true
+- tap:
+    text: Allow location
+- tap:
+    id: com.android.permissioncontroller:id/permission_allow_foreground_only_button
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Keep recording within reach
+- await:
+    idle: true
+- tap:
+    text: Allow notifications
+- tap:
+    id: com.android.permissioncontroller:id/permission_allow_button
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Ready for your next outing
+- await:
+    idle: true
+- tap:
+    text: Open Whereday
+- await:
+    visible:
+      text: Your location journal
+- await:
+    idle: true

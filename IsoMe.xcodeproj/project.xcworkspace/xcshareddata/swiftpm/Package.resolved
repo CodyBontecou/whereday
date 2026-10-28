@@ -1,5 +1,5 @@
 {
-  "originHash" : "d2dedc51e832757a6e96d43877d5dab9d9465f1f7c1898402b36dfea6798571c",
+  "originHash" : "2fcc88ebeaa06b20c48d238911998f4b0779d516db51a9782f5dee6108257835",
   "pins" : [
     {
       "identity" : "exportkit",
@@ -17,6 +17,23 @@
       "state" : {
         "branch" : "main",
         "revision" : "02986909abddf547b0b3cd0e2170544acd0aaa01"
+      }
+    },
+    {
+      "identity" : "scrawl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kitlangton/scrawl",
+      "state" : {
+        "revision" : "6d4fa333475ef5170c4df683e306480f8618b95a"
+      }
+    },
+    {
+      "identity" : "selfieoverlaykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CodyBontecou/SelfieOverlayKit.git",
+      "state" : {
+        "branch" : "debug-only",
+        "revision" : "dca25e185b62b0d93ae85cdef5e08eff8bcf61d4"
       }
     }
   ],

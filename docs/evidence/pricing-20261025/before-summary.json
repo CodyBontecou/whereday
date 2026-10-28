@@ -1,0 +1,49 @@
+{
+  "iaps": [
+    {
+      "id": "6761962715",
+      "name": "Family Lifetime Export",
+      "productId": "com.bontecou.isome.lifetime",
+      "type": "NON_CONSUMABLE",
+      "baseTerritory": "USA",
+      "currentPrice": {
+        "amount": "20.0",
+        "currency": "USD"
+      },
+      "estimatedProceeds": {
+        "amount": "17.0",
+        "currency": "USD"
+      }
+    },
+    {
+      "id": "6807491599",
+      "name": "Family Lifetime Upgrade",
+      "productId": "com.bontecou.isome.lifetime.family.upgrade",
+      "type": "NON_CONSUMABLE",
+      "baseTerritory": "USA",
+      "currentPrice": {
+        "amount": "10.0",
+        "currency": "USD"
+      },
+      "estimatedProceeds": {
+        "amount": "8.5",
+        "currency": "USD"
+      }
+    },
+    {
+      "id": "6807491383",
+      "name": "Individual Lifetime Export",
+      "productId": "com.bontecou.isome.lifetime.individual",
+      "type": "NON_CONSUMABLE",
+      "baseTerritory": "USA",
+      "currentPrice": {
+        "amount": "10.0",
+        "currency": "USD"
+      },
+      "estimatedProceeds": {
+        "amount": "8.5",
+        "currency": "USD"
+      }
+    }
+  ]
+}

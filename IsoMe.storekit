@@ -5,7 +5,7 @@
   ],
   "products" : [
     {
-      "displayPrice" : "10.00",
+      "displayPrice" : "19.99",
       "familyShareable" : false,
       "internalID" : "A50A1E75-7217-443E-8CF5-E36B64D1D64F",
       "localizations" : [
@@ -20,7 +20,7 @@
       "type" : "NonConsumable"
     },
     {
-      "displayPrice" : "20.00",
+      "displayPrice" : "39.99",
       "familyShareable" : true,
       "internalID" : "86F588B9-F970-4411-A550-487F4E68195D",
       "localizations" : [
@@ -35,7 +35,7 @@
       "type" : "NonConsumable"
     },
     {
-      "displayPrice" : "10.00",
+      "displayPrice" : "19.99",
       "familyShareable" : true,
       "internalID" : "D081C3E1-934A-46E2-9952-13609560B334",
       "localizations" : [

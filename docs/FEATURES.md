@@ -216,7 +216,7 @@
 
 **PLT-5 URL scheme** — `isome://stop` only (any other host ignored).
 
-**MON-1 Lifetime export plans** — Individual Lifetime $10 (`com.bontecou.isome.lifetime.individual`), Family Lifetime $20 (`com.bontecou.isome.lifetime`), and a $10 Individual → Family upgrade (`com.bontecou.isome.lifetime.family.upgrade`). Family products use Apple Family Sharing. Owners of the original lifetime product are grandfathered as Family. Entitlements remain Apple server-side, survive reinstall, reconcile refunds/revocations across all products, and support restore. Paywall contexts: export/settings/webhook. Debug builds default to Family; pass `--use-storekit` for the local StoreKit catalog.
+**MON-1 Lifetime export plans** — Individual Lifetime $19.99 (`com.bontecou.isome.lifetime.individual`), Family Lifetime $39.99 (`com.bontecou.isome.lifetime`), and a $19.99 Individual → Family upgrade (`com.bontecou.isome.lifetime.family.upgrade`). Family products use Apple Family Sharing. Owners of the original lifetime product are grandfathered as Family. Entitlements remain Apple server-side, survive reinstall, reconcile refunds/revocations across all products, and support restore. Paywall contexts: export/settings/webhook. Debug builds default to Family; pass `--use-storekit` for the local StoreKit catalog.
 
 **ANL-1 Onboarding/purchase analytics** — default-on in release (DEBUG requires env opt-in); whitelisted funnel events + coarse properties only (no location/addresses/user text); 50-event offline queue; persistent pseudonymous install UUID; ships to Cloudflare worker `iso-me-onboarding-analytics.costream.workers.dev` (endpoint/token overridable via env).
 
@@ -307,7 +307,7 @@
 | D-2 | "No third-party dependencies" | ExportKit + Notelet SPM packages | Update README |
 | D-3 | "No cloud sync" | APNs scheduler + analytics workers exist (routing-only, no location data) | Qualify claim |
 | D-4 | "Auto-off timer 30 min to never" | Never/1h/2h/4h/8h/12h | Fix README |
-| D-5 | Historical release docs describe the former single-product price | All formats, webhook delivery, and scheduled exports use $10 Individual / $20 Family lifetime plans | Preserve release history; current copy updated |
+| D-5 | Historical release docs describe the former single-product price | All formats, webhook delivery, and scheduled exports use $19.99 Individual / $39.99 Family lifetime plans | Preserve release history; current copy updated |
 | D-6 | — | Export **intents** bypass the paywall | Product decision: gate or accept |
 | D-7 | Frameworks table lists CoreMotion activity detection | No CoreMotion code remains | Remove |
 | D-8 | README watch description ("syncs via App Groups") | Watch records independently + WCSession route sync pipeline | Expand |

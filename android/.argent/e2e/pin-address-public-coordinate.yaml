@@ -1,0 +1,110 @@
+steps:
+- tap:
+    text: Add saved place
+- await:
+    visible:
+      text: Choose location on map
+- await:
+    idle: true
+- type:
+    into:
+      text: Latitude
+    text: '48.8584'
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: '48.8584'
+- tool: button
+  args:
+    button: back
+- type:
+    into:
+      text: Longitude
+    text: '2.2945'
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: '2.2945'
+- tool: button
+  args:
+    button: back
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: Selected location
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Find address for pin
+    direction: down
+    within:
+      id: place-location-scroll-margin
+- await:
+    visible:
+      text: 'Latitude: 48.8584'
+- await:
+    visible:
+      text: 'Longitude: 2.2945'
+- tap:
+    text: Find address for pin
+- scroll-to:
+    target:
+      text: Address found for selected pin.
+    direction: down
+    within:
+      id: place-location-scroll-margin
+- await:
+    visible:
+      text: Address found for selected pin.
+    timeout: 20000
+- await:
+    visible:
+      text: 'Latitude: 48.8584'
+- await:
+    visible:
+      text: 'Longitude: 2.2945'
+- scroll-to:
+    target:
+      text: Use this location
+    direction: up
+    within:
+      id: place-location-scroll-margin
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: '48.8584'
+- await:
+    visible:
+      role: TextField
+      text: '2.2945'
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard saved place changes?
+- await:
+    idle: true
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      text: Add saved place
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Save a place
+executionPrerequisite: Onboarded idle app at Settings with Add saved place visible, network geocoding enabled and a working
+  system provider/network. Run place-search-public-query first to reach this state. Uses only the public Eiffel Tower coordinates
+  48.8584,2.2945 in an unsaved draft and discards it.

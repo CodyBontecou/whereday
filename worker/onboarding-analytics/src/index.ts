@@ -47,9 +47,10 @@ const STRING_PROPERTY_KEYS = new Set([
 
 const ALLOWED_PROPERTY_KEYS = new Set([...STRING_PROPERTY_KEYS]);
 
-const PLATFORMS = new Set(["ios"]);
-const ONBOARDING_STEPS = new Set(["welcome", "features", "permissions", "ready"]);
+const PLATFORMS = new Set(["ios", "android"]);
+const ONBOARDING_STEPS = new Set(["welcome", "features", "permissions", "notifications", "ready"]);
 const AUTHORIZATION_STATUSES = new Set([
+  "authorized",
   "not_determined",
   "when_in_use",
   "always",
@@ -57,10 +58,11 @@ const AUTHORIZATION_STATUSES = new Set([
   "restricted",
   "unknown",
 ]);
-const AUTHORIZATION_REQUEST_KINDS = new Set(["when_in_use", "always", "settings"]);
+const AUTHORIZATION_REQUEST_KINDS = new Set(["when_in_use", "always", "settings", "notifications"]);
 const TRACKING_INTENTS = new Set(["start_immediately", "later", "unavailable"]);
 const PAYWALL_CONTEXTS = new Set(["export", "settings", "webhook", "onboarding"]);
 const PRODUCT_IDS = new Set([
+  "whereday_export_lifetime",
   "com.bontecou.isome.lifetime.individual",
   "com.bontecou.isome.lifetime",
   "com.bontecou.isome.lifetime.family.upgrade",
@@ -110,6 +112,27 @@ export default {
   },
 };
 
+// Bound unknown/chunked bodies before materializing or decoding request text.
+async function boundedBody(request: Request): Promise<string | null> {
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_BODY_BYTES) { await reader.cancel(); return null; }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+}
+
 async function ingestEvents(request: Request, env: Env): Promise<Response> {
   const authError = authorize(request, env);
   if (authError) return authError;
@@ -119,10 +142,10 @@ async function ingestEvents(request: Request, env: Env): Promise<Response> {
     return json({ ok: false, error: "body_too_large" }, 413);
   }
 
-  const rawBody = await request.text();
-  if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
-    return json({ ok: false, error: "body_too_large" }, 413);
-  }
+  let rawBody: string | null;
+  try { rawBody = await boundedBody(request); }
+  catch { return json({ ok: false, error: "invalid_body" }, 400); }
+  if (rawBody === null) return json({ ok: false, error: "body_too_large" }, 413);
 
   let body: unknown;
   try {
@@ -224,6 +247,16 @@ function normalizeProperties(properties: Record<string, unknown>): OnboardingPro
     }
   }
 
+  if (normalized.authorizationStatus === "authorized" && (normalized.platform !== "android" || normalized.authorizationRequestKind !== "notifications")) {
+    throw new Error("invalid_notification_authorization");
+  }
+  const androidProduct = normalized.productId === "whereday_export_lifetime";
+  if (normalized.platform === "android" && normalized.productId && !androidProduct) {
+    throw new Error("invalid_platform_product");
+  }
+  if ((androidProduct || normalized.onboardingStep === "notifications" || normalized.authorizationRequestKind === "notifications") && normalized.platform !== "android") {
+    throw new Error("invalid_platform_specific_property");
+  }
   return normalized;
 }
 

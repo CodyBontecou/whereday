@@ -1,0 +1,134 @@
+[
+  {
+    "name": "csv-basic",
+    "format": "csv",
+    "existing": "a,b\n1,2\n",
+    "incoming": "a,b\n3,4\n"
+  },
+  {
+    "name": "csv-header-only",
+    "format": "csv",
+    "existing": " a,b\r\n1,2\r\n\n",
+    "incoming": "a,b\n\n"
+  },
+  {
+    "name": "csv-blank-old",
+    "format": "csv",
+    "existing": " \n\t",
+    "incoming": "a,b\n3,4\n"
+  },
+  {
+    "name": "csv-quoted-multiline",
+    "format": "csv",
+    "existing": "id,note\n1,\"old\n note\"\n",
+    "incoming": "id,note\n2,\"new\n note\"\n"
+  },
+  {
+    "name": "csv-combined",
+    "format": "csv",
+    "existing": "# Combined\n# Generated old\n\n# VISITS (1)\na,b\n1,2\n\n# POINTS (0)\ntime,lat\n",
+    "incoming": "# Combined\n# Generated new\n\n# VISITS (0)\na,b\n\n# POINTS (1)\ntime,lat\n3,4\n"
+  },
+  {
+    "name": "json-ids",
+    "format": "json",
+    "existing": "{\"exportDate\":\"old\",\"visits\":[{\"id\":\"same\",\"name\":\"first\"}],\"points\":[{\"id\":\"same\"}],\"removed\":true}",
+    "incoming": "{\"exportDate\":\"new\",\"visits\":[{\"id\":\"same\",\"name\":\"updated\"},{\"id\":\"later\"}],\"points\":[{\"id\":\"same\"},{\"id\":\"next\"}]}"
+  },
+  {
+    "name": "json-arrival",
+    "format": "json",
+    "existing": "{\"visits\":[{\"arrivedAt\":\"2026-01-01\",\"notes\":\"café 🗺️\"}]}",
+    "incoming": "{\"visits\":[{\"arrivedAt\":\"2026-01-01\",\"notes\":\"edited\"},{\"arrivedAt\":\"2026-01-02\"}]}"
+  },
+  {
+    "name": "json-arrays",
+    "format": "owntracks",
+    "existing": "[{\"tst\":1},7,{\"unknown\":true}]",
+    "incoming": "[{\"tst\":1},{\"tst\":2},7]"
+  },
+  {
+    "name": "json-missing-old-array",
+    "format": "json",
+    "existing": "{\"metadata\":true}",
+    "incoming": "{\"points\":[{\"id\":\"same\"},{\"id\":\"same\"}]}"
+  },
+  {
+    "name": "json-feature-identity",
+    "format": "geojson",
+    "existing": "{\"type\":\"FeatureCollection\",\"features\":[{\"properties\":{\"timestamp\":\"old\"}}]}",
+    "incoming": "{\"type\":\"FeatureCollection\",\"features\":[{\"properties\":{\"timestamp\":\"old\"}}]}"
+  },
+  {
+    "name": "json-null-identities",
+    "format": "json",
+    "existing": "[{\"id\":null,\"v\":1},{\"id\":true,\"v\":2}]",
+    "incoming": "[{\"id\":null,\"v\":3},{\"id\":true,\"v\":4}]"
+  },
+  {
+    "name": "json-wrong-root",
+    "format": "json",
+    "existing": "[]",
+    "incoming": "{\"visits\":[]}"
+  },
+  {
+    "name": "json-corrupt",
+    "format": "json",
+    "existing": "{",
+    "incoming": "{\"points\":[]}"
+  },
+  {
+    "name": "markdown-sections",
+    "format": "markdown",
+    "existing": "Old preamble\n## Visits\nold\n## My notes\nkeep\n",
+    "incoming": "New preamble\n## Visits\nnew\n## Location Points\npoint\n"
+  },
+  {
+    "name": "markdown-frontmatter",
+    "format": "markdown",
+    "existing": "---\nowner: me\nstatus: old\n---\nOld\n## Visits\nold\n",
+    "incoming": "---\nstatus: new\n---\nNew\n## Visits\nnew\n"
+  },
+  {
+    "name": "markdown-multiline",
+    "format": "markdown",
+    "existing": "---\ntags: [one,\n  two]\nnotes: |\n  preserved note\n---\n## Notes\nkeep\n",
+    "incoming": "---\nstatus: updated\n---\n## Visits\nrow\n"
+  },
+  {
+    "name": "markdown-duplicate-headings",
+    "format": "markdown",
+    "existing": "## Visits\na\n## Visits\nb\n## Personal\nkeep",
+    "incoming": "## Visits\nfirst\n## Visits\nlast"
+  },
+  {
+    "name": "markdown-unicode-headings",
+    "format": "markdown",
+    "existing": "## Café!\nold\n## Private 🗺️\nkeep\n",
+    "incoming": "## CafÉ\nnew\n"
+  },
+  {
+    "name": "markdown-no-headings",
+    "format": "markdown",
+    "existing": "Old text",
+    "incoming": "New text"
+  },
+  {
+    "name": "markdown-crlf",
+    "format": "markdown",
+    "existing": "---\r\na: b\r\n---\r\n## Visits\r\nold\r\n",
+    "incoming": "## Visits\r\nnew\r\n"
+  },
+  {
+    "name": "markdown-unclosed-frontmatter",
+    "format": "markdown",
+    "existing": "---\na: b\n## Private\nkeep\n",
+    "incoming": "## Visits\nnew\n"
+  },
+  {
+    "name": "json-equivalent-number-identities",
+    "format": "owntracks",
+    "existing": "[{\"tst\":1.0},{\"tst\":1e3},{\"tst\":-0.0}]",
+    "incoming": "[{\"tst\":1},{\"tst\":1000},{\"tst\":0}]"
+  }
+]

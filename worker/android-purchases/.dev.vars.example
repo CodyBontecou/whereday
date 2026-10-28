@@ -1,0 +1,3 @@
+# Local placeholders only. Supply real values through Wrangler secrets when deploying.
+GOOGLE_SERVICE_ACCOUNT_JSON=""
+LEASE_PRIVATE_KEY_PKCS8=""

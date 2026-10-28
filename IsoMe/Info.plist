@@ -42,5 +42,14 @@
         <string>com.bontecou.isome.refresh</string>
         <string>com.bontecou.isome.dailyexport</string>
     </array>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Record narration when you start a Scrawl development capture.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Send Scrawl development recordings to your paired Mac.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

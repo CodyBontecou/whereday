@@ -1,0 +1,25 @@
+{
+  "target": "https://isome.isolated.tech",
+  "reportURL": "https://is-agentic.com/scan/isome.isolated.tech",
+  "baseline": 57,
+  "iteration1": 88,
+  "final": 99,
+  "deployment": "https://80b6b61a.spotted-8ez.pages.dev",
+  "changes": [
+    "HTML/Markdown content negotiation with Vary: Accept and cache separation",
+    "Real HTML and Markdown 404s with recovery links",
+    "Factual About and Contact pages and publisher contact metadata",
+    "llms.txt with task-specific guidance and integration boundaries",
+    "Read-only public product metadata API with OpenAPI 3.1 and API catalog"
+  ],
+  "verification": [
+    "25 live HTML/Markdown page pairs and cache separation",
+    "Real 404s and structured API errors",
+    "Accept preferences, HEAD, unsupported methods, and unchanged image bytes",
+    "Product payload and problem details validated with JSON Schema 2020-12",
+    "Canonical public Is Agentic report confirms 99/100 and 80/80 Essential points",
+    "Live Lighthouse homepage retains 100 Performance, Accessibility, Best Practices, and SEO"
+  ],
+  "scanFreshness": "Used the documented Ora force option after the Rescan button reused cached evidence; refreshed the canonical Is Agentic report and saved its public JSON response.",
+  "remaining": "The report retains partial checks, including publisher postal-address metadata. No postal address or unsupported private journal access was invented."
+}

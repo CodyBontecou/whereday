@@ -1,0 +1,43 @@
+steps:
+  - echo: Requires completed onboarding, idle recording, disabled default 21:00 once-daily automatic exports and unconfigured purchase verification. Temporarily selects three hours, verifies persistence, restores once daily and checks denied enable. No destination writes.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
+  - tap: { text: { matches: '^Automatic exports$' } }
+  - await: { visible: { text: Enable automatic exports } }
+  - await: { idle: true }
+  - tap: { text: 'Daily anchor: 21:00' }
+  - await: { visible: { id: 'android:id/timePicker' } }
+  - tap: { id: 'android:id/button2' }
+  - await: { visible: { text: { matches: '^Once daily$' } } }
+  - tap: { text: { matches: '^Once daily$' } }
+  - await: { visible: { text: { matches: '^Every 3 hours$' } } }
+  - tap: { text: { matches: '^Every 3 hours$' } }
+  - await: { visible: { text: Update day file } }
+  - await: { idle: true }
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
+  - tap: { text: { matches: '^Automatic exports$' } }
+  - await: { visible: { text: { matches: '^Every 3 hours$' } } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Every 3 hours$' } }
+  - await: { visible: { text: { matches: '^Once daily$' } } }
+  - tap: { text: { matches: '^Once daily$' } }
+  - await: { hidden: { text: Update day file } }
+  - await: { idle: true }
+  - tap: { text: Enable automatic exports }
+  - scroll-to: { target: { text: { matches: '^Verified lifetime export access is required\.$' } }, direction: down }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - await: { visible: { text: No successful automatic export yet. } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Back to settings }, direction: up }
+  - tap: { text: Back to settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

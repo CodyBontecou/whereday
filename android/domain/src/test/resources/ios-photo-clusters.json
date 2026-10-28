@@ -1,0 +1,296 @@
+{
+  "provenance": {
+    "algorithm": "c1c42db4b15bb0405a976f365c11fb375eea1ba1ce508d4e5100d04a4aa4703c",
+    "harness": "2515cfceeb0cf243951d25b0d0b6f8ed4d92a15464183152417b438c309d7639"
+  },
+  "cases": [
+    {
+      "clusters": [],
+      "name": "empty",
+      "photos": [],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 48.8584,
+          "lon": 2.2945,
+          "photos": [
+            "photo-001",
+            "photo-000"
+          ]
+        }
+      ],
+      "name": "same-place-unsorted",
+      "photos": [
+        {
+          "lat": 48.8584,
+          "lon": 2.2945,
+          "time": 20,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 48.8584,
+          "lon": 2.2945,
+          "time": 10,
+          "uri": "photo-001"
+        }
+      ],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 0,
+          "lon": 0.00021666666666666666,
+          "photos": [
+            "photo-000",
+            "photo-001",
+            "photo-002"
+          ]
+        },
+        {
+          "lat": 0,
+          "lon": 0.0006,
+          "photos": [
+            "photo-003"
+          ]
+        }
+      ],
+      "name": "centroid-not-first",
+      "photos": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "time": 0,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 0,
+          "lon": 0.00025,
+          "time": 1,
+          "uri": "photo-001"
+        },
+        {
+          "lat": 0,
+          "lon": 0.0004,
+          "time": 2,
+          "uri": "photo-002"
+        },
+        {
+          "lat": 0,
+          "lon": 0.0006,
+          "time": 3,
+          "uri": "photo-003"
+        }
+      ],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "photos": [
+            "photo-000"
+          ]
+        },
+        {
+          "lat": 0,
+          "lon": 0.00039999999999999996,
+          "photos": [
+            "photo-001",
+            "photo-002"
+          ]
+        }
+      ],
+      "name": "nearest-group",
+      "photos": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "time": 0,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 0,
+          "lon": 0.0005,
+          "time": 1,
+          "uri": "photo-001"
+        },
+        {
+          "lat": 0,
+          "lon": 0.0003,
+          "time": 2,
+          "uri": "photo-002"
+        }
+      ],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 18.00005,
+          "lon": -66,
+          "photos": [
+            "photo-000",
+            "photo-001"
+          ]
+        },
+        {
+          "lat": 48.00005,
+          "lon": 2,
+          "photos": [
+            "photo-002",
+            "photo-003"
+          ]
+        }
+      ],
+      "name": "equal-times",
+      "photos": [
+        {
+          "lat": 18,
+          "lon": -66,
+          "time": 0,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 18.0001,
+          "lon": -66,
+          "time": 0,
+          "uri": "photo-001"
+        },
+        {
+          "lat": 48,
+          "lon": 2,
+          "time": 0,
+          "uri": "photo-002"
+        },
+        {
+          "lat": 48.0001,
+          "lon": 2,
+          "time": 0,
+          "uri": "photo-003"
+        }
+      ],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "photos": [
+            "photo-000",
+            "photo-001"
+          ]
+        },
+        {
+          "lat": 0,
+          "lon": 179.9999,
+          "photos": [
+            "photo-002"
+          ]
+        }
+      ],
+      "name": "dateline-arithmetic-centroid",
+      "photos": [
+        {
+          "lat": 0,
+          "lon": 179.9999,
+          "time": 0,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 0,
+          "lon": -179.9999,
+          "time": 1,
+          "uri": "photo-001"
+        },
+        {
+          "lat": 0,
+          "lon": 179.9999,
+          "time": 2,
+          "uri": "photo-002"
+        }
+      ],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 89.99989999999998,
+          "lon": 0,
+          "photos": [
+            "photo-000",
+            "photo-001",
+            "photo-002"
+          ]
+        }
+      ],
+      "name": "polar",
+      "photos": [
+        {
+          "lat": 89.9999,
+          "lon": 0,
+          "time": 0,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 89.9999,
+          "lon": 120,
+          "time": 1,
+          "uri": "photo-001"
+        },
+        {
+          "lat": 89.9999,
+          "lon": -120,
+          "time": 2,
+          "uri": "photo-002"
+        }
+      ],
+      "threshold": 35
+    },
+    {
+      "clusters": [
+        {
+          "lat": 48,
+          "lon": 2,
+          "photos": [
+            "photo-000",
+            "photo-001"
+          ]
+        },
+        {
+          "lat": 48.000001,
+          "lon": 2,
+          "photos": [
+            "photo-002"
+          ]
+        }
+      ],
+      "name": "exact-coordinate-only",
+      "photos": [
+        {
+          "lat": 48,
+          "lon": 2,
+          "time": 0,
+          "uri": "photo-000"
+        },
+        {
+          "lat": 48,
+          "lon": 2,
+          "time": 1,
+          "uri": "photo-001"
+        },
+        {
+          "lat": 48.000001,
+          "lon": 2,
+          "time": 2,
+          "uri": "photo-002"
+        }
+      ],
+      "threshold": 0
+    }
+  ]
+}

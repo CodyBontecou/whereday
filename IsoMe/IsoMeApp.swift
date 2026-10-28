@@ -1,3 +1,6 @@
+#if DEBUG
+import ScrawlKit
+#endif
 import SwiftUI
 import SwiftData
 import StoreKit
@@ -8,6 +11,12 @@ struct IsoMeApp: App {
     @StateObject private var watchSyncReceiver = WatchLocationSyncReceiver()
     @State private var showingMyselfClaim = false
     @State private var manualVisitRouter = ManualVisitRouter()
+
+    init() {
+        #if DEBUG && os(iOS)
+        DebugSelfie.install()
+        #endif
+    }
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -51,10 +60,16 @@ struct IsoMeApp: App {
                 )) { Button("OK", role: .cancel) {} } message: {
                     Text(manualVisitRouter.errorMessage ?? "")
                 }
+                #if DEBUG
+                .scrawl()
+                #endif
                 .sheet(isPresented: $showingMyselfClaim) {
                     MyselfClaimView(app: "iso.me")
                 }
                 .onOpenURL { url in
+                    #if DEBUG
+                    if url.host == "scrawl" || url.host == "tether" { return }
+                    #endif
                     handleDeepLink(url)
                 }
                 .task {
