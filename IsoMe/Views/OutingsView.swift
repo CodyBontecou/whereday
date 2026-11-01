@@ -3,6 +3,7 @@ import SwiftData
 import MapKit
 import Combine
 
+/// One day's timeline: the places in order with the moves between them, in the Today list's language.
 struct OutingsView: View {
     @Bindable var viewModel: LocationViewModel
     let onShowOnMap: () -> Void
@@ -16,10 +17,12 @@ struct OutingsView: View {
         self.onShowOnMap = onShowOnMap
     }
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var calendarDraft: CalendarEventDraft?
     @State private var selectedDate = Date()
     @State private var hasLoadedSessions = false
     @State private var hasAutoSelectedInitialTimelineDate = false
+    @State private var showingDayPicker = false
 
     @AppStorage(RecordingSessionInferenceConfiguration.includesInferredSessionsKey)
     private var includesInferredSessions = RecordingSessionInferenceConfiguration.defaultIncludesInferredSessions
@@ -39,6 +42,24 @@ struct OutingsView: View {
 
     private var selectedDaySubtitle: String {
         selectedDayRange.lowerBound.formatted(.dateTime.weekday(.wide).month(.abbreviated).day().year())
+    }
+
+    private var dayCaption: String {
+        let date = selectedDayRange.lowerBound
+        let weekday = date.formatted(.dateTime.weekday(.abbreviated))
+        let monthDay = date.formatted(.dateTime.month(.abbreviated).day())
+        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 0
+        let year = Calendar.current.isDate(date, equalTo: Date(), toGranularity: .year)
+            ? ""
+            : " · \(date.formatted(.dateTime.year()))"
+        return String(localized: "\(weekday) · \(monthDay) · DAY \(dayOfYear)\(year)").uppercased()
+    }
+
+    private var dayTitle: String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(selectedDate) { return String(localized: "Today") }
+        if calendar.isDateInYesterday(selectedDate) { return String(localized: "Yesterday") }
+        return selectedDate.formatted(.dateTime.weekday(.wide))
     }
 
     private var dayResetButtonTitle: String {
@@ -78,6 +99,15 @@ struct OutingsView: View {
             }
             return lhs.startDate < rhs.startDate
         }
+    }
+
+    /// Place inks cycle in order of first appearance, matching the Today dial.
+    private func placeInks(for events: [TimelineEvent]) -> [String: Color] {
+        var inks: [String: Color] = [:]
+        for case .visit(let visit) in events where inks[visit.displayName] == nil {
+            inks[visit.displayName] = TE.placeInks[inks.count % TE.placeInks.count]
+        }
+        return inks
     }
 
     private var inferenceConfiguration: RecordingSessionInferenceConfiguration {
@@ -121,7 +151,7 @@ struct OutingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                FieldNotesBackground()
+                TE.surface.ignoresSafeArea()
 
                 if !hasLoadedSessions && hasAnyTimelineData {
                     ProgressView("Building timeline…")
@@ -129,35 +159,47 @@ struct OutingsView: View {
                         .foregroundStyle(TE.textMuted)
                 } else {
                     ScrollView {
-                        VStack(spacing: 0) {
+                        VStack(alignment: .leading, spacing: 0) {
+                            header
+                            dayStepper
+                                .padding(.top, 14)
                             overviewSection
+                                .padding(.top, 18)
+
+                            if timelineEvents.isEmpty {
+                                emptyTimelineSection
+                                    .padding(.top, 22)
+                            } else {
+                                timelineSection
+                                    .padding(.top, 22)
+                            }
 
                             DisclosureGroup {
                                 dayControlsSection
                             } label: {
-                                Text("Day & recording options")
+                                Text("Movement options")
                                     .font(.subheadline)
-                                    .foregroundStyle(TE.accent)
+                                    .foregroundStyle(TE.inkRust)
                                     .frame(minHeight: 44)
                             }
+                            .tint(TE.inkRust)
                             .padding(.horizontal, 24)
-
-                            if timelineEvents.isEmpty {
-                                emptyTimelineSection
-                            } else {
-                                timelineSection
-                            }
+                            .padding(.top, 20)
 
                             countryDaysSection
                         }
                         .padding(.bottom, 28)
                     }
+                    .scrollIndicators(.hidden)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.hidden, for: .navigationBar)
+            .foregroundStyle(TE.textPrimary)
+            .toolbar(.hidden, for: .navigationBar)
             .sheet(item: $calendarDraft) { draft in
-                CalendarEventEditor(draft: draft)
+                CalendarEventReviewSheet(draft: draft)
+            }
+            .sheet(isPresented: $showingDayPicker) {
+                dayPickerSheet
             }
             .task {
                 refreshTimelineData()
@@ -170,194 +212,157 @@ struct OutingsView: View {
         }
     }
 
-    private var countryDaysSection: some View {
-        TECard(paperOpacity: 0.94) {
-            NavigationLink {
-                CountryDaysView()
+    // MARK: - Header
+
+    private var header: some View {
+        HStack(alignment: .bottom) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(dayCaption)
+                    .font(TE.mono(.caption2))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.textMuted)
+                Text(dayTitle)
+                    .font(TE.editorial(.largeTitle))
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityLabel(selectedDaySubtitle)
+            }
+            Spacer(minLength: 12)
+            Button {
+                showingDayPicker = true
             } label: {
-                TERow(showDivider: false) {
-                    HStack(spacing: 12) {
-                        Image(systemName: "globe.europe.africa")
-                            .foregroundStyle(TE.accent)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Country Days")
-                                .font(TE.mono(.subheadline, weight: .semibold))
-                                .foregroundStyle(TE.textPrimary)
-                            Text("Review days present in each country.")
-                                .font(.caption)
-                                .foregroundStyle(TE.textMuted)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        Image(systemName: "chevron.right")
-                            .font(.caption)
-                            .foregroundStyle(TE.textMuted)
-                    }
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
-                }
+                Image(systemName: "calendar")
+                    .font(.system(size: 18, weight: .light))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(TE.card))
+                    .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Pick a day")
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 12)
+        .padding(.horizontal, 24)
+        .padding(.top, 24)
     }
 
-    private var overviewSection: some View {
-        VStack(spacing: 0) {
-            Text(selectedDaySubtitle)
-                .font(.subheadline.weight(.medium))
-                .foregroundStyle(TE.textPrimary)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-
-            HStack(spacing: 12) {
-                OutingOverviewMetric(
-                    label: "MOVES",
-                    value: "\(sessions.count)",
-                    systemImage: "figure.walk.motion"
-                )
-
-                OutingOverviewMetric(
-                    label: "VISITS",
-                    value: "\(dayVisits.count)",
-                    systemImage: "mappin.and.ellipse"
-                )
-
-                OutingOverviewMetric(
-                    label: "DISTANCE",
-                    value: DistanceFormatter.format(meters: totalDistance, usesMetric: usesMetricDistanceUnits),
-                    systemImage: "point.topleft.down.to.point.bottomright.curvepath"
-                )
+    private var dayStepper: some View {
+        HStack(spacing: 10) {
+            Button {
+                moveSelectedDay(by: -1)
+            } label: {
+                stepperCircle(systemImage: "chevron.left")
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 12)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Previous day")
+
+            Button {
+                selectedDate = Date()
+            } label: {
+                Text(dayResetButtonTitle)
+                    .font(TE.mono(.caption2, weight: .semibold))
+                    .tracking(1.2)
+                    .foregroundStyle(Calendar.current.isDateInToday(selectedDate) ? TE.textMuted : TE.inkRust)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 14)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                    .background(Capsule().fill(TE.card))
+                    .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(dayResetButtonTitle)
+            .accessibilityHint(
+                Calendar.current.isDateInToday(selectedDate)
+                    ? ""
+                    : String(localized: "JUMP TO TODAY")
+            )
+
+            Button {
+                moveSelectedDay(by: 1)
+            } label: {
+                stepperCircle(systemImage: "chevron.right")
+            }
+            .buttonStyle(.plain)
+            .disabled(isSelectedDayTodayOrFuture)
+            .opacity(isSelectedDayTodayOrFuture ? 0.35 : 1)
+            .accessibilityLabel("Next day")
         }
+        .padding(.horizontal, 24)
     }
 
-    private var dayControlsSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "CONTROLS")
+    private func stepperCircle(systemImage: String) -> some View {
+        Image(systemName: systemImage)
+            .font(.system(size: 15, weight: .medium))
+            .frame(width: 44, height: 44)
+            .background(Circle().fill(TE.card))
+            .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+    }
 
-            TECard(paperOpacity: 0.94) {
-                VStack(spacing: 0) {
-                    TERow {
-                        HStack(spacing: 10) {
-                            Button {
-                                moveSelectedDay(by: -1)
-                            } label: {
-                                Image(systemName: "chevron.left")
-                                    .font(.caption.weight(.bold))
-                                    .frame(width: 34, height: 34)
-                                    .background(TE.textMuted.opacity(0.10), in: RoundedRectangle(cornerRadius: 4))
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityLabel("Previous day")
-
-                            Button {
-                                selectedDate = Date()
-                            } label: {
-                                Text(dayResetButtonTitle)
-                                    .font(TE.mono(.caption2, weight: .bold))
-                                    .tracking(1.2)
-                                    .foregroundStyle(TE.accent)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.75)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 34)
-                                    .background(TE.accent.opacity(0.10), in: RoundedRectangle(cornerRadius: 4))
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityLabel(dayResetButtonTitle)
-                            .accessibilityHint(
-                                Calendar.current.isDateInToday(selectedDate)
-                                    ? ""
-                                    : String(localized: "JUMP TO TODAY")
-                            )
-
-                            Button {
-                                moveSelectedDay(by: 1)
-                            } label: {
-                                Image(systemName: "chevron.right")
-                                    .font(.caption.weight(.bold))
-                                    .frame(width: 34, height: 34)
-                                    .background(TE.textMuted.opacity(0.10), in: RoundedRectangle(cornerRadius: 4))
-                            }
-                            .buttonStyle(.plain)
-                            .disabled(isSelectedDayTodayOrFuture)
-                            .opacity(isSelectedDayTodayOrFuture ? 0.35 : 1)
-                            .accessibilityLabel("Next day")
-                        }
-                        .foregroundStyle(TE.textPrimary)
-                    }
-
-                    TERow {
-                        DatePicker("DATE", selection: $selectedDate, displayedComponents: .date)
-                            .font(TE.mono(.caption, weight: .medium))
-                            .foregroundStyle(TE.textPrimary)
-                            .tint(TE.accent)
-                    }
-
-                    TERow(showDivider: includesInferredSessions) {
-                        Toggle(isOn: $includesInferredSessions) {
-                            Text("INFERRED MOVEMENT")
-                                .font(TE.mono(.caption, weight: .medium))
-                                .tracking(1)
-                                .foregroundStyle(TE.textPrimary)
-                        }
-                        .toggleStyle(TEToggleStyle())
-                    }
-
-                    if includesInferredSessions {
-                        TERow(showDivider: false) {
-                            HStack(spacing: 12) {
-                                Text("SPLIT AFTER")
-                                    .font(TE.mono(.caption, weight: .medium))
-                                    .tracking(1)
-                                    .foregroundStyle(TE.textPrimary)
-
-                                Spacer()
-
-                                Menu {
-                                    ForEach(RecordingSessionGapPreset.allCases) { option in
-                                        Button {
-                                            inferenceGapPresetRawValue = option.rawValue
-                                        } label: {
-                                            if inferenceGapPreset == option {
-                                                Label(option.settingsLabel, systemImage: "checkmark")
-                                            } else {
-                                                Text(option.settingsLabel)
-                                            }
-                                        }
-                                    }
-                                } label: {
-                                    HStack(spacing: 6) {
-                                        Text(inferenceGapPreset.label.uppercased())
-                                        Image(systemName: "chevron.up.chevron.down")
-                                            .font(.caption2.weight(.bold))
-                                    }
-                                    .font(TE.mono(.caption2, weight: .semibold))
-                                    .tracking(1)
-                                    .foregroundStyle(TE.accent)
-                                }
-                            }
-                        }
-                    }
+    private var dayPickerSheet: some View {
+        NavigationStack {
+            DatePicker(
+                "Day",
+                selection: $selectedDate,
+                in: ...Date(),
+                displayedComponents: .date
+            )
+            .datePickerStyle(.graphical)
+            .tint(TE.inkRust)
+            .padding(.horizontal, 16)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .background(TE.surface.ignoresSafeArea())
+            .navigationTitle("Pick a day")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { showingDayPicker = false }
                 }
             }
-            .padding(.horizontal, 16)
-
-            TESectionFooter(text: "Use inferred movement to fill older days from GPS points that were saved before exact start/stop sessions existed.")
+            .onChange(of: selectedDate) { _, _ in
+                showingDayPicker = false
+            }
         }
+        .presentationDetents([.medium, .large])
     }
 
-    private var timelineSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "EVENTS")
+    // MARK: - Numbers
 
-            LazyVStack(spacing: 10) {
-                ForEach(timelineEvents) { event in
+    @ViewBuilder
+    private var overviewSection: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 12))
+            : AnyLayout(HStackLayout(alignment: .top, spacing: 12))
+        layout {
+            stat(DistanceFormatter.format(meters: totalDistance, usesMetric: usesMetricDistanceUnits), label: "DISTANCE")
+            stat(dayVisits.count.formatted(), label: "VISITS")
+            stat(sessions.count.formatted(), label: "MOVES")
+        }
+        .padding(.horizontal, 24)
+    }
+
+    private func stat(_ value: String, label: LocalizedStringKey) -> some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(value)
+                .font(TE.editorial(.title))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(label)
+                .font(TE.mono(.caption2))
+                .tracking(1)
+                .foregroundStyle(TE.textMuted)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - The day
+
+    private var timelineSection: some View {
+        let events = timelineEvents
+        let inks = placeInks(for: events)
+        return VStack(alignment: .leading, spacing: 0) {
+            sectionLabel("THE DAY")
+
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(events) { event in
                     switch event {
                     case .session(let session):
                         NavigationLink {
@@ -367,7 +372,7 @@ struct OutingsView: View {
                                 onShowOnMap: onShowOnMap
                             )
                         } label: {
-                            TimelineMovementCard(
+                            TimelineMoveRow(
                                 session: session,
                                 usesMetricDistanceUnits: usesMetricDistanceUnits
                             )
@@ -384,7 +389,12 @@ struct OutingsView: View {
                             VisitDetailView(visit: visit, viewModel: viewModel, showsMap: !usesCompanionMap)
                                 .onAppear { onVisitOpened?(visit) }
                         } label: {
-                            TimelineVisitCard(visit: visit, isCurrent: viewModel.isCurrentVisit(visit))
+                            TimelineStayRow(
+                                visit: visit,
+                                dayRange: selectedDayRange,
+                                ink: inks[visit.displayName] ?? TE.placeInks[0],
+                                isCurrent: viewModel.isCurrentVisit(visit)
+                            )
                         }
                         .buttonStyle(.plain)
                         .contextMenu {
@@ -395,54 +405,144 @@ struct OutingsView: View {
                     }
                 }
             }
-            .padding(.horizontal, 16)
         }
+        .padding(.horizontal, 24)
+    }
+
+    private func sectionLabel(_ title: LocalizedStringKey) -> some View {
+        Text(title)
+            .font(TE.mono(.caption2))
+            .tracking(1.5)
+            .foregroundStyle(TE.textMuted)
+            .padding(.bottom, 10)
+            .accessibilityAddTraits(.isHeader)
     }
 
     private var emptyTimelineSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "EVENTS")
-
-            TECard(paperOpacity: 0.94) {
-                emptyState
-                    .frame(maxWidth: .infinity)
-            }
-            .padding(.horizontal, 16)
-        }
-    }
-
-    private var emptyState: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "calendar")
-                .font(.largeTitle.weight(.light))
-                .foregroundStyle(TE.textMuted)
-
-            Text("NO TIMELINE EVENTS")
-                .font(TE.mono(.caption, weight: .bold))
-                .tracking(2)
-                .foregroundStyle(TE.textPrimary)
+        VStack(alignment: .leading, spacing: 0) {
+            sectionLabel("THE DAY")
 
             Text(emptyStateMessage)
-                .font(TE.mono(.caption2, weight: .medium))
+                .font(TE.editorial(.body))
                 .foregroundStyle(TE.textMuted)
-                .multilineTextAlignment(.center)
-                .lineSpacing(3)
-                .padding(.horizontal, 24)
+                .fixedSize(horizontal: false, vertical: true)
 
             if let emptyStateActionLabel {
                 Button {
                     performEmptyStateAction()
                 } label: {
                     Text(emptyStateActionLabel)
-                        .font(TE.mono(.caption2, weight: .bold))
+                        .font(TE.mono(.caption2, weight: .semibold))
                         .tracking(1.4)
-                        .foregroundStyle(TE.accent)
+                        .foregroundStyle(TE.inkRust)
+                        .frame(minHeight: 44)
                 }
                 .buttonStyle(.plain)
+                .padding(.top, 4)
             }
         }
-        .padding(.horizontal, 18)
-        .padding(.vertical, 34)
+        .padding(.horizontal, 24)
+    }
+
+    // MARK: - Options
+
+    private var dayControlsSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(spacing: 0) {
+                Toggle(isOn: $includesInferredSessions) {
+                    Text("Inferred movement")
+                        .font(.subheadline)
+                        .foregroundStyle(TE.textPrimary)
+                }
+                .toggleStyle(TEToggleStyle())
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+
+                if includesInferredSessions {
+                    Rectangle()
+                        .fill(TE.dialTrack)
+                        .frame(height: 1)
+                        .accessibilityHidden(true)
+
+                    HStack(spacing: 12) {
+                        Text("Split after")
+                            .font(.subheadline)
+                            .foregroundStyle(TE.textPrimary)
+
+                        Spacer()
+
+                        Menu {
+                            ForEach(RecordingSessionGapPreset.allCases) { option in
+                                Button {
+                                    inferenceGapPresetRawValue = option.rawValue
+                                } label: {
+                                    if inferenceGapPreset == option {
+                                        Label(option.settingsLabel, systemImage: "checkmark")
+                                    } else {
+                                        Text(option.settingsLabel)
+                                    }
+                                }
+                            }
+                        } label: {
+                            HStack(spacing: 6) {
+                                Text(inferenceGapPreset.label.uppercased())
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .font(.caption2.weight(.bold))
+                            }
+                            .font(TE.mono(.caption, weight: .semibold))
+                            .foregroundStyle(TE.inkRust)
+                            .frame(minHeight: 44)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                }
+            }
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+            .padding(.top, 4)
+
+            Text("Use inferred movement to fill older days from GPS points that were saved before exact start/stop sessions existed.")
+                .font(.caption)
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 8)
+        }
+    }
+
+    private var countryDaysSection: some View {
+        NavigationLink {
+            CountryDaysView()
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "globe.europe.africa")
+                    .font(.system(size: 18, weight: .light))
+                    .foregroundStyle(TE.textPrimary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Country Days")
+                        .font(TE.editorial(.title3))
+                        .foregroundStyle(TE.textPrimary)
+                    Text("Review days present in each country.")
+                        .font(.caption)
+                        .foregroundStyle(TE.textMuted)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(TE.textMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+            .frame(minHeight: 44)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+            .contentShape(RoundedRectangle(cornerRadius: 18))
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 16)
+        .padding(.top, 12)
     }
 
     private var emptyStateActionLabel: String? {
@@ -546,246 +646,132 @@ private enum TimelineEvent: Identifiable {
     }
 }
 
-private struct OutingOverviewMetric: View {
-    let label: LocalizedStringKey
-    let value: String
-    let systemImage: String
+private enum TimelineRowFormat {
+    static func clock(_ date: Date) -> String {
+        date.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+    }
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 5) {
-                Image(systemName: systemImage)
-                    .font(.caption2.weight(.semibold))
-                    .foregroundStyle(TE.accent)
-                    .accessibilityHidden(true)
-
-                Text(label)
-                    .font(TE.mono(.caption2, weight: .semibold))
-                    .tracking(1)
-                    .foregroundStyle(TE.textMuted)
-            }
-
-            Text(value)
-                .font(TE.mono(.caption, weight: .bold))
-                .foregroundStyle(TE.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-                .monospacedDigit()
+    static func duration(_ interval: TimeInterval) -> String {
+        let minutes = max(0, Int(interval / 60))
+        if minutes < 60 {
+            return String(localized: "\(minutes)m")
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        return String(format: "%dh %02dm", minutes / 60, minutes % 60)
     }
 }
 
-private struct TimelineMovementCard: View {
-    let session: RecordingSessionSummary
-    let usesMetricDistanceUnits: Bool
-
-    var body: some View {
-        TECard(paperOpacity: 0.94) {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: session.isInferred ? "wand.and.stars" : "figure.walk.motion")
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(session.isInferred ? TE.warning : TE.accent)
-                        .frame(width: 28, height: 28)
-                        .background((session.isInferred ? TE.warning : TE.accent).opacity(0.12), in: Circle())
-                        .accessibilityHidden(true)
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 6) {
-                            Text("MOVEMENT")
-                                .font(TE.mono(.caption2, weight: .bold))
-                                .tracking(1.4)
-                                .foregroundStyle(TE.textMuted)
-
-                            if session.isActive {
-                                OutingBadge(text: String(localized: "LIVE"), color: TE.success)
-                            } else if session.isInferred {
-                                OutingBadge(text: String(localized: "INFERRED"), color: TE.warning)
-                            }
-                        }
-
-                        Text(session.title)
-                            .font(.headline)
-                            .foregroundStyle(TE.textPrimary)
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        Text(session.formattedTimeRange)
-                            .font(TE.mono(.caption2, weight: .medium))
-                            .foregroundStyle(TE.textMuted)
-                            .lineLimit(2)
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(TE.textMuted.opacity(0.55))
-                        .padding(.top, 2)
-                }
-
-                HStack(spacing: 8) {
-                    OutingStatChip(
-                        label: "TIME",
-                        value: RecordingSessionFormatter.duration(session.duration),
-                        systemImage: "clock"
-                    )
-                    OutingStatChip(
-                        label: "DISTANCE",
-                        value: DistanceFormatter.format(meters: session.distanceMeters, usesMetric: usesMetricDistanceUnits),
-                        systemImage: "ruler"
-                    )
-                    OutingStatChip(
-                        label: "POINTS",
-                        value: "\(session.pointCount)",
-                        systemImage: "smallcircle.filled.circle"
-                    )
-                }
-            }
-            .padding(14)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Movement, \(session.title)")
-        .accessibilityValue(session.accessibilityValue)
-        .accessibilityHint("Opens movement details.")
-    }
-}
-
-private struct TimelineVisitCard: View {
+/// A place on the day: start time in mono, its place ink, the serif name and how long.
+private struct TimelineStayRow: View {
     let visit: Visit
+    let dayRange: ClosedRange<Date>
+    let ink: Color
     let isCurrent: Bool
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
-        TECard(paperOpacity: 0.94) {
-            HStack(alignment: .top, spacing: 10) {
-                Image(systemName: isCurrent ? "mappin.circle.fill" : "mappin.and.ellipse")
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(isCurrent ? TE.accent : TE.inkRust)
-                    .frame(width: 28, height: 28)
-                    .background((isCurrent ? TE.accent : TE.inkRust).opacity(0.12), in: Circle())
-                    .accessibilityHidden(true)
+        let start = max(visit.arrivedAt, dayRange.lowerBound)
+        let end = min(visit.departedAt ?? Date(), dayRange.upperBound)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack(spacing: 6) {
-                        Text("VISIT")
-                            .font(TE.mono(.caption2, weight: .bold))
-                            .tracking(1.4)
-                            .foregroundStyle(TE.textMuted)
-
-                        if isCurrent {
-                            OutingBadge(text: String(localized: "NOW"), color: TE.success)
-                        }
-
-                        OutingBadge(text: visit.confirmationStatus.displayName.uppercased(), color: statusColor)
-
-                        if visit.source == .manual {
-                            OutingBadge(text: String(localized: "MANUAL"), color: TE.accent)
-                        }
-                    }
-
-                    Text(visit.displayName)
-                        .font(.headline)
-                        .foregroundStyle(TE.textPrimary)
-                        .fixedSize(horizontal: false, vertical: true)
-
-                    Text("\(visit.formattedTimeRange) • \(visit.formattedDuration)")
-                        .font(TE.mono(.caption2, weight: .medium))
-                        .foregroundStyle(TE.textMuted)
-                        .lineLimit(2)
-
-                    if let address = visit.address, !address.isEmpty, address != visit.displayName {
-                        Text(address)
-                            .font(TE.mono(.caption2, weight: .medium))
-                            .foregroundStyle(TE.textMuted.opacity(0.82))
-                            .lineLimit(1)
-                    }
+        HStack(alignment: .center, spacing: 10) {
+            Text(TimelineRowFormat.clock(start))
+                .font(TE.mono(.caption))
+                .foregroundStyle(TE.textMuted)
+                .frame(minWidth: 44, alignment: .leading)
+            Circle()
+                .fill(ink)
+                .frame(width: 12, height: 12)
+                .frame(width: 14)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(visit.displayName)
+                    .font(TE.editorial(.title3))
+                    .multilineTextAlignment(.leading)
+                if let tags {
+                    Text(tags)
+                        .font(TE.mono(.caption2))
+                        .tracking(1)
+                        .foregroundStyle(visit.confirmationStatus == .unconfirmed ? TE.inkRust : TE.textMuted)
                 }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(TE.textMuted.opacity(0.55))
-                    .padding(.top, 2)
             }
-            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Text(isCurrent ? String(localized: "now") : TimelineRowFormat.duration(end.timeIntervalSince(start)))
+                .font(TE.mono(.caption))
+                .foregroundStyle(isCurrent ? TE.inkRust : TE.textMuted)
         }
+        .frame(minHeight: 46)
+        .padding(.vertical, 2)
+        .contentShape(Rectangle())
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(visit.accessibilityLabel)
         .accessibilityValue("\(visit.accessibilityValue). Status \(visit.confirmationStatus.displayName). Source \(visit.source.displayName).")
         .accessibilityHint("Opens visit details.")
     }
 
-    private var statusColor: Color {
-        switch visit.confirmationStatus {
-        case .unconfirmed: return TE.warning
-        case .confirmed: return TE.success
-        case .corrected: return TE.accent
+    private var tags: String? {
+        var parts: [String] = []
+        if visit.confirmationStatus == .unconfirmed {
+            parts.append(String(localized: "Not confirmed"))
         }
+        if visit.source == .manual {
+            parts.append(String(localized: "Manual"))
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ").uppercased()
     }
 }
 
-private struct RecordingSessionCard: View {
+/// A move between places: a dotted line and a mono summary, tappable for the outing's details.
+private struct TimelineMoveRow: View {
     let session: RecordingSessionSummary
     let usesMetricDistanceUnits: Bool
 
     var body: some View {
-        TECard {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .top, spacing: 10) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 6) {
-                            Text(session.title.uppercased())
-                                .font(TE.mono(.caption, weight: .bold))
-                                .tracking(1.4)
-                                .foregroundStyle(TE.textPrimary)
-                                .lineLimit(1)
-
-                            if session.isActive {
-                                OutingBadge(text: String(localized: "LIVE"), color: TE.success)
-                            } else if session.isInferred {
-                                OutingBadge(text: String(localized: "INFERRED"), color: TE.warning)
-                            }
-                        }
-
-                        Text(session.formattedTimeRange)
-                            .font(TE.mono(.caption2, weight: .medium))
-                            .foregroundStyle(TE.textMuted)
-                            .lineLimit(2)
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(TE.textMuted.opacity(0.55))
-                        .padding(.top, 2)
-                }
-
-                HStack(spacing: 8) {
-                    OutingStatChip(
-                        label: "DURATION",
-                        value: RecordingSessionFormatter.duration(session.duration),
-                        systemImage: "clock"
-                    )
-                    OutingStatChip(
-                        label: "DISTANCE",
-                        value: DistanceFormatter.format(meters: session.distanceMeters, usesMetric: usesMetricDistanceUnits),
-                        systemImage: "ruler"
-                    )
-                    OutingStatChip(
-                        label: "POINTS",
-                        value: "\(session.pointCount)",
-                        systemImage: "smallcircle.filled.circle"
-                    )
-                }
-            }
-            .padding(14)
+        HStack(spacing: 10) {
+            Text(TimelineRowFormat.clock(session.startedAt))
+                .font(TE.mono(.caption2))
+                .foregroundStyle(TE.textMuted.opacity(0.8))
+                .frame(minWidth: 44, alignment: .leading)
+            TimelineDottedLine()
+                .stroke(TE.dialTick, style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [0.1, 4]))
+                .frame(width: 14)
+                .frame(minHeight: 30)
+            Text(summary)
+                .font(TE.mono(.caption2))
+                .foregroundStyle(session.isActive ? TE.inkRust : TE.textMuted)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Image(systemName: "chevron.right")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(TE.textMuted.opacity(0.55))
         }
+        .frame(minHeight: 44)
+        .contentShape(Rectangle())
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(session.title)
+        .accessibilityLabel("Movement, \(session.title)")
         .accessibilityValue(session.accessibilityValue)
-        .accessibilityHint("Opens outing details.")
+        .accessibilityHint("Opens movement details.")
+    }
+
+    private var summary: String {
+        var parts = [session.title]
+        if session.distanceMeters > 0 {
+            parts.append(DistanceFormatter.format(meters: session.distanceMeters, usesMetric: usesMetricDistanceUnits))
+        }
+        parts.append(RecordingSessionFormatter.duration(session.duration))
+        if session.isActive {
+            parts.append(String(localized: "live"))
+        } else if session.isInferred {
+            parts.append(String(localized: "inferred"))
+        }
+        return parts.joined(separator: " · ")
+    }
+}
+
+private struct TimelineDottedLine: Shape {
+    func path(in rect: CGRect) -> Path {
+        Path { path in
+            path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
+        }
     }
 }
 
@@ -1760,38 +1746,6 @@ private struct OutingBadge: View {
     }
 }
 
-private struct OutingStatChip: View {
-    let label: LocalizedStringKey
-    let value: String
-    let systemImage: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 4) {
-                Image(systemName: systemImage)
-                    .font(.caption2.weight(.semibold))
-                    .foregroundStyle(TE.accent)
-                    .accessibilityHidden(true)
-
-                Text(label)
-                    .font(TE.mono(.caption2, weight: .semibold))
-                    .tracking(0.7)
-                    .foregroundStyle(TE.textMuted)
-            }
-
-            Text(value)
-                .font(TE.mono(.caption2, weight: .bold))
-                .foregroundStyle(TE.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
-                .monospacedDigit()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 8)
-        .background(TE.textMuted.opacity(0.08), in: RoundedRectangle(cornerRadius: 4))
-    }
-}
 
 #Preview {
     OutingsView(

@@ -80,7 +80,7 @@ struct IsoMeWidgetEntryView: View {
     var body: some View {
         switch family {
         case .accessoryCircular:
-            CircularWidgetView(data: entry.data)
+            CircularWidgetView(data: entry.data, date: entry.date)
         case .accessoryRectangular:
             RectangularWidgetView(data: entry.data)
         case .accessoryInline:
@@ -88,38 +88,84 @@ struct IsoMeWidgetEntryView: View {
         case .accessoryCorner:
             CornerWidgetView(data: entry.data)
         default:
-            CircularWidgetView(data: entry.data)
+            CircularWidgetView(data: entry.data, date: entry.date)
         }
     }
 }
 
-// MARK: - Circular Widget (Small circular complication)
+// MARK: - Palette
+
+/// Whereday's night inks for watch complications. Accessory families may be tinted by the face,
+/// so rust parts are marked accentable.
+private enum WatchWidgetTE {
+    static let textPrimary = hex(0xECE6D8)
+    static let textMuted = hex(0x9AA3B8)
+    static let inkRust = hex(0xF0805F)
+    static let dialTrack = hex(0x222C46)
+
+    static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
+        Font.system(style, design: .monospaced).weight(weight)
+    }
+
+    private static func hex(_ value: UInt32) -> Color {
+        Color(
+            red: Double((value >> 16) & 0xFF) / 255,
+            green: Double((value >> 8) & 0xFF) / 255,
+            blue: Double(value & 0xFF) / 255
+        )
+    }
+}
+
+private func dayFraction(of date: Date) -> Double {
+    let start = Calendar.current.startOfDay(for: date)
+    return min(max(date.timeIntervalSince(start) / 86_400, 0), 1)
+}
+
+/// Splits "6.4 km" into its number and unit so the number can lead.
+private func distanceParts(_ formatted: String) -> (value: String, unit: String) {
+    guard let space = formatted.lastIndex(where: { $0 == " " || $0 == "\u{00A0}" || $0 == "\u{202F}" }) else {
+        return (formatted, "")
+    }
+    return (String(formatted[..<space]), String(formatted[formatted.index(after: space)...]))
+}
+
+// MARK: - Circular Widget (the day dial)
 
 struct CircularWidgetView: View {
     let data: SharedLocationData
+    var date: Date = Date()
 
     var body: some View {
+        let parts = distanceParts(data.formattedDistance)
+
         ZStack {
             AccessoryWidgetBackground()
 
-            VStack(spacing: 2) {
-                Image(systemName: statusIcon)
-                    .font(.title2)
-                    .foregroundStyle(statusColor)
+            Circle()
+                .inset(by: 4)
+                .stroke(WatchWidgetTE.dialTrack, lineWidth: 4)
 
-                Text("\(data.todayVisitsCount)")
-                    .font(.caption2)
-                    .fontWeight(.semibold)
+            Circle()
+                .inset(by: 4)
+                .trim(from: 0, to: max(0.01, dayFraction(of: date)))
+                .stroke(data.isTrackingEnabled ? WatchWidgetTE.inkRust : WatchWidgetTE.textMuted,
+                        style: StrokeStyle(lineWidth: 4, lineCap: .butt))
+                .rotationEffect(.degrees(-90))
+                .widgetAccentable()
+
+            VStack(spacing: 0) {
+                Text(parts.value)
+                    .font(.system(.body, design: .serif))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                Text(parts.unit.uppercased())
+                    .font(WatchWidgetTE.mono(.caption2))
+                    .foregroundStyle(WatchWidgetTE.textMuted)
             }
+            .padding(.horizontal, 9)
         }
-    }
-
-    private var statusIcon: String {
-        data.isTrackingEnabled ? "location.fill" : "location.slash"
-    }
-
-    private var statusColor: Color {
-        data.isTrackingEnabled ? .green : .secondary
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(localized: "\(data.trackingStatus), \(data.formattedDistance) today"))
     }
 }
 
@@ -129,48 +175,31 @@ struct RectangularWidgetView: View {
     let data: SharedLocationData
 
     var body: some View {
-        HStack(spacing: 8) {
-            // Left: Status icon
-            VStack {
-                Image(systemName: statusIcon)
-                    .font(.title2)
-                    .foregroundStyle(statusColor)
-                Text(data.trackingStatus)
-                    .font(.caption2)
-            }
-            .frame(width: 50)
+        VStack(alignment: .leading, spacing: 1) {
+            Text(data.isTrackingEnabled ? "● ROUTE" : "WHEREDAY")
+                .font(WatchWidgetTE.mono(.caption2, weight: .medium))
+                .tracking(1)
+                .foregroundStyle(data.isTrackingEnabled ? WatchWidgetTE.inkRust : WatchWidgetTE.textMuted)
+                .widgetAccentable()
 
-            // Right: Stats
-            VStack(alignment: .leading, spacing: 2) {
-                if let locationName = data.currentLocationName {
-                    Text(locationName)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .lineLimit(1)
-                }
+            Text(data.formattedDistance)
+                .font(.system(.title3, design: .serif))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
 
-                HStack(spacing: 8) {
-                    Label("\(data.todayVisitsCount)", systemImage: "mappin")
-                    Label(data.formattedDistance, systemImage: "figure.walk")
-                }
-                .font(.caption2)
-
-                if data.isTrackingEnabled,
-                   let remaining = data.formattedRemainingTime {
-                    Text("\(remaining) left")
-                        .font(.caption2)
-                        .foregroundStyle(.orange)
+            Group {
+                if data.isTrackingEnabled, let remaining = data.formattedRemainingTime {
+                    Text("\(data.todayVisitsCount) VISITS · \(remaining) LEFT")
+                } else {
+                    Text("\(data.todayVisitsCount) VISITS · \(data.todayPointsCount) PTS")
                 }
             }
+            .font(WatchWidgetTE.mono(.caption2))
+            .foregroundStyle(WatchWidgetTE.textMuted)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
         }
-    }
-
-    private var statusIcon: String {
-        data.isTrackingEnabled ? "location.fill" : "location.slash"
-    }
-
-    private var statusColor: Color {
-        data.isTrackingEnabled ? .green : .secondary
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -181,7 +210,7 @@ struct InlineWidgetView: View {
 
     var body: some View {
         if data.isTrackingEnabled {
-            Label("\(data.todayVisitsCount) visits • \(data.formattedDistance)", systemImage: "location.fill")
+            Label("\(data.todayVisitsCount) visits • \(data.formattedDistance)", systemImage: "record.circle")
         } else {
             Label("Tracking Off", systemImage: "location.slash")
         }
@@ -195,25 +224,18 @@ struct CornerWidgetView: View {
 
     var body: some View {
         ZStack {
-            Image(systemName: statusIcon)
+            Image(systemName: data.isTrackingEnabled ? "record.circle" : "location.slash")
                 .font(.title3)
-                .foregroundStyle(statusColor)
+                .foregroundStyle(data.isTrackingEnabled ? WatchWidgetTE.inkRust : WatchWidgetTE.textMuted)
+                .widgetAccentable()
         }
         .widgetLabel {
             if data.isTrackingEnabled {
-                Text("\(data.todayVisitsCount) visits")
+                Text(data.formattedDistance)
             } else {
                 Text("Off")
             }
         }
-    }
-
-    private var statusIcon: String {
-        data.isTrackingEnabled ? "location.fill" : "location.slash"
-    }
-
-    private var statusColor: Color {
-        data.isTrackingEnabled ? .green : .secondary
     }
 }
 

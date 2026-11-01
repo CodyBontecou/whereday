@@ -995,6 +995,20 @@ final class LocationManager: NSObject, ObservableObject {
         )
 
         sharedData.save()
+
+        // Widgets and the Live Activity dial draw today's stays, including one carried over from last night.
+        let overlappingPredicate = #Predicate<Visit> { visit in
+            visit.arrivedAt < endOfToday && (visit.departedAt == nil || visit.departedAt! > startOfToday)
+        }
+        var overlappingDescriptor = FetchDescriptor<Visit>(predicate: overlappingPredicate)
+        overlappingDescriptor.sortBy = [SortDescriptor(\.arrivedAt, order: .forward)]
+        LiveActivityManager.publishTodayWidgetSnapshot(
+            visits: (try? context.fetch(overlappingDescriptor)) ?? [],
+            distanceMeters: totalDistance,
+            usesMetricDistanceUnits: usesMetricDistanceUnits,
+            isTracking: isTrackingEnabled
+        )
+
         WidgetCenter.shared.reloadAllTimelines()
     }
 

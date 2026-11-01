@@ -808,62 +808,252 @@ final class PhotoMomentPlaceDirectoryState {
     func movePage(by delta: Int) { pageIndex = min(max(pageIndex + delta, 0), pageCount - 1) }
 }
 
+/// "Moments": every matched photo place, by place or grouped by day, as on the Moments artboard.
 struct PhotoMomentPlacesView: View {
+    enum Grouping: Hashable, CaseIterable {
+        case byPlace, byDay
+
+        var title: LocalizedStringKey {
+            switch self {
+            case .byPlace: "By place"
+            case .byDay: "By day"
+            }
+        }
+    }
+
     let title: String
     @Bindable var selection: PhotoMomentDetailSelection
+    /// Names a place after the visit it was taken during; nil falls back to its coordinates.
+    let placeName: ((PhotoMomentCluster) -> String?)?
+    var thumbnailLoader: PhotoThumbnailLoader = loadPhotoThumbnail
     @State private var directory: PhotoMomentPlaceDirectoryState
+    @State private var grouping: Grouping = .byPlace
     @Environment(\.dismiss) private var dismiss
 
-    init(places: [PhotoMomentCluster], title: String, selection: PhotoMomentDetailSelection) {
+    init(
+        places: [PhotoMomentCluster],
+        title: String,
+        selection: PhotoMomentDetailSelection,
+        placeName: ((PhotoMomentCluster) -> String?)? = nil,
+        thumbnailLoader: @escaping PhotoThumbnailLoader = loadPhotoThumbnail
+    ) {
         self.title = title
         self.selection = selection
+        self.placeName = placeName
+        self.thumbnailLoader = thumbnailLoader
         _directory = State(initialValue: PhotoMomentPlaceDirectoryState(places: places))
+    }
+
+    /// The current page's places grouped by the day their first photo was taken, newest day first.
+    private var dayGroups: [(day: Date, places: [PhotoMomentCluster])] {
+        let calendar = Calendar.current
+        let grouped = Dictionary(grouping: directory.pagePlaces) { place in
+            calendar.startOfDay(for: place.sortedPhotos.first?.takenAt ?? .distantPast)
+        }
+        return grouped.keys.sorted(by: >).map { day in
+            (day, grouped[day] ?? [])
+        }
     }
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    Text("Every place is listed here, even outside the visible map. Area annotations group places for rendering; they do not represent one shared location.")
-                        .font(.caption)
-                }
-                Section("\(directory.places.count) places") {
-                    ForEach(directory.pagePlaces) { place in
-                        Button {
-                            selection.place = place
-                        } label: {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("\(place.count) photos at \(place.coordinateText)")
-                                Text(place.timeRangeText).font(.caption)
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 14) {
+                    header
+                    groupingPicker
+
+                    switch grouping {
+                    case .byPlace:
+                        ForEach(directory.pagePlaces) { place in
+                            placeCard(place, timeStyle: .dayAndTime)
+                        }
+                    case .byDay:
+                        ForEach(dayGroups, id: \.day) { group in
+                            Text(dayTitle(group.day).uppercased())
+                                .font(TE.mono(.caption2, weight: .semibold))
+                                .tracking(1.2)
+                                .foregroundStyle(TE.textMuted)
+                                .padding(.top, 6)
+                                .accessibilityAddTraits(.isHeader)
+                            ForEach(group.places) { place in
+                                placeCard(place, timeStyle: .timeOnly)
                             }
                         }
-                        .accessibilityLabel(place.accessibilityLabel)
-                        .accessibilityValue(place.accessibilityValue)
-                        .accessibilityHint("Opens the complete photo collection at this place.")
                     }
-                }
-                if directory.pageCount > 1 {
-                    HStack {
-                        Button("Previous page") { directory.movePage(by: -1) }
-                            .disabled(directory.pageIndex == 0)
-                        Spacer()
-                        Text("\(directory.pageIndex + 1) of \(directory.pageCount)")
-                        Spacer()
-                        Button("Next page") { directory.movePage(by: 1) }
-                            .disabled(directory.pageIndex == directory.pageCount - 1)
+
+                    if directory.pageCount > 1 {
+                        pager
                     }
-                    .font(.caption)
-                    .buttonStyle(.borderless)
+
+                    footer
                 }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 24)
             }
-            .navigationTitle(title)
+            .foregroundStyle(TE.textPrimary)
+            .background(TE.surface.ignoresSafeArea())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(TE.surface, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") { dismiss() }
+                        .fontWeight(.semibold)
+                        .foregroundStyle(TE.inkRust)
+                }
             }
             .sheet(item: $selection.place) { place in
-                PhotoMomentClusterQuickView(cluster: place, selection: selection)
+                PhotoMomentClusterQuickView(cluster: place, selection: selection, thumbnailLoader: thumbnailLoader)
             }
         }
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("PHOTOS · MATCHED TO YOUR DAYS")
+                .font(TE.mono(.caption2, weight: .semibold))
+                .tracking(1.2)
+                .foregroundStyle(TE.textMuted)
+            Text(title)
+                .font(TE.editorial(.largeTitle))
+                .accessibilityAddTraits(.isHeader)
+            Text(directory.places.count == 1 ? "1 place" : "\(directory.places.count) places")
+                .font(.footnote)
+                .foregroundStyle(TE.textMuted)
+        }
+        .padding(.top, 4)
+    }
+
+    private var groupingPicker: some View {
+        HStack(spacing: 8) {
+            ForEach(Grouping.allCases, id: \.self) { option in
+                let isOn = grouping == option
+                Button {
+                    grouping = option
+                } label: {
+                    Text(option.title)
+                        .font(.footnote.weight(.medium))
+                        .foregroundStyle(isOn ? TE.onInkCard : TE.textPrimary)
+                        .padding(.horizontal, 16)
+                        .frame(minHeight: 44)
+                        .background(Capsule().fill(isOn ? TE.accent : TE.card))
+                        .overlay(Capsule().strokeBorder(isOn ? Color.clear : TE.border, lineWidth: 1))
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(isOn ? .isSelected : [])
+            }
+        }
+    }
+
+    private enum TimeStyle { case dayAndTime, timeOnly }
+
+    private func placeCard(_ place: PhotoMomentCluster, timeStyle: TimeStyle) -> some View {
+        Button {
+            selection.place = place
+        } label: {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Text(placeName?(place) ?? place.coordinateText)
+                        .font(TE.editorial(.title3))
+                        .lineLimit(2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(placeCaption(place, timeStyle: timeStyle))
+                        .font(TE.mono(.caption2, weight: .medium))
+                        .foregroundStyle(TE.textMuted)
+                        .multilineTextAlignment(.trailing)
+                }
+                thumbnailStrip(place)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
+            .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(placeName?(place).map { String(localized: "\(place.count) photos at \($0)") } ?? place.accessibilityLabel)
+        .accessibilityValue(place.accessibilityValue)
+        .accessibilityHint("Opens the complete photo collection at this place.")
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private static let stripLimit = 4
+
+    private func thumbnailStrip(_ place: PhotoMomentCluster) -> some View {
+        let photos = Array(place.sortedPhotos.prefix(Self.stripLimit))
+        let overflow = place.count - photos.count
+        return HStack(spacing: 6) {
+            ForEach(Array(photos.enumerated()), id: \.element.id) { index, photo in
+                PhotoThumbnailView(
+                    assetLocalIdentifier: photo.assetLocalIdentifier,
+                    targetPointSize: CGSize(width: 64, height: 64),
+                    cornerRadius: 10,
+                    loader: thumbnailLoader
+                )
+                .overlay {
+                    if index == photos.count - 1, overflow > 0 {
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.black.opacity(0.45))
+                        Text("+\(overflow)")
+                            .font(TE.mono(.footnote, weight: .semibold))
+                            .foregroundStyle(.white)
+                    }
+                }
+            }
+        }
+        .accessibilityHidden(true)
+    }
+
+    private func placeCaption(_ place: PhotoMomentCluster, timeStyle: TimeStyle) -> String {
+        let count = place.count == 1 ? String(localized: "1 photo") : String(localized: "\(place.count) photos")
+        guard let first = place.sortedPhotos.first else { return count }
+        let time: String
+        switch timeStyle {
+        case .timeOnly:
+            time = LocationMapView.clockText(first.takenAt)
+        case .dayAndTime:
+            let calendar = Calendar.current
+            time = calendar.isDateInToday(first.takenAt)
+                ? LocationMapView.clockText(first.takenAt)
+                : first.takenAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
+        }
+        return "\(time) · \(count)"
+    }
+
+    private func dayTitle(_ day: Date) -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(day) { return String(localized: "Today") }
+        if calendar.isDateInYesterday(day) { return String(localized: "Yesterday") }
+        return day.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())
+    }
+
+    private var pager: some View {
+        HStack {
+            Button("Previous page") { directory.movePage(by: -1) }
+                .disabled(directory.pageIndex == 0)
+            Spacer()
+            Text("\(directory.pageIndex + 1) of \(directory.pageCount)")
+                .monospacedDigit()
+            Spacer()
+            Button("Next page") { directory.movePage(by: 1) }
+                .disabled(directory.pageIndex == directory.pageCount - 1)
+        }
+        .font(TE.mono(.caption, weight: .semibold))
+        .foregroundStyle(TE.inkRust)
+        .buttonStyle(.plain)
+        .frame(minHeight: 44)
+    }
+
+    private var footer: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Photos are read from this iPhone's library; only their time and place are kept.", systemImage: "lock")
+            Text("Every place is listed here, even outside the visible map. Area annotations group places for rendering; they do not represent one shared location.")
+        }
+        .font(.caption)
+        .foregroundStyle(TE.textMuted)
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(.top, 6)
     }
 }
 

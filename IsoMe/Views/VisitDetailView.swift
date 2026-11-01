@@ -2,6 +2,7 @@ import SwiftUI
 import MapKit
 import SwiftData
 
+/// Confirm or correct a visit: its name, times, the nearby place it really was, photos and a note.
 struct VisitDetailView: View {
     @Bindable var visit: Visit
     @Bindable var viewModel: LocationViewModel
@@ -17,6 +18,10 @@ struct VisitDetailView: View {
     @State private var timeValidationMessage: String?
     @State private var showingOverlapConfirmation = false
     @State private var checkoutError: String?
+    @State private var calendarDraft: CalendarEventDraft?
+    @State private var showingPlaceSearch = false
+    @State private var photoMoments: [PhotoMoment] = []
+    @State private var selectedPhotoMoment: PhotoMoment?
     @FocusState private var focusedField: FocusedField?
 
     private enum FocusedField: Hashable {
@@ -26,32 +31,62 @@ struct VisitDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 0) {
+                titleSection
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+
                 if showsMap {
                     mapSection
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
                 }
 
-                // Location Info
-                locationInfoSection
-
-                // Time Info
                 timeInfoSection
+                    .padding(.horizontal, 24)
+                    .padding(.top, 16)
 
-                // Notes
+                placeChoiceSection
+                    .padding(.horizontal, 24)
+                    .padding(.top, 20)
+
+                if !photoMoments.isEmpty {
+                    photosSection
+                        .padding(.top, 20)
+                }
+
                 notesSection
+                    .padding(.horizontal, 24)
+                    .padding(.top, 18)
 
-                // Actions
-                actionsSection
+                secondaryActions
+                    .padding(.horizontal, 16)
+                    .padding(.top, 18)
+
+                // Coordinates (for debugging/reference)
+                Text(String(format: "%.6f, %.6f", visit.latitude, visit.longitude))
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+                    .textSelection(.enabled)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 16)
             }
-            .padding()
+            .padding(.bottom, 16)
         }
-        .background(FieldNotesBackground())
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom) {
+            actionBar
+        }
+        .background(TE.surface.ignoresSafeArea())
         .foregroundStyle(TE.textPrimary)
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             syncEditableStateFromVisit()
+        }
+        .task(id: photoTaskKey) {
+            loadPhotoMoments()
         }
         .alert("Delete Visit?", isPresented: $showingDeleteConfirmation) {
             Button("Cancel", role: .cancel) {}
@@ -76,6 +111,24 @@ struct VisitDetailView: View {
         } message: {
             Text(checkoutError ?? "")
         }
+        .sheet(item: $calendarDraft) { draft in
+            CalendarEventReviewSheet(draft: draft)
+        }
+        .sheet(isPresented: $showingPlaceSearch) {
+            PlaceSelectionView(
+                initialRegion: MKCoordinateRegion(
+                    center: visit.coordinate,
+                    latitudinalMeters: 1_000,
+                    longitudinalMeters: 1_000
+                ),
+                onSelect: correctVisit(with:)
+            )
+            .presentationDetents([.large])
+        }
+        .sheet(item: $selectedPhotoMoment) { photo in
+            PhotoMomentQuickView(photo: photo)
+                .presentationDetents([.medium, .large])
+        }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
@@ -90,292 +143,486 @@ struct VisitDetailView: View {
 
     // MARK: - Sections
 
+    private var titleSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .center, spacing: 8) {
+                statusChip
+
+                if viewModel.isCurrentVisit(visit) {
+                    HStack(spacing: 5) {
+                        Circle()
+                            .fill(TE.liveDot)
+                            .frame(width: 8, height: 8)
+                            .accessibilityHidden(true)
+                        Text("NOW")
+                            .font(TE.mono(.caption2))
+                            .tracking(1.2)
+                            .foregroundStyle(TE.inkRust)
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Current visit")
+                }
+
+                Spacer(minLength: 8)
+
+                Button(action: openInMaps) {
+                    Image(systemName: "arrow.up.right")
+                        .font(.system(size: 17, weight: .regular))
+                        .frame(width: 44, height: 44)
+                        .background(Circle().fill(TE.card))
+                        .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Open visit in Maps")
+                .accessibilityValue(visit.displayName)
+                .accessibilityHint("Opens this location in your default navigation app when supported.")
+            }
+
+            TextField("Visit name", text: $nameText, axis: .vertical)
+                .font(TE.editorial(.title))
+                .textFieldStyle(.plain)
+                .submitLabel(.done)
+                .focused($focusedField, equals: .name)
+                .onSubmit(saveName)
+                .onChange(of: nameText) { _, newValue in
+                    // Vertical fields insert a newline on Return; treat it as submit.
+                    if newValue.contains("\n") {
+                        nameText = newValue.replacingOccurrences(of: "\n", with: "")
+                        focusedField = nil
+                    }
+                }
+                .onChange(of: focusedField) { oldValue, newValue in
+                    if oldValue == .name && newValue != .name {
+                        saveName()
+                    }
+                }
+                .accessibilityLabel("Name")
+
+            Text(subtitleText)
+                .font(TE.mono(.caption))
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if visit.hasCustomName, visit.automaticDisplayName != visit.displayName {
+                detectedAsLine(String(localized: "Detected as \(visit.automaticDisplayName)"))
+            }
+
+            if let originalName = visit.originalLocationName,
+               visit.confirmationStatus == .corrected,
+               originalName != visit.displayName {
+                detectedAsLine(String(localized: "Originally detected as \(originalName)"))
+            }
+        }
+    }
+
+    private func detectedAsLine(_ text: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(text)
+                .font(TE.editorial(.subheadline).italic())
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if visit.hasCustomName {
+                Button("Reset") {
+                    resetName()
+                }
+                .font(.footnote.weight(.medium))
+                .foregroundStyle(TE.inkRust)
+                .frame(minHeight: 44)
+                .buttonStyle(.plain)
+                .accessibilityLabel("Reset name")
+                .accessibilityHint("Restores the automatically detected visit name.")
+            }
+        }
+    }
+
+    private var statusChip: some View {
+        Text(statusChipText)
+            .font(TE.mono(.caption2))
+            .tracking(1.2)
+            .foregroundStyle(TE.textPrimary)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(RoundedRectangle(cornerRadius: 6).fill(statusTint.opacity(0.22)))
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityLabel("Visit status: \(visit.confirmationStatus.displayName), source: \(visit.source.displayName)")
+    }
+
+    private var statusChipText: String {
+        let source: String = switch visit.source {
+        case .automatic: String(localized: "Detected")
+        case .manual: String(localized: "Added by you")
+        case .imported: String(localized: "Imported")
+        }
+        let status: String = switch visit.confirmationStatus {
+        case .unconfirmed: String(localized: "Not confirmed")
+        case .confirmed: String(localized: "Confirmed")
+        case .corrected: String(localized: "Corrected")
+        }
+        return "\(source) · \(status)".uppercased()
+    }
+
+    private var statusTint: Color {
+        switch visit.confirmationStatus {
+        case .unconfirmed: return TE.placeInks[2]
+        case .confirmed: return TE.placeInks[3]
+        case .corrected: return TE.placeInks[0]
+        }
+    }
+
+    private var subtitleText: String {
+        var parts: [String] = []
+        if let address = visit.address, !address.isEmpty, address != visit.displayName {
+            parts.append(address)
+        }
+        let calendar = Calendar.current
+        if calendar.isDateInToday(visit.arrivedAt) {
+            parts.append(String(localized: "Today"))
+        } else if calendar.isDateInYesterday(visit.arrivedAt) {
+            parts.append(String(localized: "Yesterday"))
+        } else {
+            parts.append(visit.arrivedAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day().year()))
+        }
+        return parts.joined(separator: " · ")
+    }
+
     private var mapSection: some View {
         Map(initialPosition: .region(MKCoordinateRegion(
             center: visit.coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         ))) {
             Marker(visit.displayName, coordinate: visit.coordinate)
-                .tint(viewModel.isCurrentVisit(visit) ? .blue : .red)
+                .tint(viewModel.isCurrentVisit(visit) ? TE.inkRust : TE.accent)
         }
-        .frame(height: 200)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .frame(height: 160)
+        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
         .accessibilityLabel("Visit map")
         .accessibilityValue("\(visit.accessibilityLabel). \(visit.accessibilityValue)")
     }
 
-    private var locationInfoSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Name")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+    // MARK: Times
 
-            HStack(alignment: .center, spacing: 8) {
-                TextField("Visit name", text: $nameText)
-                    .font(TE.editorial(.title))
-                    .textFieldStyle(.plain)
-                    .submitLabel(.done)
-                    .focused($focusedField, equals: .name)
-                    .onSubmit(saveName)
-                    .onChange(of: focusedField) { oldValue, newValue in
-                        if oldValue == .name && newValue != .name {
-                            saveName()
-                        }
-                    }
-
-                if visit.hasCustomName {
-                    Button("Reset") {
-                        resetName()
-                    }
-                    .font(.caption.weight(.semibold))
-                    .buttonStyle(.bordered)
-                    .foregroundStyle(TE.accent)
-                    .controlSize(.small)
-                    .accessibilityHint("Restores the automatically detected visit name.")
-                }
-
-                if viewModel.isCurrentVisit(visit) {
-                    Text("Now")
-                        .font(.caption)
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(Capsule())
-                        .accessibilityLabel("Current visit")
-                }
-            }
-
-            if visit.hasCustomName, visit.automaticDisplayName != visit.displayName {
-                Text("Detected as \(visit.automaticDisplayName)")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-            }
-
-            if let address = visit.address, !address.isEmpty, address != visit.displayName {
-                Text(address)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-
-            visitStatusBadges
-
-            if let originalName = visit.originalLocationName,
-               visit.confirmationStatus == .corrected,
-               originalName != visit.displayName {
-                Text("Originally detected as \(originalName)")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-            }
-
-            DisclosureGroup {
-                NearbyVisitNameSuggestionSection(visit: visit) { suggestion in
-                    correctVisit(with: suggestion)
-                }
-            } label: {
-                Text("Nearby businesses")
-                    .font(.subheadline)
-                    .foregroundStyle(TE.accent)
-                    .frame(minHeight: 44)
-            }
-
-            // Coordinates (for debugging/reference)
-            Text(String(format: "%.6f, %.6f", visit.latitude, visit.longitude))
-                .font(.caption)
-                .foregroundStyle(.tertiary)
-                .monospaced()
-        }
-        .padding()
-        .background(TE.card.opacity(0.94))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+    /// Same-day stays edit as two time fields plus a day; overnight stays need full dates.
+    private var editsAsSingleDay: Bool {
+        isStillHere || Calendar.current.isDate(arrivedAt, inSameDayAs: departedAt)
     }
 
     private var timeInfoSection: some View {
-        VStack(spacing: 0) {
-            visitDatePicker("Arrived", selection: $arrivedAt)
-                .padding()
-                .onChange(of: arrivedAt) { _, _ in validateEditedTimes() }
-
-            Divider()
-
-            Toggle("Still here", isOn: $isStillHere)
-                .padding()
-                .onChange(of: isStillHere) { _, _ in validateEditedTimes() }
-
-            if !isStillHere {
-                Divider()
-
-                visitDatePicker("Departed", selection: $departedAt)
-                    .padding()
-                    .onChange(of: departedAt) { _, _ in validateEditedTimes() }
+        VStack(alignment: .leading, spacing: 12) {
+            if editsAsSingleDay && !dynamicTypeSize.isAccessibilitySize {
+                HStack(alignment: .bottom, spacing: 10) {
+                    timeBox("ARRIVED") {
+                        DatePicker("Arrived", selection: $arrivedAt, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                    }
+                    timeBox("LEFT") {
+                        if isStillHere {
+                            Text("still here")
+                                .font(TE.editorial(.body).italic())
+                                .foregroundStyle(TE.textMuted)
+                        } else {
+                            DatePicker("Departed", selection: $departedAt, displayedComponents: .hourAndMinute)
+                                .labelsHidden()
+                        }
+                    }
+                    durationText
+                        .padding(.bottom, 10)
+                }
+            } else {
+                fullDateRow("ARRIVED", title: "Arrived", selection: $arrivedAt)
+                if !isStillHere {
+                    fullDateRow("LEFT", title: "Departed", selection: $departedAt)
+                }
+                HStack {
+                    Text("DURATION")
+                        .font(TE.mono(.caption2))
+                        .tracking(1.2)
+                        .foregroundStyle(TE.textMuted)
+                    Spacer()
+                    durationText
+                }
             }
 
-            Divider()
-
-            HStack {
-                Text("Duration")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Text(editedDurationText)
-                    .font(.title3)
-                    .fontWeight(.medium)
+            if editsAsSingleDay {
+                HStack(spacing: 12) {
+                    Text("DAY")
+                        .font(TE.mono(.caption2))
+                        .tracking(1.2)
+                        .foregroundStyle(TE.textMuted)
+                    Spacer(minLength: 8)
+                    DatePicker("Day", selection: visitDay, displayedComponents: .date)
+                        .labelsHidden()
+                }
+                .frame(minHeight: 44)
             }
-            .padding()
+
+            Toggle(isOn: $isStillHere) {
+                Text("Still here")
+                    .font(.subheadline)
+            }
+            .toggleStyle(TEToggleStyle())
 
             if let timeValidationMessage {
-                Divider()
                 Text(timeValidationMessage)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                    .font(.footnote)
+                    .foregroundStyle(TE.inkRust)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             if hasUnsavedTimeChanges {
-                Divider()
                 Button {
                     saveTimes()
                 } label: {
                     Label("Save Time Changes", systemImage: "clock.badge.checkmark")
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(TEActionButtonStyle(emphasis: .primary))
+                .buttonStyle(VisitPillButtonStyle(kind: .primary))
                 .disabled(timeValidationMessage != nil)
-                .padding()
             }
         }
-        .background(TE.card.opacity(0.94))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .tint(TE.accent)
+        .onChange(of: arrivedAt) { _, _ in validateEditedTimes() }
+        .onChange(of: departedAt) { _, _ in validateEditedTimes() }
+        .onChange(of: isStillHere) { _, _ in validateEditedTimes() }
+    }
+
+    private var durationText: some View {
+        Text(editedDurationText)
+            .font(TE.editorial(.title2))
+            .monospacedDigit()
+            .accessibilityLabel("Duration \(editedDurationText)")
+    }
+
+    private func timeBox<Content: View>(_ label: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label)
+                .font(TE.mono(.caption2))
+                .tracking(1.2)
+                .foregroundStyle(TE.textMuted)
+                .accessibilityHidden(true)
+            content()
+                .padding(.horizontal, 8)
+                .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
+        }
+        .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder
-    private func visitDatePicker(_ title: LocalizedStringKey, selection: Binding<Date>) -> some View {
-        if dynamicTypeSize >= .xxLarge {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(title)
+    private func fullDateRow(_ label: LocalizedStringKey, title: LocalizedStringKey, selection: Binding<Date>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(label)
+                .font(TE.mono(.caption2))
+                .tracking(1.2)
+                .foregroundStyle(TE.textMuted)
+                .accessibilityHidden(true)
+            Group {
                 if dynamicTypeSize.isAccessibilitySize {
-                    DatePicker(title, selection: selection, displayedComponents: .date)
-                        .labelsHidden()
-                    DatePicker(title, selection: selection, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
+                    VStack(alignment: .leading, spacing: 8) {
+                        DatePicker(title, selection: selection, displayedComponents: .date)
+                            .labelsHidden()
+                        DatePicker(title, selection: selection, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                    }
                 } else {
                     DatePicker(title, selection: selection, displayedComponents: [.date, .hourAndMinute])
                         .labelsHidden()
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        } else {
-            DatePicker(title, selection: selection, displayedComponents: [.date, .hourAndMinute])
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
+        }
+    }
+
+    /// Moving the day keeps the times of day and shifts arrival and departure together.
+    private var visitDay: Binding<Date> {
+        Binding(
+            get: { arrivedAt },
+            set: { newDay in
+                let calendar = Calendar.current
+                let dayOffset = calendar.dateComponents(
+                    [.day],
+                    from: calendar.startOfDay(for: arrivedAt),
+                    to: calendar.startOfDay(for: newDay)
+                ).day ?? 0
+                guard dayOffset != 0 else { return }
+                arrivedAt = calendar.date(byAdding: .day, value: dayOffset, to: arrivedAt) ?? arrivedAt
+                if !isStillHere {
+                    departedAt = calendar.date(byAdding: .day, value: dayOffset, to: departedAt) ?? departedAt
+                }
+            }
+        )
+    }
+
+    // MARK: Place
+
+    private var placeChoiceSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("WHERE WERE YOU?")
+                    .font(TE.mono(.caption2))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.textMuted)
+                    .accessibilityAddTraits(.isHeader)
+                Spacer(minLength: 8)
+                Text("nearest first")
+                    .font(TE.editorial(.subheadline).italic())
+                    .foregroundStyle(TE.textMuted)
+            }
+
+            NearbyVisitNameSuggestionSection(
+                visit: visit,
+                selectedName: visit.displayName,
+                showsControls: false
+            ) { suggestion in
+                correctVisit(with: suggestion)
+            }
+
+            let layout = dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(spacing: 8))
+                : AnyLayout(HStackLayout(spacing: 8))
+            layout {
+                Button("Search…") {
+                    focusedField = nil
+                    showingPlaceSearch = true
+                }
+                .buttonStyle(VisitPillButtonStyle())
+                .accessibilityLabel("Search for the place")
+                .accessibilityHint("Search Apple Maps or drop a pin to correct this visit.")
+
+                Button("Not here") {
+                    focusedField = .name
+                }
+                .buttonStyle(VisitPillButtonStyle())
+                .accessibilityHint("None of these places. Type the name yourself.")
+            }
+        }
+    }
+
+    // MARK: Photos and notes
+
+    private var photosSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("PHOTOS FROM THIS VISIT")
+                .font(TE.mono(.caption2))
+                .tracking(1.5)
+                .foregroundStyle(TE.textMuted)
+                .accessibilityAddTraits(.isHeader)
+                .padding(.horizontal, 24)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(photoMoments) { photo in
+                        Button {
+                            selectedPhotoMoment = photo
+                        } label: {
+                            PhotoThumbnailView(
+                                assetLocalIdentifier: photo.assetLocalIdentifier,
+                                targetPointSize: CGSize(width: 72, height: 72),
+                                cornerRadius: 10
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(photo.accessibilityLabel)
+                        .accessibilityValue(photo.accessibilityValue)
+                    }
+                }
+                .padding(.horizontal, 24)
+            }
         }
     }
 
     private var notesSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Notes")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            TextField("Add notes about this visit...", text: $notesText, axis: .vertical)
-                .textFieldStyle(.plain)
-                .lineLimit(3...6)
-                .focused($focusedField, equals: .notes)
-                .onChange(of: focusedField) { oldValue, newValue in
-                    if oldValue == .notes && newValue != .notes {
-                        saveNotes()
-                    }
+        TextField("Add a note — who you met, what you had…", text: $notesText, axis: .vertical)
+            .font(TE.editorial(.body).italic())
+            .textFieldStyle(.plain)
+            .lineLimit(2...6)
+            .focused($focusedField, equals: .notes)
+            .onChange(of: focusedField) { oldValue, newValue in
+                if oldValue == .notes && newValue != .notes {
+                    saveNotes()
                 }
-        }
-        .padding()
-        .background(TE.card.opacity(0.94))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, minHeight: 64, alignment: .topLeading)
+            .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
+            .accessibilityLabel("Notes")
     }
 
-    private var actionsSection: some View {
-        VStack(spacing: 12) {
-            AddEventToCalendarButton { CalendarEventDraft(visit: visit, notes: notesText) }
+    // MARK: Actions
 
-            if visit.source == .manual, visit.departedAt == nil {
-                Button {
-                    if viewModel.checkoutVisit(visit) {
-                        syncEditableStateFromVisit()
-                    } else {
-                        checkoutError = viewModel.visitMutationError?.localizedDescription
+    @ViewBuilder
+    private var secondaryActions: some View {
+        let showsCheckOut = visit.source == .manual && visit.departedAt == nil
+        let showsUndo = visit.confirmationStatus == .corrected && visit.originalCoordinate != nil
+        if showsCheckOut || showsUndo {
+            VStack(spacing: 8) {
+                if showsCheckOut {
+                    Button {
+                        if viewModel.checkoutVisit(visit) {
+                            syncEditableStateFromVisit()
+                        } else {
+                            checkoutError = viewModel.visitMutationError?.localizedDescription
+                        }
+                    } label: {
+                        Label("Check Out", systemImage: "rectangle.portrait.and.arrow.right")
                     }
-                } label: {
-                    Label("Check Out", systemImage: "rectangle.portrait.and.arrow.right")
-                        .frame(maxWidth: .infinity)
+                    .buttonStyle(VisitPillButtonStyle())
+                    .disabled(visit.arrivedAt > Date())
+                    .accessibilityHint("Ends this manual visit at the current time.")
                 }
-                .buttonStyle(TEActionButtonStyle(emphasis: .primary))
-                .disabled(visit.arrivedAt > Date())
-                .accessibilityHint("Ends this manual visit at the current time.")
+
+                if showsUndo {
+                    Button {
+                        undoCorrection()
+                    } label: {
+                        Label("Undo Correction", systemImage: "arrow.uturn.backward")
+                    }
+                    .buttonStyle(VisitPillButtonStyle())
+                    .accessibilityHint("Restores the originally detected visit location.")
+                }
             }
+        }
+    }
+
+    private var actionBar: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            Button("Calendar") {
+                calendarDraft = CalendarEventDraft(visit: visit, notes: notesText)
+            }
+            .buttonStyle(VisitPillButtonStyle())
+            .accessibilityLabel("Add Event to Calendar")
+
+            Button("Delete", role: .destructive) {
+                showingDeleteConfirmation = true
+            }
+            .buttonStyle(VisitPillButtonStyle(kind: .destructive))
+            .accessibilityLabel("Delete Visit")
+            .accessibilityHint("Deletes this visit after confirmation.")
 
             if visit.confirmationStatus == .unconfirmed {
-                Button {
+                Button("Confirm") {
                     confirmVisit()
-                } label: {
-                    HStack {
-                        Image(systemName: "checkmark.seal")
-                            .accessibilityHidden(true)
-                        Text("Confirm Place")
-                    }
-                    .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(TEActionButtonStyle(emphasis: .primary))
+                .buttonStyle(VisitPillButtonStyle(kind: .primary))
+                .accessibilityLabel("Confirm Place")
                 .accessibilityHint("Marks this visit as reviewed and correct.")
             }
-
-            if visit.confirmationStatus == .corrected,
-               visit.originalCoordinate != nil {
-                Button {
-                    undoCorrection()
-                } label: {
-                    HStack {
-                        Image(systemName: "arrow.uturn.backward")
-                            .accessibilityHidden(true)
-                        Text("Undo Correction")
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(TEActionButtonStyle())
-                .accessibilityHint("Restores the originally detected visit location.")
-            }
-
-            // Open in Maps
-            Button {
-                openInMaps()
-            } label: {
-                HStack {
-                    Image(systemName: "map")
-                        .accessibilityHidden(true)
-                    Text("Open in Maps")
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(TEActionButtonStyle())
-            .accessibilityLabel("Open visit in Maps")
-            .accessibilityValue(visit.displayName)
-            .accessibilityHint("Opens this location in your default navigation app when supported.")
-
-            // Delete
-            Button(role: .destructive) {
-                showingDeleteConfirmation = true
-            } label: {
-                HStack {
-                    Image(systemName: "trash")
-                        .accessibilityHidden(true)
-                    Text("Delete Visit")
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(TEActionButtonStyle(emphasis: .destructive))
-            .accessibilityHint("Deletes this visit after confirmation.")
         }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .padding(.bottom, 8)
+        .background(TE.surface)
     }
-
-    // MARK: - Actions
 
     private var editedDeparture: Date? {
         isStillHere ? nil : departedAt
@@ -397,6 +644,15 @@ struct VisitDetailView: View {
         let end = editedDeparture ?? Date()
         let seconds = max(0, end.timeIntervalSince(arrivedAt))
         return VisitDetailDurationFormatter.format(seconds)
+    }
+
+    private var photoTaskKey: String {
+        "\(visit.id.uuidString)-\(visit.arrivedAt.timeIntervalSince1970)-\(visit.departedAt?.timeIntervalSince1970 ?? 0)"
+    }
+
+    private func loadPhotoMoments() {
+        let end = max(visit.arrivedAt, visit.departedAt ?? Date())
+        photoMoments = viewModel.photosInDateRange(visit.arrivedAt...end)
     }
 
     private func syncEditableStateFromVisit() {
@@ -440,49 +696,6 @@ struct VisitDetailView: View {
         nameText = visit.displayName
     }
 
-    private var visitStatusBadges: some View {
-        HStack(spacing: 8) {
-            VisitMetadataBadge(
-                text: visit.confirmationStatus.displayName,
-                systemImage: statusSystemImage,
-                tint: statusTint
-            )
-
-            VisitMetadataBadge(
-                text: visit.source.displayName,
-                systemImage: sourceSystemImage,
-                tint: .gray
-            )
-        }
-        .padding(.top, 2)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Visit status: \(visit.confirmationStatus.displayName), source: \(visit.source.displayName)")
-    }
-
-    private var statusSystemImage: String {
-        switch visit.confirmationStatus {
-        case .unconfirmed: return "questionmark.circle"
-        case .confirmed: return "checkmark.seal"
-        case .corrected: return "mappin.and.ellipse.circle"
-        }
-    }
-
-    private var sourceSystemImage: String {
-        switch visit.source {
-        case .automatic: return "location"
-        case .manual: return "hand.tap"
-        case .imported: return "square.and.arrow.down"
-        }
-    }
-
-    private var statusTint: Color {
-        switch visit.confirmationStatus {
-        case .unconfirmed: return .orange
-        case .confirmed: return .green
-        case .corrected: return .blue
-        }
-    }
-
     private func correctVisit(with suggestion: NearbyPlaceSuggestion) {
         focusedField = nil
         viewModel.correctVisit(
@@ -492,6 +705,23 @@ struct VisitDetailView: View {
             coordinate: suggestion.coordinate,
             placeSource: .appleMaps,
             distanceMeters: suggestion.distanceMeters
+        )
+        nameText = visit.displayName
+    }
+
+    /// A searched place or dropped pin; an unnamed pin keeps the visit's current name.
+    private func correctVisit(with selection: ManualLocationSelection) {
+        focusedField = nil
+        let trimmedName = selection.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let original = CLLocation(latitude: visit.latitude, longitude: visit.longitude)
+        let chosen = CLLocation(latitude: selection.coordinate.latitude, longitude: selection.coordinate.longitude)
+        viewModel.correctVisit(
+            visit,
+            name: trimmedName.isEmpty ? visit.displayName : trimmedName,
+            address: selection.address,
+            coordinate: selection.coordinate,
+            placeSource: selection.visitPlaceSource,
+            distanceMeters: original.distance(from: chosen)
         )
         nameText = visit.displayName
     }
@@ -522,6 +752,51 @@ struct VisitDetailView: View {
     }
 }
 
+/// The visit screen's 48pt rounded actions: outlined paper, rust for delete, filled ink to confirm.
+struct VisitPillButtonStyle: ButtonStyle {
+    enum Kind {
+        case standard, destructive, primary
+    }
+
+    var kind: Kind = .standard
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        let filled = kind == .primary && isEnabled
+        configuration.label
+            .font(.subheadline.weight(kind == .primary ? .semibold : .medium))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity, minHeight: 48)
+            .foregroundStyle(foreground(filled: filled))
+            .background {
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(background(filled: filled))
+            }
+            .overlay {
+                if !filled {
+                    RoundedRectangle(cornerRadius: 14)
+                        .strokeBorder(kind == .destructive ? TE.inkRust.opacity(0.35) : TE.border, lineWidth: 1)
+                }
+            }
+            .opacity(configuration.isPressed ? 0.75 : 1)
+            .contentShape(RoundedRectangle(cornerRadius: 14))
+    }
+
+    private func foreground(filled: Bool) -> Color {
+        if !isEnabled { return TE.textMuted }
+        if filled { return TE.surface }
+        return kind == .destructive ? TE.inkRust : TE.textPrimary
+    }
+
+    private func background(filled: Bool) -> Color {
+        if filled { return TE.accent }
+        return kind == .destructive ? Color.clear : TE.card
+    }
+}
+
 private enum VisitDetailDurationFormatter {
     static func format(_ seconds: TimeInterval) -> String {
         let minutes = max(0, Int(seconds / 60))
@@ -534,26 +809,25 @@ private enum VisitDetailDurationFormatter {
     }
 }
 
-private struct VisitMetadataBadge: View {
-    let text: String
-    let systemImage: String
-    let tint: Color
-
-    var body: some View {
-        Label(text, systemImage: systemImage)
-            .font(.caption2.weight(.semibold))
-            .textCase(.uppercase)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .foregroundStyle(tint)
-            .background(tint.opacity(0.12))
-            .clipShape(Capsule())
-    }
-}
-
 struct NearbyVisitNameSuggestionSection: View {
     let visit: Visit
+    /// Highlights the suggestion the visit is already named after.
+    var selectedName: String?
+    /// The visit screen supplies its own header and search, so it hides these.
+    var showsControls = true
     let onSelect: (NearbyPlaceSuggestion) -> Void
+
+    init(
+        visit: Visit,
+        selectedName: String? = nil,
+        showsControls: Bool = true,
+        onSelect: @escaping (NearbyPlaceSuggestion) -> Void
+    ) {
+        self.visit = visit
+        self.selectedName = selectedName
+        self.showsControls = showsControls
+        self.onSelect = onSelect
+    }
 
     @AppStorage("allowNetworkGeocoding") private var allowNetworkGeocoding = true
     @State private var suggestions: [NearbyPlaceSuggestion] = []
@@ -582,28 +856,32 @@ struct NearbyVisitNameSuggestionSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 6) {
-                Label("Nearby businesses", systemImage: "building.2")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
+            if showsControls {
+                HStack(spacing: 6) {
+                    Label("Nearby businesses", systemImage: "building.2")
+                        .font(TE.mono(.caption2, weight: .semibold))
+                        .tracking(1)
+                        .foregroundStyle(TE.textMuted)
 
-                Spacer()
+                    Spacer()
 
-                if isLoading {
-                    ProgressView()
-                        .controlSize(.mini)
-                        .accessibilityLabel("Loading nearby businesses")
+                    if isLoading {
+                        ProgressView()
+                            .controlSize(.mini)
+                            .accessibilityLabel("Loading nearby businesses")
+                    }
                 }
-            }
 
-            searchField
-                .disabled(suggestions.isEmpty)
-                .opacity(suggestions.isEmpty ? 0.65 : 1)
+                searchField
+                    .disabled(suggestions.isEmpty)
+                    .opacity(suggestions.isEmpty ? 0.65 : 1)
+            }
 
             if !allowNetworkGeocoding {
                 Text(NetworkGeocodingPolicy.LookupError.disabled.localizedDescription)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
             } else if suggestions.isEmpty {
                 emptyState
             } else if filteredSuggestions.isEmpty {
@@ -612,7 +890,7 @@ struct NearbyVisitNameSuggestionSection: View {
                 suggestionList
             }
         }
-        .padding(.top, 6)
+        .padding(.top, showsControls ? 6 : 0)
         .task(id: suggestionTaskKey) {
             await loadSuggestions(force: true)
         }
@@ -622,11 +900,11 @@ struct NearbyVisitNameSuggestionSection: View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(TE.textMuted)
                 .accessibilityHidden(true)
 
             TextField("Filter businesses", text: $businessSearchText)
-                .font(.caption)
+                .font(.subheadline)
                 .textInputAutocapitalization(.words)
                 .autocorrectionDisabled()
                 .submitLabel(.search)
@@ -636,32 +914,33 @@ struct NearbyVisitNameSuggestionSection: View {
                     businessSearchText = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(TE.textMuted)
+                        .frame(minWidth: 44, minHeight: 44)
                         .accessibilityLabel("Clear business filter")
                 }
                 .buttonStyle(.plain)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
-        .background(Color(.tertiarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .padding(.horizontal, 12)
+        .frame(minHeight: 44)
+        .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
     }
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 6) {
             if loadFailed {
                 Text("Couldn’t load nearby businesses.")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
             } else if isLoading || !hasSearched {
                 Text("Looking for places near this visit…")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
             } else {
                 Text("No nearby businesses found. Try again, or edit the visit name manually.")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
             }
 
             if loadFailed || (hasSearched && suggestions.isEmpty && !isLoading) {
@@ -669,9 +948,11 @@ struct NearbyVisitNameSuggestionSection: View {
                     Task { await loadSuggestions(force: true) }
                 } label: {
                     Label("Try nearby search again", systemImage: "arrow.clockwise")
-                        .font(.caption)
+                        .font(.footnote)
                 }
                 .buttonStyle(.borderless)
+                .foregroundStyle(TE.inkRust)
+                .frame(minHeight: 44)
             }
         }
     }
@@ -679,57 +960,69 @@ struct NearbyVisitNameSuggestionSection: View {
     private var filteredEmptyState: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("No nearby businesses match “\(normalizedBusinessSearchText)”.")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+                .font(.footnote)
+                .foregroundStyle(TE.textMuted)
 
             Button {
                 businessSearchText = ""
             } label: {
                 Label("Clear filter", systemImage: "xmark.circle")
-                    .font(.caption)
+                    .font(.footnote)
             }
             .buttonStyle(.borderless)
+                .foregroundStyle(TE.inkRust)
+                .frame(minHeight: 44)
         }
     }
 
     private var suggestionList: some View {
         VStack(spacing: 8) {
+            if !showsControls, isLoading {
+                ProgressView()
+                    .controlSize(.small)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityLabel("Loading nearby businesses")
+            }
+
             ForEach(filteredSuggestions) { suggestion in
+                let isSelected = suggestion.name == selectedName
                 Button {
                     onSelect(suggestion)
                 } label: {
                     HStack(spacing: 10) {
-                        Image(systemName: "mappin.and.ellipse")
-                            .foregroundStyle(.blue)
-                            .accessibilityHidden(true)
-
                         VStack(alignment: .leading, spacing: 2) {
                             Text(suggestion.name)
-                                .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.primary)
-                                .lineLimit(1)
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(TE.textPrimary)
+                                .multilineTextAlignment(.leading)
 
-                            if let address = suggestion.address, !address.isEmpty {
+                            if showsControls, let address = suggestion.address, !address.isEmpty {
                                 Text(address)
                                     .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(TE.textMuted)
                                     .lineLimit(1)
                             }
                         }
-
-                        Spacer(minLength: 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
                         Text(suggestion.distanceLabel)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .font(TE.mono(.caption2))
+                            .foregroundStyle(TE.textMuted)
                     }
-                    .padding(10)
-                    .background(Color(.tertiarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                    .frame(minHeight: 48)
+                    .background(RoundedRectangle(cornerRadius: 14).fill(TE.card))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .strokeBorder(isSelected ? TE.textPrimary : TE.border, lineWidth: isSelected ? 2 : 1)
+                    )
+                    .contentShape(RoundedRectangle(cornerRadius: 14))
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Correct visit to \(suggestion.name)")
                 .accessibilityValue(suggestion.distanceLabel)
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
     }

@@ -2,8 +2,11 @@ import SwiftUI
 import SwiftData
 import ExportKit
 
+/// The Archive tab: an export "recipe" written as a sentence whose underlined choices open the
+/// full set of export options, with a sample of the files it will produce.
 struct ExportView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Bindable var viewModel: LocationViewModel
     @StateObject private var exportFolderManager = ExportFolderManager.shared
     @StateObject private var dailyScheduler = DailyExportScheduler.shared
@@ -17,9 +20,18 @@ struct ExportView: View {
     @State private var showingClearFolderConfirmation = false
     @State private var dailyTimeBinding = Date()
     @State private var cachedOutingSummaries: [RecordingSessionSummary] = []
+    @State private var showingSettings = false
+    @State private var editingToken: RecipeToken?
+    @State private var showingSaveRecipe = false
+    @State private var newRecipeName = ""
+    @State private var livePreview: RecipeLivePreview = .idle
 
     @AppStorage("useDefaultExportFolder") private var useDefaultExportFolder = true
     @AppStorage("exportFilenamePattern") private var filenamePattern = FilenameTemplate.defaultPattern
+    @AppStorage("exportSavedRecipes") private var savedRecipesData = Data()
+
+    /// Above this many records the inline sample is skipped; the full preview sheet still works.
+    private static let livePreviewItemLimit = 20_000
 
     private var selectedFormatsList: [ExportFormat] {
         let selected = ExportFormat.allCases.filter { selectedFormats.contains($0) }
@@ -105,58 +117,29 @@ struct ExportView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                FieldNotesBackground()
-                    .overlay(TE.surface.opacity(0.45))
-                    .allowsHitTesting(false)
-
-                if dynamicTypeSize.isAccessibilitySize {
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            exportSections
-                            exportFooter
-                                .padding(.top, 20)
-                        }
-                        .padding(.bottom, 170)
-                    }
+            Group {
+                if usesDuoLayout {
+                    duoLayout
                 } else {
-                    ScrollViewReader { proxy in
-                        ScrollView {
-                            exportSections
-                                .padding(.bottom, 32)
-                        }
-                        #if DEBUG
-                        .onAppear {
-                            if ProcessInfo.processInfo.arguments.contains("--demo-export-filters") {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                                    proxy.scrollTo("export-date-range", anchor: .top)
-                                }
-                            }
-                        }
-                        #endif
-                    }
-                    .safeAreaInset(edge: .bottom, spacing: 0) {
-                        exportFooter
-                    }
+                    compactLayout
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .alert("Remove Default Folder?", isPresented: $showingClearFolderConfirmation) {
-                Button("Cancel", role: .cancel) {}
-                Button("Remove", role: .destructive) { exportFolderManager.clearDefaultFolder() }
-            } message: {
-                Text("Exports will use the share sheet instead of saving directly to a folder.")
-            }
-            .sheet(isPresented: $showingFolderPicker) {
-                FolderPicker { url in
-                    if let url = url {
-                        exportFolderManager.setDefaultFolder(url)
-                    }
-                }
-            }
+            .background(TE.surface.ignoresSafeArea())
+            .foregroundStyle(TE.textPrimary)
+            .toolbar(.hidden, for: .navigationBar)
+            .modifier(FolderPresentations(
+                isPickingFolder: presentation($showingFolderPicker, inOptionsSheet: false),
+                isConfirmingRemoval: presentation($showingClearFolderConfirmation, inOptionsSheet: false),
+                folderManager: exportFolderManager
+            ))
             .sheet(isPresented: $showingPaywall) {
                 PaywallView(storeManager: storeManager, context: .export)
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView(viewModel: viewModel)
+            }
+            .sheet(item: $editingToken) { token in
+                optionsSheet(for: token)
             }
             .sheet(isPresented: $showingPreview) {
                 IsoMeExportPreviewView(
@@ -173,8 +156,28 @@ struct ExportView: View {
                     totalFileCount: splitFileCount
                 )
             }
+            .alert("Save Recipe", isPresented: $showingSaveRecipe) {
+                TextField("Name", text: $newRecipeName)
+                Button("Save") { saveCurrentRecipe() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Saved recipes appear above the sentence. Tap one to load its choices.")
+            }
+            .task(id: livePreviewKey) {
+                // Let rapid changes settle before rendering sample files.
+                try? await Task.sleep(nanoseconds: 350_000_000)
+                guard !Task.isCancelled else { return }
+                await buildLivePreview()
+            }
             .onAppear {
                 ensurePointDataIfNeeded()
+                #if DEBUG
+                if ProcessInfo.processInfo.arguments.contains("--demo-export-filters") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        editingToken = .range
+                    }
+                }
+                #endif
             }
             .onChange(of: storeManager.canExport) { _, _ in ensurePointDataIfNeeded() }
             .onChange(of: options) { _, _ in persistExportPreferences() }
@@ -186,6 +189,781 @@ struct ExportView: View {
             .onChange(of: viewModel.allRecordingSessions.count) { _, _ in refreshOutingSummariesIfNeeded() }
             .onChange(of: viewModel.totalLocationPointCount) { _, _ in refreshOutingSummariesIfNeeded() }
         }
+    }
+
+    /// Folder sheets are owned by whichever layer is frontmost, so the options sheet can present them too.
+    private func presentation(_ flag: Binding<Bool>, inOptionsSheet: Bool) -> Binding<Bool> {
+        Binding(
+            get: { flag.wrappedValue && (editingToken != nil) == inOptionsSheet },
+            set: { flag.wrappedValue = $0 }
+        )
+    }
+
+    private var usesDuoLayout: Bool {
+        horizontalSizeClass == .regular && !dynamicTypeSize.isAccessibilitySize
+    }
+
+    // MARK: - Layouts
+
+    @ViewBuilder
+    private var compactLayout: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    recipeComposer
+                    recipeOutcome
+                    exportFooter
+                        .padding(.top, 20)
+                }
+                .padding(.bottom, 170)
+            }
+        } else {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    recipeComposer
+                    recipeOutcome
+                }
+                .padding(.bottom, 24)
+            }
+            .scrollIndicators(.hidden)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                exportFooter
+            }
+        }
+    }
+
+    private var duoLayout: some View {
+        HStack(spacing: 0) {
+            ScrollView {
+                recipeComposer
+                    .padding(.bottom, 24)
+            }
+            .scrollIndicators(.hidden)
+            .frame(maxWidth: .infinity)
+
+            Rectangle()
+                .fill(TE.dialTrack)
+                .frame(width: 2)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
+
+            VStack(spacing: 12) {
+                livePreviewPane
+                scheduleCard
+                exportFooter
+            }
+            .padding(.top, 26)
+            .padding(.horizontal, 8)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var recipeComposer: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            recipeHeader
+            recipeChips
+                .padding(.top, 14)
+            recipeSentence
+                .padding(.horizontal, 24)
+                .padding(.top, 22)
+            recipeHint
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
+        }
+    }
+
+    private var recipeOutcome: some View {
+        VStack(spacing: 12) {
+            outcomeCard
+            scheduleCard
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 18)
+    }
+
+    // MARK: - Header
+
+    private var recipeHeader: some View {
+        HStack(alignment: .bottom) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("ARCHIVE · YOUR DATA, YOUR FILES")
+                    .font(TE.mono(.caption2))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.textMuted)
+                Group {
+                    if let recipe = matchingRecipe {
+                        Text(verbatim: recipe.name)
+                    } else {
+                        Text("New recipe")
+                    }
+                }
+                .font(TE.editorial(.largeTitle))
+                .lineLimit(2)
+                .accessibilityAddTraits(.isHeader)
+            }
+            Spacer(minLength: 12)
+            Button {
+                showingSettings = true
+            } label: {
+                Image(systemName: "gearshape")
+                    .font(.system(size: 18, weight: .light))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(TE.card))
+                    .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Settings")
+        }
+        .padding(.horizontal, 24)
+        .padding(.top, 12)
+    }
+
+    // MARK: - Saved recipes
+
+    private var recipeChips: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(savedRecipes) { recipe in
+                    let isCurrent = recipe.id == matchingRecipe?.id
+                    Button {
+                        apply(recipe)
+                    } label: {
+                        Text(verbatim: recipe.name)
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(TE.textPrimary)
+                            .lineLimit(1)
+                            .padding(.horizontal, 12)
+                            .frame(minHeight: 36)
+                            .background(Capsule().fill(TE.card))
+                            .overlay(Capsule().strokeBorder(isCurrent ? TE.inkRust : TE.border, lineWidth: 1))
+                            .frame(minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityValue(isCurrent ? Text("Loaded") : Text(""))
+                    .accessibilityHint("Loads this saved recipe")
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            deleteRecipe(recipe)
+                        } label: {
+                            Label("Delete Recipe", systemImage: "trash")
+                        }
+                    }
+                    .accessibilityAction(named: "Delete Recipe") { deleteRecipe(recipe) }
+                }
+
+                if matchingRecipe == nil {
+                    Button {
+                        newRecipeName = suggestedRecipeName
+                        showingSaveRecipe = true
+                    } label: {
+                        Text("+ Save this")
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(TE.textMuted)
+                            .lineLimit(1)
+                            .padding(.horizontal, 12)
+                            .frame(minHeight: 36)
+                            .overlay(
+                                Capsule().strokeBorder(TE.dialTick, style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                            )
+                            .frame(minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Save this recipe")
+                }
+            }
+            .padding(.horizontal, 24)
+        }
+    }
+
+    // MARK: - Sentence
+
+    private var recipeSentence: some View {
+        Text(sentenceText)
+            .font(TE.editorial(.title))
+            .lineSpacing(6)
+            .foregroundStyle(TE.textPrimary)
+            .tint(TE.inkRust)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .environment(\.openURL, OpenURLAction { url in
+                if let token = RecipeToken(url: url) {
+                    handle(token)
+                }
+                return .handled
+            })
+            .accessibilityAction(named: "Change data") { handle(.what) }
+            .accessibilityAction(named: "Change date range") { handle(.range) }
+            .accessibilityAction(named: "Change format") { handle(.format) }
+            .accessibilityAction(named: "Change file layout") { handle(.layout) }
+            .accessibilityAction(named: "Change destination") { handle(.destination) }
+    }
+
+    /// Builds the recipe sentence from one localized template so translations can reorder the choices.
+    private var sentenceText: AttributedString {
+        let markers = (0..<5).map { "\u{E000}\($0)\u{E001}" }
+        let template = String(
+            localized: "Export my \(markers[0]) from \(markers[1]) as \(markers[2]), \(markers[3]), into \(markers[4]).",
+            comment: "Archive recipe sentence. Each placeholder is a tappable choice: data, date range, format, file layout, destination."
+        )
+        let tokens: [(RecipeToken, String)] = [
+            (.what, whatPhrase),
+            (.range, rangePhrase),
+            (.format, formatPhrase),
+            (.layout, layoutPhrase),
+            (.destination, destinationPhrase)
+        ]
+
+        var result = AttributedString()
+        var remaining = template[...]
+        while let open = remaining.firstIndex(of: "\u{E000}") {
+            result += AttributedString(String(remaining[..<open]))
+            let afterOpen = remaining.index(after: open)
+            guard let close = remaining[afterOpen...].firstIndex(of: "\u{E001}"),
+                  let index = Int(remaining[afterOpen..<close]),
+                  tokens.indices.contains(index) else {
+                remaining = remaining[afterOpen...]
+                continue
+            }
+            let (token, phrase) = tokens[index]
+            var choice = AttributedString(phrase)
+            choice.link = token.url
+            choice.swiftUI.foregroundColor = TE.inkRust
+            choice.swiftUI.underlineStyle = Text.LineStyle(pattern: .solid, color: TE.placeInks[1])
+            result += choice
+            remaining = remaining[remaining.index(after: close)...]
+        }
+        result += AttributedString(String(remaining))
+        return result
+    }
+
+    private var recipeHint: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+            : AnyLayout(HStackLayout(alignment: .center, spacing: 12))
+        return layout {
+            Text("TAP ANY UNDERLINED WORD TO CHANGE IT")
+                .font(TE.mono(.caption2))
+                .tracking(1)
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+            if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: 0) }
+            Button {
+                editingToken = .all
+            } label: {
+                Text("ALL OPTIONS")
+                    .font(TE.mono(.caption2, weight: .semibold))
+                    .tracking(1)
+                    .foregroundStyle(TE.inkRust)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint("Shows filters, fields, file path and every other export option")
+        }
+    }
+
+    private var whatPhrase: String {
+        switch options.dataKind {
+        case .visits: return String(localized: "visits")
+        case .points: return String(localized: "points")
+        case .outings: return String(localized: "outings")
+        case .all: return String(localized: "visits & points")
+        }
+    }
+
+    private var rangePhrase: String {
+        switch options.datePreset {
+        case .allTime: return String(localized: "all time")
+        case .today: return String(localized: "today")
+        case .yesterday: return String(localized: "yesterday")
+        case .last7Days: return String(localized: "the last 7 days")
+        case .last30Days: return String(localized: "the last 30 days")
+        case .thisMonth: return String(localized: "this month")
+        case .custom:
+            let lower = min(options.customStart, options.customEnd)
+            let upper = max(options.customStart, options.customEnd)
+            let calendar = Calendar.current
+            let sameYear = calendar.isDate(lower, equalTo: upper, toGranularity: .year)
+                && calendar.isDate(upper, equalTo: Date(), toGranularity: .year)
+            let style: Date.FormatStyle = sameYear
+                ? .dateTime.month(.abbreviated).day()
+                : .dateTime.month(.abbreviated).day().year()
+            if calendar.isDate(lower, inSameDayAs: upper) {
+                return lower.formatted(style)
+            }
+            return "\(lower.formatted(style)) – \(upper.formatted(style))"
+        }
+    }
+
+    private var formatPhrase: String {
+        selectedFormatsList.map(\.displayName).formatted(.list(type: .and))
+    }
+
+    private var layoutPhrase: String {
+        guard options.splitByDay else { return String(localized: "all in one file") }
+        return showsOutingExport ? String(localized: "one file per outing") : String(localized: "one file per day")
+    }
+
+    private var destinationPhrase: String {
+        if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
+            return exportFolderManager.selectedFolderName ?? String(localized: "your folder")
+        }
+        return String(localized: "the share sheet")
+    }
+
+    private func handle(_ token: RecipeToken) {
+        if token == .layout {
+            options.splitByDay.toggle()
+        } else {
+            editingToken = token
+        }
+    }
+
+    // MARK: - What you'll get
+
+    private var outcomeCard: some View {
+        Button {
+            ensurePointDataIfNeeded()
+            showingPreview = true
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                let layout = dynamicTypeSize.isAccessibilitySize
+                    ? AnyLayout(VStackLayout(alignment: .leading, spacing: 2))
+                    : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: 8))
+                layout {
+                    Text("WHAT YOU'LL GET")
+                        .font(TE.mono(.caption2))
+                        .tracking(1.4)
+                        .foregroundStyle(TE.textMuted)
+                    if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: 0) }
+                    Text(verbatim: outcomeSummary)
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textPrimary)
+                }
+
+                livePreviewRows
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+            .contentShape(RoundedRectangle(cornerRadius: 18))
+        }
+        .buttonStyle(.plain)
+        .disabled(totalCount == 0)
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Shows the files and contents that will be exported")
+    }
+
+    @ViewBuilder
+    private var livePreviewRows: some View {
+        switch livePreview {
+        case .idle, .loading:
+            HStack(spacing: 10) {
+                ProgressView()
+                    .controlSize(.small)
+                    .tint(TE.textMuted)
+                Text("Building preview…")
+                    .font(TE.mono(.caption))
+                    .foregroundStyle(TE.textMuted)
+            }
+        case .empty:
+            Text("Nothing matches this recipe yet.")
+                .font(TE.editorial(.body))
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+        case .tooLarge:
+            previewNote("Too much data to sample here. Tap to open the full preview.")
+        case .failed:
+            previewNote("Couldn't sample these files. Tap to open the full preview.")
+        case .ready(let files, _):
+            let shown = Array(files.prefix(4))
+            ForEach(shown) { file in
+                HStack(spacing: 10) {
+                    Image(systemName: "doc")
+                        .font(.footnote)
+                        .foregroundStyle(TE.textMuted)
+                        .accessibilityHidden(true)
+                    Text(verbatim: file.filename)
+                        .font(TE.mono(.caption))
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(verbatim: file.sizeLabel)
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textMuted)
+                }
+            }
+            let remaining = max(0, splitFileCount - shown.count)
+            if remaining > 0 {
+                Text(remaining == 1 ? LocalizedStringKey("+ 1 more file") : LocalizedStringKey("+ \(remaining) more files"))
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+                    .padding(.leading, 26)
+            }
+        }
+    }
+
+    private func previewNote(_ text: LocalizedStringKey) -> some View {
+        Text(text)
+            .font(.footnote)
+            .foregroundStyle(TE.textMuted)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var outcomeSummary: String {
+        if showsOutingExport {
+            return String(localized: "\(filteredOutings.count.formatted()) outings")
+        }
+        var parts: [String] = []
+        if showsVisitFields {
+            parts.append(String(localized: "\(filteredVisits.count.formatted()) visits"))
+        }
+        if showsPointFields {
+            parts.append(String(localized: "\(filteredPoints.count.formatted()) pts"))
+        }
+        return parts.joined(separator: " · ")
+    }
+
+    /// The two-pane archive shows the first sample file's contents next to the sentence.
+    private var livePreviewPane: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(livePreviewTitle)
+                    .font(TE.mono(.caption2))
+                    .tracking(1.4)
+                    .foregroundStyle(TE.textMuted)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                Spacer(minLength: 0)
+                if case .ready = livePreview, splitFileCount > 0 {
+                    Text("1 of \(splitFileCount) files")
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textPrimary)
+                }
+            }
+
+            if case .ready(_, let content?) = livePreview {
+                ScrollView {
+                    Text(verbatim: content)
+                        .font(TE.mono(.caption))
+                        .lineSpacing(4)
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            } else {
+                livePreviewRows
+                Spacer(minLength: 0)
+            }
+
+            Button {
+                ensurePointDataIfNeeded()
+                showingPreview = true
+            } label: {
+                Text("OPEN FULL PREVIEW")
+                    .font(TE.mono(.caption2, weight: .semibold))
+                    .tracking(1)
+                    .foregroundStyle(TE.inkRust)
+                    .frame(minHeight: 44)
+            }
+            .buttonStyle(.plain)
+            .disabled(totalCount == 0)
+            .accessibilityLabel("Preview Export")
+            .accessibilityHint("Shows the files and contents that will be exported")
+        }
+        .padding(.horizontal, 18)
+        .padding(.top, 16)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .padding(.horizontal, 8)
+    }
+
+    private var livePreviewTitle: String {
+        if case .ready(let files, _) = livePreview, let first = files.first {
+            return String(localized: "PREVIEW · \(first.filename)")
+        }
+        return String(localized: "PREVIEW")
+    }
+
+    private var livePreviewKey: LivePreviewKey {
+        LivePreviewKey(
+            options: options,
+            formats: selectedFormatsList,
+            filenamePattern: filenamePattern,
+            visitCount: viewModel.allVisits.count,
+            pointCount: viewModel.locationPoints.count,
+            sessionCount: viewModel.allRecordingSessions.count,
+            outingCount: cachedOutingSummaries.count,
+            rootName: previewDestinationRootName
+        )
+    }
+
+    @MainActor
+    private func buildLivePreview() async {
+        guard totalCount > 0 else {
+            livePreview = .empty
+            return
+        }
+        guard totalCount <= Self.livePreviewItemLimit else {
+            livePreview = .tooLarge
+            return
+        }
+        if case .ready = livePreview {} else { livePreview = .loading }
+
+        do {
+            let preview = try await IsoMeExportKitAdapter.preview(
+                visits: viewModel.allVisits,
+                points: viewModel.locationPoints,
+                recordingSessions: viewModel.allRecordingSessions,
+                activeTrackingStart: viewModel.locationManager.trackingStartTime,
+                options: options,
+                selectedFormats: selectedFormatsList,
+                filenamePattern: filenamePattern
+            )
+            guard !Task.isCancelled else { return }
+            let rootName = previewDestinationRootName
+            let files = preview.records.flatMap { record in
+                record.files.map { IsoMePreviewFile(plannedFile: $0, rootName: rootName) }
+            }
+            guard let first = files.first else {
+                livePreview = .empty
+                return
+            }
+            let content = String(first.plannedFile.displayContent().text.prefix(4_000))
+            livePreview = .ready(files, firstContent: content)
+        } catch {
+            livePreview = .failed
+        }
+    }
+
+    // MARK: - Schedule
+
+    private var scheduleCard: some View {
+        VStack(spacing: 0) {
+            if storeManager.canExport && exportFolderManager.hasDefaultFolder {
+                Toggle(isOn: Binding(
+                    get: { dailyScheduler.isEnabled },
+                    set: { dailyScheduler.setEnabledFromUserSetup($0) }
+                )) {
+                    scheduleLabel(title: scheduleTitle, detail: scheduleDetail)
+                }
+                .toggleStyle(TEToggleStyle())
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .frame(minHeight: 56)
+
+                if dailyScheduler.isEnabled {
+                    Rectangle().fill(TE.border).frame(height: 1).padding(.leading, 16)
+                    Button {
+                        editingToken = .schedule
+                    } label: {
+                        HStack {
+                            Text("Change schedule")
+                                .font(.subheadline)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(TE.textMuted)
+                                .accessibilityHidden(true)
+                        }
+                        .padding(.horizontal, 16)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                }
+            } else {
+                Button {
+                    if storeManager.canExport {
+                        editingToken = .schedule
+                    } else {
+                        showingPaywall = true
+                    }
+                } label: {
+                    HStack(spacing: 12) {
+                        scheduleLabel(
+                            title: String(localized: "Repeat automatically"),
+                            detail: storeManager.canExport
+                                ? String(localized: "Choose a folder for scheduled files first")
+                                : String(localized: "Part of a Whereday plan")
+                        )
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(TE.textMuted)
+                            .accessibilityHidden(true)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .frame(minHeight: 56)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+    }
+
+    private func scheduleLabel(title: String, detail: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(verbatim: title)
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(TE.textPrimary)
+            Text(verbatim: detail)
+                .font(TE.mono(.caption2))
+                .foregroundStyle(TE.textMuted)
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var scheduleTitle: String {
+        var components = DateComponents()
+        components.hour = dailyScheduler.hour
+        components.minute = dailyScheduler.minute
+        let time = (Calendar.current.date(from: components) ?? Date()).formatted(date: .omitted, time: .shortened)
+        if dailyScheduler.isIntervalSchedule {
+            return String(localized: "Repeat every \(dailyScheduler.intervalHours) h from \(time)")
+        }
+        return String(localized: "Repeat every day at \(time)")
+    }
+
+    private var scheduleDetail: String {
+        let mode: ScheduledExportFileMode = dailyScheduler.isIntervalSchedule ? dailyScheduler.fileMode : .rewrite
+        let modeText = mode == .append
+            ? String(localized: "Appends only what's new")
+            : String(localized: "Rewrites the day's file")
+        return "\(modeText) · \(dailyScheduler.format.displayName)"
+    }
+
+    /// The scheduler keeps its own format and data; this offers to align them with the sentence.
+    @ViewBuilder
+    private var matchScheduleToRecipeRow: some View {
+        if dailyScheduler.format != primarySelectedFormat || dailyScheduler.dataKind != options.dataKind {
+            Button {
+                dailyScheduler.format = primarySelectedFormat
+                dailyScheduler.dataKind = options.dataKind
+            } label: {
+                Text("Use this recipe's format and data")
+            }
+            .buttonStyle(ArchiveCapsuleButtonStyle(filled: false))
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+        }
+    }
+
+    // MARK: - Option sheets
+
+    private func optionsSheet(for token: RecipeToken) -> some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 0) {
+                    sheetSections(for: token)
+                }
+                .padding(.bottom, 32)
+            }
+            .background(TE.surface.ignoresSafeArea())
+            .navigationTitle(token.sheetTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { editingToken = nil }
+                }
+            }
+            .modifier(FolderPresentations(
+                isPickingFolder: presentation($showingFolderPicker, inOptionsSheet: true),
+                isConfirmingRemoval: presentation($showingClearFolderConfirmation, inOptionsSheet: true),
+                folderManager: exportFolderManager
+            ))
+        }
+        .presentationDetents(token == .all ? [.large] : [.medium, .large])
+    }
+
+    @ViewBuilder
+    private func sheetSections(for token: RecipeToken) -> some View {
+        switch token {
+        case .what:
+            dataKindSection
+            if showsVisitFields || showsPointFields { filtersSection }
+            if showsVisitFields { visitFieldsSection }
+            if showsPointFields { pointFieldsSection }
+            if showsOutingExport { outingFieldsSection }
+        case .range:
+            dateRangeSection
+                .id("export-date-range")
+            timeOfDaySection
+        case .format:
+            formatSection
+        case .layout:
+            outputSection
+            filenameSection
+        case .destination:
+            exportFolderSection
+            filenameSection
+            webhookSection
+        case .schedule:
+            if exportFolderManager.hasDefaultFolder && storeManager.canExport {
+                dailyExportSection
+                matchScheduleToRecipeRow
+            } else {
+                exportFolderSection
+            }
+        case .all:
+            exportSections
+        }
+    }
+
+    // MARK: - Saved recipe storage
+
+    private var savedRecipes: [SavedExportRecipe] {
+        (try? JSONDecoder().decode([SavedExportRecipe].self, from: savedRecipesData)) ?? []
+    }
+
+    private var matchingRecipe: SavedExportRecipe? {
+        savedRecipes.first { recipe in
+            recipe.options == options
+                && Set(recipe.formats) == Set(selectedFormatsList)
+                && recipe.filenamePattern == filenamePattern
+        }
+    }
+
+    private var suggestedRecipeName: String {
+        let range = rangePhrase
+        return "\(formatPhrase), \(range.prefix(1).uppercased() + range.dropFirst())"
+    }
+
+    private func apply(_ recipe: SavedExportRecipe) {
+        options = recipe.options
+        selectedFormats = Set(recipe.formats.isEmpty ? [.json] : recipe.formats)
+        options.format = primarySelectedFormat
+        filenamePattern = recipe.filenamePattern
+        ensurePointDataIfNeeded()
+    }
+
+    private func saveCurrentRecipe() {
+        let name = newRecipeName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        var recipes = savedRecipes
+        recipes.append(SavedExportRecipe(
+            id: UUID(),
+            name: name,
+            options: options,
+            formats: selectedFormatsList,
+            filenamePattern: filenamePattern
+        ))
+        storeRecipes(recipes)
+    }
+
+    private func deleteRecipe(_ recipe: SavedExportRecipe) {
+        storeRecipes(savedRecipes.filter { $0.id != recipe.id })
+    }
+
+    private func storeRecipes(_ recipes: [SavedExportRecipe]) {
+        savedRecipesData = (try? JSONEncoder().encode(recipes)) ?? Data()
     }
 
     private var exportSections: some View {
@@ -1087,50 +1865,46 @@ struct ExportView: View {
                     .padding(.bottom, 2)
             }
 
-            Button {
-                ensurePointDataIfNeeded()
-                showingPreview = true
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "eye")
-                        .font(.caption.weight(.bold))
-                    Text(previewButtonLabel)
+            let layout = dynamicTypeSize.isAccessibilitySize || usesDuoLayout
+                ? AnyLayout(VStackLayout(spacing: 8))
+                : AnyLayout(HStackLayout(spacing: 8))
+            layout {
+                if !usesDuoLayout {
+                    Button {
+                        ensurePointDataIfNeeded()
+                        showingPreview = true
+                    } label: {
+                        Text("Preview")
+                    }
+                    .buttonStyle(ArchiveCapsuleButtonStyle(filled: false))
+                    .frame(maxWidth: dynamicTypeSize.isAccessibilitySize ? .infinity : 130)
+                    .disabled(totalCount == 0)
+                    .accessibilityLabel("Preview Export")
+                    .accessibilityHint("Shows the files and contents that will be exported")
                 }
-            }
-            .buttonStyle(TEActionButtonStyle())
-            .disabled(totalCount == 0)
-            .accessibilityLabel("Preview Export")
-            .accessibilityHint("Shows the files and contents that will be exported")
 
-            Button {
-                runExport()
-            } label: {
-                Text(exportButtonLabel)
+                Button {
+                    runExport()
+                } label: {
+                    Text(exportButtonLabel)
+                }
+                .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
+                .disabled(totalCount == 0)
             }
-            .buttonStyle(TEActionButtonStyle(emphasis: .primary))
-            .disabled(totalCount == 0)
         }
         .padding(.horizontal, 16)
         .padding(.top, 12)
-        .padding(.bottom, 16)
+        .padding(.bottom, 14)
         .background(TE.surface)
     }
 
-    private var previewButtonLabel: LocalizedStringKey {
-        if totalCount == 0 { return "NOTHING TO PREVIEW" }
-        let n = splitFileCount
-        if n == 0 { return "NOTHING TO PREVIEW" }
-        if n == 1 { return "PREVIEW 1 FILE" }
-        return "PREVIEW \(n) FILES"
-    }
-
     private var exportButtonLabel: LocalizedStringKey {
-        if totalCount == 0 { return "NOTHING TO EXPORT" }
-        if !storeManager.canExport { return "UNLOCK EXPORT" }
+        if totalCount == 0 { return "Nothing to export" }
+        if !storeManager.canExport { return "Unlock export" }
         let n = splitFileCount
-        if n == 0 { return "NOTHING TO EXPORT" }
-        if n == 1 { return "EXPORT 1 FILE" }
-        return "EXPORT \(n) FILES"
+        if n == 0 { return "Nothing to export" }
+        if n == 1 { return "Export 1 file" }
+        return "Export \(n) files"
     }
 
     // MARK: - Reusable bits
@@ -1353,6 +2127,125 @@ private struct ExportFormatGrid: View {
         }
         .buttonStyle(.plain)
         .accessibilityValue(isSelected ? "Selected" : "Not selected")
+    }
+}
+
+// MARK: - Recipe support
+
+/// A tappable choice in the recipe sentence, plus the sheets that aren't words in it.
+private enum RecipeToken: String, Identifiable {
+    case what, range, format, layout, destination, schedule, all
+
+    var id: String { rawValue }
+
+    private static let scheme = "whereday-recipe"
+
+    var url: URL? { URL(string: "\(Self.scheme)://\(rawValue)") }
+
+    init?(url: URL) {
+        guard url.scheme == Self.scheme, let host = url.host(), let token = RecipeToken(rawValue: host) else { return nil }
+        self = token
+    }
+
+    var sheetTitle: LocalizedStringKey {
+        switch self {
+        case .what: "What to export"
+        case .range: "Date range"
+        case .format: "Formats"
+        case .layout: "File layout"
+        case .destination: "Destination"
+        case .schedule: "Schedule"
+        case .all: "All options"
+        }
+    }
+}
+
+private struct SavedExportRecipe: Codable, Identifiable, Equatable {
+    let id: UUID
+    var name: String
+    var options: ExportOptions
+    var formats: [ExportFormat]
+    var filenamePattern: String
+}
+
+private struct LivePreviewKey: Equatable {
+    let options: ExportOptions
+    let formats: [ExportFormat]
+    let filenamePattern: String
+    let visitCount: Int
+    let pointCount: Int
+    let sessionCount: Int
+    let outingCount: Int
+    let rootName: String
+}
+
+private enum RecipeLivePreview {
+    case idle
+    case loading
+    case empty
+    case tooLarge
+    case failed
+    case ready([IsoMePreviewFile], firstContent: String?)
+}
+
+/// Folder picking and removal, attached to whichever layer (tab or options sheet) is frontmost.
+private struct FolderPresentations: ViewModifier {
+    @Binding var isPickingFolder: Bool
+    @Binding var isConfirmingRemoval: Bool
+    let folderManager: ExportFolderManager
+
+    init(isPickingFolder: Binding<Bool>, isConfirmingRemoval: Binding<Bool>, folderManager: ExportFolderManager) {
+        _isPickingFolder = isPickingFolder
+        _isConfirmingRemoval = isConfirmingRemoval
+        self.folderManager = folderManager
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .alert("Remove Default Folder?", isPresented: $isConfirmingRemoval) {
+                Button("Cancel", role: .cancel) {}
+                Button("Remove", role: .destructive) { folderManager.clearDefaultFolder() }
+            } message: {
+                Text("Exports will use the share sheet instead of saving directly to a folder.")
+            }
+            .sheet(isPresented: $isPickingFolder) {
+                FolderPicker { url in
+                    if let url = url {
+                        folderManager.setDefaultFolder(url)
+                    }
+                }
+            }
+    }
+}
+
+/// Capsule actions for the Archive screens: filled ink for the main action, hairline for secondary ones.
+struct ArchiveCapsuleButtonStyle: ButtonStyle {
+    let filled: Bool
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.body.weight(filled ? .semibold : .medium))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, minHeight: filled ? 54 : 44)
+            .foregroundStyle(filled ? TE.surface : TE.textPrimary)
+            .background {
+                if filled {
+                    Capsule().fill(isEnabled ? TE.accent : TE.textMuted)
+                } else {
+                    Capsule().fill(TE.card)
+                }
+            }
+            .overlay {
+                if !filled {
+                    Capsule().strokeBorder(TE.border, lineWidth: 1)
+                }
+            }
+            .opacity(configuration.isPressed ? 0.8 : (isEnabled || filled ? 1 : 0.5))
+            .contentShape(Capsule())
     }
 }
 

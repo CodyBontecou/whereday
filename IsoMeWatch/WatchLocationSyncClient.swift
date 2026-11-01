@@ -11,6 +11,8 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     static let shared = WatchLocationSyncClient()
 
     @Published private(set) var syncStatus: String?
+    /// Points recorded on the watch that the iPhone hasn't acknowledged yet.
+    @Published private(set) var pendingPointCount = 0
 
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -25,6 +27,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         stateURL = Self.makeStateURL()
         state = Self.loadState(from: stateURL) ?? WatchLocationSyncState(deviceID: UUID())
         super.init()
+        pendingPointCount = state.points.count
     }
 
     func activate() {
@@ -169,6 +172,9 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     }
 
     private func saveState() {
+        if pendingPointCount != state.points.count {
+            pendingPointCount = state.points.count
+        }
         do {
             try FileManager.default.createDirectory(
                 at: stateURL.deletingLastPathComponent(),

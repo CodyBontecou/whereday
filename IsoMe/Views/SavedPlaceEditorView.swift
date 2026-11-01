@@ -13,6 +13,8 @@ struct SavedPlaceEditorView: View {
     @State private var radiusText: String
     @State private var locationPicker: LocationPickerRequest?
     @State private var showingDiscardConfirmation = false
+    @State private var showingDeleteConfirmation = false
+    @State private var showsCoordinates = false
     @State private var saveError: String?
     @FocusState private var focusedField: Field?
 
@@ -37,35 +39,43 @@ struct SavedPlaceEditorView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                detailsSection
-                locationSection
-                coordinatesSection
-                radiusSection
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    locationSection
+                    nameField
+                    radiusSection
+                    addressField
+                    coordinatesSection
 
-                if isDirty, let message = formDraft.validationMessage {
-                    Section {
+                    if isDirty, let message = formDraft.validationMessage {
                         Text(message)
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(TE.inkRust)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
+
+                    bottomActions
+                        .padding(.top, 8)
                 }
+                .padding(.horizontal, 16)
+                .padding(.top, 10)
+                .padding(.bottom, 24)
             }
-            .scrollContentBackground(.hidden)
-            .background {
-                FieldNotesBackground()
-                    .overlay(TE.surface.opacity(0.45))
-                    .allowsHitTesting(false)
-            }
-            .navigationTitle(initialDraft.existingPlaceID == nil ? "Add Location" : "Edit Location")
+            .scrollDismissesKeyboard(.interactively)
+            .background(TE.surface.ignoresSafeArea())
+            .foregroundStyle(TE.textPrimary)
+            .navigationTitle(isExistingPlace ? "Edit Location" : "Add Location")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", action: cancel)
+                        .foregroundStyle(TE.textMuted)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save", action: save)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(formDraft.validationMessage == nil ? TE.inkRust : TE.textMuted)
                         .disabled(formDraft.validationMessage != nil)
                         .accessibilityHint(formDraft.validationMessage ?? String(localized: "Saves this reusable location."))
                 }
@@ -88,6 +98,12 @@ struct SavedPlaceEditorView: View {
             } message: {
                 Text("Your changes to this saved location have not been saved.")
             }
+            .confirmationDialog("Delete Saved Location?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
+                Button("Delete", role: .destructive, action: delete)
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This removes the reusable location. Your past visits are kept.")
+            }
             .alert("Unable to Save Location", isPresented: Binding(
                 get: { saveError != nil },
                 set: { if !$0 { saveError = nil } }
@@ -98,109 +114,181 @@ struct SavedPlaceEditorView: View {
             }
         }
         .interactiveDismissDisabled(isDirty)
+        .tint(TE.accent)
     }
 
-    private var detailsSection: some View {
-        Section {
+    private var isExistingPlace: Bool { initialDraft.existingPlaceID != nil }
+
+    private var placeInk: Color {
+        guard let id = initialDraft.existingPlaceID,
+              let place = viewModel.savedPlaces.first(where: { $0.id == id }) else { return TE.placeInks[0] }
+        return PlaceVisitIndex.ink(for: place, in: viewModel.savedPlaces)
+    }
+
+    private var locationSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button(action: chooseLocation) {
+                if let coordinate = validCoordinate {
+                    PlaceMapCard(coordinate: coordinate, radius: previewRadius, ink: placeInk,
+                                 name: draft.name.isEmpty ? String(localized: "Saved Location") : draft.name,
+                                 caption: "TAP TO MOVE PIN")
+                        .frame(height: 190)
+                } else {
+                    VStack(spacing: 8) {
+                        Image(systemName: "mappin.and.ellipse")
+                            .font(.title2)
+                            .foregroundStyle(TE.accent)
+                        Text("Choose Location")
+                            .font(.subheadline.weight(.medium))
+                        Text("Search for an address or place a pin anywhere, including places missing from Maps.")
+                            .font(.footnote)
+                            .foregroundStyle(TE.textMuted)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(20)
+                    .frame(maxWidth: .infinity, minHeight: 150)
+                    .background(RoundedRectangle(cornerRadius: 16).fill(TE.dialTrack))
+                    .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
+                }
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(validCoordinate == nil ? "Choose Location" : "Change Location")
+            .accessibilityValue(validCoordinate == nil ? "" : String(localized: "Match radius: \(Int(previewRadius)) meters"))
+            .accessibilityHint("Search for a place or move a pin on the map.")
+        }
+    }
+
+    private var nameField: some View {
+        fieldGroup("NAME") {
             TextField("Name", text: $draft.name, prompt: Text("e.g. Home or Favorite Cafe"))
                 .textInputAutocapitalization(.words)
                 .focused($focusedField, equals: .name)
                 .accessibilityLabel("Location name")
+                .modifier(PlaceEditorFieldChrome())
+        }
+    }
 
+    private var addressField: some View {
+        fieldGroup("ADDRESS · OPTIONAL") {
             TextField("Address", text: $draft.address, prompt: Text("Address (optional)"), axis: .vertical)
                 .lineLimit(1...3)
                 .textInputAutocapitalization(.words)
                 .focused($focusedField, equals: .address)
                 .accessibilityLabel("Address, optional")
-        } header: {
-            sectionHeader("LOCATION DETAILS")
+                .modifier(PlaceEditorFieldChrome())
         }
-        .listRowBackground(TE.card.opacity(0.97))
-    }
-
-    private var locationSection: some View {
-        Section {
-            if let coordinate = validCoordinate {
-                Map(initialPosition: .region(previewRegion(for: coordinate)), interactionModes: []) {
-                    MapCircle(center: coordinate, radius: previewRadius)
-                        .foregroundStyle(.blue.opacity(0.15))
-                        .stroke(.blue.opacity(0.4), lineWidth: 1)
-                    Marker(draft.name.isEmpty ? "Saved Location" : draft.name, coordinate: coordinate)
-                        .tint(.blue)
-                }
-                .id("\(coordinate.latitude),\(coordinate.longitude),\(previewRadius)")
-                .frame(height: 180)
-                .listRowInsets(EdgeInsets())
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Saved location map")
-                .accessibilityValue("Match radius: \(Int(previewRadius)) meters")
-            }
-
-            Button(action: chooseLocation) {
-                Label(validCoordinate == nil ? "Choose Location" : "Change Location", systemImage: "mappin.and.ellipse")
-                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-            }
-            .accessibilityHint("Search for a place or move a pin on the map.")
-        } header: {
-            sectionHeader("LOCATION")
-        } footer: {
-            Text("Search for an address or place a pin anywhere, including places missing from Maps.")
-        }
-        .listRowBackground(TE.card.opacity(0.97))
-    }
-
-    private var coordinatesSection: some View {
-        Section {
-            coordinateField("Latitude", placeholder: "−90 to 90", text: $latitudeText, field: .latitude)
-            coordinateField("Longitude", placeholder: "−180 to 180", text: $longitudeText, field: .longitude)
-        } header: {
-            sectionHeader("COORDINATES")
-        } footer: {
-            Text("You can also enter coordinates directly instead of using the map.")
-        }
-        .listRowBackground(TE.card.opacity(0.97))
     }
 
     private var radiusSection: some View {
-        Section {
-            HStack {
-                Text("Match radius")
-                Spacer()
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("MATCH RADIUS")
+                    .font(TE.mono(.caption2, weight: .semibold))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.textMuted)
+                Spacer(minLength: 8)
                 TextField("150", text: $radiusText)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .font(TE.editorial(.title3))
                     .focused($focusedField, equals: .radius)
+                    .fixedSize()
                     .accessibilityLabel("Match radius in meters")
                 Text("m")
-                    .foregroundStyle(.secondary)
+                    .font(TE.editorial(.title3))
                     .accessibilityHidden(true)
             }
-        } header: {
-            sectionHeader("MATCH AREA")
-        } footer: {
-            Text("Future automatic visits inside this radius use the saved name. Choose 25–10,000 meters. Editing a saved location does not change past visits.")
+            Slider(value: radiusSliderBinding, in: 25...500, step: 5) {
+                Text("Match radius")
+            }
+            .tint(TE.accent)
+            .accessibilityValue("\(Int(previewRadius)) meters")
+            Text("Future automatic visits inside this radius use the saved name. Choose 25–10,000 meters; type a value above 500. Editing a saved location does not change past visits.")
+                .font(TE.mono(.caption2))
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .listRowBackground(TE.card.opacity(0.97))
+    }
+
+    private var radiusSliderBinding: Binding<Double> {
+        Binding(
+            get: { min(max(previewRadius, 25), 500) },
+            set: { radiusText = Self.coordinateText($0.rounded()) }
+        )
+    }
+
+    private var coordinatesSection: some View {
+        DisclosureGroup(isExpanded: $showsCoordinates) {
+            VStack(alignment: .leading, spacing: 12) {
+                coordinateField("Latitude", placeholder: "−90 to 90", text: $latitudeText, field: .latitude)
+                coordinateField("Longitude", placeholder: "−180 to 180", text: $longitudeText, field: .longitude)
+                Text("You can also enter coordinates directly instead of using the map.")
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.top, 10)
+        } label: {
+            Text("COORDINATES")
+                .font(TE.mono(.caption2, weight: .semibold))
+                .tracking(1.5)
+                .foregroundStyle(TE.textMuted)
+                .frame(minHeight: 44)
+        }
+        .tint(TE.textMuted)
+    }
+
+    @ViewBuilder
+    private var bottomActions: some View {
+        if isExistingPlace {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 8) {
+                    deleteButton.frame(maxWidth: .infinity)
+                    saveButton.frame(maxWidth: .infinity).layoutPriority(1)
+                }
+                VStack(spacing: 8) {
+                    saveButton
+                    deleteButton
+                }
+            }
+        } else {
+            saveButton
+        }
+    }
+
+    private var saveButton: some View {
+        Button("Save place", action: save)
+            .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
+            .disabled(formDraft.validationMessage != nil)
+    }
+
+    private var deleteButton: some View {
+        Button("Delete") { showingDeleteConfirmation = true }
+            .buttonStyle(PlacesInkButtonStyle(emphasis: .destructive))
+    }
+
+    private func fieldGroup<Content: View>(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(TE.mono(.caption2, weight: .semibold))
+                .textCase(.uppercase)
+                .tracking(1.4)
+                .foregroundStyle(TE.textMuted)
+            content()
+        }
     }
 
     private func coordinateField(_ title: LocalizedStringKey, placeholder: LocalizedStringKey, text: Binding<String>, field: Field) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        fieldGroup(title) {
             TextField(title, text: text, prompt: Text(placeholder))
                 .keyboardType(.numbersAndPunctuation)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .focused($focusedField, equals: field)
                 .accessibilityLabel(Text(title))
+                .modifier(PlaceEditorFieldChrome())
         }
-    }
-
-    private func sectionHeader(_ title: LocalizedStringKey) -> some View {
-        Text(title)
-            .font(TE.mono(.caption2, weight: .semibold))
-            .foregroundStyle(.secondary)
     }
 
     private var formDraft: SavedPlaceDraft {
@@ -273,6 +361,18 @@ struct SavedPlaceEditorView: View {
         }
     }
 
+    private func delete() {
+        focusedField = nil
+        guard let id = initialDraft.existingPlaceID,
+              let place = viewModel.savedPlaces.first(where: { $0.id == id }) else { dismiss(); return }
+        do {
+            try viewModel.deleteManagedPlace(place)
+            dismiss()
+        } catch {
+            saveError = error.localizedDescription
+        }
+    }
+
     private static func coordinateText(_ value: Double?) -> String {
         guard let value else { return "" }
         let text = String(value)
@@ -281,5 +381,17 @@ struct SavedPlaceEditorView: View {
 
     private static func number(from text: String) -> Double? {
         Double(text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: ",", with: "."))
+    }
+}
+
+/// Paper text fields with a hairline border, as in the place and stay editors.
+struct PlaceEditorFieldChrome: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .frame(minHeight: 48)
+            .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
     }
 }

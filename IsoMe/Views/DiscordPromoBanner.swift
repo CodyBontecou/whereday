@@ -1,77 +1,62 @@
 import SwiftUI
 
+/// The inverted ink card at the top of Settings.
 struct DiscordPromoBanner: View {
     @Environment(\.openURL) private var openURL
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let onDismiss: () -> Void
 
     var body: some View {
-        HStack(spacing: 10) {
-            Button {
-                if let discordInviteURL = IsoMeURLs.discordInvite {
-                    openURL(discordInviteURL)
-                }
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                        .font(.callout.weight(.semibold))
-                        .foregroundStyle(TE.accent)
-                        .frame(width: 22)
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 12))
+            : AnyLayout(HStackLayout(spacing: 12))
 
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("JOIN THE COMMUNITY")
-                            .font(TE.mono(.caption, weight: .semibold))
-                            .tracking(1)
-                            .foregroundStyle(TE.textPrimary)
+        layout {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("JOIN THE COMMUNITY")
+                    .font(TE.mono(.caption2))
+                    .tracking(1.2)
+                    .foregroundStyle(TE.onInkCardMuted)
+                Text("Chat with us on Discord")
+                    .font(TE.editorial(.title3))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityElement(children: .combine)
 
-                        Text("Chat with us on Discord")
-                            .font(TE.mono(.caption2))
-                            .foregroundStyle(TE.textMuted)
+            HStack(spacing: 12) {
+                Button {
+                    if let discordInviteURL = IsoMeURLs.discordInvite {
+                        openURL(discordInviteURL)
                     }
-
-                    Spacer(minLength: 8)
-
-                    Text("JOIN")
-                        .font(TE.mono(.caption2, weight: .semibold))
-                        .tracking(1.4)
-                        .foregroundStyle(TE.accent)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(
-                            Capsule()
-                                .fill(TE.accent.opacity(0.12))
-                        )
-                        .overlay(
-                            Capsule()
-                                .strokeBorder(TE.accent.opacity(0.32), lineWidth: 1)
-                        )
+                } label: {
+                    Text("Join")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(TE.inkCard)
+                        .padding(.horizontal, 16)
+                        .frame(minHeight: 44)
+                        .background(Capsule().fill(TE.onInkCard))
+                        .contentShape(Capsule())
                 }
-            }
-            .buttonStyle(.plain)
-            .contentShape(Rectangle())
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Join the Discord community.")
-            .accessibilityAddTraits(.isButton)
+                .buttonStyle(.plain)
+                .accessibilityLabel("Join the Discord community.")
 
-            Button(action: onDismiss) {
-                Image(systemName: "xmark")
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(TE.textMuted)
-                    .frame(width: 28, height: 28)
-                    .contentShape(Rectangle())
+                Button(action: onDismiss) {
+                    Image(systemName: "xmark")
+                        .font(.footnote.weight(.semibold))
+                        .frame(width: 44, height: 44)
+                        .overlay(Circle().strokeBorder(TE.onInkCard.opacity(0.35), lineWidth: 1))
+                        .contentShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Dismiss Discord banner.")
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Dismiss Discord banner.")
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(TE.card)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(TE.border, lineWidth: 1)
-        )
+        .foregroundStyle(TE.onInkCard)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.inkCard))
+        .accessibilityElement(children: .contain)
     }
 }
 
