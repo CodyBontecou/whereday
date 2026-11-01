@@ -1,0 +1,17 @@
+# Reusable Obsidian travel journal example
+
+Previous goal turn: progress (Timeline inspector/tutorial). This turn: progress, extending the existing guide rather than adding a duplicate article.
+
+Published https://whereday.com/blog/iphone-location-journal-obsidian/#journal-template at deployment https://f9d3870d.spotted-8ez.pages.dev.
+
+Blank travel-journal-template.md uses manual fields and prompts, with a code-formatted example link rather than an active broken placeholder. Completed synthetic-trip-reflections.md links to Location/synthetic-obsidian-export. Downloadable ZIP contains exactly four fixed safe paths: those two notes under Templates/Travel journal.md and Trip reflections.md, the unchanged native sample under Location/, and README.md. No plugin code, vault settings or sync configuration. ZIP generator runs in the normal build and fixes entry dates/permissions for deterministic bytes.
+
+Native verification used a new temporary extracted vault in Obsidian 1.14.5. Reflection rendered in Reading view, followed link opened the expected January 1, 2000 table with 11:45–12:00 and 12:02–12:17 visits, each 15 minutes. Blank template rendered and actual keyboard copy/paste into a separate note matched source bytes. Initial paste landed in the new note title; corrected focus and expanded instructions to name the file first, then paste below the title. Source export bytes unchanged. Temporary copy note removed after recording its hash. No personal records were used or published. No mobile transfer, scheduled export, new native exporter test or Maps plugin verification claimed.
+
+New native screenshot saved as PNG under docs/qa and encoded as lossless public WebP. Independent decoded RGBA equality checked. Guide includes image with dimensions/alt text and explicit desktop verification scope. Official Obsidian internal-link and manage-notes documentation checked October 30. Internal paths are vault-root based, as documented. Existing released-export provenance retained rather than attributed to this new check.
+
+Build passes 39 documents including 404, 38 published reader-reachable pages, 1,402 local targets, metadata/schema/sitemap and byte-identical rebuild. Sixteen Python tests pass. JS/native implementation was unchanged, so their suites were not rerun. Local and production HTTP contract checks cover all 38 HTML/Markdown pairs. ZIP --check and independent extraction/path/link/source-byte checks pass. Production evidence: ../seo-obsidian-template-live-2026-10-30.json. Native evidence: ../seo-obsidian-template-native-2026-10-30.json.
+
+In-app browser used for web verification. Recovered a stale earlier tab by creating a fresh tab in the same selected browser. Local and live guide tested at 390px, no page overflow; section link jumps to downloads and folder/steps. Viewport reset, production guide retained. Actual ZIP/native rendering establishes the workflow, not a browser imitation of Obsidian. Screenshots: obsidian-template-guide-mobile-2026-10-30.jpg and obsidian-reflection-template-2026-10-30.png.
+
+Second review found no material issue. Existing roadmap identified this reusable-file gap. Prior keyword research returned unknown metrics for Obsidian travel journal; no new spend or ranking/traffic forecast. GPX-to-GeoJSON is a stronger quantified runner-up (30 estimated US searches/month) and needs separately checked converter behavior. Existing private roadmap report updated in place; broad SEO goal remains active.

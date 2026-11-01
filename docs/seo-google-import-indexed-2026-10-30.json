@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "siteUrl": "sc-domain:whereday.com",
+  "results": [
+    {
+      "url": "https://whereday.com/blog/import-google-timeline-iphone/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=IOIy67qgWhHg4pK6UjWvMw&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-30T19:24:33Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/blog/import-google-timeline-iphone/",
+          "userCanonical": "https://whereday.com/blog/import-google-timeline-iphone/",
+          "referringUrls": [
+            "https://whereday.com/?ref=appcustomerservice.com"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        },
+        "richResultsResult": {
+          "verdict": "PASS",
+          "detectedItems": [
+            {
+              "richResultType": "Breadcrumbs",
+              "items": [
+                {
+                  "name": "Unnamed item"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "meta": {
+    "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+    "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/settings/integrations"
+  }
+}

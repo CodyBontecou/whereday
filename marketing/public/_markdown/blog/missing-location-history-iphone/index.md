@@ -8,11 +8,11 @@ Practical iPhone guides
 
 Check the date and recording state, then separate missing points, missing visits, pending Watch transfers, and export filters. Keep existing records while you investigate.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 26, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
 ## Find out which part is missing
 
-If an Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.
+If a Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.
 
 This guide is for an existing Whereday journal. For Apple Maps or Google Timeline records, use [the iPhone location-history guide](https://whereday.com/blog/view-location-history-iphone/). Installing Whereday cannot recover a route that another app never recorded.
 
@@ -52,7 +52,7 @@ Start enables GPS recording, visit monitoring, and significant location changes 
 
 In our isolated 1.7.16 release-source simulator check, Start changed to Stop and the timer ran. After stopping, Timeline saved an eight-second outing with zero distance and zero points. Its detail explicitly said No GPS points were saved for this outing yet. A running timer or an outing card alone does not confirm a route was captured.
 
-![Whereday outing detail showing eight seconds, zero distance, zero points, and no saved GPS points](https://whereday.com/screenshots/journal-empty-outing.png)
+![Whereday outing detail showing eight seconds, zero distance, zero points, and no saved GPS points](https://whereday.com/screenshots/journal-empty-outing.webp)
 
 Checked October 26, 2026 in a separate Debug simulator rebuild of 1.7.16 (46), iOS 26.5. This empty test journal contains no personal route. It does not establish why no points arrived or verify physical GPS recording.
 
@@ -94,7 +94,7 @@ Keep the Watch app installed while checking pending records. Its queue is not a 
 
 ## 5. If history exists but the exported file is empty
 
-Inspect Export Preview before changing the journal. Preview is free; writing a file requires the optional export unlock. Work on one expected date and change one filter at a time.
+Inspect Export Preview before changing the journal. Preview is free; file writing follows the export access rules for new and existing users described below. Work on one expected date and change one filter at a time.
 
 - Match the record type. Choose Points for a measured path or Visits for stops. A visit record does not supply the intervening GPS route.
 - Check dates and time of day. Use a range covering the expected record. Disable the time of day filter for the comparison. Visit selection uses arrival time; an overnight visit arriving before the selected range can be excluded even if you were still there the next morning.
@@ -140,7 +140,7 @@ A saved place provides reusable location details. You can separately add a known
 ## Check a short route.
 Then trust a longer day.
 
-Recording and reviewing history are free. Check one finished session before relying on a new setup for a long trip.
+From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Check one finished session before relying on a new setup for a long trip.
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 

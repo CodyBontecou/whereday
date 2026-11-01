@@ -12,7 +12,9 @@ python3 marketing/scripts/build_site.py
 This regenerates documentation from `scripts/build_docs.py`, renders articles and comparison
 pages from `scripts/build_seo_pages.py` and `content/`, updates sitemap coverage,
 and validates local links, fragment/ARIA targets, canonical URLs, H1 counts,
-descriptions, JSON-LD, and unresolved template tokens. Python 3.9+ is sufficient;
+descriptions, JSON-LD, unresolved template tokens, and reachability of published
+pages from the homepage through reader links. Canonical, schema, alternate,
+404-only and nofollow links do not satisfy that navigation check. Python 3.9+ is sufficient;
 no package installation is needed. A repeated build produces the same output.
 
 The homepage, blog hub, and original private-journal article remain directly
@@ -25,10 +27,11 @@ its generator. Edit the newer articles and comparison in `content/`, with their
 metadata in `scripts/build_seo_pages.py`, then rebuild. Do not patch only the
 generated versions.
 
-The four measured acquisition pages carry a temporary `store-listing-note`
-while Apple's public US listing still uses iso.me. Remove those notes only
-after the public listing is verified as Whereday, then rebuild HTML/Markdown.
-See [the handoff record](../docs/qa/seo-whereday-store-handoff-2026-10-26.md).
+Apple's public US lookup confirmed **Whereday: Location History 1.8** on
+October 30, 2026. The temporary iso.me store-listing notices have been removed.
+Access copy distinguishes new-user plans from protected existing-user rights;
+keep that distinction in both HTML and agent-readable Markdown. Historical
+1.7.16 workflow checks retain their original dates and limits.
 
 Content review dates are explicit. When materially updating a page, update its
 visible date and structured data, plus the corresponding date entries in the
@@ -205,11 +208,24 @@ guarantee indexing.
 
 ## Acquisition measurement
 
-Search Console ownership is verified. The [October 26 baseline](../docs/search-console-baseline-2026-10-26.md)
-preserves September 27–October 24 historical performance from the existing
-isolated.tech domain property filtered to Whereday. The dedicated URL-prefix
-property is processing; its sitemap already shows Success. Use the report's
-stored filters and date windows for repeatable comparisons.
+Search Console ownership is verified. On October 30, the existing Google account's
+`sc-domain:whereday.com` property was selected in OpenSEO. The
+[measurement record](../docs/qa/seo-measurement-connection-2026-10-30.md) preserves
+final Web data for September 30–October 27 and the preceding 28 days, plus
+separate completed UTC acquisition windows. Use those stored filters, date
+boundaries, and aggregation notes for repeatable comparisons. Six established
+URLs are indexed with matching canonicals. A subsequent Search Console inspection
+confirms the import guide is also submitted and indexed, with a successful mobile
+crawl at October 30, 19:24:33 UTC and its expected canonical.
+
+The [October 26 baseline](../docs/search-console-baseline-2026-10-26.md)
+remains a historical record from the isolated.tech domain property filtered to
+Whereday. Its then-processing URL-prefix property is separate from the domain
+property now selected in OpenSEO. The [October 30 domain comparison](../docs/qa/seo-domain-move-comparison-2026-10-30.md)
+reads the now-authorized dedicated legacy property. Its early history is missing
+relative to the parent-domain baseline. After separate approval, fresh parent-domain
+queries restricted to the old-host filter reproduced the saved 5-click/297-impression
+baseline exactly. Use that filtered source for historical continuity.
 
 The existing gated Cloudflare Web Analytics integration is retained. The shared
 `public/assets/acquisition.js` adds coarse website counts after the same
@@ -330,19 +346,17 @@ contains the exact native output. All 23 Country Days tests pass. See
 [the CSV evidence](../docs/qa/seo-country-day-csv-2026-10-26.md).
 No physical travel or live country-resolution accuracy was tested.
 
-The Google Timeline migration walkthrough is prepared in `content/` and
-listed in `DRAFTS` in `build_seo_pages.py`. It is intentionally absent from
-`public/`, the sitemap, and acquisition links: the confirmed public build's
-source predates the importer. Render it outside the deployment tree with:
+The Google Timeline migration walkthrough is published at
+`/blog/import-google-timeline-iphone/` for version 1.8/build 52. The release's
+frozen source manifest was rechecked; its 12 importer tests passed. The guide
+includes the exact synthetic fixture, preview, and completion screenshots.
+The UI check used a release-source Debug rebuild on iOS 26.5, not a physical
+App Store binary; repeated-import UI replay remains unverified. Native tests
+cover duplicate handling. Keep those evidence scopes explicit. See
+[the release verification](../docs/qa/seo-google-import-1-8-2026-10-30.md).
 
-```sh
-python3 marketing/scripts/preview_drafts.py
-```
-
-Before promoting it into `PAGES`, confirm the supporting public binary,
-repeat import/duplicate checks, replace the release-preview notices, and
-update the comparison, history, backup, and export references together. Current
-source support alone is insufficient to claim App Store availability.
+`DRAFTS` is currently empty. Future release-gated drafts must stay outside
+`public/` until their supporting released version and workflow are verified.
 
 The October 26 responsive layout sweep checked all 30 sitemap pages at 320
 and 390 CSS pixels. Five wide documentation tables now scroll in labelled,
@@ -405,3 +419,68 @@ python3 marketing/scripts/check_agentic_http.py --base-url http://127.0.0.1:8890
 ```
 
 Run the same checker without `--base-url` after deployment to verify production.
+
+## Screenshot delivery
+
+Nine guide screenshots use lossless WebP copies while retaining the original
+PNGs. The [encoding and verification record](../docs/qa/seo-lossless-screenshots-2026-10-30.md)
+and [manifest](../docs/seo-lossless-screenshots-2026-10-30.json) preserve hashes,
+exact decoded-pixel comparisons, sizes and page usage. Use `cwebp -lossless -m 6`
+when updating these copies; keep PNG where it is smaller. The normal build does
+not require an image encoder.
+
+## GPX browser tool and tutorial
+
+The free viewer lives at `/tools/gpx-viewer/`, with a worked tutorial at
+`/blog/check-gpx-file/` and a `/tools/` hub. Edit their source content and
+`build_seo_pages.py`; the normal build includes them in navigation validation,
+Markdown and the sitemap. `gpx-demo.mjs` is generated from the unchanged public
+five-point synthetic export. Do not replace that evidence sample with personal data.
+
+`assets/gpx-core.mjs` parses GPX 1.0/1.1 track points, routes and waypoints.
+It preserves segment boundaries, diagnoses missing/invalid times and coordinates,
+and exports a limited CSV point table. It is not full schema validation, file
+repair or a restorable journal converter. Limits:10 MiB/50,000 source points;
+plot sampling at2,000 points; preview at25 valid points. CSV includes all usable
+coordinate points and guards untrusted text against spreadsheet formulas.
+
+The tool excludes acquisition/Web Analytics scripts and the Worker adds a
+Content Security Policy with `connect-src 'none'`, self-only scripts, no
+referrers and `no-transform`. Protect slashless and direct-index aliases too.
+No external map tiles, geocoding, file uploads or local-storage persistence are
+used. Following a normal outbound link leaves this boundary. Other site pages
+retain their existing gated analytics.
+
+Run `npm ci --prefix marketing` then `npm test --prefix marketing` for GPX
+and Worker tests; the XML DOM package is a development dependency only.
+The normal Python site build has no new runtime dependency.
+
+## Format comparison examples
+
+`/blog/gpx-kml-geojson-location-history/` compares the same invented trip in
+GPX, timed KML, GeoJSON and the browser viewer’s CSV. The files are synthetic
+comparison fixtures, not newly captured native exports. Their first point has
+latitude0/longitude10 so swapping coordinate order can be detected.
+
+The normal site build runs `scripts/check_format_samples.py`: an independent
+check of all five coordinates, five timestamps and the two groups. KML uses
+Google’s gx track extension with interpolation off and ground-clamped placeholder
+altitudes; GeoJSON uses explicitly custom times arrays. No elevation was measured.
+To regenerate derived fixtures, run `node marketing/scripts/build_format_samples.mjs`
+after installing the existing test dependencies. Use `--check` for byte drift;
+JavaScript tests also compare the saved CSV with actual browser export logic.
+The CSV’s CRLF endings are protected in .gitattributes.
+
+### Timeline JSON to GPX (October 30, 2026)
+
+The existing local Timeline inspector now exports accepted records through
+`public/assets/timeline-gpx.mjs`. Raw locations and timed source paths form
+tracks; visits and activity endpoints are waypoints. Provenance from
+`timeline-core.mjs` prevents rejected components being bridged. Source paths,
+backwards time, UTC days, >10-minute gaps and longitude jumps stay separate.
+The tutorial includes three deterministic GPX downloads, tested byte-for-byte
+against actual browser downloads and against the official GPX1.1 schema.
+`npm test` includes eight conversion cases, including all50,000 acceptedpoints.
+No native importer, missing route reconstruction or road matching is provided.
+Keep tool-page analytics exclusion and connection-blocking CSP intact.
+Evidence: `../docs/qa/seo-timeline-gpx-2026-10-30.md`.

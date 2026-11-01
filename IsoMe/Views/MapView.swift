@@ -3898,6 +3898,13 @@ struct TraceScrubPanel: View {
     @ScaledMetric(relativeTo: .largeTitle) private var wideClockSize: CGFloat = 60
 
     var body: some View {
+        // Hug the content, scrolling only once it would pass the cap.
+        CappedHeightLayout(maxHeight: maxHeight) {
+            panel
+        }
+    }
+
+    private var panel: some View {
         VStack(spacing: 0) {
             grabber
 
@@ -3920,9 +3927,6 @@ struct TraceScrubPanel: View {
             .padding(.bottom, isExpandedLayout ? 24 : 12)
         }
         .frame(maxWidth: .infinity)
-        // Hug the content, scrolling only once it would pass the cap.
-        .frame(maxHeight: maxHeight)
-        .fixedSize(horizontal: false, vertical: true)
         .foregroundStyle(TE.textPrimary)
         .background {
             UnevenRoundedRectangle(topLeadingRadius: 26, topTrailingRadius: 26, style: .continuous)
@@ -4120,6 +4124,25 @@ private extension Text {
 }
 
 /// The day's stays as one bar; the part of today not yet lived is hatched.
+/// Offers its content at most `maxHeight` and takes only the height the content uses,
+/// unlike `.frame(maxHeight:)`, which grows to the cap.
+private struct CappedHeightLayout: Layout {
+    let maxHeight: CGFloat
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        guard let content = subviews.first else { return .zero }
+        return content.sizeThatFits(cappedProposal(proposal))
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        subviews.first?.place(at: bounds.origin, proposal: ProposedViewSize(width: bounds.width, height: bounds.height))
+    }
+
+    private func cappedProposal(_ proposal: ProposedViewSize) -> ProposedViewSize {
+        ProposedViewSize(width: proposal.width, height: min(proposal.height ?? maxHeight, maxHeight))
+    }
+}
+
 struct TraceDayBar: View {
     let segments: [TraceDay.Segment]
     let nowFraction: Double?

@@ -1,0 +1,19 @@
+{
+  "locations": [
+    {
+      "latitudeE7": 0,
+      "longitudeE7": 100000000,
+      "timestampMs": "946728000000"
+    },
+    {
+      "latitudeE7": 10000,
+      "longitudeE7": 100010000,
+      "timestamp": "2000-01-01T12:01:00Z"
+    },
+    {
+      "latitudeE7": 910000000,
+      "longitudeE7": 100020000,
+      "timestamp": "2000-01-01T12:02:00Z"
+    }
+  ]
+}

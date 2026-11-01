@@ -1,0 +1,197 @@
+{
+  "deployment": "https://16238819.spotted-8ez.pages.dev",
+  "results": [
+    {
+      "path": "/screenshots/google-import-complete-1-8.png",
+      "status": 200,
+      "bytes": 225518,
+      "sha256": "1939eb5bf572ad8751b4c419b787fdb5ce4c72ae2cf784405b9bbbd0440fc626"
+    },
+    {
+      "path": "/screenshots/google-import-complete-1-8.webp",
+      "status": 200,
+      "bytes": 54802,
+      "sha256": "818eddc5a7b76da54ec98ee7dd6279648ce5ec328ccf06993a167bd4e917d6b0"
+    },
+    {
+      "path": "/screenshots/google-import-preview-1-8.png",
+      "status": 200,
+      "bytes": 552272,
+      "sha256": "f38f25c85a933aedb74b9679abd41ef67494f9630fdc36211fc79d0aaa573245"
+    },
+    {
+      "path": "/screenshots/google-import-preview-1-8.webp",
+      "status": 200,
+      "bytes": 125174,
+      "sha256": "b16899bf9abbdedcb31938fc3a92b357ea82b73d0c2bf18b860863d50299a79e"
+    },
+    {
+      "path": "/screenshots/gpx-preview-synthetic.png",
+      "status": 200,
+      "bytes": 202801,
+      "sha256": "5becfd61420e7a13756185d1c82451e5c0574f1c4dd4d0d3137f892090f7ec52"
+    },
+    {
+      "path": "/screenshots/gpx-preview-synthetic.webp",
+      "status": 200,
+      "bytes": 35026,
+      "sha256": "0ad4fb41c2870b76c3c4d1e1b98521a05d5f6df8a3bc8cc44274304e86fd8fa2"
+    },
+    {
+      "path": "/screenshots/gpx-studio-ui-export.png",
+      "status": 200,
+      "bytes": 58830,
+      "sha256": "f63d66bcd7f4fd58655ea43b799d47f1c49a663f777b3a421d8481425da9c6cc"
+    },
+    {
+      "path": "/screenshots/gpx-studio-ui-export.webp",
+      "status": 200,
+      "bytes": 13654,
+      "sha256": "5030a385ca057ca046afcded2c091b0adbc4bff9ee5c6082d7c263a120212cae"
+    },
+    {
+      "path": "/screenshots/journal-empty-outing.png",
+      "status": 200,
+      "bytes": 85339,
+      "sha256": "398115164acee2058b3d625a41aa0160be86b5d0c95de2e2ecaae5e41a4c9bb5"
+    },
+    {
+      "path": "/screenshots/journal-empty-outing.webp",
+      "status": 200,
+      "bytes": 32752,
+      "sha256": "f23ec9d5e486c04777416a5f8b9041f7f22cccc4168409ec47240acd2100d2b8"
+    },
+    {
+      "path": "/screenshots/obsidian-maps-synthetic.png",
+      "status": 200,
+      "bytes": 213671,
+      "sha256": "c93964aed9867ad581f61cc19ea71e3deab35c1315bcd031d65f7ceb3eaa9626"
+    },
+    {
+      "path": "/screenshots/obsidian-maps-synthetic.webp",
+      "status": 200,
+      "bytes": 168656,
+      "sha256": "893314b4784709307865ea80790f6c7b953c08ebcec13c476a664e4fdfb3fb82"
+    },
+    {
+      "path": "/screenshots/obsidian-synthetic-export.png",
+      "status": 200,
+      "bytes": 230693,
+      "sha256": "7167198d17f9c789d4a04d4a01e0eb8ce00e3ef4437d0566fdca55b8fc031332"
+    },
+    {
+      "path": "/screenshots/obsidian-synthetic-export.webp",
+      "status": 200,
+      "bytes": 168854,
+      "sha256": "0427df5fd17d9f8b5715b79730038f870d914bca95d16385cb671b926027de17"
+    },
+    {
+      "path": "/screenshots/restore-synthetic-after-restart.png",
+      "status": 200,
+      "bytes": 713892,
+      "sha256": "e65cf84baccd6cf1ce1a4cda5b1c2335299f6bd72a7df8de888294d20553bcce"
+    },
+    {
+      "path": "/screenshots/restore-synthetic-after-restart.webp",
+      "status": 200,
+      "bytes": 203846,
+      "sha256": "03512fa750f1a395d50b9ae71646ffebf86c5606c23497d5cba0617fc83a919a"
+    },
+    {
+      "path": "/screenshots/saved-location-editor.png",
+      "status": 200,
+      "bytes": 90622,
+      "sha256": "efabaf291e91c009bc19ba02e03cd0f04876e70796c7dcd992544c458d7126f1"
+    },
+    {
+      "path": "/screenshots/saved-location-editor.webp",
+      "status": 200,
+      "bytes": 28904,
+      "sha256": "93aa0ec6e0a3fa13298b6c427150c088ded3937d6fa3f577293f7743c7dd7e92"
+    },
+    {
+      "path": "/blog/back-up-iphone-location-history/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 29888
+    },
+    {
+      "path": "/blog/back-up-iphone-location-history/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 15848
+    },
+    {
+      "path": "/blog/import-google-timeline-iphone/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 20715
+    },
+    {
+      "path": "/blog/import-google-timeline-iphone/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 7411
+    },
+    {
+      "path": "/blog/iphone-location-journal-obsidian/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 27853
+    },
+    {
+      "path": "/blog/iphone-location-journal-obsidian/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 14530
+    },
+    {
+      "path": "/blog/missing-location-history-iphone/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 27333
+    },
+    {
+      "path": "/blog/missing-location-history-iphone/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 14131
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 47100
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 16460
+    },
+    {
+      "path": "/blog/record-iphone-route-gpx/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 28736
+    },
+    {
+      "path": "/blog/record-iphone-route-gpx/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 14424
+    },
+    {
+      "path": "/docs/places/",
+      "accept": "text/html",
+      "status": 200,
+      "bytes": 22306
+    },
+    {
+      "path": "/docs/places/",
+      "accept": "text/markdown",
+      "status": 200,
+      "bytes": 6897
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "semanticSegments": [
+    {
+      "startTime": "2020-01-01T00:00:00Z",
+      "endTime": "2020-01-01T01:00:00Z",
+      "visit": {
+        "topCandidate": {
+          "placeLocation": {
+            "latLng": "geo:37.7,-122.4"
+          },
+          "placeName": "Timeline sample cafe"
+        }
+      },
+      "timelinePath": [
+        {
+          "point": "geo:37.7,-122.4",
+          "time": "2020-01-01T00:00:00Z"
+        },
+        {
+          "point": "geo:37.701,-122.401",
+          "durationMinutesOffsetFromStartTime": "30"
+        }
+      ]
+    },
+    {
+      "startTime": "2020-01-01T00:00:00Z",
+      "endTime": "2020-01-01T01:00:00Z",
+      "visit": {
+        "topCandidate": {
+          "placeLocation": {
+            "latLng": "geo:37.7,-122.4"
+          },
+          "placeName": "Timeline sample cafe"
+        }
+      },
+      "timelinePath": [
+        {
+          "point": "geo:37.7,-122.4",
+          "time": "2020-01-01T00:00:00Z"
+        },
+        {
+          "point": "geo:37.701,-122.401",
+          "durationMinutesOffsetFromStartTime": "30"
+        }
+      ]
+    },
+    {
+      "startTime": "bad",
+      "endTime": "bad",
+      "visit": {}
+    }
+  ]
+}

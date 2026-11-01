@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://whereday.com/samples/synthetic-google-timeline.json",
+    "status": 200,
+    "sha256": "c268f859c184a26aa34eabf168d729b6f4af9dfabeb600ffad9f5fe3b3b04bf4",
+    "bytes": 1180,
+    "content_type": "application/json",
+    "content_disposition": "attachment; filename=\"synthetic-google-timeline.json\""
+  },
+  {
+    "url": "https://whereday.com/screenshots/google-import-preview-1-8.png",
+    "status": 200,
+    "sha256": "f38f25c85a933aedb74b9679abd41ef67494f9630fdc36211fc79d0aaa573245",
+    "bytes": 552272,
+    "content_type": "image/png",
+    "content_disposition": null
+  },
+  {
+    "url": "https://whereday.com/screenshots/google-import-complete-1-8.png",
+    "status": 200,
+    "sha256": "1939eb5bf572ad8751b4c419b787fdb5ce4c72ae2cf784405b9bbbd0440fc626",
+    "bytes": 225518,
+    "content_type": "image/png",
+    "content_disposition": null
+  }
+]

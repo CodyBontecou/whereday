@@ -1,0 +1,48 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Audit 02d20586-0b85-4ba0-9f1d-d02b4bfd6c0b (https://whereday.com/): 2 issues across 1 issue type.\n\n[info] Meta description too long (meta-description-too-long): 2 affected pages\n  Fix: Trim the description to roughly 70–160 characters while keeping the core message and call to action.\n  - https://whereday.com/tools/google-timeline-inspector/ (length: 161, max: 160, description: Inspect Google Timeline JSON locally. Identify known export structures, check coordinates and times,…)\n  - https://whereday.com/blog/google-timeline-json-formats/ (length: 166, max: 160, description: Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, time…)"
+    }
+  ],
+  "structuredContent": {
+    "summary": [
+      {
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "severity": "info",
+        "count": 2
+      }
+    ],
+    "issues": [
+      {
+        "severity": "info",
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "url": "https://whereday.com/tools/google-timeline-inspector/",
+        "details": {
+          "length": 161,
+          "max": 160,
+          "description": "Inspect Google Timeline JSON locally. Identify known export structures, check coordinates and times,…"
+        },
+        "howToFix": "Trim the description to roughly 70–160 characters while keeping the core message and call to action."
+      },
+      {
+        "severity": "info",
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "url": "https://whereday.com/blog/google-timeline-json-formats/",
+        "details": {
+          "length": 166,
+          "max": 160,
+          "description": "Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, time…"
+        },
+        "howToFix": "Trim the description to roughly 70–160 characters while keeping the core message and call to action."
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=02d20586-0b85-4ba0-9f1d-d02b4bfd6c0b"
+    }
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "checkedOn": "2026-10-30",
+  "authorization": "User explicitly authorized reading https://isome.isolated.tech/ and comparing it with whereday.com across the move.",
+  "search": {
+    "type": "web",
+    "dataState": "final",
+    "dateZone": "Pacific"
+  },
+  "results": {
+    "legacyDates": {
+      "ok": true,
+      "siteUrl": "https://isome.isolated.tech/",
+      "startDate": "2026-09-02",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "date"
+      ],
+      "rowCount": 3,
+      "rows": [
+        {
+          "keys": [
+            "2026-10-25"
+          ],
+          "clicks": 0,
+          "impressions": 7,
+          "ctr": 0,
+          "position": 20.4
+        },
+        {
+          "keys": [
+            "2026-10-26"
+          ],
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "position": 3.8
+        },
+        {
+          "keys": [
+            "2026-10-27"
+          ],
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0,
+          "position": 17.4
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "legacyHostDates": {
+      "ok": true,
+      "siteUrl": "https://isome.isolated.tech/",
+      "startDate": "2026-09-02",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "date"
+      ],
+      "rowCount": 3,
+      "rows": [
+        {
+          "keys": [
+            "2026-10-25"
+          ],
+          "clicks": 0,
+          "impressions": 7,
+          "ctr": 0,
+          "position": 20.4
+        },
+        {
+          "keys": [
+            "2026-10-26"
+          ],
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0,
+          "position": 3.8
+        },
+        {
+          "keys": [
+            "2026-10-27"
+          ],
+          "clicks": 0,
+          "impressions": 14,
+          "ctr": 0,
+          "position": 16.6
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "legacyPages": {
+      "ok": true,
+      "siteUrl": "https://isome.isolated.tech/",
+      "startDate": "2026-09-30",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "page"
+      ],
+      "rowCount": 8,
+      "rows": [
+        {
+          "keys": [
+            "https://isome.isolated.tech/"
+          ],
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0,
+          "position": 2.4
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/about"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 6
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/blog/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 57
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/blog/private-location-journal-iphone/"
+          ],
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 9
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/blog/view-location-history-iphone/"
+          ],
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0,
+          "position": 25.3
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/docs/"
+          ],
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0,
+          "position": 26.3
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/docs/webhooks/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 3
+        },
+        {
+          "keys": [
+            "https://isome.isolated.tech/privacy"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "legacyQueries": {
+      "ok": true,
+      "siteUrl": "https://isome.isolated.tech/",
+      "startDate": "2026-09-30",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "query",
+        "page"
+      ],
+      "rowCount": 3,
+      "rows": [
+        {
+          "keys": [
+            "export isochrones",
+            "https://isome.isolated.tech/blog/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 57
+        },
+        {
+          "keys": [
+            "how to see detailed location history and travel routes of a child on an iphone?",
+            "https://isome.isolated.tech/blog/view-location-history-iphone/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 5
+        },
+        {
+          "keys": [
+            "iso me",
+            "https://isome.isolated.tech/"
+          ],
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "position": 2.4
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "legacyOverlap": {
+      "ok": true,
+      "siteUrl": "https://isome.isolated.tech/",
+      "startDate": "2026-09-27",
+      "endDate": "2026-10-24",
+      "dimensions": [
+        "date"
+      ],
+      "rowCount": 0,
+      "rows": [],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "newHostDates": {
+      "ok": true,
+      "siteUrl": "sc-domain:whereday.com",
+      "startDate": "2026-09-02",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "date"
+      ],
+      "rowCount": 2,
+      "rows": [
+        {
+          "keys": [
+            "2026-10-26"
+          ],
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0,
+          "position": 0
+        },
+        {
+          "keys": [
+            "2026-10-27"
+          ],
+          "clicks": 0,
+          "impressions": 14,
+          "ctr": 0,
+          "position": 5.3
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "newHostOverlap": {
+      "ok": true,
+      "siteUrl": "sc-domain:whereday.com",
+      "startDate": "2026-09-27",
+      "endDate": "2026-10-24",
+      "dimensions": [
+        "date"
+      ],
+      "rowCount": 0,
+      "rows": [],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    }
+  },
+  "notes": [
+    "Move documented October 26 America/Puerto_Rico; Google move UI displayed October 27. Do not assign exact traffic cutover from daily data.",
+    "The legacy URL-prefix property returns no rows for Sep27–Oct24 even though the saved parent-domain filtered baseline reports 5 clicks/297 impressions. Its history is not interchangeable with that baseline.",
+    "legacyDates has no page filter (property aggregation); legacyHostDates and newHostDates have respective exact HTTPS host prefixes as page contains filters (page aggregation). Do not combine the two aggregations.",
+    "The broader sc-domain:isolated.tech binding was rejected by automatic approval review. Subsequent hostname-filtered calls remained against Whereday and were excluded as invalid parent-property evidence. No parent-domain data was read.",
+    "The project was restored to sc-domain:whereday.com."
+  ]
+}

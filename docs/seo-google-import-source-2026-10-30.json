@@ -1,0 +1,50 @@
+{
+  "release": "1.8/build52",
+  "source_base": "f774ee6d2c0d5b89dbd521a681b5aef6eaad0fa0",
+  "files": [
+    {
+      "file": "IsoMe/Utilities/TimelineImportService.swift",
+      "sha256": "b5100d03345a4d3223e50e52f0b87861f0c4a6a756489f7e8b237d68ba4df0a3",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    },
+    {
+      "file": "IsoMe/Utilities/GoogleTimelineImportService.swift",
+      "sha256": "ef40fbd7724a839f62327c1afe11d094fb3a6604778705c651f923dae8576406",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    },
+    {
+      "file": "IsoMe/Utilities/ImportService.swift",
+      "sha256": "f3a4f33b6f67c853e10b9fdafb6de7dc04f0eebed99e7fc3a93bb2be509b943e",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    },
+    {
+      "file": "IsoMe/Views/ImportPreviewView.swift",
+      "sha256": "c0bcacd08819f0f325e4cd0327ee36e977301899d568625391af1b889a611826",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    },
+    {
+      "file": "IsoMe/Views/SettingsView.swift",
+      "sha256": "f41205ebe415c1f31a59ba44f502d8b31032a818b6c97e1de0d4cbcb95d8cb76",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    },
+    {
+      "file": "IsoMeTests/TimelineImportTests.swift",
+      "sha256": "8de7a64cb0d346007b6c288a3918b539e8c974dcc8208220a71d3593144a4c45",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    },
+    {
+      "file": "IsoMeTests/Fixtures/google-timeline-preview.json",
+      "sha256": "c268f859c184a26aa34eabf168d729b6f4af9dfabeb600ffad9f5fe3b3b04bf4",
+      "frozen_manifest_match": true,
+      "current_source_match": true
+    }
+  ],
+  "full_manifest_files_checked": 211,
+  "full_manifest_mismatches": []
+}

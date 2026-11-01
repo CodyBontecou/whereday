@@ -10,7 +10,7 @@ watchOS 10+
 
 Updated
 
-October 26, 2026
+October 30, 2026
 
 Reading
 
@@ -22,7 +22,7 @@ Back to
 
 ## Record on the Watch, then check the phone copy
 
-Whereday can record GPS points on Apple Watch without the iPhone nearby. The Watch keeps a local queue for transfer to the companion iPhone. Recording and reviewing history are free; writing export files on the phone requires the optional unlock.
+Whereday can record GPS points on Apple Watch without the iPhone nearby. The Watch keeps a local queue for transfer to the companion iPhone. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.
 
 Install the Watch app and allow its location request. The phone app is needed to review transferred records in its journal and use its export workflow. Controls can vary by version; if a control described below is missing, check the available app update.
 
@@ -71,6 +71,10 @@ This explains why a pending queue can contain points already saved on the phone:
 
 What was checked: released queue batching, acknowledgements, receiver imports, and reopening temporary disk stores in an iOS 26.5 simulator. All 15 selected native tests passed on October 26, 2026. Delivery was supplied by the test with WatchConnectivity disabled. No physical Watch recording, Bluetooth or Wi-Fi delivery, background transfer, app-process restart, or Watch sync screen was newly verified.
 
+## Export the phone copy as GPX
+
+Once the recording is saved on the iPhone, follow the [Apple Watch to GPX walkthrough](https://whereday.com/blog/record-iphone-route-gpx/#watch-to-gpx). It covers selecting points or an outing, checking the saved file, and comparing a partial 500-point transfer with the complete 503-point synthetic example. A GPX that opens successfully can still be missing the last batch.
+
 ## If the route is missing or incomplete
 
 - Nothing recorded: check the Watch's location permission, tracking state, and whether the point count advanced during the session.
@@ -101,7 +105,7 @@ Not necessarily. In the checked example, 500 points were already saved while all
 
 ### Will retrying add the same points twice?
 
-The checked replay of the same Watch batch added zero duplicate points, including after the phone store was reopened. This depends on those same record IDs. A repeated file import is a separate workflow: the [backup import check](https://whereday.com/blog/back-up-iphone-location-history/#checked-import) shows that importing the point file again added repeated points.
+The checked replay of the same Watch batch added zero duplicate points, including after the phone store was reopened. This depends on those same record IDs. A repeated file import is a separate workflow. The [historical backup import check in 1.7.16](https://whereday.com/blog/back-up-iphone-location-history/#checked-import) added repeated points. Version 1.8 adds duplicate preview and skipping for supported imports; see the [current import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/).
 
 ### Does Nothing to sync prove I have a complete backup?
 

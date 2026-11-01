@@ -2,54 +2,71 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://whereday.com/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/about</loc>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/back-up-iphone-location-history/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/blog/check-gpx-file/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/blog/google-timeline-json-formats/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/blog/gpx-kml-geojson-location-history/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/blog/import-google-timeline-iphone/</loc>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/iphone-location-journal-obsidian/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/iphone-location-tracking-battery/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/missing-location-history-iphone/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/private-location-journal-iphone/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/record-iphone-route-gpx/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/track-days-in-country-iphone/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/blog/view-location-history-iphone/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/compare/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/compare/google-maps-timeline/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/contact</loc>
@@ -60,19 +77,19 @@
   </url>
   <url>
     <loc>https://whereday.com/docs/apple-watch/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/automatic-exports/</loc>
-    <lastmod>2026-08-22</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/export-import/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/getting-started/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/photos/</loc>
@@ -80,19 +97,19 @@
   </url>
   <url>
     <loc>https://whereday.com/docs/places/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/privacy-data/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/siri-shortcuts/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/timeline-outings/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/tracking/</loc>
@@ -108,18 +125,30 @@
   </url>
   <url>
     <loc>https://whereday.com/integrations/dawarich/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/privacy</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/terms</loc>
     <lastmod>2026-10-29</lastmod>
   </url>
   <url>
+    <loc>https://whereday.com/tools/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/tools/google-timeline-inspector/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/tools/gpx-viewer/</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
     <loc>https://whereday.com/zh-hans/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
 </urlset>

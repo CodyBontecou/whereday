@@ -8,7 +8,7 @@ Practical iPhone guides
 
 Find the app and date that hold your saved visits, distinguish iPhone location settings from recorded history, and check existing copies before changing your setup.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 26, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
 ## Check the recorder you already used
 
@@ -61,7 +61,7 @@ Google’s iPhone guide describes optional encrypted backup and a device selecto
 
 For an independent file, use Settings → Location & Privacy → Export Timeline data → Save to Files. Google names the export `location-history.json`. Follow [Google’s current iPhone instructions](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en) if menus differ.
 
-Keep the archive separately. The verified App Store 1.7.16 build of Whereday does not import Google Timeline files; see the [Google Timeline comparison](https://whereday.com/compare/google-maps-timeline/) before switching.
+Keep the archive separately. Whereday 1.8 can preview supported Google Timeline JSON; use the [import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/) to check formats, duplicates, and a synthetic example before saving.
 
 ## Keep the records before changing the setup
 
@@ -86,16 +86,16 @@ Photos, receipts, and calendar entries may help you remember a day, but they are
 
 ## Record your next day with Whereday
 
-If you want a separate journal without an Whereday account, try a short recording before a longer trip:
+If you want a separate journal without a Whereday account, try a short recording before a longer trip:
 
 - Install Whereday and complete permission setup. Always location access allows recording in the background.
 - On Map, tap the recording control before you leave. Start enables GPS recording and visit monitoring together.
 - Stop when you finish. Open Timeline, choose the day, and open the outing. Check its Points count, Path, and times; a saved outing alone does not prove a GPS route was captured.
 - If you need a portable route file, follow [the iPhone route and GPX guide](https://whereday.com/blog/record-iphone-route-gpx/).
 
-Recording and reviewing your journal are free. Writing export files requires the optional one-time unlock; preview is free. Read [the setup walkthrough](https://whereday.com/blog/private-location-journal-iphone/) for permissions, battery controls, and keeping supported copies.
+From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Read [the setup walkthrough](https://whereday.com/blog/private-location-journal-iphone/) for permissions, battery controls, and keeping supported copies.
 
-Core records are stored on your phone. Apple services supply place names and map features; default-on first-party onboarding telemetry excludes location records. Optional webhooks send records to your chosen endpoint. The [privacy policy](https://whereday.com/privacy) explains those boundaries.
+Core records are stored on your phone. Apple services supply place names and map features. Production version 1.8 disables onboarding and purchase analytics; earlier versions can still send the technical events described in the privacy policy. Optional webhooks send records to your chosen endpoint. The [privacy policy](https://whereday.com/privacy) explains those boundaries.
 
 ## Common location-history questions
 
@@ -118,7 +118,7 @@ Whereday’s map interface. This illustrative screenshot may contain sample data
 ## Remember your next trip.
 Start recording before you go.
 
-Try Whereday’s free recording, then review the route and visits on your iPhone.
+Check your tracking access, then record and review the route and visits on your iPhone.
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 

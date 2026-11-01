@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+October 30, 2026
 
 Reading
 
@@ -20,7 +20,7 @@ Back to
 
 [All docs](https://whereday.com/docs/)
 
-Optional paid feature. Auto Export appears in the Export tab after you choose a default export folder and unlock file exports. Recording, viewing history, and Export Preview are free.
+Optional scheduled exports. Auto Export appears in the Export tab after you choose a default export folder and have export access. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.
 
 ## Set up one file you can check
 

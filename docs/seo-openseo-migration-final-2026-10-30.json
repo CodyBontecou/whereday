@@ -1,0 +1,36 @@
+{
+  "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+  "auditId": "c33637c3-7077-4d8a-8da2-6de8d8d61ada",
+  "issues": {
+    "summary": [],
+    "issues": [],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=c33637c3-7077-4d8a-8da2-6de8d8d61ada"
+    }
+  },
+  "migrationPage": {
+    "pages": [
+      {
+        "id": "a17bfd2d1df30b4a406a36c91fb0461bc1f9",
+        "url": "https://whereday.com/blog/import-google-timeline-iphone/",
+        "statusCode": 200,
+        "fetchClass": "ok",
+        "redirectUrl": null,
+        "title": "Import Google Timeline on iPhone — Whereday",
+        "metaDescription": "Import Google Timeline JSON into Whereday on iPhone. Preview visits, points, duplicates, and skipped entries. Includes a checked synthetic example.",
+        "wordCount": 983,
+        "isIndexable": true,
+        "crawlDepth": null,
+        "inSitemap": true,
+        "internalLinkCount": 12,
+        "responseTimeMs": 90
+      }
+    ],
+    "total": 1,
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=c33637c3-7077-4d8a-8da2-6de8d8d61ada"
+    }
+  }
+}

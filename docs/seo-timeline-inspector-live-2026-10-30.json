@@ -1,0 +1,117 @@
+{
+  "deployment": "https://cee606ec.spotted-8ez.pages.dev",
+  "checkedAtUTC": "2026-10-30T20:57:16.767380+00:00",
+  "checks": [
+    {
+      "path": "/tools/google-timeline-inspector/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/tools/google-timeline-inspector/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/blog/google-timeline-json-formats/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/blog/google-timeline-json-formats/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/tools/google-timeline-inspector/",
+      "policy": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; object-src 'none'",
+      "analyticsAbsent": true
+    },
+    {
+      "path": "/tools/google-timeline-inspector",
+      "status": 308,
+      "location": "/tools/google-timeline-inspector/",
+      "bodyBytes": 0
+    },
+    {
+      "path": "/tools/google-timeline-inspector/index.html",
+      "status": 308,
+      "location": "/tools/google-timeline-inspector/",
+      "bodyBytes": 0
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "policy": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; object-src 'none'",
+      "analyticsAbsent": true
+    },
+    {
+      "path": "/assets/timeline-core.mjs",
+      "status": 200,
+      "type": "application/javascript",
+      "sha256": "0e7a8015bc839858e7eda4cfbaa34d7f41d3e5d6490d51e0b92505f09750d3c2",
+      "disposition": null
+    },
+    {
+      "path": "/assets/timeline-viewer.mjs",
+      "status": 200,
+      "type": "application/javascript",
+      "sha256": "a5c11de8432859f16413920707bb594c5b84b6bb4ff24a17ef888c4f316e028d",
+      "disposition": null
+    },
+    {
+      "path": "/assets/timeline-demo.mjs",
+      "status": 200,
+      "type": "application/javascript",
+      "sha256": "7212b3efb8704a9e09191f3b9da0adf2cc5c17c20428f9834332df787750e80d",
+      "disposition": null
+    },
+    {
+      "path": "/assets/gpx-viewer.css",
+      "status": 200,
+      "type": "text/css",
+      "sha256": "ea8625f1d2c0c4aebc81d2efcc45f3c8c39e10014a238da7130788244c185469",
+      "disposition": null
+    },
+    {
+      "path": "/samples/synthetic-google-timeline.json",
+      "status": 200,
+      "type": "application/json",
+      "sha256": "c268f859c184a26aa34eabf168d729b6f4af9dfabeb600ffad9f5fe3b3b04bf4",
+      "disposition": "attachment; filename=\"synthetic-google-timeline.json\""
+    },
+    {
+      "path": "/samples/synthetic-google-raw.json",
+      "status": 200,
+      "type": "application/json",
+      "sha256": "3445005e349f3a745ed5e5bda3c1445167140ab70f69596f8cb4671fcda15426",
+      "disposition": "attachment; filename=\"synthetic-google-raw.json\""
+    },
+    {
+      "path": "/samples/synthetic-google-semantic.json",
+      "status": 200,
+      "type": "application/json",
+      "sha256": "2e2fc2fd647e66aec32a8df8a84cd16a8d25aa4710a325800ba14d95358048ce",
+      "disposition": "attachment; filename=\"synthetic-google-semantic.json\""
+    },
+    {
+      "path": "/samples/synthetic-google-unknown.json",
+      "status": 200,
+      "type": "application/json",
+      "sha256": "56ac0908965f2c38e4749e0e7f6b40ec6a73502f0839d49004565612d08df480",
+      "disposition": "attachment; filename=\"synthetic-google-unknown.json\""
+    },
+    {
+      "path": "/blog/",
+      "readerLinks": true
+    },
+    {
+      "path": "/tools/",
+      "readerLinks": true
+    },
+    {
+      "path": "/blog/import-google-timeline-iphone/",
+      "readerLinks": true
+    }
+  ],
+  "sitemapVerified": true
+}

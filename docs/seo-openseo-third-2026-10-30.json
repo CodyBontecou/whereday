@@ -1,0 +1,30 @@
+{
+  "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+  "auditId": "8a74be86-0dc3-44e0-8f0e-d89ab52a109c",
+  "issues": {
+    "summary": [
+      {
+        "issueType": "thin-content",
+        "title": "Thin content",
+        "severity": "warning",
+        "count": 1
+      }
+    ],
+    "issues": [
+      {
+        "severity": "warning",
+        "issueType": "thin-content",
+        "title": "Thin content",
+        "url": "https://whereday.com/compare/",
+        "details": {
+          "wordCount": 109
+        },
+        "howToFix": "Either expand the page with genuinely useful content, noindex it, or consolidate it into a stronger page. If the content exists but is rendered by JavaScript, ensure it is server-rendered or pre-rendered."
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=8a74be86-0dc3-44e0-8f0e-d89ab52a109c"
+    }
+  }
+}

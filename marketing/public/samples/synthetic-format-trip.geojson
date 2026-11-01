@@ -1,0 +1,58 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "synthetic": true,
+        "segment": 1,
+        "times": [
+          "2000-01-01T12:00:00Z",
+          "2000-01-01T12:01:00Z",
+          "2000-01-01T12:02:00Z"
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            10,
+            0
+          ],
+          [
+            10.001,
+            0.001
+          ],
+          [
+            10.002,
+            0.002
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "synthetic": true,
+        "segment": 2,
+        "times": [
+          "2000-01-01T12:13:00Z",
+          "2000-01-01T12:14:00Z"
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            10.003,
+            0.003
+          ],
+          [
+            10.004,
+            0.004
+          ]
+        ]
+      }
+    }
+  ]
+}

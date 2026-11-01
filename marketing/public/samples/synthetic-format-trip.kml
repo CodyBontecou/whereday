@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document><name>Invented five-point format comparison</name>
+    <description>Guide example, not a native-app export. Ground-clamped; coordinate altitude zeros are placeholders, not measured elevation.</description>
+    <Placemark><name>Invented trip</name><gx:MultiTrack>
+      <altitudeMode>clampToGround</altitudeMode><gx:interpolate>0</gx:interpolate>
+      <gx:Track>
+        <when>2000-01-01T12:00:00Z</when>
+        <when>2000-01-01T12:01:00Z</when>
+        <when>2000-01-01T12:02:00Z</when>
+        <gx:coord>10 0 0</gx:coord>
+        <gx:coord>10.001 0.001 0</gx:coord>
+        <gx:coord>10.002 0.002 0</gx:coord>
+      </gx:Track>
+      <gx:Track>
+        <when>2000-01-01T12:13:00Z</when>
+        <when>2000-01-01T12:14:00Z</when>
+        <gx:coord>10.003 0.003 0</gx:coord>
+        <gx:coord>10.004 0.004 0</gx:coord>
+      </gx:Track>
+    </gx:MultiTrack></Placemark>
+  </Document>
+</kml>

@@ -1,0 +1,75 @@
+{
+  "appId": "6761960794",
+  "libraryId": "6761960794",
+  "placementGroup": "IPHONE_DUO_PROFILE",
+  "locale": "en-US",
+  "placedOnVersion": "1.8.2",
+  "assets": [
+    {
+      "fileName": "01-day-unfolded-2853x2007.png",
+      "id": "94000019-30b5-855a-8028-864cbbff34a1",
+      "sha256": "40d0565e6fdc0be9d28e669a2024665fca1a6fc58cacd4ed1c3bc8d838559716",
+      "state": "WAITING_FOR_REVIEW",
+      "specId": "b83915b8-5b87-4e63-bba5-ab3a0c439862",
+      "imageAsset": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/90C1wQeQaiZgB2Kio4GSkQ/{w}x{h}bb.{f}",
+        "width": 2853,
+        "height": 2007
+      },
+      "placementId": "40000019-30b5-855a-8f17-e12939eb660a",
+      "placementState": "ACTIVE"
+    },
+    {
+      "fileName": "02-places-in-context-2853x2007.png",
+      "id": "7fc00019-30b5-855a-8029-62a261176b2d",
+      "sha256": "6bf57d991c9ad4f293f871a53ee564886be8a6189abd048bb182aafac885f7ef",
+      "state": "WAITING_FOR_REVIEW",
+      "specId": "b83915b8-5b87-4e63-bba5-ab3a0c439862",
+      "imageAsset": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/FoD_u9vn_NZJ4gVXcRyK3A/{w}x{h}bb.{f}",
+        "width": 2853,
+        "height": 2007
+      },
+      "placementId": "fa000019-30b5-855a-8f2e-f2fe90d5fcb8",
+      "placementState": "ACTIVE"
+    },
+    {
+      "fileName": "03-after-dark-2853x2007.png",
+      "id": "57400019-30b5-855a-8013-5b9b5330295a",
+      "sha256": "1eba9b668f9e4146d32a86ee452c8f879c6ebfb587a5ab6dd30873849a336829",
+      "state": "WAITING_FOR_REVIEW",
+      "specId": "b83915b8-5b87-4e63-bba5-ab3a0c439862",
+      "imageAsset": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/HFUYjVUP8hm6GXvxXUJnqw/{w}x{h}bb.{f}",
+        "width": 2853,
+        "height": 2007
+      },
+      "placementId": "22000019-30b5-855a-8f06-da6789394cac",
+      "placementState": "ACTIVE"
+    },
+    {
+      "fileName": "04-cover-map-1398x2034.png",
+      "id": "38400019-30b5-855a-8000-c343537fbd2a",
+      "sha256": "da39f8a9f4a8d02b1b52e186e3beec600e7f66318765b2ad2aacdec8b9874dd0",
+      "state": "WAITING_FOR_REVIEW",
+      "specId": "205e7ab6-a23a-4ee2-b327-0a99ec2a2520",
+      "imageAsset": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/FRQkU7rOO19mwvLbaJ8yyA/{w}x{h}bb.{f}",
+        "width": 1398,
+        "height": 2034
+      },
+      "placementId": "70c00019-30b5-855a-8f1e-52fcfcfebeb7",
+      "placementState": "ACTIVE"
+    }
+  ],
+  "versionId": "8ec51400-9523-462c-ac5d-83d504290b45",
+  "localizationId": "61a47aa4-a6a0-4a51-bd55-b0c2c0a471de",
+  "submittedForReview": true,
+  "releaseType": "MANUAL",
+  "verifiedOrder": true,
+  "verification": "Apple readback confirms WAITING_FOR_REVIEW for 1.8.2 (58) and all four Duo assets; placement order verified.",
+  "processingComplete": true,
+  "submissionId": "fa4d9b89-8f00-4aa7-bc9c-0eb9327fa9c9",
+  "submittedDate": "2026-10-30T20:06:19.746Z",
+  "build": "58"
+}

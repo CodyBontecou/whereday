@@ -1,14 +1,14 @@
 <section aria-labelledby="answer">
   <h2 id="answer">An alternative for your next recorded day</h2>
-  <p>Whereday is an iPhone location journal for people who want to record their own visits and routes without a Google account. Recording is free. A one-time purchase unlocks file exports, scheduled exports, and webhooks.</p>
+  <p>Whereday is an iPhone location journal for people who want to record their own visits and routes without a Google account. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.</p>
   <p>Google Timeline already keeps history on your device and offers encrypted backup. Choose based on the recording and export workflow you need. Starting Whereday does not move your old Timeline archive.</p>
 </section>
 
 <section aria-labelledby="decision">
   <h2 id="decision">Start with the history you need to keep</h2>
   <ul>
-    <li><strong>Find or move your existing Google history:</strong> keep its archive and check <a href="#preserve">Timeline export and backup</a> first. Whereday 1.7.16 cannot import Google Timeline files.</li>
-    <li><strong>Record future visits and routes without another account:</strong> <a href="#choose">try Whereday’s free recording</a>, then inspect the saved points before relying on it.</li>
+    <li><strong>Find or move your existing Google history:</strong> keep its archive and check <a href="#preserve">Timeline export and backup</a> first. Whereday 1.8 supports selected Google JSON formats; follow the <a href="/blog/import-google-timeline-iphone/">import walkthrough</a>.</li>
+    <li><strong>Record future visits and routes without another account:</strong> <a href="#choose">check Whereday’s recording access</a>, then inspect the saved points before relying on it.</li>
     <li><strong>Use new records in a map, notes, or your own server:</strong> review the <a href="#examples">checked export examples</a> before paying for exports. File compatibility and restoration are separate questions.</li>
   </ul>
 </section>
@@ -23,13 +23,13 @@
         <tr><th scope="row">Account</th><td>No Whereday account.</td><td>Google account.</td></tr>
         <tr><th scope="row">Storage and backup</th><td>Local journal. Keep supported export files for restoration; no built-in cloud sync.</td><td>Device history, with optional encrypted server backup.</td></tr>
         <tr><th scope="row">Recording</th><td>Start and Stop control GPS recording and visit monitoring together. Always permission allows background recording.</td><td>Visits and routes collected with Timeline enabled.</td></tr>
-        <tr><th scope="row">Files</th><td>JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks, and Overland. Paid export; free preview.</td><td>Location-history JSON export.</td></tr>
-        <tr><th scope="row">Moving existing history</th><td>App Store 1.7.16 imports Whereday JSON, CSV, and Markdown files. No Google Timeline import in that build.</td><td>Timeline backup can transfer history to another device.</td></tr>
-        <tr><th scope="row">Payment</th><td>Free recording. US lifetime unlock: $49.99 Individual or $89.99 Family. Regional prices vary.</td><td>Timeline is available within Google Maps.</td></tr>
+        <tr><th scope="row">Files</th><td>JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks, and Overland. OwnTracks and Overland carry GPS points. Preview is free; file writing follows the <a href="/#export-access">new-user and existing-user export rules</a>.</td><td>Location-history JSON export.</td></tr>
+        <tr><th scope="row">Moving existing history</th><td>Version 1.8 previews supported Google Timeline JSON and Whereday JSON, CSV, or Markdown. Select record types and inspect approximate duplicates before saving.</td><td>Timeline backup can transfer history to another device.</td></tr>
+        <tr><th scope="row">Payment</th><td>New users from 1.8 choose a subscription or Lifetime access; eligible subscriptions include a trial. Existing users retain free tracking and prior purchase rights. See <a href="/#pricing">current prices and access</a>.</td><td>Timeline is available within Google Maps.</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="source-note">Google features: <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s Timeline help for iPhone</a>, checked October 26, 2026. Whereday features are described in its <a href="/docs/">product documentation</a>. This comparison is written by Whereday’s developer.</p>
+  <p class="source-note">Google features: <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s Timeline help for iPhone</a>, checked October 30, 2026. Whereday features are described in its <a href="/docs/">product documentation</a>. This comparison is written by Whereday’s developer.</p>
 </section>
 
 <section aria-labelledby="choose">
@@ -41,13 +41,13 @@
     <li>You want an optional webhook workflow alongside a local journal.</li>
   </ul>
   <p>Use the <a href="/blog/private-location-journal-iphone/">private location journal guide</a> to set up your first recording. Start enables detailed GPS as well as visit monitoring; there is no separate passive visit-only switch. Permissions, GPS conditions, and battery can affect the record.</p>
-  <p><a class="button" href="https://apps.apple.com/app/id6761960794">Try free tracking on iPhone</a></p>
+  <p><a class="button" href="https://apps.apple.com/app/id6761960794">Download Whereday for iPhone</a></p>
 </section>
 
 <section aria-labelledby="keep-google">
   <h2 id="keep-google">When keeping Google Timeline makes sense</h2>
-  <p>Keep Timeline if its existing archive, Maps workflow, and backup meet your needs. Whereday is not a drop-in replacement for importing that archive. Review <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s current settings and backup instructions</a> before changing your setup.</p>
-  <p>If you want to try Whereday, record a short session and inspect it before relying on it for a longer trip. You can evaluate the free recording features before buying export access.</p>
+  <p>Keep Timeline if its existing archive, Maps workflow, and backup meet your needs. Importing selected visits and timed points does not reproduce every Google activity, label, or backup feature. Review <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s current settings and backup instructions</a> before changing your setup.</p>
+  <p>If you want to try Whereday, record a short session and inspect it before relying on it for a longer trip. Check your trial eligibility and tracking access before starting; existing users retain their earlier rights.</p>
 </section>
 
 <section aria-labelledby="preserve">
@@ -58,8 +58,8 @@
     <li>Choose <strong>Save to Files</strong>, select a destination, and save <code>location-history.json</code>. Keep that original file separately.</li>
     <li>For Google’s device-transfer backup, open <strong>Your Timeline → cloud icon</strong> and check Backup. Google says backup requires auto-delete to be off and changes can take a few days to appear.</li>
   </ol>
-  <p class="source-note">These steps follow <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s iPhone export and backup instructions</a>, checked October 26, 2026. Google notes that settings are being updated, so labels may differ. No Google device-transfer test is claimed here.</p>
-  <p>App Store 1.7.16 cannot import that Google archive. A future importer still cannot reconstruct records missing from the file. An exported file is not proof of a successful restore.</p>
+  <p class="source-note">These steps follow <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s iPhone export and backup instructions</a>, checked October 30, 2026. Google notes that settings are being updated, so labels may differ. No Google device-transfer test is claimed here.</p>
+  <p>Whereday 1.8 supports selected Google Timeline JSON structures. Follow the <a href="/blog/import-google-timeline-iphone/">preview-and-import walkthrough</a>, including its checked synthetic example and format limits. No importer can reconstruct records missing from the file. An exported file is not proof of a successful restore.</p>
   <p>For existing Apple or Google records, start with <a href="/blog/view-location-history-iphone/">the iPhone history guide</a>. For new Whereday routes, follow <a href="/blog/record-iphone-route-gpx/">the GPX export walkthrough</a> and check <a href="/docs/export-import/">export and restore compatibility</a>. A GPX file is useful for drawing a route elsewhere, but it cannot be imported into Whereday. Keep supported visit and point exports for records you want to restore later.</p>
 </section>
 
@@ -71,12 +71,12 @@
     <li><a href="/blog/iphone-location-journal-obsidian/">Markdown in Obsidian:</a> a native export with two invented visits opened in a temporary desktop vault, with an optional checked Maps plugin example. Mobile and scheduled delivery need separate checks.</li>
     <li><a href="/integrations/dawarich/">Overland delivery to Dawarich:</a> three invented points persisted after the local receiver and database restarted. Production HTTPS and unattended delivery remain unverified.</li>
   </ul>
-  <p>For returning data to Whereday, read the <a href="/blog/back-up-iphone-location-history/">backup and restore guide</a>. In the checked 1.7.16 import, nearby visits reconciled while repeating the point file appended its points again. Keep the originals and verify destination counts before repeating an import.</p>
+  <p>For returning data to Whereday, read the <a href="/blog/back-up-iphone-location-history/">backup and restore guide</a>. That guide preserves a historical 1.7.16 example where nearby visits reconciled and repeated point files appended again. Version 1.8 adds preview and duplicate skipping; inspect the current preview rather than applying the old counts to a new import. Keep the originals and verify destination counts before repeating an import.</p>
 </section>
 
 <section aria-labelledby="privacy">
   <h2 id="privacy">Understand what local storage means</h2>
-  <p>Whereday does not operate a server archive of your location history. Apple services handle place names and map features; first-party onboarding and purchase telemetry is enabled by default and excludes your location records. Optional webhooks deliver records to an endpoint you configure. Exported copies follow the storage rules of the destination you choose.</p>
+  <p>Whereday does not operate a server archive of your location history. Apple services handle place names and map features. Production version 1.8 disables onboarding and purchase analytics; earlier versions can still send the technical events described in the privacy policy. Optional webhooks deliver records to an endpoint you configure. Exported copies follow the storage rules of the destination you choose.</p>
   <p>Read the <a href="/privacy">privacy policy</a>, <a href="/docs/tracking/">recording controls</a>, and <a href="/#pricing">current pricing</a> before choosing a workflow.</p>
 </section>
 
@@ -87,6 +87,6 @@
 
 <section class="closing" aria-labelledby="start">
   <h2 id="start">Record your next route.<br>Keep a copy you can use.</h2>
-  <p>Start with free tracking, then decide whether you need the optional export unlock.</p>
+  <p>Check your tracking and export access, then record a short session before relying on a longer trip.</p>
   <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
 </section>

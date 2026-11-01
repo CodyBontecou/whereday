@@ -1,0 +1,37 @@
+[
+  {
+    "path": "Shared/WatchLocationSyncState.swift",
+    "matchesFrozen18": true,
+    "sha256": "c6bc03c61ee19b9f32e52943fca378c992c5e0b9a676361b2dd5dfccc24a3785"
+  },
+  {
+    "path": "IsoMe/Services/WatchLocationSyncReceiver.swift",
+    "matchesFrozen18": true,
+    "sha256": "efa2cda5b6e46059a574c0f8880cf38f05e1163e6e217ad7ad88e3d20b8f883d"
+  },
+  {
+    "path": "IsoMe/Utilities/ExportService.swift",
+    "matchesFrozen18": true,
+    "sha256": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc"
+  },
+  {
+    "path": "IsoMe/Utilities/IsoMeExportKitAdapter.swift",
+    "matchesFrozen18": true,
+    "sha256": "53e3a1f6dd4216b61e46aba1a4eb1470088dcb9acd622bbe2a126a4f7ff4ca8b"
+  },
+  {
+    "path": "IsoMe/Models/ExportOptions.swift",
+    "matchesFrozen18": true,
+    "sha256": "d09ce6823793c51946b02e897b7958b9fe082c4d8b48327f9000445d84562046"
+  },
+  {
+    "path": "IsoMeTests/Fixtures/watch-offline-route.json",
+    "matchesFrozen18": true,
+    "sha256": "335dc353ca2f2d5897c77a957ce08146f49546f6c20514fadfef48f2c09806e9"
+  },
+  {
+    "path": "IsoMe.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "matchesFrozen18": true,
+    "sha256": "445496b7fb89f624f87a96811b13dce98aaa2880cba016c7c400557e701c361c"
+  }
+]

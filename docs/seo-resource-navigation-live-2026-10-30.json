@@ -1,0 +1,232 @@
+{
+  "deployment": "https://5eb96a2b.spotted-8ez.pages.dev",
+  "checkedAtUTC": "2026-10-30T21:25:10.896969+00:00",
+  "checks": [
+    {
+      "path": "/about",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/back-up-iphone-location-history/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/check-gpx-file/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/google-timeline-json-formats/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/gpx-kml-geojson-location-history/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/import-google-timeline-iphone/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/iphone-location-journal-obsidian/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/iphone-location-tracking-battery/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/missing-location-history-iphone/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-private-journal&mt=8"
+    },
+    {
+      "path": "/blog/record-iphone-route-gpx/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-gpx&mt=8"
+    },
+    {
+      "path": "/blog/track-days-in-country-iphone/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/blog/view-location-history-iphone/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/compare/google-maps-timeline/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-google-timeline&mt=8"
+    },
+    {
+      "path": "/compare/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/apple-watch/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/automatic-exports/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/export-import/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/getting-started/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/photos/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/places/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/privacy-data/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/siri-shortcuts/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/timeline-outings/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/tracking/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/docs/webhooks/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-home&mt=8"
+    },
+    {
+      "path": "/integrations/dawarich/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/integrations/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/tools/google-timeline-inspector/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    },
+    {
+      "path": "/tools/",
+      "status": 200,
+      "resources": true,
+      "downloadURL": "https://apps.apple.com/app/id6761960794"
+    }
+  ],
+  "custom404": true,
+  "chineseNavigationUnchanged": true,
+  "privacyToolPoliciesRetained": true,
+  "navigationModuleSHA256": "1ee3610528c9061ba3adae7b2181b2a216a7a9c0f85b643dc5165f936bb1222b"
+}

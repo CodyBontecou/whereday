@@ -1,0 +1,63 @@
+{
+  "deployment": "https://a459cdde.spotted-8ez.pages.dev",
+  "checks": [
+    {
+      "path": "/tools/google-timeline-inspector/",
+      "status": 200,
+      "bytes": 20550,
+      "privacyAndNewVersionVerified": true
+    },
+    {
+      "path": "/blog/google-timeline-json-formats/",
+      "status": 200,
+      "bytes": 24220
+    },
+    {
+      "path": "/tools/",
+      "status": 200,
+      "bytes": 14821
+    },
+    {
+      "path": "/assets/timeline-core.mjs",
+      "status": 200,
+      "bytes": 9002,
+      "sha256": "cb3d7ecd5f1fc5bee1592d67366c7d8d10b56825be58b57a93d8ee56f9eff3b5",
+      "localBytesMatch": true
+    },
+    {
+      "path": "/assets/timeline-viewer.mjs",
+      "status": 200,
+      "bytes": 6191,
+      "sha256": "668c9b8224b7b41533455296d5323131b62c930ffdb632ab3b27711f0fe078cd",
+      "localBytesMatch": true
+    },
+    {
+      "path": "/assets/timeline-gpx.mjs",
+      "status": 200,
+      "bytes": 2771,
+      "sha256": "b20584727ed379ede8438935212c10c623197907bb0618cccbf17c882c3694c0",
+      "localBytesMatch": true
+    },
+    {
+      "path": "/samples/synthetic-google-raw-converted.gpx",
+      "status": 200,
+      "bytes": 759,
+      "sha256": "6c6e7297faa6a9d6f240f13ea33598f686cc46ced7e54b5bd7874037223d2312",
+      "localBytesMatch": true
+    },
+    {
+      "path": "/samples/synthetic-google-semantic-converted.gpx",
+      "status": 200,
+      "bytes": 1285,
+      "sha256": "926af24f475e8e5b76279b14f2c0c7cfb076181a1157b11ed1ce3c2c676696cf",
+      "localBytesMatch": true
+    },
+    {
+      "path": "/samples/synthetic-google-device-converted.gpx",
+      "status": 200,
+      "bytes": 1410,
+      "sha256": "94a74f3be7542ed7c95d67b69fc62b88c7542646f78a4bb91d0c3bd71668bf30",
+      "localBytesMatch": true
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "checkedOn": "2026-10-30",
+  "searchType": "web",
+  "dataState": "final",
+  "timezone": "Pacific",
+  "dates": {
+    "ok": true,
+    "siteUrl": "sc-domain:whereday.com",
+    "startDate": "2026-10-23",
+    "endDate": "2026-10-29",
+    "dimensions": [
+      "date"
+    ],
+    "rowCount": 3,
+    "rows": [
+      {
+        "keys": [
+          "2026-10-26"
+        ],
+        "clicks": 0,
+        "impressions": 0,
+        "ctr": 0,
+        "position": 0
+      },
+      {
+        "keys": [
+          "2026-10-27"
+        ],
+        "clicks": 0,
+        "impressions": 5,
+        "ctr": 0,
+        "position": 5.2
+      },
+      {
+        "keys": [
+          "2026-10-28"
+        ],
+        "clicks": 0,
+        "impressions": 9,
+        "ctr": 0,
+        "position": 21
+      }
+    ],
+    "hasMore": false,
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+    }
+  },
+  "newDayQueries": {
+    "ok": true,
+    "siteUrl": "sc-domain:whereday.com",
+    "startDate": "2026-10-28",
+    "endDate": "2026-10-28",
+    "dimensions": [
+      "query",
+      "page"
+    ],
+    "rowCount": 1,
+    "rows": [
+      {
+        "keys": [
+          "download iphone location history",
+          "https://whereday.com/blog/view-location-history-iphone/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 10
+      }
+    ],
+    "hasMore": false,
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+    }
+  },
+  "newDayPages": {
+    "ok": true,
+    "siteUrl": "sc-domain:whereday.com",
+    "startDate": "2026-10-28",
+    "endDate": "2026-10-28",
+    "dimensions": [
+      "page"
+    ],
+    "rowCount": 7,
+    "rows": [
+      {
+        "keys": [
+          "https://whereday.com/blog/back-up-iphone-location-history/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 4
+      },
+      {
+        "keys": [
+          "https://whereday.com/blog/iphone-location-journal-obsidian/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 9
+      },
+      {
+        "keys": [
+          "https://whereday.com/blog/record-iphone-route-gpx/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 5
+      },
+      {
+        "keys": [
+          "https://whereday.com/blog/view-location-history-iphone/"
+        ],
+        "clicks": 0,
+        "impressions": 4,
+        "ctr": 0,
+        "position": 39.5
+      },
+      {
+        "keys": [
+          "https://whereday.com/docs/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 2
+      },
+      {
+        "keys": [
+          "https://whereday.com/docs/apple-watch/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 11
+      },
+      {
+        "keys": [
+          "https://whereday.com/integrations/"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 5
+      }
+    ],
+    "hasMore": false,
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+    }
+  },
+  "decision": "October28 is newly available; all observations predate October30 deployments. One disclosed relevant query is insufficient to diagnose title/answer underperformance. Existing history guide includes export instructions; preserve its scope. Page aggregation is separate from the property/date series. Zero-impression position0 is not a rank."
+}

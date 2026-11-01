@@ -1,0 +1,15 @@
+{
+  "capturedOn": "2026-10-30",
+  "locale": "en-US",
+  "device": "Whereday Duo App Store Capture",
+  "udid": "0030D9B0-28DD-4712-A1AA-26466A61EC64",
+  "runtime": "iOS 27.1",
+  "version": "1.8.1",
+  "build": "57",
+  "source": "Existing 1.8.1 (57) simulator app copied to a newly created isolated Duo simulator. Fresh source build attempts failed because the host disk was full; no claim that this binary matches current HEAD.",
+  "fixtures": "Built-in --seed-screenshot-data synthetic San Francisco records. Tracking off. Fixed simulated location 37.7765, -122.4258.",
+  "capture": "Argent screenshot scale=1; inner panel rotated LandscapeRight into upright landscape, outer panel Portrait. No app UI retouching or enlargement.",
+  "statusBar": "9:41, Wi-Fi, 100% battery",
+  "hardwareTested": false,
+  "uploaded": false
+}

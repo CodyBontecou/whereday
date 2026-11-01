@@ -4,6 +4,14 @@
 /samples/synthetic-ui-export.gpx
   Access-Control-Allow-Origin: https://gpx.studio
 
+/samples/synthetic-watch-first-batch.gpx
+  Content-Disposition: attachment; filename="synthetic-watch-first-batch.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-watch-complete.gpx
+  Content-Disposition: attachment; filename="synthetic-watch-complete.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8
+
 /samples/synthetic-visits.json
   Content-Disposition: attachment; filename="synthetic-visits.json"
 
@@ -21,3 +29,48 @@
 
 /samples/synthetic-country-days.csv
   Content-Disposition: attachment; filename="synthetic-country-days.csv"
+
+/samples/synthetic-google-timeline.json
+  Content-Disposition: attachment; filename="synthetic-google-timeline.json"
+
+/samples/synthetic-format-trip.csv
+  Content-Disposition: attachment; filename="synthetic-format-trip.csv"
+
+/samples/synthetic-format-trip.geojson
+  Content-Disposition: attachment; filename="synthetic-format-trip.geojson"
+
+/samples/synthetic-format-trip.kml
+  Content-Disposition: attachment; filename="synthetic-format-trip.kml"
+
+/samples/synthetic-google-raw.json
+  Content-Disposition: attachment; filename="synthetic-google-raw.json"
+
+/samples/synthetic-google-semantic.json
+  Content-Disposition: attachment; filename="synthetic-google-semantic.json"
+
+/samples/synthetic-google-unknown.json
+  Content-Disposition: attachment; filename="synthetic-google-unknown.json"
+
+/samples/travel-journal-template.md
+  Content-Disposition: attachment; filename="travel-journal-template.md"
+
+/samples/synthetic-trip-reflections.md
+  Content-Disposition: attachment; filename="synthetic-trip-reflections.md"
+
+/samples/whereday-travel-journal-example.zip
+  Content-Disposition: attachment; filename="whereday-travel-journal-example.zip"
+
+/samples/synthetic-gpx-converted.geojson
+  Content-Disposition: attachment; filename="synthetic-gpx-converted.geojson"
+
+/samples/synthetic-google-raw-converted.gpx
+  Content-Disposition: attachment; filename="synthetic-google-raw-converted.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-google-semantic-converted.gpx
+  Content-Disposition: attachment; filename="synthetic-google-semantic-converted.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-google-device-converted.gpx
+  Content-Disposition: attachment; filename="synthetic-google-device-converted.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8

@@ -2,7 +2,7 @@
 
 # Export and restore location history
 
-Export recorded visits, route points, and outings in eight formats. Preview is free; writing files requires Pro. Import supported Whereday visit and point files for free.
+Choose among eight export formats; content depends on the record type. Preview and supported import are free. Export access depends on when you joined; new users retain exports after tracking expires.
 
 Platform
 
@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+October 30, 2026
 
 Reading
 
@@ -20,7 +20,7 @@ Back to
 
 [All docs](https://whereday.com/docs/)
 
-Free vs Pro. Building and previewing exports is free. Writing export files (from the app's Export tab or an outing's page) is the Pro unlock, along with automatic exports and webhooks. Importing a prior export is free.
+Preview, import and export access. Export Preview and supported import are free. New users from version 1.8 retain file exports after tracking access expires. Existing free users keep their previous export-unlock requirement. Auto Export and webhook settings follow the same export access; folder selection, scheduling and receiver setup still need to be configured. See [the access explanation](https://whereday.com/#export-access).
 
 ## Eight formats
 
@@ -34,7 +34,7 @@ Free vs Pro. Building and previewing exports is free. Writing export files (from
 | OwnTracks | OwnTracks-ecosystem tools (route points).
 | Overland | Overland-ecosystem tools (route points).
 
-Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland formats carry route points (visits exports in those slots fall back to JSON). For receiver delivery, follow the [Dawarich Overland walkthrough](https://whereday.com/integrations/dawarich/) and verify the destination’s saved points.
+Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland carry GPS points. In the released 1.8 export flow, choosing either uses Points even if Visits or All is selected; other selected formats keep their selected data type. For an outing, these two formats contain its route points, not visit rows or outing notes. Check Preview for each format. For receiver delivery, follow the [Dawarich Overland walkthrough](https://whereday.com/integrations/dawarich/) and verify the destination’s saved points.
 
 ## What gets exported
 
@@ -66,14 +66,17 @@ File names come from a template you control. These tokens are available:
 
 Pick a default folder (with auto-save on by default) and exports land there silently with a confirmation toast; otherwise the standard share sheet appears. The Preview button renders everything without writing — free, and a good way to sanity-check filters. Single outings can also be exported straight from their detail page.
 
-## Import
+## Import supported visit and point files
 
-Settings → Import file accepts visit and point files exported from Whereday as JSON, CSV, or Markdown. Importing is free. A matching file extension alone does not make another app's file compatible: The verified App Store 1.7.16 build does not support Google Timeline archives; its importer also lacks the newer preview and duplicate checks.
+Compare [GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) with checked synthetic files before choosing an output for another app.
+
+Settings → Data Import → Import File accepts supported Whereday JSON, CSV, or Markdown and, in version 1.8, supported Google Timeline JSON. Importing is free. Review format, dates, selected record types, and approximate duplicates before confirming. A matching file extension alone does not make another app's file compatible. Follow the [Google Timeline import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/) for supported structures and a checked synthetic example.
 
 Choose a file for the next task
 | Format | Useful for | Import into Whereday
 | Whereday JSON | Structured visit or point records | Supported visit and point exports
 | Whereday CSV / Markdown | Spreadsheets / readable records | Supported visit and point exports; required fields must remain
+| Google Timeline JSON | Moving supported Google visits and timed points | Version 1.8: classic raw, legacy semantic, and device Timeline formats; preview first
 | GPX / KML / GeoJSON | Mapping tools and route viewers | No
 | OwnTracks / Overland | Compatible location tools | No
 
@@ -88,7 +91,7 @@ If Preview is unexpectedly empty, follow the [export filter diagnosis](https://w
 
 [Automatic exports](https://whereday.com/docs/automatic-exports/) can keep scheduled copies, subject to iOS background execution. For the recording workflow, see [the private location journal guide](https://whereday.com/blog/private-location-journal-iphone/). For a route file, follow [the GPX recording walkthrough](https://whereday.com/blog/record-iphone-route-gpx/). For restorable records, use [the backup and restore checklist](https://whereday.com/blog/back-up-iphone-location-history/). Comparing apps? Read [Whereday and Google Timeline](https://whereday.com/compare/google-maps-timeline/).
 
-Import adds supported records. In the checked 1.7.16 release-source example, post-import visit reconciliation combined two nearby visits into one, while importing the point file again added repeated points. The import result is not necessarily the final stored visit count. See the [checked disk import and JSON re-export](https://whereday.com/blog/back-up-iphone-location-history/#checked-import). Import each intended file once, then check individual records before retrying. The [synthetic JSON examples](https://whereday.com/blog/back-up-iphone-location-history/#sample) show the visit and point structures without using private history.
+Version 1.8 previews and skips approximate duplicate visits and points. In the historical 1.7.16 release-source example, post-import visit reconciliation combined two nearby visits into one, while importing the point file again added repeated points. The import result is not necessarily the final stored visit count. See the [checked disk import and JSON re-export](https://whereday.com/blog/back-up-iphone-location-history/#checked-import). Inspect the current preview and individual records before retrying; the historical 1.7.16 counts do not describe the newer duplicate-skipping importer. The [synthetic JSON examples](https://whereday.com/blog/back-up-iphone-location-history/#sample) show the visit and point structures without using private history.
 
 For a readable note in a desktop vault, follow the [Markdown-to-Obsidian workflow](https://whereday.com/blog/iphone-location-journal-obsidian/). It covers manual file placement and keeps generated notes separate from personal writing.
 

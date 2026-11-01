@@ -1,0 +1,97 @@
+{
+  "deployment": "https://b3ceb9d1.spotted-8ez.pages.dev",
+  "checkedAtUTC": "2026-10-30T21:37:25.561163+00:00",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "expectedClaims": [
+        "retain file exports after tracking access expires",
+        "GPX, KML, GeoJSON, OwnTracks and Overland exports are not Whereday restore files."
+      ]
+    },
+    {
+      "path": "/docs/export-import/",
+      "status": 200,
+      "expectedClaims": [
+        "choosing either uses Points even if Visits or All is selected",
+        "retain file exports after tracking access expires",
+        "id=\"supported-import\""
+      ]
+    },
+    {
+      "path": "/compare/google-maps-timeline/",
+      "status": 200,
+      "expectedClaims": [
+        "new-user and existing-user export rules"
+      ]
+    },
+    {
+      "path": "/docs/timeline-outings/",
+      "status": 200,
+      "expectedClaims": [
+        "writing the country-date CSV follows"
+      ]
+    },
+    {
+      "path": "/docs/automatic-exports/",
+      "status": 200,
+      "expectedClaims": [
+        "New users from 1.8 retain exports after tracking access expires"
+      ]
+    },
+    {
+      "path": "/docs/webhooks/",
+      "status": 200,
+      "expectedClaims": [
+        "existing free users keep their previous export-unlock requirement"
+      ]
+    },
+    {
+      "path": "/blog/track-days-in-country-iphone/",
+      "status": 200,
+      "expectedClaims": [
+        "existing free users keep their previous export-unlock requirement"
+      ]
+    },
+    {
+      "path": "/blog/record-iphone-route-gpx/",
+      "status": 200,
+      "expectedClaims": [
+        "new-user and existing-user rules above"
+      ]
+    },
+    {
+      "path": "/integrations/dawarich/",
+      "status": 200,
+      "expectedClaims": [
+        "new users from 1.8 retain access after tracking expires"
+      ]
+    },
+    {
+      "path": "/zh-hans/",
+      "status": 200,
+      "expectedClaims": [
+        "旧版免费用户仍需原有导出解锁",
+        "导出功能需要付费吗",
+        "1.8 版本更新"
+      ]
+    },
+    {
+      "path": "/llms.txt",
+      "status": 200,
+      "expectedClaims": [
+        "New users from 1.8 retain exports after tracking access expires"
+      ]
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "expectedClaims": [
+        "existing access, new-user tracking plans"
+      ]
+    }
+  ],
+  "docsProBadgesRemoved": true,
+  "openAPIExportDescription": "Native export choices; content depends on record type. OwnTracks and Overland carry GPS points. Export access follows the new-user and existing-user rules at pricingURL; not every export format can be imported."
+}

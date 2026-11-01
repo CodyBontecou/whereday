@@ -1,0 +1,95 @@
+{
+  "note": "Compare exact content after decoding Cloudflare email obfuscation and removing injected email decoder and Cloudflare Insights script. These edge transformations were observed in response diffs.",
+  "pages": [
+    {
+      "url": "https://whereday.com/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "6a889cca7519bca549bcf77759b2e6a597a3547c2abde16b985c73b87c56a2e2"
+    },
+    {
+      "url": "https://whereday.com/blog/private-location-journal-iphone/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "ddb55cf2644d8eff62f81600d815f1b475281e083bcacba59bc90d8d6394599d"
+    },
+    {
+      "url": "https://whereday.com/compare/google-maps-timeline/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "44d41e22af8cf261536010913bda4e1e34a228d2fdc175af2c6ff05373c9f1f3"
+    },
+    {
+      "url": "https://whereday.com/blog/record-iphone-route-gpx/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "cad7219cbe38ceba457a448599007242fff110ad4cf47f29e89b03ad56e112ed"
+    },
+    {
+      "url": "https://whereday.com/about",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "a01df82940c3949b56366cdd16d01bf0f8ca6148386be94d0e7eef0da0997b57"
+    },
+    {
+      "url": "https://whereday.com/zh-hans/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "3870d35a1469c63c4f8a2eafa3e721537f716c19bb21e14a5a0285bea6b47a40"
+    },
+    {
+      "url": "https://whereday.com/docs/apple-watch/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "c2fc89a1d7a10a8033909d653d5b9cac19cb5b6b7e7c0ecd990aa645b91a6ec2"
+    },
+    {
+      "url": "https://whereday.com/docs/automatic-exports/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "20a6ff4c80e6f63d290d614a139f23da7640d5cec51b272c5c76851feaa0beef"
+    },
+    {
+      "url": "https://whereday.com/docs/places/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "44be8d8a6a34127fbdf9e5eedfc681bd9724fd9754a74d1d6693d31a002ed37f"
+    },
+    {
+      "url": "https://whereday.com/docs/siri-shortcuts/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "92b71a1598b7a24ade4331232c7e8bc0e32b369d714f774955de2ac9ccb895e1"
+    },
+    {
+      "url": "https://whereday.com/docs/getting-started/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "0e21e814b999e3628668da5c35d0651c45b417e5b655096805b2411b6c38bd31"
+    },
+    {
+      "url": "https://whereday.com/docs/privacy-data/",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "281571171162bc25ebe880b02ef15fb89d490d84fc8ea5333d9ba14332a75909"
+    },
+    {
+      "url": "https://whereday.com/privacy",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "d1bfc2a2b3356f5c3a8786a94287564309ddc1a47f0a9908a4facdc16d8db0a0"
+    },
+    {
+      "url": "https://whereday.com/llms.txt",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "cd89f960d004446f26c726eadb39fd94472628df25aac8c362206f653767da0e"
+    },
+    {
+      "url": "https://whereday.com/sitemap.xml",
+      "status": 200,
+      "matches_after_documented_edge_transforms": true,
+      "sha256": "74430aab76d139ca58bc8d290ac7d90a99275960bd2b8f18d694aff2495ce8b5"
+    }
+  ]
+}

@@ -8,13 +8,13 @@ Practical iPhone guides
 
 Check whether recording is still running, review iPhone’s battery report, and compare one setting at a time. A larger distance filter still uses high-accuracy GPS.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 26, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
 ## Check the recording before changing settings
 
 If Whereday uses more battery than you expected, first check whether a recording is still running. Tap Stop when the trip is finished, then confirm the app has left its recording state. In Whereday, Start enables detailed GPS recording, visit monitoring, and significant location changes together. There is no separate visits-only recording mode.
 
-This guide explains the controls you can change and how to compare the result on your own phone. It does not promise a number of recording hours or a percentage saving. Recording and reviewing the route are free; exporting a file requires the optional unlock.
+This guide explains the controls you can change and how to compare the result on your own phone. It does not promise a number of recording hours or a percentage saving. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.
 
 Battery and route checklist
 - [Read the iPhone battery report](https://whereday.com/blog/iphone-location-tracking-battery/#usage)
@@ -82,7 +82,7 @@ There is no verified universal duration for Whereday. Device condition, recordin
 ## Keep the route you need.
 Check where it ends.
 
-Try free recording and review your first short outing before choosing settings for a longer day.
+Check your tracking access and review your first short outing before choosing settings for a longer day.
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 

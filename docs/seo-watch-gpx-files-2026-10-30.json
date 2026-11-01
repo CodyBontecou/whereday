@@ -1,0 +1,24 @@
+[
+  {
+    "file": "synthetic-watch-complete.gpx",
+    "points": 503,
+    "segments": 1,
+    "waypoints": 0,
+    "firstTime": "2026-10-24T14:00:00.000Z",
+    "lastTime": "2026-10-24T14:41:50.000Z",
+    "sha256": "8c29957bf9fe0a47a5706b4bf63e2994b8fd888c5a0aa0cf1ce9ab39898ad951",
+    "bytes": 145219,
+    "allCoordinatesAndTimesMatchFixture": true
+  },
+  {
+    "file": "synthetic-watch-first-batch.gpx",
+    "points": 500,
+    "segments": 1,
+    "waypoints": 0,
+    "firstTime": "2026-10-24T14:00:00.000Z",
+    "lastTime": "2026-10-24T14:41:35.000Z",
+    "sha256": "b2019f0c5379fb0955b17ebe5673faa37701bd29173ed7efb3a88e1aab86b0f3",
+    "bytes": 144355,
+    "allCoordinatesAndTimesMatchFixture": true
+  }
+]

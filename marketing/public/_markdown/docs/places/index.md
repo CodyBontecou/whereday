@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+October 30, 2026
 
 Reading
 
@@ -30,7 +30,7 @@ Choose the action for your task
 | Fix a stop already in your journal | Open that visit and confirm or correct it.
 | Add a stop from an earlier day | Map → + → Add past visit.
 
-Recording, reviewing, and managing places are free. Saving an export file is a separate optional purchase; see [current pricing](https://whereday.com/#pricing).
+From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. See [current pricing](https://whereday.com/#pricing).
 
 ## Manage reusable saved locations
 
@@ -42,7 +42,7 @@ Recording, reviewing, and managing places are free. Saving an export file is a s
 
 Nearby future automatic visits can use the saved name. Editing or deleting a location in this management screen keeps past visits unchanged. To fix an older visit, edit that visit itself. A place with the same name is not necessarily the same location; check the pin and radius.
 
-![Whereday Add Location editor with name, optional address, direct latitude and longitude fields, and a default 150 metre match radius](https://whereday.com/screenshots/saved-location-editor.png)
+![Whereday Add Location editor with name, optional address, direct latitude and longitude fields, and a default 150 metre match radius](https://whereday.com/screenshots/saved-location-editor.webp)
 
 The editor opened with location permission denied in an isolated Debug simulator rebuild of release 1.7.16, iOS 26.5, checked October 26, 2026. This confirms the available controls, not a completed save through this screen.
 

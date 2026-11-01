@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+October 30, 2026
 
 Reading
 
@@ -20,7 +20,7 @@ Back to
 
 [All docs](https://whereday.com/docs/)
 
-Pro feature, off by default. Webhooks can send your location data off your device — to a server you choose. Nothing is sent until you configure an endpoint, and the settings screen leads with a prominent warning card.
+Export access, off by default. New users from 1.8 retain export access after tracking expires; existing free users keep their previous export-unlock requirement. Webhooks can send your location data off your device — to a server you choose. Nothing is sent until you configure an endpoint, and the settings screen leads with a prominent warning card.
 
 ## What it's for
 

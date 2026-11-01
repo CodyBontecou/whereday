@@ -1,0 +1,259 @@
+{
+  "metrics": {
+    "keywords": [
+      {
+        "keyword": "google timeline export",
+        "search_volume": 30,
+        "keyword_difficulty": 4,
+        "main_intent": "navigational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "google timeline alternative",
+        "search_volume": 20,
+        "keyword_difficulty": 13,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0.03,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "google timeline backup",
+        "search_volume": 20,
+        "keyword_difficulty": 10,
+        "main_intent": "navigational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "google maps timeline alternative",
+        "search_volume": 10,
+        "keyword_difficulty": 5,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "import google timeline",
+        "search_volume": 10,
+        "keyword_difficulty": 0,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/keywords"
+    }
+  },
+  "liveQueries": {
+    "results": [
+      {
+        "keyword": "import google timeline iphone",
+        "ok": false,
+        "error": "Internal SE Server Error. The data provider is temporarily unavailable; this is not a problem with the request."
+      },
+      {
+        "keyword": "google timeline export iphone",
+        "ok": true,
+        "items": [
+          {
+            "type": "ai_overview",
+            "rank": 1,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 2,
+            "organicRank": 1,
+            "title": "Free Google Maps Timeline Export to Excel - Chrome Web Store",
+            "url": "https://chromewebstore.google.com/detail/free-google-maps-timeline/mjjpapfcbfpgbkabmfkmacjfediepccp",
+            "domain": "chromewebstore.google.com",
+            "description": "Export your trips and mileage from Google Maps Timeline to Excel for your mileage tax deduction."
+          },
+          {
+            "type": "organic",
+            "rank": 3,
+            "organicRank": 2,
+            "title": "Google Timeline on iPhone : r/GoogleMaps",
+            "url": "https://google.com/goto?url=CAESigEB6zswFa0kAqdmi1CTduq0ZsWb6cHUgFxcXybkZwgB-jBG0frtyOgs5p0x3FK-PYDqdVmsTsRzAjhpb7K2hScekh4YnHqNXvf9JwB6DuyPsopuhvi2alVVar_78ahbLulN9HKYz-y7Pmdeie_JR4d3PRaRW5iY-2wl8d4oHIeN7qEFRr4nmHFtwbY",
+            "domain": "google.com",
+            "description": "Google Timeline on iPhone. Now, it shows the time cycling but only 1.3 miles distance. Distances are wildly inaccurate."
+          },
+          {
+            "type": "video",
+            "rank": 4,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 5,
+            "organicRank": 3,
+            "title": "Google Maps multi-day timeline - Mikhail Melnik",
+            "url": "https://mikhailmelnik.medium.com/google-maps-multi-day-timeline-e6a63e26fbc9",
+            "domain": "mikhailmelnik.medium.com",
+            "description": "Export your timeline from Google Maps using your mobile device … navigate to Settings > Location > Location Services > Timeline, select your  ..."
+          },
+          {
+            "type": "organic",
+            "rank": 6,
+            "organicRank": 4,
+            "title": "How to export Google Maps Timeline - twm's blog",
+            "url": "https://blog.dummzeuch.de/2025/09/07/how-to-export-google-maps-timeline/",
+            "domain": "blog.dummzeuch.de",
+            "description": "Sep 7, 2025 — In your phone's settings menu, navigate to “Location” -> “Location Settings” -> “Timeline” · There you will find an entry “Export Timeline data” ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 7,
+            "organicRank": 5,
+            "title": "Google Maps Timeline Data Stored on iPhone not Appearing",
+            "url": "https://support.google.com/maps/thread/312127463/google-maps-timeline-data-stored-on-iphone-not-appearing?hl=en",
+            "domain": "support.google.com",
+            "description": "Dec 8, 2024 — On your Android phone, open the Google Maps app . · Tap your profile picture or initial Your Timeline. · At the upper right, tap the cloud . · From ... Read more"
+          },
+          {
+            "type": "people_also_ask",
+            "rank": 8,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 9,
+            "organicRank": 6,
+            "title": "That's your Google Maps Timeline history animated.",
+            "url": "https://www.threads.com/@meta.ai/post/DcTxwrdjlLq/thats-your-google-maps-timeline-history-animated-on-i-os-you-have-to-export-it/?hl=en",
+            "domain": "www.threads.com",
+            "description": "On iOS you have to export it first: open Google Maps > tap your profile pic > Your Timeline > \"...\" > Location and privacy settings > Export ..."
+          },
+          {
+            "type": "organic",
+            "rank": 10,
+            "organicRank": 7,
+            "title": "Export Google Maps Timeline: iPhone, Android and Takeout",
+            "url": "https://google.com/goto?url=CAEScAHrOzAVehLL0fbc1aolAtH6eWtXrhI98G3w_TKH_fabiuIQAwpWaM6S_ALg8vr-Mym8WwMcP8kh9wl4DUvuTpwnA_ofiXGXGrHhN0aTsqKHtVuZff0qi4ZnTTCLwUQLav8eIWcxfFASK6Xqb1-DaIQ",
+            "domain": "google.com",
+            "description": "On iPhone, open Google Maps, tap your profile picture, then Settings, Location & Privacy, Export Timeline data. Export Timeline data."
+          },
+          {
+            "type": "organic",
+            "rank": 11,
+            "organicRank": 8,
+            "title": "Goole Maps Timeline Data Lost after switching to a new ...",
+            "url": "https://support.google.com/maps/thread/310316240/goole-maps-timeline-data-lost-after-switching-to-a-new-iphone?hl=en",
+            "domain": "support.google.com",
+            "description": "Nov 28, 2024 — I lost 10+ years worth of Google Maps Timeline data and I can't be more miserable. I switched to a new iPhone recently. I backed up all my data ... Read more"
+          },
+          {
+            "type": "related_searches",
+            "rank": 12,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 13,
+            "organicRank": 9,
+            "title": "Goole Maps Timeline Data Lost after switching to a new ...",
+            "url": "https://support.google.com/maps/thread/310316240/goole-maps-timeline-data-lost-after-switching-to-a-new-iphone?hl=en",
+            "domain": "support.google.com",
+            "description": "Nov 28, 2024 — I lost 10+ years worth of Google Maps Timeline data and I can't be more miserable. I switched to a new iPhone recently. I backed up all my data ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 14,
+            "organicRank": 10,
+            "title": "How to Save Your Google Maps Timeline Data ...",
+            "url": "https://lifehacker.com/tech/how-to-save-your-google-maps-timeline-data",
+            "domain": "lifehacker.com",
+            "description": "Jun 5, 2024 — According to Google's email to users, you first need to update the Google Maps app on the device you'd like to save the data to. (Remember, this ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 15,
+            "organicRank": 11,
+            "title": "How to Visualize Google Timeline on iPhone",
+            "url": "https://google.com/goto?url=CAESigEB6zswFQIl6SZkCY0W1mwhQdLugy9OWZmdrMASEaJduAZkIWax_OmQUNXb0OabH2BUV-VnzTXKi8upnye6GD70Mu5JRp93d4EdU41XGYpE2L9DQ6nxhWzXJwZFgdfTS0fy2MEZQJya8Rvs1eeHgVYBwJBSFY10Hh_aN2U9qLlnpVnq36kxh4hqioU",
+            "domain": "google.com",
+            "description": "Open the Google Maps app on your iPhone, tap your profile or initials, then select \"Your Timeline\" to see everywhere you've been with your phone. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 16,
+            "organicRank": 12,
+            "title": "Google Location History - Data Sources",
+            "url": "https://google.com/goto?url=CAESewHrOzAVDaXCs1xpsU4HK2EdhyBv8Kn3t4GRp4I1_Eq2LW0w7mZb3ELzadS1sQjycBwKQ1NrHbJi0amR-vx0u9dIed9UtIkrFt751caE_Bg6oBrwnfhD7flahXYR7p7KEJQb4B_lSq0so9DHUWb3iG30LLkMyRFiqLE2JQ",
+            "domain": "google.com",
+            "description": "How to get it · Open the Settings app. · Tap Location. Settings app · Tap Location services. Location services · Tap Timeline. Timeline · Tap Export timeline data. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 17,
+            "organicRank": 13,
+            "title": "Transfer maps timeline from android to ios",
+            "url": "https://support.google.com/maps/thread/379005695/transfer-maps-timeline-from-android-to-ios?hl=en",
+            "domain": "support.google.com",
+            "description": "Oct 8, 2025 — Transfer maps timeline from android to ios. I was previously using an Android device and have now switched to iOS. However, on the new phone ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 18,
+            "organicRank": 14,
+            "title": "Exporting google maps timeline",
+            "url": "https://support.google.com/maps/thread/340858226/exporting-google-maps-timeline?hl=en",
+            "domain": "support.google.com",
+            "description": "Apr 27, 2025 — Is there anyway to programmatically export it to another mobile app? Like let's say every hour? I don't want to manually export and then upload. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 19,
+            "organicRank": 15,
+            "title": "Google Maps Timeline on iPhone: How It Works, Issues, ...",
+            "url": "https://google.com/goto?url=CAESewHrOzAV4GLjNEqxfmqq3reK_Q5NbeZDgx86AMSTFd54T2nMbZ629_ALrbQ4ijiAOHy-kemdvC1QamB4QRj4pB6LuP7OIpzaWBhQHFzfPdUvewdqILa6umR007DE5RUuHcOyJKoXhje9QQU_B5aUR_hq_8RmqRY47MJqzQ",
+            "domain": "google.com",
+            "description": "Google shifted Timeline storage from the cloud to your iPhone or Android device, with only one encrypted backup option and no manual export. In March 2025 many ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 20,
+            "organicRank": 16,
+            "title": "How to view your Google Maps Timeline on iPhone, iPad, ...",
+            "url": "https://www.idownloadblog.com/2020/09/10/google-maps-timeline-online-iphone-ipad/",
+            "domain": "www.idownloadblog.com",
+            "description": "Jun 10, 2024 — On iOS, tap your profile picture and pick Settings > Personal content. On the web, click the gear icon and pick Timeline settings. Then enable ... Read more"
+          }
+        ],
+        "locationCode": 2840,
+        "languageCode": "en",
+        "device": "desktop"
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/keywords"
+    }
+  },
+  "date": "2026-10-30",
+  "market": "US/en desktop depth20"
+}

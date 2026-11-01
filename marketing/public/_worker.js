@@ -2,6 +2,10 @@
 const pages = {
   "/about": "/_markdown/about.md",
   "/blog/back-up-iphone-location-history/": "/_markdown/blog/back-up-iphone-location-history/index.md",
+  "/blog/check-gpx-file/": "/_markdown/blog/check-gpx-file/index.md",
+  "/blog/google-timeline-json-formats/": "/_markdown/blog/google-timeline-json-formats/index.md",
+  "/blog/gpx-kml-geojson-location-history/": "/_markdown/blog/gpx-kml-geojson-location-history/index.md",
+  "/blog/import-google-timeline-iphone/": "/_markdown/blog/import-google-timeline-iphone/index.md",
   "/blog/": "/_markdown/blog/index.md",
   "/blog/iphone-location-journal-obsidian/": "/_markdown/blog/iphone-location-journal-obsidian/index.md",
   "/blog/iphone-location-tracking-battery/": "/_markdown/blog/iphone-location-tracking-battery/index.md",
@@ -30,6 +34,9 @@ const pages = {
   "/integrations/": "/_markdown/integrations/index.md",
   "/privacy": "/_markdown/privacy.md",
   "/terms": "/_markdown/terms.md",
+  "/tools/google-timeline-inspector/": "/_markdown/tools/google-timeline-inspector/index.md",
+  "/tools/gpx-viewer/": "/_markdown/tools/gpx-viewer/index.md",
+  "/tools/": "/_markdown/tools/index.md",
   "/zh-hans/": "/_markdown/zh-hans/index.md"
 };
 
@@ -161,6 +168,12 @@ export default {
       if (markdown) {
         response.headers.append('Link', `<${url.origin}${url.pathname}>; rel="alternate"; type="text/markdown"`);
       }
+    }
+    if (['/tools/gpx-viewer', '/tools/gpx-viewer/', '/tools/gpx-viewer/index.html', '/tools/google-timeline-inspector', '/tools/google-timeline-inspector/', '/tools/google-timeline-inspector/index.html'].includes(url.pathname) && response.ok) {
+      response.headers.set('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; object-src 'none'");
+      response.headers.set('Referrer-Policy', 'no-referrer');
+      response.headers.set('X-Content-Type-Options', 'nosniff');
+      response.headers.set('Cache-Control', 'no-store, no-transform');
     }
     return response;
   },

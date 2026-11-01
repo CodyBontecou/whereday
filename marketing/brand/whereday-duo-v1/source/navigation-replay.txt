@@ -1,0 +1,41 @@
+Prerequisite: Dedicated iPhone Duo simulator, Whereday 1.8.1 (57) installed, default text size. Seeding replaces this simulator app's local records. Use only an isolated capture device.
+Running e2e test "duo-appstore-capture-20261030" on 0030D9B0-28DD-4712-A1AA-26466A61EC64 (10 steps)
+[1] ✓ launch-app (0.5s)
+{
+  "launched": true,
+  "bundleId": "com.bontecou.isome"
+}
+[2] ✓ fold open (6.9s) — open: screen 3 (inner panel 2007x2853)
+[3] ✓ fold open (0.8s) — open: screen 3 (inner panel 2007x2853)
+[4] ✓ await-ui-element (0.6s)
+{
+  "success": true,
+  "elapsed": 624
+}
+[5] ✓ gesture-tap (0.1s)
+{
+  "tapped": true,
+  "timestampMs": 1793388943231
+}
+[6] ✓ await-ui-element (0.8s)
+{
+  "success": true,
+  "elapsed": 821
+}
+[7] ✓ gesture-tap (0.1s)
+{
+  "tapped": true,
+  "timestampMs": 1793388944109
+}
+[8] ✓ launch-app (0.7s)
+{
+  "launched": true,
+  "bundleId": "com.bontecou.isome"
+}
+[9] ✓ await-ui-element (10.5s)
+{
+  "success": true,
+  "elapsed": 10450
+}
+[10] ✓ fold closed (1.8s) — closed: screen 1 (cover panel 1398x2034)
+PASS — 10 passed, 0 failed, 0 errored, 0 skipped (23.3s)

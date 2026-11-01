@@ -1,0 +1,65 @@
+{
+  "deployment": "https://4ccfabd7.spotted-8ez.pages.dev",
+  "checks": [
+    {
+      "path": "/",
+      "accept": "text/html",
+      "status": 200,
+      "verifiedPhrase": "a Whereday location database"
+    },
+    {
+      "path": "/",
+      "accept": "text/markdown",
+      "status": 200,
+      "verifiedPhrase": "a Whereday location database"
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "accept": "text/html",
+      "status": 200,
+      "verifiedPhrase": "a Whereday location database"
+    },
+    {
+      "path": "/blog/private-location-journal-iphone/",
+      "accept": "text/markdown",
+      "status": 200,
+      "verifiedPhrase": "a Whereday location database"
+    },
+    {
+      "path": "/blog/view-location-history-iphone/",
+      "accept": "text/html",
+      "status": 200,
+      "verifiedPhrase": "without a Whereday account"
+    },
+    {
+      "path": "/blog/view-location-history-iphone/",
+      "accept": "text/markdown",
+      "status": 200,
+      "verifiedPhrase": "without a Whereday account"
+    },
+    {
+      "path": "/blog/missing-location-history-iphone/",
+      "accept": "text/html",
+      "status": 200,
+      "verifiedPhrase": "If a Whereday day"
+    },
+    {
+      "path": "/blog/missing-location-history-iphone/",
+      "accept": "text/markdown",
+      "status": 200,
+      "verifiedPhrase": "If a Whereday day"
+    },
+    {
+      "path": "/integrations/dawarich/",
+      "accept": "text/html",
+      "status": 200,
+      "verifiedPhrase": "not a Whereday restore file"
+    },
+    {
+      "path": "/integrations/dawarich/",
+      "accept": "text/markdown",
+      "status": 200,
+      "verifiedPhrase": "not a Whereday restore file"
+    }
+  ]
+}

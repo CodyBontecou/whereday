@@ -6,20 +6,19 @@ Practical iPhone guides
 
 # How to record an iPhone route and export a GPX file
 
-Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Recording and preview are free; saving the file requires the optional unlock.
+Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Tracking depends on your plan and existing access; Export Preview is free and saving files requires export access.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 26, 2026
-
-Whereday is currently listed as iso.me in the U.S. App Store.
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
 ## Record first, then export the points
 
 To record an iPhone route as GPX with Whereday, start tracking before your trip, stop when you finish, then choose Points and GPX in Export. Select the right date range, preview the result, and save the file to Files or share it with a compatible route viewer.
 
-Recording is free. Previewing the export is free. Writing the GPX file requires the optional one-time unlock. This workflow exports a route recorded in Whereday; it does not extract old Apple Maps or Google Timeline history.
+From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. This workflow exports a route recorded in Whereday; it does not extract old Apple Maps or Google Timeline history.
 
 From recording to file
 - [Record and check a route](https://whereday.com/blog/record-iphone-route-gpx/#record)
+- [Export an Apple Watch route](https://whereday.com/blog/record-iphone-route-gpx/#watch-to-gpx)
 - [Select points and export GPX](https://whereday.com/blog/record-iphone-route-gpx/#export)
 - [Check the saved file](https://whereday.com/blog/record-iphone-route-gpx/#verify)
 - [Inspect a synthetic GPX example](https://whereday.com/blog/record-iphone-route-gpx/#sample)
@@ -36,6 +35,30 @@ From recording to file
 Try this with a short session before relying on it for a full day. GPS can be noisy or unavailable, and permission changes or a stopped session can leave gaps. There is no separate passive visit-only switch. The [recording reference](https://whereday.com/docs/tracking/) explains distance filtering and auto-stop.
 
 For a longer trip, choose an auto-stop duration that will not end early. Stop when you finish. Detailed GPS uses battery, and a larger distance filter trades route detail for fewer captured points; check the result before settling on a setting. Use the [battery comparison checklist](https://whereday.com/blog/iphone-location-tracking-battery/) to compare your own recordings.
+
+## Export a route recorded on Apple Watch
+
+If you recorded in the Whereday Watch app, transfer the route to its companion iPhone before exporting. This workflow uses Whereday’s saved points; it does not extract an Apple Workout or Apple Health route.
+
+- Stop the recording on the Watch. Bring the paired devices together and open Whereday on both. If available, choose Sync Now on the Watch.
+- Open the recording’s date in the phone’s Timeline. Inspect the outing, its map, and its start and end times. A Sync queued message is not confirmation that every point has arrived.
+- On the phone, choose Points and GPX in Export, then select the recording’s dates. Review filters and Preview before saving. Points can include other recordings in that period; use the specific outing’s Export action when you need that outing alone.
+- Open the saved file in the [local GPX viewer](https://whereday.com/tools/gpx-viewer/). Compare its first and last point times, count, and shape with the phone copy. Keep pending Watch data while investigating missing points.
+
+The [Watch sync reference](https://whereday.com/docs/apple-watch/#checked-transfer) explains pending points and acknowledgements. Sync retries with the same record IDs are separate from importing a GPX file. Whereday does not import GPX.
+
+### A readable GPX can still be incomplete
+
+In a synthetic native check, an invented 503-point Watch queue reached the iPhone in batches of 500 and three. We exported the phone’s saved Points as GPX after the first batch, then again after the remaining points arrived and the first batch was retried.
+
+Both files opened, but only the later export held all 503 example points
+| Phone state | GPX track points | Last point, UTC
+| First batch saved; transfer incomplete | 500 | October 24, 2026, 14:41:35
+| Final batch saved; delayed first batch retried | 503 | October 24, 2026, 14:41:50
+
+[Download the incomplete 500-point example](https://whereday.com/samples/synthetic-watch-first-batch.gpx) and [the complete 503-point example](https://whereday.com/samples/synthetic-watch-complete.gpx). Both start at 14:00 UTC on October 24, 2026 and contain one track segment, with no visit waypoints. Coordinates and times are invented. Load either file in the local viewer to compare counts and endpoints; a line on a map alone cannot prove a transfer is complete.
+
+Checked October 30, 2026 with the native queue, phone receiver, and export code matching released Whereday 1.8 (52). Delivery was supplied directly by an iOS simulator test, with WatchConnectivity disabled. The saved phone records were passed to the export service without a date or accuracy filter. This checks the data handoff, not physical Watch recording, wireless transport, the outing-only export action, or a fresh share-sheet workflow. The separate app-to-Files check below covers the earlier export screen.
 
 ## 2. Choose Points and GPX
 
@@ -118,7 +141,7 @@ We also checked the export screen in an isolated Debug rebuild of released iso.m
 - Closed Preview, chose Export 1 File → Save to Files → On My iPhone → Save.
 - Checked the saved file, then opened that exact public synthetic file in gpx.studio.
 
-![Earlier iso.me (now Whereday) Export Preview in the isolated simulator showing GPX, three items, one file, and a planned size of 1003 bytes](https://whereday.com/screenshots/gpx-preview-synthetic.png)
+![Earlier iso.me (now Whereday) Export Preview in the isolated simulator showing GPX, three items, one file, and a planned size of 1003 bytes](https://whereday.com/screenshots/gpx-preview-synthetic.webp)
 
 The checked preview for the three imported synthetic points. The test build was already unlocked; no App Store purchase was tested.
 
@@ -128,7 +151,7 @@ In this single-file example, the generated filename was `iso.me - Monday 2026-10
 
 [Open the saved synthetic export in gpx.studio](https://gpx.studio/app?files=%5B%22https%3A%2F%2Fwhereday.com%2Fsamples%2Fsynthetic-ui-export.gpx%22%5D). In a fresh desktop browser context, the viewer displayed the angled three-point line, 0.03 km, and 02:00 / 02:00 moving and total time. Those are viewer results for invented data, not a GPS accuracy or distance benchmark.
 
-![gpx.studio showing the angled synthetic track saved from Whereday, with 0.03 km distance and 02:00 moving and total time](https://whereday.com/screenshots/gpx-studio-ui-export.png)
+![gpx.studio showing the angled synthetic track saved from Whereday, with 0.03 km distance and 02:00 moving and total time](https://whereday.com/screenshots/gpx-studio-ui-export.webp)
 
 The 1003-byte UI export opened in gpx.studio, checked October 26, 2026. Only the public synthetic file was loaded.
 
@@ -155,11 +178,17 @@ Exported coordinates and times can reveal your movements. A file saved in cloud 
 ## Record the route.
 Choose how to keep it.
 
-Try free recording and export preview. The optional purchase unlocks writing files; see [current pricing](https://whereday.com/#pricing).
+Check your tracking access and try Export Preview. Export access follows the new-user and existing-user rules above; see [current pricing](https://whereday.com/#pricing).
 
 [Download free for iPhone](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-gpx&mt=8)
 
-Reviewed October 26, 2026. Steps reflect Whereday’s recording and export controls; labels can vary by app version. For setup, read [the private journal guide](https://whereday.com/blog/private-location-journal-iphone/); for existing Apple or Google records, see [how to view iPhone location history](https://whereday.com/blog/view-location-history-iphone/).
+Reviewed October 30, 2026; earlier app and viewer checks retain their own dates above. Steps reflect Whereday’s recording and export controls; labels can vary by app version. For setup, read [the private journal guide](https://whereday.com/blog/private-location-journal-iphone/); for existing Apple or Google records, see [how to view iPhone location history](https://whereday.com/blog/view-location-history-iphone/).
+
+## Inspect a GPX before importing it
+
+Use the [free local GPX viewer](https://whereday.com/tools/gpx-viewer/) to check the points, separate segments and available times in a file you already have. Follow the [five-point tutorial](https://whereday.com/blog/check-gpx-file/) for expected results and CSV limits.
+
+For a different destination, compare [GPX with KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) before converting an archive.
 
 ## Read next
 

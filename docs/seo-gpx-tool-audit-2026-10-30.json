@@ -1,0 +1,32 @@
+{
+  "auditId": "c264cf26-3cd9-4e78-adfa-05603951eb11",
+  "status": "completed",
+  "urlsCrawled": 48,
+  "issues": {
+    "summary": [
+      {
+        "issueType": "thin-content",
+        "title": "Thin content",
+        "severity": "warning",
+        "count": 1
+      }
+    ],
+    "issues": [
+      {
+        "severity": "warning",
+        "issueType": "thin-content",
+        "title": "Thin content",
+        "url": "https://whereday.com/tools/",
+        "details": {
+          "wordCount": 80
+        },
+        "howToFix": "Either expand the page with genuinely useful content, noindex it, or consolidate it into a stronger page. If the content exists but is rendered by JavaScript, ensure it is server-rendered or pre-rendered."
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=c264cf26-3cd9-4e78-adfa-05603951eb11"
+    }
+  },
+  "decision": "Accept 80-word tools navigation hub warning with one real tool. No broken/metadata/canonical issue reported; do not pad or noindex a useful hub merely to clear a word-count warning. HTML crawl precedes final JavaScript-only Clear-state fix."
+}

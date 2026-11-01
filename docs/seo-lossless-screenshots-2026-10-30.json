@@ -1,0 +1,121 @@
+{
+  "screenshots": [
+    {
+      "png": "/screenshots/google-import-complete-1-8.png",
+      "webp": "/screenshots/google-import-complete-1-8.webp",
+      "originalBytes": 225518,
+      "webpBytes": 54802,
+      "pixelsIdentical": true,
+      "pngSHA256": "1939eb5bf572ad8751b4c419b787fdb5ce4c72ae2cf784405b9bbbd0440fc626",
+      "webpSHA256": "818eddc5a7b76da54ec98ee7dd6279648ce5ec328ccf06993a167bd4e917d6b0",
+      "pages": [
+        "/blog/import-google-timeline-iphone/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/google-import-preview-1-8.png",
+      "webp": "/screenshots/google-import-preview-1-8.webp",
+      "originalBytes": 552272,
+      "webpBytes": 125174,
+      "pixelsIdentical": true,
+      "pngSHA256": "f38f25c85a933aedb74b9679abd41ef67494f9630fdc36211fc79d0aaa573245",
+      "webpSHA256": "b16899bf9abbdedcb31938fc3a92b357ea82b73d0c2bf18b860863d50299a79e",
+      "pages": [
+        "/blog/import-google-timeline-iphone/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/gpx-preview-synthetic.png",
+      "webp": "/screenshots/gpx-preview-synthetic.webp",
+      "originalBytes": 202801,
+      "webpBytes": 35026,
+      "pixelsIdentical": true,
+      "pngSHA256": "5becfd61420e7a13756185d1c82451e5c0574f1c4dd4d0d3137f892090f7ec52",
+      "webpSHA256": "0ad4fb41c2870b76c3c4d1e1b98521a05d5f6df8a3bc8cc44274304e86fd8fa2",
+      "pages": [
+        "/blog/record-iphone-route-gpx/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/gpx-studio-ui-export.png",
+      "webp": "/screenshots/gpx-studio-ui-export.webp",
+      "originalBytes": 58830,
+      "webpBytes": 13654,
+      "pixelsIdentical": true,
+      "pngSHA256": "f63d66bcd7f4fd58655ea43b799d47f1c49a663f777b3a421d8481425da9c6cc",
+      "webpSHA256": "5030a385ca057ca046afcded2c091b0adbc4bff9ee5c6082d7c263a120212cae",
+      "pages": [
+        "/blog/record-iphone-route-gpx/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/journal-empty-outing.png",
+      "webp": "/screenshots/journal-empty-outing.webp",
+      "originalBytes": 85339,
+      "webpBytes": 32752,
+      "pixelsIdentical": true,
+      "pngSHA256": "398115164acee2058b3d625a41aa0160be86b5d0c95de2e2ecaae5e41a4c9bb5",
+      "webpSHA256": "f23ec9d5e486c04777416a5f8b9041f7f22cccc4168409ec47240acd2100d2b8",
+      "pages": [
+        "/blog/missing-location-history-iphone/index.html",
+        "/blog/private-location-journal-iphone/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/obsidian-maps-synthetic.png",
+      "webp": "/screenshots/obsidian-maps-synthetic.webp",
+      "originalBytes": 213671,
+      "webpBytes": 168656,
+      "pixelsIdentical": true,
+      "pngSHA256": "c93964aed9867ad581f61cc19ea71e3deab35c1315bcd031d65f7ceb3eaa9626",
+      "webpSHA256": "893314b4784709307865ea80790f6c7b953c08ebcec13c476a664e4fdfb3fb82",
+      "pages": [
+        "/blog/iphone-location-journal-obsidian/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/obsidian-synthetic-export.png",
+      "webp": "/screenshots/obsidian-synthetic-export.webp",
+      "originalBytes": 230693,
+      "webpBytes": 168854,
+      "pixelsIdentical": true,
+      "pngSHA256": "7167198d17f9c789d4a04d4a01e0eb8ce00e3ef4437d0566fdca55b8fc031332",
+      "webpSHA256": "0427df5fd17d9f8b5715b79730038f870d914bca95d16385cb671b926027de17",
+      "pages": [
+        "/blog/iphone-location-journal-obsidian/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/restore-synthetic-after-restart.png",
+      "webp": "/screenshots/restore-synthetic-after-restart.webp",
+      "originalBytes": 713892,
+      "webpBytes": 203846,
+      "pixelsIdentical": true,
+      "pngSHA256": "e65cf84baccd6cf1ce1a4cda5b1c2335299f6bd72a7df8de888294d20553bcce",
+      "webpSHA256": "03512fa750f1a395d50b9ae71646ffebf86c5606c23497d5cba0617fc83a919a",
+      "pages": [
+        "/blog/back-up-iphone-location-history/index.html"
+      ]
+    },
+    {
+      "png": "/screenshots/saved-location-editor.png",
+      "webp": "/screenshots/saved-location-editor.webp",
+      "originalBytes": 90622,
+      "webpBytes": 28904,
+      "pixelsIdentical": true,
+      "pngSHA256": "efabaf291e91c009bc19ba02e03cd0f04876e70796c7dcd992544c458d7126f1",
+      "webpSHA256": "93aa0ec6e0a3fa13298b6c427150c088ded3937d6fa3f577293f7743c7dd7e92",
+      "pages": [
+        "/docs/places/index.html"
+      ]
+    }
+  ],
+  "keptPNG": [
+    "/screenshots/dawarich-synthetic-points.png",
+    "/screenshots/gpx-studio-synthetic.png"
+  ],
+  "originalBytes": 2373638,
+  "webpBytes": 831668,
+  "savedBytes": 1541970,
+  "savedPercent": 64.96
+}

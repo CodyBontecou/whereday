@@ -1,0 +1,245 @@
+{
+  "data": [
+    {
+      "type": "appAssetLibraryPlacements",
+      "id": "40000019-30b5-855a-8f17-e12939eb660a",
+      "attributes": {
+        "createdDate": "2026-10-30T19:47:05.970952Z",
+        "lastModifiedDate": "2026-10-30T19:47:05.970952Z",
+        "placementType": "APP_SCREENSHOT",
+        "mediaType": "IMAGE",
+        "placementGroup": "IPHONE_DUO_PROFILE",
+        "state": "ACTIVE",
+        "stateDetails": null
+      },
+      "relationships": {
+        "image": {
+          "data": {
+            "type": "appAssetLibraryImages",
+            "id": "94000019-30b5-855a-8028-864cbbff34a1"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryPlacements/40000019-30b5-855a-8f17-e12939eb660a"
+      }
+    },
+    {
+      "type": "appAssetLibraryPlacements",
+      "id": "fa000019-30b5-855a-8f2e-f2fe90d5fcb8",
+      "attributes": {
+        "createdDate": "2026-10-30T19:47:07.273343Z",
+        "lastModifiedDate": "2026-10-30T19:47:07.273343Z",
+        "placementType": "APP_SCREENSHOT",
+        "mediaType": "IMAGE",
+        "placementGroup": "IPHONE_DUO_PROFILE",
+        "state": "ACTIVE",
+        "stateDetails": null
+      },
+      "relationships": {
+        "image": {
+          "data": {
+            "type": "appAssetLibraryImages",
+            "id": "7fc00019-30b5-855a-8029-62a261176b2d"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryPlacements/fa000019-30b5-855a-8f2e-f2fe90d5fcb8"
+      }
+    },
+    {
+      "type": "appAssetLibraryPlacements",
+      "id": "22000019-30b5-855a-8f06-da6789394cac",
+      "attributes": {
+        "createdDate": "2026-10-30T19:47:08.581869Z",
+        "lastModifiedDate": "2026-10-30T19:47:08.581869Z",
+        "placementType": "APP_SCREENSHOT",
+        "mediaType": "IMAGE",
+        "placementGroup": "IPHONE_DUO_PROFILE",
+        "state": "ACTIVE",
+        "stateDetails": null
+      },
+      "relationships": {
+        "image": {
+          "data": {
+            "type": "appAssetLibraryImages",
+            "id": "57400019-30b5-855a-8013-5b9b5330295a"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryPlacements/22000019-30b5-855a-8f06-da6789394cac"
+      }
+    },
+    {
+      "type": "appAssetLibraryPlacements",
+      "id": "70c00019-30b5-855a-8f1e-52fcfcfebeb7",
+      "attributes": {
+        "createdDate": "2026-10-30T19:48:47.143353Z",
+        "lastModifiedDate": "2026-10-30T19:48:47.143353Z",
+        "placementType": "APP_SCREENSHOT",
+        "mediaType": "IMAGE",
+        "placementGroup": "IPHONE_DUO_PROFILE",
+        "state": "PENDING",
+        "stateDetails": null
+      },
+      "relationships": {
+        "image": {
+          "data": {
+            "type": "appAssetLibraryImages",
+            "id": "38400019-30b5-855a-8000-c343537fbd2a"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryPlacements/70c00019-30b5-855a-8f1e-52fcfcfebeb7"
+      }
+    }
+  ],
+  "included": [
+    {
+      "type": "appAssetLibraryImages",
+      "id": "38400019-30b5-855a-8000-c343537fbd2a",
+      "attributes": {
+        "specId": null,
+        "fileName": "04-cover-map-1398x2034.png",
+        "createdDate": "2026-10-30T19:45:10.0367Z",
+        "lastModifiedDate": "2026-10-30T19:45:13.938913Z",
+        "fileSize": 3819999,
+        "state": "UPLOAD_COMPLETE",
+        "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+        "imageAsset": null,
+        "stateDetails": null,
+        "uploadOperations": [
+          {
+            "method": "PUT",
+            "url": "https://northamerica-1.object-storage.apple.com/itms-assets-prod-200001/PurpleSource221/v4/cf/d7/70/cfd7702b-9ca7-4f28-bf21-79474519e134/R-hp_0cKkJzQKLSNsm4nf52ZoNSg-COdaj3MXgWKYHY_U003d-1793389509717?partNumber=1&uploadId=6a3953b0-d49a-11f1-8f82-70b2b904afc1&apple-asset-repo-correlation-key=LUZB3XKPMYXWC3B65MANNWDJCE&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20261030T194509Z&X-Amz-SignedHeaders=host&X-Amz-Credential=PKIAI0ZGNAD8WKMSOOX0%2F20261030%2Fnorthamerica-1%2Fs3%2Faws4_request&X-Amz-Expires=604800&X-Amz-Signature=e8528dc6e9e8b22d3736e5f709ccad2036b0e42fa0060a6a0b342706f77ae6b3",
+            "length": 3819999,
+            "offset": 0,
+            "requestHeaders": [
+              {
+                "name": "Content-Type",
+                "value": "image/png"
+              }
+            ]
+          }
+        ],
+        "referenceName": "Whereday Duo 2026-10-30 / 04-cover-map"
+      },
+      "relationships": {
+        "placements": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/38400019-30b5-855a-8000-c343537fbd2a/relationships/placements",
+            "related": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/38400019-30b5-855a-8000-c343537fbd2a/placements"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/38400019-30b5-855a-8000-c343537fbd2a"
+      }
+    },
+    {
+      "type": "appAssetLibraryImages",
+      "id": "57400019-30b5-855a-8013-5b9b5330295a",
+      "attributes": {
+        "specId": "b83915b8-5b87-4e63-bba5-ab3a0c439862",
+        "fileName": "03-after-dark-2853x2007.png",
+        "createdDate": "2026-10-30T19:44:58.101389Z",
+        "lastModifiedDate": "2026-10-30T19:45:10.491249Z",
+        "fileSize": 5689598,
+        "state": "PREPARE_FOR_SUBMISSION",
+        "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+        "imageAsset": {
+          "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/HFUYjVUP8hm6GXvxXUJnqw/{w}x{h}bb.{f}",
+          "width": 2853,
+          "height": 2007
+        },
+        "stateDetails": null,
+        "referenceName": "Whereday Duo 2026-10-30 / 03-after-dark"
+      },
+      "relationships": {
+        "placements": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/57400019-30b5-855a-8013-5b9b5330295a/relationships/placements",
+            "related": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/57400019-30b5-855a-8013-5b9b5330295a/placements"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/57400019-30b5-855a-8013-5b9b5330295a"
+      }
+    },
+    {
+      "type": "appAssetLibraryImages",
+      "id": "7fc00019-30b5-855a-8029-62a261176b2d",
+      "attributes": {
+        "specId": "b83915b8-5b87-4e63-bba5-ab3a0c439862",
+        "fileName": "02-places-in-context-2853x2007.png",
+        "createdDate": "2026-10-30T19:44:50.355153Z",
+        "lastModifiedDate": "2026-10-30T19:44:58.642116Z",
+        "fileSize": 5581806,
+        "state": "PREPARE_FOR_SUBMISSION",
+        "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+        "imageAsset": {
+          "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/FoD_u9vn_NZJ4gVXcRyK3A/{w}x{h}bb.{f}",
+          "width": 2853,
+          "height": 2007
+        },
+        "stateDetails": null,
+        "referenceName": "Whereday Duo 2026-10-30 / 02-places-in-context"
+      },
+      "relationships": {
+        "placements": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/7fc00019-30b5-855a-8029-62a261176b2d/relationships/placements",
+            "related": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/7fc00019-30b5-855a-8029-62a261176b2d/placements"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/7fc00019-30b5-855a-8029-62a261176b2d"
+      }
+    },
+    {
+      "type": "appAssetLibraryImages",
+      "id": "94000019-30b5-855a-8028-864cbbff34a1",
+      "attributes": {
+        "specId": "b83915b8-5b87-4e63-bba5-ab3a0c439862",
+        "fileName": "01-day-unfolded-2853x2007.png",
+        "createdDate": "2026-10-30T19:44:42.561511Z",
+        "lastModifiedDate": "2026-10-30T19:44:50.951265Z",
+        "fileSize": 5641283,
+        "state": "PREPARE_FOR_SUBMISSION",
+        "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+        "imageAsset": {
+          "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/90C1wQeQaiZgB2Kio4GSkQ/{w}x{h}bb.{f}",
+          "width": 2853,
+          "height": 2007
+        },
+        "stateDetails": null,
+        "referenceName": "Whereday Duo 2026-10-30 / 01-day-unfolded"
+      },
+      "relationships": {
+        "placements": {
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/94000019-30b5-855a-8028-864cbbff34a1/relationships/placements",
+            "related": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/94000019-30b5-855a-8028-864cbbff34a1/placements"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.appstoreconnect.apple.com/v1/appAssetLibraryImages/94000019-30b5-855a-8028-864cbbff34a1"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://api.appstoreconnect.apple.com/v1/appStoreVersionLocalizations/61a47aa4-a6a0-4a51-bd55-b0c2c0a471de/placements?filter%5BplacementGroup%5D=IPHONE_DUO_PROFILE&include=image&sort=placementGroupPosition"
+  },
+  "meta": {
+    "paging": {
+      "total": 4,
+      "limit": 50
+    }
+  }
+}
