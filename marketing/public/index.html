@@ -260,6 +260,16 @@
     .mock .serif { font-family: var(--serif); }
     .mock .mono { font-family: var(--mono); }
     .mock-note { font-family: var(--mono); font-size: 11px; letter-spacing: 1.2px; color: var(--mute); text-align: center; margin: 14px 0 0; }
+    /* Trace mockup: the one interactive screen, scrubbed by /assets/trace-replay.js */
+    .trace-scrub { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 28px; margin: 0; background: transparent; cursor: pointer; }
+    .trace-scrub::-webkit-slider-runnable-track { height: 28px; background: transparent; }
+    .trace-scrub::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: 4px; border-radius: 10px; background: #FBF9F4; border: 3px solid #C2462A; box-sizing: border-box; }
+    .trace-scrub::-moz-range-track { height: 28px; background: transparent; }
+    .trace-scrub::-moz-range-thumb { width: 20px; height: 20px; border-radius: 10px; background: #FBF9F4; border: 3px solid #C2462A; box-sizing: border-box; }
+    .trace-scrub:focus-visible { outline: 3px solid #C2462A; outline-offset: 2px; border-radius: 14px; }
+    .trace-jump { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid #D8D2C3; background: #FBF9F4; color: #1E2B45; font: 500 13px Inter, sans-serif; white-space: nowrap; flex-shrink: 0; cursor: pointer; }
+    .trace-jump:hover { border-color: #1E2B45; }
+    .trace-jump:focus-visible { outline: 3px solid #C2462A; outline-offset: 2px; }
 
     /* § 01 Day */
     .day { display: flex; flex-direction: column; gap: 44px; padding-block: clamp(56px, 8vw, 104px); }
@@ -689,8 +699,8 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
         </div>
         <div class="screens">
           <figure>
-            <div class="phone small"><div class="mock" style="--w: 390; --h: 844" aria-hidden="true" inert><div style="width: 390px; height: 844px; box-sizing: border-box; background: #ECE6D8; color: #1E2B45; font-family: Inter, system-ui, sans-serif; position: relative; overflow: hidden">
-<svg width="390" height="560" viewBox="0 0 390 560" style="position: absolute; top: 0; left: 0">
+            <div class="phone small"><div class="mock trace-replay" style="--w: 390; --h: 844" data-trace-replay><div style="width: 390px; height: 844px; box-sizing: border-box; background: #ECE6D8; color: #1E2B45; font-family: Inter, system-ui, sans-serif; position: relative; overflow: hidden">
+<svg width="390" height="560" viewBox="0 0 390 560" style="position: absolute; top: 0; left: 0" aria-hidden="true">
 <path d="M250 0 H390 V250 C350 230 330 180 345 140 C360 95 300 60 250 0 Z" fill="#CFD8DF"></path>
 <rect x="40" y="250" width="70" height="60" rx="4" fill="#D6DCC6"></rect>
 <g stroke="#DDD5C4" stroke-width="1.2">
@@ -699,7 +709,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 </g>
 <path d="M0 540 L390 120" stroke="#E2D9C6" stroke-width="6"></path>
 <polyline points="70,470 110,420 180,380 240,260 290,170 320,110 280,180 230,250 170,330 150,355 130,380 170,330" fill="none" stroke="#1E2B45" stroke-opacity="0.18" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></polyline>
-<polyline points="70,470 70,470 110,420 180,380 240,260 290,170 320,110 320,110 280,180 230,250 170,330 170,330 150,355 130,380 130.0,380.0" fill="none" stroke="#1E2B45" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></polyline>
+<polyline data-trace="trail" points="70,470 70,470 110,420 180,380 240,260 290,170 320,110 320,110 280,180 230,250 170,330 170,330 150,355 130,380 130.0,380.0" fill="none" stroke="#1E2B45" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"></polyline>
 <g>
 <circle cx="70" cy="470" r="9" fill="#1E2B45"></circle>
 <circle cx="320" cy="110" r="9" fill="#C2462A"></circle>
@@ -712,10 +722,10 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <text x="184" y="334">OFFICE</text>
 <text x="58" y="400">TARTINE</text>
 </g>
-<circle cx="130.0" cy="380.0" r="16" fill="#C2462A" fill-opacity="0.18"></circle>
-<circle cx="130.0" cy="380.0" r="7" fill="#F3EFE6" stroke="#C2462A" stroke-width="3"></circle>
+<circle data-trace="halo" cx="130.0" cy="380.0" r="16" fill="#C2462A" fill-opacity="0.18"></circle>
+<circle data-trace="dot" cx="130.0" cy="380.0" r="7" fill="#F3EFE6" stroke="#C2462A" stroke-width="3"></circle>
 </svg>
-<div style="position: absolute; top: 54px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center">
+<div aria-hidden="true" style="position: absolute; top: 54px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center">
 <span style="height: 44px; padding: 0 16px 0 12px; border-radius: 22px; background: #FBF9F4; border: 1px solid #D8D2C3; display: flex; align-items: center; gap: 6px; text-decoration: none; color: #1E2B45; font: 500 14px Inter, sans-serif">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>Today</span>
 <span style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 22px; background: #FBF9F4; border: 1px solid #D8D2C3; display: flex; align-items: center; justify-content: center; color: #1E2B45">
@@ -723,13 +733,13 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 </span>
 </div>
 <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 330px; box-sizing: border-box; background: #F3EFE6; border-radius: 26px 26px 0 0; padding: 12px 24px 30px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 -10px 30px rgba(30,43,69,0.12)">
-<span style="align-self: center; width: 36px; height: 4px; border-radius: 2px; background: #CFC8B7"></span>
-<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<span aria-hidden="true" style="align-self: center; width: 36px; height: 4px; border-radius: 2px; background: #CFC8B7"></span>
+<div aria-hidden="true" style="display: flex; justify-content: space-between; align-items: flex-end">
 <div style="display: flex; flex-direction: column; gap: 4px">
-<span class="mono" style="font-size: 11px; letter-spacing: 1.4px; color: #66645D">STAYING AT</span>
-<span class="serif" style="font-size: 28px; line-height: 1.1">Tartine Manufactory</span>
+<span class="mono" style="font-size: 11px; letter-spacing: 1.4px; color: #66645D" data-trace="kicker">STAYING AT</span>
+<span class="serif" style="font-size: 28px; line-height: 1.1" data-trace="label">Tartine Manufactory</span>
 </div>
-<span class="serif" style="font-size: 44px; line-height: 0.9; font-variant-numeric: tabular-nums">12:58</span>
+<span class="serif" style="font-size: 44px; line-height: 0.9; font-variant-numeric: tabular-nums" data-trace="clock">12:58</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 0">
 <div style="position: relative; height: 8px; border-radius: 4px; overflow: hidden; background: #E4DED0" aria-hidden="true">
@@ -740,24 +750,23 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <span style="position: absolute; left: 57.6%; width: 2.1%; top: 0; bottom: 0; background: #B7862B"></span>
 <span style="position: absolute; left: 59.7%; right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(90deg,#E4DED0 0 4px,#F3EFE6 4px 8px)"></span>
 </div>
-<span style="position: absolute; left: -9999px">Time of day</span>
-<span class="mock-thumb" style="display: block; position: relative; height: 28px"><span style="position: absolute; top: 4px; left: calc(54% - 10px); width: 20px; height: 20px; border-radius: 10px; background: #FBF9F4; border: 3px solid #C2462A; box-sizing: border-box"></span></span>
-<div class="mono" style="display: flex; justify-content: space-between; font-size: 10px; color: #66645D; margin-top: -6px">
+<input class="trace-scrub" type="range" aria-label="Replay the sample day, time of day" min="0" max="1440" step="1" value="778" aria-valuetext="12:58, staying at Tartine Manufactory">
+<div class="mono" aria-hidden="true" style="display: flex; justify-content: space-between; font-size: 10px; color: #66645D; margin-top: -6px">
 <span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>
 </div>
 </div>
 <div style="display: flex; gap: 8px; overflow: hidden">
-<span style="display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid #D8D2C3; background: #FBF9F4; color: #1E2B45; display: flex; align-items: center; gap: 8px; font: 500 13px Inter, sans-serif; white-space: nowrap; flex-shrink: 0">
-<span style="width: 8px; height: 8px; border-radius: 4px; background: #1E2B45"></span>Home</span>
-<span style="display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid #D8D2C3; background: #FBF9F4; color: #1E2B45; display: flex; align-items: center; gap: 8px; font: 500 13px Inter, sans-serif; white-space: nowrap; flex-shrink: 0">
-<span style="width: 8px; height: 8px; border-radius: 4px; background: #C2462A"></span>Ferry Bldg</span>
-<span style="display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid #D8D2C3; background: #FBF9F4; color: #1E2B45; display: flex; align-items: center; gap: 8px; font: 500 13px Inter, sans-serif; white-space: nowrap; flex-shrink: 0">
-<span style="width: 8px; height: 8px; border-radius: 4px; background: #B7862B"></span>Office</span>
-<span style="display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid #D8D2C3; background: #FBF9F4; color: #1E2B45; display: flex; align-items: center; gap: 8px; font: 500 13px Inter, sans-serif; white-space: nowrap; flex-shrink: 0">
-<span style="width: 8px; height: 8px; border-radius: 4px; background: #5E7F5A"></span>Tartine</span>
+<button class="trace-jump" type="button" data-minute="300" aria-label="Jump to Home">
+<span style="width: 8px; height: 8px; border-radius: 4px; background: #1E2B45"></span><span aria-hidden="true">Home</span></button>
+<button class="trace-jump" type="button" data-minute="540" aria-label="Jump to Ferry Building">
+<span style="width: 8px; height: 8px; border-radius: 4px; background: #C2462A"></span><span aria-hidden="true">Ferry Bldg</span></button>
+<button class="trace-jump" type="button" data-minute="660" aria-label="Jump to Mission Office">
+<span style="width: 8px; height: 8px; border-radius: 4px; background: #B7862B"></span><span aria-hidden="true">Office</span></button>
+<button class="trace-jump" type="button" data-minute="790" aria-label="Jump to Tartine Manufactory">
+<span style="width: 8px; height: 8px; border-radius: 4px; background: #5E7F5A"></span><span aria-hidden="true">Tartine</span></button>
 </div>
-<div class="mono" style="display: flex; justify-content: space-between; font-size: 11px; color: #4E4C46; border-top: 1px solid #D8D2C3; padding-top: 12px">
-<span>13.0 km so far</span><span>Drag to replay · now 14:20</span>
+<div class="mono" aria-hidden="true" style="display: flex; justify-content: space-between; font-size: 11px; color: #4E4C46; border-top: 1px solid #D8D2C3; padding-top: 12px">
+<span><span data-trace="dist">13.0</span> km so far</span><span>Drag to replay · now 14:20</span>
 </div>
 </div>
 </div></div></div>
@@ -1707,6 +1716,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 })();
 </script>
 <!-- End Cloudflare Web Analytics -->
+<script defer src="/assets/trace-replay.js"></script>
 <script defer src="/assets/acquisition.js"></script>
 <script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
 </body>
