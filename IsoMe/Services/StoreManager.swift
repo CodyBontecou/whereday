@@ -97,6 +97,9 @@ final class StoreManager: ObservableObject {
     @Published private(set) var hasLegacyTrackingAccess = false
     @Published private(set) var hasPurchasedBefore = false
     @Published private(set) var trackingExpiration: Date?
+    /// StoreKit's renewal intent for the active subscription: true renews, false ends at `trackingExpiration`,
+    /// nil when there's no subscription or the status couldn't be read.
+    @Published private(set) var willAutoRenew: Bool?
     @Published private(set) var trialEligibleProductIDs: Set<String> = []
 
     var isLoading: Bool { isLoadingProducts || purchasingOption != nil || isRestoring }
@@ -275,6 +278,7 @@ final class StoreManager: ObservableObject {
         }
         var active: [String] = []
         var expirations: [String: Date] = [:]
+        var groupIDs: [String: String] = [:]
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result,
                   Self.productIDs.contains(transaction.productID),
@@ -283,9 +287,15 @@ final class StoreManager: ObservableObject {
                                 isUpgraded: transaction.isUpgraded) else { continue }
             active.append(transaction.productID)
             expirations[transaction.productID] = transaction.expirationDate
+            groupIDs[transaction.productID] = transaction.subscriptionGroupID
         }
         let preferred = Self.preferredEntitlementProductID(from: active)
         trackingExpiration = preferred.flatMap { expirations[$0] }
+        if let preferred, let groupID = groupIDs[preferred] {
+            willAutoRenew = await Self.autoRenewStatus(productID: preferred, subscriptionGroupID: groupID)
+        } else {
+            willAutoRenew = nil
+        }
         unlockedProductID = preferred
         isPurchased = preferred != nil
         if isPurchased { rememberPurchase() }
@@ -306,6 +316,18 @@ final class StoreManager: ObservableObject {
                 await self?.checkEntitlement()
             }
         }
+    }
+
+    /// Reads the verified renewal info for the subscription that grants access.
+    private static func autoRenewStatus(productID: String, subscriptionGroupID: String) async -> Bool? {
+        guard let statuses = try? await Product.SubscriptionInfo.status(for: subscriptionGroupID) else { return nil }
+        let matching = statuses.first { status in
+            if case .verified(let renewal) = status.renewalInfo, renewal.currentProductID == productID { return true }
+            if case .verified(let transaction) = status.transaction, transaction.productID == productID { return true }
+            return false
+        } ?? statuses.first
+        guard let matching, case .verified(let renewal) = matching.renewalInfo else { return nil }
+        return renewal.willAutoRenew
     }
 
     nonisolated static func isActive(revocationDate: Date?, expirationDate: Date?, isUpgraded: Bool, now: Date = Date()) -> Bool {

@@ -18,6 +18,8 @@ struct ShortcutsGuideView: View {
         var id: String { "\(name)" }
     }
 
+    @Environment(\.openURL) private var openURL
+
     private static var appName: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Whereday"
     }
@@ -26,24 +28,24 @@ struct ShortcutsGuideView: View {
         let app = Self.appName
         return [
             ActionGroup(name: "RECORD", actions: [
-                Action(title: "Start Tracking", detail: "Begin recording your route", phrase: String(localized: "Start \(app)")),
-                Action(title: "Stop Tracking", detail: "End the current tracking session", phrase: String(localized: "Stop tracking with \(app)")),
-                Action(title: "Check In", detail: "Start a manual visit at a saved place, coordinates or your current location", phrase: String(localized: "Check in with \(app)")),
-                Action(title: "Check Out", detail: "Finish an open manual visit", phrase: nil)
+                Action(title: "Start Tracking", detail: "Begin a recorded outing", phrase: String(localized: "Start \(app)")),
+                Action(title: "Stop Tracking", detail: "End the current outing", phrase: String(localized: "Stop tracking with \(app)")),
+                Action(title: "Check In", detail: "Start a manual visit at a saved place or coordinates", phrase: String(localized: "Check in with \(app)")),
+                Action(title: "Check Out", detail: "Finish an open visit", phrase: nil)
             ]),
             ActionGroup(name: "ASK", actions: [
-                Action(title: "Today's Distance", detail: "How far you've moved today", phrase: String(localized: "How far have I gone with \(app)")),
-                Action(title: "Today's Tracking Duration", detail: "How long the current session has been running", phrase: String(localized: "How long have I been tracking with \(app)")),
-                Action(title: "Today's Visits", detail: "Number of visits logged today", phrase: String(localized: "How many visits today in \(app)")),
+                Action(title: "Today's Distance", detail: "Kilometres or miles moved since midnight", phrase: String(localized: "How far have I gone with \(app)")),
+                Action(title: "Today's Tracking Duration", detail: "How long recording has run", phrase: String(localized: "How long have I been tracking with \(app)")),
+                Action(title: "Today's Visits", detail: "Places stopped at today", phrase: String(localized: "How many visits today in \(app)")),
                 Action(title: "Get Visits", detail: "Visits in a date range, for other shortcuts", phrase: nil),
-                Action(title: "Get Movements", detail: "Outings in a date range, for other shortcuts", phrase: nil),
-                Action(title: "Get Current Outing Name", detail: "The name of the outing being recorded", phrase: nil)
+                Action(title: "Get Movements", detail: "Walks, rides and drives in a range", phrase: nil),
+                Action(title: "Get Current Outing Name", detail: "The name of what you are recording", phrase: nil)
             ]),
             ActionGroup(name: "CHANGE", actions: [
-                Action(title: "Rename Current Outing", detail: "Name the outing being recorded", phrase: String(localized: "Rename current outing in \(app)")),
+                Action(title: "Rename Current Outing", detail: "Give the live recording a name", phrase: String(localized: "Rename current outing in \(app)")),
                 Action(title: "Rename Visit", detail: "Fix a place name after the fact", phrase: String(localized: "Rename a visit in \(app)")),
-                Action(title: "Rename Movement", detail: "Label a recorded movement", phrase: String(localized: "Rename a movement in \(app)")),
-                Action(title: "Export Data", detail: "Export visits, points or outings for a date range as a file", phrase: String(localized: "Export \(app) data"))
+                Action(title: "Rename Movement", detail: "Label a walk, ride or drive", phrase: String(localized: "Rename a movement in \(app)")),
+                Action(title: "Export Data", detail: "Run an export in any format", phrase: String(localized: "Export \(app) data"))
             ])
         ]
     }
@@ -94,9 +96,12 @@ struct ShortcutsGuideView: View {
             Text("“Hey Siri, how far have I gone with \(Self.appName)?”")
                 .font(TE.editorial(.title2))
                 .fixedSize(horizontal: false, vertical: true)
-            Text("→ Answers with today's distance")
-                .font(TE.mono(.caption))
-                .foregroundStyle(TE.liveDot)
+            TimelineView(.periodic(from: .now, by: 30)) { context in
+                Text(verbatim: "→ " + Self.liveAnswer(now: context.date))
+                    .font(TE.mono(.caption))
+                    .foregroundStyle(TE.liveDot)
+                    .contentTransition(.numericText())
+            }
         }
         .foregroundStyle(TE.onInkCard)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -106,7 +111,42 @@ struct ShortcutsGuideView: View {
         .accessibilityElement(children: .combine)
     }
 
+    /// What Today's Distance would answer right now, from the same shared snapshot the intent reads.
+    static func liveAnswer(now: Date = Date(), snapshot: SharedLocationData? = SharedLocationData.load()) -> String {
+        let data = snapshot ?? .empty
+        // A snapshot last written before midnight still holds yesterday's total.
+        let isToday = data.lastUpdateTime.map { Calendar.current.isDate($0, inSameDayAs: now) } ?? false
+        let meters = isToday ? data.todayDistanceMeters : 0
+        guard meters > 0 else { return String(localized: "You haven't moved yet today") }
+        let formatted = DistanceFormatter.format(meters: meters, usesMetric: data.prefersMetricDistanceUnits)
+        return String(localized: "\(formatted) since midnight")
+    }
+
     private func actionRow(_ action: Action) -> some View {
+        HStack(spacing: 12) {
+            actionText(action)
+            Button {
+                // App Shortcuts can't be added one by one from inside an app; this opens Shortcuts, where they're listed.
+                openURL(Self.shortcutsAppURL)
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 15, weight: .regular))
+                    .frame(width: 40, height: 40)
+                    .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+                    .contentShape(Circle())
+            }
+            .buttonStyle(.plain)
+            .frame(minWidth: 44, minHeight: 44)
+            .accessibilityLabel(Text("Add \(Text(action.title)) to Shortcuts"))
+        }
+        .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+    }
+
+    private static let shortcutsAppURL = URL(string: "shortcuts://")!
+
+    private func actionText(_ action: Action) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(action.title)
                 .font(.subheadline)
@@ -125,9 +165,7 @@ struct ShortcutsGuideView: View {
             .padding(.top, 2)
         }
         .fixedSize(horizontal: false, vertical: true)
-        .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
 }

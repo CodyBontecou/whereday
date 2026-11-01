@@ -169,6 +169,26 @@
 		9038E89D0D7D984DC89F365B /* DebugSelfie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */; };
 		47B033577E4B1712A002C33E /* SelfieOverlayKit in Frameworks */ = {isa = PBXBuildFile; productRef = C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */; };
 		E5A546658B9E479D8364CF00 /* ScrawlKit in Frameworks */ = {isa = PBXBuildFile; productRef = 11AB94AF57A54AF190F5E84D /* ScrawlKit */; };
+		F0A71100212F00010000F0A7 /* Newsreader.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70001212F00000000F0A7 /* Newsreader.ttf */; };
+		F0A72100212F00010000F0A7 /* Newsreader.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70001212F00000000F0A7 /* Newsreader.ttf */; };
+		F0A73100212F00010000F0A7 /* Newsreader.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70001212F00000000F0A7 /* Newsreader.ttf */; };
+		F0A74100212F00010000F0A7 /* Newsreader.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70001212F00000000F0A7 /* Newsreader.ttf */; };
+		F0A71200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */; };
+		F0A72200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */; };
+		F0A73200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */; };
+		F0A74200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */; };
+		F0A71300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */; };
+		F0A72300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */; };
+		F0A73300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */; };
+		F0A74300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */; };
+		F0A71400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */; };
+		F0A72400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */; };
+		F0A73400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */; };
+		F0A74400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */; };
+		F0A71500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
+		F0A72500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
+		F0A73500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
+		F0A74500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -395,6 +415,11 @@
 		CA1E00860000000000000002 /* CalendarEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventEditor.swift; sourceTree = "<group>"; };
 		CA1E00860000000000000004 /* CalendarEventDraftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventDraftTests.swift; sourceTree = "<group>"; };
 		779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugSelfie.swift; sourceTree = "<group>"; };
+		F0A70001212F00000000F0A7 /* Newsreader.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Newsreader.ttf"; sourceTree = "<group>"; };
+		F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Newsreader-Italic.ttf"; sourceTree = "<group>"; };
+		F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
+		F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Medium.ttf"; sourceTree = "<group>"; };
+		F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-SemiBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -519,6 +544,7 @@
 				A1000001212F000000000001 /* IsoMeApp.swift */,
 				A1000019212F000000000019 /* AppDelegate.swift */,
 				A100001F212F00000000001F /* TEDesign.swift */,
+				F0A70000212F00000000F0A7 /* Fonts */,
 				A1000010212F000000000010 /* Info.plist */,
 				A100001D212F00000000001D /* IsoMe.entitlements */,
 				A1FFFFFB212EFFFFFFFF0003 /* Models */,
@@ -744,6 +770,18 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		F0A70000212F00000000F0A7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F0A70001212F00000000F0A7 /* Newsreader.ttf */,
+				F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */,
+				F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */,
+				F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */,
+				F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -917,6 +955,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0A71100212F00010000F0A7 /* Newsreader.ttf in Resources */,
+				F0A71200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */,
+				F0A71300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */,
+				F0A71400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */,
+				F0A71500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */,
 				A100000F212F00010000000F /* Preview Assets.xcassets in Resources */,
 				A100000E212F00010000000E /* Assets.xcassets in Resources */,
 				FEC10001212F000100000001 /* outings-dashboard.mp4 in Resources */,
@@ -940,6 +983,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0A72100212F00010000F0A7 /* Newsreader.ttf in Resources */,
+				F0A72200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */,
+				F0A72300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */,
+				F0A72400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */,
+				F0A72500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */,
 				A2000005212F000100000005 /* Assets.xcassets in Resources */,
 				B2000007212F000100000007 /* Localizable.xcstrings in Resources */,
 				B200000C212F00010000000C /* InfoPlist.xcstrings in Resources */,
@@ -950,6 +998,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0A73100212F00010000F0A7 /* Newsreader.ttf in Resources */,
+				F0A73200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */,
+				F0A73300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */,
+				F0A73400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */,
+				F0A73500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */,
 				A3000003212F000100000003 /* WatchAssets.xcassets in Resources */,
 				B2000008212F000100000008 /* Localizable.xcstrings in Resources */,
 				B200000A212F00010000000A /* InfoPlist.xcstrings in Resources */,
@@ -960,6 +1013,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0A74100212F00010000F0A7 /* Newsreader.ttf in Resources */,
+				F0A74200212F00010000F0A7 /* Newsreader-Italic.ttf in Resources */,
+				F0A74300212F00010000F0A7 /* IBMPlexMono-Regular.ttf in Resources */,
+				F0A74400212F00010000F0A7 /* IBMPlexMono-Medium.ttf in Resources */,
+				F0A74500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */,
 				B2000009212F000100000009 /* Localizable.xcstrings in Resources */,
 				B200000D212F00010000000D /* InfoPlist.xcstrings in Resources */,
 			);

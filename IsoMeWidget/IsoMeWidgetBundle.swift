@@ -57,12 +57,22 @@ enum WidgetTE {
         ]
     }
 
+    /// IBM Plex Mono, bundled and registered in this extension.
     static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
-        Font.system(style, design: .monospaced).weight(weight)
+        WheredayFont.mono(style, weight: weight)
     }
 
+    static func mono(size: CGFloat, weight: Font.Weight = .regular, relativeTo style: Font.TextStyle) -> Font {
+        WheredayFont.mono(size: size, weight: weight, relativeTo: style)
+    }
+
+    /// Newsreader, bundled and registered in this extension.
     static func editorial(_ style: Font.TextStyle) -> Font {
-        Font.system(style, design: .serif)
+        WheredayFont.serif(style)
+    }
+
+    static func editorial(size: CGFloat, relativeTo style: Font.TextStyle) -> Font {
+        WheredayFont.serif(size: size, relativeTo: style)
     }
 }
 
@@ -236,7 +246,7 @@ struct TimelineStripView: View {
                     .minimumScaleFactor(0.7)
                 Spacer(minLength: 4)
                 Text(sinceLabel)
-                    .font(WidgetTE.mono(.caption2))
+                    .font(WidgetTE.mono(size: 10, relativeTo: .caption2))
                     .tracking(1)
                     .foregroundStyle(WidgetTE.textMuted)
                     .lineLimit(1)
@@ -251,7 +261,7 @@ struct TimelineStripView: View {
                         if hour != "24" { Spacer(minLength: 0) }
                     }
                 }
-                .font(WidgetTE.mono(.caption2))
+                .font(WidgetTE.mono(size: 9, relativeTo: .caption2))
                 .foregroundStyle(WidgetTE.textMuted)
                 .accessibilityHidden(true)
             }
@@ -305,12 +315,12 @@ struct TimelineStripView: View {
     private func stat(value: String, label: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             Text(value)
-                .font(WidgetTE.editorial(.body))
+                .font(WidgetTE.editorial(size: 18, relativeTo: .body))
                 .foregroundStyle(WidgetTE.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(label)
-                .font(WidgetTE.mono(.caption2))
+                .font(WidgetTE.mono(size: 9, relativeTo: .caption2))
                 .tracking(1)
                 .foregroundStyle(WidgetTE.textMuted)
                 .lineLimit(1)
@@ -349,14 +359,14 @@ struct DayDialWidgetView: View {
 
             VStack(spacing: 2) {
                 Text(WidgetDay.clock(day.now))
-                    .font(.system(.title, design: .serif))
+                    .font(WidgetTE.editorial(.title))
                     .monospacedDigit()
                     .foregroundStyle(WidgetTE.Night.textPrimary)
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
                 if let stay = day.currentStay {
                     Text(stay.placeName.uppercased())
-                        .font(WidgetTE.mono(.caption2))
+                        .font(WidgetTE.mono(size: 9, relativeTo: .caption2))
                         .tracking(1)
                         .foregroundStyle(WidgetTE.Night.label)
                         .lineLimit(1)

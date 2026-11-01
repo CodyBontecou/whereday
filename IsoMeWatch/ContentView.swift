@@ -54,7 +54,7 @@ struct ContentView: View {
     private var appHeader: some View {
         HStack(spacing: 4) {
             Text(locationData.isTrackingEnabled ? "● Route" : "Today")
-                .font(WatchTE.mono(.caption2, weight: .medium))
+                .font(WatchTE.mono(size: 11, weight: .medium, relativeTo: .caption2))
                 .foregroundStyle(WatchTE.inkRust)
             Spacer(minLength: 0)
         }
@@ -66,42 +66,73 @@ struct ContentView: View {
     // MARK: - Glance: the day dial
 
     private var glancePanel: some View {
-        VStack(spacing: 6) {
-            ZStack {
-                WatchDayDial(nowFraction: WatchDayDial.dayFraction(of: Date()))
+        // Redraw each minute so the arcs, the "now" tick and "30 min" stay current.
+        TimelineView(.everyMinute) { timeline in
+            let now = timeline.date
+            let context = syncClient.todayContext
+            let arcs = context?.arcs(now: now) ?? []
+            let parts = Self.distanceParts(
+                DistanceFormatter.format(meters: todayDistance(on: now), usesMetric: locationData.prefersMetricDistanceUnits)
+            )
+            let stay = context?.currentStay(on: now)
 
-                VStack(spacing: 0) {
-                    Text(distanceParts.value)
-                        .font(.system(.title2, design: .serif))
-                        .foregroundStyle(WatchTE.textPrimary)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.6)
-                    Text(distanceParts.unit.uppercased())
-                        .font(WatchTE.mono(.caption2))
-                        .foregroundStyle(WatchTE.textMuted)
+            VStack(spacing: 6) {
+                ZStack {
+                    WatchDayDial(arcs: arcs, hasStays: context?.isSameDay(as: now) ?? false, nowFraction: WatchDayDial.dayFraction(of: now))
+
+                    VStack(spacing: 0) {
+                        Text(parts.value)
+                            .font(WheredayFont.serif(size: 26, relativeTo: .title2))
+                            .foregroundStyle(WatchTE.textPrimary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                        Text(parts.unit.uppercased())
+                            .font(WatchTE.mono(size: 9, relativeTo: .caption2))
+                            .foregroundStyle(WatchTE.textMuted)
+                    }
+                    .padding(.horizontal, 22)
                 }
-                .padding(.horizontal, 22)
-            }
-            .frame(width: 112, height: 112)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(String(localized: "Today's dial, \(locationData.formattedDistance) moved"))
+                .frame(width: 118, height: 118)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(dialAccessibilityLabel(stayCount: arcs.count, distance: parts))
 
-            Text(glanceTitle)
-                .font(.system(.headline, design: .serif))
-                .foregroundStyle(WatchTE.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+                Text(stay?.name ?? glanceTitle)
+                    .font(WheredayFont.serif(size: 17, relativeTo: .headline))
+                    .foregroundStyle(WatchTE.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
 
-            if let detail = glanceDetail {
-                Text(detail)
-                    .font(WatchTE.mono(.caption2))
-                    .foregroundStyle(WatchTE.textMuted)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.8)
+                if let detail = stay.map({ Self.sinceLabel(since: $0.since, now: now) }) ?? glanceDetail {
+                    Text(detail)
+                        .font(WatchTE.mono(size: 10, relativeTo: .caption2))
+                        .foregroundStyle(WatchTE.textMuted)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.8)
+                }
             }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
+    }
+
+    /// The watch's own distance today, or the iPhone's day total when that's further.
+    private func todayDistance(on date: Date) -> Double {
+        max(locationData.todayDistanceMeters, syncClient.todayContext?.distance(on: date) ?? 0)
+    }
+
+    private func dialAccessibilityLabel(stayCount: Int, distance: (value: String, unit: String)) -> String {
+        let moved = "\(distance.value) \(distance.unit)"
+        if stayCount > 0 {
+            return String(localized: "Today's dial, \(stayCount) stays, \(moved) moved")
+        }
+        return String(localized: "Today's dial, \(moved) moved")
+    }
+
+    /// "since 13:50 · 30 min"
+    private static func sinceLabel(since: Date, now: Date) -> String {
+        let clock = since.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+        let duration = StayDurationFormatter.compact(now.timeIntervalSince(since))
+        return String(localized: "since \(clock) · \(duration)")
     }
 
     private var glanceTitle: String {
@@ -128,22 +159,29 @@ struct ContentView: View {
     // MARK: - Route recording
 
     private var routePanel: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(distanceParts.value)
-                .font(.system(size: 44, weight: .regular, design: .serif))
+        let parts = Self.distanceParts(
+            DistanceFormatter.format(
+                meters: locationData.routeDistanceMeters ?? 0,
+                usesMetric: locationData.prefersMetricDistanceUnits
+            )
+        )
+
+        return VStack(alignment: .leading, spacing: 4) {
+            Text(parts.value)
+                .font(WheredayFont.serif(size: 46, relativeTo: .largeTitle))
                 .foregroundStyle(WatchTE.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
 
             HStack(spacing: 0) {
-                Text("\(distanceParts.unit.uppercased()) TODAY")
+                Text("\(parts.unit.uppercased()) THIS ROUTE")
                 if let start = locationData.trackingStartTime {
                     Text(verbatim: " · ")
                     Text(start, style: .timer)
                         .monospacedDigit()
                 }
             }
-            .font(WatchTE.mono(.caption2))
+            .font(WatchTE.mono(size: 10, relativeTo: .caption2))
             .foregroundStyle(WatchTE.textMuted)
             .lineLimit(1)
             .minimumScaleFactor(0.7)
@@ -152,30 +190,45 @@ struct ContentView: View {
                 Image(systemName: "arrow.triangle.2.circlepath")
                     .font(.caption2.weight(.semibold))
                 Text(pendingLabel)
-                    .font(WatchTE.mono(.caption2))
+                    .font(WatchTE.mono(size: 10, relativeTo: .caption2))
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .foregroundStyle(WatchTE.green)
             .padding(.top, 4)
+            .accessibilityElement(children: .combine)
+
+            if let markStatus = syncClient.markStatus {
+                Text(markStatus)
+                    .font(WatchTE.mono(size: 10, relativeTo: .caption2))
+                    .foregroundStyle(WatchTE.textPrimary)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
             if let remaining = locationData.formattedRemainingTime {
                 Text(String(localized: "\(remaining) until auto-off"))
-                    .font(WatchTE.mono(.caption2))
+                    .font(WatchTE.mono(size: 10, relativeTo: .caption2))
                     .foregroundStyle(WatchTE.ochre)
                     .lineLimit(1)
             }
 
             HStack(spacing: 6) {
                 Button {
-                    syncClient.syncPending(force: true)
+                    let fix = tracker.recentFix
+                    syncClient.requestMarkPlace(
+                        latitude: fix?.latitude,
+                        longitude: fix?.longitude,
+                        horizontalAccuracy: nil
+                    )
                 } label: {
-                    Text("Sync")
+                    Text("Mark")
                 }
                 .buttonStyle(WatchCapsuleButtonStyle(filled: false))
-                .accessibilityIdentifier("watchSyncNow")
-                .accessibilityLabel("Sync Now")
+                .accessibilityIdentifier("watchMarkPlace")
+                .accessibilityLabel("Mark this place")
+                .accessibilityHint("Checks in here on your iPhone")
 
                 Button {
                     tracker.toggleTracking()
@@ -191,6 +244,8 @@ struct ContentView: View {
         .padding(.horizontal, 4)
     }
 
+    /// Sync runs on its own (each place change, every few points, on launch and when the
+    /// iPhone becomes reachable), so the route screen only reports it.
     private var pendingLabel: String {
         let count = syncClient.pendingPointCount
         if count > 0 {
@@ -308,7 +363,7 @@ struct ContentView: View {
     private func statItem(value: String, label: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             Text(value)
-                .font(.system(.body, design: .serif))
+                .font(WheredayFont.serif(.body))
                 .foregroundStyle(WatchTE.textPrimary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
@@ -326,8 +381,7 @@ struct ContentView: View {
     }
 
     /// Splits "6.4 km" into its number and unit so the number can lead.
-    private var distanceParts: (value: String, unit: String) {
-        let formatted = locationData.formattedDistance
+    private static func distanceParts(_ formatted: String) -> (value: String, unit: String) {
         guard let space = formatted.lastIndex(where: { $0 == " " || $0 == "\u{00A0}" || $0 == "\u{202F}" }) else {
             return (formatted, "")
         }
@@ -337,16 +391,20 @@ struct ContentView: View {
 
 // MARK: - Day dial
 
-/// A 24-hour ring, midnight at the top. The watch doesn't keep today's stays, so the dial shows
-/// the part of the day already lived, with a rust "now" tick.
+/// A 24-hour ring, midnight at the top. Today's stays from the iPhone are drawn as arcs in
+/// their places' inks; without them (no iPhone context yet today) the dial shows the part of
+/// the day already lived. A rust tick marks "now".
 private struct WatchDayDial: View {
+    let arcs: [WatchTodayContext.Arc]
+    /// True when the iPhone's context is from today, even if it has no stays yet.
+    var hasStays: Bool = false
     let nowFraction: Double
 
     var body: some View {
         GeometryReader { geometry in
             let size = min(geometry.size.width, geometry.size.height)
             let lineWidth = size * 0.11
-            let inset = lineWidth / 2
+            let inset = lineWidth / 2 + size * 0.03
             let radius = size / 2 - inset
             let angle = Angle.degrees(nowFraction * 360 - 90)
 
@@ -355,11 +413,22 @@ private struct WatchDayDial: View {
                     .inset(by: inset)
                     .stroke(WatchTE.dialTrack, lineWidth: lineWidth)
 
-                Circle()
-                    .inset(by: inset)
-                    .trim(from: 0, to: nowFraction)
-                    .stroke(WatchTE.navyInk.opacity(0.55), style: StrokeStyle(lineWidth: lineWidth, lineCap: .butt))
-                    .rotationEffect(.degrees(-90))
+                if hasStays {
+                    ForEach(Array(arcs.enumerated()), id: \.offset) { _, arc in
+                        Circle()
+                            .inset(by: inset)
+                            .trim(from: arc.startFraction, to: arc.endFraction)
+                            .stroke(WatchTE.placeInks[arc.inkIndex % WatchTE.placeInks.count],
+                                    style: StrokeStyle(lineWidth: lineWidth, lineCap: .butt))
+                            .rotationEffect(.degrees(-90))
+                    }
+                } else {
+                    Circle()
+                        .inset(by: inset)
+                        .trim(from: 0, to: nowFraction)
+                        .stroke(WatchTE.navyInk.opacity(0.55), style: StrokeStyle(lineWidth: lineWidth, lineCap: .butt))
+                        .rotationEffect(.degrees(-90))
+                }
 
                 ForEach(0..<4, id: \.self) { quarter in
                     Rectangle()
@@ -402,9 +471,16 @@ private enum WatchTE {
     static let navyInk = hex(0x8FA6D9)
     static let dialTrack = hex(0x222C46)
     static let buttonFill = hex(0x222C46)
+    /// Per-place inks, in the order the iPhone assigns them (matches the widgets' night inks).
+    static let placeInks: [Color] = [navyInk, inkRust, ochre, green]
 
+    /// IBM Plex Mono, bundled and registered in the watch app.
     static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
-        Font.system(style, design: .monospaced).weight(weight)
+        WheredayFont.mono(style, weight: weight)
+    }
+
+    static func mono(size: CGFloat, weight: Font.Weight = .regular, relativeTo style: Font.TextStyle) -> Font {
+        WheredayFont.mono(size: size, weight: weight, relativeTo: style)
     }
 
     private static func hex(_ value: UInt32) -> Color {

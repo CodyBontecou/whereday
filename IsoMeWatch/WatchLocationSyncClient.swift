@@ -2,6 +2,7 @@ import CoreLocation
 import Combine
 import Foundation
 import WatchConnectivity
+import WidgetKit
 
 /// File-backed offline queue for Apple Watch route recordings. The watch writes
 /// every accepted point locally first, then opportunistically transfers batches
@@ -13,6 +14,14 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     @Published private(set) var syncStatus: String?
     /// Points recorded on the watch that the iPhone hasn't acknowledged yet.
     @Published private(set) var pendingPointCount = 0
+    /// Today's stays from the iPhone, for the glance dial. Persisted in the App Group.
+    @Published private(set) var todayContext: WatchTodayContext?
+    /// Result of the latest "Mark", e.g. "Marked Mission Office."
+    @Published private(set) var markStatus: String?
+
+    /// Marks waiting for an activated session; WatchConnectivity queues them after that.
+    private var pendingMarkRequests: [WatchMarkPlaceRequest] = []
+    private static let pendingMarkRequestsKey = "watchPendingMarkRequests"
 
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -28,6 +37,110 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         state = Self.loadState(from: stateURL) ?? WatchLocationSyncState(deviceID: UUID())
         super.init()
         pendingPointCount = state.points.count
+        todayContext = WatchTodayContext.load()
+        if let data = Self.sharedDefaults.data(forKey: Self.pendingMarkRequestsKey),
+           let requests = try? decoder.decode([WatchMarkPlaceRequest].self, from: data) {
+            pendingMarkRequests = requests
+        }
+    }
+
+    private static var sharedDefaults: UserDefaults {
+        UserDefaults(suiteName: SharedLocationData.appGroupIdentifier) ?? .standard
+    }
+
+    // MARK: - Today context from iPhone
+
+    private func applyApplicationContext(_ context: [String: Any]) {
+        guard let data = context[WatchTodayContext.applicationContextKey] as? Data,
+              let decoded = try? decoder.decode(WatchTodayContext.self, from: data) else { return }
+        // Application contexts can arrive out of order across relaunches; keep the newest.
+        if let current = todayContext, current.generatedAt > decoded.generatedAt { return }
+        todayContext = decoded
+        decoded.save()
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    // MARK: - Mark
+
+    /// Asks the iPhone to check in at the current place. Sent live when the iPhone is
+    /// reachable; otherwise queued with `transferUserInfo` until it is.
+    func requestMarkPlace(latitude: Double?, longitude: Double?, horizontalAccuracy: Double?) {
+        let request = WatchMarkPlaceRequest(
+            id: UUID(),
+            requestedAt: Date(),
+            latitude: latitude,
+            longitude: longitude,
+            horizontalAccuracy: horizontalAccuracy
+        )
+        guard WCSession.isSupported() else {
+            markStatus = String(localized: "iPhone sync is unavailable.")
+            return
+        }
+        activate()
+        let session = WCSession.default
+        guard session.activationState == .activated else {
+            pendingMarkRequests.append(request)
+            savePendingMarkRequests()
+            markStatus = String(localized: "Mark queued for iPhone.")
+            return
+        }
+        send(request, over: session)
+    }
+
+    private func send(_ request: WatchMarkPlaceRequest, over session: WCSession) {
+        guard let data = try? encoder.encode(request) else { return }
+        let message = [WatchLocationSyncTransport.markRequestUserInfoKey: data]
+        guard session.isReachable else {
+            session.transferUserInfo(message)
+            markStatus = String(localized: "Mark queued for iPhone.")
+            return
+        }
+        markStatus = String(localized: "Marking…")
+        session.sendMessage(message) { [weak self] reply in
+            DispatchQueue.main.async {
+                if let ackData = reply[WatchLocationSyncTransport.markAckUserInfoKey] as? Data {
+                    self?.handleMarkAckData(ackData)
+                } else {
+                    self?.markStatus = String(localized: "Marked on iPhone.")
+                }
+            }
+        } errorHandler: { _ in
+            // Fall back to the durable queue; the iPhone ignores a repeat of a handled request.
+            session.transferUserInfo(message)
+            DispatchQueue.main.async { [weak self] in
+                self?.markStatus = String(localized: "Mark queued for iPhone.")
+            }
+        }
+    }
+
+    private func flushPendingMarkRequests() {
+        guard !pendingMarkRequests.isEmpty, WCSession.isSupported(),
+              WCSession.default.activationState == .activated else { return }
+        let requests = pendingMarkRequests
+        pendingMarkRequests = []
+        savePendingMarkRequests()
+        for request in requests {
+            send(request, over: WCSession.default)
+        }
+    }
+
+    private func savePendingMarkRequests() {
+        if let data = try? encoder.encode(pendingMarkRequests) {
+            Self.sharedDefaults.set(data, forKey: Self.pendingMarkRequestsKey)
+        }
+    }
+
+    private func handleMarkAckData(_ data: Data) {
+        guard let ack = try? decoder.decode(WatchMarkPlaceAck.self, from: data) else { return }
+        if ack.succeeded {
+            if let name = ack.placeName {
+                markStatus = String(localized: "Marked \(name).")
+            } else {
+                markStatus = String(localized: "Marked on iPhone.")
+            }
+        } else {
+            markStatus = ack.errorMessage ?? String(localized: "Couldn’t mark this place.")
+        }
     }
 
     func activate() {
@@ -212,8 +325,17 @@ extension WatchLocationSyncClient: WCSessionDelegate {
             }
             return
         }
+        let receivedContext = session.receivedApplicationContext
         DispatchQueue.main.async { [weak self] in
+            self?.applyApplicationContext(receivedContext)
+            self?.flushPendingMarkRequests()
             self?.syncPending(force: true)
+        }
+    }
+
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.applyApplicationContext(applicationContext)
         }
     }
 
@@ -230,7 +352,26 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         }
     }
 
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        guard message[WatchLocationSyncTransport.syncRequestMessageKey] != nil else {
+            replyHandler([:])
+            return
+        }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return replyHandler([:]) }
+            let waiting = self.pendingPointCount
+            self.syncPending(force: true)
+            replyHandler([WatchLocationSyncTransport.pendingPointCountReplyKey: waiting])
+        }
+    }
+
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        if let markAck = userInfo[WatchLocationSyncTransport.markAckUserInfoKey] as? Data {
+            DispatchQueue.main.async { [weak self] in
+                self?.handleMarkAckData(markAck)
+            }
+            return
+        }
         guard let data = userInfo[WatchLocationSyncTransport.ackUserInfoKey] as? Data else { return }
         DispatchQueue.main.async { [weak self] in
             self?.handleAckData(data)

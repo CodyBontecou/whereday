@@ -2,22 +2,26 @@ import SwiftUI
 
 struct LogViewerView: View {
     private enum Filter: CaseIterable, Identifiable {
-        case all, warnings, errors
+        case all, location, export, webhook, errors
         var id: Self { self }
 
         var title: LocalizedStringKey {
             switch self {
             case .all: "All"
-            case .warnings: "Warnings"
+            case .location: "Location"
+            case .export: "Export"
+            case .webhook: "Webhook"
             case .errors: "Errors"
             }
         }
 
-        func includes(_ level: LogManager.LogEntry.Level) -> Bool {
+        func includes(_ entry: LogManager.LogEntry) -> Bool {
             switch self {
             case .all: true
-            case .warnings: level == .warning
-            case .errors: level == .error
+            case .location: entry.category == .location
+            case .export: entry.category == .export
+            case .webhook: entry.category == .webhook
+            case .errors: entry.level == .error
             }
         }
     }
@@ -27,7 +31,7 @@ struct LogViewerView: View {
     @State private var filter: Filter = .all
 
     private var visibleEntries: [LogManager.LogEntry] {
-        logManager.entries.reversed().filter { filter.includes($0.level) }
+        logManager.entries.reversed().filter { filter.includes($0) }
     }
 
     var body: some View {
@@ -141,10 +145,16 @@ struct LogViewerView: View {
                 Text(entry.timestamp.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).second(.twoDigits)))
                     .font(TE.mono(.caption))
                     .foregroundStyle(TE.textMuted)
-                Text(verbatim: entry.level.rawValue)
+                Text(verbatim: entry.category.rawValue)
                     .font(TE.mono(.caption2))
                     .tracking(1)
                     .foregroundStyle(colorForLevel(entry.level))
+                if entry.level != .info {
+                    Text(verbatim: entry.level.rawValue)
+                        .font(TE.mono(.caption2))
+                        .tracking(1)
+                        .foregroundStyle(colorForLevel(entry.level))
+                }
             }
             Text(verbatim: entry.message)
                 .font(TE.mono(.footnote))
@@ -160,7 +170,7 @@ struct LogViewerView: View {
 
     private func colorForLevel(_ level: LogManager.LogEntry.Level) -> Color {
         switch level {
-        case .info: return TE.textMuted
+        case .info: return TE.textPrimary
         case .warning: return TE.placeInks[2]
         case .error: return TE.inkRust
         }

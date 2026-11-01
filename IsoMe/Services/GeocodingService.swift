@@ -161,6 +161,65 @@ actor GeocodingService {
     }
 }
 
+/// Names the street under a point of the day's trace ("Along the Embarcadero").
+/// Lookups are sparing: points share ~100 m cells, results are cached per cell,
+/// one request runs at a time, and requests are spaced a couple of seconds apart.
+actor StreetNameLookup {
+    static let shared = StreetNameLookup()
+
+    private let geocoder = CLGeocoder()
+    /// A cell maps to nil when Apple found no street there, so it is not asked again.
+    private var cache: [String: String?] = [:]
+    private var isRequestInFlight = false
+    private var lastRequestTime: Date?
+    private let minimumRequestInterval: TimeInterval = 2
+
+    nonisolated static func cellKey(for coordinate: CLLocationCoordinate2D) -> String {
+        let latitude = (coordinate.latitude * 1000).rounded() / 1000
+        let longitude = (coordinate.longitude * 1000).rounded() / 1000
+        return "\(latitude),\(longitude)"
+    }
+
+    /// The street (CLPlacemark thoroughfare) at a coordinate, or nil when unknown or lookups are off.
+    func street(at coordinate: CLLocationCoordinate2D) async -> String? {
+        guard NetworkGeocodingPolicy.isAllowed, CLLocationCoordinate2DIsValid(coordinate) else { return nil }
+        let key = Self.cellKey(for: coordinate)
+        if let cached = cache[key] { return cached }
+
+        while isRequestInFlight {
+            try? await Task.sleep(nanoseconds: 250_000_000)
+            if Task.isCancelled { return nil }
+        }
+        if let cached = cache[key] { return cached }
+
+        if let lastRequestTime {
+            let wait = minimumRequestInterval - Date().timeIntervalSince(lastRequestTime)
+            if wait > 0 {
+                try? await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000))
+                if Task.isCancelled { return nil }
+            }
+            if let cached = cache[key] { return cached }
+        }
+        guard !isRequestInFlight, NetworkGeocodingPolicy.isAllowed else { return nil }
+
+        isRequestInFlight = true
+        lastRequestTime = Date()
+        defer { isRequestInFlight = false }
+        do {
+            let placemarks = try await geocoder.reverseGeocodeLocation(
+                CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            )
+            let street = placemarks.first?.thoroughfare?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let value = (street?.isEmpty ?? true) ? nil : street
+            cache[key] = .some(value)
+            return value
+        } catch {
+            // Network and throttling failures are not cached, so a later pass can retry.
+            return nil
+        }
+    }
+}
+
 struct NearbyPlaceSuggestion: Identifiable {
     let id: String
     let name: String

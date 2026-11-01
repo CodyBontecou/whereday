@@ -2,6 +2,8 @@ import SwiftUI
 import SwiftData
 import MapKit
 import Combine
+import Charts
+import UniformTypeIdentifiers
 
 /// One day's timeline: the places in order with the moves between them, in the Today list's language.
 struct OutingsView: View {
@@ -10,11 +12,17 @@ struct OutingsView: View {
     let usesCompanionMap: Bool
     let onVisitOpened: ((Visit) -> Void)?
 
-    init(viewModel: LocationViewModel, usesCompanionMap: Bool = false, onVisitOpened: ((Visit) -> Void)? = nil, onShowOnMap: @escaping () -> Void) {
+    /// - Parameter initialDate: Opens the timeline on this day instead of today (e.g. from the Atlas).
+    init(viewModel: LocationViewModel, usesCompanionMap: Bool = false, initialDate: Date? = nil, onVisitOpened: ((Visit) -> Void)? = nil, onShowOnMap: @escaping () -> Void) {
         self.viewModel = viewModel
         self.usesCompanionMap = usesCompanionMap
         self.onVisitOpened = onVisitOpened
         self.onShowOnMap = onShowOnMap
+        if let initialDate {
+            _selectedDate = State(initialValue: initialDate)
+            // An explicitly requested day is never swapped for the latest day with data.
+            _hasAutoSelectedInitialTimelineDate = State(initialValue: true)
+        }
     }
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -374,6 +382,7 @@ struct OutingsView: View {
                         } label: {
                             TimelineMoveRow(
                                 session: session,
+                                title: session.displayTitle(visits: viewModel.visitsNearOuting(session)),
                                 usesMetricDistanceUnits: usesMetricDistanceUnits
                             )
                         }
@@ -722,6 +731,8 @@ private struct TimelineStayRow: View {
 /// A move between places: a dotted line and a mono summary, tappable for the outing's details.
 private struct TimelineMoveRow: View {
     let session: RecordingSessionSummary
+    /// The outing's name, or its automatic "Morning ride to …" title.
+    let title: String
     let usesMetricDistanceUnits: Bool
 
     var body: some View {
@@ -746,13 +757,13 @@ private struct TimelineMoveRow: View {
         .frame(minHeight: 44)
         .contentShape(Rectangle())
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Movement, \(session.title)")
+        .accessibilityLabel("Movement, \(title)")
         .accessibilityValue(session.accessibilityValue)
         .accessibilityHint("Opens movement details.")
     }
 
     private var summary: String {
-        var parts = [session.title]
+        var parts = [title]
         if session.distanceMeters > 0 {
             parts.append(DistanceFormatter.format(meters: session.distanceMeters, usesMetric: usesMetricDistanceUnits))
         }
@@ -777,6 +788,7 @@ private struct TimelineDottedLine: Shape {
 
 private struct RecordingSessionDetailView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.dismiss) private var dismiss
     let session: RecordingSessionSummary
     @Bindable var viewModel: LocationViewModel
@@ -794,6 +806,9 @@ private struct RecordingSessionDetailView: View {
     @State private var showingDeleteConfirmation = false
     @State private var isSyncingPhotos = false
     @State private var selectedPhotoMoment: PhotoMoment?
+    @State private var metrics: RouteMetrics?
+    @State private var showingGPXExporter = false
+    @State private var gpxDocument = RouteGPXDocument(data: Data())
     @FocusState private var isNameFieldFocused: Bool
     @FocusState private var isNotesFieldFocused: Bool
 
@@ -808,6 +823,18 @@ private struct RecordingSessionDetailView: View {
 
     private var visits: [Visit] {
         viewModel.visitsOverlappingDateRange(session.dateRange)
+    }
+
+    /// "Morning ride to Ferry Building", from the stay the outing ended at.
+    private var automaticTitle: String {
+        session.automaticTitle(visits: viewModel.visitsNearOuting(session))
+    }
+
+    /// The name typed here once saved, otherwise the automatic title.
+    private var displayTitle: String {
+        let typed = nameText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if session.storedSession != nil { return typed.isEmpty ? automaticTitle : typed }
+        return automaticTitle
     }
 
     private var photoMoments: [PhotoMoment] {
@@ -872,38 +899,61 @@ private struct RecordingSessionDetailView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                summarySection
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    heroMap(topInset: proxy.safeAreaInsets.top)
 
-                if session.points.isEmpty {
-                    noPointsSection
-                } else {
-                    mapSection
+                    titleSection
+                        .padding(.horizontal, 24)
+                        .padding(.top, 18)
+
+                    statStrip
+                        .padding(.horizontal, 24)
+                        .padding(.top, 16)
+
+                    if isRouteReplayEnabled, canReplayRoute {
+                        routeReplayControls
+                            .padding(.horizontal, 16)
+                            .padding(.top, 14)
+                    }
+
+                    if let metrics, metrics.speedSamples.count >= 2 {
+                        speedSection(metrics)
+                            .padding(.horizontal, 24)
+                            .padding(.top, 16)
+                    }
+
+                    pointsCard
+                        .padding(.horizontal, 16)
+                        .padding(.top, 14)
+
+                    if let storedSession = session.storedSession {
+                        editableDetailsSection(storedSession)
+                    } else {
+                        inferredSection
+                    }
+
+                    visitsSection
+
+                    photoMomentsSection
+
+                    moreSection
                 }
-
-                statsSection
-
-                if let storedSession = session.storedSession {
-                    editableDetailsSection(storedSession)
-                } else {
-                    inferredSection
-                }
-
-                visitsSection
-
-                photoMomentsSection
-
-                actionSection
+                .padding(.bottom, 16)
             }
-            .padding(.bottom, 28)
+            .scrollIndicators(.hidden)
+            .ignoresSafeArea(edges: .top)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                bottomBar
+            }
         }
-        .background(FieldNotesBackground())
-        .navigationTitle("")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
-            nameText = session.storedSession?.displayName(defaultName: session.defaultTitle) ?? session.title
+            // Only a name the person gave is edited here; the automatic title is the placeholder.
+            nameText = session.storedSession?.normalizedCustomName ?? ""
             notesText = session.storedSession?.notes ?? ""
             validateRouteReplayState()
             syncPhotoMomentsIfAllowed()
@@ -920,6 +970,9 @@ private struct RecordingSessionDetailView: View {
         }
         .task(id: roadSnappingTaskKey) {
             await refreshRoadSnappedRoute()
+        }
+        .task(id: session.pointCount) {
+            metrics = RouteMetrics(points: session.distancePoints, distanceMeters: session.distanceMeters)
         }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
@@ -947,94 +1000,110 @@ private struct RecordingSessionDetailView: View {
             PhotoMomentQuickView(photo: photo)
                 .presentationDetents([.medium, .large])
         }
+        .fileExporter(
+            isPresented: $showingGPXExporter,
+            document: gpxDocument,
+            contentType: RouteGPXDocument.contentType,
+            defaultFilename: gpxFilename
+        ) { result in
+            switch result {
+            case .success:
+                ExportToastCenter.shared.show(.success(message: String(localized: "GPX exported")))
+                AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+            case .failure(let error):
+                ExportToastCenter.shared.show(.failure(message: error.localizedDescription))
+            }
+        }
     }
 
-    private var summarySection: some View {
-        VStack(spacing: 0) {
-            TECard(paperOpacity: 0.94) {
-                TERow(showDivider: false) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack(spacing: 6) {
-                            Text(session.title)
-                                .font(TE.editorial(.title2))
-                                .foregroundStyle(TE.textPrimary)
-                                .lineLimit(2)
+    // MARK: - Map
 
-                            if session.isActive {
-                                OutingBadge(text: String(localized: "LIVE"), color: TE.success)
-                            } else if session.isInferred {
-                                OutingBadge(text: String(localized: "INFERRED"), color: TE.warning)
-                            }
-                        }
-
-                        Text(session.formattedTimeRange)
-                            .font(TE.mono(.caption, weight: .medium))
-                            .foregroundStyle(TE.textMuted)
-                            .fixedSize(horizontal: false, vertical: true)
+    private func heroMap(topInset: CGFloat) -> some View {
+        ZStack {
+            if session.points.isEmpty {
+                ZStack {
+                    TE.dialTrack
+                    VStack(spacing: 8) {
+                        Image(systemName: "location.slash")
+                            .font(.title3)
+                        Text("No GPS points were saved for this outing yet.")
+                            .font(TE.mono(.caption))
+                            .multilineTextAlignment(.center)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundStyle(TE.textMuted)
+                    .padding(.horizontal, 32)
+                    .padding(.top, topInset)
                 }
+            } else {
+                SessionPathMapView(
+                    points: routeReplayPoints,
+                    replaySnapshot: isRouteReplayEnabled ? routeReplaySnapshot : nil,
+                    roadSnappedRoute: activeRoadSnappedRoute,
+                    photoMoments: photoMoments,
+                    showsStraightLineSegments: showStraightLinePathSegments,
+                    showsRawPathFallback: shouldDrawStraightLinePath
+                )
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
         }
-    }
-
-    private var mapSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "PATH")
-
-            SessionPathMapView(
-                points: routeReplayPoints,
-                replaySnapshot: isRouteReplayEnabled ? routeReplaySnapshot : nil,
-                roadSnappedRoute: activeRoadSnappedRoute,
-                photoMoments: photoMoments,
-                showsStraightLineSegments: showStraightLinePathSegments,
-                showsRawPathFallback: shouldDrawStraightLinePath
-            )
-            .frame(height: 260)
-            .clipShape(RoundedRectangle(cornerRadius: 4))
-            .overlay {
-                RoundedRectangle(cornerRadius: 4)
-                    .strokeBorder(TE.border, lineWidth: 1)
+        .frame(height: 270 + topInset)
+        .frame(maxWidth: .infinity)
+        .clipped()
+        .overlay(alignment: .topLeading) {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(TE.textPrimary)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(TE.card))
+                    .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
             }
-            .padding(.horizontal, 16)
-
-            if isPreparingRoadRoute {
-                routeSnappingStatus
-                    .padding(.horizontal, 16)
-                    .padding(.top, 10)
-            }
-
+            .buttonStyle(.plain)
+            .accessibilityLabel("Back")
+            .padding(.leading, 16)
+            .padding(.top, topInset + 10)
+        }
+        .overlay(alignment: .bottomTrailing) {
             if canReplayRoute {
-                routeReplayControls
-                    .padding(.horizontal, 16)
-                    .padding(.top, 12)
+                Button {
+                    if isRouteReplayEnabled {
+                        toggleRouteReplayPlayback()
+                    } else {
+                        startRouteReplay()
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        if isPreparingRoadRoute {
+                            ProgressView()
+                                .controlSize(.mini)
+                                .tint(TE.onInkCard)
+                        } else {
+                            Image(systemName: isRouteReplayEnabled && isRouteReplayPlaying ? "pause.fill" : "play.fill")
+                                .font(.caption.weight(.bold))
+                        }
+                        Text(isRouteReplayEnabled && isRouteReplayPlaying ? "Pause" : "Replay")
+                            .font(.footnote.weight(.medium))
+                    }
+                    .foregroundStyle(TE.onInkCard)
+                    .padding(.horizontal, 14)
+                    .frame(minHeight: 44)
+                    .background(Capsule().fill(TE.inkCard))
+                }
+                .buttonStyle(.plain)
+                .disabled(isPreparingRoadRoute)
+                .accessibilityHint(isPreparingRoadRoute
+                    ? "Wait for the outing path to be matched to roads."
+                    : "Replays this outing on the map.")
+                .padding(.trailing, 16)
+                .padding(.bottom, 14)
             }
         }
-    }
-
-    private var routeSnappingStatus: some View {
-        HStack(spacing: 8) {
-            ProgressView()
-                .controlSize(.mini)
-                .tint(TE.accent)
-
-            Text("MATCHING PATH TO ROADS…")
-                .font(TE.mono(.caption2, weight: .semibold))
-                .tracking(1.2)
-                .foregroundStyle(TE.textMuted)
-
-            Spacer()
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 9)
-        .background(TE.textMuted.opacity(0.08), in: RoundedRectangle(cornerRadius: 4))
     }
 
     @ViewBuilder
     private var routeReplayControls: some View {
-        if isRouteReplayEnabled, let routeReplaySnapshot {
+        if let routeReplaySnapshot {
             RouteReplayControl(
                 snapshot: routeReplaySnapshot,
                 pointCount: routeReplayPoints.count,
@@ -1047,75 +1116,218 @@ private struct RecordingSessionDetailView: View {
                 onScrub: { isRouteReplayPlaying = false },
                 onClose: disableRouteReplay
             )
+        }
+    }
+
+    // MARK: - Title and stats
+
+    private var activityLabel: String {
+        let status: String
+        if session.isActive {
+            status = String(localized: "LIVE")
+        } else if session.isInferred {
+            status = String(localized: "INFERRED")
         } else {
-            Button(action: startRouteReplay) {
-                HStack(spacing: 8) {
-                    Image(systemName: "play.fill")
-                        .font(.caption.weight(.bold))
+            status = String(localized: "RECORDED")
+        }
+        guard let mode = metrics?.travelMode else { return status }
+        return "\(mode.label.uppercased()) · \(status)"
+    }
 
-                    Text("PLAY OUTING")
-                        .font(TE.mono(.caption, weight: .bold))
-                        .tracking(2)
-                }
-                .foregroundStyle(TE.accent)
-                .frame(maxWidth: .infinity)
-                .frame(height: 44)
-                .background(TE.accent.opacity(0.10), in: RoundedRectangle(cornerRadius: 4))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 4)
-                        .strokeBorder(TE.accent.opacity(0.35), lineWidth: 1)
+    private var titleSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 8) {
+                RouteBadge(text: activityLabel, foreground: TE.textPrimary, background: TE.dialTrack)
+                if activeRoadSnappedRoute != nil {
+                    RouteBadge(text: String(localized: "MATCHED TO ROADS"), foreground: TE.placeInks[3], background: TE.placeInks[3].opacity(0.16))
+                } else if isPreparingRoadRoute {
+                    RouteBadge(text: String(localized: "MATCHING TO ROADS…"), foreground: TE.textMuted, background: TE.dialTrack)
                 }
             }
-            .buttonStyle(.plain)
-            .disabled(isPreparingRoadRoute)
-            .opacity(isPreparingRoadRoute ? 0.55 : 1)
-            .accessibilityHint(isPreparingRoadRoute
-                ? "Wait for the outing path to be matched to roads."
-                : "Opens route replay controls for this outing.")
+
+            Text(displayTitle)
+                .font(WheredayFont.serif(size: 28, relativeTo: .title))
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+
+            Text(timeRangeLine)
+                .font(TE.mono(.caption))
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
-    private var noPointsSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "PATH")
+    private var timeRangeLine: String {
+        let calendar = Calendar.current
+        let day: String
+        if calendar.isDateInToday(session.startedAt) {
+            day = String(localized: "Today")
+        } else if calendar.isDateInYesterday(session.startedAt) {
+            day = String(localized: "Yesterday")
+        } else {
+            day = session.startedAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
+        }
+        let start = TimelineRowFormat.clock(session.startedAt)
+        if session.isActive {
+            return String(localized: "\(day) · \(start) – now")
+        }
+        let end = calendar.isDate(session.startedAt, inSameDayAs: session.effectiveEndDate)
+            ? TimelineRowFormat.clock(session.effectiveEndDate)
+            : session.effectiveEndDate.formatted(date: .abbreviated, time: .shortened)
+        return "\(day) · \(start) – \(end)"
+    }
 
-            TECard(paperOpacity: 0.94) {
-                TERow(showDivider: false) {
-                    HStack(spacing: 10) {
-                        Image(systemName: "location.slash")
-                            .foregroundStyle(TE.textMuted)
-                        Text("No GPS points were saved for this outing yet.")
-                            .font(TE.mono(.caption, weight: .medium))
-                            .foregroundStyle(TE.textMuted)
-                        Spacer()
+    private var statStrip: some View {
+        let items: [(value: String, label: String)] = [
+            (DistanceFormatter.format(meters: session.distanceMeters, usesMetric: usesMetricDistanceUnits), String(localized: "DISTANCE")),
+            (metrics.map { RecordingSessionFormatter.duration($0.movingTime) } ?? "—", String(localized: "MOVING")),
+            (metrics?.averageMovingSpeed.map { formattedSpeed($0, decimals: 0) } ?? "—", String(localized: "AVG")),
+            (metrics?.climbMeters.map(formattedClimb) ?? "—", String(localized: "CLIMB"))
+        ]
+        let columns = dynamicTypeSize.isAccessibilitySize ? 2 : 4
+        return LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: columns), alignment: .leading, spacing: 0) {
+            ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.value)
+                        .font(WheredayFont.serif(size: 24, relativeTo: .title2))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                    Text(item.label)
+                        .font(WheredayFont.mono(size: 10, relativeTo: .caption2))
+                        .foregroundStyle(TE.textMuted)
+                }
+                .padding(.vertical, 12)
+                .padding(.leading, index % columns == 0 ? 0 : 14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .overlay(alignment: .leading) {
+                    if index % columns != 0 {
+                        Rectangle().fill(TE.border).frame(width: 1)
                     }
                 }
+                .accessibilityElement(children: .combine)
             }
-            .padding(.horizontal, 16)
+        }
+        .overlay(alignment: .top) { Rectangle().fill(TE.border).frame(height: 1) }
+        .overlay(alignment: .bottom) { Rectangle().fill(TE.border).frame(height: 1) }
+    }
+
+    private func speedSection(_ metrics: RouteMetrics) -> some View {
+        let factor = usesMetricDistanceUnits ? 3.6 : 2.23693629
+        let unit = usesMetricDistanceUnits ? "km/h" : "mph"
+        let samples = metrics.speedSamples
+        let start = session.startedAt
+        let end = session.effectiveEndDate
+        let middle = start.addingTimeInterval(end.timeIntervalSince(start) / 2)
+        return VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("SPEED")
+                    .font(TE.mono(.caption2))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.textMuted)
+                    .accessibilityAddTraits(.isHeader)
+                Spacer()
+                if let top = metrics.topSpeedMetersPerSecond {
+                    Text("top \(Int((top * factor).rounded())) \(unit)")
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textMuted)
+                }
+            }
+
+            Chart(samples) { sample in
+                LineMark(
+                    x: .value("Time", sample.date),
+                    y: .value("Speed", sample.metersPerSecond * factor)
+                )
+                .interpolationMethod(.monotone)
+                .lineStyle(StrokeStyle(lineWidth: 2, lineJoin: .round))
+                .foregroundStyle(TE.placeInks[1])
+            }
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+            .chartXScale(domain: start...max(end, start.addingTimeInterval(1)))
+            .chartYScale(domain: 0...max(1, (metrics.topSpeedMetersPerSecond ?? 1) * factor * 1.1))
+            .frame(height: 48)
+            .accessibilityLabel("Speed over the outing")
+            .accessibilityValue(metrics.topSpeedMetersPerSecond.map { "Top \(formattedSpeed($0, decimals: 0))" } ?? "")
+
+            HStack {
+                Text(TimelineRowFormat.clock(start))
+                Spacer()
+                Text(TimelineRowFormat.clock(middle))
+                Spacer()
+                Text(TimelineRowFormat.clock(end))
+            }
+            .font(WheredayFont.mono(size: 10, relativeTo: .caption2))
+            .foregroundStyle(TE.textMuted)
+            .accessibilityHidden(true)
         }
     }
 
-    private var statsSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "STATS")
+    // MARK: - Points and road matching
 
-            TECard(paperOpacity: 0.94) {
-                VStack(spacing: 0) {
-                    detailRow(label: "START", value: session.startedAt.formatted(date: .abbreviated, time: .shortened))
-                    detailRow(label: session.isActive ? "LATEST" : "END", value: session.effectiveEndDate.formatted(date: .abbreviated, time: .shortened))
-                    detailRow(label: "DURATION", value: RecordingSessionFormatter.duration(session.duration))
-                    detailRow(label: "DISTANCE", value: DistanceFormatter.format(meters: session.distanceMeters, usesMetric: usesMetricDistanceUnits))
-                    detailRow(label: "POINTS", value: "\(session.pointCount)")
-                    if session.outlierCount > 0 {
-                        detailRow(label: "GPS GLITCHES", value: "\(session.outlierCount)")
-                    }
-                    if let averageSpeed = session.averageSpeedMetersPerSecond {
-                        detailRow(label: "AVG SPEED", value: formattedSpeed(averageSpeed), showDivider: false)
-                    }
+    private var keptPointCount: Int { session.distancePoints.count }
+
+    private var pointsCountText: String {
+        if let received = session.storedSession?.receivedLocationCount, received >= keptPointCount, received > 0 {
+            return String(localized: "\(keptPointCount.formatted()) of \(received.formatted())")
+        }
+        return keptPointCount == 1 ? String(localized: "1 point") : String(localized: "\(keptPointCount.formatted()) points")
+    }
+
+    private var pointsSettingsText: String {
+        let filter = session.storedSession?.distanceFilterMeters
+            ?? (UserDefaults.standard.object(forKey: "distanceFilter") == nil ? 5 : UserDefaults.standard.double(forKey: "distanceFilter"))
+        var parts: [String] = []
+        if filter > 0 {
+            parts.append(String(localized: "Every \(formattedShortDistance(filter))"))
+        } else {
+            parts.append(String(localized: "Every fix"))
+        }
+        if let accuracy = metrics?.medianAccuracyMeters {
+            parts.append(String(localized: "±\(formattedShortDistance(accuracy)) accuracy"))
+        }
+        return parts.joined(separator: " · ")
+    }
+
+    private var pointsCard: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Points kept")
+                        .font(.subheadline)
+                    Text(pointsSettingsText)
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Text(pointsCountText)
+                    .font(TE.mono(.caption))
+                    .foregroundStyle(TE.textMuted)
+                    .multilineTextAlignment(.trailing)
+            }
+            .frame(minHeight: 52)
+            .accessibilityElement(children: .combine)
+
+            Rectangle().fill(TE.dialTrack).frame(height: 1)
+
+            Toggle(isOn: $snapTravelPathToRoads) {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Snap to roads")
+                        .font(.subheadline)
+                        .foregroundStyle(TE.textPrimary)
+                    Text("Cleans up GPS drift")
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textMuted)
                 }
             }
-            .padding(.horizontal, 16)
+            .toggleStyle(TEToggleStyle())
+            .frame(minHeight: 52)
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 4)
+        .background(RoundedRectangle(cornerRadius: 16).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
     }
 
     private func editableDetailsSection(_ storedSession: RecordingSession) -> some View {
@@ -1131,7 +1343,7 @@ private struct RecordingSessionDetailView: View {
                                 .tracking(1)
                                 .foregroundStyle(TE.textMuted)
 
-                            TextField("Outing name", text: $nameText)
+                            TextField(automaticTitle, text: $nameText)
                                 .font(TE.mono(.caption, weight: .medium))
                                 .foregroundStyle(TE.textPrimary)
                                 .textFieldStyle(.plain)
@@ -1407,93 +1619,60 @@ private struct RecordingSessionDetailView: View {
         return "Connecting Photos lets Whereday show pictures taken during this outing."
     }
 
-    private var actionSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "ACTIONS")
+    private var moreSection: some View {
+        VStack(spacing: 10) {
+            AddEventToCalendarButton { CalendarEventDraft(session: session, notes: notesText) }
+                .tint(TE.accent)
 
-            TECard(paperOpacity: 0.94) {
-                TERow(showDivider: false) {
-                    HStack(spacing: 12) {
-                        Text("FORMAT")
-                            .font(TE.mono(.caption, weight: .medium))
-                            .tracking(1)
-                            .foregroundStyle(TE.textPrimary)
-
-                        Spacer()
-
-                        Menu {
-                            ForEach(ExportFormat.allCases, id: \.token) { format in
-                                Button {
-                                    outingDetailExportFormatToken = format.token
-                                } label: {
-                                    if outingExportFormat == format {
-                                        Label(format.displayName, systemImage: "checkmark")
-                                    } else {
-                                        Text(format.displayName)
-                                    }
-                                }
-                            }
-                        } label: {
-                            HStack(spacing: 6) {
-                                Text(outingExportFormat.displayName.uppercased())
-                                Image(systemName: "chevron.up.chevron.down")
-                                    .font(.caption2.weight(.bold))
-                            }
-                            .font(TE.mono(.caption2, weight: .semibold))
-                            .tracking(1)
-                            .foregroundStyle(TE.accent)
-                        }
-                    }
-                }
+            Button {
+                showPhotoMarkersOnMap = true
+                viewModel.focusMap(on: session)
+                onShowOnMap()
+            } label: {
+                Label("Show on map", systemImage: "map")
             }
-            .padding(.horizontal, 16)
-
-            VStack(spacing: 10) {
-                AddEventToCalendarButton { CalendarEventDraft(session: session, notes: notesText) }
-                    .tint(TE.accent)
-
-                Button {
-                    showPhotoMarkersOnMap = true
-                    viewModel.focusMap(on: session)
-                    onShowOnMap()
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "map.fill")
-                            .font(.caption.weight(.bold))
-                        Text("SHOW ON MAP")
-                    }
-                }
-                .buttonStyle(TEActionButtonStyle(emphasis: .primary))
-
-                Button {
-                    exportOuting()
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: exportFolderManager.hasDefaultFolder && useDefaultExportFolder ? "square.and.arrow.down" : "square.and.arrow.up")
-                            .font(.caption.weight(.bold))
-                        Text(exportButtonTitle)
-                    }
-                }
-                .buttonStyle(TEActionButtonStyle())
-                .accessibilityHint("Exports this outing in the selected format.")
-
-                Button(role: .destructive) {
-                    showingDeleteConfirmation = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "trash")
-                            .font(.caption.weight(.bold))
-                        Text("DELETE OUTING")
-                    }
-                }
-                .buttonStyle(TEActionButtonStyle(emphasis: .destructive))
-                .accessibilityHint("Deletes this outing and its GPS points after confirmation. Visits are kept.")
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 2)
-
-            TESectionFooter(text: outingExportFooterText)
+            .buttonStyle(PlacesInkButtonStyle())
         }
+        .padding(.horizontal, 16)
+        .padding(.top, 20)
+    }
+
+    private var bottomBar: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            Button("Delete", role: .destructive) {
+                showingDeleteConfirmation = true
+            }
+            .buttonStyle(PlacesInkButtonStyle(emphasis: .destructive))
+            .accessibilityHint("Deletes this outing and its GPS points after confirmation. Visits are kept.")
+
+            Button("Share") {
+                shareOuting()
+            }
+            .buttonStyle(PlacesInkButtonStyle())
+            .accessibilityHint("Opens the share sheet with this outing as \(outingExportFormat.displayName). Touch and hold to choose another format.")
+            .contextMenu {
+                Picker("Share format", selection: $outingDetailExportFormatToken) {
+                    ForEach(ExportFormat.allCases, id: \.token) { format in
+                        Text(format.displayName).tag(format.token)
+                    }
+                }
+            }
+
+            Button("Export GPX") {
+                exportGPX()
+            }
+            .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
+            .accessibilityHint(exportFolderManager.hasDefaultFolder && useDefaultExportFolder
+                ? "Saves this route as GPX to your export folder."
+                : "Saves this route as a GPX file.")
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
+        .background(TE.surface.ignoresSafeArea(edges: .bottom))
     }
 
     private var deleteConfirmationMessage: String {
@@ -1508,43 +1687,19 @@ private struct RecordingSessionDetailView: View {
         ExportFormat(exportKitFormatID: outingDetailExportFormatToken) ?? .markdown
     }
 
-    private var exportButtonTitle: String {
-        if !storeManager.canExport { return String(localized: "UNLOCK EXPORT") }
-        let formatName = outingExportFormat.displayName.uppercased()
-        if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
-            return String(localized: "EXPORT \(formatName)")
-        }
-        return String(localized: "SHARE \(formatName)")
+    private var gpxFilename: String {
+        "whereday-outing-\(session.startedAt.formatted(.iso8601.year().month().day()))"
     }
 
-    private var outingExportFooterText: LocalizedStringKey {
-        switch outingExportFormat {
-        case .markdown:
-            return "Markdown exports this outing as a page with YAML front matter, visits, and route points."
-        case .json, .csv:
-            return "This format exports an outing summary with timing, distance, visit count, notes, and coordinates."
-        case .gpx, .kml, .geojson, .owntracks, .overland:
-            return "This route format exports the outing's GPS route points. Notes and visit rows are not represented."
+    private func formattedShortDistance(_ meters: Double) -> String {
+        if usesMetricDistanceUnits {
+            return String(localized: "\(Int(meters.rounded())) m")
         }
+        return String(localized: "\(Int((meters * 3.28084).rounded())) ft")
     }
 
-    private func detailRow(label: LocalizedStringKey, value: String, showDivider: Bool = true) -> some View {
-        TERow(showDivider: showDivider) {
-            HStack(spacing: 12) {
-                Text(label)
-                    .font(TE.mono(.caption, weight: .medium))
-                    .tracking(1)
-                    .foregroundStyle(TE.textMuted)
-
-                Spacer()
-
-                Text(value)
-                    .font(TE.mono(.caption, weight: .semibold))
-                    .foregroundStyle(TE.textPrimary)
-                    .multilineTextAlignment(.trailing)
-                    .monospacedDigit()
-            }
-        }
+    private func formattedClimb(_ meters: Double) -> String {
+        "+" + formattedShortDistance(meters)
     }
 
     private func saveEditableDetails() {
@@ -1554,7 +1709,7 @@ private struct RecordingSessionDetailView: View {
             customName: nameText,
             notes: notesText
         )
-        nameText = storedSession.displayName(defaultName: session.defaultTitle)
+        nameText = storedSession.normalizedCustomName ?? ""
         notesText = storedSession.notes ?? ""
     }
 
@@ -1578,19 +1733,48 @@ private struct RecordingSessionDetailView: View {
         }
     }
 
-    private func exportOuting() {
+    private func outingExportOptions(format: ExportFormat) -> ExportOptions {
+        var options = ExportOptions()
+        options.dataKind = .outings
+        options.format = format
+        options.splitByDay = true
+        return options
+    }
+
+    /// Opens the share sheet with this outing in the chosen share format.
+    private func shareOuting() {
         guard storeManager.canExport else {
             showingPaywall = true
             return
         }
-
         saveEditableDetails()
+        do {
+            try ExportService.shareOuting(
+                session,
+                visits: visits,
+                options: outingExportOptions(format: outingExportFormat),
+                filenamePattern: filenamePattern,
+                completion: { completed in
+                    guard completed else { return }
+                    Task { @MainActor in
+                        AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                    }
+                }
+            )
+        } catch {
+            viewModel.exportError = error.localizedDescription
+            ExportToastCenter.shared.show(.failure(message: error.localizedDescription))
+        }
+    }
 
-        var options = ExportOptions()
-        options.dataKind = .outings
-        options.format = outingExportFormat
-        options.splitByDay = true
-
+    /// Exports the route as GPX: into the default export folder when one is set, else via Save to Files.
+    private func exportGPX() {
+        guard storeManager.canExport else {
+            showingPaywall = true
+            return
+        }
+        saveEditableDetails()
+        let options = outingExportOptions(format: .gpx)
         do {
             if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
                 let urls = try ExportService.saveOutingToDefaultFolder(
@@ -1602,19 +1786,9 @@ private struct RecordingSessionDetailView: View {
                 ExportToastCenter.shared.show(.success(savedURLs: urls))
                 AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
             } else {
-                try ExportService.shareOuting(
-                    session,
-                    visits: visits,
-                    options: options,
-                    filenamePattern: filenamePattern,
-                    completion: { completed in
-                        guard completed else { return }
-                        Task { @MainActor in
-                            AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
-                        }
-                    }
-                )
-                ExportToastCenter.shared.show(.success(message: String(localized: "Share sheet opened")))
+                let data = try ExportService.outingsData(outings: [session], visits: visits, format: .gpx, options: options)
+                gpxDocument = RouteGPXDocument(data: data)
+                showingGPXExporter = true
             }
         } catch {
             viewModel.exportError = error.localizedDescription
@@ -1719,11 +1893,42 @@ private struct RecordingSessionDetailView: View {
         roadSnappedRoute = route
     }
 
-    private func formattedSpeed(_ metersPerSecond: Double) -> String {
+    private func formattedSpeed(_ metersPerSecond: Double, decimals: Int = 1) -> String {
         if usesMetricDistanceUnits {
-            return String(format: "%.1f km/h", locale: .current, metersPerSecond * 3.6)
+            return String(format: "%.\(decimals)f km/h", locale: .current, metersPerSecond * 3.6)
         }
-        return String(format: "%.1f mph", locale: .current, metersPerSecond * 2.23693629)
+        return String(format: "%.\(decimals)f mph", locale: .current, metersPerSecond * 2.23693629)
+    }
+}
+
+/// A small mono label on a tinted plate, as in the route header ("BIKE · RECORDED").
+private struct RouteBadge: View {
+    let text: String
+    let foreground: Color
+    let background: Color
+
+    var body: some View {
+        Text(text)
+            .font(WheredayFont.mono(size: 10, relativeTo: .caption2))
+            .tracking(1.2)
+            .foregroundStyle(foreground)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(RoundedRectangle(cornerRadius: 6).fill(background))
+    }
+}
+
+/// A GPX route file for Save to Files.
+private struct RouteGPXDocument: FileDocument {
+    static let contentType = UTType(filenameExtension: "gpx", conformingTo: .xml) ?? .xml
+    static var readableContentTypes: [UTType] { [contentType] }
+    var data: Data
+    init(data: Data) { self.data = data }
+    init(configuration: ReadConfiguration) throws {
+        data = configuration.file.regularFileContents ?? Data()
+    }
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: data)
     }
 }
 
@@ -1755,4 +1960,11 @@ private struct OutingBadge: View {
         ),
         onShowOnMap: {}
     )
+}
+
+extension LocationViewModel {
+    /// Stays overlapping an outing, plus any that began shortly after it ended (its destination).
+    func visitsNearOuting(_ session: RecordingSessionSummary) -> [Visit] {
+        visitsOverlappingDateRange(session.startedAt...session.effectiveEndDate.addingTimeInterval(20 * 60))
+    }
 }

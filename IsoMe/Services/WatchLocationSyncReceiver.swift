@@ -75,6 +75,108 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
         isActivated = true
     }
 
+    // MARK: - Today context → Apple Watch
+
+    /// Latest context handed to `publishTodayContext`, kept until a session can deliver it.
+    private static var latestTodayContext: WatchTodayContext?
+    /// Last context the session accepted, to skip identical application-context updates.
+    private static var lastSentTodayContext: WatchTodayContext?
+
+    /// Sends today's stays to the watch through the WatchConnectivity application context,
+    /// which keeps only the newest value and delivers it when the watch app next runs.
+    /// Asks a reachable watch to send its waiting points now.
+    /// Completes with the number of points that were waiting, or nil when the watch can't be reached.
+    static func requestWatchSync(completion: @escaping @MainActor (Int?) -> Void) {
+        guard WCSession.isSupported() else {
+            Task { @MainActor in completion(nil) }
+            return
+        }
+        let session = WCSession.default
+        guard session.activationState == .activated, session.isPaired, session.isWatchAppInstalled, session.isReachable else {
+            Task { @MainActor in completion(nil) }
+            return
+        }
+        session.sendMessage(
+            [WatchLocationSyncTransport.syncRequestMessageKey: true],
+            replyHandler: { reply in
+                let count = reply[WatchLocationSyncTransport.pendingPointCountReplyKey] as? Int
+                Task { @MainActor in completion(count) }
+            },
+            errorHandler: { _ in
+                Task { @MainActor in completion(nil) }
+            }
+        )
+    }
+
+    static func publishTodayContext(_ context: WatchTodayContext) {
+        latestTodayContext = context
+        flushTodayContext()
+    }
+
+    fileprivate static func flushTodayContext() {
+        guard let context = latestTodayContext, WCSession.isSupported() else { return }
+        let session = WCSession.default
+        guard session.activationState == .activated,
+              session.isPaired,
+              session.isWatchAppInstalled else { return }
+        if let lastSent = lastSentTodayContext,
+           lastSent.isSameDay(as: context.generatedAt),
+           Self.contentEquals(lastSent, context) {
+            return
+        }
+        guard let data = try? JSONEncoder().encode(context) else { return }
+        do {
+            try session.updateApplicationContext([WatchTodayContext.applicationContextKey: data])
+            lastSentTodayContext = context
+        } catch {
+            // Keep `latestTodayContext`; the next publish or activation retries.
+        }
+    }
+
+    private static func contentEquals(_ lhs: WatchTodayContext, _ rhs: WatchTodayContext) -> Bool {
+        var lhs = lhs
+        lhs.generatedAt = rhs.generatedAt
+        return lhs == rhs
+    }
+
+    // MARK: - "Mark" from Apple Watch
+
+    private static let handledMarkRequestsKey = "watchHandledMarkRequestIDs"
+
+    /// A queued (transferUserInfo) mark: process it and send the result back the same way.
+    private func handleMarkRequest(_ data: Data) async {
+        guard let ack = await processMarkRequest(data),
+              WCSession.isSupported(), WCSession.default.activationState == .activated,
+              let ackData = try? encoder.encode(ack) else { return }
+        WCSession.default.transferUserInfo([WatchLocationSyncTransport.markAckUserInfoKey: ackData])
+    }
+
+    /// Checks in once per request ID; nil for an undecodable or already-handled request.
+    private func processMarkRequest(_ data: Data) async -> WatchMarkPlaceAck? {
+        guard let request = try? decoder.decode(WatchMarkPlaceRequest.self, from: data) else { return nil }
+        let defaults = UserDefaults.standard
+        var handled = defaults.stringArray(forKey: Self.handledMarkRequestsKey) ?? []
+        // The watch may send a message and later fall back to a queued transfer.
+        guard !handled.contains(request.id.uuidString) else { return nil }
+        handled.append(request.id.uuidString)
+        defaults.set(Array(handled.suffix(50)), forKey: Self.handledMarkRequestsKey)
+
+        let ack: WatchMarkPlaceAck
+        do {
+            let visit = try await MarkPlaceSupport.markCurrentPlace(
+                name: nil,
+                latitude: request.latitude,
+                longitude: request.longitude
+            )
+            ack = WatchMarkPlaceAck(requestID: request.id, succeeded: true, placeName: visit.displayName)
+        } catch {
+            let message = (error as? CustomLocalizedStringResourceConvertible)
+                .map { String(localized: $0.localizedStringResource) } ?? error.localizedDescription
+            ack = WatchMarkPlaceAck(requestID: request.id, succeeded: false, errorMessage: message)
+        }
+        return ack
+    }
+
     @discardableResult
     func importPayload(_ payload: WatchLocationSyncPayload) -> WatchLocationSyncAck {
         guard payload.version == WatchLocationSyncPayload.currentVersion else {
@@ -187,6 +289,10 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
                 LocationManager.shared?.syncDataToWatch()
                 WidgetCenter.shared.reloadAllTimelines()
                 NotificationCenter.default.post(name: .watchLocationDataImported, object: nil)
+                LogManager.shared.info(
+                    "Imported from Apple Watch: \(importedPointCount) points, \(importedVisitCount) visits",
+                    category: .watch
+                )
             }
 
             return WatchLocationSyncAck(
@@ -255,7 +361,18 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
 
 extension WatchLocationSyncReceiver: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        // No-op; receiving queued userInfo after activation drives imports.
+        // Receiving queued userInfo after activation drives imports; push any
+        // today context published before the session was ready.
+        guard activationState == .activated else { return }
+        Task { @MainActor in
+            WatchLocationSyncReceiver.flushTodayContext()
+        }
+    }
+
+    nonisolated func sessionWatchStateDidChange(_ session: WCSession) {
+        Task { @MainActor in
+            WatchLocationSyncReceiver.flushTodayContext()
+        }
     }
 
     nonisolated func sessionDidBecomeInactive(_ session: WCSession) {}
@@ -281,7 +398,30 @@ extension WatchLocationSyncReceiver: WCSessionDelegate {
         }
     }
 
+    /// "Mark" sent live while the iPhone is reachable; the reply carries the result.
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        guard let markData = message[WatchLocationSyncTransport.markRequestUserInfoKey] as? Data else {
+            replyHandler([:])
+            return
+        }
+        Task { @MainActor [weak self] in
+            guard let self,
+                  let ack = await processMarkRequest(markData),
+                  let ackData = try? encoder.encode(ack) else {
+                replyHandler([:])
+                return
+            }
+            replyHandler([WatchLocationSyncTransport.markAckUserInfoKey: ackData])
+        }
+    }
+
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        if let markData = userInfo[WatchLocationSyncTransport.markRequestUserInfoKey] as? Data {
+            Task { @MainActor [weak self] in
+                await self?.handleMarkRequest(markData)
+            }
+            return
+        }
         guard let data = userInfo[WatchLocationSyncTransport.payloadUserInfoKey] as? Data else { return }
         Task { @MainActor [weak self] in
             guard let ack = self?.importPayloadData(data) else { return }

@@ -53,6 +53,20 @@ struct CalendarEventDraft: Identifiable {
         String(format: "%.6f, %.6f", locale: Locale(identifier: "en_US_POSIX"), coordinate.latitude, coordinate.longitude)
     }
 
+    /// The review sheet's starting notes: "Logged by Whereday · 50 min", then the event's own notes.
+    var reviewNotes: String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .short
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.maximumUnitCount = 2
+        let seconds = max(0, endDate.timeIntervalSince(startDate))
+        // Under a minute still reads as a duration rather than "0 min".
+        let duration = formatter.string(from: max(seconds, 60)) ?? ""
+        let byline = String(localized: "Logged by Whereday · \(duration)")
+        guard let notes else { return byline }
+        return byline + "\n\n" + notes
+    }
+
     func makeEvent(in store: EKEventStore) -> EKEvent {
         let event = EKEvent(eventStore: store)
         event.title = title
@@ -122,7 +136,7 @@ struct CalendarEventReviewSheet: View {
 
     init(draft: CalendarEventDraft) {
         _draft = State(initialValue: draft)
-        _notesText = State(initialValue: draft.notes ?? "")
+        _notesText = State(initialValue: draft.reviewNotes)
     }
 
     var body: some View {
@@ -138,7 +152,7 @@ struct CalendarEventReviewSheet: View {
                 notesCard
                     .padding(.horizontal, 16)
                     .padding(.top, 12)
-                Text("Times come from your timeline. Editing them here changes only the calendar event, not your record. You'll choose the calendar in the next step.")
+                Text("Times come from the visit. Editing them here changes only the calendar event, not your record.")
                     .font(.caption)
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
@@ -228,6 +242,9 @@ struct CalendarEventReviewSheet: View {
                 divider
                 infoRow("Location", value: location)
             }
+            // Naming the calendar here would need full calendar access; Calendar's own editor picks it instead.
+            divider
+            infoRow("Calendar", value: String(localized: "Chosen in the next step"))
         }
         .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
         .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))

@@ -1,5 +1,6 @@
 import SwiftUI
 import StoreKit
+import SwiftData
 
 struct PaywallView: View {
     @ObservedObject var storeManager: StoreManager
@@ -11,10 +12,21 @@ struct PaywallView: View {
     @State private var family = false
     @State private var selectedOption: IsoMePurchaseOption = .individualYearly
     @State private var showSubscriptionManagement = false
+    @Environment(\.modelContext) private var modelContext
+    /// Ink index per day for the two-pane grid: recorded days when there are any, else nil.
+    @State private var planDays: [Int?]?
 
     private var managing: Bool { context == .settings && storeManager.isPurchased }
+    /// Yearly and Lifetime are the choices on offer. Weekly is kept only for someone already
+    /// subscribed to Weekly, so their current plan stays visible and purchasable from here.
     private var options: [IsoMePurchaseOption] {
-        family ? [.familyWeekly, .familyYearly, .family] : [.individualWeekly, .individualYearly, .individual]
+        let weekly: IsoMePurchaseOption = family ? .familyWeekly : .individualWeekly
+        let base: [IsoMePurchaseOption] = family ? [.familyYearly, .family] : [.individualYearly, .individual]
+        return isSubscribedToWeekly ? [weekly] + base : base
+    }
+    private var isSubscribedToWeekly: Bool {
+        let active = storeManager.activePurchaseOption
+        return active == .individualWeekly || active == .familyWeekly
     }
     /// Only plans the App Store actually returned are offered.
     private var offeredOptions: [IsoMePurchaseOption] {
@@ -54,6 +66,10 @@ struct PaywallView: View {
         }
         .task {
             await storeManager.loadProducts()
+        }
+        .task(id: usesTwoPanes) {
+            guard usesTwoPanes, planDays == nil else { return }
+            planDays = PlanDayGrid.recordedDays(in: modelContext)
         }
     }
 
@@ -120,9 +136,8 @@ struct PaywallView: View {
                     .tracking(1.5)
                     .foregroundStyle(TE.onInkCardMuted)
                 Spacer(minLength: 16)
-                JourneyMapIllustration(ink: TE.onInkCard, paper: TE.inkCard)
-                    .frame(height: 150)
-                    .accessibilityHidden(true)
+                PlanDayGrid(days: planDays)
+                    .frame(maxWidth: 460, maxHeight: 150)
                 Spacer(minLength: 16)
                 VStack(alignment: .leading, spacing: 10) {
                     headline
@@ -293,7 +308,10 @@ struct PaywallView: View {
                     }
                 }
                 if let product {
-                    Text(PaywallCopy.disclosure(for: option, displayPrice: product.displayPrice, hasTrial: trial))
+                    // Lifetime reads as the artboard does; its price sits on the title line.
+                    Text(option.isSubscription
+                         ? PaywallCopy.disclosure(for: option, displayPrice: product.displayPrice, hasTrial: trial)
+                         : String(localized: "One-time purchase. Yours for good."))
                         .font(.footnote)
                         .foregroundStyle(TE.textMuted)
                 }
@@ -540,6 +558,92 @@ struct JourneyMapIllustration: View {
             shading.stroke(hatch, with: .color(ink.opacity(0.55)), lineWidth: 0.65)
         }
         context.stroke(outline, with: .color(ink), style: StrokeStyle(lineWidth: 1.1, lineCap: .round, lineJoin: .round))
+    }
+}
+
+/// Half a year of days on the plan page: 26 weeks of cells, each in the ink of the place you spent
+/// most of that day at. Without recorded days it draws a fixed illustrative pattern instead.
+struct PlanDayGrid: View {
+    static let dayCount = 182
+    private static let rows = 7
+
+    /// One entry per day, oldest first: an ink index, or nil for a day with nothing recorded.
+    /// A nil array means there is no recorded history to show.
+    let days: [Int?]?
+
+    /// Inks tuned for the ink page: light on navy by day, deep on amber at night.
+    private static let inks: [Color] = [
+        TE.adaptive(0x8FA6D9, 0x1E2B45),
+        TE.adaptive(0xF0805F, 0xA8381F),
+        TE.adaptive(0xE0B565, 0x7A5A1C),
+        TE.adaptive(0x9DC097, 0x3F5C3C)
+    ]
+    private static let empty = TE.adaptive(0x2C3754, 0xC9A050)
+
+    var body: some View {
+        let cells = days ?? Self.illustrativeDays
+        Canvas { context, size in
+            let columns = Int(ceil(Double(cells.count) / Double(Self.rows)))
+            let gap: CGFloat = 3
+            let side = max(2, min((size.width - gap * CGFloat(columns - 1)) / CGFloat(columns),
+                                  (size.height - gap * CGFloat(Self.rows - 1)) / CGFloat(Self.rows)))
+            let gridWidth = side * CGFloat(columns) + gap * CGFloat(columns - 1)
+            let originX = (size.width - gridWidth) / 2
+            for (index, ink) in cells.enumerated() {
+                let column = index / Self.rows
+                let row = index % Self.rows
+                let rect = CGRect(x: originX + CGFloat(column) * (side + gap), y: CGFloat(row) * (side + gap),
+                                  width: side, height: side)
+                let color = ink.map { Self.inks[$0 % Self.inks.count] } ?? Self.empty
+                context.fill(Path(roundedRect: rect, cornerRadius: side * 0.22), with: .color(color))
+            }
+        }
+        .accessibilityElement()
+        .accessibilityAddTraits(.isImage)
+        .accessibilityLabel(days == nil
+            ? Text("An illustration of half a year of days, each colored by place")
+            : Text("Your last 26 weeks, each day colored by the place you spent most time at"))
+        .accessibilityValue(days.map { days in
+            Text("\(days.compactMap { $0 }.count) of \(days.count) days recorded")
+        } ?? Text(""))
+    }
+
+    /// The artboard's pattern: mostly one ink, accents of the others, and a quiet stretch at the end.
+    static let illustrativeDays: [Int?] = (0..<dayCount).map { index in
+        if index > 152 || (index * 7) % 23 == 3 { return nil }
+        guard ((index / 9) * 5 + index) % 13 >= 9 else { return 0 }
+        return [0, 0, 1, 2, 3][index % 5]
+    }
+
+    /// Each of the last 182 days in the ink of its longest-stay saved place, in the library's ink order.
+    /// Returns nil when nothing was recorded in that window.
+    @MainActor
+    static func recordedDays(in context: ModelContext, now: Date = Date(), calendar: Calendar = .current) -> [Int?]? {
+        let today = calendar.startOfDay(for: now)
+        guard let start = calendar.date(byAdding: .day, value: -(dayCount - 1), to: today) else { return nil }
+        let visitDescriptor = FetchDescriptor<Visit>(
+            predicate: #Predicate { $0.arrivedAt >= start },
+            sortBy: [SortDescriptor(\.arrivedAt, order: .reverse)]
+        )
+        var placeDescriptor = FetchDescriptor<SavedPlace>()
+        placeDescriptor.sortBy = [SortDescriptor(\.name, order: .forward)]
+        guard let visits = try? context.fetch(visitDescriptor), !visits.isEmpty else { return nil }
+        let places = (try? context.fetch(placeDescriptor)) ?? []
+        let index = PlaceVisitIndex(places: places, visits: visits)
+
+        // Seconds per day per ink; visits outside every saved place count toward the first ink.
+        var time = Array(repeating: [Int: TimeInterval](), count: dayCount)
+        func add(_ visit: Visit, ink: Int) {
+            let day = calendar.dateComponents([.day], from: start, to: calendar.startOfDay(for: visit.arrivedAt)).day ?? -1
+            guard time.indices.contains(day) else { return }
+            let end = min(visit.departedAt ?? now, now)
+            time[day][ink, default: 0] += max(60, end.timeIntervalSince(visit.arrivedAt))
+        }
+        for (offset, place) in places.enumerated() {
+            for visit in index.visits(for: place) { add(visit, ink: offset % inks.count) }
+        }
+        for visit in index.unmatched { add(visit, ink: 0) }
+        return time.map { day in day.max { $0.value < $1.value }?.key }
     }
 }
 

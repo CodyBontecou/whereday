@@ -13,6 +13,8 @@ struct MyselfClaimView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var busy = false
     @State private var errorMessage: String?
+    /// The App Store has no purchase this claim can use: distinct from a verification or network failure.
+    @State private var noQualifyingPurchase = false
     @State private var openedClaim = false
 
     var body: some View {
@@ -35,17 +37,36 @@ struct MyselfClaimView: View {
 
                 BackPageCard {
                     step(1, title: "Verify your purchase",
-                         detail: "We’ll send your App Store purchase proof to myself.md to verify eligibility. Your health and location data stay on your device.",
+                         detail: "We send your App Store purchase proof to myself.md. Your health and location data stay on your device.",
                          fill: openedClaim ? TE.placeInks[1] : TE.textPrimary, ink: TE.surface)
                     BackPageDivider()
                     step(2, title: "Choose the account that gets it",
-                         detail: "Then sign in to choose the myself.md account that receives access. Each original purchase can be linked to one account. Family-shared access alone does not qualify; the purchaser can claim.",
+                         detail: "Each original purchase links to one myself.md account. Family-shared access alone doesn’t qualify — the purchaser can claim.",
                          fill: openedClaim ? TE.textPrimary : TE.dialTrack, ink: openedClaim ? TE.surface : TE.textPrimary)
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 20)
 
-                if let errorMessage {
+                if noQualifyingPurchase {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("NO QUALIFYING PURCHASE")
+                            .font(TE.mono(.caption2))
+                            .tracking(1.2)
+                            .foregroundStyle(TE.inkRust)
+                        Text(noQualifyingPurchaseDetail)
+                            .font(.footnote)
+                            .foregroundStyle(TE.textMuted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+                    .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.inkRust, lineWidth: 1.5))
+                    .padding(.horizontal, 16)
+                    .padding(.top, 14)
+                    .accessibilityElement(children: .combine)
+                } else if let errorMessage {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("COULDN'T VERIFY")
                             .font(TE.mono(.caption2))
@@ -97,7 +118,7 @@ struct MyselfClaimView: View {
                         if busy {
                             ProgressView().tint(TE.surface)
                             Text("Verifying purchase…")
-                        } else if errorMessage != nil {
+                        } else if errorMessage != nil || noQualifyingPurchase {
                             Text("Try again")
                         } else {
                             Text(openedClaim ? "Open claim again" : "Verify purchase and continue")
@@ -149,6 +170,7 @@ struct MyselfClaimView: View {
         guard MyselfClaimFeature.isEnabled else { return }
         busy = true
         errorMessage = nil
+        noQualifyingPurchase = false
         defer { busy = false }
         do {
             // Explicit user action may ask the App Store to authenticate; background launches never do.
@@ -166,7 +188,10 @@ struct MyselfClaimView: View {
             request.httpBody = try JSONEncoder().encode(proof)
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let response = response as? HTTPURLResponse else { throw ClaimError.message("The claim service did not respond.") }
-            let result = try JSONDecoder().decode(ClaimResponse.self, from: data)
+            let result = (try? JSONDecoder().decode(ClaimResponse.self, from: data)) ?? ClaimResponse()
+            if Self.isNoQualifyingPurchaseRejection(statusCode: response.statusCode, error: result.error) {
+                throw ClaimError.noQualifyingPurchase
+            }
             guard response.statusCode == 200, let raw = result.claimUrl, let url = URL(string: raw),
                   url.scheme == server.scheme, url.host == server.host, url.port == server.port,
                   url.user == nil, url.password == nil, url.path == "/claim", url.query == nil,
@@ -175,9 +200,17 @@ struct MyselfClaimView: View {
             }
             openURL(url)
             openedClaim = true
+        } catch ClaimError.noQualifyingPurchase {
+            noQualifyingPurchase = true
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    private var noQualifyingPurchaseDetail: String {
+        app == "health.md"
+            ? String(localized: "Use the Apple Account that bought this app or its lifetime unlock, then try again.")
+            : String(localized: "Use the Apple Account that bought Whereday or its lifetime unlock, then try again.")
     }
 
     @MainActor
@@ -192,14 +225,27 @@ struct MyselfClaimView: View {
                 return PurchaseProof(app: app, kind: "iap", proof: result.jwsRepresentation)
             }
         }
-        if app == "health.md" {
-            let result = try await AppTransaction.refresh()
-            if case .verified(let transaction) = result,
-               transaction.originalPurchaseDate < Date(timeIntervalSince1970: 1777161600) {
+        // A paid download of the app itself also qualifies, verified from the signed AppTransaction.
+        // health.md's paid-download window closed when it went free; Whereday's proof is sent as-is
+        // and myself.md decides eligibility (its rejection maps to NO QUALIFYING PURCHASE).
+        let result = try await AppTransaction.refresh()
+        if case .verified(let transaction) = result {
+            let qualifies = app == "health.md"
+                ? transaction.originalPurchaseDate < Date(timeIntervalSince1970: 1777161600)
+                : true
+            if qualifies {
                 return PurchaseProof(app: app, kind: "app", proof: result.jwsRepresentation)
             }
         }
-        throw ClaimError.message("No qualifying purchase was found. Use the Apple Account that bought this app or its lifetime unlock, then try again.")
+        throw ClaimError.noQualifyingPurchase
+    }
+
+    /// myself.md answers an ineligible proof with 403 and "A qualifying … is required." (both the
+    /// lifetime-unlock and paid-download checks). Other 403s (Apple couldn't verify, refresh the
+    /// purchase) are verification failures, not a missing purchase, so they stay COULDN'T VERIFY.
+    nonisolated static func isNoQualifyingPurchaseRejection(statusCode: Int, error: String?) -> Bool {
+        guard statusCode == 403, let error else { return false }
+        return error.trimmingCharacters(in: .whitespaces).hasPrefix("A qualifying ")
     }
 
     private struct PurchaseProof: Encodable {
@@ -214,6 +260,13 @@ struct MyselfClaimView: View {
     }
     private enum ClaimError: LocalizedError {
         case message(String)
-        var errorDescription: String? { if case .message(let text) = self { return text }; return nil }
+        case noQualifyingPurchase
+        var errorDescription: String? {
+            switch self {
+            case .message(let text): return text
+            case .noQualifyingPurchase:
+                return String(localized: "No qualifying purchase was found. Use the Apple Account that bought this app or its lifetime unlock, then try again.")
+            }
+        }
     }
 }
