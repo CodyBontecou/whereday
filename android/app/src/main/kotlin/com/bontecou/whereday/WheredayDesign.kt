@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
@@ -311,7 +312,7 @@ internal enum class WdEmphasis {primary,secondary,destructive}
         .then(if(pressed) Modifier.background(pressTint) else Modifier)
         .border(1.dp,if(filled || emphasis==WdEmphasis.destructive) ink else wd.border,shape)
         .clickable(interaction,null,enabled=enabled && !busy,role=Role.Button,onClick=onClick)
-        .padding(horizontal=16.dp,vertical=14.dp),
+        .padding(horizontal=12.dp,vertical=14.dp),
         horizontalArrangement=Arrangement.Center,verticalAlignment=Alignment.CenterVertically) {
         val content=if(filled) wd.surface else ink
         if(busy) CircularProgressIndicator(Modifier.size(18.dp),color=content,strokeWidth=2.dp)
@@ -499,4 +500,46 @@ internal data class WdTab(val id:String,val title:String,val icon:ImageVector,va
 @Composable internal fun WdSnackbar(data:SnackbarData,modifier:Modifier=Modifier) {
     Snackbar(data,modifier.padding(horizontal=16.dp,vertical=8.dp),shape=RoundedCornerShape(16.dp),containerColor=wd.inkCard,
         contentColor=wd.onInkCard,actionColor=wd.onInkCard,actionContentColor=wd.onInkCard,dismissActionContentColor=wd.onInkCardMuted)
+}
+
+/** One stay or move on the 24-hour dial, as fractions of the day from midnight. */
+internal data class WdDialSegment(val start:Float,val end:Float,val ink:Color)
+
+/** iOS's 24-hour day dial: a track ring, place-ink arcs for each stay and a coral "now" marker.
+ *  Decorative only; the list beside it carries the same information for accessibility. */
+@Composable internal fun WdDayDial(segments:List<WdDialSegment>,modifier:Modifier=Modifier,now:Float?=null,nowCaption:String?=null,
+    centerText:String?=null,size:Dp=200.dp) {
+    val track=wd.dialTrack;val tick=wd.dialTick;val live=wd.liveDot;val card=wd.card
+    Box(modifier.size(size).clearAndSetSemantics {},contentAlignment=Alignment.Center) {
+        androidx.compose.foundation.Canvas(Modifier.matchParentSize()) {
+            val side=this.size.minDimension
+            val stroke=side*0.07f
+            val inset=side*0.06f+stroke/2
+            val arcSize=androidx.compose.ui.geometry.Size(side-inset*2,side-inset*2)
+            val topLeft=androidx.compose.ui.geometry.Offset(inset,inset)
+            drawArc(track,0f,360f,false,topLeft,arcSize,style=androidx.compose.ui.graphics.drawscope.Stroke(stroke))
+            segments.forEach {segment->
+                val sweep=((segment.end-segment.start).coerceAtLeast(0.004f))*360f
+                drawArc(segment.ink,-90f+segment.start*360f,sweep,false,topLeft,arcSize,style=androidx.compose.ui.graphics.drawscope.Stroke(stroke))
+            }
+            val center=this.center
+            repeat(4) {quarter->
+                val angle=Math.toRadians(quarter*90.0-90.0)
+                val outer=side/2-side*0.01f;val inner=outer-side*0.03f
+                drawLine(tick,androidx.compose.ui.geometry.Offset(center.x+(inner*kotlin.math.cos(angle)).toFloat(),center.y+(inner*kotlin.math.sin(angle)).toFloat()),
+                    androidx.compose.ui.geometry.Offset(center.x+(outer*kotlin.math.cos(angle)).toFloat(),center.y+(outer*kotlin.math.sin(angle)).toFloat()),strokeWidth=1.dp.toPx())
+            }
+            if(now!=null) {
+                val angle=Math.toRadians(now*360.0-90.0)
+                val radius=arcSize.width/2
+                val point=androidx.compose.ui.geometry.Offset(center.x+(radius*kotlin.math.cos(angle)).toFloat(),center.y+(radius*kotlin.math.sin(angle)).toFloat())
+                drawCircle(card,stroke*0.75f,point)
+                drawCircle(live,stroke*0.5f,point)
+            }
+        }
+        Column(horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(2.dp)) {
+            if(nowCaption!=null) Text(nowCaption.uppercase(),style=WdType.caption2.copy(letterSpacing=0.1.em),color=wd.textMuted)
+            if(centerText!=null) Text(centerText,style=WdType.title.copy(fontSize=(size.value*0.17f).sp,lineHeight=(size.value*0.2f).sp),color=wd.textPrimary)
+        }
+    }
 }

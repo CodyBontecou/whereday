@@ -513,7 +513,8 @@ private class JournalMapRenderer {
             if(overlay) {
                 Box(Modifier.align(Alignment.TopStart).padding(10.dp)) {onlineControl()}
                 Column(Modifier.align(Alignment.TopEnd).padding(10.dp),horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(8.dp)) {layersControl();fitControl()}
-                Box(Modifier.align(Alignment.BottomStart).padding(10.dp).widthIn(max=300.dp)) {followControl()}
+                // Bottom-end keeps the MapLibre logo and attribution (bottom-start) visible and tappable.
+                Box(Modifier.align(Alignment.BottomEnd).padding(10.dp).widthIn(max=300.dp)) {followControl()}
             }
         }
         visitFocus?.let {focus->visits.find {it.id==focus.id}?.let {visit->

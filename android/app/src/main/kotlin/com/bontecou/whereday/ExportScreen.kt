@@ -259,7 +259,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
                 val save:@Composable (Modifier)->Unit={WdButton(stringResource(R.string.export_delivery_save_export_as),{deliver("save")},it,enabled=deliverable && !splitDays && (extraFormats+format).size==1)}
                 val share:@Composable (Modifier)->Unit={WdButton(stringResource(R.string.export_delivery_share_export),{deliver("share")},it,emphasis=WdEmphasis.primary,enabled=deliverable,busy=operation==ExportUiOperation.delivery,icon=Icons.Outlined.IosShare)}
                 if(stacked) {share(Modifier);save(Modifier)}
-                else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {save(Modifier.weight(1f));share(Modifier.weight(1.4f))}
+                else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {save(Modifier.weight(1f));share(Modifier.weight(1f))}
             }
         }
     }

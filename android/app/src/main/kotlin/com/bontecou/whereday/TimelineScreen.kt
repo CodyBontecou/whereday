@@ -111,6 +111,21 @@ import java.time.*
                 val sequences=chronological.mapIndexed {index,entry->entry.first to index+1}.toMap()
                 val entries=(window.visits.map { TimelineEntry(it.id,it.arrivedAt,visit=it) }+window.sessions.map { TimelineEntry(it.id,it.startedAt,session=it) }+window.inferred.map { TimelineEntry(it.id,it.startedAt,inferred=it) }).sortedByDescending { it.time }
                 val inks=journalInkIndex(window.visits.sortedBy {it.arrivedAt}.map {it.name?.takeIf {n->n.isNotBlank()} ?: it.id})
+                item("day-dial") {
+                    // The iOS Today dial: each stay inked around the 24-hour ring, with the coral "now" marker on today.
+                    val zone=java.time.ZoneId.systemDefault()
+                    val dayStart=day.atStartOfDay(zone).toInstant()
+                    fun fraction(at:java.time.Instant)=(java.time.Duration.between(dayStart,at).toMillis()/86_400_000f).coerceIn(0f,1f)
+                    val nowInstant=java.time.Instant.now()
+                    val isToday=day==LocalDate.now()
+                    val segments=window.sessions.map {WdDialSegment(fraction(it.startedAt),fraction(it.endedAt ?: nowInstant),wd.textMuted.copy(alpha=0.45f))}+
+                        window.visits.map {visit->WdDialSegment(fraction(visit.arrivedAt),fraction(visit.departedAt ?: nowInstant),
+                            wd.placeInks[(inks[visit.name?.takeIf {it.isNotBlank()} ?: visit.id] ?: 0)%wd.placeInks.size])}
+                    Box(Modifier.fillMaxWidth().padding(top=6.dp,bottom=14.dp),contentAlignment=Alignment.Center) {
+                        WdDayDial(segments,now=if(isToday) fraction(nowInstant) else null,nowCaption=if(isToday) stringResource(R.string.timeline_redesign_now) else null,
+                            centerText=if(isToday) nowInstant.atZone(zone).format(DateTimeFormatter.ofPattern(if(android.text.format.DateFormat.is24HourFormat(LocalContext.current)) "HH:mm" else "h:mm")) else null)
+                    }
+                }
                 if(entries.isEmpty()) item { Text(stringResource(R.string.timeline_empty),style=WdType.serifBody,color=wd.textMuted,modifier=Modifier.padding(horizontal=24.dp).testTag("timeline-empty")) }
                 items(entries,key={ if(it.visit!=null) "visit:${it.id}" else "session:${it.id}" }) { entry ->
                     val visit=entry.visit
