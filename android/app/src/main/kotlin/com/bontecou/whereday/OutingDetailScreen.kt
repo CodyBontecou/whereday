@@ -2,6 +2,20 @@ package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DeleteOutline
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.ErrorOutline
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Map
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -49,52 +63,74 @@ private sealed interface OutingState {
     val scope=rememberCoroutineScope()
     val exportSettings by graph.exportSettings.state.collectAsStateWithLifecycle()
     BackHandler(onBack=back)
-    Box(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}) {
+    Box(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).testTag("outing-detail-content").padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        TextButton(onClick=back) { Text(stringResource(R.string.timeline_back)) }
+        WdBackChip(stringResource(R.string.timeline_back),back)
         when(val current=state) {
-            OutingState.Loading -> LinearProgressIndicator(Modifier.fillMaxWidth())
-            OutingState.Failed -> Text(stringResource(R.string.outing_load_error),color=MaterialTheme.colorScheme.error)
+            OutingState.Loading -> WdLoading()
+            OutingState.Failed -> WdNotice(stringResource(R.string.outing_load_error),icon=Icons.Outlined.ErrorOutline,warning=true)
             is OutingState.Ready -> {
                 val detail=current.detail
                 val session=detail.session
                 val photoRange=remember(session.startedAt,session.endedAt,detail.summary.count) {HistoryRange(session.startedAt,(session.endedAt ?: java.time.Instant.now()).plusMillis(1))}
                 val photos=matchedPhotos(graph,photoRange)
                 val photoLayer=photoMapLayer(graph,photoRange,photos.count!=null,validationFailed=photos.error!=null)
-                Text(session.name ?: stringResource(if(detail.inferred) R.string.timeline_inferred else R.string.outing_details),style=MaterialTheme.typography.headlineSmall,modifier=Modifier.testTag("outing-title"))
-                Text(timelineRange(session.startedAt,session.endedAt,R.string.timeline_recording))
-                Text(stringResource(R.string.outing_point_summary,resources.getQuantityString(R.plurals.timeline_point_count,detail.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.count),resources.getQuantityString(R.plurals.outing_glitch_count,detail.summary.outlierCount.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.outlierCount)),modifier=Modifier.testTag("outing-point-summary"))
-                Text(distanceText(detail.summary.distanceMeters,metric,locale),style=MaterialTheme.typography.headlineMedium)
-                val duration=java.time.Duration.between(session.startedAt,session.endedAt ?: java.time.Instant.now()).toMinutes().coerceAtLeast(0)
-                val average=detail.summary.averageSpeed?.let {speed->stringResource(R.string.outing_average_speed,distanceText(speed*3600,metric,locale))} ?: stringResource(R.string.outing_average_unavailable)
-                Text(stringResource(R.string.outing_duration_summary,duration/60,duration%60,average),modifier=Modifier.testTag("outing-duration"))
+                val live=session.endedAt==null
+                Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                        Text(session.startedAt.atZone(java.time.ZoneId.systemDefault()).toLocalDate().format(java.time.format.DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.FULL).withLocale(locale)).uppercase(locale),
+                            style=WdType.caption2.copy(letterSpacing=0.14.em),color=wd.textMuted,modifier=Modifier.weight(1f,fill=false))
+                        if(live) WdBadge(stringResource(R.string.timeline_recording),color=wd.inkRust)
+                        else if(detail.inferred) WdBadge(stringResource(R.string.timeline_inferred),color=wd.textMuted)
+                    }
+                    Text(session.name ?: stringResource(if(detail.inferred) R.string.timeline_inferred else R.string.outing_details),style=WdType.title,color=wd.textPrimary,modifier=Modifier.semantics {heading()}.testTag("outing-title"))
+                    Text(timelineRange(session.startedAt,session.endedAt,R.string.timeline_recording),style=WdType.caption,color=if(live) wd.inkRust else wd.textMuted)
+                }
+                WdCard(radius=16.dp) {
+                    Row(Modifier.padding(horizontal=16.dp,vertical=14.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                        WdStat(distanceText(detail.summary.distanceMeters,metric,locale),stringResource(R.string.timeline_redesign_distance),Modifier.weight(1f))
+                        if(live) WdLiveDot()
+                    }
+                    WdDivider(Modifier.padding(start=16.dp))
+                    Column(Modifier.padding(horizontal=16.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                        val duration=java.time.Duration.between(session.startedAt,session.endedAt ?: java.time.Instant.now()).toMinutes().coerceAtLeast(0)
+                        val average=detail.summary.averageSpeed?.let {speed->stringResource(R.string.outing_average_speed,distanceText(speed*3600,metric,locale))} ?: stringResource(R.string.outing_average_unavailable)
+                        Text(stringResource(R.string.outing_duration_summary,duration/60,duration%60,average),style=WdType.caption.copy(fontWeight=FontWeight.Medium),color=wd.textPrimary,modifier=Modifier.testTag("outing-duration"))
+                        Text(stringResource(R.string.outing_point_summary,resources.getQuantityString(R.plurals.timeline_point_count,detail.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.count),resources.getQuantityString(R.plurals.outing_glitch_count,detail.summary.outlierCount.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.outlierCount)),
+                            style=WdType.caption,color=wd.textMuted,modifier=Modifier.testTag("outing-point-summary"))
+                    }
+                }
                 RouteReplayButton(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader),metric,
                     ((detail.summary.count-detail.summary.outlierCount).takeIf {it>0} ?: detail.summary.count)>=2,onShowingChange={replayShowing=it})
                 JournalMap(detail.points,detail.visits,followMetric=metric,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
                     roadController=graph.roadDisplay,roadVisible=!visitInspectionActive && !editing && !deleting && selectedVisit==null && !replayShowing,
                     pointMarkerSource=rememberHistoryPointMarkerSource(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader)))
-                if(detail.summary.count>detail.points.size) Text(resources.getQuantityString(R.plurals.outing_sampled,detail.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.count),style=MaterialTheme.typography.bodySmall)
-                session.notes?.takeIf { it.isNotBlank() }?.let { Text(it,style=MaterialTheme.typography.bodyLarge) }
+                if(detail.summary.count>detail.points.size) Text(resources.getQuantityString(R.plurals.outing_sampled,detail.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.count),style=WdType.caption2,color=wd.textMuted)
+                session.notes?.takeIf { it.isNotBlank() }?.let {
+                    OutingSectionLabel(stringResource(R.string.timeline_redesign_notes))
+                    Text(it,style=WdType.serifBody,color=wd.textPrimary)
+                }
                 val calendarTitle=stringResource(R.string.calendar_outing_title,sequence)
                 CalendarEventButton(session to detail.endpoints.first,enabled=!busy,makeDraft={now->CalendarEventDraft.outing(session,detail.endpoints.first?.coordinate,calendarTitle,now)})
-                Button(onClick={ showOnMap(session) }) { Text(stringResource(R.string.outing_show_map)) }
-                if(!detail.inferred) OutlinedButton(enabled=!busy,onClick={ editingId=id }) { Text(stringResource(R.string.outing_edit)) }
-                else Text(stringResource(R.string.outing_inferred_explanation),style=MaterialTheme.typography.bodyMedium)
+                WdButton(stringResource(R.string.outing_show_map),{ showOnMap(session) },emphasis=WdEmphasis.primary,icon=Icons.Outlined.Map)
+                if(!detail.inferred) WdButton(stringResource(R.string.outing_edit),{ editingId=id },enabled=!busy,icon=Icons.Outlined.Edit)
+                else WdNotice(stringResource(R.string.outing_inferred_explanation),icon=Icons.Outlined.Info)
                 if(detail.visits.isNotEmpty()) {
-                    Text(stringResource(R.string.outing_linked_visits),style=MaterialTheme.typography.titleLarge)
+                    OutingSectionLabel(stringResource(R.string.outing_linked_visits))
                     detail.visits.forEach { visit -> VisitNavigationRow(visit) {if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit} }
                 }
                 MatchedPhotoStrip(graph,photos,photoRange)
+                OutingSectionLabel(stringResource(R.string.timeline_redesign_export))
                 Choice(stringResource(R.string.outing_format),exportSettings.selection.format.name,ExportFormat.entries.map {it.name},enabled=exportSettings.ready && !exportSettings.saving) {
                     graph.exportSettings.update(exportSettings.selection.copy(format=ExportFormat.valueOf(it)))
                 }
-                Text(stringResource(R.string.outing_format_explanation),style=MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.outing_format_explanation),style=WdType.caption2,color=wd.textMuted)
                 HistoryFileActions(graph,stringResource(R.string.outing_export),!busy && exportSettings.ready && !exportSettings.saving && exportSettings.error==null) {
                     val selection=exportSettings.selection
                     graph.exports.prepareOuting(id,selection.format,selection.options,selection.filename,sequence,inferredHeader)
                 }
-                exportSettings.failure?.let {Text(exportSettingsText(it),color=MaterialTheme.colorScheme.error)}
-                TextButton(enabled=!busy,onClick={ deleting=true }) { Text(stringResource(R.string.outing_delete),color=MaterialTheme.colorScheme.error) }
+                exportSettings.failure?.let {Text(exportSettingsText(it),style=MaterialTheme.typography.bodyMedium,color=wd.inkRust)}
+                WdButton(stringResource(R.string.outing_delete),{ deleting=true },Modifier.padding(top=8.dp),emphasis=WdEmphasis.destructive,enabled=!busy,icon=Icons.Outlined.DeleteOutline)
                 if(editing) key(id) {OutingEditor(session,{if(!busy) editingId=null},busy) {name,notes->
                     if(!busy && editingId==id) {
                         busy=true
@@ -107,15 +143,15 @@ private sealed interface OutingState {
                 }}
             }
         }
-        error?.let { Text(stringResource(it),color=MaterialTheme.colorScheme.error) }
-        if(busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+        error?.let { WdNotice(stringResource(it),icon=Icons.Outlined.ErrorOutline,warning=true) }
+        if(busy) LinearProgressIndicator(Modifier.fillMaxWidth().clip(CircleShape),color=wd.accent,trackColor=wd.dialTrack)
     }
     Spacer(Modifier.fillMaxHeight().width(20.dp).testTag("outing-detail-scroll-margin"))
     }
     selectedVisit?.let {visit-> key(visit.id) {
         VisitEditor(graph,visit,{selectedVisit=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,visit,reuse,remember,overlap)},{graph.history.deleteVisit(visit)})
     }}
-    if(deleting) WorkspaceAlertDialog(onDismissRequest={ deleting=false },title={ Text(stringResource(R.string.outing_delete_question)) },text={ Text(stringResource(R.string.outing_delete_explanation)) },confirmButton={ TextButton(enabled=!busy,onClick={ scope.launch {
+    if(deleting) WorkspaceAlertDialog(onDismissRequest={ deleting=false },title={ Text(stringResource(R.string.outing_delete_question),style=WdType.title2,color=wd.textPrimary) },text={ Text(stringResource(R.string.outing_delete_explanation),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted) },confirmButton={ TextButton(enabled=!busy,colors=outingDialogButtonColors(wd.inkRust),onClick={ scope.launch {
         busy=true
         try {
             if(inferredHeader==null) {
@@ -125,7 +161,7 @@ private sealed interface OutingState {
             deleting=false; back()
         } catch(e:Exception) { if(e is CancellationException) throw e; error=R.string.outing_delete_error; deleting=false }
         finally { busy=false }
-    } }) { Text(stringResource(R.string.outing_delete)) } },dismissButton={ TextButton(onClick={ deleting=false }) { Text(stringResource(R.string.visit_cancel)) } })
+    } }) { Text(stringResource(R.string.outing_delete),fontWeight=FontWeight.SemiBold) } },dismissButton={ TextButton(colors=outingDialogButtonColors(wd.accent),onClick={ deleting=false }) { Text(stringResource(R.string.visit_cancel)) } })
 }
 
 @Composable private fun OutingEditor(session: RecordingSession,dismiss: () -> Unit,busy:Boolean,save: (String?,String?) -> Unit) {
@@ -133,9 +169,17 @@ private sealed interface OutingState {
     var notes by rememberSaveable(session.id) {mutableStateOf(session.notes.orEmpty())}
     val actions=rememberVisibleEditorActions()
     val ticket=actions.epoch
-    WorkspaceAlertDialog(onDismissRequest=dismiss,title={ Text(stringResource(R.string.outing_edit)) },text={ Column(Modifier.semantics {testTagsAsResourceId=true}.verticalScroll(rememberScrollState()).testTag("outing-editor-fields"),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        OutlinedTextField(name,{name=it},enabled=!busy,modifier=Modifier.testTag("outing-name"),label={Text(stringResource(R.string.visit_name))})
-        TextButton(enabled=!busy && name.isNotBlank(),onClick={name=""}) {Text(stringResource(R.string.outing_default_name))}
-        OutlinedTextField(notes,{notes=it},enabled=!busy,modifier=Modifier.testTag("outing-notes"),label={Text(stringResource(R.string.visit_notes))},minLines=3)
-    } },confirmButton={key(ticket) {TextButton(enabled=!busy,onClick={if(actions.allows(ticket) && !busy) save(name,notes)}) {Text(stringResource(R.string.outing_save))}}},dismissButton={TextButton(enabled=!busy,onClick=dismiss) {Text(stringResource(R.string.visit_cancel))}})
+    WorkspaceAlertDialog(onDismissRequest=dismiss,title={ Text(stringResource(R.string.outing_edit),style=WdType.title2,color=wd.textPrimary) },text={ Column(Modifier.semantics {testTagsAsResourceId=true}.verticalScroll(rememberScrollState()).testTag("outing-editor-fields"),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+        OutlinedTextField(name,{name=it},enabled=!busy,modifier=Modifier.testTag("outing-name"),label={Text(stringResource(R.string.visit_name))},colors=wdTextFieldColors(),shape=RoundedCornerShape(10.dp))
+        TextButton(enabled=!busy && name.isNotBlank(),colors=outingDialogButtonColors(wd.inkRust),onClick={name=""}) {Text(stringResource(R.string.outing_default_name).uppercase(),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em))}
+        OutlinedTextField(notes,{notes=it},enabled=!busy,modifier=Modifier.testTag("outing-notes"),label={Text(stringResource(R.string.visit_notes))},minLines=3,colors=wdTextFieldColors(),shape=RoundedCornerShape(10.dp))
+        if(busy) LinearProgressIndicator(Modifier.fillMaxWidth().clip(CircleShape),color=wd.accent,trackColor=wd.dialTrack)
+    } },confirmButton={key(ticket) {TextButton(enabled=!busy,colors=outingDialogButtonColors(wd.accent),onClick={if(actions.allows(ticket) && !busy) save(name,notes)}) {Text(stringResource(R.string.outing_save),fontWeight=FontWeight.SemiBold)}}},dismissButton={TextButton(enabled=!busy,colors=outingDialogButtonColors(wd.accent),onClick=dismiss) {Text(stringResource(R.string.visit_cancel))}})
 }
+
+/** Tracked mono section label, as iOS sectionLabel / TESectionHeader inside a padded page. */
+@Composable private fun OutingSectionLabel(text:String) {
+    Text(text.uppercase(),style=WdType.eyebrow,color=wd.textMuted,modifier=Modifier.padding(top=8.dp).semantics {heading()})
+}
+
+@Composable private fun outingDialogButtonColors(ink:androidx.compose.ui.graphics.Color)=ButtonDefaults.textButtonColors(contentColor=ink,disabledContentColor=wd.textMuted.copy(alpha=0.6f))

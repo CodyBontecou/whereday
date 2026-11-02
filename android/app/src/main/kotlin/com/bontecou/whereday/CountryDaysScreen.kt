@@ -1,8 +1,16 @@
 package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -12,7 +20,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -84,52 +95,80 @@ import java.util.concurrent.atomic.AtomicBoolean
     // Keep the outgoing lazy content tied to its own route until disposal.
     val selectedCountry=selected
     key(selectedCountry) {
-    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("country-days-content"),state=if(current==null) loadingState else if(selectedCountry==null) overviewState else detailState,contentPadding=PaddingValues(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        item {TextButton(onClick={goBack()},modifier=Modifier.testTag("country-back")) {Text(stringResource(if(selectedCountry!=null) R.string.country_back_days else R.string.country_back_settings))}}
-        item {Text(selectedCountry?.let {CountryRegions.displayName(it,locale)} ?: stringResource(R.string.country_title),style=MaterialTheme.typography.headlineMedium)}
-        if(failure) item {Text(stringResource(R.string.country_load_error),color=MaterialTheme.colorScheme.error);TextButton(onClick={retry++}) {Text(stringResource(R.string.country_retry))}}
-        if(current==null && !failure) item {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.country_loading))}
+    val card=Modifier.padding(horizontal=16.dp)
+    val maximum=countries.firstOrNull()?.value?.size ?: 1
+    LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("country-days-content"),state=if(current==null) loadingState else if(selectedCountry==null) overviewState else detailState,contentPadding=PaddingValues(bottom=32.dp)) {
+        item {SettingsBackHeader(selectedCountry?.let {CountryRegions.displayName(it,locale)} ?: stringResource(R.string.country_title),
+            stringResource(if(selectedCountry!=null) R.string.country_back_days else R.string.country_back_settings),{goBack()},backTag="country-back")}
+        if(failure) item {SettingsNotice(card.padding(bottom=12.dp),warning=true) {Text(stringResource(R.string.country_load_error));SettingsTextAction(stringResource(R.string.country_retry),{retry++})}}
+        if(current==null && !failure) item {SettingsProgress(stringResource(R.string.country_loading),card.padding(bottom=12.dp))}
         if(selectedCountry!=null) {
-            if(current!=null) item {Text(pluralStringResource(R.plurals.country_days_present,selectedDays.size,number.format(selectedDays.size)),Modifier.testTag("country-detail-count"),style=MaterialTheme.typography.titleMedium)}
-            items(selectedDays,key={it.day.toString()}) {day->ListItem(modifier=Modifier.testTag("country-day-${day.day}"),headlineContent={Text(day.day.toString())},supportingContent={Text(stringResource(when {day.recorded&&day.manual->R.string.country_source_both;day.manual->R.string.country_source_manual;else->R.string.country_source_recorded}))})}
-        } else {
-            item {Choice(stringResource(R.string.country_period),periodName,CountryDayPeriod.entries.map {it.name},labelFor={periods.getValue(it)}) {periodName=it}}
-            if(current!=null) item {OutlinedCard(Modifier.fillMaxWidth()) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Text(pluralStringResource(R.plurals.country_country_count,countries.size,number.format(countries.size)),Modifier.testTag("country-summary-countries"),style=MaterialTheme.typography.titleLarge)
-                Text(pluralStringResource(R.plurals.country_unique_days,uniqueDays,number.format(uniqueDays)),Modifier.testTag("country-summary-days"))
-            }}}
-            item {Text(stringResource(R.string.country_rules))}
-            item {OutlinedButton(onClick={adding=true},modifier=Modifier.testTag("country-add-stay")) {Text(stringResource(R.string.stay_add))}}
-            item {
-                if(analysis.running) {
-                    LinearProgressIndicator(Modifier.fillMaxWidth())
-                    Text(stringResource(R.string.country_checked,number.format(analysis.progress.completed),number.format(analysis.progress.resolved)))
-                    TextButton(onClick=analysisController::stop,modifier=Modifier.testTag("country-analysis-stop")) {Text(stringResource(R.string.country_stop))}
-                } else OutlinedButton(enabled=settings?.networkGeocoding==true,onClick={if(active.get()) analyzeConfirmation=true},modifier=Modifier.testTag("country-analysis-open")) {Text(stringResource(R.string.country_analyze))}
-                status?.let {Text(it,Modifier.testTag("country-analysis-status"),style=MaterialTheme.typography.bodySmall)}
-                if(settings?.networkGeocoding==false) Text(stringResource(R.string.country_network_disabled),style=MaterialTheme.typography.bodySmall)
-            }
-            current?.let {data->
-                if(data.unresolvedPoints>0 || data.unresolvedVisits>0) item {
-                    Text(stringResource(R.string.country_unresolved,number.format(data.unresolvedPoints),number.format(data.unresolvedVisits)),Modifier.testTag("country-unresolved"),color=MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(stringResource(R.string.country_unresolved_help),style=MaterialTheme.typography.bodySmall)
+            if(current!=null) item {Text(pluralStringResource(R.plurals.country_days_present,selectedDays.size,number.format(selectedDays.size)),Modifier.padding(start=20.dp,end=20.dp,bottom=12.dp).testTag("country-detail-count"),style=WdType.title3,color=wd.textPrimary)}
+            itemsIndexed(selectedDays,key={_,it->it.day.toString()}) {index,day->
+                Row(card.settingsSegment(index==0,index==selectedDays.lastIndex).testTag("country-day-${day.day}").heightIn(min=48.dp).padding(horizontal=16.dp,vertical=12.dp),
+                    verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                    val shape=RoundedCornerShape(3.dp)
+                    Box(Modifier.size(12.dp).clip(shape).background(if(day.recorded) wd.accent else wd.card).border(1.5.dp,wd.accent,shape))
+                    Text(day.day.toString(),Modifier.weight(1f),style=WdType.monoBody,color=wd.textPrimary)
+                    Text(stringResource(when {day.recorded&&day.manual->R.string.country_source_both;day.manual->R.string.country_source_manual;else->R.string.country_source_recorded}),style=WdType.caption,color=wd.textMuted)
                 }
-                if(countries.isEmpty()) item {Text(stringResource(R.string.country_empty),style=MaterialTheme.typography.titleMedium)}
-                items(countries,key={it.key}) {country->OutlinedCard(Modifier.fillMaxWidth().testTag("country-row-${country.key}").clickable {analysisController.stop();selected=country.key}) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                    Text(CountryRegions.displayName(country.key,locale),style=MaterialTheme.typography.titleMedium)
-                    Text(stringResource(R.string.country_code_days,country.key,pluralStringResource(R.plurals.country_day_count,country.value.size,number.format(country.value.size))))
-                    Text(stringResource(R.string.country_view_dates),style=MaterialTheme.typography.labelMedium)
-                }}}
-                if(data.days.isNotEmpty()) item {OutlinedButton(onClick={preview=true},modifier=Modifier.testTag("country-preview")) {Text(stringResource(R.string.country_preview))}}
-                item {HorizontalDivider();Text(stringResource(R.string.country_manual),style=MaterialTheme.typography.titleLarge)}
-                if(data.stays.isEmpty()) item {Text(stringResource(R.string.country_manual_help))}
-                items(data.stays,key={"stay:${it.id}"}) {stay->OutlinedCard(Modifier.fillMaxWidth().testTag("country-stay-${stay.id}").clickable {editing=stay}) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                    Text(CountryRegions.displayName(stay.countryCode,locale),style=MaterialTheme.typography.titleMedium)
-                    Text(stringResource(R.string.country_stay_range,stay.firstDay.toString(),stay.lastDay.toString()))
-                    Text(stringResource(R.string.stay_edit),style=MaterialTheme.typography.labelMedium)
-                }}}
             }
-            item {HistoryFileActions(graph,stringResource(R.string.country_export),current?.days?.isNotEmpty()==true) {graph.exports.prepareCountryDays(period.bounds(today))}}
+        } else {
+            item {WdCard(card) {Box(Modifier.fillMaxWidth().heightIn(min=52.dp).padding(horizontal=16.dp,vertical=8.dp),contentAlignment=Alignment.CenterStart) {
+                Choice(stringResource(R.string.country_period),periodName,CountryDayPeriod.entries.map {it.name},labelFor={periods.getValue(it)}) {periodName=it}
+            }}}
+            if(current!=null) item {WdCard(card.padding(top=12.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                Text(pluralStringResource(R.plurals.country_country_count,countries.size,number.format(countries.size)),Modifier.testTag("country-summary-countries"),style=WdType.title2,color=wd.textPrimary)
+                Text(pluralStringResource(R.plurals.country_unique_days,uniqueDays,number.format(uniqueDays)),Modifier.testTag("country-summary-days"),style=WdType.caption,color=wd.textMuted)
+            }}}
+            item {WdSectionFooter(stringResource(R.string.country_rules))}
+            item {WdButton(stringResource(R.string.stay_add),{adding=true},card.padding(top=16.dp).testTag("country-add-stay"),icon=Icons.Outlined.Add)}
+            item {WdCard(card.padding(top=12.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                if(analysis.running) {
+                    SettingsProgress(stringResource(R.string.country_checked,number.format(analysis.progress.completed),number.format(analysis.progress.resolved)))
+                    SettingsTextAction(stringResource(R.string.country_stop),analysisController::stop,Modifier.testTag("country-analysis-stop"))
+                } else WdButton(stringResource(R.string.country_analyze),{if(active.get()) analyzeConfirmation=true},Modifier.testTag("country-analysis-open"),enabled=settings?.networkGeocoding==true,icon=Icons.Outlined.TravelExplore)
+                status?.let {Text(it,Modifier.testTag("country-analysis-status"),style=WdType.caption,color=wd.textPrimary)}
+                if(settings?.networkGeocoding==false) Text(stringResource(R.string.country_network_disabled),style=WdType.caption2,color=wd.textMuted)
+            }}}
+            current?.let {data->
+                if(data.unresolvedPoints>0 || data.unresolvedVisits>0) item {SettingsNotice(card.padding(top=12.dp)) {
+                    Text(stringResource(R.string.country_unresolved,number.format(data.unresolvedPoints),number.format(data.unresolvedVisits)),Modifier.testTag("country-unresolved"),color=wd.textMuted)
+                    Text(stringResource(R.string.country_unresolved_help),style=WdType.caption2,color=wd.textMuted)
+                }}
+                item {WdSectionHeader(stringResource(R.string.redesign_settings_by_country))}
+                if(countries.isEmpty()) item {WdCard(card) {WdEmptyState(stringResource(R.string.country_empty),null,icon=Icons.Outlined.Public)}}
+                itemsIndexed(countries,key={_,it->it.key}) {index,country->
+                    Column(card.settingsSegment(index==0,index==countries.lastIndex).testTag("country-row-${country.key}").clickable {analysisController.stop();selected=country.key}
+                        .padding(horizontal=16.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                        Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                            Text(CountryRegions.displayName(country.key,locale),Modifier.weight(1f),style=WdType.title3,color=wd.textPrimary)
+                            Text(stringResource(R.string.country_view_dates),style=WdType.caption2,color=wd.textMuted)
+                            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(18.dp),tint=wd.textMuted)
+                        }
+                        Text(stringResource(R.string.country_code_days,country.key,pluralStringResource(R.plurals.country_day_count,country.value.size,number.format(country.value.size))),style=WdType.caption,color=wd.textPrimary)
+                        Box(Modifier.fillMaxWidth().height(6.dp).clip(CircleShape).background(wd.dialTrack)) {
+                            Box(Modifier.fillMaxWidth((country.value.size.toFloat()/maximum.coerceAtLeast(1)).coerceIn(0.02f,1f)).fillMaxHeight().clip(CircleShape).background(wd.placeInks[index%wd.placeInks.size]))
+                        }
+                    }
+                }
+                if(data.days.isNotEmpty()) item {WdButton(stringResource(R.string.country_preview),{preview=true},card.padding(top=12.dp).testTag("country-preview"),icon=Icons.Outlined.Visibility)}
+                item {WdSectionHeader(stringResource(R.string.country_manual))}
+                if(data.stays.isEmpty()) item {Text(stringResource(R.string.country_manual_help),Modifier.padding(horizontal=20.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                itemsIndexed(data.stays,key={_,it->"stay:${it.id}"}) {index,stay->
+                    Row(card.settingsSegment(index==0,index==data.stays.lastIndex).testTag("country-stay-${stay.id}").clickable {editing=stay}.padding(horizontal=16.dp,vertical=12.dp),
+                        verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                        val shape=RoundedCornerShape(3.dp)
+                        Box(Modifier.size(12.dp).border(1.5.dp,wd.accent,shape))
+                        Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                            Text(CountryRegions.displayName(stay.countryCode,locale),style=WdType.title3,color=wd.textPrimary)
+                            Text(stringResource(R.string.country_stay_range,stay.firstDay.toString(),stay.lastDay.toString()),style=WdType.caption2,color=wd.textMuted)
+                        }
+                        Text(stringResource(R.string.stay_edit),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.inkRust)
+                    }
+                }
+            }
+            item {Box(card.padding(top=20.dp)) {HistoryFileActions(graph,stringResource(R.string.country_export),current?.days?.isNotEmpty()==true) {graph.exports.prepareCountryDays(period.bounds(today))}}}
         }
     }
     }

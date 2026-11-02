@@ -4,6 +4,9 @@ import android.os.SystemClock
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalUriHandler
@@ -85,32 +88,32 @@ import java.util.Locale
     }
     if(!fresh || saved!=null || !available) return
     Column(Modifier.fillMaxWidth().semantics {testTagsAsResourceId=true}.testTag("current-business-section"),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(R.string.current_business_title),style=MaterialTheme.typography.titleSmall)
-        if(places==null) Text(stringResource(R.string.current_business_checking_saved))
-        else if(!allowed) Text(stringResource(R.string.nearby_disabled))
+        Text(stringResource(R.string.current_business_title),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textMuted)
+        if(places==null) VisitPickerProgress(stringResource(R.string.current_business_checking_saved))
+        else if(!allowed) WdNotice(stringResource(R.string.nearby_disabled),icon=Icons.Outlined.CloudOff)
         else {
-            if(busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.current_business_loading))}
-            if(paused) Text(stringResource(R.string.current_business_paused))
-            else message?.let {Text(stringResource(it))}
+            if(busy) VisitPickerProgress(stringResource(R.string.current_business_loading))
+            if(paused) Text(stringResource(R.string.current_business_paused),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+            else message?.let {Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
             if(!paused && foreground) result?.let {candidate->
                 val displayedGeneration=generation
-                OutlinedCard(Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                        Text(candidate.name,style=MaterialTheme.typography.titleMedium)
-                        candidate.address?.let {Text(it)}
-                        Text(stringResource(R.string.nearby_distance,nearbyDistanceText(candidate.distanceMeters,metric,locale)))
-                        Text(stringResource(R.string.current_business_explanation),style=MaterialTheme.typography.bodySmall)
-                        OutlinedButton(modifier=Modifier.testTag("current-business-use"),onClick={scope.launch {
+                WdCard {
+                    Column(Modifier.padding(14.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                        Text(candidate.name,style=WdType.title3,color=wd.textPrimary)
+                        candidate.address?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                        Text(stringResource(R.string.nearby_distance,nearbyDistanceText(candidate.distanceMeters,metric,locale)),style=WdType.caption,color=wd.textMuted)
+                        Text(stringResource(R.string.current_business_explanation),style=WdType.caption2,color=wd.textMuted)
+                        WdButton(stringResource(R.string.nearby_use),modifier=Modifier.testTag("current-business-use"),icon=Icons.Outlined.Storefront,onClick={scope.launch {
                             val stored=try {latestSavedReader()} catch(error:CancellationException) {throw error} catch(_:Exception) {null}
                             val savedNow=stored?.let {latestFix?.savedPlaceSuggestion(it,maxOf(nowElapsedMillis,elapsedMillis()))==null}==true
                             if(savedNow && networkAllowed.first() && latestAvailable && displayedGeneration==generation && result==candidate && latestFix==fix && usable(latestFix) && noSavedPlace(latestFix) && !paused && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) select(candidate)
-                        }}) {Text(stringResource(R.string.nearby_use))}
+                        }})
                     }
                 }
             }
             if(!busy && (paused || message!=null)) TextButton(enabled=foreground,modifier=Modifier.testTag("current-business-retry"),onClick={paused=false;retry++}) {Text(stringResource(R.string.current_business_retry))}
-            TextButton(onClick={uri.openUri("https://www.geoapify.com/")}) {Text(stringResource(R.string.nearby_attribution))}
-            TextButton(onClick={uri.openUri("https://www.openstreetmap.org/copyright")}) {Text(stringResource(R.string.nearby_osm))}
+            TextButton(onClick={uri.openUri("https://www.geoapify.com/")}) {Text(stringResource(R.string.nearby_attribution),style=WdType.caption2)}
+            TextButton(onClick={uri.openUri("https://www.openstreetmap.org/copyright")}) {Text(stringResource(R.string.nearby_osm),style=WdType.caption2)}
         }
     }
 }

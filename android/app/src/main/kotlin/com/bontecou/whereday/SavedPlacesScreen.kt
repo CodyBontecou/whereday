@@ -3,22 +3,39 @@ package com.bontecou.whereday
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Place
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.SearchOff
+import androidx.compose.material.icons.outlined.UploadFile
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.text.font.FontWeight
 import java.text.NumberFormat
 import androidx.compose.ui.unit.dp
 import com.bontecou.whereday.domain.*
@@ -30,6 +47,7 @@ import java.io.ByteArrayOutputStream
 import java.text.Collator
 import java.text.Normalizer
 import java.util.Locale
+
 
 private class PlaceReadError(val resource:Int):IllegalArgumentException()
 private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:List<SavedPlace>,val policy:SavedPlaceDuplicatePolicy,val plan:SavedPlaceImportPlan)
@@ -74,40 +92,46 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
         if(currentPreview!=null) value=PlaceReview(currentPreview,places,policy,graph.savedPlaces.preview(currentPreview.places,places,policy))
     }
     if(currentPreview!=null) {
-        LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-            item {TextButton(onClick=::leave) {Text(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_library))}}
-            item {Text(stringResource(R.string.saved_csv_preview),style=MaterialTheme.typography.headlineSmall)}
-            item {Text(stringResource(R.string.saved_csv_counts,pluralStringResource(R.plurals.saved_csv_valid_rows,currentPreview.places.size,currentPreview.places.size),pluralStringResource(R.plurals.saved_csv_invalid_rows,currentPreview.invalidRows.size,currentPreview.invalidRows.size)),Modifier.testTag("saved-csv-counts"))}
-            item {
+        Column(Modifier.fillMaxSize().background(wd.surface)) {
+        PlacesBackBar(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_library),::leave)
+        LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(bottom=32.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+            item {WdPageHeader(stringResource(R.string.saved_csv_preview),Modifier.padding(bottom=4.dp),compact=true)}
+            item {Text(stringResource(R.string.saved_csv_counts,pluralStringResource(R.plurals.saved_csv_valid_rows,currentPreview.places.size,currentPreview.places.size),pluralStringResource(R.plurals.saved_csv_invalid_rows,currentPreview.invalidRows.size,currentPreview.invalidRows.size)),Modifier.padding(horizontal=24.dp).testTag("saved-csv-counts"),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+            item {Column {
                 val keep=stringResource(R.string.saved_csv_keep);val update=stringResource(R.string.saved_csv_update)
-                Choice(stringResource(R.string.saved_csv_policy),policy.name,SavedPlaceDuplicatePolicy.entries.map {it.name},!busy,labelFor={if(it==SavedPlaceDuplicatePolicy.keepExisting.name) keep else update}) {policyName=it}
-            }
-            item {Text(stringResource(R.string.saved_csv_matching),style=MaterialTheme.typography.bodySmall)}
+                PlacesPolicyChoice(stringResource(R.string.saved_csv_policy),policy.name,SavedPlaceDuplicatePolicy.entries.map {it.name},!busy,labelFor={if(it==SavedPlaceDuplicatePolicy.keepExisting.name) keep else update}) {policyName=it}
+                WdSectionFooter(stringResource(R.string.saved_csv_matching))
+            }}
             val ready=review?.takeIf {it.preview===currentPreview && it.policy==policy && it.existing==places}
-            if(ready!=null) item {Text(savedPlacePlanText(ready.plan.summary),modifier=Modifier.testTag("saved-csv-plan"),style=MaterialTheme.typography.titleMedium)}
-            else item {LinearProgressIndicator(Modifier.fillMaxWidth())}
-            item {Button(enabled=!busy && ready!=null && currentPreview.places.isNotEmpty(),onClick={confirmation=ready}) {Text(stringResource(R.string.saved_csv_import_valid))}}
-            message?.let {item {Text(it.text(),color=MaterialTheme.colorScheme.error)}}
-            if(busy) item {LinearProgressIndicator(Modifier.fillMaxWidth())}
+            if(ready!=null) item {WdCard(Modifier.padding(horizontal=16.dp)) {Text(savedPlacePlanText(ready.plan.summary),modifier=Modifier.padding(16.dp).testTag("saved-csv-plan"),style=WdType.title3,color=wd.textPrimary)}}
+            else item {PlacesProgress()}
+            item {WdButton(stringResource(R.string.saved_csv_import_valid),{confirmation=ready},Modifier.padding(horizontal=16.dp),emphasis=WdEmphasis.primary,enabled=!busy && ready!=null && currentPreview.places.isNotEmpty(),icon=Icons.Outlined.UploadFile)}
+            message?.let {item {WdNotice(it.text(),Modifier.padding(horizontal=16.dp),warning=true)}}
+            if(busy) item {PlacesProgress()}
             val entries=ready?.plan?.entries?.associateBy {it.place.id}.orEmpty()
+            item {WdSectionHeader(stringResource(R.string.redesign_places_section_rows))}
             items(currentPreview.rows,key={it.rowNumber}) {row ->
                 val place=row.place
-                Card(Modifier.fillMaxWidth()) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                    Text(stringResource(R.string.saved_csv_row_title,row.rowNumber,row.name.ifEmpty {stringResource(R.string.saved_csv_unnamed)}),style=MaterialTheme.typography.titleMedium)
-                    if(place==null) row.issues.forEach {Text(savedPlaceCsvText(it).text(),color=MaterialTheme.colorScheme.error)}
+                WdCard(Modifier.padding(horizontal=16.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                    Row(horizontalArrangement=Arrangement.spacedBy(10.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Box(Modifier.size(10.dp).clip(CircleShape).background(if(place==null) wd.inkRust else placeInk(place.id)))
+                        Text(stringResource(R.string.saved_csv_row_title,row.rowNumber,row.name.ifEmpty {stringResource(R.string.saved_csv_unnamed)}),style=WdType.title3,color=wd.textPrimary,modifier=Modifier.weight(1f))
+                    }
+                    if(place==null) row.issues.forEach {Text(savedPlaceCsvText(it).text(),style=MaterialTheme.typography.bodyMedium,color=wd.inkRust)}
                     else {
-                        entries[place.id]?.let {Text(stringResource(when(it.action) {SavedPlaceImportAction.add->R.string.saved_csv_action_add;SavedPlaceImportAction.update->R.string.saved_csv_action_update;SavedPlaceImportAction.skip->R.string.saved_csv_action_skip}))}
-                        Text(stringResource(R.string.saved_csv_coordinate,String.format(locale,"%.6f",place.coordinate.latitude),String.format(locale,"%.6f",place.coordinate.longitude),number(place.radius)))
-                        place.address?.let {Text(it)}
+                        entries[place.id]?.let {Text(stringResource(when(it.action) {SavedPlaceImportAction.add->R.string.saved_csv_action_add;SavedPlaceImportAction.update->R.string.saved_csv_action_update;SavedPlaceImportAction.skip->R.string.saved_csv_action_skip}),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=if(it.action==SavedPlaceImportAction.skip) wd.textMuted else wd.accent)}
+                        Text(stringResource(R.string.saved_csv_coordinate,String.format(locale,"%.6f",place.coordinate.latitude),String.format(locale,"%.6f",place.coordinate.longitude),number(place.radius)),style=WdType.caption,color=wd.textMuted)
+                        place.address?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)}
                     }
                 }}
             }
         }
-        confirmation?.let {confirmed ->WorkspaceAlertDialog(onDismissRequest={if(busy) job?.cancel() else confirmation=null},title={Text(stringResource(R.string.saved_csv_confirm_title))},text={
+        }
+        confirmation?.let {confirmed ->WorkspaceAlertDialog(onDismissRequest={if(busy) job?.cancel() else confirmation=null},title={Text(stringResource(R.string.saved_csv_confirm_title),style=WdType.title2)},text={
             val summary=confirmed.plan.summary
             Column(Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                Text(stringResource(R.string.saved_csv_confirm_body,savedPlacePlanText(summary),confirmed.preview.invalidRows.size))
-                if(busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.saved_csv_importing))}
+                Text(stringResource(R.string.saved_csv_confirm_body,savedPlacePlanText(summary),confirmed.preview.invalidRows.size),color=wd.textPrimary)
+                if(busy) {PlacesProgress(Modifier,inset=false);Text(stringResource(R.string.saved_csv_importing),style=WdType.caption,color=wd.textMuted)}
             }
         },confirmButton={TextButton(enabled=!busy,onClick={job=scope.launch {
             busy=true;message=null
@@ -116,7 +140,7 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
                 preview=null;confirmation=null;message=PlaceUiText(R.string.saved_csv_result,listOf(summary.added,summary.updated,summary.skipped))
             } catch(e:Exception) {confirmation=null;if(e is CancellationException) {message=PlaceUiText(R.string.saved_csv_canceled);throw e};message=PlaceUiText(if(e is SavedPlacesChanged) R.string.saved_changed else R.string.saved_csv_import_error)}
             finally {busy=false}
-        }}) {Text(stringResource(R.string.saved_csv_commit))}},dismissButton={TextButton(onClick={if(busy) job?.cancel() else confirmation=null}) {Text(stringResource(if(busy) R.string.saved_csv_cancel else R.string.visit_cancel))}})}
+        }}) {Text(stringResource(R.string.saved_csv_commit),fontWeight=FontWeight.SemiBold)}},dismissButton={TextButton(onClick={if(busy) job?.cancel() else confirmation=null}) {Text(stringResource(if(busy) R.string.saved_csv_cancel else R.string.visit_cancel),color=wd.textMuted)}})}
         return
     }
     val filtered by produceState<List<SavedPlace>?>(null,places,query,locale) {
@@ -128,36 +152,73 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
                 .sortedWith {a,b->collator.compare(a.name,b.name).takeIf {it!=0} ?: a.id.compareTo(b.id)}
         }
     }
-    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        item {TextButton(onClick=::leave) {Text(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_settings))}}
-        item {Text(stringResource(R.string.saved_title),style=MaterialTheme.typography.headlineSmall)}
-        item {OutlinedTextField(query,{query=it},label={Text(stringResource(R.string.visit_saved_search))},singleLine=true,modifier=Modifier.fillMaxWidth().testTag("saved-places-search"),trailingIcon={
-            if(query.isNotEmpty()) TextButton(onClick={query=""}) {Text(stringResource(R.string.visit_saved_clear))}
+    Column(Modifier.fillMaxSize().background(wd.surface)) {
+    PlacesBackBar(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_settings),::leave)
+    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(bottom=32.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+        item {WdPageHeader(stringResource(R.string.saved_title),Modifier.padding(bottom=4.dp),eyebrow=pluralStringResource(R.plurals.redesign_places_saved_eyebrow,places.size,places.size))}
+        item {OutlinedTextField(query,{query=it},label={Text(stringResource(R.string.visit_saved_search))},singleLine=true,shape=RoundedCornerShape(14.dp),colors=wdTextFieldColors(),
+            modifier=Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-places-search"),
+            leadingIcon={Icon(Icons.Outlined.Search,null,tint=wd.textMuted)},trailingIcon={
+            if(query.isNotEmpty()) TextButton(onClick={query=""}) {Text(stringResource(R.string.visit_saved_clear),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.accent)}
         })}
-        item {FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(enabled=!busy,onClick={adding=true}) {Text(stringResource(R.string.saved_add))}
-            OutlinedButton(enabled=!busy,onClick={picker.launch(arrayOf("text/*","application/csv","application/octet-stream"))}) {Text(stringResource(R.string.saved_import_csv))}
+        item {Row(Modifier.padding(horizontal=16.dp),horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+            WdButton(stringResource(R.string.saved_add),{adding=true},Modifier.weight(1f),emphasis=WdEmphasis.primary,enabled=!busy,icon=Icons.Outlined.Add)
+            WdButton(stringResource(R.string.saved_import_csv),{picker.launch(arrayOf("text/*","application/csv","application/octet-stream"))},Modifier.weight(1f).align(Alignment.CenterVertically),enabled=!busy,icon=Icons.Outlined.UploadFile)
         }}
-        item {Text(stringResource(R.string.saved_csv_help),style=MaterialTheme.typography.bodySmall)}
-        message?.let {item {Text(it.text())}}
-        if(busy) item {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.saved_csv_reading))}
+        item {WdSectionFooter(stringResource(R.string.saved_csv_help),Modifier.padding(horizontal=4.dp))}
+        message?.let {item {WdNotice(it.text(),Modifier.padding(horizontal=16.dp))}}
+        if(busy) item {Column {PlacesProgress();Text(stringResource(R.string.saved_csv_reading),Modifier.padding(horizontal=20.dp,vertical=6.dp),style=WdType.caption,color=wd.textMuted)}}
         val matches=filtered
-        if(matches==null) item {LinearProgressIndicator(Modifier.fillMaxWidth())}
-        else if(matches.isEmpty()) item {Text(stringResource(if(query.isBlank()) R.string.saved_empty else R.string.saved_no_match))}
-        else {
-            item {Text(pluralStringResource(R.plurals.saved_count,places.size,matches.size,places.size),style=MaterialTheme.typography.bodySmall)}
-            items(matches,key={it.id}) {place ->Card(Modifier.fillMaxWidth().clickable(enabled=!busy) {editing=place}) {
-                Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                    Text(place.name,style=MaterialTheme.typography.titleMedium);place.address?.let {Text(it)}
-                    Text(stringResource(R.string.saved_radius,number(place.radius)),style=MaterialTheme.typography.bodySmall)
-                }
-            }}
+        if(matches==null) item {PlacesProgress()}
+        else if(matches.isEmpty()) item {
+            val blank=query.isBlank()
+            WdEmptyState(stringResource(if(blank) R.string.redesign_places_empty_title else R.string.redesign_places_no_match_title),stringResource(if(blank) R.string.saved_empty else R.string.saved_no_match),icon=if(blank) Icons.Outlined.Place else Icons.Outlined.SearchOff)
         }
+        else {
+            item {Text(pluralStringResource(R.plurals.saved_count,places.size,matches.size,places.size),Modifier.padding(start=24.dp,end=24.dp,top=8.dp),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textMuted)}
+            items(matches,key={it.id}) {place ->
+                val shape=RoundedCornerShape(16.dp)
+                Row(Modifier.padding(horizontal=16.dp).fillMaxWidth().clip(shape).background(wd.card).border(1.dp,wd.border,shape).clickable(enabled=!busy,role=Role.Button) {editing=place}
+                    .heightIn(min=58.dp).padding(horizontal=16.dp,vertical=14.dp),horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
+                    Box(Modifier.size(12.dp).clip(CircleShape).background(placeInk(place.id)))
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                        Text(place.name,style=WdType.title3,color=wd.textPrimary);place.address?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                        Text(stringResource(R.string.saved_radius,number(place.radius)),style=WdType.caption2,color=wd.textMuted)
+                    }
+                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(18.dp),tint=wd.textMuted)
+                }
+            }
+        }
+    }
     }
     if(adding || editing!=null) {
         val expected=editing
         key(expected!=null,expected?.id) {
             PlaceEditor(expected,{adding=false;editing=null},{graph.savedPlaces.save(it,expected)},expected?.let {place->{graph.savedPlaces.delete(place)}})
         }
+    }
+}
+
+/** A stable place ink per saved place, matching the iOS dial and map colors. */
+@Composable @ReadOnlyComposable internal fun placeInk(id:String)=wd.placeInks[(id.hashCode() and Int.MAX_VALUE)%wd.placeInks.size]
+
+/** A pushed page's leading paper back capsule; the serif title lives in the page body as on iOS. */
+@Composable internal fun PlacesBackBar(label:String,onBack:()->Unit,modifier:Modifier=Modifier) {
+    Row(modifier.fillMaxWidth().statusBarsPadding().heightIn(min=56.dp).padding(horizontal=12.dp),verticalAlignment=Alignment.CenterVertically) {WdBackChip(label,onBack)}
+}
+
+/** A thin ink progress rule used for inline loading states. */
+@Composable internal fun PlacesProgress(modifier:Modifier=Modifier,inset:Boolean=true) {
+    LinearProgressIndicator(modifier.then(if(inset) Modifier.padding(horizontal=20.dp,vertical=8.dp) else Modifier).fillMaxWidth().clip(CircleShape),color=wd.accent,trackColor=wd.dialTrack)
+}
+
+/** The duplicate policy as a card of checkable rows (iOS inline picker) instead of a dropdown. */
+@Composable private fun PlacesPolicyChoice(label:String,value:String,choices:List<String>,enabled:Boolean,labelFor:(String)->String,change:(String)->Unit) {
+    WdSectionHeader(label)
+    WdCard(Modifier.padding(horizontal=16.dp)) {
+        choices.forEachIndexed {index,choice->WdRow(Modifier.semantics {selected=choice==value},divider=index<choices.lastIndex,onClick={change(choice)},enabled=enabled) {
+            Text(labelFor(choice),style=MaterialTheme.typography.bodyLarge,color=if(enabled) wd.textPrimary else wd.textMuted,modifier=Modifier.weight(1f))
+            if(choice==value) Icon(Icons.Outlined.Check,null,Modifier.size(18.dp),tint=wd.accent)
+        }}
     }
 }

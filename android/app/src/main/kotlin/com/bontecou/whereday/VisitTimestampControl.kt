@@ -1,7 +1,11 @@
 package com.bontecou.whereday
 
 import android.text.format.DateFormat
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -11,7 +15,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -49,13 +56,11 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
     val time=local.format(clock)
     val dateAction=stringResource(R.string.visit_timestamp_date_action,label,day)
     val timeAction=stringResource(R.string.visit_timestamp_time_action,label,time)
-    Column(modifier,verticalArrangement=Arrangement.spacedBy(4.dp)) {
-        Text(label,style=MaterialTheme.typography.labelLarge)
-        FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-            OutlinedButton(enabled=enabled,onClick={draft=VisitTimestampDraft(value,zone,VisitTimestampPart.date)},
-                modifier=Modifier.testTag("visit-timestamp-date").semantics {contentDescription=dateAction}) {Text(day)}
-            OutlinedButton(enabled=enabled,onClick={draft=VisitTimestampDraft(value,zone,VisitTimestampPart.time)},
-                modifier=Modifier.testTag("visit-timestamp-time").semantics {contentDescription=timeAction}) {Text(time)}
+    Column(modifier,verticalArrangement=Arrangement.spacedBy(6.dp)) {
+        Text(label,style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textMuted)
+        FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+            VisitTimestampPill(day,enabled,Modifier.testTag("visit-timestamp-date").semantics {contentDescription=dateAction}) {draft=VisitTimestampDraft(value,zone,VisitTimestampPart.date)}
+            VisitTimestampPill(time,enabled,Modifier.testTag("visit-timestamp-time").semantics {contentDescription=timeAction}) {draft=VisitTimestampDraft(value,zone,VisitTimestampPart.time)}
         }
     }
     draft?.let {opening->key(opening) {
@@ -69,6 +74,25 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
     }}
 }
 
+/** A mono figure in a paper capsule, as iOS renders the arrival and departure pickers. */
+@Composable private fun VisitTimestampPill(text:String,enabled:Boolean,modifier:Modifier,onClick:()->Unit) {
+    val shape=RoundedCornerShape(10.dp)
+    Box(modifier.heightIn(min=44.dp).clip(shape).background(wd.surface).border(1.dp,wd.border,shape)
+        .clickable(enabled=enabled,role=Role.Button,onClick=onClick).padding(horizontal=14.dp,vertical=8.dp),contentAlignment=Alignment.Center) {
+        Text(text,style=WdType.monoBody,color=if(enabled) wd.textPrimary else wd.textMuted)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable private fun visitTimePickerColors()=TimePickerDefaults.colors(
+    clockDialColor=wd.dialTrack,clockDialSelectedContentColor=wd.surface,clockDialUnselectedContentColor=wd.textPrimary,selectorColor=wd.accent,
+    containerColor=wd.card,periodSelectorBorderColor=wd.border,periodSelectorSelectedContainerColor=wd.accent,periodSelectorUnselectedContainerColor=wd.card,
+    periodSelectorSelectedContentColor=wd.surface,periodSelectorUnselectedContentColor=wd.textMuted,timeSelectorSelectedContainerColor=wd.accent,
+    timeSelectorUnselectedContainerColor=wd.dialTrack,timeSelectorSelectedContentColor=wd.surface,timeSelectorUnselectedContentColor=wd.textPrimary,
+)
+
+@Composable private fun visitRadioColors()=RadioButtonDefaults.colors(selectedColor=wd.accent,unselectedColor=wd.textMuted)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable private fun VisitDateDialog(label:String,draft:VisitTimestampDraft,dismiss:()->Unit,apply:(Instant)->Unit) {
     var iso by rememberSaveable {mutableStateOf(draft.local.year !in 1..9999)}
@@ -81,8 +105,8 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
         val selected=choices.selected(preferred)
         WorkspaceAlertDialog(onDismissRequest=dismiss,title={Text(title)},text={
             Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.date_iso_help))
-                OutlinedTextField(text,{if(it.length<=32) text=it},singleLine=true,label={Text(stringResource(R.string.visit_timestamp_date))},modifier=Modifier.testTag("visit-timestamp-date-input"))
+                Text(stringResource(R.string.date_iso_help),color=wd.textMuted)
+                OutlinedTextField(text,{if(it.length<=32) text=it},singleLine=true,label={Text(stringResource(R.string.visit_timestamp_date))},colors=wdTextFieldColors(),textStyle=WdType.monoBody,modifier=Modifier.testTag("visit-timestamp-date-input"))
                 VisitTimestampReview(draft,choices,preferred,{preferred=it})
                 if(initial!=null && initial.year in 1..9999) TextButton(onClick={if(runCatching {LocalDate.parse(text).year in 1..9999}.getOrDefault(false)) iso=false}) {Text(stringResource(R.string.date_use_calendar))}
             }
@@ -101,11 +125,11 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
         // Month enforces six 48 dp rows. Give the picker its natural height and scroll
         // the whole body instead of squeezing those rows behind the review controls.
         Column(Modifier.heightIn(max=520.dp)) {
-            Text(title,Modifier.padding(16.dp),style=MaterialTheme.typography.titleLarge)
+            Text(title,Modifier.padding(start=20.dp,end=20.dp,top=20.dp,bottom=4.dp),style=WdType.title2,color=wd.textPrimary)
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).testTag("visit-timestamp-date-scroll")) {
-            DatePicker(state,modifier=Modifier.fillMaxWidth(),showModeToggle=false,title=null,headline={
+            DatePicker(state,modifier=Modifier.fillMaxWidth(),showModeToggle=false,title=null,colors=workspaceDatePickerColors(),headline={
                 Text(day?.let {displayVisitDate(it,locale)} ?: stringResource(R.string.date_range_not_selected),
-                    Modifier.padding(horizontal=16.dp,vertical=8.dp),style=MaterialTheme.typography.titleLarge)
+                    Modifier.padding(horizontal=20.dp,vertical=8.dp),style=WdType.numeral,color=wd.textPrimary)
             })
             VisitTimestampReview(draft,choices,preferred,{preferred=it})
             TextButton(onClick={text=day?.toString().orEmpty();iso=true}) {Text(stringResource(R.string.date_enter_iso))}
@@ -139,19 +163,19 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
         Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             if(useInput) {
                 OutlinedTextField(hourText,{hourText=it.take(8)},label={Text(stringResource(if(display24) R.string.visit_timestamp_hour_24 else R.string.visit_timestamp_hour_12))},
-                    singleLine=true,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Number),modifier=Modifier.testTag("visit-timestamp-hour"))
+                    singleLine=true,colors=wdTextFieldColors(),textStyle=WdType.monoBody,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Number),modifier=Modifier.testTag("visit-timestamp-hour"))
                 OutlinedTextField(minuteText,{minuteText=it.take(8)},label={Text(stringResource(R.string.visit_timestamp_minute))},
-                    singleLine=true,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Number),modifier=Modifier.testTag("visit-timestamp-minute"))
+                    singleLine=true,colors=wdTextFieldColors(),textStyle=WdType.monoBody,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Number),modifier=Modifier.testTag("visit-timestamp-minute"))
                 if(!display24) {
                     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
                     val periods=remember(locale) {DateFormatSymbols(locale).amPmStrings}
                     FlowRow(Modifier.selectableGroup(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                         periods.forEachIndexed {index,name->Row(Modifier.minimumInteractiveComponentSize().selectable(afternoon==(index==1),onClick={afternoon=index==1},role=Role.RadioButton),verticalAlignment=androidx.compose.ui.Alignment.CenterVertically) {
-                            RadioButton(afternoon==(index==1),onClick=null);Text(name)
+                            RadioButton(afternoon==(index==1),onClick=null,colors=visitRadioColors());Text(name,color=wd.textPrimary)
                         }}
                     }
                 }
-            } else TimePicker(state)
+            } else TimePicker(state,colors=visitTimePickerColors())
             VisitTimestampReview(draft,choices,preferred,{preferred=it})
             if(!large) TextButton(enabled=!input || fields!=null,onClick={
                 if(input) {
@@ -174,22 +198,22 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
     val clock24=DateFormat.is24HourFormat(LocalContext.current)
     val clock=remember(locale,clock24) {DateTimeFormatter.ofPattern(DateFormat.getBestDateTimePattern(locale,if(clock24) "Hm" else "hm"),locale)}
     Column(modifier.fillMaxWidth().padding(horizontal=16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-        Text(stringResource(R.string.visit_timestamp_zone,draft.zone.id),style=MaterialTheme.typography.bodySmall)
+        Text(stringResource(R.string.visit_timestamp_zone,draft.zone.id),style=WdType.caption,color=wd.textMuted)
         Text(if(draft.part==VisitTimestampPart.date) stringResource(R.string.visit_timestamp_kept_time,draft.local.format(clock))
-            else stringResource(R.string.visit_timestamp_kept_date,displayVisitDate(draft.local.toLocalDate(),locale)),style=MaterialTheme.typography.bodySmall)
+            else stringResource(R.string.visit_timestamp_kept_date,displayVisitDate(draft.local.toLocalDate(),locale)),style=WdType.caption,color=wd.textMuted)
         choices.problem?.let {problem->Text(when(problem) {
             VisitTimestampProblem.invalid->stringResource(R.string.visit_timestamp_invalid)
             VisitTimestampProblem.gap->stringResource(R.string.visit_timestamp_gap,draft.zone.id)
             VisitTimestampProblem.unsupported->stringResource(R.string.date_range_unsupported)
-        },modifier=Modifier.semantics {liveRegion=LiveRegionMode.Polite},color=MaterialTheme.colorScheme.error,style=MaterialTheme.typography.bodySmall)}
+        },modifier=Modifier.semantics {liveRegion=LiveRegionMode.Polite},color=wd.inkRust,style=MaterialTheme.typography.bodySmall)}
         if(choices.values.size>1) {
-            Text(stringResource(R.string.visit_timestamp_ambiguous),style=MaterialTheme.typography.bodySmall)
+            Text(stringResource(R.string.visit_timestamp_ambiguous),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
             Column(Modifier.selectableGroup()) {choices.values.forEachIndexed {index,option->
                 val offset=if(option.offset==ZoneOffset.UTC) "UTC" else "UTC${option.offset.id}"
                 val name=stringResource(if(index==0) R.string.visit_timestamp_first else R.string.visit_timestamp_second,offset)
                 Row(Modifier.fillMaxWidth().minimumInteractiveComponentSize().selectable(option.offset.id==preferred,onClick={choose(option.offset.id)},role=Role.RadioButton),verticalAlignment=androidx.compose.ui.Alignment.CenterVertically) {
-                    RadioButton(option.offset.id==preferred,onClick=null)
-                    Text(name,Modifier.weight(1f),style=MaterialTheme.typography.bodyMedium)
+                    RadioButton(option.offset.id==preferred,onClick=null,colors=visitRadioColors())
+                    Text(name,Modifier.weight(1f),style=WdType.caption,color=wd.textPrimary)
                 }
             }}
         }

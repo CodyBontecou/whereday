@@ -1,12 +1,24 @@
 package com.bontecou.whereday
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.PhotoLibrary
+import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
@@ -62,17 +74,20 @@ internal fun PhotoMoment.libraryEntry()=PhotoLibraryEntry(PhotoAssetRow(uri,take
     val owner="matched:$range"
     var selected by rememberSaveable(owner,stateSaver=PhotoViewerDraft.Saver) {mutableStateOf<PhotoViewerDraft?>(null)}
     LaunchedEffect(state.enabled,state.error) {if(!state.enabled || state.error!=null) selected=null}
-    Text(stringResource(R.string.photo_title),style=MaterialTheme.typography.titleLarge)
+    Text(stringResource(R.string.photo_title),style=WdType.title2,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
     when {
-        state.error!=null->Text(stringResource(state.error),color=MaterialTheme.colorScheme.error)
-        state.count==null->Text(stringResource(R.string.photo_check_access),style=MaterialTheme.typography.bodyMedium)
-        state.count==0L->Text(stringResource(R.string.photo_matched_empty))
+        state.error!=null->WdNotice(stringResource(state.error),warning=true)
+        state.count==null->Row(horizontalArrangement=Arrangement.spacedBy(10.dp),verticalAlignment=Alignment.CenterVertically) {
+            CircularProgressIndicator(Modifier.size(16.dp),color=wd.accent,trackColor=wd.dialTrack,strokeWidth=2.dp)
+            Text(stringResource(R.string.photo_check_access),style=WdType.caption,color=wd.textMuted)
+        }
+        state.count==0L->WdNotice(stringResource(R.string.photo_matched_empty),icon=Icons.Outlined.PhotoLibrary)
         else->{
-            Text(resources.getQuantityString(R.plurals.photo_matched_count,state.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),state.count))
+            Text(resources.getQuantityString(R.plurals.photo_matched_count,state.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),state.count),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textMuted)
             PagedMatchedPhotoCards(graph,range) {selected=PhotoViewerDraft.open(owner,it)}
         }
     }
-    TextButton(onClick=state.refresh) {Text(stringResource(R.string.photo_matched_refresh))}
+    WdButton(stringResource(R.string.photo_matched_refresh),state.refresh,icon=Icons.Outlined.Refresh)
     selected?.takeIf {it.owner==owner}?.let {draft->if(state.count!=null) key(range,draft.id) {
         PagedMatchedPhotoViewer(graph,range,draft.current,close={selected=null},onCurrent={draft.current=it})
     }}
@@ -80,7 +95,7 @@ internal fun PhotoMoment.libraryEntry()=PhotoLibraryEntry(PhotoAssetRow(uri,take
 
 /** One labelled button per photo. Image and caption are decorative children of that button. */
 @Composable internal fun MatchedPhotoCards(photos:List<PhotoMoment>,select:(PhotoMoment)->Unit,image:@Composable (PhotoMoment,Modifier)->Unit) {
-    LazyRow(Modifier.testTag("matched-photo-strip"),horizontalArrangement=Arrangement.spacedBy(12.dp),contentPadding=PaddingValues(4.dp)) {
+    LazyRow(Modifier.testTag("matched-photo-strip"),horizontalArrangement=Arrangement.spacedBy(10.dp),contentPadding=PaddingValues(vertical=4.dp)) {
         items(photos,key={it.uri}) {photo->
             MatchedPhotoCard(photo,{select(photo)}) {modifier->image(photo,modifier)}
         }
@@ -90,11 +105,12 @@ internal fun PhotoMoment.libraryEntry()=PhotoLibraryEntry(PhotoAssetRow(uri,take
 @Composable internal fun MatchedPhotoCard(photo:PhotoMoment,select:()->Unit,image:@Composable (Modifier)->Unit) {
     val time=photoCaptureTime(photo.takenAt)
     val description=stringResource(R.string.photo_taken_at,time)
-    OutlinedCard(onClick=select,modifier=Modifier.testTag("matched-photo-card").semantics {contentDescription=description}) {
-        Column(Modifier.width(112.dp).clearAndSetSemantics {}.padding(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-            image(Modifier.size(96.dp))
-            Text(time,style=MaterialTheme.typography.labelMedium)
-            Text(stringResource(R.string.photo_open),style=MaterialTheme.typography.labelMedium)
+    val shape=RoundedCornerShape(14.dp)
+    Box(Modifier.clip(shape).background(wd.card).border(1.dp,wd.border,shape).clickable(role=Role.Button,onClick=select).testTag("matched-photo-card").semantics {contentDescription=description}) {
+        Column(Modifier.width(112.dp).clearAndSetSemantics {}.padding(8.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+            image(Modifier.size(96.dp).clip(RoundedCornerShape(10.dp)))
+            Text(time,style=WdType.caption2,color=wd.textPrimary,maxLines=2)
+            Text(stringResource(R.string.photo_open),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold),color=wd.accent)
         }
     }
 }

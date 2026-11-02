@@ -1,9 +1,16 @@
 package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.Description
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.SearchOff
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +23,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -99,59 +107,66 @@ private data class SoftwareNoticeReadResult(val sha256:String,val chunks:List<St
         }
     }
     BackHandler {leave()}
-    Column(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.padding(20.dp).testTag("software-notices-screen"),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        TextButton(onClick={leave()},modifier=Modifier.testTag("software-notices-back")) {Text(stringResource(R.string.common_back))}
-        Text(stringResource(R.string.software_notices_title),style=MaterialTheme.typography.headlineSmall)
+    val card=Modifier.padding(horizontal=16.dp)
+    Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("software-notices-screen")) {
+        SettingsBackHeader(stringResource(R.string.software_notices_title),stringResource(R.string.common_back),{leave()},backTag="software-notices-back")
         when {
-            catalogFailed->{
-                Text(stringResource(R.string.software_notices_failed),Modifier.testTag("software-notices-error"),color=MaterialTheme.colorScheme.error)
-                TextButton(onClick={if(interactive()) catalogRetry++},modifier=Modifier.testTag("software-notices-retry")) {Text(stringResource(R.string.software_notices_retry))}
+            catalogFailed->SettingsNotice(card,warning=true) {
+                Text(stringResource(R.string.software_notices_failed),Modifier.testTag("software-notices-error"))
+                SettingsTextAction(stringResource(R.string.software_notices_retry),{if(interactive()) catalogRetry++},Modifier.testTag("software-notices-retry"))
             }
-            catalog==null->{CircularProgressIndicator();Text(stringResource(R.string.software_notices_loading))}
+            catalog==null->SettingsProgress(stringResource(R.string.software_notices_loading),card.padding(top=8.dp))
             document!=null->{
                 val loaded=readResult?.takeIf {it.sha256==document.sha256}
                 when {
-                    loaded?.failed==true->{
-                        Text(stringResource(R.string.software_notices_failed),Modifier.testTag("software-notices-document-error"),color=MaterialTheme.colorScheme.error)
-                        TextButton(onClick={if(interactive() && currentDocument==document) documentRetry++},modifier=Modifier.testTag("software-notices-document-retry")) {Text(stringResource(R.string.software_notices_retry))}
+                    loaded?.failed==true->SettingsNotice(card,warning=true) {
+                        Text(stringResource(R.string.software_notices_failed),Modifier.testTag("software-notices-document-error"))
+                        SettingsTextAction(stringResource(R.string.software_notices_retry),{if(interactive() && currentDocument==document) documentRetry++},Modifier.testTag("software-notices-document-retry"))
                     }
-                    loaded==null->{CircularProgressIndicator();Text(stringResource(R.string.software_notices_loading))}
+                    loaded==null->SettingsProgress(stringResource(R.string.software_notices_loading),card.padding(top=8.dp))
                     else->key(component.id,document.sha256) {
                         SelectionContainer(Modifier.weight(1f)) {
-                            LazyColumn(Modifier.fillMaxSize().testTag("software-notices-text"),state=rememberLazyListState()) {
-                                item(key="component") {Text(component.name,style=MaterialTheme.typography.titleMedium)}
-                                item(key="document") {Text(document.title,style=MaterialTheme.typography.bodyMedium)}
-                                items(requireNotNull(loaded.chunks).size,key={it}) {index->
-                                    Text(requireNotNull(loaded.chunks)[index],Modifier.fillMaxWidth().testTag("software-notice-chunk-$index"),style=MaterialTheme.typography.bodySmall)
+                            val chunks=requireNotNull(loaded.chunks)
+                            LazyColumn(Modifier.fillMaxSize().testTag("software-notices-text"),state=rememberLazyListState(),contentPadding=PaddingValues(start=16.dp,end=16.dp,bottom=32.dp)) {
+                                item(key="component") {Text(component.name,Modifier.padding(horizontal=4.dp),style=WdType.title3,color=wd.textPrimary)}
+                                item(key="document") {Text(document.title,Modifier.padding(start=4.dp,end=4.dp,top=2.dp,bottom=12.dp),style=WdType.caption,color=wd.textMuted)}
+                                items(chunks.size,key={it}) {index->
+                                    Text(chunks[index],Modifier.settingsSegment(index==0,index==chunks.lastIndex).padding(horizontal=16.dp,vertical=if(chunks.size==1) 16.dp else 8.dp).testTag("software-notice-chunk-$index"),style=WdType.caption2,color=wd.textPrimary)
                                 }
-                                item(key="end") {Text(stringResource(R.string.software_notices_end),Modifier.padding(top=16.dp).testTag("software-notice-end"),style=MaterialTheme.typography.labelMedium)}
+                                item(key="end") {Text(stringResource(R.string.software_notices_end),Modifier.fillMaxWidth().padding(top=16.dp).testTag("software-notice-end"),style=WdType.caption2,color=wd.textMuted,textAlign=TextAlign.Center)}
                             }
                         }
                     }
                 }
             }
             component!=null->key(component.id) {
-                LazyColumn(Modifier.weight(1f).testTag("software-notices-documents"),state=rememberLazyListState(),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                    item {Text(component.name,style=MaterialTheme.typography.titleLarge)}
-                    item {SelectionContainer {Text(component.coordinate,style=MaterialTheme.typography.bodySmall)}}
-                    items(component.documents,key={it.sha256}) {item->
-                        TextButton(onClick={if(interactive() && currentComponent==component && currentDocument==null) {selectedDocument=item.sha256}},shape=RoundedCornerShape(8.dp),contentPadding=PaddingValues(12.dp),modifier=Modifier.fillMaxWidth().testTag("software-notice-document-${item.sha256}")) {Text(item.title)}
+                LazyColumn(Modifier.weight(1f).testTag("software-notices-documents"),state=rememberLazyListState(),contentPadding=PaddingValues(start=16.dp,end=16.dp,bottom=32.dp)) {
+                    item {Text(component.name,Modifier.padding(horizontal=4.dp),style=WdType.title2,color=wd.textPrimary)}
+                    item {SelectionContainer {Text(component.coordinate,Modifier.padding(start=4.dp,end=4.dp,top=2.dp,bottom=16.dp),style=WdType.caption,color=wd.textMuted)}}
+                    itemsIndexed(component.documents,key={_,it->it.sha256}) {index,item->
+                        Box(Modifier.settingsSegment(index==0,index==component.documents.lastIndex)) {
+                            WdNavRow(item.title,Modifier.testTag("software-notice-document-${item.sha256}"),icon=Icons.Outlined.Description,divider=false,
+                                onClick={if(interactive() && currentComponent==component && currentDocument==null) {selectedDocument=item.sha256}})
+                        }
                     }
                 }
             }
             else->{
                 OutlinedTextField(query,{query=it.take(256)},label={Text(stringResource(R.string.software_notices_search))},singleLine=true,
-                    modifier=Modifier.fillMaxWidth().testTag("software-notices-search"))
+                    leadingIcon={Icon(Icons.Outlined.Search,null,tint=wd.textMuted)},shape=RoundedCornerShape(12.dp),colors=wdTextFieldColors(),
+                    modifier=card.fillMaxWidth().testTag("software-notices-search"))
                 val matches=remember(catalog,query) {catalog.orEmpty().filter {it.name.contains(query,ignoreCase=true) || it.coordinate.contains(query,ignoreCase=true)}}
-                LazyColumn(Modifier.weight(1f).testTag("software-notices-list"),state=overviewScroll,verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                    item {Text(stringResource(R.string.software_notices_intro),style=MaterialTheme.typography.bodyMedium)}
-                    if(matches.isEmpty()) item {Text(stringResource(R.string.software_notices_empty),Modifier.testTag("software-notices-empty"))}
-                    items(matches,key={it.id}) {item->
-                        TextButton(onClick={if(interactive() && currentComponent==null) {focus.clearFocus();keyboard?.hide();selected=item.id;selectedDocument=null}},shape=RoundedCornerShape(8.dp),contentPadding=PaddingValues(12.dp),modifier=Modifier.fillMaxWidth().testTag("software-notice-component-${item.id}")) {
-                            Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                                Text(item.name,style=MaterialTheme.typography.titleMedium)
-                                Text(item.coordinate,style=MaterialTheme.typography.bodySmall)
+                LazyColumn(Modifier.weight(1f).testTag("software-notices-list"),state=overviewScroll,contentPadding=PaddingValues(start=16.dp,end=16.dp,top=12.dp,bottom=32.dp)) {
+                    item {Text(stringResource(R.string.software_notices_intro),Modifier.padding(start=4.dp,end=4.dp,bottom=12.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                    if(matches.isEmpty()) item {WdCard {WdEmptyState(stringResource(R.string.software_notices_empty),null,Modifier.testTag("software-notices-empty"),icon=Icons.Outlined.SearchOff)}}
+                    itemsIndexed(matches,key={_,it->it.id}) {index,item->
+                        WdRow(Modifier.settingsSegment(index==0,index==matches.lastIndex).testTag("software-notice-component-${item.id}"),divider=false,
+                            onClick={if(interactive() && currentComponent==null) {focus.clearFocus();keyboard?.hide();selected=item.id;selectedDocument=null}}) {
+                            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                                Text(item.name,style=MaterialTheme.typography.bodyLarge,color=wd.textPrimary)
+                                Text(item.coordinate,style=WdType.caption2,color=wd.textMuted)
                             }
+                            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(18.dp),tint=wd.textMuted)
                         }
                     }
                 }

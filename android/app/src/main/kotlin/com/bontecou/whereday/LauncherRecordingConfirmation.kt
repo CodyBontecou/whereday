@@ -1,10 +1,16 @@
 package com.bontecou.whereday
 
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.StopCircle
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
@@ -63,11 +69,18 @@ private class LauncherConsentGate(private val lifecycle:Lifecycle) {
     val start=action==LauncherAction.start
     val already=if(start) active else !active
     key(ticket) { WorkspaceAlertDialog(onDismissRequest=cancel,
-        title={Text(stringResource(when {already && start->R.string.launcher_already_active;already->R.string.launcher_already_stopped;start->R.string.launcher_start_title;else->R.string.launcher_stop_title}))},
-        text={Text(stringResource(when {already->R.string.launcher_check_journal;start->R.string.launcher_start_body;else->R.string.launcher_stop_body}),Modifier.verticalScroll(rememberScrollState()))},
-        confirmButton={TextButton(onClick=approve,modifier=Modifier.testTag("launcher-recording-confirm")) {
-            Text(stringResource(when {already->R.string.launcher_done;start->R.string.shortcut_start;else->R.string.shortcut_stop}))
+        title={Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {
+            Row(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
+                if(already) Icon(Icons.Outlined.CheckCircle,null,Modifier.size(16.dp),tint=wd.textMuted)
+                else if(start) WdLiveDot(Modifier.size(16.dp)) else Icon(Icons.Outlined.StopCircle,null,Modifier.size(16.dp),tint=wd.inkRust)
+                Text(stringResource(R.string.launcher_kicker_recording).uppercase(),style=WdType.eyebrow,color=if(already) wd.textMuted else if(start) wd.accent else wd.inkRust)
+            }
+            Text(stringResource(when {already && start->R.string.launcher_already_active;already->R.string.launcher_already_stopped;start->R.string.launcher_start_title;else->R.string.launcher_stop_title}),style=WdType.title2,color=wd.textPrimary)
         }},
-        dismissButton={if(!already) TextButton(onClick=cancel,modifier=Modifier.testTag("launcher-recording-cancel")) {Text(stringResource(R.string.launcher_cancel))}})
+        text={Text(stringResource(when {already->R.string.launcher_check_journal;start->R.string.launcher_start_body;else->R.string.launcher_stop_body}),Modifier.verticalScroll(rememberScrollState()),
+            style=MaterialTheme.typography.bodyLarge,color=wd.textMuted)},
+        confirmButton={InkDialogButton(stringResource(when {already->R.string.launcher_done;start->R.string.shortcut_start;else->R.string.shortcut_stop}),approve,
+            Modifier.testTag("launcher-recording-confirm"),destructive=!already && !start)},
+        dismissButton={if(!already) InkDialogButton(stringResource(R.string.launcher_cancel),cancel,Modifier.testTag("launcher-recording-cancel"),muted=true)})
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -271,7 +272,7 @@ private val WdShapes=Shapes(
 /** A row holding a label (and optional detail) beside a Whereday switch. */
 @Composable internal fun WdToggleRow(label:String,checked:Boolean,onCheckedChange:(Boolean)->Unit,modifier:Modifier=Modifier,
     detail:String?=null,enabled:Boolean=true,divider:Boolean=true) {
-    WdRow(modifier.selectable(checked,enabled=enabled,role=Role.Switch) {onCheckedChange(!checked)},divider) {
+    WdRow(modifier.toggleable(checked,enabled=enabled,role=Role.Switch,onValueChange=onCheckedChange),divider) {
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
             Text(label,style=MaterialTheme.typography.bodyLarge,color=if(enabled) wd.textPrimary else wd.textMuted)
             if(detail!=null) Text(detail,style=WdType.caption2,color=wd.textMuted)

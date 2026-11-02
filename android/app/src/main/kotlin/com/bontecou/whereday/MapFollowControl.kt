@@ -4,7 +4,16 @@ import android.Manifest
 import android.os.SystemClock
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.NearMe
+import androidx.compose.material.icons.outlined.LocationOff
+import androidx.compose.material.icons.outlined.NearMe
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -83,14 +92,27 @@ internal class MapFollowUi(val enabled:Boolean,val showing:Boolean,val fix:MapLo
     },stop,hide)
 }
 
+/** The iOS user-location control: a floating paper chip that inks when following, with a paper status slip beneath. */
 @Composable internal fun MapFollowControl(follow:MapFollowUi,metric:Boolean=true) {
-    Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
-        FilterChip(follow.enabled,follow.toggle,label={Text(stringResource(if(follow.enabled) R.string.map_following else R.string.map_follow))},modifier=Modifier.testTag("map-follow-location"))
-        if(follow.showing) TextButton(onClick=follow.hide,modifier=Modifier.testTag("map-hide-location")) {Text(stringResource(R.string.map_hide_location))}
-        follow.message?.let {Text(it,style=MaterialTheme.typography.bodySmall,modifier=Modifier.testTag("map-follow-status"))}
-        follow.fix?.let {fix->
-            val accuracy=ceil(if(metric) fix.accuracyMeters else fix.accuracyMeters/0.3048).toInt().coerceAtLeast(1)
-            Text(stringResource(R.string.map_follow_accuracy,accuracy,if(metric) "m" else "ft"),style=MaterialTheme.typography.bodySmall,modifier=Modifier.testTag("map-location-accuracy"))
+    val colors=wd
+    Column(verticalArrangement=Arrangement.spacedBy(6.dp)) {
+        Row(horizontalArrangement=Arrangement.spacedBy(6.dp),verticalAlignment=Alignment.CenterVertically) {
+            Box(Modifier.wdFloating(CircleShape,colors,6.dp)) {
+                WdChip(stringResource(if(follow.enabled) R.string.map_following else R.string.map_follow),follow.enabled,follow.toggle,
+                    Modifier.heightIn(min=44.dp).testTag("map-follow-location"),icon=if(follow.enabled) Icons.Filled.NearMe else Icons.Outlined.NearMe)
+            }
+            if(follow.showing) TraceCapsule(stringResource(R.string.map_hide_location),follow.hide,Modifier.testTag("map-hide-location"),icon=Icons.Outlined.LocationOff,floating=true)
+        }
+        if(follow.message!=null || follow.fix!=null) Column(Modifier.wdFloating(RoundedCornerShape(12.dp),colors,6.dp).padding(horizontal=12.dp,vertical=8.dp),
+            verticalArrangement=Arrangement.spacedBy(4.dp)) {
+            follow.message?.let {Text(it,style=MaterialTheme.typography.bodySmall,color=colors.textMuted,modifier=Modifier.testTag("map-follow-status"))}
+            follow.fix?.let {fix->
+                val accuracy=ceil(if(metric) fix.accuracyMeters else fix.accuracyMeters/0.3048).toInt().coerceAtLeast(1)
+                Row(horizontalArrangement=Arrangement.spacedBy(6.dp),verticalAlignment=Alignment.CenterVertically) {
+                    Box(Modifier.size(8.dp).clip(CircleShape).background(colors.liveDot))
+                    Text(stringResource(R.string.map_follow_accuracy,accuracy,if(metric) "m" else "ft"),style=WdType.caption2,color=colors.textPrimary,modifier=Modifier.testTag("map-location-accuracy"))
+                }
+            }
         }
     }
 }

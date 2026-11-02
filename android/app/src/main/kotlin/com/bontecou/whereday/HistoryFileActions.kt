@@ -5,7 +5,17 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.IosShare
+import androidx.compose.material.icons.outlined.SaveAlt
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.heading
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -75,36 +85,41 @@ import kotlinx.coroutines.*
         }
     }
     Column(Modifier.semantics {testTagsAsResourceId=true},verticalArrangement=Arrangement.spacedBy(8.dp)) {
-        OutlinedButton(enabled=enabled && picker.loaded && !picker.busy && !busy && pending==null,onClick={if(enabled && picker.loaded && !picker.busy && !busy && pending==null && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {sheet=true;notice=null;savedFiles=null}},modifier=Modifier.testTag("history-export-open")) {Text(label)}
-        if(busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.export_delivery_preparing));TextButton(onClick={job?.cancel()},modifier=Modifier.testTag("history-export-cancel-preparation-inline")) {Text(stringResource(R.string.export_delivery_cancel_preparation))}}
-        notice?.let {Text(exportDeliveryText(it,savedFiles),Modifier.testTag("history-export-notice"),style=MaterialTheme.typography.bodySmall)}
+        WdButton(label,{if(enabled && picker.loaded && !picker.busy && !busy && pending==null && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {sheet=true;notice=null;savedFiles=null}},Modifier.testTag("history-export-open"),
+            enabled=enabled && picker.loaded && !picker.busy && !busy && pending==null,icon=Icons.Outlined.IosShare)
+        if(busy) {ExportProgress();ExportBusyLine(stringResource(R.string.export_delivery_preparing));ExportLink(stringResource(R.string.export_delivery_cancel_preparation),{job?.cancel()},Modifier.testTag("history-export-cancel-preparation-inline"))}
+        notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),textModifier=Modifier.testTag("history-export-notice"),warning=it.isFailure)}
         picker.notice?.let {value ->
             val text=exportDeliveryText(value)
-            Text(picker.request?.displayName?.let {stringResource(R.string.export_delivery_name_status,it,text)} ?: text,Modifier.testTag("history-export-picker-notice"),style=MaterialTheme.typography.bodySmall)
+            ExportCallout(picker.request?.displayName?.let {stringResource(R.string.export_delivery_name_status,it,text)} ?: text,textModifier=Modifier.testTag("history-export-picker-notice"),warning=value.isFailure)
         }
         pending?.let {request ->
-            Text(stringResource(R.string.export_delivery_pending,request.displayName),Modifier.testTag("history-export-pending"),style=MaterialTheme.typography.titleSmall)
-            Text(stringResource(R.string.export_delivery_pending_help),style=MaterialTheme.typography.bodySmall)
-            if(request.destination!=null) OutlinedButton(enabled=!picker.busy,onClick={pickerController.resume(request.id)},modifier=Modifier.testTag("history-export-resume")) {Text(stringResource(R.string.export_delivery_resume))}
-            OutlinedButton(enabled=!picker.busy,onClick={scope.launch {
-                try {requestId=request.id;saver.launch(files.pickerIntent(request.id));pickerController.refresh()}
-                catch(e:Exception) {if(e is CancellationException) throw e;notice=exportDeliveryNotice(e,ExportDeliveryNotice.unavailable)}
-            }}) {Text(stringResource(R.string.export_delivery_choose))}
-            TextButton(onClick={pickerController.cancel(request.id)},modifier=Modifier.testTag("history-export-cancel-pending")) {Text(stringResource(R.string.export_delivery_cancel_pending))}
+            val shape=RoundedCornerShape(14.dp)
+            Column(Modifier.fillMaxWidth().clip(shape).background(wd.card).border(1.dp,wd.border,shape).padding(16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(R.string.export_delivery_pending,request.displayName),Modifier.testTag("history-export-pending"),style=MaterialTheme.typography.titleSmall,color=wd.textPrimary)
+                Text(stringResource(R.string.export_delivery_pending_help),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+                if(request.destination!=null) WdButton(stringResource(R.string.export_delivery_resume),{pickerController.resume(request.id)},Modifier.testTag("history-export-resume"),emphasis=WdEmphasis.primary,enabled=!picker.busy)
+                WdButton(stringResource(R.string.export_delivery_choose),{scope.launch {
+                    try {requestId=request.id;saver.launch(files.pickerIntent(request.id));pickerController.refresh()}
+                    catch(e:Exception) {if(e is CancellationException) throw e;notice=exportDeliveryNotice(e,ExportDeliveryNotice.unavailable)}
+                }},enabled=!picker.busy)
+                ExportLink(stringResource(R.string.export_delivery_cancel_pending),{pickerController.cancel(request.id)},Modifier.testTag("history-export-cancel-pending"),destructive=true)
+            }
         }
-        if(picker.request==null && picker.notice!=null) TextButton(onClick=pickerController::discardInterrupted,modifier=Modifier.testTag("history-export-discard")) {Text(stringResource(R.string.export_delivery_discard))}
+        if(picker.request==null && picker.notice!=null) ExportLink(stringResource(R.string.export_delivery_discard),pickerController::discardInterrupted,Modifier.testTag("history-export-discard"))
     }
     if(sheet) WorkspaceModalBottomSheet(onDismissRequest={job?.cancel();sheet=false}) {
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal=24.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-            Text(label,style=MaterialTheme.typography.headlineSmall)
-            Text(stringResource(R.string.export_delivery_access_help))
-            OutlinedButton(enabled=!busy,onClick={deliver("share")},modifier=Modifier.testTag("history-export-share")) {Text(stringResource(R.string.export_delivery_share))}
-            OutlinedButton(enabled=!busy,onClick={deliver("save")},modifier=Modifier.testTag("history-export-save")) {Text(stringResource(R.string.export_delivery_save_as))}
-            OutlinedButton(enabled=!busy && settings?.exportFolder!=null,onClick={deliver("folder")},modifier=Modifier.testTag("history-export-folder")) {Text(stringResource(R.string.export_delivery_folder))}
-            if(settings?.exportFolder==null) Text(stringResource(R.string.export_delivery_folder_help),style=MaterialTheme.typography.bodySmall)
-            notice?.let {Text(exportDeliveryText(it,savedFiles),Modifier.testTag("history-export-sheet-notice"),color=MaterialTheme.colorScheme.error)}
-            if(busy) {LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onClick={job?.cancel()},modifier=Modifier.testTag("history-export-cancel-preparation")) {Text(stringResource(R.string.export_delivery_cancel_preparation))}}
-            TextButton(enabled=!busy,onClick={sheet=false}) {Text(stringResource(R.string.export_delivery_done))}
+        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal=20.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+            Text(stringResource(R.string.export_redesign_eyebrow).uppercase(),style=WdType.eyebrow,color=wd.textMuted)
+            Text(label,style=WdType.title2,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
+            ExportBody(stringResource(R.string.export_delivery_access_help))
+            WdButton(stringResource(R.string.export_delivery_share),{deliver("share")},Modifier.testTag("history-export-share"),emphasis=WdEmphasis.primary,enabled=!busy,icon=Icons.Outlined.IosShare)
+            WdButton(stringResource(R.string.export_delivery_save_as),{deliver("save")},Modifier.testTag("history-export-save"),enabled=!busy,icon=Icons.Outlined.SaveAlt)
+            WdButton(stringResource(R.string.export_delivery_folder),{deliver("folder")},Modifier.testTag("history-export-folder"),enabled=!busy && settings?.exportFolder!=null,icon=Icons.Outlined.Folder)
+            if(settings?.exportFolder==null) Text(stringResource(R.string.export_delivery_folder_help),style=WdType.caption2,color=wd.textMuted)
+            notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),textModifier=Modifier.testTag("history-export-sheet-notice"),warning=true)}
+            if(busy) {ExportProgress();ExportLink(stringResource(R.string.export_delivery_cancel_preparation),{job?.cancel()},Modifier.testTag("history-export-cancel-preparation"))}
+            ExportLink(stringResource(R.string.export_delivery_done),{sheet=false},Modifier.align(Alignment.CenterHorizontally),enabled=!busy)
         }
     }
 }

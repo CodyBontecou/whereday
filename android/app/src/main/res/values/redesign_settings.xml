@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="redesign_settings_eyebrow">The back pages</string>
+    <string name="redesign_settings_data">Exports and automation</string>
+    <string name="redesign_settings_about">About</string>
+    <string name="redesign_settings_feedback">Feedback</string>
+    <string name="redesign_settings_links">Links</string>
+    <string name="redesign_settings_how_to">Running actions</string>
+    <string name="redesign_settings_licenses">Licenses</string>
+    <string name="redesign_settings_sources">Sources</string>
+    <string name="redesign_settings_by_country">By country</string>
+</resources>

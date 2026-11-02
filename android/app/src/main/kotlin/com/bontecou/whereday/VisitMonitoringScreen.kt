@@ -10,12 +10,18 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -75,37 +81,44 @@ import kotlinx.coroutines.*
     location:()->Unit,notifications:()->Unit,settings:()->Unit) {
     BackHandler(onBack=back)
     val running=mode==VisitMonitoringMode.balanced || mode==VisitMonitoringMode.route
-    Surface(Modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize().testTag("visits-only-screen").verticalScroll(rememberScrollState()).padding(20.dp),
-            verticalArrangement=Arrangement.spacedBy(16.dp)) {
-            TextButton(onClick=back) {Text(stringResource(R.string.common_back))}
-            Text(stringResource(R.string.visits_title),style=MaterialTheme.typography.headlineMedium)
-            Text(stringResource(R.string.visits_explanation))
-            Text(stringResource(when {
-                busy || mode==VisitMonitoringMode.preparing->R.string.visits_preparing
-                requested && mode==VisitMonitoringMode.balanced->R.string.visits_active
-                requested && mode==VisitMonitoringMode.route->R.string.visits_route
-                interrupted || requested->R.string.visits_interrupted
-                else->R.string.visits_off
-            }),Modifier.testTag("visits-status"),style=MaterialTheme.typography.titleMedium)
-            if(busy || mode==VisitMonitoringMode.preparing) LinearProgressIndicator(Modifier.fillMaxWidth())
-            if(!running && mode!=VisitMonitoringMode.preparing) Button(enabled=!busy && !blocked && access.location!=LocationPrecision.none,
-                onClick=start,modifier=Modifier.testTag("visits-start")) {Text(stringResource(R.string.visits_start))}
-            if(requested || running || mode==VisitMonitoringMode.preparing) OutlinedButton(enabled=!blocked,onClick=stop,
-                modifier=Modifier.testTag("visits-stop")) {Text(stringResource(R.string.visits_stop))}
-            Text(stringResource(R.string.visits_handoff))
-            if(access.location!=LocationPrecision.precise) {
-                if(access.location==LocationPrecision.approximate) Text(stringResource(R.string.visits_approximate))
-                OutlinedButton(enabled=!busy && !blocked,onClick=location) {Text(stringResource(R.string.visits_location))}
+    val preparing=busy || mode==VisitMonitoringMode.preparing
+    val card=Modifier.padding(horizontal=16.dp)
+    Column(Modifier.fillMaxSize().background(wd.surface).testTag("visits-only-screen").verticalScroll(rememberScrollState()).padding(bottom=32.dp)) {
+        SettingsBackHeader(stringResource(R.string.visits_title),stringResource(R.string.common_back),back)
+        Text(stringResource(R.string.visits_explanation),Modifier.padding(horizontal=20.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+        WdCard(card.padding(top=16.dp)) {
+            Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+                Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                    if(running && requested) WdLiveDot() else Box(Modifier.size(20.dp),contentAlignment=Alignment.Center) {
+                        Box(Modifier.size(10.dp).clip(CircleShape).background(if(interrupted || requested) wd.inkRust else wd.textMuted.copy(alpha=0.5f)))
+                    }
+                    Text(stringResource(when {
+                        busy || mode==VisitMonitoringMode.preparing->R.string.visits_preparing
+                        requested && mode==VisitMonitoringMode.balanced->R.string.visits_active
+                        requested && mode==VisitMonitoringMode.route->R.string.visits_route
+                        interrupted || requested->R.string.visits_interrupted
+                        else->R.string.visits_off
+                    }),Modifier.weight(1f).testTag("visits-status"),style=WdType.title3,color=wd.textPrimary)
+                }
+                if(preparing) SettingsProgress(null)
+                if(!running && mode!=VisitMonitoringMode.preparing) WdButton(stringResource(R.string.visits_start),start,Modifier.testTag("visits-start"),
+                    emphasis=WdEmphasis.primary,enabled=!busy && !blocked && access.location!=LocationPrecision.none,icon=Icons.Outlined.PlayArrow)
+                if(requested || running || mode==VisitMonitoringMode.preparing) WdButton(stringResource(R.string.visits_stop),stop,Modifier.testTag("visits-stop"),
+                    emphasis=WdEmphasis.destructive,enabled=!blocked,icon=Icons.Outlined.Stop)
             }
-            if(!access.notifications) {
-                Text(stringResource(if(android.os.Build.VERSION.SDK_INT>=33) R.string.visits_notification_warning else R.string.visits_notification_warning_legacy))
-                OutlinedButton(enabled=!busy && !blocked,onClick=notifications) {Text(stringResource(R.string.visits_notifications))}
-            }
-            TextButton(enabled=!busy && !blocked,onClick=settings) {Text(stringResource(R.string.visits_settings))}
-            Text(stringResource(R.string.visits_recovery))
-            if(error) Text(stringResource(R.string.visits_error),color=MaterialTheme.colorScheme.error)
         }
+        WdSectionFooter(stringResource(R.string.visits_handoff))
+        if(access.location==LocationPrecision.approximate) SettingsNotice(card.padding(top=12.dp),warning=true) {Text(stringResource(R.string.visits_approximate))}
+        if(!access.notifications) SettingsNotice(card.padding(top=12.dp),warning=true) {
+            Text(stringResource(if(android.os.Build.VERSION.SDK_INT>=33) R.string.visits_notification_warning else R.string.visits_notification_warning_legacy))
+        }
+        WdCard(card.padding(top=16.dp)) {
+            if(access.location!=LocationPrecision.precise) WdNavRow(stringResource(R.string.visits_location),icon=Icons.Outlined.LocationOn,enabled=!busy && !blocked,onClick=location)
+            if(!access.notifications) WdNavRow(stringResource(R.string.visits_notifications),icon=Icons.Outlined.Notifications,enabled=!busy && !blocked,onClick=notifications)
+            WdNavRow(stringResource(R.string.visits_settings),icon=Icons.Outlined.Settings,divider=false,enabled=!busy && !blocked,onClick=settings)
+        }
+        WdSectionFooter(stringResource(R.string.visits_recovery))
+        if(error) SettingsNotice(card.padding(top=12.dp),warning=true) {Text(stringResource(R.string.visits_error))}
     }
 }
 

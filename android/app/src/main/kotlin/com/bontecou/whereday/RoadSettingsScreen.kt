@@ -1,7 +1,11 @@
 package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -53,29 +57,29 @@ import com.bontecou.whereday.platform.*
     val allow=stringResource(R.string.road_consent_allow)
     val cancel=stringResource(R.string.road_consent_cancel)
     val review=state.review?.takeIf {session.isCurrent(it)}
-    Surface(Modifier.fillMaxSize()) {
-    Column(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("road-settings-screen")
-        .verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        TextButton(onClick=back) {Text(stringResource(R.string.road_settings_back))}
-        Text(stringResource(R.string.road_settings_title),style=MaterialTheme.typography.headlineMedium)
-        Text(stringResource(R.string.road_settings_explanation))
-        ExportToggle(label,enabled,editable && (enabled || available && current?.networkGeocoding==true),
-            Modifier.testTag("road-consent-switch").semantics {contentDescription=label}) {value->
-            if(value && current!=null) session.review(current) else session.disable()
+    val card=Modifier.padding(horizontal=16.dp)
+    Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("road-settings-screen")
+        .verticalScroll(rememberScrollState()).padding(bottom=32.dp)) {
+        SettingsBackHeader(stringResource(R.string.road_settings_title),stringResource(R.string.road_settings_back),back)
+        Text(stringResource(R.string.road_settings_explanation),Modifier.padding(horizontal=20.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+        WdCard(card.padding(top=16.dp)) {
+            SettingsToggle(label,enabled,editable && (enabled || available && current?.networkGeocoding==true),
+                Modifier.testTag("road-consent-switch").semantics {contentDescription=label},divider=provider!=null) {value->
+                if(value && current!=null) session.review(current) else session.disable()
+            }
+            provider?.let {
+                WdNavRow(stringResource(R.string.road_settings_privacy),icon=Icons.Outlined.PrivacyTip,divider=false,onClick={try {uriHandler.openUri(it.privacyUrl);linkError=false} catch(_:Exception) {linkError=true}})
+            }
         }
-        if(!available) Text(stringResource(R.string.road_settings_unavailable))
-        if(current?.networkGeocoding==false) Text(stringResource(R.string.road_settings_network))
-        provider?.let {
-            Text(checkNotNull(sharing))
-            TextButton(onClick={try {uriHandler.openUri(it.privacyUrl);linkError=false} catch(_:Exception) {linkError=true}}) {Text(stringResource(R.string.road_settings_privacy))}
-        }
-        Text(revoke)
-        if(state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-        state.failure?.let {Text(stringResource(if(it==RoadConsentFailure.storage) R.string.road_consent_storage_error else R.string.road_consent_stale),color=MaterialTheme.colorScheme.error)}
-        if(state.failure!=null) OutlinedButton(enabled=editable,onClick={session.disable()}) {Text(stringResource(R.string.road_consent_turn_off))}
-        if(state.savedEnabled==false && !enabled) Text(stringResource(R.string.road_consent_disabled))
-        if(linkError) Text(stringResource(R.string.road_consent_link_error),color=MaterialTheme.colorScheme.error)
-    }
+        provider?.let {WdSectionFooter(checkNotNull(sharing))}
+        WdSectionFooter(revoke)
+        if(!available) SettingsNotice(card.padding(top=12.dp)) {Text(stringResource(R.string.road_settings_unavailable))}
+        if(current?.networkGeocoding==false) SettingsNotice(card.padding(top=12.dp)) {Text(stringResource(R.string.road_settings_network))}
+        if(state.busy) SettingsProgress(null,card.padding(top=16.dp))
+        state.failure?.let {SettingsNotice(card.padding(top=12.dp),warning=true) {Text(stringResource(if(it==RoadConsentFailure.storage) R.string.road_consent_storage_error else R.string.road_consent_stale))}}
+        if(state.failure!=null) WdButton(stringResource(R.string.road_consent_turn_off),{session.disable()},card.padding(top=12.dp),emphasis=WdEmphasis.destructive,enabled=editable)
+        if(state.savedEnabled==false && !enabled) SettingsNotice(card.padding(top=12.dp),icon=Icons.Outlined.CheckCircle) {Text(stringResource(R.string.road_consent_disabled))}
+        if(linkError) SettingsNotice(card.padding(top=12.dp),warning=true) {Text(stringResource(R.string.road_consent_link_error))}
     }
     if(review!=null && provider!=null) WorkspaceAlertDialog(onDismissRequest={session.dismiss(review.id)},title={Text(consentTitle)},
         text={Column(Modifier.verticalScroll(rememberScrollState()).testTag("road-consent-disclosure"),verticalArrangement=Arrangement.spacedBy(12.dp)) {

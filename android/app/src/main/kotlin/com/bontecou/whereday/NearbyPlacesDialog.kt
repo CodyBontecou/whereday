@@ -6,6 +6,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalConfiguration
@@ -53,13 +56,13 @@ import kotlinx.coroutines.flow.first
     }
     WorkspaceAlertDialog(onDismissRequest=dismiss,title={Text(stringResource(R.string.nearby_title))},text={
         Column(Modifier.semantics {testTagsAsResourceId=true}.testTag("nearby-content").verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-            Text(stringResource(R.string.nearby_disclosure))
+            Text(stringResource(R.string.nearby_disclosure),style=WdType.caption2,color=wd.textMuted)
             when {
-                !available->Text(stringResource(R.string.nearby_unavailable))
-                !allowed->Text(stringResource(R.string.nearby_disabled))
-                !fresh()->Text(stringResource(R.string.nearby_expired))
+                !available->WdNotice(stringResource(R.string.nearby_unavailable),icon=Icons.Outlined.CloudOff,warning=true)
+                !allowed->WdNotice(stringResource(R.string.nearby_disabled),icon=Icons.Outlined.CloudOff)
+                !fresh()->WdNotice(stringResource(R.string.nearby_expired),icon=Icons.Outlined.TimerOff,warning=true)
             }
-            OutlinedButton(enabled=available && allowed && fresh() && !busy,modifier=Modifier.testTag("nearby-search"),onClick={
+            WdButton(stringResource(R.string.nearby_search),enabled=available && allowed && fresh() && !busy,modifier=Modifier.testTag("nearby-search"),emphasis=WdEmphasis.primary,icon=Icons.Outlined.Storefront,onClick={
                 clear();busy=true
                 val request=generation
                 job=scope.launch {
@@ -75,33 +78,33 @@ import kotlinx.coroutines.flow.first
                     catch(_:Exception) {if(request==generation) message=R.string.nearby_error}
                     finally {if(request==generation) busy=false}
                 }
-            }) {Text(stringResource(R.string.nearby_search))}
-            if(busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.nearby_loading))}
-            message?.let {Text(stringResource(it))}
+            })
+            if(busy) VisitPickerProgress(stringResource(R.string.nearby_loading))
+            message?.let {VisitPickerNote(stringResource(it),if(it==R.string.nearby_empty) Icons.Outlined.SearchOff else Icons.Outlined.ErrorOutline)}
             // Hide immediately on opt-out/expiry, before the clearing effect has run.
             if(allowed && fresh() && results.isNotEmpty()) {
-                OutlinedTextField(filter,{filter=it},label={Text(stringResource(R.string.nearby_filter))},singleLine=true,modifier=Modifier.fillMaxWidth().testTag("nearby-filter"))
+                OutlinedTextField(filter,{filter=it},label={Text(stringResource(R.string.nearby_filter))},singleLine=true,colors=wdTextFieldColors(),leadingIcon={Icon(Icons.Outlined.FilterList,null,tint=wd.textMuted)},modifier=Modifier.fillMaxWidth().testTag("nearby-filter"))
                 if(filter.isNotEmpty()) TextButton(onClick={filter=""},modifier=Modifier.testTag("nearby-filter-clear")) {Text(stringResource(R.string.nearby_filter_clear))}
                 val filtered=remember(results,filter,locale) {filterNearbyPlaceSuggestions(results,filter,locale.toLanguageTag())}
-                if(filtered.isEmpty()) Text(stringResource(R.string.nearby_filter_empty,filter.trim()),Modifier.testTag("nearby-filter-empty"))
+                if(filtered.isEmpty()) Text(stringResource(R.string.nearby_filter_empty,filter.trim()),Modifier.testTag("nearby-filter-empty"),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
                 filtered.forEach {suggestion->
-                OutlinedCard(Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                        Text(suggestion.name,style=MaterialTheme.typography.titleMedium)
-                        suggestion.address?.let {Text(it)}
-                        Text(stringResource(R.string.nearby_distance,nearbyDistanceText(suggestion.distanceMeters,metric,locale)),Modifier.testTag("nearby-distance-${suggestion.id}"))
+                WdCard {
+                    Column(Modifier.padding(horizontal=14.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                        Text(suggestion.name,style=WdType.title3,color=wd.textPrimary)
+                        suggestion.address?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                        Text(stringResource(R.string.nearby_distance,nearbyDistanceText(suggestion.distanceMeters,metric,locale)),Modifier.testTag("nearby-distance-${suggestion.id}"),style=WdType.caption,color=wd.textMuted)
                         TextButton(modifier=Modifier.testTag("nearby-use-${suggestion.id}"),onClick={
                             val request=generation
                             scope.launch {
                                 if(networkAllowed.first() && request==generation && suggestion in filterNearbyPlaceSuggestions(results,filter,locale.toLanguageTag()) && fresh() && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) select(suggestion)
                             }
-                        }) {Text(stringResource(R.string.nearby_use))}
+                        }) {Text(stringResource(R.string.nearby_use),fontWeight=FontWeight.SemiBold)}
                     }
                 }
             }
             }
-            TextButton(onClick={uri.openUri("https://www.geoapify.com/")}) {Text(stringResource(R.string.nearby_attribution))}
-            TextButton(onClick={uri.openUri("https://www.openstreetmap.org/copyright")}) {Text(stringResource(R.string.nearby_osm))}
+            TextButton(onClick={uri.openUri("https://www.geoapify.com/")}) {Text(stringResource(R.string.nearby_attribution),style=WdType.caption2)}
+            TextButton(onClick={uri.openUri("https://www.openstreetmap.org/copyright")}) {Text(stringResource(R.string.nearby_osm),style=WdType.caption2)}
         }
     },confirmButton={TextButton(onClick=dismiss,modifier=Modifier.testTag("nearby-close")) {Text(stringResource(R.string.nearby_close))}})
 }

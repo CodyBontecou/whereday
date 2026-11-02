@@ -3,10 +3,23 @@ package com.bontecou.whereday
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.provider.CalendarContract
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.EditCalendar
+import androidx.compose.material.icons.outlined.ErrorOutline
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -59,7 +72,9 @@ internal fun CalendarEventDraft.calendarIntent()=Intent(Intent.ACTION_INSERT,Cal
         onDispose {alive.set(false);job?.cancel();owner.lifecycle.removeObserver(observer)}
     }
     key(alive) { Column {
-        OutlinedButton(enabled=enabled && !busy,onClick={
+        val live=enabled && !busy
+        Row(Modifier.testTag("calendar-add").heightIn(min=40.dp).clip(CircleShape).background(wd.card).border(1.dp,wd.border,CircleShape)
+            .clickable(enabled=live,role=Role.Button,onClick={
             if(current() && !busy) {
                 busy=true;error=null
                 val prepare=currentMake;val handoff=currentLaunch;val now=Instant.now();val ticket=generation.get()
@@ -75,8 +90,16 @@ internal fun CalendarEventDraft.calendarIntent()=Intent(Intent.ACTION_INSERT,Cal
                     finally {if(alive.get() && ticket==generation.get() && !handedOff) busy=false}
                 }
             }
-        },modifier=Modifier.testTag("calendar-add")) {Text(stringResource(if(busy) R.string.calendar_opening else R.string.calendar_add))}
-        error?.let {Text(stringResource(it),color=MaterialTheme.colorScheme.error,
-            modifier=Modifier.testTag("calendar-error").semantics {liveRegion=LiveRegionMode.Polite})}
+        }).padding(horizontal=14.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+            if(busy) CircularProgressIndicator(Modifier.size(14.dp),color=wd.accent,trackColor=wd.dialTrack,strokeWidth=1.5.dp)
+            else Icon(Icons.Outlined.EditCalendar,null,Modifier.size(16.dp),tint=if(enabled) wd.accent else wd.textMuted)
+            Text(stringResource(if(busy) R.string.calendar_opening else R.string.calendar_add),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),
+                color=if(live) wd.accent else wd.textMuted,maxLines=2)
+        }
+        error?.let {Row(Modifier.padding(top=6.dp),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+            Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(14.dp).padding(top=1.dp),tint=wd.inkRust)
+            Text(stringResource(it),style=MaterialTheme.typography.bodySmall,color=wd.inkRust,
+                modifier=Modifier.testTag("calendar-error").semantics {liveRegion=LiveRegionMode.Polite})
+        }}
     } }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -98,10 +99,12 @@ private data class PhotoIconSnapshot(val owner:PhotoPlaceDirectory,val style:Pho
     }}
     val scope=rememberCoroutineScope()
     val scale=LocalContext.current.resources.displayMetrics.density
-    val spriteState by produceState<PhotoIconSnapshot?>(null,ready,markers,style,scale) {
+    // Pins are drawn in Whereday ink: paper frame, accent placeholder and count badge.
+    val pinInk=wd.accent.toArgb();val pinPaper=wd.card.toArgb()
+    val spriteState by produceState<PhotoIconSnapshot?>(null,ready,markers,style,scale,pinInk,pinPaper) {
         value=null
         if(ready!=null) {
-            var sprites=if(style==PhotoMarkerStyle.dots) emptyMap() else markers.associate {it.id to photoPin(scale,null,it.photoCount)}
+            var sprites=if(style==PhotoMarkerStyle.dots) emptyMap() else markers.associate {it.id to photoPin(scale,null,it.photoCount,pinInk,pinPaper)}
             value=PhotoIconSnapshot(ready,style,scale,sprites)
             if(style==PhotoMarkerStyle.images) for(marker in markers) {
                 currentCoroutineContext().ensureActive()
@@ -109,7 +112,7 @@ private data class PhotoIconSnapshot(val owner:PhotoPlaceDirectory,val style:Pho
                 try {
                     val bitmap=latestThumbnail(uri,128)
                     currentCoroutineContext().ensureActive()
-                    sprites=sprites+(marker.id to photoPin(scale,bitmap,marker.photoCount))
+                    sprites=sprites+(marker.id to photoPin(scale,bitmap,marker.photoCount,pinInk,pinPaper))
                     value=PhotoIconSnapshot(ready,style,scale,sprites)
                 } catch(error:CancellationException) {throw error}
                 catch(_:Exception) {currentCoroutineContext().ensureActive();try {graph.photoLibrary.unavailable(uri)} catch(error:CancellationException) {throw error} catch(_:Exception) {}}
@@ -139,25 +142,25 @@ private data class PhotoIconSnapshot(val owner:PhotoPlaceDirectory,val style:Pho
 }
 
 /** Fixed size sprites avoid provider images or arbitrary camera coordinates in native annotations. */
-private fun photoPin(scale:Float,image:Bitmap?,count:Long):Bitmap {
+private fun photoPin(scale:Float,image:Bitmap?,count:Long,ink:Int,paper:Int):Bitmap {
     val bitmap=Bitmap.createBitmap((52*scale).toInt().coerceAtLeast(1),(54*scale).toInt().coerceAtLeast(1),Bitmap.Config.ARGB_8888)
     bitmap.density=(160*scale).toInt()
     val canvas=Canvas(bitmap);canvas.scale(scale,scale)
     val paint=Paint(Paint.ANTI_ALIAS_FLAG)
-    paint.color=Color.WHITE;canvas.drawRoundRect(2f,8f,46f,48f,6f,6f,paint)
+    paint.color=paper;canvas.drawRoundRect(2f,8f,46f,48f,6f,6f,paint)
     val path=Path().apply {moveTo(17f,47f);lineTo(24f,54f);lineTo(31f,47f);close()};canvas.drawPath(path,paint)
     if(image!=null) {
         canvas.save();canvas.clipRect(5f,11f,43f,45f)
         val ratio=maxOf(38f/image.width,34f/image.height);val width=image.width*ratio;val height=image.height*ratio
         canvas.drawBitmap(image,null,RectF(24-width/2,28-height/2,24+width/2,28+height/2),paint);canvas.restore()
     } else {
-        paint.color=Color.rgb(40,93,66);canvas.drawRoundRect(5f,11f,43f,45f,4f,4f,paint)
-        paint.color=Color.WHITE;canvas.drawRoundRect(12f,21f,36f,37f,3f,3f,paint);canvas.drawRect(17f,18f,24f,23f,paint)
-        paint.color=Color.rgb(40,93,66);canvas.drawCircle(24f,29f,6f,paint)
+        paint.color=ink;canvas.drawRoundRect(5f,11f,43f,45f,4f,4f,paint)
+        paint.color=paper;canvas.drawRoundRect(12f,21f,36f,37f,3f,3f,paint);canvas.drawRect(17f,18f,24f,23f,paint)
+        paint.color=ink;canvas.drawCircle(24f,29f,6f,paint)
     }
     if(count>1) {
-        paint.color=Color.rgb(40,93,66);canvas.drawCircle(39f,11f,11f,paint)
-        paint.color=Color.WHITE;paint.textSize=11f;paint.typeface=Typeface.create(Typeface.DEFAULT,Typeface.BOLD);paint.textAlign=Paint.Align.CENTER
+        paint.color=paper;canvas.drawCircle(39f,11f,11f,paint);paint.color=ink;canvas.drawCircle(39f,11f,9.5f,paint)
+        paint.color=paper;paint.textSize=11f;paint.typeface=Typeface.create(Typeface.DEFAULT,Typeface.BOLD);paint.textAlign=Paint.Align.CENTER
         canvas.drawText(if(count>99) "99+" else count.toString(),39f,15f,paint)
     }
     return bitmap

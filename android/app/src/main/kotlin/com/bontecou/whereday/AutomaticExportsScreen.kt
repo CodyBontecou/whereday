@@ -2,7 +2,12 @@ package com.bontecou.whereday
 
 import android.text.format.DateFormat
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -96,44 +101,54 @@ internal data class AutomaticExportActions(
     val repeats=(0..23).associate {it.toString() to if(it==0) stringResource(R.string.automatic_export_daily) else pluralStringResource(R.plurals.automatic_export_interval,it,number.format(it))}
     val kinds=mapOf("visits" to stringResource(R.string.automatic_export_visits),"points" to stringResource(R.string.automatic_export_points),"all" to stringResource(R.string.automatic_export_all),"outings" to stringResource(R.string.automatic_export_outings))
     val modes=mapOf("rewrite" to stringResource(R.string.automatic_export_rewrite),"append" to stringResource(R.string.automatic_export_append))
-    Column(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("automatic-exports-screen").verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        TextButton(onClick=back) {Text(stringResource(R.string.automatic_export_back))}
-        Text(stringResource(R.string.automatic_export_title),style=MaterialTheme.typography.headlineMedium)
-        Text(stringResource(R.string.automatic_export_intro))
-        if(!ui.loaded && ui.failure==null) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.automatic_export_loading))}
+    // The back capsule scrolls with the page so tests and TalkBack reach it through the same scroll container.
+    Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("automatic-exports-screen").verticalScroll(rememberScrollState()).padding(bottom=24.dp)) {
+        WdTopBar(stringResource(R.string.automatic_export_title),back,backLabel=stringResource(R.string.automatic_export_back))
+        ExportBody(stringResource(R.string.automatic_export_intro),Modifier.padding(horizontal=24.dp).padding(top=4.dp))
+        if(!ui.loaded && ui.failure==null) Column(Modifier.exportInset().padding(top=20.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {ExportProgress();ExportBusyLine(stringResource(R.string.automatic_export_loading))}
         if(ui.loaded) {
-            ExportToggle(stringResource(R.string.automatic_export_enable),settings.enabled,enabled=!ui.busy || settings.enabled,modifier=Modifier.testTag("automatic-export-enabled")) {value->
-                if(foreground() && current.loaded && (!current.busy || !value && current.state.settings.enabled)) actions.enabled(value)
+            WdSectionHeader(stringResource(R.string.export_redesign_section_schedule))
+            ExportCard {
+                ExportToggleRow(stringResource(R.string.automatic_export_enable),settings.enabled,enabled=!ui.busy || settings.enabled,modifier=Modifier.testTag("automatic-export-enabled")) {value->
+                    if(foreground() && current.loaded && (!current.busy || !value && current.state.settings.enabled)) actions.enabled(value)
+                }
+                WdNavRow(stringResource(R.string.automatic_export_anchor,time.format(LocalTime.of(settings.schedule.hour,settings.schedule.minute))),Modifier.testTag("automatic-export-anchor"),icon=Icons.Outlined.Schedule,enabled=editable) {anchor()}
+                ExportChoiceRow(stringResource(R.string.automatic_export_repeat),settings.schedule.intervalHours.toString(),repeats.keys.toList(),editable,divider=false,labelFor={repeats.getValue(it)}) {value->edit {it.copy(schedule=it.schedule.copy(intervalHours=value.toInt()))}}
             }
-            OutlinedButton(enabled=editable,onClick={anchor()},modifier=Modifier.testTag("automatic-export-anchor")) {Text(stringResource(R.string.automatic_export_anchor,time.format(LocalTime.of(settings.schedule.hour,settings.schedule.minute))))}
-            Text(stringResource(R.string.automatic_export_zone,zone.id),style=MaterialTheme.typography.bodySmall)
-            Choice(stringResource(R.string.automatic_export_repeat),settings.schedule.intervalHours.toString(),repeats.keys.toList(),editable,labelFor={repeats.getValue(it)}) {value->edit {it.copy(schedule=it.schedule.copy(intervalHours=value.toInt()))}}
-            Choice(stringResource(R.string.automatic_export_format),settings.format.name,ExportFormat.entries.map {it.name},editable) {value->edit {it.copy(format=ExportFormat.valueOf(value))}}
-            Choice(stringResource(R.string.automatic_export_data),if(settings.outings) "outings" else settings.kind.name,DataKind.entries.map {it.name}+"outings",editable,labelFor={kinds.getValue(it)}) {value->edit {if(value=="outings") it.copy(outings=true) else it.copy(outings=false,kind=DataKind.valueOf(value))}}
-            if(settings.outings) Text(stringResource(R.string.automatic_export_outings_help),style=MaterialTheme.typography.bodySmall)
-            if(settings.schedule.intervalHours>0) {
-                Choice(stringResource(R.string.automatic_export_file_mode),settings.fileMode.name,ScheduledFileMode.entries.map {it.name},editable,labelFor={modes.getValue(it)}) {value->edit {it.copy(fileMode=ScheduledFileMode.valueOf(value))}}
-                if(settings.format in setOf(ExportFormat.gpx,ExportFormat.kml)) Text(stringResource(R.string.automatic_export_container_help),style=MaterialTheme.typography.bodySmall)
+            WdSectionFooter(stringResource(R.string.automatic_export_zone,zone.id))
+            WdSectionHeader(stringResource(R.string.export_redesign_section_contents))
+            ExportCard {
+                ExportChoiceRow(stringResource(R.string.automatic_export_format),settings.format.name,ExportFormat.entries.map {it.name},editable) {value->edit {it.copy(format=ExportFormat.valueOf(value))}}
+                ExportChoiceRow(stringResource(R.string.automatic_export_data),if(settings.outings) "outings" else settings.kind.name,DataKind.entries.map {it.name}+"outings",editable,divider=settings.schedule.intervalHours>0,labelFor={kinds.getValue(it)}) {value->edit {if(value=="outings") it.copy(outings=true) else it.copy(outings=false,kind=DataKind.valueOf(value))}}
+                if(settings.schedule.intervalHours>0) ExportChoiceRow(stringResource(R.string.automatic_export_file_mode),settings.fileMode.name,ScheduledFileMode.entries.map {it.name},editable,divider=false,labelFor={modes.getValue(it)}) {value->edit {it.copy(fileMode=ScheduledFileMode.valueOf(value))}}
             }
-            Text(stringResource(if(folderConfigured) R.string.automatic_export_folder_ready else R.string.automatic_export_folder_missing),style=MaterialTheme.typography.bodySmall)
-            Text(stringResource(R.string.automatic_export_policy),style=MaterialTheme.typography.bodySmall)
-            HorizontalDivider()
-            Text(state.lastSuccess?.let {stringResource(R.string.automatic_export_last_success,date(it))} ?: stringResource(R.string.automatic_export_no_success))
-            ui.nextAttempt?.let {Text(stringResource(R.string.automatic_export_next,date(it)))}
-            if(settings.enabled && pending!=null && ui.nextAttempt==null) Text(stringResource(R.string.automatic_export_saved_retry),style=MaterialTheme.typography.bodySmall)
-            pending?.let {Text(stringResource(R.string.automatic_export_pending,date(it.plan.filenameDate,it.plan.options.zone)))}
-            if(ui.busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.automatic_export_updating))}
-            if(pending!=null) OutlinedButton(enabled=!ui.busy,onClick={if(foreground() && current.loaded && !current.busy && current.state.pending?.id==pending.id) actions.retry()},modifier=Modifier.testTag("automatic-export-retry")) {Text(stringResource(R.string.automatic_export_retry))}
-            else OutlinedButton(enabled=!ui.busy,onClick={if(foreground() && current.loaded && !current.busy && current.state.pending==null) actions.run()},modifier=Modifier.testTag("automatic-export-run")) {Text(stringResource(R.string.automatic_export_run))}
-            if(pending!=null || ui.busy) TextButton(onClick={if(foreground() && current.loaded && (current.state.pending!=null || current.busy)) actions.cancel()}) {Text(stringResource(R.string.automatic_export_cancel_pending))}
+            if(settings.outings) WdSectionFooter(stringResource(R.string.automatic_export_outings_help))
+            if(settings.schedule.intervalHours>0 && settings.format in setOf(ExportFormat.gpx,ExportFormat.kml)) WdSectionFooter(stringResource(R.string.automatic_export_container_help))
+            ExportCallout(stringResource(if(folderConfigured) R.string.automatic_export_folder_ready else R.string.automatic_export_folder_missing),Modifier.exportInset().padding(top=16.dp),warning=!folderConfigured)
+            WdSectionFooter(stringResource(R.string.automatic_export_policy))
+            WdSectionHeader(stringResource(R.string.export_redesign_section_status))
+            ExportCard {
+                Column(Modifier.fillMaxWidth().padding(16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                    Text(state.lastSuccess?.let {stringResource(R.string.automatic_export_last_success,date(it))} ?: stringResource(R.string.automatic_export_no_success),style=MaterialTheme.typography.bodyLarge,color=wd.textPrimary)
+                    ui.nextAttempt?.let {Text(stringResource(R.string.automatic_export_next,date(it)),style=WdType.caption,color=wd.textMuted)}
+                    if(settings.enabled && pending!=null && ui.nextAttempt==null) Text(stringResource(R.string.automatic_export_saved_retry),style=WdType.caption,color=wd.textMuted)
+                    pending?.let {Text(stringResource(R.string.automatic_export_pending,date(it.plan.filenameDate,it.plan.options.zone)),style=MaterialTheme.typography.bodyMedium,color=wd.warning)}
+                    if(ui.busy) {ExportProgress();ExportBusyLine(stringResource(R.string.automatic_export_updating))}
+                    if(pending!=null) WdButton(stringResource(R.string.automatic_export_retry),{if(foreground() && current.loaded && !current.busy && current.state.pending?.id==pending.id) actions.retry()},Modifier.testTag("automatic-export-retry"),emphasis=WdEmphasis.primary,enabled=!ui.busy,icon=Icons.Outlined.Refresh)
+                    else WdButton(stringResource(R.string.automatic_export_run),{if(foreground() && current.loaded && !current.busy && current.state.pending==null) actions.run()},Modifier.testTag("automatic-export-run"),emphasis=WdEmphasis.primary,enabled=!ui.busy,icon=Icons.Outlined.PlayArrow)
+                    if(pending!=null || ui.busy) ExportLink(stringResource(R.string.automatic_export_cancel_pending),{if(foreground() && current.loaded && (current.state.pending!=null || current.busy)) actions.cancel()},destructive=true)
+                }
+            }
         }
-        state.lastFailure?.let {Text(automaticExportFailureText(it),color=MaterialTheme.colorScheme.error)}
-        state.lastStatus?.let {Text(automaticExportNoticeText(it),style=MaterialTheme.typography.bodySmall)}
-        ui.failure?.let {Text(automaticExportFailureText(it),color=MaterialTheme.colorScheme.error)}
-        ui.notice?.let {Text(automaticExportActionText(it),style=MaterialTheme.typography.bodySmall)}
-        if(!ui.loaded && ui.failure!=null) {
-            TextButton(enabled=!ui.busy,onClick=actions.refresh) {Text(stringResource(R.string.automatic_export_retry_load))}
-            TextButton(enabled=!ui.busy,onClick={reset=true}) {Text(stringResource(R.string.automatic_export_reset_settings))}
+        Column(Modifier.exportInset().padding(top=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+            state.lastFailure?.let {ExportCallout(automaticExportFailureText(it),warning=true)}
+            state.lastStatus?.let {ExportCallout(automaticExportNoticeText(it))}
+            ui.failure?.let {ExportCallout(automaticExportFailureText(it),warning=true)}
+            ui.notice?.let {ExportCallout(automaticExportActionText(it))}
+            if(!ui.loaded && ui.failure!=null) {
+                WdButton(stringResource(R.string.automatic_export_retry_load),actions.refresh,enabled=!ui.busy,emphasis=WdEmphasis.primary)
+                ExportLink(stringResource(R.string.automatic_export_reset_settings),{reset=true},enabled=!ui.busy,destructive=true)
+            }
         }
     }
     if(reset) WorkspaceAlertDialog(onDismissRequest={reset=false},title={Text(stringResource(R.string.automatic_export_reset_title))},text={Text(stringResource(R.string.automatic_export_reset_body))},confirmButton={TextButton(onClick={reset=false;if(foreground() && !current.loaded && !current.busy && current.failure!=null) actions.reset()}) {Text(stringResource(R.string.automatic_export_reset))}},dismissButton={TextButton(onClick={reset=false}) {Text(stringResource(R.string.automatic_export_cancel))}})

@@ -13,6 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import java.util.Locale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.ErrorOutline
+import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.ui.res.stringResource
 import java.time.*
 import java.time.format.DateTimeFormatter
@@ -67,23 +74,27 @@ import java.util.concurrent.atomic.AtomicReference
     fun error(a:LocalDate?,b:LocalDate?)=customDateError(a,b,latestDate,zone) ?: validate(a!!,b!!)
     val a=runCatching {LocalDate.parse(firstText)}.getOrNull()
     val b=runCatching {LocalDate.parse(lastText)}.getOrNull()
+    val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     if(iso) {
         SideEffect {onDates(a,b)}
         val error=error(a,b)
         SideEffect {currentApply.set(if(enabled && error==null) { {save(a!!,b!!)} } else null)}
-        WorkspaceAlertDialog(onDismissRequest=dismiss,title={Text(stringResource(R.string.map_choose_dates))},text={
-            Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.date_iso_help))
-                OutlinedTextField(firstText,{firstText=it},label={Text(stringResource(R.string.date_range_from))},
-                    singleLine=true,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii),modifier=Modifier.testTag("date-range-from"))
-                OutlinedTextField(lastText,{lastText=it},label={Text(stringResource(R.string.date_range_through))},
-                    singleLine=true,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii),modifier=Modifier.testTag("date-range-through"))
-                error?.let {DateRangeError(it)}
+        WorkspaceAlertDialog(onDismissRequest=dismiss,title={Text(stringResource(R.string.map_choose_dates),style=WdType.title2,color=wd.textPrimary)},text={
+            Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                Text(stringResource(R.string.date_iso_help),style=WdType.caption,color=wd.textMuted)
+                OutlinedTextField(firstText,{firstText=it},label={Text(stringResource(R.string.date_range_from))},textStyle=WdType.monoBody,
+                    singleLine=true,isError=a==null,colors=wdTextFieldColors(),shape=RoundedCornerShape(10.dp),
+                    keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii),modifier=Modifier.testTag("date-range-from"))
+                OutlinedTextField(lastText,{lastText=it},label={Text(stringResource(R.string.date_range_through))},textStyle=WdType.monoBody,
+                    singleLine=true,isError=b==null,colors=wdTextFieldColors(),shape=RoundedCornerShape(10.dp),
+                    keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii),modifier=Modifier.testTag("date-range-through"))
+                error?.let {DateRangeError(it,inset=false)}
                 if(a!=null && b!=null && a<=b && a.year in 1..9999 && b.year in 1..9999)
-                    TextButton(onClick={iso=false}) {Text(stringResource(R.string.date_use_calendar))}
+                    TextButton(onClick={iso=false},colors=dateLinkColors()) {Icon(Icons.Outlined.CalendarMonth,null,Modifier.size(16.dp));Spacer(Modifier.width(6.dp))
+                        Text(stringResource(R.string.date_use_calendar).uppercase(locale),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em))}
             }
-        },confirmButton={key(approvalEpoch) {TextButton(enabled=enabled && error==null,onClick=apply) {Text(stringResource(R.string.map_apply_dates))}}},
-            dismissButton={TextButton(onClick=dismiss) {Text(stringResource(R.string.map_cancel_dates))}})
+        },confirmButton={key(approvalEpoch) {TextButton(enabled=enabled && error==null,onClick=apply,colors=dateActionColors()) {Text(stringResource(R.string.map_apply_dates),fontWeight=FontWeight.SemiBold)}}},
+            dismissButton={TextButton(onClick=dismiss,colors=dateActionColors()) {Text(stringResource(R.string.map_cancel_dates))}})
         return
     }
     val selectable=remember(latestDate) {object:SelectableDates {
@@ -100,30 +111,30 @@ import java.util.concurrent.atomic.AtomicReference
     SideEffect {onDates(selectedFirst,selectedLast)}
     val error=error(selectedFirst,selectedLast)
     SideEffect {currentApply.set(if(enabled && error==null) { {save(selectedFirst!!,selectedLast!!)} } else null)}
-    val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val dateFormat=remember(locale) {DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)}
     val missing=stringResource(R.string.date_range_not_selected)
-    WorkspaceDatePickerDialog(onDismissRequest=dismiss,confirmButton={key(approvalEpoch) {TextButton(enabled=enabled && error==null,onClick=apply) {Text(stringResource(R.string.map_apply_dates))}}},dismissButton={TextButton(onClick=dismiss) {Text(stringResource(R.string.map_cancel_dates))}}) {
+    WorkspaceDatePickerDialog(onDismissRequest=dismiss,confirmButton={key(approvalEpoch) {TextButton(enabled=enabled && error==null,onClick=apply,colors=dateActionColors()) {Text(stringResource(R.string.map_apply_dates),fontWeight=FontWeight.SemiBold)}}},dismissButton={TextButton(onClick=dismiss,colors=dateActionColors()) {Text(stringResource(R.string.map_cancel_dates))}}) {
         Column(Modifier.heightIn(max=520.dp)) {
-            DateRangePicker(state=state,modifier=Modifier.weight(1f),showModeToggle=false,title={Text(stringResource(R.string.map_choose_dates),Modifier.padding(16.dp))},headline={
-                Column(Modifier.fillMaxWidth().padding(start=16.dp,end=16.dp,bottom=12.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+            DateRangePicker(state=state,modifier=Modifier.weight(1f),showModeToggle=false,colors=wdDateRangeColors(),title={Text(stringResource(R.string.map_choose_dates),Modifier.padding(start=24.dp,end=24.dp,top=20.dp,bottom=8.dp),style=WdType.title2,color=wd.textPrimary)},headline={
+                Column(Modifier.fillMaxWidth().padding(start=24.dp,end=16.dp,bottom=12.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                     Text(stringResource(R.string.date_range_label_value,stringResource(R.string.date_range_from),selectedFirst?.format(dateFormat) ?: missing),
-                        style=MaterialTheme.typography.bodyLarge,modifier=Modifier.testTag("date-range-from-headline"))
+                        style=WdType.caption.copy(fontWeight=FontWeight.Medium),color=if(selectedFirst==null) wd.textMuted else wd.textPrimary,modifier=Modifier.testTag("date-range-from-headline"))
                     Text(stringResource(R.string.date_range_label_value,stringResource(R.string.date_range_through),selectedLast?.format(dateFormat) ?: missing),
-                        style=MaterialTheme.typography.bodyLarge,modifier=Modifier.testTag("date-range-through-headline"))
+                        style=WdType.caption.copy(fontWeight=FontWeight.Medium),color=if(selectedLast==null) wd.textMuted else wd.textPrimary,modifier=Modifier.testTag("date-range-through-headline"))
                 }
             })
             if(selectedFirst!=null && selectedLast!=null) error?.let {DateRangeError(it)}
             TextButton(onClick={
                 firstText=selectedFirst?.toString().orEmpty();lastText=selectedLast?.toString().orEmpty();iso=true
-            }) {Text(stringResource(R.string.date_enter_iso))}
+            },colors=dateLinkColors(),modifier=Modifier.padding(horizontal=12.dp)) {Icon(Icons.Outlined.Keyboard,null,Modifier.size(16.dp));Spacer(Modifier.width(6.dp))
+                Text(stringResource(R.string.date_enter_iso))}
         }
     }
 }
 
 private fun utcDate(millis:Long)=Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
 
-@Composable private fun DateRangeError(error:CustomDateError) {
+@Composable private fun DateRangeError(error:CustomDateError,inset:Boolean=true) {
     val id=when(error) {
         CustomDateError.invalid->R.string.date_range_invalid
         CustomDateError.order->R.string.date_range_order
@@ -132,5 +143,22 @@ private fun utcDate(millis:Long)=Instant.ofEpochMilli(millis).atZone(ZoneOffset.
         CustomDateError.unsupported->R.string.date_range_unsupported
         CustomDateError.retainedTimes->R.string.date_range_retained_times
     }
-    Text(stringResource(id),Modifier.padding(horizontal=16.dp),color=MaterialTheme.colorScheme.error)
+    Row(Modifier.padding(horizontal=if(inset) 24.dp else 0.dp,vertical=4.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+        Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(16.dp).padding(top=1.dp),tint=wd.inkRust)
+        Text(stringResource(id),style=MaterialTheme.typography.bodySmall,color=wd.inkRust)
+    }
 }
+
+@Composable private fun dateActionColors()=ButtonDefaults.textButtonColors(contentColor=wd.accent,disabledContentColor=wd.textMuted.copy(alpha=0.6f))
+@Composable private fun dateLinkColors()=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)
+
+/** The iOS graphical picker tinted in rust on paper. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable private fun wdDateRangeColors()=DatePickerDefaults.colors(
+    containerColor=wd.card,titleContentColor=wd.textMuted,headlineContentColor=wd.textPrimary,weekdayContentColor=wd.textMuted,
+    subheadContentColor=wd.textMuted,navigationContentColor=wd.textPrimary,yearContentColor=wd.textPrimary,currentYearContentColor=wd.inkRust,
+    selectedYearContentColor=wd.surface,selectedYearContainerColor=wd.inkRust,dayContentColor=wd.textPrimary,disabledDayContentColor=wd.textMuted.copy(alpha=0.4f),
+    selectedDayContentColor=wd.surface,selectedDayContainerColor=wd.inkRust,todayContentColor=wd.inkRust,todayDateBorderColor=wd.inkRust,
+    dayInSelectionRangeContentColor=wd.textPrimary,dayInSelectionRangeContainerColor=wd.inkRust.copy(alpha=if(wd.dark) 0.22f else 0.14f),
+    dividerColor=wd.border,
+)

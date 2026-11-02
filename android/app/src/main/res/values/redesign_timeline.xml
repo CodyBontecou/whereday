@@ -1,0 +1,10 @@
+<resources>
+    <string name="timeline_redesign_eyebrow">%1$s · %2$s · DAY %3$d</string>
+    <string name="timeline_redesign_the_day">The day</string>
+    <string name="timeline_redesign_now">now</string>
+    <string name="timeline_redesign_minutes">%1$dm</string>
+    <string name="timeline_redesign_hours">%1$dh %2$sm</string>
+    <string name="timeline_redesign_distance">Distance</string>
+    <string name="timeline_redesign_notes">Notes</string>
+    <string name="timeline_redesign_export">Export</string>
+</resources>

@@ -158,7 +158,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                 Scaffold(containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
                     snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
                     bottomBar={WdFloatingTabBar(wdTabs,tab,{tab=it},Modifier.semantics {testTagsAsResourceId=true})}) {padding->
-                    Box(Modifier.padding(padding).fillMaxSize()) {
+                    Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {
                         when(tab) {
                             0->mapPage()
                             1->timelinePage()

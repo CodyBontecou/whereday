@@ -9,9 +9,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.PersistableBundle
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
@@ -73,24 +78,41 @@ internal object SupportIntents {
 
 @Composable internal fun SupportForm(info:SupportInfo,error:Boolean,dismiss:()->Unit,logs:()->Unit,releases:()->Unit,link:(SupportLink)->Unit,feedback:()->Unit,copyEmail:()->Unit,reviewAvailable:Boolean=false,review:()->Unit={}) {
     var copied by remember {mutableStateOf(false)}
-    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("support-screen"),contentPadding=PaddingValues(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        item {TextButton(onClick=dismiss) {Text(stringResource(R.string.support_back))}}
-        item {Text(stringResource(R.string.support_title),style=MaterialTheme.typography.headlineSmall)}
-        item {Text(stringResource(R.string.support_version,info.version));Text(stringResource(R.string.support_platform,info.api))}
-        item {OutlinedButton(onClick=logs,modifier=Modifier.fillMaxWidth()) {Text(stringResource(R.string.support_view_logs))}}
-        item {OutlinedButton(onClick=releases,modifier=Modifier.fillMaxWidth()) {Text(stringResource(R.string.support_release_notes))}}
-        item {OutlinedButton(enabled=reviewAvailable,onClick=review,modifier=Modifier.fillMaxWidth().testTag("support-rate-app")) {Text(stringResource(R.string.support_rate_app))}}
-        if(!reviewAvailable) item {Text(stringResource(R.string.support_review_unavailable),style=MaterialTheme.typography.bodySmall)}
-        item {HorizontalDivider()}
-        item {Text(stringResource(R.string.support_feedback_description))}
-        item {OutlinedButton(onClick=feedback,modifier=Modifier.fillMaxWidth()) {Text(stringResource(R.string.support_send_feedback))}}
-        item {TextButton(onClick={copyEmail();copied=true}) {Text(stringResource(R.string.support_copy_email))}}
-        if(copied) item {Text(stringResource(R.string.support_email_copied),modifier=Modifier.testTag("support-email-copied"))}
-        if(error) item {Text(stringResource(R.string.support_no_handler),color=MaterialTheme.colorScheme.error)}
-        item {OutlinedButton(onClick={link(SupportLink.community)},modifier=Modifier.fillMaxWidth()) {Text(stringResource(R.string.support_community))}}
-        item {OutlinedButton(onClick={link(SupportLink.website)},modifier=Modifier.fillMaxWidth()) {Text(stringResource(R.string.support_website))}}
-        item {TextButton(onClick={link(SupportLink.privacy)}) {Text(stringResource(R.string.support_privacy))}}
-        item {TextButton(onClick={link(SupportLink.terms)}) {Text(stringResource(R.string.support_terms))}}
+    val card=Modifier.padding(horizontal=16.dp)
+    LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("support-screen"),contentPadding=PaddingValues(bottom=32.dp)) {
+        item {SettingsBackHeader(stringResource(R.string.support_title),stringResource(R.string.support_back),dismiss)}
+        item {WdCard(card) {WdRow(divider=false) {
+            Icon(Icons.Outlined.Info,null,Modifier.size(20.dp),tint=wd.textMuted)
+            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                Text(stringResource(R.string.support_version,info.version),style=WdType.monoBody,color=wd.textPrimary)
+                Text(stringResource(R.string.support_platform,info.api),style=WdType.caption,color=wd.textMuted)
+            }
+        }}}
+        item {Spacer(Modifier.height(16.dp))}
+        item {WdCard(card) {
+            WdNavRow(stringResource(R.string.support_view_logs),icon=Icons.AutoMirrored.Outlined.ReceiptLong,onClick=logs)
+            WdNavRow(stringResource(R.string.support_release_notes),icon=Icons.Outlined.NewReleases,onClick=releases)
+            WdNavRow(stringResource(R.string.support_rate_app),Modifier.testTag("support-rate-app"),icon=Icons.Outlined.StarOutline,divider=false,enabled=reviewAvailable,onClick=review)
+        }}
+        if(!reviewAvailable) item {WdSectionFooter(stringResource(R.string.support_review_unavailable))}
+        item {WdSectionHeader(stringResource(R.string.redesign_settings_feedback))}
+        item {WdCard(card) {
+            WdNavRow(stringResource(R.string.support_send_feedback),icon=Icons.Outlined.MailOutline,onClick=feedback)
+            WdRow(divider=false,onClick={copyEmail();copied=true}) {
+                Icon(Icons.Outlined.ContentCopy,null,Modifier.size(20.dp),tint=wd.textMuted)
+                Text(stringResource(R.string.support_copy_email),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge,color=wd.textPrimary)
+            }
+        }}
+        item {WdSectionFooter(stringResource(R.string.support_feedback_description))}
+        if(copied) item {SettingsNotice(card.padding(top=12.dp),icon=Icons.Outlined.CheckCircle) {Text(stringResource(R.string.support_email_copied),modifier=Modifier.testTag("support-email-copied"))}}
+        if(error) item {SettingsNotice(card.padding(top=12.dp),warning=true) {Text(stringResource(R.string.support_no_handler))}}
+        item {WdSectionHeader(stringResource(R.string.redesign_settings_links))}
+        item {WdCard(card) {
+            WdNavRow(stringResource(R.string.support_community),icon=Icons.Outlined.Forum,onClick={link(SupportLink.community)})
+            WdNavRow(stringResource(R.string.support_website),icon=Icons.Outlined.Language,onClick={link(SupportLink.website)})
+            WdNavRow(stringResource(R.string.support_privacy),icon=Icons.Outlined.PrivacyTip,onClick={link(SupportLink.privacy)})
+            WdNavRow(stringResource(R.string.support_terms),icon=Icons.Outlined.Gavel,divider=false,onClick={link(SupportLink.terms)})
+        }}
     }
 }
 
@@ -98,28 +120,39 @@ internal object SupportIntents {
     BackHandler(onBack=dismiss)
     var clearing by remember {mutableStateOf(false)}
     var copied by remember {mutableStateOf(false)}
-    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("activity-logs-screen"),contentPadding=PaddingValues(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        item {TextButton(onClick=dismiss) {Text(stringResource(R.string.support_back))}}
-        item {Text(stringResource(R.string.support_logs_title),style=MaterialTheme.typography.headlineSmall)}
-        item {Text(stringResource(R.string.support_logs_privacy))}
-        item {OutlinedButton(enabled=entries.isNotEmpty(),onClick={copy(info.reportHeader+"\n\n"+entries.joinToString("\n") {it.display});copied=true},modifier=Modifier.fillMaxWidth()) {Text(stringResource(R.string.support_copy_logs))}}
-        item {TextButton(enabled=entries.isNotEmpty(),onClick={clearing=true}) {Text(stringResource(R.string.support_clear_logs))}}
-        if(copied) item {Text(stringResource(R.string.support_logs_copied))}
-        if(entries.isEmpty()) item {Text(stringResource(R.string.support_logs_empty))}
-        items(entries.asReversed(),key={it.id}) {entry->SelectionContainer {Text(entry.display,style=MaterialTheme.typography.bodySmall,color=if(entry.event.level=="ERROR") MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)}}
+    val card=Modifier.padding(horizontal=16.dp)
+    LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("activity-logs-screen"),contentPadding=PaddingValues(bottom=32.dp)) {
+        item {SettingsBackHeader(stringResource(R.string.support_logs_title),stringResource(R.string.support_back),dismiss)}
+        item {Text(stringResource(R.string.support_logs_privacy),Modifier.padding(horizontal=20.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+        item {Row(card.padding(top=16.dp),horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+            WdButton(stringResource(R.string.support_copy_logs),{copy(info.reportHeader+"\n\n"+entries.joinToString("\n") {it.display});copied=true},Modifier.weight(1f),enabled=entries.isNotEmpty(),icon=Icons.Outlined.ContentCopy)
+            WdButton(stringResource(R.string.support_clear_logs),{clearing=true},Modifier.weight(1f),emphasis=WdEmphasis.destructive,enabled=entries.isNotEmpty(),icon=Icons.Outlined.DeleteOutline)
+        }}
+        if(copied) item {SettingsNotice(card.padding(top=12.dp),icon=Icons.Outlined.CheckCircle) {Text(stringResource(R.string.support_logs_copied))}}
+        item {WdSectionHeader(stringResource(R.string.support_logs_title))}
+        if(entries.isEmpty()) item {WdCard(card) {WdEmptyState(stringResource(R.string.support_logs_empty),null,icon=Icons.AutoMirrored.Outlined.ReceiptLong)}}
+        val ordered=entries.asReversed()
+        itemsIndexed(ordered,key={_,it->it.id}) {index,entry->
+            val error=entry.event.level=="ERROR"
+            SelectionContainer(card.settingsSegment(index==0,index==ordered.lastIndex)) {
+                Text(entry.display,Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=10.dp),style=WdType.caption2,color=if(error) wd.inkRust else wd.textPrimary)
+            }
+        }
     }
-    if(clearing) WorkspaceAlertDialog(onDismissRequest={clearing=false},title={Text(stringResource(R.string.support_clear_logs_question))},text={Text(stringResource(R.string.support_clear_logs_description))},confirmButton={TextButton(onClick={clear();clearing=false;copied=false}) {Text(stringResource(R.string.support_clear_logs))}},dismissButton={TextButton(onClick={clearing=false}) {Text(stringResource(R.string.support_cancel))}})
+    if(clearing) WorkspaceAlertDialog(onDismissRequest={clearing=false},title={Text(stringResource(R.string.support_clear_logs_question))},text={Text(stringResource(R.string.support_clear_logs_description))},confirmButton={TextButton(onClick={clear();clearing=false;copied=false},colors=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)) {Text(stringResource(R.string.support_clear_logs))}},dismissButton={TextButton(onClick={clearing=false}) {Text(stringResource(R.string.support_cancel))}})
 }
 
 @Composable internal fun AndroidReleaseNotes(dismiss:()->Unit) {
     BackHandler(onBack=dismiss)
-    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("android-release-notes"),contentPadding=PaddingValues(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        item {TextButton(onClick=dismiss) {Text(stringResource(R.string.support_back))}}
-        item {Text(stringResource(R.string.support_release_notes),style=MaterialTheme.typography.headlineSmall)}
-        item {Text(stringResource(R.string.support_preview_title),style=MaterialTheme.typography.titleLarge)}
-        item {Text(stringResource(R.string.support_preview_notice))}
-        item {Text(stringResource(R.string.support_preview_journal))}
-        item {Text(stringResource(R.string.support_preview_portability))}
-        item {Text(stringResource(R.string.support_preview_automation))}
+    LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("android-release-notes"),contentPadding=PaddingValues(bottom=32.dp)) {
+        item {SettingsBackHeader(stringResource(R.string.support_release_notes),stringResource(R.string.support_back),dismiss)}
+        item {WdCard(Modifier.padding(horizontal=16.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+            Text(stringResource(R.string.support_preview_title),style=WdType.title3,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
+            Text(stringResource(R.string.support_preview_notice),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+            listOf(R.string.support_preview_journal,R.string.support_preview_portability,R.string.support_preview_automation).forEach {
+                WdDivider()
+                Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
+            }
+        }}}
     }
 }

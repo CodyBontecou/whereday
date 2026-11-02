@@ -1,13 +1,23 @@
 package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.automirrored.outlined.Undo
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
@@ -183,64 +193,107 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
         return
     }
     VisitEditorFrame(inline,inlineBackLabel,onDismissRequest=::cancel,title={Text(if(visit!=null) stringResource(R.string.visit_edit) else stringResource(if(mode==ManualVisitMode.current) {if(seed!=null) R.string.visit_link_check_in else R.string.map_save_current} else R.string.map_add_past))},text={
-        Column(Modifier.fillMaxWidth().semantics {testTagsAsResourceId=true}.testTag("visit-editor-fields").verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-            OutlinedTextField(name,{name=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false},label={Text(stringResource(R.string.visit_name))},enabled=!busy,modifier=Modifier.fillMaxWidth().testTag("visit-name"))
-            OutlinedTextField(address,{address=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false},label={Text(stringResource(R.string.visit_address))},enabled=!busy,modifier=Modifier.fillMaxWidth().testTag("visit-address"))
-            OutlinedButton(enabled=!busy,onClick={focus.clearFocus();keyboard?.hide();choosing=true}) {Text(stringResource(R.string.visit_choose_location))}
-            OutlinedButton(enabled=!busy,onClick={focus.clearFocus();keyboard?.hide();savedChooser=true}) {Text(stringResource(R.string.visit_choose_saved))}
-            OutlinedButton(enabled=!busy && !expiredFix,onClick={
-                focus.clearFocus();keyboard?.hide()
-                nearbyOrigin=try {Coordinate(latitude.trim().replace(',','.').toDouble(),longitude.trim().replace(',','.').toDouble())} catch(_:IllegalArgumentException) {error=context.getString(R.string.visit_error_coordinate);null}
-            },modifier=Modifier.testTag("visit-nearby")) {Text(stringResource(R.string.nearby_title))}
-            if(visit==null && mode==ManualVisitMode.current) {
-                OutlinedButton(enabled=!busy,onClick={focus.clearFocus();keyboard?.hide();locating=true}) {Text(stringResource(R.string.visit_find_current))}
-                if(currentFixRequired) Text(stringResource(if(expiredFix) R.string.visit_fix_expired else R.string.visit_fix_ready))
-            }
-            OutlinedTextField(latitude,{latitude=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false;currentFix=null;currentFixRequired=false;selectedSavedId=null;selectedSavedName=null;saveReusable=false},label={Text(stringResource(R.string.visit_latitude))},enabled=!busy,modifier=Modifier.fillMaxWidth().testTag("visit-latitude"))
-            OutlinedTextField(longitude,{longitude=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false;currentFix=null;currentFixRequired=false;selectedSavedId=null;selectedSavedName=null;saveReusable=false},label={Text(stringResource(R.string.visit_longitude))},enabled=!busy,modifier=Modifier.fillMaxWidth().testTag("visit-longitude"))
-            VisitDateTimeControl(stringResource(R.string.visit_arrived),Instant.ofEpochMilli(arrivalMillis),enabled=!busy,modifier=Modifier.testTag("visit-arrival-time")) {arrivalMillis=it.toEpochMilli()}
-            if(visit!=null || mode==ManualVisitMode.current) Row {Checkbox(stillHere,{stillHere=it},enabled=!busy,modifier=Modifier.semantics {contentDescription=context.getString(R.string.visit_still_here)});Text(stringResource(R.string.visit_still_here),Modifier.padding(top=12.dp))}
-            else Text(stringResource(R.string.visit_past_times),style=MaterialTheme.typography.bodySmall)
-            if(!stillHere) VisitDateTimeControl(stringResource(R.string.visit_departed),Instant.ofEpochMilli(departureMillis),enabled=!busy,modifier=Modifier.testTag("visit-departure-time")) {departureMillis=it.toEpochMilli()}
-            OutlinedTextField(notes,{notes=it},label={Text(stringResource(R.string.visit_notes))},enabled=!busy,modifier=Modifier.fillMaxWidth().testTag("visit-notes"))
-            if(visit==null) {
-                if(selectedSavedId!=null) Text(stringResource(R.string.visit_using_saved,selectedSavedName.orEmpty()),style=MaterialTheme.typography.bodySmall)
-                else {
-                    Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
-                        Text(stringResource(R.string.visit_reuse),Modifier.weight(1f).padding(top=12.dp))
-                        Switch(saveReusable,{saveReusable=it},enabled=!busy,modifier=Modifier.semantics {contentDescription=context.getString(R.string.visit_reuse_accessibility)})
-                    }
-                    if(saveReusable) {
-                        Choice(stringResource(R.string.visit_radius),"$reusableRadius m",listOf("50 m","100 m","150 m","250 m"),!busy) {reusableRadius=it.substringBefore(' ').toInt()}
-                        Text(stringResource(R.string.visit_reuse_description),style=MaterialTheme.typography.bodySmall)
-                        if(reusableCandidate==null) Text(stringResource(R.string.visit_reuse_prepare))
-                        else if(readyReuse==null) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.visit_reuse_reviewing))}
-                        else Text(readyReuse.plan.original?.let {stringResource(R.string.visit_reuse_update,it.name)} ?: stringResource(R.string.visit_reuse_create,readyReuse.plan.value.name),style=MaterialTheme.typography.bodyMedium)
+        Column(Modifier.fillMaxWidth().semantics {testTagsAsResourceId=true}.testTag("visit-editor-fields").verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            val fieldColors=wdTextFieldColors()
+            VisitEditorSection(stringResource(R.string.redesign_visit_section_where)) {
+                Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                    OutlinedTextField(name,{name=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false},label={Text(stringResource(R.string.visit_name))},enabled=!busy,colors=fieldColors,textStyle=WdType.serifBody,modifier=Modifier.fillMaxWidth().testTag("visit-name"))
+                    OutlinedTextField(address,{address=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false},label={Text(stringResource(R.string.visit_address))},enabled=!busy,colors=fieldColors,modifier=Modifier.fillMaxWidth().testTag("visit-address"))
+                }
+                WdDivider()
+                WdNavRow(stringResource(R.string.visit_choose_location),icon=Icons.Outlined.Map,enabled=!busy) {focus.clearFocus();keyboard?.hide();choosing=true}
+                WdNavRow(stringResource(R.string.visit_choose_saved),icon=Icons.Outlined.BookmarkBorder,enabled=!busy) {focus.clearFocus();keyboard?.hide();savedChooser=true}
+                WdNavRow(stringResource(R.string.nearby_title),Modifier.testTag("visit-nearby"),icon=Icons.Outlined.Storefront,enabled=!busy && !expiredFix,divider=visit==null && mode==ManualVisitMode.current) {
+                    focus.clearFocus();keyboard?.hide()
+                    nearbyOrigin=try {Coordinate(latitude.trim().replace(',','.').toDouble(),longitude.trim().replace(',','.').toDouble())} catch(_:IllegalArgumentException) {error=context.getString(R.string.visit_error_coordinate);null}
+                }
+                if(visit==null && mode==ManualVisitMode.current) {
+                    WdNavRow(stringResource(R.string.visit_find_current),icon=Icons.Outlined.MyLocation,enabled=!busy,divider=currentFixRequired) {focus.clearFocus();keyboard?.hide();locating=true}
+                    if(currentFixRequired) WdRow(divider=false) {
+                        if(expiredFix) Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(20.dp),tint=wd.inkRust) else WdLiveDot()
+                        Text(stringResource(if(expiredFix) R.string.visit_fix_expired else R.string.visit_fix_ready),Modifier.weight(1f),style=MaterialTheme.typography.bodyMedium,color=if(expiredFix) wd.inkRust else wd.textPrimary)
                     }
                 }
             }
-            error?.let {Text(it,color=MaterialTheme.colorScheme.error,modifier=Modifier.testTag("visit-editor-error"))}
-            if(busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-            if(visit!=null) Text(stringResource(R.string.visit_remember_reviewed),style=MaterialTheme.typography.bodySmall)
-            if(visit!=null && onShowOnMap!=null) TextButton(enabled=!busy,onClick={viewOnMap()},modifier=Modifier.testTag("visit-view-map")) {Text(stringResource(R.string.visit_view_map))}
-            visit?.let {stored->
-                val unknownTitle=stringResource(R.string.calendar_unknown_place)
-                Text(stringResource(R.string.calendar_saved_visit),style=MaterialTheme.typography.bodySmall)
-                CalendarEventButton(stored,enabled=!busy,makeDraft={now->CalendarEventDraft.visit(stored,unknownTitle,now)})
+            VisitEditorSection(stringResource(R.string.redesign_visit_section_coordinates)) {
+                Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                    OutlinedTextField(latitude,{latitude=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false;currentFix=null;currentFixRequired=false;selectedSavedId=null;selectedSavedName=null;saveReusable=false},label={Text(stringResource(R.string.visit_latitude))},enabled=!busy,colors=fieldColors,textStyle=WdType.monoBody,modifier=Modifier.fillMaxWidth().testTag("visit-latitude"))
+                    OutlinedTextField(longitude,{longitude=it;source="userEntered";sourceDistance=null;placeSelectionChanged=false;currentFix=null;currentFixRequired=false;selectedSavedId=null;selectedSavedName=null;saveReusable=false},label={Text(stringResource(R.string.visit_longitude))},enabled=!busy,colors=fieldColors,textStyle=WdType.monoBody,modifier=Modifier.fillMaxWidth().testTag("visit-longitude"))
+                }
             }
-            visit?.takeIf {it.source==VisitSource.manual && it.departedAt==null}?.let {stored->
-                Text(stringResource(R.string.visit_checkout_description),style=MaterialTheme.typography.bodySmall)
-                TextButton(enabled=!busy,onClick={
-                    focus.clearFocus();keyboard?.hide()
-                    val now=Instant.now()
-                    persist(stored.copy(departedAt=now,departureInferred=false,updatedAt=now),allowOverlap=true)
-                },modifier=Modifier.testTag("visit-checkout")) {Text(stringResource(R.string.visit_checkout))}
+            VisitEditorSection(stringResource(R.string.redesign_visit_section_when)) {
+                Column(Modifier.padding(horizontal=16.dp,vertical=14.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+                    VisitDateTimeControl(stringResource(R.string.visit_arrived),Instant.ofEpochMilli(arrivalMillis),enabled=!busy,modifier=Modifier.testTag("visit-arrival-time")) {arrivalMillis=it.toEpochMilli()}
+                    if(visit!=null || mode==ManualVisitMode.current) Row(verticalAlignment=Alignment.CenterVertically) {
+                        Checkbox(stillHere,{stillHere=it},enabled=!busy,colors=CheckboxDefaults.colors(checkedColor=wd.accent,uncheckedColor=wd.textMuted,checkmarkColor=wd.surface),modifier=Modifier.semantics {contentDescription=context.getString(R.string.visit_still_here)})
+                        Text(stringResource(R.string.visit_still_here),style=MaterialTheme.typography.bodyLarge,color=if(busy) wd.textMuted else wd.textPrimary)
+                    }
+                    else Text(stringResource(R.string.visit_past_times),style=WdType.caption2,color=wd.textMuted)
+                    if(!stillHere) VisitDateTimeControl(stringResource(R.string.visit_departed),Instant.ofEpochMilli(departureMillis),enabled=!busy,modifier=Modifier.testTag("visit-departure-time")) {departureMillis=it.toEpochMilli()}
+                }
             }
-            if(visit?.confirmation==Confirmation.unconfirmed) TextButton(enabled=!busy,onClick={submit(true)}) {Text(stringResource(R.string.visit_confirm))}
-            if(visit?.confirmation==Confirmation.corrected && visit.originalCoordinate!=null) TextButton(enabled=!busy,onClick={undoing=true}) {Text(stringResource(R.string.visit_undo))}
-            if(delete!=null) TextButton(enabled=!busy,onClick={deleting=true}) {Text(stringResource(R.string.visit_delete_action),color=MaterialTheme.colorScheme.error)}
+            VisitEditorSection(stringResource(R.string.redesign_visit_section_notes)) {
+                OutlinedTextField(notes,{notes=it},label={Text(stringResource(R.string.visit_notes))},enabled=!busy,colors=fieldColors,textStyle=WdType.serifBody,modifier=Modifier.fillMaxWidth().padding(12.dp).testTag("visit-notes"))
+            }
+            if(visit==null) VisitEditorSection(stringResource(R.string.redesign_visit_section_reuse)) {
+                Column(Modifier.padding(horizontal=16.dp,vertical=14.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                    if(selectedSavedId!=null) Row(horizontalArrangement=Arrangement.spacedBy(10.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Icon(Icons.Outlined.Bookmark,null,Modifier.size(18.dp),tint=wd.accent)
+                        Text(stringResource(R.string.visit_using_saved,selectedSavedName.orEmpty()),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
+                    }
+                    else {
+                        Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,verticalAlignment=Alignment.CenterVertically) {
+                            Text(stringResource(R.string.visit_reuse),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge,color=wd.textPrimary)
+                            Switch(saveReusable,{saveReusable=it},enabled=!busy,colors=wdSwitchColors(),modifier=Modifier.semantics {contentDescription=context.getString(R.string.visit_reuse_accessibility)})
+                        }
+                        if(saveReusable) {
+                            Choice(stringResource(R.string.visit_radius),"$reusableRadius m",listOf("50 m","100 m","150 m","250 m"),!busy) {reusableRadius=it.substringBefore(' ').toInt()}
+                            Text(stringResource(R.string.visit_reuse_description),style=WdType.caption2,color=wd.textMuted)
+                            if(reusableCandidate==null) Text(stringResource(R.string.visit_reuse_prepare),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+                            else if(readyReuse==null) {LinearProgressIndicator(Modifier.fillMaxWidth(),color=wd.accent,trackColor=wd.dialTrack);Text(stringResource(R.string.visit_reuse_reviewing),style=WdType.caption,color=wd.textMuted)}
+                            else Text(readyReuse.plan.original?.let {stringResource(R.string.visit_reuse_update,it.name)} ?: stringResource(R.string.visit_reuse_create,readyReuse.plan.value.name),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
+                        }
+                    }
+                }
+            }
+            error?.let {
+                val shape=RoundedCornerShape(14.dp)
+                Row(Modifier.fillMaxWidth().clip(shape).background(wd.inkRust.copy(alpha=if(wd.dark) 0.12f else 0.06f)).border(1.dp,wd.inkRust.copy(alpha=0.35f),shape).padding(14.dp),
+                    horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+                    Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(20.dp),tint=wd.inkRust)
+                    Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.inkRust,modifier=Modifier.weight(1f).testTag("visit-editor-error"))
+                }
+            }
+            if(busy) LinearProgressIndicator(Modifier.fillMaxWidth(),color=wd.accent,trackColor=wd.dialTrack)
+            if(visit!=null) VisitEditorSection(stringResource(R.string.redesign_visit_section_more),framed=false) {
+                Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                    Text(stringResource(R.string.visit_remember_reviewed),style=WdType.caption2,color=wd.textMuted)
+                    if(onShowOnMap!=null) WdButton(stringResource(R.string.visit_view_map),{viewOnMap()},Modifier.testTag("visit-view-map"),enabled=!busy,icon=Icons.Outlined.Map)
+                    val unknownTitle=stringResource(R.string.calendar_unknown_place)
+                    Text(stringResource(R.string.calendar_saved_visit),style=WdType.caption2,color=wd.textMuted)
+                    CalendarEventButton(visit,enabled=!busy,makeDraft={now->CalendarEventDraft.visit(visit,unknownTitle,now)})
+                    visit.takeIf {it.source==VisitSource.manual && it.departedAt==null}?.let {stored->
+                        Text(stringResource(R.string.visit_checkout_description),style=WdType.caption2,color=wd.textMuted)
+                        WdButton(stringResource(R.string.visit_checkout),{
+                            focus.clearFocus();keyboard?.hide()
+                            val now=Instant.now()
+                            persist(stored.copy(departedAt=now,departureInferred=false,updatedAt=now),allowOverlap=true)
+                        },Modifier.testTag("visit-checkout"),enabled=!busy,icon=Icons.AutoMirrored.Outlined.Logout)
+                    }
+                    if(visit.confirmation==Confirmation.unconfirmed) WdButton(stringResource(R.string.visit_confirm),{submit(true)},enabled=!busy,icon=Icons.Outlined.Check)
+                    if(visit.confirmation==Confirmation.corrected && visit.originalCoordinate!=null) WdButton(stringResource(R.string.visit_undo),{undoing=true},enabled=!busy,icon=Icons.AutoMirrored.Outlined.Undo)
+                }
+            }
+            if(delete!=null) WdButton(stringResource(R.string.visit_delete_action),{deleting=true},enabled=!busy,emphasis=WdEmphasis.destructive,icon=Icons.Outlined.DeleteOutline)
         }
-    },confirmButton={TextButton(enabled=!busy && !expiredFix && (!saveReusable || readyReuse!=null),onClick={submit()},modifier=Modifier.testTag("visit-save")) {Text(stringResource(R.string.visit_save))}},dismissButton={TextButton(enabled=!busy,onClick=::cancel) {Text(stringResource(R.string.visit_cancel))}})
+    },confirmButton={
+        val enabled=!busy && !expiredFix && (!saveReusable || readyReuse!=null)
+        if(inline) WdButton(stringResource(R.string.visit_save),{submit()},Modifier.testTag("visit-save"),emphasis=WdEmphasis.primary,enabled=enabled,busy=busy)
+        else TextButton(enabled=enabled,onClick={submit()},modifier=Modifier.testTag("visit-save")) {Text(stringResource(R.string.visit_save))}
+    },dismissButton={
+        if(inline) WdButton(stringResource(R.string.visit_cancel),::cancel,enabled=!busy)
+        else TextButton(enabled=!busy,onClick=::cancel) {Text(stringResource(R.string.visit_cancel))}
+    })
     fun selectBusiness(suggestion:NearbyPlaceSuggestion) {
         val coordinate=runCatching {Coordinate(latitude.trim().replace(',','.').toDouble(),longitude.trim().replace(',','.').toDouble())}.getOrNull()
         val selected=VisitDraft(id,name,address,notes,coordinate,Instant.ofEpochMilli(arrivalMillis),if(stillHere) null else Instant.ofEpochMilli(departureMillis),source,sourceDistance,placeSelectionChanged).selectNearby(suggestion,"geoapify")
@@ -289,9 +342,17 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
             confirmButton={TextButton(enabled=!busy && ticket==saveKey,onClick={if(mapReview==ticket && currentKey()==ticket) viewOnMap(ticket)},modifier=Modifier.testTag("visit-discard-view-map")) {Text(stringResource(R.string.visit_discard_map_confirm))}},
             dismissButton={TextButton(onClick={if(mapReview==ticket) mapReview=null}) {Text(stringResource(R.string.visit_keep_editing))}})
     }
-    if(discarding) WorkspaceAlertDialog(onDismissRequest={discarding=false},title={Text(stringResource(R.string.visit_discard_title))},confirmButton={TextButton(onClick=dismiss) {Text(stringResource(R.string.visit_discard))}},dismissButton={TextButton(onClick={discarding=false}) {Text(stringResource(R.string.visit_keep_editing))}})
+    if(discarding) WorkspaceAlertDialog(onDismissRequest={discarding=false},title={Text(stringResource(R.string.visit_discard_title))},confirmButton={TextButton(onClick=dismiss) {Text(stringResource(R.string.visit_discard),color=wd.inkRust)}},dismissButton={TextButton(onClick={discarding=false}) {Text(stringResource(R.string.visit_keep_editing))}})
     if(undoing) WorkspaceAlertDialog(onDismissRequest={undoing=false},title={Text(stringResource(R.string.visit_restore_title))},text={Text(stringResource(R.string.visit_restore_description))},confirmButton={TextButton(enabled=!busy,onClick={undoing=false;visit?.let {persist(it.undoCorrection(Instant.now()))}}) {Text(stringResource(R.string.visit_restore))}},dismissButton={TextButton(onClick={undoing=false}) {Text(stringResource(R.string.visit_cancel))}})
     if(deleting) WorkspaceAlertDialog(onDismissRequest={if(!busy) deleting=false},title={Text(stringResource(R.string.visit_delete_title))},text={Text(stringResource(R.string.visit_delete_description))},confirmButton={TextButton(enabled=!busy,onClick={scope.launch {
         busy=true;try {delete?.invoke();dismiss()} catch(e:Exception) {if(e is CancellationException) throw e;error=failure(e,R.string.visit_error_delete);deleting=false} finally {busy=false}
-    }}) {Text(stringResource(R.string.visit_delete))}},dismissButton={TextButton(enabled=!busy,onClick={deleting=false}) {Text(stringResource(R.string.visit_cancel))}})
+    }}) {Text(stringResource(R.string.visit_delete),color=if(busy) wd.textMuted else wd.inkRust)}},dismissButton={TextButton(enabled=!busy,onClick={deleting=false}) {Text(stringResource(R.string.visit_cancel))}})
+}
+
+/** A tracked mono caption over a hairline card, as iOS groups the visit detail into TECard sections. */
+@Composable private fun VisitEditorSection(title:String,framed:Boolean=true,content:@Composable ColumnScope.()->Unit) {
+    Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+        Text(title.uppercase(),style=WdType.eyebrow,color=wd.textMuted,modifier=Modifier.padding(start=4.dp).semantics {heading()})
+        if(framed) WdCard(content=content) else Column(content=content)
+    }
 }

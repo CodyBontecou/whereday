@@ -1,6 +1,9 @@
 package com.bontecou.whereday
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
@@ -31,6 +34,19 @@ internal val LocalWorkspaceDialogsReady=staticCompositionLocalOf {true}
 /** Screen coordinates: each native dialog has a different window origin from its owner. */
 internal val LocalWorkspaceDialogRegion=staticCompositionLocalOf<Rect?> {null}
 internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {emptyList()}
+
+/** Whereday sheet chrome shared by every workspace dialog: paper card, 20 dp corners, hairline border. */
+private val WorkspaceSheetShape=RoundedCornerShape(20.dp)
+
+/** Date picker in ink on paper, matching the iOS graphical calendar tint. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable internal fun workspaceDatePickerColors()=DatePickerDefaults.colors(
+    containerColor=wd.card,titleContentColor=wd.textMuted,headlineContentColor=wd.textPrimary,weekdayContentColor=wd.textMuted,
+    subheadContentColor=wd.textMuted,navigationContentColor=wd.textPrimary,yearContentColor=wd.textPrimary,currentYearContentColor=wd.accent,
+    selectedYearContentColor=wd.surface,selectedYearContainerColor=wd.accent,dayContentColor=wd.textPrimary,
+    selectedDayContentColor=wd.surface,selectedDayContainerColor=wd.accent,todayContentColor=wd.accent,todayDateBorderColor=wd.accent,
+    dividerColor=wd.border,
+)
 
 /** Keep the modal window/scrim and Back ownership, but constrain content to the owner's safe pane. */
 @Composable internal fun WorkspaceDialog(
@@ -98,13 +114,15 @@ internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {e
     val states=rememberSaveableStateHolder()
     val body=rememberWorkspaceContent {states.SaveableStateProvider("dialog-body") {text?.invoke()}}
     if(LocalWorkspaceDialogRegion.current==null) {
-        AlertDialog(onDismissRequest,confirmButton,modifier,dismissButton=dismissButton,title=title,text=if(text==null) null else { {body()} })
+        AlertDialog(onDismissRequest,confirmButton,modifier.border(1.dp,wd.border,WorkspaceSheetShape),dismissButton=dismissButton,
+            title=title?.let {heading->@Composable {ProvideTextStyle(WdType.title2) {heading()}}},text=if(text==null) null else { {body()} },
+            shape=WorkspaceSheetShape,containerColor=wd.card,titleContentColor=wd.textPrimary,textContentColor=wd.textMuted,tonalElevation=0.dp)
     } else WorkspaceDialog(onDismissRequest) {
-        Surface(modifier.widthIn(min=280.dp).testTag("workspace-alert"),shape=AlertDialogDefaults.shape,
-            color=AlertDialogDefaults.containerColor,tonalElevation=AlertDialogDefaults.TonalElevation) {
+        Surface(modifier.widthIn(min=280.dp).testTag("workspace-alert"),shape=WorkspaceSheetShape,
+            color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {
             Column(Modifier.padding(24.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-                title?.let {Box(Modifier.semantics {heading()}) {CompositionLocalProvider(LocalContentColor provides AlertDialogDefaults.titleContentColor) {ProvideTextStyle(MaterialTheme.typography.headlineSmall) {it()}}}}
-                if(text!=null) Box(Modifier.weight(1f,fill=false)) {CompositionLocalProvider(LocalContentColor provides AlertDialogDefaults.textContentColor) {ProvideTextStyle(MaterialTheme.typography.bodyMedium) {body()}}}
+                title?.let {Box(Modifier.semantics {heading()}) {CompositionLocalProvider(LocalContentColor provides wd.textPrimary) {ProvideTextStyle(WdType.title2) {it()}}}}
+                if(text!=null) Box(Modifier.weight(1f,fill=false)) {CompositionLocalProvider(LocalContentColor provides wd.textMuted) {ProvideTextStyle(MaterialTheme.typography.bodyMedium) {body()}}}
                 FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp,androidx.compose.ui.Alignment.End),verticalArrangement=Arrangement.spacedBy(4.dp)) {dismissButton?.invoke();confirmButton()}
             }
         }
@@ -116,9 +134,10 @@ internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {e
     if(!LocalWorkspaceDialogsReady.current) return
     val states=rememberSaveableStateHolder()
     val body=rememberWorkspaceContent {states.SaveableStateProvider("calendar-body") {Column(content=content)}}
-    if(LocalWorkspaceDialogRegion.current==null) DatePickerDialog(onDismissRequest,confirmButton,dismissButton=dismissButton) {body()}
+    if(LocalWorkspaceDialogRegion.current==null) DatePickerDialog(onDismissRequest,confirmButton,Modifier.border(1.dp,wd.border,WorkspaceSheetShape),dismissButton=dismissButton,
+        shape=WorkspaceSheetShape,tonalElevation=0.dp,colors=workspaceDatePickerColors()) {body()}
     else WorkspaceDialog(onDismissRequest) {
-        Surface(Modifier.widthIn(max=360.dp),shape=DatePickerDefaults.shape,color=DatePickerDefaults.colors().containerColor) {
+        Surface(Modifier.widthIn(max=360.dp),shape=WorkspaceSheetShape,color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {
             Column {
                 Column(Modifier.weight(1f,fill=false)) {body()}
                 FlowRow(Modifier.fillMaxWidth().padding(12.dp),horizontalArrangement=Arrangement.spacedBy(8.dp,androidx.compose.ui.Alignment.End)) {dismissButton();confirmButton()}
@@ -130,9 +149,10 @@ internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {e
 /** A pane menu cannot use a platform popup that is free to cross a reported hinge. */
 @Composable internal fun WorkspaceDropdownMenu(expanded:Boolean,onDismissRequest:()->Unit,content:@Composable ColumnScope.()->Unit) {
     if(!LocalWorkspaceDialogsReady.current) return
-    if(LocalWorkspaceDialogRegion.current==null) DropdownMenu(expanded,onDismissRequest,content=content)
+    if(LocalWorkspaceDialogRegion.current==null) DropdownMenu(expanded,onDismissRequest,shape=RoundedCornerShape(12.dp),containerColor=wd.card,
+        tonalElevation=0.dp,border=BorderStroke(1.dp,wd.border),content=content)
     else if(expanded) WorkspaceDialog(onDismissRequest) {
-        Surface(shape=MaterialTheme.shapes.extraSmall,tonalElevation=3.dp) {
+        Surface(shape=RoundedCornerShape(12.dp),color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {
             Column(Modifier.widthIn(min=112.dp).verticalScroll(rememberScrollState()).padding(vertical=8.dp),content=content)
         }
     }
@@ -143,9 +163,9 @@ internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {e
     if(!LocalWorkspaceDialogsReady.current) return
     val states=rememberSaveableStateHolder()
     val body=rememberWorkspaceContent {states.SaveableStateProvider("sheet-body") {Column(content=content)}}
-    if(LocalWorkspaceDialogRegion.current==null) ModalBottomSheet(onDismissRequest) {body()}
+    if(LocalWorkspaceDialogRegion.current==null) ModalBottomSheet(onDismissRequest,containerColor=wd.card,contentColor=wd.textPrimary,tonalElevation=0.dp) {body()}
     else WorkspaceDialog(onDismissRequest,bottomAligned=true) {
-        Surface(shape=BottomSheetDefaults.ExpandedShape,color=MaterialTheme.colorScheme.surfaceContainerLow) {body()}
+        Surface(shape=BottomSheetDefaults.ExpandedShape,color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {body()}
     }
 }
 
@@ -161,9 +181,9 @@ internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {e
     val pendingInput by androidx.compose.runtime.saveable.rememberSaveable(stateSaver=inputSaver) {mutableStateOf<FrameworkClockInput?>(null)}
     WorkspaceDialog(onDismissRequest=dismiss,properties=androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false)) {
         Box(Modifier.safeDrawingPadding().imePadding().padding(16.dp)) {
-            Surface(Modifier.widthIn(max=360.dp),shape=MaterialTheme.shapes.extraLarge) {
+            Surface(Modifier.widthIn(max=360.dp),shape=WorkspaceSheetShape,color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {
                 Column {
-                    Box(Modifier.padding(24.dp).semantics {heading()}) {ProvideTextStyle(MaterialTheme.typography.headlineSmall) {title(draftHour,draftMinute)}}
+                    Box(Modifier.padding(24.dp).semantics {heading()}) {ProvideTextStyle(WdType.title2) {title(draftHour,draftMinute)}}
                     Column(Modifier.weight(1f,fill=false).verticalScroll(rememberScrollState())) {
                         androidx.compose.ui.viewinterop.AndroidView(factory={context->
                             // The host is a narrow modal even in a landscape activity. Inflate the

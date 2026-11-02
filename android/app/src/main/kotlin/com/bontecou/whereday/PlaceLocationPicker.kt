@@ -1,7 +1,12 @@
 package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -9,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
@@ -166,29 +173,26 @@ import java.util.concurrent.atomic.AtomicBoolean
     LaunchedEffect(map,selected) {drawPin(map)}
     WorkspaceDialog(fillRegion=true,onDismissRequest={close()},properties=DialogProperties(usePlatformDefaultWidth=false)) {
         BackHandler(onBack={close()})
-        Surface(Modifier.fillMaxSize()) {
+        Surface(Modifier.fillMaxSize(),color=wd.surface,contentColor=wd.textPrimary) {
             Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize().systemBarsPadding().semantics {testTagsAsResourceId=true}.testTag("place-location-content").padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
-                    TextButton(modifier=Modifier.weight(1f).testTag("place-pin-close"),onClick={close()}) {Text(stringResource(R.string.place_pin_cancel))}
-                    TextButton(modifier=Modifier.weight(1f).testTag("place-pin-use"),enabled=selected!=null,onClick={
-                        if(!closed && alive.get() && !searching && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) currentSelection()?.let {
-                            val choice=PlaceLocationSelection(it,pinPlaced,selectedName,selectedAddress,selectedSource)
-                            closed=true;cancelReverse();use(choice)
-                        }
-                    }) {Text(stringResource(R.string.place_pin_use))}
+                Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+                    VisitPickerBackChip(stringResource(R.string.place_pin_cancel),{close()},Modifier.testTag("place-pin-close"))
                 }
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
-                    Text(stringResource(R.string.place_pin_title),Modifier.weight(1f),style=MaterialTheme.typography.headlineSmall)
-                    TextButton(onClick={cancelReverse();searching=true},modifier=Modifier.testTag("place-pin-search")) {Text(stringResource(R.string.place_pin_search))}
+                Text(stringResource(R.string.place_pin_title),style=WdType.title,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
+                Text(stringResource(R.string.place_pin_instructions),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+                WdButton(stringResource(R.string.place_pin_search),{cancelReverse();searching=true},Modifier.testTag("place-pin-search"),icon=Icons.Outlined.Search)
+                WdCard {
+                    Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=10.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Text(stringResource(R.string.place_pin_online),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge,color=wd.textPrimary)
+                        Switch(online,{online=it},Modifier.testTag("place-pin-online").semantics {contentDescription=onlineDescription},colors=wdSwitchColors())
+                    }
+                    WdDivider(Modifier.padding(start=16.dp))
+                    Text(stringResource(R.string.place_pin_tiles_disclosure),Modifier.padding(horizontal=16.dp,vertical=10.dp),style=WdType.caption2,color=wd.textMuted)
                 }
-                Text(stringResource(R.string.place_pin_instructions))
-                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
-                    Text(stringResource(R.string.place_pin_online),Modifier.weight(1f).padding(top=12.dp))
-                    Switch(online,{online=it},Modifier.testTag("place-pin-online").semantics {contentDescription=onlineDescription})
-                }
-                Text(stringResource(R.string.place_pin_tiles_disclosure),style=MaterialTheme.typography.bodySmall)
+                val mapShape=RoundedCornerShape(14.dp)
+                Box(Modifier.fillMaxWidth().clip(mapShape).background(wd.card).border(1.dp,wd.border,mapShape).padding(1.dp)) {
                 AndroidView(factory={mapView.apply {
                     addOnDidFailLoadingMapListener {error=R.string.place_pin_tile_error}
                     getMapAsync {target->
@@ -206,28 +210,38 @@ import java.util.concurrent.atomic.AtomicBoolean
                         map=target;ready=true;mapReady(target)
                     }
                 }},modifier=Modifier.fillMaxWidth().height(280.dp).semantics {contentDescription=mapDescription})
-                if(!online) Text(stringResource(R.string.place_pin_offline),style=MaterialTheme.typography.bodySmall)
-                error?.let {Text(stringResource(it),color=MaterialTheme.colorScheme.error)}
-                OutlinedButton(enabled=ready,modifier=Modifier.testTag("place-pin-drop"),onClick={
+                }
+                if(!online) Text(stringResource(R.string.place_pin_offline),style=WdType.caption2,color=wd.textMuted)
+                error?.let {WdNotice(stringResource(it),icon=Icons.Outlined.ErrorOutline,warning=true)}
+                WdButton(stringResource(R.string.place_pin_drop),{
                     map?.cameraPosition?.target?.wrap()?.let {clearMetadata();latitude=it.latitude;longitude=it.longitude;pinPlaced=true}
-                }) {Text(stringResource(R.string.place_pin_drop))}
-                Text(stringResource(R.string.place_pin_center,number.format(cameraLatitude),number.format(cameraLongitude)),style=MaterialTheme.typography.bodySmall)
-                if(selected==null) Text(stringResource(R.string.place_pin_empty))
-                else {
-                    Text(stringResource(R.string.place_pin_selected),style=MaterialTheme.typography.titleMedium)
-                    selectedName?.let {Text(it)}
-                    selectedAddress?.let {Text(it)}
-                    Text(stringResource(R.string.place_pin_latitude,number.format(selected.latitude)))
-                    Text(stringResource(R.string.place_pin_longitude,number.format(selected.longitude)))
-                    Text(stringResource(R.string.place_pin_draft),style=MaterialTheme.typography.bodySmall)
-                    Text(stringResource(R.string.place_pin_lookup_disclosure),style=MaterialTheme.typography.bodySmall)
-                    if(!allowed) Text(stringResource(R.string.place_pin_disabled),style=MaterialTheme.typography.bodySmall)
-                    OutlinedButton(enabled=allowed&&!reverseBusy,onClick={findAddress()},modifier=Modifier.testTag("place-pin-find")) {Text(stringResource(R.string.place_pin_find))}
-                    if(reverseBusy) {LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onClick={cancelReverse()},modifier=Modifier.testTag("place-pin-stop")) {Text(stringResource(R.string.place_pin_stop))}}
-                    reverseStatus?.let {Text(stringResource(it),style=MaterialTheme.typography.bodySmall)}
-                    reverseError?.let {Text(stringResource(it),color=MaterialTheme.colorScheme.error)}
+                },Modifier.testTag("place-pin-drop"),enabled=ready,icon=Icons.Outlined.AddLocationAlt)
+                Text(stringResource(R.string.place_pin_center,number.format(cameraLatitude),number.format(cameraLongitude)),style=WdType.caption,color=wd.textMuted)
+                if(selected==null) VisitPickerNote(stringResource(R.string.place_pin_empty),Icons.Outlined.WrongLocation)
+                else WdCard {
+                    Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.place_pin_selected),style=WdType.title3,color=wd.textPrimary)
+                    selectedName?.let {Text(it,style=MaterialTheme.typography.titleMedium,color=wd.textPrimary)}
+                    selectedAddress?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                    Text(stringResource(R.string.place_pin_latitude,number.format(selected.latitude)),style=WdType.caption,color=wd.textPrimary)
+                    Text(stringResource(R.string.place_pin_longitude,number.format(selected.longitude)),style=WdType.caption,color=wd.textPrimary)
+                    Text(stringResource(R.string.place_pin_draft),style=WdType.caption2,color=wd.textMuted)
+                    Text(stringResource(R.string.place_pin_lookup_disclosure),style=WdType.caption2,color=wd.textMuted)
+                    if(!allowed) Text(stringResource(R.string.place_pin_disabled),style=WdType.caption2,color=wd.textMuted)
+                    WdButton(stringResource(R.string.place_pin_find),{findAddress()},Modifier.testTag("place-pin-find"),enabled=allowed&&!reverseBusy,icon=Icons.Outlined.TravelExplore)
+                    if(reverseBusy) {LinearProgressIndicator(Modifier.fillMaxWidth(),color=wd.accent,trackColor=wd.dialTrack);TextButton(onClick={cancelReverse()},modifier=Modifier.testTag("place-pin-stop")) {Text(stringResource(R.string.place_pin_stop))}}
+                    reverseStatus?.let {Text(stringResource(it),style=MaterialTheme.typography.bodySmall,color=wd.textPrimary)}
+                    reverseError?.let {Text(stringResource(it),style=MaterialTheme.typography.bodySmall,color=wd.inkRust)}
+                    }
                 }
             }
+                // The primary action is pinned beneath the scrolling draft, as on iOS.
+                WdButton(stringResource(R.string.place_pin_use),{
+                    if(!closed && alive.get() && !searching && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) currentSelection()?.let {
+                        val choice=PlaceLocationSelection(it,pinPlaced,selectedName,selectedAddress,selectedSource)
+                        closed=true;cancelReverse();use(choice)
+                    }
+                },Modifier.testTag("place-pin-use"),emphasis=WdEmphasis.primary,enabled=selected!=null,icon=Icons.Outlined.Check)
             }
             // The page margin is a stable scroll gesture area outside the interactive map.
             Spacer(Modifier.align(Alignment.CenterStart).fillMaxHeight().width(20.dp).systemBarsPadding()

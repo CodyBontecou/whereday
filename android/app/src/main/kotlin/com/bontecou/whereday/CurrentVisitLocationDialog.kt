@@ -12,7 +12,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
 import java.util.Locale
@@ -80,23 +83,29 @@ import kotlinx.coroutines.*
     val usable=location?.takeIf {it.isUsable(maxOf(elapsed,SystemClock.elapsedRealtime()))}
     WorkspaceAlertDialog(onDismissRequest=dismiss,title={Text(stringResource(R.string.visit_find_current))},text={
         Column(Modifier.semantics {testTagsAsResourceId=true}.testTag("current-location-content").verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-            Text(stringResource(if(hasBusinessLookup) R.string.current_location_business_disclosure else R.string.current_location_disclosure))
-            Text(stringResource(R.string.current_location_quality))
-            if(busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.current_location_loading))}
-            else OutlinedButton(modifier=Modifier.testTag("current-location-request"),onClick={
+            Text(stringResource(if(hasBusinessLookup) R.string.current_location_business_disclosure else R.string.current_location_disclosure),color=wd.textPrimary)
+            Text(stringResource(R.string.current_location_quality),style=WdType.caption2,color=wd.textMuted)
+            if(busy) VisitPickerProgress(stringResource(R.string.current_location_loading))
+            else WdButton(stringResource(R.string.current_location_request),{
                 if(ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) request()
                 else {generation++;job?.cancel();location=null;message=null;busy=false;permission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION))}
-            }) {Text(stringResource(R.string.current_location_request))}
+            },Modifier.testTag("current-location-request"),icon=Icons.Outlined.MyLocation)
             usable?.let {
-                Text(stringResource(R.string.current_location_ready))
-                val number=NumberFormat.getNumberInstance(locale).apply {maximumFractionDigits=0}
-                Text(stringResource(R.string.current_location_coordinate,String.format(locale,"%.5f",it.coordinate.latitude),String.format(locale,"%.5f",it.coordinate.longitude),number.format(it.accuracyMeters)),Modifier.testTag("current-location-coordinate"))
+                // The inverted "you're here" card from iOS: navy on paper, amber at night.
+                WdInkCard {
+                    WdLiveDot()
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                        Text(stringResource(R.string.current_location_ready),style=MaterialTheme.typography.titleMedium,color=wd.onInkCard)
+                        val number=NumberFormat.getNumberInstance(locale).apply {maximumFractionDigits=0}
+                        Text(stringResource(R.string.current_location_coordinate,String.format(locale,"%.5f",it.coordinate.latitude),String.format(locale,"%.5f",it.coordinate.longitude),number.format(it.accuracyMeters)),Modifier.testTag("current-location-coordinate"),style=WdType.caption,color=wd.onInkCardMuted)
+                    }
+                }
             }
             if(!busy && selectSaved!=null) CurrentSavedPlaceSuggestion(location,places.orEmpty(),elapsed,selectSaved)
             if(!busy && hasBusinessLookup) CurrentBusinessSuggestion(location,places,elapsed,nearby!!,networkAllowed!!,nearbyAvailable,readSavedPlaces!!,selectBusiness!!,metric=metric)
-            if(location!=null && usable==null) Text(stringResource(R.string.current_location_expired))
-            message?.let {Text(stringResource(it))}
+            if(location!=null && usable==null) WdNotice(stringResource(R.string.current_location_expired),icon=Icons.Outlined.TimerOff,warning=true)
+            message?.let {WdNotice(stringResource(it),icon=if(denied) Icons.Outlined.LocationOff else Icons.Outlined.ErrorOutline,warning=true)}
             if(denied) TextButton(onClick={context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,"package:${context.packageName}".toUri()))}) {Text(stringResource(R.string.current_location_permissions))}
         }
     },confirmButton={TextButton(modifier=Modifier.testTag("current-location-use"),enabled=usable!=null && !busy,onClick={location?.takeIf {it.isUsable(SystemClock.elapsedRealtime())}?.let(select)}) {Text(stringResource(R.string.current_location_use))}},
@@ -108,17 +117,17 @@ import kotlinx.coroutines.*
     val latestPlaces by rememberUpdatedState(places)
     val usable=fix?.takeIf {it.isUsable(maxOf(nowElapsedMillis,elapsedMillis()))} ?: return
     val suggestion=remember(usable,places) {usable.savedPlaceSuggestion(places,usable.elapsedMillis)} ?: return
-    OutlinedCard(Modifier.fillMaxWidth().semantics {testTagsAsResourceId=true}.testTag("current-saved-place-suggestion")) {
-        Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-            Text(stringResource(R.string.current_saved_place_title),style=MaterialTheme.typography.titleSmall)
-            Text(suggestion.name,style=MaterialTheme.typography.titleMedium)
-            suggestion.address?.takeIf {it.isNotBlank()}?.let {Text(it)}
-            Text(stringResource(R.string.current_saved_place_explanation),style=MaterialTheme.typography.bodySmall)
-            OutlinedButton(onClick={
+    WdCard(Modifier.semantics {testTagsAsResourceId=true}.testTag("current-saved-place-suggestion")) {
+        Column(Modifier.padding(14.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            Text(stringResource(R.string.current_saved_place_title),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textMuted)
+            Text(suggestion.name,style=WdType.title3,color=wd.textPrimary)
+            suggestion.address?.takeIf {it.isNotBlank()}?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+            Text(stringResource(R.string.current_saved_place_explanation),style=WdType.caption2,color=wd.textMuted)
+            WdButton(stringResource(R.string.current_saved_place_use),{
                 // A queued click cannot use an expired fix or a no-longer-matching place snapshot.
                 val current=latestFix?.savedPlaceSuggestion(latestPlaces,maxOf(nowElapsedMillis,elapsedMillis()))
                 if(current==suggestion) use(suggestion)
-            },modifier=Modifier.testTag("use-current-saved-place")) {Text(stringResource(R.string.current_saved_place_use))}
+            },Modifier.testTag("use-current-saved-place"),icon=Icons.Outlined.Bookmark)
         }
     }
 }

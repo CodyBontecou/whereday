@@ -1,14 +1,20 @@
 package com.bontecou.whereday
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
@@ -76,47 +82,63 @@ private fun AutomationFailure?.accessUnavailable()=this!=null && this!=Automatio
         else discard=AutomationDialog(sequence.incrementAndGet(),automationReviewKey(current),choices().toSet())
     }
     BackHandler {leave()}
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).semantics {testTagsAsResourceId=true}.testTag("automation-screen").padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        TextButton(onClick={leave()}) {Text(stringResource(R.string.automation_back))}
-        Text(stringResource(R.string.automation_title),style=MaterialTheme.typography.headlineMedium)
-        Text(stringResource(R.string.automation_intro))
-        if(!state.loaded) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.automation_loading))}
+    val card=Modifier.padding(horizontal=16.dp)
+    Column(Modifier.fillMaxSize().background(wd.surface).verticalScroll(rememberScrollState()).semantics {testTagsAsResourceId=true}.testTag("automation-screen").padding(bottom=32.dp)) {
+        SettingsBackHeader(stringResource(R.string.automation_title),stringResource(R.string.automation_back),{leave()})
+        Text(stringResource(R.string.automation_intro),Modifier.padding(horizontal=20.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+        if(!state.loaded) SettingsProgress(stringResource(R.string.automation_loading),card.padding(top=20.dp))
         else {
-            Text(stringResource(when {
-                state.failure.accessUnavailable()->R.string.automation_status_unknown
-                approval==null->R.string.automation_status_disabled
-                installed!=approval.identity->R.string.automation_status_changed
-                else->R.string.automation_status_connected
-            }),Modifier.testTag("automation-status"),style=MaterialTheme.typography.titleMedium)
-            if(installed==null) {
-                Text(stringResource(R.string.automation_not_installed))
-                OutlinedButton(enabled=!state.busy,onClick={if(interactive() && current.installed==null) install()}) {Text(stringResource(R.string.automation_install))}
-            } else {
-                Text(stringResource(R.string.automation_package,installed.packageName),style=MaterialTheme.typography.bodySmall)
-                Text(stringResource(R.string.automation_installation_help),style=MaterialTheme.typography.bodySmall)
-            }
-            TextButton(enabled=!state.busy,onClick={if(interactive()) reload()}) {Text(stringResource(R.string.automation_reload))}
-            HorizontalDivider()
-            Text(stringResource(R.string.automation_allowed),style=MaterialTheme.typography.titleLarge)
-            AutomationScope.entries.forEach {scope->
-                Row(Modifier.fillMaxWidth().toggleable(scope in selected,enabled=installed!=null && !state.busy,role=Role.Checkbox) {value->
-                    if(interactive() && current.installed!=null && automationReviewKey(current)==key) {
-                        val now=choices();draft=AutomationChoiceDraft(automationBinding(current),if(value) now+scope else now-scope)
+            WdCard(card.padding(top=16.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                val connected=!state.failure.accessUnavailable() && approval!=null && installed==approval.identity
+                Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+                    Icon(if(connected) Icons.Outlined.Link else if(approval==null && !state.failure.accessUnavailable()) Icons.Outlined.LinkOff else Icons.Outlined.ErrorOutline,null,Modifier.size(20.dp),
+                        tint=if(connected) wd.accent else if(approval==null && !state.failure.accessUnavailable()) wd.textMuted else wd.inkRust)
+                    Text(stringResource(when {
+                        state.failure.accessUnavailable()->R.string.automation_status_unknown
+                        approval==null->R.string.automation_status_disabled
+                        installed!=approval.identity->R.string.automation_status_changed
+                        else->R.string.automation_status_connected
+                    }),Modifier.weight(1f).testTag("automation-status"),style=WdType.title3,color=wd.textPrimary)
+                }
+                if(installed==null) {
+                    Text(stringResource(R.string.automation_not_installed),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+                    WdButton(stringResource(R.string.automation_install),{if(interactive() && current.installed==null) install()},enabled=!state.busy,trailingIcon=Icons.AutoMirrored.Outlined.OpenInNew)
+                } else {
+                    Text(stringResource(R.string.automation_package,installed.packageName),style=WdType.caption,color=wd.textPrimary)
+                    Text(stringResource(R.string.automation_installation_help),style=WdType.caption2,color=wd.textMuted)
+                }
+                SettingsTextAction(stringResource(R.string.automation_reload),{if(interactive()) reload()},enabled=!state.busy)
+            }}
+            WdSectionHeader(stringResource(R.string.automation_allowed))
+            WdCard(card) {
+                AutomationScope.entries.forEachIndexed {index,scope->
+                    val rowEnabled=installed!=null && !state.busy
+                    WdRow(Modifier.toggleable(scope in selected,enabled=rowEnabled,role=Role.Checkbox) {value->
+                        if(interactive() && current.installed!=null && automationReviewKey(current)==key) {
+                            val now=choices();draft=AutomationChoiceDraft(automationBinding(current),if(value) now+scope else now-scope)
+                        }
+                    }.testTag("automation-scope-${scope.name}"),divider=index<AutomationScope.entries.lastIndex) {
+                        Checkbox(checked=scope in selected,onCheckedChange=null,enabled=rowEnabled,
+                            colors=CheckboxDefaults.colors(checkedColor=wd.accent,uncheckedColor=wd.textMuted,checkmarkColor=wd.surface))
+                        Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                            Text(scope.title(),style=MaterialTheme.typography.bodyLarge,color=if(rowEnabled) wd.textPrimary else wd.textMuted)
+                            Text(scope.detail(),style=WdType.caption2,color=wd.textMuted)
+                        }
                     }
-                }.testTag("automation-scope-${scope.name}").padding(vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-                    Checkbox(checked=scope in selected,onCheckedChange=null)
-                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)) {Text(scope.title(),style=MaterialTheme.typography.titleMedium);Text(scope.detail(),style=MaterialTheme.typography.bodySmall)}
                 }
             }
-            if(selected!=baseline) Text(stringResource(R.string.automation_unsaved),style=MaterialTheme.typography.labelLarge)
-            Button(enabled=installed!=null && selected.isNotEmpty() && !state.busy && (selected!=baseline || approval?.identity!=installed || state.failure.accessUnavailable()),
-                onClick={if(canApprove()) current.installed?.let {reviewed=AutomationReview(sequence.incrementAndGet(),automationReviewKey(current),it.snapshot(),choices().toSet())}},modifier=Modifier.testTag("automation-save")) {Text(stringResource(R.string.automation_save))}
-            Text(stringResource(R.string.automation_results_help),style=MaterialTheme.typography.bodySmall)
-            if(approval!=null || state.failure.accessUnavailable()) TextButton(enabled=!state.busy,onClick={if(canDisable()) revoke=AutomationDialog(sequence.incrementAndGet(),automationReviewKey(current),choices().toSet())}) {Text(stringResource(R.string.automation_disable),color=MaterialTheme.colorScheme.error)}
-            if(state.busy) {LinearProgressIndicator(Modifier.fillMaxWidth());Text(stringResource(R.string.automation_saving))}
-            state.notice?.let {Text(automationNoticeText(it),Modifier.testTag("automation-notice"))}
-            state.failure?.let {Text(automationFailureText(it),Modifier.testTag("automation-error"),color=MaterialTheme.colorScheme.error)}
-            Text(stringResource(R.string.automation_instructions,AutomationActivity.ACTION_RUN),style=MaterialTheme.typography.bodySmall)
+            if(selected!=baseline) Text(stringResource(R.string.automation_unsaved),Modifier.padding(start=20.dp,end=20.dp,top=8.dp),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.inkRust)
+            WdButton(stringResource(R.string.automation_save),{if(canApprove()) current.installed?.let {reviewed=AutomationReview(sequence.incrementAndGet(),automationReviewKey(current),it.snapshot(),choices().toSet())}},
+                card.padding(top=16.dp).testTag("automation-save"),emphasis=WdEmphasis.primary,
+                enabled=installed!=null && selected.isNotEmpty() && !state.busy && (selected!=baseline || approval?.identity!=installed || state.failure.accessUnavailable()))
+            WdSectionFooter(stringResource(R.string.automation_results_help))
+            if(approval!=null || state.failure.accessUnavailable()) WdButton(stringResource(R.string.automation_disable),{if(canDisable()) revoke=AutomationDialog(sequence.incrementAndGet(),automationReviewKey(current),choices().toSet())},
+                card.padding(top=16.dp),emphasis=WdEmphasis.destructive,enabled=!state.busy)
+            if(state.busy) SettingsProgress(stringResource(R.string.automation_saving),card.padding(top=16.dp))
+            state.notice?.let {SettingsNotice(card.padding(top=12.dp),icon=Icons.Outlined.CheckCircle) {Text(automationNoticeText(it),Modifier.testTag("automation-notice"))}}
+            state.failure?.let {SettingsNotice(card.padding(top=12.dp),warning=true) {Text(automationFailureText(it),Modifier.testTag("automation-error"))}}
+            WdSectionHeader(stringResource(R.string.redesign_settings_how_to))
+            WdCard(card) {Text(stringResource(R.string.automation_instructions,AutomationActivity.ACTION_RUN),Modifier.padding(16.dp),style=WdType.caption,color=wd.textPrimary)}
         }
     }
     reviewed?.let {ticket->WorkspaceAlertDialog(onDismissRequest={if(reviewed==ticket) reviewed=null},title={Text(stringResource(R.string.automation_review_title))},text={
@@ -130,7 +152,7 @@ private fun AutomationFailure?.accessUnavailable()=this!=null && this!=Automatio
         }
     },modifier=Modifier.testTag("automation-allow")) {Text(stringResource(R.string.automation_allow))}},dismissButton={TextButton(onClick={if(reviewed==ticket) reviewed=null}) {Text(stringResource(R.string.automation_cancel))}})}
     revoke?.let {ticket->WorkspaceAlertDialog(onDismissRequest={if(revoke==ticket) revoke=null},title={Text(stringResource(R.string.automation_revoke_title))},text={Text(stringResource(R.string.automation_revoke_body),Modifier.verticalScroll(rememberScrollState()))},
-        confirmButton={TextButton(enabled=!state.busy,onClick={if(revoke==ticket) {revoke=null;if(canDisable() && automationReviewKey(current)==ticket.key) disable()}},modifier=Modifier.testTag("automation-revoke")) {Text(stringResource(R.string.automation_revoke_confirm))}},dismissButton={TextButton(onClick={if(revoke==ticket) revoke=null}) {Text(stringResource(R.string.automation_cancel))}})}
+        confirmButton={TextButton(enabled=!state.busy,onClick={if(revoke==ticket) {revoke=null;if(canDisable() && automationReviewKey(current)==ticket.key) disable()}},modifier=Modifier.testTag("automation-revoke"),colors=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)) {Text(stringResource(R.string.automation_revoke_confirm))}},dismissButton={TextButton(onClick={if(revoke==ticket) revoke=null}) {Text(stringResource(R.string.automation_cancel))}})}
     discard?.let {ticket->WorkspaceAlertDialog(onDismissRequest={if(discard==ticket) discard=null},title={Text(stringResource(R.string.automation_discard_title))},text={Text(stringResource(R.string.automation_discard_body))},
         confirmButton={TextButton(enabled=!state.busy,onClick={if(discard==ticket) {discard=null;if(foreground() && !current.busy && automationReviewKey(current)==ticket.key && choices()==ticket.scopes) back()}},modifier=Modifier.testTag("automation-discard")) {Text(stringResource(R.string.automation_discard_confirm))}},dismissButton={TextButton(onClick={if(discard==ticket) discard=null}) {Text(stringResource(R.string.automation_cancel))}})}
 }

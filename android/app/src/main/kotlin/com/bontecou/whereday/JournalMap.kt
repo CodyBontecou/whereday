@@ -1,6 +1,20 @@
 package com.bontecou.whereday
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
+import java.util.Locale
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
@@ -61,6 +75,7 @@ private class JournalMapRenderer {
     private var photoFeatures:String=""
     private val loadedPhotoIcons=mutableMapOf<String,android.graphics.Bitmap>()
     var fitPaddingPixels=48
+    var inks=MapInks()
     var startIcon:android.graphics.Bitmap?=null
     var endIcon:android.graphics.Bitmap?=null
     private var fitted = false
@@ -106,7 +121,7 @@ private class JournalMapRenderer {
         val styleKey=if(online) "https://tiles.openfreemap.org/styles/${if(dark) "dark" else "liberty"}" else "offline:$dark"
         if(requestedStyle != styleKey) {
             requestedStyle=styleKey; error=false;loadedPhotoIcons.clear();renderedPhotoClusters=null
-            val builder=if(online) Style.Builder().fromUri(styleKey) else Style.Builder().fromJson("""{"version":8,"sources":{},"layers":[{"id":"background","type":"background","paint":{"background-color":"${if(dark) "#18211c" else "#edf1eb"}"}}]}""")
+            val builder=if(online) Style.Builder().fromUri(styleKey) else Style.Builder().fromJson("""{"version":8,"sources":{},"layers":[{"id":"background","type":"background","paint":{"background-color":"${inks.hex(inks.background)}"}}]}""")
             target.setStyle(builder) { style ->
                 if(map!==target || disposed || requestedStyle!=styleKey) return@setStyle
                 style.addSource(GeoJsonSource("journal-route",emptyCollection()))
@@ -122,25 +137,26 @@ private class JournalMapRenderer {
                 style.addSource(GeoJsonSource("journal-active-route",emptyCollection()))
                 style.addSource(GeoJsonSource("journal-active-start",emptyCollection()))
                 style.addSource(GeoJsonSource("journal-active-current",emptyCollection()))
-                style.addLayer(LineLayer("journal-path","journal-route").withProperties(lineColor("#39835b"),lineWidth(4f)))
-                style.addLayer(LineLayer("journal-road-path","journal-road-route").withProperties(lineColor("#1976d2"),lineWidth(4f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
-                style.addLayer(LineLayer("journal-active-path","journal-active-route").withProperties(lineColor("#1976d2"),lineWidth(5f)))
-                style.addLayer(CircleLayer("journal-point","journal-points").withProperties(circleColor("#39835b"),circleRadius(3f),circleStrokeColor("#ffffff"),circleStrokeWidth(1f)))
-                style.addLayer(CircleLayer("journal-visit","journal-visits").withProperties(circleColor("#a16a2e"),circleRadius(8f),circleStrokeColor("#ffffff"),circleStrokeWidth(2f)))
-                style.addLayer(CircleLayer("journal-current-location","journal-location").withProperties(circleColor("#1976d2"),circleRadius(8f),circleStrokeColor("#ffffff"),circleStrokeWidth(3f)))
-                style.addLayer(CircleLayer("journal-replay-position","journal-replay").withProperties(circleColor("#285d42"),circleRadius(10f),circleStrokeColor("#ffffff"),circleStrokeWidth(3f)))
-                style.addLayer(CircleLayer("journal-outlier","journal-outliers").withProperties(circleColor("#b3261e"),circleRadius(5f),circleStrokeColor("#ffffff"),circleStrokeWidth(2f)))
+                val ink=inks
+                style.addLayer(LineLayer("journal-path","journal-route").withProperties(lineColor(ink.path),lineWidth(4f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
+                style.addLayer(LineLayer("journal-road-path","journal-road-route").withProperties(lineColor(ink.path),lineWidth(4f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
+                style.addLayer(LineLayer("journal-active-path","journal-active-route").withProperties(lineColor(ink.active),lineWidth(5f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
+                style.addLayer(CircleLayer("journal-point","journal-points").withProperties(circleColor(ink.path),circleRadius(3f),circleStrokeColor(ink.paper),circleStrokeWidth(1f)))
+                style.addLayer(CircleLayer("journal-visit","journal-visits").withProperties(circleColor(ink.visit),circleRadius(8f),circleStrokeColor(ink.paper),circleStrokeWidth(2f)))
+                style.addLayer(CircleLayer("journal-current-location","journal-location").withProperties(circleColor(ink.live),circleRadius(8f),circleStrokeColor(ink.paper),circleStrokeWidth(3f)))
+                style.addLayer(CircleLayer("journal-replay-position","journal-replay").withProperties(circleColor(ink.paper),circleRadius(8f),circleStrokeColor(ink.highlight),circleStrokeWidth(3.5f)))
+                style.addLayer(CircleLayer("journal-outlier","journal-outliers").withProperties(circleColor(ink.highlight),circleRadius(5f),circleStrokeColor(ink.paper),circleStrokeWidth(2f)))
                 startIcon?.let {style.addImage("route-start",it)}
                 endIcon?.let {style.addImage("route-end",it)}
                 style.addLayer(SymbolLayer("journal-start-flag","journal-start").withProperties(iconImage("route-start"),iconAnchor(Property.ICON_ANCHOR_BOTTOM),iconAllowOverlap(true),iconIgnorePlacement(true)))
                 style.addLayer(SymbolLayer("journal-end-flag","journal-end").withProperties(iconImage("route-end"),iconAnchor(Property.ICON_ANCHOR_BOTTOM),iconAllowOverlap(true),iconIgnorePlacement(true)))
                 style.addLayer(SymbolLayer("journal-active-start-flag","journal-active-start").withProperties(iconImage("route-start"),iconAnchor(Property.ICON_ANCHOR_BOTTOM),iconAllowOverlap(true),iconIgnorePlacement(true)))
-                style.addLayer(CircleLayer("journal-active-position","journal-active-current").withProperties(circleColor("#1976d2"),circleRadius(10f),circleStrokeColor("#ffffff"),circleStrokeWidth(3f)))
+                style.addLayer(CircleLayer("journal-active-position","journal-active-current").withProperties(circleColor(ink.live),circleRadius(10f),circleStrokeColor(ink.paper),circleStrokeWidth(3f)))
                 style.addLayer(SymbolLayer("journal-photo","journal-photos").withProperties(iconImage(Expression.get("icon")),iconAnchor(Property.ICON_ANCHOR_BOTTOM),iconAllowOverlap(true),iconIgnorePlacement(true)))
-                style.addLayer(CircleLayer("journal-photo-dot","journal-photos").withProperties(circleColor("#39835b"),circleRadius(Expression.get("dotRadius")),circlePitchScale("viewport"),circlePitchAlignment("viewport"),circleStrokeColor("#ffffff"),circleStrokeWidth(2f),visibility(Property.NONE)))
-                style.addLayer(CircleLayer("journal-focused-visit","journal-visits").withProperties(circleColor("#a16a2e"),circleRadius(11f),circleStrokeColor("#ffffff"),circleStrokeWidth(3f),visibility(Property.NONE)))
-                style.addLayer(CircleLayer("journal-selected-point","journal-points").withProperties(circleColor("#39835b"),circleRadius(8f),circleStrokeColor("#ffffff"),circleStrokeWidth(3f),visibility(Property.NONE)))
-                style.addLayer(CircleLayer("journal-selected-outlier","journal-outliers").withProperties(circleColor("#b3261e"),circleRadius(8f),circleStrokeColor("#ffffff"),circleStrokeWidth(3f),visibility(Property.NONE)))
+                style.addLayer(CircleLayer("journal-photo-dot","journal-photos").withProperties(circleColor(ink.photo),circleRadius(Expression.get("dotRadius")),circlePitchScale("viewport"),circlePitchAlignment("viewport"),circleStrokeColor(ink.paper),circleStrokeWidth(2f),visibility(Property.NONE)))
+                style.addLayer(CircleLayer("journal-focused-visit","journal-visits").withProperties(circleColor(ink.visit),circleRadius(11f),circleStrokeColor(ink.highlight),circleStrokeWidth(3f),visibility(Property.NONE)))
+                style.addLayer(CircleLayer("journal-selected-point","journal-points").withProperties(circleColor(ink.highlight),circleRadius(8f),circleStrokeColor(ink.paper),circleStrokeWidth(3f),visibility(Property.NONE)))
+                style.addLayer(CircleLayer("journal-selected-outlier","journal-outliers").withProperties(circleColor(ink.highlight),circleRadius(9f),circleStrokeColor(ink.paper),circleStrokeWidth(3f),visibility(Property.NONE)))
                 update()
                 if(!fitted && (this.points.isNotEmpty() || this.visits.isNotEmpty() || this.photos.isNotEmpty())) fit()
             }
@@ -246,7 +262,13 @@ private class JournalMapRenderer {
     val pointLocale=LocalConfiguration.current.locales[0]
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     var savedCamera by rememberSaveable(stateSaver=JournalMapCamera.Saver) {mutableStateOf<JournalMapCamera?>(null)}
-    val renderer=remember(context) { JournalMapRenderer().apply {val scale=context.resources.displayMetrics.density;fitPaddingPixels=kotlin.math.ceil(48*scale).toInt();startIcon=routeFlag(scale,false);endIcon=routeFlag(scale,true)} }
+    val renderer=remember(context) { JournalMapRenderer().apply {val scale=context.resources.displayMetrics.density;fitPaddingPixels=kotlin.math.ceil(48*scale).toInt()} }
+    // Route ink follows the Whereday palette: accent paths, place inks for visits/flags, live dot, rust highlights.
+    val inks=mapInks()
+    val flagScale=context.resources.displayMetrics.density
+    renderer.inks=inks
+    renderer.startIcon=remember(flagScale,inks) {routeFlag(flagScale,false,inks)}
+    renderer.endIcon=remember(flagScale,inks) {routeFlag(flagScale,true,inks)}
     val mapView=remember(context) { MapLibre.getInstance(context); RendererReadyMapView(context).also { it.onCreate(null) } }
     var online by rememberSaveable { mutableStateOf(false) }
     var showPoints by rememberSaveable { mutableStateOf(true) }
@@ -371,14 +393,14 @@ private class JournalMapRenderer {
         BlockVisitLinks()
         WorkspaceAlertDialog(onDismissRequest={pickingPoint=false},title={Text(stringResource(R.string.map_point_browse))},text={
             Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.map_point_sampled))
+                Text(stringResource(R.string.map_point_sampled),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
                 LazyColumn(Modifier.heightIn(max=400.dp)) {
                     items(displayPoints,key={it.id}) {point->
                         TextButton(onClick={selectPoint(point);pickingPoint=false},modifier=Modifier.fillMaxWidth().testTag("map-point-choice-${point.id}")) {
                             Column(Modifier.fillMaxWidth()) {
-                                Text(pointTimestamp(point,pointLocale))
-                                Text(String.format(pointLocale,"%.5f, %.5f",point.coordinate.latitude,point.coordinate.longitude))
-                                if(point.outlier) Text(stringResource(R.string.map_point_outlier))
+                                Text(pointTimestamp(point,pointLocale),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textPrimary)
+                                Text(String.format(pointLocale,"%.5f, %.5f",point.coordinate.latitude,point.coordinate.longitude),style=WdType.caption2,color=wd.textMuted)
+                                if(point.outlier) Text(stringResource(R.string.map_point_outlier),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold),color=wd.inkRust)
                             }
                         }
                     }
@@ -388,7 +410,7 @@ private class JournalMapRenderer {
     }
     if(pickingVisit && onVisitSelected!=null) WorkspaceAlertDialog(onDismissRequest={pickingVisit=false},title={Text(stringResource(R.string.map_visits))},text={
         val choices=contents.visits.filter {candidateVisits==null || it.id in candidateVisits.orEmpty()}
-        if(choices.isEmpty()) Text(stringResource(R.string.map_visits_empty))
+        if(choices.isEmpty()) Text(stringResource(R.string.map_visits_empty),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
         else LazyColumn(Modifier.heightIn(max=400.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             items(choices,key={it.id}) {visit-> VisitNavigationRow(visit) {pickingVisit=false;selectedPointId=null;onVisitSelected(visit)} }
         }
@@ -401,7 +423,7 @@ private class JournalMapRenderer {
             MapLayerToggle(stringResource(R.string.map_layer_endpoints),showEnds,"map-layer-endpoints") {showEnds=it}
             activeRecording?.let {current->
                 MapLayerToggle(stringResource(R.string.active_recording_map_layer),current.enabled,"map-layer-active-recording",change=current.change)
-                Text(stringResource(R.string.active_recording_map_description),style=MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.active_recording_map_description),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
             }
             photoLayer?.let {photo->
                 MapLayerToggle(stringResource(R.string.map_layer_photos),photo.enabled,"map-layer-photos",change=photo.enable)
@@ -409,149 +431,212 @@ private class JournalMapRenderer {
                     latestPhotoLayer?.takeIf {!it.dots}?.showImages?.invoke(value)
                 }
                 MapLayerToggle(stringResource(R.string.map_layer_photo_dots),photo.dots,"map-layer-photo-dots",change=photo.showDots)
-                Text(stringResource(R.string.map_photo_dots_description),style=MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.map_photo_dots_description),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
             }
             if(onOutliers!=null) MapLayerToggle(stringResource(R.string.map_layer_outliers),showOutliers,"map-layer-outliers",change=onOutliers)
-            Text(stringResource(if(onOutliers!=null) R.string.map_outliers_main else R.string.map_outliers_local),style=MaterialTheme.typography.bodySmall)
+            Text(stringResource(if(onOutliers!=null) R.string.map_outliers_main else R.string.map_outliers_local),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
             val (start,end)=endpoints.selected(showOutliers,allOutlierFallback)
-            start?.let {Text(stringResource(R.string.map_route_start,timeText(it.time)),style=MaterialTheme.typography.bodySmall)}
-            end?.takeIf {it.id!=start?.id}?.let {Text(stringResource(R.string.map_route_end,timeText(it.time)),style=MaterialTheme.typography.bodySmall)}
+            start?.let {Text(stringResource(R.string.map_route_start,timeText(it.time)),style=WdType.caption2,color=wd.textMuted)}
+            end?.takeIf {it.id!=start?.id}?.let {Text(stringResource(R.string.map_route_end,timeText(it.time)),style=WdType.caption2,color=wd.textMuted)}
         }
     },confirmButton={TextButton(onClick={configuring=false}) {Text(stringResource(R.string.map_layers_done))}})
-    Column(modifier,verticalArrangement=Arrangement.spacedBy(8.dp)) {
-        FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-            FilterChip(online,{ online=!online },label={ Text(stringResource(R.string.map_online)) })
-            TextButton(onClick={configuring=true}) {Text(stringResource(R.string.map_layers))}
-            TextButton(onClick={ follow?.stop?.invoke();renderer.follow(follow?.fix,false);renderer.fit() }) { Text(stringResource(R.string.map_fit)) }
+    val colors=wd
+    // At large text the floating controls leave the map and wrap above it, so every label stays readable.
+    val overlay=LocalDensity.current.fontScale<1.3f
+    val onlineControl:@Composable ()->Unit={Box(Modifier.wdFloating(CircleShape,colors,6.dp)) {WdChip(stringResource(R.string.map_online),online,{ online=!online },Modifier.heightIn(min=44.dp),icon=Icons.Outlined.Public)}}
+    val layersControl:@Composable ()->Unit={TraceCapsule(stringResource(R.string.map_layers),{configuring=true},icon=Icons.Outlined.Layers,floating=true)}
+    val fitControl:@Composable ()->Unit={TraceCapsule(stringResource(R.string.map_fit),{ follow?.stop?.invoke();renderer.follow(follow?.fix,false);renderer.fit() },icon=Icons.Outlined.CenterFocusWeak,floating=true)}
+    val followControl:@Composable ()->Unit={follow?.let {source->
+        val controls=if(visitFocus==null) source else MapFollowUi(source.enabled,source.showing,source.fix,source.message,
+            {if(!source.enabled) onVisitFocusCleared();source.toggle()},source.stop,source.hide)
+        MapFollowControl(controls,followMetric)
+    }}
+    Column(modifier,verticalArrangement=Arrangement.spacedBy(10.dp)) {
+        if(!overlay) FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            onlineControl();layersControl();fitControl()
         }
-        follow?.let {source->
-            val controls=if(visitFocus==null) source else MapFollowUi(source.enabled,source.showing,source.fix,source.message,
-                {if(!source.enabled) onVisitFocusCleared();source.toggle()},source.stop,source.hide)
-            MapFollowControl(controls,followMetric)
+        if(!overlay) followControl()
+        val frame=RoundedCornerShape(20.dp)
+        Box(Modifier.fillMaxWidth().height(340.dp).clip(frame).background(colors.dialTrack).border(1.dp,colors.border,frame)) {
+            AndroidView(factory={ mapView.apply {
+                addOnDidFailLoadingMapListener { renderer.error=true }
+                getMapAsync { map ->
+                    if(renderer.disposed) return@getMapAsync
+                    renderer.map=map
+                    renderer.restoreCamera(savedCamera)
+                    map.addOnCameraIdleListener {refreshViewport();renderer.cameraSnapshot()?.let {savedCamera=it}}
+                    map.addOnCameraMoveStartedListener {reason->if(reason==MapLibreMap.OnCameraMoveStartedListener.REASON_API_GESTURE) latestFollow?.stop?.invoke()}
+                    renderer.follow(latestFollow?.fix,latestFollow?.enabled==true && latestVisitFocus==null)
+                    map.addOnMapClickListener {coordinate->
+                        if(renderer.disposed || !renderer.queryReady || renderer.map!==map) return@addOnMapClickListener false
+                        val photoAction=latestPhotoLayer
+                        if(photoAction!=null && photoAction.visibleClusters.isNotEmpty()) {
+                            val pixel=map.projection.toScreenLocation(coordinate)
+                            val clusters=photoAction.visibleClusters
+                            val density=context.resources.displayMetrics.density
+                            val matches=if(photoAction.dots) {
+                                val centers=clusters.map {marker->map.projection.toScreenLocation(LatLng(marker.coordinate.latitude,marker.coordinate.longitude)).let {PhotoMarkerPoint((it.x/density).toDouble(),(it.y/density).toDouble())}}
+                                // Native Android targets are 48 dp; ties keep the stable directory order.
+                                val index=PhotoDotHitTesting.targetIndex(PhotoMarkerPoint((pixel.x/density).toDouble(),(pixel.y/density).toDouble()),centers,48.0)
+                                listOfNotNull(index?.let {clusters[it]})
+                            } else {
+                                val radius=28f*density
+                                val ids=map.queryRenderedFeatures(android.graphics.RectF(pixel.x-radius,pixel.y-radius,pixel.x+radius,pixel.y+radius),"journal-photo").mapNotNull {it.getStringProperty("id")}.toSet()
+                                clusters.filter {it.id in ids}
+                            }
+                            if(matches.isNotEmpty()) {latestPointSelection(null);photoAction.open(matches);return@addOnMapClickListener true}
+                        }
+                        val action=latestVisitAction
+                        if(action!=null && latestLayers.visits) {
+                            val pixel=map.projection.toScreenLocation(coordinate)
+                            val radius=24f*context.resources.displayMetrics.density
+                            val bounds=android.graphics.RectF(pixel.x-radius,pixel.y-radius,pixel.x+radius,pixel.y+radius)
+                            val ids=map.queryRenderedFeatures(bounds,"journal-visit").mapNotNull {it.getStringProperty("id")}.toSet()
+                            val matches=latestVisibleVisits.filter {it.id in ids}
+                            if(matches.size==1) {latestPointSelection(null);action(matches.single());return@addOnMapClickListener true}
+                            if(matches.size>1) {latestPointSelection(null);candidateVisits=ids;pickingVisit=true;return@addOnMapClickListener true}
+                        }
+                        val pixel=map.projection.toScreenLocation(coordinate)
+                        val density=context.resources.displayMetrics.density
+                        val radius=24f*density
+                        val ids=map.queryRenderedFeatures(android.graphics.RectF(pixel.x-radius,pixel.y-radius,pixel.x+radius,pixel.y+radius),"journal-point","journal-outlier").mapNotNull {it.getStringProperty("id")}.toSet()
+                        val candidates=latestDisplayPoints.filter {it.id in ids}
+                        val centers=candidates.map {point->map.projection.toScreenLocation(LatLng(point.coordinate.latitude,point.coordinate.longitude)).let {it.x.toDouble()/density to it.y.toDouble()/density}}
+                        val hit=pointHitIndex(pixel.x.toDouble()/density,pixel.y.toDouble()/density,centers)?.let {candidates[it]}
+                        val hadSelection=latestSelectedPoint!=null
+                        latestPointSelection(hit?.takeIf {it.id!=latestSelectedPoint})
+                        hit!=null || hadSelection
+                    }
+                    renderer.render(latestPoints,latestVisits,latestOnline,latestDark,latestLayers,latestReplay,latestEnds,latestFallback,latestPhotoLayer?.visibleClusters.orEmpty(),latestPhotoLayer?.icons.orEmpty(),latestActiveRecording,latestRoadGeometry,latestPhotoLayer?.dots==true,latestVisitFocus)
+                }
+            } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null);renderer.render(points,visits,online,dark,layers,replay,endpoints,allOutlierFallback,photoClusters,photoLayer?.icons.orEmpty(),activeSnapshot,roadGeometry,photoLayer?.dots==true,visitFocus) },modifier=Modifier.fillMaxSize().testTag("journal-native-map"))
+            if(overlay) {
+                Box(Modifier.align(Alignment.TopStart).padding(10.dp)) {onlineControl()}
+                Column(Modifier.align(Alignment.TopEnd).padding(10.dp),horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(8.dp)) {layersControl();fitControl()}
+                Box(Modifier.align(Alignment.BottomStart).padding(10.dp).widthIn(max=300.dp)) {followControl()}
+            }
         }
         visitFocus?.let {focus->visits.find {it.id==focus.id}?.let {visit->
-            Text(stringResource(R.string.map_selected_visit,visit.name?.takeIf {it.isNotBlank()} ?: stringResource(R.string.timeline_visit)),Modifier.testTag("map-focused-visit"))
+            Row(Modifier.wdFloating(CircleShape,colors,0.dp).padding(horizontal=14.dp,vertical=10.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                Box(Modifier.size(10.dp).clip(CircleShape).background(colors.placeInks[2]).border(2.dp,colors.inkRust,CircleShape))
+                Text(stringResource(R.string.map_selected_visit,visit.name?.takeIf {it.isNotBlank()} ?: stringResource(R.string.timeline_visit)),Modifier.testTag("map-focused-visit"),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=colors.textPrimary)
+            }
         }}
-        activeRecording?.takeIf {it.enabled}?.let {current->
-            activeSummary?.let {Text(it,modifier=Modifier.testTag("active-recording-map-summary"),style=MaterialTheme.typography.bodySmall)}
-            activeSnapshot?.let {snapshot->
-                snapshot.endpoints.first?.let {point->Text(stringResource(R.string.active_recording_map_start,timeText(point.time),"${point.coordinate.latitude}, ${point.coordinate.longitude}"),style=MaterialTheme.typography.bodySmall)}
-                snapshot.endpoints.last?.takeIf {it.id!=snapshot.endpoints.first?.id}?.let {point->Text(stringResource(R.string.active_recording_map_latest,timeText(point.time),"${point.coordinate.latitude}, ${point.coordinate.longitude}"),style=MaterialTheme.typography.bodySmall)}
-            }
-            val message=when(current.status) {
-                ActiveRecordingMapStatus.inactive->R.string.active_recording_map_inactive
-                ActiveRecordingMapStatus.paused->R.string.active_recording_map_paused
-                ActiveRecordingMapStatus.loading->R.string.active_recording_map_loading
-                ActiveRecordingMapStatus.empty->R.string.active_recording_map_empty
-                ActiveRecordingMapStatus.failed->R.string.active_recording_map_failed
-                else->null
-            }
-            message?.let {Text(stringResource(it),style=MaterialTheme.typography.bodySmall)}
-            if(current.status==ActiveRecordingMapStatus.failed) TextButton(onClick=current.retry) {Text(stringResource(R.string.active_recording_map_retry))}
-            TextButton(enabled=activeSnapshot?.count?.let {it>0}==true,onClick={follow?.stop?.invoke();renderer.follow(follow?.fix,false);renderer.fitActiveRecording()},modifier=Modifier.testTag("fit-active-recording")) {Text(stringResource(R.string.active_recording_map_fit))}
+        if(markerLoad.loading) Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+            CircularProgressIndicator(Modifier.size(14.dp),color=colors.accent,trackColor=colors.dialTrack,strokeWidth=2.dp)
+            Text(stringResource(R.string.map_point_loading),Modifier.testTag("map-point-loading"),style=WdType.caption2,color=colors.textMuted)
         }
-        if(displayPoints.isNotEmpty()) TextButton(onClick={pickingPoint=true},modifier=Modifier.testTag("map-point-browse")) {Text(stringResource(R.string.map_point_browse))}
-        if(onVisitSelected!=null && visits.isNotEmpty()) TextButton(onClick={selectedPointId=null;candidateVisits=null;pickingVisit=true}) {Text(stringResource(R.string.map_visits))}
-        if(photoClusters.isNotEmpty()) TextButton(onClick={photoLayer?.open?.invoke(photoClusters)}) {Text(stringResource(R.string.map_photos))}
-        photoLayer?.browsePlaces?.let {browse->TextButton(onClick=browse,modifier=Modifier.testTag("browse-photo-places")) {Text(stringResource(R.string.map_browse_photos))}}
-        photoLayer?.directoryMessage?.let {Text(it,style=MaterialTheme.typography.bodySmall)}
-        photoLayer?.retryDirectory?.let {retry->TextButton(onClick=retry) {Text(stringResource(R.string.map_retry_photos))}}
-        if(online) Text(stringResource(R.string.map_tiles_disclosure),style=MaterialTheme.typography.bodySmall)
-        if(roadGeometry.roads.isNotEmpty()) {
-            Text(stringResource(R.string.map_road_estimate_description),modifier=Modifier.testTag("road-estimate-caption"),style=MaterialTheme.typography.bodySmall)
-            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(4.dp),modifier=Modifier.testTag("road-attributions")) {
-                displayedRoad?.attributions.orEmpty().distinct().forEach {credit->
-                    TextButton(onClick={try {attributionLinks.openUri(credit.url);attributionError=false} catch(_:Exception) {attributionError=true}},
-                        shape=androidx.compose.foundation.shape.RoundedCornerShape(8.dp),contentPadding=PaddingValues(8.dp)) {
-                        Text(stringResource(if(credit.kind==RoadAttributionKind.provider) R.string.map_road_provider_credit else R.string.map_road_data_credit,credit.name))
-                    }
-                }
-            }
-            if(attributionError) Text(stringResource(R.string.map_attribution_link_error),style=MaterialTheme.typography.bodySmall)
-        }
-        AndroidView(factory={ mapView.apply {
-            addOnDidFailLoadingMapListener { renderer.error=true }
-            getMapAsync { map ->
-                if(renderer.disposed) return@getMapAsync
-                renderer.map=map
-                renderer.restoreCamera(savedCamera)
-                map.addOnCameraIdleListener {refreshViewport();renderer.cameraSnapshot()?.let {savedCamera=it}}
-                map.addOnCameraMoveStartedListener {reason->if(reason==MapLibreMap.OnCameraMoveStartedListener.REASON_API_GESTURE) latestFollow?.stop?.invoke()}
-                renderer.follow(latestFollow?.fix,latestFollow?.enabled==true && latestVisitFocus==null)
-                map.addOnMapClickListener {coordinate->
-                    if(renderer.disposed || !renderer.queryReady || renderer.map!==map) return@addOnMapClickListener false
-                    val photoAction=latestPhotoLayer
-                    if(photoAction!=null && photoAction.visibleClusters.isNotEmpty()) {
-                        val pixel=map.projection.toScreenLocation(coordinate)
-                        val clusters=photoAction.visibleClusters
-                        val density=context.resources.displayMetrics.density
-                        val matches=if(photoAction.dots) {
-                            val centers=clusters.map {marker->map.projection.toScreenLocation(LatLng(marker.coordinate.latitude,marker.coordinate.longitude)).let {PhotoMarkerPoint((it.x/density).toDouble(),(it.y/density).toDouble())}}
-                            // Native Android targets are 48 dp; ties keep the stable directory order.
-                            val index=PhotoDotHitTesting.targetIndex(PhotoMarkerPoint((pixel.x/density).toDouble(),(pixel.y/density).toDouble()),centers,48.0)
-                            listOfNotNull(index?.let {clusters[it]})
-                        } else {
-                            val radius=28f*density
-                            val ids=map.queryRenderedFeatures(android.graphics.RectF(pixel.x-radius,pixel.y-radius,pixel.x+radius,pixel.y+radius),"journal-photo").mapNotNull {it.getStringProperty("id")}.toSet()
-                            clusters.filter {it.id in ids}
-                        }
-                        if(matches.isNotEmpty()) {latestPointSelection(null);photoAction.open(matches);return@addOnMapClickListener true}
-                    }
-                    val action=latestVisitAction
-                    if(action!=null && latestLayers.visits) {
-                        val pixel=map.projection.toScreenLocation(coordinate)
-                        val radius=24f*context.resources.displayMetrics.density
-                        val bounds=android.graphics.RectF(pixel.x-radius,pixel.y-radius,pixel.x+radius,pixel.y+radius)
-                        val ids=map.queryRenderedFeatures(bounds,"journal-visit").mapNotNull {it.getStringProperty("id")}.toSet()
-                        val matches=latestVisibleVisits.filter {it.id in ids}
-                        if(matches.size==1) {latestPointSelection(null);action(matches.single());return@addOnMapClickListener true}
-                        if(matches.size>1) {latestPointSelection(null);candidateVisits=ids;pickingVisit=true;return@addOnMapClickListener true}
-                    }
-                    val pixel=map.projection.toScreenLocation(coordinate)
-                    val density=context.resources.displayMetrics.density
-                    val radius=24f*density
-                    val ids=map.queryRenderedFeatures(android.graphics.RectF(pixel.x-radius,pixel.y-radius,pixel.x+radius,pixel.y+radius),"journal-point","journal-outlier").mapNotNull {it.getStringProperty("id")}.toSet()
-                    val candidates=latestDisplayPoints.filter {it.id in ids}
-                    val centers=candidates.map {point->map.projection.toScreenLocation(LatLng(point.coordinate.latitude,point.coordinate.longitude)).let {it.x.toDouble()/density to it.y.toDouble()/density}}
-                    val hit=pointHitIndex(pixel.x.toDouble()/density,pixel.y.toDouble()/density,centers)?.let {candidates[it]}
-                    val hadSelection=latestSelectedPoint!=null
-                    latestPointSelection(hit?.takeIf {it.id!=latestSelectedPoint})
-                    hit!=null || hadSelection
-                }
-                renderer.render(latestPoints,latestVisits,latestOnline,latestDark,latestLayers,latestReplay,latestEnds,latestFallback,latestPhotoLayer?.visibleClusters.orEmpty(),latestPhotoLayer?.icons.orEmpty(),latestActiveRecording,latestRoadGeometry,latestPhotoLayer?.dots==true,latestVisitFocus)
-            }
-        } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null);renderer.render(points,visits,online,dark,layers,replay,endpoints,allOutlierFallback,photoClusters,photoLayer?.icons.orEmpty(),activeSnapshot,roadGeometry,photoLayer?.dots==true,visitFocus) },modifier=Modifier.fillMaxWidth().height(300.dp).testTag("journal-native-map"))
-        if(markerLoad.loading) Text(stringResource(R.string.map_point_loading),Modifier.testTag("map-point-loading"),style=MaterialTheme.typography.bodySmall)
-        if(markerLoad.failed) {
-            Text(stringResource(R.string.map_point_load_failed),Modifier.testTag("map-point-load-failed"),color=MaterialTheme.colorScheme.error)
-            TextButton(onClick=markerLoad.retry,modifier=Modifier.testTag("map-point-retry")) {Text(stringResource(R.string.map_point_retry))}
+        if(markerLoad.failed) Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+            Text(stringResource(R.string.map_point_load_failed),Modifier.weight(1f).testTag("map-point-load-failed"),style=MaterialTheme.typography.bodySmall,color=colors.inkRust)
+            TraceCapsule(stringResource(R.string.map_point_retry),markerLoad.retry,Modifier.testTag("map-point-retry"),icon=Icons.Outlined.Refresh)
         }
         selectedPoint?.let {MapPointInspection(it,followMetric) {selectPoint(null)}}
-        if(renderer.error) Text(stringResource(R.string.map_tiles_failed),color=MaterialTheme.colorScheme.error)
-        if(!online) Text(stringResource(R.string.map_offline),style=MaterialTheme.typography.bodySmall)
+        activeRecording?.takeIf {it.enabled}?.let {current->
+            WdCard(radius=14.dp) {
+                Column(Modifier.padding(14.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                    Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                        WdLiveDot(Modifier.size(16.dp),color=if(current.status==ActiveRecordingMapStatus.ready) colors.liveDot else colors.textMuted)
+                        Text(stringResource(R.string.map_redesign_live_path).uppercase(),style=WdType.eyebrow,color=colors.textMuted)
+                    }
+                    activeSummary?.let {Text(it,modifier=Modifier.testTag("active-recording-map-summary"),style=MaterialTheme.typography.bodyMedium,color=colors.textPrimary)}
+                    activeSnapshot?.let {snapshot->
+                        snapshot.endpoints.first?.let {point->Text(stringResource(R.string.active_recording_map_start,timeText(point.time),"${point.coordinate.latitude}, ${point.coordinate.longitude}"),style=WdType.caption2,color=colors.textMuted)}
+                        snapshot.endpoints.last?.takeIf {it.id!=snapshot.endpoints.first?.id}?.let {point->Text(stringResource(R.string.active_recording_map_latest,timeText(point.time),"${point.coordinate.latitude}, ${point.coordinate.longitude}"),style=WdType.caption2,color=colors.textMuted)}
+                    }
+                    val message=when(current.status) {
+                        ActiveRecordingMapStatus.inactive->R.string.active_recording_map_inactive
+                        ActiveRecordingMapStatus.paused->R.string.active_recording_map_paused
+                        ActiveRecordingMapStatus.loading->R.string.active_recording_map_loading
+                        ActiveRecordingMapStatus.empty->R.string.active_recording_map_empty
+                        ActiveRecordingMapStatus.failed->R.string.active_recording_map_failed
+                        else->null
+                    }
+                    message?.let {Text(stringResource(it),style=MaterialTheme.typography.bodySmall,color=if(current.status==ActiveRecordingMapStatus.failed) colors.inkRust else colors.textMuted)}
+                    FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp),modifier=Modifier.padding(top=4.dp)) {
+                        if(current.status==ActiveRecordingMapStatus.failed) TraceCapsule(stringResource(R.string.active_recording_map_retry),current.retry,icon=Icons.Outlined.Refresh)
+                        TraceCapsule(stringResource(R.string.active_recording_map_fit),{follow?.stop?.invoke();renderer.follow(follow?.fix,false);renderer.fitActiveRecording()},Modifier.testTag("fit-active-recording"),
+                            enabled=activeSnapshot?.count?.let {it>0}==true,icon=Icons.Outlined.CenterFocusWeak)
+                    }
+                }
+            }
+        }
+        val browsePoints=displayPoints.isNotEmpty()
+        val browseVisits=onVisitSelected!=null && visits.isNotEmpty()
+        val photoActions=photoClusters.isNotEmpty() || photoLayer?.browsePlaces!=null || photoLayer?.retryDirectory!=null
+        if(browsePoints || browseVisits || photoActions) FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            if(browsePoints) TraceCapsule(stringResource(R.string.map_point_browse),{pickingPoint=true},Modifier.testTag("map-point-browse"),icon=Icons.Outlined.ScatterPlot)
+            if(browseVisits) TraceCapsule(stringResource(R.string.map_visits),{selectedPointId=null;candidateVisits=null;pickingVisit=true},icon=Icons.Outlined.Place)
+            if(photoClusters.isNotEmpty()) TraceCapsule(stringResource(R.string.map_photos),{photoLayer?.open?.invoke(photoClusters)},icon=Icons.Outlined.PhotoLibrary)
+            photoLayer?.browsePlaces?.let {browse->TraceCapsule(stringResource(R.string.map_browse_photos),browse,Modifier.testTag("browse-photo-places"),icon=Icons.Outlined.PhotoAlbum)}
+            photoLayer?.retryDirectory?.let {retry->TraceCapsule(stringResource(R.string.map_retry_photos),retry,icon=Icons.Outlined.Refresh)}
+        }
+        photoLayer?.directoryMessage?.let {Text(it,style=MaterialTheme.typography.bodySmall,color=colors.textMuted)}
+        if(roadGeometry.roads.isNotEmpty()) {
+            Text(stringResource(R.string.map_road_estimate_description),modifier=Modifier.testTag("road-estimate-caption"),style=WdType.caption2,color=colors.textMuted)
+            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(4.dp),modifier=Modifier.testTag("road-attributions")) {
+                displayedRoad?.attributions.orEmpty().distinct().forEach {credit->
+                    TraceCapsule(stringResource(if(credit.kind==RoadAttributionKind.provider) R.string.map_road_provider_credit else R.string.map_road_data_credit,credit.name),
+                        {try {attributionLinks.openUri(credit.url);attributionError=false} catch(_:Exception) {attributionError=true}},compact=true)
+                }
+            }
+            if(attributionError) Text(stringResource(R.string.map_attribution_link_error),style=MaterialTheme.typography.bodySmall,color=colors.inkRust)
+        }
+        if(renderer.error) WdNotice(stringResource(R.string.map_tiles_failed),icon=Icons.Outlined.CloudOff,warning=true)
+        if(online) Text(stringResource(R.string.map_tiles_disclosure),style=WdType.caption2,color=colors.textMuted)
+        if(!online) Text(stringResource(R.string.map_offline),style=WdType.caption2,color=colors.textMuted)
     }
 }
 
 @Composable private fun MapLayerToggle(label:String,checked:Boolean,id:String,enabled:Boolean=true,change:(Boolean)->Unit) {
-    Row(Modifier.fillMaxWidth().testTag(id).toggleable(checked,enabled=enabled,role=Role.Checkbox,onValueChange=change).heightIn(min=48.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-        Text(label,Modifier.weight(1f).padding(top=12.dp));Checkbox(checked,onCheckedChange=null,enabled=enabled)
+    Row(Modifier.fillMaxWidth().testTag(id).toggleable(checked,enabled=enabled,role=Role.Checkbox,onValueChange=change).heightIn(min=48.dp),
+        horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
+        Text(label,Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge,color=if(enabled) wd.textPrimary else wd.textMuted);Switch(checked,null,enabled=enabled,colors=wdSwitchColors())
     }
 }
-private fun routeFlag(scale:Float,end:Boolean):android.graphics.Bitmap {
+
+/** Map ink as ARGB ints for MapLibre: the Whereday palette, never Material defaults. */
+internal data class MapInks(val path:Int=0xFF1E2B45.toInt(),val active:Int=0xFFA8381F.toInt(),val visit:Int=0xFFB7862B.toInt(),val live:Int=0xFFF08A6B.toInt(),
+    val highlight:Int=0xFFA8381F.toInt(),val photo:Int=0xFF5E7F5A.toInt(),val paper:Int=0xFFFBF9F4.toInt(),val background:Int=0xFFF3EFE6.toInt(),
+    val start:Int=0xFF5E7F5A.toInt(),val end:Int=0xFFC2462A.toInt(),val pole:Int=0xFF1E2B45.toInt()) {
+    fun hex(color:Int)=String.format(Locale.ROOT,"#%06X",color and 0xFFFFFF)
+}
+@Composable internal fun mapInks():MapInks {
+    val c=wd
+    return remember(c) {MapInks(path=c.accent.toArgb(),active=c.inkRust.toArgb(),visit=c.placeInks[2].toArgb(),live=c.liveDot.toArgb(),highlight=c.inkRust.toArgb(),
+        photo=c.placeInks[3].toArgb(),paper=c.card.toArgb(),background=c.surface.toArgb(),start=c.placeInks[3].toArgb(),end=c.placeInks[1].toArgb(),pole=c.textPrimary.toArgb())}
+}
+
+/** A paper capsule button used across the Trace map: hairline, mono label, optional glyph; floating adds the map shadow. */
+@Composable internal fun TraceCapsule(text:String,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true,icon:ImageVector?=null,floating:Boolean=false,compact:Boolean=false) {
+    val colors=wd
+    val shape=CircleShape
+    val ink=if(enabled) colors.textPrimary else colors.textMuted.copy(alpha=0.6f)
+    Row((if(floating) modifier.wdFloating(shape,colors,6.dp) else modifier.clip(shape).background(colors.card).border(1.dp,colors.border,shape))
+        .clickable(enabled=enabled,role=Role.Button,onClick=onClick).heightIn(min=if(compact) 36.dp else 44.dp).padding(horizontal=if(compact) 12.dp else 14.dp,vertical=6.dp),
+        verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+        if(icon!=null) Icon(icon,null,Modifier.size(16.dp),tint=if(enabled) colors.accent else ink)
+        Text(text,style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=ink)
+    }
+}
+
+private fun routeFlag(scale:Float,end:Boolean,inks:MapInks):android.graphics.Bitmap {
     val bitmap=android.graphics.Bitmap.createBitmap((44*scale).toInt().coerceAtLeast(1),(42*scale).toInt().coerceAtLeast(1),android.graphics.Bitmap.Config.ARGB_8888)
     bitmap.density=(160*scale).toInt()
     val canvas=android.graphics.Canvas(bitmap);canvas.scale(scale,scale);canvas.translate(6f,3f)
     val paint=android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
-    paint.color=android.graphics.Color.WHITE;paint.strokeWidth=5f;canvas.drawLine(16f,5f,16f,39f,paint)
-    paint.color=android.graphics.Color.rgb(40,93,66);paint.strokeWidth=2f;canvas.drawLine(16f,5f,16f,39f,paint)
-    paint.color=android.graphics.Color.WHITE;canvas.drawCircle(16f,39f,3f,paint)
-    paint.color=android.graphics.Color.rgb(40,93,66);canvas.drawCircle(16f,39f,2f,paint)
+    paint.color=inks.paper;paint.strokeWidth=5f;canvas.drawLine(16f,5f,16f,39f,paint)
+    paint.color=inks.pole;paint.strokeWidth=2f;canvas.drawLine(16f,5f,16f,39f,paint)
+    paint.color=inks.paper;canvas.drawCircle(16f,39f,3.5f,paint)
+    paint.color=if(end) inks.end else inks.start;canvas.drawCircle(16f,39f,2.5f,paint)
     if(end) {
-        paint.color=android.graphics.Color.WHITE;canvas.drawRect(16f,6f,36f,22f,paint)
-        paint.color=android.graphics.Color.rgb(35,43,38)
+        paint.color=inks.paper;canvas.drawRect(15f,5f,37f,23f,paint)
+        paint.color=inks.end
         for(row in 0..3) for(col in 0..4) if((row+col)%2==0) canvas.drawRect(16f+col*4,6f+row*4,20f+col*4,10f+row*4,paint)
     } else {
-        val path=android.graphics.Path();path.moveTo(16f,6f);path.lineTo(37f,14f);path.lineTo(16f,22f);path.close();canvas.drawPath(path,paint)
+        val outline=android.graphics.Path();outline.moveTo(15f,4.5f);outline.lineTo(39f,14f);outline.lineTo(15f,23.5f);outline.close()
+        paint.color=inks.paper;canvas.drawPath(outline,paint)
+        val path=android.graphics.Path();path.moveTo(16f,6f);path.lineTo(37f,14f);path.lineTo(16f,22f);path.close()
+        paint.color=inks.start;canvas.drawPath(path,paint)
     }
     return bitmap
 }
