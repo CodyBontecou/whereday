@@ -1,8 +1,45 @@
 import XCTest
 import StoreKitTest
+import SwiftUI
 @testable import IsoMe
 
 final class StoreManagerTests: XCTestCase {
+    @MainActor
+    func testPendingPurchaseCheckDoesNotBlockAppContent() async {
+        // Freeze StoreKit at its unresolved launch state, including a fresh user's
+        // provisional paywall requirement. The actual launch gate must show content.
+        let opened = expectation(description: "App content opens without a StoreKit response")
+        let gate = PurchaseLaunchGate(hasResolvedEntitlements: false, requiresInitialPaywall: true) {
+            Text("Paywall").onAppear { XCTFail("Pending verification must not force a purchase") }
+        } content: {
+            Text("Journal").onAppear { opened.fulfill() }
+        }
+        let host = UIHostingController(rootView: gate)
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        window.rootViewController = host
+        window.makeKeyAndVisible()
+        host.view.layoutIfNeeded()
+        defer { window.isHidden = true; window.rootViewController = nil }
+        await fulfillment(of: [opened], timeout: 1)
+    }
+
+    @MainActor
+    func testResolvedNewUserStillSeesRequiredPaywall() async {
+        let opened = expectation(description: "Confirmed new user sees the required paywall")
+        let gate = PurchaseLaunchGate(hasResolvedEntitlements: true, requiresInitialPaywall: true) {
+            Text("Paywall").onAppear { opened.fulfill() }
+        } content: {
+            Text("Journal").onAppear { XCTFail("A confirmed paywall requirement must be enforced") }
+        }
+        let host = UIHostingController(rootView: gate)
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        window.rootViewController = host
+        window.makeKeyAndVisible()
+        host.view.layoutIfNeeded()
+        defer { window.isHidden = true; window.rootViewController = nil }
+        await fulfillment(of: [opened], timeout: 1)
+    }
+
     func testPaywallCopyLocalizesEveryBranchAndPreservesStoreKitPrice() throws {
         let locales = ["ar", "bn", "en", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"]
         // An already-formatted storefront price must not be parsed or reformatted.
