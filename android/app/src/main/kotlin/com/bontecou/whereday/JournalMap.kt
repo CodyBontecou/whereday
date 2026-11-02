@@ -139,7 +139,7 @@ private class JournalMapRenderer {
                 style.addSource(GeoJsonSource("journal-active-current",emptyCollection()))
                 val ink=inks
                 style.addLayer(LineLayer("journal-path","journal-route").withProperties(lineColor(ink.path),lineWidth(4f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
-                style.addLayer(LineLayer("journal-road-path","journal-road-route").withProperties(lineColor(ink.path),lineWidth(4f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
+                style.addLayer(LineLayer("journal-road-path","journal-road-route").withProperties(lineColor(ink.road),lineWidth(4f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
                 style.addLayer(LineLayer("journal-active-path","journal-active-route").withProperties(lineColor(ink.active),lineWidth(5f),lineCap(Property.LINE_CAP_ROUND),lineJoin(Property.LINE_JOIN_ROUND)))
                 style.addLayer(CircleLayer("journal-point","journal-points").withProperties(circleColor(ink.path),circleRadius(3f),circleStrokeColor(ink.paper),circleStrokeWidth(1f)))
                 style.addLayer(CircleLayer("journal-visit","journal-visits").withProperties(circleColor(ink.visit),circleRadius(8f),circleStrokeColor(ink.paper),circleStrokeWidth(2f)))
@@ -457,7 +457,7 @@ private class JournalMapRenderer {
         }
         if(!overlay) followControl()
         val frame=RoundedCornerShape(20.dp)
-        Box(Modifier.fillMaxWidth().height(340.dp).clip(frame).background(colors.dialTrack).border(1.dp,colors.border,frame)) {
+        Box(Modifier.fillMaxWidth().height(300.dp).clip(frame).background(colors.dialTrack).border(1.dp,colors.border,frame)) {
             AndroidView(factory={ mapView.apply {
                 addOnDidFailLoadingMapListener { renderer.error=true }
                 getMapAsync { map ->
@@ -596,15 +596,16 @@ private class JournalMapRenderer {
 }
 
 /** Map ink as ARGB ints for MapLibre: the Whereday palette, never Material defaults. */
-internal data class MapInks(val path:Int=0xFF1E2B45.toInt(),val active:Int=0xFFA8381F.toInt(),val visit:Int=0xFFB7862B.toInt(),val live:Int=0xFFF08A6B.toInt(),
+internal data class MapInks(val path:Int=0xFF1E2B45.toInt(),val road:Int=0xFF24459E.toInt(),val active:Int=0xFFA8381F.toInt(),val visit:Int=0xFFB7862B.toInt(),val live:Int=0xFFF08A6B.toInt(),
     val highlight:Int=0xFFA8381F.toInt(),val photo:Int=0xFF5E7F5A.toInt(),val paper:Int=0xFFFBF9F4.toInt(),val background:Int=0xFFF3EFE6.toInt(),
     val start:Int=0xFF5E7F5A.toInt(),val end:Int=0xFFC2462A.toInt(),val pole:Int=0xFF1E2B45.toInt()) {
     fun hex(color:Int)=String.format(Locale.ROOT,"#%06X",color and 0xFFFFFF)
 }
 @Composable internal fun mapInks():MapInks {
     val c=wd
-    return remember(c) {MapInks(path=c.accent.toArgb(),active=c.inkRust.toArgb(),visit=c.placeInks[2].toArgb(),live=c.liveDot.toArgb(),highlight=c.inkRust.toArgb(),
-        photo=c.placeInks[3].toArgb(),paper=c.card.toArgb(),background=c.surface.toArgb(),start=c.placeInks[3].toArgb(),end=c.placeInks[1].toArgb(),pole=c.textPrimary.toArgb())}
+    return remember(c) {// Estimated roads use iOS's pencil-blue onboarding ink so they stay distinct from the raw navy path they replace.
+    MapInks(path=c.accent.toArgb(),road=(if(c.dark) 0xFF94B3FF else 0xFF24459E).toInt(),active=c.inkRust.toArgb(),visit=c.placeInks[2].toArgb(),live=c.liveDot.toArgb(),highlight=c.inkRust.toArgb(),
+        photo=c.placeInks[3].toArgb(),paper=c.card.toArgb(),background=c.surface.toArgb(),start=c.accent.toArgb(),end=c.placeInks[1].toArgb(),pole=c.textPrimary.toArgb())}
 }
 
 /** A paper capsule button used across the Trace map: hairline, mono label, optional glyph; floating adds the map shadow. */

@@ -85,7 +85,9 @@ internal enum class SettingsDestination {usage,support,countries,licenses,softwa
     val ink=if(enabled) wd.accent else wd.textMuted
     val picker:@Composable ()->Unit = {
         Box {
-            Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(2.dp)) {
+            // The value alone is the button, as before the redesign, so the label stays its own node.
+            Row(Modifier.heightIn(min=48.dp).clip(RoundedCornerShape(8.dp)).clickable(enabled=enabled,role=Role.Button) {expanded=true}.padding(horizontal=6.dp),
+                verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(2.dp)) {
                 Text(labelFor(value),style=WdType.caption.copy(fontWeight=FontWeight.Medium),color=ink)
                 Icon(Icons.Filled.UnfoldMore,null,Modifier.size(16.dp),tint=ink)
             }
@@ -95,7 +97,7 @@ internal enum class SettingsDestination {usage,support,countries,licenses,softwa
             }}
         }
     }
-    val row=Modifier.fillMaxWidth().heightIn(min=36.dp).clickable(enabled=enabled,role=Role.Button) {expanded=true}
+    val row=Modifier.fillMaxWidth().heightIn(min=36.dp)
     val text=if(enabled) wd.textPrimary else wd.textMuted
     if(LocalDensity.current.fontScale>=1.3f) {
         Column(row,verticalArrangement=Arrangement.spacedBy(4.dp,Alignment.CenterVertically)) {Text(label,Modifier.fillMaxWidth(),style=MaterialTheme.typography.bodyLarge,color=text);picker()}

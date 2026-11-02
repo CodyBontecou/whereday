@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -56,6 +57,7 @@ import java.time.*
     val day by model.timelineDay.collectAsStateWithLifecycle()
     val state by model.timelineWindow.collectAsStateWithLifecycle()
     val resources=LocalContext.current.resources
+    val largeText=LocalDensity.current.fontScale>=1.3f
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val formattedDay=day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale))
     val todayHint=stringResource(R.string.timeline_today_hint,formattedDay)
@@ -111,7 +113,8 @@ import java.time.*
                 val sequences=chronological.mapIndexed {index,entry->entry.first to index+1}.toMap()
                 val entries=(window.visits.map { TimelineEntry(it.id,it.arrivedAt,visit=it) }+window.sessions.map { TimelineEntry(it.id,it.startedAt,session=it) }+window.inferred.map { TimelineEntry(it.id,it.startedAt,inferred=it) }).sortedByDescending { it.time }
                 val inks=journalInkIndex(window.visits.sortedBy {it.arrivedAt}.map {it.name?.takeIf {n->n.isNotBlank()} ?: it.id})
-                item("day-dial") {
+                // Like iOS at accessibility sizes, large text drops the dial so the stays stay within reach.
+                if(!largeText) item("day-dial") {
                     // The iOS Today dial: each stay inked around the 24-hour ring, with the coral "now" marker on today.
                     val zone=java.time.ZoneId.systemDefault()
                     val dayStart=day.atStartOfDay(zone).toInstant()
@@ -150,7 +153,7 @@ import java.time.*
                                     Text(timelineRange(visit.arrivedAt,visit.departedAt,R.string.visit_still_here),style=WdType.caption2,color=muted)
                                     visit.address?.let { Text(it,style=MaterialTheme.typography.bodySmall,color=muted) }
                                     visit.notes?.takeIf { it.isNotBlank() }?.let { Text(it,style=MaterialTheme.typography.bodyMedium,color=fg) }
-                                    Text(confirmationLabel(visit.confirmation).uppercase(),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em),
+                                    Text(confirmationLabel(visit.confirmation),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em),
                                         color=if(visit.confirmation==Confirmation.unconfirmed) (if(ongoing) wd.liveDot else wd.inkRust) else muted)
                                     val unknownTitle=stringResource(R.string.calendar_unknown_place)
                                     CalendarEventButton(visit,makeDraft={now->CalendarEventDraft.visit(visit,unknownTitle,now)})
@@ -176,7 +179,7 @@ import java.time.*
                                 entry.inferred?.let { Text(stringResource(R.string.timeline_point_summary,resources.getQuantityString(R.plurals.timeline_point_count,it.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),it.summary.count),distanceText(it.summary.distanceMeters,metric,locale)),style=WdType.caption,color=wd.textMuted) }
                                 session.notes?.takeIf { it.isNotBlank() }?.let { Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary) }
                                 Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(2.dp)) {
-                                    Text(stringResource(R.string.timeline_view_outing).uppercase(),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em),color=wd.inkRust)
+                                    Text(stringResource(R.string.timeline_view_outing),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em),color=wd.inkRust)
                                     Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,null,Modifier.size(14.dp),tint=wd.inkRust)
                                 }
                                 val calendarTitle=stringResource(R.string.calendar_outing_title,sequences[session.id] ?: 1)

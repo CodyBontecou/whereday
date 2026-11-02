@@ -30,7 +30,7 @@ import com.bontecou.whereday.domain.Visit
             Text(visit.name?.takeIf {it.isNotBlank()} ?: stringResource(R.string.timeline_visit),style=WdType.title3,color=wd.textPrimary)
             Text(timelineRange(visit.arrivedAt,visit.departedAt,R.string.visit_still_here),style=WdType.caption2,color=wd.textMuted)
             visit.address?.takeIf {it.isNotBlank()}?.let {Text(it,style=MaterialTheme.typography.bodySmall,color=wd.textMuted)}
-            Text(stringResource(R.string.timeline_open_visit).uppercase(),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em),color=wd.inkRust)
+            Text(stringResource(R.string.timeline_open_visit),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em),color=wd.inkRust)
         }
         Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight,null,Modifier.size(18.dp),tint=wd.textMuted)
     }

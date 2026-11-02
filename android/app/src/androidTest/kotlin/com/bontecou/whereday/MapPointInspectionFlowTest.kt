@@ -91,6 +91,9 @@ class MapPointInspectionFlowTest {
     }}
     @Test fun actualPointTapHighlightsMetadataAndRepeatOrBlankTapDismisses() {
         show();val (view,map)=native()
+        // Floating controls sit over the map's corners; center the point so the tap reaches the map, not a control.
+        compose.runOnUiThread {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newLatLng(LatLng(18.0,-66.0)))}
+        compose.awaitNativeMapFrame(view,map)
         fun center()=compose.runOnIdle {map.projection.toScreenLocation(LatLng(18.0,-66.0))}
         tap(view,center());awaitDetails();compose.onNodeWithTag("map-point-inspection").assertExists()
         compose.onNodeWithTag("map-point-accuracy").assertTextContains("9 m",substring=true)
@@ -99,7 +102,8 @@ class MapPointInspectionFlowTest {
         compose.waitUntil(5000) {compose.runOnIdle {map.queryRenderedFeatures(RectF(0f,0f,view.width.toFloat(),view.height.toFloat()),"journal-selected-point").singleOrNull()?.getStringProperty("id")==point.id}}
         tap(view,center());awaitDetails(false);compose.onNodeWithTag("map-point-inspection").assertDoesNotExist()
         tap(view,center());awaitDetails();compose.onNodeWithTag("map-point-inspection").assertExists()
-        tap(view,PointF(view.width*.1f,view.height*.1f));awaitDetails(false);compose.onNodeWithTag("map-point-inspection").assertDoesNotExist()
+        // Floating map controls occupy the corners, so the blank tap lands in open map left of center.
+        tap(view,PointF(view.width*.2f,view.height*.6f));awaitDetails(false);compose.onNodeWithTag("map-point-inspection").assertDoesNotExist()
     }
     @Test fun accessibleChoiceUsesImperialFieldsAndRetainsSelectionThroughRestoration() {
         val tester=show(false);choose()
@@ -132,6 +136,9 @@ class MapPointInspectionFlowTest {
     }
     @Test fun nativeTapAfterScopeChangeUsesTheCurrentSelectionOwner() {
         show();val (view,map)=native()
+        // Floating controls sit over the map's corners; center the point so the tap reaches the map, not a control.
+        compose.runOnUiThread {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newLatLng(LatLng(18.0,-66.0)))}
+        compose.awaitNativeMapFrame(view,map)
         fun center()=compose.runOnIdle {map.projection.toScreenLocation(LatLng(18.0,-66.0))}
         tap(view,center());awaitDetails()
         compose.runOnIdle {scope.value="replacement-range"}

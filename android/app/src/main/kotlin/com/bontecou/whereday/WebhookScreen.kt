@@ -239,5 +239,5 @@ internal data class WebhookActions(
         trailingIcon=if(secret) {{IconButton(onClick={revealed=!revealed}) {Icon(if(revealed) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,contentDescription=stringResource(if(revealed) R.string.webhook_hide else R.string.webhook_show,label),tint=wd.textMuted)}}} else null)
 }
 @Composable private fun <T> WebhookMenu(label:String,value:T,choices:List<Pair<T,String>>,enabled:Boolean,divider:Boolean=true,change:(T)->Unit) {
-    ExportMenuRow(label,value,choices,enabled,divider,change)
+    ExportMenuRow(label,value,choices,enabled,divider,change=change)
 }

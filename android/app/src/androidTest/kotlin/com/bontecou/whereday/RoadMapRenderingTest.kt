@@ -85,7 +85,7 @@ class RoadMapRenderingTest {
             assertTrue(crop.intersect(bounds))
             val pixels=IntArray(crop.width()*crop.height())
             bitmap.getPixels(pixels,0,crop.width(),crop.left,crop.top,crop.width(),crop.height())
-            val blue=pixels.count {color->kotlin.math.abs(android.graphics.Color.red(color)-25)<=12 && kotlin.math.abs(android.graphics.Color.green(color)-118)<=12 && kotlin.math.abs(android.graphics.Color.blue(color)-210)<=12}
+            val blue=pixels.count {color->kotlin.math.abs(android.graphics.Color.red(color)-36)<=12 && kotlin.math.abs(android.graphics.Color.green(color)-69)<=12 && kotlin.math.abs(android.graphics.Color.blue(color)-158)<=12}
             if(expectedRoad) assertTrue("Displayed blue road pixels required, found $blue",blue>300)
             else assertEquals("Removed roads must not remain in the displayed buffer",0,blue)
             if(InstrumentationRegistry.getArguments().getString("captureRoadMap")=="true") {

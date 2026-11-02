@@ -261,7 +261,7 @@ class PhotoDotRenderingTest {
         try {
             assertTrue(bounds.intersect(Rect(0,0,bitmap.width,bitmap.height)))
             val pixels=IntArray(bounds.width()*bounds.height());bitmap.getPixels(pixels,0,bounds.width(),bounds.left,bounds.top,bounds.width(),bounds.height())
-            val green=pixels.count {kotlin.math.abs(Color.red(it)-57)<=10 && kotlin.math.abs(Color.green(it)-131)<=10 && kotlin.math.abs(Color.blue(it)-91)<=10}
+            val green=pixels.count {kotlin.math.abs(Color.red(it)-94)<=10 && kotlin.math.abs(Color.green(it)-127)<=10 && kotlin.math.abs(Color.blue(it)-90)<=10}
             if(dots) {assertTrue("Displayed dots required: $green",green>30);assertTrue("Dots must remain small visuals",green<pixels.size/20);assertEquals(0,pixels.count {Color.red(it)>245 && Color.green(it)<10 && Color.blue(it)>245})}
             else assertEquals("Hidden dots must leave no displayed dot pixels",0,green)
             val centers=compose.runOnIdle {visuals.map {(c,size)->map.projection.toScreenLocation(LatLng(c.latitude,c.longitude)) to size}}
@@ -271,8 +271,9 @@ class PhotoDotRenderingTest {
                 val colored=mutableListOf<Pair<Int,Int>>()
                 for(row in maxOf(0,y-radius)..minOf(bitmap.height-1,y+radius)) for(col in maxOf(0,x-radius)..minOf(bitmap.width-1,x+radius)) {
                     val color=bitmap.getPixel(col,row)
-                    if((Color.red(color)>=248 && Color.green(color)>=248 && Color.blue(color)>=248) ||
-                        (kotlin.math.abs(Color.red(color)-57)<=10 && kotlin.math.abs(Color.green(color)-131)<=10 && kotlin.math.abs(Color.blue(color)-91)<=10)) colored.add(col to row)
+                    // Paper stroke (#FBF9F4) around the photo ink (#5E7F5A).
+                    if((kotlin.math.abs(Color.red(color)-251)<=6 && kotlin.math.abs(Color.green(color)-249)<=6 && kotlin.math.abs(Color.blue(color)-244)<=6) ||
+                        (kotlin.math.abs(Color.red(color)-94)<=10 && kotlin.math.abs(Color.green(color)-127)<=10 && kotlin.math.abs(Color.blue(color)-90)<=10)) colored.add(col to row)
                 }
                 assertTrue("Visible dot and stroke required",colored.isNotEmpty())
                 val width=colored.maxOf {it.first}-colored.minOf {it.first}+1

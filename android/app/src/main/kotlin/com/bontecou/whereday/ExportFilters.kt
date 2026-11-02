@@ -67,14 +67,15 @@ internal fun Modifier.exportInset()=padding(horizontal=16.dp)
 }
 
 /** A label beside a paper capsule that opens a menu; large text stacks the capsule under the label. */
-@Composable internal fun <T> ExportMenuRow(label:String,value:T,choices:List<Pair<T,String>>,enabled:Boolean=true,divider:Boolean=true,change:(T)->Unit) {
+@Composable internal fun <T> ExportMenuRow(label:String,value:T,choices:List<Pair<T,String>>,enabled:Boolean=true,divider:Boolean=true,currentLabel:String?=null,change:(T)->Unit) {
     var expanded by remember {mutableStateOf(false)}
     val picker:@Composable ()->Unit={
         Box {
             Row(Modifier.heightIn(min=40.dp).clip(CircleShape).background(wd.surface).border(1.dp,wd.border,CircleShape)
                 .clickable(enabled=enabled,role=Role.Button) {expanded=true}.padding(start=14.dp,end=10.dp),
                 verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(4.dp)) {
-                Text(choices.firstOrNull {it.first==value}?.second.orEmpty(),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=if(enabled) wd.accent else wd.textMuted,maxLines=2,overflow=TextOverflow.Ellipsis)
+                // A value outside the menu (a custom accuracy or filename) still shows its own label, as Choice did.
+                Text(currentLabel ?: choices.firstOrNull {it.first==value}?.second.orEmpty(),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=if(enabled) wd.accent else wd.textMuted,maxLines=2,overflow=TextOverflow.Ellipsis)
                 Icon(Icons.Filled.KeyboardArrowDown,null,Modifier.size(16.dp),tint=if(enabled) wd.accent else wd.textMuted)
             }
             WorkspaceDropdownMenu(expanded,{expanded=false}) {choices.forEach {(choice,text)->
@@ -96,7 +97,7 @@ internal fun Modifier.exportInset()=padding(horizontal=16.dp)
 
 /** The archive version of Settings' Choice: same string keys and labels, Whereday chrome. */
 @Composable internal fun ExportChoiceRow(label:String,value:String,choices:List<String>,enabled:Boolean=true,divider:Boolean=true,labelFor:(String)->String={it.replaceFirstChar {c->c.uppercase()}},change:(String)->Unit) {
-    ExportMenuRow(label,value,choices.map {it to labelFor(it)},enabled,divider,change)
+    ExportMenuRow(label,value,choices.map {it to labelFor(it)},enabled,divider,labelFor(value),change)
 }
 
 /** A tappable row with an accent label, for in-card actions such as resetting dates. */

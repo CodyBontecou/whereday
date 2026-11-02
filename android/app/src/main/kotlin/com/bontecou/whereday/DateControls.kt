@@ -91,7 +91,7 @@ import java.util.concurrent.atomic.AtomicReference
                 error?.let {DateRangeError(it,inset=false)}
                 if(a!=null && b!=null && a<=b && a.year in 1..9999 && b.year in 1..9999)
                     TextButton(onClick={iso=false},colors=dateLinkColors()) {Icon(Icons.Outlined.CalendarMonth,null,Modifier.size(16.dp));Spacer(Modifier.width(6.dp))
-                        Text(stringResource(R.string.date_use_calendar).uppercase(locale),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em))}
+                        Text(stringResource(R.string.date_use_calendar),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold,letterSpacing=0.1.em))}
             }
         },confirmButton={key(approvalEpoch) {TextButton(enabled=enabled && error==null,onClick=apply,colors=dateActionColors()) {Text(stringResource(R.string.map_apply_dates),fontWeight=FontWeight.SemiBold)}}},
             dismissButton={TextButton(onClick=dismiss,colors=dateActionColors()) {Text(stringResource(R.string.map_cancel_dates))}})
