@@ -1,0 +1,1345 @@
+{
+  "provenance": {
+    "IsoMe/Utilities/SavedPlaceManagement.swift": "0f52b35937ee5cf72f47397fca53afb2c9dad5c34549609b73a3d0527e5d7dc9",
+    "IsoMe/Utilities/SavedPlaceImportService.swift": "8277a3af27714d7fbb5af734a9bf182a588b15c77a892b3a890cadd82185095f",
+    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "android/scripts/fixtures/SavedPlacePlanFixtures.swift": "70ade8db7d5be179927888f3c3f723786945918d00b762c8d220de5708511dce",
+    "android/scripts/fixtures/saved-place-plan-inputs.json": "8f21fe2f4b974478b437110ef1a6bd9c1354ebc895defecee18816dae38001d2"
+  },
+  "cases": [
+    {
+      "distances": [
+        [
+          0,
+          11.099647664075942,
+          55498.238318537355,
+          55509.33796620143
+        ],
+        [
+          11.099647664075942,
+          0,
+          55487.138670873275,
+          55498.238318537355
+        ],
+        [
+          55500.606352075716,
+          55489.50670483644,
+          0,
+          11.100595904570453
+        ],
+        [
+          55514.08011691432,
+          55502.97952100975,
+          11.100595904570453,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        },
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 38,
+          "longitude": -9,
+          "name": "Home",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 38.0001,
+          "longitude": -9,
+          "name": " home ",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 38.5,
+          "longitude": -9,
+          "name": "Park",
+          "radius": 150
+        },
+        {
+          "address": "Address 12",
+          "id": "00000000-0000-0000-0000-000000000012",
+          "latitude": 38.5001,
+          "longitude": -9,
+          "name": "park",
+          "radius": 150
+        }
+      ],
+      "name": "stored-and-file-keepExisting",
+      "nameKeys": {
+        " home ": "home",
+        "Home": "home",
+        "park": "park",
+        "Park": "park"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 2,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          11.099647664075942,
+          55498.238318537355,
+          55509.33796620143
+        ],
+        [
+          11.099647664075942,
+          0,
+          55487.138670873275,
+          55498.238318537355
+        ],
+        [
+          55500.606352075716,
+          55489.50670483644,
+          0,
+          11.100595904570453
+        ],
+        [
+          55514.08011691432,
+          55502.97952100975,
+          11.100595904570453,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        },
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 38,
+          "longitude": -9,
+          "name": "Home",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 38.0001,
+          "longitude": -9,
+          "name": " home ",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 38.5,
+          "longitude": -9,
+          "name": "Park",
+          "radius": 150
+        },
+        {
+          "address": "Address 12",
+          "id": "00000000-0000-0000-0000-000000000012",
+          "latitude": 38.5001,
+          "longitude": -9,
+          "name": "park",
+          "radius": 150
+        }
+      ],
+      "name": "stored-and-file-updateExisting",
+      "nameKeys": {
+        " home ": "home",
+        "Home": "home",
+        "park": "park",
+        "Park": "park"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 0,
+        "updated": 2
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          222.63898158654715,
+          211.50703250721978,
+          445.2779631730943,
+          667.9169447596414
+        ],
+        [
+          222.63898158654715,
+          0,
+          11.131949079327361,
+          222.63898158654715,
+          445.2779631730943
+        ],
+        [
+          211.50703250721978,
+          11.131949079327361,
+          0,
+          233.77093066587452,
+          456.40991225242163
+        ],
+        [
+          445.2779631730943,
+          222.63898158654715,
+          233.77093066587452,
+          0,
+          222.63898158654715
+        ],
+        [
+          667.9169447596414,
+          445.2779631730943,
+          456.40991225242163,
+          222.63898158654715,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000012"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Coffee",
+          "radius": 250
+        },
+        {
+          "address": "Address 2",
+          "id": "00000000-0000-0000-0000-000000000002",
+          "latitude": 0,
+          "longitude": 0.002,
+          "name": "Coffee",
+          "radius": 250
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": 0.0019,
+          "name": "Coffee",
+          "radius": 250
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 0,
+          "longitude": 0.004,
+          "name": "Coffee",
+          "radius": 250
+        },
+        {
+          "address": "Address 12",
+          "id": "00000000-0000-0000-0000-000000000012",
+          "latitude": 0,
+          "longitude": 0.006,
+          "name": "Coffee",
+          "radius": 250
+        }
+      ],
+      "name": "nearest-sequential-keepExisting",
+      "nameKeys": {
+        "Coffee": "coffee"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 2,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          222.63898158654715,
+          211.50703250721978,
+          445.2779631730943,
+          667.9169447596414
+        ],
+        [
+          222.63898158654715,
+          0,
+          11.131949079327361,
+          222.63898158654715,
+          445.2779631730943
+        ],
+        [
+          211.50703250721978,
+          11.131949079327361,
+          0,
+          233.77093066587452,
+          456.40991225242163
+        ],
+        [
+          445.2779631730943,
+          222.63898158654715,
+          233.77093066587452,
+          0,
+          222.63898158654715
+        ],
+        [
+          667.9169447596414,
+          445.2779631730943,
+          456.40991225242163,
+          222.63898158654715,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Coffee",
+          "radius": 250
+        },
+        {
+          "address": "Address 2",
+          "id": "00000000-0000-0000-0000-000000000002",
+          "latitude": 0,
+          "longitude": 0.002,
+          "name": "Coffee",
+          "radius": 250
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": 0.0019,
+          "name": "Coffee",
+          "radius": 250
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 0,
+          "longitude": 0.004,
+          "name": "Coffee",
+          "radius": 250
+        },
+        {
+          "address": "Address 12",
+          "id": "00000000-0000-0000-0000-000000000012",
+          "latitude": 0,
+          "longitude": 0.006,
+          "name": "Coffee",
+          "radius": 250
+        }
+      ],
+      "name": "nearest-sequential-updateExisting",
+      "nameKeys": {
+        "Coffee": "coffee"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 0,
+        "updated": 3
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          222.63898158128245,
+          111.31949079327357
+        ],
+        [
+          222.63898158128245,
+          0,
+          111.31949079064123
+        ],
+        [
+          111.31949079327357,
+          111.31949079064123,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 2",
+          "id": "00000000-0000-0000-0000-000000000002",
+          "latitude": 0,
+          "longitude": 0.001,
+          "name": "Tie",
+          "radius": 250
+        },
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": -0.001,
+          "name": "Tie",
+          "radius": 250
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Tie",
+          "radius": 250
+        }
+      ],
+      "name": "tie-keepExisting",
+      "nameKeys": {
+        "Tie": "tie"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 1,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          222.63898158128245,
+          111.31949079327357
+        ],
+        [
+          222.63898158128245,
+          0,
+          111.31949079064123
+        ],
+        [
+          111.31949079327357,
+          111.31949079064123,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 2",
+          "id": "00000000-0000-0000-0000-000000000002",
+          "latitude": 0,
+          "longitude": 0.001,
+          "name": "Tie",
+          "radius": 250
+        },
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": -0.001,
+          "name": "Tie",
+          "radius": 250
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Tie",
+          "radius": 250
+        }
+      ],
+      "name": "tie-updateExisting",
+      "nameKeys": {
+        "Tie": "tie"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 0,
+        "updated": 1
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          445.2779631720565
+        ],
+        [
+          445.2779631720565,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 179.999,
+          "name": "Harbor",
+          "radius": 600
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": -179.997,
+          "name": " harbor ",
+          "radius": 150
+        }
+      ],
+      "name": "date-line-keepExisting",
+      "nameKeys": {
+        " harbor ": "harbor",
+        "Harbor": "harbor"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 1,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          445.2779631720565
+        ],
+        [
+          445.2779631720565,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 179.999,
+          "name": "Harbor",
+          "radius": 600
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": -179.997,
+          "name": " harbor ",
+          "radius": 150
+        }
+      ],
+      "name": "date-line-updateExisting",
+      "nameKeys": {
+        " harbor ": "harbor",
+        "Harbor": "harbor"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 0,
+        "updated": 1
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          38.79091201180979,
+          223.3879591190538
+        ],
+        [
+          38.79091201180979,
+          0,
+          219.99419406967473
+        ],
+        [
+          223.3879591190538,
+          219.99419406967473,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 89.999,
+          "longitude": -170,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 89.999,
+          "longitude": 170,
+          "name": "Polar station",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 89.999,
+          "longitude": 10,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "name": "pole-89.999-keepExisting",
+      "nameKeys": {
+        "Polar station": "polar station"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 1,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          38.79091201180979,
+          223.3879591190538
+        ],
+        [
+          38.79091201180979,
+          0,
+          219.99419406967473
+        ],
+        [
+          223.3879591190538,
+          219.99419406967473,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 89.999,
+          "longitude": -170,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 89.999,
+          "longitude": 170,
+          "name": "Polar station",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 89.999,
+          "longitude": 10,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "name": "pole-89.999-updateExisting",
+      "nameKeys": {
+        "Polar station": "polar station"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 0,
+        "updated": 1
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          38.79091201180979,
+          223.3879591190538
+        ],
+        [
+          38.79091201180979,
+          0,
+          219.99419406967473
+        ],
+        [
+          223.3879591190538,
+          219.99419406967473,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": -89.999,
+          "longitude": -170,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": -89.999,
+          "longitude": 170,
+          "name": "Polar station",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": -89.999,
+          "longitude": 10,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "name": "pole--89.999-keepExisting",
+      "nameKeys": {
+        "Polar station": "polar station"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 1,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          38.79091201180979,
+          223.3879591190538
+        ],
+        [
+          38.79091201180979,
+          0,
+          219.99419406967473
+        ],
+        [
+          223.3879591190538,
+          219.99419406967473,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": -89.999,
+          "longitude": -170,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": -89.999,
+          "longitude": 170,
+          "name": "Polar station",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": -89.999,
+          "longitude": 10,
+          "name": "Polar station",
+          "radius": 150
+        }
+      ],
+      "name": "pole--89.999-updateExisting",
+      "nameKeys": {
+        "Polar station": "polar station"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 0,
+        "updated": 1
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          156900.54441288,
+          0,
+          156900.54441288
+        ],
+        [
+          156900.54441288,
+          0,
+          156891.76240558812,
+          0
+        ],
+        [
+          0,
+          156900.54441288,
+          0,
+          156900.54441288
+        ],
+        [
+          156900.54441288,
+          0,
+          156891.76240558812,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Café",
+          "radius": 150
+        },
+        {
+          "address": "Address 2",
+          "id": "00000000-0000-0000-0000-000000000002",
+          "latitude": 1,
+          "longitude": 1,
+          "name": "Straße",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "café",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 1,
+          "longitude": 1,
+          "name": "STRASSE",
+          "radius": 150
+        }
+      ],
+      "name": "unicode-keepExisting",
+      "nameKeys": {
+        "café": "café",
+        "Café": "café",
+        "STRASSE": "strasse",
+        "Straße": "strasse"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 2,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          156900.54441288,
+          0,
+          156900.54441288
+        ],
+        [
+          156900.54441288,
+          0,
+          156891.76240558812,
+          0
+        ],
+        [
+          0,
+          156900.54441288,
+          0,
+          156900.54441288
+        ],
+        [
+          156900.54441288,
+          0,
+          156891.76240558812,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000002"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Café",
+          "radius": 150
+        },
+        {
+          "address": "Address 2",
+          "id": "00000000-0000-0000-0000-000000000002",
+          "latitude": 1,
+          "longitude": 1,
+          "name": "Straße",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "café",
+          "radius": 150
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 1,
+          "longitude": 1,
+          "name": "STRASSE",
+          "radius": 150
+        }
+      ],
+      "name": "unicode-updateExisting",
+      "nameKeys": {
+        "café": "café",
+        "Café": "café",
+        "STRASSE": "strasse",
+        "Straße": "strasse"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 0,
+        "updated": 2
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          149.27527235936043
+        ],
+        [
+          149.27527235936043,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Equator",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0.00135,
+          "longitude": 0,
+          "name": "Equator",
+          "radius": 150
+        }
+      ],
+      "name": "ellipsoid-threshold-keepExisting",
+      "nameKeys": {
+        "Equator": "equator"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 1,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          149.27527235936043
+        ],
+        [
+          149.27527235936043,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Equator",
+          "radius": 150
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0.00135,
+          "longitude": 0,
+          "name": "Equator",
+          "radius": 150
+        }
+      ],
+      "name": "ellipsoid-threshold-updateExisting",
+      "nameKeys": {
+        "Equator": "equator"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 0,
+        "skipped": 0,
+        "updated": 1
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          165.86141878048176,
+          331.72283756096203,
+          11.057427918699092
+        ],
+        [
+          165.86141878048176,
+          0,
+          165.86141878048025,
+          176.91884669918085
+        ],
+        [
+          331.72283756096203,
+          165.86141878048025,
+          0,
+          342.7802654796611
+        ],
+        [
+          11.057427918699092,
+          176.91884669918085,
+          342.7802654796611,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000011"
+        },
+        {
+          "action": "skip",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0.099,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0.1005,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 0.102,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        },
+        {
+          "address": "Address 12",
+          "id": "00000000-0000-0000-0000-000000000012",
+          "latitude": 0.0989,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        }
+      ],
+      "name": "latitude-bucket-move-keepExisting",
+      "nameKeys": {
+        "Trail": "trail"
+      },
+      "policy": "keepExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 2,
+        "updated": 0
+      }
+    },
+    {
+      "distances": [
+        [
+          0,
+          165.86141878048176,
+          331.72283756096203,
+          11.057427918699092
+        ],
+        [
+          165.86141878048176,
+          0,
+          165.86141878048025,
+          176.91884669918085
+        ],
+        [
+          331.72283756096203,
+          165.86141878048025,
+          0,
+          342.7802654796611
+        ],
+        [
+          11.057427918699092,
+          176.91884669918085,
+          342.7802654796611,
+          0
+        ]
+      ],
+      "entries": [
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "update",
+          "targetId": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "action": "add",
+          "targetId": "00000000-0000-0000-0000-000000000012"
+        }
+      ],
+      "existing": [
+        {
+          "address": "Address 1",
+          "id": "00000000-0000-0000-0000-000000000001",
+          "latitude": 0.099,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        }
+      ],
+      "incoming": [
+        {
+          "address": "Address 10",
+          "id": "00000000-0000-0000-0000-000000000010",
+          "latitude": 0.1005,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        },
+        {
+          "address": "Address 11",
+          "id": "00000000-0000-0000-0000-000000000011",
+          "latitude": 0.102,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        },
+        {
+          "address": "Address 12",
+          "id": "00000000-0000-0000-0000-000000000012",
+          "latitude": 0.0989,
+          "longitude": 0,
+          "name": "Trail",
+          "radius": 200
+        }
+      ],
+      "name": "latitude-bucket-move-updateExisting",
+      "nameKeys": {
+        "Trail": "trail"
+      },
+      "policy": "updateExisting",
+      "summary": {
+        "added": 1,
+        "skipped": 0,
+        "updated": 2
+      }
+    }
+  ]
+}

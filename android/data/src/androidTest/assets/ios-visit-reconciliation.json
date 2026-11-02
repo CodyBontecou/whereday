@@ -1,0 +1,570 @@
+{
+  "provenance": {
+    "IsoMe/Services/LocationManager.swift": "6033791414f75072bb0b9c8426f4321bb4f7074f58b0487c733b06631e341137",
+    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "android/scripts/fixtures/VisitReconciliationFixtures.swift": "1e07703765225a76401e1eaacca46bce4f88a3866b8216691e0bf5830921c6b9",
+    "android/scripts/generate_visit_reconciliation_fixtures.py": "3ba1b3183250b2ee620008d22367c2f54cc22cb583ab1dda10b9d2b8ac931069"
+  },
+  "cases": [
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000001",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "overlap",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000002",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000001",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 4000,
+        "id": "00000000-0000-0000-0000-000000000003",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "gap-30",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 3800,
+        "departure": 4000,
+        "id": "00000000-0000-0000-0000-000000000004",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000003",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": false,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 4000,
+        "id": "00000000-0000-0000-0000-000000000005",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "gap-over-30",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 3801,
+        "departure": 4000,
+        "id": "00000000-0000-0000-0000-000000000006",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000005",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000007",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "arrival-15",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1900,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000008",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 1000,
+        "id": "00000000-0000-0000-0000-000000000007",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000009",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "arrival-over-15",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1901,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000010",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 1000,
+        "id": "00000000-0000-0000-0000-000000000009",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 110680.38857983118,
+      "inferredDeparture": 20000,
+      "matches": false,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000011",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "far",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000012",
+        "inferred": false,
+        "latitude": 19,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000011",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000013",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "open",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000014",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000013",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000015",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "both-open",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000016",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000015",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": false,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000017",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "same-id",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000017",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000017",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": "Street",
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000019",
+        "inferred": true,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Corrected cafe",
+        "notes": "first\n\nsecond"
+      },
+      "name": "metadata",
+      "now": 20000,
+      "source": {
+        "address": "Street",
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000020",
+        "inferred": true,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Detected",
+        "notes": "second"
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000019",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Corrected cafe",
+        "notes": " first \n"
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000021",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": " same "
+      },
+      "name": "same-notes",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000022",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": "same"
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000021",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": " same "
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000023",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": " source \n"
+      },
+      "name": "empty-target-notes",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000024",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": " source \n"
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000023",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": " \n"
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 26000,
+      "matches": false,
+      "merged": {
+        "address": null,
+        "arrival": 25000,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000025",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "name": "future-open",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 26000,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000026",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 25000,
+        "departure": null,
+        "id": "00000000-0000-0000-0000-000000000025",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 21.18099654877858,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000027",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": 179.9999,
+        "name": null,
+        "notes": null
+      },
+      "name": "dateline",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000028",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -179.9999,
+        "name": null,
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000027",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": 179.9999,
+        "name": null,
+        "notes": null
+      }
+    }
+  ]
+}

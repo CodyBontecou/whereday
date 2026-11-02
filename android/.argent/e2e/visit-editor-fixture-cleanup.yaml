@@ -1,0 +1,8 @@
+executionPrerequisite: Edit visit is open for only the known synthetic Codex QA visit 20261027 at 0,0, opened by the scroll diagnostic; Delete visit is visible. Deletes that fixture only.
+steps:
+- tap: { text: Delete visit }
+- await: { visible: { text: Delete this visit? } }
+- await: { idle: true }
+- tap: { text: { matches: '^Delete$' } }
+- await: { visible: { text: No outings or visits for this day. } }
+- await: { hidden: { text: Codex QA visit 20261027 } }

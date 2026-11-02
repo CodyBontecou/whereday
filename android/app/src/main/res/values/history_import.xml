@@ -1,0 +1,40 @@
+<resources>
+    <string name="history_import_title">Review history import</string>
+    <string name="history_import_reading">Reading and checking the selected file…</string>
+    <string name="history_import_applying">Importing reviewed records…</string>
+    <string name="history_import_canceling">Cancel requested. Waiting for the current operation to finish. If it already committed, the completed result will appear here.</string>
+    <string name="history_import_canceled">Import canceled. No records from this operation were written.</string>
+    <string name="history_import_complete">Imported %1$s and %2$s. Kept %3$s.</string>
+    <string name="history_import_failed">The history file could not be imported.</string>
+    <string name="history_import_unchanged">Your journal has not changed. Review these records before importing.</string>
+    <string name="history_import_summary">%1$s · %2$s · %3$s</string>
+    <string name="history_import_dates">%1$s – %2$s (%3$s)</string>
+    <string name="history_import_context">Older Markdown clock times use language %1$s and time zone %2$s. If these differ from the original export, discard this review and match your phone settings before choosing the file again.</string>
+    <string name="history_import_existing">Journal matches to keep: %1$d. Repeated file records combined: %2$d. Nearby records with matching times are kept.</string>
+    <string name="history_import_rejected">%1$d rows could not be read and will be skipped. The first errors appear below.</string>
+    <string name="history_import_duplicates">Matching records</string>
+    <string name="history_import_keep">Keep existing records</string>
+    <string name="history_import_replace">Replace matching records</string>
+    <string name="history_import_confirm">Import valid records</string>
+    <string name="history_import_cancel">Cancel import</string>
+    <string name="history_import_discard">Discard review</string>
+    <string name="history_import_done">Done</string>
+    <string name="history_import_lifetime">You can return to this review while Whereday stays open. After the app restarts, choose the file again. Imports never restart automatically.</string>
+    <string name="history_import_replace_title">Replace matching journal records?</string>
+    <string name="history_import_replace_body">Only records with matching IDs will be replaced. Local corrections or notes on those records may be overwritten. Nearby matches are kept. If matching history changed after review, the import will stop so you can choose and review the file again.</string>
+    <string name="history_import_replace_confirm">Replace and import</string>
+    <string name="history_import_back">Keep reviewing</string>
+    <plurals name="history_import_visit_count">
+        <item quantity="one">%d visit</item>
+        <item quantity="other">%d visits</item>
+    </plurals>
+    <plurals name="history_import_point_count">
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+    <plurals name="history_import_kept_count">
+        <item quantity="one">%d existing record</item>
+        <item quantity="other">%d existing records</item>
+    </plurals>
+    <string name="history_import_replaceable">Records with matching IDs: %d. Replacement affects these records only. The counts above describe Keep existing; replacement rechecks all selected records.</string>
+</resources>

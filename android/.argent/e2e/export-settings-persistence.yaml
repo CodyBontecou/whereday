@@ -1,0 +1,34 @@
+steps:
+  - echo: Requires completed onboarding, idle recording and the Readable filename preset. Changes to Compact, verifies it after restart, then restores Readable. Does not buy or write a destination file.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Export }
+  - await: { visible: { text: Lifetime export access } }
+  - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
+  - tap: { text: { matches: '^Filters and fields$' } }
+  - scroll-to: { target: { text: { matches: '^Readable$' } }, direction: down }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Readable$' } }
+  - await: { visible: { text: { matches: '^Compact$' } } }
+  - tap: { text: { matches: '^Compact$' } }
+  - await: { visible: { text: 'isome_{type}_{datetime}' } }
+  - await: { idle: true }
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Fit route } }
+  - await: { idle: true }
+  - tap: { text: Export }
+  - await: { visible: { text: Lifetime export access } }
+  - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
+  - tap: { text: { matches: '^Filters and fields$' } }
+  - scroll-to: { target: { text: { matches: '^Compact$' } }, direction: down }
+  - await: { visible: { text: 'isome_{type}_{datetime}' } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Compact$' } }
+  - await: { visible: { text: { matches: '^Readable$' } } }
+  - tap: { text: { matches: '^Readable$' } }
+  - await: { visible: { text: 'Whereday - {day} {date} - {type}' } }
+  - await: { idle: true }
+  - tap: { text: Settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

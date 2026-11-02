@@ -1,0 +1,44 @@
+steps:
+- echo: Fresh isolated com.bontecou.whereday.mapqa app only. Walk all five onboarding pages without requesting
+    location or notifications; no recording or owner-package data access.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Your days, remembered
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: A journal of where you go
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Record in the background
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Keep recording within reach
+- await:
+    idle: true
+- tap:
+    text: Continue
+- await:
+    visible:
+      text: Ready for your next outing
+- await:
+    idle: true
+- tap:
+    text: Open Whereday
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

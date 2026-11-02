@@ -1,0 +1,150 @@
+steps:
+- echo: Requires onboarded idle app, no visit named Codex current QA 20261027, and run before local midnight.
+    Uses only an offline synthetic 0,0 pin; no GPS/geocoder request. Creates an open visit, verifies it
+    after restart, closes it, reopens to verify, and deletes it without clearing history.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Save current place
+- await:
+    idle: true
+- tap:
+    text: Save current place
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- await:
+    visible:
+      text: Still here
+- tap:
+    text: Choose visit location
+- await:
+    visible:
+      text: Drop pin at map center
+- await:
+    idle: true
+- await:
+    visible:
+      text: 'Map center: 0.000000, 0.000000'
+- tap:
+    text: Drop pin at map center
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- await:
+    visible:
+      text: '0.0'
+      role: TextField
+- type:
+    into:
+      text: Name
+    text: Codex current QA 20261027
+    submit: false
+- await:
+    visible:
+      text: Codex current QA 20261027
+      role: TextField
+- tool: button
+  args:
+    button: back
+- tap:
+    text:
+      matches: ^Save$
+- await:
+    visible:
+      text: Visit saved. Review it in Timeline.
+- await:
+    idle: true
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Fit route
+- await:
+    idle: true
+- tap:
+    text: Timeline
+- await:
+    visible:
+      text: Add past visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: Codex current QA 20261027
+- await:
+    visible:
+      text: Still here
+- tap:
+    text: Codex current QA 20261027
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: Still here
+- tap:
+    role: CheckBox
+    within:
+      id: visit-editor-fields
+- await:
+    visible:
+      text: Departed
+- tap:
+    text:
+      matches: ^Save$
+- await:
+    visible:
+      text: Add past visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: Codex current QA 20261027
+- await:
+    hidden:
+      text: Still here
+- tap:
+    text: Codex current QA 20261027
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: Departed
+- scroll-to:
+    target:
+      text: Delete visit
+    direction: down
+    within:
+      id: visit-editor-fields
+- await:
+    visible:
+      text: Delete visit
+- tap:
+    text: Delete visit
+- await:
+    visible:
+      text: Delete this visit?
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^Delete$
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Codex current QA 20261027

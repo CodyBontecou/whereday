@@ -1,0 +1,19 @@
+<resources>
+    <string name="road_settings_title">Road display</string>
+    <string name="road_settings_back">Back to settings</string>
+    <string name="road_settings_enable">Estimate paths along roads</string>
+    <string name="road_settings_explanation">Estimates change the map display only. Recorded locations, distances and replay statistics keep their original values.</string>
+    <string name="road_settings_unavailable">Road display is unavailable in this build. A routing provider and its privacy information must be configured first.</string>
+    <string name="road_settings_network">Turn on Network geocoding in Settings before enabling road display. Turning it off also stops road requests.</string>
+    <string name="road_settings_sharing">For the selected map range or outing, eligible recorded segment endpoints and travel modes are sent to %1$s to estimate a route. These coordinates can reveal where you have been. Up to 40 segments can be considered per preparation, with an alternate travel mode when needed.</string>
+    <string name="road_settings_privacy">Routing provider privacy policy</string>
+    <string name="road_settings_revoke">Turn this off to cancel requests and discard derived routes from memory. No derived routes are saved in your history. Clearing history also turns this off. Coordinates already received by the provider cannot be recalled.</string>
+    <string name="road_consent_title">Share recorded endpoints for routing?</string>
+    <string name="road_consent_allow">Allow road display</string>
+    <string name="road_consent_cancel">Not now</string>
+    <string name="road_consent_storage_error">The preference could not be saved. Check the switch, then try again. Enabling requires a new confirmation.</string>
+    <string name="road_consent_stale">The recording history or privacy settings changed. Review the current settings and confirm again.</string>
+    <string name="road_consent_disabled">Road display is off.</string>
+    <string name="road_consent_turn_off">Turn road display off</string>
+    <string name="road_consent_link_error">The privacy policy could not be opened.</string>
+</resources>

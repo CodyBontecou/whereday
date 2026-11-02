@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "maplibre-android-13.4.1.txt": {
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-native/18545ca10d296704b2cba675b182ff2c8da24588/platform/android/LICENSE.md",
+      "sha256": "db3cc41e2c79f394a1dddd890c55c263426175029a898d5167820498ddebf152",
+      "bytes": 76774
+    },
+    "maplibre-native-13.4.1.txt": {
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-native/18545ca10d296704b2cba675b182ff2c8da24588/LICENSE.md",
+      "sha256": "554cff8b6f6d2e77629e8c6eab769844ab86adc610ca2d60401ba2e0dce3c229",
+      "bytes": 1374
+    },
+    "maplibre-gestures-0.0.4.txt": {
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-gestures-android/823df84b427c6f8a320c2f14660f986243f6987b/LICENSE.md",
+      "sha256": "e82169bcba4d61ddb2d838aa154d153517e227efb07a60668efbcc472b18773f",
+      "bytes": 3503
+    },
+    "apache-2.0.txt": {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    "guava-parent-26.0-android.pom": {
+      "url": "https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom",
+      "sha256": "f8698ab46ca996ce889c1afc8ca4f25eb8ac6b034dc898d4583742360016cc04",
+      "bytes": 10180
+    },
+    "maplibre-harfbuzz.txt": {
+      "url": "https://raw.githubusercontent.com/harfbuzz/harfbuzz/c1eb66d4159fec311334aee5c0a59384491d3989/COPYING",
+      "sha256": "ba8f810f2455c2f08e2d56bb49b72f37fcf68f1f4fade38977cfd7372050ad64",
+      "bytes": 1971
+    },
+    "maplibre-unordered-dense.txt": {
+      "url": "https://raw.githubusercontent.com/martinus/unordered_dense/729896c7ba8bbd9da5573679270133086d05b5dd/LICENSE",
+      "sha256": "4f5a62734899ec0ba85d3e8264a7ed1fcb4bcb8f0b4359c0afd627b6314ae599",
+      "bytes": 1078
+    },
+    "maplibre-pmtiles.txt": {
+      "url": "https://raw.githubusercontent.com/protomaps/PMTiles/e232df55745642b39f0cc1edfc85df2633bce29c/LICENSE",
+      "sha256": "0371c38f338835f7fc13ed71176f3d92144e22c8b736a31cced57adbbeb647b3",
+      "bytes": 1713
+    },
+    "maplibre-icu.txt": {
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-native/18545ca10d296704b2cba675b182ff2c8da24588/vendor/icu/LICENSE",
+      "sha256": "4eac19453ddf356478db3be6b101a6d872d0046cdc8222df1ff5c997dd4b9fbe",
+      "bytes": 21000
+    },
+    "maplibre-jni-hpp.txt": {
+      "url": "https://raw.githubusercontent.com/mapbox/jni.hpp/57ca9ed4bbeb22ed8d20a55063dcaa217ba47f42/LICENSE.txt",
+      "sha256": "640f62b4b6e940645b96d12416e6db84ed191ebcfd10c3a0ccc9a1338f222726",
+      "bytes": 903
+    },
+    "maplibre-tile-format.txt": {
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-tile-spec/751ebb1837e4fd03c9074b91fce24727013c1868/LICENSE-APACHE",
+      "sha256": "61255827d133b77aff06d22205fea27506c289dbd8326312faee2788e0f5373a",
+      "bytes": 10841
+    },
+    "maplibre-vulkan-headers.txt": {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Headers/015e25c3c91b70eb1a754d36fb14c4ba6ad9b0b9/LICENSE.md",
+      "sha256": "ac24e5ea920e4318e4d02c4086ae51f53cfb03feed06c18df1019e7ada1ec7bc",
+      "bytes": 458
+    },
+    "maplibre-vulkan-memory-allocator.txt": {
+      "url": "https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/7942b798289f752dc23b0a79516fd8545febd718/LICENSE.txt",
+      "sha256": "f56ab0392925231e34dd008a7670bb5c5ead490203bc9e125de3106fef642a27",
+      "bytes": 1099
+    },
+    "maplibre-glslang.txt": {
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glslang/a92c61f8456fa9731c0b000a2c6fc52a740c2be7/LICENSE.txt",
+      "sha256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+      "bytes": 54705
+    }
+  }
+}

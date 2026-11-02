@@ -1,0 +1,18 @@
+steps:
+  - echo: Onboarded idle English mapQa app on API35, analytics flag off. Check Settings, unavailable sharing and Back; no approval or recording.
+  - launch: com.bontecou.whereday.mapqa
+  - await: {visible: {text: Start recording}}
+  - await: {idle: true}
+  - tap: {text: Settings}
+  - await: {visible: {id: settings-screen}}
+  - await: {idle: true}
+  - scroll-to: {target: {text: Usage analytics}}
+  - await: {visible: {text: Usage analytics}}
+  - tap: {text: Usage analytics}
+  - await: {visible: {id: usage-analytics-screen}}
+  - await: {idle: true}
+  - await: {visible: {text: Sharing is unavailable in this build. No usage analytics will be sent.}}
+  - await: {visible: {id: usage-analytics-switch}}
+  - tap: {text: Back}
+  - await: {visible: {id: settings-screen}}
+  - await: {idle: true}

@@ -1,0 +1,1451 @@
+{
+  "scope": "Verbatim Swift Google parser and timeline parse validation; legacy Whereday parser stubbed and unused; no storage/UI/network acceptance",
+  "provenance": {
+    "IsoMe/Utilities/GoogleTimelineImportService.swift": "ef40fbd7724a839f62327c1afe11d094fb3a6604778705c651f923dae8576406",
+    "IsoMe/Utilities/TimelineImportService.swift": "b5100d03345a4d3223e50e52f0b87861f0c4a6a756489f7e8b237d68ba4df0a3",
+    "IsoMe/Utilities/ImportService.swift": "f3a4f33b6f67c853e10b9fdafb6de7dc04f0eebed99e7fc3a93bb2be509b943e",
+    "extractedSha256": "e10012e196f91b8b3a97100c80e095566fd69404492361f2412c6e2190e655e0",
+    "generatorSha256": "46b2a98693d81dab7d81edfc943987b3ea5b67c71446f2fefba4b600a0c8e4ca"
+  },
+  "cases": [
+    {
+      "input": {
+        "id": "raw-basic",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":0,\"longitudeE7\":0,\"timestamp\":\"2020-01-01T01:00:00.123Z\",\"altitude\":12,\"velocity\":4.5}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": 12,
+            "latitude": 0,
+            "longitude": 0,
+            "speed": 4.5,
+            "time": 1577840400123
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-latitudeE7-True",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":true,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-latitudeE7-910000000",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":910000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-longitudeE7-1810000000",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":1810000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-timestampMs-NaN",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"NaN\",\"accuracy\":8}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-accuracy--5",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":-5}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-accuracy-None",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":null}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-accuracy-True",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":true}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-altitude-NaN",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8,\"altitude\":\"NaN\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-velocity--1",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8,\"velocity\":-1}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-latitudeE7-0x10",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":\"0x10\",\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 1.6e-06,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-latitudeE7-1d",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latitudeE7\":\"1d\",\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-aliases-and-fallback",
+        "json": "{\"locations\":[{\"latE7\":\"377000000\",\"lngE7\":\"-1224000000\",\"timestampMs\":\"bad\",\"timestamp\":\"2020-01-01T01:00:00Z\"},{\"latitudeE7\":null,\"latE7\":377000000,\"longitudeE7\":-1224000000,\"latLng\":\"geo:18,-66\",\"timestampMs\":\"0\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 0
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "raw-unknown-and-nonobject",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{},null,3,\"text\",[]]}"
+      },
+      "expected": {
+        "invalid": 5,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "semantic-visit",
+        "json": "{\"timelineObjects\":[{\"placeVisit\":{\"location\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"}}},{}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [],
+        "source": "googleSemantic",
+        "unsupported": 1,
+        "visits": [
+          {
+            "address": "1 Test Street",
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Cafe 日本語",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "semantic-paths",
+        "json": "{\"timelineObjects\":[{\"activitySegment\":{\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"},\"startLocation\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"endLocation\":{\"latLng\":\"geo:37.701,-122.401\"},\"simplifiedRawPath\":{\"points\":[{\"latE7\":377001000,\"lngE7\":-1224001000,\"timestampMs\":\"1577836801000\"},{\"latLng\":\"geo:37.7,-122.4\"}]},\"waypointPath\":{\"waypoints\":[{\"latLng\":\"geo:37.71,-122.41\",\"durationMinutesOffsetFromStartTime\":2}]}}}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7001,
+            "longitude": -122.4001,
+            "speed": null,
+            "time": 1577836801000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.71,
+            "longitude": -122.41,
+            "speed": null,
+            "time": 1577836920000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleSemantic",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "semantic-path-order-with-ties",
+        "json": "{\"timelineObjects\":[{\"activitySegment\":{\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"},\"waypointPath\":{\"waypoints\":[{\"latLng\":\"geo:18.000001,-66\",\"timestampMs\":\"1577836801000\"}]},\"simplifiedRawPath\":{\"points\":[{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"1577836801000\"}]}}}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577836801000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18.000001,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577836801000
+          }
+        ],
+        "source": "googleSemantic",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "semantic-visit-precedence",
+        "json": "{\"timelineObjects\":[{\"activitySegment\":{\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"},\"startLocation\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"endLocation\":{\"latLng\":\"geo:37.701,-122.401\"},\"simplifiedRawPath\":{\"points\":[{\"latE7\":377001000,\"lngE7\":-1224001000,\"timestampMs\":\"1577836801000\"},{\"latLng\":\"geo:37.7,-122.4\"}]},\"waypointPath\":{\"waypoints\":[{\"latLng\":\"geo:37.71,-122.41\",\"durationMinutesOffsetFromStartTime\":2}]}},\"placeVisit\":{\"location\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"}}}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [],
+        "source": "googleSemantic",
+        "unsupported": 0,
+        "visits": [
+          {
+            "address": "1 Test Street",
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Cafe 日本語",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "semantic-invalid-interval",
+        "json": "{\"timelineObjects\":[{\"placeVisit\":{\"location\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"}}},{\"activitySegment\":{\"duration\":{\"startTimestamp\":\"2020-01-02T00:00:00Z\",\"endTimestamp\":\"2020-01-01T00:00:00Z\"},\"startLocation\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"endLocation\":{\"latLng\":\"geo:37.701,-122.401\"},\"simplifiedRawPath\":{\"points\":[{\"latE7\":377001000,\"lngE7\":-1224001000,\"timestampMs\":\"1577836801000\"},{\"latLng\":\"geo:37.7,-122.4\"}]},\"waypointPath\":{\"waypoints\":[{\"latLng\":\"geo:37.71,-122.41\",\"durationMinutesOffsetFromStartTime\":2}]}}}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [],
+        "source": "googleSemantic",
+        "unsupported": 0,
+        "visits": [
+          {
+            "address": "1 Test Street",
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Cafe 日本語",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "device-object",
+        "json": "{\"semanticSegments\":[{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2020-01-01T03:00:00+02:00\"}]}"
+      },
+      "expected": {
+        "invalid": 2,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577837100000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577837700000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.702,
+            "longitude": -122.402,
+            "speed": null,
+            "time": 1577838600000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleDevice",
+        "unsupported": 0,
+        "visits": [
+          {
+            "address": null,
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Lunch",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "device-array",
+        "json": "[{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2020-01-01T03:00:00+02:00\"}]"
+      },
+      "expected": {
+        "invalid": 2,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577837100000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577837700000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.702,
+            "longitude": -122.402,
+            "speed": null,
+            "time": 1577838600000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleDevice",
+        "unsupported": 0,
+        "visits": [
+          {
+            "address": null,
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Lunch",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "device-string-location",
+        "json": "[{\"startTime\":\"2020-01-01T00:00:00Z\",\"endTime\":\"2020-01-01T01:00:00Z\",\"visit\":{\"topCandidate\":{\"placeLocation\":\"geo:37.7,-122.4\"}}}]"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [],
+        "source": "googleDevice",
+        "unsupported": 0,
+        "visits": [
+          {
+            "address": null,
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": null,
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "device-unsupported",
+        "json": "[{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2020-01-01T03:00:00+02:00\"},{\"startTime\":\"2020-01-01T00:00:00Z\",\"endTime\":\"2020-01-01T01:00:00Z\",\"unknown\":true}]"
+      },
+      "expected": {
+        "invalid": 2,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577837100000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577837700000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.702,
+            "longitude": -122.402,
+            "speed": null,
+            "time": 1577838600000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleDevice",
+        "unsupported": 1,
+        "visits": [
+          {
+            "address": null,
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Lunch",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "device-reversed",
+        "json": "[{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2020-01-01T03:00:00+02:00\"},{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2019-12-31T23:00:00Z\"}]"
+      },
+      "expected": {
+        "invalid": 3,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577837100000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577837700000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.702,
+            "longitude": -122.402,
+            "speed": null,
+            "time": 1577838600000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleDevice",
+        "unsupported": 0,
+        "visits": [
+          {
+            "address": null,
+            "arrival": 1577836800000,
+            "departure": 1577840400000,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "name": "Lunch",
+            "placeSource": "import",
+            "source": "imported"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "id": "root-priority",
+        "json": "{\"semanticSegments\":[{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2020-01-01T03:00:00+02:00\"}],\"timelineObjects\":[{\"activitySegment\":{\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"},\"startLocation\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"endLocation\":{\"latLng\":\"geo:37.701,-122.401\"},\"simplifiedRawPath\":{\"points\":[{\"latE7\":377001000,\"lngE7\":-1224001000,\"timestampMs\":\"1577836801000\"},{\"latLng\":\"geo:37.7,-122.4\"}]},\"waypointPath\":{\"waypoints\":[{\"latLng\":\"geo:37.71,-122.41\",\"durationMinutesOffsetFromStartTime\":2}]}}}],\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8}],\"visits\":[{}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "semantic-priority",
+        "json": "{\"semanticSegments\":[{\"timelinePath\":[{\"point\":\"geo:37.7,-122.4\",\"durationMinutesOffsetFromStartTime\":\"5\"},{\"point\":\"37.701°, -122.401°\",\"durationMinutesOffsetFromStartTime\":15},{\"point\":\"geo:37.702,-122.402\",\"time\":\"2020-01-01T00:30:00Z\"},{\"point\":\"geo:37.703,-122.403\",\"durationMinutesOffsetFromStartTime\":65},{\"point\":\"geo:37,-122\"}],\"visit\":{\"topCandidate\":{\"placeLocation\":{\"latLng\":\"37.7°, -122.4°\"},\"placeName\":\"Lunch\"}},\"activity\":{\"start\":{\"latLng\":\"geo:37.7,-122.4\"},\"end\":{\"latLng\":\"geo:37.701,-122.401\"}},\"startTime\":\"2020-01-01T02:00:00+02:00\",\"endTime\":\"2020-01-01T03:00:00+02:00\"}],\"timelineObjects\":[{\"activitySegment\":{\"duration\":{\"startTimestampMs\":\"1577836800000\",\"endTimestamp\":\"2020-01-01T01:00:00Z\"},\"startLocation\":{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"name\":\"Cafe 日本語\",\"address\":\"1 Test Street\"},\"endLocation\":{\"latLng\":\"geo:37.701,-122.401\"},\"simplifiedRawPath\":{\"points\":[{\"latE7\":377001000,\"lngE7\":-1224001000,\"timestampMs\":\"1577836801000\"},{\"latLng\":\"geo:37.7,-122.4\"}]},\"waypointPath\":{\"waypoints\":[{\"latLng\":\"geo:37.71,-122.41\",\"durationMinutesOffsetFromStartTime\":2}]}}}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.7001,
+            "longitude": -122.4001,
+            "speed": null,
+            "time": 1577836801000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.71,
+            "longitude": -122.41,
+            "speed": null,
+            "time": 1577836920000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 37.701,
+            "longitude": -122.401,
+            "speed": null,
+            "time": 1577840400000
+          }
+        ],
+        "source": "googleSemantic",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01T00:00:00Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01T00:00:00Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01T00:00:00.123456789Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01T00:00:00.123456789Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577836800123
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01T00:00:00+02:00",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01T00:00:00+02:00\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577829600000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01T00:00:00+02",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01T00:00:00+02\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577829600000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01T00:00:00Ztail",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01T00:00:00Ztail\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01t00:00:00z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01t00:00:00z\"}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-02-30T00:00:00Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-02-30T00:00:00Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1583020800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2020-01-01T24:00:00Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2020-01-01T24:00:00Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577923200000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-2016-12-31T23:59:60Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"2016-12-31T23:59:60Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1483228800000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-0001-01-01T00:00:00Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"0001-01-01T00:00:00Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": -62135769600000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-4001-01-01T00:00:00Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"4001-01-01T00:00:00Z\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 64092211200000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "date-4002-01-01T00:00:00Z",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestamp\":\"4002-01-01T00:00:00Z\"}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds--62135769600000",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"-62135769600000\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": -62135769600000
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds-64092211200000",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"64092211200000\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 64092211200000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds--1",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"-1\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": -1
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds-0",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"0\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 0
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds-123.456",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"123.456\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 123
+          },
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds-1577836800123.456",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"1577836800123.456\"}]}"
+      },
+      "expected": {
+        "invalid": 0,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          },
+          {
+            "accuracy": -1,
+            "altitude": null,
+            "latitude": 18,
+            "longitude": -66,
+            "speed": null,
+            "time": 1577836800123
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "milliseconds-1e300",
+        "json": "{\"locations\":[{\"latitudeE7\":377000000,\"longitudeE7\":-1224000000,\"timestampMs\":\"1577836800000\",\"accuracy\":8},{\"latLng\":\"geo:18,-66\",\"timestampMs\":\"1e300\"}]}"
+      },
+      "expected": {
+        "invalid": 1,
+        "points": [
+          {
+            "accuracy": 8,
+            "altitude": null,
+            "latitude": 37.7,
+            "longitude": -122.4,
+            "speed": null,
+            "time": 1577836800000
+          }
+        ],
+        "source": "googleRaw",
+        "unsupported": 0,
+        "visits": []
+      }
+    },
+    {
+      "input": {
+        "id": "empty",
+        "json": "{\"locations\":[]}"
+      },
+      "expected": {
+        "error": true
+      }
+    },
+    {
+      "input": {
+        "id": "bad-array",
+        "json": "{\"locations\":\"bad\"}"
+      },
+      "expected": {
+        "error": true
+      }
+    },
+    {
+      "input": {
+        "id": "empty-device",
+        "json": "[]"
+      },
+      "expected": {
+        "error": true
+      }
+    },
+    {
+      "input": {
+        "id": "unsupported",
+        "json": "{\"unrelated\":[]}"
+      },
+      "expected": {
+        "error": true
+      }
+    },
+    {
+      "input": {
+        "id": "malformed-known-unicode",
+        "json": "{\"locations\":[{\"latLng\":\"geo:18,-66\",\"timestampMs\":0,\"name\":\"\\ud800\"}]}"
+      },
+      "expected": {
+        "error": true
+      }
+    }
+  ]
+}

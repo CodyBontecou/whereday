@@ -1,0 +1,8 @@
+<resources>
+    <string name="visit_view_map">View saved visit on map</string>
+    <string name="visit_discard_map_body">Discard your unsaved changes and view the saved visit on the map?</string>
+    <string name="visit_discard_map_confirm">Discard and view map</string>
+    <string name="visit_error_map">This saved visit is unavailable or its date is outside the supported map range.</string>
+    <string name="map_date_visit">Visit day</string>
+    <string name="map_selected_visit">Selected visit: %s</string>
+</resources>

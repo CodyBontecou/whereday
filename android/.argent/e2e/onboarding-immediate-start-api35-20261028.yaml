@@ -1,0 +1,119 @@
+steps:
+- echo: Disposable mapQa, idle/onboarded, English API35. Foreground location pregranted, notifications denied. Replay setup, choose immediate
+    recording explicitly, require acknowledged active Map status, then stop; only QA history may be created.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      id: settings-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Replay onboarding
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Replay onboarding
+- tap:
+    text: Replay onboarding
+- await:
+    visible:
+      text: Your days, remembered
+- await:
+    idle: true
+- tap:
+    text: Continue
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: A journal of where you go
+- await:
+    idle: true
+- tap:
+    text: Continue
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Record in the background
+- await:
+    idle: true
+- tap:
+    text: Continue
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Keep recording within reach
+- await:
+    idle: true
+- tap:
+    text: Continue
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Ready for your next outing
+- await:
+    idle: true
+- await:
+    visible:
+      id: onboarding-start-now
+- tap:
+    id: onboarding-start-now
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording and open Whereday
+- tap:
+    text: Start recording and open Whereday
+- await:
+    visible:
+      text: Stop recording
+    timeout: 18000
+- await:
+    idle: true
+- await:
+    visible:
+      text: Recording continues with the screen off.
+- tap:
+    text: Stop recording
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

@@ -1,0 +1,252 @@
+[
+  {
+    "name": "completed",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "points": [],
+    "visits": [
+      "2020-02-29T11:59:59.000Z",
+      "2020-02-29T12:00:00.000Z",
+      "2020-02-29T12:01:00.000Z",
+      "2020-02-29T12:01:00.001Z"
+    ]
+  },
+  {
+    "name": "unicode-multiline",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "points": [],
+    "visits": [
+      "2020-02-29T11:59:59.000Z",
+      "2020-02-29T12:00:00.000Z",
+      "2020-02-29T12:01:00.000Z",
+      "2020-02-29T12:01:00.001Z"
+    ],
+    "title": "  Caf\u00e9, \"quoted\" | caf\u00e9  ",
+    "notes": "  First line\nSecond line  "
+  },
+  {
+    "name": "active-empty",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": null,
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "points": [],
+    "visits": []
+  },
+  {
+    "name": "active-last-fix",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": null,
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "points": [
+      {
+        "time": "2020-02-29T12:00:02.125Z",
+        "lat": 0.0,
+        "lon": 0.0,
+        "outlier": false
+      },
+      {
+        "time": "2020-02-29T12:00:03.250Z",
+        "lat": 0.0,
+        "lon": 0.0,
+        "outlier": true
+      }
+    ],
+    "visits": [
+      "2020-02-29T11:59:59.000Z",
+      "2020-02-29T12:00:00.000Z",
+      "2020-02-29T12:01:00.000Z",
+      "2020-02-29T12:01:00.001Z"
+    ]
+  },
+  {
+    "name": "inferred",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": true,
+    "points": [
+      {
+        "time": "2020-02-29T12:00:02.125Z",
+        "lat": 0.0,
+        "lon": 0.0,
+        "outlier": false
+      },
+      {
+        "time": "2020-02-29T12:00:03.250Z",
+        "lat": 0.0,
+        "lon": 0.0,
+        "outlier": true
+      }
+    ],
+    "visits": [
+      "2020-02-29T11:59:59.000Z",
+      "2020-02-29T12:00:00.000Z",
+      "2020-02-29T12:01:00.000Z",
+      "2020-02-29T12:01:00.001Z"
+    ],
+    "notes": "Ignored inferred notes",
+    "title": "Ignored inferred title"
+  },
+  {
+    "name": "zero-duration",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:00:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "points": [
+      {
+        "time": "2020-02-29T12:00:02.125Z",
+        "lat": 0.0,
+        "lon": 0.0,
+        "outlier": false
+      }
+    ],
+    "visits": [
+      "2020-02-29T11:59:59.000Z",
+      "2020-02-29T12:00:00.000Z",
+      "2020-02-29T12:01:00.000Z",
+      "2020-02-29T12:01:00.001Z"
+    ],
+    "notes": "   ",
+    "title": "  "
+  },
+  {
+    "name": "nonzero-walk",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "visits": [],
+    "points": [
+      {
+        "lat": 18.4655,
+        "lon": -66.1057,
+        "time": "2020-02-29T12:00:00.000Z",
+        "outlier": false
+      },
+      {
+        "lat": 18.4665,
+        "lon": -66.1047,
+        "time": "2020-02-29T12:00:20.000Z",
+        "outlier": false
+      },
+      {
+        "lat": 18.4675,
+        "lon": -66.1067,
+        "time": "2020-02-29T12:00:40.000Z",
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "nonzero-outlier-bridge",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "visits": [],
+    "points": [
+      {
+        "lat": 18.4655,
+        "lon": -66.1057,
+        "time": "2020-02-29T12:00:00.000Z",
+        "outlier": false
+      },
+      {
+        "lat": 18.4665,
+        "lon": -66.1047,
+        "time": "2020-02-29T12:00:20.000Z",
+        "outlier": true
+      },
+      {
+        "lat": 18.4675,
+        "lon": -66.1067,
+        "time": "2020-02-29T12:00:40.000Z",
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "nonzero-all-outliers",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "visits": [],
+    "points": [
+      {
+        "lat": 18.4655,
+        "lon": -66.1057,
+        "time": "2020-02-29T12:00:00.000Z",
+        "outlier": true
+      },
+      {
+        "lat": 18.4665,
+        "lon": -66.1047,
+        "time": "2020-02-29T12:00:20.000Z",
+        "outlier": true
+      },
+      {
+        "lat": 18.4675,
+        "lon": -66.1067,
+        "time": "2020-02-29T12:00:40.000Z",
+        "outlier": true
+      }
+    ]
+  },
+  {
+    "name": "nonzero-dateline",
+    "id": "outing",
+    "sequence": 3,
+    "start": "2020-02-29T12:00:00.000Z",
+    "end": "2020-02-29T12:01:00.000Z",
+    "now": "2020-02-29T13:00:00.000Z",
+    "inferred": false,
+    "visits": [],
+    "points": [
+      {
+        "lat": 0,
+        "lon": 179.999,
+        "time": "2020-02-29T12:00:00.000Z",
+        "outlier": false
+      },
+      {
+        "lat": 0.001,
+        "lon": -179.999,
+        "time": "2020-02-29T12:00:20.000Z",
+        "outlier": false
+      },
+      {
+        "lat": 0.002,
+        "lon": -179.998,
+        "time": "2020-02-29T12:00:40.000Z",
+        "outlier": false
+      }
+    ]
+  }
+]

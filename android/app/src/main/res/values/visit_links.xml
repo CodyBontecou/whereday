@@ -1,0 +1,8 @@
+<resources>
+    <string name="visit_link_title">Visit link</string>
+    <string name="visit_link_invalid">This visit link is invalid. Check the place, coordinates, and times.</string>
+    <string name="visit_link_missing">That Whereday item could not be found.</string>
+    <string name="visit_link_load_error">The visit could not be loaded. Please try again.</string>
+    <string name="visit_link_ok">OK</string>
+    <string name="visit_link_check_in">Check in</string>
+</resources>

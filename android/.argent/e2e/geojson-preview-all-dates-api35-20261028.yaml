@@ -1,0 +1,43 @@
+steps:
+  - echo: Onboarded idle disposable mapQa only, zero history, Json/All defaults, collapsed fields and unavailable purchases. Render free GeoJSON, verify All dates, restore Json/collapsed fields and return to Map. No recording, permission or destination changes. Home/resume refreshes the known stale inspection bridge.
+  - launch: com.bontecou.whereday.mapqa
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}
+  - tap: {text: Export}
+  - await: {visible: {text: 'Your history, in your format'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Json$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Geojson$'}}
+  - await: {visible: {text: Preview export}}
+  - await: {idle: true}
+  - tap: {text: Preview export}
+  - scroll-to: {target: {text: FeatureCollection}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tool: await-ui-element
+    args: {condition: visible, selector: {text: FeatureCollection}}
+  - scroll-to: {target: {text: {matches: '^Filters and fields$'}}, direction: up}
+  - tap: {text: {matches: '^Filters and fields$'}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tool: await-ui-element
+    args: {condition: visible, selector: {text: All dates}}
+  - tap: {text: Hide filters and fields}
+  - scroll-to: {target: {text: Format}, direction: up}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tap: {text: {matches: '^Geojson$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Json$'}}
+  - await: {visible: {text: Json}}
+  - await: {idle: true}
+  - tap: {text: Map}
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}

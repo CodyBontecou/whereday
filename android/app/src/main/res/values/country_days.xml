@@ -1,0 +1,62 @@
+<resources>
+    <string name="country_back_days">Back to Country Days</string>
+    <string name="country_back_settings">Back to settings</string>
+    <string name="country_title">Country Days</string>
+    <string name="country_period">Period</string>
+    <string name="country_period_year">This year</string>
+    <string name="country_period_rolling">Last 365 days</string>
+    <string name="country_period_all">All time</string>
+    <string name="country_load_error">Country days could not be loaded. Try again.</string>
+    <string name="country_retry">Try again</string>
+    <string name="country_loading">Calculating country days…</string>
+    <string name="country_source_both">Recorded + manual</string>
+    <string name="country_source_manual">Manual</string>
+    <string name="country_source_recorded">Recorded</string>
+    <string name="country_rules">Each local date counts once per country. Travel days can count in more than one country. Open visits and unverified departures count only the arrival date; route points can add other dates. Gaps are not filled.</string>
+    <string name="country_checked">%1$s checked · %2$s identified</string>
+    <string name="country_stop">Stop analysis</string>
+    <string name="country_analyze">Analyze saved locations</string>
+    <string name="country_network_disabled">Network geocoding is disabled. Enable it in Settings to analyze locations, or add manual stays.</string>
+    <string name="country_unresolved">Unresolved points: %1$s. Unresolved visits: %2$s. A verified country and local time zone are required; these locations are excluded from recorded totals.</string>
+    <string name="country_unresolved_help">Analyze saved locations to identify their countries. Completed results are saved on this phone.</string>
+    <string name="country_empty">No country days yet</string>
+    <string name="country_code_days">%1$s · %2$s</string>
+    <string name="country_view_dates">View dates</string>
+    <string name="country_preview">Preview country CSV</string>
+    <string name="country_manual">Manual stays</string>
+    <string name="country_manual_help">Add missing dates or known stays. Overlapping dates count only once.</string>
+    <string name="country_stay_range">%1$s → %2$s</string>
+    <string name="country_export">Export country CSV</string>
+    <string name="country_preview_title">Country CSV preview</string>
+    <string name="country_preview_help">Preview shows the first 100 local dates. Export country CSV includes all dates in the selected period and requires verified lifetime access.</string>
+    <string name="country_done">Done</string>
+    <string name="country_analyze_title">Analyze saved locations?</string>
+    <string name="country_analyze_disclosure">Coordinates are sent to your device’s geocoding service to identify countries. Geographic time zones are calculated on this phone from bundled boundaries. Results are estimates; unavailable locations stay unresolved. You can stop and continue later.</string>
+    <string name="country_start">Start analysis</string>
+    <string name="country_cancel">Cancel</string>
+    <string name="country_analysis_preparing">Loading geographic time zones…</string>
+    <string name="country_analysis_waiting">Waiting before the next lookup. You can stop and continue later.</string>
+    <string name="country_analysis_lookup">Looking up a saved location…</string>
+    <string name="country_analysis_nothing">No saved locations need analysis right now. Unavailable results retry after an hour.</string>
+    <string name="country_analysis_finished">Locations identified: %1$s of %2$s. Unavailable results retry after an hour.</string>
+    <string name="country_analysis_disabled">Enable network geocoding in Settings, or add a manual stay.</string>
+    <string name="country_analysis_stopped">Analysis stopped. Completed results are saved; analyze again to continue.</string>
+    <string name="country_analysis_stopping">Stopping analysis…</string>
+    <string name="country_analysis_error">Country lookup is temporarily unavailable. Completed results are saved. Check your connection and try again later.</string>
+    <plurals name="country_days_present">
+        <item quantity="one">%1$s day present</item>
+        <item quantity="other">%1$s days present</item>
+    </plurals>
+    <plurals name="country_country_count">
+        <item quantity="one">%1$s country</item>
+        <item quantity="other">%1$s countries</item>
+    </plurals>
+    <plurals name="country_unique_days">
+        <item quantity="one">%1$s day with recorded or manual presence</item>
+        <item quantity="other">%1$s days with recorded or manual presence</item>
+    </plurals>
+    <plurals name="country_day_count">
+        <item quantity="one">%1$s day</item>
+        <item quantity="other">%1$s days</item>
+    </plurals>
+</resources>

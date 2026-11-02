@@ -1,0 +1,388 @@
+{
+  "provenance": {
+    "calculator": "83c8f5be07d941be060af4f5c07641536d9b215754c810a6aa7edec1d0f30f46",
+    "harness": "c25fa281e9f1a2a1c3fa4a46c3dd5667ecd4f3cfd137c66443acfcbae121e09e"
+  },
+  "coordinates": [
+    [
+      48.8584,
+      2.2945
+    ],
+    [
+      48.859,
+      2.295
+    ],
+    [
+      48.8585,
+      2.294
+    ],
+    [
+      48.86,
+      2.296
+    ]
+  ],
+  "indices": [
+    {
+      "count": 0,
+      "index": null,
+      "progress": -1,
+      "step": 1
+    },
+    {
+      "count": 0,
+      "index": null,
+      "progress": 0,
+      "step": 1
+    },
+    {
+      "count": 0,
+      "index": null,
+      "progress": 0.25,
+      "step": 1
+    },
+    {
+      "count": 0,
+      "index": null,
+      "progress": 0.5,
+      "step": 1
+    },
+    {
+      "count": 0,
+      "index": null,
+      "progress": 0.75,
+      "step": 1
+    },
+    {
+      "count": 0,
+      "index": null,
+      "progress": 1,
+      "step": 1
+    },
+    {
+      "count": 0,
+      "index": null,
+      "progress": 2,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": -1,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": 0,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": 0.25,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": 0.5,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": 0.75,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": 1,
+      "step": 1
+    },
+    {
+      "count": 1,
+      "index": 0,
+      "progress": 2,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 0,
+      "progress": -1,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 0,
+      "progress": 0,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 0,
+      "progress": 0.25,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 1,
+      "progress": 0.5,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 1,
+      "progress": 0.75,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 1,
+      "progress": 1,
+      "step": 1
+    },
+    {
+      "count": 2,
+      "index": 1,
+      "progress": 2,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 0,
+      "progress": -1,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 0,
+      "progress": 0,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 1,
+      "progress": 0.25,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 2,
+      "progress": 0.5,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 2,
+      "progress": 0.75,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 3,
+      "progress": 1,
+      "step": 1
+    },
+    {
+      "count": 4,
+      "index": 3,
+      "progress": 2,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 0,
+      "progress": -1,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 0,
+      "progress": 0,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 45,
+      "progress": 0.25,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 90,
+      "progress": 0.5,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 135,
+      "progress": 0.75,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 180,
+      "progress": 1,
+      "step": 1
+    },
+    {
+      "count": 181,
+      "index": 180,
+      "progress": 2,
+      "step": 1
+    },
+    {
+      "count": 182,
+      "index": 0,
+      "progress": -1,
+      "step": 2
+    },
+    {
+      "count": 182,
+      "index": 0,
+      "progress": 0,
+      "step": 2
+    },
+    {
+      "count": 182,
+      "index": 45,
+      "progress": 0.25,
+      "step": 2
+    },
+    {
+      "count": 182,
+      "index": 91,
+      "progress": 0.5,
+      "step": 2
+    },
+    {
+      "count": 182,
+      "index": 136,
+      "progress": 0.75,
+      "step": 2
+    },
+    {
+      "count": 182,
+      "index": 181,
+      "progress": 1,
+      "step": 2
+    },
+    {
+      "count": 182,
+      "index": 181,
+      "progress": 2,
+      "step": 2
+    },
+    {
+      "count": 2500,
+      "index": 0,
+      "progress": -1,
+      "step": 14
+    },
+    {
+      "count": 2500,
+      "index": 0,
+      "progress": 0,
+      "step": 14
+    },
+    {
+      "count": 2500,
+      "index": 625,
+      "progress": 0.25,
+      "step": 14
+    },
+    {
+      "count": 2500,
+      "index": 1250,
+      "progress": 0.5,
+      "step": 14
+    },
+    {
+      "count": 2500,
+      "index": 1874,
+      "progress": 0.75,
+      "step": 14
+    },
+    {
+      "count": 2500,
+      "index": 2499,
+      "progress": 1,
+      "step": 14
+    },
+    {
+      "count": 2500,
+      "index": 2499,
+      "progress": 2,
+      "step": 14
+    },
+    {
+      "count": 1000000,
+      "index": 0,
+      "progress": -1,
+      "step": 5556
+    },
+    {
+      "count": 1000000,
+      "index": 0,
+      "progress": 0,
+      "step": 5556
+    },
+    {
+      "count": 1000000,
+      "index": 250000,
+      "progress": 0.25,
+      "step": 5556
+    },
+    {
+      "count": 1000000,
+      "index": 500000,
+      "progress": 0.5,
+      "step": 5556
+    },
+    {
+      "count": 1000000,
+      "index": 749999,
+      "progress": 0.75,
+      "step": 5556
+    },
+    {
+      "count": 1000000,
+      "index": 999999,
+      "progress": 1,
+      "step": 5556
+    },
+    {
+      "count": 1000000,
+      "index": 999999,
+      "progress": 2,
+      "step": 5556
+    }
+  ],
+  "snapshots": [
+    {
+      "distance": 0,
+      "duration": 180,
+      "elapsed": 0,
+      "index": 0,
+      "progress": 0,
+      "totalDistance": 390.39086747297483
+    },
+    {
+      "distance": 168.2121282246184,
+      "duration": 180,
+      "elapsed": 120,
+      "index": 2,
+      "progress": 0.5,
+      "totalDistance": 390.39086747297483
+    },
+    {
+      "distance": 390.39086747297483,
+      "duration": 180,
+      "elapsed": 180,
+      "index": 3,
+      "progress": 1,
+      "totalDistance": 390.39086747297483
+    }
+  ]
+}

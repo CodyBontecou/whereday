@@ -1,0 +1,101 @@
+steps:
+- run: spanish-onboarding-api35-20261029.yaml
+- tap:
+    text: Hoy
+- await:
+    visible:
+      text: Ayer
+- await:
+    idle: true
+- tap:
+    text: Ayer
+- await:
+    visible:
+      text: Ayer
+- await:
+    idle: true
+- tap:
+    text: Ayer
+- await:
+    visible:
+      text: Personalizado
+- await:
+    idle: true
+- tap:
+    text: Personalizado
+- await:
+    visible:
+      text: Elegir fechas
+- await:
+    idle: true
+- tap:
+    text: Cancelar
+- await:
+    visible:
+      text: Ayer
+- await:
+    idle: true
+- tap:
+    text: Ayer
+- await:
+    visible:
+      text: Hoy
+- await:
+    idle: true
+- tap:
+    text: Hoy
+- await:
+    visible:
+      text: Hoy
+- await:
+    idle: true
+- tap:
+    text: Capas del mapa
+- await:
+    visible:
+      text: Marcadores de inicio y fin
+- await:
+    idle: true
+- tap:
+    id: map-layer-path
+- tap:
+    id: map-layer-points
+- tap:
+    text: Terminar con las capas
+- await:
+    visible:
+      text: Capas del mapa
+- await:
+    idle: true
+- tap:
+    text: Capas del mapa
+- await:
+    visible:
+      text: Ruta recorrida
+- await:
+    idle: true
+- tap:
+    id: map-layer-path
+- tap:
+    id: map-layer-points
+- tap:
+    text: Terminar con las capas
+- await:
+    visible:
+      text: Capas del mapa
+- await:
+    idle: true
+- tap:
+    text: "Seguir mi ubicaci\xF3n"
+- await:
+    visible:
+      text: "\xBFSeguir tu ubicaci\xF3n?"
+- await:
+    idle: true
+- tap:
+    text: Ahora no
+- await:
+    visible:
+      text: "Iniciar grabaci\xF3n"
+- await:
+    idle: true

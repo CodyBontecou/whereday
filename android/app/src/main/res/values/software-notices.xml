@@ -1,0 +1,10 @@
+<resources>
+    <string name="software_notices_title">Software notices</string>
+    <string name="software_notices_intro">Licenses and notices for third-party software used by Whereday. Original texts are not translated.</string>
+    <string name="software_notices_search">Search software</string>
+    <string name="software_notices_empty">No matching software.</string>
+    <string name="software_notices_loading">Loading notices…</string>
+    <string name="software_notices_failed">These notices could not be opened. Try again.</string>
+    <string name="software_notices_retry">Try again</string>
+    <string name="software_notices_end">End of notice</string>
+</resources>

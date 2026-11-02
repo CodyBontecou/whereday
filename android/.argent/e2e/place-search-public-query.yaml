@@ -1,0 +1,102 @@
+steps:
+- echo: Requires onboarded idle app with network geocoding enabled, a working system provider/network, and English UI. Submits
+    only the public query Reykjavik Iceland; applies it to a new unsaved draft, then discards. No journal points or device
+    location are sent.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Fit route
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Add saved place
+    direction: down
+- tap:
+    text: Add saved place
+- await:
+    visible:
+      text: Choose location on map
+- await:
+    idle: true
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: Search places
+- await:
+    idle: true
+- tap:
+    text: Search places
+- await:
+    visible:
+      text: Place name or address
+- await:
+    idle: true
+- type:
+    into:
+      text: Place name or address
+    text: Reykjavik Iceland
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: Reykjavik Iceland
+- tool: button
+  args:
+    button: back
+- tap:
+    text: Search
+- await:
+    visible:
+      text: Select this place
+    timeout: 20000
+- await:
+    visible:
+      text: "Reykjav\xEDk"
+- tap:
+    text: Select this place
+- await:
+    visible:
+      text: Selected location
+- await:
+    idle: true
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: "Reykjav\xEDk"
+- await:
+    visible:
+      role: TextField
+      text: "Reykjav\xEDk, Iceland"
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard saved place changes?
+- await:
+    idle: true
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      text: Add saved place
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Save a place

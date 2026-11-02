@@ -1,0 +1,109 @@
+steps:
+- tap:
+    text: Add saved place
+- await:
+    visible:
+      text: Choose location on map
+- await:
+    idle: true
+- type:
+    into:
+      text: Name
+    text: Unsaved pin QA
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: Unsaved pin QA
+- tool: button
+  args:
+    button: back
+- type:
+    into:
+      text: Address
+    text: Synthetic old address
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: Synthetic old address
+- tool: button
+  args:
+    button: back
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: No location selected.
+- await:
+    idle: true
+- tap:
+    text: Drop pin at map center
+- await:
+    visible:
+      text: Selected location
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: Unsaved pin QA
+- await:
+    hidden:
+      role: TextField
+      text: Synthetic old address
+- type:
+    into:
+      text: Address
+    text: Synthetic kept address
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: Synthetic kept address
+- tool: button
+  args:
+    button: back
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: 'Latitude: 0.0'
+- await:
+    idle: true
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: Synthetic kept address
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard saved place changes?
+- await:
+    idle: true
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      text: Add saved place
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Save a place
+executionPrerequisite: Onboarded idle Whereday app at Settings, with Add saved place visible. A new unsaved synthetic draft
+  is created and discarded; no stored places or journal data are modified. Run saved-place-map-selection first to reach this
+  state.

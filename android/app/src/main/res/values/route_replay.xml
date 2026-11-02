@@ -1,0 +1,18 @@
+<resources>
+    <string name="replay_title">Route replay</string>
+    <string name="replay_close">Close route replay</string>
+    <string name="replay_changed">History changed. Close and start replay again to load the latest route.</string>
+    <string name="replay_preparing">Preparing route replay…</string>
+    <string name="replay_load_error">Route replay could not load. Close and try again.</string>
+    <string name="replay_cache_error">Replay cache is unavailable. Close and try again.</string>
+    <string name="replay_pause">Pause route replay</string>
+    <string name="replay_play">Play route replay</string>
+    <string name="replay_point">Point %1$d of %2$d</string>
+    <string name="replay_progress">Route replay progress</string>
+    <string name="replay_progress_state">%1$s. Elapsed %2$s of %3$s. Distance %4$s of %5$s.</string>
+    <string name="replay_start">Replay start</string>
+    <string name="replay_end">Replay end</string>
+    <string name="replay_elapsed">Elapsed %1$s / %2$s</string>
+    <string name="replay_distance">Distance %1$s / %2$s</string>
+    <plurals name="replay_sampled"><item quantity="one">Map draws %d sampled point. Replay position and statistics include every route point.</item><item quantity="other">Map draws %d sampled points. Replay position and statistics include every route point.</item></plurals>
+</resources>

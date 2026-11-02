@@ -1,0 +1,16 @@
+{
+  "amendments": [
+    {
+      "observedAt": "2026-10-29T17:19:58.160866+00:00",
+      "path": "IsoMe/Models/Visit.swift",
+      "reason": "Recognize approved Android Geoapify place provenance during iOS import and subsequent export.",
+      "frozenBaselineSHA256": "137ffd7c2df9e91c3a8665ccc15f84076df326c7fd93996026b933887eb64f9f",
+      "beforeSHA256": "137ffd7c2df9e91c3a8665ccc15f84076df326c7fd93996026b933887eb64f9f",
+      "afterSHA256": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+      "beforeMatchesFrozenBaseline": true,
+      "schemaChange": false,
+      "verification": "android/scripts/verify_place_provenance.py",
+      "scope": "New computed enum case/display name; existing raw String storage and unknown-source fallback unchanged."
+    }
+  ]
+}

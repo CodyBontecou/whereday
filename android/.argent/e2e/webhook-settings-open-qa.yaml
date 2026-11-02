@@ -1,0 +1,18 @@
+steps:
+  - echo: Onboarded, idle isolated com.bontecou.whereday.mapqa only. Open Webhooks and verify Settings survives a background/resume cycle. No permissions, recording, or owner journal access.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { text: Start recording } }
+  - await: { idle: true }
+  - tap: { text: Settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Webhooks }, direction: down }
+  - tool: button
+    args: { button: home }
+  - tool: launch-app
+    args: { bundleId: com.bontecou.whereday.mapqa }
+  - await: { visible: { text: Webhooks } }
+  - await: { idle: true }
+  - tap: { text: Webhooks }
+  - await: { visible: { id: webhook-screen } }
+  - await: { idle: true }

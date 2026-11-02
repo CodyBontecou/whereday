@@ -1,0 +1,3790 @@
+{
+  "provenance": {
+    "algorithm": "d894cc20865aad2c042a658936ab0d1335c8ddb1465eb471a68348760a70006e",
+    "harness": "95593e60b0f7ab7d3919512942d7fa98e66b2c415211e99a27e23c212bad61f6",
+    "inputs": "0dadd4eb9753c3672786926955b35fb1004b5442153dd7f9a45ed3856ad73c2d",
+    "generator": "444d9eb9337b871c427e6b868193342aa76c84dbf11bc2b96bc08296d615a02e"
+  },
+  "cases": [
+    {
+      "fromMillis": 1793404800000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1793318400000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793404800000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1772928000000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1772841600000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772928000000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1773532800000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1773446400000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773532800000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1794096000000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1794009600000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794096000000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1791527400000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1792800000000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792886400000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1790299800000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1775347200000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1775260800000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775347200000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1772810100000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1325721600000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1325635200000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325721600000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -141177600000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -141264000000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177600000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1793491200000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1793404800000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -7603200000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -7689600000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7603200000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 746236800000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 746150400000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746236800000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1325203200000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1325116800000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325203200000,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1793419200000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1793332800000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793419200000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1772946000000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1772859600000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772946000000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1772353800000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1770366600000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1773547200000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1773460800000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773547200000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1772955000000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1770967800000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1794114000000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1794027600000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794114000000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1791523800000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1792814400000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1792728000000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792814400000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1790299800000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1775361600000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1775275200000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775361600000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1772813700000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1325739600000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1325653200000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325739600000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -141249600000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -141336000000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141249600000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1793419200000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1793332800000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793419200000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -7588800000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -7675200000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7588800000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 746251200000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 746164800000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746251200000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1325221200000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1325134800000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325221200000,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1793401200000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1793314800000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793401200000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1792861954125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1790874754125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1772924400000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1772838000000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772924400000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1773529200000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1773442800000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773529200000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1794092400000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1794006000000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794092400000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1791523800000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1792879200000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1792792800000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792879200000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1792283400000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1790296200000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1775340000000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1775253600000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775340000000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1772813700000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1325718000000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1325631600000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325718000000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -141181200000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -141267600000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141181200000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1793487600000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1793401200000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793487600000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1792882800000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1790895600000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -7606800000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -7693200000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7606800000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 746229600000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 746143200000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746229600000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1325199600000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1325113200000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325199600000,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1793451600000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793365200000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793451600000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1790880154125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1772888400000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1772802000000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772888400000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1773493200000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1773406800000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773493200000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1794056400000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793970000000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794056400000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1791527400000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1792846800000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1792760400000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792846800000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1790301600000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1775395800000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1775307600000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775395800000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1774795500000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1772808300000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1325682000000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1325595600000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325682000000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -141213600000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -141300000000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141213600000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793451600000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793365200000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793451600000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1790901000000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -7639200000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -7725600000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7639200000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 746199000000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 746112600000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746199000000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1325163600000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1325077200000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325163600000,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793444400000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793358000000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793444400000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1772881200000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1772794800000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772881200000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1773486000000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1773399600000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773486000000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1794049200000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793962800000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794049200000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1791527400000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1792839600000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1792753200000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792839600000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1790299800000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1775386800000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1775300400000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775386800000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1772810100000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1325757600000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1325671200000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325757600000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -141224400000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -141310800000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141224400000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793444400000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793358000000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793444400000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -7563600000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -7650000000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7563600000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 746276400000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 746190000000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746276400000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1325239200000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1325152800000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325239200000,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793384100000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793297700000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793384100000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1772907300000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1772820900000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772907300000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1773512100000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1773425700000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773512100000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1794075300000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793988900000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794075300000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1791527400000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1792865700000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1792779300000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792865700000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1790299800000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1775326500000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1775240100000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775326500000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1772810100000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1325700900000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1325614500000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325700900000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -141197400000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -141283800000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141197400000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793470500000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793384100000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793470500000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -7623000000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -7709400000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7623000000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 746216100000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 746129700000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746216100000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1325182500000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1325096100000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325182500000,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793419200000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1793332800000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793419200000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1772946000000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1772863200000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772946000000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1772353800000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1770366600000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1773547200000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1773460800000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773547200000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1770967800000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1794114000000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1794027600000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794114000000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1791523800000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1792814400000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1792728000000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792814400000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1790299800000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1775361600000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1775275200000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775361600000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1772813700000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1325739600000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1325653200000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325739600000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -141249600000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -141336000000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141249600000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1793419200000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1793332800000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793419200000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -7588800000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -7675200000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7588800000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 746251200000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 746164800000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746251200000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1325221200000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1325134800000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325221200000,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1793441700000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793355300000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793441700000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1772878500000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1772792100000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772878500000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1773483300000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1773396900000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773483300000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1794046500000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793960100000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794046500000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1791527400000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1792836900000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1792750500000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792836900000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1790303400000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1775387700000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1775297700000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775387700000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1774793700000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1772806500000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1325758500000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1325672100000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325758500000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -141223500000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -141309900000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141223500000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793441700000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793355300000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793441700000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -7562700000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -7649100000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7562700000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -8163000000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -10150200000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 746277300000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 746190900000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746277300000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1325240100000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1325153700000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325240100000,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793448000000,
+      "preset": "today",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793361600000,
+      "preset": "yesterday",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793448000000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1792865554125,
+      "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1790878354125,
+      "preset": "thirtyDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1772884800000,
+      "preset": "today",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1772798400000,
+      "preset": "yesterday",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772884800000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1772350200000,
+      "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1770363000000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1773489600000,
+      "preset": "today",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1773403200000,
+      "preset": "yesterday",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773489600000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1772951400000,
+      "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1770964200000,
+      "preset": "thirtyDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1794052800000,
+      "preset": "today",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793966400000,
+      "preset": "yesterday",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794052800000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793514600000,
+      "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1791527400000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1792843200000,
+      "preset": "today",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1792756800000,
+      "preset": "yesterday",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792843200000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1792287000000,
+      "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1790299800000,
+      "preset": "thirtyDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1775390400000,
+      "preset": "today",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1775304000000,
+      "preset": "yesterday",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775390400000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1774797300000,
+      "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1772810100000,
+      "preset": "thirtyDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1325678400000,
+      "preset": "today",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1325592000000,
+      "preset": "yesterday",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325678400000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1325154600000,
+      "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1323167400000,
+      "preset": "thirtyDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -141217200000,
+      "preset": "today",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -141303600000,
+      "preset": "yesterday",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141217200000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -141782400000,
+      "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -143769600000,
+      "preset": "thirtyDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793448000000,
+      "preset": "today",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793361600000,
+      "preset": "yesterday",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793448000000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1792886400000,
+      "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1790899200000,
+      "preset": "thirtyDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -7560000000,
+      "preset": "today",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -7646400000,
+      "preset": "yesterday",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7560000000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -8245800000,
+      "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -10233000000,
+      "preset": "thirtyDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 746280000000,
+      "preset": "today",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 746193600000,
+      "preset": "yesterday",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746280000000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 745677000000,
+      "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 743689800000,
+      "preset": "thirtyDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1325246400000,
+      "preset": "today",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1325160000000,
+      "preset": "yesterday",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400000,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1324641600000,
+      "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thirtyDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": -62135769600000,
+      "preset": "all",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Kwajalein"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+[
+  {
+    "name": "UTC-all",
+    "zone": "UTC",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "UTC-compact",
+    "zone": "UTC",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "isome_{type}_{datetime}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "UTC-title",
+    "zone": "UTC",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{name}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "America/Puerto_Rico-all",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "America/Puerto_Rico-compact",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "isome_{type}_{datetime}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "America/Puerto_Rico-title",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{name}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "America/New_York-all",
+    "zone": "America/New_York",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "America/New_York-compact",
+    "zone": "America/New_York",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "isome_{type}_{datetime}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "America/New_York-title",
+    "zone": "America/New_York",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{name}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "Asia/Kathmandu-all",
+    "zone": "Asia/Kathmandu",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "Asia/Kathmandu-compact",
+    "zone": "Asia/Kathmandu",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "isome_{type}_{datetime}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "Asia/Kathmandu-title",
+    "zone": "Asia/Kathmandu",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{name}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "Pacific/Kiritimati-all",
+    "zone": "Pacific/Kiritimati",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "Pacific/Kiritimati-compact",
+    "zone": "Pacific/Kiritimati",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "isome_{type}_{datetime}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "Pacific/Kiritimati-title",
+    "zone": "Pacific/Kiritimati",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "outings",
+    "format": "md",
+    "pattern": "{name}-{format}",
+    "title": "  Café walk  "
+  },
+  {
+    "name": "empty-pattern",
+    "zone": "UTC",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "points",
+    "format": "json",
+    "pattern": "",
+    "title": ""
+  },
+  {
+    "name": "missing-title",
+    "zone": "UTC",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "visits",
+    "format": "gpx",
+    "pattern": "{title}-{name}",
+    "title": "  "
+  },
+  {
+    "name": "uppercase-extension",
+    "zone": "UTC",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "all",
+    "format": "json",
+    "pattern": "History.JSON",
+    "title": ""
+  },
+  {
+    "name": "with-extension",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "visits",
+    "format": "csv",
+    "pattern": "folder/Track.csv",
+    "title": ""
+  },
+  {
+    "name": "folder-only",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "visits",
+    "format": "csv",
+    "pattern": "folder/",
+    "title": ""
+  },
+  {
+    "name": "extension-only",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "visits",
+    "format": "csv",
+    "pattern": ".csv",
+    "title": ""
+  },
+  {
+    "name": "punctuation-title",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "visits",
+    "format": "csv",
+    "pattern": "{title}",
+    "title": ".Walk: café/park?"
+  },
+  {
+    "name": "date-folder",
+    "zone": "America/Puerto_Rico",
+    "now": "2020-03-01T00:15:45Z",
+    "kind": "visits",
+    "format": "csv",
+    "pattern": "{date}/Track",
+    "title": ""
+  }
+]

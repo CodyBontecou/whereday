@@ -1,0 +1,424 @@
+{
+  "provenance": {
+    "resolver": "575850604d34e5ba992a59f64f1fab22a11e36c06ac012ab305bbe85a7b1bafc",
+    "constants": "e04fa546f77b7f7f13170faec884506d744bcb87a4a1eafe678b9971fac6fce5",
+    "models": "5521e823f405b7321a46d360b351e44ea328a3171a31aa10d5fca983de93c8bb",
+    "harness": "e01975ef787a57a6bad3723aa0242cc1315964a4b7e9a4d4bd96ef62013e63f8"
+  },
+  "cases": [
+    {
+      "from": 1793109590,
+      "gps": [
+        48.8584,
+        2.2945
+      ],
+      "name": "gps-wins",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "a",
+          "lat": 48.8584,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109600
+        }
+      ],
+      "result": {
+        "lat": 48.8584,
+        "lon": 2.2945,
+        "source": "photo_gps"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/gps-wins",
+      "visits": [
+        {
+          "arrival": 1793109550,
+          "departure": 1793109650,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": [
+        91,
+        2
+      ],
+      "name": "invalid-gps",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "a",
+          "lat": 48.858399000000006,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109590
+        }
+      ],
+      "result": {
+        "lat": 48.858399000000006,
+        "lon": 2.2945,
+        "source": "inferred_route"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/invalid-gps",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "route-tie-earlier",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "before",
+          "lat": 48.858399000000006,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109590
+        },
+        {
+          "id": "after",
+          "lat": 48.858401,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109610
+        }
+      ],
+      "result": {
+        "lat": 48.858399000000006,
+        "lon": 2.2945,
+        "source": "inferred_route"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/route-tie-earlier",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "route-nearest-after",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "before",
+          "lat": 48.858398900000005,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109589
+        },
+        {
+          "id": "after",
+          "lat": 48.858401,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109610
+        }
+      ],
+      "result": {
+        "lat": 48.858401,
+        "lon": 2.2945,
+        "source": "inferred_route"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/route-nearest-after",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "route-window-boundary",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "a",
+          "lat": 48.85831,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793108700
+        }
+      ],
+      "result": {
+        "lat": 48.85831,
+        "lon": 2.2945,
+        "source": "inferred_route"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/route-window-boundary",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "route-window-outside",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "a",
+          "lat": 48.8583099999,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793108699.999
+        }
+      ],
+      "result": null,
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/route-window-outside",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "all-outlier-fallback",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "a",
+          "lat": 48.858399000000006,
+          "lon": 2.2945,
+          "outlier": true,
+          "time": 1793109590
+        }
+      ],
+      "result": {
+        "lat": 48.858399000000006,
+        "lon": 2.2945,
+        "source": "inferred_route"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/all-outlier-fallback",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "good-anywhere-suppresses-bad",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "bad",
+          "lat": 48.8584,
+          "lon": 2.2945,
+          "outlier": true,
+          "time": 1793109600
+        },
+        {
+          "id": "good",
+          "lat": 48.8584905,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793110505
+        }
+      ],
+      "result": {
+        "lat": 18,
+        "lon": -66,
+        "source": "inferred_visit"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/good-anywhere-suppresses-bad",
+      "visits": [
+        {
+          "arrival": 1793109550,
+          "departure": 1793109650,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "bad-outside-request-window",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "bad",
+          "lat": 48.8583,
+          "lon": 2.2945,
+          "outlier": true,
+          "time": 1793108600
+        }
+      ],
+      "result": null,
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/bad-outside-request-window",
+      "visits": []
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "route-before-visit",
+      "now": 1793109600,
+      "points": [
+        {
+          "id": "a",
+          "lat": 48.858401,
+          "lon": 2.2945,
+          "outlier": false,
+          "time": 1793109610
+        }
+      ],
+      "result": {
+        "lat": 48.858401,
+        "lon": 2.2945,
+        "source": "inferred_route"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/route-before-visit",
+      "visits": [
+        {
+          "arrival": 1793109550,
+          "departure": 1793109650,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "visit-grace-start",
+      "now": 1793109600,
+      "points": [],
+      "result": {
+        "lat": 18,
+        "lon": -66,
+        "source": "inferred_visit"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/visit-grace-start",
+      "visits": [
+        {
+          "arrival": 1793110500,
+          "departure": 1793110600,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "visit-grace-outside",
+      "now": 1793109600,
+      "points": [],
+      "result": null,
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/visit-grace-outside",
+      "visits": [
+        {
+          "arrival": 1793110500.001,
+          "departure": 1793110600,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "open-visit-end",
+      "now": 1793109600,
+      "points": [],
+      "result": {
+        "lat": 18,
+        "lon": -66,
+        "source": "inferred_visit"
+      },
+      "time": 1793110500,
+      "until": 1793110600,
+      "uri": "content://synthetic/open-visit-end",
+      "visits": [
+        {
+          "arrival": 1793109550,
+          "departure": null,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "open-visit-future-outside",
+      "now": 1793109600,
+      "points": [],
+      "result": null,
+      "time": 1793110500.001,
+      "until": 1793110600,
+      "uri": "content://synthetic/open-visit-future-outside",
+      "visits": [
+        {
+          "arrival": 1793109550,
+          "departure": null,
+          "id": "v",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "overlapping-visits-earliest",
+      "now": 1793109600,
+      "points": [],
+      "result": {
+        "lat": 18,
+        "lon": -66,
+        "source": "inferred_visit"
+      },
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/overlapping-visits-earliest",
+      "visits": [
+        {
+          "arrival": 1793109500,
+          "departure": 1793109700,
+          "id": "early",
+          "lat": 18,
+          "lon": -66
+        },
+        {
+          "arrival": 1793109550,
+          "departure": 1793109700,
+          "id": "later",
+          "lat": 18,
+          "lon": -66
+        }
+      ]
+    },
+    {
+      "from": 1793109590,
+      "gps": null,
+      "name": "no-match",
+      "now": 1793109600,
+      "points": [],
+      "result": null,
+      "time": 1793109600,
+      "until": 1793109610,
+      "uri": "content://synthetic/no-match",
+      "visits": []
+    }
+  ]
+}
