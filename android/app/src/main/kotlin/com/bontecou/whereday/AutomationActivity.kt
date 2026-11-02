@@ -52,7 +52,7 @@ class AutomationActivity:ComponentActivity() {
             SideEffect {androidx.core.view.WindowInsetsControllerCompat(window,view).apply {
                 isAppearanceLightStatusBars=!dark;isAppearanceLightNavigationBars=!dark
             }}
-            MaterialTheme(colorScheme=if(dark) darkColorScheme(primary=androidx.compose.ui.graphics.Color(0xFFA8D8B8)) else lightColorScheme(primary=androidx.compose.ui.graphics.Color(0xFF285D42))) {
+            WheredayTheme(dark) {
                 AutomationCommandContent {operation?.cancel();failure("cancelled")}
             }
         }

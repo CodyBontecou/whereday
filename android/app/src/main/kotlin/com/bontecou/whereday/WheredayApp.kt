@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -47,13 +48,11 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             isAppearanceLightNavigationBars=!dark
         }
     }}
-    val colors = if (dark) darkColorScheme(primary = Color(0xFFA8D8B8), secondary = Color(0xFFBBCBBF))
-        else lightColorScheme(primary = Color(0xFF285D42), secondary = Color(0xFF4E6355))
     val presentations=remember {VisitLinkPresentations()}
-    CompositionLocalProvider(LocalVisitLinkPresentations provides presentations) { MaterialTheme(colorScheme = colors) {
+    CompositionLocalProvider(LocalVisitLinkPresentations provides presentations) { WheredayTheme(dark) {
         if(clear.blocked) JournalWorkspaceFrame(false,primary={JournalClearBarrier(clear,graph.journalClear::clear)},companion={})
         JournalReadyState(clear) {
-            if(current==null) JournalWorkspaceFrame(false,primary={Surface(Modifier.fillMaxSize()) {Box(Modifier.padding(32.dp)) {CircularProgressIndicator()}}},companion={})
+            if(current==null) JournalWorkspaceFrame(false,primary={Box(Modifier.fillMaxSize().background(wd.surface),contentAlignment=androidx.compose.ui.Alignment.Center) {WdLoading()}},companion={})
             else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) 3 else 0,access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused)
         }
         if(!clear.blocked) WorkspaceRootDialogScope {PermissionAccessReview(accessReview?.takeIf {it.generation==clear.generation},onAccessDismiss,onAccessRequest,onAccessSettings)}
@@ -97,7 +96,8 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             }
         }
         val titles = listOf(R.string.shell_map,R.string.shell_timeline,R.string.shell_export,R.string.shell_settings).map {androidx.compose.ui.res.stringResource(it)}
-        val icons = listOf(Icons.Outlined.Map, Icons.Outlined.Timeline, Icons.Outlined.IosShare, Icons.Outlined.Settings)
+        val icons = listOf(Icons.Outlined.Map, Icons.Outlined.Schedule, Icons.Outlined.Inventory2, Icons.Outlined.Settings)
+        val selectedIcons = listOf(Icons.Filled.Map, Icons.Filled.Schedule, Icons.Filled.Inventory2, Icons.Filled.Settings)
         val navigationIds=listOf("map","timeline","export","settings")
         var paired by remember {mutableStateOf(false)}
         val workspaceContext=LocalContext.current
@@ -152,24 +152,26 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             VisitLinkHost(graph,visitLink,onVisitLinkHandled,windowFocused=windowFocused,showVisitOnMap={stored->journal.showVisitOnMap(stored);tab=0}) {tab=0}},
             inspection={inline->CompositionLocalProvider(LocalInlineVisitEditor provides inline) {Box(Modifier.fillMaxSize()) {inspector();if(inline && tab==1) SnackbarHost(workspaceMessages,Modifier.align(androidx.compose.ui.Alignment.BottomCenter))}}},primary={hasCompanion->
             SideEffect {paired=hasCompanion}
-            if(!(hasCompanion && tab==1 && inspectedVisit!=null)) Scaffold(topBar = { TopAppBar(title = { Text(if (tab == 0) "Whereday" else titles[tab]) }) },
-                snackbarHost={SnackbarHost(workspaceMessages)},
-                bottomBar = { NavigationBar(Modifier.semantics {testTagsAsResourceId=true}) { titles.forEachIndexed { i, title -> NavigationBarItem(selected = tab == i, onClick = { tab = i }, icon = { Icon(icons[i], null) }, label = { Text(title) },modifier=Modifier.testTag("navigation-${navigationIds[i]}")) } } }) { padding ->
-                Box(Modifier.padding(padding).fillMaxSize()) {
-                    when(tab) {
-                        0->mapPage()
-                        1->timelinePage()
-                        else->tabState.SaveableStateProvider(tab) {when(tab) {
-                            2->ExportScreen(graph)
-                            3->SettingsScreen(graph,current,places.map {it.value},count)
-                        }}
+            if(!(hasCompanion && tab==1 && inspectedVisit!=null)) {
+                val wdTabs=titles.indices.map {WdTab(navigationIds[it],titles[it],icons[it],selectedIcons[it])}
+                // The floating bar sits below each page so lists end above it, as on iOS.
+                Scaffold(containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
+                    snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
+                    bottomBar={WdFloatingTabBar(wdTabs,tab,{tab=it},Modifier.semantics {testTagsAsResourceId=true})}) {padding->
+                    Box(Modifier.padding(padding).fillMaxSize()) {
+                        when(tab) {
+                            0->mapPage()
+                            1->timelinePage()
+                            else->tabState.SaveableStateProvider(tab) {when(tab) {
+                                2->ExportScreen(graph)
+                                3->SettingsScreen(graph,current,places.map {it.value},count)
+                            }}
+                        }
                     }
                 }
             }
         },companion={
-            if(!(tab==0 && inspectedVisit!=null)) Scaffold(topBar={TopAppBar(title={Text(titles[if(tab==0) 1 else 0])})}) {padding->
-                Box(Modifier.padding(padding).fillMaxSize()) {if(tab==0) timelinePage() else mapPage()}
-            }
+            if(!(tab==0 && inspectedVisit!=null)) Box(Modifier.fillMaxSize().background(wd.surface).statusBarsPadding()) {if(tab==0) timelinePage() else mapPage()}
         })
 
 }
