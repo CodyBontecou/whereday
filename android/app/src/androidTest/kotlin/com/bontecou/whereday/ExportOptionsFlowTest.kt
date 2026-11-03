@@ -242,11 +242,44 @@ class ExportOptionsFlowTest {
         compose.onNodeWithTag("export-access-buy").assertTextEquals("Comprar acceso de por vida · 12,34 €").assertIsNotEnabled()
         action("export-access-restore");assertEquals(1,restores);assertEquals(0,buys)
         compose.runOnIdle {purchase=purchase.copy(access=AccessState.free,notice=null)}
-        action("export-access-buy");assertEquals(1,buys)
+        // The card's Buy opens the Lifetime carousel; only the carousel's Buy starts checkout.
+        action("export-access-buy");assertEquals(0,buys);compose.onNodeWithTag("paywall-pager").assertExists()
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Unlock exports · 12,34 €").assertIsEnabled().performClick();assertEquals(1,buys)
         compose.runOnIdle {checkout=true};compose.onNodeWithTag("export-access-buy").assertIsNotEnabled();compose.onNodeWithTag("export-access-restore").assertIsNotEnabled()
-        compose.runOnIdle {checkout=false;purchase=purchase.copy(busy=true)};compose.onNodeWithTag("export-access-buy").assertIsNotEnabled()
+        compose.onNodeWithTag("paywall-buy").assertIsNotEnabled();compose.onNodeWithTag("paywall-restore").assertIsNotEnabled()
+        compose.runOnIdle {checkout=false;purchase=purchase.copy(busy=true)};compose.onNodeWithTag("export-access-buy").assertIsNotEnabled();compose.onNodeWithTag("paywall-buy").assertIsNotEnabled()
         compose.runOnIdle {purchase=purchase.copy(busy=false,access=AccessState.active,notice=BillingNotice.cached)}
+        compose.onNodeWithTag("paywall").assertDoesNotExist()
         compose.onNodeWithTag("export-access-buy").assertDoesNotExist();compose.onNodeWithText("Compra verificada").assertExists()
+    }
+    @Test fun lifetimeCarouselPagesPendingStateAndRestoreUseTheCardCallbacks() {
+        var purchase by mutableStateOf(BillingState(AccessState.free,LifetimeProduct("synthetic","12,34 €")))
+        var buys=0;var restores=0;var dismissed=0
+        compose.setContent {MaterialTheme {LifetimePaywall(purchase,false,{buys++},{restores++},{dismissed++})}}
+        compose.onNodeWithTag("paywall-page-1").assertExists()
+        compose.onNodeWithTag("paywall-dot-1").assertIsSelected();compose.onNodeWithContentDescription("Page 3 of 3").assertIsNotSelected()
+        compose.onNodeWithTag("paywall-dot-2").performClick();compose.onNodeWithTag("paywall-page-2").assertIsDisplayed()
+        compose.onNodeWithTag("paywall-review").assertDoesNotExist()
+        compose.onNodeWithTag("paywall-dot-3").performClick();compose.onNodeWithTag("paywall-dot-3").assertIsSelected()
+        compose.onNodeWithTag("paywall-price",useUnmergedTree=true).assertTextEquals("12,34 €")
+        compose.onNodeWithTag("paywall-restore").performClick();assertEquals(1,restores);assertEquals(0,buys)
+        compose.runOnIdle {purchase=purchase.copy(access=AccessState.pending,notice=BillingNotice.pendingPayment)}
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Waiting for Google Play…").assertIsNotEnabled()
+        compose.onNodeWithTag("paywall-pending").assertExists()
+        compose.runOnIdle {purchase=purchase.copy(access=AccessState.free,notice=BillingNotice.canceled)}
+        compose.onNodeWithTag("paywall-notice").assertTextEquals("Compra cancelada.")
+        compose.onNodeWithTag("paywall-close").performClick();assertEquals(1,dismissed)
+        compose.runOnIdle {purchase=purchase.copy(access=AccessState.active,notice=null)};compose.waitForIdle();assertEquals(2,dismissed)
+    }
+    @Test fun lifetimeCarouselWithoutAStoreProductShowsPlayUnavailableAndNoPrice() {
+        val purchase=BillingState(AccessState.unavailable,null,notice=BillingNotice.unavailable)
+        var buys=0
+        compose.setContent {MaterialTheme {Column(Modifier.verticalScroll(rememberScrollState())) {LifetimeExportAccess(purchase,false,{buys++},{})}}}
+        compose.onNodeWithTag("export-access-buy").assertDoesNotExist()
+        action("export-access-paywall")
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Google Play unavailable").assertIsNotEnabled()
+        compose.onNodeWithTag("paywall-dot-3").performClick();compose.onNodeWithTag("paywall-price",useUnmergedTree=true).assertContentDescriptionEquals("Google Play unavailable")
+        assertEquals(0,buys)
     }
     @Test fun billingNoticeUsesCurrentUiLocaleWithoutChangingItsIdentity() {
         val es=compose.activity.createConfigurationContext(android.content.res.Configuration(compose.activity.resources.configuration).apply {setLocales(LocaleList.forLanguageTags("es"))})
