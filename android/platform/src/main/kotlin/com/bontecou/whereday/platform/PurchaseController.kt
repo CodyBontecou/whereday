@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.time.Clock
 
 /** Application-owned billing connection. Activities are used only while opening Play's sheet. */
-class PurchaseController(context: Context,private val usage:()->UsageFunnel?={null}) {
+class PurchaseController(private val context: Context,private val usage:()->UsageFunnel?={null}) {
     private val scope=CoroutineScope(SupervisorJob()+Dispatchers.IO)
     private val configuration=PurchaseConfiguration()
     private val identity=PurchaseIdentity()
@@ -20,9 +20,15 @@ class PurchaseController(context: Context,private val usage:()->UsageFunnel?={nu
     val checkoutInFlight=checkout.asStateFlow()
     private val purchaseUsage=java.util.concurrent.atomic.AtomicReference<UsageFunnel.PurchaseAttempt?>()
     private val restoring=java.util.concurrent.atomic.AtomicBoolean()
-    private val store=PlayPurchaseStore(context,configuration.productId) { code ->
+    /** The plan whose Play sheet is open, so a completed free-week checkout can schedule its reminder. */
+    private val checkoutPlan=java.util.concurrent.atomic.AtomicReference<StoreProduct?>()
+    private val store=PlayPurchaseStore(context,configuration.productId,configuration.subscriptionId) { result ->
+        val code=result.code
         val attempt=purchaseUsage.getAndSet(null)
+        val plan=checkoutPlan.getAndSet(null)
         checkout.value=false
+        if(code==BillingClient.BillingResponseCode.OK && plan!=null && plan.freeTrialDays>0 && result.purchasedAt!=null)
+            TrialReminder.schedule(context,result.purchasedAt.plus(java.time.Duration.ofDays(plan.freeTrialDays.toLong())),plan.formattedPrice,plan.plan==StorePlan.yearly)
         if(code==BillingClient.BillingResponseCode.OK) scope.launch {refreshUsage(attempt)}
         else {
             usage()?.purchaseFinished(attempt,if(code==BillingClient.BillingResponseCode.USER_CANCELED) UsageOutcome.cancelled else UsageOutcome.failed,
@@ -30,45 +36,55 @@ class PurchaseController(context: Context,private val usage:()->UsageFunnel?={nu
             if(code==BillingClient.BillingResponseCode.USER_CANCELED) session.notice(BillingNotice.canceled) else refresh()
         }
     }
-    private val session:BillingSession=BillingSession(configuration.productId,configuration.configured,store,
+    private val session:BillingSession=BillingSession(configuration.productIds,configuration.configured,store,
         RemotePurchaseVerifier(context,configuration,identity),
-        { LeaseVerifier(configuration.publicKey,context.packageName,configuration.productId,identity.hash()) },
+        { LeaseVerifier(configuration.publicKey,context.packageName,configuration.productIds.toSet(),identity.hash()) },
         PurchaseGrantCache(context),Clock.systemUTC())
     val state=session.state
 
-    init { scope.launch { for(signal in refreshes) session.refresh() } }
+    init { scope.launch { for(signal in refreshes) {session.refresh();reconcileReminder()} } }
+    /** A canceled or replaced trial keeps no reminder; Play itself reports cancellation as auto-renew off. */
+    private fun reconcileReminder() {
+        val current=state.value
+        if(current.access==AccessState.active && (current.activeProductId!=configuration.subscriptionId || !current.autoRenewing)) TrialReminder.cancel(context)
+        else if(current.access==AccessState.free) TrialReminder.cancel(context)
+    }
+    val subscriptionId get()=configuration.subscriptionId
+    /** Play's own subscription page; cancellation and plan changes happen there. */
+    fun manageUri()="https://play.google.com/store/account/subscriptions?sku=${configuration.subscriptionId}&package=${context.packageName}"
 
     fun refresh() { refreshes.trySend(Unit) }
     // Resuming under Play's sheet must not admit another checkout before its callback.
     fun resumed() {refresh()}
 
     /** Called directly at the click boundary, before dispatching Play UI work. */
-    fun purchase(activity:Activity,context:UsagePaywall=UsagePaywall.export):Job? {
+    fun purchase(activity:Activity,plan:StorePlan,context:UsagePaywall=UsagePaywall.export):Job? {
         val current=state.value
-        if(!configuration.configured || current.busy || current.product==null || restoring.get() ||
+        val product=current.product(plan)
+        if(!configuration.configured || current.busy || product==null || restoring.get() ||
             current.access in setOf(AccessState.active,AccessState.pending) || !checkout.compareAndSet(false,true)) return null
-        val attempt=usage()?.purchase(context,configuration.productId)
-        purchaseUsage.set(attempt)
+        val attempt=usage()?.purchase(context,product.id)
+        purchaseUsage.set(attempt);checkoutPlan.set(product)
         return scope.launch(Dispatchers.Main.immediate) {
             try {
-                when(store.launch(activity)) {
+                when(store.launch(activity,plan)) {
                     BillingClient.BillingResponseCode.OK -> Unit // Listener completes this exact captured attempt.
                     BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                        purchaseUsage.compareAndSet(attempt,null);checkout.value=false
+                        purchaseUsage.compareAndSet(attempt,null);checkout.value=false;checkoutPlan.set(null)
                         withContext(Dispatchers.IO) {refreshUsage(attempt)}
                     }
                     BillingClient.BillingResponseCode.USER_CANCELED -> {
-                        purchaseUsage.compareAndSet(attempt,null);checkout.value=false
+                        purchaseUsage.compareAndSet(attempt,null);checkout.value=false;checkoutPlan.set(null)
                         usage()?.purchaseFinished(attempt,UsageOutcome.cancelled,UsageError.userCancelled);session.notice(BillingNotice.canceled)
                     }
                     else -> {
-                        purchaseUsage.compareAndSet(attempt,null);checkout.value=false
+                        purchaseUsage.compareAndSet(attempt,null);checkout.value=false;checkoutPlan.set(null)
                         usage()?.purchaseFinished(attempt,UsageOutcome.failed,UsageError.storeUnavailable)
                         session.notice(BillingNotice.storeUnavailable)
                     }
                 }
             } catch(e:Exception) {
-                purchaseUsage.compareAndSet(attempt,null);checkout.value=false
+                purchaseUsage.compareAndSet(attempt,null);checkout.value=false;checkoutPlan.set(null)
                 if(e is CancellationException) throw e
                 usage()?.purchaseFinished(attempt,UsageOutcome.failed,UsageError.unknown)
                 session.notice(BillingNotice.storeUnavailable)

@@ -33,9 +33,10 @@ import com.bontecou.whereday.billing.*
     BillingNotice.notFound->R.string.billing_not_found
 })
 
-@Composable internal fun LifetimeExportAccess(purchase:BillingState,checkout:Boolean,buy:()->Unit,restore:()->Unit) {
+/** Export access on the Export tab: every subscription plan and Lifetime include exports. [manage] opens Play's subscription page. */
+@Composable internal fun ExportAccessCard(purchase:BillingState,checkout:Boolean,buy:(StorePlan)->Unit,restore:()->Unit,manage:(()->Unit)?=null) {
     var paywall by rememberSaveable {mutableStateOf(false)}
-    if(paywall) LifetimePaywallDialog(purchase,checkout,buy,restore,dismiss={paywall=false})
+    if(paywall) PaywallDialog(purchase,checkout,buy,restore,dismiss={paywall=false},entry=PaywallEntry.export)
     WdCard(Modifier.testTag("export-access")) {
         Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
@@ -60,14 +61,14 @@ import com.bontecou.whereday.billing.*
                 Text(stringResource(R.string.export_access_verified),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.success)
             }
             else {
-                // Buying goes through the Lifetime carousel; its Buy and Restore call the same callbacks as this card.
-                val product=purchase.product
-                if(product!=null) WdButton(stringResource(R.string.export_access_buy,product.formattedPrice),{paywall=true},Modifier.testTag("export-access-buy"),emphasis=WdEmphasis.primary,
+                // Buying goes through the plan carousel; its Buy and Restore call the same callbacks as this card.
+                if(purchase.products.isNotEmpty()) WdButton(stringResource(R.string.paywall_preview),{paywall=true},Modifier.testTag("export-access-buy"),emphasis=WdEmphasis.primary,
                     enabled=!purchase.busy && !checkout && purchase.access!=AccessState.pending,icon=Icons.Outlined.LockOpen)
-                // Without a store product there is nothing to buy, but the carousel still explains what Lifetime adds and shows Play as unavailable.
+                // Without store products there is nothing to buy, but the carousel still explains the plans and shows Play as unavailable.
                 else if(purchase.access!=AccessState.checking) WdButton(stringResource(R.string.paywall_preview),{paywall=true},Modifier.testTag("export-access-paywall"),
                     icon=Icons.Outlined.Info)
             }
+            if(manage!=null) WdButton(stringResource(R.string.paywall_manage),manage,Modifier.testTag("export-access-manage"),icon=Icons.Outlined.OpenInNew)
             WdButton(stringResource(R.string.export_access_restore),restore,Modifier.testTag("export-access-restore"),enabled=!purchase.busy && !checkout,icon=Icons.Outlined.Restore)
             if(purchase.busy) Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
                 CircularProgressIndicator(Modifier.size(16.dp),color=wd.accent,trackColor=wd.dialTrack,strokeWidth=2.dp)

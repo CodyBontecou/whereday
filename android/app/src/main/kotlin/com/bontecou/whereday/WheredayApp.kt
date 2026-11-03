@@ -30,7 +30,8 @@ import kotlinx.coroutines.launch
 internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: () -> Unit, onRequestLocation: () -> Unit, onRequestNotifications: () -> Unit,onOnboardingStart:suspend()->Unit,
     launcherAction:LauncherAction?=null,onLauncherActionHandled:()->Unit={},onStartRecording:()->Unit={},onStopRecording:()->Unit={},onboardingAuthorization:UsageAuthorization=UsageAuthorization.unknown,
     access:RecordingAccessState?=null,accessReview:PermissionReview?=null,onAccessOptions:(PermissionAccessKind)->Unit={},
-    onAccessDismiss:(Long)->Unit={},onAccessRequest:(Long)->Unit={},onAccessSettings:(Long)->Unit={},visitLink:VisitLinkRequest?=null,onVisitLinkHandled:(String)->Unit={},windowFocused:Boolean=true) {
+    onAccessDismiss:(Long)->Unit={},onAccessRequest:(Long)->Unit={},onAccessSettings:(Long)->Unit={},visitLink:VisitLinkRequest?=null,onVisitLinkHandled:(String)->Unit={},windowFocused:Boolean=true,
+    trackingPaywall:Boolean=false,onTrackingPaywallDismiss:()->Unit={}) {
     val settings by graph.preferences.settings.collectAsStateWithLifecycle(initialValue = null)
     val clear by graph.journalClear.state.collectAsStateWithLifecycle()
     // Return to Settings for this clear; a fresh activity after completion starts normally.
@@ -53,7 +54,8 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         if(clear.blocked) JournalWorkspaceFrame(false,primary={JournalClearBarrier(clear,graph.journalClear::clear)},companion={})
         JournalReadyState(clear) {
             if(current==null) JournalWorkspaceFrame(false,primary={Box(Modifier.fillMaxSize().background(wd.surface),contentAlignment=androidx.compose.ui.Alignment.Center) {WdLoading()}},companion={})
-            else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) 3 else 0,access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused)
+            else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) 3 else 0,access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused,
+                trackingPaywall,onTrackingPaywallDismiss)
         }
         if(!clear.blocked) WorkspaceRootDialogScope {PermissionAccessReview(accessReview?.takeIf {it.generation==clear.generation},onAccessDismiss,onAccessRequest,onAccessSettings)}
     } }
@@ -64,20 +66,43 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
 @Composable private fun ReadyJournal(graph:AppGraph,journal:JournalViewModel,current:AppSettings,onRecord:()->Unit,
     onRequestLocation:()->Unit,onRequestNotifications:()->Unit,onOnboardingStart:suspend()->Unit,
     launcherAction:LauncherAction?,onLauncherActionHandled:()->Unit,onStartRecording:()->Unit,onStopRecording:()->Unit,
-    onboardingAuthorization:UsageAuthorization,initialTab:Int,access:RecordingAccessState?,onAccessOptions:(PermissionAccessKind)->Unit,visitLink:VisitLinkRequest?,onVisitLinkHandled:(String)->Unit,windowFocused:Boolean) {
+    onboardingAuthorization:UsageAuthorization,initialTab:Int,access:RecordingAccessState?,onAccessOptions:(PermissionAccessKind)->Unit,visitLink:VisitLinkRequest?,onVisitLinkHandled:(String)->Unit,windowFocused:Boolean,
+    trackingPaywall:Boolean,onTrackingPaywallDismiss:()->Unit) {
         val scope = rememberCoroutineScope()
+        val purchase by graph.purchases.state.collectAsStateWithLifecycle()
+        val checkout by graph.purchases.checkoutInFlight.collectAsStateWithLifecycle()
+        val activity=LocalActivity.current
+        fun buy(plan:com.bontecou.whereday.billing.StorePlan,entry:UsagePaywall) {if(activity!=null) graph.purchases.purchase(activity,plan,entry)}
+        // Onboarding's "start now" waits behind the plans when tracking needs one, then starts once access is verified.
+        var startAfterAccess by rememberSaveable {mutableStateOf(false)}
+        LaunchedEffect(purchase.access,current.onboarded) {
+            if(current.onboarded && purchase.access==com.bontecou.whereday.billing.AccessState.active) {
+                if(!current.accessGateCleared) graph.preferences.update {it.copy(accessGateCleared=true)}
+                if(startAfterAccess) {startAfterAccess=false;onStartRecording()}
+            }
+        }
         if (!current.onboarded) {
             JournalWorkspaceFrame(false,primary={Onboarding(onRequestLocation,onRequestNotifications,graph.usageAnalytics,onboardingAuthorization,access,onAccessOptions) {decision->
                 val start=decision.start
                 val permit=decision.permit
                 val authorization=decision.authorization
-                completeOnboarding(start,onOnboardingStart,{graph.preferences.update {latest->latest.copy(onboarded=true)}}) {
+                val deferred=start && purchase.trackingLocked
+                if(deferred) startAfterAccess=true
+                completeOnboarding(start && !deferred,onOnboardingStart,{graph.preferences.update {latest->latest.copy(onboarded=true)}}) {
                     graph.usageAnalytics.track(permit) {UsageEvent(UsageEventName.onboardingCompleted,step=UsageStep.ready,authorization=authorization,
                         tracking=if(start) UsageTrackingIntent.startImmediately else if(authorization in setOf(UsageAuthorization.foreground,UsageAuthorization.always)) UsageTrackingIntent.later else UsageTrackingIntent.unavailable)}
                 }
             }},companion={})
             return
         }
+        // New installs choose a plan once, right after onboarding, as on iOS. A plan that later lapses never brings this back:
+        // history stays open and only starting tracking asks again.
+        if(purchase.enforced && !current.accessGateCleared && purchase.access!=com.bontecou.whereday.billing.AccessState.active) {
+            JournalWorkspaceFrame(false,primary={Paywall(purchase,checkout,{buy(it,UsagePaywall.onboarding)},{graph.purchases.restore(UsagePaywall.onboarding)},{},
+                entry=PaywallEntry.gate)},companion={})
+            return
+        }
+        if(trackingPaywall) PaywallDialog(purchase,checkout,{buy(it,UsagePaywall.settings)},{graph.purchases.restore(UsagePaywall.settings)},onTrackingPaywallDismiss)
         val places by graph.history.dao.observePlaces().collectAsStateWithLifecycle(emptyList())
         val count by graph.history.dao.pointCount().collectAsStateWithLifecycle(0L)
         val recording by graph.history.dao.observeRecording().collectAsStateWithLifecycle(null)

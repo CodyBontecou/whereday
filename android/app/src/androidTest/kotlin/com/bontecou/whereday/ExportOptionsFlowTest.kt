@@ -235,16 +235,18 @@ class ExportOptionsFlowTest {
         compose.onNode(hasText("private-history",substring=true)).assertDoesNotExist()
         assertTrue(preview().contains("Visita QA 日本語"));assertEquals(2,calls.get())
     }
-    @Test fun lifetimeCardPreservesStorePriceAndDisablesPendingCheckoutAndBusyActions() {
-        var purchase by mutableStateOf(BillingState(AccessState.pending,LifetimeProduct("synthetic","12,34 €"),notice=BillingNotice.pendingPayment))
-        var checkout by mutableStateOf(false);var buys=0;var restores=0
-        compose.setContent {MaterialTheme {Column(Modifier.verticalScroll(rememberScrollState())) {LifetimeExportAccess(purchase,checkout,{buys++},{restores++})}}}
-        compose.onNodeWithTag("export-access-buy").assertTextEquals("Comprar acceso de por vida · 12,34 €").assertIsNotEnabled()
-        action("export-access-restore");assertEquals(1,restores);assertEquals(0,buys)
+    private val plans=listOf(StoreProduct("individual",StorePlan.weekly,"0,99 €",990_000,"EUR",7),StoreProduct("individual",StorePlan.yearly,"29,99 €",29_990_000,"EUR",7),
+        StoreProduct("lifetime",StorePlan.lifetime,"49,99 €",49_990_000,"EUR"))
+    @Test fun accessCardOpensPlansAndDisablesPendingCheckoutAndBusyActions() {
+        var purchase by mutableStateOf(BillingState(AccessState.pending,plans,notice=BillingNotice.pendingPayment))
+        var checkout by mutableStateOf(false);val bought=mutableListOf<StorePlan>();var restores=0
+        compose.setContent {MaterialTheme {Column(Modifier.verticalScroll(rememberScrollState())) {ExportAccessCard(purchase,checkout,{bought+=it},{restores++})}}}
+        compose.onNodeWithTag("export-access-buy").assertTextEquals("Ver planes").assertIsNotEnabled()
+        action("export-access-restore");assertEquals(1,restores);assertTrue(bought.isEmpty())
         compose.runOnIdle {purchase=purchase.copy(access=AccessState.free,notice=null)}
-        // The card's Buy opens the Lifetime carousel; only the carousel's Buy starts checkout.
-        action("export-access-buy");assertEquals(0,buys);compose.onNodeWithTag("paywall-pager").assertExists()
-        compose.onNodeWithTag("paywall-buy").assertTextEquals("Unlock exports · 12,34 €").assertIsEnabled().performClick();assertEquals(1,buys)
+        // The card opens the plan carousel, which leads with export formats here; only the carousel's Buy starts checkout.
+        action("export-access-buy");assertTrue(bought.isEmpty());compose.onNodeWithTag("paywall-formats").assertExists()
+        compose.onNodeWithTag("paywall-buy").assertIsEnabled().performClick();assertEquals(listOf(StorePlan.yearly),bought)
         compose.runOnIdle {checkout=true};compose.onNodeWithTag("export-access-buy").assertIsNotEnabled();compose.onNodeWithTag("export-access-restore").assertIsNotEnabled()
         compose.onNodeWithTag("paywall-buy").assertIsNotEnabled();compose.onNodeWithTag("paywall-restore").assertIsNotEnabled()
         compose.runOnIdle {checkout=false;purchase=purchase.copy(busy=true)};compose.onNodeWithTag("export-access-buy").assertIsNotEnabled();compose.onNodeWithTag("paywall-buy").assertIsNotEnabled()
@@ -252,33 +254,48 @@ class ExportOptionsFlowTest {
         compose.onNodeWithTag("paywall").assertDoesNotExist()
         compose.onNodeWithTag("export-access-buy").assertDoesNotExist();compose.onNodeWithText("Compra verificada").assertExists()
     }
-    @Test fun lifetimeCarouselPagesPendingStateAndRestoreUseTheCardCallbacks() {
-        var purchase by mutableStateOf(BillingState(AccessState.free,LifetimeProduct("synthetic","12,34 €")))
-        var buys=0;var restores=0;var dismissed=0
-        compose.setContent {MaterialTheme {LifetimePaywall(purchase,false,{buys++},{restores++},{dismissed++})}}
-        compose.onNodeWithTag("paywall-page-1").assertExists()
-        compose.onNodeWithTag("paywall-dot-1").assertIsSelected();compose.onNodeWithContentDescription("Page 3 of 3").assertIsNotSelected()
-        compose.onNodeWithTag("paywall-dot-2").performClick();compose.onNodeWithTag("paywall-page-2").assertIsDisplayed()
-        compose.onNodeWithTag("paywall-review").assertDoesNotExist()
+    @Test fun planCarouselOffersTheFreeWeekBuysTheSelectedPlanAndUsesTheCallbacks() {
+        var purchase by mutableStateOf(BillingState(AccessState.free,plans))
+        val bought=mutableListOf<StorePlan>();var restores=0;var dismissed=0
+        compose.setContent {MaterialTheme {Paywall(purchase,false,{bought+=it},{restores++},{dismissed++})}}
+        compose.onNodeWithTag("paywall-page-1").assertExists();compose.onNodeWithTag("paywall-review").assertDoesNotExist()
+        compose.onNodeWithTag("paywall-dot-1").assertIsSelected();compose.onNodeWithContentDescription("Página 3 de 3").assertIsNotSelected()
+        compose.onNodeWithTag("paywall-dot-2").performClick();compose.onNodeWithTag("paywall-trial-steps").assertIsDisplayed()
+        compose.onNodeWithText("Día 5 · Un recordatorio").assertExists()
         compose.onNodeWithTag("paywall-dot-3").performClick();compose.onNodeWithTag("paywall-dot-3").assertIsSelected()
-        compose.onNodeWithTag("paywall-price",useUnmergedTree=true).assertTextEquals("12,34 €")
-        compose.onNodeWithTag("paywall-restore").performClick();assertEquals(1,restores);assertEquals(0,buys)
+        compose.onNodeWithTag("paywall-price-lifetime",useUnmergedTree=true).assertTextEquals("49,99 €")
+        // Yearly is preselected and its trial sets the button and the renewal disclosure.
+        compose.onNodeWithTag("paywall-plan-yearly").assertIsSelected()
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Probar 7 días gratis")
+        compose.onNodeWithTag("paywall-disclosure").assertTextEquals("7 días gratis, después 29,99 € al año, con renovación automática hasta que canceles.")
+        compose.onNodeWithTag("paywall-plan-lifetime").performClick();compose.onNodeWithTag("paywall-buy").assertTextEquals("Comprar De por vida").performClick()
+        compose.onNodeWithTag("paywall-plan-weekly").performClick();compose.onNodeWithTag("paywall-buy").performClick()
+        assertEquals(listOf(StorePlan.lifetime,StorePlan.weekly),bought)
+        compose.onNodeWithTag("paywall-restore").performClick();assertEquals(1,restores)
         compose.runOnIdle {purchase=purchase.copy(access=AccessState.pending,notice=BillingNotice.pendingPayment)}
-        compose.onNodeWithTag("paywall-buy").assertTextEquals("Waiting for Google Play…").assertIsNotEnabled()
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Esperando a Google Play…").assertIsNotEnabled()
         compose.onNodeWithTag("paywall-pending").assertExists()
         compose.runOnIdle {purchase=purchase.copy(access=AccessState.free,notice=BillingNotice.canceled)}
         compose.onNodeWithTag("paywall-notice").assertTextEquals("Compra cancelada.")
         compose.onNodeWithTag("paywall-close").performClick();assertEquals(1,dismissed)
         compose.runOnIdle {purchase=purchase.copy(access=AccessState.active,notice=null)};compose.waitForIdle();assertEquals(2,dismissed)
     }
-    @Test fun lifetimeCarouselWithoutAStoreProductShowsPlayUnavailableAndNoPrice() {
-        val purchase=BillingState(AccessState.unavailable,null,notice=BillingNotice.unavailable)
+    @Test fun withoutAnEligibleTrialTheCarouselSkipsTheFreeWeekAndTheGateCannotBeClosed() {
+        val purchase=BillingState(AccessState.free,plans.map {it.copy(freeTrialDays=0)})
+        compose.setContent {MaterialTheme {Paywall(purchase,false,{},{},{},entry=PaywallEntry.gate)}}
+        compose.onNodeWithContentDescription("Página 2 de 2").assertExists();compose.onNodeWithTag("paywall-trial-steps").assertDoesNotExist()
+        compose.onNodeWithTag("paywall-close").assertDoesNotExist()
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Suscribirse")
+        compose.onNodeWithTag("paywall-disclosure").assertTextEquals("29,99 € al año, con renovación automática hasta que canceles.")
+    }
+    @Test fun planCarouselWithoutStoreProductsShowsPlayUnavailable() {
+        val purchase=BillingState(AccessState.unavailable,notice=BillingNotice.unavailable)
         var buys=0
-        compose.setContent {MaterialTheme {Column(Modifier.verticalScroll(rememberScrollState())) {LifetimeExportAccess(purchase,false,{buys++},{})}}}
+        compose.setContent {MaterialTheme {Column(Modifier.verticalScroll(rememberScrollState())) {ExportAccessCard(purchase,false,{buys++},{})}}}
         compose.onNodeWithTag("export-access-buy").assertDoesNotExist()
         action("export-access-paywall")
-        compose.onNodeWithTag("paywall-buy").assertTextEquals("Google Play unavailable").assertIsNotEnabled()
-        compose.onNodeWithTag("paywall-dot-3").performClick();compose.onNodeWithTag("paywall-price",useUnmergedTree=true).assertContentDescriptionEquals("Google Play unavailable")
+        compose.onNodeWithTag("paywall-buy").assertTextEquals("Google Play no disponible").assertIsNotEnabled()
+        compose.onNodeWithTag("paywall-dot-2").performClick();compose.onNodeWithTag("paywall-no-plans").assertExists()
         assertEquals(0,buys)
     }
     @Test fun billingNoticeUsesCurrentUiLocaleWithoutChangingItsIdentity() {

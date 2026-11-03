@@ -26,8 +26,11 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val history = HistoryRepository(database)
     val historyImports=HistoryImportController(DatabaseHistoryImportTarget(database),DiskHistoryImportWorkspaceFactory(java.io.File(context.cacheDir,"history-import-review")))
     val journalCommands=JournalCommands(history)
-    val recordingCommands:RecordingCommands=RecordingCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked})
-    val visitMonitoringCommands=VisitMonitoringCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked})
+    // Starting either kind of tracking needs a subscription or Lifetime once Play billing is configured; stopping never does.
+    val recordingCommands:RecordingCommands=RecordingCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked},
+        access={purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)})
+    val visitMonitoringCommands=VisitMonitoringCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked},
+        access={purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)})
     val automationAccess=AutomationAccess(context.applicationContext)
     val automationResults=AutomationResults(context.applicationContext,automationAccess) {purchases.requireAccess(com.bontecou.whereday.billing.Capability.fileExport)}
     val automationController=AutomationController(automationAccess,automationResults)

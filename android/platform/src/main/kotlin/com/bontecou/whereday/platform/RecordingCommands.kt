@@ -38,7 +38,9 @@ internal object RecordingStartTickets {
 }
 
 /** The service owns recording; this facade waits for an acknowledgment, never a stored toggle alone. */
-class RecordingCommands(private val context:Context,private val history:HistoryRepository,private val clock:Clock=Clock.systemUTC(),private val canStart:()->Boolean={true}) {
+/** [access] throws [com.bontecou.whereday.billing.VerifiedAccessRequired] when tracking needs a subscription or Lifetime first. */
+class RecordingCommands(private val context:Context,private val history:HistoryRepository,private val clock:Clock=Clock.systemUTC(),private val canStart:()->Boolean={true},
+    private val access:suspend ()->Unit={}) {
     val preparing:Boolean get()=RecordingStartTickets.pending()
     suspend fun status():AutomationRecordingStatus=history.database.readSnapshot {dao ->
         val state=dao.recording()
@@ -53,6 +55,7 @@ class RecordingCommands(private val context:Context,private val history:HistoryR
     }
     suspend fun startVisible(activity:Activity) {
         if(!canStart()) throw JournalClearPending()
+        access()
         val ticket=RecordingStartTickets.create();var acknowledged=false
         try {
             val code=receipt {reply ->

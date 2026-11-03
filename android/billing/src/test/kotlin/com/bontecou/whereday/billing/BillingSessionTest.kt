@@ -13,9 +13,9 @@ class BillingSessionTest {
     private val key=KeyPairGenerator.getInstance("RSA").apply { initialize(2048) }.generateKeyPair()
     private val clock=TestClock(Instant.parse("2026-10-27T12:00:00Z"))
     private val purchase=StorePurchase("synthetic-token","lifetime",StorePurchaseState.purchased)
-    private fun lease(device:String="device-a",token:String=purchase.token,issued:Instant=clock.now,duration:Duration=Duration.ofDays(7),packageName:String="example.app"):String {
+    private fun lease(device:String="device-a",token:String=purchase.token,issued:Instant=clock.now,duration:Duration=Duration.ofDays(7),packageName:String="example.app",product:String="lifetime"):String {
         val claims=JsonObject().apply {
-            addProperty("aud",packageName);addProperty("sub",device);addProperty("product_id","lifetime");addProperty("jti","fixture-grant")
+            addProperty("aud",packageName);addProperty("sub",device);addProperty("product_id",product);addProperty("jti","fixture-grant")
             addProperty("purchase_token_hash",sha256(token.toByteArray()));addProperty("iat",issued.epochSecond)
             addProperty("refresh_after",issued.plusSeconds(86400).epochSecond);addProperty("exp",issued.plus(duration).epochSecond)
         }
@@ -24,15 +24,15 @@ class BillingSessionTest {
         val signature=Signature.getInstance("SHA256withRSA").apply { initSign(key.private);update(message.toByteArray()) }.sign()
         return "$message.${encode(signature)}"
     }
-    private fun checker()=LeaseVerifier(Base64.getEncoder().encodeToString(key.public.encoded),"example.app","lifetime","device-a")
+    private fun checker()=LeaseVerifier(Base64.getEncoder().encodeToString(key.public.encoded),"example.app",setOf("lifetime","individual"),"device-a")
     private class Cache:GrantCache {
         var value:CachedGrant?=null
         override suspend fun load()=value
         override suspend fun save(value:CachedGrant) { this.value=value }
         override suspend fun clear() { value=null }
     }
-    private fun session(cache:Cache,store:suspend ()->StoreSnapshot,verify:suspend (StorePurchase)->PurchaseVerification,configured:Boolean=true)=BillingSession("lifetime",configured,object:PurchaseStore { override suspend fun snapshot()=store() },object:PurchaseVerifier { override suspend fun verify(purchase:StorePurchase)=verify(purchase) },::checker,cache,clock)
-    private fun owned(purchase:StorePurchase=this.purchase)=StoreSnapshot(LifetimeProduct("lifetime","localized fixture price"),listOf(purchase))
+    private fun session(cache:Cache,store:suspend ()->StoreSnapshot,verify:suspend (StorePurchase)->PurchaseVerification,configured:Boolean=true)=BillingSession(listOf("lifetime","individual"),configured,object:PurchaseStore { override suspend fun snapshot()=store() },object:PurchaseVerifier { override suspend fun verify(purchase:StorePurchase)=verify(purchase) },::checker,cache,clock)
+    private fun owned(purchase:StorePurchase=this.purchase)=StoreSnapshot(listOf(StoreProduct("lifetime",StorePlan.lifetime,"localized fixture price")),listOf(purchase))
     private suspend fun denied(session:BillingSession) {
         try { session.requireAccess(Capability.fileExport);fail("Expected locked paid feature") } catch(expected:IllegalStateException) { }
     }
@@ -72,7 +72,7 @@ class BillingSessionTest {
         val revoked=session(cache,{ owned() },{ PurchaseVerification.Revoked })
         assertEquals(BillingRefreshResult.notFound,revoked.refresh());assertEquals(BillingNotice.notEligible,revoked.state.value.notice);assertNull(cache.value);denied(revoked)
         cache.value=CachedGrant(lease(),clock.now)
-        val empty=session(cache,{ StoreSnapshot(null,emptyList()) },{ fail("Must not verify missing purchase");PurchaseVerification.Revoked })
+        val empty=session(cache,{ StoreSnapshot(emptyList(),emptyList()) },{ fail("Must not verify missing purchase");PurchaseVerification.Revoked })
         assertEquals(BillingRefreshResult.notFound,empty.refresh());assertNull(cache.value);denied(empty)
     }
     @Test fun accountOrPurchaseChangeCannotReuseUnrelatedCachedGrant()=runBlocking {
@@ -84,7 +84,7 @@ class BillingSessionTest {
         val started=CompletableDeferred<Unit>();val finish=CompletableDeferred<Unit>()
         val session=session(Cache(),{ owned() },{ started.complete(Unit);finish.await();PurchaseVerification.Active(lease()) })
         val refresh=launch { session.refresh() };started.await()
-        withTimeout(1000) { session.requireAccess(Capability.recording);session.requireAccess(Capability.preview) }
+        withTimeout(1000) { session.requireAccess(Capability.historyImport);session.requireAccess(Capability.preview) }
         finish.complete(Unit);refresh.join()
     }
     @Test fun verificationProtocolIsUnambiguousAndPurchaseTokensAreRedacted() {
@@ -107,7 +107,7 @@ class BillingSessionTest {
         val session=session(cache,{started.complete(Unit);finish.await();throw IOException("offline fixture")},{PurchaseVerification.Revoked})
         val refresh=async {try {session.requireAccessWithRefresh(Capability.scheduledExport);false} catch(_:IllegalStateException) {true}}
         started.await()
-        withTimeout(1000) {session.requireAccessWithRefresh(Capability.recording);session.requireAccessWithRefresh(Capability.preview)}
+        withTimeout(1000) {session.requireAccessWithRefresh(Capability.historyImport);session.requireAccessWithRefresh(Capability.preview)}
         finish.complete(Unit);assertTrue(refresh.await());denied(session)
     }
     @Test fun backgroundRenewalHonorsRevocationAndUnconfiguredBuildsNeverQueryStore()=runBlocking {
@@ -119,11 +119,11 @@ class BillingSessionTest {
         try {disabled.requireAccessWithRefresh(Capability.scheduledExport);fail()} catch(_:IllegalStateException) {}
     }
     @Test fun explicitEmptyRestoreHasFeedbackWithoutChangingTheFreePolicy()=runBlocking {
-        val current=session(Cache(),{StoreSnapshot(null,emptyList())},{fail("No purchase to verify");PurchaseVerification.Revoked})
+        val current=session(Cache(),{StoreSnapshot(emptyList(),emptyList())},{fail("No purchase to verify");PurchaseVerification.Revoked})
         assertEquals(BillingRefreshResult.notFound,current.refresh());assertNull(current.state.value.notice)
         assertEquals(BillingRefreshResult.notFound,current.refresh(userRestore=true));assertEquals(BillingNotice.notFound,current.state.value.notice)
         assertEquals(AccessState.free,current.state.value.access)
-        current.requireAccess(Capability.recording);current.requireAccess(Capability.preview);denied(current)
+        current.requireAccess(Capability.historyImport);current.requireAccess(Capability.preview);denied(current)
     }
     @Test fun presentationNoticesCannotGrantOrRevokeVerifiedAccess()=runBlocking {
         val current=session(Cache(),{owned()},{PurchaseVerification.Active(lease())})
@@ -131,6 +131,27 @@ class BillingSessionTest {
         assertEquals(BillingRefreshResult.verified,current.refresh())
         current.notice(BillingNotice.canceled);current.requireAccess(Capability.fileExport)
         assertEquals(AccessState.active,current.state.value.access);assertEquals("Purchase canceled.",current.state.value.message)
+    }
+    @Test fun configuredBuildsPutRecordingBehindAccessWhileBuildsWithoutBillingKeepItFree()=runBlocking {
+        val locked=session(Cache(),{StoreSnapshot(emptyList(),emptyList())},{fail("No purchase to verify");PurchaseVerification.Revoked})
+        assertTrue(locked.state.value.trackingLocked)
+        try {locked.requireAccess(Capability.recording);fail("Expected locked recording")} catch(_:VerifiedAccessRequired) {}
+        val unlocked=session(Cache(),{owned()},{PurchaseVerification.Active(lease())})
+        unlocked.refresh();unlocked.requireAccess(Capability.recording);assertFalse(unlocked.state.value.trackingLocked)
+        val disabled=session(Cache(),{fail("Unconfigured builds must not query Play");owned()},{PurchaseVerification.Revoked},false)
+        disabled.refresh();disabled.requireAccess(Capability.recording);assertFalse(disabled.state.value.trackingLocked)
+    }
+    @Test fun subscriptionLeasesAreBoundToTheirProductAndLifetimeIsVerifiedFirst()=runBlocking {
+        val subscription=StorePurchase("subscription-token","individual",StorePurchaseState.purchased,autoRenewing=true)
+        var verified:StorePurchase?=null
+        val both=session(Cache(),{StoreSnapshot(emptyList(),listOf(subscription,purchase))},{verified=it;PurchaseVerification.Active(lease())})
+        assertEquals(BillingRefreshResult.verified,both.refresh());assertEquals(purchase,verified);assertEquals("lifetime",both.state.value.activeProductId)
+        val renewing=session(Cache(),{StoreSnapshot(emptyList(),listOf(subscription))},{PurchaseVerification.Active(lease(token=subscription.token,product="individual"))})
+        assertEquals(BillingRefreshResult.verified,renewing.refresh());renewing.requireAccess(Capability.recording);assertEquals("individual",renewing.state.value.activeProductId)
+        // A lease signed for another product cannot unlock this purchase.
+        val mismatched=session(Cache(),{StoreSnapshot(emptyList(),listOf(subscription))},{PurchaseVerification.Active(lease(token=subscription.token))})
+        assertEquals(BillingRefreshResult.failed,mismatched.refresh());denied(mismatched)
+        try {checker().verify(lease(product="unknown"));fail("Expected unknown product rejection")} catch(_:IllegalArgumentException) {}
     }
     private class TestClock(var now:Instant):Clock() { override fun instant()=now;override fun getZone():ZoneId=ZoneOffset.UTC;override fun withZone(zone:ZoneId):Clock=this }
 }

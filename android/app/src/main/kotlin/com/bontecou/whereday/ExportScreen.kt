@@ -166,10 +166,13 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             Text(pluralStringResource(R.plurals.export_stored_points,count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(count)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)
             if(count==0L) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
             Box(Modifier.exportInset().padding(top=16.dp)) {
-                LifetimeExportAccess(purchase,checkout,buy={
+                val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
+                ExportAccessCard(purchase,checkout,buy={plan->
                     val activity=generateSequence(context) {(it as? android.content.ContextWrapper)?.baseContext}.filterIsInstance<android.app.Activity>().firstOrNull()
-                    if(activity!=null) graph.purchases.purchase(activity,com.bontecou.whereday.platform.UsagePaywall.export)
-                },restore={graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.export)})
+                    if(activity!=null) graph.purchases.purchase(activity,plan,com.bontecou.whereday.platform.UsagePaywall.export)
+                },restore={graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.export)},
+                    manage=if(purchase.access==com.bontecou.whereday.billing.AccessState.active && purchase.activeProductId==graph.purchases.subscriptionId)
+                        {{runCatching {uriHandler.openUri(graph.purchases.manageUri())}}} else null)
             }
             saved.failure?.let {ExportCallout(exportSettingsText(it),Modifier.exportInset().padding(top=12.dp),warning=true) {
                 WdButton(stringResource(if(saved.ready) R.string.export_settings_retry else R.string.export_settings_reset),{if(saved.ready) graph.exportSettings.retry() else graph.exportSettings.reset()})

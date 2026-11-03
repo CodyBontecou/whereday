@@ -1,9 +1,8 @@
 <resources>
     <string name="export_title">Your history, in your format</string>
-    <string name="export_access_title">Lifetime export access</string>
-    <string name="export_access_body">One individual purchase through Google Play. Recording, imports and export previews are free.</string>
+    <string name="export_access_title">Exports are part of your plan</string>
+    <string name="export_access_body">Every Whereday plan includes exports: Weekly, Yearly or a one-time Lifetime purchase. Imports and export previews are free.</string>
     <string name="export_access_verified">Purchase verified</string>
-    <string name="export_access_buy">Buy lifetime access · %1$s</string>
     <string name="export_access_restore">Restore purchases</string>
     <string name="export_access_checking">Checking purchase status…</string>
     <string name="export_format">Format</string>
@@ -63,14 +62,14 @@
     <string name="export_point_outlier">Outlier flag</string>
     <string name="billing_unavailable">Purchases are not available in this build. Recording, imports and previews remain free.</string>
     <string name="billing_pending_payment">Your purchase is pending in Google Play. Access starts after payment is completed and verified.</string>
-    <string name="billing_verified">Lifetime export access is verified.</string>
+    <string name="billing_verified">Whereday access is verified.</string>
     <string name="billing_pending_verification">Your purchase is pending verification.</string>
     <string name="billing_not_eligible">Google Play no longer reports an eligible purchase.</string>
     <string name="billing_cached">Using previously verified access. Connect to refresh purchase status.</string>
     <string name="billing_verification_failed">Purchase status could not be verified. Check your connection and try Restore purchases.</string>
     <string name="billing_canceled">Purchase canceled.</string>
     <string name="billing_store_unavailable">Google Play could not open the purchase. Try again.</string>
-    <string name="billing_not_found">No eligible lifetime purchase was found for this Google Play account.</string>
+    <string name="billing_not_found">No eligible subscription or Lifetime purchase was found for this Google Play account.</string>
     <plurals name="export_stored_points">
         <item quantity="one">%1$s route point stored on this phone.</item>
         <item quantity="other">%1$s route points stored on this phone.</item>

@@ -15,7 +15,7 @@ data class CachedGrant(val signedLease: String,val lastSeen: Instant)
 interface GrantCache { suspend fun load(): CachedGrant?; suspend fun save(value: CachedGrant); suspend fun clear() }
 
 /** Signed cache only: a Play client callback or editable preference never unlocks paid features. */
-class LeaseVerifier(publicKeySpki: String,private val packageName: String,private val productId: String,private val deviceKeyHash: String) {
+class LeaseVerifier(publicKeySpki: String,private val packageName: String,private val productIds: Set<String>,private val deviceKeyHash: String) {
     private val key=KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(Base64.getDecoder().decode(publicKeySpki)))
     init { require((key as java.security.interfaces.RSAPublicKey).modulus.bitLength()>=2048) }
     fun verify(compact: String): VerifiedGrant {
@@ -31,7 +31,8 @@ class LeaseVerifier(publicKeySpki: String,private val packageName: String,privat
             val value=claims[name]?.takeIf { it.isJsonPrimitive && it.asJsonPrimitive.isNumber }?.asString?.toLongOrNull() ?: error("Invalid grant time")
             return Instant.ofEpochSecond(value)
         }
-        require(text("aud")==packageName && text("product_id")==productId && text("sub")==deviceKeyHash)
+        val productId=text("product_id")
+        require(text("aud")==packageName && productId in productIds && text("sub")==deviceKeyHash)
         val grant=VerifiedGrant(text("jti"),productId,deviceKeyHash,text("purchase_token_hash"),time("iat"),time("refresh_after"),time("exp"))
         require(grant.id.length in 1..128 && grant.purchaseTokenHash.matches(Regex("[0-9a-f]{64}")))
         require(grant.expiresAt>grant.issuedAt && grant.refreshAfter in grant.issuedAt..grant.expiresAt)

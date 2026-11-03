@@ -70,7 +70,12 @@ internal data class WebhookActions(
             Text(stringResource(R.string.webhook_purchase_body),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
             purchase.notice?.let {Text(billingNoticeText(it),style=WdType.caption2,color=wd.textMuted)}
             if(purchase.access==AccessState.active) Text(stringResource(R.string.webhook_verified),style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.SemiBold),color=wd.success)
-            else purchase.product?.let {product->WdButton(stringResource(R.string.webhook_buy,product.formattedPrice),{graph.purchases.purchase(activity,com.bontecou.whereday.platform.UsagePaywall.webhook)},emphasis=WdEmphasis.primary,enabled=!purchase.busy && !checkout && purchase.access!=AccessState.pending)}
+            else if(purchase.products.isNotEmpty()) {
+                var plans by androidx.compose.runtime.saveable.rememberSaveable {mutableStateOf(false)}
+                if(plans) PaywallDialog(purchase,checkout,{plan->graph.purchases.purchase(activity,plan,com.bontecou.whereday.platform.UsagePaywall.webhook)},
+                    {graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.webhook)},{plans=false},entry=PaywallEntry.export)
+                WdButton(stringResource(R.string.paywall_preview),{plans=true},emphasis=WdEmphasis.primary,enabled=!purchase.busy && !checkout && purchase.access!=AccessState.pending)
+            }
             WdButton(stringResource(R.string.webhook_restore),{graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.webhook)},enabled=!purchase.busy && !checkout)
             if(purchase.busy) ExportProgress()
         }

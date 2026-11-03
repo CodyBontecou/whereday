@@ -35,6 +35,8 @@ class MainActivity : ComponentActivity() {
     private var launcherAction by mutableStateOf<LauncherAction?>(null)
     private var visitLink by mutableStateOf<VisitLinkRequest?>(null)
     private var access by mutableStateOf<RecordingAccessState?>(null)
+    /** The plan carousel opened because tracking was started without a subscription or Lifetime. */
+    private var trackingPaywall by mutableStateOf(false)
     private var permissionReview by mutableStateOf<PermissionReview?>(null)
     private var reviewSerial=0L
     private var foregroundEpoch=0L
@@ -110,10 +112,11 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             val linkWindowFocused by reviewWindowFocused.collectAsStateWithLifecycle()
-            WheredayApp(graph, journal, onRecord = { if (RecordingRuntime.active.value) stopRecording() else requestLocation(true) },
+            WheredayApp(graph, journal, onRecord = { if (RecordingRuntime.active.value) stopRecording() else if(trackingLocked()) trackingPaywall=true else requestLocation(true) },
                 onRequestLocation = { requestLocation(false,true) }, onRequestNotifications = { requestNotifications(true) },
                 launcherAction=launcherAction,onLauncherActionHandled={launcherAction=null},
-                onStartRecording={if(!RecordingRuntime.active.value) requestLocation(true)},onStopRecording={stopRecording()},onboardingAuthorization=locationAccess,
+                onStartRecording={if(!RecordingRuntime.active.value) {if(trackingLocked()) trackingPaywall=true else requestLocation(true)}},onStopRecording={stopRecording()},onboardingAuthorization=locationAccess,
+                trackingPaywall=trackingPaywall,onTrackingPaywallDismiss={trackingPaywall=false},
                 onOnboardingStart={graph.recordingCommands.startVisible(this@MainActivity)},
                 access=access,accessReview=permissionReview,onAccessOptions={openAccessOptions(it)},
                 onAccessDismiss={id->if(permissionReview?.id==id) permissionReview=null},
@@ -241,6 +244,8 @@ class MainActivity : ComponentActivity() {
         try {startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:$packageName")))}
         catch(_:Exception) {accessFailure=PermissionAccessFailure.settings;refreshAccess()}
     }
+    /** Known to need a plan. While access is still being checked the start proceeds and [beginRecording] decides with the cached lease. */
+    private fun trackingLocked()=graph.purchases.state.value.let {it.trackingLocked && it.access!=com.bontecou.whereday.billing.AccessState.checking}
     private fun stopRecording() {
         pendingFocusStart?.cancel();permissionHandoff?.cancel();permissionReview=null
         pendingLocation=pendingLocation?.copy(start=false)
@@ -254,6 +259,9 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch(start=CoroutineStart.LAZY) {
             try {
                 if(!focusedFor(ticket.generation,ticket.foreground) || !permissionResultCurrent(ticket) || !hasWindowFocus()) return@launch
+                // The same check as RecordingCommands: this direct start must not bypass the plan requirement.
+                try {graph.purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)}
+                catch(_:com.bontecou.whereday.billing.VerifiedAccessRequired) {trackingPaywall=true;return@launch}
                 RecordingService.startForGeneration(this@MainActivity,ticket.generation);requestNotifications()
             } catch(error:CancellationException) {throw error}
             catch(_:Exception) {graph.activityLog.record(AppEvent.recordingStartFailed);android.widget.Toast.makeText(this@MainActivity,getString(R.string.recording_permission_start_failed),android.widget.Toast.LENGTH_LONG).show()}

@@ -18,6 +18,7 @@ android {
         require(reviewEnabled in setOf("true","false"))
         buildConfigField("boolean","PLAY_REVIEW_AVAILABLE",reviewEnabled)
         buildConfigField("String","PURCHASE_PRODUCT_ID",configString(providers.gradleProperty("whereday.purchaseProductId").getOrElse("whereday_export_lifetime")))
+        buildConfigField("String","SUBSCRIPTION_PRODUCT_ID",configString(providers.gradleProperty("whereday.subscriptionProductId").getOrElse("whereday_individual")))
         buildConfigField("String","PURCHASE_VERIFIER_URL",configString(providers.gradleProperty("whereday.purchaseVerifierUrl").getOrElse("")))
         buildConfigField("String","PURCHASE_VERIFIER_PUBLIC_KEY",configString(providers.gradleProperty("whereday.purchaseVerifierPublicKey").getOrElse("")))
         val usageEnabled=providers.gradleProperty("whereday.analyticsEnabled").getOrElse("false")

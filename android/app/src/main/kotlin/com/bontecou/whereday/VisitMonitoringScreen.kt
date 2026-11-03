@@ -40,7 +40,13 @@ import kotlinx.coroutines.*
     var work by remember {mutableStateOf<Job?>(null)}
     var busy by remember {mutableStateOf(false)}
     var error by remember {mutableStateOf(false)}
+    var plans by remember {mutableStateOf(false)}
     var access by remember {mutableStateOf(recordingAccess(context))}
+    val purchase by graph.purchases.state.collectAsStateWithLifecycle()
+    val checkout by graph.purchases.checkoutInFlight.collectAsStateWithLifecycle()
+    // Visits only is tracking too: without a plan, starting it opens the plans instead of an error.
+    if(plans) PaywallDialog(purchase,checkout,{plan->context.visitActivity()?.let {graph.purchases.purchase(it,plan,com.bontecou.whereday.platform.UsagePaywall.settings)}},
+        {graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.settings)},{plans=false})
     val mode by VisitMonitoringRuntime.state.collectAsStateWithLifecycle()
     val row by graph.history.dao.observeVisitMonitoring().collectAsStateWithLifecycle(initialValue=null)
     val clear by graph.journalClear.state.collectAsStateWithLifecycle()
@@ -52,6 +58,7 @@ import kotlinx.coroutines.*
             busy=true;error=false
             try {action()}
             catch(e:CancellationException) {throw e}
+            catch(_:com.bontecou.whereday.billing.VerifiedAccessRequired) {plans=true}
             catch(_:Exception) {error=true}
             finally {busy=false}
         }

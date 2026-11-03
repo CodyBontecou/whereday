@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.map
 private val Context.preferenceStore by preferencesDataStore("settings")
 data class AppSettings(val onboarded: Boolean = false, val appearance: String = "system", val metric: Boolean = true, val distanceFilter: Int = 5, val stopAfterHours: Int = 0, val networkGeocoding: Boolean = true, val exportFolder: String? = null,
     val inferredEnabled: Boolean=true,val inferredGapMinutes: Int=30,val inferredMinimumMinutes: Int=0,val inferredMinimumPoints: Int=1,val exportConfiguration:String?=null,val showOutliers:Boolean=false,val photoEpoch:String="",val showPhotoMarkers:Boolean=false,val showPhotoImages:Boolean=true,val requestPhotoLocations:Boolean=false,val automaticPhotoSync:Boolean=false,
-    val roadDisplayEnabled:Boolean=false,val roadAccessRevision:String="",val showPhotoDots:Boolean=false) {
+    val roadDisplayEnabled:Boolean=false,val roadAccessRevision:String="",val showPhotoDots:Boolean=false,
+    /** Set once this install first has verified access; the post-onboarding paywall never returns after that, even if a plan lapses. */
+    val accessGateCleared:Boolean=false) {
     val inferenceRules get()=com.bontecou.whereday.domain.InferenceRules(java.time.Duration.ofMinutes(inferredGapMinutes.toLong()),java.time.Duration.ofMinutes(inferredMinimumMinutes.toLong()),inferredMinimumPoints)
 }
 class AppPreferences(private val context: Context,private val beforeRoadPolicyChange:(String)->Unit={}) {
@@ -34,9 +36,10 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
         val exports = stringPreferencesKey("export_configuration_v1")
         val roadDisplay=booleanPreferencesKey("road_display_enabled")
         val roadRevision=stringPreferencesKey("road_access_revision")
+        val accessGate=booleanPreferencesKey("access_gate_cleared")
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
-        p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false)
+        p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false)
     val settings = context.preferenceStore.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { context.preferenceStore.edit { p ->
         val previous=read(p)
@@ -62,5 +65,6 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
             p[Keys.roadRevision]=revision
         }
         p[Keys.roadDisplay]=value.roadDisplayEnabled
+        p[Keys.accessGate]=value.accessGateCleared
     } }
 }

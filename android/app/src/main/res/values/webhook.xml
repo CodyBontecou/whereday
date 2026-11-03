@@ -97,9 +97,8 @@
     <string name="webhook_reset_confirm">Reset webhooks</string>
     <string name="webhook_show">Show %1$s</string>
     <string name="webhook_hide">Hide %1$s</string>
-    <string name="webhook_purchase_body">One individual lifetime purchase unlocks exports and webhooks. Recording, imports and previews remain free.</string>
+    <string name="webhook_purchase_body">Webhooks are included with every Whereday plan: Weekly, Yearly or Lifetime. Imports and previews remain free.</string>
     <string name="webhook_verified">Purchase verified</string>
-    <string name="webhook_buy">Buy lifetime access · %1$s</string>
     <string name="webhook_restore">Restore purchases</string>
     <string name="webhook_validation_https">Use an HTTPS endpoint URL.</string>
     <string name="webhook_validation_fields">Check the endpoint and authentication fields.</string>

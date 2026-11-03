@@ -28,10 +28,11 @@ internal object VisitStartTickets {
 
 /** Visible user actions start monitoring. Permission reviews never enqueue a future start. */
 class VisitMonitoringCommands(private val context:Context,private val history:HistoryRepository,
-    private val canStart:()->Boolean={true}) {
+    private val canStart:()->Boolean={true},private val access:suspend ()->Unit={}) {
     val preparing get()=VisitStartTickets.pending()
     suspend fun startVisible(activity:Activity,reviewedGeneration:String?) {
         if(!canStart()) throw JournalClearPending()
+        access()
         val ticket=VisitStartTickets.create();var acknowledged=false
         try {
             val code=receipt {reply->

@@ -16,11 +16,14 @@ import javax.net.ssl.HttpsURLConnection
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-data class PurchaseConfiguration(val productId:String=BuildConfig.PURCHASE_PRODUCT_ID,val endpoint:String=BuildConfig.PURCHASE_VERIFIER_URL,val publicKey:String=BuildConfig.PURCHASE_VERIFIER_PUBLIC_KEY,val cloudProjectNumber:Long=BuildConfig.PLAY_CLOUD_PROJECT_NUMBER) {
+/** [productId] is the one-time Lifetime unlock; [subscriptionId] holds the weekly and yearly base plans. */
+data class PurchaseConfiguration(val productId:String=BuildConfig.PURCHASE_PRODUCT_ID,val subscriptionId:String=BuildConfig.SUBSCRIPTION_PRODUCT_ID,val endpoint:String=BuildConfig.PURCHASE_VERIFIER_URL,val publicKey:String=BuildConfig.PURCHASE_VERIFIER_PUBLIC_KEY,val cloudProjectNumber:Long=BuildConfig.PLAY_CLOUD_PROJECT_NUMBER) {
+    /** Every product that grants access, Lifetime first. */
+    val productIds get()=listOf(productId,subscriptionId)
     val configured:Boolean get()=runCatching {
         val uri=URI(endpoint)
         require(uri.scheme=="https" && !uri.host.isNullOrBlank() && uri.rawUserInfo==null && uri.query==null && uri.fragment==null)
-        require(productId.matches(Regex("[a-z0-9_.]{1,200}")) && cloudProjectNumber>0)
+        require(productIds.all {it.matches(Regex("[a-z0-9_.]{1,200}"))} && productId!=subscriptionId && cloudProjectNumber>0)
         val key=KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(Base64.getDecoder().decode(publicKey))) as java.security.interfaces.RSAPublicKey
         require(key.modulus.bitLength()>=2048)
     }.isSuccess
@@ -30,7 +33,7 @@ class RemotePurchaseVerifier(context:Context,private val configuration:PurchaseC
     private val integrity=IntegrityManagerFactory.createStandard(context.applicationContext)
     private var provider:StandardIntegrityTokenProvider?=null
     override suspend fun verify(purchase:StorePurchase):PurchaseVerification=withContext(Dispatchers.IO) {
-        check(configuration.configured && purchase.productId==configuration.productId && purchase.state==StorePurchaseState.purchased)
+        check(configuration.configured && purchase.productId in configuration.productIds && purchase.state==StorePurchaseState.purchased)
         val publicKey=identity.publicKey()
         val challenge=post("v1/challenges",JsonObject().apply { addProperty("publicKey",publicKey);addProperty("packageName",packageName) })
         val challengeId=challenge["challengeId"].asString
