@@ -126,7 +126,8 @@ import java.time.*
                             wd.placeInks[(inks[visit.name?.takeIf {it.isNotBlank()} ?: visit.id] ?: 0)%wd.placeInks.size])}
                     Box(Modifier.fillMaxWidth().padding(top=6.dp,bottom=14.dp),contentAlignment=Alignment.Center) {
                         WdDayDial(segments,now=if(isToday) fraction(nowInstant) else null,nowCaption=if(isToday) stringResource(R.string.timeline_redesign_now) else null,
-                            centerText=if(isToday) nowInstant.atZone(zone).format(DateTimeFormatter.ofPattern(if(android.text.format.DateFormat.is24HourFormat(LocalContext.current)) "HH:mm" else "h:mm")) else null)
+                            // The dial is a 00–24 ring, so its clock reads 24-hour time like iOS, whatever the system setting.
+                            centerText=if(isToday) nowInstant.atZone(zone).format(DateTimeFormatter.ofPattern("HH:mm")) else null)
                     }
                 }
                 if(entries.isEmpty()) item { Text(stringResource(R.string.timeline_empty),style=WdType.serifBody,color=wd.textMuted,modifier=Modifier.padding(horizontal=24.dp).testTag("timeline-empty")) }
