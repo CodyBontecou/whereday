@@ -8,7 +8,7 @@ Practical iPhone guides
 
 Find the app and date that hold your saved visits, distinguish iPhone location settings from recorded history, and check existing copies before changing your setup.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 31, 2026
 
 ## Check the recorder you already used
 
@@ -20,6 +20,7 @@ Choose your next step
 - [Look for Apple’s visited places](https://whereday.com/blog/view-location-history-iphone/#apple)
 - [Find Significant Locations in Settings](https://whereday.com/blog/view-location-history-iphone/#significant)
 - [Open your Google Timeline](https://whereday.com/blog/view-location-history-iphone/#google)
+- [Download the right kind of copy](https://whereday.com/blog/view-location-history-iphone/#download)
 - [Keep existing records before making changes](https://whereday.com/blog/view-location-history-iphone/#preserve)
 - [Check why a day is missing](https://whereday.com/blog/view-location-history-iphone/#missing)
 - [Record future visits and routes](https://whereday.com/blog/view-location-history-iphone/#future)
@@ -62,6 +63,26 @@ Google’s iPhone guide describes optional encrypted backup and a device selecto
 For an independent file, use Settings → Location & Privacy → Export Timeline data → Save to Files. Google names the export `location-history.json`. Follow [Google’s current iPhone instructions](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en) if menus differ.
 
 Keep the archive separately. Whereday 1.8 can preview supported Google Timeline JSON; use the [import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/) to check formats, duplicates, and a synthetic example before saving.
+
+## How to download your iPhone location history
+
+There is no single download that combines every recorder on your iPhone. First identify the app holding the dates you need, then choose a copy for your next task. A route for a map viewer and a file for restoring a journal can contain different records.
+
+Choose the source and destination before saving
+| History source | Copy to keep | Next check
+| Google Maps Timeline | Export Timeline data to Files as `location-history.json`, using the steps above. | [Identify the JSON structure](https://whereday.com/blog/google-timeline-json-formats/) and inspect supported records. Keep the original even if you convert a copy to GPX.
+| Whereday visits and points | Export Visits and Points separately as Whereday JSON for a journal copy. | Follow the [export checklist](https://whereday.com/blog/back-up-iphone-location-history/#export), then compare both record types and the selected dates.
+| Whereday route for another viewer | Select Points and GPX in Export, then save through the share sheet. | [Check the GPX points, times and segments](https://whereday.com/blog/check-gpx-file/). GPX is not a Whereday journal restore file.
+| Apple Maps Visited Places | The linked Apple iOS 26 guide documents browsing and managing visits; it does not provide a bulk GPX or JSON export procedure. | Keep access to the original history. Do not assume a screenshot or shared place contains a timestamped route.
+
+### Check the saved file, not just the download message
+
+- Locate it in Files. Open the destination folder you chose. Note the filename and export date, and keep an untouched copy before converting or editing.
+- Compare its scope. Check the earliest and latest expected dates and both visits and points where relevant. A filename or nonzero file size does not establish that the full period was saved.
+- Inspect a known example first. Open the [local GPX viewer](https://whereday.com/tools/gpx-viewer/) and choose Try a synthetic example. The invented file has five points in two segments, from 12:00 to 12:14 UTC on January 1, 2000. The eleven-minute gap remains a break; it is not filled in by downloading or converting the file.
+- Check the destination. After importing a supported copy, inspect several actual records and dates there before removing the source. A successful format check does not prove that every field transferred.
+
+The [format comparison](https://whereday.com/blog/gpx-kml-geojson-location-history/) explains when GPX, KML, GeoJSON or CSV fits a downstream tool. Our browser inspectors process selected files locally without uploading them; normal links leave that tool page. Keep personal location archives out of public support posts.
 
 ## Keep the records before changing the setup
 
@@ -122,7 +143,7 @@ Check your tracking access, then record and review the route and visits on your 
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
-Reviewed October 26, 2026 against the linked Apple iOS 26 and current Maps guidance, Google’s iPhone Timeline help, and Whereday’s verified release source. Apple and Google steps follow their linked help pages; menus may vary by version and region. The screenshot illustrates Whereday.
+Download guidance reviewed October 31, 2026 against the linked Apple iOS 26 and current Maps guidance, Google’s iPhone Timeline help, and the published Whereday export and file-inspection guides. Earlier native workflow evidence retains its own dates; no new device-transfer test is claimed. Apple and Google steps follow their linked help pages; menus may vary by version and region. The screenshot illustrates Whereday.
 
 ## Read next
 

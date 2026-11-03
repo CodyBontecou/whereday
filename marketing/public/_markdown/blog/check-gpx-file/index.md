@@ -8,7 +8,7 @@ Practical iPhone guides
 
 Start with a known example, check your file’s actual records, and keep the original before making changes.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 1, 2026
 
 ## Inspect the file before importing it
 
@@ -67,6 +67,19 @@ The table includes only usable-coordinate points. It does not preserve all metad
 A single-point part or independent waypoint becomes a Point feature. An invalid coordinate or a longitude jump over 180 degrees starts a separate part; no boundary coordinates or times are interpolated. Empty parts produce no feature. Coordinate order is longitude, then latitude. Missing or unusable normalized times and elevations remain `null`; original timestamp text stays in `original_times` when present. Each custom property array has one value per coordinate, including a single value for a Point.
 
 Point order within each group, duplicates and the viewer’s group numbers are retained. File metadata, track/route names, styling and extensions are omitted; this is not a lossless archive conversion. GeoJSON’s geometry rules and optional height reference are defined in [RFC 7946](https://www.rfc-editor.org/rfc/rfc7946). This tool keeps elevation outside geometry and uses its own documented time/elevation fields. Keep the original GPX.
+
+## Before using GPX points for a location heatmap
+
+A location heatmap can help you spot clusters of recorded points. First decide what you want to count: GPS samples, separate visits, or time spent. Those are different questions. This viewer supplies a point table and route plot; it does not calculate a heatmap or visit durations.
+
+- Start with the CSV. Use the five-point demo above and choose Download points as CSV. In a mapping tool that accepts a coordinate table, select longitude as X and latitude as Y, in WGS84 decimal degrees. Confirm five input rows before applying any density styling. The converted GeoJSON example contains two lines, not a five-feature point layer.
+- Keep the groups and timestamps. In this invented file, group 1 has three samples from 12:00 to 12:02 UTC; group 2 has two from 12:13 to 12:14. The first group supplies three of five samples (60%). That does not mean 60% of the trip was spent there.
+- Leave the gap unknown. The full timestamp span is 14 minutes, but the spans within the two segments total only three minutes. The remaining eleven minutes have no intermediate samples in this file. Do not assign that interval to either endpoint or draw an assumed route through it.
+- Check recording consistency before comparing days. A recorder saving a point every second can contribute many more samples than one saving every minute. Repeated exports can also repeat records. Inspect dates, duplicate warnings and source settings; retain the original and document any filtering in a separate working copy.
+
+For example, [QGIS documents a point-density heatmap](https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/interpolation.html#heatmap-kernel-density-estimation) with a search radius, output pixel size and optional weight field. Those choices change the result: a larger radius smooths over more space. Record the settings and units when comparing maps. The instructions here prepare and check the input; they do not establish a tested QGIS import or a time-weighted analysis.
+
+Before sharing any heatmap or CSV, review whether home, work or repeated routes are visible. Removing names does not remove coordinates. Use the [format comparison](https://whereday.com/blog/gpx-kml-geojson-location-history/) to check which location fields remain, and use only the synthetic example when testing an unfamiliar service.
 
 ## If the file will not open
 
