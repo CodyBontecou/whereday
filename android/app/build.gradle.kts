@@ -18,9 +18,20 @@ android {
     }
     buildFeatures { compose = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+    // The Play upload key lives outside the repo; its path and passwords come from ~/.gradle/gradle.properties.
+    val uploadStoreFile = providers.gradleProperty("whereday.uploadStoreFile").orNull
+    if (uploadStoreFile != null) signingConfigs.create("upload") {
+        storeFile = file(uploadStoreFile)
+        storePassword = providers.gradleProperty("whereday.uploadStorePassword").get()
+        keyAlias = providers.gradleProperty("whereday.uploadKeyAlias").get()
+        keyPassword = providers.gradleProperty("whereday.uploadKeyPassword").get()
+    }
     buildTypes {
         getByName("debug") { isPseudoLocalesEnabled = true }
-        release { isMinifyEnabled = false }
+        release {
+            isMinifyEnabled = false
+            if (uploadStoreFile != null) signingConfig = signingConfigs.getByName("upload")
+        }
         create("mapQa") {
             initWith(getByName("debug"))
             applicationIdSuffix = ".mapqa"
