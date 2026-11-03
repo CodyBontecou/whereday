@@ -2,18 +2,23 @@ import SwiftUI
 import StoreKit
 import SwiftData
 
+/// The paywall's carousel pages, in swipe order.
+private enum PaywallPage: Hashable {
+    case promise, freeWeek, plans
+}
+
 struct PaywallView: View {
     @ObservedObject var storeManager: StoreManager
     var context: PaywallContext = .export
     var isRequired = false
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var family = false
     @State private var selectedOption: IsoMePurchaseOption = .individualYearly
     @State private var showSubscriptionManagement = false
+    @State private var page: PaywallPage = .promise
     @Environment(\.modelContext) private var modelContext
-    /// Ink index per day for the two-pane grid: recorded days when there are any, else nil.
+    /// Ink index per day for the promise page's grid: recorded days when there are any, else nil.
     @State private var planDays: [Int?]?
 
     private var managing: Bool { context == .settings && storeManager.isPurchased }
@@ -32,14 +37,21 @@ struct PaywallView: View {
     private var offeredOptions: [IsoMePurchaseOption] {
         options.filter { storeManager.product(for: $0) != nil }
     }
-    private var usesTwoPanes: Bool { horizontalSizeClass == .regular && !dynamicTypeSize.isAccessibilitySize }
+    private var yearlyOption: IsoMePurchaseOption { family ? .familyYearly : .individualYearly }
+    /// The free-week page only appears while the yearly plan really offers a trial.
+    private var pages: [PaywallPage] {
+        storeManager.trialEligibleProductIDs.contains(yearlyOption.productID)
+            ? [.promise, .freeWeek, .plans] : [.promise, .plans]
+    }
+    /// Opened from an export or webhook, the first page leads with what that unlocks.
+    private var leadsWithExport: Bool { context == .export || context == .webhook }
 
     var body: some View {
         Group {
-            if usesTwoPanes {
-                twoPaneLayout
+            if managing {
+                managingLayout
             } else {
-                singleColumnLayout
+                carouselLayout
             }
         }
         .background(TE.surface.ignoresSafeArea())
@@ -56,19 +68,24 @@ struct PaywallView: View {
             keepSelectionOffered()
         }
         .onChange(of: storeManager.productsByID.count) { _, _ in keepSelectionOffered() }
+        .onChange(of: pages) { _, pages in
+            if !pages.contains(page) { page = .plans }
+        }
         .onAppear {
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("--review-family-paywall") {
+            let arguments = ProcessInfo.processInfo.arguments
+            if arguments.contains("--review-family-paywall") {
                 family = true
                 selectedOption = .familyYearly
             }
+            if arguments.contains("--review-paywall-plans") { page = .plans }
             #endif
         }
         .task {
             await storeManager.loadProducts()
         }
-        .task(id: usesTwoPanes) {
-            guard usesTwoPanes, planDays == nil else { return }
+        .task {
+            guard planDays == nil else { return }
             planDays = PlanDayGrid.recordedDays(in: modelContext)
         }
     }
@@ -82,31 +99,58 @@ struct PaywallView: View {
 
     // MARK: - Layouts
 
-    private var singleColumnLayout: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                HStack {
-                    eyebrow
-                    Spacer(minLength: 12)
-                    closeButton
-                }
+    /// One story per page, swiped through, with the price and purchase button pinned below every page.
+    private var carouselLayout: some View {
+        VStack(spacing: 0) {
+            header
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
+            TabView(selection: $page) {
+                ForEach(pages, id: \.self) { page in
+                    ScrollView {
+                        pageContent(page)
+                            .padding(.horizontal, 24)
+                            .padding(.top, 14)
+                            .padding(.bottom, 16)
+                            .frame(maxWidth: 560, alignment: .leading)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .scrollIndicators(.hidden)
+                    .tag(page)
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            footer
+                .frame(maxWidth: 560)
+                .frame(maxWidth: .infinity)
+                .background(TE.surface.ignoresSafeArea(edges: .bottom))
+        }
+    }
+
+    /// Settings, for someone who already has a plan: what they own, and what they can still add.
+    private var managingLayout: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                header
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
 
                 VStack(alignment: .leading, spacing: 10) {
                     JourneyMapIllustration(ink: TE.textPrimary, paper: TE.card)
                         .frame(height: 96)
                         .accessibilityHidden(true)
-                    headline
+                    Text("Your Whereday plan")
                         .font(TE.editorial(.largeTitle))
-                    subheadline
+                    Text("Manage your purchase and Family Sharing.")
                         .font(.subheadline)
                         .foregroundStyle(TE.textMuted)
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 14)
 
-                planContent
+                activePlanCard
                     .padding(.horizontal, 20)
                     .padding(.top, 18)
 
@@ -127,61 +171,191 @@ struct PaywallView: View {
         }
     }
 
-    /// The wide layout: the promise on an ink page, the plans beside it.
-    private var twoPaneLayout: some View {
-        HStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("YOUR WHEREDAY PLAN")
-                    .font(TE.mono(.caption2))
-                    .tracking(1.5)
-                    .foregroundStyle(TE.onInkCardMuted)
-                Spacer(minLength: 16)
-                PlanDayGrid(days: planDays)
-                    .frame(maxWidth: 460, maxHeight: 150)
-                Spacer(minLength: 16)
-                VStack(alignment: .leading, spacing: 10) {
-                    headline
-                        .font(TE.editorial(.largeTitle))
-                    subheadline
-                        .font(.subheadline)
-                        .foregroundStyle(TE.onInkCardMuted)
-                }
-            }
-            .foregroundStyle(TE.onInkCard)
-            .padding(.horizontal, 36)
-            .padding(.vertical, 40)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-            .background(TE.inkCard.ignoresSafeArea())
+    // MARK: - Pages
 
-            VStack(spacing: 0) {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack {
-                            Spacer(minLength: 0)
-                            closeButton
-                        }
-                        planContent
-                            .padding(.top, 8)
-                        notes
-                            .padding(.top, 16)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 20)
-                }
-                .scrollIndicators(.hidden)
-                footer
+    @ViewBuilder
+    private func pageContent(_ page: PaywallPage) -> some View {
+        switch page {
+        case .promise:
+            if leadsWithExport { exportPromise } else { promise }
+        case .freeWeek:
+            freeWeek
+        case .plans:
+            plans
+        }
+    }
+
+    private var promise: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            PlanDayGrid(days: planDays)
+                .frame(height: 84)
+                .padding(14)
+                .frame(maxWidth: .infinity)
+                .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+                .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+            italicSecondLine(String(localized: "A life of places.\nYours to keep."))
+                .font(TE.editorial(.largeTitle))
+            VStack(alignment: .leading, spacing: 14) {
+                PaywallBenefitRow(systemImage: "clock", title: "Every day, recorded for you",
+                                  detail: "Visits and routes log in the background. No check-ins.")
+                PaywallBenefitRow(systemImage: "map", title: "Revisit any place, any date",
+                                  detail: "Map, timeline and calendar of where you've been.")
+                PaywallBenefitRow(systemImage: "lock", title: "Private, on your iPhone",
+                                  detail: "No account. Export to GPX, CSV, Markdown and more.")
             }
-            .frame(maxWidth: .infinity)
+        }
+    }
+
+    private static let exportFormats = ["GPX", "GeoJSON", "KML", "CSV", "JSON", "Markdown", "OwnTracks", "Overland"]
+    private static let exportFormatInks = [0, 1, 0, 3, 3, 0, 2, 2]
+
+    private var exportPromise: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8),
+                                     count: dynamicTypeSize.isAccessibilitySize ? 2 : 4), spacing: 8) {
+                ForEach(Self.exportFormats.indices, id: \.self) { index in
+                    Text(verbatim: Self.exportFormats[index])
+                        .font(TE.mono(.caption, weight: .medium))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .frame(maxWidth: .infinity, minHeight: 34)
+                        .overlay(RoundedRectangle(cornerRadius: 10)
+                            .strokeBorder(TE.placeInks[Self.exportFormatInks[index]], lineWidth: 1))
+                }
+            }
+            .padding(16)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+            .accessibilityElement(children: .combine)
+            italicSecondLine(String(localized: "Take your history\nanywhere."))
+                .font(TE.editorial(.largeTitle))
+            VStack(alignment: .leading, spacing: 14) {
+                PaywallBenefitRow(systemImage: "square.and.arrow.down", title: "Every format, filtered your way",
+                                  detail: "Pick dates, fields and accuracy. Visits, routes or outings.")
+                PaywallBenefitRow(systemImage: "calendar.badge.clock", title: "A file a day, saved for you",
+                                  detail: "Scheduled exports land in your folder or Obsidian vault.")
+                PaywallBenefitRow(systemImage: "link", title: "Webhooks and Shortcuts",
+                                  detail: "Send each day to your own server or automation.")
+            }
+        }
+    }
+
+    private var freeWeek: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            if let review = PaywallReview.featured {
+                PaywallReviewCard(review: review)
+            }
+            Text("How your *free week* works")
+                .font(TE.editorial(.largeTitle))
+                .accessibilityAddTraits(.isHeader)
+            VStack(alignment: .leading, spacing: 0) {
+                PaywallTrialStep(systemImage: "checkmark", ink: TE.textPrimary, isDone: true,
+                                 title: Text("Today"),
+                                 detail: Text("Everything unlocks. Recording starts with your first walk out the door."))
+                PaywallTrialStep(systemImage: "bell", ink: TE.placeInks[3],
+                                 title: Text("Day 5 · A reminder"),
+                                 detail: Text("We'll notify you two days before the trial ends."))
+                PaywallTrialStep(systemImage: "calendar", ink: TE.inkRust, isLast: true,
+                                 title: Text("Day 7 · Your plan begins"),
+                                 detail: Text(verbatim: renewalDetail))
+            }
+        }
+    }
+
+    private var renewalDetail: String {
+        if let product = storeManager.product(for: yearlyOption) {
+            return String(localized: "\(product.displayPrice) for the year. Cancel before then in Apple settings and you won't be charged.")
+        }
+        return String(localized: "Your yearly plan begins. Cancel before then in Apple settings and you won't be charged.")
+    }
+
+    private var plans: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Choose your *plan*")
+                .font(TE.editorial(.largeTitle))
+                .accessibilityAddTraits(.isHeader)
+            audiencePicker
+            if offeredOptions.isEmpty {
+                unavailablePlans
+            } else {
+                let sideBySide = offeredOptions.count == 2 && !dynamicTypeSize.isAccessibilitySize
+                let layout = sideBySide
+                    ? AnyLayout(HStackLayout(alignment: .top, spacing: 12))
+                    : AnyLayout(VStackLayout(spacing: 12))
+                layout {
+                    ForEach(offeredOptions) { option in
+                        planCard(option)
+                    }
+                }
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            includedList
+            if family {
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "person.3")
+                        .foregroundStyle(TE.textMuted)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Share with up to 5 family members using Apple Family Sharing")
+                        Text("Family Sharing shares access, not your location journal.")
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                .font(.footnote)
+                .foregroundStyle(TE.textMuted)
+                .accessibilityElement(children: .combine)
+            }
+            if selectedOption.isSubscription, storeManager.product(for: selectedOption) != nil {
+                Text("Cancel in Apple subscription settings at least 24 hours before renewal.")
+                    .font(.caption)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            notes
+        }
+    }
+
+    private var includedList: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("EVERY PLAN INCLUDES")
+                .font(TE.mono(.caption2))
+                .tracking(1.2)
+                .foregroundStyle(TE.textMuted)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 12, alignment: .leading)],
+                      alignment: .leading, spacing: 8) {
+                includedItem("Automatic recording")
+                includedItem("All 8 export formats")
+                includedItem("Scheduled exports")
+                includedItem("Webhooks")
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func includedItem(_ title: LocalizedStringKey) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "checkmark")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(TE.placeInks[3])
+                .accessibilityHidden(true)
+            Text(title)
+                .font(.subheadline)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
     // MARK: - Pieces
 
-    private var eyebrow: some View {
-        Text("YOUR WHEREDAY PLAN")
-            .font(TE.mono(.caption2))
-            .tracking(1.5)
-            .foregroundStyle(TE.textMuted)
+    private var header: some View {
+        HStack {
+            Text(leadsWithExport && !managing ? "EXPORT IS PART OF YOUR PLAN" : "YOUR WHEREDAY PLAN")
+                .font(TE.mono(.caption2))
+                .tracking(1.5)
+                .foregroundStyle(TE.textMuted)
+            Spacer(minLength: 12)
+            closeButton
+        }
+        .frame(minHeight: 44)
     }
 
     @ViewBuilder
@@ -191,65 +365,11 @@ struct PaywallView: View {
         }
     }
 
-    private var headline: Text {
-        if managing {
-            return Text("Your Whereday plan")
-        }
-        // The second line is set in italic, as on the printed page.
-        let lines = String(localized: "A life of places.\nYours to keep.").split(separator: "\n", maxSplits: 1)
-        guard lines.count == 2 else { return Text(String(localized: "A life of places.\nYours to keep.")) }
+    /// A two-line headline whose second line is set in italic, as on the printed page.
+    private func italicSecondLine(_ localized: String) -> Text {
+        let lines = localized.split(separator: "\n", maxSplits: 1)
+        guard lines.count == 2 else { return Text(verbatim: localized) }
         return Text(verbatim: "\(lines[0])\n") + Text(verbatim: String(lines[1])).italic()
-    }
-
-    private var subheadline: Text {
-        managing
-            ? Text("Manage your purchase and Family Sharing.")
-            : Text("Track your days. Revisit your places.\nKeep your history private and on-device.")
-    }
-
-    @ViewBuilder
-    private var planContent: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if managing {
-                activePlanCard
-            } else {
-                audiencePicker
-                if offeredOptions.isEmpty {
-                    unavailablePlans
-                } else {
-                    ForEach(offeredOptions) { option in
-                        planCard(option)
-                    }
-                }
-                if family {
-                    HStack(alignment: .top, spacing: 10) {
-                        Image(systemName: "person.3")
-                            .foregroundStyle(TE.textMuted)
-                            .accessibilityHidden(true)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Share with up to 5 family members using Apple Family Sharing")
-                            Text("Family Sharing shares access, not your location journal.")
-                        }
-                        .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .font(.footnote)
-                    .foregroundStyle(TE.textMuted)
-                    .accessibilityElement(children: .combine)
-                }
-                if selectedOption.isSubscription, storeManager.product(for: selectedOption) != nil {
-                    Text("Cancel in Apple subscription settings at least 24 hours before renewal.")
-                        .font(.caption)
-                        .foregroundStyle(TE.textMuted)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-            if let error = storeManager.purchaseError ?? storeManager.productLoadError {
-                Text(error)
-                    .font(.footnote)
-                    .foregroundStyle(TE.inkRust)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
     }
 
     private var audiencePicker: some View {
@@ -289,48 +409,64 @@ struct PaywallView: View {
         let trial = storeManager.trialEligibleProductIDs.contains(option.productID)
         let product = storeManager.product(for: option)
         return Button { selectedOption = option } label: {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text(verbatim: option.title)
-                        .font(TE.editorial(.title3))
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .top, spacing: 6) {
+                    planBadge(option, hasTrial: trial)
                     Spacer(minLength: 4)
-                    if trial {
-                        Text("7 DAYS FREE")
-                            .font(TE.mono(.caption2))
-                            .foregroundStyle(TE.card)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(RoundedRectangle(cornerRadius: 10).fill(TE.placeInks[1]))
-                    } else if let product {
-                        Text(verbatim: product.displayPrice)
-                            .font(TE.mono(.footnote))
-                            .monospacedDigit()
-                    }
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.title3)
+                        .foregroundStyle(isSelected ? TE.inkRust : TE.border)
+                        .accessibilityHidden(true)
                 }
+                Text(verbatim: PaywallCopy.planName(for: option))
+                    .font(TE.editorial(.title2))
+                    .padding(.top, 2)
                 if let product {
-                    // Lifetime reads as the artboard does; its price sits on the title line.
-                    Text(option.isSubscription
-                         ? PaywallCopy.disclosure(for: option, displayPrice: product.displayPrice, hasTrial: trial)
-                         : String(localized: "One-time purchase. Yours for good."))
-                        .font(.footnote)
+                    HStack(alignment: .firstTextBaseline, spacing: 4) {
+                        Text(verbatim: product.displayPrice)
+                            .font(TE.mono(.title3, weight: .medium))
+                            .monospacedDigit()
+                        Text(verbatim: option.billingCaption)
+                            .font(.footnote)
+                            .foregroundStyle(TE.textMuted)
+                    }
+                    Text(verbatim: PaywallCopy.planDetail(for: option, price: product.price, format: product.priceFormatStyle))
+                        .font(.caption)
                         .foregroundStyle(TE.textMuted)
                 }
             }
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.horizontal, 18)
-            .padding(.vertical, 16)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(14)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
             .overlay(
                 RoundedRectangle(cornerRadius: 18)
-                    .strokeBorder(isSelected ? TE.placeInks[1] : TE.border, lineWidth: isSelected ? 2 : 1)
+                    .strokeBorder(isSelected ? TE.inkRust : TE.border, lineWidth: isSelected ? 2 : 1)
             )
             .contentShape(RoundedRectangle(cornerRadius: 18))
         }
         .buttonStyle(PaywallInkPressStyle())
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    @ViewBuilder
+    private func planBadge(_ option: IsoMePurchaseOption, hasTrial: Bool) -> some View {
+        if hasTrial {
+            Text("7 DAYS FREE")
+                .font(TE.mono(.caption2, weight: .medium))
+                .foregroundStyle(TE.card)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(RoundedRectangle(cornerRadius: 10).fill(TE.inkRust))
+        } else if !option.isSubscription {
+            Text("ONE-TIME")
+                .font(TE.mono(.caption2, weight: .medium))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(TE.border, lineWidth: 1))
+        }
     }
 
     private var activePlanCard: some View {
@@ -372,7 +508,29 @@ struct PaywallView: View {
     }
 
     private var footer: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
+            if !managing {
+                PaywallPageDots(count: pages.count, index: pages.firstIndex(of: page) ?? 0) { index in
+                    withAnimation { page = pages[index] }
+                }
+                if let product = storeManager.product(for: selectedOption) {
+                    Text(verbatim: PaywallCopy.disclosure(
+                        for: selectedOption,
+                        displayPrice: product.displayPrice,
+                        hasTrial: storeManager.trialEligibleProductIDs.contains(selectedOption.productID)))
+                        .font(.caption)
+                        .foregroundStyle(TE.textMuted)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            if let error = storeManager.purchaseError ?? storeManager.productLoadError {
+                Text(error)
+                    .font(.footnote)
+                    .foregroundStyle(TE.inkRust)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if !managing {
                 purchaseButton(selectedOption)
             } else if storeManager.canBuyFamilyUpgrade {
@@ -453,6 +611,171 @@ nonisolated enum PaywallCopy {
         if option == .familyUpgrade { return String(localized: "Upgrade to Family", bundle: bundle) }
         if !option.isSubscription { return String(localized: "Buy Lifetime", bundle: bundle) }
         return hasTrial ? String(localized: "Start 7-day free trial", bundle: bundle) : String(localized: "Subscribe", bundle: bundle)
+    }
+
+    /// The short name on a plan card; the Individual/Family switch above it says who it's for.
+    static func planName(for option: IsoMePurchaseOption, bundle: Bundle = .main) -> String {
+        switch option {
+        case .individualWeekly, .familyWeekly: return String(localized: "Weekly", bundle: bundle)
+        case .individualYearly, .familyYearly: return String(localized: "Yearly", bundle: bundle)
+        case .individual, .family: return String(localized: "Lifetime", bundle: bundle)
+        case .familyUpgrade: return String(localized: "Family Upgrade", bundle: bundle)
+        }
+    }
+
+    /// The line under a plan card's price. Yearly shows its monthly equivalent, in the storefront's currency format.
+    static func planDetail(for option: IsoMePurchaseOption, price: Decimal, format: Decimal.FormatStyle.Currency,
+                           bundle: Bundle = .main) -> String {
+        switch option {
+        case .individualYearly, .familyYearly:
+            let monthly = (price / 12).formatted(format)
+            return String(localized: "\(monthly) a month, billed yearly", bundle: bundle)
+        case .individualWeekly, .familyWeekly:
+            return String(localized: "Renews every week.", bundle: bundle)
+        case .individual, .family, .familyUpgrade:
+            return String(localized: "One-time purchase. Yours for good.", bundle: bundle)
+        }
+    }
+}
+
+/// An App Store review quoted with the reviewer's permission, shown verbatim in its own language.
+struct PaywallReview {
+    let quote: String
+    let reviewer: String
+    let rating: Int
+
+    /// Empty until real, permitted quotes are added; the free-week page then leads with the first.
+    static let all: [PaywallReview] = []
+    static var featured: PaywallReview? { all.first }
+}
+
+private struct PaywallReviewCard: View {
+    let review: PaywallReview
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 3) {
+                ForEach(0..<5, id: \.self) { index in
+                    Image(systemName: index < review.rating ? "star.fill" : "star")
+                        .font(.caption)
+                        .foregroundStyle(TE.placeInks[2])
+                }
+            }
+            .accessibilityElement()
+            .accessibilityLabel(Text("\(review.rating) out of 5 stars"))
+            Text(verbatim: "“\(review.quote)”")
+                .font(TE.editorial(.title3))
+                .italic()
+                .fixedSize(horizontal: false, vertical: true)
+            Text(verbatim: review.reviewer.uppercased())
+                .font(TE.mono(.caption2))
+                .tracking(0.6)
+                .foregroundStyle(TE.textMuted)
+        }
+        .padding(.horizontal, 18)
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityElement(children: .combine)
+    }
+}
+
+private struct PaywallBenefitRow: View {
+    let systemImage: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 14) {
+            Image(systemName: systemImage)
+                .font(.body)
+                .frame(width: 34, height: 34)
+                .background(RoundedRectangle(cornerRadius: 10).fill(TE.card))
+                .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(TE.border, lineWidth: 1))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.body.weight(.semibold))
+                Text(detail)
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textMuted)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// One stop on the free-week timeline, joined to the next by a rule in its ink.
+private struct PaywallTrialStep: View {
+    let systemImage: String
+    let ink: Color
+    var isDone = false
+    var isLast = false
+    let title: Text
+    let detail: Text
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 16) {
+            VStack(spacing: 0) {
+                Image(systemName: systemImage)
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(isDone ? TE.surface : ink)
+                    .frame(width: 28, height: 28)
+                    .background(Circle().fill(isDone ? ink : TE.card))
+                    .overlay(Circle().strokeBorder(ink, lineWidth: isDone ? 0 : 2))
+                if !isLast {
+                    Rectangle()
+                        .fill(isDone ? ink : TE.border)
+                        .frame(width: 2)
+                        .frame(minHeight: 22, maxHeight: .infinity)
+                }
+            }
+            .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                title
+                    .font(.body.weight(.semibold))
+                detail
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textMuted)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.top, 3)
+            .padding(.bottom, isLast ? 0 : 18)
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// The carousel's position: tap a dot to jump, or swipe up and down on it with VoiceOver.
+private struct PaywallPageDots: View {
+    let count: Int
+    let index: Int
+    let select: (Int) -> Void
+
+    var body: some View {
+        HStack(spacing: 6) {
+            ForEach(0..<count, id: \.self) { dot in
+                Capsule()
+                    .fill(dot == index ? TE.textPrimary : TE.border)
+                    .frame(width: dot == index ? 18 : 6, height: 6)
+                    .frame(minWidth: 18, minHeight: 24)
+                    .contentShape(Rectangle())
+                    .onTapGesture { select(dot) }
+            }
+        }
+        .animation(.easeOut(duration: 0.2), value: index)
+        .accessibilityElement()
+        .accessibilityLabel(Text("Page \(index + 1) of \(count)"))
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment where index + 1 < count: select(index + 1)
+            case .decrement where index > 0: select(index - 1)
+            default: break
+            }
+        }
     }
 }
 
@@ -571,14 +894,9 @@ struct PlanDayGrid: View {
     /// A nil array means there is no recorded history to show.
     let days: [Int?]?
 
-    /// Inks tuned for the ink page: light on navy by day, deep on amber at night.
-    private static let inks: [Color] = [
-        TE.adaptive(0x8FA6D9, 0x1E2B45),
-        TE.adaptive(0xF0805F, 0xA8381F),
-        TE.adaptive(0xE0B565, 0x7A5A1C),
-        TE.adaptive(0x9DC097, 0x3F5C3C)
-    ]
-    private static let empty = TE.adaptive(0x2C3754, 0xC9A050)
+    /// The place inks, drawn on the paper card of the paywall's first page.
+    private static let inks: [Color] = TE.placeInks
+    private static let empty = TE.dialTrack
 
     var body: some View {
         let cells = days ?? Self.illustrativeDays

@@ -366,4 +366,42 @@ final class StoreManagerTests: XCTestCase {
         XCTAssertNil(store.trackingExpiration)
     }
 
+
+    func testPlanCardsUseShortNamesAndYearlyMonthlyEquivalent() {
+        let usd = Decimal.FormatStyle.Currency(code: "USD", locale: Locale(identifier: "en_US"))
+        let english = Bundle.main.url(forResource: "en", withExtension: "lproj").flatMap(Bundle.init(url:)) ?? .main
+        XCTAssertEqual(PaywallCopy.planName(for: .individualYearly, bundle: english), "Yearly")
+        XCTAssertEqual(PaywallCopy.planName(for: .family, bundle: english), "Lifetime")
+        XCTAssertEqual(PaywallCopy.planDetail(for: .individualYearly, price: Decimal(string: "29.99")!, format: usd, bundle: english),
+                       "$2.50 a month, billed yearly")
+        XCTAssertEqual(PaywallCopy.planDetail(for: .familyYearly, price: Decimal(string: "49.99")!, format: usd, bundle: english),
+                       "$4.17 a month, billed yearly")
+        XCTAssertEqual(PaywallCopy.planDetail(for: .individual, price: Decimal(string: "49.99")!, format: usd, bundle: english),
+                       "One-time purchase. Yours for good.")
+    }
+
+    func testTrialReminderFiresTwoDaysBeforeTheTrialEnds() {
+        let start = Date(timeIntervalSince1970: 1_800_000_000)
+        let trialEnds = start.addingTimeInterval(7 * 24 * 60 * 60)
+        XCTAssertEqual(TrialReminder.fireDate(trialEnds: trialEnds, now: start), start.addingTimeInterval(5 * 24 * 60 * 60))
+        // A trial ending within two days gets no reminder rather than one in the past.
+        XCTAssertNil(TrialReminder.fireDate(trialEnds: start.addingTimeInterval(24 * 60 * 60), now: start))
+        let body = TrialReminder.body(displayPrice: "$29.99", renewal: trialEnds)
+        XCTAssertTrue(body.contains("$29.99"))
+        XCTAssertTrue(body.contains(trialEnds.formatted(date: .abbreviated, time: .omitted)))
+    }
+
+    func testCarouselPaywallCopyIsTranslatedInEveryShippedLocale() throws {
+        let keys = ["How your *free week* works", "Choose your *plan*", "%@ a month, billed yearly",
+                    "Your free week ends in 2 days", "Day 5 · A reminder", "EXPORT IS PART OF YOUR PLAN"]
+        for locale in ["ar", "bn", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"] {
+            let url = Bundle.main.bundleURL.appendingPathComponent("\(locale).lproj")
+            let bundle = try XCTUnwrap(Bundle(url: url), "Missing compiled locale: \(locale)")
+            for key in keys {
+                XCTAssertNotEqual(bundle.localizedString(forKey: key, value: nil, table: nil), key, "\(locale): \(key)")
+            }
+            let detail = PaywallCopy.planDetail(for: .individualYearly, price: 12, format: .currency(code: "USD"), bundle: bundle)
+            XCTAssertFalse(detail.contains("%@"), "\(locale): \(detail)")
+        }
+    }
 }

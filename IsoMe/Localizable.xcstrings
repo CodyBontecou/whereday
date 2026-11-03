@@ -80238,6 +80238,774 @@
           }
         }
       }
+    },
+    "Every day, recorded for you": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "كل يوم يُسجَّل لك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিটি দিন, আপনার জন্য রেকর্ড করা"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Every day, recorded for you"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Cada día, registrado por ti"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Chaque jour, enregistré pour vous"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "हर दिन, आपके लिए रिकॉर्ड"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "毎日を自動で記録"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Każdy dzień zapisany za Ciebie"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Cada dia registrado para você"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Каждый день записывается сам"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每一天，都为你记录"}}
+      }
+    },
+    "Visits and routes log in the background. No check-ins.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تُسجَّل الزيارات والمسارات في الخلفية. دون تسجيل وصول يدوي."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ভিজিট আর রুট ব্যাকগ্রাউন্ডে রেকর্ড হয়। চেক-ইন লাগে না।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Visits and routes log in the background. No check-ins."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Las visitas y rutas se registran en segundo plano. Sin check-ins."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Visites et trajets sont enregistrés en arrière-plan. Sans check-in."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "विज़िट और रूट बैकग्राउंड में रिकॉर्ड होते हैं। चेक-इन की ज़रूरत नहीं।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "訪問先とルートをバックグラウンドで記録。チェックインは不要です。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wizyty i trasy zapisują się w tle. Bez meldowania się."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Visitas e rotas são registradas em segundo plano. Sem check-ins."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Визиты и маршруты записываются в фоне. Без отметок вручную."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "到访和路线在后台记录，无需签到。"}}
+      }
+    },
+    "Revisit any place, any date": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "عُد إلى أي مكان وأي تاريخ"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "যেকোনো জায়গা, যেকোনো তারিখ আবার দেখুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Revisit any place, any date"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Vuelve a cualquier lugar y fecha"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Retrouvez chaque lieu, chaque date"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "कोई भी जगह, कोई भी तारीख़ फिर से देखें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "どの場所も、どの日も振り返れる"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wracaj do każdego miejsca i dnia"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Reveja qualquer lugar e data"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Любое место, любая дата"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "随时回顾任何地点和日期"}}
+      }
+    },
+    "Map, timeline and calendar of where you've been.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "خريطة وخط زمني وتقويم للأماكن التي زرتها."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনি যেখানে গেছেন তার মানচিত্র, টাইমলাইন আর ক্যালেন্ডার।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Map, timeline and calendar of where you've been."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Mapa, línea de tiempo y calendario de dónde has estado."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Carte, chronologie et calendrier de vos lieux."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आप जहाँ-जहाँ गए, उसका नक्शा, टाइमलाइन और कैलेंडर।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "訪れた場所をマップ、タイムライン、カレンダーで。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Mapa, oś czasu i kalendarz miejsc, w których byłeś."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Mapa, linha do tempo e calendário de onde você esteve."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Карта, хронология и календарь ваших мест."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "用地图、时间线和日历查看你去过的地方。"}}
+      }
+    },
+    "Private, on your iPhone": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "خاص، على iPhone الخاص بك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ব্যক্তিগত, আপনার iPhone-এ"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Private, on your iPhone"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Privado, en tu iPhone"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Privé, sur votre iPhone"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "निजी, आपके iPhone पर"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "プライベートに、iPhoneの中だけで"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Prywatnie, na Twoim iPhonie"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Privado, no seu iPhone"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Приватно, на вашем iPhone"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "私密保存在你的 iPhone 上"}}
+      }
+    },
+    "No account. Export to GPX, CSV, Markdown and more.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "دون حساب. صدّر إلى GPX وCSV وMarkdown وغيرها."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "অ্যাকাউন্ট লাগে না। GPX, CSV, Markdown ও আরও অনেক ফরম্যাটে এক্সপোর্ট করুন।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "No account. Export to GPX, CSV, Markdown and more."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Sin cuenta. Exporta a GPX, CSV, Markdown y más."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Sans compte. Export en GPX, CSV, Markdown et plus."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "कोई अकाउंट नहीं। GPX, CSV, Markdown और अन्य में एक्सपोर्ट करें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "アカウント不要。GPX、CSV、Markdownなどに書き出せます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Bez konta. Eksport do GPX, CSV, Markdown i innych."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Sem conta. Exporte para GPX, CSV, Markdown e mais."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Без аккаунта. Экспорт в GPX, CSV, Markdown и другие форматы."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "无需账户。可导出为 GPX、CSV、Markdown 等格式。"}}
+      }
+    },
+    "Take your history\nanywhere.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "خذ سجلّك\nإلى أي مكان."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার ইতিহাস নিয়ে যান\nযেকোনো জায়গায়।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Take your history\nanywhere."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Lleva tu historial\na cualquier parte."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Emportez votre historique\npartout."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "अपना इतिहास ले जाएँ\nकहीं भी।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "あなたの記録を、\nどこへでも。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zabierz swoją historię\ngdziekolwiek."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Leve seu histórico\npara qualquer lugar."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Ваша история —\nгде угодно."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "你的足迹，\n随处可用。"}}
+      }
+    },
+    "Every format, filtered your way": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "كل الصيغ، بالتصفية التي تريدها"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিটি ফরম্যাট, আপনার মতো করে ফিল্টার"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Every format, filtered your way"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Todos los formatos, filtrados a tu manera"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Tous les formats, filtrés à votre façon"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "हर फ़ॉर्मेट, आपके हिसाब से फ़िल्टर"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "あらゆる形式を、好みの条件で"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Każdy format, filtrowany po Twojemu"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Todos os formatos, filtrados do seu jeito"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Любой формат, с вашими фильтрами"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "所有格式，按你的方式筛选"}}
+      }
+    },
+    "Pick dates, fields and accuracy. Visits, routes or outings.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "اختر التواريخ والحقول والدقة. زيارات أو مسارات أو رحلات."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "তারিখ, ফিল্ড আর নির্ভুলতা বেছে নিন। ভিজিট, রুট বা আউটিং।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Pick dates, fields and accuracy. Visits, routes or outings."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Elige fechas, campos y precisión. Visitas, rutas o salidas."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Choisissez dates, champs et précision. Visites, trajets ou sorties."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "तारीख़ें, फ़ील्ड और सटीकता चुनें। विज़िट, रूट या आउटिंग।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "日付、項目、精度を選べます。訪問先、ルート、お出かけごとに。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wybierz daty, pola i dokładność. Wizyty, trasy lub wyjścia."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Escolha datas, campos e precisão. Visitas, rotas ou passeios."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Выбирайте даты, поля и точность. Визиты, маршруты или поездки."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "选择日期、字段和精度。到访、路线或出行均可。"}}
+      }
+    },
+    "A file a day, saved for you": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "ملف كل يوم، يُحفظ لك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিদিন একটি ফাইল, আপনার জন্য সেভ করা"}},
+        "en": {"stringUnit": {"state": "translated", "value": "A file a day, saved for you"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Un archivo al día, guardado por ti"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Un fichier par jour, enregistré pour vous"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "हर दिन एक फ़ाइल, आपके लिए सेव"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "毎日1ファイル、自動で保存"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Jeden plik dziennie, zapisany za Ciebie"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Um arquivo por dia, salvo para você"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Файл каждый день, сохраняется сам"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每天一个文件，自动保存"}}
+      }
+    },
+    "Scheduled exports land in your folder or Obsidian vault.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تصل عمليات التصدير المجدولة إلى مجلدك أو خزنة Obsidian."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "নির্ধারিত এক্সপোর্ট আপনার ফোল্ডার বা Obsidian ভল্টে পৌঁছে যায়।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Scheduled exports land in your folder or Obsidian vault."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Las exportaciones programadas llegan a tu carpeta o bóveda de Obsidian."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Les exports programmés arrivent dans votre dossier ou coffre Obsidian."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "शेड्यूल किए गए एक्सपोर्ट आपके फ़ोल्डर या Obsidian वॉल्ट में पहुँचते हैं।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "スケジュール書き出しがフォルダやObsidian保管庫に届きます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zaplanowane eksporty trafiają do Twojego folderu lub sejfu Obsidian."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Exportações agendadas chegam à sua pasta ou cofre do Obsidian."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Плановые экспорты попадают в вашу папку или хранилище Obsidian."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "定时导出会存入你的文件夹或 Obsidian 库。"}}
+      }
+    },
+    "Webhooks and Shortcuts": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "Webhooks واختصارات"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ওয়েবহুক ও শর্টকাট"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Webhooks and Shortcuts"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Webhooks y Atajos"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Webhooks et Raccourcis"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "वेबहुक और शॉर्टकट"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "Webhookとショートカット"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Webhooki i Skróty"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Webhooks e Atalhos"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Вебхуки и Быстрые команды"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "Webhook 和快捷指令"}}
+      }
+    },
+    "Send each day to your own server or automation.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "أرسل كل يوم إلى خادمك أو إلى أتمتتك."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিটি দিন নিজের সার্ভার বা অটোমেশনে পাঠান।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Send each day to your own server or automation."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Envía cada día a tu propio servidor o automatización."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Envoyez chaque journée à votre serveur ou à vos automatisations."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "हर दिन अपने सर्वर या ऑटोमेशन पर भेजें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "毎日の記録を自分のサーバーや自動化へ送信。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wysyłaj każdy dzień na własny serwer lub do automatyzacji."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Envie cada dia para seu servidor ou automação."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Отправляйте каждый день на свой сервер или в автоматизацию."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "把每天的记录发送到你的服务器或自动化流程。"}}
+      }
+    },
+    "How your *free week* works": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "كيف يعمل *أسبوعك المجاني*"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার *বিনামূল্যের সপ্তাহ* কীভাবে কাজ করে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "How your *free week* works"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Cómo funciona tu *semana gratis*"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Comment fonctionne votre *semaine gratuite*"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपका *मुफ़्त हफ़्ता* कैसे काम करता है"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "*無料の1週間*の流れ"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Jak działa Twój *darmowy tydzień*"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Como funciona sua *semana grátis*"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Как устроена *бесплатная неделя*"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "*免费一周*如何运作"}}
+      }
+    },
+    "Everything unlocks. Recording starts with your first walk out the door.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "يُفتح كل شيء. يبدأ التسجيل مع أول خروج لك من الباب."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "সবকিছু আনলক হয়। দরজার বাইরে প্রথম পা রাখতেই রেকর্ডিং শুরু।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Everything unlocks. Recording starts with your first walk out the door."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Todo se desbloquea. La grabación empieza en cuanto sales por la puerta."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Tout est débloqué. L’enregistrement commence dès votre première sortie."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "सब कुछ अनलॉक हो जाता है। घर से पहला कदम बाहर रखते ही रिकॉर्डिंग शुरू।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "すべての機能が使えます。外へ出た瞬間から記録が始まります。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wszystko się odblokowuje. Zapis zaczyna się przy pierwszym wyjściu z domu."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Tudo é liberado. A gravação começa assim que você sai de casa."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Всё открывается. Запись начинается, как только вы выйдете за дверь."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "全部功能解锁。你一出门，记录就开始。"}}
+      }
+    },
+    "Day 5 · A reminder": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "اليوم ٥ · تذكير"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "দিন ৫ · একটি রিমাইন্ডার"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Day 5 · A reminder"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Día 5 · Un recordatorio"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Jour 5 · Un rappel"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "दिन 5 · एक रिमाइंडर"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "5日目 · リマインダー"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Dzień 5 · Przypomnienie"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Dia 5 · Um lembrete"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "День 5 · Напоминание"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "第 5 天 · 提醒"}}
+      }
+    },
+    "We'll notify you two days before the trial ends.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "سنرسل لك إشعارًا قبل انتهاء التجربة بيومين."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ট্রায়াল শেষ হওয়ার দুই দিন আগে আমরা আপনাকে জানাব।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "We'll notify you two days before the trial ends."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Te avisaremos dos días antes de que termine la prueba."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Nous vous préviendrons deux jours avant la fin de l’essai."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "ट्रायल ख़त्म होने से दो दिन पहले हम आपको सूचना देंगे।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "無料体験が終わる2日前にお知らせします。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Powiadomimy Cię dwa dni przed końcem okresu próbnego."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Avisaremos você dois dias antes do fim do teste."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Мы напомним за два дня до конца пробного периода."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "我们会在试用结束前两天通知你。"}}
+      }
+    },
+    "Day 7 · Your plan begins": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "اليوم ٧ · تبدأ خطتك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "দিন ৭ · আপনার প্ল্যান শুরু"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Day 7 · Your plan begins"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Día 7 · Empieza tu plan"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Jour 7 · Votre formule commence"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "दिन 7 · आपका प्लान शुरू"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "7日目 · プランの開始"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Dzień 7 · Zaczyna się Twój plan"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Dia 7 · Seu plano começa"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "День 7 · Начинается подписка"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "第 7 天 · 订阅开始"}}
+      }
+    },
+    "%@ for the year. Cancel before then in Apple settings and you won't be charged.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "%@ للسنة. ألغِ قبل ذلك من إعدادات Apple ولن يتم تحصيل أي مبلغ."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "বছরে %@। এর আগে Apple সেটিংসে বাতিল করলে কোনো চার্জ হবে না।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%@ for the year. Cancel before then in Apple settings and you won't be charged."}},
+        "es": {"stringUnit": {"state": "translated", "value": "%@ al año. Cancela antes en los ajustes de Apple y no se te cobrará."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%@ pour l’année. Annulez avant dans les réglages Apple et vous ne serez pas facturé."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "साल के लिए %@। उससे पहले Apple सेटिंग में रद्द करें, कोई शुल्क नहीं लगेगा।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "1年で%@。それまでにAppleの設定で解約すれば請求されません。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "%@ za rok. Anuluj wcześniej w ustawieniach Apple, a nie zostaniesz obciążony."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ por ano. Cancele antes nos ajustes da Apple e você não será cobrado."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "%@ в год. Отмените заранее в настройках Apple — и плата не спишется."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "一年 %@。在此之前于 Apple 设置中取消，就不会扣费。"}}
+      }
+    },
+    "Your yearly plan begins. Cancel before then in Apple settings and you won't be charged.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تبدأ خطتك السنوية. ألغِ قبل ذلك من إعدادات Apple ولن يتم تحصيل أي مبلغ."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার বার্ষিক প্ল্যান শুরু হয়। এর আগে Apple সেটিংসে বাতিল করলে কোনো চার্জ হবে না।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Your yearly plan begins. Cancel before then in Apple settings and you won't be charged."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Empieza tu plan anual. Cancela antes en los ajustes de Apple y no se te cobrará."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Votre formule annuelle commence. Annulez avant dans les réglages Apple et vous ne serez pas facturé."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपका वार्षिक प्लान शुरू होता है। उससे पहले Apple सेटिंग में रद्द करें, कोई शुल्क नहीं लगेगा।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "年額プランが始まります。それまでにAppleの設定で解約すれば請求されません。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zaczyna się Twój plan roczny. Anuluj wcześniej w ustawieniach Apple, a nie zostaniesz obciążony."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Seu plano anual começa. Cancele antes nos ajustes da Apple e você não será cobrado."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Начинается годовая подписка. Отмените заранее в настройках Apple — и плата не спишется."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "年订阅开始。在此之前于 Apple 设置中取消，就不会扣费。"}}
+      }
+    },
+    "Choose your *plan*": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "اختر *خطتك*"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার *প্ল্যান* বেছে নিন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Choose your *plan*"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Elige tu *plan*"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Choisissez votre *formule*"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "अपना *प्लान* चुनें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "*プラン*を選ぶ"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wybierz swój *plan*"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Escolha seu *plano*"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Выберите *тариф*"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "选择你的*方案*"}}
+      }
+    },
+    "EVERY PLAN INCLUDES": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تتضمن كل الخطط"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিটি প্ল্যানে আছে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "EVERY PLAN INCLUDES"}},
+        "es": {"stringUnit": {"state": "translated", "value": "TODOS LOS PLANES INCLUYEN"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "TOUTES LES FORMULES INCLUENT"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "हर प्लान में शामिल"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "すべてのプランに含まれるもの"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "KAŻDY PLAN ZAWIERA"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "TODOS OS PLANOS INCLUEM"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "ВО ВСЕХ ТАРИФАХ"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "所有方案均包含"}}
+      }
+    },
+    "Automatic recording": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تسجيل تلقائي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "স্বয়ংক্রিয় রেকর্ডিং"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Automatic recording"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Grabación automática"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Enregistrement automatique"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "स्वचालित रिकॉर्डिंग"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "自動記録"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Automatyczny zapis"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Gravação automática"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Автоматическая запись"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "自动记录"}}
+      }
+    },
+    "All 8 export formats": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "صيغ التصدير الثماني كلها"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৮টি এক্সপোর্ট ফরম্যাটই"}},
+        "en": {"stringUnit": {"state": "translated", "value": "All 8 export formats"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Los 8 formatos de exportación"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Les 8 formats d’export"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "सभी 8 एक्सपोर्ट फ़ॉर्मेट"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "8種類すべての書き出し形式"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wszystkie 8 formatów eksportu"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Todos os 8 formatos de exportação"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Все 8 форматов экспорта"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "全部 8 种导出格式"}}
+      }
+    },
+    "Scheduled exports": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تصدير مجدول"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "নির্ধারিত এক্সপোর্ট"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Scheduled exports"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Exportaciones programadas"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Exports programmés"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "शेड्यूल किए गए एक्सपोर्ट"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "スケジュール書き出し"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zaplanowane eksporty"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Exportações agendadas"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Плановый экспорт"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "定时导出"}}
+      }
+    },
+    "Webhooks": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "Webhooks"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ওয়েবহুক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Webhooks"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Webhooks"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Webhooks"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "वेबहुक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "Webhook"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Webhooki"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Webhooks"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Вебхуки"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "Webhook"}}
+      }
+    },
+    "EXPORT IS PART OF YOUR PLAN": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "التصدير جزء من خطتك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "এক্সপোর্ট আপনার প্ল্যানের অংশ"}},
+        "en": {"stringUnit": {"state": "translated", "value": "EXPORT IS PART OF YOUR PLAN"}},
+        "es": {"stringUnit": {"state": "translated", "value": "LA EXPORTACIÓN ESTÁ EN TU PLAN"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "L’EXPORT FAIT PARTIE DE VOTRE FORMULE"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "एक्सपोर्ट आपके प्लान का हिस्सा है"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "書き出しはプランに含まれます"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "EKSPORT JEST CZĘŚCIĄ PLANU"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "A EXPORTAÇÃO FAZ PARTE DO SEU PLANO"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "ЭКСПОРТ ВХОДИТ В ТАРИФ"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "导出功能包含在方案中"}}
+      }
+    },
+    "YOUR WHEREDAY PLAN": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "خطتك في Whereday"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার Whereday প্ল্যান"}},
+        "en": {"stringUnit": {"state": "translated", "value": "YOUR WHEREDAY PLAN"}},
+        "es": {"stringUnit": {"state": "translated", "value": "TU PLAN DE WHEREDAY"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "VOTRE FORMULE WHEREDAY"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपका Whereday प्लान"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "あなたのWhereday プラン"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "TWÓJ PLAN WHEREDAY"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "SEU PLANO WHEREDAY"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "ВАШ ТАРИФ WHEREDAY"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "你的 Whereday 方案"}}
+      }
+    },
+    "Close": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "إغلاق"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "বন্ধ করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Close"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Cerrar"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Fermer"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "बंद करें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "閉じる"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zamknij"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Fechar"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Закрыть"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "关闭"}}
+      }
+    },
+    "WHO IS THIS FOR?": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "لمن هذه الخطة؟"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "এটি কার জন্য?"}},
+        "en": {"stringUnit": {"state": "translated", "value": "WHO IS THIS FOR?"}},
+        "es": {"stringUnit": {"state": "translated", "value": "¿PARA QUIÉN ES?"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "POUR QUI ?"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "यह किसके लिए है?"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "誰が使いますか？"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "DLA KOGO?"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "PARA QUEM É?"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "ДЛЯ КОГО?"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "给谁使用？"}}
+      }
+    },
+    "Loading plans…": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "جارٍ تحميل الخطط…"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্ল্যান লোড হচ্ছে…"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Loading plans…"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Cargando planes…"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Chargement des formules…"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "प्लान लोड हो रहे हैं…"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "プランを読み込み中…"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wczytywanie planów…"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Carregando planos…"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Загрузка тарифов…"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "正在加载方案…"}}
+      }
+    },
+    "7 DAYS FREE": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "٧ أيام مجانًا"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৭ দিন বিনামূল্যে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "7 DAYS FREE"}},
+        "es": {"stringUnit": {"state": "translated", "value": "7 DÍAS GRATIS"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "7 JOURS OFFERTS"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "7 दिन मुफ़्त"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "7日間無料"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "7 DNI ZA DARMO"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "7 DIAS GRÁTIS"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "7 ДНЕЙ БЕСПЛАТНО"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "免费 7 天"}}
+      }
+    },
+    "ONE-TIME": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "دفعة واحدة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "এককালীন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "ONE-TIME"}},
+        "es": {"stringUnit": {"state": "translated", "value": "PAGO ÚNICO"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "PAIEMENT UNIQUE"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "एक बार"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "買い切り"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "JEDNORAZOWO"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "PAGAMENTO ÚNICO"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "РАЗОВО"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "一次性"}}
+      }
+    },
+    "Weekly": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "أسبوعي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "সাপ্তাহিক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Weekly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Semanal"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Hebdomadaire"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "साप्ताहिक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "週額"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Tygodniowy"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Semanal"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "На неделю"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "周订阅"}}
+      }
+    },
+    "Yearly": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "سنوي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "বার্ষিক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Yearly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Anual"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Annuel"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "वार्षिक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "年額"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Roczny"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Anual"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "На год"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "年订阅"}}
+      }
+    },
+    "Lifetime": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "مدى الحياة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "লাইফটাইম"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Lifetime"}},
+        "es": {"stringUnit": {"state": "translated", "value": "De por vida"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "À vie"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "लाइफ़टाइम"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "買い切り"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Dożywotni"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Vitalício"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Навсегда"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "终身版"}}
+      }
+    },
+    "Family Upgrade": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "ترقية العائلة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ফ্যামিলি আপগ্রেড"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Family Upgrade"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Ampliación familiar"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Passage en Famille"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "फ़ैमिली अपग्रेड"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "ファミリーへのアップグレード"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Ulepszenie do rodzinnego"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Upgrade Família"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Переход на семейный"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "升级家庭版"}}
+      }
+    },
+    "%@ a month, billed yearly": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "%@ شهريًا، تُدفع سنويًا"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "মাসে %@, বছরে একবার বিল"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%@ a month, billed yearly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "%@ al mes, facturado anualmente"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%@ par mois, facturé annuellement"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "%@ प्रति माह, सालाना बिल"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "月あたり%@、年払い"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "%@ miesięcznie, płatne rocznie"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ por mês, cobrado anualmente"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "%@ в месяц при оплате за год"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每月 %@，按年计费"}}
+      }
+    },
+    "Renews every week.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "يتجدد كل أسبوع."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতি সপ্তাহে নবায়ন হয়।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Renews every week."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Se renueva cada semana."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Se renouvelle chaque semaine."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "हर हफ़्ते नवीनीकृत होता है।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "毎週更新されます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Odnawia się co tydzień."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Renova toda semana."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Продлевается каждую неделю."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每周自动续订。"}}
+      }
+    },
+    "One-time purchase. Yours for good.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "شراء لمرة واحدة. لك إلى الأبد."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "এককালীন কেনাকাটা। চিরকাল আপনার।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "One-time purchase. Yours for good."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Pago único. Tuyo para siempre."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Achat unique. À vous pour de bon."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "एक बार की खरीदारी। हमेशा के लिए आपका।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "一度の購入で、ずっと使えます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Jednorazowy zakup. Na zawsze Twój."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Compra única. Seu para sempre."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Разовая покупка. Навсегда ваше."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "一次购买，永久拥有。"}}
+      }
+    },
+    "Current period ends %@.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تنتهي الفترة الحالية في %@."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "বর্তমান মেয়াদ শেষ হবে %@।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Current period ends %@."}},
+        "es": {"stringUnit": {"state": "translated", "value": "El periodo actual termina el %@."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "La période en cours se termine le %@."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "मौजूदा अवधि %@ को समाप्त होगी।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "現在の期間は%@に終了します。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Bieżący okres kończy się %@."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "O período atual termina em %@."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Текущий период заканчивается %@."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "当前周期于 %@ 结束。"}}
+      }
+    },
+    "%lld out of 5 stars": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "%lld من ٥ نجوم"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৫-এর মধ্যে %lld তারা"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%lld out of 5 stars"}},
+        "es": {"stringUnit": {"state": "translated", "value": "%lld de 5 estrellas"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%lld étoiles sur 5"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "5 में से %lld सितारे"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "5つ星中%lld"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "%lld na 5 gwiazdek"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%lld de 5 estrelas"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "%lld из 5 звёзд"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "%lld 星（满分 5 星）"}}
+      }
+    },
+    "Page %lld of %lld": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "الصفحة %1$lld من %2$lld"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "পৃষ্ঠা %1$lld / %2$lld"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Page %lld of %lld"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Página %1$lld de %2$lld"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Page %1$lld sur %2$lld"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "पेज %1$lld / %2$lld"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "%2$lldページ中%1$lldページ目"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Strona %1$lld z %2$lld"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Página %1$lld de %2$lld"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Страница %1$lld из %2$lld"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "第 %1$lld 页，共 %2$lld 页"}}
+      }
+    },
+    "An illustration of half a year of days, each colored by place": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "رسم توضيحي لنصف عام من الأيام، كل يوم بلون مكانه"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ছয় মাসের দিনগুলোর একটি চিত্র, প্রতিটি দিন জায়গা অনুযায়ী রঙিন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "An illustration of half a year of days, each colored by place"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Una ilustración de medio año de días, cada uno coloreado según el lugar"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Une illustration de six mois de journées, chacune colorée selon le lieu"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आधे साल के दिनों का चित्र, हर दिन जगह के हिसाब से रंगा"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "半年分の日々のイラスト。日ごとに場所の色で塗られています"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Ilustracja pół roku dni, każdy w kolorze miejsca"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Uma ilustração de meio ano de dias, cada um colorido pelo lugar"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Иллюстрация полугода, каждый день окрашен цветом места"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "半年日子的示意图，每天按地点着色"}}
+      }
+    },
+    "Your last 26 weeks, each day colored by the place you spent most time at": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "آخر ٢٦ أسبوعًا، كل يوم بلون المكان الذي قضيت فيه معظم وقتك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার শেষ ২৬ সপ্তাহ, প্রতিটি দিন সবচেয়ে বেশি সময় কাটানো জায়গার রঙে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Your last 26 weeks, each day colored by the place you spent most time at"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Tus últimas 26 semanas, cada día coloreado según el lugar donde más tiempo pasaste"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Vos 26 dernières semaines, chaque jour coloré selon le lieu où vous avez passé le plus de temps"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपके पिछले 26 हफ़्ते, हर दिन उस जगह के रंग में जहाँ आपने सबसे ज़्यादा समय बिताया"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "直近26週間。日ごとに一番長く過ごした場所の色で表示"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Ostatnie 26 tygodni, każdy dzień w kolorze miejsca, w którym spędziłeś najwięcej czasu"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Suas últimas 26 semanas, cada dia colorido pelo lugar onde você passou mais tempo"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Последние 26 недель, каждый день — цветом места, где вы провели больше всего времени"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "最近 26 周，每天按停留最久的地点着色"}}
+      }
+    },
+    "%lld of %lld days recorded": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تم تسجيل %1$lld من %2$lld يومًا"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "%2$lld দিনের মধ্যে %1$lld দিন রেকর্ড হয়েছে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%lld of %lld days recorded"}},
+        "es": {"stringUnit": {"state": "translated", "value": "%1$lld de %2$lld días registrados"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%1$lld jours enregistrés sur %2$lld"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "%2$lld में से %1$lld दिन रिकॉर्ड हुए"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "%2$lld日中%1$lld日を記録"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zapisano %1$lld z %2$lld dni"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%1$lld de %2$lld dias registrados"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Записано дней: %1$lld из %2$lld"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "已记录 %1$lld 天，共 %2$lld 天"}}
+      }
+    },
+    "Your plan starts on %@ at %@. Cancel in Apple settings before then if you don't want to continue.": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تبدأ خطتك في %1$@ بسعر %2$@. ألغِ من إعدادات Apple قبل ذلك إن لم ترغب في المتابعة."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার প্ল্যান %1$@ তারিখে %2$@ দামে শুরু হবে। চালিয়ে যেতে না চাইলে এর আগে Apple সেটিংসে বাতিল করুন।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Your plan starts on %@ at %@. Cancel in Apple settings before then if you don't want to continue."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Tu plan empieza el %1$@ por %2$@. Cancela antes en los ajustes de Apple si no quieres continuar."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Votre formule commence le %1$@ au prix de %2$@. Annulez avant dans les réglages Apple si vous ne souhaitez pas continuer."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपका प्लान %1$@ को %2$@ पर शुरू होगा। जारी नहीं रखना चाहते तो उससे पहले Apple सेटिंग में रद्द करें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "プランは%1$@に%2$@で開始します。続けない場合は、それまでにAppleの設定で解約してください。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Twój plan zaczyna się %1$@ w cenie %2$@. Jeśli nie chcesz kontynuować, anuluj wcześniej w ustawieniach Apple."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Seu plano começa em %1$@ por %2$@. Cancele antes nos ajustes da Apple se não quiser continuar."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Подписка начнётся %1$@ по цене %2$@. Если не хотите продолжать, отмените заранее в настройках Apple."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "你的方案将于 %1$@ 开始，价格 %2$@。如不想继续，请在此之前于 Apple 设置中取消。"}}
+      }
+    },
+    "Your free week ends in 2 days": {
+      "comment": "Carousel paywall.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "ينتهي أسبوعك المجاني بعد يومين"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার বিনামূল্যের সপ্তাহ ২ দিনে শেষ হবে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Your free week ends in 2 days"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Tu semana gratis termina en 2 días"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Votre semaine gratuite se termine dans 2 jours"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपका मुफ़्त हफ़्ता 2 दिन में ख़त्म होगा"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "無料の1週間はあと2日で終了します"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Twój darmowy tydzień kończy się za 2 dni"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Sua semana grátis termina em 2 dias"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Бесплатная неделя закончится через 2 дня"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "你的免费一周将在 2 天后结束"}}
+      }
     }
   },
   "version": "1.0"
