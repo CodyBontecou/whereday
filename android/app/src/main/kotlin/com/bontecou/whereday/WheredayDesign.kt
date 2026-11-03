@@ -196,11 +196,35 @@ private val WdShapes=Shapes(
 /** A pushed page's top bar: a paper back capsule and a centered serif title, replacing TopAppBar. */
 @Composable internal fun WdTopBar(title:String,onBack:(()->Unit)?,modifier:Modifier=Modifier,backLabel:String?=null,
     actions:@Composable RowScope.()->Unit={}) {
-    Box(modifier.fillMaxWidth().statusBarsPadding().heightIn(min=56.dp).padding(horizontal=12.dp)) {
-        if(onBack!=null) WdBackChip(backLabel ?: androidx.compose.ui.res.stringResource(R.string.common_back),onBack,Modifier.align(Alignment.CenterStart))
-        Text(title,style=WdType.title3,color=wd.textPrimary,maxLines=1,overflow=TextOverflow.Ellipsis,textAlign=TextAlign.Center,
-            modifier=Modifier.align(Alignment.Center).padding(horizontal=if(onBack!=null) 96.dp else 16.dp).semantics {heading()})
-        Row(Modifier.align(Alignment.CenterEnd),horizontalArrangement=Arrangement.spacedBy(4.dp),verticalAlignment=Alignment.CenterVertically,content=actions)
+    // The title centres between the side controls, as wide as the wider side allows; when a long back label
+    // leaves too little room, it moves to its own line instead of running under the chip.
+    androidx.compose.ui.layout.Layout({
+        if(onBack!=null) WdBackChip(backLabel ?: androidx.compose.ui.res.stringResource(R.string.common_back),onBack) else Spacer(Modifier)
+        Text(title,style=WdType.title3,color=wd.textPrimary,maxLines=2,overflow=TextOverflow.Ellipsis,textAlign=TextAlign.Center,
+            modifier=Modifier.semantics {heading()})
+        Row(horizontalArrangement=Arrangement.spacedBy(4.dp),verticalAlignment=Alignment.CenterVertically,content=actions)
+    },modifier.fillMaxWidth().statusBarsPadding().heightIn(min=56.dp).padding(horizontal=12.dp)) {measurables,constraints->
+        val loose=constraints.copy(minWidth=0,minHeight=0)
+        val back=measurables[0].measure(loose);val end=measurables[2].measure(loose)
+        val gap=8.dp.roundToPx();val side=maxOf(back.width,end.width)
+        val inline=constraints.maxWidth-2*(side+gap)
+        val titleFits=inline>0 && measurables[1].maxIntrinsicWidth(Int.MAX_VALUE)<=inline
+        val row=maxOf(back.height,end.height,56.dp.roundToPx())
+        if(titleFits) {
+            val text=measurables[1].measure(loose.copy(maxWidth=inline))
+            val height=maxOf(row,constraints.minHeight)
+            layout(constraints.maxWidth,height) {
+                back.place(0,(height-back.height)/2);end.place(constraints.maxWidth-end.width,(height-end.height)/2)
+                text.place((constraints.maxWidth-text.width)/2,(height-text.height)/2)
+            }
+        } else {
+            val text=measurables[1].measure(loose.copy(maxWidth=constraints.maxWidth))
+            val height=maxOf(row+text.height+gap,constraints.minHeight)
+            layout(constraints.maxWidth,height) {
+                back.place(0,(row-back.height)/2);end.place(constraints.maxWidth-end.width,(row-end.height)/2)
+                text.place((constraints.maxWidth-text.width)/2,row)
+            }
+        }
     }
 }
 
