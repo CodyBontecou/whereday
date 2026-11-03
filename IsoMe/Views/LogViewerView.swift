@@ -142,7 +142,7 @@ struct LogViewerView: View {
     private func logRow(_ entry: LogManager.LogEntry) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 10) {
-                Text(entry.timestamp.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).second(.twoDigits)))
+                Text(entry.timestamp.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits):\(second: .twoDigits)", timeZone: .current, calendar: .current)))
                     .font(TE.mono(.caption))
                     .foregroundStyle(TE.textMuted)
                 Text(verbatim: entry.category.rawValue)

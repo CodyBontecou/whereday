@@ -166,6 +166,7 @@
 		76CE00000000000000000002 /* manual-visit-shortcuts.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 76CE00000000000000000001 /* manual-visit-shortcuts.mp4 */; };
 		CA1E00860000000000000001 /* CalendarEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E00860000000000000002 /* CalendarEventEditor.swift */; };
 		CA1E00860000000000000003 /* CalendarEventDraftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E00860000000000000004 /* CalendarEventDraftTests.swift */; };
+		D24C10C00000000000000001 /* ClockTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24C10C00000000000000002 /* ClockTextTests.swift */; };
 		9038E89D0D7D984DC89F365B /* DebugSelfie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */; };
 		47B033577E4B1712A002C33E /* SelfieOverlayKit in Frameworks */ = {isa = PBXBuildFile; productRef = C5C74EDCA9166F6ABF3D1B9D /* SelfieOverlayKit */; };
 		E5A546658B9E479D8364CF00 /* ScrawlKit in Frameworks */ = {isa = PBXBuildFile; productRef = 11AB94AF57A54AF190F5E84D /* ScrawlKit */; };
@@ -414,6 +415,7 @@
 		76CE00000000000000000001 /* manual-visit-shortcuts.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "manual-visit-shortcuts.mp4"; sourceTree = "<group>"; };
 		CA1E00860000000000000002 /* CalendarEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventEditor.swift; sourceTree = "<group>"; };
 		CA1E00860000000000000004 /* CalendarEventDraftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventDraftTests.swift; sourceTree = "<group>"; };
+		D24C10C00000000000000002 /* ClockTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTextTests.swift; sourceTree = "<group>"; };
 		779ADAB4E6F611FD4614C8A9 /* DebugSelfie.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugSelfie.swift; sourceTree = "<group>"; };
 		F0A70001212F00000000F0A7 /* Newsreader.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Newsreader.ttf"; sourceTree = "<group>"; };
 		F0A70002212F00000000F0A7 /* Newsreader-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Newsreader-Italic.ttf"; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 				C0DE0304212F000000000304 /* CountryDayTests.swift */,
 				C0DE04020000000000000001 /* WatchLocationSyncTests.swift */,
 				CA1E00860000000000000004 /* CalendarEventDraftTests.swift */,
+				D24C10C00000000000000002 /* ClockTextTests.swift */,
 				CA1E00870000000000000002 /* TEActionContrastTests.swift */,
 				E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */,
 				EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */,
@@ -1168,6 +1171,7 @@
 				C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */,
 				C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */,
 				CA1E00860000000000000003 /* CalendarEventDraftTests.swift in Sources */,
+				D24C10C00000000000000001 /* ClockTextTests.swift in Sources */,
 				CA1E00870000000000000001 /* TEActionContrastTests.swift in Sources */,
 				34314394A69B4C38B941108A /* VisitMapOpenerTests.swift in Sources */,
 				A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */,

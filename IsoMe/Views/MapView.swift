@@ -1008,7 +1008,7 @@ struct LocationMapView: View {
     }
 
     static func clockText(_ date: Date) -> String {
-        date.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
     }
 
     /// Describes where the day stood at a moment, using only recorded stays and points.
