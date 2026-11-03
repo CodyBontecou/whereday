@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Which Google Timeline JSON File Do You Have? — Whereday</title>
+  <meta name="description" content="Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, times and unsupported records before importing.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/google-timeline-json-formats/">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="Which Google Timeline JSON File Do You Have? — Whereday">
+  <meta property="og:description" content="Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, times and unsupported records before importing.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/google-timeline-json-formats/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map.png">
+  <meta property="og:image:alt" content="Whereday map interface showing visits and route points">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Which Google Timeline JSON File Do You Have? — Whereday">
+  <meta name="twitter:description" content="Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, times and unsupported records before importing.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1f1f1f;
+  --muted: #5f5d59;
+  --rule: #d2cfca;
+  --accent: #1c57ca;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Geist", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.brand img { border-radius: 4px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.button { display: inline-flex; justify-content: center; align-items: center; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: white; font-size: 16px; line-height: 24px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #1748a8; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 64px; }
+.breadcrumbs { font-size: 14px; line-height: 20px; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+h1 { max-width: 680px; font-size: 48px; line-height: 1; margin: 16px 0 24px; font-weight: 600; background: linear-gradient(to right, #000, #666); color: transparent; background-clip: text; -webkit-background-clip: text; }
+h2 { font-size: 30px; line-height: 36px; font-weight: 600; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 28px; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 28px; }
+header { padding-bottom: 40px; }
+section { margin-top: 48px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+caption { text-align: left; font-weight: 600; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border: 1px solid var(--rule); min-width: 160px; }
+thead { background: #ecebe4; }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--rule); }
+.route-example { margin: 48px 0; }
+.route-example img { display: block; width: 100%; height: auto; border-radius: 16px; }
+.route-example figcaption { max-width: none; margin-top: 12px; }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 32px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.closing h2 { font-size: 36px; line-height: 40px; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: white; margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; background: white; overflow-x: auto; font-size: 14px; line-height: 20px; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 36px; line-height: 40px; }
+  h2 { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/google-timeline-json-formats/",
+      "url": "https://whereday.com/blog/google-timeline-json-formats/",
+      "name": "Which Google Timeline JSON File Do You Have? — Whereday",
+      "description": "Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, times and unsupported records before importing.",
+      "inLanguage": "en",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "Identify your Google Timeline JSON file",
+      "datePublished": "2026-10-30",
+      "mainEntityOfPage": "https://whereday.com/blog/google-timeline-json-formats/",
+      "image": "https://whereday.com/screenshots/map.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Timeline JSON formats",
+          "item": "https://whereday.com/blog/google-timeline-json-formats/"
+        }
+      ]
+    }
+  ]
+}</script>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Timeline JSON formats</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">Identify your Google Timeline JSON file</h1><p class="lede">Look inside the export, compare a known example, and separate a format check from an app’s import preview.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-30">October 30, 2026</time></p></header>
+    <section><h2>Identify the structure inside the JSON</h2><p>A filename such as <code>location-history.json</code> is a starting point, not a format guarantee. Google exports have used several structures. Open a copy in the <a href="/tools/google-timeline-inspector/">local Timeline JSON inspector</a> to see which supported shape it matches. Matching keys do not authenticate who created a file.</p><p>Keep the original archive before editing or converting anything. If your download is a ZIP, extract it first and inspect the JSON files individually. Renaming a ZIP, KML or GPX to JSON does not convert it.</p><div class="table-scroll" role="region" aria-label="Timeline JSON structures" tabindex="0"><table><thead><tr><th>Top-level structure</th><th>What the inspector looks for</th><th>What to check next</th></tr></thead><tbody><tr><td><code>locations</code></td><td>Raw coordinates and timestamps</td><td>Coordinate scale and usable point times</td></tr><tr><td><code>timelineObjects</code></td><td>Semantic place visits and activity segments</td><td>Visit intervals and timed path components</td></tr><tr><td><code>semanticSegments</code>, or a recognizable device-style array</td><td>Device visits, activities and timeline paths</td><td>Intervals, explicit path times and minute offsets</td></tr></tbody></table></div><p>These are supported families, not an exhaustive list of every Google export. Mixed containers, unexpected field types or an unfamiliar format can prevent inspection. An unrecognized file does not establish that your history is lost.</p></section>
+<section><h2>Try three invented files with known results</h2><p>Use the example selector in the inspector before choosing personal data. Every coordinate and date in these files is invented. Counts describe the supported coordinates and times before duplicate handling.</p><ol><li><a href="/samples/synthetic-google-raw.json" download>Raw location history JSON</a>: three source entries produce two timed points and one unusable-coordinate finding. Latitude 91 is deliberately outside the valid range.</li><li><a href="/samples/synthetic-google-semantic.json" download>Semantic Timeline JSON</a>: three entries produce one visit and three timed points. A waypoint without a time is reported, and an unknown row is left unsupported. The activity’s endpoints have times; its untimed waypoint does not acquire an invented one.</li><li><a href="/samples/synthetic-google-timeline.json" download>Device Timeline JSON</a>: three entries produce two visit records and four timed points, with two point times derived from explicit minute offsets and one invalid interval. Repeated entries are intentional.</li></ol><p>The device example is also used in the <a href="/blog/import-google-timeline-iphone/">Whereday import walkthrough</a>. In an empty native journal, that preview plans one new visit and two new points after handling repeated records. The browser’s two/four counts are earlier checks, so they are not a forecast of native import results.</p><p>For an unsupported-file case, try <a href="/samples/synthetic-google-unknown.json" download>this unrelated JSON example</a>. The inspector should identify that it is not a supported Timeline structure. Valid JSON alone does not make a file location history.</p></section>
+<section><h2>Read coordinates and times without guessing</h2><p>Fields named <code>latitudeE7</code> and <code>longitudeE7</code> store degrees multiplied by ten million. A longitude of <code>100000000</code> therefore represents 10 degrees. Latitude and longitude are separate fields; exchanging them can move a location even when both numbers remain in range. The raw and semantic examples start at latitude 0, longitude 10 to make that distinction visible.</p><p><code>timestampMs</code> means milliseconds since the Unix epoch. An ISO timestamp instead includes a date, time and timezone, such as <code>2000-01-01T12:00:00Z</code>. This inspector does not guess that a seconds value was intended to be milliseconds. Check the displayed date range against the period you expected.</p><p>The preview displays UTC. A source timestamp with an offset can appear on another clock time, or even another calendar day, when shown in UTC. That alone does not mean the record shifted. A path’s supported minute-offset field is used only with a valid parent interval and within that interval. An untimed coordinate remains untimed.</p></section>
+<section><h2>Separate a format check from an import preview</h2><p>The inspector checks known coordinate/time fields. It does not validate every optional field, reproduce Whereday’s duplicate rules or guarantee that an app will accept your file. Several records may describe the same visit, and repeated coordinates overlap in the plot. Dots are deliberately not joined into an inferred route.</p><p>A recognized empty container can contain no records. A short range can reflect one file rather than your whole archive. Unsupported rows and missing timestamps may explain part of a result, but cannot tell you whether another device or backup contains more history. Keep other copies while investigating.</p><p>The browser tool accepts up to 10 MiB and 50,000 source entries or expanded inspected components. It previews 20 checked records and plots up to 2,000 locations. Those are its own limits, separate from the native importer. Large files are rejected rather than silently trimmed.</p></section>
+<section aria-labelledby="convert-gpx"><h2 id="convert-gpx">Convert a supported Timeline JSON to GPX</h2><ol><li>Open the <a href="/tools/google-timeline-inspector/#inspect-json">local Timeline inspector</a>, select your extracted JSON, and read the detected shape, dates and findings.</li><li>Check the GPX output counts. Visits and activity endpoints become waypoints. Raw locations and explicit timed path components become track points. The converter keeps repeated records rather than merging them.</li><li>Choose <strong>Download supported records as GPX</strong>. Keep your original JSON; this conversion omits names, addresses and other optional fields.</li><li>Open the downloaded file in the <a href="/tools/gpx-viewer/">GPX viewer</a>. Compare track points and waypoints separately, then inspect times and segment boundaries before sharing. The viewer accepts up to 10 MiB and 50,000 points; a converted GPX can be larger than its source JSON.</li></ol><div class="table-scroll" role="region" aria-label="Timeline to GPX example results" tabindex="0"><table><caption>Expected results for the three invented JSON examples above</caption><thead><tr><th scope="col">Example</th><th scope="col">Track points / segments</th><th scope="col">Visit / endpoint waypoints</th><th scope="col">Expected GPX download</th></tr></thead><tbody><tr><th scope="row">Raw</th><td>2 / 1</td><td>0 / 0</td><td><a href="/samples/synthetic-google-raw-converted.gpx" download>Raw example GPX</a></td></tr><tr><th scope="row">Semantic</th><td>1 / 1</td><td>1 / 2</td><td><a href="/samples/synthetic-google-semantic-converted.gpx" download>Semantic example GPX</a></td></tr><tr><th scope="row">Device</th><td>4 / 4</td><td>2 / 0</td><td><a href="/samples/synthetic-google-device-converted.gpx" download>Device example GPX</a></td></tr></tbody></table></div><p>The raw example leaves out its invalid latitude. The semantic example exports two activity endpoints as waypoints and its single timed path point as a one-point segment; the untimed waypoint stays omitted. The device example retains both repeated visits and paths. Its thirty-minute path gaps exceed the converter’s ten-minute rule, so its four track points occupy four one-point segments. A destination viewer may show dots instead of lines for those segments.</p><p>Source paths stay separate. Rejected components, backwards time, UTC day changes, gaps over ten minutes and longitude jumps over 180 degrees break segments. Point order within each source path is retained; nothing is road-matched or assigned a guessed time. These rules prevent some misleading connections, but cannot establish continuous recording or recover a missing route. Read the <a href="/tools/google-timeline-inspector/#gpx-conversion">full conversion rules and omitted fields</a>. Coordinates are rounded to at most fifteen decimal places; longitude 180 is written as the equivalent −180 boundary. Times are normalized to UTC with millisecond precision. GPX is not a complete Timeline backup, and Whereday does not import GPX.</p></section>
+<section><h2>Choose the next step</h2><p>For a fresh export on iPhone, Google’s <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">official Timeline help</a> describes its export controls. Follow our <a href="/blog/import-google-timeline-iphone/">export-and-import walkthrough</a> for the Files handoff and Whereday’s actual preview. A Google device-transfer backup and an exported JSON file serve different workflows.</p><p>If your destination needs a map file, first <a href="/blog/gpx-kml-geojson-location-history/">compare GPX, KML, GeoJSON and CSV</a>. The inspector can convert supported coordinate/time records to GPX using the rules above; it does not import a file into Google Maps. For a GPX you already have, use the <a href="/tools/gpx-viewer/">GPX viewer</a>.</p><p>On the inspector page, file reading and plotting happen locally, without analytics, uploads, browser storage or external map tiles. Clear removes rendered details without deleting your original. Ordinary page and public-script requests still reach the server; following another link leaves that tool page.</p></section>
+
+    </article>
+    
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
+<script defer src="/assets/acquisition.js"></script>
+</body>
+</html>

@@ -54,6 +54,18 @@
           "@id": "https://whereday.com/blog/back-up-iphone-location-history/"
         },
         {
+          "@id": "https://whereday.com/blog/check-gpx-file/"
+        },
+        {
+          "@id": "https://whereday.com/blog/google-timeline-json-formats/"
+        },
+        {
+          "@id": "https://whereday.com/blog/gpx-kml-geojson-location-history/"
+        },
+        {
+          "@id": "https://whereday.com/blog/import-google-timeline-iphone/"
+        },
+        {
           "@id": "https://whereday.com/blog/iphone-location-journal-obsidian/"
         },
         {
@@ -633,27 +645,38 @@
     .guide-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
     @media (max-width: 640px) { .guide-card-grid { grid-template-columns: 1fr; } }
   </style>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav class="top" aria-label="Primary navigation">
-    <div class="nav-inner">
-      <a href="/" class="brand" aria-label="Whereday home">
+  <nav class="top shared-navigation" aria-label="Primary navigation"><div class="nav-inner"><a href="/" class="brand" aria-label="Whereday home">
         <img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" alt="" width="26" height="26">
         <span class="brand-dot" aria-hidden="true"></span>
         WHEREDAY
-      </a>
-      <div class="nav-links">
-        <a href="/#features">Features</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/blog/" aria-current="page">Blog</a>
-        <a href="/docs/">Docs</a>
-        <a href="/#faq">FAQ</a>
-        <a href="https://apps.apple.com/app/id6761960794" class="btn btn-primary">Download</a>
-      </div>
-    </div>
-  </nav>
+      </a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/" aria-current="page">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/" aria-current="page">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a href="/#features">Features</a><a href="/#faq">FAQ</a></div></details><a href="https://apps.apple.com/app/id6761960794" class="btn btn-primary">Download</a></div></div></nav>
 
   <main id="main">
     <header class="blog-hero">
@@ -775,6 +798,7 @@
       <nav class="guide-task-nav" aria-label="Guide topics"><a href="#find-history">Find history</a><a href="#record-routes">Record routes</a><a href="#keep-history">Keep records</a></nav>
       <div class="guide-card-grid">
         <article class="post-card"><div class="post-status">Location history guide</div><h3><a href="/blog/view-location-history-iphone/">How to see your location history on iPhone</a></h3><p>Find existing Apple or Google records, check why a day is empty, and understand what a new recorder can capture.</p><p><a href="/blog/view-location-history-iphone/">Find your recorded history</a></p></article>
+        <article class="post-card"><div class="post-status">Google Timeline migration</div><h3><a href="/blog/import-google-timeline-iphone/">Import Google Timeline into Whereday</a></h3><p>Save Google JSON to Files, preview visits and points, inspect duplicates, and keep the original archive. Includes a checked synthetic example.</p><p><a href="/blog/import-google-timeline-iphone/">Follow the import walkthrough</a></p></article>
         <article class="post-card"><div class="post-status">Troubleshooting guide</div><h3><a href="/blog/missing-location-history-iphone/">Check missing visits and route points</a></h3><p>Separate recording gaps, hidden points, delayed Watch transfers, and export filters while keeping existing history.</p><p><a href="/blog/missing-location-history-iphone/">Find the right diagnostic check</a></p></article>
       </div>
     </section>
@@ -796,10 +820,11 @@
         <article class="post-card"><div class="post-status">Backup and restore guide</div><h3><a href="/blog/back-up-iphone-location-history/">Back up and restore your location history</a></h3><p>Keep separate visit and point files. See the synthetic file-picker import, saved counts after restart, and remaining physical restore checks.</p><p><a href="/blog/back-up-iphone-location-history/">Follow the backup checklist</a></p></article>
         <article class="post-card"><div class="post-status">Travel journal guide</div><h3><a href="/blog/track-days-in-country-iphone/">Track days spent in each country</a></h3><p>Check local dates, travel days, and gaps. Add a manual stay and understand the CSV export.</p><p><a href="/blog/track-days-in-country-iphone/">Review your country dates</a></p></article>
         <article class="post-card"><div class="post-status">Checked receiver workflow</div><h3><a href="/integrations/dawarich/">Send Whereday GPS points to Dawarich</a></h3><p>Match Overland to the batch endpoint, check saved points, and understand queue limits. Includes a native delivery and database persistence example.</p><p><a href="/integrations/dawarich/">Check the receiver workflow</a></p></article>
-        <article class="post-card"><div class="post-status">Markdown journal workflow</div><h3><a href="/blog/iphone-location-journal-obsidian/">Read your location journal in Obsidian</a></h3><p>Inspect the native Markdown sample in a desktop vault and the checked Maps plugin with two synthetic visit markers. Mobile and scheduled delivery remain unverified.</p><p><a href="/blog/iphone-location-journal-obsidian/">Follow the manual Markdown workflow</a></p></article>
+        <article class="post-card"><div class="post-status">Markdown journal workflow</div><h3><a href="/blog/iphone-location-journal-obsidian/">Read your location journal in Obsidian</a></h3><p>Use a free travel journal template and a linked example vault, then inspect native Markdown and optional visit maps. Mobile and scheduled delivery remain unverified.</p><p><a href="/blog/iphone-location-journal-obsidian/">Follow the manual Markdown workflow</a> · <a href="/blog/iphone-location-journal-obsidian/#journal-template">Get the travel journal template</a></p></article>
       </div>
     </section>
 
+    <section class="post-section wrap"><div class="section-head"><h2>Check a location file before using it.</h2></div><p><a href="/tools/gpx-viewer/">Open the free GPX viewer with CSV and GeoJSON downloads</a>, or <a href="/blog/check-gpx-file/">follow the worked GPX inspection tutorial</a>. Compare <a href="/blog/gpx-kml-geojson-location-history/">GPX, KML, GeoJSON and CSV</a> with downloadable versions of the same invented trip. Use an invented example before opening your own file. For Google exports, <a href="/blog/google-timeline-json-formats/">identify your Timeline JSON structure</a> with the <a href="/tools/google-timeline-inspector/">local JSON inspector</a>.</p></section>
     <section class="principles wrap" aria-labelledby="principles-title">
       <div class="section-head">
         <div>
@@ -896,5 +921,6 @@
 </script>
 <!-- End Cloudflare Web Analytics -->
 <script defer src="/assets/acquisition.js"></script>
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
 </body>
 </html>

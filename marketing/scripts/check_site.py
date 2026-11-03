@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check the built site's crawlability, metadata, and local link targets."""
-from collections import Counter
+from collections import Counter, deque
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -18,6 +18,7 @@ class Page(HTMLParser):
         self.path = path
         self.ids = []
         self.targets = []
+        self.reader_links = []
         self.canonicals = []
         self.languages = []
         self.language_alternates = []
@@ -38,6 +39,8 @@ class Page(HTMLParser):
             self.language_alternates.append((attrs["hreflang"], attrs.get("href", "")))
         if tag == "a" and attrs.get("hreflang"):
             self.language_switches.append((attrs["hreflang"], attrs.get("href", "")))
+        if tag == "a" and attrs.get("href") and "nofollow" not in attrs.get("rel", "").lower().split():
+            self.reader_links.append(attrs["href"])
         if "id" in attrs:
             self.ids.append(attrs["id"])
         if tag == "h1":
@@ -100,6 +103,42 @@ def resolve_local(path):
         return candidate
     candidate = candidate.with_suffix(".html")
     return candidate if candidate.is_file() else None
+
+
+def reader_depths(pages):
+    """Require published pages to be reachable from home through reader links.
+
+    Canonicals, schema, sitemap entries, and links on the 404 page do not make
+    an orphan discoverable through site navigation.
+    """
+    published = {path: page for path, page in pages.items() if path.name != "404.html"}
+    graph = {}
+    for path, page in published.items():
+        destinations = set()
+        for href in page.reader_links:
+            url = urlsplit(urljoin(page_url(path), href))
+            if url.scheme not in ("https", "http") or url.netloc != urlsplit(BASE).netloc:
+                continue
+            destination = resolve_local(url.path)
+            if destination in published:
+                destinations.add(page_url(destination))
+        graph[page_url(path)] = destinations
+
+    home = BASE + "/"
+    if home not in graph:
+        raise ValueError("reader navigation: missing homepage")
+    depths = {home: 0}
+    pending = deque([home])
+    while pending:
+        source = pending.popleft()
+        for destination in graph[source]:
+            if destination not in depths:
+                depths[destination] = depths[source] + 1
+                pending.append(destination)
+    orphans = sorted(set(graph) - set(depths))
+    if orphans:
+        raise ValueError("reader navigation: pages unreachable from homepage: " + ", ".join(orphans))
+    return depths
 
 
 def check():
@@ -185,11 +224,17 @@ def check():
         errors.append("sitemap: duplicate URLs")
     if set(listed) != expected:
         errors.append(f"sitemap mismatch; missing: {expected - set(listed)}, extra: {set(listed) - expected}")
+    depths = {}
+    try:
+        depths = reader_depths(pages)
+    except ValueError as error:
+        errors.append(str(error))
     for error in errors:
         print(f"ERROR {error}")
     if errors:
         raise SystemExit(1)
     print(f"Passed: {len(pages)} pages, {checked_links} local targets, metadata, JSON-LD, IDs, and sitemap coverage.")
+    print(f"Reader navigation: {len(depths)} published pages reachable; maximum depth {max(depths.values())}.")
 
 
 if __name__ == "__main__":

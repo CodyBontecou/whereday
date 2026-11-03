@@ -8,19 +8,20 @@ Practical iPhone guides
 
 Export visits as a Markdown file, copy it into your desktop vault, and check the rendered table. Keep your own writing separate from generated location notes.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 26, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
 ## Export a note, then place it in your vault
 
 To read Whereday location history in Obsidian, export Visits as Markdown, save the `.md` file, and copy it into a folder inside your Obsidian vault. Open the note and check the dates and visit table. No Whereday-specific Obsidian plugin is needed for this manual file workflow.
 
-This guide covers a manual handoff to an existing desktop vault. Recording and export preview are free; writing the Markdown file requires Whereday’s optional unlock. It does not set up automatic iPhone-to-vault sync.
+This guide covers a manual handoff to an existing desktop vault. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. It does not set up automatic iPhone-to-vault sync.
 
 From location history to a readable note
 - [Choose visits or route points](https://whereday.com/blog/iphone-location-journal-obsidian/#choose)
 - [Export a Markdown file](https://whereday.com/blog/iphone-location-journal-obsidian/#export)
 - [Add the file to a desktop vault](https://whereday.com/blog/iphone-location-journal-obsidian/#vault)
 - [Try the synthetic example](https://whereday.com/blog/iphone-location-journal-obsidian/#sample)
+- [Use a travel journal template](https://whereday.com/blog/iphone-location-journal-obsidian/#journal-template)
 - [Try an optional desktop visit map](https://whereday.com/blog/iphone-location-journal-obsidian/#map-plugin)
 - [Keep updates separate from your writing](https://whereday.com/blog/iphone-location-journal-obsidian/#updates)
 - [Understand scheduling and mobile limits](https://whereday.com/blog/iphone-location-journal-obsidian/#schedule)
@@ -92,9 +93,45 @@ The native export test also parsed this Markdown back through Whereday’s impor
 
 We copied this exact file into a clean desktop vault and checked it in Obsidian 1.14.5. Both visit rows rendered in Reading view, and a link from a separate `Trip reflections` note opened the export. The nine-column table is wider than Obsidian’s default reading area; scroll horizontally to see Source and Status, or choose fewer columns before exporting.
 
-![Obsidian Reading view displaying the app-generated synthetic export, with two invented visits, their times, coordinates, names, and notes](https://whereday.com/screenshots/obsidian-synthetic-export.png)
+![Obsidian Reading view displaying the app-generated synthetic export, with two invented visits, their times, coordinates, names, and notes](https://whereday.com/screenshots/obsidian-synthetic-export.webp)
 
 The unchanged synthetic app export in Obsidian 1.14.5, checked October 26, 2026. The table continues horizontally. This verifies desktop file rendering and a vault link; iPhone transfer and scheduled delivery remain untested.
+
+## Use a travel journal template for your own reflections
+
+A location table helps you remember where and when. Keep the context you write yourself in a separate note, so a newer export can replace its table without replacing your writing. This plain Markdown template needs no community plugin or automatic date setup.
+
+- [Download the blank travel journal template](https://whereday.com/samples/travel-journal-template.md) to copy for each trip.
+- [Download the completed synthetic reflection note](https://whereday.com/samples/synthetic-trip-reflections.md) to see the structure filled in.
+- [Download the example vault folder](https://whereday.com/samples/whereday-travel-journal-example.zip) with both notes, the unchanged native synthetic export and setup instructions. Extract it before opening the folder in desktop Obsidian.
+
+### Start with the complete example
+
+```
+Whereday-travel-journal-example/
+README.md
+Trip reflections.md
+Templates/
+Travel journal.md
+Location/
+synthetic-obsidian-export.md
+```
+
+- Extract the ZIP into a new folder. In desktop Obsidian, choose Open folder as vault and select `Whereday-travel-journal-example`.
+- Open Trip reflections in Reading view. Follow Open the two-visit source note. It should open the separate table with two January 1, 2000 visits.
+- Check stop A at 11:45 AM–12:00 PM and stop B at 12:02 PM–12:17 PM. Both last fifteen minutes. The reflection identifies the two-minute interval without inventing a route or activity.
+- Open Templates/Travel journal and copy its contents into the body of a new note with a different name. Name the note first, then paste below its title. Fill in your own date, timezone context, memories and gaps.
+- Replace its link instruction with a real file link: type `[[` and select the generated visit note in your vault. Test that link before adding more writing.
+
+![Obsidian Reading view of the invented trip reflection, with a link to its separate source note and prompts for context and gaps](https://whereday.com/screenshots/obsidian-travel-journal-template.webp)
+
+The completed example in Obsidian 1.14.5, checked October 30, 2026. The handwritten reflection and generated source table are separate notes.
+
+The blank note’s example link is displayed as code until you replace it. There is no automatic date substitution. The completed sample’s active link is `[[Location/synthetic-obsidian-export|Open the two-visit source note]]`; its path starts at the vault root. If you move only the reflection note into another vault, copy its source into the matching `Location` folder or update the link. A missing target can create a new empty note when opened, so check the existing file first. See [Obsidian’s internal-link documentation](https://obsidian.md/help/links).
+
+Checked October 30, 2026 in a separate desktop vault using Obsidian 1.14.5: the reflection rendered, its link opened both source visit rows, and copying the blank template into a new note preserved its file contents. This checks the extracted example folder, not mobile transfer or scheduled exports.
+
+All sample records and reflections are invented. The source table’s Export Date is its creation date, not its visit date; its clock times were generated in UTC. Neither a handwritten reflection nor an edited Markdown table is a substitute for supported backup files. The example folder contains no plugin code or vault settings and does not configure sync or map requests.
 
 ## Optional: show the sample visits on a desktop map
 
@@ -121,7 +158,7 @@ zoom: 17
 
 This center and zoom are for the invented sample near (0, 0). In Obsidian 1.14.5 on desktop, the plugin showed two visits and two markers. Both popups contained the expected names, clock times, notes, and 15-minute durations. No route is expected from this visits-only file.
 
-![Obsidian showing two invented visits with OpenTopoMap ocean tiles and a Synthetic stop B popup containing its times, 15-minute duration, and sample-data note](https://whereday.com/screenshots/obsidian-maps-synthetic.png)
+![Obsidian showing two invented visits with OpenTopoMap ocean tiles and a Synthetic stop B popup containing its times, 15-minute duration, and sample-data note](https://whereday.com/screenshots/obsidian-maps-synthetic.webp)
 
 The unchanged native Markdown sample in Whereday Maps 0.7.15. All coordinates and visits are invented. This verifies desktop file rendering and marker popups, not mobile transfer or scheduled delivery.
 
@@ -145,7 +182,7 @@ If you intentionally replace a generated note, retain the earlier copy until you
 
 ## Scheduled files and mobile vaults need separate checks
 
-Whereday’s paid Auto Export feature writes the current local day to a selected folder. A selected folder is not proof that Obsidian can see it, that a cloud service has transferred it, or that the background run succeeded. Start with the manual file handoff above.
+Whereday’s Auto Export feature writes the current local day to a selected folder. A selected folder is not proof that Obsidian can see it, that a cloud service has transferred it, or that the background run succeeded. Start with the manual file handoff above.
 
 Auto Export’s Rewrite mode can replace the day’s file. Keep personal writing elsewhere. An update runs on the current day, so enabling it today is not an initial archive of earlier history. Check the latest file and the recorded run result; see the [automatic-export reference](https://whereday.com/docs/automatic-exports/) for scheduling behavior.
 
@@ -156,7 +193,7 @@ For restorable location records, keep the original supported exports separately.
 ## Keep the stops readable.
 Add your own context.
 
-Try free recording and Markdown preview. See [current pricing](https://whereday.com/#pricing) for the optional file-export unlock.
+Check your tracking access and try Markdown preview. See [current pricing](https://whereday.com/#pricing) for the export access rules.
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 

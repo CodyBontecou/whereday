@@ -81,6 +81,14 @@ Find existing Apple or Google records, check why a day is empty, and understand 
 
 [Find your recorded history](https://whereday.com/blog/view-location-history-iphone/)
 
+Google Timeline migration
+
+### [Import Google Timeline into Whereday](https://whereday.com/blog/import-google-timeline-iphone/)
+
+Save Google JSON to Files, preview visits and points, inspect duplicates, and keep the original archive. Includes a checked synthetic example.
+
+[Follow the import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/)
+
 Troubleshooting guide
 
 ### [Check missing visits and route points](https://whereday.com/blog/missing-location-history-iphone/)
@@ -153,9 +161,13 @@ Markdown journal workflow
 
 ### [Read your location journal in Obsidian](https://whereday.com/blog/iphone-location-journal-obsidian/)
 
-Inspect the native Markdown sample in a desktop vault and the checked Maps plugin with two synthetic visit markers. Mobile and scheduled delivery remain unverified.
+Use a free travel journal template and a linked example vault, then inspect native Markdown and optional visit maps. Mobile and scheduled delivery remain unverified.
 
-[Follow the manual Markdown workflow](https://whereday.com/blog/iphone-location-journal-obsidian/)
+[Follow the manual Markdown workflow](https://whereday.com/blog/iphone-location-journal-obsidian/) · [Get the travel journal template](https://whereday.com/blog/iphone-location-journal-obsidian/#journal-template)
+
+## Check a location file before using it.
+
+[Open the free GPX viewer with CSV and GeoJSON downloads](https://whereday.com/tools/gpx-viewer/), or [follow the worked GPX inspection tutorial](https://whereday.com/blog/check-gpx-file/). Compare [GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) with downloadable versions of the same invented trip. Use an invented example before opening your own file. For Google exports, [identify your Timeline JSON structure](https://whereday.com/blog/google-timeline-json-formats/) with the [local JSON inspector](https://whereday.com/tools/google-timeline-inspector/).
 
 § 02 Export and connect
 

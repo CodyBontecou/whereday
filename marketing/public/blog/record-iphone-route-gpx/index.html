@@ -101,7 +101,7 @@ pre code { overflow-wrap: normal; }
       "name": "How to Record an iPhone Route and Export GPX — Whereday",
       "description": "Record a route in Whereday and export GPX to Files. Includes a checked export-and-viewer example with synthetic points, previews, and free and paid limits.",
       "inLanguage": "en",
-      "dateModified": "2026-10-26",
+      "dateModified": "2026-10-30",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -142,22 +142,42 @@ pre code { overflow-wrap: normal; }
     }
   ]
 }</script>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
-    <div class="nav-links"><a href="/blog/" aria-current="true">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-gpx&amp;mt=8">Download free</a></div>
-  </nav>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-gpx&amp;mt=8">Download free</a></div></nav>
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Record and export GPX</li></ol></nav>
     <article aria-labelledby="article-title">
-    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">How to record an iPhone route and export a GPX file</h1><p class="lede">Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Recording and preview are free; saving the file requires the optional unlock.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p><p class="source-note store-listing-note">Whereday is currently listed as <strong>iso.me</strong> in the U.S. App Store.</p></header>
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">How to record an iPhone route and export a GPX file</h1><p class="lede">Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Tracking depends on your plan and existing access; Export Preview is free and saving files requires export access.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-30">October 30, 2026</time></p></header>
     <section aria-labelledby="quick-answer">
   <h2 id="quick-answer">Record first, then export the points</h2>
   <p>To record an iPhone route as GPX with Whereday, start tracking before your trip, stop when you finish, then choose <strong>Points</strong> and <strong>GPX</strong> in Export. Select the right date range, preview the result, and save the file to Files or share it with a compatible route viewer.</p>
-  <p>Recording is free. Previewing the export is free. Writing the GPX file requires the optional one-time unlock. This workflow exports a route recorded in Whereday; it does not extract old Apple Maps or Google Timeline history.</p>
-  <nav class="article-toc" aria-label="In this guide"><strong>From recording to file</strong><ol><li><a href="#record">Record and check a route</a></li><li><a href="#export">Select points and export GPX</a></li><li><a href="#verify">Check the saved file</a></li><li><a href="#sample">Inspect a synthetic GPX example</a></li><li><a href="#checked-ui-export">See the checked app-to-Files export</a></li><li><a href="#problems">Fix an empty or incomplete export</a></li></ol></nav>
+  <p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. This workflow exports a route recorded in Whereday; it does not extract old Apple Maps or Google Timeline history.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>From recording to file</strong><ol><li><a href="#record">Record and check a route</a></li><li><a href="#watch-to-gpx">Export an Apple Watch route</a></li><li><a href="#export">Select points and export GPX</a></li><li><a href="#verify">Check the saved file</a></li><li><a href="#sample">Inspect a synthetic GPX example</a></li><li><a href="#checked-ui-export">See the checked app-to-Files export</a></li><li><a href="#problems">Fix an empty or incomplete export</a></li></ol></nav>
 </section>
 
 <section aria-labelledby="record">
@@ -170,6 +190,30 @@ pre code { overflow-wrap: normal; }
   </ol>
   <p>Try this with a short session before relying on it for a full day. GPS can be noisy or unavailable, and permission changes or a stopped session can leave gaps. There is no separate passive visit-only switch. The <a href="/docs/tracking/">recording reference</a> explains distance filtering and auto-stop.</p>
   <p>For a longer trip, choose an auto-stop duration that will not end early. Stop when you finish. Detailed GPS uses battery, and a larger distance filter trades route detail for fewer captured points; check the result before settling on a setting. Use the <a href="/blog/iphone-location-tracking-battery/">battery comparison checklist</a> to compare your own recordings.</p>
+</section>
+
+<section aria-labelledby="watch-to-gpx">
+  <h2 id="watch-to-gpx">Export a route recorded on Apple Watch</h2>
+  <p>If you recorded in the Whereday Watch app, transfer the route to its companion iPhone before exporting. This workflow uses Whereday’s saved points; it does not extract an Apple Workout or Apple Health route.</p>
+  <ol>
+    <li>Stop the recording on the Watch. Bring the paired devices together and open Whereday on both. If available, choose <strong>Sync Now</strong> on the Watch.</li>
+    <li>Open the recording’s date in the phone’s Timeline. Inspect the outing, its map, and its start and end times. A <strong>Sync queued</strong> message is not confirmation that every point has arrived.</li>
+    <li>On the phone, choose <strong>Points</strong> and <strong>GPX</strong> in Export, then select the recording’s dates. Review filters and Preview before saving. Points can include other recordings in that period; use the specific outing’s Export action when you need that outing alone.</li>
+    <li>Open the saved file in the <a href="/tools/gpx-viewer/">local GPX viewer</a>. Compare its first and last point times, count, and shape with the phone copy. Keep pending Watch data while investigating missing points.</li>
+  </ol>
+  <p>The <a href="/docs/apple-watch/#checked-transfer">Watch sync reference</a> explains pending points and acknowledgements. Sync retries with the same record IDs are separate from importing a GPX file. Whereday does not import GPX.</p>
+  <h3>A readable GPX can still be incomplete</h3>
+  <p>In a synthetic native check, an invented 503-point Watch queue reached the iPhone in batches of 500 and three. We exported the phone’s saved Points as GPX after the first batch, then again after the remaining points arrived and the first batch was retried.</p>
+  <div class="table-scroll" role="region" aria-label="Watch transfer and GPX completeness example" tabindex="0"><table>
+    <caption>Both files opened, but only the later export held all 503 example points</caption>
+    <thead><tr><th scope="col">Phone state</th><th scope="col">GPX track points</th><th scope="col">Last point, UTC</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">First batch saved; transfer incomplete</th><td>500</td><td>October 24, 2026, 14:41:35</td></tr>
+      <tr><th scope="row">Final batch saved; delayed first batch retried</th><td>503</td><td>October 24, 2026, 14:41:50</td></tr>
+    </tbody>
+  </table></div>
+  <p><a href="/samples/synthetic-watch-first-batch.gpx" download>Download the incomplete 500-point example</a> and <a href="/samples/synthetic-watch-complete.gpx" download>the complete 503-point example</a>. Both start at 14:00 UTC on October 24, 2026 and contain one track segment, with no visit waypoints. Coordinates and times are invented. Load either file in the local viewer to compare counts and endpoints; a line on a map alone cannot prove a transfer is complete.</p>
+  <p class="source-note">Checked October 30, 2026 with the native queue, phone receiver, and export code matching released Whereday 1.8 (52). Delivery was supplied directly by an iOS simulator test, with WatchConnectivity disabled. The saved phone records were passed to the export service without a date or accuracy filter. This checks the data handoff, not physical Watch recording, wireless transport, the outing-only export action, or a fresh share-sheet workflow. The separate app-to-Files check below covers the earlier export screen.</p>
 </section>
 
 <section aria-labelledby="export">
@@ -245,11 +289,11 @@ pre code { overflow-wrap: normal; }
     <li>Closed Preview, chose <strong>Export 1 File → Save to Files → On My iPhone → Save</strong>.</li>
     <li>Checked the saved file, then opened that exact public synthetic file in gpx.studio.</li>
   </ol>
-  <figure class="product-example"><img src="/screenshots/gpx-preview-synthetic.png" width="1206" height="2622" alt="Earlier iso.me (now Whereday) Export Preview in the isolated simulator showing GPX, three items, one file, and a planned size of 1003 bytes" loading="lazy" decoding="async"><figcaption>The checked preview for the three imported synthetic points. The test build was already unlocked; no App Store purchase was tested.</figcaption></figure>
+  <figure class="product-example"><img src="/screenshots/gpx-preview-synthetic.webp" width="1206" height="2622" alt="Earlier iso.me (now Whereday) Export Preview in the isolated simulator showing GPX, three items, one file, and a planned size of 1003 bytes" loading="lazy" decoding="async"><figcaption>The checked preview for the three imported synthetic points. The test build was already unlocked; no App Store purchase was tested.</figcaption></figure>
   <p><a href="/samples/synthetic-ui-export.gpx" download>Download the exact GPX saved through Files</a>. The saved copy matched the share-sheet file byte for byte. It contains three track points, one segment, and times <strong>12:00, 12:01, and 12:02 UTC on January 1, 2000</strong>. No visit waypoints are included.</p>
   <p>In this single-file example, the generated filename was <code>iso.me - Monday 2026-10-26 - points.gpx</code>, while the point times were in 2000. The metadata time records file generation. Inspect the actual track timestamps rather than treating the filename as proof of its date range.</p>
   <p><a href="https://gpx.studio/app?files=%5B%22https%3A%2F%2Fwhereday.com%2Fsamples%2Fsynthetic-ui-export.gpx%22%5D">Open the saved synthetic export in gpx.studio</a>. In a fresh desktop browser context, the viewer displayed the angled three-point line, <strong>0.03 km</strong>, and <strong>02:00 / 02:00</strong> moving and total time. Those are viewer results for invented data, not a GPS accuracy or distance benchmark.</p>
-  <figure class="route-example"><img src="/screenshots/gpx-studio-ui-export.png" width="1280" height="900" alt="gpx.studio showing the angled synthetic track saved from Whereday, with 0.03 km distance and 02:00 moving and total time" loading="lazy" decoding="async"><figcaption>The 1003-byte UI export opened in gpx.studio, checked October 26, 2026. Only the public synthetic file was loaded.</figcaption></figure>
+  <figure class="route-example"><img src="/screenshots/gpx-studio-ui-export.webp" width="1280" height="900" alt="gpx.studio showing the angled synthetic track saved from Whereday, with 0.03 km distance and 02:00 moving and total time" loading="lazy" decoding="async"><figcaption>The 1003-byte UI export opened in gpx.studio, checked October 26, 2026. Only the public synthetic file was loaded.</figcaption></figure>
   <p class="source-note">The app’s Export screen, file creation, share sheet, Save to Files, and viewer handoff were checked with unchanged release-source export code and a separate test identity. This was not the App Store binary, a purchase flow, a physical recording, or an unattended export. Keep those evidence limits separate from the earlier serializer-only sample.</p>
 </section>
 
@@ -274,11 +318,13 @@ pre code { overflow-wrap: normal; }
 
 <section class="closing" aria-labelledby="try-recording">
   <h2 id="try-recording">Record the route.<br>Choose how to keep it.</h2>
-  <p>Try free recording and export preview. The optional purchase unlocks writing files; see <a href="/#pricing">current pricing</a>.</p>
+  <p>Check your tracking access and try Export Preview. Export access follows the new-user and existing-user rules above; see <a href="/#pricing">current pricing</a>.</p>
   <a class="button" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-gpx&amp;mt=8">Download free for iPhone</a>
 </section>
 
-<p class="source-note">Reviewed October 26, 2026. Steps reflect Whereday’s recording and export controls; labels can vary by app version. For setup, read <a href="/blog/private-location-journal-iphone/">the private journal guide</a>; for existing Apple or Google records, see <a href="/blog/view-location-history-iphone/">how to view iPhone location history</a>.</p>
+<p class="source-note">Reviewed October 30, 2026; earlier app and viewer checks retain their own dates above. Steps reflect Whereday’s recording and export controls; labels can vary by app version. For setup, read <a href="/blog/private-location-journal-iphone/">the private journal guide</a>; for existing Apple or Google records, see <a href="/blog/view-location-history-iphone/">how to view iPhone location history</a>.</p>
+<section aria-labelledby="inspect-export"><h2 id="inspect-export">Inspect a GPX before importing it</h2><p>Use the <a href="/tools/gpx-viewer/">free local GPX viewer</a> to check the points, separate segments and available times in a file you already have. Follow the <a href="/blog/check-gpx-file/">five-point tutorial</a> for expected results and CSV limits.</p></section>
+<p>For a different destination, compare <a href="/blog/gpx-kml-geojson-location-history/">GPX with KML, GeoJSON and CSV</a> before converting an archive.</p>
 
     </article>
     <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/back-up-iphone-location-history/">Keep a restorable copy</a><p>GPX is a map file; retain supported visits and points separately for import.</p></li><li><a href="/blog/missing-location-history-iphone/">Investigate an incomplete route</a><p>Check recording state and filters before repeating the export.</p></li></ul></nav>
@@ -332,6 +378,7 @@ pre code { overflow-wrap: normal; }
 })();
 </script>
 <!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
 <script defer src="/assets/acquisition.js"></script>
 </body>
 </html>

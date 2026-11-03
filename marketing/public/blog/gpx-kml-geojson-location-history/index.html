@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPX vs KML vs GeoJSON: Choose a Location File — Whereday</title>
+  <meta name="description" content="Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/gpx-kml-geojson-location-history/">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="GPX vs KML vs GeoJSON: Choose a Location File — Whereday">
+  <meta property="og:description" content="Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/gpx-kml-geojson-location-history/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map.png">
+  <meta property="og:image:alt" content="Whereday map interface showing visits and route points">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GPX vs KML vs GeoJSON: Choose a Location File — Whereday">
+  <meta name="twitter:description" content="Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1f1f1f;
+  --muted: #5f5d59;
+  --rule: #d2cfca;
+  --accent: #1c57ca;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Geist", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: white; z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.brand img { border-radius: 4px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.button { display: inline-flex; justify-content: center; align-items: center; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: white; font-size: 16px; line-height: 24px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #1748a8; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 64px; }
+.breadcrumbs { font-size: 14px; line-height: 20px; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li + li::before { content: "/"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.025em; }
+h1 { max-width: 680px; font-size: 48px; line-height: 1; margin: 16px 0 24px; font-weight: 600; background: linear-gradient(to right, #000, #666); color: transparent; background-clip: text; -webkit-background-clip: text; }
+h2 { font-size: 30px; line-height: 36px; font-weight: 600; margin: 0 0 16px; }
+h3 { font-size: 20px; line-height: 28px; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 28px; }
+header { padding-bottom: 40px; }
+section { margin-top: 48px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+caption { text-align: left; font-weight: 600; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border: 1px solid var(--rule); min-width: 160px; }
+thead { background: #ecebe4; }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--rule); }
+.route-example { margin: 48px 0; }
+.route-example img { display: block; width: 100%; height: auto; border-radius: 16px; }
+.route-example figcaption { max-width: none; margin-top: 12px; }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 32px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.closing h2 { font-size: 36px; line-height: 40px; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: white; margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 8px; background: white; overflow-x: auto; font-size: 14px; line-height: 20px; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 36px; line-height: 40px; }
+  h2 { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/gpx-kml-geojson-location-history/",
+      "url": "https://whereday.com/blog/gpx-kml-geojson-location-history/",
+      "name": "GPX vs KML vs GeoJSON: Choose a Location File — Whereday",
+      "description": "Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.",
+      "inLanguage": "en",
+      "dateModified": "2026-10-30",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "GPX, KML or GeoJSON: choose a file you can use",
+      "datePublished": "2026-10-30",
+      "mainEntityOfPage": "https://whereday.com/blog/gpx-kml-geojson-location-history/",
+      "image": "https://whereday.com/screenshots/map.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Choose a file format",
+          "item": "https://whereday.com/blog/gpx-kml-geojson-location-history/"
+        }
+      ]
+    }
+  ]
+}</script>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Choose a file format</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">GPX, KML or GeoJSON: choose a file you can use</h1><p class="lede">Choose for your destination, check what the file preserves, and keep an original you can return to.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-30">October 30, 2026</time></p></header>
+    <section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Choose the format your next tool can use</h2>
+  <p><strong>GPX</strong> is a useful starting point for a GPS track or route. Choose <strong>KML</strong> when your destination expects Google Earth-style features, <strong>GeoJSON</strong> for mapping or GIS work, and <strong>CSV</strong> for a point table. Check the destination’s actual import requirements before converting.</p>
+  <p>The extension does not tell you everything a file preserves. A line on a map, a timed recording, and a restorable location journal are different outputs. Keep the original file alongside any converted copy.</p>
+  <nav class="article-toc" aria-label="In this guide"><ol><li><a href="#choose">Match a format to your task</a></li><li><a href="#example">Download the same invented trip in four formats</a></li><li><a href="#differences">Inspect coordinates, timestamps and segments</a></li><li><a href="#check">Check a conversion before relying on it</a></li><li><a href="#whereday">Choose a Whereday export or restore workflow</a></li></ol></nav>
+</section>
+<section aria-labelledby="choose">
+  <h2 id="choose">GPX vs KML vs GeoJSON vs CSV</h2>
+  <div class="table-scroll" role="region" aria-label="Location file format comparison" tabindex="0"><table><caption>Start with the task, then verify the receiving app</caption><thead><tr><th scope="col">Format</th><th scope="col">Useful for</th><th scope="col">Check before using it</th></tr></thead><tbody>
+    <tr><th scope="row">GPX</th><td>GPS tracks, routes and waypoints in compatible viewers</td><td>Which objects are present, whether points have times, and whether segments stay separate</td></tr>
+    <tr><th scope="row">KML</th><td>Google Earth-style placemarks, geometry and presentation</td><td>Support for the actual geometry and extensions; an ordinary line is different from a timed track</td></tr>
+    <tr><th scope="row">GeoJSON</th><td>Mapping applications and geographic information systems (GIS)</td><td>Geometry type, longitude-first coordinate order, and the meaning of custom properties</td></tr>
+    <tr><th scope="row">CSV</th><td>Spreadsheets, filtering and row-based analysis</td><td>Column names, timezone, units and group identifiers; CSV does not define a universal route model</td></tr>
+  </tbody></table></div>
+  <p>A planned route may have coordinates without recording times. A recorded track can contain several segments. Neither a valid file nor a continuous line proves that every part of a real journey was captured.</p>
+</section>
+<section aria-labelledby="example">
+  <h2 id="example">One invented trip, four downloadable files</h2>
+  <p>The comparison starts with <strong>five points in two segments</strong>: three points from 12:00 to 12:02, then two from 12:13 to 12:14 on January 1, 2000, in UTC. The break between segments is 11 minutes. The coordinates are invented and there is no measured elevation.</p>
+  <pre aria-label="Two segments in the example">Segment 1: 12:00 → 12:01 → 12:02
+           [11-minute break]
+Segment 2: 12:13 → 12:14</pre>
+  <ul>
+    <li><a href="/samples/synthetic-format-trip.gpx" download>Download the source GPX</a> — one track, two segments and five timed points.</li>
+    <li><a href="/samples/synthetic-format-trip.kml" download>Download the timed KML example</a> — two <code>gx:Track</code> elements inside a <code>gx:MultiTrack</code>, with interpolation between them disabled.</li>
+    <li><a href="/samples/synthetic-format-trip.geojson" download>Download the GeoJSON example</a> — two LineString features with three and two positions; each has a custom <code>times</code> array.</li>
+    <li><a href="/samples/synthetic-format-trip.csv" download>Download the CSV point table</a> — five data rows, plus a header, using the free viewer’s documented CSV output.</li>
+  </ul>
+  <p>These are controlled examples created for this guide, not personal history or newly captured native-app exports. Automated checks compare their coordinates, times and group boundaries. That verifies the contents, not that every third-party viewer will import every field.</p>
+</section>
+<section aria-labelledby="differences">
+  <h2 id="differences">What changes between the files?</h2>
+  <h3>Coordinate order needs attention</h3>
+  <p>The first point is latitude <strong>0</strong>, longitude <strong>10</strong>. GPX labels those values as attributes; GeoJSON positions and KML track coordinates put longitude first. Swapping them can move a point while leaving both numbers within valid coordinate ranges.</p>
+  <pre><code>GPX:     &lt;trkpt lat="0" lon="10"&gt;…&lt;/trkpt&gt;
+GeoJSON: "coordinates": [[10, 0], …]
+KML:     &lt;gx:coord&gt;10 0 0&lt;/gx:coord&gt;
+CSV:     latitude=0, longitude=10</code></pre>
+  <p>The KML example is clamped to the ground: its third-coordinate zeros are placeholders, not measured elevation. The GPX has no elevation elements, the GeoJSON positions are two-dimensional, and the CSV elevation cells are blank. For real height data, check the units and height reference rather than assuming a copied number has the same physical meaning.</p>
+  <h3>Time must have a defined place</h3>
+  <p>In the source GPX, each point has a <code>time</code> value. The KML example pairs each <code>when</code> with a <code>gx:coord</code> in the same track. This uses Google’s KML track extension; the destination must support it. A simple KML LineString is a different representation.</p>
+  <p>GeoJSON describes geometry and feature properties, but these examples’ <code>times</code> arrays are our own convention: entry 1 describes coordinate 1, and so on within each feature. A reader must explicitly understand that convention to use the times. Keeping the property in a file does not guarantee timed playback in another app.</p>
+  <p>The CSV includes both <code>time_utc</code> and <code>original_time</code>. The first is normalized to UTC; the second retains the original timestamp text. When inspecting a real export, compare timezone-aware times rather than only the clock labels shown in a spreadsheet or viewer.</p>
+  <h3>Keep the break instead of inventing a connection</h3>
+  <p>The GPX uses two <code>trkseg</code> elements. The KML has two timed tracks and <code>gx:interpolate</code> set to 0. The GeoJSON has two separate LineString features. In CSV, <code>group</code> is 1 for the first three rows and 2 for the last two; point numbering restarts in each group.</p>
+  <p>A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.</p>
+</section>
+<section aria-labelledby="check">
+  <h2 id="check">Check a conversion with a small file first</h2>
+  <ol>
+    <li><strong>Keep the original.</strong> Save the converted file separately. Renaming the extension does not convert the contents.</li>
+    <li><strong>Inspect counts and dates.</strong> For this example, expect five points, two groups and times from 12:00 to 12:14 UTC. Check that one segment contains three points and the other contains two.</li>
+    <li><strong>Check a known coordinate.</strong> The first point is 0° latitude, 10° longitude. Check the destination’s field order and units.</li>
+    <li><strong>Open it in the intended destination.</strong> Look for a joined gap, absent times, changed point counts or ignored properties. File parsing checks and actual app behavior answer different questions.</li>
+    <li><strong>Document what was omitted.</strong> These derived examples preserve selected point data and grouping; they do not carry every possible source field, extension or application setting.</li>
+  </ol>
+  <p>To inspect the GPX, use the <a href="/tools/gpx-viewer/">free local GPX viewer</a> and select the source GPX downloaded above. Expect five valid points, one track and two segments. The viewer accepts GPX, not the KML or GeoJSON examples. Its CSV download should match the CSV example byte-for-byte.</p>
+  <p>The <a href="/blog/check-gpx-file/">worked GPX inspection tutorial</a> explains missing timestamps, invalid coordinates and CSV limits. Warnings identify things to review; they do not automatically prove that a pause, duplicate position or gap is an error.</p>
+</section>
+<section aria-labelledby="whereday">
+  <h2 id="whereday">Which file should you keep from Whereday?</h2>
+  <p>For a portable route, read the <a href="/blog/record-iphone-route-gpx/">recording and GPX export guide</a>. Whereday’s native format options also include KML, GeoJSON and CSV; see the <a href="/docs/export-import/">export and import reference</a> for supported record types and requirements. This guide’s comparison fixtures are not assertions about every native exporter’s field choices.</p>
+  <p>For a restorable journal copy, follow the <a href="/blog/back-up-iphone-location-history/">Whereday JSON backup workflow</a>. Supported Whereday CSV or Markdown imports have their own required fields. A generic point table is not automatically compatible, and the GPX, KML and GeoJSON examples are not Whereday restore files.</p>
+  <p>New-user tracking access and native file-writing access depend on your plan and existing rights. The free browser GPX viewer does not require Whereday or an account. Keep the original recording or archive as well as any file made for another tool.</p>
+</section>
+<section aria-labelledby="sources">
+  <h2 id="sources">Specifications behind the examples</h2>
+  <p>Use the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation</a> for point and segment structure, the <a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack">KML track reference</a> for timed tracks and interpolation, and <a href="https://www.rfc-editor.org/rfc/rfc7946">GeoJSON RFC 7946</a> for positions, geometry and properties. App support must be checked separately from the format’s capabilities.</p>
+</section>
+<section><h2>Convert an existing GPX locally</h2><p>The <a href="/tools/gpx-viewer/#geojson-output">GPX viewer now offers GeoJSON download</a>. Its custom properties differ from this article’s controlled comparison file: use the <a href="/blog/check-gpx-file/#geojson">worked converter tutorial</a> and exact generated example to check its field mapping. The converter keeps parts disconnected at invalid coordinates and dateline jumps, and preserves elevation in a property array rather than assuming a height reference for geometry.</p></section>
+
+    </article>
+    
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
+<script defer src="/assets/acquisition.js"></script>
+</body>
+</html>

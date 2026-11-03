@@ -1,0 +1,53 @@
+{
+  "timelineObjects": [
+    {
+      "placeVisit": {
+        "location": {
+          "latitudeE7": 0,
+          "longitudeE7": 100000000,
+          "name": "Invented stop"
+        },
+        "duration": {
+          "startTimestamp": "2000-01-01T12:00:00Z",
+          "endTimestamp": "2000-01-01T12:10:00Z"
+        }
+      }
+    },
+    {
+      "activitySegment": {
+        "startLocation": {
+          "latitudeE7": 0,
+          "longitudeE7": 100000000
+        },
+        "endLocation": {
+          "latitudeE7": 20000,
+          "longitudeE7": 100020000
+        },
+        "duration": {
+          "startTimestamp": "2000-01-01T12:10:00Z",
+          "endTimestamp": "2000-01-01T12:20:00Z"
+        },
+        "simplifiedRawPath": {
+          "points": [
+            {
+              "latE7": 10000,
+              "lngE7": 100010000,
+              "timestampMs": "946728900000"
+            }
+          ]
+        },
+        "waypointPath": {
+          "waypoints": [
+            {
+              "latE7": 15000,
+              "lngE7": 100015000
+            }
+          ]
+        }
+      }
+    },
+    {
+      "unknownExampleRecord": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0,
+            0
+          ],
+          [
+            0.0001,
+            0.0001
+          ],
+          [
+            0.0002,
+            0.0002
+          ]
+        ]
+      },
+      "properties": {
+        "kind": "track",
+        "group": 1,
+        "part": 1,
+        "point_numbers": [
+          1,
+          2,
+          3
+        ],
+        "times_utc": [
+          "2000-01-01T12:00:00.000Z",
+          "2000-01-01T12:01:00.000Z",
+          "2000-01-01T12:02:00.000Z"
+        ],
+        "original_times": [
+          "2000-01-01T12:00:00.000Z",
+          "2000-01-01T12:01:00.000Z",
+          "2000-01-01T12:02:00.000Z"
+        ],
+        "elevations_m": [
+          0,
+          1,
+          2
+        ],
+        "point_names": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            0.0003,
+            0.0003
+          ],
+          [
+            0.0004,
+            0.0004
+          ]
+        ]
+      },
+      "properties": {
+        "kind": "track",
+        "group": 2,
+        "part": 1,
+        "point_numbers": [
+          1,
+          2
+        ],
+        "times_utc": [
+          "2000-01-01T12:13:00.000Z",
+          "2000-01-01T12:14:00.000Z"
+        ],
+        "original_times": [
+          "2000-01-01T12:13:00.000Z",
+          "2000-01-01T12:14:00.000Z"
+        ],
+        "elevations_m": [
+          3,
+          4
+        ],
+        "point_names": [
+          null,
+          null
+        ]
+      }
+    }
+  ]
+}

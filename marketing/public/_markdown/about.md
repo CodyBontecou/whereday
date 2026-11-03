@@ -17,7 +17,7 @@ The app requires no account. Your journal stays on your device; Whereday does no
 
 ## What you can use
 
-Tracking, the timeline, the Apple Watch app, and supported import are free. Export and related automation features use optional lifetime purchases. Check the [current pricing details](https://whereday.com/#pricing) and the App Store purchase sheet for your storefront.
+From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Check the [current pricing details](https://whereday.com/#pricing) and the App Store purchase sheet for your storefront.
 
 Read the [product documentation](https://whereday.com/docs/), inspect the [source code under the AGPL v3 license](https://github.com/CodyBontecou/whereday), or [contact the developer](https://whereday.com/contact) with a question. This website documents the native app; its [public product metadata endpoint](https://whereday.com/api/v1/product) describes capabilities and documentation links, with a [read-only OpenAPI contract](https://whereday.com/openapi.json). It cannot access your private journal.
 

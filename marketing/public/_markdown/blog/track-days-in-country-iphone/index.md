@@ -6,13 +6,13 @@ Practical iPhone guides
 
 # How to track days spent in each country on iPhone
 
-Review country totals and the dates behind them, add missing stays, and keep a personal record without an Whereday account.
+Review country totals and the dates behind them, add missing stays, and keep a personal record without a Whereday account.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 26, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
 ## Count the dates you can account for
 
-In Whereday, open Timeline → Country Days to count local dates represented by your recorded visits, route points, and manual stays. Choose this year, the last 365 days, or all time, then open a country to review its dates. Viewing the counts and adding manual stays are free. Writing the CSV file requires the optional export purchase.
+In Whereday, open Timeline → Country Days to count local dates represented by your recorded visits, route points, and manual stays. Choose this year, the last 365 days, or all time, then open a country to review its dates. Viewing the counts and adding manual stays are free. From version 1.8, new users retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.
 
 This guide covers Country Days in Whereday 1.7.16. It is a personal travel journal: its rules do not determine tax residency, immigration status, or how a visa counts a day.
 
@@ -87,14 +87,14 @@ Analysis can identify a country for an existing coordinate. It cannot recover lo
 
 ## 5. Keep a CSV copy of your country dates
 
-Use the export control in Country Days and save the CSV to a destination you choose. The file includes country codes, local dates, and recorded/manual source information. Viewing and editing your counts are free; writing this export requires the lifetime unlock. See [current pricing](https://whereday.com/#pricing).
+Use the export control in Country Days and save the CSV to a destination you choose. The file includes country codes, local dates, and recorded/manual source information. Viewing and editing your counts are free; writing the CSV follows the export access rules above. See [current pricing](https://whereday.com/#pricing).
 
 The CSV uses `country_code`, `local_date`, and `source`. Source is `recorded`, `manual`, or `recorded+manual`; the last value still represents one country/date. Compare your file with the [checked four-row example](https://whereday.com/blog/track-days-in-country-iphone/#checked-example) and inspect a known date and a travel day. A country-date CSV is a summary, not a backup of every visit, route point, or manual stay. Keep your underlying records using the [backup checklist](https://whereday.com/blog/back-up-iphone-location-history/).
 
 ## Remember the country.
 Keep the dates behind the count.
 
-Start a free local journal and review Country Days on your iPhone.
+Check your tracking access and review Country Days on your iPhone.
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 

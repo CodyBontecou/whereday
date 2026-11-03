@@ -1,0 +1,6 @@
+{
+  "name": "whereday-marketing-checks",
+  "private": true,
+  "scripts": { "test": "node --test scripts/*.test.mjs" },
+  "devDependencies": { "@xmldom/xmldom": "0.9.12" }
+}

@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Missing Visits or GPS Points in Whereday? iPhone Checks</title>
-  <meta name="description" content="Check an empty Whereday outing, missing GPS points, visits, Watch sync, or export filters. Includes a checked zero-point example and steps that preserve your journal.">
+  <meta name="description" content="Check missing Whereday visits, GPS points, Watch sync, and export filters. Includes an empty-outing example and steps that preserve your journal.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://whereday.com/blog/missing-location-history-iphone/">
   <meta name="theme-color" content="#f5f4ef">
   <meta property="og:title" content="Missing Visits or GPS Points in Whereday? iPhone Checks">
-  <meta property="og:description" content="Check an empty Whereday outing, missing GPS points, visits, Watch sync, or export filters. Includes a checked zero-point example and steps that preserve your journal.">
+  <meta property="og:description" content="Check missing Whereday visits, GPS points, Watch sync, and export filters. Includes an empty-outing example and steps that preserve your journal.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://whereday.com/blog/missing-location-history-iphone/">
   <meta property="og:image" content="https://whereday.com/screenshots/map.png">
   <meta property="og:image:alt" content="Whereday map interface showing visits and route points">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Missing Visits or GPS Points in Whereday? iPhone Checks">
-  <meta name="twitter:description" content="Check an empty Whereday outing, missing GPS points, visits, Watch sync, or export filters. Includes a checked zero-point example and steps that preserve your journal.">
+  <meta name="twitter:description" content="Check missing Whereday visits, GPS points, Watch sync, and export filters. Includes an empty-outing example and steps that preserve your journal.">
   <meta name="twitter:image" content="https://whereday.com/screenshots/map.png">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -99,9 +99,9 @@ pre code { overflow-wrap: normal; }
       "@id": "https://whereday.com/blog/missing-location-history-iphone/",
       "url": "https://whereday.com/blog/missing-location-history-iphone/",
       "name": "Missing Visits or GPS Points in Whereday? iPhone Checks",
-      "description": "Check an empty Whereday outing, missing GPS points, visits, Watch sync, or export filters. Includes a checked zero-point example and steps that preserve your journal.",
+      "description": "Check missing Whereday visits, GPS points, Watch sync, and export filters. Includes an empty-outing example and steps that preserve your journal.",
       "inLanguage": "en",
-      "dateModified": "2026-10-26",
+      "dateModified": "2026-10-30",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -142,20 +142,40 @@ pre code { overflow-wrap: normal; }
     }
   ]
 }</script>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
-    <div class="nav-links"><a href="/blog/" aria-current="true">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div>
-  </nav>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Missing visits and route points</li></ol></nav>
     <article aria-labelledby="article-title">
-    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">What to check when visits or route points are missing in Whereday</h1><p class="lede">Check the date and recording state, then separate missing points, missing visits, pending Watch transfers, and export filters. Keep existing records while you investigate.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p></header>
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">What to check when visits or route points are missing in Whereday</h1><p class="lede">Check the date and recording state, then separate missing points, missing visits, pending Watch transfers, and export filters. Keep existing records while you investigate.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-30">October 30, 2026</time></p></header>
     <section aria-labelledby="start-here">
   <h2 id="start-here">Find out which part is missing</h2>
-  <p>If an Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.</p>
+  <p>If a Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.</p>
   <p>This guide is for an existing Whereday journal. For Apple Maps or Google Timeline records, use <a href="/blog/view-location-history-iphone/">the iPhone location-history guide</a>. Installing Whereday cannot recover a route that another app never recorded.</p>
   <nav class="article-toc" aria-label="In this guide"><strong>Choose the symptom</strong><ol><li><a href="#symptoms">Match what you see</a></li><li><a href="#recording">Check recording and permission</a></li><li><a href="#points">Inspect route points and filters</a></li><li><a href="#visits">Check visits and place names</a></li><li><a href="#watch">Check Watch transfer</a></li><li><a href="#export">Check an empty export</a></li><li><a href="#preserve">Preserve records and ask for help</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
 </section>
@@ -188,7 +208,7 @@ pre code { overflow-wrap: normal; }
   </ol>
   <h3>A saved outing can contain zero route points</h3>
   <p>In our isolated 1.7.16 release-source simulator check, Start changed to Stop and the timer ran. After stopping, Timeline saved an eight-second outing with zero distance and zero points. Its detail explicitly said <strong>No GPS points were saved for this outing yet</strong>. A running timer or an outing card alone does not confirm a route was captured.</p>
-  <figure class="product-example"><img src="/screenshots/journal-empty-outing.png" width="302" height="656" alt="Whereday outing detail showing eight seconds, zero distance, zero points, and no saved GPS points" loading="lazy" decoding="async"><figcaption>Checked October 26, 2026 in a separate Debug simulator rebuild of 1.7.16 (46), iOS 26.5. This empty test journal contains no personal route. It does not establish why no points arrived or verify physical GPS recording.</figcaption></figure>
+  <figure class="product-example"><img src="/screenshots/journal-empty-outing.webp" width="302" height="656" alt="Whereday outing detail showing eight seconds, zero distance, zero points, and no saved GPS points" loading="lazy" decoding="async"><figcaption>Checked October 26, 2026 in a separate Debug simulator rebuild of 1.7.16 (46), iOS 26.5. This empty test journal contains no personal route. It does not establish why no points arrived or verify physical GPS recording.</figcaption></figure>
   <p>Open your outing and check <strong>Points</strong> and the path, then compare the expected time range. For the complete first-session checklist, see <a href="/blog/private-location-journal-iphone/#first-recording">the recording guide</a>.</p>
   <p>Review the app’s permission under <strong>iPhone Settings → Privacy &amp; Security → Location Services</strong>. Whereday offers Always access for background visit monitoring; an active manual session and automatic visit detection have different permission needs. Follow <a href="https://support.apple.com/en-us/102515">Apple’s Location Services instructions</a> if the controls on your iOS version differ.</p>
   <p>For a new test, allow time to acquire a location and choose an open area with a clear view of the sky. Apple explains that GPS accuracy can improve over several minutes and that buildings, roofs, and terrain can obstruct signals. This is a future-recording check, not a way to recover earlier movement.</p>
@@ -223,7 +243,7 @@ pre code { overflow-wrap: normal; }
 
 <section aria-labelledby="export">
   <h2 id="export">5. If history exists but the exported file is empty</h2>
-  <p>Inspect Export Preview before changing the journal. Preview is free; writing a file requires the optional export unlock. Work on one expected date and change one filter at a time.</p>
+  <p>Inspect Export Preview before changing the journal. Preview is free; file writing follows the export access rules for new and existing users described below. Work on one expected date and change one filter at a time.</p>
   <ol>
     <li><strong>Match the record type.</strong> Choose Points for a measured path or Visits for stops. A visit record does not supply the intervening GPS route.</li>
     <li><strong>Check dates and time of day.</strong> Use a range covering the expected record. Disable the time of day filter for the comparison. Visit selection uses arrival time; an overnight visit arriving before the selected range can be excluded even if you were still there the next morning.</li>
@@ -262,7 +282,7 @@ pre code { overflow-wrap: normal; }
 
 <section class="closing" aria-labelledby="test-next-route">
   <h2 id="test-next-route">Check a short route.<br>Then trust a longer day.</h2>
-  <p>Recording and reviewing history are free. Check one finished session before relying on a new setup for a long trip.</p>
+  <p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Check one finished session before relying on a new setup for a long trip.</p>
   <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
 </section>
 <p class="source-note">Reviewed October 26, 2026 against Whereday 1.7.16 (46) release-source recording and export filters, the checked empty-outing example, Watch-sync source, and Apple’s linked Location Services guidance. This is a diagnostic checklist, not a guarantee of recovering deleted or unrecorded movement. Controls can vary by version.</p>
@@ -319,6 +339,7 @@ pre code { overflow-wrap: normal; }
 })();
 </script>
 <!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
 <script defer src="/assets/acquisition.js"></script>
 </body>
 </html>

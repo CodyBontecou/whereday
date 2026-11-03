@@ -1,0 +1,70 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Choose the format your next tool can use</h2>
+  <p><strong>GPX</strong> is a useful starting point for a GPS track or route. Choose <strong>KML</strong> when your destination expects Google Earth-style features, <strong>GeoJSON</strong> for mapping or GIS work, and <strong>CSV</strong> for a point table. Check the destination’s actual import requirements before converting.</p>
+  <p>The extension does not tell you everything a file preserves. A line on a map, a timed recording, and a restorable location journal are different outputs. Keep the original file alongside any converted copy.</p>
+  <nav class="article-toc" aria-label="In this guide"><ol><li><a href="#choose">Match a format to your task</a></li><li><a href="#example">Download the same invented trip in four formats</a></li><li><a href="#differences">Inspect coordinates, timestamps and segments</a></li><li><a href="#check">Check a conversion before relying on it</a></li><li><a href="#whereday">Choose a Whereday export or restore workflow</a></li></ol></nav>
+</section>
+<section aria-labelledby="choose">
+  <h2 id="choose">GPX vs KML vs GeoJSON vs CSV</h2>
+  <div class="table-scroll" role="region" aria-label="Location file format comparison" tabindex="0"><table><caption>Start with the task, then verify the receiving app</caption><thead><tr><th scope="col">Format</th><th scope="col">Useful for</th><th scope="col">Check before using it</th></tr></thead><tbody>
+    <tr><th scope="row">GPX</th><td>GPS tracks, routes and waypoints in compatible viewers</td><td>Which objects are present, whether points have times, and whether segments stay separate</td></tr>
+    <tr><th scope="row">KML</th><td>Google Earth-style placemarks, geometry and presentation</td><td>Support for the actual geometry and extensions; an ordinary line is different from a timed track</td></tr>
+    <tr><th scope="row">GeoJSON</th><td>Mapping applications and geographic information systems (GIS)</td><td>Geometry type, longitude-first coordinate order, and the meaning of custom properties</td></tr>
+    <tr><th scope="row">CSV</th><td>Spreadsheets, filtering and row-based analysis</td><td>Column names, timezone, units and group identifiers; CSV does not define a universal route model</td></tr>
+  </tbody></table></div>
+  <p>A planned route may have coordinates without recording times. A recorded track can contain several segments. Neither a valid file nor a continuous line proves that every part of a real journey was captured.</p>
+</section>
+<section aria-labelledby="example">
+  <h2 id="example">One invented trip, four downloadable files</h2>
+  <p>The comparison starts with <strong>five points in two segments</strong>: three points from 12:00 to 12:02, then two from 12:13 to 12:14 on January 1, 2000, in UTC. The break between segments is 11 minutes. The coordinates are invented and there is no measured elevation.</p>
+  <pre aria-label="Two segments in the example">Segment 1: 12:00 → 12:01 → 12:02
+           [11-minute break]
+Segment 2: 12:13 → 12:14</pre>
+  <ul>
+    <li><a href="/samples/synthetic-format-trip.gpx" download>Download the source GPX</a> — one track, two segments and five timed points.</li>
+    <li><a href="/samples/synthetic-format-trip.kml" download>Download the timed KML example</a> — two <code>gx:Track</code> elements inside a <code>gx:MultiTrack</code>, with interpolation between them disabled.</li>
+    <li><a href="/samples/synthetic-format-trip.geojson" download>Download the GeoJSON example</a> — two LineString features with three and two positions; each has a custom <code>times</code> array.</li>
+    <li><a href="/samples/synthetic-format-trip.csv" download>Download the CSV point table</a> — five data rows, plus a header, using the free viewer’s documented CSV output.</li>
+  </ul>
+  <p>These are controlled examples created for this guide, not personal history or newly captured native-app exports. Automated checks compare their coordinates, times and group boundaries. That verifies the contents, not that every third-party viewer will import every field.</p>
+</section>
+<section aria-labelledby="differences">
+  <h2 id="differences">What changes between the files?</h2>
+  <h3>Coordinate order needs attention</h3>
+  <p>The first point is latitude <strong>0</strong>, longitude <strong>10</strong>. GPX labels those values as attributes; GeoJSON positions and KML track coordinates put longitude first. Swapping them can move a point while leaving both numbers within valid coordinate ranges.</p>
+  <pre><code>GPX:     &lt;trkpt lat="0" lon="10"&gt;…&lt;/trkpt&gt;
+GeoJSON: "coordinates": [[10, 0], …]
+KML:     &lt;gx:coord&gt;10 0 0&lt;/gx:coord&gt;
+CSV:     latitude=0, longitude=10</code></pre>
+  <p>The KML example is clamped to the ground: its third-coordinate zeros are placeholders, not measured elevation. The GPX has no elevation elements, the GeoJSON positions are two-dimensional, and the CSV elevation cells are blank. For real height data, check the units and height reference rather than assuming a copied number has the same physical meaning.</p>
+  <h3>Time must have a defined place</h3>
+  <p>In the source GPX, each point has a <code>time</code> value. The KML example pairs each <code>when</code> with a <code>gx:coord</code> in the same track. This uses Google’s KML track extension; the destination must support it. A simple KML LineString is a different representation.</p>
+  <p>GeoJSON describes geometry and feature properties, but these examples’ <code>times</code> arrays are our own convention: entry 1 describes coordinate 1, and so on within each feature. A reader must explicitly understand that convention to use the times. Keeping the property in a file does not guarantee timed playback in another app.</p>
+  <p>The CSV includes both <code>time_utc</code> and <code>original_time</code>. The first is normalized to UTC; the second retains the original timestamp text. When inspecting a real export, compare timezone-aware times rather than only the clock labels shown in a spreadsheet or viewer.</p>
+  <h3>Keep the break instead of inventing a connection</h3>
+  <p>The GPX uses two <code>trkseg</code> elements. The KML has two timed tracks and <code>gx:interpolate</code> set to 0. The GeoJSON has two separate LineString features. In CSV, <code>group</code> is 1 for the first three rows and 2 for the last two; point numbering restarts in each group.</p>
+  <p>A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.</p>
+</section>
+<section aria-labelledby="check">
+  <h2 id="check">Check a conversion with a small file first</h2>
+  <ol>
+    <li><strong>Keep the original.</strong> Save the converted file separately. Renaming the extension does not convert the contents.</li>
+    <li><strong>Inspect counts and dates.</strong> For this example, expect five points, two groups and times from 12:00 to 12:14 UTC. Check that one segment contains three points and the other contains two.</li>
+    <li><strong>Check a known coordinate.</strong> The first point is 0° latitude, 10° longitude. Check the destination’s field order and units.</li>
+    <li><strong>Open it in the intended destination.</strong> Look for a joined gap, absent times, changed point counts or ignored properties. File parsing checks and actual app behavior answer different questions.</li>
+    <li><strong>Document what was omitted.</strong> These derived examples preserve selected point data and grouping; they do not carry every possible source field, extension or application setting.</li>
+  </ol>
+  <p>To inspect the GPX, use the <a href="/tools/gpx-viewer/">free local GPX viewer</a> and select the source GPX downloaded above. Expect five valid points, one track and two segments. The viewer accepts GPX, not the KML or GeoJSON examples. Its CSV download should match the CSV example byte-for-byte.</p>
+  <p>The <a href="/blog/check-gpx-file/">worked GPX inspection tutorial</a> explains missing timestamps, invalid coordinates and CSV limits. Warnings identify things to review; they do not automatically prove that a pause, duplicate position or gap is an error.</p>
+</section>
+<section aria-labelledby="whereday">
+  <h2 id="whereday">Which file should you keep from Whereday?</h2>
+  <p>For a portable route, read the <a href="/blog/record-iphone-route-gpx/">recording and GPX export guide</a>. Whereday’s native format options also include KML, GeoJSON and CSV; see the <a href="/docs/export-import/">export and import reference</a> for supported record types and requirements. This guide’s comparison fixtures are not assertions about every native exporter’s field choices.</p>
+  <p>For a restorable journal copy, follow the <a href="/blog/back-up-iphone-location-history/">Whereday JSON backup workflow</a>. Supported Whereday CSV or Markdown imports have their own required fields. A generic point table is not automatically compatible, and the GPX, KML and GeoJSON examples are not Whereday restore files.</p>
+  <p>New-user tracking access and native file-writing access depend on your plan and existing rights. The free browser GPX viewer does not require Whereday or an account. Keep the original recording or archive as well as any file made for another tool.</p>
+</section>
+<section aria-labelledby="sources">
+  <h2 id="sources">Specifications behind the examples</h2>
+  <p>Use the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation</a> for point and segment structure, the <a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack">KML track reference</a> for timed tracks and interpolation, and <a href="https://www.rfc-editor.org/rfc/rfc7946">GeoJSON RFC 7946</a> for positions, geometry and properties. App support must be checked separately from the format’s capabilities.</p>
+</section>
+<section><h2>Convert an existing GPX locally</h2><p>The <a href="/tools/gpx-viewer/#geojson-output">GPX viewer now offers GeoJSON download</a>. Its custom properties differ from this article’s controlled comparison file: use the <a href="/blog/check-gpx-file/#geojson">worked converter tutorial</a> and exact generated example to check its field mapping. The converter keeps parts disconnected at invalid coordinates and dateline jumps, and preserves elevation in a property array rather than assuming a height reference for geometry.</p></section>

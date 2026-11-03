@@ -318,35 +318,47 @@ footer {
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .doc-card a { text-decoration: underline; text-underline-offset: 4px; }
 </style>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <nav class="top" aria-label="Primary navigation">
-    <div class="nav-inner">
-      <a href="/" class="brand" aria-label="Whereday home">
+  <nav class="top shared-navigation" aria-label="Primary navigation"><div class="nav-inner"><a href="/" class="brand" aria-label="Whereday home">
         <img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" alt="" width="26" height="26">
         <span class="brand-dot" aria-hidden="true"></span>
         WHEREDAY
-      </a>
-      <div class="nav-links">
-        <a href="/#features">Features</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/terms">Terms</a>
-        <a href="https://apps.apple.com/app/id6761960794" class="btn">Download</a>
-      </div>
-    </div>
-  </nav>
+      </a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/" aria-current="true">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/" aria-current="true">Docs</a><a href="/#pricing">Pricing</a><a href="/#features">Features</a><a href="/terms">Terms</a></div></details><a href="https://apps.apple.com/app/id6761960794" class="btn">Download</a></div></div></nav>
 
 <main id="main">
 
   <header class="doc-head">
     <span class="eyebrow">§ Docs · Guide 6 of 11</span>
     <h1>Export and restore location history</h1>
-    <p class="lede">Export recorded visits, route points, and outings in eight formats. Preview is free; writing files requires Pro. Import supported Whereday visit and point files for free.</p>
+    <p class="lede">Choose among eight export formats; content depends on the record type. Preview and supported import are free. Export access depends on when you joined; new users retain exports after tracking expires.</p>
     <div class="meta-strip">
       <div><div class="k">Platform</div><div class="v">iOS 17+</div></div>
-      <div><div class="k">Updated</div><div class="v">October 26, 2026</div></div>
+      <div><div class="k">Updated</div><div class="v">October 30, 2026</div></div>
       <div><div class="k">Reading</div><div class="v">5 min</div></div>
       <div><div class="k">Back to</div><div class="v"><a href="/docs/">All docs</a></div></div>
     </div>
@@ -354,7 +366,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
   <div class="content">
     <div class="doc-card">
-<div class="callout pro"><p><strong>Free vs Pro.</strong> Building and previewing exports is free. Writing export files (from the app's Export tab or an outing's page) is the Pro unlock, along with automatic exports and webhooks. <strong>Importing a prior export is free.</strong></p></div>
+<div class="callout pro"><p><strong>Preview, import and export access.</strong> Export Preview and supported import are free. New users from version 1.8 retain file exports after tracking access expires. Existing free users keep their previous export-unlock requirement. Auto Export and webhook settings follow the same export access; folder selection, scheduling and receiver setup still need to be configured. See <a href="/#export-access">the access explanation</a>.</p></div>
 
 <h2>Eight formats</h2>
 <table>
@@ -368,7 +380,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 <tr><td><strong>OwnTracks</strong></td><td>OwnTracks-ecosystem tools (route points).</td></tr>
 <tr><td><strong>Overland</strong></td><td>Overland-ecosystem tools (route points).</td></tr>
 </table>
-<p>Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland formats carry route points (visits exports in those slots fall back to JSON). For receiver delivery, follow the <a href="/integrations/dawarich/">Dawarich Overland walkthrough</a> and verify the destination’s saved points.</p>
+<p>Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland carry GPS points. In the released 1.8 export flow, choosing either uses Points even if Visits or All is selected; other selected formats keep their selected data type. For an outing, these two formats contain its route points, not visit rows or outing notes. Check Preview for each format. For receiver delivery, follow the <a href="/integrations/dawarich/">Dawarich Overland walkthrough</a> and verify the destination’s saved points.</p>
 
 <h2>What gets exported</h2>
 <ul>
@@ -399,14 +411,16 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 <h2>Saving and sharing</h2>
 <p>Pick a <strong>default folder</strong> (with auto-save on by default) and exports land there silently with a confirmation toast; otherwise the standard share sheet appears. The <strong>Preview</strong> button renders everything without writing — free, and a good way to sanity-check filters. Single outings can also be exported straight from their detail page.</p>
 
-<h2>Import</h2>
-<p>Settings → <strong>Import file</strong> accepts visit and point files exported from Whereday as JSON, CSV, or Markdown. Importing is free. A matching file extension alone does not make another app's file compatible: The verified App Store 1.7.16 build does not support Google Timeline archives; its importer also lacks the newer preview and duplicate checks.</p>
+<h2 id="supported-import">Import supported visit and point files</h2>
+<p>Compare <a href="/blog/gpx-kml-geojson-location-history/">GPX, KML, GeoJSON and CSV</a> with checked synthetic files before choosing an output for another app.</p>
+<p>Settings → <strong>Data Import → Import File</strong> accepts supported Whereday JSON, CSV, or Markdown and, in version 1.8, supported Google Timeline JSON. Importing is free. Review format, dates, selected record types, and approximate duplicates before confirming. A matching file extension alone does not make another app's file compatible. Follow the <a href="/blog/import-google-timeline-iphone/">Google Timeline import walkthrough</a> for supported structures and a checked synthetic example.</p>
 <div role="region" aria-label="Supported import file formats" tabindex="0" style="overflow-x:auto;max-width:100%">
 <table>
 <caption>Choose a file for the next task</caption>
 <tr><th scope="col">Format</th><th scope="col">Useful for</th><th scope="col">Import into Whereday</th></tr>
 <tr><th scope="row">Whereday JSON</th><td>Structured visit or point records</td><td>Supported visit and point exports</td></tr>
 <tr><th scope="row">Whereday CSV / Markdown</th><td>Spreadsheets / readable records</td><td>Supported visit and point exports; required fields must remain</td></tr>
+<tr><th scope="row">Google Timeline JSON</th><td>Moving supported Google visits and timed points</td><td>Version 1.8: classic raw, legacy semantic, and device Timeline formats; preview first</td></tr>
 <tr><th scope="row">GPX / KML / GeoJSON</th><td>Mapping tools and route viewers</td><td>No</td></tr>
 <tr><th scope="row">OwnTracks / Overland</th><td>Compatible location tools</td><td>No</td></tr>
 </table>
@@ -420,7 +434,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 <li>When importing later, keep the originals and inspect several dates, visits, and points after the import. Do not assume every setting, photo association, or edited outing is restored.</li>
 </ol>
 <p><a href="/docs/automatic-exports/">Automatic exports</a> can keep scheduled copies, subject to iOS background execution. For the recording workflow, see <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>. For a route file, follow <a href="/blog/record-iphone-route-gpx/">the GPX recording walkthrough</a>. For restorable records, use <a href="/blog/back-up-iphone-location-history/">the backup and restore checklist</a>. Comparing apps? Read <a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a>.</p>
-<p>Import adds supported records. In the checked 1.7.16 release-source example, post-import visit reconciliation combined two nearby visits into one, while importing the point file again added repeated points. The import result is not necessarily the final stored visit count. See the <a href="/blog/back-up-iphone-location-history/#checked-import">checked disk import and JSON re-export</a>. Import each intended file once, then check individual records before retrying. The <a href="/blog/back-up-iphone-location-history/#sample">synthetic JSON examples</a> show the visit and point structures without using private history.</p>
+<p>Version 1.8 previews and skips approximate duplicate visits and points. In the historical 1.7.16 release-source example, post-import visit reconciliation combined two nearby visits into one, while importing the point file again added repeated points. The import result is not necessarily the final stored visit count. See the <a href="/blog/back-up-iphone-location-history/#checked-import">checked disk import and JSON re-export</a>. Inspect the current preview and individual records before retrying; the historical 1.7.16 counts do not describe the newer duplicate-skipping importer. The <a href="/blog/back-up-iphone-location-history/#sample">synthetic JSON examples</a> show the visit and point structures without using private history.</p>
 <p>For a readable note in a desktop vault, follow the <a href="/blog/iphone-location-journal-obsidian/">Markdown-to-Obsidian workflow</a>. It covers manual file placement and keeps generated notes separate from personal writing.</p>
     </div>
     <nav class="pager" aria-label="Guides">
@@ -495,6 +509,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 })();
 </script>
 <!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
 <script defer src="/assets/acquisition.js"></script>
 </body>
 </html>

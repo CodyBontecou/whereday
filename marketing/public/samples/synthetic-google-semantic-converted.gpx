@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday local Timeline converter" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata><desc>Supported coordinate/time records only. Point order within each source path and duplicates retained. Path breaks at rejected components, backwards time, UTC day changes, gaps over ten minutes and longitude jumps over 180 degrees. Visits and activity endpoints are waypoints. No road matching or missing-path reconstruction.</desc></metadata>
+  <wpt lat="0" lon="10"><time>2000-01-01T12:00:00.000Z</time><name>Visit, source entry 1</name><desc>Visit end: 2000-01-01T12:10:00.000Z. Not a route point.</desc><type>Visit</type></wpt>
+  <wpt lat="0" lon="10"><time>2000-01-01T12:10:00.000Z</time><name>Activity endpoint, source entry 2</name><desc>Only an endpoint; no connecting path inferred.</desc><type>Activity endpoint</type></wpt>
+  <wpt lat="0.002" lon="10.002"><time>2000-01-01T12:20:00.000Z</time><name>Activity endpoint, source entry 2</name><desc>Only an endpoint; no connecting path inferred.</desc><type>Activity endpoint</type></wpt>
+  <trk><name>Supported Timeline path points</name>
+    <trkseg>
+      <trkpt lat="0.001" lon="10.001"><time>2000-01-01T12:15:00.000Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

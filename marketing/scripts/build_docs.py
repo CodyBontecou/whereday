@@ -10,7 +10,7 @@ REVIEWED = {"getting-started", "tracking", "export-import", "privacy-data", "app
 GUIDES = [
     # (slug, title, short, lede, platform, minutes, tag)
     ("getting-started", "Getting started",
-     "Install, onboarding, permissions, and your first tracking session.",
+     "Install Whereday, choose location permissions, and check your first recorded route and visits on iPhone.",
      "Everything from installing Whereday to your first recorded day — what each permission is for and where your data lives from minute one.",
      "iOS 17+", 3, None),
     ("tracking", "Visits, routes & battery",
@@ -31,16 +31,16 @@ GUIDES = [
      "iOS 17+", 2, None),
     ("export-import", "Export and restore location history",
      "Eight export formats, filters, filename templates, and free import for restores.",
-     "Export recorded visits, route points, and outings in eight formats. Preview is free; writing files requires Pro. Import supported Whereday visit and point files for free.",
-     "iOS 17+", 5, "PRO"),
+     "Choose among eight export formats; content depends on the record type. Preview and supported import are free. Export access depends on when you joined; new users retain exports after tracking expires.",
+     "iOS 17+", 5, None),
     ("automatic-exports", "Automatically export iPhone location history to a folder",
      "Set up daily or interval exports, check rewrite and append behavior, and verify saved files in Whereday.",
      "Save the current local day to a folder you choose. Check a manual run first, then choose how later runs update the file and how you will spot a missed day.",
-     "iOS 17+", 6, "PRO"),
+     "iOS 17+", 6, None),
     ("webhooks", "Webhooks & self-hosting",
      "Configure optional delivery and verify your receiver’s payload and authentication requirements.",
      "The optional webhook feature posts your data, in your chosen format, to a server you control. Off by default, fully configurable, and nothing is sent until you set it up.",
-     "iOS 17+", 4, "PRO"),
+     "iOS 17+", 4, None),
     ("siri-shortcuts", "Siri & Shortcuts for iPhone location tracking",
      "Start and stop tracking, read saved visits, rename outings, and export a chosen date range with Whereday Shortcuts actions.",
      "Build shortcuts for recording, reading your journal, renaming stops, and exporting files. Choose the dates and data you need, then check the result before adding an automation.",
@@ -50,7 +50,7 @@ GUIDES = [
      "Start a route on Apple Watch, record without your iPhone nearby, then check the transfer back to your phone. Learn the recording controls, sync status, and recovery checks.",
      "watchOS 10+", 6, None),
     ("privacy-data", "Privacy & your data",
-     "What stays on your device, what can leave it, and how deletion works.",
+     "Understand Whereday’s on-device location storage, optional network services, version-specific analytics, and deletion controls.",
      "A plain-language map of every place your data can go: on-device storage, Apple system services, first-party analytics, and the optional features you control.",
      "iOS 17+ · watchOS 10+", 4, None),
 ]
@@ -147,7 +147,7 @@ BODIES["timeline-outings"] = """
 <p>Tap any outing for its full record: a road-matched mini map, start and end times, duration, distance, point count, GPS-glitch count, and average speed. Recorded outings can be renamed and given notes (inferred ones can't — edit the points' day instead). Linked visits and photos appear below.</p>
 <ul>
 <li><strong>Show on map</strong> focuses the Map tab on this outing's path.</li>
-<li><strong>Export</strong> saves this single outing in your choice of format (a Pro feature; the picker remembers your format).</li>
+<li><strong>Export</strong> saves this single outing in your choice of format (subject to your export access; the picker remembers your format).</li>
 <li><strong>Delete outing</strong> removes the session and its GPS points — <strong>visits are kept</strong>. Deleting the active outing stops tracking first.</li>
 </ul>
 
@@ -170,7 +170,7 @@ BODIES["places"] = """
 <tr><th scope="row">Fix a stop already in your journal</th><td>Open that visit and confirm or correct it.</td></tr>
 <tr><th scope="row">Add a stop from an earlier day</th><td>Map → + → Add past visit.</td></tr>
 </table>
-<p>Recording, reviewing, and managing places are free. Saving an export file is a separate optional purchase; see <a href="/#pricing">current pricing</a>.</p>
+<p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. See <a href="/#pricing">current pricing</a>.</p>
 
 <h2 id="saved-locations">Manage reusable saved locations</h2>
 <ol>
@@ -181,7 +181,7 @@ BODIES["places"] = """
 <li>Save, then check the location in the list. Search the list or open an existing location to edit its name, coordinate, address, or radius.</li>
 </ol>
 <p>Nearby future automatic visits can use the saved name. Editing or deleting a location in this management screen keeps past visits unchanged. To fix an older visit, edit that visit itself. A place with the same name is not necessarily the same location; check the pin and radius.</p>
-<figure style="max-width:302px;margin:24px auto"><img src="/screenshots/saved-location-editor.png" width="302" height="656" style="height:auto" alt="Whereday Add Location editor with name, optional address, direct latitude and longitude fields, and a default 150 metre match radius" loading="lazy" decoding="async"><figcaption><p>The editor opened with location permission denied in an isolated Debug simulator rebuild of release 1.7.16, iOS 26.5, checked October 26, 2026. This confirms the available controls, not a completed save through this screen.</p></figcaption></figure>
+<figure style="max-width:302px;margin:24px auto"><img src="/screenshots/saved-location-editor.webp" width="302" height="656" style="height:auto" alt="Whereday Add Location editor with name, optional address, direct latitude and longitude fields, and a default 150 metre match radius" loading="lazy" decoding="async"><figcaption><p>The editor opened with location permission denied in an isolated Debug simulator rebuild of release 1.7.16, iOS 26.5, checked October 26, 2026. This confirms the available controls, not a completed save through this screen.</p></figcaption></figure>
 <p>Direct coordinate entry does not require the phone’s current GPS position. Map search and map previews use Apple services; disabling Location names does not turn those interactive map services into an offline feature. See the <a href="/docs/privacy-data/">network and storage reference</a>.</p>
 
 <h2 id="locations-csv">Import saved locations from CSV</h2>
@@ -245,7 +245,7 @@ BODIES["photos"] = """
 """
 
 BODIES["export-import"] = """
-<div class="callout pro"><p><strong>Free vs Pro.</strong> Building and previewing exports is free. Writing export files (from the app's Export tab or an outing's page) is the Pro unlock, along with automatic exports and webhooks. <strong>Importing a prior export is free.</strong></p></div>
+<div class="callout pro"><p><strong>Preview, import and export access.</strong> Export Preview and supported import are free. New users from version 1.8 retain file exports after tracking access expires. Existing free users keep their previous export-unlock requirement. Auto Export and webhook settings follow the same export access; folder selection, scheduling and receiver setup still need to be configured. See <a href="/#export-access">the access explanation</a>.</p></div>
 
 <h2>Eight formats</h2>
 <table>
@@ -259,7 +259,7 @@ BODIES["export-import"] = """
 <tr><td><strong>OwnTracks</strong></td><td>OwnTracks-ecosystem tools (route points).</td></tr>
 <tr><td><strong>Overland</strong></td><td>Overland-ecosystem tools (route points).</td></tr>
 </table>
-<p>Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland formats carry route points (visits exports in those slots fall back to JSON). For receiver delivery, follow the <a href="/integrations/dawarich/">Dawarich Overland walkthrough</a> and verify the destination’s saved points.</p>
+<p>Choose any mix of formats in one export; each becomes its own file. OwnTracks and Overland carry GPS points. In the released 1.8 export flow, choosing either uses Points even if Visits or All is selected; other selected formats keep their selected data type. For an outing, these two formats contain its route points, not visit rows or outing notes. Check Preview for each format. For receiver delivery, follow the <a href="/integrations/dawarich/">Dawarich Overland walkthrough</a> and verify the destination’s saved points.</p>
 
 <h2>What gets exported</h2>
 <ul>
@@ -290,14 +290,16 @@ BODIES["export-import"] = """
 <h2>Saving and sharing</h2>
 <p>Pick a <strong>default folder</strong> (with auto-save on by default) and exports land there silently with a confirmation toast; otherwise the standard share sheet appears. The <strong>Preview</strong> button renders everything without writing — free, and a good way to sanity-check filters. Single outings can also be exported straight from their detail page.</p>
 
-<h2>Import</h2>
-<p>Settings → <strong>Import file</strong> accepts visit and point files exported from Whereday as JSON, CSV, or Markdown. Importing is free. A matching file extension alone does not make another app's file compatible: The verified App Store 1.7.16 build does not support Google Timeline archives; its importer also lacks the newer preview and duplicate checks.</p>
+<h2 id="supported-import">Import supported visit and point files</h2>
+<p>Compare <a href="/blog/gpx-kml-geojson-location-history/">GPX, KML, GeoJSON and CSV</a> with checked synthetic files before choosing an output for another app.</p>
+<p>Settings → <strong>Data Import → Import File</strong> accepts supported Whereday JSON, CSV, or Markdown and, in version 1.8, supported Google Timeline JSON. Importing is free. Review format, dates, selected record types, and approximate duplicates before confirming. A matching file extension alone does not make another app's file compatible. Follow the <a href="/blog/import-google-timeline-iphone/">Google Timeline import walkthrough</a> for supported structures and a checked synthetic example.</p>
 <div role="region" aria-label="Supported import file formats" tabindex="0" style="overflow-x:auto;max-width:100%">
 <table>
 <caption>Choose a file for the next task</caption>
 <tr><th scope="col">Format</th><th scope="col">Useful for</th><th scope="col">Import into Whereday</th></tr>
 <tr><th scope="row">Whereday JSON</th><td>Structured visit or point records</td><td>Supported visit and point exports</td></tr>
 <tr><th scope="row">Whereday CSV / Markdown</th><td>Spreadsheets / readable records</td><td>Supported visit and point exports; required fields must remain</td></tr>
+<tr><th scope="row">Google Timeline JSON</th><td>Moving supported Google visits and timed points</td><td>Version 1.8: classic raw, legacy semantic, and device Timeline formats; preview first</td></tr>
 <tr><th scope="row">GPX / KML / GeoJSON</th><td>Mapping tools and route viewers</td><td>No</td></tr>
 <tr><th scope="row">OwnTracks / Overland</th><td>Compatible location tools</td><td>No</td></tr>
 </table>
@@ -311,13 +313,13 @@ BODIES["export-import"] = """
 <li>When importing later, keep the originals and inspect several dates, visits, and points after the import. Do not assume every setting, photo association, or edited outing is restored.</li>
 </ol>
 <p><a href="/docs/automatic-exports/">Automatic exports</a> can keep scheduled copies, subject to iOS background execution. For the recording workflow, see <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>. For a route file, follow <a href="/blog/record-iphone-route-gpx/">the GPX recording walkthrough</a>. For restorable records, use <a href="/blog/back-up-iphone-location-history/">the backup and restore checklist</a>. Comparing apps? Read <a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a>.</p>
-<p>Import adds supported records. In the checked 1.7.16 release-source example, post-import visit reconciliation combined two nearby visits into one, while importing the point file again added repeated points. The import result is not necessarily the final stored visit count. See the <a href="/blog/back-up-iphone-location-history/#checked-import">checked disk import and JSON re-export</a>. Import each intended file once, then check individual records before retrying. The <a href="/blog/back-up-iphone-location-history/#sample">synthetic JSON examples</a> show the visit and point structures without using private history.</p>
+<p>Version 1.8 previews and skips approximate duplicate visits and points. In the historical 1.7.16 release-source example, post-import visit reconciliation combined two nearby visits into one, while importing the point file again added repeated points. The import result is not necessarily the final stored visit count. See the <a href="/blog/back-up-iphone-location-history/#checked-import">checked disk import and JSON re-export</a>. Inspect the current preview and individual records before retrying; the historical 1.7.16 counts do not describe the newer duplicate-skipping importer. The <a href="/blog/back-up-iphone-location-history/#sample">synthetic JSON examples</a> show the visit and point structures without using private history.</p>
 <p>For a readable note in a desktop vault, follow the <a href="/blog/iphone-location-journal-obsidian/">Markdown-to-Obsidian workflow</a>. It covers manual file placement and keeps generated notes separate from personal writing.</p>
 
 """
 
 BODIES["automatic-exports"] = """
-<div class="callout pro"><p><strong>Optional paid feature.</strong> Auto Export appears in the Export tab after you choose a default export folder and unlock file exports. Recording, viewing history, and Export Preview are free.</p></div>
+<div class="callout pro"><p><strong>Optional scheduled exports.</strong> Auto Export appears in the Export tab after you choose a default export folder and have export access. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.</p></div>
 
 <h2 id="setup">Set up one file you can check</h2>
 <ol>
@@ -380,7 +382,7 @@ BODIES["automatic-exports"] = """
 """
 
 BODIES["webhooks"] = """
-<div class="callout pro"><p><strong>Pro feature, off by default.</strong> Webhooks can send your location data off your device — to a server <em>you</em> choose. Nothing is sent until you configure an endpoint, and the settings screen leads with a prominent warning card.</p></div>
+<div class="callout pro"><p><strong>Export access, off by default.</strong> New users from 1.8 retain export access after tracking expires; existing free users keep their previous export-unlock requirement. Webhooks can send your location data off your device — to a server <em>you</em> choose. Nothing is sent until you configure an endpoint, and the settings screen leads with a prominent warning card.</p></div>
 
 <h2>What it's for</h2>
 <p>Webhooks deliver records to a receiver you choose, but the payload must match that receiver's API. An endpoint accepting HTTP POST is not enough to establish compatibility. Verify a dedicated test destination before enabling delivery of your history.</p>
@@ -482,7 +484,7 @@ BODIES["siri-shortcuts"] = """
 
 BODIES["apple-watch"] = """
 <h2>Record on the Watch, then check the phone copy</h2>
-<p>Whereday can record GPS points on Apple Watch without the iPhone nearby. The Watch keeps a local queue for transfer to the companion iPhone. Recording and reviewing history are free; writing export files on the phone requires the optional unlock.</p>
+<p>Whereday can record GPS points on Apple Watch without the iPhone nearby. The Watch keeps a local queue for transfer to the companion iPhone. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.</p>
 <p>Install the Watch app and allow its location request. The phone app is needed to review transferred records in its journal and use its export workflow. Controls can vary by version; if a control described below is missing, check the available app update.</p>
 
 <h2>Before your first route</h2>
@@ -529,6 +531,9 @@ BODIES["apple-watch"] = """
 <p>This explains why a pending queue can contain points already saved on the phone: the Watch may still be waiting for an acknowledgement. Conversely, an empty queue says nothing about whether you selected the right date or whether a route was recorded before transfer.</p>
 <p><strong>What was checked:</strong> released queue batching, acknowledgements, receiver imports, and reopening temporary disk stores in an iOS 26.5 simulator. All 15 selected native tests passed on October 26, 2026. Delivery was supplied by the test with WatchConnectivity disabled. No physical Watch recording, Bluetooth or Wi-Fi delivery, background transfer, app-process restart, or Watch sync screen was newly verified.</p>
 
+<h2>Export the phone copy as GPX</h2>
+<p>Once the recording is saved on the iPhone, follow the <a href="/blog/record-iphone-route-gpx/#watch-to-gpx">Apple Watch to GPX walkthrough</a>. It covers selecting points or an outing, checking the saved file, and comparing a partial 500-point transfer with the complete 503-point synthetic example. A GPX that opens successfully can still be missing the last batch.</p>
+
 <h2>If the route is missing or incomplete</h2>
 <ul>
 <li><strong>Nothing recorded:</strong> check the Watch's location permission, tracking state, and whether the point count advanced during the session.</li>
@@ -554,7 +559,7 @@ BODIES["apple-watch"] = """
 <h3>Does Sync queued mean my route is missing from the phone?</h3>
 <p>Not necessarily. In the checked example, 500 points were already saved while all 503 still remained queued because the acknowledgement had not been applied. Inspect the phone’s intended date before deciding what is missing.</p>
 <h3>Will retrying add the same points twice?</h3>
-<p>The checked replay of the same Watch batch added zero duplicate points, including after the phone store was reopened. This depends on those same record IDs. A repeated file import is a separate workflow: the <a href="/blog/back-up-iphone-location-history/#checked-import">backup import check</a> shows that importing the point file again added repeated points.</p>
+<p>The checked replay of the same Watch batch added zero duplicate points, including after the phone store was reopened. This depends on those same record IDs. A repeated file import is a separate workflow. The <a href="/blog/back-up-iphone-location-history/#checked-import">historical backup import check in 1.7.16</a> added repeated points. Version 1.8 adds duplicate preview and skipping for supported imports; see the <a href="/blog/import-google-timeline-iphone/">current import walkthrough</a>.</p>
 <h3>Does Nothing to sync prove I have a complete backup?</h3>
 <p>No. It describes pending transfer data. It does not recreate unrecorded movement, establish the completeness of older phone history, or provide a separate archive. Verify the phone copy and retain supported exports for records you need to keep.</p>
 
@@ -567,7 +572,7 @@ BODIES["apple-watch"] = """
 # Country Days is present in verified public 1.7.16 build 46.
 BODIES["timeline-outings"] += """
 <h2>Country Days</h2>
-<p>Timeline → <strong>Country Days</strong> counts local dates represented by visits, route points, and manual stays. Review this year, the last 365 days, or all time. A travel date can count in more than one country; gaps are not filled automatically. Viewing and manual stays are free; writing the country-date CSV uses the export purchase.</p>
+<p>Timeline → <strong>Country Days</strong> counts local dates represented by visits, route points, and manual stays. Review this year, the last 365 days, or all time. A travel date can count in more than one country; gaps are not filled automatically. Viewing and manual stays are free; writing the country-date CSV follows the <a href="/#export-access">new-user and existing-user export rules</a>.</p>
 <p>See <a href="/blog/track-days-in-country-iphone/">how to track days spent in each country</a> for timezone, network-geocoding, and counting details, including a <a href="/blog/track-days-in-country-iphone/#checked-example">checked four-row CSV example</a>.</p>
 """
 
@@ -616,7 +621,7 @@ SHELL = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>__TITLE__ — Whereday Docs</title>
+  <title>__SEO_TITLE__ — Whereday Docs</title>
   <meta name="description" content="__DESC__">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="__CANONICAL__">
@@ -780,6 +785,12 @@ def build():
     OUT.mkdir(parents=True, exist_ok=True)
     total = len(GUIDES)
 
+    seo_titles = {
+        "apple-watch": "Record Apple Watch GPS without your iPhone",
+        "automatic-exports": "Auto-export iPhone location history",
+        "places": "Save and edit places on iPhone",
+        "siri-shortcuts": "Siri & Shortcuts for location tracking",
+    }
     # Guide pages
     for i, (slug, title, short, lede, platform, minutes, tag) in enumerate(GUIDES):
         prev_g = GUIDES[i - 1] if i > 0 else None
@@ -789,7 +800,7 @@ def build():
         body = body.replace("__TITLE__", html.escape(title))
         body = body.replace("__LEDE__", html.escape(lede))
         body = body.replace("__PLATFORM__", html.escape(platform))
-        body = body.replace("__UPDATED__", UPDATED if slug in REVIEWED else "August 22, 2026")
+        body = body.replace("__UPDATED__", "October 30, 2026" if slug in {"places", "automatic-exports", "apple-watch", "export-import", "webhooks", "timeline-outings"} else UPDATED if slug in REVIEWED else "August 22, 2026")
         body = body.replace("__MINUTES__", str(minutes))
         body = body.replace("__CONTENT__", BODIES[slug].strip())
         body = body.replace("__PREV__", pager_link("prev", prev_g))
@@ -798,6 +809,7 @@ def build():
         page = (SHELL
                 .replace("__TITLE__", html.escape(title))
                 .replace("__DESC__", html.escape(short))
+                .replace("__SEO_TITLE__", html.escape(seo_titles.get(slug, title)))
                 .replace("__CANONICAL__", BASE + slug + "/")
                 .replace("__BODY__", body))
         (OUT / slug).mkdir(exist_ok=True)
@@ -817,6 +829,7 @@ def build():
             f'      </a>')
     index = (SHELL
              .replace("__TITLE__", "Documentation")
+             .replace("__SEO_TITLE__", "Documentation")
              .replace("__DESC__", "Practical guides for every corner of Whereday: tracking, timelines, exports, automation, the Apple Watch app, and privacy.")
              .replace("__CANONICAL__", BASE)
              .replace("__BODY__",

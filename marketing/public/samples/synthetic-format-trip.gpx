@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday format guide: synthetic example" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata><name>Invented five-point format comparison</name><desc>Created for the guide. Not a personal journey or a new native-app export. No measured elevation.</desc></metadata>
+  <trk><name>Invented trip</name>
+    <trkseg>
+      <trkpt lat="0" lon="10"><time>2000-01-01T12:00:00Z</time></trkpt>
+      <trkpt lat="0.001" lon="10.001"><time>2000-01-01T12:01:00Z</time></trkpt>
+      <trkpt lat="0.002" lon="10.002"><time>2000-01-01T12:02:00Z</time></trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="0.003" lon="10.003"><time>2000-01-01T12:13:00Z</time></trkpt>
+      <trkpt lat="0.004" lon="10.004"><time>2000-01-01T12:14:00Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

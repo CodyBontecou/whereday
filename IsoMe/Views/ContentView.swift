@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var showingTrackingPaywall = false
 
     private var showsInitialPaywall: Bool {
+        guard storeManager.hasResolvedEntitlements else { return false }
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--review-hard-paywall") && !storeManager.isPurchased {
             return true
@@ -34,36 +35,39 @@ struct ContentView: View {
     var body: some View {
         Group {
             if let viewModel = viewModel {
-                if !storeManager.hasResolvedEntitlements {
-                    ProgressView("Checking purchases…")
-                } else if showsInitialPaywall {
+                PurchaseLaunchGate(
+                    hasResolvedEntitlements: storeManager.hasResolvedEntitlements,
+                    requiresInitialPaywall: showsInitialPaywall
+                ) {
                     PaywallView(storeManager: storeManager, context: .onboarding, isRequired: true)
-                } else if hasCompletedOnboarding || bypassOnboardingForWatchReplay {
-                    Group {
-                        #if DEBUG
-                        if ProcessInfo.processInfo.arguments.contains("--review-upgrade-paywall") {
-                            PaywallView(storeManager: .shared, context: .settings)
-                        } else if ProcessInfo.processInfo.arguments.contains("--review-paywall") {
-                            PaywallView(storeManager: .shared, context: .export)
-                        } else if ProcessInfo.processInfo.arguments.contains("--demo-webhook-settings") {
-                            NavigationStack {
-                                WebhookSettingsView()
+                } content: {
+                    if hasCompletedOnboarding || bypassOnboardingForWatchReplay {
+                        Group {
+                            #if DEBUG
+                            if ProcessInfo.processInfo.arguments.contains("--review-upgrade-paywall") {
+                                PaywallView(storeManager: .shared, context: .settings)
+                            } else if ProcessInfo.processInfo.arguments.contains("--review-paywall") {
+                                PaywallView(storeManager: .shared, context: .export)
+                            } else if ProcessInfo.processInfo.arguments.contains("--demo-webhook-settings") {
+                                NavigationStack {
+                                    WebhookSettingsView()
+                                }
+                            } else {
+                                MainTabView(viewModel: viewModel, startsOnArchive: startsOnArchive)
                             }
-                        } else {
+                            #else
                             MainTabView(viewModel: viewModel, startsOnArchive: startsOnArchive)
+                            #endif
                         }
-                        #else
-                        MainTabView(viewModel: viewModel, startsOnArchive: startsOnArchive)
-                        #endif
-                    }
-                        .onAppear {
-                            startPendingTrackingIfAllowed(viewModel: viewModel)
+                            .onAppear {
+                                startPendingTrackingIfAllowed(viewModel: viewModel)
+                            }
+                    } else {
+                        OnboardingView(viewModel: viewModel) { shouldStartTracking, opensImport in
+                            pendingTrackingStart = shouldStartTracking
+                            startsOnArchive = opensImport
+                            hasCompletedOnboarding = true
                         }
-                } else {
-                    OnboardingView(viewModel: viewModel) { shouldStartTracking, opensImport in
-                        pendingTrackingStart = shouldStartTracking
-                        startsOnArchive = opensImport
-                        hasCompletedOnboarding = true
                     }
                 }
             } else {
@@ -1054,4 +1058,21 @@ private enum ScreenshotFeatureDemoSeeder {
     ContentView()
         .modelContainer(for: [Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self], inMemory: true)
     .environment(ManualVisitRouter())
+}
+
+/// Purchase verification runs in the background so a delayed StoreKit response
+/// cannot lock users out of their journal. Tracking still checks `canTrack`.
+struct PurchaseLaunchGate<Paywall: View, Content: View>: View {
+    let hasResolvedEntitlements: Bool
+    let requiresInitialPaywall: Bool
+    @ViewBuilder var paywall: () -> Paywall
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        if hasResolvedEntitlements && requiresInitialPaywall {
+            paywall()
+        } else {
+            content()
+        }
+    }
 }

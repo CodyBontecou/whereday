@@ -14,7 +14,8 @@
     "Timeline and outings",
     "Independent Apple Watch recording",
     "Portable export",
-    "Supported Whereday file import (App Store 1.7.16)",
+    "Supported Whereday file import",
+    "Google Timeline JSON import with preview and duplicate checks (1.8)",
     "Country Days and manual stays",
     "Siri and Shortcuts",
     "Optional outbound webhooks"

@@ -24,7 +24,7 @@ Questions
 
 ## Getting started
 
-Install, onboarding, permissions, and your first tracking session.
+Install Whereday, choose location permissions, and check your first recorded route and visits on iPhone.
 
 ](https://whereday.com/docs/getting-started/) [ Guide 02
 
@@ -50,19 +50,19 @@ Manage saved locations, enter coordinates, import a places CSV, and distinguish 
 
 Optionally connect your Photos library to place pictures on your map and outings.
 
-](https://whereday.com/docs/photos/) [ Pro 06
+](https://whereday.com/docs/photos/) [ Guide 06
 
 ## Export and restore location history
 
 Eight export formats, filters, filename templates, and free import for restores.
 
-](https://whereday.com/docs/export-import/) [ Pro 07
+](https://whereday.com/docs/export-import/) [ Guide 07
 
 ## Automatically export iPhone location history to a folder
 
 Set up daily or interval exports, check rewrite and append behavior, and verify saved files in Whereday.
 
-](https://whereday.com/docs/automatic-exports/) [ Pro 08
+](https://whereday.com/docs/automatic-exports/) [ Guide 08
 
 ## Webhooks & self-hosting
 
@@ -84,7 +84,7 @@ Record on Apple Watch, check transfer status, and verify the phone copy with a c
 
 ## Privacy & your data
 
-What stays on your device, what can leave it, and how deletion works.
+Understand Whereday’s on-device location storage, optional network services, version-specific analytics, and deletion controls.
 
 ](https://whereday.com/docs/privacy-data/)
 

@@ -1,7 +1,7 @@
 <section aria-labelledby="quick-answer">
   <h2 id="quick-answer">Keep the files before changing phones</h2>
   <p>To keep a restorable copy of Whereday location history, export <strong>Visits</strong> and <strong>Points</strong> separately as Whereday JSON files. Include the dates and fields you need, confirm both files exist, and retain the originals when importing them on another iPhone.</p>
-  <p>Recording, preview, and importing supported files are free. Writing export files requires the optional one-time unlock. This guide covers Whereday records; it is not a way to restore Apple Maps or Google Timeline archives.</p>
+  <p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. This guide covers Whereday records. For a Google archive, use the separate <a href="/blog/import-google-timeline-iphone/">Google Timeline import walkthrough</a>; Apple Maps archives are not supported restore files.</p>
   <nav class="article-toc" aria-label="In this guide"><strong>Backup and restore checklist</strong><ol><li><a href="#scope">Decide what the files must preserve</a></li><li><a href="#export">Export visits and points</a></li><li><a href="#check">Verify and keep the copies</a></li><li><a href="#sample">Inspect synthetic JSON examples</a></li><li><a href="#checked-import">See the checked import result</a></li><li><a href="#restore">Import on the destination iPhone</a></li><li><a href="#scheduled">Understand scheduled exports</a></li></ol></nav>
 </section>
 
@@ -92,7 +92,7 @@
   <h3 id="checked-picker">File selection and a full app restart</h3>
   <p>In a separate check, the same release-source app started with <strong>zero visits and zero points</strong> in its isolated simulator journal. We selected <code>synthetic-visits.json</code> through Settings → Import File and the system file picker. The alert reported <strong>Imported 2 visits</strong>, while Settings showed one saved visit after reconciliation.</p>
   <p>We then downloaded <code>synthetic-points.json</code> in Safari and selected it through the picker. Its alert reported <strong>Imported 3 points</strong>. After terminating and relaunching the app, Settings still showed <strong>1 visit and 3 points</strong>. This checks the file-selection, import, save, and app-restart path separately from the native field and re-export checks above.</p>
-  <figure class="product-example"><img src="/screenshots/restore-synthetic-after-restart.png" width="1206" height="2622" alt="Isolated Whereday simulator Settings after an app restart, showing one saved visit and three saved points from the synthetic JSON files" loading="lazy" decoding="async"><figcaption>Saved totals after the app process was restarted. The two nearby invented visits became one; all three points remained. No personal journal was used.</figcaption></figure>
+  <figure class="product-example"><img src="/screenshots/restore-synthetic-after-restart.webp" width="1206" height="2622" alt="Isolated Whereday simulator Settings after an app restart, showing one saved visit and three saved points from the synthetic JSON files" loading="lazy" decoding="async"><figcaption>Saved totals after the app process was restarted. The two nearby invented visits became one; all three points remained. No personal journal was used.</figcaption></figure>
   <p class="source-note">Checked October 26, 2026 on iOS 26.5 with a Debug rebuild of 1.7.16 (46) and a separate app identity. Settings and import code were unchanged from the verified release source. This was not the App Store binary, a purchase test, a captured source-phone export, or a transfer between physical phones.</p>
 </section>
 
@@ -100,13 +100,13 @@
   <h2 id="restore">3. Import the supported files on the destination</h2>
   <ol>
     <li>Make the saved visit and point files available in Files on the destination iPhone.</li>
-    <li>Open Whereday, then choose <strong>Settings → Import file</strong>. Allow the system file picker to finish opening; a later opening in the simulator check took about seven seconds.</li>
-    <li>Select a supported Whereday file and read the import result. Repeat for the other data type and any additional dated files.</li>
+    <li>Open Whereday, then choose <strong>Settings → Data Import → Import File</strong>. Allow the system file picker to finish opening; a later opening in the simulator check took about seven seconds.</li>
+    <li>Select a supported Whereday file. In version 1.8, review the format, dates, selected record types, new counts, and duplicates before confirming. Read the completion result, then repeat for the other data type and any additional dated files.</li>
     <li>Check several dates on Map and Timeline. Look for both visits and route points, including the earliest and most recent records you expected.</li>
     <li>Close and reopen Whereday, then check the same dates again. Confirm the imported records remain before erasing or retiring the original phone.</li>
     <li>Keep your originals until you have checked the result. An import cannot restore records that were excluded from the export.</li>
   </ol>
-  <p>In App Store 1.7.16, import adds records without the newer preview and duplicate checks. Nearby visits can still be combined by visit reconciliation after import, while repeated points can be added again. Import each intended file once and inspect the result before retrying. If a file fails, retain it and read the reported format or field error before editing it. A JSON archive from Google Timeline has a different structure and is not a supported Whereday restore file.</p>
+  <p>In version 1.8, importing a supported Whereday file shows a read-only preview, record-type selection, and approximate duplicate counts before saving. The 1.7.16 examples above predate these controls: that older importer could combine nearby visits and append repeated points. Keep the original and inspect the new preview before confirming or retrying. If a file fails, retain it and read the reported format or field error before editing it. Google Timeline JSON uses separate supported structures; follow the <a href="/blog/import-google-timeline-iphone/">Google import guide</a> instead of treating it as a Whereday backup.</p>
   <h3>Check the destination against the original files</h3>
   <ul>
     <li><strong>Before importing:</strong> note the visit and point totals in Settings → Data. A phone that already has records is a merge situation, not a clean destination.</li>
@@ -133,7 +133,7 @@
 
 <section class="closing" aria-labelledby="keep-records">
   <h2 id="keep-records">Keep the records.<br>Check the copy.</h2>
-  <p>Try free recording and export preview. See <a href="/#pricing">current pricing</a> for the optional file-export unlock.</p>
+  <p>Check your tracking access and try Export Preview. See <a href="/#pricing">current pricing</a> for the export access rules.</p>
   <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
 </section>
 

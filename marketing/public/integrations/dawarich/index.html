@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Send Whereday iPhone Location Points to Dawarich with Overland</title>
+  <title>Send iPhone Location Points to Dawarich — Whereday</title>
   <meta name="description" content="Configure Whereday’s Overland webhook for Dawarich, check authentication and saved points, and understand why Test Connection does not prove storage.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://whereday.com/integrations/dawarich/">
   <meta name="theme-color" content="#f5f4ef">
-  <meta property="og:title" content="Send Whereday iPhone Location Points to Dawarich with Overland">
+  <meta property="og:title" content="Send iPhone Location Points to Dawarich — Whereday">
   <meta property="og:description" content="Configure Whereday’s Overland webhook for Dawarich, check authentication and saved points, and understand why Test Connection does not prove storage.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://whereday.com/integrations/dawarich/">
   <meta property="og:image" content="https://whereday.com/screenshots/dawarich-synthetic-points.png">
   <meta property="og:image:alt" content="Dawarich 1.18.0 displaying three invented points sent by Whereday’s native webhook code">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Send Whereday iPhone Location Points to Dawarich with Overland">
+  <meta name="twitter:title" content="Send iPhone Location Points to Dawarich — Whereday">
   <meta name="twitter:description" content="Configure Whereday’s Overland webhook for Dawarich, check authentication and saved points, and understand why Test Connection does not prove storage.">
   <meta name="twitter:image" content="https://whereday.com/screenshots/dawarich-synthetic-points.png">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -98,10 +98,10 @@ pre code { overflow-wrap: normal; }
       "@type": "BlogPosting",
       "@id": "https://whereday.com/integrations/dawarich/",
       "url": "https://whereday.com/integrations/dawarich/",
-      "name": "Send Whereday iPhone Location Points to Dawarich with Overland",
+      "name": "Send iPhone Location Points to Dawarich — Whereday",
       "description": "Configure Whereday’s Overland webhook for Dawarich, check authentication and saved points, and understand why Test Connection does not prove storage.",
       "inLanguage": "en",
-      "dateModified": "2026-10-26",
+      "dateModified": "2026-10-30",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -142,17 +142,37 @@ pre code { overflow-wrap: normal; }
     }
   ]
 }</script>
+<style id="shared-navigation-styles">.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #d2cfca); border-radius:4px; background:var(--paper, #fff); color:var(--ink, #1f1f1f); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--accent, #1c57ca); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #fff); border:1px solid var(--rule, #d2cfca); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1f1f1f); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#e9e7df; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#e9e7df; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
-    <div class="nav-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div>
-  </nav>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/integrations/">Integrations</a></li><li>Dawarich</li></ol></nav>
     <article aria-labelledby="article-title">
-    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">Send Whereday location points to Dawarich</h1><p class="lede">Pair the Overland payload with Dawarich’s batch endpoint, then verify the points at the destination. Webhooks are optional, off by default, and require Whereday’s export unlock.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-26">October 26, 2026</time></p></header>
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">Send Whereday location points to Dawarich</h1><p class="lede">Pair the Overland payload with Dawarich’s batch endpoint, then verify the points at the destination. Webhooks are optional and off by default; access follows Whereday’s export rules for new and existing users.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-30">October 30, 2026</time></p></header>
     <section aria-labelledby="quick-answer">
   <h2 id="quick-answer">Use Overland with the batch endpoint</h2>
   <p>For a Dawarich receiver, configure Whereday’s webhook format as <strong>Overland</strong> and use <code>https://your-dawarich-host/api/v1/overland/batches</code>. Authenticate with your instance’s API key. Check actual saved points after a small test; an HTTP success response alone does not establish that locations were stored.</p>
@@ -164,14 +184,14 @@ pre code { overflow-wrap: normal; }
   <p>On October 26, 2026, Whereday’s unchanged native webhook code from release source <strong>1.7.16 (46)</strong> sent three invented points to an isolated <strong>Dawarich 1.18.0</strong> receiver. All three were stored with the expected timestamps, coordinates, altitude, speed, accuracy, and tracker ID. The values remained unchanged after restarting both the receiver and its database.</p>
   <div class="table-scroll" role="region" aria-label="Synthetic receiver verification" tabindex="0"><table><caption>Invented fixture, January 1, 2000, UTC</caption><thead><tr><th scope="col">Time</th><th scope="col">Latitude</th><th scope="col">Longitude</th><th scope="col">Stored result</th></tr></thead><tbody><tr><th scope="row">12:00:00</th><td>1.000000</td><td>2.000000</td><td>Present after restart</td></tr><tr><th scope="row">12:01:00</th><td>1.000100</td><td>2.000100</td><td>Present after restart</td></tr><tr><th scope="row">12:02:00</th><td>1.000200</td><td>2.000200</td><td>Present after restart</td></tr></tbody></table></div>
   <figure class="route-example"><img src="/screenshots/dawarich-synthetic-points.png" width="1280" height="720" alt="Dawarich 1.18.0 Points screen showing all three invented points, their coordinates, and January 1, 2000 timestamps" loading="lazy" decoding="async"><figcaption>The receiver’s Points screen after the restart check. The locations and dates are invented. The payload’s speed of 1 metre per second appears as 3.6 kilometres per hour in this view.</figcaption></figure>
-  <p><a href="/samples/synthetic-overland-export.json" download>Download the exact synthetic Overland payload</a>. It was generated by the released serializer and contains no personal history or credentials. It is a request-body example, not an Whereday restore file. Posting it to a receiver can create records there.</p>
+  <p><a href="/samples/synthetic-overland-export.json" download>Download the exact synthetic Overland payload</a>. It was generated by the released serializer and contains no personal history or credentials. It is a request-body example, not a Whereday restore file. Posting it to a receiver can create records there.</p>
   <p>The check used a Debug simulator rebuild of the release source and a native test calling the real batch-flush path. The receiver was local, reached through a loopback tunnel, and isolated from outbound internet access. This verifies native serialization, authentication, transmission, and receiver persistence. It does not verify a physical recording, the complete settings workflow, production HTTPS, or unattended iOS background delivery.</p>
 </section>
 <section aria-labelledby="configure">
   <h2 id="configure">Configure a small test before sending history</h2>
   <ol>
     <li>Prepare your own Dawarich instance and obtain its API key from the account’s API access settings. Use an HTTPS address reachable from the iPhone.</li>
-    <li>In Whereday, open the <strong>Export</strong> tab and its <strong>Webhook</strong> settings. Webhooks require the optional export unlock. Review the warning that records will leave the device before enabling delivery.</li>
+    <li>In Whereday, open the <strong>Export</strong> tab and its <strong>Webhook</strong> settings. Webhooks follow the export access rules: new users from 1.8 retain access after tracking expires; existing free users need their previous unlock. Review the warning that records will leave the device before enabling delivery.</li>
     <li>Set the endpoint to your instance’s <code>/api/v1/overland/batches</code> path and select <strong>Overland</strong> as the format. Do not pair this payload with the OwnTracks endpoint.</li>
     <li>Choose <strong>API Key (Query)</strong> authentication, set the key name to <code>api_key</code>, and enter your instance’s key as the value. Keep the key out of screenshots and shared URLs.</li>
     <li>For an initial recording test, choose <strong>By Count</strong> batching. Review the queue count and use <strong>Flush queue</strong> if points are waiting. Check the result in Dawarich before relying on ongoing delivery.</li>
@@ -190,7 +210,7 @@ pre code { overflow-wrap: normal; }
   <p>Overland carries GPS points, not a complete copy of Whereday’s visits, names, notes, settings, or outing edits. The webhook queue is held in memory; queued points can be lost when iOS terminates the app. Do not treat it as a durable offline archive or assume every historical point will be resent automatically.</p>
   <p>The native regression suite covers successful queue clearing, failed-send retention, transient retries, and authentication errors using controlled responses. That is separate from the live receiver persistence check and does not establish long-term background reliability. See the <a href="/docs/webhooks/">send modes and retry reference</a> and keep a <a href="/blog/back-up-iphone-location-history/">separate backup</a>.</p>
 </section>
-<section class="answer-box"><h2>Keep the local journal.<br>Choose its destination.</h2><p>Recording and review are free. Webhook delivery requires the optional unlock; see <a href="/#pricing">current pricing</a>.</p><p><a class="button" data-placement="inline" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></p></section>
+<section class="answer-box"><h2>Keep the local journal.<br>Choose its destination.</h2><p>Tracking and webhook delivery depend on your plan and existing access; see <a href="/#pricing">current pricing</a>.</p><p><a class="button" data-placement="inline" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></p></section>
 
     </article>
     <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/docs/webhooks/">Review send modes and queue limits</a><p>Check realtime, batching, retries, and manual-send behavior.</p></li><li><a href="/blog/back-up-iphone-location-history/">Keep a separate backup</a><p>A receiver copy is different from a restorable Whereday journal.</p></li></ul></nav>
@@ -244,6 +264,7 @@ pre code { overflow-wrap: normal; }
 })();
 </script>
 <!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
 <script defer src="/assets/acquisition.js"></script>
 </body>
 </html>

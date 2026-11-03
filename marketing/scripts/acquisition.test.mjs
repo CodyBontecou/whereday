@@ -97,3 +97,27 @@ test('legacy and www links redirect to Whereday without losing paths or queries'
     assert.equal(response.headers.get('Location'), 'https://whereday.com/docs/export-import/?format=gpx&x=%2F');
   }
 });
+
+test('file tool denies network connections and referrers at the response boundary', async () => {
+ const response=await worker.fetch(new Request('https://whereday.com/tools/gpx-viewer/'),{ASSETS:{fetch:async()=>new Response('<html>GPX tool</html>',{headers:{'Content-Type':'text/html'}})}});
+ assert.ok(response.headers.get('Content-Security-Policy').includes("connect-src 'none'"));
+ assert.ok(response.headers.get('Content-Security-Policy').includes("script-src 'self'"));
+ assert.equal(response.headers.get('Referrer-Policy'),'no-referrer');
+ assert.ok(response.headers.get('Cache-Control').includes('no-transform'));
+});
+
+test('GPX privacy headers also protect direct index and slashless aliases', async () => {
+ for (const path of ['/tools/gpx-viewer','/tools/gpx-viewer/index.html']) {
+  const response=await worker.fetch(new Request('https://whereday.com'+path),{ASSETS:{fetch:async()=>new Response('GPX')}});
+  assert.ok(response.headers.get('Content-Security-Policy').includes("connect-src 'none'"));
+ }
+});
+
+test('Timeline privacy boundary covers every URL alias', async () => {
+ for (const path of ['/tools/google-timeline-inspector/','/tools/google-timeline-inspector','/tools/google-timeline-inspector/index.html']) {
+  const response=await worker.fetch(new Request('https://whereday.com'+path),{ASSETS:{fetch:async()=>new Response('Timeline')}});
+  assert.ok(response.headers.get('Content-Security-Policy').includes("connect-src 'none'"));
+  assert.equal(response.headers.get('Referrer-Policy'),'no-referrer');
+  assert.ok(response.headers.get('Cache-Control').includes('no-transform'));
+ }
+});

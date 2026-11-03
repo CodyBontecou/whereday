@@ -1,6 +1,6 @@
 <section aria-labelledby="start-here">
   <h2 id="start-here">Find out which part is missing</h2>
-  <p>If an Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.</p>
+  <p>If a Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.</p>
   <p>This guide is for an existing Whereday journal. For Apple Maps or Google Timeline records, use <a href="/blog/view-location-history-iphone/">the iPhone location-history guide</a>. Installing Whereday cannot recover a route that another app never recorded.</p>
   <nav class="article-toc" aria-label="In this guide"><strong>Choose the symptom</strong><ol><li><a href="#symptoms">Match what you see</a></li><li><a href="#recording">Check recording and permission</a></li><li><a href="#points">Inspect route points and filters</a></li><li><a href="#visits">Check visits and place names</a></li><li><a href="#watch">Check Watch transfer</a></li><li><a href="#export">Check an empty export</a></li><li><a href="#preserve">Preserve records and ask for help</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
 </section>
@@ -33,7 +33,7 @@
   </ol>
   <h3>A saved outing can contain zero route points</h3>
   <p>In our isolated 1.7.16 release-source simulator check, Start changed to Stop and the timer ran. After stopping, Timeline saved an eight-second outing with zero distance and zero points. Its detail explicitly said <strong>No GPS points were saved for this outing yet</strong>. A running timer or an outing card alone does not confirm a route was captured.</p>
-  <figure class="product-example"><img src="/screenshots/journal-empty-outing.png" width="302" height="656" alt="Whereday outing detail showing eight seconds, zero distance, zero points, and no saved GPS points" loading="lazy" decoding="async"><figcaption>Checked October 26, 2026 in a separate Debug simulator rebuild of 1.7.16 (46), iOS 26.5. This empty test journal contains no personal route. It does not establish why no points arrived or verify physical GPS recording.</figcaption></figure>
+  <figure class="product-example"><img src="/screenshots/journal-empty-outing.webp" width="302" height="656" alt="Whereday outing detail showing eight seconds, zero distance, zero points, and no saved GPS points" loading="lazy" decoding="async"><figcaption>Checked October 26, 2026 in a separate Debug simulator rebuild of 1.7.16 (46), iOS 26.5. This empty test journal contains no personal route. It does not establish why no points arrived or verify physical GPS recording.</figcaption></figure>
   <p>Open your outing and check <strong>Points</strong> and the path, then compare the expected time range. For the complete first-session checklist, see <a href="/blog/private-location-journal-iphone/#first-recording">the recording guide</a>.</p>
   <p>Review the app’s permission under <strong>iPhone Settings → Privacy &amp; Security → Location Services</strong>. Whereday offers Always access for background visit monitoring; an active manual session and automatic visit detection have different permission needs. Follow <a href="https://support.apple.com/en-us/102515">Apple’s Location Services instructions</a> if the controls on your iOS version differ.</p>
   <p>For a new test, allow time to acquire a location and choose an open area with a clear view of the sky. Apple explains that GPS accuracy can improve over several minutes and that buildings, roofs, and terrain can obstruct signals. This is a future-recording check, not a way to recover earlier movement.</p>
@@ -68,7 +68,7 @@
 
 <section aria-labelledby="export">
   <h2 id="export">5. If history exists but the exported file is empty</h2>
-  <p>Inspect Export Preview before changing the journal. Preview is free; writing a file requires the optional export unlock. Work on one expected date and change one filter at a time.</p>
+  <p>Inspect Export Preview before changing the journal. Preview is free; file writing follows the export access rules for new and existing users described below. Work on one expected date and change one filter at a time.</p>
   <ol>
     <li><strong>Match the record type.</strong> Choose Points for a measured path or Visits for stops. A visit record does not supply the intervening GPS route.</li>
     <li><strong>Check dates and time of day.</strong> Use a range covering the expected record. Disable the time of day filter for the comparison. Visit selection uses arrival time; an overnight visit arriving before the selected range can be excluded even if you were still there the next morning.</li>
@@ -107,7 +107,7 @@
 
 <section class="closing" aria-labelledby="test-next-route">
   <h2 id="test-next-route">Check a short route.<br>Then trust a longer day.</h2>
-  <p>Recording and reviewing history are free. Check one finished session before relying on a new setup for a long trip.</p>
+  <p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Check one finished session before relying on a new setup for a long trip.</p>
   <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
 </section>
 <p class="source-note">Reviewed October 26, 2026 against Whereday 1.7.16 (46) release-source recording and export filters, the checked empty-outing example, Watch-sync source, and Apple’s linked Location Services guidance. This is a diagnostic checklist, not a guarantee of recovering deleted or unrecorded movement. Controls can vary by version.</p>

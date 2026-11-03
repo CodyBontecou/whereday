@@ -10,6 +10,7 @@ from build_seo_pages import render
 from check_site import BASE, PUBLIC, page_url
 from product_contract import build_product_contract
 from campaign_links import update_download_links
+from build_navigation import enhance_navigation
 
 TRUST = [
     {
@@ -18,7 +19,7 @@ TRUST = [
         'headline': 'About Whereday',
         'description': 'Meet Whereday, the open source iPhone and Apple Watch location journal built by Cody Bontecou at isolated.tech.',
         'lede': 'A location journal you can keep on your own device, built by Cody Bontecou at isolated.tech.',
-        'content': '''<section><h2>Why Whereday exists</h2><p>Whereday records the places you visit and the routes you choose to track, then lets you review that history on your iPhone. It is an independent, open source project built by <a href="https://isolated.tech">Cody Bontecou at isolated.tech</a>. The goal is a useful personal journal with portable files and understandable controls.</p><p>The app requires no account. Your journal stays on your device; Whereday does not operate a server archive of your location history. Apple geocoding and Maps services, optional webhook delivery, first-party onboarding analytics, and export scheduling have specific network behavior described in the <a href="/privacy">privacy policy</a>.</p></section><section><h2>What you can use</h2><p>Tracking, the timeline, the Apple Watch app, and supported import are free. Export and related automation features use optional lifetime purchases. Check the <a href="/#pricing">current pricing details</a> and the App Store purchase sheet for your storefront.</p><p>Read the <a href="/docs/">product documentation</a>, inspect the <a href="https://github.com/CodyBontecou/whereday">source code under the AGPL v3 license</a>, or <a href="/contact">contact the developer</a> with a question. This website documents the native app; its <a href="/api/v1/product">public product metadata endpoint</a> describes capabilities and documentation links, with a <a href="/openapi.json">read-only OpenAPI contract</a>. It cannot access your private journal.</p></section>''',
+        'content': '''<section><h2>Why Whereday exists</h2><p>Whereday records the places you visit and the routes you choose to track, then lets you review that history on your iPhone. It is an independent, open source project built by <a href="https://isolated.tech">Cody Bontecou at isolated.tech</a>. The goal is a useful personal journal with portable files and understandable controls.</p><p>The app requires no account. Your journal stays on your device; Whereday does not operate a server archive of your location history. Apple geocoding and Maps services, optional webhook delivery, first-party onboarding analytics, and export scheduling have specific network behavior described in the <a href="/privacy">privacy policy</a>.</p></section><section><h2>What you can use</h2><p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Check the <a href="/#pricing">current pricing details</a> and the App Store purchase sheet for your storefront.</p><p>Read the <a href="/docs/">product documentation</a>, inspect the <a href="https://github.com/CodyBontecou/whereday">source code under the AGPL v3 license</a>, or <a href="/contact">contact the developer</a> with a question. This website documents the native app; its <a href="/api/v1/product">public product metadata endpoint</a> describes capabilities and documentation links, with a <a href="/openapi.json">read-only OpenAPI contract</a>. It cannot access your private journal.</p></section>''',
     },
     {
         'path': '/contact', 'section': 'About', 'section_path': '/about', 'breadcrumb': 'Contact',
@@ -123,6 +124,11 @@ def build():
             content = content.replace('content="index,follow"', 'content="noindex,follow"')
         (PUBLIC / (page['path'].lstrip('/') + '.html')).write_text(content)
     update_download_links()
+    for source in sorted(PUBLIC.rglob('*.html')):
+        original = source.read_text()
+        enhanced = enhance_navigation(original, page_url(source).removeprefix(BASE))
+        if enhanced != original:
+            source.write_text(enhanced)
     manifest = {}
     for source in sorted(PUBLIC.rglob('*.html')):
         if source.name == '404.html':

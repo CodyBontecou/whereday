@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday local Timeline converter" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata><desc>Supported coordinate/time records only. Point order within each source path and duplicates retained. Path breaks at rejected components, backwards time, UTC day changes, gaps over ten minutes and longitude jumps over 180 degrees. Visits and activity endpoints are waypoints. No road matching or missing-path reconstruction.</desc></metadata>
+  <wpt lat="37.7" lon="-122.4"><time>2020-01-01T00:00:00.000Z</time><name>Visit, source entry 1</name><desc>Visit end: 2020-01-01T01:00:00.000Z. Not a route point.</desc><type>Visit</type></wpt>
+  <wpt lat="37.7" lon="-122.4"><time>2020-01-01T00:00:00.000Z</time><name>Visit, source entry 2</name><desc>Visit end: 2020-01-01T01:00:00.000Z. Not a route point.</desc><type>Visit</type></wpt>
+  <trk><name>Supported Timeline path points</name>
+    <trkseg>
+      <trkpt lat="37.7" lon="-122.4"><time>2020-01-01T00:00:00.000Z</time></trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="37.701" lon="-122.401"><time>2020-01-01T00:30:00.000Z</time></trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="37.7" lon="-122.4"><time>2020-01-01T00:00:00.000Z</time></trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="37.701" lon="-122.401"><time>2020-01-01T00:30:00.000Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

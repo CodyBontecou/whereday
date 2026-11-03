@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render articles and comparisons as static, crawlable HTML."""
 from html import escape
+from datetime import date
 import json
 from pathlib import Path
 
@@ -23,10 +24,10 @@ PAGES = [
         "path": "/integrations/dawarich/",
         "section": "Integrations", "section_path": "/integrations/", "breadcrumb": "Dawarich",
         "type": "BlogPosting",
-        "title": "Send Whereday iPhone Location Points to Dawarich with Overland",
+        "title": "Send iPhone Location Points to Dawarich — Whereday",
         "headline": "Send Whereday location points to Dawarich",
         "description": "Configure Whereday’s Overland webhook for Dawarich, check authentication and saved points, and understand why Test Connection does not prove storage.",
-        "lede": "Pair the Overland payload with Dawarich’s batch endpoint, then verify the points at the destination. Webhooks are optional, off by default, and require Whereday’s export unlock.",
+        "lede": "Pair the Overland payload with Dawarich’s batch endpoint, then verify the points at the destination. Webhooks are optional and off by default; access follows Whereday’s export rules for new and existing users.",
         "image": "/screenshots/dawarich-synthetic-points.png",
         "image_alt": "Dawarich 1.18.0 displaying three invented points sent by Whereday’s native webhook code",
         "source": "dawarich.html",
@@ -38,7 +39,7 @@ PAGES = [
         "title": "Track Days Spent in Each Country on iPhone — Whereday",
         "headline": "How to track days spent in each country on iPhone",
         "description": "Track country dates from visits, GPS points, and manual stays in Whereday. Inspect a checked CSV example for travel days, timezones, overlaps, and gaps.",
-        "lede": "Review country totals and the dates behind them, add missing stays, and keep a personal record without an Whereday account.",
+        "lede": "Review country totals and the dates behind them, add missing stays, and keep a personal record without a Whereday account.",
         "source": "track-days-in-country-iphone.html",
     },
     {
@@ -47,7 +48,7 @@ PAGES = [
         "headline": "Choose how you keep your location history.",
         "description": "Compare Whereday with Google Timeline on iPhone: accounts, recording, backups, exports, and the limits of moving an existing archive.",
         "lede": "Understand the account, recording, backup, and export choices before changing the way you keep your own visits and routes.",
-        "content": '<section class="card"><h2><a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a></h2><p>A comparison of recording controls, device storage, backup, export formats, and payment. Learn where each fits and why your existing Google archive needs to be kept separately.</p><a href="/compare/google-maps-timeline/">Read the Google Timeline comparison</a></section><section><h2>New to recording your own history?</h2><p>Start with <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>, or check <a href="/docs/export-import/">which files Whereday can export and restore</a>.</p></section>',
+        "content": '<section class="card"><h2><a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a></h2><p>A comparison of recording controls, device storage, backup, export formats, and payment. Learn where each fits and why your existing Google archive needs to be kept separately.</p><a href="/compare/google-maps-timeline/">Read the Google Timeline comparison</a></section><section><h2>Moving an existing Google archive?</h2><p>Choose the <a href="/blog/import-google-timeline-iphone/">Google Timeline import walkthrough</a> if you already have a supported JSON file and want its visits and timed points in Whereday. Version 1.8 previews new records, approximate duplicates, and skipped entries before saving. Keep your original archive: importing selected records does not reproduce every Google activity or replace Google’s device-transfer backup.</p><p>For records already in Whereday, use the <a href="/blog/back-up-iphone-location-history/">backup and restore guide</a>. A GPX route for a viewer and a restorable journal copy are different outputs.</p></section><section><h2>New to recording your own history?</h2><p>Start with <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>, or check <a href="/docs/export-import/">which files Whereday can export and restore</a>.</p></section>',
     },
     {
         "path": "/compare/google-maps-timeline/",
@@ -65,7 +66,8 @@ PAGES = [
         "type": "BlogPosting",
         "title": "How to See Your Location History on iPhone — Whereday",
         "headline": "How to see your location history on iPhone",
-        "description": "Find iPhone location history in Apple Maps or Google Timeline, check Significant Locations settings, and preserve existing records before changing devices.",
+        "description": "Find iPhone location history in Apple Maps, Google Timeline or Whereday. Choose a download, check its dates and records, and keep the original before moving.",
+        "modified": "2026-10-31",
         "lede": "Find the app and date that hold your saved visits, distinguish iPhone location settings from recorded history, and check existing copies before changing your setup.",
         "source": "view-location-history-iphone.html",
     },
@@ -78,7 +80,7 @@ PAGES = [
         "title": "How to Record an iPhone Route and Export GPX — Whereday",
         "headline": "How to record an iPhone route and export a GPX file",
         "description": "Record a route in Whereday and export GPX to Files. Includes a checked export-and-viewer example with synthetic points, previews, and free and paid limits.",
-        "lede": "Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Recording and preview are free; saving the file requires the optional unlock.",
+        "lede": "Start tracking in Whereday, stop after your trip, then select Points and GPX in Export. Tracking depends on your plan and existing access; Export Preview is free and saving files requires export access.",
         "image": "/screenshots/export.png",
         "image_alt": "Whereday export interface with data types and file format choices",
         "source": "record-iphone-route-gpx.html",
@@ -91,7 +93,7 @@ PAGES = [
         "type": "BlogPosting",
         "title": "Back Up and Restore iPhone Location History — Whereday",
         "headline": "How to back up and restore your Whereday location history",
-        "description": "Back up Whereday visits and GPS points as JSON. See checked file-picker imports, saved counts after an app restart, and limits to verify before changing iPhones.",
+        "description": "Back up Whereday visits and GPS points as JSON. Check imported records after an app restart and review restore limits before changing iPhones.",
         "lede": "Export Visits and Points separately as Whereday JSON, check the saved files, and keep the originals when importing on another iPhone.",
         "image": "/screenshots/export.png",
         "image_alt": "Whereday export interface with data and file format controls",
@@ -117,7 +119,7 @@ PAGES = [
         "type": "BlogPosting",
         "title": "Missing Visits or GPS Points in Whereday? iPhone Checks",
         "headline": "What to check when visits or route points are missing in Whereday",
-        "description": "Check an empty Whereday outing, missing GPS points, visits, Watch sync, or export filters. Includes a checked zero-point example and steps that preserve your journal.",
+        "description": "Check missing Whereday visits, GPS points, Watch sync, and export filters. Includes an empty-outing example and steps that preserve your journal.",
         "lede": "Check the date and recording state, then separate missing points, missing visits, pending Watch transfers, and export filters. Keep existing records while you investigate.",
         "source": "missing-location-history-iphone.html",
     },
@@ -129,27 +131,69 @@ PAGES = [
         "type": "BlogPosting",
         "title": "Export an iPhone Location Journal to Obsidian — Whereday",
         "headline": "Read your iPhone location journal in Obsidian",
-        "description": "Export Whereday visits as Markdown for Obsidian. Includes checked desktop notes and Maps plugin examples, synthetic downloads, and timezone and sync limits.",
+        "description": "Export Whereday visits to Obsidian. Use a free travel journal template, a linked example vault and checked Markdown notes, with timezone and sync limits.",
         "lede": "Export visits as a Markdown file, copy it into your desktop vault, and check the rendered table. Keep your own writing separate from generated location notes.",
         "source": "iphone-location-journal-obsidian.html",
     },
 ]
 
 
-# Not generated into public/ until the supporting App Store build is verified.
-DRAFTS = [{
+# Access/privacy copy reviewed against public version 1.8; examples retain their test dates.
+for page in PAGES:
+    if page.get("source") in {
+        "google-maps-timeline.html", "record-iphone-route-gpx.html",
+        "back-up-iphone-location-history.html",
+        "iphone-location-tracking-battery.html", "missing-location-history-iphone.html",
+        "iphone-location-journal-obsidian.html", "dawarich.html",
+        "track-days-in-country-iphone.html",
+    }:
+        page["modified"] = "2026-10-30"
+
+for page in PAGES:
+    if page["path"] == "/compare/":
+        page["modified"] = "2026-10-30"
+
+PAGES.append({
     "path": "/blog/import-google-timeline-iphone/", "section": "Guides", "section_path": "/blog/",
-    "breadcrumb": "Import Google Timeline", "type": "BlogPosting", "robots": "noindex,follow",
-    "title": "Import Google Timeline on iPhone — Release Preview — Whereday",
+    "breadcrumb": "Import Google Timeline", "type": "BlogPosting",
+    "title": "Import Google Timeline on iPhone — Whereday",
     "headline": "How to import Google Timeline into Whereday on iPhone",
-    "description": "A release-preview walkthrough of supported Google JSON files, import preview, duplicate checks, and preserving the original archive.",
-    "lede": "Prepared for the next supporting release. The verified public 1.7.16 build does not include this importer.",
+    "description": "Import Google Timeline JSON into Whereday on iPhone. Preview visits, points, duplicates, and skipped entries. Includes a checked synthetic example.",
+    "lede": "Save a Google Timeline JSON to Files, preview it in Whereday, and choose which visits and timed points to add.",
+    "published": "2026-10-30", "modified": "2026-10-30",
     "source": "import-google-timeline-iphone.html",
-}]
+    "image": "/screenshots/google-import-preview-1-8.png",
+    "image_alt": "Whereday 1.8 preview of an invented Google Timeline file",
+})
+DRAFTS = []
+
 
 
 # Keep next steps specific to the task on each page.
+PAGES.extend([
+    {"path": "/tools/", "section": "Tools", "section_path": "/tools/", "title": "Free Location File Tools — Whereday", "headline": "Make sense of your location files", "description": "Inspect GPX routes and Google Timeline JSON locally with free browser tools. Check coordinates, timestamps and known structures without uploading your files.", "lede": "Practical tools for checking your own files before importing or converting them.", "modified": "2026-10-30", "content": '<section class="card"><h2><a href="/tools/gpx-viewer/">GPX viewer and file inspector</a></h2><p>Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.</p><p><a href="/blog/check-gpx-file/">Follow the worked inspection tutorial</a> with an invented five-point example.</p><p>Have a different file type? <a href="/blog/gpx-kml-geojson-location-history/">Compare GPX, KML, GeoJSON and CSV</a> before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.</p></section><section class="card"><h2><a href="/tools/google-timeline-inspector/">Google Timeline JSON inspector</a></h2><p>Identify supported raw, semantic and device Timeline structures. Check coordinates and times, inspect findings and try invented examples before opening your own archive.</p><p><a href="/blog/google-timeline-json-formats/">Learn which Timeline JSON file you have</a> and why browser counts can differ from a native import preview. Your selected file stays in the tool page.</p></section>'},
+    {"path": "/tools/gpx-viewer/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "GPX viewer", "title": "Free GPX Viewer and File Inspector — Whereday", "headline": "See your route. Understand your GPX.", "description": "View GPX files locally, check tracks and timestamps, and convert GPX to CSV or GeoJSON. Keep segments separate without uploading your location file.", "lede": "A free GPX viewer with clear file checks and a local route plot. Your file stays on your device.", "modified": "2026-10-30", "local_file_tool": True, "source": "gpx-viewer.html"},
+    {"path": "/blog/check-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Check a GPX file", "type": "BlogPosting", "title": "Check a GPX File Before Importing It — Whereday", "headline": "Check your GPX before you import it", "description": "Inspect GPX points, segments and timestamps locally. Follow a five-point example, understand warnings, and check documented CSV and GeoJSON downloads.", "lede": "Start with a known example, check your file’s actual records, and keep the original before making changes.", "published": "2026-10-30", "modified": "2026-11-01", "source": "check-gpx-file.html"}
+])
+
+PAGES.append({
+    "path": "/blog/gpx-kml-geojson-location-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Choose a file format", "type": "BlogPosting",
+    "title": "GPX vs KML vs GeoJSON: Choose a Location File — Whereday",
+    "headline": "GPX, KML or GeoJSON: choose a file you can use",
+    "description": "Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.",
+    "lede": "Choose for your destination, check what the file preserves, and keep an original you can return to.",
+    "published": "2026-10-30", "modified": "2026-10-30", "source": "gpx-kml-geojson-location-history.html"
+})
+
+PAGES.extend([
+    {"path": "/tools/google-timeline-inspector/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "Timeline JSON inspector", "title": "Google Timeline JSON Inspector and GPX Converter — Whereday", "headline": "Inspect Timeline JSON and convert supported records to GPX", "description": "Inspect Google Timeline JSON locally and convert supported records to GPX. Check coordinates, times, visits and path segments without uploading your file.", "lede": "Check your export, review supported records, and save GPX locally while keeping your original JSON.", "modified": "2026-10-30", "local_file_tool": True, "source": "google-timeline-inspector.html"},
+    {"path": "/blog/google-timeline-json-formats/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Timeline JSON formats", "type": "BlogPosting", "title": "Which Google Timeline JSON File Do You Have? — Whereday", "headline": "Identify your Google Timeline JSON file", "description": "Identify raw, semantic and device Google Timeline JSON with worked examples. Check coordinates, times and unsupported records before importing.", "lede": "Look inside the export, compare a known example, and separate a format check from an app’s import preview.", "published": "2026-10-30", "modified": "2026-10-30", "source": "google-timeline-json-formats.html"}
+])
+
 RELATED = {
+ '/blog/import-google-timeline-iphone/': [
+     ('/blog/back-up-iphone-location-history/', 'Keep a restorable Whereday copy', 'Choose supported visit and point exports after checking the import.'),
+     ('/compare/google-maps-timeline/', 'Compare recording workflows', 'Review access, backups, privacy, and portability before switching.')],
  '/integrations/dawarich/': [('/docs/webhooks/', 'Review send modes and queue limits', 'Check realtime, batching, retries, and manual-send behavior.'), ('/blog/back-up-iphone-location-history/', 'Keep a separate backup', 'A receiver copy is different from a restorable Whereday journal.')],
  '/blog/track-days-in-country-iphone/': [
      ('/blog/private-location-journal-iphone/', 'Record your next trip',
@@ -207,7 +251,7 @@ RELATED = {
                                      'Check the service that recorded them before changing apps.'),
                                     ('/blog/record-iphone-route-gpx/',
                                      'Try the route export workflow',
-                                     'See the free recording and preview steps before writing a '
+                                     'Check recording access and preview steps before writing a '
                                      'GPX file.')]}
 
 
@@ -235,19 +279,21 @@ def render(page):
         "@type": "BreadcrumbList",
         "itemListElement": [{"@type": "ListItem", "position": i, "name": name, "item": BASE + target} for i, (name, target) in enumerate(crumbs, 1)],
     }
-    webpage = {"@type": "WebPage", "@id": url, "url": url, "name": page["title"], "description": page["description"], "inLanguage": "en", "dateModified": REVIEWED, "author": {"@type": "Person", "name": "Cody Bontecou", "url": "https://isolated.tech"}}
+    webpage = {"@type": "WebPage", "@id": url, "url": url, "name": page["title"], "description": page["description"], "inLanguage": "en", "dateModified": page.get("modified", REVIEWED), "author": {"@type": "Person", "name": "Cody Bontecou", "url": "https://isolated.tech"}}
     if is_article:
-        webpage.update({"@type": "BlogPosting", "headline": page["headline"], "datePublished": REVIEWED, "mainEntityOfPage": url, "image": image, "publisher": {"@type": "Organization", "name": "isolated.tech", "url": "https://isolated.tech"}})
-    # Remove this temporary handoff note only after the public listing is verified
-    # as Whereday. The editable App Store draft is not release evidence.
-    store_notice = ('<p class="source-note store-listing-note">Whereday is currently listed as '
-                    '<strong>iso.me</strong> in the U.S. App Store.</p>') if path in {
-                        '/compare/google-maps-timeline/', '/blog/record-iphone-route-gpx/'} else ''
+        webpage.update({"@type": "BlogPosting", "headline": page["headline"], "datePublished": page.get("published", REVIEWED), "mainEntityOfPage": url, "image": image, "publisher": {"@type": "Organization", "name": "isolated.tech", "url": "https://isolated.tech"}})
+    # Apple public US lookup confirmed Whereday 1.8 on October 30, 2026.
+    store_notice = ""
+    modified = page.get("modified", REVIEWED)
+    reviewed_date = date.fromisoformat(modified)
+    reviewed_label = f"{reviewed_date:%B} {reviewed_date.day}, {reviewed_date.year}"
     schema = json.dumps({"@context": "https://schema.org", "@graph": [webpage, breadcrumb]}, ensure_ascii=False, indent=2)
     nav_crumbs = "".join(f'<li>{escape(name)}</li>' if target == path else f'<li><a href="{target}">{escape(name)}</a></li>' for name, target in crumbs)
     # Preserve the site's existing production-host and analytics-gate behavior.
     home = (PUBLIC / "index.html").read_text()
     analytics = home[home.index("<!-- Cloudflare Web Analytics -->"):home.index("<!-- End Cloudflare Web Analytics -->") + len("<!-- End Cloudflare Web Analytics -->")]
+    if page.get("local_file_tool"):
+        analytics = ""
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -282,7 +328,7 @@ def render(page):
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>{nav_crumbs}</ol></nav>
     {'<article aria-labelledby="article-title">' if is_article else ''}
-    <header><p class="eyebrow">{'Practical iPhone guides' if is_article else 'iPhone location journals'}</p><h1 id="article-title">{escape(page["headline"])}</h1><p class="lede">{escape(page["lede"])}</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="{REVIEWED}">October 26, 2026</time></p>{store_notice}</header>
+    <header><p class="eyebrow">{'Practical iPhone guides' if is_article else 'iPhone location journals'}</p><h1 id="article-title">{escape(page["headline"])}</h1><p class="lede">{escape(page["lede"])}</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="{modified}">{reviewed_label}</time></p>{store_notice}</header>
     {content}
     {'</article>' if is_article else ''}
     {related_navigation(path)}

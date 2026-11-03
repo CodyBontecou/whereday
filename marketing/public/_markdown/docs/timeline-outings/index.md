@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+October 30, 2026
 
 Reading
 
@@ -41,7 +41,7 @@ Inference is configurable in Settings → Inferred outings:
 Tap any outing for its full record: a road-matched mini map, start and end times, duration, distance, point count, GPS-glitch count, and average speed. Recorded outings can be renamed and given notes (inferred ones can't — edit the points' day instead). Linked visits and photos appear below.
 
 - Show on map focuses the Map tab on this outing's path.
-- Export saves this single outing in your choice of format (a Pro feature; the picker remembers your format).
+- Export saves this single outing in your choice of format (subject to your export access; the picker remembers your format).
 - Delete outing removes the session and its GPS points — visits are kept. Deleting the active outing stops tracking first.
 
 ## Route replay
@@ -56,7 +56,7 @@ If a recorded day looks incomplete, follow the [missing visits and route points 
 
 ## Country Days
 
-Timeline → Country Days counts local dates represented by visits, route points, and manual stays. Review this year, the last 365 days, or all time. A travel date can count in more than one country; gaps are not filled automatically. Viewing and manual stays are free; writing the country-date CSV uses the export purchase.
+Timeline → Country Days counts local dates represented by visits, route points, and manual stays. Review this year, the last 365 days, or all time. A travel date can count in more than one country; gaps are not filled automatically. Viewing and manual stays are free; writing the country-date CSV follows the [new-user and existing-user export rules](https://whereday.com/#export-access).
 
 See [how to track days spent in each country](https://whereday.com/blog/track-days-in-country-iphone/) for timezone, network-geocoding, and counting details, including a [checked four-row CSV example](https://whereday.com/blog/track-days-in-country-iphone/#checked-example).
 

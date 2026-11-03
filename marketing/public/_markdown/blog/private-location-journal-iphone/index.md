@@ -1,12 +1,10 @@
-Guide · Reviewed October 26, 2026
+Guide · Reviewed October 30, 2026
 
 # How to keep a private location journal on iPhone.
 
 To keep a private location journal on iPhone, enable recording in Whereday, check a short route in Timeline, and keep supported exports for records you want to restore later. Your visits and routes stay on your phone unless you export or configure delivery elsewhere.
 
 [Start the checklist](https://whereday.com/blog/private-location-journal-iphone/#setup) [Get Whereday](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-private-journal&mt=8)
-
-Whereday is currently listed as iso.me in the U.S. App Store.
 
 Private journal setup
 
@@ -72,7 +70,7 @@ Most people do not need location history because they want another dashboard. Th
 
 That distinction matters because location data is sensitive. A timeline can reveal your home, routines, work patterns, health visits, travel, religious practice, relationships, and habits. Before turning on any location recorder, ask two questions: who stores the data, and how do I leave with a copy?
 
-Whereday is built around the local-first answer. Your visits and routes are stored on your iPhone for core tracking. There is no Whereday account requirement and no Whereday server-side location archive for your everyday journal. If you enable features that talk to the network, such as readable place-name lookup through Apple's geocoding service or optional webhooks that you configure, review their boundaries. First-party onboarding and purchase telemetry is on by default and excludes location records; [the privacy policy lists network requests](https://whereday.com/privacy).
+Whereday is built around the local-first answer. Your visits and routes are stored on your iPhone for core tracking. There is no Whereday account requirement and no Whereday server-side location archive for your everyday journal. If you enable features that talk to the network, such as readable place-name lookup through Apple's geocoding service or optional webhooks that you configure, review their boundaries. Production version 1.8 disables onboarding and purchase analytics; earlier versions can still send the technical events described in the privacy policy. See [the privacy policy lists network requests](https://whereday.com/privacy).
 
 ## A simple private-journal checklist
 
@@ -100,15 +98,15 @@ Deletion Know how to remove local history and remember that deleting an app can 
 
 In a checked simulator example, Start changed to Stop and the timer advanced. After stopping, Timeline listed one eight-second outing, zero visits, and zero distance. Opening it showed 0 points and “No GPS points were saved for this outing yet.” This verifies the controls and empty-path state, not a successful route recording.
 
-![Whereday outing detail with an eight-second duration, zero distance, zero points, and the message that no GPS points were saved](https://whereday.com/screenshots/journal-empty-outing.png)
+![Whereday outing detail with an eight-second duration, zero distance, zero points, and the message that no GPS points were saved](https://whereday.com/screenshots/journal-empty-outing.webp)
 
 Checked October 26, 2026 in an isolated Debug simulator rebuild of the 1.7.16 release source, on iOS 26.5. No GPS points were saved during this session. This is not a physical outing or a battery test.
 
 If you see this state, check location permission, the selected date, and whether tracking was on when you moved. Try another short recording where the phone can obtain a location, then inspect the saved points again. A manual visit can add a stop to your journal, but it cannot recreate the missing GPS path. Use the [missing-recording checklist](https://whereday.com/blog/missing-location-history-iphone/) for the next checks.
 
-Tracking is free. Writing export files, scheduled exports, and webhooks require the one-time unlock; importing a prior export is free. See [current pricing](https://whereday.com/#pricing) and the [setup reference](https://whereday.com/docs/getting-started/).
+From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. See [current pricing](https://whereday.com/#pricing) and the [setup reference](https://whereday.com/docs/getting-started/).
 
-[Record your first day free](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-private-journal&mt=8)
+[Download Whereday for iPhone](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-private-journal&mt=8)
 
 ## Capture visits and routes without turning your life into a feed
 
@@ -135,7 +133,7 @@ Use the [battery-use checklist](https://whereday.com/blog/iphone-location-tracki
 
 The map is the fastest way to make the journal feel real. You can scan where you stopped, see route lines, and connect points to the day they happened. This is useful even when you never export anything. The app becomes a private memory instrument: open it, answer a question, close it.
 
-When readable place names help, Whereday can use Apple's geocoding service to turn coordinates into names or addresses. That makes the timeline easier to read, but it is still worth understanding the boundary: coordinate-to-place lookup is a network service governed by Apple's policies, not an Whereday location database.
+When readable place names help, Whereday can use Apple's geocoding service to turn coordinates into names or addresses. That makes the timeline easier to read, but it is still worth understanding the boundary: coordinate-to-place lookup is a network service governed by Apple's policies, not a Whereday location database.
 
 Storage and network requests
 
@@ -196,8 +194,6 @@ Used that way, a private location journal is quietly valuable. It gives you the 
 ## Start with a local journal.
 
 Download Whereday, keep your working location history on your iPhone, and export when you need a portable copy.
-
-Whereday is currently listed as iso.me in the U.S. App Store.
 
 [Get Whereday](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-private-journal&mt=8)
 
