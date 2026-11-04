@@ -1,4 +1,6 @@
 import SwiftUI
+import SwiftData
+import CoreLocation
 
 /// A shareable card summarizing one month.
 struct MonthRecapView: View {
@@ -7,8 +9,13 @@ struct MonthRecapView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.displayScale) private var displayScale
+    @Environment(\.modelContext) private var modelContext
+    @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
+    @ObservedObject private var localities = LocalityResolver.shared
     @State private var monthOffset = 0
     @State private var renderedCard: UIImage?
+    @State private var monthPoints: [LocationPoint] = []
+    @State private var loadedPointsMonth: Date?
 
     private var displayedMonth: Date {
         let calendar = Calendar.current
@@ -21,7 +28,13 @@ struct MonthRecapView: View {
     }
 
     var body: some View {
-        let recap = MonthRecap(visits: viewModel.allVisits, month: displayedMonth)
+        let recap = MonthRecap(
+            visits: viewModel.allVisits,
+            points: loadedPointsMonth == displayedMonth ? monthPoints : [],
+            month: displayedMonth,
+            usesMetric: usesMetricDistanceUnits,
+            locality: { localities.locality(latitude: $0, longitude: $1) }
+        )
         ScrollView {
             VStack(spacing: 18) {
                 HStack {
@@ -78,11 +91,29 @@ struct MonthRecapView: View {
                 Button("Done") { dismiss() }
             }
         }
-        .task(id: "\(monthOffset)-\(viewModel.allVisits.count)") {
+        .task(id: monthOffset) {
+            loadPoints(for: displayedMonth)
+            localities.request(recap.visitCoordinates)
+        }
+        .task(id: "\(monthOffset)-\(viewModel.allVisits.count)-\(monthPoints.count)-\(localities.revision)") {
             renderedCard = nil
             renderedCard = render(recap)
         }
         .tint(TE.accent)
+    }
+
+    /// Loads the month's kept route points, used for distance moved.
+    private func loadPoints(for month: Date) {
+        let interval = Calendar.current.dateInterval(of: .month, for: month) ?? DateInterval(start: month, duration: 0)
+        let start = interval.start
+        let end = interval.end
+        var descriptor = FetchDescriptor<LocationPoint>(
+            predicate: #Predicate { $0.timestamp >= start && $0.timestamp < end && !$0.isOutlier },
+            sortBy: [SortDescriptor(\.timestamp)]
+        )
+        descriptor.propertiesToFetch = [\.latitude, \.longitude, \.timestamp]
+        monthPoints = (try? modelContext.fetch(descriptor)) ?? []
+        loadedPointsMonth = month
     }
 
     @MainActor
@@ -116,7 +147,7 @@ private struct MonthRecapCard: View {
 
             (Text(recap.daysLine) + Text("\n") + Text(recap.placesLine) + Text("\n")
                 + Text(recap.closingLine).foregroundStyle(TE.inkRust).italic())
-                .font(.system(size: 44, design: .serif))
+                .font(WheredayFont.serif(size: 44, relativeTo: .largeTitle))
                 .lineSpacing(-4)
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -124,9 +155,13 @@ private struct MonthRecapCard: View {
                 .frame(height: 60)
 
             HStack(alignment: .top, spacing: 8) {
-                stat(recap.visitCount.formatted(), label: "VISITS")
+                if recap.hasDistance {
+                    stat(recap.movedText, label: "MOVED")
+                } else {
+                    stat(recap.visitCount.formatted(), label: "VISITS")
+                }
                 stat(recap.newPlaces.formatted(), label: "NEW PLACES")
-                stat(recap.biggestDay.map { $0.formatted(.dateTime.month(.abbreviated).day()) } ?? "—", label: "BUSIEST DAY")
+                stat(recap.biggestDay.map { $0.formatted(.dateTime.month(.abbreviated).day()) } ?? "—", label: "BIGGEST DAY")
             }
 
             VStack(spacing: 0) {
@@ -163,18 +198,22 @@ private struct MonthRecapCard: View {
     }
 
     private var bars: some View {
-        let maximum = max(recap.visitsPerDay.max() ?? 0, 1)
+        let values = recap.barValues
+        let maximum = max(values.max() ?? 0, 1)
         let threshold = recap.highlightThreshold
+        let monthName = recap.month.formatted(.dateTime.month(.wide))
         return HStack(alignment: .bottom, spacing: 0) {
-            ForEach(Array(recap.visitsPerDay.enumerated()), id: \.offset) { _, count in
+            ForEach(Array(values.enumerated()), id: \.offset) { _, value in
                 Capsule()
-                    .fill(count > 0 && count >= threshold ? TE.liveDot : TE.border)
-                    .frame(width: 6, height: max(6, 60 * Double(count) / Double(maximum)))
+                    .fill(value > 0 && value >= threshold ? TE.liveDot : TE.border)
+                    .frame(width: 6, height: max(6, 60 * value / maximum))
                     .frame(maxWidth: .infinity)
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Places visited each day")
+        .accessibilityLabel(recap.hasDistance
+            ? String(localized: "Distance moved each day in \(monthName)")
+            : String(localized: "Places visited each day in \(monthName)"))
     }
 
     private func stat(_ value: String, label: LocalizedStringKey) -> some View {
@@ -191,7 +230,7 @@ private struct MonthRecapCard: View {
     }
 }
 
-/// One month's totals, computed from recorded visits.
+/// One month's totals, computed from recorded visits and route points.
 private struct MonthRecap {
     struct TopPlace {
         let name: String
@@ -207,10 +246,25 @@ private struct MonthRecap {
     let newPlaces: Int
     let biggestDay: Date?
     let visitsPerDay: [Int]
+    /// Metres moved on each day of the month, from consecutive kept route points.
+    let distancePerDay: [Double]
+    let totalDistance: Double
+    let cityCount: Int
+    let visitCoordinates: [CLLocationCoordinate2D]
+    let usesMetric: Bool
     let topPlaces: [TopPlace]
 
-    init(visits: [Visit], month: Date, now: Date = Date(), calendar: Calendar = .current) {
+    init(
+        visits: [Visit],
+        points: [LocationPoint] = [],
+        month: Date,
+        usesMetric: Bool = true,
+        locality: (Double, Double) -> String? = { _, _ in nil },
+        now: Date = Date(),
+        calendar: Calendar = .current
+    ) {
         self.month = month
+        self.usesMetric = usesMetric
         let interval = calendar.dateInterval(of: .month, for: month) ?? DateInterval(start: month, duration: 0)
         dayCount = calendar.range(of: .day, in: .month, for: month)?.count ?? 30
         let inMonth = visits.filter { visit in
@@ -232,12 +286,33 @@ private struct MonthRecap {
         }
         let counts = perDay.map(\.count)
         visitsPerDay = counts
-        recordedDays = counts.filter { $0 > 0 }.count
-        if let best = counts.indices.max(by: { counts[$0] < counts[$1] }), counts[best] > 0 {
+
+        var distances = Array(repeating: 0.0, count: dayCount)
+        var pointDays = Set<Int>()
+        let ordered = points.filter { interval.contains($0.timestamp) && !$0.isOutlier }
+        for (index, point) in ordered.enumerated() {
+            let day = calendar.component(.day, from: point.timestamp) - 1
+            guard distances.indices.contains(day) else { continue }
+            pointDays.insert(day)
+            guard index > 0 else { continue }
+            let previous = ordered[index - 1]
+            // Movement is attributed to the day it ends on, only within one day.
+            guard calendar.isDate(previous.timestamp, inSameDayAs: point.timestamp) else { continue }
+            distances[day] += previous.distance(to: point)
+        }
+        distancePerDay = distances
+        totalDistance = distances.reduce(0, +)
+        recordedDays = counts.indices.filter { counts[$0] > 0 || pointDays.contains($0) }.count
+
+        let ranking: [Double] = totalDistance > 0 ? distances : counts.map(Double.init)
+        if let best = ranking.indices.max(by: { ranking[$0] < ranking[$1] }), ranking[best] > 0 {
             biggestDay = calendar.date(byAdding: .day, value: best, to: interval.start)
         } else {
             biggestDay = nil
         }
+
+        visitCoordinates = inMonth.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+        cityCount = Set(inMonth.compactMap { locality($0.latitude, $0.longitude) }).count
         topPlaces = durations.sorted { $0.value > $1.value }.prefix(3).map { TopPlace(name: $0.key, duration: $0.value) }
 
         // A place is new when its first-ever visit falls in this month.
@@ -249,10 +324,21 @@ private struct MonthRecap {
         newPlaces = firstSeen.values.filter { interval.contains($0) }.count
     }
 
-    /// The top fifth of days by places visited are highlighted.
-    var highlightThreshold: Int {
-        let sorted = visitsPerDay.filter { $0 > 0 }.sorted(by: >)
-        guard !sorted.isEmpty else { return .max }
+    var hasDistance: Bool { totalDistance > 0 }
+
+    /// Distance per day when route points exist, otherwise places visited per day.
+    var barValues: [Double] {
+        hasDistance ? distancePerDay : visitsPerDay.map(Double.init)
+    }
+
+    var movedText: String {
+        DistanceFormatter.format(meters: totalDistance, usesMetric: usesMetric)
+    }
+
+    /// The top fifth of days are highlighted.
+    var highlightThreshold: Double {
+        let sorted = barValues.filter { $0 > 0 }.sorted(by: >)
+        guard !sorted.isEmpty else { return .infinity }
         return sorted[min(sorted.count - 1, max(0, sorted.count / 5))]
     }
 
@@ -265,7 +351,9 @@ private struct MonthRecap {
     }
 
     var closingLine: String {
-        switch countryCount {
+        if cityCount == 1 { return String(localized: "one city.") }
+        if cityCount > 1 { return String(localized: "\(cityCount) cities.") }
+        return switch countryCount {
         case 0: visitCount == 1 ? String(localized: "one visit.") : String(localized: "\(visitCount) visits.")
         case 1: String(localized: "one country.")
         default: String(localized: "\(countryCount) countries.")

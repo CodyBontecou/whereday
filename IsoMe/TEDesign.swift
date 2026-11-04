@@ -50,11 +50,11 @@ enum TE {
 
     // MARK: - Typography
     static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
-        Font.system(style, design: .monospaced).weight(weight)
+        WheredayFont.mono(style, weight: weight)
     }
 
     static func editorial(_ style: Font.TextStyle) -> Font {
-        Font.system(style, design: .serif)
+        WheredayFont.serif(style)
     }
 }
 

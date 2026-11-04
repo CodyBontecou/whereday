@@ -1,6 +1,7 @@
 import Foundation
 import StoreKit
 import CoreLocation
+import UserNotifications
 
 nonisolated enum IsoMePurchaseOption: String, CaseIterable, Identifiable, Sendable {
     // Preserve every legacy ID: previous purchases remain valid.
@@ -39,6 +40,40 @@ nonisolated enum IsoMePurchaseOption: String, CaseIterable, Identifiable, Sendab
         case .individualYearly, .familyYearly: return String(localized: "per year")
         default: return String(localized: "once")
         }
+    }
+}
+
+/// The reminder the paywall's free-week page promises: two days before a free trial ends.
+enum TrialReminder {
+    static let identifier = "com.bontecou.isome.trial-reminder"
+    static let leadTime: TimeInterval = 2 * 24 * 60 * 60
+
+    /// Nil when the trial ends too soon for a reminder to be useful.
+    nonisolated static func fireDate(trialEnds: Date, now: Date = Date()) -> Date? {
+        let date = trialEnds.addingTimeInterval(-leadTime)
+        return date > now ? date : nil
+    }
+
+    nonisolated static func body(displayPrice: String, renewal: Date, bundle: Bundle = .main) -> String {
+        let day = renewal.formatted(date: .abbreviated, time: .omitted)
+        return String(localized: "Your plan starts on \(day) at \(displayPrice). Cancel in Apple settings before then if you don't want to continue.", bundle: bundle)
+    }
+
+    /// Asks for notification permission at the moment it's needed: right after the trial starts.
+    static func schedule(trialEnds: Date, displayPrice: String, center: UNUserNotificationCenter = .current()) async {
+        guard let fireDate = fireDate(trialEnds: trialEnds),
+              (try? await center.requestAuthorization(options: [.alert, .sound])) == true else { return }
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "Your free week ends in 2 days")
+        content.body = body(displayPrice: displayPrice, renewal: trialEnds)
+        content.sound = .default
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        try? await center.add(UNNotificationRequest(identifier: identifier, content: content, trigger: trigger))
+    }
+
+    static func cancel(center: UNUserNotificationCenter = .current()) {
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
     }
 }
 
@@ -97,6 +132,9 @@ final class StoreManager: ObservableObject {
     @Published private(set) var hasLegacyTrackingAccess = false
     @Published private(set) var hasPurchasedBefore = false
     @Published private(set) var trackingExpiration: Date?
+    /// StoreKit's renewal intent for the active subscription: true renews, false ends at `trackingExpiration`,
+    /// nil when there's no subscription or the status couldn't be read.
+    @Published private(set) var willAutoRenew: Bool?
     @Published private(set) var trialEligibleProductIDs: Set<String> = []
 
     var isLoading: Bool { isLoadingProducts || purchasingOption != nil || isRestoring }
@@ -198,6 +236,7 @@ final class StoreManager: ObservableObject {
         purchasingOption = option
         purchaseError = nil
         defer { purchasingOption = nil }
+        let offersTrial = option.isSubscription && trialEligibleProductIDs.contains(option.productID)
         if product(for: option) == nil { await loadProducts() }
         guard let product = product(for: option) else {
             purchaseError = String(localized: "Product not available")
@@ -217,6 +256,9 @@ final class StoreManager: ObservableObject {
                 rememberPurchase()
                 await transaction.finish()
                 await checkEntitlement()
+                if offersTrial, transaction.offer?.type == .introductory, let trialEnds = transaction.expirationDate {
+                    await TrialReminder.schedule(trialEnds: trialEnds, displayPrice: product.displayPrice)
+                }
                 return .succeeded
             case .userCancelled: return .cancelled
             case .pending:
@@ -275,6 +317,7 @@ final class StoreManager: ObservableObject {
         }
         var active: [String] = []
         var expirations: [String: Date] = [:]
+        var groupIDs: [String: String] = [:]
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result,
                   Self.productIDs.contains(transaction.productID),
@@ -283,11 +326,21 @@ final class StoreManager: ObservableObject {
                                 isUpgraded: transaction.isUpgraded) else { continue }
             active.append(transaction.productID)
             expirations[transaction.productID] = transaction.expirationDate
+            groupIDs[transaction.productID] = transaction.subscriptionGroupID
         }
         let preferred = Self.preferredEntitlementProductID(from: active)
         trackingExpiration = preferred.flatMap { expirations[$0] }
+        if let preferred, let groupID = groupIDs[preferred] {
+            willAutoRenew = await Self.autoRenewStatus(productID: preferred, subscriptionGroupID: groupID)
+        } else {
+            willAutoRenew = nil
+        }
         unlockedProductID = preferred
         isPurchased = preferred != nil
+        // A canceled trial, or Lifetime bought during one, has nothing left to remind about.
+        if willAutoRenew == false || (hasResolvedEntitlements && activePurchaseOption?.isSubscription != true) {
+            TrialReminder.cancel()
+        }
         if isPurchased { rememberPurchase() }
         if !hasPurchasedBefore {
             for await result in Transaction.all {
@@ -306,6 +359,18 @@ final class StoreManager: ObservableObject {
                 await self?.checkEntitlement()
             }
         }
+    }
+
+    /// Reads the verified renewal info for the subscription that grants access.
+    private static func autoRenewStatus(productID: String, subscriptionGroupID: String) async -> Bool? {
+        guard let statuses = try? await Product.SubscriptionInfo.status(for: subscriptionGroupID) else { return nil }
+        let matching = statuses.first { status in
+            if case .verified(let renewal) = status.renewalInfo, renewal.currentProductID == productID { return true }
+            if case .verified(let transaction) = status.transaction, transaction.productID == productID { return true }
+            return false
+        } ?? statuses.first
+        guard let matching, case .verified(let renewal) = matching.renewalInfo else { return nil }
+        return renewal.willAutoRenew
     }
 
     nonisolated static func isActive(revocationDate: Date?, expirationDate: Date?, isUpgraded: Bool, now: Date = Date()) -> Bool {

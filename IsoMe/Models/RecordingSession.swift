@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import CoreLocation
 
 @Model
 final class RecordingSession {
@@ -8,19 +9,34 @@ final class RecordingSession {
     var endedAt: Date?
     var customName: String?
     var notes: String?
+    /// Every GPS fix delivered while recording, before accuracy filtering. nil for sessions
+    /// recorded before this was counted; the route screen then shows only the kept count.
+    var receivedLocationCount: Int?
+    /// The distance filter in metres that was active when this session was recorded.
+    var distanceFilterMeters: Double?
 
     init(
         id: UUID = UUID(),
         startedAt: Date,
         endedAt: Date? = nil,
         customName: String? = nil,
-        notes: String? = nil
+        notes: String? = nil,
+        receivedLocationCount: Int? = nil,
+        distanceFilterMeters: Double? = nil
     ) {
         self.id = id
         self.startedAt = startedAt
         self.endedAt = endedAt
         self.customName = customName
         self.notes = notes
+        self.receivedLocationCount = receivedLocationCount
+        self.distanceFilterMeters = distanceFilterMeters
+    }
+
+    /// Adds fixes delivered by Core Location, counted before any are discarded.
+    func recordReceivedLocations(_ count: Int) {
+        guard count > 0 else { return }
+        receivedLocationCount = (receivedLocationCount ?? 0) + count
     }
 
     var isActive: Bool {
@@ -56,6 +72,54 @@ struct RecordingSessionSummary: Identifiable {
 
     var defaultTitle: String {
         String(localized: "Outing \(sequenceNumber)")
+    }
+
+    /// What the person sees: their own name for the outing, or a descriptive automatic title.
+    /// Stored names and `title` (used by exports and intents) are left as they are.
+    func displayTitle(visits: [Visit]) -> String {
+        storedSession?.normalizedCustomName ?? automaticTitle(visits: visits)
+    }
+
+    /// "Morning ride to Ferry Building": part of day, travel mode, and the stay it ended at when known.
+    func automaticTitle(visits: [Visit], calendar: Calendar = .current) -> String {
+        let part = Self.partOfDay(for: startedAt, calendar: calendar)
+        let noun = Self.travelNoun(for: averageSpeedMetersPerSecond.flatMap { TravelMode.infer(averageSpeed: $0) })
+        if let destination = destinationVisit(in: visits)?.displayName, !destination.isEmpty {
+            return String(localized: "\(part) \(noun) to \(destination)")
+        }
+        return String(localized: "\(part) \(noun)")
+    }
+
+    /// The stay the outing ended at: one that began near the end, close to the last fix.
+    func destinationVisit(in visits: [Visit]) -> Visit? {
+        guard !isActive, let end = distancePoints.last else { return nil }
+        let endDate = effectiveEndDate
+        let endLocation = CLLocation(latitude: end.latitude, longitude: end.longitude)
+        return visits
+            .filter { visit in
+                abs(visit.arrivedAt.timeIntervalSince(endDate)) <= 20 * 60 &&
+                CLLocation(latitude: visit.latitude, longitude: visit.longitude).distance(from: endLocation) <= 300
+            }
+            .min { abs($0.arrivedAt.timeIntervalSince(endDate)) < abs($1.arrivedAt.timeIntervalSince(endDate)) }
+    }
+
+    static func partOfDay(for date: Date, calendar: Calendar = .current) -> String {
+        switch calendar.component(.hour, from: date) {
+        case 5..<12: return String(localized: "Morning", comment: "Part of day in an automatic outing title")
+        case 12..<17: return String(localized: "Afternoon", comment: "Part of day in an automatic outing title")
+        case 17..<21: return String(localized: "Evening", comment: "Part of day in an automatic outing title")
+        default: return String(localized: "Night", comment: "Part of day in an automatic outing title")
+        }
+    }
+
+    static func travelNoun(for mode: TravelMode?) -> String {
+        switch mode {
+        case .walk: return String(localized: "walk", comment: "Travel noun in an automatic outing title")
+        case .run: return String(localized: "run", comment: "Travel noun in an automatic outing title")
+        case .bike: return String(localized: "ride", comment: "Travel noun in an automatic outing title")
+        case .drive: return String(localized: "drive", comment: "Travel noun in an automatic outing title")
+        case .transit, .fly, nil: return String(localized: "trip", comment: "Travel noun in an automatic outing title")
+        }
     }
 
     var effectiveEndDate: Date {
@@ -144,6 +208,115 @@ struct RecordingSessionSummary: Identifiable {
         }
 
         return parts.joined(separator: ". ")
+    }
+}
+
+/// Ride statistics derived from a session's GPS points (artboard "Route").
+struct RouteMetrics {
+    /// A speed sample: the average speed over one time bucket of the route.
+    struct SpeedSample: Identifiable {
+        let date: Date
+        let metersPerSecond: Double
+        var id: Date { date }
+    }
+
+    /// Below this speed a stretch counts as stopped, not moving (≈1.8 km/h).
+    static let movingSpeedThreshold: Double = 0.5
+    /// Longer intervals between fixes are tracking gaps and never count as moving time.
+    static let maximumMovingInterval: TimeInterval = 10 * 60
+    /// Altitude changes smaller than this are treated as GPS noise when summing climb.
+    static let climbHysteresisMeters: Double = 2
+
+    let distanceMeters: Double
+    let movingTime: TimeInterval
+    let climbMeters: Double?
+    let speedSamples: [SpeedSample]
+    let topSpeedMetersPerSecond: Double?
+    let medianAccuracyMeters: Double?
+
+    init(points: [LocationPoint], distanceMeters: Double? = nil) {
+        let ordered = points.sorted { $0.timestamp < $1.timestamp }
+        self.distanceMeters = distanceMeters ?? RecordingSessionBuilder.totalDistance(in: ordered)
+
+        var moving: TimeInterval = 0
+        if ordered.count > 1 {
+            for index in 1..<ordered.count {
+                let interval = ordered[index].timestamp.timeIntervalSince(ordered[index - 1].timestamp)
+                guard interval > 0, interval <= Self.maximumMovingInterval else { continue }
+                let speed = ordered[index - 1].distance(to: ordered[index]) / interval
+                if speed > Self.movingSpeedThreshold { moving += interval }
+            }
+        }
+        movingTime = moving
+
+        climbMeters = Self.climb(in: ordered)
+        speedSamples = Self.speedSamples(for: ordered)
+        topSpeedMetersPerSecond = speedSamples.map(\.metersPerSecond).max().flatMap { $0 > 0 ? $0 : nil }
+
+        let accuracies = ordered.map(\.horizontalAccuracy).filter { $0 >= 0 && $0.isFinite }.sorted()
+        medianAccuracyMeters = accuracies.isEmpty ? nil : accuracies[accuracies.count / 2]
+    }
+
+    var averageMovingSpeed: Double? {
+        guard movingTime > 0, distanceMeters > 0 else { return nil }
+        return distanceMeters / movingTime
+    }
+
+    var travelMode: TravelMode? {
+        TravelMode.infer(meters: distanceMeters, seconds: movingTime)
+    }
+
+    /// Sum of rises in a moving-average-smoothed altitude profile, with hysteresis.
+    private static func climb(in points: [LocationPoint]) -> Double? {
+        let altitudes = points.compactMap(\.altitude).filter(\.isFinite)
+        guard altitudes.count >= 3 else { return nil }
+        let window = 2
+        let smoothed = altitudes.indices.map { index -> Double in
+            let lower = max(0, index - window)
+            let upper = min(altitudes.count - 1, index + window)
+            let slice = altitudes[lower...upper]
+            return slice.reduce(0, +) / Double(slice.count)
+        }
+        var total: Double = 0
+        var anchor = smoothed[0]
+        for altitude in smoothed.dropFirst() {
+            let delta = altitude - anchor
+            if delta >= climbHysteresisMeters {
+                total += delta
+                anchor = altitude
+            } else if delta <= -climbHysteresisMeters {
+                anchor = altitude
+            }
+        }
+        return total
+    }
+
+    /// Average speed per time bucket, so single-fix spikes don't dominate the chart.
+    private static func speedSamples(for points: [LocationPoint]) -> [SpeedSample] {
+        guard let first = points.first, let last = points.last, points.count > 1 else { return [] }
+        let duration = last.timestamp.timeIntervalSince(first.timestamp)
+        guard duration > 0 else { return [] }
+        let bucketLength = max(15, duration / 48)
+        let bucketCount = max(1, Int((duration / bucketLength).rounded(.up)))
+        var distances = Array(repeating: 0.0, count: bucketCount)
+        var times = Array(repeating: 0.0, count: bucketCount)
+        for index in 1..<points.count {
+            let previous = points[index - 1]
+            let current = points[index]
+            let interval = current.timestamp.timeIntervalSince(previous.timestamp)
+            guard interval > 0 else { continue }
+            let midpoint = previous.timestamp.addingTimeInterval(interval / 2).timeIntervalSince(first.timestamp)
+            let bucket = min(bucketCount - 1, max(0, Int(midpoint / bucketLength)))
+            distances[bucket] += previous.distance(to: current)
+            times[bucket] += interval
+        }
+        return (0..<bucketCount).map { bucket in
+            let speed = times[bucket] > 0 ? distances[bucket] / times[bucket] : 0
+            return SpeedSample(
+                date: first.timestamp.addingTimeInterval((Double(bucket) + 0.5) * bucketLength),
+                metersPerSecond: speed
+            )
+        }
     }
 }
 

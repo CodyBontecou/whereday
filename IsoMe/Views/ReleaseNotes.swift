@@ -39,17 +39,17 @@ enum IsoMeReleaseNotes {
                         .init(
                             symbolSystemName: "mappin.and.ellipse",
                             title: "Log a visit from Shortcuts",
-                            description: "Use a saved place, enter coordinates, or request your current location when permission allows."
+                            description: "Use a saved place, enter coordinates, or your current location when permission allows."
                         ),
                         .init(
                             symbolSystemName: "checkmark.circle",
                             title: "Keep overlapping visits intentional",
-                            description: "Shortcuts warns about overlapping visits. Enable Allow Overlap only when you want to keep both records."
+                            description: "Shortcuts warns about overlaps. Turn on Allow Overlap only when you want both records."
                         ),
                         .init(
                             symbolSystemName: "link",
                             title: "Open visit forms with a link",
-                            description: "Links can open Check In, Add Past Visit, or a visit's details. Review the place and times before saving."
+                            description: "Links can open Check In, Add Past Visit, or a visit's details."
                         )
                     ]
                 )
@@ -502,6 +502,11 @@ enum ReleaseNoteItem {
         case video
     }
 
+    var isMedia: Bool {
+        if case .media = self { return true }
+        return false
+    }
+
     struct Row {
         let symbolSystemName: String
         let title: LocalizedStringResource
@@ -598,7 +603,7 @@ private struct ReleaseNotesPage: View {
                 .padding(.top, 24)
 
                 ForEach(Array(release.items.enumerated()), id: \.offset) { index, item in
-                    itemView(item, isFirst: index == 0)
+                    itemView(item, isFirst: index == 0, followsMedia: index > 0 && release.items[index - 1].isMedia)
                 }
             }
             .padding(.bottom, 24)
@@ -629,7 +634,7 @@ private struct ReleaseNotesPage: View {
     }
 
     @ViewBuilder
-    private func itemView(_ item: ReleaseNoteItem, isFirst: Bool) -> some View {
+    private func itemView(_ item: ReleaseNoteItem, isFirst: Bool, followsMedia: Bool = false) -> some View {
         switch item {
         case .media(_, let url, let title, let description):
             VStack(alignment: .leading, spacing: 0) {
@@ -651,7 +656,8 @@ private struct ReleaseNotesPage: View {
             }
         case .list(let title, let rows):
             VStack(alignment: .leading, spacing: 0) {
-                if !(isFirst && !release.hasMedia) {
+                // A list right after the video continues its headline, so it carries no label of its own.
+                if !(isFirst && !release.hasMedia) && !followsMedia {
                     Text(title)
                         .font(TE.mono(.caption2))
                         .tracking(1.5)
@@ -687,7 +693,7 @@ private struct ReleaseNotesPage: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .padding(.top, isFirst && !release.hasMedia ? 18 : 0)
+                .padding(.top, (isFirst && !release.hasMedia) || followsMedia ? 18 : 0)
             }
         }
     }
@@ -737,19 +743,32 @@ private struct ReleaseNoteVideo: View {
     @State private var player: AVQueuePlayer?
     @State private var looper: AVPlayerLooper?
     @State private var isPlaying = false
+    /// The clip's real running time, read from the bundled asset (e.g. "0:18").
+    @State private var durationText: String?
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             RoundedRectangle(cornerRadius: 20).fill(TE.inkCard)
             ReleaseNotePlayerLayer(player: player)
-            Label(isPlaying ? "Pause" : "Play", systemImage: isPlaying ? "pause.fill" : "play.fill")
-                .labelStyle(.iconOnly)
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(TE.onInkCard)
-                .frame(width: 32, height: 32)
-                .background(Circle().fill(TE.inkCard.opacity(0.7)))
-                .padding(12)
-                .accessibilityHidden(true)
+            HStack(spacing: 6) {
+                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                    .font(.caption2.weight(.semibold))
+                Group {
+                    if let durationText {
+                        Text("VIDEO · \(durationText)")
+                    } else {
+                        Text("VIDEO")
+                    }
+                }
+                .font(TE.mono(.caption2, weight: .medium))
+                .tracking(1)
+            }
+            .foregroundStyle(TE.onInkCard)
+            .padding(.horizontal, 10)
+            .frame(minHeight: 28)
+            .background(Capsule().fill(TE.inkCard.opacity(0.7)))
+            .padding(12)
+            .accessibilityHidden(true)
         }
         .frame(height: 236)
         .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -757,9 +776,13 @@ private struct ReleaseNoteVideo: View {
         .onTapGesture { togglePlayback() }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Video: \(Text(title))"))
+        .accessibilityValue(durationText.map { Text(verbatim: $0) } ?? Text(verbatim: ""))
         .accessibilityAddTraits(.isButton)
         .accessibilityHint(isPlaying ? "Pauses the video" : "Plays the video")
         .task(id: url) {
+            if let duration = try? await AVURLAsset(url: url).load(.duration) {
+                durationText = Self.formatDuration(duration)
+            }
             let item = AVPlayerItem(url: url)
             let queue = AVQueuePlayer(playerItem: item)
             queue.isMuted = true
@@ -774,6 +797,13 @@ private struct ReleaseNoteVideo: View {
             player?.pause()
             isPlaying = false
         }
+    }
+
+    static func formatDuration(_ time: CMTime) -> String? {
+        let seconds = time.seconds
+        guard seconds.isFinite, seconds > 0 else { return nil }
+        let total = Int(seconds.rounded())
+        return String(format: "%d:%02d", total / 60, total % 60)
     }
 
     private func togglePlayback() {

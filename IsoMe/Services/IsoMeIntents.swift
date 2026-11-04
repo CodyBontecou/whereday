@@ -1,4 +1,5 @@
 import AppIntents
+import CoreLocation
 import SwiftData
 import Foundation
 import UniformTypeIdentifiers
@@ -104,6 +105,15 @@ struct StopTrackingIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        await TrackingIntentSupport.stopTracking()
+        return .result(dialog: "Tracking stopped.")
+    }
+}
+
+@MainActor
+enum TrackingIntentSupport {
+    /// Shared by the Stop Tracking shortcut and the Live Activity's "Stop route" button.
+    static func stopTracking() async {
         if let manager = LocationManager.shared {
             manager.stopTracking()
         } else {
@@ -112,8 +122,114 @@ struct StopTrackingIntent: AppIntent {
             let context = IntentSupport.makeContext()
             LocationManager.closePersistedRecordingSessions(in: context)
             UserDefaults.standard.set(false, forKey: "isTrackingEnabled")
+            await LiveActivityManager.shared.endAllActivities()
         }
-        return .result(dialog: "Tracking stopped.")
+    }
+}
+
+// MARK: - Mark This Place (Live Activity and Apple Watch)
+
+/// Checks in at the current place without any UI, for the Live Activity button and the
+/// watch's "Mark" button. Reuses the Check In shortcut's validation and storage.
+@MainActor
+enum MarkPlaceSupport {
+    /// Fixes older than this aren't "the current place".
+    private static let freshLocationAge: TimeInterval = 120
+
+    @discardableResult
+    static func markCurrentPlace(name: String?, latitude: Double?, longitude: Double?) async throws -> Visit {
+        await StoreManager.shared.checkEntitlement()
+        let context = ManualVisitAutomation.makeContext()
+
+        let coordinate: CLLocationCoordinate2D
+        if let latitude, let longitude,
+           CLLocationCoordinate2DIsValid(CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) {
+            coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else if let location = LocationManager.shared?.currentLocation,
+                  abs(location.timestamp.timeIntervalSinceNow) <= freshLocationAge {
+            coordinate = location.coordinate
+        } else {
+            let locator = ManualIntentLocation()
+            coordinate = try await locator.coordinate()
+        }
+
+        // A second tap at the same place shouldn't stack identical check-ins.
+        let here = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        if let open = try ManualVisitAutomation.openVisits(context: context).first(where: {
+            CLLocation(latitude: $0.latitude, longitude: $0.longitude).distance(from: here) < 100
+        }) {
+            return open
+        }
+
+        let placeName = await resolvedName(preferred: name, at: here)
+        // Overlap is allowed: the button is an explicit "I'm here" while a route records,
+        // so it may sit inside an automatically detected stay.
+        let visit = try await ManualVisitAutomation.checkIn(
+            context: context,
+            name: placeName,
+            savedPlaceID: nil,
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            at: Date(),
+            allowOverlap: true,
+            currentLocation: { coordinate }
+        )
+        NotificationCenter.default.post(name: .manualVisitsChanged, object: nil)
+        LocationManager.shared?.syncDataToWatch()
+        return visit
+    }
+
+    /// The Live Activity's place name when it is a real name, else a nearby saved place,
+    /// else a reverse-geocoded name (when Location Names is on), else "Marked place".
+    private static func resolvedName(preferred: String?, at location: CLLocation) async -> String {
+        if let preferred = preferred?.trimmingCharacters(in: .whitespacesAndNewlines),
+           !preferred.isEmpty, !looksLikeCoordinate(preferred) {
+            return preferred
+        }
+        let context = ManualVisitAutomation.makeContext()
+        if let places = try? context.fetch(FetchDescriptor<SavedPlace>()),
+           let nearest = places
+            .map({ ($0, CLLocation(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude).distance(from: location)) })
+            .filter({ $0.1 <= 150 })
+            .min(by: { $0.1 < $1.1 }) {
+            return nearest.0.name
+        }
+        if NetworkGeocodingPolicy.isAllowed {
+            let lookup = Task { try await GeocodingService().reverseGeocode(location: location) }
+            let timeout = Task {
+                try? await Task.sleep(for: .seconds(6))
+                lookup.cancel()
+            }
+            let result = try? await lookup.value
+            timeout.cancel()
+            if let name = result?.name ?? result?.address,
+               !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return name
+            }
+        }
+        return String(localized: "Marked place")
+    }
+
+    private static func looksLikeCoordinate(_ text: String) -> Bool {
+        text.range(of: #"^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$"#, options: .regularExpression) != nil
+    }
+}
+
+// MARK: - Live Activity intents (app-side implementations)
+
+extension MarkPlaceLiveActivityIntent {
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        try await MarkPlaceSupport.markCurrentPlace(name: name, latitude: latitude, longitude: longitude)
+        return .result()
+    }
+}
+
+extension StopRouteLiveActivityIntent {
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        await TrackingIntentSupport.stopTracking()
+        return .result()
     }
 }
 

@@ -3,32 +3,60 @@ import MapKit
 import SwiftUI
 
 /// The rhythm of one place: visits, typical stay, and when you tend to come here.
+/// Works for a saved place, or for a spot you keep visiting that isn't saved yet.
 struct PlaceDetailView: View {
     let viewModel: LocationViewModel
     /// Two-pane layouts embed the detail next to the list, without their own navigation chrome.
     var isEmbedded = false
-    private let placeID: UUID
+    private let savedPlaceID: UUID?
+    private let unsaved: UnsavedPlaceSuggestion?
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    /// The draft an unsaved spot is saved with; its id becomes the new place's id.
+    @State private var saveDraft: SavedPlaceDraft?
     @State private var editingDraft: SavedPlaceDraft?
     @State private var inspectedVisit: Visit?
+    @State private var isRenaming = false
+    @State private var renameText = ""
+    @State private var isEditingNote = false
+    @State private var noteText = ""
+    @State private var showingMergePicker = false
+    @State private var errorMessage: String?
+    @FocusState private var focusedField: Field?
+
+    private enum Field: Hashable { case name, note }
 
     init(place: SavedPlace, viewModel: LocationViewModel, isEmbedded: Bool = false) {
         // Only the identity is kept, so a deletion elsewhere never touches a removed model.
-        placeID = place.id
+        savedPlaceID = place.id
+        unsaved = nil
         self.viewModel = viewModel
         self.isEmbedded = isEmbedded
     }
 
+    /// A visited spot with no saved place around it, offered with a way to save it.
+    init(suggestion: UnsavedPlaceSuggestion, viewModel: LocationViewModel, isEmbedded: Bool = false) {
+        savedPlaceID = nil
+        unsaved = suggestion
+        self.viewModel = viewModel
+        self.isEmbedded = isEmbedded
+        _saveDraft = State(initialValue: suggestion.draft)
+    }
+
     private var place: SavedPlace? {
-        viewModel.savedPlaces.first { $0.id == placeID }
+        if let savedPlaceID { return viewModel.savedPlaces.first { $0.id == savedPlaceID } }
+        // An unsaved spot turns into its saved place as soon as the editor saves it.
+        if let saveDraft { return viewModel.savedPlaces.first { $0.id == saveDraft.id } }
+        return nil
     }
 
     var body: some View {
         Group {
             if let place {
                 content(place: place)
+            } else if savedPlaceID == nil, let unsaved {
+                unsavedContent(unsaved)
             } else {
                 ContentUnavailableView("Place Removed", systemImage: "mappin.slash",
                                        description: Text("This saved place no longer exists. Your past visits are kept."))
@@ -39,6 +67,20 @@ struct PlaceDetailView: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar {
+            if !isEmbedded, let place {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Edit") { editingDraft = SavedPlaceDraft(place) }
+                        .accessibilityHint("Move, resize, change the kind of, or delete this saved place.")
+                }
+            }
+            if focusedField != nil {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { commitEditing() }
+                }
+            }
+        }
         .sheet(item: $editingDraft) { draft in
             SavedPlaceEditorView(viewModel: viewModel, draft: draft)
         }
@@ -52,25 +94,228 @@ struct PlaceDetailView: View {
                     }
             }
         }
+        .sheet(isPresented: $showingMergePicker) {
+            if let place {
+                PlaceMergePicker(viewModel: viewModel, place: place) { plan in
+                    showingMergePicker = false
+                    merge(plan)
+                }
+            }
+        }
+        .alert("Unable to Update Place", isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
+            Button("OK", role: .cancel) { errorMessage = nil }
+        } message: { Text(errorMessage ?? "") }
         .onChange(of: place == nil) { _, removed in
-            if removed && !isEmbedded { dismiss() }
+            if removed && savedPlaceID != nil && !isEmbedded { dismiss() }
         }
         .tint(TE.accent)
     }
 
+    // MARK: - Saved place
+
     private func content(place: SavedPlace) -> some View {
         let ink = PlaceVisitIndex.ink(for: place, in: viewModel.savedPlaces)
         let visits = PlaceVisitIndex(places: viewModel.savedPlaces, visits: viewModel.allVisits).visits(for: place)
-        let rhythm = PlaceRhythm(visits: visits)
+        return detailScroll(coordinate: place.coordinate, radius: place.radiusMeters, ink: ink, name: place.name, visits: visits) {
+            titleBlock(place)
+        } footer: {
+            noteSection(place)
+            savedActions(place)
+        }
+    }
 
+    private func titleBlock(_ place: SavedPlace) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 8) {
+                PlaceStatusBadge(title: "CONFIRMED", ink: TE.placeInks[3])
+                Text(Self.kicker(for: place))
+                    .font(TE.mono(.caption2))
+                    .tracking(1.2)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if isRenaming {
+                TextField("Name", text: $renameText)
+                    .font(TE.editorial(.largeTitle))
+                    .textInputAutocapitalization(.words)
+                    .submitLabel(.done)
+                    .focused($focusedField, equals: .name)
+                    .onSubmit { commitRename() }
+                    .accessibilityLabel("Place name")
+                    .padding(.bottom, 2)
+                    .overlay(alignment: .bottom) { Rectangle().fill(TE.inkRust).frame(height: 1) }
+                HStack(spacing: 16) {
+                    Button("Save name") { commitRename() }
+                        .font(TE.mono(.caption, weight: .semibold))
+                        .foregroundStyle(TE.inkRust)
+                        .disabled(renameText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    Button("Cancel") { isRenaming = false; focusedField = nil }
+                        .font(TE.mono(.caption))
+                        .foregroundStyle(TE.textMuted)
+                }
+                .frame(minHeight: 44)
+            } else if isEmbedded {
+                // Two-pane: the name renames in place; Edit opens the full editor.
+                Button { beginRename(place) } label: {
+                    Text(place.name)
+                        .font(TE.editorial(.largeTitle))
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(.isHeader)
+                .accessibilityHint("Renames this place.")
+                .accessibilityAction(named: "Rename") { beginRename(place) }
+            } else {
+                Text(place.name)
+                    .font(TE.editorial(.largeTitle))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+            }
+            if let address = place.address, !address.isEmpty {
+                Text(address)
+                    .font(TE.mono(.caption))
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    /// "CAFÉ · SAVED PLACE", or "SAVED PLACE" before a kind is chosen.
+    static func kicker(for place: SavedPlace) -> String {
+        guard let kind = place.kind?.label.uppercased() else { return String(localized: "SAVED PLACE") }
+        return String(localized: "\(kind) · SAVED PLACE")
+    }
+
+    @ViewBuilder
+    private func noteSection(_ place: SavedPlace) -> some View {
+        let note = place.notes?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if isEditingNote {
+            VStack(alignment: .leading, spacing: 8) {
+                sectionLabel("NOTE")
+                TextField("Note", text: $noteText, prompt: Text("What makes this place yours?"), axis: .vertical)
+                    .lineLimit(3...8)
+                    .focused($focusedField, equals: .note)
+                    .accessibilityLabel("Note about this place")
+                    .modifier(PlaceEditorFieldChrome())
+                HStack(spacing: 16) {
+                    Button("Save note") { commitNote() }
+                        .font(TE.mono(.caption, weight: .semibold))
+                        .foregroundStyle(TE.inkRust)
+                    Button("Cancel") { isEditingNote = false; focusedField = nil }
+                        .font(TE.mono(.caption))
+                        .foregroundStyle(TE.textMuted)
+                }
+                .frame(minHeight: 44)
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 18)
+        } else if !note.isEmpty {
+            Button { beginNote(place) } label: {
+                VStack(alignment: .leading, spacing: 6) {
+                    sectionLabel("NOTE")
+                    Text(note)
+                        .font(TE.editorial(.body))
+                        .italic()
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint("Edits this note.")
+            .padding(.horizontal, 24)
+            .padding(.top, 18)
+        }
+    }
+
+    private func savedActions(_ place: SavedPlace) -> some View {
+        let hasNote = !(place.notes?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            if isEmbedded {
+                Button("Edit") { editingDraft = SavedPlaceDraft(place) }
+                    .buttonStyle(PlacesInkButtonStyle())
+                    .accessibilityHint("Rename, move, resize, or delete this saved place.")
+            } else {
+                Button("Rename") { beginRename(place) }
+                    .buttonStyle(PlacesInkButtonStyle())
+                    .disabled(isRenaming)
+            }
+            Button("Merge…") { showingMergePicker = true }
+                .buttonStyle(PlacesInkButtonStyle())
+                .disabled(viewModel.savedPlaces.count < 2)
+                .accessibilityHint("Folds another saved place and its visits into this one.")
+            Button(hasNote ? "Edit note" : "Add note") { beginNote(place) }
+                .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
+                .disabled(isEditingNote)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 24)
+    }
+
+    // MARK: - Unsaved spot
+
+    private func unsavedContent(_ suggestion: UnsavedPlaceSuggestion) -> some View {
+        let visits = suggestion.visits(places: viewModel.savedPlaces, visits: viewModel.allVisits)
+        return detailScroll(coordinate: suggestion.coordinate, radius: 75, ink: TE.inkRust, name: suggestion.name, visits: visits) {
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 8) {
+                    PlaceStatusBadge(title: "UNSAVED", ink: TE.inkRust)
+                    Text("VISITED · SINCE \((visits.last?.arrivedAt ?? suggestion.lastVisit).formatted(.dateTime.month(.abbreviated).year()).uppercased())")
+                        .font(TE.mono(.caption2))
+                        .tracking(1.2)
+                        .foregroundStyle(TE.textMuted)
+                }
+                Text(suggestion.name)
+                    .font(TE.editorial(.largeTitle))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                if let address = suggestion.address, !address.isEmpty {
+                    Text(address)
+                        .font(TE.mono(.caption))
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        } footer: {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("You keep coming back here. Save it to name its future visits and follow its rhythm.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 8)
+                Button("Save place") {
+                    editingDraft = saveDraft ?? suggestion.draft
+                }
+                .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
+                .accessibilityHint("Saves this spot so future visits use its name.")
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 24)
+        }
+    }
+
+    // MARK: - Layout
+
+    private func detailScroll<Header: View, Footer: View>(
+        coordinate: CLLocationCoordinate2D, radius: Double, ink: Color, name: String, visits: [Visit],
+        @ViewBuilder header: () -> Header, @ViewBuilder footer: () -> Footer
+    ) -> some View {
+        let rhythm = PlaceRhythm(visits: visits)
         return ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                PlaceMapCard(coordinate: place.coordinate, radius: place.radiusMeters, ink: ink, name: place.name)
+                PlaceMapCard(coordinate: coordinate, radius: radius, ink: ink, name: name)
                     .frame(height: 196)
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
 
-                titleBlock(place)
+                header()
                     .padding(.horizontal, 24)
                     .padding(.top, 18)
 
@@ -86,35 +331,94 @@ struct PlaceDetailView: View {
                     .padding(.horizontal, 24)
                     .padding(.top, 18)
 
-                Button("Edit place") { editingDraft = SavedPlaceDraft(place) }
-                    .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
-                    .padding(.horizontal, 16)
-                    .padding(.top, 24)
-                    .accessibilityHint("Rename, move, resize, or delete this saved place.")
+                footer()
             }
             .padding(.bottom, 24)
         }
         .scrollIndicators(.hidden)
+        .scrollDismissesKeyboard(.interactively)
     }
 
-    private func titleBlock(_ place: SavedPlace) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("SAVED PLACE · SINCE \(place.createdAt.formatted(.dateTime.month(.abbreviated).year()).uppercased())")
-                .font(TE.mono(.caption2))
-                .tracking(1.2)
-                .foregroundStyle(TE.textMuted)
-            Text(place.name)
-                .font(TE.editorial(.largeTitle))
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityAddTraits(.isHeader)
-            if let address = place.address, !address.isEmpty {
-                Text(address)
-                    .font(TE.mono(.caption))
-                    .foregroundStyle(TE.textMuted)
-                    .fixedSize(horizontal: false, vertical: true)
+    private func sectionLabel(_ title: LocalizedStringKey) -> some View {
+        Text(title)
+            .font(TE.mono(.caption2))
+            .tracking(1.5)
+            .foregroundStyle(TE.textMuted)
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    // MARK: - Actions
+
+    private func beginRename(_ place: SavedPlace) {
+        renameText = place.name
+        isRenaming = true
+        focusedField = .name
+    }
+
+    private func commitRename() {
+        guard let place else { isRenaming = false; return }
+        let name = renameText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        if name != place.name {
+            var draft = SavedPlaceDraft(place)
+            draft.name = name
+            do { try viewModel.saveManagedPlace(draft) } catch {
+                errorMessage = error.localizedDescription
+                return
             }
         }
+        isRenaming = false
+        focusedField = nil
     }
+
+    private func beginNote(_ place: SavedPlace) {
+        noteText = place.notes ?? ""
+        isEditingNote = true
+        focusedField = .note
+    }
+
+    private func commitNote() {
+        guard let place else { isEditingNote = false; return }
+        if noteText != (place.notes ?? "") {
+            var draft = SavedPlaceDraft(place)
+            draft.notes = noteText
+            do { try viewModel.saveManagedPlace(draft) } catch {
+                errorMessage = error.localizedDescription
+                return
+            }
+        }
+        isEditingNote = false
+        focusedField = nil
+    }
+
+    private func commitEditing() {
+        switch focusedField {
+        case .name: commitRename()
+        case .note: commitNote()
+        case nil: break
+        }
+    }
+
+    private func merge(_ plan: SavedPlaceMergePlan) {
+        do { try viewModel.mergeSavedPlaces(plan) } catch { errorMessage = error.localizedDescription }
+    }
+
+    static func mergeMessage(_ plan: SavedPlaceMergePlan) -> String {
+        let visits = plan.movedVisitIDs.union(plan.renamedVisitIDs).count
+        var parts = [String(localized: "\(plan.removedName) is removed and its \(visits) visits become \(plan.keptName).")]
+        if plan.radiusGrows {
+            let radius = Measurement(value: plan.mergedRadius, unit: UnitLength.meters)
+                .formatted(.measurement(width: .abbreviated, usage: .asProvided))
+            parts.append(String(localized: "The match radius grows to \(radius) to cover both."))
+        }
+        if !plan.coversRemovedPlace {
+            parts.append(String(localized: "The places are too far apart for one circle, so only visits named after \(plan.removedName) move."))
+        }
+        parts.append(String(localized: "This can't be undone."))
+        return parts.joined(separator: " ")
+    }
+
+    // MARK: - Sections
 
     private func stats(_ rhythm: PlaceRhythm) -> some View {
         let year = Calendar.current.component(.year, from: Date())
@@ -150,11 +454,7 @@ struct PlaceDetailView: View {
     }
 
     private var rhythmTitle: some View {
-        Text("WHEN YOU COME HERE")
-            .font(TE.mono(.caption2))
-            .tracking(1.5)
-            .foregroundStyle(TE.textMuted)
-            .accessibilityAddTraits(.isHeader)
+        sectionLabel("WHEN YOU COME HERE")
     }
 
     @ViewBuilder
@@ -171,12 +471,8 @@ struct PlaceDetailView: View {
     private func recentSection(_ visits: [Visit]) -> some View {
         if !visits.isEmpty {
             VStack(alignment: .leading, spacing: 0) {
-                Text("RECENT")
-                    .font(TE.mono(.caption2))
-                    .tracking(1.5)
-                    .foregroundStyle(TE.textMuted)
+                sectionLabel("RECENT")
                     .padding(.bottom, 4)
-                    .accessibilityAddTraits(.isHeader)
                 let recent = Array(visits.prefix(5))
                 ForEach(recent) { visit in
                     Button { inspectedVisit = visit } label: {
@@ -209,6 +505,109 @@ struct PlaceDetailView: View {
         .frame(minHeight: 44)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
+    }
+}
+
+/// A small tinted status chip: "CONFIRMED" for saved places, "UNSAVED" for spots not saved yet.
+private struct PlaceStatusBadge: View {
+    let title: LocalizedStringKey
+    let ink: Color
+
+    var body: some View {
+        Text(title)
+            .font(TE.mono(.caption2, weight: .medium))
+            .tracking(1.2)
+            .foregroundStyle(ink)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(RoundedRectangle(cornerRadius: 6).fill(ink.opacity(0.16)))
+    }
+}
+
+/// Picks the saved place to fold into another one, nearest first.
+private struct PlaceMergePicker: View {
+    let viewModel: LocationViewModel
+    let place: SavedPlace
+    let onConfirm: (SavedPlaceMergePlan) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var searchText = ""
+    @State private var pendingMerge: SavedPlaceMergePlan?
+
+    var body: some View {
+        let index = PlaceVisitIndex(places: viewModel.savedPlaces, visits: viewModel.allVisits)
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let others = viewModel.savedPlaces
+            .filter { $0.id != place.id }
+            .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }
+            .sorted { place.distanceMeters(to: $0.coordinate) < place.distanceMeters(to: $1.coordinate) }
+        NavigationStack {
+            List {
+                Section {
+                    ForEach(others, id: \.id) { other in
+                        Button {
+                            pendingMerge = SavedPlaceMergePlan(keeping: place, removing: other,
+                                                              places: viewModel.savedPlaces, visits: viewModel.allVisits)
+                        } label: {
+                            HStack(spacing: 12) {
+                                Circle()
+                                    .fill(PlaceVisitIndex.ink(for: other, in: viewModel.savedPlaces))
+                                    .frame(width: 12, height: 12)
+                                    .accessibilityHidden(true)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(other.name)
+                                        .font(TE.editorial(.title3))
+                                        .foregroundStyle(TE.textPrimary)
+                                    Text(Self.distanceLabel(place.distanceMeters(to: other.coordinate)))
+                                        .font(TE.mono(.caption2))
+                                        .foregroundStyle(TE.textMuted)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                let count = index.visits(for: other).count
+                                Text(count == 1 ? String(localized: "1 visit") : String(localized: "\(count) visits"))
+                                    .font(TE.mono(.caption))
+                                    .foregroundStyle(TE.textMuted)
+                            }
+                            .frame(minHeight: 44)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityHint("Merges this place into \(place.name).")
+                    }
+                } footer: {
+                    Text("The place you pick is removed. Its visits, kind, address and note join \(place.name).")
+                }
+            }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(TE.surface.ignoresSafeArea())
+            .searchable(text: $searchText, prompt: Text("Find a place"))
+            .overlay {
+                if others.isEmpty { ContentUnavailableView.search(text: searchText) }
+            }
+            .navigationTitle("Merge into \(place.name)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+            }
+            .confirmationDialog(
+                pendingMerge.map { String(localized: "Merge \($0.removedName) into \($0.keptName)?") } ?? "",
+                isPresented: Binding(get: { pendingMerge != nil }, set: { if !$0 { pendingMerge = nil } }),
+                titleVisibility: .visible,
+                presenting: pendingMerge
+            ) { plan in
+                Button("Merge", role: .destructive) { onConfirm(plan) }
+                Button("Cancel", role: .cancel) { pendingMerge = nil }
+            } message: { plan in
+                Text(PlaceDetailView.mergeMessage(plan))
+            }
+        }
+        .tint(TE.accent)
+    }
+
+    private static func distanceLabel(_ meters: Double) -> String {
+        let distance = Measurement(value: meters, unit: UnitLength.meters)
+        return String(localized: "\(distance.formatted(.measurement(width: .abbreviated, usage: .road))) away")
     }
 }
 
@@ -259,6 +658,10 @@ struct PlaceMapCard: View {
 // MARK: - Rhythm grid
 
 private struct PlaceRhythmGrid: View {
+    /// The waking-day window the grid draws, 07:00 through the 22:00 hour.
+    static let hours = Array(7...22)
+    static let labelledHours: Set<Int> = [7, 11, 15, 19, 22]
+
     let rhythm: PlaceRhythm
     let ink: Color
     @ScaledMetric(relativeTo: .caption2) private var rowHeight: CGFloat = 14
@@ -272,7 +675,7 @@ private struct PlaceRhythmGrid: View {
                         .foregroundStyle(TE.textMuted)
                         .frame(width: 22, alignment: .leading)
                     HStack(spacing: 0) {
-                        ForEach(0..<24, id: \.self) { hour in
+                        ForEach(Self.hours, id: \.self) { hour in
                             let level = rhythm.level(weekday: weekday, hour: hour)
                             let size: CGFloat = [3, 6, 9, 12][level]
                             Circle()
@@ -286,13 +689,21 @@ private struct PlaceRhythmGrid: View {
             }
             HStack(spacing: 0) {
                 Color.clear.frame(width: 22, height: 1)
-                ForEach([0, 6, 12, 18], id: \.self) { hour in
-                    Text(String(format: "%02d", hour))
-                        .font(TE.mono(.caption2))
-                        .foregroundStyle(TE.textMuted)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                // Each label sits centred under its hour's column.
+                ForEach(Self.hours, id: \.self) { hour in
+                    Color.clear
+                        .frame(maxWidth: .infinity, minHeight: 1)
+                        .overlay {
+                            if Self.labelledHours.contains(hour) {
+                                Text(verbatim: "\(hour)")
+                                    .font(TE.mono(.caption2))
+                                    .foregroundStyle(TE.textMuted)
+                                    .fixedSize()
+                            }
+                        }
                 }
             }
+            .padding(.top, 2)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityAddTraits(.isImage)

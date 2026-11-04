@@ -23,6 +23,34 @@ enum VisitMutationError: LocalizedError {
     }
 }
 
+/// A stored stay that a new stop would overlap, and how saving the stop trims it.
+@MainActor
+struct VisitOverlapResolution: Identifiable {
+    enum Change: Equatable {
+        /// The earlier stay ends where the new stop begins.
+        case endsAt(Date)
+        /// The later stay begins where the new stop ends.
+        case startsAt(Date)
+    }
+
+    let visit: Visit
+    let change: Change
+    /// How long the two overlap, measured against now for a stay still in progress.
+    let overlap: TimeInterval
+
+    var id: UUID { visit.id }
+}
+
+/// What saving a stop over the given times would do to stored stays.
+@MainActor
+enum VisitOverlapCheck {
+    case none
+    /// Every overlapped stay can be trimmed to make room.
+    case trims([VisitOverlapResolution])
+    /// This stay sits inside the new stop (or the new stop is open-ended over it); it cannot be trimmed.
+    case conflict(Visit)
+}
+
 /// Shared mutation boundary for the app and background App Intents.
 @MainActor
 final class ManualVisitStore {
@@ -30,6 +58,120 @@ final class ManualVisitStore {
     private(set) var visitMutationError: VisitMutationError?
 
     init(context: ModelContext) { self.modelContext = context }
+
+    /// Checks stored stays (manual and recorded) against a new stop's times.
+    /// Adjacent stays that share a boundary do not overlap.
+    func overlapCheck(arrivedAt: Date, departedAt: Date?, excluding excluded: Visit? = nil, now: Date = Date()) -> VisitOverlapCheck {
+        guard arrivedAt.timeIntervalSinceReferenceDate.isFinite,
+              departedAt.map({ $0 >= arrivedAt }) ?? true,
+              let candidates = try? overlappingVisits(arrivedAt: arrivedAt, departedAt: departedAt, excluding: excluded) else {
+            return .none
+        }
+        guard !candidates.isEmpty else { return .none }
+
+        var resolutions: [VisitOverlapResolution] = []
+        for candidate in candidates.sorted(by: { $0.arrivedAt < $1.arrivedAt }) {
+            let candidateEnd = candidate.departedAt ?? Date.distantFuture
+            let change: VisitOverlapResolution.Change
+            if candidate.arrivedAt < arrivedAt {
+                change = .endsAt(arrivedAt)
+            } else if let departedAt, candidateEnd > departedAt, candidate.arrivedAt < departedAt {
+                change = .startsAt(departedAt)
+            } else {
+                return .conflict(candidate)
+            }
+            let overlapStart = max(candidate.arrivedAt, arrivedAt)
+            let overlapEnd = min(candidate.departedAt ?? now, departedAt ?? now)
+            resolutions.append(VisitOverlapResolution(
+                visit: candidate,
+                change: change,
+                overlap: max(0, overlapEnd.timeIntervalSince(overlapStart))
+            ))
+        }
+
+        // Two stays cannot both end at the new arrival without one swallowing the other.
+        let endings = resolutions.filter { if case .endsAt = $0.change { true } else { false } }
+        let startings = resolutions.filter { if case .startsAt = $0.change { true } else { false } }
+        if endings.count > 1 { return .conflict(endings[1].visit) }
+        if startings.count > 1 { return .conflict(startings[0].visit) }
+        return .trims(resolutions)
+    }
+
+    /// Saves a stop, first trimming any stays it overlaps so the timeline stays continuous:
+    /// an earlier stay ends at the stop's arrival, a later one starts at its departure.
+    /// A stay that cannot be trimmed is reported as `.overlap`, as without trimming.
+    @discardableResult
+    func createManualVisitTrimmingOverlaps(
+        name: String,
+        address: String?,
+        coordinate: CLLocationCoordinate2D,
+        arrivedAt: Date,
+        departedAt: Date?,
+        placeSource: VisitPlaceSource = .userEntered
+    ) -> Visit? {
+        visitMutationError = nil
+        let resolutions: [VisitOverlapResolution]
+        switch overlapCheck(arrivedAt: arrivedAt, departedAt: departedAt) {
+        case .none:
+            resolutions = []
+        case .conflict(let visit):
+            visitMutationError = .overlap(visit.displayName)
+            return nil
+        case .trims(let trims):
+            resolutions = trims
+        }
+
+        let previous = resolutions.map { resolution in
+            (resolution.visit, resolution.visit.arrivedAt, resolution.visit.departedAt,
+             resolution.visit.countryDepartureIsInferred, resolution.visit.updatedAt)
+        }
+        let now = Date()
+        for resolution in resolutions {
+            switch resolution.change {
+            case .endsAt(let end):
+                resolution.visit.departedAt = end
+                resolution.visit.countryDepartureIsInferred = false
+            case .startsAt(let start):
+                resolution.visit.arrivedAt = start
+            }
+            resolution.visit.updatedAt = now
+        }
+
+        // The trims and the new stop are saved together; undo the trims if the stop fails.
+        let visit = createManualVisit(
+            name: name,
+            address: address,
+            coordinate: coordinate,
+            arrivedAt: arrivedAt,
+            departedAt: departedAt,
+            placeSource: placeSource,
+            allowOverlap: true
+        )
+        if visit == nil, !previous.isEmpty {
+            for (trimmed, arrived, departed, inferred, updated) in previous {
+                trimmed.arrivedAt = arrived
+                trimmed.departedAt = departed
+                trimmed.countryDepartureIsInferred = inferred
+                trimmed.updatedAt = updated
+            }
+            try? modelContext.save()
+        }
+        return visit
+    }
+
+    private func overlappingVisits(arrivedAt: Date, departedAt: Date?, excluding excluded: Visit?) throws -> [Visit] {
+        let end = departedAt ?? Date.distantFuture
+        let distantFuture = Date.distantFuture
+        let predicate = #Predicate<Visit> { candidate in
+            candidate.arrivedAt <= end && (candidate.departedAt ?? distantFuture) >= arrivedAt
+        }
+        return try modelContext.fetch(FetchDescriptor<Visit>(predicate: predicate)).filter { candidate in
+            guard candidate.id != excluded?.id else { return false }
+            let candidateEnd = candidate.departedAt ?? Date.distantFuture
+            return (candidate.arrivedAt < end && candidateEnd > arrivedAt)
+                || (candidate.arrivedAt == arrivedAt && candidateEnd == end)
+        }
+    }
 
     @discardableResult
     func createManualVisit(

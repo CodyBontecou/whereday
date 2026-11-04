@@ -10,6 +10,9 @@ struct SavedLocationsView: View {
     @State private var searchText = ""
     @State private var filter: PlacesFilter = .mostVisited
     @State private var selectedPlaceID: UUID?
+    /// Two-pane selection of a visited spot that isn't saved yet.
+    @State private var selectedSuggestionID: String?
+    @State private var pushedSuggestion: UnsavedPlaceSuggestion?
     @State private var sheet: SavedLocationSheet?
     @State private var showingImportPicker = false
     @State private var isReadingFile = false
@@ -18,6 +21,17 @@ struct SavedLocationsView: View {
     @FocusState private var searchFocused: Bool
 
     private var isTwoPane: Bool { horizontalSizeClass == .regular }
+
+    /// The place the two-pane detail shows: the one picked, or else the first in the list.
+    private func effectiveSelectedPlaceID(_ library: PlacesLibrary) -> UUID? {
+        guard selectedSuggestionID == nil else { return nil }
+        if let selectedPlaceID, library.places.contains(where: { $0.id == selectedPlaceID }) {
+            return selectedPlaceID
+        }
+        let listFilter = filter == .unsaved ? PlacesFilter.mostVisited : filter
+        return library.sorted(filter: listFilter, query: searchText).first?.id
+            ?? library.sorted(filter: .mostVisited, query: "").first?.id
+    }
 
     var body: some View {
         let library = PlacesLibrary(places: viewModel.savedPlaces, visits: viewModel.allVisits)
@@ -86,6 +100,11 @@ struct SavedLocationsView: View {
         .alert("Saved Locations", isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
             Button("OK", role: .cancel) { errorMessage = nil }
         } message: { Text(errorMessage ?? "") }
+        .navigationDestination(isPresented: Binding(get: { pushedSuggestion != nil }, set: { if !$0 { pushedSuggestion = nil } })) {
+            if let pushedSuggestion {
+                PlaceDetailView(suggestion: pushedSuggestion, viewModel: viewModel)
+            }
+        }
         .onAppear { viewModel.loadSavedPlaces() }
         .tint(TE.accent)
     }
@@ -120,7 +139,7 @@ struct SavedLocationsView: View {
     private func header(_ library: PlacesLibrary) -> some View {
         HStack(alignment: .bottom, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(viewModel.savedPlaces.count) SAVED · \(viewModel.allVisits.count) VISITS")
+                Text("\(viewModel.savedPlaces.count) SAVED · \(library.visitedPlaceCount) VISITED")
                     .font(TE.mono(.caption2))
                     .tracking(1.5)
                     .foregroundStyle(TE.textMuted)
@@ -177,7 +196,7 @@ struct SavedLocationsView: View {
                 chip(.mostVisited, title: "Most visited")
                 chip(.recent, title: "Recent")
                 if !library.suggestions.isEmpty {
-                    chip(.unsaved, title: "Unsaved · \(library.suggestions.count)", dot: TE.inkRust)
+                    chip(.unsaved, title: "Unnamed · \(library.suggestions.count)", dot: TE.inkRust)
                 }
                 chip(.alphabetical, title: "A–Z")
             }
@@ -258,8 +277,11 @@ struct SavedLocationsView: View {
         let row = placeRow(place, library: library)
         Group {
             if isTwoPane {
-                Button { selectedPlaceID = place.id } label: { row }
-                    .accessibilityAddTraits(selectedPlaceID == place.id ? .isSelected : [])
+                Button {
+                    selectedPlaceID = place.id
+                    selectedSuggestionID = nil
+                } label: { row }
+                    .accessibilityAddTraits(effectiveSelectedPlaceID(library) == place.id ? .isSelected : [])
             } else {
                 NavigationLink { PlaceDetailView(place: place, viewModel: viewModel) } label: { row }
             }
@@ -277,7 +299,8 @@ struct SavedLocationsView: View {
 
     private func placeRow(_ place: SavedPlace, library: PlacesLibrary) -> some View {
         let visits = library.index.visits(for: place)
-        let selected = isTwoPane && selectedPlaceID == place.id
+        let selected = isTwoPane && effectiveSelectedPlaceID(library) == place.id
+        let isHome = place.kind == .home
         return HStack(spacing: 12) {
             Circle()
                 .fill(PlaceVisitIndex.ink(for: place, in: viewModel.savedPlaces))
@@ -287,17 +310,27 @@ struct SavedLocationsView: View {
                 Text(place.name)
                     .font(TE.editorial(.title3))
                     .multilineTextAlignment(.leading)
-                Text(subtitle(place, lastVisit: visits.first))
+                Text(isHome && !(place.address ?? "").isEmpty ? place.address ?? "" : subtitle(place, lastVisit: visits.first))
                     .font(TE.mono(.caption2))
                     .foregroundStyle(TE.textMuted)
                     .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text(visits.count == 1 ? String(localized: "1 visit") : String(localized: "\(visits.count) visits"))
+            Text(isHome ? Self.dayCountLabel(visits) : visits.count == 1 ? String(localized: "1 visit") : String(localized: "\(visits.count) visits"))
                 .font(TE.mono(.caption))
                 .foregroundStyle(selected ? TE.inkRust : TE.textMuted)
         }
         .frame(minHeight: 58)
+        .padding(.horizontal, isTwoPane ? 10 : 0)
+        .background {
+            // Two-pane: the picked row is drawn like Today's selected stay.
+            if isTwoPane {
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(selected ? TE.surface : Color.clear)
+                    .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(selected ? TE.inkRust : Color.clear, lineWidth: 1.5))
+            }
+        }
+        .padding(.horizontal, isTwoPane ? -10 : 0)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
@@ -309,6 +342,13 @@ struct SavedLocationsView: View {
         }
         if let address = place.address, !address.isEmpty { return address }
         return String(localized: "No visits yet")
+    }
+
+    /// Home counts the distinct days you were there, not individual visits.
+    private static func dayCountLabel(_ visits: [Visit]) -> String {
+        let calendar = Calendar.current
+        let days = Set(visits.map { calendar.startOfDay(for: $0.arrivedAt) }).count
+        return days == 1 ? String(localized: "1 day") : String(localized: "\(days) days")
     }
 
     private static func relativeDay(_ date: Date, now: Date = Date()) -> String {
@@ -339,12 +379,7 @@ struct SavedLocationsView: View {
                 } else {
                     LazyVStack(spacing: 0) {
                         ForEach(suggestions) { suggestion in
-                            Button { sheet = .editor(suggestion.draft) } label: {
-                                suggestionRow(suggestion)
-                            }
-                            .buttonStyle(.plain)
-                            .disabled(isReadingFile)
-                            .accessibilityHint("Saves this place so future visits use its name.")
+                            suggestionLink(suggestion)
                             if suggestion.id != suggestions.last?.id {
                                 Rectangle().fill(TE.dialTrack).frame(height: 1)
                             }
@@ -353,6 +388,35 @@ struct SavedLocationsView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private func suggestionLink(_ suggestion: UnsavedPlaceSuggestion) -> some View {
+        let row = suggestionRow(suggestion)
+        Group {
+            if isTwoPane {
+                Button { selectedSuggestionID = suggestion.id } label: { row }
+                    .accessibilityAddTraits(selectedSuggestionID == suggestion.id ? .isSelected : [])
+            } else {
+                // Pushed by state rather than a row link, so saving the spot (which removes its row) keeps the page open.
+                Button { pushedSuggestion = suggestion } label: {
+                    HStack(spacing: 8) {
+                        row
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(TE.textMuted)
+                            .accessibilityHidden(true)
+                    }
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(isReadingFile)
+        .accessibilityHint("Shows this spot's visits and rhythm, with an option to save it.")
+        .contextMenu {
+            Button("Save", systemImage: "plus") { sheet = .editor(suggestion.draft) }
+        }
+        .accessibilityAction(named: "Save") { sheet = .editor(suggestion.draft) }
     }
 
     private func suggestionRow(_ suggestion: UnsavedPlaceSuggestion) -> some View {
@@ -370,8 +434,8 @@ struct SavedLocationsView: View {
                     .foregroundStyle(TE.textMuted)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text("Save")
-                .font(TE.mono(.caption, weight: .semibold))
+            Text("UNSAVED")
+                .font(TE.mono(.caption2, weight: .semibold))
                 .foregroundStyle(TE.inkRust)
         }
         .frame(minHeight: 58)
@@ -397,7 +461,7 @@ struct SavedLocationsView: View {
             .accessibilityLabel("Import Locations from CSV")
 
             if !library.suggestions.isEmpty && filter != .unsaved {
-                Button("Save \(library.suggestions.count) places") { filter = .unsaved }
+                Button("Name \(library.suggestions.count) places") { filter = .unsaved }
                     .buttonStyle(PlacesInkButtonStyle())
                     .accessibilityHint("Shows frequent places that aren't saved yet.")
             }
@@ -418,8 +482,12 @@ struct SavedLocationsView: View {
 
     @ViewBuilder
     private func detailPane(_ library: PlacesLibrary) -> some View {
-        let fallback = library.sorted(filter: .mostVisited, query: "").first
-        if let place = viewModel.savedPlaces.first(where: { $0.id == selectedPlaceID }) ?? fallback {
+        let shownID = effectiveSelectedPlaceID(library)
+        if let suggestionID = selectedSuggestionID,
+           let suggestion = library.suggestions.first(where: { $0.id == suggestionID }) {
+            PlaceDetailView(suggestion: suggestion, viewModel: viewModel, isEmbedded: true)
+                .id(suggestion.id)
+        } else if let place = viewModel.savedPlaces.first(where: { $0.id == shownID }) {
             PlaceDetailView(place: place, viewModel: viewModel, isEmbedded: true)
                 .id(place.id)
         } else {
@@ -442,9 +510,15 @@ private struct PlacesLibrary {
 
     init(places: [SavedPlace], visits: [Visit]) {
         self.places = places
-        index = PlaceVisitIndex(places: places, visits: visits)
+        let index = PlaceVisitIndex(places: places, visits: visits)
+        self.index = index
         suggestions = UnsavedPlaceSuggestion.suggestions(from: index.unmatched)
+        let visitedSaved = places.reduce(0) { $0 + (index.visits(for: $1).isEmpty ? 0 : 1) }
+        visitedPlaceCount = visitedSaved + UnsavedPlaceSuggestion.distinctSpotCount(in: index.unmatched)
     }
+
+    /// Saved places with at least one visit, plus every distinct unsaved spot you've stopped at.
+    let visitedPlaceCount: Int
 
     func sorted(filter: PlacesFilter, query: String) -> [SavedPlace] {
         let query = query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -452,16 +526,19 @@ private struct PlacesLibrary {
             query.isEmpty || $0.name.localizedCaseInsensitiveContains(query)
                 || ($0.address?.localizedCaseInsensitiveContains(query) ?? false)
         }
+        let ordered: [SavedPlace]
         switch filter {
         case .alphabetical, .unsaved:
-            return matching
+            ordered = matching
         case .mostVisited:
-            return matching.sorted { index.visits(for: $0).count > index.visits(for: $1).count }
+            ordered = matching.sorted { index.visits(for: $0).count > index.visits(for: $1).count }
         case .recent:
-            return matching.sorted {
+            ordered = matching.sorted {
                 (index.visits(for: $0).first?.arrivedAt ?? .distantPast) > (index.visits(for: $1).first?.arrivedAt ?? .distantPast)
             }
         }
+        // Home is pinned to the top, whatever the order.
+        return ordered.filter { $0.kind == .home } + ordered.filter { $0.kind != .home }
     }
 }
 
@@ -478,12 +555,28 @@ struct UnsavedPlaceSuggestion: Identifiable {
         SavedPlaceDraft(name: name, address: address ?? "", latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
 
+    /// The ~150 m grid cell a visit falls in; suggestions are keyed by it.
+    static func gridKey(for visit: Visit) -> String? {
+        guard visit.latitude.isFinite && visit.longitude.isFinite else { return nil }
+        let step = 0.0014
+        return "\(Int((visit.latitude / step).rounded())):\(Int((visit.longitude / step).rounded()))"
+    }
+
+    /// Distinct grid cells among visits that match no saved place.
+    static func distinctSpotCount(in unmatched: [Visit]) -> Int {
+        Set(unmatched.compactMap(gridKey(for:))).count
+    }
+
+    /// This spot's visits that still match no saved place, newest first.
+    func visits(places: [SavedPlace], visits: [Visit]) -> [Visit] {
+        PlaceVisitIndex(places: places, visits: visits).unmatched.filter { Self.gridKey(for: $0) == id }
+    }
+
     /// Visits are grouped on a ~150 m grid; `visits` are expected newest first.
     static func suggestions(from visits: [Visit], minimumVisits: Int = 3, limit: Int = 12) -> [UnsavedPlaceSuggestion] {
-        let step = 0.0014
         var groups: [String: [Visit]] = [:]
-        for visit in visits where visit.latitude.isFinite && visit.longitude.isFinite {
-            let key = "\(Int((visit.latitude / step).rounded())):\(Int((visit.longitude / step).rounded()))"
+        for visit in visits {
+            guard let key = gridKey(for: visit) else { continue }
             groups[key, default: []].append(visit)
         }
         return groups.compactMap { key, group -> UnsavedPlaceSuggestion? in

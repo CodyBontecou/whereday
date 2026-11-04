@@ -9,29 +9,28 @@ struct ImportFileSelection: Identifiable {
 struct ImportPreviewView: View {
     let url: URL
     let viewModel: LocationViewModel
+    /// Called from the failed state's "Choose another file"; the sheet closes so the caller can reopen its picker.
+    /// Without it, the failed state offers only Done.
+    var onChooseAnotherFile: (() -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @ObservedObject private var progress = ImportProgress.shared
     @State private var phase: Phase = .reading
     @State private var options = ImportOptions()
 
     private enum Phase {
         case reading
         case ready(ImportPreview)
-        case saving
-        case complete(ImportCommitResult)
-        case failed(String)
+        case saving(ImportPreview)
+        case complete(ImportCommitResult, ImportPreview)
+        /// `detail` is the raw error, shown as secondary text; `whileSaving` is true when the
+        /// file was readable but writing it failed.
+        case failed(detail: String, whileSaving: Bool)
     }
 
     private var isSaving: Bool {
         if case .saving = phase { return true }
         return false
-    }
-
-    private var isFinished: Bool {
-        switch phase {
-        case .complete, .failed: return true
-        case .reading, .ready, .saving: return false
-        }
     }
 
     var body: some View {
@@ -51,14 +50,6 @@ struct ImportPreviewView: View {
             .foregroundStyle(TE.textPrimary)
             .navigationBarTitleDisplayMode(.inline)
             .accessibilityIdentifier("import-review-screen")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    if !isFinished {
-                        Button("Cancel", role: .cancel) { dismiss() }
-                            .disabled(isSaving)
-                    }
-                }
-            }
         }
         .interactiveDismissDisabled(isSaving)
         .task {
@@ -71,7 +62,8 @@ struct ImportPreviewView: View {
             } catch is CancellationError {
                 // Closing the sheet cancels preparation without writing anything.
             } catch {
-                phase = .failed(error.localizedDescription)
+                LogManager.shared.error("Import couldn't read \(url.lastPathComponent) · \(error.localizedDescription)", category: .general)
+                phase = .failed(detail: error.localizedDescription, whileSaving: false)
             }
         }
     }
@@ -101,20 +93,29 @@ struct ImportPreviewView: View {
         case .reading:
             fileCard(name: url.lastPathComponent, detail: nil)
             statusBlock(title: "Reading and checking duplicates...")
-        case .saving:
-            statusBlock(title: "Saving import...")
+        case .saving(let preview):
+            fileCard(name: preview.fileName, detail: fileDetail(preview))
+            savingBlock(preview)
         case .ready(let preview):
             review(preview)
-        case .complete(let result):
+        case .complete(let result, let preview):
             VStack(alignment: .leading, spacing: 6) {
                 Text("IMPORT COMPLETE")
                     .font(TE.mono(.caption2))
                     .tracking(1.2)
                     .foregroundStyle(TE.onInkCardMuted)
-                Text(result.summary)
-                    .font(TE.editorial(.title2))
+                Text(verbatim: completionHeadline(result))
+                    .font(TE.editorial(.title))
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("import-completion-summary")
+                Text(verbatim: completionDetail(preview))
+                    .font(.subheadline)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(verbatim: duplicatesSummary(result))
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.onInkCardMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 4)
             }
             .foregroundStyle(TE.onInkCard)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -122,19 +123,30 @@ struct ImportPreviewView: View {
             .background(RoundedRectangle(cornerRadius: 18).fill(TE.inkCard))
             .padding(.horizontal, 16)
             .padding(.top, 28)
-        case .failed(let message):
+        case .failed(let detail, let whileSaving):
             VStack(alignment: .leading, spacing: 6) {
-                Text("IMPORT FAILED")
+                Text("IMPORT FAILED · NOTHING WAS SAVED")
                     .font(TE.mono(.caption2))
                     .tracking(1.2)
                     .foregroundStyle(TE.inkRust)
-                Text(message)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(whileSaving ? "This import couldn't be saved." : "This file isn't one Whereday can read.")
                     .font(TE.editorial(.title3))
                     .fixedSize(horizontal: false, vertical: true)
-                Text("Try a Google Timeline JSON export, or a Whereday JSON, CSV or Markdown file.")
+                Text(whileSaving
+                     ? "Your existing records weren't touched. Try importing the file again."
+                     : "Try a Google Timeline JSON export, or a Whereday JSON, CSV or Markdown file. Your existing records weren't touched.")
                     .font(.footnote)
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
+                if !detail.isEmpty {
+                    Text(verbatim: detail)
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.top, 4)
+                        .textSelection(.enabled)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(18)
@@ -144,6 +156,82 @@ struct ImportPreviewView: View {
             .padding(.top, 28)
             .accessibilityElement(children: .combine)
         }
+    }
+
+    /// "Saving import…" with the live count of records written so far.
+    private func savingBlock(_ preview: ImportPreview) -> some View {
+        let total = progress.total > 0 ? progress.total : selectedCount(preview)
+        let completed = min(progress.completed, total)
+        return VStack(alignment: .leading, spacing: 10) {
+            Text("Saving import…")
+                .font(TE.editorial(.title3))
+            ProgressView(value: Double(completed), total: Double(max(total, 1)))
+                .tint(TE.inkRust)
+            Text(verbatim: progressCaption(preview, completed: completed, total: total))
+                .font(TE.mono(.caption2))
+                .tracking(1)
+                .foregroundStyle(TE.textMuted)
+                .monospacedDigit()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .padding(.horizontal, 16)
+        .padding(.top, 12)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func progressCaption(_ preview: ImportPreview, completed: Int, total: Int) -> String {
+        let savesPoints = options.includePoints && preview.newPointCount > 0
+        let savesVisits = options.includeVisits && preview.newVisitCount > 0
+        let unit: String
+        switch (savesPoints, savesVisits) {
+        case (false, true): unit = String(localized: "VISITS")
+        case (true, true): unit = String(localized: "RECORDS")
+        default: unit = String(localized: "POINTS")
+        }
+        return String(localized: "\(completed.formatted()) OF \(total.formatted()) \(unit)")
+    }
+
+    private func completionHeadline(_ result: ImportCommitResult) -> String {
+        let points = result.pointCount == 1
+            ? String(localized: "1 point")
+            : String(localized: "\(result.pointCount.formatted()) points")
+        let visits = result.visitCount == 1
+            ? String(localized: "1 visit")
+            : String(localized: "\(result.visitCount.formatted()) visits")
+        switch (result.pointCount > 0, result.visitCount > 0) {
+        case (true, true): return String(localized: "\(points) and \(visits) added")
+        case (false, true): return String(localized: "\(visits) added")
+        default: return String(localized: "\(points) added")
+        }
+    }
+
+    /// "Five years of days now show in Atlas." from the imported file's real date range.
+    private func completionDetail(_ preview: ImportPreview) -> String {
+        guard let range = preview.payload.dateRange else {
+            return String(localized: "They now show in Atlas.")
+        }
+        let calendar = Calendar.current
+        let days = (calendar.dateComponents([.day], from: calendar.startOfDay(for: range.lowerBound),
+                                            to: calendar.startOfDay(for: range.upperBound)).day ?? 0) + 1
+        if days <= 1 {
+            return String(localized: "\(range.lowerBound.formatted(date: .abbreviated, time: .omitted)) now shows in Atlas.")
+        }
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .spellOut
+        formatter.allowedUnits = [.year, .month, .day]
+        formatter.maximumUnitCount = 1
+        guard let span = formatter.string(from: range.lowerBound, to: range.upperBound.addingTimeInterval(86_400)) else {
+            return String(localized: "They now show in Atlas.")
+        }
+        let sentence = String(localized: "\(span) of days now show in Atlas.")
+        return sentence.prefix(1).uppercased() + sentence.dropFirst()
+    }
+
+    private func duplicatesSummary(_ result: ImportCommitResult) -> String {
+        String(localized: "\((result.duplicatePointCount + result.duplicateVisitCount).formatted()) DUPLICATES SKIPPED")
     }
 
     private func statusBlock(title: LocalizedStringKey) -> some View {
@@ -326,29 +414,55 @@ struct ImportPreviewView: View {
                         .foregroundStyle(TE.textMuted)
                 }
                 Button {
-                    phase = .saving
+                    progress.reset()
+                    phase = .saving(preview)
                     Task {
                         do {
-                            phase = .complete(try await viewModel.commitImport(preview, options: options))
+                            let result = try await viewModel.commitImport(preview, options: options)
+                            phase = .complete(result, preview)
+                            LogManager.shared.info("Imported \(result.pointCount) points and \(result.visitCount) visits · \(preview.payload.format.displayName)", category: .general)
                         } catch {
-                            phase = .failed(error.localizedDescription)
+                            LogManager.shared.error("Import failed · \(error.localizedDescription)", category: .general)
+                            phase = .failed(detail: error.localizedDescription, whileSaving: true)
                         }
                     }
                 } label: {
-                    Text("Import Selected Records")
+                    Text("Import selected records")
                 }
                 .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
                 .disabled(selectedCount(preview) == 0)
                 .accessibilityIdentifier("confirm-import")
+                Button("Cancel", role: .cancel) { dismiss() }
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                    .buttonStyle(.plain)
             case .saving:
                 Button {} label: { Text("Saving…") }
                     .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
                     .disabled(true)
-            case .complete, .failed:
+            case .complete:
                 Button("Done") { dismiss() }
                     .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
+            case .failed:
+                if let onChooseAnotherFile {
+                    Button("Choose another file") {
+                        onChooseAnotherFile()
+                        dismiss()
+                    }
+                    .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
+                    Button("Cancel") { dismiss() }
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .buttonStyle(.plain)
+                } else {
+                    Button("Done") { dismiss() }
+                        .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
+                }
             case .reading:
-                EmptyView()
+                Button("Cancel", role: .cancel) { dismiss() }
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                    .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, 20)

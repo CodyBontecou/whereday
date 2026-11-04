@@ -106,6 +106,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
 
         if locationData.trackingStartTime == nil {
             locationData.trackingStartTime = Date()
+            locationData.routeDistanceMeters = 0
         }
         locationData.isTrackingEnabled = true
         syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
@@ -117,6 +118,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         locationData.isTrackingEnabled = false
         locationData.trackingStartTime = nil
         locationData.stopAfterHours = nil
+        locationData.routeDistanceMeters = nil
         syncClient.endActiveSession(endedAt: Date())
         saveLocationData()
         locationManager.stopUpdatingLocation()
@@ -240,6 +242,20 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         }
 
         locationData.todayDistanceMeters += distance
+        // Only movement after the route began counts toward the route.
+        if let start = locationData.trackingStartTime,
+           let previousTime = persistedState.lastTimestamp, previousTime >= start {
+            locationData.routeDistanceMeters = (locationData.routeDistanceMeters ?? 0) + distance
+        }
+    }
+
+    /// The latest accurate fix, when recent enough to stand for "here" (for Mark).
+    var recentFix: (latitude: Double, longitude: Double)? {
+        guard let latitude = locationData.lastLatitude,
+              let longitude = locationData.lastLongitude,
+              let time = locationData.lastUpdateTime,
+              abs(time.timeIntervalSinceNow) <= 120 else { return nil }
+        return (latitude, longitude)
     }
 
     private func updateVisitCount(using location: CLLocation) {
@@ -268,12 +284,15 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         let wasTracking = locationData.isTrackingEnabled
         let trackingStartTime = locationData.trackingStartTime
         let stopAfterHours = locationData.stopAfterHours
+        let routeDistanceMeters = locationData.routeDistanceMeters
 
         persistedState = PersistedWatchTrackingState(dayStart: calendar.startOfDay(for: date))
         locationData = .empty
         locationData.isTrackingEnabled = wasTracking
         locationData.trackingStartTime = trackingStartTime
         locationData.stopAfterHours = stopAfterHours
+        // A route that runs past midnight keeps its own distance.
+        locationData.routeDistanceMeters = routeDistanceMeters
         locationData.usesMetricDistanceUnits = usesMetricDistanceUnits
         savePersistedState()
         saveLocationData()

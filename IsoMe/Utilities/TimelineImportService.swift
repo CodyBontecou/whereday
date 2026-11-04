@@ -84,6 +84,37 @@ struct ImportCommitResult: Sendable {
     }
 }
 
+/// Live progress of the import being saved, for the review sheet's "29,880 OF 48,210 POINTS" line.
+/// The import worker posts counts from its own actor; the sheet observes them on the main actor.
+@MainActor
+final class ImportProgress: ObservableObject {
+    static let shared = ImportProgress()
+
+    @Published private(set) var completed = 0
+    @Published private(set) var total = 0
+    private var generation = 0
+
+    func reset() {
+        generation += 1
+        completed = 0
+        total = 0
+    }
+
+    nonisolated static func post(completed: Int, total: Int) {
+        Task { @MainActor in shared.update(completed: completed, total: total) }
+    }
+
+    private func update(completed: Int, total: Int) {
+        // Posts can land out of order; counts only move forward within one import.
+        if total != self.total {
+            self.total = total
+            self.completed = completed
+        } else {
+            self.completed = max(self.completed, completed)
+        }
+    }
+}
+
 /// This worker owns its contexts. File IO, JSON parsing, duplicate indexing and
 /// insertions do not run in the SwiftUI action that presents the review sheet.
 actor TimelineImportService {
@@ -165,9 +196,14 @@ actor TimelineImportService {
         context.autosaveEnabled = false
         // Recheck against fresh storage: the preview is advisory, not a reservation.
         let plan = try makePlan(payload: preview.payload, options: options, context: context)
+        let total = plan.visits.count + plan.points.count
+        ImportProgress.post(completed: 0, total: total)
         do {
             for (index, imported) in plan.visits.enumerated() {
-                if index.isMultiple(of: 500) { try Task.checkCancellation() }
+                if index.isMultiple(of: 500) {
+                    try Task.checkCancellation()
+                    ImportProgress.post(completed: index, total: total)
+                }
                 context.insert(Visit(
                     latitude: imported.latitude, longitude: imported.longitude,
                     arrivedAt: imported.arrivedAt, departedAt: imported.departedAt,
@@ -185,11 +221,15 @@ actor TimelineImportService {
                 ))
             }
             for (index, imported) in plan.points.enumerated() {
-                if index.isMultiple(of: 500) { try Task.checkCancellation() }
+                if index.isMultiple(of: 500) {
+                    try Task.checkCancellation()
+                    ImportProgress.post(completed: plan.visits.count + index, total: total)
+                }
                 context.insert(LocationPoint(latitude: imported.latitude, longitude: imported.longitude,
                                              timestamp: imported.timestamp, altitude: imported.altitude, speed: imported.speed,
                                              horizontalAccuracy: imported.horizontalAccuracy, isOutlier: imported.isOutlier))
             }
+            ImportProgress.post(completed: total, total: total)
             try Task.checkCancellation()
             // One save is intentional: an error/cancellation cannot leave half an import.
             try context.save()

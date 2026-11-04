@@ -19,7 +19,18 @@ struct LocationMapView: View {
     var focusedVisit: Visit? = nil
     var onSelectVisit: ((Visit) -> Void)? = nil
     var presentation: TraceMapPresentation = .full
+    /// When set, the replay controls are published here for another pane instead of overlaid.
+    var replayBridge: TraceReplayBridge? = nil
+    /// Called when the inspector for `focusedVisit` is closed, so the owner can clear its focus
+    /// (and a later tap on the same stay reopens it).
+    var onCloseFocusedVisit: (() -> Void)? = nil
+    /// When set, the companion's Replay button drives this instead of its own state, so the owner
+    /// can rearrange its panes (for example the tabletop layout on a half-open Duo).
+    var companionReplay: Binding<Bool>? = nil
     @ObservedObject private var locationManager: LocationManager
+    /// Streets under the playhead, keyed by `StreetNameLookup.cellKey`.
+    @State private var streetNames: [String: String] = [:]
+    @State private var calendarDraft: CalendarEventDraft?
     @Namespace private var mapScope
     @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
     /// A time the person dragged to; cleared when playback or a new range takes over.
@@ -62,18 +73,25 @@ struct LocationMapView: View {
     @State private var appliedMapFocusRequestID: UUID?
     @State private var activePreset: MapDatePreset? = .today
     @AppStorage("showOutliers") private var showOutliers = false
+    @AppStorage(MapLayerSettings.minimumStayMinutesKey) private var minimumStayMinutes = 0
     @AppStorage("photoPlacesPromptDismissed") private var photoPlacesPromptDismissed = false
 
     init(
         viewModel: LocationViewModel,
         focusedVisit: Visit? = nil,
         onSelectVisit: ((Visit) -> Void)? = nil,
-        presentation: TraceMapPresentation = .full
+        presentation: TraceMapPresentation = .full,
+        replayBridge: TraceReplayBridge? = nil,
+        onCloseFocusedVisit: (() -> Void)? = nil,
+        companionReplay: Binding<Bool>? = nil
     ) {
+        self.companionReplay = companionReplay
         self.viewModel = viewModel
+        self.onCloseFocusedVisit = onCloseFocusedVisit
         self.focusedVisit = focusedVisit
         self.onSelectVisit = onSelectVisit
         self.presentation = presentation
+        self.replayBridge = replayBridge
         self.locationManager = viewModel.locationManager
     }
 
@@ -92,7 +110,14 @@ struct LocationMapView: View {
     private let routeReplayTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
 
     var filteredVisits: [Visit] {
-        viewModel.visitsInDateRange(viewModel.mapDateRange)
+        let visits = viewModel.visitsInDateRange(viewModel.mapDateRange)
+        guard minimumStayMinutes > 0 else { return visits }
+        // Ongoing stays are always drawn; only finished stops below the minimum are left off.
+        let minimum = TimeInterval(minimumStayMinutes * 60)
+        return visits.filter { visit in
+            guard let departedAt = visit.departedAt else { return true }
+            return departedAt.timeIntervalSince(visit.arrivedAt) >= minimum
+        }
     }
 
     var filteredPoints: [LocationPoint] {
@@ -260,6 +285,9 @@ struct LocationMapView: View {
             .task(id: currentPlaceSuggestionTaskKey) {
                 await refreshCurrentPlaceSuggestion()
             }
+            .task(id: traceStreetLookupTarget?.key) {
+                await refreshTraceStreetName()
+            }
             .onReceive(routeReplayTimer) { _ in
                 advanceRouteReplayIfNeeded()
             }
@@ -319,6 +347,9 @@ struct LocationMapView: View {
         .sheet(item: $deepLinkedVisit) { visit in
             NavigationStack { VisitDetailView(visit: visit, viewModel: viewModel) }
         }
+        .sheet(item: $calendarDraft) { draft in
+            CalendarEventReviewSheet(draft: draft)
+        }
         .sheet(item: $manualVisitDraft) { draft in
             ManualVisitSheet(
                 viewModel: viewModel,
@@ -356,7 +387,9 @@ struct LocationMapView: View {
         .onChange(of: selectedVisit?.id) { _, _ in
             showSelectedVisitInCompanion()
         }
-        .onChange(of: focusedVisit?.id, initial: true) { _, _ in
+        .onChange(of: focusedVisit?.id, initial: true) { _, id in
+            // A new focus (or the owner clearing it) reopens the inspector for the next tap.
+            if id != dismissedFocusedVisitID { dismissedFocusedVisitID = nil }
             focusCompanionVisit()
         }
         .sheet(item: selectedVisitSheet) { visit in
@@ -399,8 +432,14 @@ struct LocationMapView: View {
         return nil
     }
 
+    /// The overlaid panel; with a replay bridge the controls sit in another pane instead.
     private var showsTracePanel: Bool {
-        presentation == .full || showsCompanionReplay
+        guard replayBridge == nil else { return false }
+        return presentation == .full || isCompanionReplayShown
+    }
+
+    private var isCompanionReplayShown: Bool {
+        companionReplay?.wrappedValue ?? showsCompanionReplay
     }
 
     private var mapCanvas: some View {
@@ -417,7 +456,11 @@ struct LocationMapView: View {
                     floatingCards(photoDetails: photoDetails)
                         .padding(.horizontal, 12)
 
-                    if showsTracePanel {
+                    if let replayBridge {
+                        TimelineView(.everyMinute) { context in
+                            publishTracePanel(day: day, now: context.date, to: replayBridge)
+                        }
+                    } else if showsTracePanel {
                         TimelineView(.everyMinute) { context in
                             tracePanel(day: day, now: context.date, maxHeight: container.size.height * 0.62)
                         }
@@ -438,7 +481,7 @@ struct LocationMapView: View {
         .mapScope(mapScope)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isTracking)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isRouteReplayEnabled)
-        .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: showsCompanionReplay)
+        .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isCompanionReplayShown)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: inspectorVisit?.id)
         .onChange(of: isTracking) { _, newValue in
             if !newValue {
@@ -657,6 +700,21 @@ struct LocationMapView: View {
 
             Spacer(minLength: 0)
 
+            if replayBridge != nil {
+                // Half-open: the replay controls sit below the fold.
+                Text("TABLETOP · MAP ABOVE THE FOLD")
+                    .font(TE.mono(.caption2, weight: .medium))
+                    .tracking(1)
+                    .foregroundStyle(TE.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 32)
+                    .background(Capsule().fill(TE.card.opacity(0.92)))
+                    .padding(.top, 6)
+                    .accessibilityLabel("Tabletop. Map above the fold.")
+            }
+
             VStack(spacing: 8) {
                 MapChromeButton(systemImage: "square.3.layers.3d", label: "Map layers") {
                     showingFilters = true
@@ -688,12 +746,16 @@ struct LocationMapView: View {
     private var companionReplayButton: some View {
         Button {
             withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
-                showsCompanionReplay.toggle()
+                if let companionReplay {
+                    companionReplay.wrappedValue.toggle()
+                } else {
+                    showsCompanionReplay.toggle()
+                }
             }
         } label: {
             Label(
-                showsCompanionReplay ? "Close replay" : "Replay",
-                systemImage: showsCompanionReplay ? "xmark" : "play.fill"
+                isCompanionReplayShown ? "Close replay" : "Replay",
+                systemImage: isCompanionReplayShown ? "xmark" : "play.fill"
             )
             .font(.footnote.weight(.medium))
             .padding(.horizontal, 14)
@@ -754,7 +816,7 @@ struct LocationMapView: View {
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
 
-            if let inspectorVisit, !(presentation == .companion && showsCompanionReplay) {
+            if let inspectorVisit, !(presentation == .companion && isCompanionReplayShown) {
                 inspectorCard(for: inspectorVisit)
                     .frame(maxWidth: 440)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -793,13 +855,17 @@ struct LocationMapView: View {
             onConfirm: { viewModel.confirmVisit(visit) },
             onDetails: { deepLinkedVisit = visit },
             onPhotos: { openPhotos(for: visit) },
-            onClose: closeInspector
+            onClose: closeInspector,
+            onCalendar: { calendarDraft = CalendarEventDraft(visit: visit) }
         )
     }
 
     private func closeInspector() {
         if selectedVisit != nil {
             selectedVisit = nil
+        } else if let onCloseFocusedVisit {
+            dismissedFocusedVisitID = nil
+            onCloseFocusedVisit()
         } else {
             dismissedFocusedVisitID = focusedVisit?.id
         }
@@ -865,17 +931,18 @@ struct LocationMapView: View {
             pointMarkers: $showPointMarkers,
             startEndMarkers: $showStartEndMarkers,
             sessionPath: $showSessionPath,
-            hasSessionPoints: !activeSessionPoints.isEmpty
+            hasSessionPoints: !activeSessionPoints.isEmpty,
+            minimumStayMinutes: $minimumStayMinutes
         )
     }
 
     // MARK: - Scrubbing the day
 
-    private func tracePanel(day: TraceDay, now: Date, maxHeight: CGFloat) -> some View {
+    private func tracePanelModel(day: TraceDay, now: Date) -> TraceReplayPanelModel {
         let focus = focusTime(day: day, now: now)
         let status = traceStatus(at: focus, day: day, now: now)
         let visitAtFocus = day.visit(at: focus, now: now)
-        return TraceScrubPanel(
+        return TraceReplayPanelModel(
             kicker: status.kicker,
             title: status.title,
             clock: Self.clockText(focus),
@@ -884,12 +951,10 @@ struct LocationMapView: View {
             focusFraction: day.fraction(of: focus),
             focusedPlaceID: visitAtFocus.map { $0.displayName },
             distanceText: traceDistanceText,
+            hint: String(localized: "Drag to replay · now \(Self.clockText(now))"),
             isReplaying: isRouteReplayEnabled,
             isPlaying: isRouteReplayPlaying,
             canPlay: canReplayRoute,
-            isExpandedLayout: horizontalSizeClass == .regular,
-            maxHeight: maxHeight,
-            isCollapsed: $isTracePanelCollapsed,
             onScrub: { fraction in scrub(to: day.date(at: fraction), day: day) },
             onStep: { delta in scrub(to: focus.addingTimeInterval(delta), day: day) },
             onJump: { place in jump(to: place, day: day) },
@@ -899,6 +964,29 @@ struct LocationMapView: View {
             },
             onDone: disableRouteReplay
         )
+    }
+
+    private func tracePanel(day: TraceDay, now: Date, maxHeight: CGFloat) -> some View {
+        TraceScrubPanel(
+            model: tracePanelModel(day: day, now: now),
+            isExpandedLayout: horizontalSizeClass == .regular,
+            maxHeight: maxHeight,
+            isCollapsed: $isTracePanelCollapsed
+        )
+    }
+
+    /// Half-open: the replay controls live in the pane below the fold, so publish them there.
+    private func publishTracePanel(day: TraceDay, now: Date, to bridge: TraceReplayBridge) -> some View {
+        let model = tracePanelModel(day: day, now: now)
+        return Color.clear
+            .frame(width: 0, height: 0)
+            .accessibilityHidden(true)
+            .onChange(of: model.signature, initial: true) { _, _ in
+                bridge.panel = model
+            }
+            .onDisappear {
+                if bridge.panel?.signature == model.signature { bridge.panel = nil }
+            }
     }
 
     private var traceDistanceText: String {
@@ -920,7 +1008,7 @@ struct LocationMapView: View {
     }
 
     static func clockText(_ date: Date) -> String {
-        date.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
     }
 
     /// Describes where the day stood at a moment, using only recorded stays and points.
@@ -937,14 +1025,22 @@ struct LocationMapView: View {
         }
 
         let points = filteredPoints
-        if let index = RouteReplayCalculator.index(atOrBefore: time, in: points),
-           abs(points[index].timestamp.timeIntervalSince(time)) <= 15 * 60 {
+        if let index = movingPointIndex(at: time, day: day, now: now) {
+            if let arriving = arrivingStatus(at: time, day: day, now: now, points: points) {
+                return (datePrefix + arriving.kicker, arriving.title)
+            }
+            // "WALKING · 4 KM/H": the mode is an estimate from GPS speed alone.
             var kicker = String(localized: "ON THE MOVE")
-            if let speed = points[index].speed, speed > 0.5 {
+            if let speed = movementSpeed(at: index, in: points) {
+                if let mode = TravelMode.infer(averageSpeed: speed) {
+                    kicker = mode.activeLabel.uppercased()
+                }
                 kicker += " · " + formattedSpeed(speed).uppercased()
             }
             let title: String
-            if let next = day.visits.first(where: { $0.arrivedAt > time }) {
+            if let street = streetNames[StreetNameLookup.cellKey(for: points[index].coordinate)] {
+                title = String(localized: "Along \(Self.streetPhrase(street))")
+            } else if let next = day.visits.first(where: { $0.arrivedAt > time }) {
                 title = String(localized: "Toward \(next.displayName)")
             } else if let previous = day.visits.last(where: { ($0.departedAt ?? now) < time }) {
                 title = String(localized: "After \(previous.displayName)")
@@ -955,6 +1051,87 @@ struct LocationMapView: View {
         }
 
         return (datePrefix + String(localized: "NO RECORD"), String(localized: "Nothing recorded"))
+    }
+
+    /// "ARRIVING · BIKE 3.4 KM": the closing stretch of a move into the next recorded stay.
+    /// The mode and distance describe the whole move, from the last stay (or first fix) to the arrival.
+    private func arrivingStatus(
+        at time: Date,
+        day: TraceDay,
+        now: Date,
+        points: [LocationPoint]
+    ) -> (kicker: String, title: String)? {
+        guard let next = day.visits.first(where: { $0.arrivedAt > time }) else { return nil }
+        let previousEnd = day.visits.last(where: { ($0.departedAt ?? now) <= time })?.departedAt
+        let movePoints = points.filter { point in
+            point.timestamp <= next.arrivedAt && (previousEnd.map { point.timestamp >= $0 } ?? true)
+        }
+        guard let first = movePoints.first else { return nil }
+        let start = previousEnd ?? first.timestamp
+        let duration = next.arrivedAt.timeIntervalSince(start)
+        guard duration > 0 else { return nil }
+        // The last third of the move, or its final five minutes, reads as arriving.
+        let remaining = next.arrivedAt.timeIntervalSince(time)
+        guard remaining <= max(5 * 60, duration / 3) else { return nil }
+
+        let meters = RouteReplayCalculator.totalDistance(in: movePoints)
+        guard meters > 50 else { return nil }
+        let distance = DistanceFormatter.format(meters: meters, usesMetric: usesMetricDistanceUnits)
+        let kicker: String
+        if let mode = TravelMode.infer(meters: meters, seconds: duration) {
+            kicker = String(localized: "ARRIVING · \(mode.label.uppercased()) \(distance.uppercased())")
+        } else {
+            kicker = String(localized: "ARRIVING · \(distance.uppercased())")
+        }
+        return (kicker, next.displayName)
+    }
+
+    /// The recorded point the trace is "on the move" at, when the moment falls outside every stay.
+    private func movingPointIndex(at time: Date, day: TraceDay, now: Date) -> Int? {
+        guard time <= now.addingTimeInterval(60), day.visit(at: time, now: now) == nil else { return nil }
+        let points = filteredPoints
+        guard let index = RouteReplayCalculator.index(atOrBefore: time, in: points),
+              abs(points[index].timestamp.timeIntervalSince(time)) <= 15 * 60 else { return nil }
+        return index
+    }
+
+    /// GPS speed when the fix carries one, otherwise the pace to the neighbouring point.
+    private func movementSpeed(at index: Int, in points: [LocationPoint]) -> Double? {
+        if let speed = points[index].speed, speed.isFinite, speed > 0.5 { return speed }
+        let neighbour = index + 1 < points.count ? index + 1 : index - 1
+        guard points.indices.contains(neighbour) else { return nil }
+        let a = points[min(index, neighbour)]
+        let b = points[max(index, neighbour)]
+        let seconds = b.timestamp.timeIntervalSince(a.timestamp)
+        guard seconds > 0, seconds <= 15 * 60 else { return nil }
+        let speed = a.distance(to: b) / seconds
+        return speed > 0.5 ? speed : nil
+    }
+
+    /// "The Embarcadero" reads as "the Embarcadero" mid-sentence.
+    private static func streetPhrase(_ street: String) -> String {
+        guard street.hasPrefix("The ") else { return street }
+        return "the " + street.dropFirst(4)
+    }
+
+    /// The street lookup follows the playhead only while it is between stays.
+    private var traceStreetLookupTarget: (key: String, coordinate: CLLocationCoordinate2D)? {
+        guard showsTracePanel || replayBridge != nil else { return nil }
+        let now = Date()
+        let day = traceDay
+        let time = focusTime(day: day, now: now)
+        guard let index = movingPointIndex(at: time, day: day, now: now) else { return nil }
+        let coordinate = filteredPoints[index].coordinate
+        return (StreetNameLookup.cellKey(for: coordinate), coordinate)
+    }
+
+    private func refreshTraceStreetName() async {
+        guard let target = traceStreetLookupTarget, streetNames[target.key] == nil else { return }
+        // Scrubbing and playback cross many cells; look up only where the playhead settles.
+        try? await Task.sleep(nanoseconds: 700_000_000)
+        guard !Task.isCancelled,
+              let street = await StreetNameLookup.shared.street(at: target.coordinate) else { return }
+        streetNames[target.key] = street
     }
 
     private func formattedSpeed(_ metersPerSecond: Double) -> String {
@@ -1109,7 +1286,7 @@ struct LocationMapView: View {
 
     private func openBlankManualVisitSheet() {
         locationManager.requestCurrentLocationForManualVisit()
-        manualVisitDraft = ManualVisitDraft(mode: .addPlaceManually, title: "Add Place")
+        manualVisitDraft = ManualVisitDraft(mode: .addPlaceManually, title: "Log a stop", initialSearchRegion: visibleMapRegion)
     }
 
     private func openPastVisitSheet() {
@@ -1120,7 +1297,7 @@ struct LocationMapView: View {
             arrivedAt: arrivedAt,
             departedAt: departedAt,
             isStillHere: false,
-            title: "Add Past Visit",
+            title: "Log a stop",
             hidesCurrentPlacePromptAfterSave: false,
             initialSearchRegion: visibleMapRegion
         )
@@ -2369,7 +2546,19 @@ struct ManualVisitSheet: View {
     @State private var showingLocationPicker = false
     @State private var isSaving = false
     @State private var showingOverlapConfirmation = false
+    @State private var overlapAlertMessage = ""
     @State private var searchQuery = ""
+    @Environment(\.modelContext) private var modelContext
+    @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
+    @StateObject private var placeSearch = PlaceSearchViewModel()
+    @FocusState private var isSearchFocused: Bool
+    @State private var previewCamera: MapCameraPosition
+    @State private var previewCenter: CLLocationCoordinate2D?
+    /// Stored stays the stop's times would overlap, checked before saving.
+    @State private var overlapCheck: VisitOverlapCheck = .none
+    @State private var pinLookupTask: Task<Void, Never>?
+
+    private static let pinGeocoder = GeocodingService()
 
     init(
         viewModel: LocationViewModel,
@@ -2390,6 +2579,19 @@ struct ManualVisitSheet: View {
         _isStillHere = State(initialValue: draft.isStillHere)
         _locationSelection = State(initialValue: draft.locationSelection)
         _selectedSavedPlaceID = State(initialValue: draft.locationSelection?.savedPlaceID)
+        if let selection = draft.locationSelection, selection.coordinateIsValid {
+            _previewCamera = State(initialValue: .region(Self.previewRegion(around: selection.coordinate)))
+            _previewCenter = State(initialValue: selection.coordinate)
+        } else if let region = draft.initialSearchRegion {
+            _previewCamera = State(initialValue: .region(region))
+            _previewCenter = State(initialValue: region.center)
+        } else {
+            _previewCamera = State(initialValue: .userLocation(fallback: .automatic))
+        }
+    }
+
+    private static func previewRegion(around coordinate: CLLocationCoordinate2D) -> MKCoordinateRegion {
+        MKCoordinateRegion(center: coordinate, latitudinalMeters: 700, longitudinalMeters: 700)
     }
 
     private var manualLocation: CLLocation? {
@@ -2477,14 +2679,20 @@ struct ManualVisitSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     searchField
+                    mapPreview
                     resultsCard
-                    placeCard
                     timeCard
 
                     if let validationMessage {
                         LogStopNotice(text: validationMessage, systemImage: "exclamationmark.triangle.fill")
+                    } else {
+                        ForEach(Array(overlapNotices.enumerated()), id: \.offset) { _, notice in
+                            LogStopNotice(text: notice, systemImage: "exclamationmark.triangle")
+                                .accessibilityAddTraits(.updatesFrequently)
+                        }
                     }
 
+                    placeCard
                     locationCard
                     reuseCard
 
@@ -2509,6 +2717,18 @@ struct ManualVisitSheet: View {
                     locationManager.requestCurrentLocationForManualVisit()
                 }
             }
+            .onDisappear { pinLookupTask?.cancel() }
+            .onChange(of: overlapCheckKey, initial: true) { _, _ in
+                refreshOverlapCheck()
+            }
+            .onChange(of: coordinateKey, initial: true) { _, _ in
+                guard let coordinate else { return }
+                previewCamera = .region(Self.previewRegion(around: coordinate))
+            }
+            .onChange(of: searchQuery) { _, query in
+                placeSearch.query = query
+                placeSearch.queryChanged(region: searchRegion)
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
@@ -2525,7 +2745,7 @@ struct ManualVisitSheet: View {
                 Button("Cancel", role: .cancel) {}
                 Button("Save Anyway") { save(allowOverlap: true) }
             } message: {
-                Text(viewModel.visitMutationError?.localizedDescription ?? "")
+                Text(overlapAlertMessage)
             }
             .sheet(isPresented: $showingLocationPicker) {
                 PlaceSelectionView(
@@ -2543,15 +2763,23 @@ struct ManualVisitSheet: View {
     private var searchField: some View {
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(TE.textMuted)
+                .foregroundStyle(TE.textPrimary)
                 .accessibilityHidden(true)
-            TextField("Search saved places", text: $searchQuery)
-            .textInputAutocapitalization(.words)
-            .autocorrectionDisabled()
-            .submitLabel(.search)
+            TextField("Search Apple Maps or saved places", text: $searchQuery)
+                .focused($isSearchFocused)
+                .textInputAutocapitalization(.words)
+                .autocorrectionDisabled()
+                .submitLabel(.search)
+                .onSubmit { placeSearch.submit(region: searchRegion) }
+            if placeSearch.isSearching {
+                ProgressView()
+                    .controlSize(.small)
+                    .accessibilityLabel("Searching Apple Maps")
+            }
             if !searchQuery.isEmpty {
                 Button {
                     searchQuery = ""
+                    placeSearch.clear()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(TE.textMuted)
@@ -2564,83 +2792,367 @@ struct ManualVisitSheet: View {
         }
         .padding(.leading, 14)
         .frame(minHeight: 48)
-        .background(Capsule().fill(TE.card))
-        .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
+        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(TE.card))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .strokeBorder(isSearchFocused ? TE.textPrimary : TE.border, lineWidth: isSearchFocused ? 2 : 1)
+        )
+    }
+
+    /// Where distances are measured from and Apple Maps searches are centred.
+    private var referenceCoordinate: CLLocationCoordinate2D? {
+        if let location = locationManager.currentLocation, CLLocationCoordinate2DIsValid(location.coordinate) {
+            return location.coordinate
+        }
+        return initialSearchRegion?.center ?? coordinate ?? previewCenter
+    }
+
+    private var searchRegion: MKCoordinateRegion? {
+        guard let referenceCoordinate else { return initialSearchRegion }
+        return MKCoordinateRegion(center: referenceCoordinate, latitudinalMeters: 20_000, longitudinalMeters: 20_000)
+    }
+
+    /// Apple Maps results, minus places already saved at the same spot.
+    private var appleMapsResults: [PlaceSearchResult] {
+        guard !trimmedQuery.isEmpty else { return [] }
+        let saved = matchingSavedPlaces
+        return placeSearch.results.filter { result in
+            !saved.contains { place in
+                Self.distance(from: place.coordinate, to: result.coordinate) < 75
+            }
+        }
+    }
+
+    private static func distance(from a: CLLocationCoordinate2D, to b: CLLocationCoordinate2D) -> CLLocationDistance {
+        CLLocation(latitude: a.latitude, longitude: a.longitude)
+            .distance(from: CLLocation(latitude: b.latitude, longitude: b.longitude))
+    }
+
+    private func distanceText(to coordinate: CLLocationCoordinate2D) -> String? {
+        guard let referenceCoordinate else { return nil }
+        return DistanceFormatter.format(
+            meters: Self.distance(from: referenceCoordinate, to: coordinate),
+            usesMetric: usesMetricDistanceUnits
+        )
+    }
+
+    /// The pin's match radius: the saved place's, the radius being saved, or the fix's accuracy.
+    private var previewRadius: CLLocationDistance {
+        if let selectedSavedPlace { return selectedSavedPlace.radiusMeters }
+        if saveAsReusableLocation { return reusableRadiusMeters }
+        if locationSelection == nil, let manualLocation { return max(25, manualLocation.horizontalAccuracy) }
+        return 50
+    }
+
+    private var coordinateKey: String {
+        guard let coordinate else { return "none" }
+        return String(format: "%.6f,%.6f", coordinate.latitude, coordinate.longitude)
+    }
+
+    private var mapPreview: some View {
+        Map(position: $previewCamera) {
+            if let coordinate {
+                MapCircle(center: coordinate, radius: previewRadius)
+                    .foregroundStyle(TE.inkRust.opacity(0.12))
+                    .stroke(TE.inkRust, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                Annotation("", coordinate: coordinate, anchor: .center) {
+                    Circle()
+                        .fill(TE.inkRust)
+                        .frame(width: 20, height: 20)
+                        .overlay(Circle().strokeBorder(TE.surface, lineWidth: 3))
+                }
+                .annotationTitles(.hidden)
+            }
+        }
+        .mapStyle(.standard(emphasis: .muted))
+        .mapControls {}
+        .onMapCameraChange(frequency: .onEnd) { context in
+            previewCenter = context.region.center
+        }
+        .overlay {
+            // The centre a dropped pin would use.
+            Image(systemName: "plus")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(TE.textPrimary.opacity(0.55))
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
+        .overlay(alignment: .topTrailing) {
+            Button {
+                showingLocationPicker = true
+            } label: {
+                Image(systemName: "arrow.up.left.and.arrow.down.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(TE.textPrimary)
+                    .frame(width: 32, height: 32)
+                    .background(Circle().fill(TE.card.opacity(0.92)))
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Choose on a larger map")
+        }
+        .frame(height: 120)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Map preview")
+        .accessibilityValue(coordinate == nil ? String(localized: "No pin yet") : String(localized: "Pin placed"))
+    }
+
+    private func isSelectedAppleMapsResult(_ result: PlaceSearchResult) -> Bool {
+        guard let locationSelection, locationSelection.source == .appleMaps else { return false }
+        return Self.distance(from: locationSelection.coordinate, to: result.coordinate) < 1
+    }
+
+    /// One row of the merged results: a saved place or an Apple Maps match.
+    private enum LogStopResult: Identifiable {
+        case saved(SavedPlace, inkIndex: Int)
+        case appleMaps(PlaceSearchResult)
+
+        var id: String {
+            switch self {
+            case .saved(let place, _): "saved-\(place.id.uuidString)"
+            case .appleMaps(let result): "maps-\(result.id)"
+            }
+        }
+    }
+
+    /// How well a name answers the query: a name that starts with it beats one that contains it,
+    /// which beats a match on the address alone.
+    private func relevanceTier(name: String, address: String?) -> Int {
+        guard !trimmedQuery.isEmpty else { return 0 }
+        let options: String.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
+        if name.range(of: trimmedQuery, options: options.union(.anchored)) != nil { return 0 }
+        if name.range(of: trimmedQuery, options: options) != nil { return 1 }
+        if address?.range(of: trimmedQuery, options: options) != nil { return 2 }
+        return 3
+    }
+
+    /// Saved places and Apple Maps results in one list, by relevance and then distance;
+    /// a saved place goes first only when the two are otherwise equal.
+    private var mergedResults: [LogStopResult] {
+        let reference = referenceCoordinate
+        struct Ranked { let result: LogStopResult; let tier: Int; let distance: CLLocationDistance; let isSaved: Bool; let order: Int }
+        var ranked: [Ranked] = []
+        for (index, place) in matchingSavedPlaces.enumerated() {
+            ranked.append(Ranked(
+                result: .saved(place, inkIndex: index),
+                tier: relevanceTier(name: place.name, address: place.address),
+                distance: reference.map { Self.distance(from: $0, to: place.coordinate) } ?? 0,
+                isSaved: true,
+                order: index
+            ))
+        }
+        for (index, result) in appleMapsResults.enumerated() {
+            ranked.append(Ranked(
+                result: .appleMaps(result),
+                tier: relevanceTier(name: result.name, address: result.address),
+                distance: reference.map { Self.distance(from: $0, to: result.coordinate) } ?? 0,
+                isSaved: false,
+                order: index
+            ))
+        }
+        return ranked.sorted { a, b in
+            if a.tier != b.tier { return a.tier < b.tier }
+            // Within a few metres two places are as near as each other.
+            if abs(a.distance - b.distance) > 5 { return a.distance < b.distance }
+            if a.isSaved != b.isSaved { return a.isSaved }
+            return a.order < b.order
+        }.map(\.result)
+    }
+
+    @ViewBuilder
+    private func resultRow(_ entry: LogStopResult) -> some View {
+        switch entry {
+        case .saved(let place, let inkIndex):
+            savedPlaceRow(place, inkIndex: inkIndex)
+        case .appleMaps(let result):
+            appleMapsRow(result)
+        }
+    }
+
+    private func savedPlaceRow(_ place: SavedPlace, inkIndex index: Int) -> some View {
+        Button {
+            applySavedPlace(place)
+        } label: {
+            LogStopResultRow(
+                title: place.name,
+                subtitle: place.address,
+                trailing: selectedSavedPlaceID == place.id ? nil : String(localized: "Saved"),
+                ink: TE.placeInks[index % TE.placeInks.count],
+                isSelected: selectedSavedPlaceID == place.id
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selectedSavedPlaceID == place.id ? .isSelected : [])
+        .contextMenu {
+            Button("Delete Saved Location", systemImage: "trash", role: .destructive) {
+                deleteSavedPlace(place)
+            }
+        }
+        .accessibilityAction(named: "Delete saved location") {
+            deleteSavedPlace(place)
+        }
+    }
+
+    private func appleMapsRow(_ result: PlaceSearchResult) -> some View {
+        let isSelected = isSelectedAppleMapsResult(result)
+        return Button {
+            applyLocationSelection(.appleMapsResult(result))
+        } label: {
+            LogStopResultRow(
+                title: result.name,
+                subtitle: [result.address, String(localized: "Apple Maps")]
+                    .compactMap { $0 }
+                    .filter { !$0.isEmpty }
+                    .joined(separator: " · "),
+                trailing: distanceText(to: result.coordinate),
+                ink: TE.textMuted,
+                isSelected: isSelected,
+                uppercasesTrailing: false
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     @ViewBuilder
     private var resultsCard: some View {
-        let places = matchingSavedPlaces
-        let showsPickerRow = mode == .addPastVisit || selectedSavedPlaceID != nil
-        if !places.isEmpty || showsPickerRow {
-            VStack(spacing: 0) {
-                ForEach(Array(places.enumerated()), id: \.element.id) { index, place in
-                    Button {
-                        applySavedPlace(place)
-                    } label: {
-                        LogStopResultRow(
-                            title: place.name,
-                            subtitle: place.address,
-                            trailing: selectedSavedPlaceID == place.id ? nil : String(localized: "Saved"),
-                            ink: TE.placeInks[index % TE.placeInks.count],
-                            isSelected: selectedSavedPlaceID == place.id
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(selectedSavedPlaceID == place.id ? .isSelected : [])
-                    .contextMenu {
-                        Button("Delete Saved Location", systemImage: "trash", role: .destructive) {
-                            deleteSavedPlace(place)
-                        }
-                    }
-                    .accessibilityAction(named: "Delete saved location") {
-                        deleteSavedPlace(place)
-                    }
-
-                    if index < places.count - 1 || showsPickerRow {
-                        Divider().overlay(TE.border).padding(.leading, 38)
-                    }
-                }
-
-                if mode == .addPastVisit {
-                    Button {
-                        showingLocationPicker = true
-                    } label: {
-                        LogStopResultRow(
-                            title: locationSelection == nil
-                                ? String(localized: "Search Apple Maps or choose on map")
-                                : String(localized: "Choose another location"),
-                            subtitle: String(localized: "Drop a pin or look up an address"),
-                            trailing: nil,
-                            ink: TE.inkRust,
-                            systemImage: "mappin.and.ellipse"
-                        )
-                    }
-                    .buttonStyle(.plain)
-                } else if selectedSavedPlaceID != nil {
-                    Button {
-                        selectedSavedPlaceID = nil
-                        locationSelection = nil
-                        locationManager.requestCurrentLocationForManualVisit()
-                    } label: {
-                        LogStopResultRow(
-                            title: String(localized: "Use current location instead"),
-                            subtitle: nil,
-                            trailing: nil,
-                            ink: TE.inkRust,
-                            systemImage: "location.fill"
-                        )
-                    }
-                    .buttonStyle(.plain)
-                }
+        let results = mergedResults
+        VStack(spacing: 0) {
+            ForEach(results) { entry in
+                resultRow(entry)
+                Divider().overlay(TE.border).padding(.leading, 38)
             }
-            .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(TE.card))
-            .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
-        } else if !trimmedQuery.isEmpty {
-            Text("No saved places match “\(trimmedQuery)”.")
+
+            if let searchError = placeSearch.errorMessage, !trimmedQuery.isEmpty {
+                resultsMessage(searchError)
+            } else if results.isEmpty, trimmedQuery.count >= 2, !placeSearch.isSearching {
+                resultsMessage(String(localized: "No places match “\(trimmedQuery)”."))
+            }
+
+            Button {
+                dropPinAtMapCentre()
+            } label: {
+                LogStopResultRow(
+                    title: String(localized: "Drop a pin here"),
+                    subtitle: String(localized: "Use the map centre"),
+                    trailing: nil,
+                    ink: TE.inkRust,
+                    systemImage: "mappin.and.ellipse",
+                    isSelected: locationSelection?.source == .mapPin
+                )
+            }
+            .buttonStyle(.plain)
+            .disabled(previewCenter == nil)
+            .accessibilityHint("Pins the stop where the map preview is centred.")
+
+            if mode != .addPastVisit, selectedSavedPlaceID != nil || locationSelection != nil {
+                Divider().overlay(TE.border).padding(.leading, 38)
+                Button {
+                    pinLookupTask?.cancel()
+                    selectedSavedPlaceID = nil
+                    locationSelection = nil
+                    locationManager.requestCurrentLocationForManualVisit()
+                } label: {
+                    LogStopResultRow(
+                        title: String(localized: "Use current location instead"),
+                        subtitle: nil,
+                        trailing: nil,
+                        ink: TE.inkRust,
+                        systemImage: "location.fill"
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
+    }
+
+    private func resultsMessage(_ text: String) -> some View {
+        VStack(spacing: 0) {
+            Text(text)
                 .font(.footnote)
                 .foregroundStyle(TE.textMuted)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Divider().overlay(TE.border).padding(.leading, 12)
+        }
+    }
+
+    /// Pins the stop at the preview map's centre, then names it from Apple's lookup if still unnamed.
+    private func dropPinAtMapCentre() {
+        guard let center = previewCenter, CLLocationCoordinate2DIsValid(center) else { return }
+        applyLocationSelection(ManualLocationSelection(name: "", address: nil, coordinate: center, source: .mapPin))
+
+        pinLookupTask?.cancel()
+        guard NetworkGeocodingPolicy.isAllowed else { return }
+        pinLookupTask = Task {
+            let location = CLLocation(latitude: center.latitude, longitude: center.longitude)
+            guard let result = try? await Self.pinGeocoder.reverseGeocode(location: location),
+                  !Task.isCancelled,
+                  let selection = locationSelection,
+                  selection.source == .mapPin,
+                  Self.distance(from: selection.coordinate, to: center) < 1 else { return }
+            if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+               let suggested = result.name ?? result.address?.components(separatedBy: ",").first {
+                nameBinding.wrappedValue = suggested
+            }
+            if address.isEmpty, let suggestedAddress = result.address, !suggestedAddress.isEmpty {
+                addressBinding.wrappedValue = suggestedAddress
+            }
+        }
+    }
+
+    // MARK: Overlaps
+
+    /// The departure the stop would be saved with; nil while still there.
+    private var proposedDeparture: Date? {
+        mode.requiresDeparture ? departedAt : (isStillHere ? nil : departedAt)
+    }
+
+    private var overlapCheckKey: String {
+        "\(arrivedAt.timeIntervalSinceReferenceDate)|\(proposedDeparture?.timeIntervalSinceReferenceDate ?? -1)"
+    }
+
+    private func refreshOverlapCheck() {
+        guard validationMessage == nil else {
+            overlapCheck = .none
+            return
+        }
+        overlapCheck = ManualVisitStore(context: modelContext)
+            .overlapCheck(arrivedAt: arrivedAt, departedAt: proposedDeparture)
+    }
+
+    /// "Overlaps Mission Office by 15 min (until 12:30). Saving will end that visit at 12:15."
+    private var overlapNotices: [String] {
+        switch overlapCheck {
+        case .none:
+            return []
+        case .conflict(let visit):
+            let start = LocationMapView.clockText(visit.arrivedAt)
+            let end = visit.departedAt.map(LocationMapView.clockText) ?? String(localized: "now")
+            return [String(localized: "\(visit.displayName) (\(start)–\(end)) falls inside this stop, so it can’t be trimmed. Review the times, or save to keep both visits.")]
+        case .trims(let resolutions):
+            return resolutions.map { resolution in
+                let name = resolution.visit.displayName
+                let minutes = max(1, Int((resolution.overlap / 60).rounded()))
+                switch resolution.change {
+                case .endsAt(let end):
+                    let newEnd = LocationMapView.clockText(end)
+                    if let until = resolution.visit.departedAt.map(LocationMapView.clockText) {
+                        return String(localized: "Overlaps \(name) by \(minutes) min (until \(until)). Saving will end that visit at \(newEnd).")
+                    }
+                    return String(localized: "Overlaps \(name), which is still in progress. Saving will end that visit at \(newEnd).")
+                case .startsAt(let start):
+                    let from = LocationMapView.clockText(resolution.visit.arrivedAt)
+                    let newStart = LocationMapView.clockText(start)
+                    return String(localized: "Overlaps \(name) by \(minutes) min (from \(from)). Saving will start that visit at \(newStart).")
+                }
+            }
         }
     }
 
@@ -2885,22 +3397,42 @@ struct ManualVisitSheet: View {
         }
 
         isSaving = true
-        let visit = viewModel.createManualVisit(
-            name: name,
-            address: address,
-            coordinate: coordinate,
-            arrivedAt: arrivedAt,
-            departedAt: mode.requiresDeparture ? departedAt : (isStillHere ? nil : departedAt),
-            placeSource: locationSelection?.visitPlaceSource ?? .userEntered,
-            allowOverlap: allowOverlap
-        )
+        let placeSource = locationSelection?.visitPlaceSource ?? .userEntered
+        let visit: Visit?
+        let mutationError: VisitMutationError?
+        if allowOverlap {
+            visit = viewModel.createManualVisit(
+                name: name,
+                address: address,
+                coordinate: coordinate,
+                arrivedAt: arrivedAt,
+                departedAt: proposedDeparture,
+                placeSource: placeSource,
+                allowOverlap: true
+            )
+            mutationError = viewModel.visitMutationError
+        } else {
+            // Overlapped stays (recorded or manual) are trimmed in the same save, as the notice said.
+            let store = ManualVisitStore(context: modelContext)
+            visit = store.createManualVisitTrimmingOverlaps(
+                name: name,
+                address: address,
+                coordinate: coordinate,
+                arrivedAt: arrivedAt,
+                departedAt: proposedDeparture,
+                placeSource: placeSource
+            )
+            mutationError = store.visitMutationError
+            if visit != nil { viewModel.loadData() }
+        }
 
         guard let visit else {
             isSaving = false
-            if case .overlap = viewModel.visitMutationError {
+            if case .overlap = mutationError {
+                overlapAlertMessage = mutationError?.localizedDescription ?? ""
                 showingOverlapConfirmation = true
             } else {
-                errorMessage = viewModel.visitMutationError?.localizedDescription
+                errorMessage = mutationError?.localizedDescription
             }
             return
         }
@@ -2928,6 +3460,8 @@ private struct LogStopResultRow: View {
     let ink: Color
     var systemImage: String? = nil
     var isSelected = false
+    /// Tags like "Saved" are set in mono capitals; distances keep their unit case.
+    var uppercasesTrailing = true
 
     var body: some View {
         HStack(spacing: 12) {
@@ -2961,7 +3495,7 @@ private struct LogStopResultRow: View {
                     .foregroundStyle(TE.inkRust)
                     .accessibilityHidden(true)
             } else if let trailing {
-                Text(trailing.uppercased())
+                Text(uppercasesTrailing ? trailing.uppercased() : trailing)
                     .font(TE.mono(.caption2, weight: .medium))
                     .tracking(1)
                     .foregroundStyle(TE.textMuted)
@@ -3097,15 +3631,18 @@ struct DateRangeFilterSheet: View {
         return "\(lowerDay.formatted(style)) – \(upperDay.formatted(style))"
     }
 
+    /// Days the apply button counts: the highlighted span, or for "All" every day since the first record.
+    private var applyDayCount: Int {
+        guard preset == .all else { return dayCount }
+        let today = calendar.startOfDay(for: Date())
+        guard let first = recordedDays.min(), first < today else { return 1 }
+        return (calendar.dateComponents([.day], from: first, to: today).day ?? 0) + 1
+    }
+
+    /// Always "Show N days", presets included, so the button says how much the map will draw.
     private var applyTitle: String {
-        switch preset {
-        case .today: String(localized: "Show today")
-        case .yesterday: String(localized: "Show yesterday")
-        case .sevenDays: String(localized: "Show the last 7 days")
-        case .thirtyDays: String(localized: "Show the last 30 days")
-        case .all: String(localized: "Show all days")
-        case nil: dayCount == 1 ? String(localized: "Show 1 day") : String(localized: "Show \(dayCount) days")
-        }
+        let count = applyDayCount
+        return count == 1 ? String(localized: "Show 1 day") : String(localized: "Show \(count) days")
     }
 
     var body: some View {
@@ -3212,8 +3749,12 @@ struct DateRangeFilterSheet: View {
 
     private func layerCard(_ layers: MapLayerSettings) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            MapLayerRow(title: "Visits", subtitle: "Places you stopped", systemImage: "mappin.circle.fill",
-                        help: .visitMarkers, isOn: layers.visits, activeHelp: $activeLayerHelp)
+            MapLayerRow(title: "Visits", subtitle: visitsLayerSubtitle(layers), systemImage: "mappin.circle.fill",
+                        help: .visitMarkers, isOn: layers.visits, activeHelp: $activeLayerHelp,
+                        showsDivider: layers.minimumStayMinutes == nil || !layers.visits.wrappedValue)
+            if let minimumStay = layers.minimumStayMinutes, layers.visits.wrappedValue {
+                MapMinimumStayRow(minutes: minimumStay)
+            }
             MapLayerRow(title: "Routes", subtitle: "Paths between stops", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
                         help: .travelPath, isOn: layers.routes, activeHelp: $activeLayerHelp)
             MapLayerRow(title: "Photos", subtitle: "Matched by time and place", systemImage: "camera.fill",
@@ -3244,6 +3785,12 @@ struct DateRangeFilterSheet: View {
         .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
     }
 
+    /// "Stops longer than 5 min", from the map's own shortest-stop setting.
+    private func visitsLayerSubtitle(_ layers: MapLayerSettings) -> LocalizedStringKey {
+        let minutes = layers.minimumStayMinutes?.wrappedValue ?? 0
+        return minutes > 0 ? "Stops longer than \(minutes) min" : "Every stop, any length"
+    }
+
     private func select(_ option: MapDatePreset) {
         preset = option
         anchorDay = nil
@@ -3266,10 +3813,13 @@ struct DateRangeFilterSheet: View {
 
         let today = calendar.startOfDay(for: Date())
         let yesterday = calendar.date(byAdding: .day, value: -1, to: today)
+        let startOfMonth = calendar.dateInterval(of: .month, for: today)?.start
         if lowerDay == upperDay, lowerDay == today {
             preset = .today
         } else if lowerDay == upperDay, lowerDay == yesterday {
             preset = .yesterday
+        } else if lowerDay == startOfMonth, upperDay == today {
+            preset = .thisMonth
         } else {
             preset = nil
         }
@@ -3552,13 +4102,14 @@ struct VisitQuickView: View {
 // MARK: - Quick Filter Bar
 
 enum MapDatePreset: CaseIterable, Hashable {
-    case today, yesterday, sevenDays, thirtyDays, all
+    case today, yesterday, sevenDays, thisMonth, thirtyDays, all
 
     var label: String {
         switch self {
         case .today: return String(localized: "Today")
         case .yesterday: return String(localized: "Yesterday")
         case .sevenDays: return String(localized: "7D")
+        case .thisMonth: return String(localized: "Month")
         case .thirtyDays: return String(localized: "30D")
         case .all: return String(localized: "All")
         }
@@ -3569,6 +4120,7 @@ enum MapDatePreset: CaseIterable, Hashable {
         case .today: return String(localized: "Today")
         case .yesterday: return String(localized: "Yesterday")
         case .sevenDays: return String(localized: "Last 7 days")
+        case .thisMonth: return String(localized: "This month")
         case .thirtyDays: return String(localized: "Last 30 days")
         case .all: return String(localized: "All time")
         }
@@ -3586,6 +4138,10 @@ enum MapDatePreset: CaseIterable, Hashable {
             return startOfYesterday...endOfYesterday
         case .sevenDays:
             return calendar.date(byAdding: .day, value: -7, to: referenceDate)!...referenceDate
+        case .thisMonth:
+            let startOfMonth = calendar.dateInterval(of: .month, for: referenceDate)?.start
+                ?? calendar.startOfDay(for: referenceDate)
+            return startOfMonth...referenceDate
         case .thirtyDays:
             return calendar.date(byAdding: .day, value: -30, to: referenceDate)!...referenceDate
         case .all:
@@ -3870,6 +4426,78 @@ struct TraceDay {
 
 /// The paper sheet under the map: where you were at the scrubbed moment, the day's
 /// stays as a bar, a time scrubber, and the places to jump between.
+/// Everything the replay controls show and do at one moment of the trace.
+@MainActor
+struct TraceReplayPanelModel {
+    let kicker: String
+    let title: String
+    let clock: String
+    let day: TraceDay
+    let nowFraction: Double?
+    let focusFraction: Double
+    let focusedPlaceID: String?
+    let distanceText: String
+    /// "Drag to replay · now 14:20".
+    let hint: String?
+    let isReplaying: Bool
+    let isPlaying: Bool
+    let canPlay: Bool
+    let onScrub: (Double) -> Void
+    let onStep: (TimeInterval) -> Void
+    let onJump: (TraceDay.Place) -> Void
+    let onPlayPause: () -> Void
+    let onDone: () -> Void
+
+    /// Changes whenever anything drawn changes, so a published copy is replaced in step.
+    var signature: [String] {
+        [
+            kicker, title, clock, distanceText, hint ?? "",
+            focusedPlaceID ?? "",
+            String(format: "%.5f", focusFraction),
+            nowFraction.map { String(format: "%.5f", $0) } ?? "-",
+            "\(isReplaying)\(isPlaying)\(canPlay)",
+            "\(day.domain.lowerBound.timeIntervalSinceReferenceDate)-\(day.domain.upperBound.timeIntervalSinceReferenceDate)",
+            day.places.map(\.name).joined(separator: "|"),
+            day.segments.map { "\($0.id)\($0.start)\($0.end)" }.joined(separator: "|")
+        ]
+    }
+}
+
+/// Carries the trace's replay controls from the map to another pane: on a half-open
+/// Duo the map stays above the fold and the scrubber, places and steps sit below it.
+@MainActor
+@Observable
+final class TraceReplayBridge {
+    var panel: TraceReplayPanelModel?
+    var isCollapsed = false
+
+    init() {}
+}
+
+/// The pane below the fold on a half-open Duo: the trace's replay controls, full width.
+struct TraceTabletopReplayPane: View {
+    @Bindable var bridge: TraceReplayBridge
+
+    var body: some View {
+        Group {
+            if let panel = bridge.panel {
+                TraceScrubPanel(
+                    model: panel,
+                    isExpandedLayout: true,
+                    maxHeight: .infinity,
+                    isCollapsed: .constant(false),
+                    showsGrabber: false
+                )
+                .frame(maxHeight: .infinity, alignment: .top)
+            } else {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .background(TE.surface.ignoresSafeArea())
+    }
+}
+
 struct TraceScrubPanel: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -3893,13 +4521,103 @@ struct TraceScrubPanel: View {
     let onJump: (TraceDay.Place) -> Void
     let onPlayPause: () -> Void
     let onDone: () -> Void
+    /// "Drag to replay · now 14:20", shown in the footer.
+    var hint: String? = nil
+    /// A pane of its own (half-open) has nothing to collapse.
+    var showsGrabber = true
 
-    @ScaledMetric(relativeTo: .largeTitle) private var clockSize: CGFloat = 44
-    @ScaledMetric(relativeTo: .largeTitle) private var wideClockSize: CGFloat = 60
+    init(
+        model: TraceReplayPanelModel,
+        isExpandedLayout: Bool,
+        maxHeight: CGFloat,
+        isCollapsed: Binding<Bool>,
+        showsGrabber: Bool = true
+    ) {
+        self.init(
+            kicker: model.kicker,
+            title: model.title,
+            clock: model.clock,
+            day: model.day,
+            nowFraction: model.nowFraction,
+            focusFraction: model.focusFraction,
+            focusedPlaceID: model.focusedPlaceID,
+            distanceText: model.distanceText,
+            isReplaying: model.isReplaying,
+            isPlaying: model.isPlaying,
+            canPlay: model.canPlay,
+            isExpandedLayout: isExpandedLayout,
+            maxHeight: maxHeight,
+            isCollapsed: isCollapsed,
+            onScrub: model.onScrub,
+            onStep: model.onStep,
+            onJump: model.onJump,
+            onPlayPause: model.onPlayPause,
+            onDone: model.onDone,
+            hint: model.hint,
+            showsGrabber: showsGrabber
+        )
+    }
+
+    init(
+        kicker: String,
+        title: String,
+        clock: String,
+        day: TraceDay,
+        nowFraction: Double?,
+        focusFraction: Double,
+        focusedPlaceID: String?,
+        distanceText: String,
+        isReplaying: Bool,
+        isPlaying: Bool,
+        canPlay: Bool,
+        isExpandedLayout: Bool,
+        maxHeight: CGFloat,
+        isCollapsed: Binding<Bool>,
+        onScrub: @escaping (Double) -> Void,
+        onStep: @escaping (TimeInterval) -> Void,
+        onJump: @escaping (TraceDay.Place) -> Void,
+        onPlayPause: @escaping () -> Void,
+        onDone: @escaping () -> Void,
+        hint: String? = nil,
+        showsGrabber: Bool = true
+    ) {
+        self.kicker = kicker
+        self.title = title
+        self.clock = clock
+        self.day = day
+        self.nowFraction = nowFraction
+        self.focusFraction = focusFraction
+        self.focusedPlaceID = focusedPlaceID
+        self.distanceText = distanceText
+        self.isReplaying = isReplaying
+        self.isPlaying = isPlaying
+        self.canPlay = canPlay
+        self.isExpandedLayout = isExpandedLayout
+        self.maxHeight = maxHeight
+        _isCollapsed = isCollapsed
+        self.onScrub = onScrub
+        self.onStep = onStep
+        self.onJump = onJump
+        self.onPlayPause = onPlayPause
+        self.onDone = onDone
+        self.hint = hint
+        self.showsGrabber = showsGrabber
+    }
 
     var body: some View {
+        // Hug the content, scrolling only once it would pass the cap.
+        CappedHeightLayout(maxHeight: maxHeight) {
+            panel
+        }
+    }
+
+    private var panel: some View {
         VStack(spacing: 0) {
-            grabber
+            if showsGrabber {
+                grabber
+            } else {
+                Color.clear.frame(height: 28)
+            }
 
             VStack(alignment: .leading, spacing: isExpandedLayout ? 18 : 12) {
                 header
@@ -3920,15 +4638,16 @@ struct TraceScrubPanel: View {
             .padding(.bottom, isExpandedLayout ? 24 : 12)
         }
         .frame(maxWidth: .infinity)
-        // Hug the content, scrolling only once it would pass the cap.
-        .frame(maxHeight: maxHeight)
-        .fixedSize(horizontal: false, vertical: true)
         .foregroundStyle(TE.textPrimary)
         .background {
-            UnevenRoundedRectangle(topLeadingRadius: 26, topTrailingRadius: 26, style: .continuous)
-                .fill(TE.surface)
-                .shadow(color: .black.opacity(0.12), radius: 30, x: 0, y: -10)
-                .ignoresSafeArea(edges: .bottom)
+            if showsGrabber {
+                UnevenRoundedRectangle(topLeadingRadius: 26, topTrailingRadius: 26, style: .continuous)
+                    .fill(TE.surface)
+                    .shadow(color: .black.opacity(0.12), radius: 30, x: 0, y: -10)
+                    .ignoresSafeArea(edges: .bottom)
+            } else {
+                TE.surface.ignoresSafeArea()
+            }
         }
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Replay controls")
@@ -3969,7 +4688,7 @@ struct TraceScrubPanel: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(clock)
-                .font(.system(size: isExpandedLayout ? wideClockSize : clockSize, design: .serif))
+                .font(WheredayFont.serif(size: isExpandedLayout ? 60 : 44, relativeTo: .largeTitle))
                 .monospacedDigit()
                 .lineLimit(1)
                 .fixedSize()
@@ -4063,10 +4782,21 @@ struct TraceScrubPanel: View {
             HStack(spacing: 12) {
                 Text(distanceText)
                 Spacer(minLength: 8)
+                hintText
                 footerActions
             }
             VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 12) {
+                    Text(distanceText)
+                    Spacer(minLength: 8)
+                    hintText
+                }
+                .frame(minHeight: 32)
+                HStack(spacing: 16) { footerActions }
+            }
+            VStack(alignment: .leading, spacing: 4) {
                 Text(distanceText)
+                hintText
                 HStack(spacing: 16) { footerActions }
             }
         }
@@ -4075,6 +4805,15 @@ struct TraceScrubPanel: View {
         .padding(.top, 4)
         .overlay(alignment: .top) {
             Rectangle().fill(TE.border).frame(height: 1)
+        }
+    }
+
+    @ViewBuilder
+    private var hintText: some View {
+        if let hint {
+            Text(hint)
+                .lineLimit(1)
+                .accessibilityHidden(true)
         }
     }
 
@@ -4120,6 +4859,25 @@ private extension Text {
 }
 
 /// The day's stays as one bar; the part of today not yet lived is hatched.
+/// Offers its content at most `maxHeight` and takes only the height the content uses,
+/// unlike `.frame(maxHeight:)`, which grows to the cap.
+private struct CappedHeightLayout: Layout {
+    let maxHeight: CGFloat
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        guard let content = subviews.first else { return .zero }
+        return content.sizeThatFits(cappedProposal(proposal))
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        subviews.first?.place(at: bounds.origin, proposal: ProposedViewSize(width: bounds.width, height: bounds.height))
+    }
+
+    private func cappedProposal(_ proposal: ProposedViewSize) -> ProposedViewSize {
+        ProposedViewSize(width: proposal.width, height: min(proposal.height ?? maxHeight, maxHeight))
+    }
+}
+
 struct TraceDayBar: View {
     let segments: [TraceDay.Segment]
     let nowFraction: Double?
@@ -4281,6 +5039,8 @@ struct MapVisitInspectorCard: View {
     let onDetails: () -> Void
     let onPhotos: () -> Void
     let onClose: () -> Void
+    /// Reviews the stay as a Calendar event (CalendarEventReviewSheet); nil hides the action.
+    var onCalendar: (() -> Void)? = nil
 
     private var isUnconfirmed: Bool { visit.confirmationStatus == .unconfirmed }
 
@@ -4340,6 +5100,11 @@ struct MapVisitInspectorCard: View {
             Button(action: onDetails) { actionLabel("Details", filled: true) }
         }
 
+        if let onCalendar {
+            Button(action: onCalendar) { actionLabel("Calendar", filled: false) }
+                .accessibilityLabel("Add Event to Calendar")
+        }
+
         if photoCount > 0 {
             Button(action: onPhotos) {
                 actionLabel(photoCount == 1 ? "1 photo" : "\(photoCount) photos", filled: false)
@@ -4393,6 +5158,44 @@ struct MapLayerSettings {
     var startEndMarkers: Binding<Bool>
     var sessionPath: Binding<Bool>
     var hasSessionPoints: Bool
+    /// Completed stays shorter than this many minutes are left off the map; 0 shows every stop.
+    var minimumStayMinutes: Binding<Int>? = nil
+
+    static let minimumStayMinutesKey = "mapMinimumStayMinutes"
+    static let minimumStayOptions = [0, 5, 10, 15, 30]
+}
+
+/// The shortest stop the Visits layer draws, chosen from a few lengths.
+private struct MapMinimumStayRow: View {
+    @Binding var minutes: Int
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 12) {
+                Text("Shortest stop")
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textPrimary)
+                Spacer(minLength: 8)
+                Picker("Shortest stop", selection: $minutes) {
+                    ForEach(MapLayerSettings.minimumStayOptions, id: \.self) { option in
+                        if option == 0 {
+                            Text("Any length").tag(option)
+                        } else {
+                            Text("\(option) min").tag(option)
+                        }
+                    }
+                }
+                .labelsHidden()
+                .tint(TE.inkRust)
+            }
+            .padding(.leading, 28)
+            .frame(minHeight: 48)
+
+            Rectangle()
+                .fill(TE.dialTrack)
+                .frame(height: 1)
+        }
+    }
 }
 
 private struct MapLayerRow: View {
@@ -5188,3 +5991,36 @@ enum MapPointMarkerSampler {
         return cells.values.sorted { $0.index < $1.index }.map(\.point)
     }
 }
+
+#if compiler(>=6.4)
+/// Reports the hinge as soon as the view joins a window: `UIHingeInteraction` calls its handler with
+/// the initial state, so a foldable is recognised at launch even while it is closed.
+@available(iOS 27.1, *)
+struct HingePresenceProbe: UIViewRepresentable {
+    /// Called with the current hinge status, or nil when the hierarchy reports no hinge.
+    let onUpdate: (UIHinge.Status?) -> Void
+
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView(frame: .zero)
+        view.isUserInteractionEnabled = false
+        view.isAccessibilityElement = false
+        let coordinator = context.coordinator
+        view.addInteraction(UIHingeInteraction { _, update in
+            coordinator.onUpdate(update.hinge?.status)
+        })
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {
+        context.coordinator.onUpdate = onUpdate
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator(onUpdate: onUpdate) }
+
+    @MainActor
+    final class Coordinator {
+        var onUpdate: (UIHinge.Status?) -> Void
+        init(onUpdate: @escaping (UIHinge.Status?) -> Void) { self.onUpdate = onUpdate }
+    }
+}
+#endif

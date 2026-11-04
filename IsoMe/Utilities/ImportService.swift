@@ -8,7 +8,7 @@ enum ImportError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unsupportedFormat:
-            return String(localized: "Unsupported file format. Import supports Google Timeline JSON and Whereday JSON, CSV, or Markdown files. KML, GPX, and GeoJSON exports are one-way map files.")
+            return String(localized: "Unsupported file format. KML, GPX, GeoJSON, OwnTracks and Overland exports are one-way map files.")
         case .invalidData(let detail):
             return String(format: String(localized: "Invalid data: %@"), detail)
         case .parsingFailed(let detail):

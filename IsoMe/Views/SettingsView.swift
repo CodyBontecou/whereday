@@ -7,6 +7,8 @@ struct SettingsView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.dismiss) private var dismiss
+    /// True when Settings is a tab of the iPad rail rather than a sheet over Archive: no back capsule then.
+    @Environment(\.isPresentedAsRailTab) private var isPresentedAsRailTab
     @Bindable var viewModel: LocationViewModel
     @ObservedObject private var locationManager: LocationManager
     @ObservedObject private var storeManager = StoreManager.shared
@@ -20,7 +22,9 @@ struct SettingsView: View {
     @State private var importFileSelection: ImportFileSelection?
     @State private var importErrorMessage: String?
     @State private var showingImportError = false
-    @State private var selectedSection: SettingsSection = .plan
+    @State private var reopenImportPicker = false
+    @State private var exportErrorMessage: String?
+    @State private var selectedPane: SettingsPane = .plan
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("discordPromoDismissed") private var discordPromoDismissed = false
@@ -40,63 +44,114 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if usesTwoPanes {
-                    twoPaneLayout
-                } else {
+        Group {
+            if usesTwoPanes {
+                twoPaneLayout
+            } else {
+                NavigationStack {
                     singleColumnLayout
+                        .navigationTitle("Settings")
+                        .toolbar(.hidden, for: .navigationBar)
                 }
             }
-            .background(TE.surface.ignoresSafeArea())
-            .foregroundStyle(TE.textPrimary)
-            .tint(TE.textPrimary)
-            .navigationTitle("Settings")
-            .toolbar(.hidden, for: .navigationBar)
-            .alert("Import Failed", isPresented: $showingImportError) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                if let message = importErrorMessage {
-                    Text(message)
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .tint(TE.textPrimary)
+        .alert("Import Failed", isPresented: $showingImportError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            if let message = importErrorMessage {
+                Text(message)
+            }
+        }
+        .alert("Export Failed", isPresented: Binding(
+            get: { exportErrorMessage != nil },
+            set: { if !$0 { exportErrorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            if let exportErrorMessage {
+                Text(exportErrorMessage)
+            }
+        }
+        .fileImporter(
+            isPresented: $showingImportPicker,
+            allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
+            allowsMultipleSelection: false
+        ) { result in
+            handleImportResult(result)
+        }
+        .onChange(of: usesMetricDistanceUnits) { _, _ in
+            locationManager.refreshDistanceUnitPreference()
+        }
+        .sheet(item: $importFileSelection, onDismiss: {
+            if reopenImportPicker {
+                reopenImportPicker = false
+                showingImportPicker = true
+            }
+        }) { selection in
+            ImportPreviewView(url: selection.url, viewModel: viewModel) {
+                reopenImportPicker = true
+            }
+        }
+        .sheet(isPresented: $showingMyselfClaim) { MyselfClaimView(app: "iso.me") }
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView(storeManager: storeManager, context: .settings)
+        }
+        .sheet(isPresented: $showingReleaseNotes) {
+            if let latest = IsoMeReleaseNotes.notes.first {
+                WhatsNewSheet(release: latest)
+            }
+        }
+        .sheet(isPresented: $showingClearConfirmation, onDismiss: {
+            if exportAfterClearSheet {
+                exportAfterClearSheet = false
+                exportEverything()
+            }
+        }) {
+            ClearDataSheet(
+                visitCount: viewModel.allVisits.count,
+                pointCount: viewModel.totalLocationPointCount,
+                earliestDate: viewModel.allVisits.map(\.arrivedAt).min(),
+                onExportFirst: { exportAfterClearSheet = true },
+                onErase: { viewModel.clearAllData() }
+            )
+        }
+    }
+
+    /// "Export everything first": every visit and point, all time, as one Whereday JSON file through the
+    /// share sheet. Once it's saved somewhere, the erase confirmation comes back so the person can finish.
+    private func exportEverything() {
+        guard storeManager.canExport else {
+            showingPaywall = true
+            return
+        }
+        viewModel.ensureAllLocationPointsLoaded()
+        var options = ExportOptions()
+        options.dataKind = .all
+        options.datePreset = .allTime
+        options.splitByDay = false
+        do {
+            try ExportService.share(
+                visits: viewModel.allVisits,
+                points: viewModel.locationPoints,
+                recordingSessions: viewModel.allRecordingSessions,
+                activeTrackingStart: viewModel.locationManager.trackingStartTime,
+                options: options,
+                selectedFormats: [.json],
+                completion: { completed in
+                    guard completed else { return }
+                    Task { @MainActor in
+                        AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                        LogManager.shared.info("Exported everything before clearing · all time", category: .export)
+                        showingClearConfirmation = true
+                    }
                 }
-            }
-            .fileImporter(
-                isPresented: $showingImportPicker,
-                allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
-                allowsMultipleSelection: false
-            ) { result in
-                handleImportResult(result)
-            }
-            .onChange(of: usesMetricDistanceUnits) { _, _ in
-                locationManager.refreshDistanceUnitPreference()
-            }
-            .sheet(item: $importFileSelection) { selection in
-                ImportPreviewView(url: selection.url, viewModel: viewModel)
-            }
-            .sheet(isPresented: $showingMyselfClaim) { MyselfClaimView(app: "iso.me") }
-            .sheet(isPresented: $showingPaywall) {
-                PaywallView(storeManager: storeManager, context: .settings)
-            }
-            .sheet(isPresented: $showingReleaseNotes) {
-                if let latest = IsoMeReleaseNotes.notes.first {
-                    WhatsNewSheet(release: latest)
-                }
-            }
-            .sheet(isPresented: $showingClearConfirmation, onDismiss: {
-                // Leave Settings so the Archive tab is ready for a full export.
-                if exportAfterClearSheet {
-                    exportAfterClearSheet = false
-                    dismiss()
-                }
-            }) {
-                ClearDataSheet(
-                    visitCount: viewModel.allVisits.count,
-                    pointCount: viewModel.totalLocationPointCount,
-                    earliestDate: viewModel.allVisits.map(\.arrivedAt).min(),
-                    onExportFirst: { exportAfterClearSheet = true },
-                    onErase: { viewModel.clearAllData() }
-                )
-            }
+            )
+        } catch {
+            LogManager.shared.error("Export everything failed · \(error.localizedDescription)", category: .export)
+            exportErrorMessage = error.localizedDescription
         }
     }
 
@@ -120,7 +175,8 @@ struct SettingsView: View {
         .scrollIndicators(.hidden)
     }
 
-    /// On a wide display the section list stays on the left and the chosen section opens on the right.
+    /// On a wide display the seven sections stay on the left and the chosen one opens on the right.
+    /// The right pane has its own navigation, so deeper pages push there instead of over both panes.
     private var twoPaneLayout: some View {
         HStack(spacing: 0) {
             ScrollView {
@@ -128,8 +184,8 @@ struct SettingsView: View {
                     header
                     communityBanner
                     VStack(spacing: 2) {
-                        ForEach(SettingsSection.allCases) { section in
-                            sectionNavigationRow(section)
+                        ForEach(SettingsPane.allCases) { pane in
+                            paneNavigationRow(pane)
                         }
                     }
                     .padding(.horizontal, 16)
@@ -138,6 +194,7 @@ struct SettingsView: View {
                 }
                 .padding(.bottom, 32)
             }
+            .scrollIndicators(.hidden)
             .frame(maxWidth: .infinity)
 
             Rectangle()
@@ -145,36 +202,23 @@ struct SettingsView: View {
                 .frame(width: 1)
                 .ignoresSafeArea()
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(selectedSection.label)
-                        .font(TE.mono(.caption2))
-                        .tracking(1.5)
-                        .foregroundStyle(TE.textMuted)
-                    Text(selectedSection.title)
-                        .font(TE.editorial(.title))
-                        .padding(.top, 2)
-                        .padding(.bottom, 12)
-                        .accessibilityAddTraits(.isHeader)
-                    sectionCard(selectedSection)
-                    sectionFooter(selectedSection)
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 26)
-                .padding(.bottom, 32)
+            NavigationStack {
+                paneDetail(selectedPane)
+                    .toolbar(.hidden, for: .navigationBar)
             }
+            .id(selectedPane)
             .frame(maxWidth: .infinity)
         }
     }
 
-    private func sectionNavigationRow(_ section: SettingsSection) -> some View {
-        let isSelected = section == selectedSection
-        return Button { selectedSection = section } label: {
+    private func paneNavigationRow(_ pane: SettingsPane) -> some View {
+        let isSelected = pane == selectedPane
+        return Button { selectedPane = pane } label: {
             HStack(spacing: 12) {
-                Text(section.title)
+                Text(pane.title)
                     .font(.subheadline)
                 Spacer(minLength: 8)
-                sectionSummary(section)
+                paneSummary(pane)
                     .font(TE.mono(.caption))
                     .foregroundStyle(TE.textMuted)
                     .lineLimit(1)
@@ -193,26 +237,109 @@ struct SettingsView: View {
     }
 
     @ViewBuilder
-    private func sectionSummary(_ section: SettingsSection) -> some View {
-        switch section {
+    private func paneSummary(_ pane: SettingsPane) -> some View {
+        switch pane {
         case .plan:
             Text(verbatim: storeManager.activePurchaseOption?.title ?? String(localized: "No plan"))
         case .recording:
             listeningSummary
         case .look:
             Text(currentAppearance.shortTitle)
-        case .data:
-            Text(verbatim: viewModel.allVisits.count.formatted())
+        case .importFile:
+            Text(verbatim: viewModel.totalLocationPointCount.formatted())
+        case .webhook:
+            Text(webhookManager.isEnabled ? "On" : "Off")
+        case .shortcuts:
+            EmptyView()
         case .help:
             Text(verbatim: AppInfo.version)
         }
+    }
+
+    @ViewBuilder
+    private func paneDetail(_ pane: SettingsPane) -> some View {
+        switch pane {
+        case .webhook:
+            WebhookSummaryPane()
+        case .shortcuts:
+            ShortcutsGuideView()
+        default:
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(pane.label)
+                        .font(TE.mono(.caption2))
+                        .tracking(1.5)
+                        .foregroundStyle(TE.textMuted)
+                    Text(pane.title)
+                        .font(TE.editorial(.title))
+                        .padding(.top, 2)
+                        .padding(.bottom, 12)
+                        .accessibilityAddTraits(.isHeader)
+                    switch pane {
+                    case .plan:
+                        planCard
+                        sectionFooter(.plan)
+                    case .recording:
+                        recordingCard
+                    case .look:
+                        lookCard
+                    case .importFile:
+                        importCard
+                    default:
+                        helpCard
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 26)
+                .padding(.bottom, 32)
+            }
+            .scrollIndicators(.hidden)
+            .background(TE.surface.ignoresSafeArea())
+        }
+    }
+
+    /// The wide layout's "Import a file" page: what's on this iPhone, the importer, and clearing it.
+    private var importCard: some View {
+        BackPageCard {
+            BackPageCountGrid(counts: [
+                (viewModel.allVisits.count, "VISITS"),
+                (viewModel.totalLocationPointCount, "POINTS")
+            ])
+            .padding(16)
+
+            BackPageDivider()
+            importRow
+
+            BackPageDivider()
+            clearDataRow
+        }
+    }
+
+    private var importRow: some View {
+        Button { showingImportPicker = true } label: {
+            BackPageRowLabel(
+                title: Text("Import a file"),
+                subtitle: Text("Google Timeline JSON, or Whereday JSON, CSV, Markdown. Duplicates are skipped."),
+                minHeight: 64
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var clearDataRow: some View {
+        Button { showingClearConfirmation = true } label: {
+            BackPageRowLabel(title: Text("Clear all data…"), tint: TE.inkRust, accessory: .none)
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Header
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 14) {
-            BackPageBackCapsule(title: "Archive") { dismiss() }
+            if !isPresentedAsRailTab {
+                BackPageBackCapsule(title: "Archive") { dismiss() }
+            }
             BackPageHeader(caption: "THE BACK PAGES", title: "Settings")
                 .padding(.horizontal, 4)
         }
@@ -300,12 +427,15 @@ struct SettingsView: View {
         }
     }
 
-    /// Subscriptions show when the current period ends; StoreKit's renewal intent isn't tracked here.
+    /// Subscriptions that will auto-renew show the renewal date; ones set to lapse show when access ends.
     private var planStatus: String {
         guard let option = storeManager.activePurchaseOption else { return "" }
         var parts: [String] = []
         if option.isSubscription, let expiration = storeManager.trackingExpiration {
-            parts.append(String(localized: "Through \(expiration.formatted(date: .abbreviated, time: .omitted))"))
+            let date = expiration.formatted(date: .abbreviated, time: .omitted)
+            parts.append(storeManager.willAutoRenew == true
+                ? String(localized: "Renews \(date)")
+                : String(localized: "Through \(date)"))
         } else if !option.isSubscription {
             parts.append(String(localized: "Lifetime"))
         }
@@ -419,14 +549,7 @@ struct SettingsView: View {
             .padding(16)
 
             BackPageDivider()
-            Button { showingImportPicker = true } label: {
-                BackPageRowLabel(
-                    title: Text("Import a file"),
-                    subtitle: Text("Google Timeline JSON, or Whereday JSON, CSV, Markdown. Duplicates are skipped."),
-                    minHeight: 64
-                )
-            }
-            .buttonStyle(.plain)
+            importRow
 
             BackPageDivider()
             NavigationLink {
@@ -445,10 +568,7 @@ struct SettingsView: View {
             .buttonStyle(.plain)
 
             BackPageDivider()
-            Button { showingClearConfirmation = true } label: {
-                BackPageRowLabel(title: Text("Clear all data…"), tint: TE.inkRust, accessory: .none)
-            }
-            .buttonStyle(.plain)
+            clearDataRow
         }
     }
 
@@ -546,6 +666,295 @@ struct SettingsView: View {
     }
 }
 
+/// The wide layout's seven top-level pages.
+
+/// The wide layout's Webhook pane: a short summary (privacy note, URL and format, what's waiting,
+/// Send now) with a link to the full WebhookSettingsView for sign-in, interval and batch size.
+private struct WebhookSummaryPane: View {
+    @ObservedObject private var storeManager = StoreManager.shared
+    @ObservedObject private var webhook = WebhookManager.shared
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    private static let commonFormats: [ExportFormat] = [.json, .geojson, .gpx, .owntracks, .overland]
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("YOUR DATA · ON-DEVICE ONLY")
+                        .font(TE.mono(.caption2))
+                        .tracking(1.5)
+                        .foregroundStyle(TE.textMuted)
+                    Text("Webhook")
+                        .font(TE.editorial(.title))
+                        .accessibilityAddTraits(.isHeader)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("DATA LEAVES YOUR DEVICE")
+                        .font(TE.mono(.caption2))
+                        .tracking(1.2)
+                        .foregroundStyle(TE.inkRust)
+                    Text("Delivery sends your location data to a server you configure.")
+                        .font(.footnote)
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(RoundedRectangle(cornerRadius: 16).fill(TE.card))
+                .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.placeInks[1], lineWidth: 1.5))
+                .accessibilityElement(children: .combine)
+
+                if storeManager.canExport {
+                    BackPageCard {
+                        BackPageToggleRow(title: "Webhook delivery", isOn: $webhook.isEnabled)
+                    }
+                    if webhook.isEnabled {
+                        endpointCard
+                        statusCard
+                    }
+                } else {
+                    Text("Webhook is part of a plan. Choose a Whereday plan to unlock export features.")
+                        .font(.footnote)
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                NavigationLink {
+                    WebhookSettingsView()
+                } label: {
+                    HStack(spacing: 4) {
+                        Text(storeManager.canExport ? "Sign-in, interval and batch size" : "See plans")
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .accessibilityHidden(true)
+                    }
+                    .font(.footnote)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 26)
+            .padding(.bottom, 32)
+        }
+        .scrollIndicators(.hidden)
+        .background(TE.surface.ignoresSafeArea())
+    }
+
+    private var endpointCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("URL")
+                    .font(TE.mono(.caption2))
+                    .tracking(1)
+                    .foregroundStyle(TE.textMuted)
+                TextField("https://example.com/api/location", text: $webhook.urlString)
+                    .font(TE.mono(.subheadline))
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .keyboardType(.URL)
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 44)
+                    .background(RoundedRectangle(cornerRadius: 10).fill(TE.surface))
+                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(TE.border, lineWidth: 1))
+            }
+            BackPageWrapLayout(spacing: 6) {
+                ForEach(formatChoices, id: \.self) { format in
+                    formatChip(format)
+                }
+                NavigationLink {
+                    WebhookSettingsView()
+                } label: {
+                    chipLabel(String(localized: "More…"), isSelected: false)
+                }
+                .buttonStyle(.plain)
+            }
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Format")
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+    }
+
+    /// The five common formats, plus the chosen one when it lives behind "More…".
+    private var formatChoices: [ExportFormat] {
+        Self.commonFormats.contains(webhook.format) ? Self.commonFormats : Self.commonFormats + [webhook.format]
+    }
+
+    private func formatChip(_ format: ExportFormat) -> some View {
+        let isSelected = webhook.format == format
+        return Button { webhook.format = format } label: {
+            chipLabel(format.displayName, isSelected: isSelected)
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    private func chipLabel(_ title: String, isSelected: Bool) -> some View {
+        Text(verbatim: title)
+            .font(TE.mono(.caption, weight: .medium))
+            .foregroundStyle(isSelected ? TE.surface : TE.textPrimary)
+            .padding(.horizontal, 10)
+            .frame(minHeight: 34)
+            .background(Capsule().fill(isSelected ? TE.accent : Color.clear))
+            .overlay(Capsule().strokeBorder(isSelected ? TE.accent : TE.border, lineWidth: 1))
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+    }
+
+    private var statusCard: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 10))
+            : AnyLayout(HStackLayout(spacing: 12))
+        return VStack(alignment: .leading, spacing: 8) {
+            layout {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(verbatim: queueTitle)
+                        .font(TE.editorial(.title3))
+                    Text(verbatim: lastSentText)
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.onInkCardMuted)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
+
+                // Only sends what's waiting; sending all history lives on the full webhook page.
+                Button {
+                    Task { await webhook.flushBatch() }
+                } label: {
+                    Text("Send now")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(TE.inkCard)
+                        .padding(.horizontal, 16)
+                        .frame(minHeight: 44)
+                        .background(Capsule().fill(TE.onInkCard))
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .disabled(webhook.isSending || !hasQueuedPoints)
+                .opacity(hasQueuedPoints ? 1 : 0.5)
+            }
+            if let error = webhook.lastError {
+                Text(error)
+                    .font(TE.mono(.caption))
+                    .foregroundStyle(TE.onInkCardMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .foregroundStyle(TE.onInkCard)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.inkCard))
+    }
+
+    private var hasQueuedPoints: Bool {
+        webhook.sendMode != .manual && webhook.queuedPointCount > 0
+    }
+
+    private var queueTitle: String {
+        guard hasQueuedPoints else { return String(localized: "Nothing waiting") }
+        return webhook.queuedPointCount == 1
+            ? String(localized: "1 point waiting")
+            : String(localized: "\(webhook.queuedPointCount.formatted()) points waiting")
+    }
+
+    /// "LAST SENT 14:05 · 200 OK"; older sends include the date.
+    private var lastSentText: String {
+        guard let last = webhook.lastSentAt else { return String(localized: "LAST SENT NEVER") }
+        let time = Calendar.current.isDateInToday(last)
+            ? last.formatted(date: .omitted, time: .shortened)
+            : last.formatted(date: .abbreviated, time: .shortened)
+        var text = String(localized: "LAST SENT \(time)")
+        if let code = webhook.lastStatusCode {
+            text += " · " + WebhookManager.statusText(code)
+        }
+        return text.uppercased()
+    }
+}
+
+/// Wraps chips onto as many rows as the width needs.
+private struct BackPageWrapLayout: Layout {
+    var spacing: CGFloat = 6
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let rows = arrange(width: proposal.width ?? .infinity, subviews: subviews)
+        let height = rows.map(\.height).reduce(0, +) + spacing * CGFloat(max(rows.count - 1, 0))
+        return CGSize(width: proposal.width ?? (rows.map(\.width).max() ?? 0), height: height)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        var y = bounds.minY
+        for row in arrange(width: bounds.width, subviews: subviews) {
+            var x = bounds.minX
+            for index in row.indices {
+                let size = subviews[index].sizeThatFits(.unspecified)
+                let width = min(size.width, bounds.width)
+                subviews[index].place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(width: width, height: size.height))
+                x += width + spacing
+            }
+            y += row.height + spacing
+        }
+    }
+
+    private struct Row {
+        var indices: [Int] = []
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+    }
+
+    private func arrange(width: CGFloat, subviews: Subviews) -> [Row] {
+        var rows: [Row] = []
+        var current = Row()
+        for index in subviews.indices {
+            let size = subviews[index].sizeThatFits(.unspecified)
+            let itemWidth = min(size.width, width)
+            if !current.indices.isEmpty, current.width + spacing + itemWidth > width {
+                rows.append(current)
+                current = Row()
+            }
+            current.width = current.indices.isEmpty ? itemWidth : current.width + spacing + itemWidth
+            current.height = max(current.height, size.height)
+            current.indices.append(index)
+        }
+        if !current.indices.isEmpty { rows.append(current) }
+        return rows
+    }
+}
+
+private enum SettingsPane: String, CaseIterable, Identifiable {
+    case plan, recording, look, importFile, webhook, shortcuts, help
+    var id: String { rawValue }
+
+    var label: LocalizedStringKey {
+        switch self {
+        case .plan: "PLAN"
+        case .recording: "RECORDING & PLACES"
+        case .look: "LOOK"
+        case .importFile, .webhook, .shortcuts: "YOUR DATA · ON-DEVICE ONLY"
+        case .help: "HELP"
+        }
+    }
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .plan: "Plan"
+        case .recording: "Recording & places"
+        case .look: "Look"
+        case .importFile: "Import a file"
+        case .webhook: "Webhook"
+        case .shortcuts: "Shortcuts & Siri"
+        case .help: "Help & diagnostics"
+        }
+    }
+}
+
 private enum SettingsSection: String, CaseIterable, Identifiable {
     case plan, recording, look, data, help
     var id: String { rawValue }
@@ -620,7 +1029,7 @@ struct ClearDataSheet: View {
                     .padding(.vertical, 14)
                 }
 
-                Text("This will permanently delete all visits, location points, and manual country stays. This action cannot be undone.")
+                Text("This permanently deletes all visits, location points, outings, saved places, photo matches and manual country stays. It can't be undone.")
                     .font(.subheadline)
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)

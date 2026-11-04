@@ -9,6 +9,7 @@ struct WebhookSettingsView: View {
     @State private var testResult: String?
     @State private var testError: String?
     @State private var isTesting = false
+    @State private var confirmingClearQueue = false
     @AppStorage("webhook.privacyWarningDismissed") private var privacyWarningDismissed = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -45,6 +46,22 @@ struct WebhookSettingsView: View {
         .sheet(isPresented: $showingPaywall) {
             PaywallView(storeManager: storeManager, context: .webhook)
         }
+        .confirmationDialog(
+            clearQueueTitle,
+            isPresented: $confirmingClearQueue,
+            titleVisibility: .visible
+        ) {
+            Button("Clear queue", role: .destructive) { webhook.clearQueue() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Waiting points won't be sent. Your saved location history stays on this iPhone.")
+        }
+    }
+
+    private var clearQueueTitle: String {
+        webhook.queuedPointCount == 1
+            ? String(localized: "Discard 1 waiting point?")
+            : String(localized: "Discard \(webhook.queuedPointCount.formatted()) waiting points?")
     }
 
     // MARK: - Header
@@ -107,7 +124,7 @@ struct WebhookSettingsView: View {
                     .tracking(usesAccessibilityLayout ? 0.5 : 1.2)
                     .foregroundStyle(TE.inkRust)
                     .fixedSize(horizontal: false, vertical: true)
-                Text("Enabling webhook delivery sends your location data to an external server you configure. Whereday does not have access to this server or the transmitted data.")
+                Text("Delivery sends your location data to a server you configure. Whereday has no access to that server or what it receives.")
                     .font(.footnote)
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
@@ -143,9 +160,7 @@ struct WebhookSettingsView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Webhook delivery")
                     .font(.subheadline)
-                Text(webhook.isEnabled
-                     ? LocalizedStringKey("Location data will be POSTed to the configured endpoint.")
-                     : LocalizedStringKey("Send location data to an external API or self-hosted server."))
+                Text(enableSubtitle)
                     .font(.caption)
                     .foregroundStyle(TE.textMuted)
             }
@@ -158,6 +173,13 @@ struct WebhookSettingsView: View {
         .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
         .padding(.horizontal, 16)
         .padding(.top, 16)
+    }
+
+    private var enableSubtitle: LocalizedStringKey {
+        guard webhook.isEnabled else { return "Send location data to an external API or self-hosted server." }
+        return webhook.sendMode == .manual
+            ? "Sends only when you tap Send now"
+            : "Sends new points as they're kept"
     }
 
     // MARK: - Endpoint
@@ -238,51 +260,103 @@ struct WebhookSettingsView: View {
 
     // MARK: - Send mode
 
+    /// One chip per way of sending: live, an interval, when a batch fills, or only on request.
+    private enum Cadence: Hashable {
+        case live, every(Int), whenFull, manual
+    }
+
+    private static let intervalChoices: [(Int, String)] = [
+        (1, String(localized: "1 min")),
+        (5, String(localized: "5 min")),
+        (15, String(localized: "15 min")),
+        (30, String(localized: "30 min")),
+        (60, String(localized: "1 hour"))
+    ]
+
+    private static let batchSizeChoices = [5, 10, 25, 50, 100]
+
+    private var cadenceChoices: [(Cadence, String)] {
+        [(Cadence.live, String(localized: "Live"))]
+            + Self.intervalChoices.map { (Cadence.every($0.0), $0.1) }
+            + [(Cadence.whenFull, String(localized: "When full")), (Cadence.manual, String(localized: "Manual"))]
+    }
+
+    private var currentCadence: Cadence {
+        switch webhook.sendMode {
+        case .realtime: .live
+        case .batchTime: .every(webhook.batchTimeMinutes)
+        case .batchCount: .whenFull
+        case .manual: .manual
+        }
+    }
+
+    private func select(_ cadence: Cadence) {
+        switch cadence {
+        case .live: webhook.sendMode = .realtime
+        case .every(let minutes):
+            webhook.batchTimeMinutes = minutes
+            webhook.sendMode = .batchTime
+        case .whenFull: webhook.sendMode = .batchCount
+        case .manual: webhook.sendMode = .manual
+        }
+    }
+
+    private var usesBatchSize: Bool {
+        webhook.sendMode == .batchTime || webhook.sendMode == .batchCount
+    }
+
     private var sendModeSection: some View {
         VStack(alignment: .leading, spacing: 0) {
             sectionHeading("HOW OFTEN")
             card {
-                segmented(
-                    WebhookManager.SendMode.allCases.map { ($0, shortLabel(for: $0), $0.label) },
-                    selection: $webhook.sendMode,
-                    groupLabel: "Send mode"
-                )
+                WebhookFlowLayout(spacing: 6) {
+                    ForEach(cadenceChoices, id: \.0) { choice in
+                        chip(choice.1, isSelected: currentCadence == choice.0) {
+                            select(choice.0)
+                        }
+                    }
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("How often")
 
-                if webhook.sendMode == .batchCount {
-                    fieldLabel("POINTS PER BATCH")
-                        .padding(.top, 4)
-                    segmented(
-                        [5, 10, 25, 50, 100].map { ($0, $0.formatted(), $0.formatted()) },
-                        selection: $webhook.batchCount,
-                        groupLabel: "Points per batch"
-                    )
-                } else if webhook.sendMode == .batchTime {
-                    fieldLabel("INTERVAL")
-                        .padding(.top, 4)
-                    segmented(
-                        [
-                            (1, String(localized: "1 min")),
-                            (5, String(localized: "5 min")),
-                            (15, String(localized: "15 min")),
-                            (30, String(localized: "30 min")),
-                            (60, String(localized: "1 hour"))
-                        ].map { ($0.0, $0.1, $0.1) },
-                        selection: $webhook.batchTimeMinutes,
-                        groupLabel: "Interval"
-                    )
+                hairline
+                HStack(spacing: 12) {
+                    Text("Points per batch")
+                        .font(.subheadline)
+                        .foregroundStyle(usesBatchSize ? TE.textPrimary : TE.textMuted)
+                    Spacer(minLength: 8)
+                    Menu {
+                        Picker("Points per batch", selection: $webhook.batchCount) {
+                            ForEach(Self.batchSizeChoices, id: \.self) { size in
+                                Text(verbatim: size.formatted()).tag(size)
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text(verbatim: webhook.batchCount.formatted())
+                                .font(TE.mono(.subheadline, weight: .medium))
+                            Image(systemName: "chevron.up.chevron.down")
+                                .font(.caption2)
+                                .accessibilityHidden(true)
+                        }
+                        .foregroundStyle(usesBatchSize ? TE.textPrimary : TE.textMuted)
+                        .frame(minWidth: 44, minHeight: 44, alignment: .trailing)
+                        .contentShape(Rectangle())
+                    }
+                    .disabled(!usesBatchSize)
+                    .accessibilityLabel("Points per batch")
+                    .accessibilityValue(Text(verbatim: webhook.batchCount.formatted()))
                 }
             }
             sectionFooter(sendModeFooter)
         }
     }
 
-    private func shortLabel(for mode: WebhookManager.SendMode) -> String {
-        switch mode {
-        case .realtime: return String(localized: "Live")
-        case .batchCount: return String(localized: "Count")
-        case .batchTime: return String(localized: "Timer")
-        case .manual: return String(localized: "Manual")
-        }
+    private var hairline: some View {
+        Rectangle()
+            .fill(TE.dialTrack)
+            .frame(height: 1)
+            .accessibilityHidden(true)
     }
 
     private var sendModeFooter: LocalizedStringKey {
@@ -290,9 +364,9 @@ struct WebhookSettingsView: View {
         case .realtime:
             return "Each new GPS fix is POSTed immediately."
         case .batchCount:
-            return "Points are queued in memory and sent when the count is reached. Unsent points are lost if the app is terminated."
+            return "Points are queued in memory and sent when the batch is full. Unsent points are lost if the app is terminated."
         case .batchTime:
-            return "Points are queued and flushed every N minutes. Unsent points are lost if the app is terminated."
+            return "Points are queued and sent on the interval, or sooner when a batch fills. Unsent points are lost if the app is terminated."
         case .manual:
             return "Data is only sent when you tap \"Send Now\" below."
         }
@@ -310,7 +384,7 @@ struct WebhookSettingsView: View {
                     Text(queueTitle)
                         .font(TE.editorial(.title2))
                     if !usesAccessibilityLayout { Spacer(minLength: 0) }
-                    Text("LAST SENT \(lastSentText)")
+                    Text(verbatim: lastSentText)
                         .font(TE.mono(.caption2))
                         .foregroundStyle(TE.onInkCardMuted)
                 }
@@ -323,9 +397,17 @@ struct WebhookSettingsView: View {
                 let buttonLayout = usesAccessibilityLayout
                     ? AnyLayout(VStackLayout(spacing: 8))
                     : AnyLayout(HStackLayout(spacing: 8))
+                // Primary row: Send now + Clear queue (artboard). With nothing queued,
+                // Send now posts the saved history and Test connection takes the second slot.
                 buttonLayout {
                     Button {
-                        Task { await webhook.sendNow() }
+                        Task {
+                            if hasQueuedPoints {
+                                await webhook.flushBatch()
+                            } else {
+                                await webhook.sendNow()
+                            }
+                        }
                     } label: {
                         Text("Send now")
                             .font(.subheadline.weight(.semibold))
@@ -335,27 +417,32 @@ struct WebhookSettingsView: View {
                             .contentShape(Capsule())
                     }
                     .buttonStyle(.plain)
+                    .disabled(webhook.isSending)
 
                     if hasQueuedPoints {
-                        inkOutlineButton("Flush queue") {
-                            Task { await webhook.flushBatch() }
+                        inkOutlineButton("Clear queue") {
+                            confirmingClearQueue = true
                         }
+                    } else {
+                        testConnectionButton
                     }
+                }
 
-                    inkOutlineButton(isTesting ? "Testing…" : "Test connection") {
-                        isTesting = true
-                        testResult = nil
-                        testError = nil
-                        Task {
-                            do {
-                                testResult = try await webhook.testConnection()
-                            } catch {
-                                testError = error.localizedDescription
-                            }
-                            isTesting = false
+                // Secondary actions stay out of the primary row.
+                if hasQueuedPoints {
+                    let secondaryLayout = usesAccessibilityLayout
+                        ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+                        : AnyLayout(HStackLayout(spacing: 16))
+                    secondaryLayout {
+                        inkTextButton(isTesting ? "Testing…" : "Test connection") {
+                            runConnectionTest()
                         }
+                        .disabled(isTesting)
+                        inkTextButton("Send all history") {
+                            Task { await webhook.sendNow() }
+                        }
+                        .disabled(webhook.isSending)
                     }
-                    .disabled(isTesting)
                 }
 
                 if let result = testResult {
@@ -371,8 +458,43 @@ struct WebhookSettingsView: View {
             .padding(.horizontal, 16)
             .padding(.top, 20)
 
-            sectionFooter("Use Test Connection to verify the endpoint URL and credentials without sending real data. Send Now posts all saved location data to the endpoint.")
+            sectionFooter(hasQueuedPoints
+                ? "Send now posts the waiting points. Clear queue discards them without sending. Send all history posts all saved location data to the endpoint."
+                : "Use Test Connection to verify the endpoint URL and credentials without sending real data. Send Now posts all saved location data to the endpoint.")
         }
+    }
+
+    private var testConnectionButton: some View {
+        inkOutlineButton(isTesting ? "Testing…" : "Test connection") {
+            runConnectionTest()
+        }
+        .disabled(isTesting)
+    }
+
+    private func runConnectionTest() {
+        isTesting = true
+        testResult = nil
+        testError = nil
+        Task {
+            do {
+                testResult = try await webhook.testConnection()
+            } catch {
+                testError = error.localizedDescription
+            }
+            isTesting = false
+        }
+    }
+
+    private func inkTextButton(_ title: LocalizedStringKey, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(TE.mono(.caption, weight: .medium))
+                .underline()
+                .foregroundStyle(TE.onInkCardMuted)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     private var hasQueuedPoints: Bool {
@@ -386,12 +508,17 @@ struct WebhookSettingsView: View {
             : String(localized: "\(webhook.queuedPointCount.formatted()) points waiting")
     }
 
+    /// "LAST SENT 14:05 · 200 OK"; older sends include the date.
     private var lastSentText: String {
-        guard let last = webhook.lastSentAt else { return String(localized: "NEVER") }
-        let fmt = DateFormatter()
-        fmt.dateStyle = .short
-        fmt.timeStyle = .short
-        return fmt.string(from: last)
+        guard let last = webhook.lastSentAt else { return String(localized: "LAST SENT NEVER") }
+        let time = Calendar.current.isDateInToday(last)
+            ? last.formatted(date: .omitted, time: .shortened)
+            : last.formatted(date: .abbreviated, time: .shortened)
+        var text = String(localized: "LAST SENT \(time)")
+        if let code = webhook.lastStatusCode {
+            text += " · " + WebhookManager.statusText(code)
+        }
+        return text.uppercased()
     }
 
     private func inkOutlineButton(_ title: LocalizedStringKey, action: @escaping () -> Void) -> some View {

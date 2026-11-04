@@ -8,9 +8,11 @@ final class CountryStay {
     var countryCode: String
     var firstDay: String
     var lastDay: String
+    var note: String?
 
-    init(countryCode: String, firstDay: String, lastDay: String) {
+    init(countryCode: String, firstDay: String, lastDay: String, note: String? = nil) {
         id = UUID()
+        self.note = note
         self.countryCode = countryCode.uppercased()
         self.firstDay = firstDay
         self.lastDay = lastDay

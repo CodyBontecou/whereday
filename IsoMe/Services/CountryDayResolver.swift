@@ -149,3 +149,99 @@ final class CountryDayResolver: ObservableObject {
         if result?.countryCode != nil { resolved += 1 }
     }
 }
+
+/// Resolves city names (placemark locality) for coordinates, throttled and cached on disk.
+///
+/// Coordinates are grouped into ~1 km cells, so a city is looked up once per neighbourhood and
+/// reused by every day, month and screen that needs it. Nothing is looked up when network
+/// geocoding is disabled; callers then simply show no city.
+@MainActor
+final class LocalityResolver: ObservableObject {
+    static let shared = LocalityResolver()
+
+    /// Bumped whenever a new locality is cached, so views can recompute.
+    @Published private(set) var revision = 0
+
+    private static let cacheKey = "localityCache.v1"
+    /// Cells that returned no locality; retried after a day.
+    private static let missKey = "localityCacheMisses.v1"
+    private let geocoder = CLGeocoder()
+    private let minimumLookupInterval: TimeInterval
+    private var cache: [String: String]
+    private var misses: [String: Date]
+    private var queue: [CLLocationCoordinate2D] = []
+    private var queuedCells = Set<String>()
+    private var worker: Task<Void, Never>?
+
+    init(minimumLookupInterval: TimeInterval = 1.5) {
+        self.minimumLookupInterval = minimumLookupInterval
+        cache = UserDefaults.standard.dictionary(forKey: Self.cacheKey) as? [String: String] ?? [:]
+        let storedMisses = UserDefaults.standard.dictionary(forKey: Self.missKey) as? [String: Double] ?? [:]
+        misses = storedMisses.mapValues { Date(timeIntervalSince1970: $0) }
+    }
+
+    nonisolated static func cell(latitude: Double, longitude: Double) -> String {
+        "\((latitude * 100).rounded() / 100),\((longitude * 100).rounded() / 100)"
+    }
+
+    /// The cached city for a coordinate, if it has been resolved.
+    func locality(latitude: Double, longitude: Double) -> String? {
+        cache[Self.cell(latitude: latitude, longitude: longitude)]
+    }
+
+    /// Queues lookups for coordinates without a cached city. Returns immediately.
+    func request(_ coordinates: [CLLocationCoordinate2D]) {
+        guard NetworkGeocodingPolicy.isAllowed else { return }
+        let retryBefore = Date().addingTimeInterval(-24 * 3600)
+        for coordinate in coordinates where CLLocationCoordinate2DIsValid(coordinate) {
+            let cell = Self.cell(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            guard cache[cell] == nil, !queuedCells.contains(cell) else { continue }
+            if let missed = misses[cell], missed > retryBefore { continue }
+            queuedCells.insert(cell)
+            queue.append(coordinate)
+        }
+        guard worker == nil, !queue.isEmpty else { return }
+        worker = Task { [weak self] in
+            await self?.drain()
+        }
+    }
+
+    private func drain() async {
+        defer { worker = nil }
+        while !queue.isEmpty, !Task.isCancelled, NetworkGeocodingPolicy.isAllowed {
+            let coordinate = queue.removeFirst()
+            let cell = Self.cell(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            defer { queuedCells.remove(cell) }
+            guard cache[cell] == nil else { continue }
+            do {
+                let placemarks = try await geocoder.reverseGeocodeLocation(
+                    CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                )
+                let placemark = placemarks.first
+                if let city = placemark?.locality ?? placemark?.subAdministrativeArea ?? placemark?.administrativeArea,
+                   !city.isEmpty {
+                    cache[cell] = city
+                    UserDefaults.standard.set(cache, forKey: Self.cacheKey)
+                    revision += 1
+                } else {
+                    recordMiss(cell)
+                }
+            } catch {
+                // Offline or throttled: stop for now; a later request retries these cells.
+                let code = (error as NSError).code
+                if code == CLError.network.rawValue {
+                    queue.removeAll()
+                    queuedCells.removeAll()
+                    return
+                }
+                recordMiss(cell)
+            }
+            try? await Task.sleep(for: .seconds(minimumLookupInterval))
+        }
+    }
+
+    private func recordMiss(_ cell: String) {
+        misses[cell] = Date()
+        UserDefaults.standard.set(misses.mapValues(\.timeIntervalSince1970), forKey: Self.missKey)
+    }
+}

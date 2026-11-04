@@ -1,4 +1,11 @@
 import SwiftUI
+import WatchConnectivity
+
+/// When the Apple Watch last handed recorded points or stays to this iPhone.
+/// ContentView stamps it whenever a watch payload is imported.
+enum WatchSyncStatus {
+    static let lastImportDateKey = "watchSync.lastImportDate"
+}
 
 /// How Whereday listens: recording modes and what stays on the phone, in plain words.
 /// The modes are presets over the distance filter and auto-stop LocationManager already applies.
@@ -6,6 +13,10 @@ struct ListeningView: View {
     let viewModel: LocationViewModel
     @ObservedObject private var locationManager: LocationManager
     @ObservedObject private var webhookManager = WebhookManager.shared
+    @ObservedObject private var dailyScheduler = DailyExportScheduler.shared
+    @Environment(\.colorScheme) private var colorScheme
+    @AppStorage("appAppearance") private var appAppearance = AppAppearance.system.rawValue
+    @AppStorage(WatchSyncStatus.lastImportDateKey) private var lastWatchImport: Double = 0
 
     @AppStorage("allowNetworkGeocoding") private var allowNetworkGeocoding = true
     @AppStorage(RecordingSessionInferenceConfiguration.includesInferredSessionsKey)
@@ -59,6 +70,10 @@ struct ListeningView: View {
                 BackPageLabel("WHAT STAYS · WHAT LEAVES")
                 privacyCard
                     .padding(.horizontal, 16)
+
+                deviceCard
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
 
                 closingNote
                     .padding(.horizontal, 24)
@@ -130,9 +145,9 @@ struct ListeningView: View {
                     .foregroundStyle(isSelected ? TE.placeInks[1] : TE.textMuted)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(detail.title)
+                    Text(detail.listeningTitle)
                         .font(.body.weight(.semibold))
-                    Text(detail.summary)
+                    Text(detail.listeningSummary)
                         .font(.footnote)
                         .foregroundStyle(TE.textMuted)
                 }
@@ -286,17 +301,123 @@ struct ListeningView: View {
                 WebhookSettingsView()
             } label: {
                 HStack(spacing: 0) {
-                    dot(webhookManager.isEnabled ? TE.inkRust : TE.dialTick)
+                    dot(sendsAnything ? TE.inkRust : TE.dialTick)
                         .padding(.leading, 16)
                     BackPageRowLabel(
-                        title: Text("Webhook delivery"),
-                        subtitle: Text("Sends points to a server you set up"),
-                        value: Text(webhookManager.isEnabled ? "On" : "Off").font(TE.mono(.caption))
+                        title: Text("Webhooks & scheduled sends"),
+                        subtitle: Text(sendsSummary),
+                        value: Text(sendsAnything ? "On" : "Off").font(TE.mono(.caption))
                     )
                     .padding(.leading, -4)
                 }
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    private var sendsAnything: Bool {
+        webhookManager.isEnabled || dailyScheduler.isEnabled
+    }
+
+    /// Webhook delivery plus the Archive's scheduled file exports, in one line.
+    private var sendsSummary: String {
+        let webhook = webhookManager.isEnabled
+            ? String(localized: "Webhook on")
+            : String(localized: "Webhook off")
+        let schedule: String
+        if !dailyScheduler.isEnabled {
+            schedule = String(localized: "no scheduled files")
+        } else if dailyScheduler.isIntervalSchedule {
+            schedule = String(localized: "files every \(dailyScheduler.intervalHours) h")
+        } else {
+            var components = DateComponents()
+            components.hour = dailyScheduler.hour
+            components.minute = dailyScheduler.minute
+            let time = Calendar.current.date(from: components)?.formatted(date: .omitted, time: .shortened) ?? ""
+            schedule = String(localized: "a daily file at \(time)")
+        }
+        var parts = [webhook, schedule]
+        if dailyScheduler.isEnabled {
+            if let error = dailyScheduler.lastError, !error.isEmpty {
+                parts.append(String(localized: "last run failed"))
+            } else if let lastRun = dailyScheduler.lastRun {
+                parts.append(String(localized: "last \(lastRun.formatted(.relative(presentation: .named)))"))
+            }
+        }
+        return parts.joined(separator: " · ")
+    }
+
+    // MARK: - Watch and appearance
+
+    private var deviceCard: some View {
+        BackPageCard {
+            NavigationLink {
+                WatchSyncDetailView()
+            } label: {
+                TimelineView(.everyMinute) { context in
+                    HStack(spacing: 12) {
+                        Image(systemName: "applewatch")
+                            .font(.subheadline)
+                            .foregroundStyle(TE.textMuted)
+                            .frame(width: 20)
+                            .accessibilityHidden(true)
+                        BackPageRowLabel(
+                            title: Text("Apple Watch"),
+                            value: Text(WatchSyncSnapshot.current(lastImport: lastWatchImport).summary(now: context.date))
+                                .font(TE.mono(.caption))
+                        )
+                        .padding(.leading, -16)
+                    }
+                    .padding(.leading, 16)
+                }
+            }
+            .buttonStyle(.plain)
+            .accessibilityElement(children: .combine)
+
+            BackPageDivider()
+            Menu {
+                Picker("Appearance", selection: $appAppearance) {
+                    ForEach(AppAppearance.allCases) { appearance in
+                        Text(appearanceName(appearance)).tag(appearance.rawValue)
+                    }
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "circle.lefthalf.filled")
+                        .font(.subheadline)
+                        .foregroundStyle(TE.textMuted)
+                        .frame(width: 20)
+                        .accessibilityHidden(true)
+                    BackPageRowLabel(
+                        title: Text("Appearance"),
+                        value: Text(appearanceSummary).font(TE.mono(.caption))
+                    )
+                    .padding(.leading, -16)
+                }
+                .padding(.leading, 16)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Appearance")
+            .accessibilityValue(appearanceSummary)
+        }
+    }
+
+    private func appearanceName(_ appearance: AppAppearance) -> String {
+        switch appearance {
+        case .system: String(localized: "Auto")
+        case .light: String(localized: "Paper")
+        case .dark: String(localized: "Night")
+        }
+    }
+
+    /// "Paper · auto" while following the system, otherwise the chosen look.
+    private var appearanceSummary: String {
+        switch AppAppearance(rawValue: appAppearance) ?? .system {
+        case .system:
+            let current = colorScheme == .dark ? String(localized: "Night") : String(localized: "Paper")
+            return String(localized: "\(current) · auto")
+        case .light: return String(localized: "Paper")
+        case .dark: return String(localized: "Night")
         }
     }
 
@@ -320,5 +441,202 @@ struct ListeningView: View {
         .foregroundStyle(TE.textMuted)
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Apple Watch
+
+/// What the iPhone can see of the watch: the WatchConnectivity session and the last payload it imported.
+/// Points still queued on the watch aren't visible from the phone, and the phone can't ask the watch to send.
+struct WatchSyncSnapshot {
+    enum Pairing {
+        case unsupported, connecting, notPaired, notInstalled, ready
+    }
+
+    let pairing: Pairing
+    let isReachable: Bool
+    let lastSync: Date?
+
+    static func current(lastImport: Double) -> WatchSyncSnapshot {
+        let lastSync = lastImport > 0 ? Date(timeIntervalSince1970: lastImport) : nil
+        guard WCSession.isSupported() else {
+            return WatchSyncSnapshot(pairing: .unsupported, isReachable: false, lastSync: lastSync)
+        }
+        let session = WCSession.default
+        let pairing: Pairing
+        if session.activationState != .activated {
+            pairing = .connecting
+        } else if !session.isPaired {
+            pairing = .notPaired
+        } else if !session.isWatchAppInstalled {
+            pairing = .notInstalled
+        } else {
+            pairing = .ready
+        }
+        return WatchSyncSnapshot(
+            pairing: pairing,
+            isReachable: session.activationState == .activated && session.isReachable,
+            lastSync: lastSync
+        )
+    }
+
+    /// The Listening row's trailing value: "Synced 2 min ago".
+    func summary(now: Date) -> String {
+        switch pairing {
+        case .unsupported: return String(localized: "Not available")
+        case .notPaired: return String(localized: "No watch paired")
+        case .notInstalled: return String(localized: "Whereday not installed")
+        case .connecting, .ready: return lastSyncText(now: now)
+        }
+    }
+
+    func lastSyncText(now: Date) -> String {
+        guard let lastSync else { return String(localized: "Not synced yet") }
+        if now.timeIntervalSince(lastSync) < 60 { return String(localized: "Synced just now") }
+        let ago = lastSync.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
+        return String(localized: "Synced \(ago)")
+    }
+
+    var pairedText: String {
+        switch pairing {
+        case .unsupported: String(localized: "Not available on this iPhone")
+        case .connecting: String(localized: "Checking…")
+        case .notPaired: String(localized: "No")
+        case .notInstalled, .ready: String(localized: "Yes")
+        }
+    }
+
+    var installedText: String {
+        switch pairing {
+        case .ready: String(localized: "Yes")
+        case .notInstalled: String(localized: "No")
+        default: "—"
+        }
+    }
+
+    var reachableText: String {
+        guard pairing == .ready else { return "—" }
+        return isReachable ? String(localized: "Yes") : String(localized: "No")
+    }
+}
+
+/// Apple Watch, from "How Whereday listens": whether the watch app is there and when it last handed over points.
+///
+/// There is no "Sync now": the watch pushes its queue on its own (WatchLocationSyncClient), and the iPhone side
+/// has no request to make it send. Points still waiting are counted on the watch, not visible here.
+struct WatchSyncDetailView: View {
+    @AppStorage(WatchSyncStatus.lastImportDateKey) private var lastWatchImport: Double = 0
+    @State private var waitingPointCount: Int?
+    @State private var isSyncing = false
+    @State private var syncMessage: String?
+
+    var body: some View {
+        TimelineView(.periodic(from: .now, by: 15)) { context in
+            let snapshot = WatchSyncSnapshot.current(lastImport: lastWatchImport)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    BackPageHeader(caption: "SYNC · FROM YOUR WRIST", title: "Apple Watch")
+                        .padding(.horizontal, 24)
+                        .padding(.top, 8)
+
+                    BackPageLabel("STATUS")
+                    BackPageCard {
+                        statusRow("Paired", value: snapshot.pairedText)
+                        BackPageDivider()
+                        statusRow("Whereday installed", value: snapshot.installedText,
+                                  valueColor: snapshot.pairing == .notInstalled ? TE.inkRust : TE.textMuted)
+                        BackPageDivider()
+                        statusRow("In range now", value: snapshot.reachableText)
+                    }
+                    .padding(.horizontal, 16)
+
+                    BackPageLabel("LAST SYNC")
+                    BackPageCard {
+                        BackPageRowLabel(
+                            title: Text("Last points received"),
+                            subtitle: snapshot.lastSync == nil ? nil : Text(snapshot.lastSyncText(now: context.date)),
+                            value: Text(snapshot.lastSync.map { $0.formatted(date: .abbreviated, time: .shortened) }
+                                        ?? String(localized: "Not synced yet"))
+                                .font(TE.mono(.caption)),
+                            accessory: .none
+                        )
+                        .accessibilityElement(children: .combine)
+                        BackPageDivider()
+                        statusRow(
+                            "Points waiting on the watch",
+                            value: waitingPointCount.map { $0.formatted() } ?? String(localized: "—")
+                        )
+                    }
+                    .padding(.horizontal, 16)
+
+                    if snapshot.pairing == .ready || snapshot.pairing == .connecting {
+                        Button(action: syncNow) {
+                            HStack(spacing: 8) {
+                                if isSyncing { ProgressView().controlSize(.small) }
+                                Text(isSyncing ? "Asking the watch…" : "Sync now")
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(TEActionButtonStyle())
+                        .disabled(isSyncing)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+
+                        if let syncMessage {
+                            Text(syncMessage)
+                                .font(TE.mono(.caption))
+                                .foregroundStyle(TE.textMuted)
+                                .padding(.horizontal, 24)
+                                .padding(.top, 8)
+                        }
+                    }
+
+                    BackPageFootnote(footnote(for: snapshot))
+                }
+                .padding(.bottom, 40)
+            }
+            .scrollIndicators(.hidden)
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
+    }
+
+    private func syncNow() {
+        isSyncing = true
+        syncMessage = nil
+        WatchLocationSyncReceiver.requestWatchSync { count in
+            isSyncing = false
+            waitingPointCount = count
+            if let count {
+                syncMessage = count == 0
+                    ? String(localized: "Nothing was waiting.")
+                    : String(localized: "Sending \(count) points from the watch.")
+            } else {
+                syncMessage = String(localized: "The watch isn't in range. Open Whereday on it and try again.")
+            }
+        }
+    }
+
+    private func footnote(for snapshot: WatchSyncSnapshot) -> LocalizedStringKey {
+        switch snapshot.pairing {
+        case .notInstalled:
+            "Install Whereday from the Watch app on this iPhone to record from your wrist."
+        case .notPaired, .unsupported:
+            "Pair an Apple Watch to record outings from your wrist."
+        case .connecting, .ready:
+            "The watch sends what it recorded on its own whenever it's near this iPhone. Sync now asks it to send right away; the watch has to be in range."
+        }
+    }
+
+    private func statusRow(_ title: LocalizedStringKey, value: String, valueColor: Color = TE.textMuted) -> some View {
+        BackPageRowLabel(
+            title: Text(title),
+            value: Text(value).font(TE.mono(.caption)),
+            valueColor: valueColor,
+            accessory: .none
+        )
+        .accessibilityElement(children: .combine)
     }
 }

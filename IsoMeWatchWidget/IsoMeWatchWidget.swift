@@ -25,13 +25,13 @@ struct IsoMeProvider: TimelineProvider {
 
     func getSnapshot(in context: Context, completion: @escaping (IsoMeEntry) -> Void) {
         let data = SharedLocationData.load() ?? .empty
-        let entry = IsoMeEntry(date: Date(), data: data)
+        let entry = IsoMeEntry(date: Date(), data: data, today: WatchTodayContext.load())
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<IsoMeEntry>) -> Void) {
         let data = SharedLocationData.load() ?? .empty
-        let entry = IsoMeEntry(date: Date(), data: data)
+        let entry = IsoMeEntry(date: Date(), data: data, today: WatchTodayContext.load())
 
         // Refresh more often when actively tracking
         let refreshInterval: TimeInterval = data.isTrackingEnabled ? 300 : 900
@@ -47,6 +47,8 @@ struct IsoMeProvider: TimelineProvider {
 struct IsoMeEntry: TimelineEntry {
     let date: Date
     let data: SharedLocationData
+    /// Today's stays from the iPhone, when the watch has received them.
+    var today: WatchTodayContext? = nil
 }
 
 // MARK: - Widget Definition
@@ -80,7 +82,7 @@ struct IsoMeWidgetEntryView: View {
     var body: some View {
         switch family {
         case .accessoryCircular:
-            CircularWidgetView(data: entry.data, date: entry.date)
+            CircularWidgetView(data: entry.data, date: entry.date, today: entry.today)
         case .accessoryRectangular:
             RectangularWidgetView(data: entry.data)
         case .accessoryInline:
@@ -88,7 +90,7 @@ struct IsoMeWidgetEntryView: View {
         case .accessoryCorner:
             CornerWidgetView(data: entry.data)
         default:
-            CircularWidgetView(data: entry.data, date: entry.date)
+            CircularWidgetView(data: entry.data, date: entry.date, today: entry.today)
         }
     }
 }
@@ -102,9 +104,17 @@ private enum WatchWidgetTE {
     static let textMuted = hex(0x9AA3B8)
     static let inkRust = hex(0xF0805F)
     static let dialTrack = hex(0x222C46)
+    /// Per-place inks, in the order the iPhone assigns them (same as the watch app's dial).
+    static let placeInks: [Color] = [hex(0x8FA6D9), inkRust, hex(0xE0B565), hex(0x9DC097)]
 
+    /// IBM Plex Mono, bundled and registered in this extension.
     static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
-        Font.system(style, design: .monospaced).weight(weight)
+        WheredayFont.mono(style, weight: weight)
+    }
+
+    /// Newsreader, bundled and registered in this extension.
+    static func editorial(_ style: Font.TextStyle) -> Font {
+        WheredayFont.serif(style)
     }
 
     private static func hex(_ value: UInt32) -> Color {
@@ -134,9 +144,19 @@ private func distanceParts(_ formatted: String) -> (value: String, unit: String)
 struct CircularWidgetView: View {
     let data: SharedLocationData
     var date: Date = Date()
+    /// Today's stays from the iPhone; drawn as per-place arcs like the watch app's dial.
+    var today: WatchTodayContext? = nil
+
+    /// The watch's own distance today, or the iPhone's day total when that's further.
+    private var distanceText: String {
+        let meters = max(data.todayDistanceMeters, today?.distance(on: date) ?? 0)
+        return DistanceFormatter.format(meters: meters, usesMetric: data.prefersMetricDistanceUnits)
+    }
 
     var body: some View {
-        let parts = distanceParts(data.formattedDistance)
+        let parts = distanceParts(distanceText)
+        let hasToday = today?.isSameDay(as: date) ?? false
+        let arcs = today?.arcs(now: date) ?? []
 
         ZStack {
             AccessoryWidgetBackground()
@@ -145,17 +165,36 @@ struct CircularWidgetView: View {
                 .inset(by: 4)
                 .stroke(WatchWidgetTE.dialTrack, lineWidth: 4)
 
-            Circle()
-                .inset(by: 4)
-                .trim(from: 0, to: max(0.01, dayFraction(of: date)))
-                .stroke(data.isTrackingEnabled ? WatchWidgetTE.inkRust : WatchWidgetTE.textMuted,
-                        style: StrokeStyle(lineWidth: 4, lineCap: .butt))
-                .rotationEffect(.degrees(-90))
-                .widgetAccentable()
+            if hasToday {
+                ForEach(Array(arcs.enumerated()), id: \.offset) { _, arc in
+                    Circle()
+                        .inset(by: 4)
+                        .trim(from: arc.startFraction, to: arc.endFraction)
+                        .stroke(WatchWidgetTE.placeInks[arc.inkIndex % WatchWidgetTE.placeInks.count],
+                                style: StrokeStyle(lineWidth: 4, lineCap: .butt))
+                        .rotationEffect(.degrees(-90))
+                }
+
+                // "Now" tick, accentable so tinted faces still show where the day is.
+                Circle()
+                    .inset(by: 4)
+                    .trim(from: max(0, dayFraction(of: date) - 0.006), to: dayFraction(of: date))
+                    .stroke(WatchWidgetTE.inkRust, style: StrokeStyle(lineWidth: 6, lineCap: .butt))
+                    .rotationEffect(.degrees(-90))
+                    .widgetAccentable()
+            } else {
+                Circle()
+                    .inset(by: 4)
+                    .trim(from: 0, to: max(0.01, dayFraction(of: date)))
+                    .stroke(data.isTrackingEnabled ? WatchWidgetTE.inkRust : WatchWidgetTE.textMuted,
+                            style: StrokeStyle(lineWidth: 4, lineCap: .butt))
+                    .rotationEffect(.degrees(-90))
+                    .widgetAccentable()
+            }
 
             VStack(spacing: 0) {
                 Text(parts.value)
-                    .font(.system(.body, design: .serif))
+                    .font(WatchWidgetTE.editorial(.body))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 Text(parts.unit.uppercased())
@@ -165,7 +204,7 @@ struct CircularWidgetView: View {
             .padding(.horizontal, 9)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(String(localized: "\(data.trackingStatus), \(data.formattedDistance) today"))
+        .accessibilityLabel(String(localized: "\(data.trackingStatus), \(distanceText) today"))
     }
 }
 
@@ -183,7 +222,7 @@ struct RectangularWidgetView: View {
                 .widgetAccentable()
 
             Text(data.formattedDistance)
-                .font(.system(.title3, design: .serif))
+                .font(WatchWidgetTE.editorial(.title3))
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 

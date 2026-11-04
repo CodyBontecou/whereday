@@ -1,4 +1,5 @@
 import ActivityKit
+import AppIntents
 import Foundation
 
 enum IsoMeURLs {
@@ -48,10 +49,56 @@ struct LocationActivityAttributes: ActivityAttributes {
         /// Latest coordinate, used to prefill "Mark this place"
         var latitude: Double? = nil
         var longitude: Double? = nil
+        /// How the last few minutes were most likely travelled, estimated from GPS speed.
+        /// nil while standing still or before there's enough movement to tell.
+        var travelMode: TravelMode? = nil
     }
 
     /// When tracking started
     var startTime: Date
+}
+
+// MARK: - Live Activity buttons
+
+/// "Mark this place" on the Lock Screen and in the Dynamic Island: checks in at the
+/// recording's latest coordinate without opening the app.
+///
+/// Declared here so both the app and the widget extension compile it; as a
+/// `LiveActivityIntent`, the system runs `perform()` in the app's process. The app's
+/// implementation lives in IsoMeIntents.swift; the widget extension carries a no-op stub.
+struct MarkPlaceLiveActivityIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "Mark This Place"
+    static var description = IntentDescription("Check in at your current place from the Whereday Live Activity.")
+    static var openAppWhenRun: Bool = false
+    static var isDiscoverable: Bool = false
+
+    @Parameter(title: "Place Name")
+    var name: String?
+
+    @Parameter(title: "Latitude")
+    var latitude: Double?
+
+    @Parameter(title: "Longitude")
+    var longitude: Double?
+
+    init() {}
+
+    init(name: String?, latitude: Double?, longitude: Double?) {
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+}
+
+/// "Stop route" on the Lock Screen and in the Dynamic Island: stops tracking in place.
+/// Runs the same logic as the Stop Tracking shortcut (see IsoMeIntents.swift).
+struct StopRouteLiveActivityIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "Stop Route"
+    static var description = IntentDescription("Stop the current Whereday recording from the Live Activity.")
+    static var openAppWhenRun: Bool = false
+    static var isDiscoverable: Bool = false
+
+    init() {}
 }
 
 // MARK: - Today snapshot for widgets

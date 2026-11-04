@@ -13,9 +13,16 @@ struct ExportOptions: Codable, Equatable {
         case last7Days
         case last30Days
         case thisMonth
+        /// A whole named month ("October"), anchored by `presetAnchor`.
+        case month
+        /// A whole calendar year ("all of 2026"), anchored by `presetAnchor`.
+        case year
         case custom
 
         var id: String { rawValue }
+
+        /// The fixed presets listed one per row; `month` and `year` are picked from their own menus.
+        static let simplePresets: [DateRangePreset] = [.allTime, .today, .yesterday, .last7Days, .last30Days, .thisMonth]
 
         var label: String {
             switch self {
@@ -25,6 +32,8 @@ struct ExportOptions: Codable, Equatable {
             case .last7Days: return String(localized: "LAST 7 DAYS")
             case .last30Days: return String(localized: "LAST 30 DAYS")
             case .thisMonth: return String(localized: "THIS MONTH")
+            case .month: return String(localized: "MONTH")
+            case .year: return String(localized: "YEAR")
             case .custom: return String(localized: "CUSTOM")
             }
         }
@@ -38,6 +47,9 @@ struct ExportOptions: Codable, Equatable {
     var datePreset: DateRangePreset = .allTime
     var customStart: Date = Calendar.current.startOfDay(for: Date().addingTimeInterval(-7 * 86_400))
     var customEnd: Date = Date()
+    /// Any date inside the month or year chosen by the `month` / `year` presets.
+    /// Optional so preferences and recipes saved before these presets still decode.
+    var presetAnchor: Date?
 
     // Time-of-day window (only hour/minute components used)
     var timeOfDayEnabled: Bool = false
@@ -107,6 +119,12 @@ struct ExportOptions: Codable, Equatable {
             let comps = cal.dateComponents([.year, .month], from: now)
             let start = cal.date(from: comps) ?? cal.startOfDay(for: now)
             return start...now
+        case .month, .year:
+            let component: Calendar.Component = datePreset == .month ? .month : .year
+            guard let interval = cal.dateInterval(of: component, for: presetAnchor ?? now) else { return nil }
+            let end = Date(timeIntervalSinceReferenceDate: interval.end.timeIntervalSinceReferenceDate.nextDown)
+            // A current month or year runs to now; a future one is an empty range at its start.
+            return interval.start...max(interval.start, min(end, now))
         case .custom:
             let lo = min(customStart, customEnd)
             let hi = max(customStart, customEnd)

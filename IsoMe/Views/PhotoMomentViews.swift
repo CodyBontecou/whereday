@@ -1,6 +1,8 @@
 import SwiftUI
 import Photos
 import CoreLocation
+import MapKit
+import SwiftData
 
 typealias PhotoThumbnailLoader = @MainActor (String, CGSize, PHImageContentMode) async -> UIImage?
 
@@ -811,12 +813,13 @@ final class PhotoMomentPlaceDirectoryState {
 /// "Moments": every matched photo place, by place or grouped by day, as on the Moments artboard.
 struct PhotoMomentPlacesView: View {
     enum Grouping: Hashable, CaseIterable {
-        case byPlace, byDay
+        case byPlace, byDay, onMap
 
         var title: LocalizedStringKey {
             switch self {
             case .byPlace: "By place"
             case .byDay: "By day"
+            case .onMap: "On map"
             }
         }
     }
@@ -828,6 +831,14 @@ struct PhotoMomentPlacesView: View {
     var thumbnailLoader: PhotoThumbnailLoader = loadPhotoThumbnail
     @State private var directory: PhotoMomentPlaceDirectoryState
     @State private var grouping: Grouping = .byPlace
+    @State private var mapCamera: MapCameraPosition = .automatic
+    /// Set by the self-loading initializer: the days whose photos this screen reads itself.
+    private let loadsRange: ClosedRange<Date>?
+    @State private var hasLoaded = false
+    @State private var photoAccess: PhotoLibraryAccessState = PhotoLibraryManager.shared.authorizationState
+    /// Stays in the loaded range, used to name photo places when no `placeName` is given.
+    @State private var loadedVisits: [Visit] = []
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
     init(
@@ -841,7 +852,85 @@ struct PhotoMomentPlacesView: View {
         self.selection = selection
         self.placeName = placeName
         self.thumbnailLoader = thumbnailLoader
+        self.loadsRange = nil
         _directory = State(initialValue: PhotoMomentPlaceDirectoryState(places: places))
+        _hasLoaded = State(initialValue: true)
+    }
+
+    /// How many days the default Moments screen reads, today included.
+    static let recentDayCount = 30
+
+    /// A self-contained Moments screen: reads the photo moments already matched from the store,
+    /// groups them into places and names each after the stay it was taken during. Suitable as a
+    /// top-level screen presented from Today. With no `day` it covers the last
+    /// `recentDayCount` days, so earlier places appear and "By day" spans several days;
+    /// with a `day` it shows that day alone.
+    init(
+        day: Date? = nil,
+        title: String = String(localized: "Moments"),
+        thumbnailLoader: @escaping PhotoThumbnailLoader = loadPhotoThumbnail
+    ) {
+        let calendar = Calendar.current
+        let lastDay = calendar.startOfDay(for: day ?? Date())
+        let start = day == nil
+            ? (calendar.date(byAdding: .day, value: -(Self.recentDayCount - 1), to: lastDay) ?? lastDay)
+            : lastDay
+        let next = calendar.date(byAdding: .day, value: 1, to: lastDay) ?? lastDay.addingTimeInterval(86_400)
+        self.title = title
+        self.selection = PhotoMomentDetailSelection()
+        self.placeName = nil
+        self.thumbnailLoader = thumbnailLoader
+        self.loadsRange = start...Date(timeIntervalSinceReferenceDate: next.timeIntervalSinceReferenceDate.nextDown)
+        _directory = State(initialValue: PhotoMomentPlaceDirectoryState(places: []))
+    }
+
+    private func displayName(for place: PhotoMomentCluster) -> String? {
+        placeName?(place) ?? loadedVisitName(for: place)
+    }
+
+    /// Names a place after a loaded stay within 250 m that spans its first photo (±10 min).
+    private func loadedVisitName(for place: PhotoMomentCluster) -> String? {
+        guard !loadedVisits.isEmpty, let first = place.sortedPhotos.first else { return nil }
+        let location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+        return loadedVisits.first { visit in
+            let end = visit.departedAt ?? Date()
+            guard first.takenAt >= visit.arrivedAt.addingTimeInterval(-600),
+                  first.takenAt <= end.addingTimeInterval(600) else { return false }
+            let visitLocation = CLLocation(latitude: visit.latitude, longitude: visit.longitude)
+            return location.distance(from: visitLocation) <= 250
+        }?.displayName
+    }
+
+    private func loadIfNeeded() {
+        guard let loadsRange, !hasLoaded else { return }
+        hasLoaded = true
+        photoAccess = PhotoLibraryManager.shared.authorizationState
+        let start = loadsRange.lowerBound
+        let end = loadsRange.upperBound
+
+        var visitDescriptor = FetchDescriptor<Visit>(predicate: #Predicate { visit in
+            visit.arrivedAt <= end && (visit.departedAt ?? end) >= start
+        })
+        visitDescriptor.sortBy = [SortDescriptor(\.arrivedAt)]
+        loadedVisits = (try? modelContext.fetch(visitDescriptor)) ?? []
+
+        guard photoAccess.canRead else { return }
+        var photoDescriptor = FetchDescriptor<PhotoMoment>(predicate: #Predicate { photo in
+            photo.takenAt >= start && photo.takenAt <= end
+        })
+        photoDescriptor.sortBy = [SortDescriptor(\.takenAt)]
+        let stored = (try? modelContext.fetch(photoDescriptor)) ?? []
+        // Only photos still present (and shared, under limited access) in the library are shown.
+        let readable = PhotoLibraryManager.shared.accessibleAssetIdentifiers(in: stored.map(\.assetLocalIdentifier))
+        let photos = stored.filter { readable.contains($0.assetLocalIdentifier) }
+        // Places are grouped within each day, so a spot photographed on two days reads as two
+        // moments; the newest day leads and each day runs in the order it was lived.
+        let calendar = Calendar.current
+        let byDay = Dictionary(grouping: photos) { calendar.startOfDay(for: $0.takenAt) }
+        let places = byDay.keys.sorted(by: >).flatMap { day in
+            PhotoMomentClusterBuilder.placeClusters(for: byDay[day] ?? [])
+        }
+        directory = PhotoMomentPlaceDirectoryState(places: places)
     }
 
     /// The current page's places grouped by the day their first photo was taken, newest day first.
@@ -862,7 +951,18 @@ struct PhotoMomentPlacesView: View {
                     header
                     groupingPicker
 
+                    if directory.places.isEmpty, hasLoaded {
+                        emptyState
+                    }
+
                     switch grouping {
+                    case .onMap:
+                        if !directory.places.isEmpty {
+                            placesMap
+                        }
+                        ForEach(directory.pagePlaces) { place in
+                            placeCard(place, timeStyle: .dayAndTime)
+                        }
                     case .byPlace:
                         ForEach(directory.pagePlaces) { place in
                             placeCard(place, timeStyle: .dayAndTime)
@@ -904,7 +1004,63 @@ struct PhotoMomentPlacesView: View {
             .sheet(item: $selection.place) { place in
                 PhotoMomentClusterQuickView(cluster: place, selection: selection, thumbnailLoader: thumbnailLoader)
             }
+            .onAppear(perform: loadIfNeeded)
         }
+    }
+
+    @ViewBuilder
+    private var emptyState: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if photoAccess.canRead {
+                Text("No photos matched yet")
+                    .font(TE.editorial(.title3))
+                Text("Photos you take while Whereday records are matched to your stops by time and place.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+            } else {
+                Text("Photos are off")
+                    .font(TE.editorial(.title3))
+                Text("Allow photo access in Settings to match your pictures to the places you stopped.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
+    }
+
+    /// "On map": every place as a numbered pin; tapping one opens its photos.
+    private var placesMap: some View {
+        let places = Array(directory.places.prefix(PhotoMomentClusterBuilder.maximumAnnotationCount))
+        return Map(position: $mapCamera) {
+            ForEach(places) { place in
+                Annotation(displayName(for: place) ?? place.coordinateText, coordinate: place.coordinate, anchor: .bottom) {
+                    Button {
+                        selection.place = place
+                    } label: {
+                        Text("\(place.count)")
+                            .font(TE.mono(.caption, weight: .semibold))
+                            .foregroundStyle(TE.onInkCard)
+                            .frame(minWidth: 32, minHeight: 32)
+                            .padding(.horizontal, 4)
+                            .background(Capsule().fill(TE.inkRust))
+                            .overlay(Capsule().strokeBorder(TE.surface, lineWidth: 2))
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(displayName(for: place).map { String(localized: "\(place.count) photos at \($0)") } ?? place.accessibilityLabel)
+                    .accessibilityHint("Opens the photos taken here.")
+                }
+            }
+        }
+        .mapStyle(.standard(emphasis: .muted))
+        .frame(height: 320)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
     }
 
     private var header: some View {
@@ -953,7 +1109,7 @@ struct PhotoMomentPlacesView: View {
         } label: {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
-                    Text(placeName?(place) ?? place.coordinateText)
+                    Text(displayName(for: place) ?? place.coordinateText)
                         .font(TE.editorial(.title3))
                         .lineLimit(2)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -972,7 +1128,7 @@ struct PhotoMomentPlacesView: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(placeName?(place).map { String(localized: "\(place.count) photos at \($0)") } ?? place.accessibilityLabel)
+        .accessibilityLabel(displayName(for: place).map { String(localized: "\(place.count) photos at \($0)") } ?? place.accessibilityLabel)
         .accessibilityValue(place.accessibilityValue)
         .accessibilityHint("Opens the complete photo collection at this place.")
         .accessibilityAddTraits(.isButton)
@@ -1014,9 +1170,19 @@ struct PhotoMomentPlacesView: View {
             time = LocationMapView.clockText(first.takenAt)
         case .dayAndTime:
             let calendar = Calendar.current
-            time = calendar.isDateInToday(first.takenAt)
-                ? LocationMapView.clockText(first.takenAt)
-                : first.takenAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
+            let daysAgo = calendar.dateComponents(
+                [.day],
+                from: calendar.startOfDay(for: first.takenAt),
+                to: calendar.startOfDay(for: Date())
+            ).day ?? 0
+            if calendar.isDateInToday(first.takenAt) {
+                time = LocationMapView.clockText(first.takenAt)
+            } else if (1...6).contains(daysAgo) {
+                // "Sat": within the past week the weekday is enough.
+                time = first.takenAt.formatted(.dateTime.weekday(.abbreviated))
+            } else {
+                time = first.takenAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
+            }
         }
         return "\(time) · \(count)"
     }
@@ -1047,8 +1213,10 @@ struct PhotoMomentPlacesView: View {
 
     private var footer: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("Photos are read from this iPhone's library; only their time and place are kept.", systemImage: "lock")
-            Text("Every place is listed here, even outside the visible map. Area annotations group places for rendering; they do not represent one shared location.")
+            Label("Photos are read on this iPhone and never copied.", systemImage: "lock")
+            if loadsRange == nil {
+                Text("Every place is listed here, even outside the visible map. Area annotations group places for rendering; they do not represent one shared location.")
+            }
         }
         .font(.caption)
         .foregroundStyle(TE.textMuted)

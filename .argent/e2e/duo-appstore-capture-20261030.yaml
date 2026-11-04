@@ -1,0 +1,62 @@
+# Capture navigation trace, not an app regression suite. Dark appearance and
+# full-resolution captures are separate host actions documented in the manifest.
+# Raw tap points came from the live AX-service tree: Valencia timeline row and
+# BackButton. Duo native-devtools auto-targeting timed out on system services.
+# These points are specific to the default-text Duo inner panel orientation.
+executionPrerequisite: Dedicated iPhone Duo simulator, Whereday 1.8.1 (57) installed, default text size. Seeding replaces this simulator app's local records. Use only an isolated capture device.
+steps:
+  - tool: launch-app
+    args:
+      bundleId: com.bontecou.isome
+      launchArgs:
+        - --seed-screenshot-data
+        - -hasCompletedOnboarding
+        - YES
+        - -AppleLanguages
+        - (en)
+        - -AppleLocale
+        - en_US
+        - -webhook.enabled
+        - NO
+  - fold: open
+  - fold: open
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Day & recording options
+      timeoutMs: 30000
+  - tool: gesture-tap
+    args:
+      x: 0.5845
+      y: 0.316
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Nearby businesses
+      timeoutMs: 30000
+  - tool: gesture-tap
+    args:
+      x: 0.2215
+      y: 0.05
+  - tool: launch-app
+    args:
+      bundleId: com.bontecou.isome
+      launchArgs:
+        - --seed-screenshot-data
+        - -hasCompletedOnboarding
+        - YES
+        - -AppleLanguages
+        - (en)
+        - -AppleLocale
+        - en_US
+        - -webhook.enabled
+        - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Day & recording options
+      timeoutMs: 30000
+  - fold: closed

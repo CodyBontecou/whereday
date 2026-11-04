@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import SwiftData
 
 struct SavedPlaceDraft: Identifiable, Equatable {
     let id: UUID
@@ -9,8 +10,12 @@ struct SavedPlaceDraft: Identifiable, Equatable {
     var latitude: Double?
     var longitude: Double?
     var radiusMeters: Double
+    var kind: SavedPlaceKind?
+    var notes: String
+    /// CSV rows carry no kind or notes, so an import leaves a matched place's own values alone.
+    var updatesKindAndNotes: Bool
 
-    init(id: UUID = UUID(), existingPlaceID: UUID? = nil, name: String = "", address: String = "", latitude: Double? = nil, longitude: Double? = nil, radiusMeters: Double = 150) {
+    init(id: UUID = UUID(), existingPlaceID: UUID? = nil, name: String = "", address: String = "", latitude: Double? = nil, longitude: Double? = nil, radiusMeters: Double = 150, kind: SavedPlaceKind? = nil, notes: String = "", updatesKindAndNotes: Bool = true) {
         self.id = id
         self.existingPlaceID = existingPlaceID
         self.name = name
@@ -18,14 +23,17 @@ struct SavedPlaceDraft: Identifiable, Equatable {
         self.latitude = latitude
         self.longitude = longitude
         self.radiusMeters = radiusMeters
+        self.kind = kind
+        self.notes = notes
+        self.updatesKindAndNotes = updatesKindAndNotes
     }
 
     init(_ place: SavedPlace) {
-        self.init(id: place.id, existingPlaceID: place.id, name: place.name, address: place.address ?? "", latitude: place.latitude, longitude: place.longitude, radiusMeters: place.radiusMeters)
+        self.init(id: place.id, existingPlaceID: place.id, name: place.name, address: place.address ?? "", latitude: place.latitude, longitude: place.longitude, radiusMeters: place.radiusMeters, kind: place.kind, notes: place.notes ?? "")
     }
 
     init(_ place: ImportedSavedPlace) {
-        self.init(id: place.id, name: place.name, address: place.address ?? "", latitude: place.latitude, longitude: place.longitude, radiusMeters: place.radiusMeters)
+        self.init(id: place.id, name: place.name, address: place.address ?? "", latitude: place.latitude, longitude: place.longitude, radiusMeters: place.radiusMeters, updatesKindAndNotes: false)
     }
 
     var coordinate: CLLocationCoordinate2D? {
@@ -73,6 +81,11 @@ struct SavedPlaceDraft: Identifiable, Equatable {
             place.longitude = longitude
         }
         place.radiusMeters = radiusMeters
+        if updatesKindAndNotes {
+            place.kind = kind
+            let trimmedNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+            place.notes = trimmedNotes.isEmpty ? nil : notes
+        }
     }
 }
 
@@ -236,5 +249,123 @@ enum SavedPlaceManagementError: LocalizedError {
         case .invalid(let message): message
         case .missingPlace: String(localized: "This saved location no longer exists. Close the editor and try again.")
         }
+    }
+}
+
+// MARK: - Merging
+
+/// What folding one saved place into another changes, worked out before the user confirms.
+///
+/// Visits are tied to saved places by geometry (the nearest containing match radius) and by the
+/// name copied onto them when they were detected. A merge therefore widens the kept place's
+/// radius to cover the removed circle, and renames visits that carry the removed place's name.
+struct SavedPlaceMergePlan: Identifiable {
+    /// Largest radius the editor accepts; a merge never grows a place beyond it.
+    static let maximumRadius = 10_000.0
+
+    let keptID: UUID
+    let removedID: UUID
+    let keptName: String
+    let removedName: String
+    /// Visits currently matched to the removed place by its radius.
+    let movedVisitIDs: Set<UUID>
+    /// Visits whose stored name came from the removed place; they take the kept name.
+    let renamedVisitIDs: Set<UUID>
+    let mergedRadius: Double
+    /// False when the removed circle is too far away to cover; renamed visits still keep the new name.
+    let coversRemovedPlace: Bool
+
+    var id: String { "\(keptID)-\(removedID)" }
+
+    init(keeping kept: SavedPlace, removing removed: SavedPlace, places: [SavedPlace], visits: [Visit]) {
+        keptID = kept.id
+        removedID = removed.id
+        keptName = kept.normalizedName
+        removedName = removed.normalizedName
+        let moved = PlaceVisitIndex(places: places, visits: visits).visits(for: removed)
+        movedVisitIDs = Set(moved.map(\.id))
+
+        let oldName = removed.normalizedName
+        var renamed = Set<UUID>()
+        for visit in visits {
+            let named = Self.matches(visit.normalizedCustomName, oldName)
+                || (visit.placeSource == .userEntered && Self.matches(visit.locationName, oldName))
+            if named || (movedVisitIDs.contains(visit.id) && Self.carriesName(visit, oldName)) {
+                renamed.insert(visit.id)
+            }
+        }
+        renamedVisitIDs = renamed
+
+        let needed = kept.distanceMeters(to: removed.coordinate) + removed.radiusMeters
+        coversRemovedPlace = needed <= Self.maximumRadius
+        mergedRadius = min(Self.maximumRadius, max(kept.radiusMeters, needed.rounded(.up)))
+        radiusGrows = mergedRadius > kept.radiusMeters
+    }
+
+    let radiusGrows: Bool
+
+    static func matches(_ value: String?, _ name: String) -> Bool {
+        guard let value = value?.trimmingCharacters(in: .whitespacesAndNewlines), !value.isEmpty, !name.isEmpty else { return false }
+        return value.localizedCaseInsensitiveCompare(name) == .orderedSame
+    }
+
+    fileprivate static func carriesName(_ visit: Visit, _ name: String) -> Bool {
+        matches(visit.normalizedCustomName, name) || matches(visit.locationName, name) || matches(visit.detectedLocationName, name)
+    }
+}
+
+extension LocationViewModel {
+    /// Folds the plan's removed place into the kept one: its visits and name matches join the kept
+    /// place, its kind, address and notes fill any gaps, and the removed place is deleted.
+    func mergeSavedPlaces(_ plan: SavedPlaceMergePlan) throws {
+        guard plan.keptID != plan.removedID,
+              let kept = savedPlaces.first(where: { $0.id == plan.keptID }),
+              let removed = savedPlaces.first(where: { $0.id == plan.removedID }),
+              let context = kept.modelContext else {
+            throw SavedPlaceManagementError.missingPlace
+        }
+        let now = Date()
+        let oldName = removed.normalizedName
+        let newName = kept.normalizedName
+        for visit in allVisits where plan.renamedVisitIDs.contains(visit.id) {
+            var changed = false
+            if SavedPlaceMergePlan.matches(visit.normalizedCustomName, oldName) {
+                visit.customName = newName
+                changed = true
+            }
+            if SavedPlaceMergePlan.matches(visit.locationName, oldName) {
+                visit.locationName = newName
+                if visit.placeSource == .userEntered, let address = kept.address { visit.address = address }
+                changed = true
+            }
+            if SavedPlaceMergePlan.matches(visit.detectedLocationName, oldName) {
+                visit.detectedLocationName = newName
+                changed = true
+            }
+            if changed { visit.updatedAt = now }
+        }
+
+        kept.radiusMeters = plan.mergedRadius
+        if kept.kind == nil { kept.kind = removed.kind }
+        if (kept.address ?? "").isEmpty { kept.address = removed.address }
+        let notes = [kept.notes, removed.notes]
+            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        kept.notes = notes.isEmpty ? nil : notes.joined(separator: "\n\n")
+        kept.createdAt = min(kept.createdAt, removed.createdAt)
+        kept.updatedAt = now
+        context.delete(removed)
+
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            loadSavedPlaces()
+            loadAllVisits()
+            throw error
+        }
+        loadSavedPlaces()
+        loadTodayVisits()
+        loadAllVisits()
     }
 }
