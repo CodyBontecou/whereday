@@ -1,6 +1,6 @@
 # Whereday 2.0 / build 62
 
-**Status: archived and exported locally as 2.0 (62), not uploaded.** Nothing was uploaded, created or submitted in App Store Connect, and no prices, products, availability or public pages were changed. App Store Connect has no 2.0 App Store version yet.
+**Status: build 62 uploaded and processed; no App Store version yet.** On November 4, 2026 (10:09 PT), at the owner's request, the 2.0 (62) IPA built from `2e295a2f` was uploaded. App Store Connect processed it as **VALID**: build ID `176ecaeb-e401-4844-9235-8bed28663383`, minimum iOS 17.0, encryption exempt. No 2.0 App Store version was created and nothing was submitted to App Review. No prices, products, availability or public pages were changed. Upload receipts and the IPA's SHA-256 are in `.asc/artifacts/stage-2.0-62/`.
 
 ## Release-build fix (`2e295a2f`)
 
@@ -79,12 +79,12 @@ An en-US trial capture on the iPhone 18 Pro Max (iOS 27.0) ran end to end, but `
 
 - `scripts/test-ios.sh --destination 'platform=iOS Simulator,id=<iPhone 18 Pro, iOS 27.0>'` on the fixed source: **364 XCTest cases passed, 0 failures; 11 Swift Testing cases passed** (`** TEST SUCCEEDED **`). iOS 27.2 simulators aren't installed, so the default destination wasn't used. The same result on `fd2a348c` before the fix is kept in `failed-archive-fd2a348c/`.
 - Release archive and App Store Connect export (`destination=export`, not upload): **succeeded**. All four bundles in the IPA (phone, phone widget, Watch, Watch widget) are **2.0 / 62**; see `ipa-verification.json`.
-- No physical-device check and no App Store Connect validation yet: validation needs the upload.
+- Upload processed **VALID** in App Store Connect. No physical-device check yet; build 62 can go to internal TestFlight testers for one.
 - Logs, archive and IPA: `.asc/artifacts/stage-2.0-62/`.
 
 ## Still to do
 
-1. Merge this branch (it carries the Release-build fix), then upload `.asc/artifacts/stage-2.0-62/export/IsoMe.ipa` (2.0 / 62) once approved. The IPA was built from `2e295a2f`; if anything else lands first, re-archive.
+1. Merge this branch so `main` carries the Release-build fix that is in uploaded build 62 (`2e295a2f`).
 2. Make `--seed-screenshot-data` populate Today, Trace, Atlas and Places. Then run `scripts/capture_localized_screenshots.py --devices iphone` for the nine listing locales, and capture iPad and Watch on a Mac with those simulators. Redo the en-US Duo set.
 3. Get a native-language read of the drafted metadata and captions.
 4. In App Store Connect (owner): create the 2.0 iOS version with manual release, apply `metadata/whereday/version/2.0/*.json` and the reviewer notes, attach build **62 (not 60)**, replace the iPhone, iPad, Watch and Duo screenshots, and check App Privacy is unchanged. Submitting for review needs the owner's go-ahead.
