@@ -136,6 +136,8 @@ struct ContentView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .watchLocationDataImported)) { _ in
+            // How Whereday listens shows when the Apple Watch last handed its recording over.
+            UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: WatchSyncStatus.lastImportDateKey)
             viewModel?.loadData()
             if let viewModel {
                 Task {
@@ -171,48 +173,75 @@ struct ContentView: View {
     }
 }
 
+extension EnvironmentValues {
+    /// True when a page is shown as its own navigation-rail tab (Settings on the open rail) rather than
+    /// pushed from another page, so it can hide a back button that would lead nowhere.
+    @Entry var isPresentedAsRailTab = false
+}
+
+/// The four destinations of the floating tab bar, plus Settings, which joins them on the open rail.
+private enum MainTab: Int, CaseIterable, Identifiable {
+    // Raw values are the TabView tags, kept stable for launch arguments.
+    case today = 4, atlas = 5, places = 6, archive = 1, settings = 2
+
+    var id: Int { rawValue }
+
+    static let primary: [MainTab] = [.today, .atlas, .places, .archive]
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .today: "Today"
+        case .atlas: "Atlas"
+        case .places: "Places"
+        case .archive: "Archive"
+        case .settings: "Settings"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .today: "clock"
+        case .atlas: "square.grid.2x2"
+        case .places: "mappin.and.ellipse"
+        case .archive: "archivebox"
+        case .settings: "gearshape"
+        }
+    }
+}
+
 private struct MainTabView: View {
     @Environment(ManualVisitRouter.self) private var manualVisitRouter
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let viewModel: LocationViewModel
     var startsOnArchive = false
-    // Map (0) and Timeline (3) open over Today; Settings (2) lives behind Archive.
+    // Map (0) and Timeline (3) open over Today; Settings (2) lives behind Archive, or on the open rail.
     @State private var selectedTab: Int = MainTabView.tabTag(forLaunchTab: MainTabView.initialTabFromLaunchArguments())
     @State private var showsTrace = MainTabView.initialTabFromLaunchArguments() == 0
     @State private var showsTimeline = MainTabView.initialTabFromLaunchArguments() == 3
     @ObservedObject private var exportToastCenter = ExportToastCenter.shared
 
+    /// Open on a foldable (and on other regular-width displays) a navigation rail replaces the tab bar.
+    private var usesRail: Bool { horizontalSizeClass == .regular }
+
     var body: some View {
-        TabView(selection: $selectedTab) {
-            todayWorkspace
-            .tabItem {
-                Label("Today", systemImage: "clock")
+        // One TabView identity across folding and unfolding, so every tab keeps its state.
+        HStack(spacing: 0) {
+            if usesRail {
+                WheredayNavigationRail(selection: $selectedTab)
+                    .padding(.leading, 14)
+                    .padding(.vertical, 20)
             }
-            .tag(4)
-
-            AtlasView(viewModel: viewModel)
-                .tabItem {
-                    Label("Atlas", systemImage: "square.grid.2x2")
-                }
-                .tag(5)
-
-            NavigationStack {
-                SavedLocationsView(viewModel: viewModel)
-            }
-            .tabItem {
-                Label("Places", systemImage: "mappin.and.ellipse")
-            }
-            .tag(6)
-
-            ExportView(viewModel: viewModel)
-                .modifier(JournalFlowPresentation())
-                .tabItem {
-                    Label("Archive", systemImage: "archivebox")
-                }
-                .tag(1)
+            tabs
         }
-        .tint(TE.inkRust)
+        .background(TE.surface.ignoresSafeArea())
         .onAppear {
-            if startsOnArchive { selectedTab = 1 }
+            if startsOnArchive { selectedTab = MainTab.archive.rawValue }
+        }
+        .onChange(of: usesRail) { _, railed in
+            // Settings has no slot in the closed tab bar; it lives behind Archive there.
+            if !railed && selectedTab == MainTab.settings.rawValue {
+                selectedTab = MainTab.archive.rawValue
+            }
         }
         .fullScreenCover(isPresented: $showsTrace) {
             journalWorkspace(mapIsPrimary: true)
@@ -262,6 +291,54 @@ private struct MainTabView: View {
         .isoMeReleaseNotesSheet()
     }
 
+    private var tabChrome: TabChrome {
+        TabChrome(showsBar: !usesRail, selection: $selectedTab)
+    }
+
+    /// The system tab bar stays hidden; the floating bar or the rail drives the selection.
+    private var tabs: some View {
+        TabView(selection: $selectedTab) {
+            todayWorkspace
+                .modifier(tabChrome)
+                .tabItem { Label(MainTab.today.title, systemImage: MainTab.today.systemImage) }
+                .tag(MainTab.today.rawValue)
+
+            AtlasView(viewModel: viewModel)
+                .modifier(tabChrome)
+                .tabItem { Label(MainTab.atlas.title, systemImage: MainTab.atlas.systemImage) }
+                .tag(MainTab.atlas.rawValue)
+
+            NavigationStack {
+                SavedLocationsView(viewModel: viewModel)
+            }
+            .modifier(tabChrome)
+            .tabItem { Label(MainTab.places.title, systemImage: MainTab.places.systemImage) }
+            .tag(MainTab.places.rawValue)
+
+            archiveTab
+                .modifier(tabChrome)
+                .tabItem { Label(MainTab.archive.title, systemImage: MainTab.archive.systemImage) }
+                .tag(MainTab.archive.rawValue)
+
+            if usesRail {
+                SettingsView(viewModel: viewModel)
+                    // A rail destination of its own: there is no Archive page to go back to.
+                    .environment(\.isPresentedAsRailTab, true)
+                    .modifier(tabChrome)
+                    .tabItem { Label(MainTab.settings.title, systemImage: MainTab.settings.systemImage) }
+                    .tag(MainTab.settings.rawValue)
+            }
+        }
+        .tint(TE.inkRust)
+    }
+
+    /// ExportView lays out its own composer and live preview when open, so it takes no decorative
+    /// second pane. Wrapping it in an ArrangementView would also drop the floating tab bar's inset
+    /// and hide the Export footer behind the bar.
+    private var archiveTab: some View {
+        ExportView(viewModel: viewModel)
+    }
+
     @ViewBuilder
     private var todayWorkspace: some View {
         #if compiler(>=6.4)
@@ -270,8 +347,8 @@ private struct MainTabView: View {
                 viewModel: viewModel,
                 onReplay: { showsTrace = true },
                 onPickDay: { showsTimeline = true },
-                onOpenPlaces: { selectedTab = 6 },
-                onOpenArchive: { selectedTab = 1 }
+                onOpenPlaces: { selectedTab = MainTab.places.rawValue },
+                onOpenArchive: { selectedTab = MainTab.archive.rawValue }
             )
         } else {
             singlePaneToday
@@ -286,8 +363,8 @@ private struct MainTabView: View {
             viewModel: viewModel,
             onReplay: { showsTrace = true },
             onPickDay: { showsTimeline = true },
-            onOpenPlaces: { selectedTab = 6 },
-            onOpenArchive: { selectedTab = 1 }
+            onOpenPlaces: { selectedTab = MainTab.places.rawValue },
+            onOpenArchive: { selectedTab = MainTab.archive.rawValue }
         )
     }
 
@@ -341,6 +418,135 @@ private struct MainTabView: View {
     }
 }
 
+/// Hides the system tab bar and, when closed, places the floating bar below each tab so content ends above it.
+/// Applied per tab (outside any NavigationStack) so pushed pages keep the bar and the inset too.
+private struct TabChrome: ViewModifier {
+    let showsBar: Bool
+    @Binding var selection: Int
+
+    func body(content: Content) -> some View {
+        // Stacked rather than a safeAreaInset: an inset added outside a NavigationStack doesn't reach
+        // the stack's content, so scroll views and pinned footers ended up behind the bar.
+        VStack(spacing: 0) {
+            content
+                .frame(maxHeight: .infinity)
+            if showsBar {
+                WheredayTabBar(selection: $selection)
+            }
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .toolbar(.hidden, for: .tabBar)
+    }
+}
+
+/// The floating capsule tab bar: Today, Atlas, Places, Archive.
+/// At accessibility text sizes it drops the labels for larger icons; long-press shows the large content viewer.
+private struct WheredayTabBar: View {
+    @Binding var selection: Int
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    private var iconOnly: Bool { dynamicTypeSize.isAccessibilitySize }
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: iconOnly ? 28 : 32, style: .continuous)
+        HStack(spacing: 0) {
+            ForEach(MainTab.primary) { tab in
+                item(tab)
+            }
+        }
+        .padding(.horizontal, 4)
+        .background(shape.fill(TE.card).shadow(color: TE.textPrimary.opacity(0.08), radius: 12, y: 8))
+        .overlay(shape.strokeBorder(TE.border, lineWidth: 1))
+        .padding(.horizontal, iconOnly ? 12 : 16)
+        .padding(.top, 6)
+        .padding(.bottom, 2)
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isTabBar)
+        .accessibilityLabel("Main")
+    }
+
+    private func item(_ tab: MainTab) -> some View {
+        let isSelected = selection == tab.rawValue
+        return Button {
+            selection = tab.rawValue
+        } label: {
+            VStack(spacing: 3) {
+                Image(systemName: tab.systemImage)
+                    .font(.system(size: iconOnly ? 28 : 20, weight: .regular))
+                    .frame(height: iconOnly ? 32 : 24)
+                if !iconOnly {
+                    Text(tab.title)
+                        .font(.system(size: 10, weight: isSelected ? .semibold : .medium))
+                        .lineLimit(1)
+                }
+            }
+            .foregroundStyle(isSelected ? TE.inkRust : TE.textMuted)
+            .frame(maxWidth: .infinity, minHeight: iconOnly ? 84 : 64)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(tab.title))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityShowsLargeContentViewer {
+            Label(tab.title, systemImage: tab.systemImage)
+        }
+    }
+}
+
+/// Open on a foldable, a slim rail on the leading edge keeps every destination one tap away.
+private struct WheredayNavigationRail: View {
+    @Binding var selection: Int
+
+    var body: some View {
+        VStack(spacing: 6) {
+            Spacer(minLength: 8)
+            ForEach(MainTab.primary) { tab in
+                item(tab)
+            }
+            Spacer(minLength: 8)
+            Rectangle()
+                .fill(TE.border)
+                .frame(width: 24, height: 1)
+                .padding(.vertical, 6)
+                .accessibilityHidden(true)
+            item(.settings)
+                .padding(.bottom, 8)
+        }
+        .frame(width: 60)
+        .frame(maxHeight: .infinity)
+        .background(Capsule().fill(TE.card))
+        .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isTabBar)
+        .accessibilityLabel("Main")
+    }
+
+    private func item(_ tab: MainTab) -> some View {
+        let isSelected = selection == tab.rawValue
+        return Button {
+            selection = tab.rawValue
+        } label: {
+            VStack(spacing: 2) {
+                Image(systemName: tab.systemImage)
+                    .font(.system(size: 20, weight: .regular))
+                    .frame(height: 24)
+                Text(tab.title)
+                    .font(.system(size: 9, weight: isSelected ? .semibold : .medium))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(isSelected ? TE.inkRust : TE.textMuted)
+            .frame(width: 52, height: 52)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(tab.title))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityShowsLargeContentViewer {
+            Label(tab.title, systemImage: tab.systemImage)
+        }
+    }
+}
 
 #if compiler(>=6.4)
 /// System arrangements retain the primary screen while the inner display gains a companion.
@@ -355,8 +561,12 @@ private struct DuoJournalWorkspace: View {
     @State private var inspectedVisit: Visit?
     @State private var hasUsedCompanion = false
     @State private var coverInspector: Visit?
+    /// Half-open (tabletop): the map stays above the fold and the replay controls move below it.
+    @State private var isHalfOpen = false
+    @State private var replayBridge = TraceReplayBridge()
 
     private var hasCompanion: Bool { horizontalSizeClass == .regular }
+    private var usesTabletopReplay: Bool { mapIsPrimary && hasCompanion && isHalfOpen }
 
     var body: some View {
         ArrangementView {
@@ -368,13 +578,17 @@ private struct DuoJournalWorkspace: View {
                         focusedVisit = visit
                         inspectedVisit = visit
                         if !hasCompanion { coverInspector = visit }
-                    } : nil
+                    } : nil,
+                    replayBridge: usesTabletopReplay ? replayBridge : nil
                 )
             } else {
                 timeline
             }
         } secondary: {
-            if mapIsPrimary {
+            if usesTabletopReplay {
+                TraceTabletopReplayPane(bridge: replayBridge)
+                    .overlay(alignment: .top) { Rectangle().fill(TE.border).frame(height: 1).allowsHitTesting(false) }
+            } else if mapIsPrimary {
                 ZStack {
                     timeline
                         .opacity(inspectedVisit == nil ? 1 : 0)
@@ -395,10 +609,26 @@ private struct DuoJournalWorkspace: View {
                 }
                 .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
             } else {
-                LocationMapView(viewModel: viewModel, focusedVisit: focusedVisit, presentation: .companion)
+                LocationMapView(
+                    viewModel: viewModel,
+                    focusedVisit: focusedVisit,
+                    presentation: .companion,
+                    onCloseFocusedVisit: { focusedVisit = nil }
+                )
             }
         }
         .arrangementViewStyle(.split.axes(hasCompanion ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
+        .onHingeChange { _, context in
+            isHalfOpen = context.hinge?.status == .partiallyOpen
+        }
+        .background {
+            // onHingeChange only reports changes; the probe also reports the posture at launch.
+            HingePresenceProbe { status in
+                isHalfOpen = status == .partiallyOpen
+            }
+            .frame(width: 0, height: 0)
+            .accessibilityHidden(true)
+        }
         .onChange(of: hasCompanion, initial: true) { _, expanded in
             // Keep a single presentation owner while crossing to the cover display.
             if expanded {
@@ -443,6 +673,11 @@ private struct DuoJournalWorkspace: View {
 /// Closed, the cover display keeps Today alone and hints that opening it shows the map.
 @available(iOS 27.1, *)
 private struct DuoTodayWorkspace: View {
+    /// Remembered so a relaunch while closed gets the cover layout before any hinge update arrives.
+    static let isFoldableKey = "duo.isFoldableDevice"
+    /// The "Open for the map" hint is first-use only: once the device has been opened, it stays hidden.
+    static let hasOpenedForMapKey = "duo.hasOpenedForMap"
+
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let viewModel: LocationViewModel
     let onReplay: () -> Void
@@ -451,28 +686,87 @@ private struct DuoTodayWorkspace: View {
     let onOpenArchive: () -> Void
     @State private var focusedVisit: Visit?
     @State private var hasUsedCompanion = false
+    @AppStorage(DuoTodayWorkspace.isFoldableKey) private var hasHinge = false
+    @AppStorage(DuoTodayWorkspace.hasOpenedForMapKey) private var hasOpenedForMap = false
+    /// Half-open (tabletop): replay keeps the map above the fold and moves its controls below.
+    @State private var isHalfOpen = false
+    @State private var showsCompanionReplay = false
+    @State private var replayBridge = TraceReplayBridge()
 
     private var hasCompanion: Bool { horizontalSizeClass == .regular }
+    /// Only a foldable gets the condensed cover layout; a plain iPhone (even one that was briefly
+    /// regular-width in landscape) keeps the full Today.
+    private var isFoldable: Bool { hasHinge }
+    /// The hint also covers a device whose hinge was not reported yet but whose inner display was used,
+    /// and disappears for good after the first time the device is opened.
+    private var showsMapHint: Bool { !hasCompanion && (hasHinge || hasUsedCompanion) && !hasOpenedForMap }
+    private var usesTabletopReplay: Bool { hasCompanion && isHalfOpen && showsCompanionReplay }
 
     var body: some View {
         ArrangementView {
-            TodayView(
-                viewModel: viewModel,
-                onReplay: onReplay,
-                onPickDay: onPickDay,
-                onOpenPlaces: onOpenPlaces,
-                onOpenArchive: onOpenArchive,
-                onSelectVisit: hasCompanion ? { focusedVisit = $0 } : nil,
-                showsCoverHint: !hasCompanion && hasUsedCompanion
-            )
+            if usesTabletopReplay {
+                companionMap(replayBridge: replayBridge)
+            } else {
+                TodayView(
+                    viewModel: viewModel,
+                    onReplay: onReplay,
+                    onPickDay: onPickDay,
+                    onOpenPlaces: onOpenPlaces,
+                    onOpenArchive: onOpenArchive,
+                    onSelectVisit: hasCompanion ? { focusedVisit = $0 } : nil,
+                    showsCoverHint: showsMapHint,
+                    selectedVisitID: hasCompanion ? focusedVisit?.id : nil,
+                    isCoverDisplay: !hasCompanion && isFoldable
+                )
+            }
         } secondary: {
-            LocationMapView(viewModel: viewModel, focusedVisit: focusedVisit, presentation: .companion)
-                .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
+            if usesTabletopReplay {
+                TraceTabletopReplayPane(bridge: replayBridge)
+                    .overlay(alignment: .top) { Rectangle().fill(TE.border).frame(height: 1).allowsHitTesting(false) }
+            } else {
+                companionMap(replayBridge: nil)
+                    .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
+            }
         }
         .arrangementViewStyle(.split.axes(hasCompanion ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
-        .onChange(of: hasCompanion, initial: true) { _, expanded in
-            if expanded { hasUsedCompanion = true }
+        .background {
+            HingePresenceProbe { status in
+                if status != nil { markFoldable() }
+                isHalfOpen = status == .partiallyOpen
+            }
+            .frame(width: 0, height: 0)
+            .accessibilityHidden(true)
         }
+        .onChange(of: hasCompanion, initial: true) { _, expanded in
+            if expanded {
+                hasUsedCompanion = true
+                if hasHinge { hasOpenedForMap = true }
+            } else {
+                showsCompanionReplay = false
+            }
+        }
+        .onHingeChange { oldContext, newContext in
+            // A hinge in either context means this is a foldable, even before the inner display is first used.
+            if oldContext.hinge != nil || newContext.hinge != nil { markFoldable() }
+            isHalfOpen = newContext.hinge?.status == .partiallyOpen
+        }
+    }
+
+    private func companionMap(replayBridge: TraceReplayBridge?) -> some View {
+        LocationMapView(
+            viewModel: viewModel,
+            focusedVisit: focusedVisit,
+            presentation: .companion,
+            replayBridge: replayBridge,
+            // Closing the inspector clears Today's highlight, and the same stay can be tapped again.
+            onCloseFocusedVisit: { focusedVisit = nil },
+            companionReplay: $showsCompanionReplay
+        )
+    }
+
+    private func markFoldable() {
+        if !hasHinge { hasHinge = true }
+        if hasCompanion && !hasOpenedForMap { hasOpenedForMap = true }
     }
 }
 
@@ -564,7 +858,7 @@ private struct OnboardingView: View {
                 .frame(maxWidth: .infinity)
             VStack(alignment: .leading, spacing: 10) {
                 Text("Every day\nis a page.")
-                    .font(.system(size: 40, design: .serif))
+                    .font(WheredayFont.serif(size: 40, relativeTo: .largeTitle))
                     .accessibilityAddTraits(.isHeader)
                 Text("Whereday quietly writes down where you were, so you can look back at any day, place or trip.")
                     .foregroundStyle(TE.textMuted)
@@ -575,7 +869,7 @@ private struct OnboardingView: View {
     private var privacyPage: some View {
         VStack(alignment: .leading, spacing: 26) {
             Text("It stays\non this phone.")
-                .font(.system(size: 40, design: .serif))
+                .font(WheredayFont.serif(size: 40, relativeTo: .largeTitle))
                 .accessibilityAddTraits(.isHeader)
             VStack(spacing: 0) {
                 Divider().overlay(TE.border)
@@ -605,7 +899,7 @@ private struct OnboardingView: View {
     private var rememberPage: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("How much\nshould it remember?")
-                .font(.system(size: 40, design: .serif))
+                .font(WheredayFont.serif(size: 40, relativeTo: .largeTitle))
                 .accessibilityAddTraits(.isHeader)
             VStack(spacing: 8) {
                 ForEach(RecordingDetail.allCases) { detail in
@@ -778,7 +1072,7 @@ private struct OnboardingDial: View {
             ring(from: 0.41, to: 0.49, ink: TE.placeInks[2].opacity(0.5))
             VStack(spacing: 2) {
                 Text(Date.now.formatted(.dateTime.weekday(.abbreviated)))
-                    .font(.system(size: 39, design: .serif))
+                    .font(.custom(WheredayFont.serifFamily, fixedSize: 39))
                 Text(Date.now.formatted(.dateTime.month(.abbreviated).day()).uppercased())
                     .font(TE.mono(.caption2))
                     .foregroundStyle(TE.textMuted)

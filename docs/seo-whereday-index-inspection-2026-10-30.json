@@ -1,0 +1,233 @@
+{
+  "ok": true,
+  "siteUrl": "sc-domain:whereday.com",
+  "results": [
+    {
+      "url": "https://whereday.com/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=Py7viyXk7R6Jc60qTkjeuA&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-30T16:04:35Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/",
+          "userCanonical": "https://whereday.com/",
+          "sitemap": [
+            "https://whereday.com/sitemap.xml"
+          ],
+          "referringUrls": [
+            "https://whereday.com/docs/",
+            "https://whereday.com/docs/automatic-exports/",
+            "http://whereday.com/",
+            "https://uplinke-seo-strategies.za.com/kpbx/",
+            "http://www.whereday.com/"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        }
+      }
+    },
+    {
+      "url": "https://whereday.com/blog/private-location-journal-iphone/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=s5X0uMAv2fxOaMglMqIMcw&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-28T22:47:55Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/blog/private-location-journal-iphone/",
+          "userCanonical": "https://whereday.com/blog/private-location-journal-iphone/",
+          "referringUrls": [
+            "https://isome.isolated.tech/blog/record-iphone-route-gpx/"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        },
+        "richResultsResult": {
+          "verdict": "PASS",
+          "detectedItems": [
+            {
+              "richResultType": "Breadcrumbs",
+              "items": [
+                {
+                  "name": "Unnamed item"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "url": "https://whereday.com/compare/google-maps-timeline/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=jVJcqbebjkMPvmFHIotMvA&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-27T18:31:03Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/compare/google-maps-timeline/",
+          "userCanonical": "https://whereday.com/compare/google-maps-timeline/",
+          "referringUrls": [
+            "https://whereday.com/docs/export-import/",
+            "https://whereday.com/sitemap.xml"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        },
+        "richResultsResult": {
+          "verdict": "PASS",
+          "detectedItems": [
+            {
+              "richResultType": "Breadcrumbs",
+              "items": [
+                {
+                  "name": "Unnamed item"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "url": "https://whereday.com/blog/record-iphone-route-gpx/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=ky9Z9HNieuroROQRk47-Hg&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-30T15:14:39Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/blog/record-iphone-route-gpx/",
+          "userCanonical": "https://whereday.com/blog/record-iphone-route-gpx/",
+          "sitemap": [
+            "https://whereday.com/sitemap.xml"
+          ],
+          "referringUrls": [
+            "https://isome.isolated.tech/blog/record-iphone-route-gpx/",
+            "https://whereday.com/blog/iphone-location-tracking-battery/"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        },
+        "richResultsResult": {
+          "verdict": "PASS",
+          "detectedItems": [
+            {
+              "richResultType": "Breadcrumbs",
+              "items": [
+                {
+                  "name": "Unnamed item"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "url": "https://whereday.com/blog/import-google-timeline-iphone/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=ElNSzmlX_OIb8YIz8u8-5g&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "NEUTRAL",
+          "coverageState": "URL is unknown to Google",
+          "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+          "indexingState": "INDEXING_STATE_UNSPECIFIED",
+          "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        }
+      }
+    },
+    {
+      "url": "https://whereday.com/blog/view-location-history-iphone/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=tlGWUHHjpomMIrUuBwDO3Q&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-29T09:24:02Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/blog/view-location-history-iphone/",
+          "userCanonical": "https://whereday.com/blog/view-location-history-iphone/",
+          "referringUrls": [
+            "https://isome.isolated.tech/blog/view-location-history-iphone/",
+            "https://isome.isolated.tech/blog/record-iphone-route-gpx/"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        },
+        "richResultsResult": {
+          "verdict": "PASS",
+          "detectedItems": [
+            {
+              "richResultType": "Breadcrumbs",
+              "items": [
+                {
+                  "name": "Unnamed item"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "url": "https://whereday.com/docs/export-import/",
+      "result": {
+        "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=P-Ppsoo2XK_q5p8qkjzmjw&utm_medium=link&utm_source=api",
+        "indexStatusResult": {
+          "verdict": "PASS",
+          "coverageState": "Submitted and indexed",
+          "robotsTxtState": "ALLOWED",
+          "indexingState": "INDEXING_ALLOWED",
+          "lastCrawlTime": "2026-10-30T07:44:34Z",
+          "pageFetchState": "SUCCESSFUL",
+          "googleCanonical": "https://whereday.com/docs/export-import/",
+          "userCanonical": "https://whereday.com/docs/export-import/",
+          "sitemap": [
+            "https://whereday.com/sitemap.xml"
+          ],
+          "referringUrls": [
+            "https://whereday.com/docs/automatic-exports/",
+            "https://isome.isolated.tech/blog/record-iphone-route-gpx/"
+          ],
+          "crawledAs": "MOBILE"
+        },
+        "mobileUsabilityResult": {
+          "verdict": "VERDICT_UNSPECIFIED"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+    "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/settings/integrations"
+  }
+}

@@ -1,25 +1,25 @@
 /* Whereday docs — shared styles (adapted from the site's doc template) */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --paper: #f5f4ef;
-  --paper-deep: #ecebe4;
-  --card: #ffffff;
-  --ink: #1f1f1f;
-  --ink-soft: #3a3a38;
-  --mute: #5f5d59;
-  --rule: #d2cfca;
-  --rule-soft: #e3e0db;
-  --accent: #1c57ca;
-  --accent-soft: rgba(50, 116, 244, 0.10);
-  --lcd: #006f46;
-  --lcd-bg: #e0e6d9;
+  --paper: #F3EFE6;
+  --paper-deep: #ECE6D8;
+  --card: #FBF9F4;
+  --ink: #1E2B45;
+  --ink-soft: #3A465F;
+  --mute: #66645D;
+  --rule: #D8D2C3;
+  --rule-soft: #E4DED0;
+  --accent: #A8381F;
+  --accent-soft: rgba(194, 70, 42, 0.10);
+  --lcd: #3F5C3C;
+  --lcd-bg: #DFE6D6;
   --warn-bg: #fdf3e4;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --display: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --radius: 4px;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --display: "Newsreader", Georgia, "Times New Roman", serif; --serif: var(--display); --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 14px;
 }
 body {
-  font-family: var(--mono);
+  font-family: var(--sans);
   background: var(--paper); color: var(--ink);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -32,7 +32,7 @@ img { max-width: 100%; }
 
 nav.top {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(245, 244, 239, 0.92);
+  background: rgba(243, 239, 230, 0.92);
   backdrop-filter: saturate(180%) blur(18px);
   -webkit-backdrop-filter: saturate(180%) blur(18px);
   border-bottom: 1px solid var(--rule);
@@ -45,7 +45,7 @@ nav.top {
 }
 .brand {
   display: flex; align-items: center; gap: 10px;
-  font-family: var(--mono); font-weight: 700;
+  font-family: var(--sans); font-weight: 700;
   font-size: 0.95rem; letter-spacing: 0.04em;
   color: var(--ink);
 }
@@ -57,7 +57,7 @@ nav.top {
 .brand-dot {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--lcd);
-  box-shadow: 0 0 6px rgba(0, 199, 115, 0.6);
+  box-shadow: 0 0 6px rgba(94, 127, 90, 0.6);
 }
 .nav-links { display: flex; align-items: center; gap: 22px; }
 .nav-links a {
@@ -99,8 +99,8 @@ nav.top {
 h1 {
   font-family: var(--display);
   font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.05;
   margin-bottom: 14px;
   color: var(--ink);
@@ -142,7 +142,7 @@ h1 {
 .doc-card h3 {
   font-family: var(--display);
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 400;
   margin: 26px 0 8px;
   color: var(--ink);
 }
@@ -228,7 +228,7 @@ td strong { color: var(--ink); }
   color: var(--mute);
 }
 .guide-card h2 {
-  font-family: var(--display); font-size: 1.08rem; font-weight: 750;
+  font-family: var(--display); font-size: 1.08rem; font-weight: 400;
   color: var(--ink); margin: 0; letter-spacing: -0.01em;
 }
 .guide-card p { font-size: 0.8rem; color: var(--ink-soft); margin: 0; line-height: 1.55; }

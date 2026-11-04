@@ -34,8 +34,6 @@ Compare accounts, recording, backups, export formats, and migration limits.
 
 Read
 
-Private location journal Product notes Release updates Export guides On-device history Apple Watch companion Private location journal Product notes Release updates Export guides On-device history Apple Watch companion
-
 § 01 Record your history
 
 ## Make your first recorded day useful.

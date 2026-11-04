@@ -147,4 +147,27 @@ struct WatchLocationSyncAck: Codable {
 enum WatchLocationSyncTransport {
     static let payloadUserInfoKey = "com.bontecou.isome.watchLocationPayload"
     static let ackUserInfoKey = "com.bontecou.isome.watchLocationAck"
+    static let markRequestUserInfoKey = "com.bontecou.isome.watchMarkPlace"
+    static let markAckUserInfoKey = "com.bontecou.isome.watchMarkPlaceAck"
+    /// iPhone → watch message asking it to send waiting points now; the reply carries the waiting count.
+    static let syncRequestMessageKey = "com.bontecou.isome.watchSyncRequest"
+    static let pendingPointCountReplyKey = "com.bontecou.isome.watchPendingPointCount"
+}
+
+/// "Mark" on Apple Watch: asks the iPhone to check in at the watch's current place.
+/// Sent with `transferUserInfo`, so it stays queued until the iPhone receives it.
+struct WatchMarkPlaceRequest: Codable, Hashable, Identifiable {
+    var id: UUID
+    var requestedAt: Date
+    /// The watch's latest accurate fix, when it has one; otherwise the iPhone uses its own.
+    var latitude: Double?
+    var longitude: Double?
+    var horizontalAccuracy: Double?
+}
+
+struct WatchMarkPlaceAck: Codable, Hashable {
+    var requestID: UUID
+    var succeeded: Bool
+    var placeName: String?
+    var errorMessage: String?
 }

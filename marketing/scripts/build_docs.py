@@ -621,6 +621,8 @@ SHELL = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
   <title>__SEO_TITLE__ — Whereday Docs</title>
   <meta name="description" content="__DESC__">
   <meta name="robots" content="index,follow">
@@ -639,7 +641,7 @@ SHELL = """<!DOCTYPE html>
       <a href="/" class="brand" aria-label="Whereday home">
         <img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" alt="" width="26" height="26">
         <span class="brand-dot" aria-hidden="true"></span>
-        WHEREDAY
+        Whereday
       </a>
       <div class="nav-links">
         <a href="/#features">Features</a>

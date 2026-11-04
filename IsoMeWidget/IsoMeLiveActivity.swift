@@ -1,6 +1,20 @@
 import ActivityKit
+import AppIntents
 import WidgetKit
 import SwiftUI
+
+// MARK: - Live Activity intents (extension stubs)
+
+// The buttons below run these intents in place. Because the app target also compiles them
+// (with real implementations in IsoMeIntents.swift), the system performs them in the app's
+// process; these stubs only satisfy the extension's build.
+extension MarkPlaceLiveActivityIntent {
+    func perform() async throws -> some IntentResult { .result() }
+}
+
+extension StopRouteLiveActivityIntent {
+    func perform() async throws -> some IntentResult { .result() }
+}
 
 struct IsoMeLiveActivity: Widget {
     var body: some WidgetConfiguration {
@@ -33,7 +47,7 @@ struct IsoMeLiveActivity: Widget {
 
                 DynamicIslandExpandedRegion(.center) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("● RECORDING")
+                        Text(model.kicker)
                             .font(WidgetTE.mono(.caption2, weight: .medium))
                             .tracking(1.2)
                             .foregroundStyle(WidgetTE.Night.inkRust)
@@ -51,19 +65,8 @@ struct IsoMeLiveActivity: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
-                    HStack(spacing: 8) {
-                        if let url = model.markPlaceURL {
-                            Link(destination: url) {
-                                LiveActivityButtonLabel(title: "Mark this place", filled: false, night: true)
-                            }
-                        }
-                        if let url = IsoMeURLs.stopTracking {
-                            Link(destination: url) {
-                                LiveActivityButtonLabel(title: "Stop tracking", filled: true, night: true)
-                            }
-                        }
-                    }
-                    .padding(.top, 4)
+                    LiveActivityActions(model: model, night: true)
+                        .padding(.top, 4)
                 }
             } compactLeading: {
                 RecordingRing(fraction: model.day.nowFraction)
@@ -99,11 +102,24 @@ private struct LiveActivityModel {
         day = WidgetDay(snapshot: TodayWidgetSnapshot.load(), now: context.state.lastUpdate)
     }
 
+    /// Today's distance: the app's day total from the widget snapshot, never less than what this
+    /// recording has covered (the snapshot can lag a few fixes behind the activity).
     var distance: String {
         DistanceFormatter.format(
-            meters: state.distanceTraveled,
+            meters: max(day.distanceMeters, state.distanceTraveled),
             usesMetric: state.usesMetricDistanceUnits ?? true
         )
+    }
+
+    /// "● RECORDING · WALKING" once there's enough movement to estimate a mode.
+    var kicker: String {
+        guard let mode = state.travelMode else { return String(localized: "● RECORDING") }
+        return String(localized: "● RECORDING · \(mode.activeLabel.uppercased())")
+    }
+
+    var markPlaceIntent: MarkPlaceLiveActivityIntent {
+        let name = state.locationName ?? day.currentStay?.placeName
+        return MarkPlaceLiveActivityIntent(name: name, latitude: state.latitude, longitude: state.longitude)
     }
 
     /// "Origin → current" once the recording has passed through two named places.
@@ -128,10 +144,6 @@ private struct LiveActivityModel {
             return String(localized: "\(points) PTS · \(remaining) LEFT")
         }
         return String(localized: "\(points) PTS")
-    }
-
-    var markPlaceURL: URL? {
-        IsoMeURLs.checkIn(latitude: state.latitude, longitude: state.longitude)
     }
 
     static func formatTime(_ seconds: Int) -> String {
@@ -169,12 +181,14 @@ struct LockScreenView: View {
                 .accessibilityLabel(String(localized: "Today's dial: \(model.day.accessibilitySummary)"))
 
                 VStack(alignment: .leading, spacing: 1) {
-                    Text("● RECORDING")
-                        .font(WidgetTE.mono(.caption2, weight: .medium))
+                    Text(model.kicker)
+                        .font(WidgetTE.mono(size: 10, weight: .medium, relativeTo: .caption2))
                         .tracking(1.2)
                         .foregroundStyle(WidgetTE.inkRust)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                     Text(model.routeTitle)
-                        .font(WidgetTE.editorial(.title3))
+                        .font(WidgetTE.editorial(size: 21, relativeTo: .title3))
                         .foregroundStyle(WidgetTE.textPrimary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
@@ -194,7 +208,7 @@ struct LockScreenView: View {
                     .frame(height: 1)
 
                 HStack(alignment: .top, spacing: 8) {
-                    stat(label: "MOVED") { Text(model.distance) }
+                    stat(label: "TODAY") { Text(model.distance) }
                     stat(label: "POINTS") { Text(model.points) }
                     if let remaining = model.remaining {
                         stat(label: "UNTIL AUTO-OFF") { Text(remaining) }
@@ -206,18 +220,7 @@ struct LockScreenView: View {
                 }
             }
 
-            HStack(spacing: 8) {
-                if let url = model.markPlaceURL {
-                    Link(destination: url) {
-                        LiveActivityButtonLabel(title: "Mark this place", filled: false, night: false)
-                    }
-                }
-                if let url = IsoMeURLs.stopTracking {
-                    Link(destination: url) {
-                        LiveActivityButtonLabel(title: "Stop tracking", filled: true, night: false)
-                    }
-                }
-            }
+            LiveActivityActions(model: model, night: false)
         }
         .padding(.horizontal, 16)
         .padding(.top, 16)
@@ -235,7 +238,7 @@ struct LockScreenView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(label)
-                .font(WidgetTE.mono(.caption2))
+                .font(WidgetTE.mono(size: 10, relativeTo: .caption2))
                 .foregroundStyle(WidgetTE.textMuted)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
@@ -246,6 +249,28 @@ struct LockScreenView: View {
 }
 
 // MARK: - Pieces
+
+/// "Mark this place" and "Stop route", performed in place through Live Activity intents.
+private struct LiveActivityActions: View {
+    let model: LiveActivityModel
+    let night: Bool
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Button(intent: model.markPlaceIntent) {
+                LiveActivityButtonLabel(title: "Mark this place", filled: false, night: night)
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("Checks in at your current place"))
+
+            Button(intent: StopRouteLiveActivityIntent()) {
+                LiveActivityButtonLabel(title: "Stop route", filled: true, night: night)
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("Stops recording"))
+        }
+    }
+}
 
 private struct LiveActivityButtonLabel: View {
     let title: LocalizedStringKey
@@ -312,7 +337,8 @@ private struct RecordingRing: View {
         distanceTraveled: 1234,
         remainingSeconds: 3600,
         lastUpdate: .now,
-        originLocationName: "Home"
+        originLocationName: "Home",
+        travelMode: .walk
     )
     LocationActivityAttributes.ContentState(
         locationName: nil,

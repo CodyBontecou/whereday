@@ -1,3 +1,4 @@
+import CoreLocation
 import SwiftData
 import SwiftUI
 
@@ -7,22 +8,32 @@ struct AtlasView: View {
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.modelContext) private var modelContext
+    @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
+    @ObservedObject private var localities = LocalityResolver.shared
     @Query(filter: #Predicate<Visit> { $0.countryCode != nil }) private var visits: [Visit]
     @Query(filter: #Predicate<LocationPoint> { $0.countryCode != nil && !$0.isOutlier }) private var points: [LocationPoint]
     @Query(sort: \CountryStay.firstDay, order: .reverse) private var stays: [CountryStay]
+    @Query(filter: #Predicate<SavedPlace> { $0.kindRaw == "home" }) private var homePlaces: [SavedPlace]
+    /// Bumped when Home's country arrives from a reverse geocode, so the inks recompute.
+    @State private var homeGeocodeRevision = 0
     @State private var range: AtlasRange = .year
     @State private var year = Calendar(identifier: .gregorian).component(.year, from: Date())
     @State private var path: [AtlasRoute] = []
     @State private var selectedDay: String?
     @State private var newStay: AtlasNewStay?
     @State private var showingRecap = false
+    @State private var selectedDayDetail: AtlasDayDetail?
 
     private var isTwoPane: Bool { horizontalSizeClass == .regular }
 
     var body: some View {
         let today = CountryDayCalculator.dayIdentifier(Date(), timeZone: .current)
         let allTime = CountryDayCalculator.summaries(visits: visits, points: points, stays: stays)
-        let atlas = range == .all ? CountryAtlas(summaries: allTime) : CountryAtlas(summaries: allTime, year: year)
+        let _ = homeGeocodeRevision
+        let home = CountryAtlas.homeCountryCode(homePlaces: homePlaces, visits: visits, points: points)
+        // Inks follow the all-time order in both ranges, so a country keeps its colour.
+        let atlas = CountryAtlas(summaries: allTime, year: range == .all ? nil : year, homeCountryCode: home)
         let years = AtlasRange.years(in: allTime, today: today)
 
         NavigationStack(path: $path) {
@@ -82,6 +93,17 @@ struct AtlasView: View {
             NavigationStack {
                 MonthRecapView(viewModel: viewModel, month: Date())
             }
+        }
+        .task(id: homePlaces.max(by: { $0.updatedAt < $1.updatedAt })
+            .map { LocalityResolver.cell(latitude: $0.latitude, longitude: $0.longitude) } ?? "") {
+            guard let place = homePlaces.max(by: { $0.updatedAt < $1.updatedAt }), home == nil else { return }
+            if await HomeCountryCache.resolve(latitude: place.latitude, longitude: place.longitude) {
+                homeGeocodeRevision += 1
+            }
+        }
+        .task(id: isTwoPane ? (selectedDay ?? today) : "") {
+            guard isTwoPane else { return }
+            selectedDayDetail = dayDetail(for: selectedDay ?? today)
         }
         .tint(TE.accent)
     }
@@ -190,8 +212,8 @@ struct AtlasView: View {
             legendItem("Manual stay") { RoundedRectangle(cornerRadius: 2).strokeBorder(TE.accent, lineWidth: 1.5) }
             legendItem("Travel day") {
                 VStack(spacing: 0) {
-                    TE.placeInks[0]
-                    TE.placeInks[1]
+                    CountryAtlas.inks[0]
+                    CountryAtlas.inks[1]
                 }.clipShape(RoundedRectangle(cornerRadius: 2))
             }
             legendItem("Ahead") { RoundedRectangle(cornerRadius: 2).strokeBorder(TE.dialTick, lineWidth: 1) }
@@ -315,26 +337,25 @@ struct AtlasView: View {
                 .font(TE.mono(.caption2))
                 .tracking(1.2)
                 .foregroundStyle(TE.onInkCardMuted)
-            Text(presences.isEmpty ? String(localized: "No record")
-                 : presences.map { Locale.current.localizedString(forRegionCode: $0.countryCode) ?? $0.countryCode }
-                    .formatted(.list(type: .and)))
+            let detail = selectedDayDetail?.day == day ? selectedDayDetail : nil
+            Text(dayTitle(presences: presences, detail: detail))
                 .font(TE.editorial(.title2))
                 .fixedSize(horizontal: false, vertical: true)
-            let names = visitNames(on: day)
-            if !names.isEmpty {
-                Text(names.joined(separator: " → "))
+            if let routeLine = routeLine(detail) {
+                Text(routeLine)
                     .font(.footnote)
                     .foregroundStyle(TE.onInkCardMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Button {
-                if let top = presences.first {
-                    path.append(.country(top.countryCode))
-                } else {
+                if presences.isEmpty {
                     newStay = AtlasNewStay(day: day, countryCode: nil)
+                } else if let country = presences.first(where: \.recorded) ?? presences.first {
+                    // The day belongs to a country's run of days; open that country's dates.
+                    path.append(.country(country.countryCode))
                 }
             } label: {
-                Text(presences.isEmpty ? LocalizedStringKey("Add a stay") : LocalizedStringKey("Open the country"))
+                Text(presences.isEmpty ? LocalizedStringKey("Add a stay") : LocalizedStringKey("Open the day"))
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(TE.inkCard)
                     .padding(.horizontal, 16)
@@ -350,20 +371,70 @@ struct AtlasView: View {
         .background(RoundedRectangle(cornerRadius: 18).fill(TE.inkCard))
     }
 
-    private func visitNames(on day: String) -> [String] {
-        guard let utcDate = CountryDayCalculator.date(for: day) else { return [] }
+    /// Midnight of a civil day in the device's calendar.
+    private func localStart(of day: String) -> Date? {
+        guard let utcDate = CountryDayCalculator.date(for: day) else { return nil }
         var utc = Calendar(identifier: .gregorian)
         utc.timeZone = TimeZone(secondsFromGMT: 0)!
         let parts = utc.dateComponents([.year, .month, .day], from: utcDate)
+        return Calendar.current.date(from: parts)
+    }
+
+    /// "City, Country" when the day's city is known, otherwise the countries present.
+    private func dayTitle(presences: [CountryPresence], detail: AtlasDayDetail?) -> String {
+        guard !presences.isEmpty else { return String(localized: "No record") }
+        let countries = presences.map { Locale.current.localizedString(forRegionCode: $0.countryCode) ?? $0.countryCode }
+        _ = localities.revision
+        if let coordinate = detail?.coordinate,
+           let city = localities.locality(latitude: coordinate.latitude, longitude: coordinate.longitude),
+           !countries.contains(city) {
+            return "\(city), \(countries.formatted(.list(type: .and)))"
+        }
+        return countries.formatted(.list(type: .and))
+    }
+
+    /// The day's visits in order, then the distance moved: "Alfama → LX Factory · 14.2 km".
+    private func routeLine(_ detail: AtlasDayDetail?) -> String? {
+        guard let detail else { return nil }
+        var parts: [String] = []
+        if !detail.visitNames.isEmpty { parts.append(detail.visitNames.joined(separator: " → ")) }
+        if detail.distanceMeters >= 50 {
+            parts.append(DistanceFormatter.format(meters: detail.distanceMeters, usesMetric: usesMetricDistanceUnits))
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
+    private func dayDetail(for day: String) -> AtlasDayDetail? {
         let calendar = Calendar.current
-        guard let start = calendar.date(from: parts),
-              let end = calendar.date(byAdding: .day, value: 1, to: start) else { return [] }
+        guard let start = localStart(of: day),
+              let end = calendar.date(byAdding: .day, value: 1, to: start) else { return nil }
+        let visits = viewModel.visitsOverlappingDateRange(start...end.addingTimeInterval(-1))
         var names: [String] = []
-        for visit in viewModel.visitsOverlappingDateRange(start...end.addingTimeInterval(-1))
-            where names.last != visit.displayName {
+        for visit in visits where names.last != visit.displayName {
             names.append(visit.displayName)
         }
-        return Array(names.prefix(5))
+
+        var descriptor = FetchDescriptor<LocationPoint>(
+            predicate: #Predicate { $0.timestamp >= start && $0.timestamp < end && !$0.isOutlier },
+            sortBy: [SortDescriptor(\.timestamp)]
+        )
+        descriptor.propertiesToFetch = [\.latitude, \.longitude, \.timestamp]
+        let points = (try? modelContext.fetch(descriptor)) ?? []
+
+        let now = Date()
+        let longest = visits.max { lhs, rhs in
+            (lhs.departedAt ?? now).timeIntervalSince(lhs.arrivedAt) < (rhs.departedAt ?? now).timeIntervalSince(rhs.arrivedAt)
+        }
+        let coordinate = longest.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+            ?? points.first.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+        if let coordinate { localities.request([coordinate]) }
+
+        return AtlasDayDetail(
+            day: day,
+            visitNames: Array(names.prefix(4)),
+            distanceMeters: RecordingSessionBuilder.totalDistance(in: points),
+            coordinate: coordinate
+        )
     }
 }
 
@@ -542,6 +613,14 @@ enum AtlasRoute: Hashable {
     case countryDays
 }
 
+/// What the two-pane selected-day card shows about one day.
+private struct AtlasDayDetail {
+    let day: String
+    let visitNames: [String]
+    let distanceMeters: Double
+    let coordinate: CLLocationCoordinate2D?
+}
+
 private struct AtlasNewStay: Identifiable {
     let id = UUID()
     let day: String?
@@ -556,7 +635,25 @@ struct CountryAtlas {
     let daysByCountry: [String: Set<String>]
     private let rank: [String: Int]
 
-    init(summaries: [CountryDaySummary], year: Int? = nil) {
+    /// - Parameters:
+    ///   - summaries: all-time summaries (most days first); `year` narrows what is shown.
+    ///   - inkOrder: country codes in the order inks are handed out. Defaults to `summaries`' order,
+    ///     which is all-time when `summaries` is, so a country keeps its colour between Year and All.
+    ///   - homeCountryCode: the saved Home's country. It always takes the first (home) ink;
+    ///     without one, the all-time most-days country does.
+    init(summaries: [CountryDaySummary], year: Int? = nil, inkOrder: [String]? = nil, homeCountryCode: String? = nil) {
+        var order = inkOrder ?? summaries.map(\.countryCode)
+        if let homeCountryCode {
+            order.removeAll { $0 == homeCountryCode }
+            order.insert(homeCountryCode, at: 0)
+        }
+        for summary in summaries where !order.contains(summary.countryCode) {
+            order.append(summary.countryCode)
+        }
+        var rank: [String: Int] = [:]
+        for code in order where rank[code] == nil { rank[code] = rank.count }
+        self.rank = rank
+
         let prefix = year.map { String(format: "%04d-", $0) }
         let scoped: [CountryDaySummary]
         if let prefix {
@@ -572,7 +669,6 @@ struct CountryAtlas {
             scoped = summaries
         }
         self.summaries = scoped
-        rank = Dictionary(uniqueKeysWithValues: scoped.enumerated().map { ($1.countryCode, $0) })
         var byDay: [String: [CountryPresence]] = [:]
         var byCountry: [String: Set<String>] = [:]
         for summary in scoped {
@@ -587,11 +683,52 @@ struct CountryAtlas {
 
     var maximumDays: Int { summaries.first?.days.count ?? 1 }
 
-    /// The four place inks in rank order; later countries reuse them, lighter.
+    /// The saved Home's country: the most common country among recorded visits (then points)
+    /// inside Home's radius, else a cached reverse geocode of Home's coordinate. Nil with no Home,
+    /// or while Home's country is still unknown.
+    @MainActor
+    static func homeCountryCode(homePlaces: [SavedPlace], visits: [Visit], points: [LocationPoint]) -> String? {
+        guard let home = homePlaces.max(by: { $0.updatedAt < $1.updatedAt }) else { return nil }
+        var counts: [String: Int] = [:]
+        for visit in visits {
+            guard let code = visit.countryCode,
+                  home.contains(CLLocationCoordinate2D(latitude: visit.latitude, longitude: visit.longitude)) else { continue }
+            counts[code, default: 0] += 1
+        }
+        if counts.isEmpty {
+            for point in points {
+                guard let code = point.countryCode,
+                      home.contains(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)) else { continue }
+                counts[code, default: 0] += 1
+            }
+        }
+        if let best = counts.max(by: { $0.value != $1.value ? $0.value < $1.value : $0.key > $1.key }) {
+            return best.key
+        }
+        return HomeCountryCache.country(latitude: home.latitude, longitude: home.longitude)
+    }
+
+    /// Country inks in rank order. Home's country takes navy on paper and pale blue at night
+    /// (the all-time most-visited country when no Home is saved); every further country gets
+    /// its own distinct ink, assigned in all-time order so colours hold between Year and All.
+    static let inks: [Color] = [
+        TE.adaptive(0x1E2B45, 0xC9D3EC), // home: navy / pale blue
+        TE.adaptive(0xC2462A, 0xF0805F), // rust
+        TE.adaptive(0xB7862B, 0xE0B565), // ochre
+        TE.adaptive(0x5E7F5A, 0x9DC097), // sage
+        TE.adaptive(0x7A86A8, 0x8E9BC2), // slate
+        TE.adaptive(0x7D4E6B, 0xC99BB9), // plum
+        TE.adaptive(0x3E7C7D, 0x86C3C1), // teal
+        TE.adaptive(0x8A5A3B, 0xD3A27E), // umber
+        TE.adaptive(0x6E7232, 0xC4C77F), // olive
+        TE.adaptive(0xB0546A, 0xE995A8), // rose
+        TE.adaptive(0x2F5D4E, 0x7FB6A1), // pine
+        TE.adaptive(0x4B4F8F, 0xA2A6E2)  // indigo
+    ]
+
     func ink(for countryCode: String) -> Color {
         let index = rank[countryCode] ?? 0
-        let ink = TE.placeInks[index % TE.placeInks.count]
-        return index < TE.placeInks.count ? ink : ink.opacity(0.5)
+        return Self.inks[index % Self.inks.count]
     }
 
     /// For each of the country's days, the other countries present that day.
@@ -630,5 +767,37 @@ struct CountryAtlas {
             date = next
         }
         return gaps
+    }
+}
+
+/// Reverse-geocoded country for the saved Home's coordinate, cached on disk per ~1 km cell.
+/// Used only when no recorded visit or point inside Home already carries a country.
+@MainActor
+enum HomeCountryCache {
+    private static let key = "atlas.homeCountryByCell.v1"
+    private static var inFlight = Set<String>()
+
+    static func country(latitude: Double, longitude: Double) -> String? {
+        let cache = UserDefaults.standard.dictionary(forKey: key) as? [String: String] ?? [:]
+        return cache[LocalityResolver.cell(latitude: latitude, longitude: longitude)]
+    }
+
+    /// Looks the country up once when it isn't cached and network geocoding is allowed.
+    /// Returns true when a new country was stored.
+    @discardableResult
+    static func resolve(latitude: Double, longitude: Double) async -> Bool {
+        let cell = LocalityResolver.cell(latitude: latitude, longitude: longitude)
+        guard country(latitude: latitude, longitude: longitude) == nil,
+              NetworkGeocodingPolicy.isAllowed,
+              CLLocationCoordinate2DIsValid(CLLocationCoordinate2D(latitude: latitude, longitude: longitude)),
+              !inFlight.contains(cell) else { return false }
+        inFlight.insert(cell)
+        defer { inFlight.remove(cell) }
+        guard let placemarks = try? await CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)),
+              let code = placemarks.first?.isoCountryCode, !code.isEmpty else { return false }
+        var cache = UserDefaults.standard.dictionary(forKey: key) as? [String: String] ?? [:]
+        cache[cell] = code.uppercased()
+        UserDefaults.standard.set(cache, forKey: key)
+        return true
     }
 }

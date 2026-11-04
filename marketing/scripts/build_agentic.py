@@ -45,6 +45,7 @@ class Markdown(HTMLParser):
         self.url, self.parts, self.links = url, [], []
         self.active = False
         self.skip = 0
+        self.hidden = None
         self.pre = False
 
     def handle_starttag(self, tag, attrs):
@@ -52,6 +53,14 @@ class Markdown(HTMLParser):
         if tag == 'main':
             self.active = True
         if not self.active:
+            return
+        # Decorative content hidden from assistive technology (such as app
+        # mockups filled with sample data) is not part of the readable page.
+        if self.hidden:
+            self.hidden[1] += tag == self.hidden[0]
+            return
+        if attrs.get('aria-hidden') == 'true' and tag not in ('svg', 'img', 'br', 'hr', 'input'):
+            self.hidden = [tag, 1]
             return
         if tag in ('script', 'style', 'svg'):
             self.skip += 1
@@ -84,6 +93,12 @@ class Markdown(HTMLParser):
     def handle_endtag(self, tag):
         if not self.active:
             return
+        if self.hidden:
+            if tag == self.hidden[0]:
+                self.hidden[1] -= 1
+                if not self.hidden[1]:
+                    self.hidden = None
+            return
         if self.skip:
             if tag in ('script', 'style', 'svg'):
                 self.skip -= 1
@@ -107,7 +122,7 @@ class Markdown(HTMLParser):
             self.parts.append('\n\n')
 
     def handle_data(self, text):
-        if self.active and not self.skip:
+        if self.active and not self.skip and not self.hidden:
             self.parts.append(text if self.pre else re.sub(r'\s+', ' ', text))
 
     def result(self):

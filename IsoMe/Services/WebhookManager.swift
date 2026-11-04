@@ -102,6 +102,8 @@ final class WebhookManager: ObservableObject {
     }
 
     @Published private(set) var lastSentAt: Date?
+    /// HTTP status of the last successful delivery, shown as "LAST SENT 14:05 · 200 OK".
+    @Published private(set) var lastStatusCode: Int?
     @Published private(set) var lastError: String?
     @Published private(set) var queuedPointCount: Int = 0
     @Published private(set) var isSending: Bool = false
@@ -124,7 +126,7 @@ final class WebhookManager: ObservableObject {
     private enum DefaultsKey: String {
         case enabled, url, format, authType
         case sendMode, batchCount, batchTimeMinutes
-        case lastSentAt, lastError
+        case lastSentAt, lastError, lastStatusCode
     }
 
     enum KeychainKey: String {
@@ -160,6 +162,7 @@ final class WebhookManager: ObservableObject {
         self.batchCount = d.object(forKey: Self.key(.batchCount)) as? Int ?? 10
         self.batchTimeMinutes = d.object(forKey: Self.key(.batchTimeMinutes)) as? Int ?? 5
         self.lastSentAt = d.object(forKey: Self.key(.lastSentAt)) as? Date
+        self.lastStatusCode = d.object(forKey: Self.key(.lastStatusCode)) as? Int
         self.lastError = d.string(forKey: Self.key(.lastError))
 
         if let urlSession {
@@ -284,6 +287,10 @@ final class WebhookManager: ObservableObject {
                     }
                 case .batchTime:
                     enqueuePendingPoint(latest)
+                    // The interval is the schedule; points per batch caps how much waits between ticks.
+                    if pendingPoints.count >= batchCount {
+                        await flushBatch()
+                    }
                 case .manual, .realtime:
                     break
                 }
@@ -311,6 +318,16 @@ final class WebhookManager: ObservableObject {
     func enqueuePendingPoint(_ point: LocationPoint) {
         pendingPoints.append(point)
         queuedPointCount = pendingPoints.count
+    }
+
+    /// Discards waiting points without sending them. Saved location history is untouched.
+    func clearQueue() {
+        let discarded = pendingPoints.count
+        pendingPoints.removeAll()
+        queuedPointCount = 0
+        if discarded > 0 {
+            LogManager.shared.info("Cleared queue · \(discarded) points discarded", category: .webhook)
+        }
     }
 
     /// Send a manual export of all saved data.
@@ -376,6 +393,7 @@ final class WebhookManager: ObservableObject {
         request.setValue("Whereday/\(AppInfo.version)", forHTTPHeaderField: "User-Agent")
         applyAuth(to: &request)
 
+        let started = Date()
         let (_, response) = try await sendRequestWithRetry(request)
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
@@ -384,8 +402,27 @@ final class WebhookManager: ObservableObject {
 
         lastSentAt = Date()
         defaults.set(lastSentAt, forKey: Self.key(.lastSentAt))
+        lastStatusCode = httpResponse.statusCode
+        defaults.set(httpResponse.statusCode, forKey: Self.key(.lastStatusCode))
         lastError = nil
         defaults.removeObject(forKey: Self.key(.lastError))
+        let milliseconds = Int(Date().timeIntervalSince(started) * 1000)
+        LogManager.shared.info(
+            "Sent \(points.count) points · \(Self.statusText(httpResponse.statusCode)) · \(milliseconds) ms",
+            category: .webhook
+        )
+    }
+
+    /// "200 OK", "204 No Content", or the bare code for anything less common.
+    static func statusText(_ code: Int) -> String {
+        let reasons: [Int: String] = [
+            200: "OK", 201: "Created", 202: "Accepted", 204: "No Content",
+            400: "Bad Request", 401: "Unauthorized", 403: "Forbidden", 404: "Not Found",
+            408: "Request Timeout", 429: "Too Many Requests",
+            500: "Internal Server Error", 502: "Bad Gateway", 503: "Service Unavailable", 504: "Gateway Timeout"
+        ]
+        guard let reason = reasons[code] else { return "\(code)" }
+        return "\(code) \(reason)"
     }
 
     private func sendRequestWithRetry(_ request: URLRequest) async throws -> (Data, URLResponse) {
@@ -525,6 +562,7 @@ final class WebhookManager: ObservableObject {
         let sanitized = Self.sanitizeError(message, masking: authValue)
         lastError = sanitized
         defaults.set(sanitized, forKey: Self.key(.lastError))
+        LogManager.shared.error(sanitized, category: .webhook)
     }
 
     static func formatFromToken(_ token: String?) -> ExportFormat {

@@ -186,6 +186,25 @@ final class WatchLocationSyncImportTests: XCTestCase {
         XCTAssertEqual(firstAck.importedPointCount, 500)
         XCTAssertEqual(firstAck.importedVisitCount, 2)
 
+        // A valid export can still be incomplete while the Watch has another
+        // batch pending. Exercise the real receiver-to-export handoff.
+        func checkGPXExport(count: Int, name: String) throws {
+            let points = try container.mainContext.fetch(FetchDescriptor<LocationPoint>())
+            var options = ExportOptions()
+            options.dataKind = .points
+            options.format = .gpx
+            let rendered = try ExportService.render(visits: [], points: points, options: options)
+            XCTAssertTrue(rendered.fileName.hasSuffix(".gpx"))
+            let xml = try XCTUnwrap(String(data: rendered.data, encoding: .utf8))
+            XCTAssertEqual(xml.components(separatedBy: "<trkpt ").count - 1, count)
+            XCTAssertFalse(xml.contains("<wpt "))
+            let attachment = XCTAttachment(data: rendered.data, uniformTypeIdentifier: "com.topografix.gpx")
+            attachment.name = name
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+        try checkGPXExport(count: 500, name: "synthetic-watch-first-batch.gpx")
+
         // The phone saved the batch, but its acknowledgement was lost. Restart
         // the Watch from its persisted queue and deliver the same data again.
         queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: JSONEncoder().encode(queue))
@@ -215,6 +234,7 @@ final class WatchLocationSyncImportTests: XCTestCase {
         // Delayed durable delivery after the queue drained is still idempotent.
         XCTAssertTrue(try XCTUnwrap(receiver.importPayloadData(wireData)).succeeded)
         XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 503)
+        try checkGPXExport(count: 503, name: "synthetic-watch-complete.gpx")
     }
 
     func testSnapshotRejectedBeforePhoneReadyCanRetryWithoutDataLoss() throws {

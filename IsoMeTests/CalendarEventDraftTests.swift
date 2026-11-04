@@ -93,6 +93,21 @@ final class CalendarEventDraftTests: XCTestCase {
         XCTAssertEqual(stored.notes, "Updated later")
     }
 
+    func testReviewNotesStartWithBylineAndKeepOwnNotes() {
+        let plain = Visit(latitude: 0, longitude: 0, arrivedAt: start, departedAt: start.addingTimeInterval(50 * 60))
+        let plainNotes = CalendarEventDraft(visit: plain).reviewNotes
+        XCTAssertTrue(plainNotes.hasPrefix("Logged by Whereday · "))
+        XCTAssertFalse(plainNotes.contains("\n"))
+
+        let noted = Visit(latitude: 0, longitude: 0, arrivedAt: start, departedAt: start.addingTimeInterval(600),
+                          notes: "Lunch with Johnny")
+        let draft = CalendarEventDraft(visit: noted)
+        XCTAssertTrue(draft.reviewNotes.hasPrefix("Logged by Whereday · "))
+        XCTAssertTrue(draft.reviewNotes.hasSuffix("\n\nLunch with Johnny"))
+        // The draft itself still carries only the visit's notes.
+        XCTAssertEqual(draft.notes, "Lunch with Johnny")
+    }
+
     func testNilEmptyAndWhitespaceOnlyNotesAreOmitted() {
         let blankNotes: [String?] = [nil, "", " \t\n\r "]
         for notes in blankNotes {

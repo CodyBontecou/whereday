@@ -1,0 +1,208 @@
+{
+  "checked_on": "2026-10-30",
+  "scope": "sc-domain:whereday.com",
+  "gsc": {
+    "currentQueryPage": {
+      "ok": true,
+      "siteUrl": "sc-domain:whereday.com",
+      "startDate": "2026-09-30",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "query",
+        "page"
+      ],
+      "rowCount": 1,
+      "rows": [
+        {
+          "keys": [
+            "wheredies",
+            "https://whereday.com/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 2
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "previousQueryPage": {
+      "ok": true,
+      "siteUrl": "sc-domain:whereday.com",
+      "startDate": "2026-09-02",
+      "endDate": "2026-09-29",
+      "dimensions": [
+        "query",
+        "page"
+      ],
+      "rowCount": 0,
+      "rows": [],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "currentDates": {
+      "ok": true,
+      "siteUrl": "sc-domain:whereday.com",
+      "startDate": "2026-09-30",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "date"
+      ],
+      "rowCount": 2,
+      "rows": [
+        {
+          "keys": [
+            "2026-10-26"
+          ],
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0,
+          "position": 0
+        },
+        {
+          "keys": [
+            "2026-10-27"
+          ],
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0,
+          "position": 5.2
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    },
+    "currentPages": {
+      "ok": true,
+      "siteUrl": "sc-domain:whereday.com",
+      "startDate": "2026-09-30",
+      "endDate": "2026-10-27",
+      "dimensions": [
+        "page"
+      ],
+      "rowCount": 11,
+      "rows": [
+        {
+          "keys": [
+            "https://whereday.com/"
+          ],
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 1.5
+        },
+        {
+          "keys": [
+            "https://whereday.com/about"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 3
+        },
+        {
+          "keys": [
+            "https://whereday.com/blog/iphone-location-journal-obsidian/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 9
+        },
+        {
+          "keys": [
+            "https://whereday.com/blog/iphone-location-tracking-battery/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 6
+        },
+        {
+          "keys": [
+            "https://whereday.com/blog/private-location-journal-iphone/"
+          ],
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 8
+        },
+        {
+          "keys": [
+            "https://whereday.com/blog/track-days-in-country-iphone/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 11
+        },
+        {
+          "keys": [
+            "https://whereday.com/blog/view-location-history-iphone/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 8
+        },
+        {
+          "keys": [
+            "https://whereday.com/docs/export-import/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 5
+        },
+        {
+          "keys": [
+            "https://whereday.com/docs/webhooks/"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 3
+        },
+        {
+          "keys": [
+            "https://whereday.com/integrations/dawarich/"
+          ],
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0,
+          "position": 4
+        },
+        {
+          "keys": [
+            "https://whereday.com/terms"
+          ],
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0,
+          "position": 2
+        }
+      ],
+      "hasMore": false,
+      "meta": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+      }
+    }
+  },
+  "notes": [
+    "The current property has rows only from October26; earlier empty rows do not establish no historical visits.",
+    "Page and property/date aggregations are separate and are not summed together.",
+    "Today's October30 deployments are outside all these windows; this baseline cannot measure their effect.",
+    "Predecessor-property history was not accessed; automatic approval review rejected switching to it as outside scope."
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "deployment": "https://2c89564a.spotted-8ez.pages.dev",
+  "checks": [
+    {
+      "path": "/assets/gpx-core.mjs",
+      "status": 200,
+      "sha256": "534fe9b3c57628bec9ced494006ec2df73bf1385338148380629ed6bd716f139",
+      "type": "application/javascript"
+    },
+    {
+      "path": "/assets/gpx-viewer.mjs",
+      "status": 200,
+      "sha256": "5be0f45f4ef4573693acfa4d0d80d9b5fe1126bea549c2965eb2ab0732155fd7",
+      "type": "application/javascript"
+    },
+    {
+      "path": "/assets/gpx-demo.mjs",
+      "status": 200,
+      "sha256": "1bb35062cd77e2f35d4edfedaf39d542dd6acb84a3fa8b79ece41298d0dca13b",
+      "type": "application/javascript"
+    },
+    {
+      "path": "/assets/gpx-viewer.css",
+      "status": 200,
+      "sha256": "dbbdc7043d69b6f9a0d1b59301078249acd8417857d8b43cdaa2cdcbe58d4fba",
+      "type": "text/css"
+    },
+    {
+      "path": "/samples/synthetic-gpx-missing-time.gpx",
+      "status": 200,
+      "sha256": "99bf6d718f759f7f49b53567821f4d76b1c3dd44b0066bfb41c04151fb596e6f",
+      "type": "application/gpx+xml"
+    },
+    {
+      "path": "/samples/synthetic-gpx-invalid-coordinate.gpx",
+      "status": 200,
+      "sha256": "8c7b7d4679ca24f9cd213191c88b7720ad6f236e620697fd12894b8778bceac0",
+      "type": "application/gpx+xml"
+    },
+    {
+      "path": "/tools/",
+      "accept": "text/html",
+      "status": 200,
+      "policy": null
+    },
+    {
+      "path": "/tools/",
+      "accept": "text/markdown",
+      "status": 200,
+      "policy": null
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "accept": "text/html",
+      "status": 200,
+      "policy": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; object-src 'none'"
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "accept": "text/markdown",
+      "status": 200,
+      "policy": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; object-src 'none'"
+    },
+    {
+      "path": "/blog/check-gpx-file/",
+      "accept": "text/html",
+      "status": 200,
+      "policy": null
+    },
+    {
+      "path": "/blog/check-gpx-file/",
+      "accept": "text/markdown",
+      "status": 200,
+      "policy": null
+    }
+  ],
+  "finalDeployment": "https://5bfe4fdf.spotted-8ez.pages.dev",
+  "clearFixFollowup": [
+    {
+      "path": "/assets/gpx-viewer.mjs",
+      "status": 200,
+      "sha256": "837ce23860c343e6f3732d3c109106b86f415344cb4c3c1d432c02f1a403f09b"
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "status": 200,
+      "sha256": "be8b38f6ace78068fdb9d0e5b1b79c9d903e04f2b745f41e130144031fd095ef"
+    }
+  ],
+  "browserClearCheck": "All eight result nodes empty; CSV disabled; demo works again."
+}

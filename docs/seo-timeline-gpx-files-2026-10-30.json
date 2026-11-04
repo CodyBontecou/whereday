@@ -1,0 +1,32 @@
+[
+  {
+    "kind": "semantic",
+    "bytes": 1285,
+    "sha256": "926af24f475e8e5b76279b14f2c0c7cfb076181a1157b11ed1ce3c2c676696cf",
+    "trackPoints": 1,
+    "segments": 1,
+    "waypoints": 3,
+    "browserBytesMatchFixture": true,
+    "allExpectedCoordinatesAndTimesMatch": true
+  },
+  {
+    "kind": "device",
+    "bytes": 1410,
+    "sha256": "94a74f3be7542ed7c95d67b69fc62b88c7542646f78a4bb91d0c3bd71668bf30",
+    "trackPoints": 4,
+    "segments": 4,
+    "waypoints": 2,
+    "browserBytesMatchFixture": true,
+    "allExpectedCoordinatesAndTimesMatch": true
+  },
+  {
+    "kind": "raw",
+    "bytes": 759,
+    "sha256": "6c6e7297faa6a9d6f240f13ea33598f686cc46ced7e54b5bd7874037223d2312",
+    "trackPoints": 2,
+    "segments": 1,
+    "waypoints": 0,
+    "browserBytesMatchFixture": true,
+    "allExpectedCoordinatesAndTimesMatch": true
+  }
+]

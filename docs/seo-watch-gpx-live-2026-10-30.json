@@ -1,0 +1,35 @@
+{
+  "deployment": "https://c8fd318d.spotted-8ez.pages.dev",
+  "checks": [
+    {
+      "path": "/blog/record-iphone-route-gpx/",
+      "status": 200,
+      "newTextPresent": true,
+      "canonicalPresent": true,
+      "noindex": false
+    },
+    {
+      "path": "/docs/apple-watch/",
+      "status": 200,
+      "newTextPresent": true,
+      "canonicalPresent": true,
+      "noindex": false
+    },
+    {
+      "path": "/samples/synthetic-watch-first-batch.gpx",
+      "status": 200,
+      "bytes": 144355,
+      "sha256": "b2019f0c5379fb0955b17ebe5673faa37701bd29173ed7efb3a88e1aab86b0f3",
+      "matchesNativeAttachment": true,
+      "attachmentHeader": true
+    },
+    {
+      "path": "/samples/synthetic-watch-complete.gpx",
+      "status": 200,
+      "bytes": 145219,
+      "sha256": "8c29957bf9fe0a47a5706b4bf63e2994b8fd888c5a0aa0cf1ce9ab39898ad951",
+      "matchesNativeAttachment": true,
+      "attachmentHeader": true
+    }
+  ]
+}

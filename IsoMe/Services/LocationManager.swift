@@ -19,6 +19,8 @@ final class LocationManager: NSObject, ObservableObject {
 
     // Published state
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    /// Approximate Location (Precise Location off) still records, but stops and routes become rough.
+    @Published var accuracyAuthorization: CLAccuracyAuthorization = .fullAccuracy
     @Published var isTrackingEnabled: Bool = false
     @Published var trackingStartTime: Date?
     @Published var stopAfterHours: Double = 0.0
@@ -118,10 +120,10 @@ final class LocationManager: NSObject, ObservableObject {
                 if store.canTrack {
                     if self.resumeAfterAccessResolution && store.hasResolvedEntitlements {
                         self.resumeAfterAccessResolution = false
-                        self.startTracking()
+                        self.startTracking(reason: .relaunch)
                     }
                 } else if self.isTrackingEnabled {
-                    self.stopTracking()
+                    self.stopTracking(reason: .accessEnded)
                 }
             }
         }
@@ -139,6 +141,7 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.distanceFilter = distanceFilter
 
         authorizationStatus = locationManager.authorizationStatus
+        accuracyAuthorization = locationManager.accuracyAuthorization
 
         // Listen for stop notification from Live Activity deep link
         NotificationCenter.default.addObserver(
@@ -153,7 +156,7 @@ final class LocationManager: NSObject, ObservableObject {
 
         // If tracking was on at last launch, resume it (re-attaches CL APIs + Live Activity).
         if isTrackingEnabled && hasLocationPermission {
-            startTracking()
+            startTracking(reason: .relaunch)
         }
     }
 
@@ -185,6 +188,43 @@ final class LocationManager: NSObject, ObservableObject {
         authorizationStatus == .authorizedAlways
     }
 
+    /// Location is allowed, but only as an approximate position.
+    var hasReducedAccuracy: Bool {
+        hasLocationPermission && accuracyAuthorization == .reducedAccuracy
+    }
+
+    // MARK: - Recorded days
+
+    private var cachedFirstRecordedDate: Date?
+    private var firstRecordedDateCheckedAt: Date?
+
+    /// The earliest day with a saved point or visit, refreshed at most once a minute.
+    func firstRecordedDate(referenceDate: Date = Date()) -> Date? {
+        if let checkedAt = firstRecordedDateCheckedAt, referenceDate.timeIntervalSince(checkedAt) < 60, checkedAt <= referenceDate {
+            return cachedFirstRecordedDate
+        }
+        guard let context = modelContext else { return cachedFirstRecordedDate }
+
+        var pointDescriptor = FetchDescriptor<LocationPoint>(sortBy: [SortDescriptor(\.timestamp, order: .forward)])
+        pointDescriptor.fetchLimit = 1
+        var visitDescriptor = FetchDescriptor<Visit>(sortBy: [SortDescriptor(\.arrivedAt, order: .forward)])
+        visitDescriptor.fetchLimit = 1
+        let earliestPoint = (try? context.fetch(pointDescriptor))?.first?.timestamp
+        let earliestVisit = (try? context.fetch(visitDescriptor))?.first?.arrivedAt
+        cachedFirstRecordedDate = [earliestPoint, earliestVisit].compactMap { $0 }.min()
+        firstRecordedDateCheckedAt = referenceDate
+        return cachedFirstRecordedDate
+    }
+
+    /// "Day N": calendar days since the first recorded day, inclusive (the first day is Day 1).
+    /// Nil until anything has been recorded.
+    func recordedDayNumber(on date: Date = Date()) -> Int? {
+        guard let first = firstRecordedDate(referenceDate: date) else { return nil }
+        let calendar = Calendar.current
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: first), to: calendar.startOfDay(for: date)).day ?? 0
+        return max(1, days + 1)
+    }
+
     func requestCurrentLocationForManualVisit() {
         guard hasLocationPermission else {
             pendingManualLocationRequest = true
@@ -198,7 +238,16 @@ final class LocationManager: NSObject, ObservableObject {
 
     // MARK: - Tracking Control
 
+    /// Why tracking started or stopped, for Diagnostics.
+    private enum TrackingChangeReason {
+        case user, relaunch, permissionGranted, autoStop, accessEnded
+    }
+
     func startTracking() {
+        startTracking(reason: .user)
+    }
+
+    private func startTracking(reason: TrackingChangeReason) {
         guard StoreManager.shared.canTrack else {
             NotificationCenter.default.post(name: .trackingAccessRequired, object: nil)
             return
@@ -208,8 +257,10 @@ final class LocationManager: NSObject, ObservableObject {
             return
         }
 
+        let wasTracking = isTrackingEnabled
         isTrackingEnabled = true
         UserDefaults.standard.set(true, forKey: "isTrackingEnabled")
+        logTrackingStart(reason: reason, wasTracking: wasTracking)
 
         if trackingStartTime == nil {
             trackingStartTime = Date()
@@ -234,8 +285,24 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     func stopTracking() {
+        stopTracking(reason: .user)
+    }
+
+    private func stopTracking(reason: TrackingChangeReason) {
         resumeAfterAccessResolution = false
         let endedAt = Date()
+        if isTrackingEnabled {
+            let minutes = trackingStartTime.map { Int(endedAt.timeIntervalSince($0) / 60) }
+            let span = minutes.map { " after \($0 / 60)h \(String(format: "%02d", $0 % 60))m" } ?? ""
+            switch reason {
+            case .autoStop:
+                LogManager.shared.info("Tracking stopped on its own\(span) · auto-stop", category: .location)
+            case .accessEnded:
+                LogManager.shared.warning("Tracking stopped\(span) · recording access ended", category: .location)
+            default:
+                LogManager.shared.info("Tracking stopped\(span)", category: .location)
+            }
+        }
         endActiveRecordingSession(at: endedAt)
 
         isTrackingEnabled = false
@@ -254,6 +321,20 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         syncDataToWatch()
+    }
+
+    private func logTrackingStart(reason: TrackingChangeReason, wasTracking: Bool) {
+        let mode = "every \(Int(distanceFilter)) m"
+        switch reason {
+        case .relaunch:
+            LogManager.shared.warning("Background session resumed after relaunch · \(mode)", category: .location)
+        case .permissionGranted:
+            LogManager.shared.info("Location updates reattached after permission change", category: .location)
+        default:
+            guard !wasTracking else { return }
+            let autoStop = stopAfterHours > 0 ? " · stops after \(stopAfterHours.formatted()) h" : ""
+            LogManager.shared.info("Tracking started · \(mode)\(autoStop)", category: .location)
+        }
     }
 
     func setStopAfterHours(_ hours: Double) {
@@ -303,13 +384,13 @@ final class LocationManager: NSObject, ObservableObject {
         let total = stopAfterHours * 3600
         let remaining = total - elapsed
         guard remaining > 0 else {
-            stopTracking()
+            stopTracking(reason: .autoStop)
             return
         }
 
         stopTrackingTimer = Timer.scheduledTimer(withTimeInterval: remaining, repeats: false) { [weak self] _ in
             Task { @MainActor in
-                self?.stopTracking()
+                self?.stopTracking(reason: .autoStop)
             }
         }
     }
@@ -354,7 +435,7 @@ final class LocationManager: NSObject, ObservableObject {
                     }
                 } else {
                     let start = trackingStartTime ?? referenceDate
-                    let session = RecordingSession(startedAt: start)
+                    let session = RecordingSession(startedAt: start, distanceFilterMeters: distanceFilter)
                     context.insert(session)
                     activeRecordingSessionID = session.id
                     trackingStartTime = start
@@ -399,7 +480,7 @@ final class LocationManager: NSObject, ObservableObject {
                 return
             }
 
-            let session = RecordingSession(startedAt: startedAt)
+            let session = RecordingSession(startedAt: startedAt, distanceFilterMeters: distanceFilter)
             context.insert(session)
             activeRecordingSessionID = session.id
             try context.save()
@@ -527,13 +608,16 @@ final class LocationManager: NSObject, ObservableObject {
         let hasArrival = arrivalDate != Date.distantPast
         let hasDeparture = departureDate != Date.distantFuture
         var visitToGeocodeID: UUID?
+        var newArrivalAwaitingName = false
 
         do {
             if hasDeparture,
                let existingVisit = try matchingOpenVisit(for: clVisit, in: context) {
                 // Departure update for an existing open visit.
-                existingVisit.departedAt = max(existingVisit.arrivedAt, departureDate)
+                let departedAt = max(existingVisit.arrivedAt, departureDate)
+                existingVisit.departedAt = departedAt
                 existingVisit.countryDepartureIsInferred = false
+                LogManager.shared.info("Visit ended (\(Int(departedAt.timeIntervalSince(existingVisit.arrivedAt) / 60)) min)", category: .visit)
                 try applySavedPlaceNameIfNeeded(to: existingVisit, in: context)
             } else if hasArrival {
                 // A new arrival means any previous open visit is no longer current,
@@ -562,6 +646,12 @@ final class LocationManager: NSObject, ObservableObject {
                     try applySavedPlaceNameIfNeeded(to: visit, in: context)
                     context.insert(visit)
                     visitToGeocodeID = visit.id
+                    if visit.geocodingCompleted {
+                        // Named by a saved place already.
+                        LogManager.shared.info("Arrived \(visit.displayName) (saved place)", category: .visit)
+                    } else {
+                        newArrivalAwaitingName = true
+                    }
                 }
             }
 
@@ -574,7 +664,14 @@ final class LocationManager: NSObject, ObservableObject {
                !visitToGeocode.geocodingCompleted {
                 Task {
                     await geocodeVisit(visitToGeocode)
+                    if newArrivalAwaitingName {
+                        // Logged once the place has a name, when Apple Maps found one.
+                        let name = visitToGeocode.isDeleted ? nil : (visitToGeocode.normalizedCustomName ?? visitToGeocode.locationName)
+                        LogManager.shared.info(name.map { "Arrived \($0)" } ?? "Arrived at a new place", category: .visit)
+                    }
                 }
+            } else if newArrivalAwaitingName {
+                LogManager.shared.info("Arrived at a new place", category: .visit)
             }
         } catch {
             lastError = String(localized: "Failed to save visit: \(error.localizedDescription)")
@@ -792,8 +889,21 @@ final class LocationManager: NSObject, ObservableObject {
     private func saveLocationPoints(_ locations: [CLLocation]) -> [LocationPoint] {
         guard let context = modelContext else { return [] }
 
+        // Count every fix the system delivered so the Route screen can show "kept of received".
+        if let activeRecordingSessionID,
+           let activeSession = try? recordingSession(withID: activeRecordingSessionID, in: context) {
+            activeSession.recordReceivedLocations(locations.count)
+        }
+
         let validLocations = locations.filter { location in
             location.horizontalAccuracy >= 0 && location.horizontalAccuracy <= 100
+        }
+        let droppedCount = locations.count - validLocations.count
+        if droppedCount > 0 {
+            LogManager.shared.info(
+                "Dropped \(droppedCount) imprecise point\(droppedCount == 1 ? "" : "s") (over ±100 m)",
+                category: .location
+            )
         }
         guard !validLocations.isEmpty else { return [] }
 
@@ -1006,7 +1116,8 @@ final class LocationManager: NSObject, ObservableObject {
             visits: (try? context.fetch(overlappingDescriptor)) ?? [],
             distanceMeters: totalDistance,
             usesMetricDistanceUnits: usesMetricDistanceUnits,
-            isTracking: isTrackingEnabled
+            isTracking: isTrackingEnabled,
+            recordedDayCount: recordedDayNumber()
         )
 
         WidgetCenter.shared.reloadAllTimelines()
@@ -1023,15 +1134,41 @@ final class LocationManager: NSObject, ObservableObject {
 extension LocationManager: CLLocationManagerDelegate {
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in
+            let previousStatus = authorizationStatus
+            let previousAccuracy = accuracyAuthorization
             authorizationStatus = manager.authorizationStatus
+            accuracyAuthorization = manager.accuracyAuthorization
             if hasLocationPermission && pendingManualLocationRequest {
                 requestCurrentLocationForManualVisit()
             }
 
+            if previousStatus != authorizationStatus || previousAccuracy != accuracyAuthorization {
+                Self.logAuthorizationChange(status: authorizationStatus, accuracy: accuracyAuthorization)
+            }
+
             if hasLocationPermission && isTrackingEnabled {
                 // Reattach the CL APIs once permission lands
-                startTracking()
+                startTracking(reason: .permissionGranted)
             }
+        }
+    }
+
+    private static func logAuthorizationChange(status: CLAuthorizationStatus, accuracy: CLAccuracyAuthorization) {
+        let access: String
+        switch status {
+        case .authorizedAlways: access = "Always"
+        case .authorizedWhenInUse: access = "While Using"
+        case .denied: access = "Off"
+        case .restricted: access = "Restricted"
+        case .notDetermined: access = "Not asked yet"
+        @unknown default: access = "Unknown"
+        }
+        let precision = accuracy == .reducedAccuracy ? "approximate" : "precise"
+        let message = "Location access changed · \(access) · \(precision)"
+        if status == .denied || status == .restricted {
+            LogManager.shared.warning(message, category: .location)
+        } else {
+            LogManager.shared.info(message, category: .location)
         }
     }
 
@@ -1085,6 +1222,12 @@ extension LocationManager: CLLocationManagerDelegate {
                 }
             } else {
                 lastError = error.localizedDescription
+            }
+            // kCLErrorLocationUnknown is transient: Core Location keeps trying.
+            if (error as? CLError)?.code == .locationUnknown {
+                LogManager.shared.warning("Location unavailable for now · still trying", category: .location)
+            } else {
+                LogManager.shared.error("Location failed · \(error.localizedDescription)", category: .location)
             }
         }
     }

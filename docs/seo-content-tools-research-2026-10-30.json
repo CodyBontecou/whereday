@@ -1,0 +1,4126 @@
+{
+  "market": "United States, English",
+  "checkedOn": "2026-10-30",
+  "research": {
+    "results": [
+      {
+        "seed": "google timeline json viewer",
+        "ok": true,
+        "rowCount": 77,
+        "source": "blended",
+        "usedFallback": false,
+        "rows": [
+          {
+            "keyword": "google timeline json viewer",
+            "searchVolume": 20,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google edge gallery github",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps timeline json viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google ux framework",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google eloquent for windows",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.14,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google chrome labs github",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "json viewer awesome safari",
+            "searchVolume": 10,
+            "keywordDifficulty": 54,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "json viewer awesome chrome plugin",
+            "searchVolume": 10,
+            "keywordDifficulty": 48,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "chrome install json viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best json viewer online",
+            "searchVolume": 10,
+            "keywordDifficulty": 66,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "yaml viewer chrome",
+            "searchVolume": 10,
+            "keywordDifficulty": 40,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "heroku buildpack google chrome",
+            "searchVolume": 10,
+            "keywordDifficulty": 42,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google edge eloquent for mac",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.1,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "chrome dev tools timeline",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google progressive web app framework",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gitlab notifier for google chrome",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google chrome source code github",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "chrome devtools protocol viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google-crawler github",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "best json formatter chrome",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "google lighthouse json viewer",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best json viewer safari",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google source code viewer",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best json viewer macos",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best json viewer mac reddit",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "ionic document viewer stackblitz",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "bitbucket html viewer",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "report viewer mvc razor",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "wayback machine watch json",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "laravel cookie consent google analytics",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "robobrowser json",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "ionic 4 cordova plugin document viewer",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "yaml viewer chrome extension",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "webxr viewer github",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google snake custom menu stuff github",
+            "searchVolume": 0,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "github google chrome lighthouse",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google content framework",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google pagespeed github",
+            "searchVolume": null,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "google chrome",
+            "searchVolume": 673000,
+            "keywordDifficulty": 100,
+            "cpc": 1.75,
+            "competition": 0.13,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google extensions",
+            "searchVolume": 74000,
+            "keywordDifficulty": 71,
+            "cpc": 2.23,
+            "competition": 0.04,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google tag manager",
+            "searchVolume": 90500,
+            "keywordDifficulty": 51,
+            "cpc": 12.42,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google remote desktop",
+            "searchVolume": 74000,
+            "keywordDifficulty": 29,
+            "cpc": 4.53,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google console",
+            "searchVolume": 74000,
+            "keywordDifficulty": 68,
+            "cpc": 1.94,
+            "competition": 0.2,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google chrome extensions",
+            "searchVolume": 22200,
+            "keywordDifficulty": 79,
+            "cpc": 4.06,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome browser",
+            "searchVolume": 60500,
+            "keywordDifficulty": 100,
+            "cpc": 2.54,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome update",
+            "searchVolume": 12100,
+            "keywordDifficulty": 100,
+            "cpc": 3.27,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google scripts",
+            "searchVolume": 22200,
+            "keywordDifficulty": 25,
+            "cpc": 56.75,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome remote desktop",
+            "searchVolume": 14800,
+            "keywordDifficulty": 58,
+            "cpc": 7.21,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google explore",
+            "searchVolume": 22200,
+            "keywordDifficulty": 46,
+            "cpc": 9.74,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google browser",
+            "searchVolume": 9900,
+            "keywordDifficulty": 100,
+            "cpc": 3.85,
+            "competition": 0.15,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google atlas chromebook",
+            "searchVolume": 90500,
+            "keywordDifficulty": 24,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome themes",
+            "searchVolume": 5400,
+            "keywordDifficulty": 33,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google cache",
+            "searchVolume": 4400,
+            "keywordDifficulty": 37,
+            "cpc": 4.14,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google dark mode",
+            "searchVolume": 6600,
+            "keywordDifficulty": 20,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome download for pc",
+            "searchVolume": 720,
+            "keywordDifficulty": 100,
+            "cpc": 2.44,
+            "competition": 0.12,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google safe browsing",
+            "searchVolume": 14800,
+            "keywordDifficulty": 86,
+            "cpc": 11.91,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google chrome free download",
+            "searchVolume": 210,
+            "keywordDifficulty": 62,
+            "cpc": 2.52,
+            "competition": 0.17,
+            "intent": "informational"
+          },
+          {
+            "keyword": "password manager google chrome",
+            "searchVolume": 6600,
+            "keywordDifficulty": 40,
+            "cpc": 4.16,
+            "competition": 0.04,
+            "intent": "informational"
+          },
+          {
+            "keyword": "make google default browser",
+            "searchVolume": 8100,
+            "keywordDifficulty": 37,
+            "cpc": 5.41,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome search",
+            "searchVolume": 1000,
+            "keywordDifficulty": 74,
+            "cpc": 4.3,
+            "competition": 0.04,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google search browser",
+            "searchVolume": 390,
+            "keywordDifficulty": 100,
+            "cpc": 2.18,
+            "competition": 0.02,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google lens chrome",
+            "searchVolume": 4400,
+            "keywordDifficulty": 51,
+            "cpc": 2.57,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google add ons",
+            "searchVolume": 1600,
+            "keywordDifficulty": 65,
+            "cpc": 2.79,
+            "competition": 0.05,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google lens extension",
+            "searchVolume": 1900,
+            "keywordDifficulty": 41,
+            "cpc": 2.3,
+            "competition": 0.01,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google chrome default browser",
+            "searchVolume": 720,
+            "keywordDifficulty": 31,
+            "cpc": 4.22,
+            "competition": 0.07,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google web designer",
+            "searchVolume": 1600,
+            "keywordDifficulty": 13,
+            "cpc": 11.98,
+            "competition": 0.04,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google discover dark mode",
+            "searchVolume": 40500,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome login",
+            "searchVolume": 3600,
+            "keywordDifficulty": 50,
+            "cpc": 1.75,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google ngram viewer",
+            "searchVolume": 9900,
+            "keywordDifficulty": 11,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "make google my default browser",
+            "searchVolume": 4400,
+            "keywordDifficulty": 30,
+            "cpc": 6.14,
+            "competition": 0.06,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome settings",
+            "searchVolume": 3600,
+            "keywordDifficulty": 28,
+            "cpc": 7.88,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google link shortener",
+            "searchVolume": 2900,
+            "keywordDifficulty": 50,
+            "cpc": 3.04,
+            "competition": 0.08,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google browser download",
+            "searchVolume": 1900,
+            "keywordDifficulty": 85,
+            "cpc": 1.71,
+            "competition": 0.26,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google chrome gmail",
+            "searchVolume": 260,
+            "keywordDifficulty": 68,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google chrome dark mode",
+            "searchVolume": 1900,
+            "keywordDifficulty": 27,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google chrome desktop",
+            "searchVolume": 1900,
+            "keywordDifficulty": 58,
+            "cpc": 4.26,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google bookmarks",
+            "searchVolume": 6600,
+            "keywordDifficulty": 45,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          }
+        ]
+      },
+      {
+        "seed": "google timeline to gpx",
+        "ok": true,
+        "rowCount": 78,
+        "source": "blended",
+        "usedFallback": false,
+        "rows": [
+          {
+            "keyword": "export google timeline to gpx",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "waze vs google maps",
+            "searchVolume": 8100,
+            "keywordDifficulty": 11,
+            "cpc": 1.48,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google timeline json to gpx",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google route planner",
+            "searchVolume": 590,
+            "keywordDifficulty": 61,
+            "cpc": 3.33,
+            "competition": 0.13,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google timeline to gpx",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps radius tool",
+            "searchVolume": 1300,
+            "keywordDifficulty": 15,
+            "cpc": 26.36,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps measuring tool",
+            "searchVolume": 1900,
+            "keywordDifficulty": 23,
+            "cpc": 1.04,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps distance matrix api",
+            "searchVolume": 260,
+            "keywordDifficulty": 10,
+            "cpc": 15.18,
+            "competition": 0.06,
+            "intent": "informational"
+          },
+          {
+            "keyword": "waze or google maps",
+            "searchVolume": 1600,
+            "keywordDifficulty": 17,
+            "cpc": 0.98,
+            "competition": 0.05,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx route creator",
+            "searchVolume": 70,
+            "keywordDifficulty": 0,
+            "cpc": 1.4,
+            "competition": 0.12,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "measure distance google maps iphone",
+            "searchVolume": 1000,
+            "keywordDifficulty": 3,
+            "cpc": 1.45,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google earth route planner",
+            "searchVolume": 50,
+            "keywordDifficulty": 81,
+            "cpc": 1.75,
+            "competition": 0.08,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx route maker",
+            "searchVolume": 20,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.02,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "route maker google maps",
+            "searchVolume": 480,
+            "keywordDifficulty": 35,
+            "cpc": 5.38,
+            "competition": 0.15,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "edit gpx",
+            "searchVolume": 480,
+            "keywordDifficulty": 5,
+            "cpc": 1.94,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google road trip planner",
+            "searchVolume": 210,
+            "keywordDifficulty": 43,
+            "cpc": 2.11,
+            "competition": 0.17,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps cycling",
+            "searchVolume": 480,
+            "keywordDifficulty": 36,
+            "cpc": 1.82,
+            "competition": 0.05,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps walking route planner",
+            "searchVolume": 320,
+            "keywordDifficulty": 54,
+            "cpc": 0.37,
+            "competition": 0.04,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps bike route planner",
+            "searchVolume": 70,
+            "keywordDifficulty": 48,
+            "cpc": null,
+            "competition": 0.12,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "measure distance google maps desktop",
+            "searchVolume": 30,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google measure distance",
+            "searchVolume": 480,
+            "keywordDifficulty": 35,
+            "cpc": 1.39,
+            "competition": 0.04,
+            "intent": "informational"
+          },
+          {
+            "keyword": "waze vs google maps vs apple maps",
+            "searchVolume": 480,
+            "keywordDifficulty": 0,
+            "cpc": 0.76,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "view gpx online",
+            "searchVolume": 260,
+            "keywordDifficulty": 21,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps driver application",
+            "searchVolume": 480,
+            "keywordDifficulty": 1,
+            "cpc": 0.68,
+            "competition": 0.02,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx creator google maps",
+            "searchVolume": 20,
+            "keywordDifficulty": 60,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps lead extractor",
+            "searchVolume": 20,
+            "keywordDifficulty": 50,
+            "cpc": 12.33,
+            "competition": 0.47,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps drive planner",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "pogo gpx routes",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps meter",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps walking speed",
+            "searchVolume": 210,
+            "keywordDifficulty": 4,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps itinerary planner",
+            "searchVolume": 140,
+            "keywordDifficulty": 38,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps carplay settings",
+            "searchVolume": 90,
+            "keywordDifficulty": 8,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps flight mode",
+            "searchVolume": 90,
+            "keywordDifficulty": 19,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps controls",
+            "searchVolume": 90,
+            "keywordDifficulty": 18,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps app measure distance",
+            "searchVolume": 320,
+            "keywordDifficulty": 13,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "distance checker google maps",
+            "searchVolume": 30,
+            "keywordDifficulty": 25,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "export strava route to gpx",
+            "searchVolume": 20,
+            "keywordDifficulty": 7,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps truck navigation",
+            "searchVolume": 10,
+            "keywordDifficulty": 23,
+            "cpc": null,
+            "competition": 0.09,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google trip planning tool",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "compare gpx",
+            "searchVolume": 20,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps predictive travel time",
+            "searchVolume": 20,
+            "keywordDifficulty": 23,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "ats google maps navigation",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "pgsharp gpx routes",
+            "searchVolume": 10,
+            "keywordDifficulty": 23,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "kml to gpx online",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps navigation ets2",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google bike route planner",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": 0.37,
+            "competition": 0.14,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google street view meta quest 3",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "waze import google maps",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google travel log",
+            "searchVolume": 10,
+            "keywordDifficulty": 39,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "distance finder google",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "track google street view car",
+            "searchVolume": 210,
+            "keywordDifficulty": 20,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps walking mode",
+            "searchVolume": 140,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps track my walk",
+            "searchVolume": 140,
+            "keywordDifficulty": 72,
+            "cpc": 6.26,
+            "competition": 0.09,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps volume control",
+            "searchVolume": 90,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "radar movil google maps",
+            "searchVolume": 110,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "gpx or kml",
+            "searchVolume": 110,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps mobile measure distance",
+            "searchVolume": 90,
+            "keywordDifficulty": 5,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps track my route",
+            "searchVolume": 70,
+            "keywordDifficulty": 54,
+            "cpc": 0.56,
+            "competition": 0.1,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "distance plotter google maps",
+            "searchVolume": 70,
+            "keywordDifficulty": 30,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps ev",
+            "searchVolume": 50,
+            "keywordDifficulty": 11,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "multi route planner google maps",
+            "searchVolume": 70,
+            "keywordDifficulty": 45,
+            "cpc": 6.3,
+            "competition": 0.04,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "routing software google maps",
+            "searchVolume": 70,
+            "keywordDifficulty": 40,
+            "cpc": null,
+            "competition": 0.36,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "google latitude and longitude finder",
+            "searchVolume": 50,
+            "keywordDifficulty": 90,
+            "cpc": 1.22,
+            "competition": 0.02,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google distance api",
+            "searchVolume": 30,
+            "keywordDifficulty": 4,
+            "cpc": null,
+            "competition": 0.08,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps route planning tool",
+            "searchVolume": 10,
+            "keywordDifficulty": 43,
+            "cpc": null,
+            "competition": 0.14,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google gps history",
+            "searchVolume": 50,
+            "keywordDifficulty": 51,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "walking planner google maps",
+            "searchVolume": 50,
+            "keywordDifficulty": 62,
+            "cpc": 0.43,
+            "competition": 0.04,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps quest diagnostics",
+            "searchVolume": 20,
+            "keywordDifficulty": 28,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "rtz to gpx converter",
+            "searchVolume": 20,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps track my run",
+            "searchVolume": 40,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0.04,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps custom route planner",
+            "searchVolume": 20,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "autovelox google maps",
+            "searchVolume": 40,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "fenix 6 google maps",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps amtrak tracking",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google map trace route",
+            "searchVolume": 30,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps travel time tool",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "gpx extensions",
+            "searchVolume": 30,
+            "keywordDifficulty": 17,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google maps bluetooth settings",
+            "searchVolume": 10,
+            "keywordDifficulty": 5,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          }
+        ]
+      },
+      {
+        "seed": "gpx viewer",
+        "ok": true,
+        "rowCount": 150,
+        "source": "blended",
+        "usedFallback": false,
+        "rows": [
+          {
+            "keyword": "gpx viewer",
+            "searchVolume": 1300,
+            "keywordDifficulty": 14,
+            "cpc": 3.29,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin",
+            "searchVolume": 450000,
+            "keywordDifficulty": 18,
+            "cpc": 1.2,
+            "competition": 0.72,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx file viewer",
+            "searchVolume": 480,
+            "keywordDifficulty": 27,
+            "cpc": 3.7,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin connect",
+            "searchVolume": 110000,
+            "keywordDifficulty": 49,
+            "cpc": 1.61,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer online",
+            "searchVolume": 260,
+            "keywordDifficulty": 22,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin express",
+            "searchVolume": 22200,
+            "keywordDifficulty": 15,
+            "cpc": 1.97,
+            "competition": 0.04,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx file viewer online",
+            "searchVolume": 260,
+            "keywordDifficulty": 22,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin forerunner",
+            "searchVolume": 74000,
+            "keywordDifficulty": 33,
+            "cpc": 0.56,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer app",
+            "searchVolume": 210,
+            "keywordDifficulty": 18,
+            "cpc": 8.11,
+            "competition": 0.08,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin connect login",
+            "searchVolume": 12100,
+            "keywordDifficulty": 63,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx file viewer android",
+            "searchVolume": 90,
+            "keywordDifficulty": 20,
+            "cpc": 4.49,
+            "competition": 0.07,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin vivoactive 5",
+            "searchVolume": 49500,
+            "keywordDifficulty": 2,
+            "cpc": 0.54,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "android gpx viewer",
+            "searchVolume": 90,
+            "keywordDifficulty": 43,
+            "cpc": 4.49,
+            "competition": 0.07,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin fenix",
+            "searchVolume": 33100,
+            "keywordDifficulty": 31,
+            "cpc": 0.78,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "mac gpx viewer",
+            "searchVolume": 70,
+            "keywordDifficulty": 10,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin stock",
+            "searchVolume": 18100,
+            "keywordDifficulty": 10,
+            "cpc": 2.78,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer app for android",
+            "searchVolume": 70,
+            "keywordDifficulty": 10,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "fitbit sense 2",
+            "searchVolume": 22200,
+            "keywordDifficulty": 4,
+            "cpc": 0.82,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx file viewer mac",
+            "searchVolume": 70,
+            "keywordDifficulty": 5,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin dash cam",
+            "searchVolume": 22200,
+            "keywordDifficulty": 9,
+            "cpc": 0.61,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer osx",
+            "searchVolume": 70,
+            "keywordDifficulty": 19,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin express download",
+            "searchVolume": 3600,
+            "keywordDifficulty": 15,
+            "cpc": 2.31,
+            "competition": 0.1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "free gpx viewer",
+            "searchVolume": 40,
+            "keywordDifficulty": 29,
+            "cpc": null,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin careers",
+            "searchVolume": 8100,
+            "keywordDifficulty": 4,
+            "cpc": 1.38,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer pro",
+            "searchVolume": 40,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin fenix 7",
+            "searchVolume": 18100,
+            "keywordDifficulty": 5,
+            "cpc": 0.53,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer windows",
+            "searchVolume": 40,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin r10",
+            "searchVolume": 18100,
+            "keywordDifficulty": 9,
+            "cpc": 1.26,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx 3d viewer",
+            "searchVolume": 30,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin instinct",
+            "searchVolume": 18100,
+            "keywordDifficulty": 11,
+            "cpc": 0.58,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx map viewer",
+            "searchVolume": 20,
+            "keywordDifficulty": null,
+            "cpc": 1.66,
+            "competition": 0.05,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin smartwatch",
+            "searchVolume": 18100,
+            "keywordDifficulty": 25,
+            "cpc": 0.68,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google maps gpx viewer",
+            "searchVolume": 20,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "strava app",
+            "searchVolume": 22200,
+            "keywordDifficulty": 100,
+            "cpc": 1.29,
+            "competition": 0.16,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer iphone",
+            "searchVolume": 20,
+            "keywordDifficulty": 44,
+            "cpc": null,
+            "competition": 0.04,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin connect app",
+            "searchVolume": 22200,
+            "keywordDifficulty": 50,
+            "cpc": 2.19,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "online gpx viewer google maps",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin pilot",
+            "searchVolume": 3600,
+            "keywordDifficulty": 44,
+            "cpc": 2.76,
+            "competition": 0.09,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer android auto",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin vivosmart 5",
+            "searchVolume": 9900,
+            "keywordDifficulty": 4,
+            "cpc": 0.76,
+            "competition": 0.96,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "best android gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.57,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "garmin livescope",
+            "searchVolume": 18100,
+            "keywordDifficulty": 1,
+            "cpc": 0.85,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "best free gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin vivoactive",
+            "searchVolume": 12100,
+            "keywordDifficulty": 10,
+            "cpc": 0.52,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer review",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin watch bands",
+            "searchVolume": 18100,
+            "keywordDifficulty": 0,
+            "cpc": 1.45,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer and recorder",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin bike computer",
+            "searchVolume": 12100,
+            "keywordDifficulty": 19,
+            "cpc": 1.03,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer app iphone",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin golf",
+            "searchVolume": 6600,
+            "keywordDifficulty": 20,
+            "cpc": 1.01,
+            "competition": 0.91,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer pro 4pda",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin golf watch",
+            "searchVolume": 14800,
+            "keywordDifficulty": 3,
+            "cpc": 0.75,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "free gpx viewer iphone",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin fish finder",
+            "searchVolume": 18100,
+            "keywordDifficulty": 24,
+            "cpc": 0.73,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx track viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin running watch",
+            "searchVolume": 14800,
+            "keywordDifficulty": 12,
+            "cpc": 0.66,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "avenue gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.06,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin fenix 7 pro",
+            "searchVolume": 6600,
+            "keywordDifficulty": 0,
+            "cpc": 0.56,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer ubuntu",
+            "searchVolume": 10,
+            "keywordDifficulty": 49,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin watch charger",
+            "searchVolume": 12100,
+            "keywordDifficulty": 0,
+            "cpc": 0.37,
+            "competition": 0.99,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "openstreetmap gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin pilot web",
+            "searchVolume": 880,
+            "keywordDifficulty": 8,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer vectura games",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin vs apple watch",
+            "searchVolume": 8100,
+            "keywordDifficulty": 0,
+            "cpc": 0.6,
+            "competition": 0.5,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gpx viewer download for pc",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin epix",
+            "searchVolume": 5400,
+            "keywordDifficulty": 12,
+            "cpc": 0.54,
+            "competition": 0.94,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx route viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": 58,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin watch comparison",
+            "searchVolume": 8100,
+            "keywordDifficulty": 2,
+            "cpc": 0.7,
+            "competition": 0.67,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gpx viewer software",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin 570",
+            "searchVolume": 6600,
+            "keywordDifficulty": 5,
+            "cpc": 0.97,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "open source gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best garmin watch",
+            "searchVolume": 8100,
+            "keywordDifficulty": 24,
+            "cpc": 0.79,
+            "competition": 0.99,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gpx file viewer windows 10",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin venu 2",
+            "searchVolume": 4400,
+            "keywordDifficulty": 7,
+            "cpc": 0.47,
+            "competition": 0.95,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer 2 app",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin app",
+            "searchVolume": 4400,
+            "keywordDifficulty": 58,
+            "cpc": 2.52,
+            "competition": 0.02,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx file viewer download",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin edge",
+            "searchVolume": 4400,
+            "keywordDifficulty": 24,
+            "cpc": 0.95,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx data viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin aviation",
+            "searchVolume": 2900,
+            "keywordDifficulty": 58,
+            "cpc": 3,
+            "competition": 0.52,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "ipad gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": 11,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin hrm pro plus",
+            "searchVolume": 4400,
+            "keywordDifficulty": 0,
+            "cpc": 1.3,
+            "competition": 0.82,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer pro offline maps",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin jobs",
+            "searchVolume": 2400,
+            "keywordDifficulty": 4,
+            "cpc": 1,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer elevation profile",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "navionics chart viewer",
+            "searchVolume": 2900,
+            "keywordDifficulty": 21,
+            "cpc": 3.23,
+            "competition": 0.08,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx 3d viewer online",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin chronograph",
+            "searchVolume": 6600,
+            "keywordDifficulty": 0,
+            "cpc": 1.66,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer open source",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin vivoactive 5 smartwatch",
+            "searchVolume": 14800,
+            "keywordDifficulty": 5,
+            "cpc": 0.56,
+            "competition": 0.33,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer pro free download",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "garmin g5",
+            "searchVolume": 4400,
+            "keywordDifficulty": 0,
+            "cpc": 0.75,
+            "competition": 0.84,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer linux",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin charger",
+            "searchVolume": 6600,
+            "keywordDifficulty": 0,
+            "cpc": 0.39,
+            "competition": 0.97,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "how to use gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin vivomove",
+            "searchVolume": 4400,
+            "keywordDifficulty": 1,
+            "cpc": 0.39,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "best free gpx viewer iphone",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "garmin military discount",
+            "searchVolume": 3600,
+            "keywordDifficulty": 3,
+            "cpc": 1.7,
+            "competition": 0.36,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gps gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin bounce 2",
+            "searchVolume": 5400,
+            "keywordDifficulty": 3,
+            "cpc": 1.29,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "free gpx viewer android",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin launch monitor",
+            "searchVolume": 3600,
+            "keywordDifficulty": 12,
+            "cpc": 1.89,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": 54,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin store",
+            "searchVolume": 4400,
+            "keywordDifficulty": 9,
+            "cpc": 1.08,
+            "competition": 0.91,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer pro review",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "garmin fenix 8 solar",
+            "searchVolume": 4400,
+            "keywordDifficulty": 2,
+            "cpc": 1.14,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "wordpress gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin swim 2",
+            "searchVolume": 2900,
+            "keywordDifficulty": 0,
+            "cpc": 0.95,
+            "competition": 0.48,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer chrome",
+            "searchVolume": 10,
+            "keywordDifficulty": 55,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin connect website",
+            "searchVolume": 2400,
+            "keywordDifficulty": 100,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer 2",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.08,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin golf simulator",
+            "searchVolume": 5400,
+            "keywordDifficulty": 13,
+            "cpc": 2.69,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer macos",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin inreach subscription",
+            "searchVolume": 3600,
+            "keywordDifficulty": 8,
+            "cpc": 1.75,
+            "competition": 0.05,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer free download",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin 55",
+            "searchVolume": 3600,
+            "keywordDifficulty": 0,
+            "cpc": 0.35,
+            "competition": 0.99,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer speed",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin edge 530",
+            "searchVolume": 2900,
+            "keywordDifficulty": 0,
+            "cpc": 0.58,
+            "competition": 0.92,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "guitar pro gpx file viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin customer service",
+            "searchVolume": 6600,
+            "keywordDifficulty": 18,
+            "cpc": 6.25,
+            "competition": 0.03,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google gpx viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin dealer resource center",
+            "searchVolume": 720,
+            "keywordDifficulty": 5,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "best gpx viewer windows",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin nuvi",
+            "searchVolume": 3600,
+            "keywordDifficulty": 4,
+            "cpc": 0.37,
+            "competition": 0.62,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer freeware",
+            "searchVolume": 10,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin fenix 9 review",
+            "searchVolume": 210,
+            "keywordDifficulty": 0,
+            "cpc": 1.55,
+            "competition": 0.61,
+            "intent": "informational"
+          },
+          {
+            "keyword": "gpx viewer with drive",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin hrm",
+            "searchVolume": 3600,
+            "keywordDifficulty": 1,
+            "cpc": 1.15,
+            "competition": 0.98,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer pro manual",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin connect iq",
+            "searchVolume": 1000,
+            "keywordDifficulty": 34,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer windows 10",
+            "searchVolume": 10,
+            "keywordDifficulty": 49,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin sale",
+            "searchVolume": 5400,
+            "keywordDifficulty": 24,
+            "cpc": 1.55,
+            "competition": 1,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gpx viewer windows 7",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin maps",
+            "searchVolume": 2900,
+            "keywordDifficulty": 67,
+            "cpc": 1.89,
+            "competition": 0.49,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer apple watch",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google fitbit air bands",
+            "searchVolume": 5400,
+            "keywordDifficulty": 7,
+            "cpc": 0.51,
+            "competition": 1,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gpx viewer windows 10 download",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin vivoactive 3",
+            "searchVolume": 2900,
+            "keywordDifficulty": 0,
+            "cpc": 0.47,
+            "competition": 0.84,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer ios",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin livescope bundle",
+            "searchVolume": 8100,
+            "keywordDifficulty": 0,
+            "cpc": 1.43,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer offline",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.21,
+            "intent": "informational"
+          },
+          {
+            "keyword": "garmin gps for cars",
+            "searchVolume": 6600,
+            "keywordDifficulty": 12,
+            "cpc": 0.55,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "gpx viewer android offline",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin account",
+            "searchVolume": 1300,
+            "keywordDifficulty": 42,
+            "cpc": 0.02,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "gpx viewer reader",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin golf app",
+            "searchVolume": 4400,
+            "keywordDifficulty": 6,
+            "cpc": 1.77,
+            "competition": 0.06,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin gpx file viewer",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "garmin black friday",
+            "searchVolume": 1600,
+            "keywordDifficulty": 16,
+            "cpc": 0.45,
+            "competition": 0.29,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "gpx file viewer pc",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": null,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garmin fenix watch",
+            "searchVolume": 9900,
+            "keywordDifficulty": 25,
+            "cpc": 0.84,
+            "competition": 1,
+            "intent": "transactional"
+          }
+        ]
+      },
+      {
+        "seed": "iphone travel journal",
+        "ok": true,
+        "rowCount": 78,
+        "source": "blended",
+        "usedFallback": false,
+        "rows": [
+          {
+            "keyword": "best travel journal app for iphone",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "sos on iphone",
+            "searchVolume": 27100,
+            "keywordDifficulty": 8,
+            "cpc": 0.04,
+            "competition": 0.08,
+            "intent": "informational"
+          },
+          {
+            "keyword": "travel journal app for iphone",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": 2.66,
+            "competition": 0.14,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google journal",
+            "searchVolume": 1600,
+            "keywordDifficulty": 34,
+            "cpc": 3.54,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "travel journal app iphone free",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "hidden apps on iphone",
+            "searchVolume": 18100,
+            "keywordDifficulty": 1,
+            "cpc": 0.09,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone mirroring app",
+            "searchVolume": 2900,
+            "keywordDifficulty": 30,
+            "cpc": 1.41,
+            "competition": 0.11,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "garageband app for iphone",
+            "searchVolume": 18100,
+            "keywordDifficulty": 30,
+            "cpc": 2.08,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "apple journal app",
+            "searchVolume": 2400,
+            "keywordDifficulty": 34,
+            "cpc": 1.61,
+            "competition": 0.01,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "find my iphone app",
+            "searchVolume": 5400,
+            "keywordDifficulty": 61,
+            "cpc": 3.36,
+            "competition": 0.15,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "day one journal app",
+            "searchVolume": 12100,
+            "keywordDifficulty": 56,
+            "cpc": 1.56,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "iphone measure app",
+            "searchVolume": 12100,
+            "keywordDifficulty": 17,
+            "cpc": 2.15,
+            "competition": 0.24,
+            "intent": "informational"
+          },
+          {
+            "keyword": "location spoofer iphone",
+            "searchVolume": 4400,
+            "keywordDifficulty": 3,
+            "cpc": 3.03,
+            "competition": 0.23,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "iphone safari history",
+            "searchVolume": 9900,
+            "keywordDifficulty": 12,
+            "cpc": 2.73,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone assistive touch apk",
+            "searchVolume": 12100,
+            "keywordDifficulty": 4,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "zelle app for iphone",
+            "searchVolume": 6600,
+            "keywordDifficulty": 29,
+            "cpc": 5.18,
+            "competition": 0.09,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "best weather app for iphone",
+            "searchVolume": 6600,
+            "keywordDifficulty": 8,
+            "cpc": 0.79,
+            "competition": 0.24,
+            "intent": "informational"
+          },
+          {
+            "keyword": "reddit iphone",
+            "searchVolume": 1900,
+            "keywordDifficulty": 20,
+            "cpc": 6.31,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "iphone calendar",
+            "searchVolume": 2900,
+            "keywordDifficulty": 44,
+            "cpc": 1.45,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone parental control app",
+            "searchVolume": 8100,
+            "keywordDifficulty": 44,
+            "cpc": 6.22,
+            "competition": 0.42,
+            "intent": "informational"
+          },
+          {
+            "keyword": "countdown app iphone",
+            "searchVolume": 8100,
+            "keywordDifficulty": 19,
+            "cpc": 0.53,
+            "competition": 0.05,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone themes",
+            "searchVolume": 3600,
+            "keywordDifficulty": 12,
+            "cpc": 1.41,
+            "competition": 0.12,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone template",
+            "searchVolume": 1000,
+            "keywordDifficulty": 8,
+            "cpc": 7.36,
+            "competition": 0.01,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "background app refresh iphone",
+            "searchVolume": 3600,
+            "keywordDifficulty": 8,
+            "cpc": 0.01,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "iphone clipart",
+            "searchVolume": 2400,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google image search iphone",
+            "searchVolume": 6600,
+            "keywordDifficulty": 15,
+            "cpc": 1.87,
+            "competition": 0.02,
+            "intent": "informational"
+          },
+          {
+            "keyword": "add widgets to iphone",
+            "searchVolume": 4400,
+            "keywordDifficulty": 16,
+            "cpc": 0.28,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "health app on iphone",
+            "searchVolume": 3600,
+            "keywordDifficulty": 37,
+            "cpc": 2.91,
+            "competition": 0.19,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best travel planning apps",
+            "searchVolume": 2400,
+            "keywordDifficulty": 26,
+            "cpc": 4.74,
+            "competition": 0.36,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "iphone messages app",
+            "searchVolume": 2400,
+            "keywordDifficulty": 56,
+            "cpc": 1.85,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "fax app for iphone",
+            "searchVolume": 4400,
+            "keywordDifficulty": 28,
+            "cpc": 7.19,
+            "competition": 0.55,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "chrome apps iphone",
+            "searchVolume": 5400,
+            "keywordDifficulty": 27,
+            "cpc": 1.48,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google icon for iphone",
+            "searchVolume": 5400,
+            "keywordDifficulty": 15,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google search bar for iphone",
+            "searchVolume": 5400,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "best parental control app for iphone",
+            "searchVolume": 2900,
+            "keywordDifficulty": 30,
+            "cpc": 7.04,
+            "competition": 0.62,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google app on iphone",
+            "searchVolume": 4400,
+            "keywordDifficulty": 38,
+            "cpc": 0.14,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "iphone app icons",
+            "searchVolume": 1900,
+            "keywordDifficulty": 28,
+            "cpc": 1.43,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone cleaner app",
+            "searchVolume": 3600,
+            "keywordDifficulty": 64,
+            "cpc": 5.14,
+            "competition": 0.4,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google journal app",
+            "searchVolume": 480,
+            "keywordDifficulty": 26,
+            "cpc": 4.38,
+            "competition": 0.06,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "sticker maker studio app for iphone",
+            "searchVolume": 4400,
+            "keywordDifficulty": 30,
+            "cpc": null,
+            "competition": 0,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "best iphone data transfer software",
+            "searchVolume": 10,
+            "keywordDifficulty": null,
+            "cpc": null,
+            "competition": 0.71,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "best widgets for iphone",
+            "searchVolume": 1000,
+            "keywordDifficulty": 0,
+            "cpc": 0.46,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best calendar app for iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 18,
+            "cpc": 4.84,
+            "competition": 0.14,
+            "intent": "commercial"
+          },
+          {
+            "keyword": "travel itinerary app",
+            "searchVolume": 1300,
+            "keywordDifficulty": 55,
+            "cpc": 3.26,
+            "competition": 0.3,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone phone app",
+            "searchVolume": 2900,
+            "keywordDifficulty": 11,
+            "cpc": 7.53,
+            "competition": 0.05,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone safari",
+            "searchVolume": 3600,
+            "keywordDifficulty": 57,
+            "cpc": 2.28,
+            "competition": 0.03,
+            "intent": "informational"
+          },
+          {
+            "keyword": "bullet journal app",
+            "searchVolume": 880,
+            "keywordDifficulty": 9,
+            "cpc": 0.58,
+            "competition": 0.06,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google map dark mode iphone",
+            "searchVolume": 3600,
+            "keywordDifficulty": 11,
+            "cpc": 0.21,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "date stamper app for iphone",
+            "searchVolume": 3600,
+            "keywordDifficulty": 6,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone ui",
+            "searchVolume": 390,
+            "keywordDifficulty": 13,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone auto update apps",
+            "searchVolume": 1600,
+            "keywordDifficulty": 4,
+            "cpc": 0.1,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "google messages for iphone",
+            "searchVolume": 1000,
+            "keywordDifficulty": 33,
+            "cpc": 2.15,
+            "competition": 0.01,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps on iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 20,
+            "cpc": 0.3,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "iphone fitness app",
+            "searchVolume": 2400,
+            "keywordDifficulty": 43,
+            "cpc": 4.02,
+            "competition": 0.13,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "iphone apn settings",
+            "searchVolume": 880,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "free fax app for iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 27,
+            "cpc": 6.76,
+            "competition": 0.61,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "square reader for iphone",
+            "searchVolume": 1900,
+            "keywordDifficulty": 30,
+            "cpc": 6.41,
+            "competition": 1,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google travel app",
+            "searchVolume": 1600,
+            "keywordDifficulty": 45,
+            "cpc": 2.86,
+            "competition": 0.18,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "daily journal app",
+            "searchVolume": 390,
+            "keywordDifficulty": 62,
+            "cpc": 2.13,
+            "competition": 0.25,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "google tasks widget iphone",
+            "searchVolume": 2900,
+            "keywordDifficulty": 0,
+            "cpc": null,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone lookup",
+            "searchVolume": 480,
+            "keywordDifficulty": 55,
+            "cpc": 4.56,
+            "competition": 0.36,
+            "intent": "informational"
+          },
+          {
+            "keyword": "best iphone cleaner app free",
+            "searchVolume": 1900,
+            "keywordDifficulty": 41,
+            "cpc": 3.04,
+            "competition": 0.59,
+            "intent": "informational"
+          },
+          {
+            "keyword": "journal app iphone",
+            "searchVolume": 1000,
+            "keywordDifficulty": 44,
+            "cpc": 4.14,
+            "competition": 0.06,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google authenticator app iphone",
+            "searchVolume": 1900,
+            "keywordDifficulty": 29,
+            "cpc": 3.09,
+            "competition": 0.2,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "food journal app free",
+            "searchVolume": 1300,
+            "keywordDifficulty": 49,
+            "cpc": 2.73,
+            "competition": 0.64,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone layout",
+            "searchVolume": 1000,
+            "keywordDifficulty": 3,
+            "cpc": 0.79,
+            "competition": 0,
+            "intent": "informational"
+          },
+          {
+            "keyword": "imazing for iphone",
+            "searchVolume": 1000,
+            "keywordDifficulty": 3,
+            "cpc": 1.39,
+            "competition": 0.24,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "apple iphone weather app",
+            "searchVolume": 2400,
+            "keywordDifficulty": 36,
+            "cpc": 0.49,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "outlook app icon iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 11,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google maps with street view iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 28,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "google photos on iphone",
+            "searchVolume": 1600,
+            "keywordDifficulty": 34,
+            "cpc": 0.61,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "pictochat iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 2,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "funny weather app for iphone",
+            "searchVolume": 2400,
+            "keywordDifficulty": 8,
+            "cpc": null,
+            "competition": 0,
+            "intent": "navigational"
+          },
+          {
+            "keyword": "app clips iphone",
+            "searchVolume": 1300,
+            "keywordDifficulty": 24,
+            "cpc": null,
+            "competition": 0,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "iphone app for windows",
+            "searchVolume": 260,
+            "keywordDifficulty": 24,
+            "cpc": 1.42,
+            "competition": 0.02,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "free screen mirroring app for iphone",
+            "searchVolume": 480,
+            "keywordDifficulty": 14,
+            "cpc": 1.76,
+            "competition": 0.43,
+            "intent": "transactional"
+          },
+          {
+            "keyword": "push notifications iphone",
+            "searchVolume": 1300,
+            "keywordDifficulty": 11,
+            "cpc": 0.99,
+            "competition": 0.01,
+            "intent": "informational"
+          },
+          {
+            "keyword": "iphone tracker app",
+            "searchVolume": 1900,
+            "keywordDifficulty": 38,
+            "cpc": 3.07,
+            "competition": 0.35,
+            "intent": "transactional"
+          }
+        ]
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/keywords"
+    }
+  },
+  "additionalMetrics": {
+    "keywords": [
+      {
+        "keyword": "gpx vs kml",
+        "search_volume": 110,
+        "keyword_difficulty": 0,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "gpx to csv",
+        "search_volume": 70,
+        "keyword_difficulty": 2,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "gpx to geojson",
+        "search_volume": 30,
+        "keyword_difficulty": 0,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "apple watch gpx export",
+        "search_volume": 10,
+        "keyword_difficulty": 49,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      },
+      {
+        "keyword": "location history heatmap",
+        "search_volume": 10,
+        "keyword_difficulty": null,
+        "main_intent": "informational",
+        "cpc": null,
+        "competition": 0,
+        "competition_level": "LOW"
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/keywords"
+    }
+  },
+  "serps": {
+    "results": [
+      {
+        "keyword": "gpx viewer",
+        "ok": true,
+        "items": [
+          {
+            "type": "ai_overview",
+            "rank": 1,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 2,
+            "organicRank": 1,
+            "title": "GPX File Viewer for Google Chrome™ - Chrome Web Store",
+            "url": "https://chromewebstore.google.com/detail/gpx-file-viewer-for-googl/bhpcppcfanbgekkjhnmjopebcklmojep",
+            "domain": "chromewebstore.google.com",
+            "description": "Open a GPX, KML, or GeoJSON file and see your route on an interactive map in seconds — with no upload, no account, and no track data ever leaving your computer. Read more"
+          },
+          {
+            "type": "people_also_ask",
+            "rank": 3,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 4,
+            "organicRank": 2,
+            "title": "GPXSee - GPS log file viewer and analyzer",
+            "url": "https://gpxsee.org/",
+            "domain": "gpxsee.org",
+            "description": "GPXSee is a GPS log file viewer and analyzer that supports all common GPS log file formats. Available for Windows, macOS, Linux and Android."
+          },
+          {
+            "type": "organic",
+            "rank": 5,
+            "organicRank": 3,
+            "title": "Free online Garmin GPX viewer",
+            "url": "https://www.msimons.nl/tools/gpx_viewer/",
+            "domain": "www.msimons.nl",
+            "description": "Welcome to our free online GPX viewer - the easiest way to upload GPX files and instantly view your GPS tracks on an interactive world map. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 6,
+            "organicRank": 4,
+            "title": "GPX Viewer - GPS Maps Location - Apps on Google Play",
+            "url": "https://play.google.com/store/apps/details?id=gpx.viewer.gps.navigation.gps.tracker&hl=en_US",
+            "domain": "play.google.com",
+            "description": "Dec 20, 2024 — GPX Viewer is the ultimate GPS locator, GPS tracks viewer, editor, analyzer and simple navigation tool for your trips and outdoor activities."
+          },
+          {
+            "type": "organic",
+            "rank": 7,
+            "organicRank": 5,
+            "title": "GPX viewer - App Store - Apple",
+            "url": "https://apps.apple.com/it/app/gpx-viewer/id1511582047?l=en-GB",
+            "domain": "apps.apple.com",
+            "description": "Import your routes in GPX format (tracks or routes) into the application. All for free and without ads."
+          },
+          {
+            "type": "organic",
+            "rank": 8,
+            "organicRank": 6,
+            "title": "Avenue GPX Viewer - App Store - Apple",
+            "url": "https://apps.apple.com/us/app/avenue-gpx-viewer/id1523681067",
+            "domain": "apps.apple.com",
+            "description": "Avenue GPX Viewer is a Great easy, quick and free GPX viewer. Easy to use, Clear and fast, Fine interface and visuals."
+          },
+          {
+            "type": "organic",
+            "rank": 9,
+            "organicRank": 7,
+            "title": "GPX Viewer — View & Convert GPX Files Online",
+            "url": "https://www.simplemaplab.com/tools/gpx-viewer",
+            "domain": "www.simplemaplab.com",
+            "description": "Sep 26, 2026 — Free in-browser GPX viewer. Drag a .gpx from Strava, Garmin, AllTrails, or Komoot onto the map for tracks, distance, and elevation."
+          },
+          {
+            "type": "organic",
+            "rank": 10,
+            "organicRank": 8,
+            "title": "GPX Viewer PRO",
+            "url": "https://google.com/goto?url=CAESYQHrOzAV9MnY-Xr3sYAcRHT0g4rKCmKCJWZ6R9oAQ1T8H6NXnpnNiImds50VHIOlt2km18DcWmQAJQOplwdsDfC4t5YZNWAw-tqboli3ulT4gOsicOHV808AoTFUzfY3MoM&gsessionid=_IdVT-p7QbpVJ1o81vikMOPC9aQQbbbuHte5ekz6mz87lNn0MHeXyA",
+            "domain": "google.com",
+            "description": "GPX Viewer PRO is the ultimate GPS locator, GPS tracks viewer, analyzer, recorder, tracker and simple navigation tool for your trips and outdoor activities."
+          },
+          {
+            "type": "organic",
+            "rank": 11,
+            "organicRank": 9,
+            "title": "GPX Viewer for Android - Download",
+            "url": "https://google.com/goto?url=CAESZwHrOzAVSAbf7TAFS6sUi3aZ9jneesN3QD9OO5X4RAh__AJMecHvockYkrc7g9gOm7jsryWxT4u67cuSZCPid0hQ_Wu5KqCtcgjZELYpT96guRbm4mqmLWf4S0yOKAObObKQJWW4CPA&gsessionid=_IdVT-p7QbpVJ1o81vikMOPC9aQQbbbuHte5ekz6mz87lNn0MHeXyA",
+            "domain": "google.com",
+            "description": "Oct 19, 2026 — A free app for Android, by Vectura Games. The GPX Viewer app is an offline application that allows you to view and navigate through the GPX ... Read more"
+          },
+          {
+            "type": "related_searches",
+            "rank": 12,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 13,
+            "organicRank": 10,
+            "title": "GPX Viewer Apps and Alternatives",
+            "url": "https://www.softpedia.com/hubs/GPX-Viewer/",
+            "domain": "www.softpedia.com",
+            "description": "GPX stands for GPS Exchange Format, and it is a file format that consists of an XML schema, designed to store GPS data for various types of applications or ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 14,
+            "organicRank": 11,
+            "title": "GPX viewer and recorder - Free download and install on ...",
+            "url": "https://google.com/goto?url=CAESeAHrOzAVr2vIuCUwhu4ffJbYIQ2JjzQahCGSjH8-ynlxrZsNOC3RgsBGOChUZ9G6j_HmuXJ3DmQwI9i5ePsLUTbbOnzd6xoCcHyUgaTikREz7gPdGY3fmLx66Z4V3AGbiws0fqfPtpQ9-1mWQY1xxeRhEDJhluk2JA&gsessionid=9i4JICgbyn63kdV9VQO7a51fAf_HBSEwEn0kUNnk0M7-9_-H7GgmmA",
+            "domain": "google.com",
+            "description": "May 21, 2016 — This app is the windows 10 version of \"Gps navigator recorder\" (more than 300.000 download in one year)."
+          },
+          {
+            "type": "organic",
+            "rank": 15,
+            "organicRank": 12,
+            "title": "GPX Viewer Online — View GPS Tracks, Routes & ...",
+            "url": "https://google.com/goto?url=CAESYQHrOzAVWan89TtAP9oZLV1nEbeXyihzR5BRy3mY1YNtIjuZ2kUZcwIu_CEEVu3w4Mf8y8lmT5fZpv0E2bze49bEIrEgMtlWDAmVjq3ZAiFQxXi7oz1IAmmoz0UF3leqCyU&gsessionid=9i4JICgbyn63kdV9VQO7a51fAf_HBSEwEn0kUNnk0M7-9_-H7GgmmA",
+            "domain": "google.com",
+            "description": "Free online GPX viewer. Drop a .gpx file to view GPS tracks, routes, and waypoints on an interactive map. No software install, no signup — runs in your ..."
+          },
+          {
+            "type": "organic",
+            "rank": 16,
+            "organicRank": 13,
+            "title": "GPS Visualizer",
+            "url": "https://google.com/goto?url=CAESWQHrOzAVy4zltvRlAx89Xn60F4cXpFvmMMVp2ykgCMxwsVUs9Rm49TbhvIVCT7_wAg_C_ccWUtMBYC84yD2JukW_6KNLfxl0_isaV2RIAdKT87qVfvg2VOiP&gsessionid=9i4JICgbyn63kdV9VQO7a51fAf_HBSEwEn0kUNnk0M7-9_-H7GgmmA",
+            "domain": "google.com",
+            "description": "GPS Visualizer is an online utility that creates maps and profiles from geographic data. It is free and easy to use, yet powerful and extremely customizable. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 17,
+            "organicRank": 14,
+            "title": "GPX Viewer for Android - Download the APK from Uptodown",
+            "url": "https://google.com/goto?url=CAESZQHrOzAVz1_cVLov94N88zFDbOqDFZy8PLcXKCcuAEX_b6ykH_N3_hBWYMjxlp5CbkGIhm3E3BlY0iFqav3qQD7wJ9CzLdLfk0M69bvr9AljT_4uojLxv5-wRuK-MsVu5wRoQpng&gsessionid=9i4JICgbyn63kdV9VQO7a51fAf_HBSEwEn0kUNnk0M7-9_-H7GgmmA",
+            "domain": "google.com",
+            "description": "GPX Viewer is a versatile app designed to enhance your outdoor activities by offering comprehensive GPS tracking, navigation, and file viewing capabilities. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 18,
+            "organicRank": 15,
+            "title": "GPX file viewer: display GPS tracks online for free!",
+            "url": "https://www.maplorer.com/view_gpx.html",
+            "domain": "www.maplorer.com",
+            "description": "Free online GPX file viewer ! Free software for Windows CE and Windows mobile based GPS systems and smartphones."
+          },
+          {
+            "type": "organic",
+            "rank": 19,
+            "organicRank": 16,
+            "title": "GPX viewer - map - App Store - Apple",
+            "url": "https://apps.apple.com/jp/app/gpx-viewer-map/id6453594386?l=en-US",
+            "domain": "apps.apple.com",
+            "description": "GPX Viewer is your ultimate companion for adventure, empowering you to import and follow GPX files on maps for an immersive and thrilling experience. Key ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 20,
+            "organicRank": 17,
+            "title": "How to View and Use GPX Files with Google Maps",
+            "url": "https://google.com/goto?url=CAESXwHrOzAV_R_7aE2IgpcP7Us59hermYpvTspd8rZftDFN8wgZl9gLvzV8P79vwxDJHNUsh3e19d769Lyw3hyUDfuGhh3ye5l3-sTewRqi11TRLN1d02sYCdgi5qJweXCG&gsessionid=9i4JICgbyn63kdV9VQO7a51fAf_HBSEwEn0kUNnk0M7-9_-H7GgmmA",
+            "domain": "google.com",
+            "description": "Nov 23, 2024 — Use GPX files with Google Maps in seconds. View any .gpx track on an interactive map, open routes in the Google Maps app, or export Google ..."
+          }
+        ],
+        "locationCode": 2840,
+        "languageCode": "en",
+        "device": "desktop"
+      },
+      {
+        "keyword": "google timeline json viewer",
+        "ok": true,
+        "items": [
+          {
+            "type": "organic",
+            "rank": 1,
+            "organicRank": 1,
+            "title": "Timeline Viewer Map",
+            "url": "https://timelineviewer.pages.dev/",
+            "domain": "timelineviewer.pages.dev",
+            "description": "View your exported Google Maps Timeline on a map. Timeline file (.json or .zip) Choose a file or drop it on the map. pick your JSON file. This site lets you ..."
+          },
+          {
+            "type": "ai_overview",
+            "rank": 2,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 3,
+            "organicRank": 2,
+            "title": "Manage your Google Maps Timeline - Android phone & tablet",
+            "url": "https://support.google.com/maps/answer/6258979?hl=en&co=GENIE.Platform%3DAndroid",
+            "domain": "support.google.com",
+            "description": "Timeline shows where and how you traveled, like walking, biking, driving, at the top of the screen, such as Places, Cities, or World,"
+          },
+          {
+            "type": "organic",
+            "rank": 4,
+            "organicRank": 3,
+            "title": "ryangriggs/GoogleTimelineMapper: Map and Browse ...",
+            "url": "https://github.com/ryangriggs/GoogleTimelineMapper",
+            "domain": "github.com",
+            "description": "This single-file web app allows you to load Google Timeline data exported via Google Takeout and map the locations. JSON files from the export."
+          },
+          {
+            "type": "organic",
+            "rank": 5,
+            "organicRank": 4,
+            "title": "What's Inside Your Google Timeline Export (And What You ...",
+            "url": "https://google.com/goto?url=CAESfgHrOzAVMh-UrBjsfNu57jiC6MCC2SRIOsJBE_6h8tjhVinUjFqCW43cn2RNPVwvDu3OGnVpkEjM-rhGCMkL7So7lQsU0r2lAKYMwlykxmOAuvp_VsDfIkVOLifBsz7j6el1VAIvSigaUqHc6OwiymVEr8-zXDLfzkhPYldw0g",
+            "domain": "google.com",
+            "description": "Mar 28, 2026 — Drop your export into the free Google Timeline Visualizer to see it on a map, or turn it into GPX, KML, or GeoJSON with the Google Timeline ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 6,
+            "organicRank": 5,
+            "title": "I got tired of my 14 years of Google Maps history being \"trapped ...",
+            "url": "https://www.reddit.com/r/LocalGuides/comments/1s59cgb/i_got_tired_of_my_14_years_of_google_maps_history/",
+            "domain": "www.reddit.com",
+            "description": "I got tired of my 14 years of Google Maps history being \"trapped\" in a JSON file, so I built a free visualizer for us. Videos & Images. This ..."
+          },
+          {
+            "type": "organic",
+            "rank": 7,
+            "organicRank": 6,
+            "title": "Timeline Exporter: GPX KML – Apps on ...",
+            "url": "https://play.google.com/store/apps/details?id=io.github.nikkittap.timelineexporter&hl=en_NZ",
+            "domain": "play.google.com",
+            "description": "Oct 10, 2026 — Timeline Exporter turns your Google Maps Timeline into open GPS formats — entirely on your phone. Pick your Timeline.json, preview the track on ..."
+          },
+          {
+            "type": "organic",
+            "rank": 8,
+            "organicRank": 7,
+            "title": "How to Visualize your Google Location History",
+            "url": "https://gist.github.com/devdattaT/018f7fc153d9a82d83775351576965f3",
+            "domain": "gist.github.com",
+            "description": "You can check it out on the timeline feature in the Google Maps application. This gets generated as a JSON file which you should download. You can then convert ..."
+          },
+          {
+            "type": "organic",
+            "rank": 9,
+            "organicRank": 8,
+            "title": "makinux/GoogleMapTimelineViewer2: GoogleMap ...",
+            "url": "https://github.com/makinux/GoogleMapTimelineViewer2",
+            "domain": "github.com",
+            "description": "timeline viewer was discontinued. Save the exported file as \"Timeline.json.\" Transfer the JSON file to your computer and save it to your preferred location."
+          },
+          {
+            "type": "organic",
+            "rank": 10,
+            "organicRank": 9,
+            "title": "Google Timeline Visualizer: Export, Review, and Share",
+            "url": "https://google.com/goto?url=CAESigEB6zswFbHQuTq8zqqG54ZPx7aGeZADzGG0Fol3y0cnbkCqWyqWKjFWof5WldQiqj_f5wAIVuzAQngPSzCZs5htyo4NM9syozkuLMaDrfCSQ-MslyiEOirh62USCiq3CtOi7PkrS7Sc4OpnU8Ast8zjI_o9RxbDVYC4nGRu8Tf9-ueoy_dDp-J0Uks",
+            "domain": "google.com",
+            "description": "Aug 21, 2026 — Google Timeline Visualizer is a free, open-source Android and web app that turns your exported Google Timeline data into an animated MP4 ... Read more"
+          },
+          {
+            "type": "related_searches",
+            "rank": 11,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 12,
+            "organicRank": 10,
+            "title": "What's Inside Your Google Timeline Export (And What You ...",
+            "url": "https://google.com/goto?url=CAESfgHrOzAVO7wdUmKozgOn6jhJqZDrk6pzcAZiVi1yOkNPHt3_ZkyDubtx_iApW8aE7HQENzPLSUCR5-84hxPb0WA-jbBio3UthlgtgOc9fK3kotxi8J83DLM5sOpi1ES2mLXVa8YcjwCZvaUUkCmRgd-LOxXm7Vcs3uCKRkhojQ",
+            "domain": "google.com",
+            "description": "Mar 28, 2026 — The file is usually called location-history.json or Timeline.json . This format has three main sections: semanticSegments , rawSignals , and ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 13,
+            "organicRank": 11,
+            "title": "Manage your Google Maps Timeline - Android phone & tablet",
+            "url": "https://support.google.com/maps/answer/6258979?hl=en&co=GENIE.Platform%3DAndroid",
+            "domain": "support.google.com",
+            "description": "Timeline helps you go back in time and remember where you've been by automatically saving your visits and routes to your Google Maps Timeline on each of your ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 14,
+            "organicRank": 12,
+            "title": "ry-li/google-maps-timeline-viewer",
+            "url": "https://google.com/goto?url=CAESbwHrOzAVwCWt5OoXH_6tPEaa2GxyfF6BTCia3yJSv_vQkalNPpfGxGeD9v4I67CZnX7J9JlEY4Tr_SW5im1QVuxGKBfJbv4ihmtB6dMiZk2CKhw1pXB85ZkvQr9Ix5AfDBXFneaGksOYwn-UTzJoUg",
+            "domain": "google.com",
+            "description": "A mobile-friendly open-source Google Maps Timeline viewer on HTML with multiple filter functions. File, About. index.html, the viewer. location-history.json ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 15,
+            "organicRank": 13,
+            "title": "Timeline Visualizer",
+            "url": "https://ahn-lab.org/google-timeline-visualizer/app/",
+            "domain": "ahn-lab.org",
+            "description": "Open Google Maps and tap your profile picture. Open Settings, then Location & Privacy (formerly Personal content). Select Export Timeline data. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 16,
+            "organicRank": 14,
+            "title": "Timeline Visualizer Video App - Apps on Google Play",
+            "url": "https://play.google.com/store/apps/details?id=com.journeyreplay.traveltimeline&hl=en_US",
+            "domain": "play.google.com",
+            "description": "Sep 1, 2026 — - Import Timeline.json files seamlessly with 100% offline on-device processing. - View your complete ground, flight, and transit routes across ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 17,
+            "organicRank": 15,
+            "title": "Google Maps multi-day timeline - Mikhail Melnik",
+            "url": "https://mikhailmelnik.medium.com/google-maps-multi-day-timeline-e6a63e26fbc9",
+            "domain": "mikhailmelnik.medium.com",
+            "description": "For Android users (apologies to iOS users), navigate to Settings > Location > Location Services > Timeline, select your Google Account (if you ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 18,
+            "organicRank": 16,
+            "title": "Google Timeline Visualizer GitHub Tutorial",
+            "url": "https://google.com/goto?url=CAESZgHrOzAViacpEGlk-pVfhvw2vZuq6enXD7R80QXYxSHJpIJyXvICOhcNl4KTm-I6JdeStEmJFokjc03PIb9x9Oizsun9v-XYFC2POkmnT7cKNMLehVNB_lsbc5XKvtQxn_LWRCK1Qw",
+            "domain": "google.com",
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 19,
+            "organicRank": 17,
+            "title": "Google Timeline Visualizer: Export, Review, and Share",
+            "url": "https://google.com/goto?url=CAESigEB6zswFRRwdyf1ZDuEJ4j39aQ3R6MpTj1_iPDNiSafu2_9-j8kpMCCR948bhPZ250TFd0bO6KIUFby0MqSNbtmOiALLBNLhBhz0ZuCATpd1PYFo-ZhANsL1a-pvtkEmluqeI_nQ7EFOiH0UqTfkkCR94ijTQ--MHLVoei2UXBUrp_xoJ55GK_04bI",
+            "domain": "google.com",
+            "description": "Aug 21, 2026 — Turn Timeline data into a travel video, troubleshoot unusual routes and render failures, and review location disclosures before sharing."
+          },
+          {
+            "type": "organic",
+            "rank": 20,
+            "organicRank": 18,
+            "title": "Google Timeline Statistics Analyzer",
+            "url": "https://google.com/goto?url=CAESagHrOzAVkxBr6BQX1U2D59UQw_b7NWGOgFJBhiYZASvChRktJsgFUrZrbLGiI4o9aI8xTK0Cjzdf7GGLejj_pt8mtRdgloGlSr7N42i3tdOx2KqeYjtYfwZofxSK-YJdwqYx3lCKbooNSXY",
+            "domain": "google.com",
+            "description": "Analyze your Google Timeline: total distance, countries visited, top places, activity breakdown and yearly trends. Free, runs in your browser."
+          }
+        ],
+        "locationCode": 2840,
+        "languageCode": "en",
+        "device": "desktop"
+      },
+      {
+        "keyword": "google timeline to gpx",
+        "ok": true,
+        "items": [
+          {
+            "type": "ai_overview",
+            "rank": 1,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 2,
+            "organicRank": 1,
+            "title": "Has anybody figured out how to convert the \"new\" format of ...",
+            "url": "https://google.com/goto?url=CAESnwEB6zswFST58UQ7L5_7HK8od1wXYutRhehVCqExCUqG0bYCvqIycLtKLHxTk3s2IUOx8X80bIl1--ALnSKoEfR-abx30o8TPa-pBRs_SCPDbdcNXm3h149XkYHsyjg83_Q4UXitNck9be6wbo5VfEE96yMrbLJJ61gGFS84kUAe3jj93ozy0Z9wkFVSyavX_jpLFjJfJkKQLMJALnNuVmg",
+            "domain": "google.com",
+            "description": "... Google Timeline data after downloading the JSON file and converting to GPX. Seems like a cool idea. However, on my iPhone I went to Google ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 3,
+            "organicRank": 2,
+            "title": "Google Maps Timeline Data Converter App",
+            "url": "https://brandonml.github.io/google-maps-timeline-converter/",
+            "domain": "brandonml.github.io",
+            "description": "A web app to clean, parse, and convert Google Maps Timeline data into CSV, KML, and JSON formats."
+          },
+          {
+            "type": "organic",
+            "rank": 4,
+            "organicRank": 3,
+            "title": "What's Inside Your Google Timeline Export (And What You ...",
+            "url": "https://dawarich.app/blog/whats-inside-your-google-timeline-export/",
+            "domain": "dawarich.app",
+            "description": "Mar 28, 2026 — Drop your export into the free Google Timeline Visualizer turn it into GPX, KML, or GeoJSON with the Google Timeline Converter — both run ..."
+          },
+          {
+            "type": "organic",
+            "rank": 5,
+            "organicRank": 4,
+            "title": "Timeline Viewer Map",
+            "url": "https://google.com/goto?url=CAESXAHrOzAVmwqzKwQIXUJLM6ThVwhcKUoWvoZTibS_ghAz9U0_c2T_iWrLZAzQQ-JgewckSu0njkuSjmVz-wym23g32CnjtucVbY2uaFJAuA7SMrWYNzJqguZ8SDSm",
+            "domain": "google.com",
+            "description": "View your exported Google Maps Timeline on a map. Get your timeline file. Services → Timeline → Export. This site lets you load that file and view your ..."
+          },
+          {
+            "type": "organic",
+            "rank": 6,
+            "organicRank": 5,
+            "title": "Location History / Timeline data JSON File",
+            "url": "https://support.google.com/maps/thread/392977654?hl=en&msgid=394017897",
+            "domain": "support.google.com",
+            "description": "Dec 7, 2025 — Hi, I accidentally deleted my old timeline and i managed to recover the JSON file.  But i am struggling to get the JSON file convert and install back ..."
+          },
+          {
+            "type": "organic",
+            "rank": 7,
+            "organicRank": 6,
+            "title": "Manage your Timeline data - Google Account Help",
+            "url": "https://support.google.com/accounts/answer/14200149?hl=en",
+            "domain": "support.google.com",
+            "description": "Timeline is a Google Account setting that helps you go back in time, and remember where you've been, in your Google Account's Activity settings."
+          },
+          {
+            "type": "organic",
+            "rank": 8,
+            "organicRank": 7,
+            "title": "Timeline Exporter: GPX KML",
+            "url": "https://play.google.com/store/apps/details?id=io.github.nikkittap.timelineexporter&hl=ln",
+            "domain": "play.google.com",
+            "description": "Timeline Exporter is the tool that gets Pick your Timeline.json, preview the track on a map, filter by date, and export to GPX, KML, GeoJSON or CSV."
+          },
+          {
+            "type": "organic",
+            "rank": 9,
+            "organicRank": 8,
+            "title": "How To Convert Google Maps To GPX Files In Seconds!",
+            "url": "https://www.youtube.com/watch?v=c2pLw2DzfDQ",
+            "domain": "www.youtube.com",
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 10,
+            "organicRank": 9,
+            "title": "Google Maps multi-day timeline - Mikhail Melnik",
+            "url": "https://mikhailmelnik.medium.com/google-maps-multi-day-timeline-e6a63e26fbc9",
+            "domain": "mikhailmelnik.medium.com",
+            "description": "navigate to Settings > Location > Location Services > Timeline, select your Google Account and click on Export Timeline Data."
+          },
+          {
+            "type": "related_searches",
+            "rank": 11,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 12,
+            "organicRank": 10,
+            "title": "Google Maps multi-day timeline - Mikhail Melnik",
+            "url": "https://google.com/goto?url=CAEShwEB6zswFa3xBG1HdMjIKU0oJ1hHIZ2eih5O84yoszx1ZRdCnnDgz87VOWTYY-Nj4RgpsGHcN9TY8CNULd-yiXT07-TmpWIklhWTP04B24DGXMAUXbErX0gv5S3rgdERt3eTJgzk8nkRv1Lw-g58VZktXBHHat_nLq4Ut5U1AsGSQu99dqxjLCc",
+            "domain": "google.com",
+            "description": "It's now time to showcase your journey! To do this, navigate to My Maps and create a new map by importing the resulting timeline.kml file into ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 13,
+            "organicRank": 11,
+            "title": "how to convert google-maps GeoJSON to GPX, retaining ...",
+            "url": "https://google.com/goto?url=CAESqgEB6zswFTBsJZ5xlYQm5ue-MUDs9ANAi6XqBC-gNNjZAq2LxD689brRTK8EM07CWcOaLEsuwm2ftEEALxEdeK6fvSGikPw00-Aoa3R3zstPjjjfQSi_V1-i1jLbUrHyao7GcXrmEw1V7NzJ4KLmBDmi7fBeXu7Hmc3xu-F7tW9cN8WxXR0c1qkLcNWmoRjECGX8HhXbo0X4pg1r6_e49FqKay8Lw1YXslM5cg",
+            "domain": "google.com",
+            "description": "I have exported my google-maps Point Of Interests (saved places / locations) via the takeout tool. How can i convert this to GPX, so that i can import ..."
+          },
+          {
+            "type": "organic",
+            "rank": 14,
+            "organicRank": 12,
+            "title": "Google Takeout Location History (googletakeout)",
+            "url": "https://www.gpsbabel.org/htmldoc-1.9.0/fmt_googletakeout.html",
+            "domain": "www.gpsbabel.org",
+            "description": "Convert a single years' location history to GPX. gpsbabel -i googletakeout -f \"Semantic Location History/2022\" -o gpx -F 2022.gpx. Example 3.22. Convert a ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 15,
+            "organicRank": 13,
+            "title": "How to Convert Google Maps to GPX File (Tutorial 2026)",
+            "url": "https://www.youtube.com/watch?v=65w7qpYDGus",
+            "domain": "www.youtube.com",
+            "description": "How to Convert Google Maps to GPX File (Tutorial 2026) I cover everything from website builders to hosting platforms, showing you exactly ..."
+          },
+          {
+            "type": "organic",
+            "rank": 16,
+            "organicRank": 14,
+            "title": "Google Timeline (.json) file format: open & convert free",
+            "url": "https://google.com/goto?url=CAEScgHrOzAVWDCkgtAH0wQzHQDITsPbD4zFTGi7CQGTC7okJCT5y5fJBqhGUaHoHvlOuTMAt5OUr7ksOjWUU2FBhgatuSR9d-mTVtIzEhZdi1bKVZAIF_fNi8bmrQ43Tg0m7iLGjvIzHRl82BMo99dKnTLwqA",
+            "domain": "google.com",
+            "description": "Google Timeline is the location history Google Maps keeps of where your phone has been. Its export is a JSON file — location-history.json on iPhone, Timeline. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 17,
+            "organicRank": 15,
+            "title": "Exporting .gpx files from Google maps",
+            "url": "https://support.google.com/maps/thread/5104928?hl=en&msgid=14187170",
+            "domain": "support.google.com",
+            "description": "Apr 29, 2019 — There are a number of programs that will convert KML to GPX. GPS Visualizer is a good one. Where are you exporting data with timestamps from? Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 18,
+            "organicRank": 16,
+            "title": "Timeline Exporter: GPX KML",
+            "url": "https://play.google.com/store/apps/details?id=io.github.nikkittap.timelineexporter&hl=ln",
+            "domain": "play.google.com",
+            "description": "Timeline Exporter turns your Google Maps Timeline into open GPS formats — entirely on your phone. Since late 2024, Google Maps Timeline is stored only on ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 19,
+            "organicRank": 17,
+            "title": "My Google Maps Route to GPX File",
+            "url": "https://www.youtube.com/watch?v=HksYL-oAar0",
+            "domain": "www.youtube.com",
+            "description": "Hey guy's R4GE VipeRzZ here, and today I'm going to show you how you can convert a route from My Google Maps to a GPX file."
+          },
+          {
+            "type": "organic",
+            "rank": 20,
+            "organicRank": 18,
+            "title": "Google Timeline a GPX, KML y CSV — Conversor",
+            "url": "https://google.com/goto?url=CAEScwHrOzAVvlLYHxDOysNoDDWol40mB5omUkc3ONyB25L0i8OZT7MsQ0I9y6LyXkUjwcTqN8e2Llg3wKP9aLT2n6DaR4y8hPRpz7SeR53QGy2qGbSwh6m3ZH6Zu7ZGGy22GTd61ymFxcY7Tlhvv9Gz0IwKgO4",
+            "domain": "google.com",
+            "description": "Herramienta gratuita y privada para convertir tu historial de ubicaciones de Google Timeline (Cronología de Google Maps) a GPX, KML, GeoJSON, KMZ o CSV. Read more"
+          }
+        ],
+        "locationCode": 2840,
+        "languageCode": "en",
+        "device": "desktop"
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/keywords"
+    }
+  },
+  "additionalSerps": {
+    "results": [
+      {
+        "keyword": "gpx vs kml",
+        "ok": true,
+        "items": [
+          {
+            "type": "ai_overview",
+            "rank": 1,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 2,
+            "organicRank": 1,
+            "title": "Which app(s) do you use for offline navigation (and ...",
+            "url": "https://google.com/goto?url=CAESowEB6zswFRAMe1i15aUFcoyOFCC__VessZON3t4qmcz-87TdE-5-fZ1QAuXjy1G4XYO9I3I2fkojgsaoM7zdqhuPNLvKIMMi9dYHGM07y4MjUFTmwOCT2WECPRZ3qTihhSZY-CUx2Emy_ddjwmmo21E1_uXK3S3MZq7oGvY9YxU_w9U9ozgSKfWHintOTPnjXE4bc6bSPEjKfnMupVr5Sa18F6SJ",
+            "domain": "google.com",
+            "description": "While doing research on various trails and routes around Australia, I've noticed that many .gpx and .kml files made by others are freely and publicly available ..."
+          },
+          {
+            "type": "people_also_ask",
+            "rank": 3,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 4,
+            "organicRank": 2,
+            "title": "Converting GPS Data Between GPX and KML | Paul Bogard",
+            "url": "https://google.com/goto?url=CAEShgEB6zswFQWUN404EhbC8hcGgMh0Gvn4o8kuW1FEP-dSJX1Y_Im87mVzFiKlweoPTJqQFxNY5QfxKkvXtWIJjvPEFYM-Fz-nWpmy2gtC74jxr6OZWpAv1NFC5U8OFZwwRFdCspyfIBzY1FYEHTJDB_6cxH8fJOLaR04LXbI7SVWuEe1RMvnCIQ",
+            "domain": "google.com",
+            "description": "GPX and KML are both file types used to store GPS data. This tutorial will teach you how to convert between GPX and KML (in both directions)"
+          },
+          {
+            "type": "organic",
+            "rank": 5,
+            "organicRank": 3,
+            "title": "What is a KML file?",
+            "url": "https://blog.vecturagames.com/what-is-a-kml-file/",
+            "domain": "blog.vecturagames.com",
+            "description": "Sep 24, 2025 — KML files can be used much like GPX files — to plan routes, share tracks with friends, or keep waypoints saved for future adventures. GPX files ..."
+          },
+          {
+            "type": "organic",
+            "rank": 6,
+            "organicRank": 4,
+            "title": "GPX Vs Other File Formats: What's the Difference and ...",
+            "url": "https://www.facebook.com/fb-answers/gpx-vs-other-file-formats/",
+            "domain": "www.facebook.com",
+            "description": "KML is tied to Google Earth and works well for viewing maps on a computer or tablet, while GPX is the universal GPS track format that most devices accept."
+          },
+          {
+            "type": "organic",
+            "rank": 7,
+            "organicRank": 5,
+            "title": "Www.gpx2kml.com: convert www.gpx to kml online. It's free ...",
+            "url": "https://www.gpx2kml.com/",
+            "domain": "www.gpx2kml.com",
+            "description": "This is a free online converter. Enjoy this simple tool to get the GPS format of your choice.It will translate your tracks, waypoints and routes from one ..."
+          },
+          {
+            "type": "organic",
+            "rank": 8,
+            "organicRank": 6,
+            "title": "What Is a GPX File? A Hiker's Guide to GPS Navigation",
+            "url": "https://google.com/goto?url=CAEScAHrOzAVbX1n4HkkiTzxGsla16JopIs7QJ7xz9vYkc7vP7RCbEbgsb_V7SMtTWm-TmHztNGStdDrEcAf5DE_5s3OfhycTcmP5QOX8xbIyo9ywOtPH8igm0uwcBMFXGsLN43SAgeU0XPBvoe6f6teVYg",
+            "domain": "google.com",
+            "description": "Both store geographic data. GPX is the standard for GPS tracks and routes and is what outdoor apps and watches expect. KML, used by Google Earth, leans towards ..."
+          },
+          {
+            "type": "organic",
+            "rank": 9,
+            "organicRank": 7,
+            "title": "GPX or KML for Garmin: Which File Type Should You Use?",
+            "url": "https://google.com/goto?url=CAESggEB6zswFTNMLMcUQX_Ac9XwYhM7GfpAjxVlIzDCUus-KrFJH1ieeEKfKeag-yaHZj_bRxQdmiL4rlnIpTpTcGY8SytrWtW-PoGjtgs1OgjaOygVODZ4z9v-K-imd3Qeqlv42pHKdCd8NJmSvx2K_WTw4mHpmQ6hjN6MTaLacpBjdbkY",
+            "domain": "google.com",
+            "description": "GPX is the standard for tracks, routes, and waypoints, while KML is mainly for viewing in Google Earth or as custom map overlays in KMZ format."
+          },
+          {
+            "type": "organic",
+            "rank": 10,
+            "organicRank": 8,
+            "title": "How do GPX, TCX, FIT, and KML formats compare for ...",
+            "url": "https://www.quora.com/How-do-GPX-TCX-FIT-and-KML-formats-compare-for-storing-exercise-data",
+            "domain": "www.quora.com",
+            "description": "How do GPX, TCX, FIT, and KML formats compare for storing exercise data?"
+          },
+          {
+            "type": "organic",
+            "rank": 11,
+            "organicRank": 9,
+            "title": "KMZ and GPX files",
+            "url": "https://google.com/goto?url=CAESZgHrOzAVzNUvU5vDZRdOOHpSTpObBA5dvNd99e9r4CVuih98bru12tt-pyzV_veU3jesYfGUCdl8RrzsvlNcqFJjn48XdnU1ssYEEhY7DLdDGOD4dFj0DeQxuli5myehYMlbWUp4UA",
+            "domain": "google.com",
+            "description": "GPX files carry GNSS data (waypoints, routes, and tracks) in a markup language format and hence they are in a text based. The intention of the GPX format is to ... Read more"
+          },
+          {
+            "type": "related_searches",
+            "rank": 12,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 13,
+            "organicRank": 10,
+            "title": "From GPX to KML in 3 Clicks",
+            "url": "https://atlas.co/blog/from-gpx-to-kml-in-3-clicks/",
+            "domain": "atlas.co",
+            "description": "Enhanced Visualization: KML offers richer styling options for lines and polygons, providing a more visually appealing presentation compared to plain GPX files. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 14,
+            "organicRank": 11,
+            "title": "KML to GPX Converter: Import Google Earth Routes to Any GPS",
+            "url": "https://google.com/goto?url=CAESYgHrOzAViBTOPnUuLIPVrKpilcbwVmrk44bD5Lvd5oXsG5kxYrgNiLpieNLG8hCtJflAhYV6A9PAhx86_TceI-KDlS-DJMnIoBZRQWoadcw_OekMsVdnZMYNYlGVVDxtyDeT",
+            "domain": "google.com",
+            "description": "Convert KML files from Google Earth or My Maps to the universally compatible GPX format. Free, online, and secure. Works with Garmin, Strava, and all major ..."
+          },
+          {
+            "type": "organic",
+            "rank": 15,
+            "organicRank": 12,
+            "title": "GPX or KML for Garmin: Which File Type Should You Use?",
+            "url": "https://www.facebook.com/fb-answers/gpx-or-kml-for-garmin/?locale=pt_BR",
+            "domain": "www.facebook.com",
+            "description": "For Garmin devices, GPX is the standard for tracks, routes, and waypoints, while KML is mainly for viewing in Google Earth or as custom map overlays in KMZ ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 16,
+            "organicRank": 13,
+            "title": "GPX vs KML and iPad to PC and back",
+            "url": "https://help.gaiagps.com/hc/en-us/community/posts/115009166108-GPX-vs-KML-and-iPad-to-PC-and-back",
+            "domain": "help.gaiagps.com",
+            "description": "Sep 29, 2017 — I have created and saved an area with layers, waypoints and other features. What is the best way to export that to my iPhone (GPX or KML)? ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 17,
+            "organicRank": 14,
+            "title": "What is a free kml to gpx file converter?",
+            "url": "https://google.com/goto?url=CAESggEB6zswFXLub6OiC9hTgI-L8ebEEmyRH3DXD-xq4-5E_T1q_GXgUARxHwIHfZ4gCDNQQt8vsFlyxBTnfgNBfxoG4jFSo1kJO-bvPCG69kHx_CGyUcb7NB-6baK2ZP5Nk1Q3gjdVQNsPLNf7N1PAMAoavtQyJfA402tmKISmwc4rpUuM",
+            "domain": "google.com",
+            "description": "GPS Visualizer is a free online tool that can convert KML files to GPX format. •. \"GPS visualizer to convert the KML to GPX\". •. \"Google ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 18,
+            "organicRank": 15,
+            "title": "GPS Exchange Format",
+            "url": "https://google.com/goto?url=CAESbAHrOzAVQiGSx_epfivnk2_iIYNqMRxzY4zPomgbOBG3WJSqRtZJEbdAlzVAYCGsJYFk3Bs2E1RcyyIutHIYDFnlR763gH1gfN_15ro7PH_oezDyQtN8QiCjV9V-UkPI0eXVAMEGQ5tEraitNg",
+            "domain": "google.com",
+            "description": "GPS Exchange Format (GPX ) is an XML schema designed as a common GPS data format for software applications. It can be used to describe waypoints, tracks, ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 19,
+            "organicRank": 16,
+            "title": "Google Map File Format: KML, KMZ, GPX and How to Use ...",
+            "url": "https://google.com/goto?url=CAESdgHrOzAVE5SxeA_dbd4SLSQ3V6PytCUZ8k6z5RQ0FnnoJCYKo78uOq3ouGqrzAEKjhYlxl61lXRQ1fgAQPPqsKya07c2ghhjo-32oBPJpdgT9wgM1g-C5WEiBhC9mnPTPmx-F2etfqTww0lpGOjjIt-xD_uU12U",
+            "domain": "google.com",
+            "description": "GPX is the standard format for GPS devices and tracks, while Google Maps prefers KML/KMZ. Google now automatically converts GPX to KML for viewing in both ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 20,
+            "organicRank": 17,
+            "title": "The GPX and KML file - Through My Lens - WordPress.com",
+            "url": "https://google.com/goto?url=CAESgAEB6zswFfIKK-Ziv-mdZr7YL__sa2RFWYC0UzcgR2LVEoMzE941JBrK5tNnDoikU_lagqWHh7piBRkscFRNudTWfhlF9q7xJLZHtLxxLuSWJoM0N3DOwRWykpK0DS7Dc-9tEGJZEaU1agOMyxQaFutAgloHy3fbNoB455wPEz9NXg",
+            "domain": "google.com",
+            "description": "Apr 28, 2016 — GPX data have more information and KML files have less when the records are used on google map. Example;. Compared to the kml file;. Both are ... Read more"
+          }
+        ],
+        "locationCode": 2840,
+        "languageCode": "en",
+        "device": "desktop"
+      },
+      {
+        "keyword": "gpx to csv",
+        "ok": true,
+        "items": [
+          {
+            "type": "organic",
+            "rank": 1,
+            "organicRank": 1,
+            "title": "How to Convert GPX to Excel",
+            "url": "https://www.facebook.com/fb-answers/how-to-convert-gpx-to-excel/?locale=te_IN",
+            "domain": "www.facebook.com",
+            "description": "GPSBabel is the most recommended free tool for converting GPX files to CSV or other formats that Excel can open. You can also use web converters like mygeodata. Read more"
+          },
+          {
+            "type": "ai_overview",
+            "rank": 2,
+            "organicRank": null,
+            "title": null,
+            "url": null,
+            "domain": null,
+            "description": null
+          },
+          {
+            "type": "organic",
+            "rank": 3,
+            "organicRank": 2,
+            "title": "Import .gpx as a mission? - #4 by Yordie - Help",
+            "url": "https://google.com/goto?url=CAESeAHrOzAVY5nKnnYH9SQwCnZOiTU3QY8lYFu966ocSHyhHSM2Rqcps9lCfY_voz-0MmOSnOJxFY-0AHjcvYY3g80xaIO1OudWqqVsJxDmFd3N5G41qCIQNfvpnyMrrxqE4FSUL8QJB_z6EG5PgGI1iBCRVdm7JsNu5Q",
+            "domain": "google.com",
+            "description": "Aug 17, 2023 — Discover fast and easy to use online conversion and transformation tool to convert GPX to CSV format - widely used in OziExplorer, Google Earth, ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 4,
+            "organicRank": 3,
+            "title": "GPX, CSV, and TCX Data Formats - CloudACM",
+            "url": "https://www.cloudacm.com/?p=517",
+            "domain": "www.cloudacm.com",
+            "description": "Feb 28, 2014 — The GPX files are a GPS eXchange Format files that contain information about tracks that have been traveled or routes that have been planned.  ..."
+          },
+          {
+            "type": "organic",
+            "rank": 5,
+            "organicRank": 4,
+            "title": "GPX FIT TCX to CSV Converter - Íoslódáil saor in aisce ...",
+            "url": "https://google.com/goto?url=CAESeAHrOzAVu-PMLCcRR12XWDzRvzIC8Hf_enky-Xy9lm6YHd000RYh3G5H4jBPFUI1Y6zW2yxwX-g_abER7j0I_PlPoGbLOG-HBjq11S0thznSJZS__eLPuFelbsqGE0G-1vKloGA0Ohc1jfEkGRWReWmvRDCZLK7nRw",
+            "domain": "google.com",
+            "description": "Oct 13, 2026 — GPX FIT TCX to CSV Converter turns a GPS recording into a spreadsheet you can filter and keep. TCX and KML tracks to CSV on your PC."
+          },
+          {
+            "type": "organic",
+            "rank": 6,
+            "organicRank": 5,
+            "title": "Converting GPX files - General geocaching topics",
+            "url": "https://google.com/goto?url=CAESiQEB6zswFXKFWqb5DYESirgsY_PCiCabtT3B2EbDXl0gl8kA1AOE8fr1RWXpMEhuRnJvXLZ1iGpL4EKydH1jQwKOdA1ZYIgboR9tbmQ9K7FFYNjcaRdxHKnWzwIN7gVLganWT8F8sMsPAxZAEgLfPdu73-B1lzLnerza0XnG1NQtsE2ejw6egJqn9A",
+            "domain": "google.com",
+            "description": "Apr 1, 2009 — If you open the .gpx file in GSAK you can export as a .csv file ( File / Export / As .txt .csv). You could then open that .csv file via Excel."
+          },
+          {
+            "type": "organic",
+            "rank": 7,
+            "organicRank": 6,
+            "title": "GPX to CSV converter: every track point in Excel, free",
+            "url": "https://spatibase.com/tools/gpx-to-csv/",
+            "domain": "spatibase.com",
+            "description": "The Spatibase GPX to CSV converter turns a GPX file into a CSV table in your web browser, with one row for every track point, route point and waypoint."
+          },
+          {
+            "type": "organic",
+            "rank": 8,
+            "organicRank": 7,
+            "title": "GPX FIT TCX to CSV Converter",
+            "url": "https://google.com/goto?url=CAESfQHrOzAV-CSiYLgAbo6h1wG2nn4ezRtRFdekPYJbGHOikJb55-RdvaTpWgn-JpRFhD77964rdzQeZ-o1uspXVJi96Q6MIxEKHCCcCR80PFqyUlLaxUZNFIRIwXataawz3EEPzQmpWX2VwswouQTaXuTNJoa9zj4f7T-RM5HN",
+            "domain": "google.com",
+            "description": "Oct 13, 2026 — GPX FIT TCX to CSV Converter turns a GPS recording into a spreadsheet you can filter and keep. then save a CSV."
+          },
+          {
+            "type": "organic",
+            "rank": 9,
+            "organicRank": 8,
+            "title": "R Script to pull together GPS waypoints from multiple GPX ...",
+            "url": "https://gist.github.com/mdmadhu/e92ee7a2fc595b3941c596c35662f1a8",
+            "domain": "gist.github.com",
+            "description": "Download ZIP R Script to pull together GPS waypoints from multiple GPX files into a single CSV file # export to CSV or some other format"
+          },
+          {
+            "type": "organic",
+            "rank": 10,
+            "organicRank": 9,
+            "title": "Transfering GPX files from Basecamp to CSV files for use ...",
+            "url": "https://gis.stackexchange.com/questions/347715/transfering-gpx-files-from-basecamp-to-csv-files-for-use-in-arcmap",
+            "domain": "gis.stackexchange.com",
+            "description": "Jan 16, 2020 — How do I transfer GPX files from Garmin Basecamp to CSV files for use in ArcMap?  I have saved all my points and tracks in Basecamp and now need to plot ..."
+          },
+          {
+            "type": "organic",
+            "rank": 11,
+            "organicRank": 10,
+            "title": "What are easy methods for converting GPS .gpx to .csv ...",
+            "url": "https://google.com/goto?url=CAESggEB6zswFQCGWdB2o6FbaKPEjkjyl-0XPzlyl-NJ_UGrqrBJjX-g1rjVbau9Op-M6zFaDoVw8eNPf1QzIrw0pKe_v5FyL766-8F38vhQ6ZwR_l45XUy1siDfJDZi3aZ0EQDpO6gTfKTlWdtIxoNpZRp12iCkgHJpt1QdQpLOwB2lNIq6",
+            "domain": "google.com",
+            "description": "Spatial analysis: what method(s) are easiest for converting from GPS .gpx file format, to .csv format (asking for a friend*)"
+          },
+          {
+            "type": "organic",
+            "rank": 12,
+            "organicRank": 11,
+            "title": "GPX FIT TCX to CSV Converter - Free download and install ...",
+            "url": "https://google.com/goto?url=CAESeAHrOzAVSlPPjAVZ_0nypIj7nVTrQY5c1tQyrZfdizWqYY9VF3GA84IfaA-ESXPn051EjoQ38TEhAN_9J6YO-yD6YQiUYKOdacjFDlt-dygA4ms1lMajwKgZxn6XWBFGdQF5wt5mnlsWNvC6f-pMNe9jG9N9B_ZrfQ",
+            "domain": "google.com",
+            "description": "Open GPX, FIT, TCX, KML and KMZ files on your Windows PC, review the route, elevation and recorded points, then save a CSV. The original file stays where it is. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 13,
+            "organicRank": 12,
+            "title": "Using GPS Utility to convert .gpx to .csv?",
+            "url": "https://www.gps-forums.com/threads/using-gps-utility-to-convert-gpx-to-csv.39792/",
+            "domain": "www.gps-forums.com",
+            "description": "Sep 22, 2008 — I can only find one option to save as a csv file in the software I have, it's called \"gps topographer (csv)\". That's the one I pick. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 14,
+            "organicRank": 13,
+            "title": "GPX to CSV in QGIS",
+            "url": "https://google.com/goto?url=CAESZgHrOzAVfvtmbco8TPYvPRerTxgFNqzrf9D6La7Su8xiq4rQ86MZ_cd7heFtcATw-pxMmprFYy6UQAMyFaWoUXfcV0Lf5YF7yeg8kfMVw5PwhOx9grHj71cwt9iqrcn73St3T1L9eg",
+            "domain": "google.com",
+            "description": "A quick overview of converting gpx files to csv while adding x, y coordinates. GPX to CSV in QGIS. @Beagle_Club_Brewing2 likes682 views5 ..."
+          },
+          {
+            "type": "organic",
+            "rank": 15,
+            "organicRank": 14,
+            "title": "CSV, TXT, and GPX files—Portal for ArcGIS",
+            "url": "https://google.com/goto?url=CAESdwHrOzAVVRmSRcE3BoYqCsHhKH0LigsVYQruYuoh9-wJfMTis0obDOTx6IJJGymdpuXoIIcGhlNmw-BMoJtnTZmqYyqb-pI92vsIThi7sdQ1JpJnhDiayMhB_Cjza0shGn8yGllYTEorLFHYxyJ4slOaDtWjS9q3",
+            "domain": "google.com",
+            "description": "You can capture data with a GPS device and use a third-party tool or GPS manufacturer utility to convert the data to a GPX format file. Once you have a GPX file ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 16,
+            "organicRank": 15,
+            "title": "importing gpx or csv files - Garmin Connect Web",
+            "url": "https://google.com/goto?url=CAESqAEB6zswFQipT4ZGFJ31rAVogH5gcA1OztitYHefp9pA7cTlFDoCZGMjFEOjKf6nHDga5kHDoFGFU5cN12qbounfVTJFqo1T1yM09IwalBXLA23Q7t8TkRgQIKDJlQJgZ8y7RCKOhqSs-q6yCdT7QG3Rb7Ep01yY9lEHHK7-IcedZV9dcCW2XHAJC_-yHLaA3srJ-2SVY_VeeI9m6y5ODIxCbGZ_mrhfE-8",
+            "domain": "google.com",
+            "description": "Jun 18, 2014 — If you go to the activities page, there is an Import link near the top-right corner of the page. Click that, then select your file. You might ..."
+          },
+          {
+            "type": "organic",
+            "rank": 17,
+            "organicRank": 16,
+            "title": "GPX, CSV, and TCX Data Formats - CloudACM",
+            "url": "https://www.cloudacm.com/?p=517",
+            "domain": "www.cloudacm.com",
+            "description": "Feb 28, 2014 — None of these data types are defined in the GPX. This is were the CSV file type comes into play. CSV files are comma separated value files. Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 18,
+            "organicRank": 17,
+            "title": "Convert GPX to CSV",
+            "url": "https://google.com/goto?url=CAEScgHrOzAVAnoEYt9W_LT-Ca2BZVHzAns1qdu2tfT6vVY22pgRTSSJW1PB8pQs3Tq2WQ7tyAWhPzmnx5wq4BK6zFSC8v5DaaUNz7mF0U7Ozu8_2pymAGxj28iKwMpLwoEVw4QOLlCk6i3x92cimDZB-b_w7A",
+            "domain": "google.com",
+            "description": "GPX files can be converted to CSV using free tools like GPSBabel, QGIS, or R's plotKML package. For quick online conversion, GPS Visualizer and GPX Studio ... Read more"
+          },
+          {
+            "type": "organic",
+            "rank": 19,
+            "organicRank": 18,
+            "title": "GPX FIT TCX to CSV Converter - Free download and install ...",
+            "url": "https://apps.microsoft.com/detail/9n085vp2083j?hl=qu-PE&gl=PE",
+            "domain": "apps.microsoft.com",
+            "description": "Oct 13, 2026 — GPX FIT TCX to CSV Converter turns a GPS recording into a spreadsheet you can filter and keep. Open GPX, FIT, TCX, KML and KMZ files on your ..."
+          },
+          {
+            "type": "organic",
+            "rank": 20,
+            "organicRank": 19,
+            "title": "GIS: How to convert a gpx track file to csv? (3 Solutions!!)",
+            "url": "https://google.com/goto?url=CAESZgHrOzAVvrNmHR7TLEqZNSB_4i9jQuChY9mdpfVNqBMOdwYqub9HXWftzIJ45YuU0If4mQtsy4BP3E0B-sCkyF-O_7IdAwkL60FUySgGts48rQ5Iv4gEyueOOMPJQe1KjvAX9Tck_g",
+            "domain": "google.com",
+            "description": "GIS: How to convert a gpx track file to csv ? (3 Solutions!!) · Comments. Comment... 31:29. Go to channel DIY ..."
+          }
+        ],
+        "locationCode": 2840,
+        "languageCode": "en",
+        "device": "desktop"
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/keywords"
+    }
+  }
+}

@@ -28,8 +28,11 @@ struct SavedPlaceEditorView: View {
         let region: MKCoordinateRegion?
     }
 
-    init(viewModel: LocationViewModel, draft: SavedPlaceDraft) {
+    /// - Parameter kind: Presets the place's kind, e.g. `.home` when saving home from onboarding.
+    init(viewModel: LocationViewModel, draft: SavedPlaceDraft, kind: SavedPlaceKind? = nil) {
         self.viewModel = viewModel
+        var draft = draft
+        if let kind { draft.kind = kind }
         initialDraft = draft
         _draft = State(initialValue: draft)
         _latitudeText = State(initialValue: Self.coordinateText(draft.latitude))
@@ -43,6 +46,7 @@ struct SavedPlaceEditorView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     locationSection
                     nameField
+                    kindSection
                     radiusSection
                     addressField
                     coordinatesSection
@@ -64,7 +68,7 @@ struct SavedPlaceEditorView: View {
             .scrollDismissesKeyboard(.interactively)
             .background(TE.surface.ignoresSafeArea())
             .foregroundStyle(TE.textPrimary)
-            .navigationTitle(isExistingPlace ? "Edit Location" : "Add Location")
+            .navigationTitle(isExistingPlace ? "Edit place" : "Add place")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
@@ -127,13 +131,13 @@ struct SavedPlaceEditorView: View {
 
     private var locationSection: some View {
         VStack(alignment: .leading, spacing: 8) {
+            if let coordinate = validCoordinate {
+                DraggablePinMap(coordinate: coordinate, radius: previewRadius, ink: placeInk,
+                                name: draft.name.isEmpty ? String(localized: "Saved Location") : draft.name,
+                                onMove: movePin, onSearch: chooseLocation)
+                    .frame(height: 210)
+            } else {
             Button(action: chooseLocation) {
-                if let coordinate = validCoordinate {
-                    PlaceMapCard(coordinate: coordinate, radius: previewRadius, ink: placeInk,
-                                 name: draft.name.isEmpty ? String(localized: "Saved Location") : draft.name,
-                                 caption: "TAP TO MOVE PIN")
-                        .frame(height: 190)
-                } else {
                     VStack(spacing: 8) {
                         Image(systemName: "mappin.and.ellipse")
                             .font(.title2)
@@ -150,13 +154,48 @@ struct SavedPlaceEditorView: View {
                     .frame(maxWidth: .infinity, minHeight: 150)
                     .background(RoundedRectangle(cornerRadius: 16).fill(TE.dialTrack))
                     .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
-                }
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(validCoordinate == nil ? "Choose Location" : "Change Location")
-            .accessibilityValue(validCoordinate == nil ? "" : String(localized: "Match radius: \(Int(previewRadius)) meters"))
+            .accessibilityLabel("Choose Location")
             .accessibilityHint("Search for a place or move a pin on the map.")
+            }
         }
+    }
+
+    /// KIND chips: what this place is to you. Tapping the chosen kind again clears it.
+    private var kindSection: some View {
+        fieldGroup("KIND") {
+            ScrollView(.horizontal) {
+                HStack(spacing: 8) {
+                    ForEach(SavedPlaceKind.allCases) { kind in
+                        let isOn = draft.kind == kind
+                        Button {
+                            draft.kind = isOn ? nil : kind
+                        } label: {
+                            Text(kind.label)
+                                .font(.footnote.weight(.medium))
+                                .lineLimit(1)
+                                .foregroundStyle(isOn ? TE.surface : TE.textPrimary)
+                                .padding(.horizontal, 14)
+                                .frame(minHeight: 36)
+                                .background(Capsule().fill(isOn ? TE.accent : TE.card))
+                                .overlay { if !isOn { Capsule().strokeBorder(TE.border, lineWidth: 1) } }
+                                .frame(minHeight: 44)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityAddTraits(isOn ? .isSelected : [])
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+        }
+    }
+
+    /// The map moved under the centre pin; keep the typed coordinates in step.
+    private func movePin(to coordinate: CLLocationCoordinate2D) {
+        latitudeText = Self.coordinateText((coordinate.latitude * 1_000_000).rounded() / 1_000_000)
+        longitudeText = Self.coordinateText((coordinate.longitude * 1_000_000).rounded() / 1_000_000)
     }
 
     private var nameField: some View {
@@ -204,9 +243,13 @@ struct SavedPlaceEditorView: View {
             }
             .tint(TE.accent)
             .accessibilityValue("\(Int(previewRadius)) meters")
-            Text("Future automatic visits inside this radius use the saved name. Choose 25–10,000 meters; type a value above 500. Editing a saved location does not change past visits.")
+            Text("Visits inside the circle get this name automatically.")
                 .font(TE.mono(.caption2))
                 .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+            Text("Choose 25–10,000 meters; type a value above 500. Past visits keep their names.")
+                .font(TE.mono(.caption2))
+                .foregroundStyle(TE.textMuted.opacity(0.8))
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -312,7 +355,7 @@ struct SavedPlaceEditorView: View {
     }
 
     private var isDirty: Bool {
-        draft.name != initialDraft.name || draft.address != initialDraft.address ||
+        draft.name != initialDraft.name || draft.address != initialDraft.address || draft.kind != initialDraft.kind ||
         latitudeText != Self.coordinateText(initialDraft.latitude) ||
         longitudeText != Self.coordinateText(initialDraft.longitude) ||
         radiusText != Self.coordinateText(initialDraft.radiusMeters)
@@ -381,6 +424,116 @@ struct SavedPlaceEditorView: View {
 
     private static func number(from text: String) -> Double? {
         Double(text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: ",", with: "."))
+    }
+}
+
+/// The place editor's map: drag the map and the centre pin lands on a new spot, with the
+/// match radius drawn around it. Searching or typing coordinates moves the map to match.
+private struct DraggablePinMap: View {
+    let coordinate: CLLocationCoordinate2D
+    let radius: Double
+    let ink: Color
+    let name: String
+    let onMove: (CLLocationCoordinate2D) -> Void
+    let onSearch: () -> Void
+
+    @State private var position: MapCameraPosition
+    /// The centre last reported by or applied to the map, so its own echo isn't treated as a move.
+    @State private var trackedCenter: CLLocationCoordinate2D
+
+    init(coordinate: CLLocationCoordinate2D, radius: Double, ink: Color, name: String,
+         onMove: @escaping (CLLocationCoordinate2D) -> Void, onSearch: @escaping () -> Void) {
+        self.coordinate = coordinate
+        self.radius = radius
+        self.ink = ink
+        self.name = name
+        self.onMove = onMove
+        self.onSearch = onSearch
+        _position = State(initialValue: .region(Self.region(around: coordinate, radius: radius)))
+        _trackedCenter = State(initialValue: coordinate)
+    }
+
+    var body: some View {
+        Map(position: $position, interactionModes: [.pan, .zoom]) {
+            MapCircle(center: coordinate, radius: radius)
+                .foregroundStyle(ink.opacity(0.14))
+                .stroke(ink, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+        }
+        .onMapCameraChange(frequency: .continuous) { context in
+            let center = context.region.center
+            guard Self.distance(center, trackedCenter) > 0.5 else { return }
+            trackedCenter = center
+            onMove(center)
+        }
+        .onChange(of: "\(coordinate.latitude),\(coordinate.longitude)") { _, _ in
+            // A search result or typed coordinate: bring the map to it.
+            guard Self.distance(coordinate, trackedCenter) > 1 else { return }
+            trackedCenter = coordinate
+            position = .region(Self.region(around: coordinate, radius: radius))
+        }
+        .overlay {
+            Circle()
+                .fill(ink)
+                .frame(width: 20, height: 20)
+                .overlay(Circle().strokeBorder(TE.surface, lineWidth: 3))
+                .shadow(color: .black.opacity(0.18), radius: 3, y: 1)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            Text("DRAG PIN TO MOVE")
+                .font(TE.mono(.caption2))
+                .foregroundStyle(TE.textPrimary)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(RoundedRectangle(cornerRadius: 6).fill(TE.card.opacity(0.92)))
+                .padding(10)
+                .allowsHitTesting(false)
+        }
+        .overlay(alignment: .topTrailing) {
+            Button(action: onSearch) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(TE.textPrimary)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(TE.card.opacity(0.94)))
+                    .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .padding(8)
+            .accessibilityLabel("Search for a place")
+            .accessibilityHint("Search for an address or place a pin on a larger map.")
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Map around \(name)")
+        .accessibilityValue("Match radius: \(Int(radius.rounded())) meters")
+        .accessibilityActions {
+            Button("Move pin north") { nudge(north: 10, east: 0) }
+            Button("Move pin south") { nudge(north: -10, east: 0) }
+            Button("Move pin east") { nudge(north: 0, east: 10) }
+            Button("Move pin west") { nudge(north: 0, east: -10) }
+        }
+    }
+
+    /// VoiceOver can't drag a map, so it moves the pin in 10 m steps instead.
+    private func nudge(north: Double, east: Double) {
+        let latitude = coordinate.latitude + north / 111_000
+        let longitude = coordinate.longitude + east / (111_000 * max(0.01, cos(coordinate.latitude * .pi / 180)))
+        let moved = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        guard CLLocationCoordinate2DIsValid(moved) else { return }
+        onMove(moved)
+    }
+
+    private static func region(around coordinate: CLLocationCoordinate2D, radius: Double) -> MKCoordinateRegion {
+        let span = max(400, radius * 4)
+        return MKCoordinateRegion(center: coordinate, latitudinalMeters: span, longitudinalMeters: span)
+    }
+
+    private static func distance(_ a: CLLocationCoordinate2D, _ b: CLLocationCoordinate2D) -> CLLocationDistance {
+        CLLocation(latitude: a.latitude, longitude: a.longitude)
+            .distance(from: CLLocation(latitude: b.latitude, longitude: b.longitude))
     }
 }
 

@@ -1,0 +1,144 @@
+{
+  "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+  "auditId": "d4c4ab9e-fe40-4e68-b144-1a1d253ec591",
+  "issues": {
+    "summary": [
+      {
+        "issueType": "thin-content",
+        "title": "Thin content",
+        "severity": "warning",
+        "count": 1
+      },
+      {
+        "issueType": "title-too-long",
+        "title": "Title too long",
+        "severity": "info",
+        "count": 5
+      },
+      {
+        "issueType": "meta-description-too-short",
+        "title": "Meta description too short",
+        "severity": "info",
+        "count": 2
+      },
+      {
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "severity": "info",
+        "count": 1
+      }
+    ],
+    "issues": [
+      {
+        "severity": "warning",
+        "issueType": "thin-content",
+        "title": "Thin content",
+        "url": "https://whereday.com/compare/",
+        "details": {
+          "wordCount": 109
+        },
+        "howToFix": "Either expand the page with genuinely useful content, noindex it, or consolidate it into a stronger page. If the content exists but is rendered by JavaScript, ensure it is server-rendered or pre-rendered."
+      },
+      {
+        "severity": "info",
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "url": "https://whereday.com/privacy",
+        "details": {
+          "length": 253,
+          "max": 160,
+          "description": "Whereday privacy policy: location history is stored on-device with no account and no server-side loc…"
+        },
+        "howToFix": "Trim the description to roughly 70–160 characters while keeping the core message and call to action."
+      },
+      {
+        "severity": "info",
+        "issueType": "meta-description-too-short",
+        "title": "Meta description too short",
+        "url": "https://whereday.com/docs/getting-started/",
+        "details": {
+          "length": 66,
+          "min": 70,
+          "description": "Install, onboarding, permissions, and your first tracking session."
+        },
+        "howToFix": "Expand the description to roughly 70–160 characters that summarize the page and give a reason to click."
+      },
+      {
+        "severity": "info",
+        "issueType": "meta-description-too-short",
+        "title": "Meta description too short",
+        "url": "https://whereday.com/docs/privacy-data/",
+        "details": {
+          "length": 69,
+          "min": 70,
+          "description": "What stays on your device, what can leave it, and how deletion works."
+        },
+        "howToFix": "Expand the description to roughly 70–160 characters that summarize the page and give a reason to click."
+      },
+      {
+        "severity": "info",
+        "issueType": "title-too-long",
+        "title": "Title too long",
+        "url": "https://whereday.com/docs/apple-watch/",
+        "details": {
+          "length": 65,
+          "max": 60,
+          "title": "Record Apple Watch GPS routes without your iPhone — Whereday Docs"
+        },
+        "howToFix": "Shorten the title to roughly 50–60 characters, front-loading the most important words."
+      },
+      {
+        "severity": "info",
+        "issueType": "title-too-long",
+        "title": "Title too long",
+        "url": "https://whereday.com/docs/automatic-exports/",
+        "details": {
+          "length": 72,
+          "max": 60,
+          "title": "Automatically export iPhone location history to a folder — Whereday Docs"
+        },
+        "howToFix": "Shorten the title to roughly 50–60 characters, front-loading the most important words."
+      },
+      {
+        "severity": "info",
+        "issueType": "title-too-long",
+        "title": "Title too long",
+        "url": "https://whereday.com/docs/places/",
+        "details": {
+          "length": 68,
+          "max": 60,
+          "title": "Save and edit places in your iPhone location journal — Whereday Docs"
+        },
+        "howToFix": "Shorten the title to roughly 50–60 characters, front-loading the most important words."
+      },
+      {
+        "severity": "info",
+        "issueType": "title-too-long",
+        "title": "Title too long",
+        "url": "https://whereday.com/docs/siri-shortcuts/",
+        "details": {
+          "length": 61,
+          "max": 60,
+          "title": "Siri & Shortcuts for iPhone location tracking — Whereday Docs"
+        },
+        "howToFix": "Shorten the title to roughly 50–60 characters, front-loading the most important words."
+      },
+      {
+        "severity": "info",
+        "issueType": "title-too-long",
+        "title": "Title too long",
+        "url": "https://whereday.com/integrations/dawarich/",
+        "details": {
+          "length": 62,
+          "max": 60,
+          "title": "Send Whereday iPhone Location Points to Dawarich with Overland"
+        },
+        "howToFix": "Shorten the title to roughly 50–60 characters, front-loading the most important words."
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=d4c4ab9e-fe40-4e68-b144-1a1d253ec591"
+    }
+  }
+}

@@ -276,6 +276,9 @@ final class SavedPlace {
     var radiusMeters: Double
     var createdAt: Date
     var updatedAt: Date
+    /// Raw value of `SavedPlaceKind`; nil for places saved before kinds existed.
+    var kindRaw: String?
+    var notes: String?
 
     init(
         id: UUID = UUID(),
@@ -284,9 +287,13 @@ final class SavedPlace {
         longitude: Double,
         address: String? = nil,
         radiusMeters: Double = 150,
+        kind: SavedPlaceKind? = nil,
+        notes: String? = nil,
         createdAt: Date = Date(),
         updatedAt: Date = Date()
     ) {
+        self.kindRaw = kind?.rawValue
+        self.notes = notes
         self.id = id
         self.name = name
         self.latitude = latitude
@@ -295,6 +302,11 @@ final class SavedPlace {
         self.radiusMeters = radiusMeters
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
+
+    var kind: SavedPlaceKind? {
+        get { kindRaw.flatMap(SavedPlaceKind.init(rawValue:)) }
+        set { kindRaw = newValue?.rawValue }
     }
 
     var coordinate: CLLocationCoordinate2D {
@@ -338,5 +350,36 @@ extension Visit {
             address: "456 Market St, San Francisco, CA",
             geocodingCompleted: true
         )
+    }
+}
+
+/// What a saved place is to the user. Home anchors "away from home" and day counts.
+enum SavedPlaceKind: String, CaseIterable, Identifiable, Codable {
+    case home
+    case work
+    case cafe
+    case gym
+    case other
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .home: return String(localized: "Home")
+        case .work: return String(localized: "Work")
+        case .cafe: return String(localized: "Café")
+        case .gym: return String(localized: "Gym")
+        case .other: return String(localized: "Other")
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .home: return "house"
+        case .work: return "briefcase"
+        case .cafe: return "cup.and.saucer"
+        case .gym: return "dumbbell"
+        case .other: return "mappin"
+        }
     }
 }

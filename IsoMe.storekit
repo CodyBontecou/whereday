@@ -3,19 +3,19 @@
   "nonRenewingSubscriptions": [],
   "products": [
     {
-      "displayPrice": "19.99", "familyShareable": false,
+      "displayPrice": "49.99", "familyShareable": false,
       "internalID": "A50A1E75-7217-443E-8CF5-E36B64D1D64F",
       "localizations": [{"description": "Track and export forever for your Apple Account.", "displayName": "Whereday Individual Lifetime", "locale": "en_US"}],
       "productID": "com.bontecou.isome.lifetime.individual", "referenceName": "Individual Lifetime", "type": "NonConsumable"
     },
     {
-      "displayPrice": "39.99", "familyShareable": true,
+      "displayPrice": "89.99", "familyShareable": true,
       "internalID": "86F588B9-F970-4411-A550-487F4E68195D",
       "localizations": [{"description": "Lifetime tracking and export with Apple Family Sharing.", "displayName": "Whereday Family Lifetime", "locale": "en_US"}],
       "productID": "com.bontecou.isome.lifetime", "referenceName": "Family Lifetime", "type": "NonConsumable"
     },
     {
-      "displayPrice": "19.99", "familyShareable": true,
+      "displayPrice": "40.00", "familyShareable": true,
       "internalID": "D081C3E1-934A-46E2-9952-13609560B334",
       "localizations": [{"description": "Add Family Sharing to Individual Lifetime.", "displayName": "Whereday Family Upgrade", "locale": "en_US"}],
       "productID": "com.bontecou.isome.lifetime.family.upgrade", "referenceName": "Family Lifetime Upgrade", "type": "NonConsumable"

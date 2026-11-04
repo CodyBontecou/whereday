@@ -1,0 +1,116 @@
+{
+  "status": "waiting-for-review",
+  "uploaded": true,
+  "provenance": {
+    "capturedOn": "2026-10-30",
+    "locale": "en-US",
+    "device": "Whereday Duo App Store Capture",
+    "udid": "0030D9B0-28DD-4712-A1AA-26466A61EC64",
+    "runtime": "iOS 27.1",
+    "version": "1.8.1",
+    "build": "57",
+    "source": "Existing 1.8.1 (57) simulator app copied to a newly created isolated Duo simulator. Fresh source build attempts failed because the host disk was full; no claim that this binary matches current HEAD.",
+    "fixtures": "Built-in --seed-screenshot-data synthetic San Francisco records. Tracking off. Fixed simulated location 37.7765, -122.4258.",
+    "capture": "Argent screenshot scale=1; inner panel rotated LandscapeRight into upright landscape, outer panel Portrait. No app UI retouching or enlargement.",
+    "statusBar": "9:41, Wi-Fi, 100% battery",
+    "hardwareTested": false,
+    "uploaded": false
+  },
+  "specifications": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications",
+  "cards": [
+    {
+      "name": "01-day-unfolded",
+      "screen": "mapTimeline",
+      "title": "Your day, unfolded.",
+      "body": "Your map and timeline. Side by side.",
+      "w": 2853,
+      "h": 2007,
+      "source": {
+        "file": "source/screens/mapTimeline.png",
+        "width": 2853,
+        "height": 2007,
+        "sha256": "828940fc6e476eb9a397bb4414ff03e22a1de26e046695aa0da90891e6448bee"
+      },
+      "file": "exports/01-day-unfolded-2853x2007.png",
+      "sha256": "40d0565e6fdc0be9d28e669a2024665fca1a6fc58cacd4ed1c3bc8d838559716",
+      "verified": {
+        "dimensions": true,
+        "opaque": true,
+        "format": "png",
+        "colourspace": "srgb"
+      }
+    },
+    {
+      "name": "02-places-in-context",
+      "screen": "visitDetails",
+      "title": "Every place has a story.",
+      "body": "See the visit. Keep the map in view.",
+      "w": 2853,
+      "h": 2007,
+      "source": {
+        "file": "source/screens/visitDetails.png",
+        "width": 2853,
+        "height": 2007,
+        "sha256": "69bd88fb2c1613d5a2b4d53e5779e4d4c5333b4c9252089b55c4f9756293e5e0"
+      },
+      "file": "exports/02-places-in-context-2853x2007.png",
+      "sha256": "6bf57d991c9ad4f293f871a53ee564886be8a6189abd048bb182aafac885f7ef",
+      "verified": {
+        "dimensions": true,
+        "opaque": true,
+        "format": "png",
+        "colourspace": "srgb"
+      }
+    },
+    {
+      "name": "03-after-dark",
+      "screen": "dark",
+      "title": "A quieter view after dark.",
+      "body": "Your places and details, in dark mode.",
+      "w": 2853,
+      "h": 2007,
+      "source": {
+        "file": "source/screens/dark.png",
+        "width": 2853,
+        "height": 2007,
+        "sha256": "e106058360570834c91da370ba62268689a3693468c81ef211d0a810882f6f52"
+      },
+      "file": "exports/03-after-dark-2853x2007.png",
+      "sha256": "1eba9b668f9e4146d32a86ee452c8f879c6ebfb587a5ab6dd30873849a336829",
+      "verified": {
+        "dimensions": true,
+        "opaque": true,
+        "format": "png",
+        "colourspace": "srgb"
+      }
+    },
+    {
+      "name": "04-cover-map",
+      "screen": "cover",
+      "title": "Your day, at a glance.",
+      "body": "Your places and routes on the outer display.",
+      "w": 1398,
+      "h": 2034,
+      "source": {
+        "file": "source/screens/cover.png",
+        "width": 1398,
+        "height": 2034,
+        "sha256": "828699b3fa922323c14115bde86aa23a7b9d0d1664684fb7b46cc519a42559d6"
+      },
+      "file": "exports/04-cover-map-1398x2034.png",
+      "sha256": "da39f8a9f4a8d02b1b52e186e3beec600e7f66318765b2ad2aacdec8b9874dd0",
+      "verified": {
+        "dimensions": true,
+        "opaque": true,
+        "format": "png",
+        "colourspace": "srgb"
+      }
+    }
+  ],
+  "uploadReceipt": "upload-receipt.json",
+  "version": "1.8.2",
+  "locale": "en-US",
+  "processingComplete": true,
+  "submittedForReview": true,
+  "build": "58"
+}

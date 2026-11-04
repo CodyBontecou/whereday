@@ -303,7 +303,8 @@ def render(page):
   <meta name="description" content="{escape(page["description"], quote=True)}">
   <meta name="robots" content="{page.get('robots', 'index,follow')}">
   <link rel="canonical" href="{url}">
-  <meta name="theme-color" content="#f5f4ef">
+  <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="{escape(page["title"], quote=True)}">
   <meta property="og:description" content="{escape(page["description"], quote=True)}">
   <meta property="og:type" content="{'article' if is_article else 'website'}">
@@ -322,7 +323,7 @@ def render(page):
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <nav class="site-nav" aria-label="Primary navigation">
-    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">WHEREDAY</a>
+    <a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">Whereday</a>
     <div class="nav-links"><a href="/blog/"{' aria-current="true"' if section == 'Guides' else ''}>Guides</a><a href="/compare/"{' aria-current="page"' if path == '/compare/' else ' aria-current="true"' if section == 'Compare' else ''}>Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a><a class="button" href="{APP}">Download free</a></div>
   </nav>
   <main id="main">
@@ -333,7 +334,7 @@ def render(page):
     {'</article>' if is_article else ''}
     {related_navigation(path)}
   </main>
-  <footer class="site-footer"><a class="brand" href="/">WHEREDAY · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
   {analytics}
 </body>
 </html>

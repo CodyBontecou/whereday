@@ -1,0 +1,322 @@
+{
+  "as_of_utc_exclusive": "2026-10-30",
+  "periods": {
+    "previous": {
+      "start_inclusive": "2026-09-04",
+      "end_inclusive": "2026-10-01",
+      "days": 28,
+      "days_with_recorded_events": 0,
+      "first_recorded_event_day": null,
+      "page_loads": 0,
+      "download_activations": 0
+    },
+    "current": {
+      "start_inclusive": "2026-10-02",
+      "end_inclusive": "2026-10-29",
+      "days": 28,
+      "days_with_recorded_events": 4,
+      "first_recorded_event_day": "2026-10-26",
+      "page_loads": 79,
+      "download_activations": 5
+    }
+  },
+  "page_sources": [
+    {
+      "page": "/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 41,
+        "download_activations": 5
+      },
+      "absolute_change": {
+        "page_loads": 41,
+        "download_activations": 5
+      }
+    },
+    {
+      "page": "/",
+      "source": "internal",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 2,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 2,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/",
+      "source": "search",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/about",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/blog/private-location-journal-iphone/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 3,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 3,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/blog/record-iphone-route-gpx/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 6,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 6,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/blog/track-days-in-country-iphone/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 2,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 2,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/blog/view-location-history-iphone/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 2,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 2,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/blog/view-location-history-iphone/",
+      "source": "search",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/compare/google-maps-timeline/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 6,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 6,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/contact",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 5,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 5,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/docs/apple-watch/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/docs/timeline-outings/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/docs/tracking/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/integrations/dawarich/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 2,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 2,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/privacy",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/terms",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 1,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 1,
+        "download_activations": 0
+      }
+    },
+    {
+      "page": "/zh-hans/",
+      "source": "direct",
+      "previous": {
+        "page_loads": 0,
+        "download_activations": 0
+      },
+      "current": {
+        "page_loads": 2,
+        "download_activations": 0
+      },
+      "absolute_change": {
+        "page_loads": 2,
+        "download_activations": 0
+      }
+    }
+  ],
+  "limits": [
+    "UTC calendar windows exclude the as-of date and all later dates.",
+    "Counts are page loads and download-link activations, not people, sessions, installs, or purchases.",
+    "Source is the coarse referrer on that page; search is not an organic-session attribution model.",
+    "Recorded-event days do not establish collector uptime. Missing rows can mean no events, exclusions, or unavailable collection.",
+    "Saved input must cover both windows; event rows alone cannot prove historical query coverage.",
+    "QA and bots may contribute. Zero counts and small samples do not establish SEO or conversion performance.",
+    "Review Search Console and Apple campaign reports separately; no causal lift or click-to-install join is calculated."
+  ]
+}

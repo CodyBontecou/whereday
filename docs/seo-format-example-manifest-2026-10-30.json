@@ -1,0 +1,31 @@
+{
+  "source": "Invented fixture for guide; not native-app output or personal data",
+  "pointCount": 5,
+  "groupCounts": [
+    3,
+    2
+  ],
+  "measuredElevation": false,
+  "files": [
+    {
+      "path": "/samples/synthetic-format-trip.gpx",
+      "bytes": 831,
+      "sha256": "b195eb121bdaf23414062cae772c891df9bfdf9e533443faefe54169d588be33"
+    },
+    {
+      "path": "/samples/synthetic-format-trip.kml",
+      "bytes": 1033,
+      "sha256": "0775c0f4e654cf018c63ca0b9ec3bb25503debdd2313473e290ed4021dd383cd"
+    },
+    {
+      "path": "/samples/synthetic-format-trip.geojson",
+      "bytes": 1007,
+      "sha256": "5dd92a8a0b47aba8b17320a5b5f2a57a7e42465bf5e5764420dd1715df168f6f"
+    },
+    {
+      "path": "/samples/synthetic-format-trip.csv",
+      "bytes": 469,
+      "sha256": "2993e34a2f9542073f1b2ac577663d46feabe52451f9d7789b70ad44bbf12b83"
+    }
+  ]
+}

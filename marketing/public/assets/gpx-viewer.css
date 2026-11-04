@@ -1,23 +1,23 @@
-.gpx-tool { background:#fff; border:1px solid #d7d7d0; border-radius:12px; padding:24px; }
+.gpx-tool { background:var(--card, #FBF9F4); border:1px solid var(--rule, #D8D2C3); border-radius:12px; padding:24px; }
 .gpx-tool .gpx-actions { display:flex; flex-wrap:wrap; gap:12px; margin:20px 0; align-items:center; }
-.gpx-tool button { font:inherit; font-size:16px; border:1px solid #315db3; background:#fff; color:#234b96; border-radius:6px; padding:10px 16px; cursor:pointer; min-height:44px; touch-action:manipulation; }
+.gpx-tool button { font:inherit; font-size:16px; border:1px solid var(--ink, #1E2B45); background:var(--card, #FBF9F4); color:var(--ink, #16203A); border-radius:6px; padding:10px 16px; cursor:pointer; min-height:44px; touch-action:manipulation; }
 .gpx-tool button:disabled { opacity:.45; cursor:default; }
-.gpx-tool button:active:not(:disabled) { background:#eaf0fc; }
-.gpx-tool button:focus-visible, .gpx-tool input:focus-visible { outline:3px solid #315db3; outline-offset:4px; }
+.gpx-tool button:active:not(:disabled) { background:var(--paper-deep, #ECE6D8); }
+.gpx-tool button:focus-visible, .gpx-tool input:focus-visible { outline:3px solid var(--ink, #1E2B45); outline-offset:4px; }
 .gpx-tool select { display:block; font:inherit; font-size:16px; padding:10px; max-width:100%; margin:12px 0; }
 .gpx-tool input { display:block; font:inherit; font-size:16px; max-width:100%; margin:12px 0; }
-.gpx-tool input::file-selector-button { font:inherit; padding:10px 14px; border:1px solid #315db3; border-radius:6px; background:#eef3fd; color:#234b96; margin-right:10px; cursor:pointer; }
+.gpx-tool input::file-selector-button { font:inherit; padding:10px 14px; border:1px solid var(--ink, #1E2B45); border-radius:6px; background:var(--paper, #F3EFE6); color:var(--ink, #16203A); margin-right:10px; cursor:pointer; }
 .gpx-tool [hidden] { display:none !important; }
 .gpx-tool h2 { font-size:24px; line-height:1.25; overflow-wrap:anywhere; }
 .gpx-tool h3 { margin-top:24px; }
 #gpx-status, #timeline-status { padding:12px 0; margin:0; min-height:48px; overflow-wrap:anywhere; }
 #gpx-counts { font-size:19px; font-weight:600; }
-#gpx-plot, #timeline-plot { display:block; width:100%; height:auto; background:#f5f7fa; border:1px solid #d5deeb; border-radius:8px; }
-.gpx-line { fill:none; stroke:#315db3; stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
-.gpx-line.alternate { stroke:#ab571b; }
-.gpx-dot { fill:#234b96; stroke:#fff; stroke-width:1; }
+#gpx-plot, #timeline-plot { display:block; width:100%; height:auto; background:var(--paper-warm, #F7F4EC); border:1px solid var(--rule, #D8D2C3); border-radius:8px; }
+.gpx-line { fill:none; stroke:var(--ink, #1E2B45); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+.gpx-line.alternate { stroke:var(--accent, #A8381F); }
+.gpx-dot { fill:var(--ink, #16203A); stroke:var(--card, #FBF9F4); stroke-width:1; }
 .gpx-tool .table-scroll { margin-top:16px; }
 .gpx-tool td { font-size:14px; overflow-wrap:anywhere; }
-.gpx-small { color:#525860; font-size:14px; line-height:1.5; }
+.gpx-small { color:var(--mute, #66645D); font-size:14px; line-height:1.5; }
 @media(max-width:640px) { .gpx-tool { padding:16px; } .gpx-tool .gpx-actions button { flex:1 1 auto; } }
-@media(hover:hover) and (pointer:fine) { .gpx-tool button:hover:not(:disabled) { background:#eef3fd; } }
+@media(hover:hover) and (pointer:fine) { .gpx-tool button:hover:not(:disabled) { background:var(--paper, #F3EFE6); } }

@@ -14,5 +14,13 @@
     <true/>
     <key>WKWatchOnly</key>
     <false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Newsreader.ttf</string>
+		<string>Newsreader-Italic.ttf</string>
+		<string>IBMPlexMono-Regular.ttf</string>
+		<string>IBMPlexMono-Medium.ttf</string>
+		<string>IBMPlexMono-SemiBold.ttf</string>
+	</array>
 </dict>
 </plist>

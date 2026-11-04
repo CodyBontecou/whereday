@@ -11,6 +11,8 @@ struct ExportView: View {
     @StateObject private var exportFolderManager = ExportFolderManager.shared
     @StateObject private var dailyScheduler = DailyExportScheduler.shared
     @ObservedObject private var storeManager = StoreManager.shared
+    @ObservedObject private var obsidianVault = ObsidianVaultStore.shared
+    @ObservedObject private var webhookManager = WebhookManager.shared
 
     @State private var options = ExportPreferencesStore.load().options
     @State private var selectedFormats: Set<ExportFormat> = ExportPreferencesStore.load().selectedFormats
@@ -25,10 +27,18 @@ struct ExportView: View {
     @State private var showingSaveRecipe = false
     @State private var newRecipeName = ""
     @State private var livePreview: RecipeLivePreview = .idle
+    @State private var showingVaultPicker = false
+    @State private var isSendingToServer = false
 
     @AppStorage("useDefaultExportFolder") private var useDefaultExportFolder = true
     @AppStorage("exportFilenamePattern") private var filenamePattern = FilenameTemplate.defaultPattern
     @AppStorage("exportSavedRecipes") private var savedRecipesData = Data()
+    @AppStorage("exportSeededExampleRecipes") private var seededExampleRecipes = false
+    @AppStorage(ObsidianVaultStore.destinationDefaultsKey) private var destinationRaw = ArchiveDestination.files.rawValue
+
+    private var destination: ArchiveDestination {
+        ArchiveDestination(rawValue: destinationRaw) ?? .files
+    }
 
     /// Above this many records the inline sample is skipped; the full preview sheet still works.
     private static let livePreviewItemLimit = 20_000
@@ -116,6 +126,15 @@ struct ExportView: View {
     }
 
     var body: some View {
+        stack
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                if pinsFooterOutsideStack {
+                    exportFooter
+                }
+            }
+    }
+
+    private var stack: some View {
         NavigationStack {
             Group {
                 if usesDuoLayout {
@@ -135,6 +154,7 @@ struct ExportView: View {
             .sheet(isPresented: $showingPaywall) {
                 PaywallView(storeManager: storeManager, context: .export)
             }
+            .modifier(VaultPresentation(isPicking: presentation($showingVaultPicker, inOptionsSheet: false), vault: obsidianVault))
             .sheet(isPresented: $showingSettings) {
                 SettingsView(viewModel: viewModel)
             }
@@ -171,6 +191,7 @@ struct ExportView: View {
             }
             .onAppear {
                 ensurePointDataIfNeeded()
+                seedExampleRecipesIfNeeded()
                 #if DEBUG
                 if ProcessInfo.processInfo.arguments.contains("--demo-export-filters") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -212,6 +233,9 @@ struct ExportView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     recipeComposer
                     recipeOutcome
+                    listeningLink
+                        .padding(.horizontal, 16)
+                        .padding(.top, 12)
                     exportFooter
                         .padding(.top, 20)
                 }
@@ -222,21 +246,32 @@ struct ExportView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     recipeComposer
                     recipeOutcome
+                    listeningLink
+                        .padding(.horizontal, 16)
+                        .padding(.top, 12)
                 }
                 .padding(.bottom, 24)
             }
             .scrollIndicators(.hidden)
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                exportFooter
-            }
         }
+    }
+
+    /// The compact footer is pinned outside the NavigationStack so it stacks on top of the
+    /// floating tab bar's inset; pinned inside, the tab bar's inset never reaches it.
+    private var pinsFooterOutsideStack: Bool {
+        !usesDuoLayout && !dynamicTypeSize.isAccessibilitySize
     }
 
     private var duoLayout: some View {
         HStack(spacing: 0) {
             ScrollView {
-                recipeComposer
-                    .padding(.bottom, 24)
+                VStack(alignment: .leading, spacing: 0) {
+                    recipeComposer
+                    listeningLink
+                        .padding(.horizontal, 24)
+                        .padding(.top, 24)
+                }
+                .padding(.bottom, 24)
             }
             .scrollIndicators(.hidden)
             .frame(maxWidth: .infinity)
@@ -281,6 +316,41 @@ struct ExportView: View {
         .padding(.top, 18)
     }
 
+    /// "How Whereday listens": what gets recorded, so the archive's contents are never a surprise.
+    private var listeningLink: some View {
+        NavigationLink {
+            ListeningView(viewModel: viewModel)
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "ear")
+                    .font(.body)
+                    .foregroundStyle(TE.textMuted)
+                    .frame(width: 24)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("How Whereday listens")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(TE.textPrimary)
+                    Text("WHAT GETS RECORDED · WHAT STAYS ON THIS IPHONE")
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(TE.textMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .frame(minHeight: 56)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+    }
+
     // MARK: - Header
 
     private var recipeHeader: some View {
@@ -302,17 +372,21 @@ struct ExportView: View {
                 .accessibilityAddTraits(.isHeader)
             }
             Spacer(minLength: 12)
-            Button {
-                showingSettings = true
-            } label: {
-                Image(systemName: "gearshape")
-                    .font(.system(size: 18, weight: .light))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(TE.card))
-                    .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+            // Regular width shows the navigation rail (MainTabView's `usesRail`), which carries
+            // Settings itself; the gear only stands in for it beside the closed tab bar.
+            if horizontalSizeClass != .regular {
+                Button {
+                    showingSettings = true
+                } label: {
+                    Image(systemName: "gearshape")
+                        .font(.system(size: 18, weight: .light))
+                        .frame(width: 44, height: 44)
+                        .background(Circle().fill(TE.card))
+                        .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Settings")
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Settings")
         }
         .padding(.horizontal, 24)
         .padding(.top, 12)
@@ -467,9 +541,9 @@ struct ExportView: View {
     private var whatPhrase: String {
         switch options.dataKind {
         case .visits: return String(localized: "visits")
-        case .points: return String(localized: "points")
+        case .points: return String(localized: "routes")
         case .outings: return String(localized: "outings")
-        case .all: return String(localized: "visits & points")
+        case .all: return String(localized: "visits & routes")
         }
     }
 
@@ -481,6 +555,11 @@ struct ExportView: View {
         case .last7Days: return String(localized: "the last 7 days")
         case .last30Days: return String(localized: "the last 30 days")
         case .thisMonth: return String(localized: "this month")
+        case .month:
+            return Self.monthName(options.presetAnchor ?? Date())
+        case .year:
+            let year = Calendar.current.component(.year, from: options.presetAnchor ?? Date())
+            return String(localized: "all of \(String(year))")
         case .custom:
             let lower = min(options.customStart, options.customEnd)
             let upper = max(options.customStart, options.customEnd)
@@ -507,10 +586,54 @@ struct ExportView: View {
     }
 
     private var destinationPhrase: String {
-        if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
-            return exportFolderManager.selectedFolderName ?? String(localized: "your folder")
+        switch destination {
+        case .files:
+            if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
+                return String(localized: "Files › \(exportFolderManager.selectedFolderName ?? String(localized: "your folder"))")
+            }
+            return String(localized: "the share sheet")
+        case .obsidian:
+            return String(localized: "my Obsidian vault")
+        case .server:
+            return serverIsDawarich || !serverIsConfigured
+                ? String(localized: "my Dawarich server")
+                : String(localized: "my server")
         }
-        return String(localized: "the share sheet")
+    }
+
+    static func monthName(_ date: Date, now: Date = Date()) -> String {
+        let sameYear = Calendar.current.isDate(date, equalTo: now, toGranularity: .year)
+        return sameYear
+            ? date.formatted(.dateTime.month(.wide))
+            : date.formatted(.dateTime.month(.wide).year())
+    }
+
+    // MARK: - Server destination
+
+    private var serverIsConfigured: Bool {
+        !webhookManager.urlString.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Dawarich takes OwnTracks and Overland posts at /api/v1/owntracks and /api/v1/overland.
+    private var serverIsDawarich: Bool {
+        let url = webhookManager.urlString.lowercased()
+        return url.contains("dawarich") || url.contains("/api/v1/owntracks") || url.contains("/api/v1/overland")
+    }
+
+    private var serverHost: String? {
+        URL(string: webhookManager.urlString.trimmingCharacters(in: .whitespacesAndNewlines))?.host()
+    }
+
+    /// One request per "file": each day's points when split by day, otherwise all of them at once.
+    /// The server receives route points in its configured webhook format; visits stay on this iPhone.
+    private var serverBatches: [[LocationPoint]] {
+        let points = filteredPoints
+        guard !points.isEmpty else { return [] }
+        guard options.splitByDay else { return [points] }
+        let calendar = Calendar.current
+        return Dictionary(grouping: points) { calendar.startOfDay(for: $0.timestamp) }
+            .sorted { $0.key < $1.key }
+            .map { $0.value.sorted { $0.timestamp < $1.timestamp } }
     }
 
     private func handle(_ token: RecipeToken) {
@@ -742,9 +865,14 @@ struct ExportView: View {
 
     // MARK: - Schedule
 
+    /// Scheduled files go to the Obsidian vault when that's the destination, otherwise the export folder.
+    private var hasScheduleTarget: Bool {
+        (destination == .obsidian && obsidianVault.hasVault) || exportFolderManager.hasDefaultFolder
+    }
+
     private var scheduleCard: some View {
         VStack(spacing: 0) {
-            if storeManager.canExport && exportFolderManager.hasDefaultFolder {
+            if storeManager.canExport && hasScheduleTarget {
                 Toggle(isOn: Binding(
                     get: { dailyScheduler.isEnabled },
                     set: { dailyScheduler.setEnabledFromUserSetup($0) }
@@ -829,7 +957,7 @@ struct ExportView: View {
         if dailyScheduler.isIntervalSchedule {
             return String(localized: "Repeat every \(dailyScheduler.intervalHours) h from \(time)")
         }
-        return String(localized: "Repeat every day at \(time)")
+        return String(localized: "Repeat every night at \(time)")
     }
 
     private var scheduleDetail: String {
@@ -879,6 +1007,7 @@ struct ExportView: View {
                 isConfirmingRemoval: presentation($showingClearFolderConfirmation, inOptionsSheet: true),
                 folderManager: exportFolderManager
             ))
+            .modifier(VaultPresentation(isPicking: presentation($showingVaultPicker, inOptionsSheet: true), vault: obsidianVault))
         }
         .presentationDetents(token == .all ? [.large] : [.medium, .large])
     }
@@ -902,11 +1031,19 @@ struct ExportView: View {
             outputSection
             filenameSection
         case .destination:
-            exportFolderSection
-            filenameSection
-            webhookSection
+            destinationChoiceSection
+            switch destination {
+            case .files:
+                exportFolderSection
+                filenameSection
+            case .obsidian:
+                obsidianVaultSection
+                filenameSection
+            case .server:
+                serverSection
+            }
         case .schedule:
-            if exportFolderManager.hasDefaultFolder && storeManager.canExport {
+            if hasScheduleTarget && storeManager.canExport {
                 dailyExportSection
                 matchScheduleToRecipeRow
             } else {
@@ -928,6 +1065,7 @@ struct ExportView: View {
             recipe.options == options
                 && Set(recipe.formats) == Set(selectedFormatsList)
                 && recipe.filenamePattern == filenamePattern
+                && (recipe.destination ?? .files) == destination
         }
     }
 
@@ -941,7 +1079,18 @@ struct ExportView: View {
         selectedFormats = Set(recipe.formats.isEmpty ? [.json] : recipe.formats)
         options.format = primarySelectedFormat
         filenamePattern = recipe.filenamePattern
+        destinationRaw = (recipe.destination ?? .files).rawValue
         ensurePointDataIfNeeded()
+    }
+
+    /// First visit: two example recipes show what a recipe can be. They delete like any other.
+    private func seedExampleRecipesIfNeeded() {
+        guard !seededExampleRecipes else { return }
+        seededExampleRecipes = true
+        var recipes = savedRecipes
+        let names = Set(recipes.map(\.name))
+        recipes.append(contentsOf: SavedExportRecipe.examples.filter { !names.contains($0.name) })
+        storeRecipes(recipes)
     }
 
     private func saveCurrentRecipe() {
@@ -953,7 +1102,8 @@ struct ExportView: View {
             name: name,
             options: options,
             formats: selectedFormatsList,
-            filenamePattern: filenamePattern
+            filenamePattern: filenamePattern,
+            destination: destination
         ))
         storeRecipes(recipes)
     }
@@ -972,7 +1122,7 @@ struct ExportView: View {
             dataKindSection
             webhookSection
             exportFolderSection
-            if exportFolderManager.hasDefaultFolder && storeManager.canExport {
+            if hasScheduleTarget && storeManager.canExport {
                 dailyExportSection
             }
             filenameSection
@@ -1067,6 +1217,187 @@ struct ExportView: View {
                 }
             }
             .padding(.horizontal, 16)
+        }
+    }
+
+    // MARK: - Destinations
+
+    private var destinationChoiceSection: some View {
+        VStack(spacing: 0) {
+            TESectionHeader(title: "SEND TO")
+
+            TECard(paperOpacity: 0.97) {
+                VStack(spacing: 0) {
+                    ForEach(Array(ArchiveDestination.allCases.enumerated()), id: \.element) { index, choice in
+                        TERow(showDivider: index < ArchiveDestination.allCases.count - 1) {
+                            Button {
+                                selectDestination(choice)
+                            } label: {
+                                HStack(spacing: 10) {
+                                    Image(systemName: choice.systemImage)
+                                        .font(.caption.weight(.medium))
+                                        .foregroundStyle(TE.accent)
+                                        .frame(width: 20)
+                                        .accessibilityHidden(true)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(choice.title)
+                                            .font(TE.mono(.caption, weight: .medium))
+                                            .tracking(1)
+                                            .foregroundStyle(TE.textPrimary)
+                                        Text(choice.detail)
+                                            .font(TE.mono(.caption2))
+                                            .foregroundStyle(TE.textMuted)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                    Spacer(minLength: 8)
+                                    if destination == choice {
+                                        Image(systemName: "checkmark")
+                                            .font(.caption.weight(.bold))
+                                            .foregroundStyle(TE.accent)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityAddTraits(destination == choice ? .isSelected : [])
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+        }
+    }
+
+    /// Obsidian reads plain Markdown, so the vault gets one Markdown note per day.
+    private func selectDestination(_ choice: ArchiveDestination) {
+        destinationRaw = choice.rawValue
+        if choice == .obsidian {
+            selectedFormats = [.markdown]
+            options.format = .markdown
+            if options.dataKind == .outings { options.dataKind = .all }
+            options.splitByDay = true
+            if !obsidianVault.hasVault { showingVaultPicker = true }
+        }
+    }
+
+    private var obsidianVaultSection: some View {
+        VStack(spacing: 0) {
+            TESectionHeader(title: "OBSIDIAN VAULT")
+
+            TECard(paperOpacity: 0.97) {
+                VStack(spacing: 0) {
+                    TERow(showDivider: obsidianVault.hasVault) {
+                        Button {
+                            showingVaultPicker = true
+                        } label: {
+                            HStack(spacing: 8) {
+                                Image(systemName: obsidianVault.hasVault ? "books.vertical.fill" : "folder.badge.plus")
+                                    .font(.caption.weight(.medium))
+                                    .foregroundStyle(TE.accent)
+                                Text(obsidianVault.vaultName.map { $0.uppercased() } ?? String(localized: "CHOOSE VAULT FOLDER"))
+                                    .font(TE.mono(.caption, weight: .medium))
+                                    .tracking(0.5)
+                                    .foregroundStyle(obsidianVault.hasVault ? TE.textPrimary : TE.accent)
+                                    .lineLimit(2)
+                                    .truncationMode(.middle)
+                                Spacer(minLength: 12)
+                                if obsidianVault.hasVault {
+                                    Text("CHANGE")
+                                        .font(TE.mono(.caption2, weight: .semibold))
+                                        .tracking(1)
+                                        .foregroundStyle(TE.accent)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if obsidianVault.hasVault {
+                        TERow(showDivider: false) {
+                            Button {
+                                obsidianVault.clear()
+                            } label: {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "folder.badge.minus")
+                                        .font(.caption.weight(.medium))
+                                        .foregroundStyle(TE.danger)
+                                    Text("FORGET VAULT")
+                                        .font(TE.mono(.caption, weight: .medium))
+                                        .tracking(1)
+                                        .foregroundStyle(TE.danger)
+                                    Spacer()
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+
+            TESectionFooter(text: "Pick your vault, or a folder inside it, in Files. Each day becomes a Markdown note; the file path below decides where in the vault it lands. Nothing leaves this iPhone except through Files.")
+        }
+    }
+
+    private var serverSection: some View {
+        VStack(spacing: 0) {
+            TESectionHeader(title: "SERVER")
+
+            TECard(paperOpacity: 0.97) {
+                VStack(spacing: 0) {
+                    TERow {
+                        HStack(spacing: 8) {
+                            Image(systemName: "server.rack")
+                                .font(.caption.weight(.medium))
+                                .foregroundStyle(TE.accent)
+                            Text(serverHost.map { $0.uppercased() } ?? String(localized: "NOT CONNECTED"))
+                                .font(TE.mono(.caption, weight: .medium))
+                                .tracking(0.5)
+                                .foregroundStyle(serverIsConfigured ? TE.textPrimary : TE.textMuted)
+                                .lineLimit(1)
+                                .truncationMode(.middle)
+                            Spacer(minLength: 8)
+                            if serverIsConfigured {
+                                Text(webhookManager.format.displayName.uppercased())
+                                    .font(TE.mono(.caption2, weight: .semibold))
+                                    .foregroundStyle(TE.textMuted)
+                            }
+                        }
+                    }
+                    if let error = webhookManager.lastError {
+                        TERow {
+                            Text(verbatim: error)
+                                .font(TE.mono(.caption2))
+                                .foregroundStyle(TE.inkRust)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    TERow(showDivider: false) {
+                        NavigationLink {
+                            WebhookSettingsView()
+                        } label: {
+                            HStack(spacing: 8) {
+                                Text(serverIsConfigured ? "SERVER SETTINGS" : "CONNECT DAWARICH OR ANOTHER SERVER")
+                                    .font(TE.mono(.caption, weight: .medium))
+                                    .tracking(1)
+                                    .foregroundStyle(TE.accent)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.caption2.weight(.bold))
+                                    .foregroundStyle(TE.accent.opacity(0.5))
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+
+            TESectionFooter(text: "Sends this recipe's route points to the server set up under Webhook, in its format and with its sign-in. For Dawarich, use OwnTracks with /api/v1/owntracks/points. Visits stay on this iPhone; one request goes out per file.")
         }
     }
 
@@ -1528,6 +1859,9 @@ struct ExportView: View {
     }
 
     private var previewDestinationLabel: String {
+        if destination == .obsidian {
+            return String(localized: "Obsidian vault: \(obsidianVault.vaultName ?? String(localized: "not chosen"))")
+        }
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
             let folderName = exportFolderManager.selectedFolderName ?? String(localized: "Selected Folder")
             return String(localized: "Default folder: \(folderName)")
@@ -1536,6 +1870,9 @@ struct ExportView: View {
     }
 
     private var previewDestinationRootName: String {
+        if destination == .obsidian {
+            return obsidianVault.vaultName ?? String(localized: "Obsidian")
+        }
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
             return exportFolderManager.selectedFolderName ?? "Selected Folder"
         }
@@ -1595,10 +1932,8 @@ struct ExportView: View {
 
             TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
-                    ForEach(Array(ExportOptions.DateRangePreset.allCases.enumerated()), id: \.element.id) { idx, preset in
-                        let isLast = idx == ExportOptions.DateRangePreset.allCases.count - 1
-                                && options.datePreset != .custom
-                        TERow(showDivider: !isLast) {
+                    ForEach(ExportOptions.DateRangePreset.simplePresets) { preset in
+                        TERow {
                             Button {
                                 options.datePreset = preset
                             } label: {
@@ -1619,6 +1954,46 @@ struct ExportView: View {
                             }
                             .buttonStyle(.plain)
                         }
+                    }
+
+                    TERow {
+                        periodMenu(
+                            title: "MONTH",
+                            selection: options.datePreset == .month ? Self.monthName(options.presetAnchor ?? Date()) : nil,
+                            choices: recentMonths.map { (Self.monthName($0), $0) },
+                            preset: .month
+                        )
+                    }
+                    TERow {
+                        periodMenu(
+                            title: "YEAR",
+                            selection: options.datePreset == .year
+                                ? String(localized: "ALL OF \(String(Calendar.current.component(.year, from: options.presetAnchor ?? Date())))")
+                                : nil,
+                            choices: recordedYears.map { (String(localized: "All of \(String(Calendar.current.component(.year, from: $0)))"), $0) },
+                            preset: .year
+                        )
+                    }
+                    TERow(showDivider: options.datePreset == .custom) {
+                        Button {
+                            options.datePreset = .custom
+                        } label: {
+                            HStack {
+                                Text(verbatim: ExportOptions.DateRangePreset.custom.label)
+                                    .font(TE.mono(.caption, weight: .medium))
+                                    .tracking(1)
+                                    .foregroundStyle(TE.textPrimary)
+                                Spacer()
+                                if options.datePreset == .custom {
+                                    Image(systemName: "checkmark")
+                                        .font(.caption.weight(.bold))
+                                        .foregroundStyle(TE.accent)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
                     }
 
                     if options.datePreset == .custom {
@@ -1652,6 +2027,59 @@ struct ExportView: View {
             .padding(.horizontal, 16)
 
             TESectionFooter(text: "Limit the export to a specific window of time.")
+        }
+    }
+
+    /// A named-month or whole-year row: a menu of periods, checked when one is in use.
+    private func periodMenu(title: LocalizedStringKey, selection: String?, choices: [(String, Date)], preset: ExportOptions.DateRangePreset) -> some View {
+        Menu {
+            ForEach(choices, id: \.1) { label, anchor in
+                Button(label) {
+                    options.presetAnchor = anchor
+                    options.datePreset = preset
+                }
+            }
+        } label: {
+            HStack {
+                Text(title)
+                    .font(TE.mono(.caption, weight: .medium))
+                    .tracking(1)
+                    .foregroundStyle(TE.textPrimary)
+                Spacer()
+                Text(verbatim: selection?.uppercased() ?? String(localized: "CHOOSE"))
+                    .font(TE.mono(.caption2, weight: .medium))
+                    .foregroundStyle(selection == nil ? TE.textMuted : TE.accent)
+                if selection != nil {
+                    Image(systemName: "checkmark")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(TE.accent)
+                } else {
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.caption2)
+                        .foregroundStyle(TE.textMuted)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// The twelve months before this one, newest first ("this month" has its own row).
+    private var recentMonths: [Date] {
+        let calendar = Calendar.current
+        let start = calendar.dateInterval(of: .month, for: Date())?.start ?? Date()
+        return (1...12).compactMap { calendar.date(byAdding: .month, value: -$0, to: start) }
+    }
+
+    /// Every year from the first recorded visit through this one, newest first.
+    private var recordedYears: [Date] {
+        let calendar = Calendar.current
+        let now = Date()
+        let currentYear = calendar.component(.year, from: now)
+        let firstYear = viewModel.allVisits.last.map { calendar.component(.year, from: $0.arrivedAt) } ?? currentYear
+        return (min(firstYear, currentYear)...currentYear).reversed().compactMap {
+            calendar.date(from: DateComponents(year: $0, month: 7, day: 1))
         }
     }
 
@@ -1889,7 +2317,7 @@ struct ExportView: View {
                     Text(exportButtonLabel)
                 }
                 .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
-                .disabled(totalCount == 0)
+                .disabled(exportButtonDisabled)
             }
         }
         .padding(.horizontal, 16)
@@ -1899,12 +2327,29 @@ struct ExportView: View {
     }
 
     private var exportButtonLabel: LocalizedStringKey {
+        if destination == .server {
+            if isSendingToServer { return "Sending…" }
+            if !storeManager.canExport { return "Unlock export" }
+            if !serverIsConfigured { return "Connect a server" }
+            let n = serverBatches.count
+            if n == 0 { return "No points to send" }
+            if n == 1 { return "Send 1 file" }
+            return "Send \(n) files"
+        }
         if totalCount == 0 { return "Nothing to export" }
         if !storeManager.canExport { return "Unlock export" }
         let n = splitFileCount
         if n == 0 { return "Nothing to export" }
+        if destination == .obsidian && !obsidianVault.hasVault { return "Choose Obsidian vault" }
         if n == 1 { return "Export 1 file" }
         return "Export \(n) files"
+    }
+
+    private var exportButtonDisabled: Bool {
+        if destination == .server {
+            return isSendingToServer || (storeManager.canExport && serverIsConfigured && serverBatches.isEmpty)
+        }
+        return totalCount == 0
     }
 
     // MARK: - Reusable bits
@@ -1966,6 +2411,17 @@ struct ExportView: View {
 
         ensurePointDataIfNeeded()
 
+        switch destination {
+        case .server:
+            sendToServer()
+            return
+        case .obsidian:
+            saveToObsidianVault()
+            return
+        case .files:
+            break
+        }
+
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
             do {
                 let urls = try ExportService.saveToDefaultFolder(
@@ -2008,7 +2464,67 @@ struct ExportView: View {
         }
     }
 
+    private func saveToObsidianVault() {
+        guard obsidianVault.hasVault else {
+            showingVaultPicker = true
+            return
+        }
+        do {
+            let files = try IsoMeExportKitAdapter.plannedFiles(
+                visits: viewModel.allVisits,
+                points: viewModel.locationPoints,
+                recordingSessions: viewModel.allRecordingSessions,
+                activeTrackingStart: viewModel.locationManager.trackingStartTime,
+                options: options,
+                selectedFormats: selectedFormatsList,
+                filenamePattern: filenamePattern
+            )
+            let urls = try obsidianVault.write(files)
+            ExportToastCenter.shared.show(.success(savedURLs: urls))
+            AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+        } catch {
+            viewModel.exportError = error.localizedDescription
+            ExportToastCenter.shared.show(.failure(message: error.localizedDescription))
+        }
+    }
+
+    /// Reuses the webhook's own queue, format and sign-in: each batch is queued, then flushed as one request.
+    private func sendToServer() {
+        guard serverIsConfigured else {
+            editingToken = .destination
+            return
+        }
+        viewModel.ensureAllLocationPointsLoaded()
+        let batches = serverBatches
+        guard !batches.isEmpty, !isSendingToServer else { return }
+        isSendingToServer = true
+        let host = serverHost ?? String(localized: "your server")
+        Task { @MainActor in
+            defer { isSendingToServer = false }
+            var sent = 0
+            for batch in batches {
+                for point in batch { webhookManager.enqueuePendingPoint(point) }
+                await webhookManager.flushBatch()
+                // A failed flush puts the batch back on the queue for the webhook's next attempt.
+                guard webhookManager.queuedPointCount == 0 else { break }
+                sent += 1
+            }
+            if sent == batches.count {
+                let message = sent == 1
+                    ? String(localized: "Sent 1 file to \(host)")
+                    : String(localized: "Sent \(sent) files to \(host)")
+                ExportToastCenter.shared.show(.success(message: message))
+            } else {
+                let reason = webhookManager.lastError ?? String(localized: "The server didn't accept the request.")
+                ExportToastCenter.shared.show(.failure(message: String(localized: "Sent \(sent) of \(batches.count) files. \(reason)")))
+            }
+        }
+    }
+
     private func ensurePointDataIfNeeded() {
+        if destination == .server {
+            viewModel.ensureAllLocationPointsLoaded()
+        }
         if effectiveDataKinds.contains(.points) || effectiveDataKinds.contains(.all) || effectiveDataKinds.contains(.outings) {
             viewModel.ensureAllLocationPointsLoaded()
         }
@@ -2166,6 +2682,145 @@ private struct SavedExportRecipe: Codable, Identifiable, Equatable {
     var options: ExportOptions
     var formats: [ExportFormat]
     var filenamePattern: String
+    /// Optional so recipes saved before destinations existed still load (as Files).
+    var destination: ArchiveDestination? = nil
+
+    static var examples: [SavedExportRecipe] {
+        var daily = ExportOptions()
+        daily.dataKind = .all
+        daily.format = .markdown
+        daily.datePreset = .thisMonth
+        daily.splitByDay = true
+
+        var weekly = ExportOptions()
+        weekly.dataKind = .points
+        weekly.format = .gpx
+        weekly.datePreset = .last7Days
+        weekly.splitByDay = false
+
+        return [
+            SavedExportRecipe(id: UUID(), name: String(localized: "Daily note → Obsidian"), options: daily,
+                              formats: [.markdown], filenamePattern: "Whereday/Daily Track - {date}", destination: .obsidian),
+            SavedExportRecipe(id: UUID(), name: String(localized: "Weekly GPX"), options: weekly,
+                              formats: [.gpx], filenamePattern: FilenameTemplate.readablePattern, destination: .files)
+        ]
+    }
+}
+
+/// Where a recipe's files go: a Files folder (or the share sheet), an Obsidian vault, or a server.
+enum ArchiveDestination: String, CaseIterable, Identifiable, Codable {
+    case files
+    case obsidian
+    case server
+
+    var id: String { rawValue }
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .files: "FILES FOLDER"
+        case .obsidian: "OBSIDIAN VAULT"
+        case .server: "DAWARICH SERVER"
+        }
+    }
+
+    var detail: LocalizedStringKey {
+        switch self {
+        case .files: "A folder in Files, or the share sheet"
+        case .obsidian: "Markdown daily notes in your vault"
+        case .server: "Route points sent through your webhook"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .files: "folder"
+        case .obsidian: "books.vertical"
+        case .server: "server.rack"
+        }
+    }
+}
+
+/// A user-picked Obsidian vault folder, kept as a security-scoped bookmark apart from the default export folder.
+@MainActor
+final class ObsidianVaultStore: ObservableObject {
+    static let shared = ObsidianVaultStore()
+
+    private let bookmarkKey = "obsidianVaultFolderBookmark"
+    @Published private(set) var vaultURL: URL?
+
+    var hasVault: Bool { vaultURL != nil }
+    var vaultName: String? { vaultURL?.lastPathComponent }
+
+    private init() {
+        guard let data = UserDefaults.standard.data(forKey: bookmarkKey) else { return }
+        var isStale = false
+        guard let url = try? URL(resolvingBookmarkData: data, options: [], relativeTo: nil, bookmarkDataIsStale: &isStale) else {
+            UserDefaults.standard.removeObject(forKey: bookmarkKey)
+            return
+        }
+        if isStale, url.startAccessingSecurityScopedResource() {
+            defer { url.stopAccessingSecurityScopedResource() }
+            try? saveBookmark(for: url)
+        }
+        vaultURL = url
+    }
+
+    func choose(_ url: URL) {
+        guard url.startAccessingSecurityScopedResource() else { return }
+        defer { url.stopAccessingSecurityScopedResource() }
+        do {
+            try saveBookmark(for: url)
+            vaultURL = url
+        } catch {
+            print("Failed to save Obsidian vault bookmark: \(error)")
+        }
+    }
+
+    func clear() {
+        UserDefaults.standard.removeObject(forKey: bookmarkKey)
+        vaultURL = nil
+    }
+
+    /// The scheduler writes here instead of the export folder when a recipe's destination is the vault.
+    static let destinationDefaultsKey = "exportDestination"
+
+    /// True when the Archive's destination is Obsidian and a vault is chosen.
+    var isScheduledDestination: Bool {
+        hasVault && UserDefaults.standard.string(forKey: Self.destinationDefaultsKey) == ArchiveDestination.obsidian.rawValue
+    }
+
+    /// Writes planned files into the vault; by default a day's note is replaced by its latest version.
+    func write(
+        _ files: [PlannedExportFile],
+        mode: ExportWriteMode = .overwrite,
+        mergeStrategies: [String: any ExportMergeStrategy] = [:]
+    ) throws -> [URL] {
+        guard let vaultURL else { throw ExportFolderError.noDefaultFolder }
+        guard vaultURL.startAccessingSecurityScopedResource() else { throw ExportFolderError.accessDenied }
+        defer { vaultURL.stopAccessingSecurityScopedResource() }
+        let destination = ExportDestination(rootURL: vaultURL, displayName: vaultName)
+        let writer = ExportFileWriter(fileSystem: FileManagerExportFileSystem(), safetyPolicy: .rejectTraversalAndAbsolutePaths)
+        return try writer.write(files, to: destination, mode: mode, mergeStrategies: mergeStrategies).map(\.url)
+    }
+
+    private func saveBookmark(for url: URL) throws {
+        let data = try url.bookmarkData(options: [], includingResourceValuesForKeys: nil, relativeTo: nil)
+        UserDefaults.standard.set(data, forKey: bookmarkKey)
+    }
+}
+
+/// Presents the vault folder picker from whichever layer is frontmost.
+private struct VaultPresentation: ViewModifier {
+    @Binding var isPicking: Bool
+    let vault: ObsidianVaultStore
+
+    func body(content: Content) -> some View {
+        content.sheet(isPresented: $isPicking) {
+            FolderPicker { url in
+                if let url { vault.choose(url) }
+            }
+        }
+    }
 }
 
 private struct LivePreviewKey: Equatable {

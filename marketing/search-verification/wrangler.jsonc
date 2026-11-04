@@ -1,0 +1,13 @@
+{
+  "name": "whereday-search-verification",
+  "account_id": "e4265f322e6380ee832b83ad45e3e8c0",
+  "main": "index.mjs",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "https://whereday.com/BingSiteAuth.xml", "zone_name": "whereday.com" },
+    { "pattern": "https://whereday.com/yandex_c33e9b984dcbf487.html", "zone_name": "whereday.com" }
+  ],
+  "observability": { "enabled": true, "head_sampling_rate": 1 }
+}

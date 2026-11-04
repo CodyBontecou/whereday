@@ -1,0 +1,1290 @@
+{
+  "checkedOn": "2026-10-30",
+  "authorization": "User explicitly approved selecting sc-domain:isolated.tech and reading only the https://isome.isolated.tech/ hostname filter.",
+  "results": {
+    "historyDates": {
+      "request": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "type": "web",
+        "dataState": "final",
+        "rowLimit": 1000,
+        "filters": [
+          {
+            "dimension": "page",
+            "operator": "contains",
+            "expression": "https://isome.isolated.tech/"
+          }
+        ],
+        "dimensions": [
+          "date"
+        ],
+        "startDate": "2026-09-02",
+        "endDate": "2026-10-27"
+      },
+      "response": {
+        "ok": true,
+        "siteUrl": "sc-domain:isolated.tech",
+        "startDate": "2026-09-02",
+        "endDate": "2026-10-27",
+        "dimensions": [
+          "date"
+        ],
+        "rowCount": 56,
+        "rows": [
+          {
+            "keys": [
+              "2026-09-02"
+            ],
+            "clicks": 0,
+            "impressions": 21,
+            "ctr": 0,
+            "position": 5.4
+          },
+          {
+            "keys": [
+              "2026-09-03"
+            ],
+            "clicks": 0,
+            "impressions": 35,
+            "ctr": 0,
+            "position": 5.5
+          },
+          {
+            "keys": [
+              "2026-09-04"
+            ],
+            "clicks": 1,
+            "impressions": 20,
+            "ctr": 0.05,
+            "position": 6.1
+          },
+          {
+            "keys": [
+              "2026-09-05"
+            ],
+            "clicks": 0,
+            "impressions": 50,
+            "ctr": 0,
+            "position": 5.1
+          },
+          {
+            "keys": [
+              "2026-09-06"
+            ],
+            "clicks": 0,
+            "impressions": 15,
+            "ctr": 0,
+            "position": 7.1
+          },
+          {
+            "keys": [
+              "2026-09-07"
+            ],
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "position": 6.4
+          },
+          {
+            "keys": [
+              "2026-09-08"
+            ],
+            "clicks": 0,
+            "impressions": 16,
+            "ctr": 0,
+            "position": 6.1
+          },
+          {
+            "keys": [
+              "2026-09-09"
+            ],
+            "clicks": 1,
+            "impressions": 17,
+            "ctr": 0.0588,
+            "position": 6.6
+          },
+          {
+            "keys": [
+              "2026-09-10"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.2
+          },
+          {
+            "keys": [
+              "2026-09-11"
+            ],
+            "clicks": 0,
+            "impressions": 12,
+            "ctr": 0,
+            "position": 5.9
+          },
+          {
+            "keys": [
+              "2026-09-12"
+            ],
+            "clicks": 0,
+            "impressions": 17,
+            "ctr": 0,
+            "position": 6.7
+          },
+          {
+            "keys": [
+              "2026-09-13"
+            ],
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "position": 14.6
+          },
+          {
+            "keys": [
+              "2026-09-14"
+            ],
+            "clicks": 0,
+            "impressions": 13,
+            "ctr": 0,
+            "position": 5.4
+          },
+          {
+            "keys": [
+              "2026-09-15"
+            ],
+            "clicks": 0,
+            "impressions": 12,
+            "ctr": 0,
+            "position": 7.8
+          },
+          {
+            "keys": [
+              "2026-09-16"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 4.4
+          },
+          {
+            "keys": [
+              "2026-09-17"
+            ],
+            "clicks": 1,
+            "impressions": 7,
+            "ctr": 0.1429,
+            "position": 6.1
+          },
+          {
+            "keys": [
+              "2026-09-18"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 5.9
+          },
+          {
+            "keys": [
+              "2026-09-19"
+            ],
+            "clicks": 0,
+            "impressions": 17,
+            "ctr": 0,
+            "position": 5.9
+          },
+          {
+            "keys": [
+              "2026-09-20"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 5.7
+          },
+          {
+            "keys": [
+              "2026-09-21"
+            ],
+            "clicks": 0,
+            "impressions": 11,
+            "ctr": 0,
+            "position": 5.4
+          },
+          {
+            "keys": [
+              "2026-09-22"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 7.1
+          },
+          {
+            "keys": [
+              "2026-09-23"
+            ],
+            "clicks": 0,
+            "impressions": 10,
+            "ctr": 0,
+            "position": 4.5
+          },
+          {
+            "keys": [
+              "2026-09-24"
+            ],
+            "clicks": 0,
+            "impressions": 8,
+            "ctr": 0,
+            "position": 5.3
+          },
+          {
+            "keys": [
+              "2026-09-25"
+            ],
+            "clicks": 0,
+            "impressions": 12,
+            "ctr": 0,
+            "position": 4.8
+          },
+          {
+            "keys": [
+              "2026-09-26"
+            ],
+            "clicks": 0,
+            "impressions": 4,
+            "ctr": 0,
+            "position": 5.8
+          },
+          {
+            "keys": [
+              "2026-09-27"
+            ],
+            "clicks": 0,
+            "impressions": 11,
+            "ctr": 0,
+            "position": 9.6
+          },
+          {
+            "keys": [
+              "2026-09-28"
+            ],
+            "clicks": 1,
+            "impressions": 13,
+            "ctr": 0.0769,
+            "position": 4.8
+          },
+          {
+            "keys": [
+              "2026-09-29"
+            ],
+            "clicks": 1,
+            "impressions": 14,
+            "ctr": 0.0714,
+            "position": 5.7
+          },
+          {
+            "keys": [
+              "2026-09-30"
+            ],
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "position": 6.1
+          },
+          {
+            "keys": [
+              "2026-10-01"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.2
+          },
+          {
+            "keys": [
+              "2026-10-02"
+            ],
+            "clicks": 0,
+            "impressions": 8,
+            "ctr": 0,
+            "position": 4.3
+          },
+          {
+            "keys": [
+              "2026-10-03"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 4.4
+          },
+          {
+            "keys": [
+              "2026-10-04"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 4.7
+          },
+          {
+            "keys": [
+              "2026-10-05"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.7
+          },
+          {
+            "keys": [
+              "2026-10-06"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.5
+          },
+          {
+            "keys": [
+              "2026-10-07"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 7.3
+          },
+          {
+            "keys": [
+              "2026-10-08"
+            ],
+            "clicks": 0,
+            "impressions": 0,
+            "ctr": 0,
+            "position": 0
+          },
+          {
+            "keys": [
+              "2026-10-09"
+            ],
+            "clicks": 0,
+            "impressions": 10,
+            "ctr": 0,
+            "position": 5.5
+          },
+          {
+            "keys": [
+              "2026-10-10"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 7.5
+          },
+          {
+            "keys": [
+              "2026-10-11"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 14.9
+          },
+          {
+            "keys": [
+              "2026-10-12"
+            ],
+            "clicks": 1,
+            "impressions": 11,
+            "ctr": 0.0909,
+            "position": 5.6
+          },
+          {
+            "keys": [
+              "2026-10-13"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 3.2
+          },
+          {
+            "keys": [
+              "2026-10-14"
+            ],
+            "clicks": 0,
+            "impressions": 13,
+            "ctr": 0,
+            "position": 7.8
+          },
+          {
+            "keys": [
+              "2026-10-15"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 5.2
+          },
+          {
+            "keys": [
+              "2026-10-16"
+            ],
+            "clicks": 0,
+            "impressions": 15,
+            "ctr": 0,
+            "position": 7.1
+          },
+          {
+            "keys": [
+              "2026-10-17"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 6.4
+          },
+          {
+            "keys": [
+              "2026-10-18"
+            ],
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 8.7
+          },
+          {
+            "keys": [
+              "2026-10-19"
+            ],
+            "clicks": 0,
+            "impressions": 25,
+            "ctr": 0,
+            "position": 4.8
+          },
+          {
+            "keys": [
+              "2026-10-20"
+            ],
+            "clicks": 1,
+            "impressions": 10,
+            "ctr": 0.1,
+            "position": 4.2
+          },
+          {
+            "keys": [
+              "2026-10-21"
+            ],
+            "clicks": 0,
+            "impressions": 52,
+            "ctr": 0,
+            "position": 5.1
+          },
+          {
+            "keys": [
+              "2026-10-22"
+            ],
+            "clicks": 1,
+            "impressions": 10,
+            "ctr": 0.1,
+            "position": 8.1
+          },
+          {
+            "keys": [
+              "2026-10-23"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 4.6
+          },
+          {
+            "keys": [
+              "2026-10-24"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 6.1
+          },
+          {
+            "keys": [
+              "2026-10-25"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 20.4
+          },
+          {
+            "keys": [
+              "2026-10-26"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 3.8
+          },
+          {
+            "keys": [
+              "2026-10-27"
+            ],
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "position": 16.6
+          }
+        ],
+        "hasMore": false,
+        "meta": {
+          "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+          "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+        }
+      }
+    },
+    "historyOverlap": {
+      "request": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "type": "web",
+        "dataState": "final",
+        "rowLimit": 1000,
+        "filters": [
+          {
+            "dimension": "page",
+            "operator": "contains",
+            "expression": "https://isome.isolated.tech/"
+          }
+        ],
+        "dimensions": [
+          "date"
+        ],
+        "startDate": "2026-09-27",
+        "endDate": "2026-10-24"
+      },
+      "response": {
+        "ok": true,
+        "siteUrl": "sc-domain:isolated.tech",
+        "startDate": "2026-09-27",
+        "endDate": "2026-10-24",
+        "dimensions": [
+          "date"
+        ],
+        "rowCount": 28,
+        "rows": [
+          {
+            "keys": [
+              "2026-09-27"
+            ],
+            "clicks": 0,
+            "impressions": 11,
+            "ctr": 0,
+            "position": 9.6
+          },
+          {
+            "keys": [
+              "2026-09-28"
+            ],
+            "clicks": 1,
+            "impressions": 13,
+            "ctr": 0.0769,
+            "position": 4.8
+          },
+          {
+            "keys": [
+              "2026-09-29"
+            ],
+            "clicks": 1,
+            "impressions": 14,
+            "ctr": 0.0714,
+            "position": 5.7
+          },
+          {
+            "keys": [
+              "2026-09-30"
+            ],
+            "clicks": 0,
+            "impressions": 14,
+            "ctr": 0,
+            "position": 6.1
+          },
+          {
+            "keys": [
+              "2026-10-01"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.2
+          },
+          {
+            "keys": [
+              "2026-10-02"
+            ],
+            "clicks": 0,
+            "impressions": 8,
+            "ctr": 0,
+            "position": 4.3
+          },
+          {
+            "keys": [
+              "2026-10-03"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 4.4
+          },
+          {
+            "keys": [
+              "2026-10-04"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 4.7
+          },
+          {
+            "keys": [
+              "2026-10-05"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.7
+          },
+          {
+            "keys": [
+              "2026-10-06"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 6.5
+          },
+          {
+            "keys": [
+              "2026-10-07"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 7.3
+          },
+          {
+            "keys": [
+              "2026-10-08"
+            ],
+            "clicks": 0,
+            "impressions": 0,
+            "ctr": 0,
+            "position": 0
+          },
+          {
+            "keys": [
+              "2026-10-09"
+            ],
+            "clicks": 0,
+            "impressions": 10,
+            "ctr": 0,
+            "position": 5.5
+          },
+          {
+            "keys": [
+              "2026-10-10"
+            ],
+            "clicks": 0,
+            "impressions": 6,
+            "ctr": 0,
+            "position": 7.5
+          },
+          {
+            "keys": [
+              "2026-10-11"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 14.9
+          },
+          {
+            "keys": [
+              "2026-10-12"
+            ],
+            "clicks": 1,
+            "impressions": 11,
+            "ctr": 0.0909,
+            "position": 5.6
+          },
+          {
+            "keys": [
+              "2026-10-13"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 3.2
+          },
+          {
+            "keys": [
+              "2026-10-14"
+            ],
+            "clicks": 0,
+            "impressions": 13,
+            "ctr": 0,
+            "position": 7.8
+          },
+          {
+            "keys": [
+              "2026-10-15"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 5.2
+          },
+          {
+            "keys": [
+              "2026-10-16"
+            ],
+            "clicks": 0,
+            "impressions": 15,
+            "ctr": 0,
+            "position": 7.1
+          },
+          {
+            "keys": [
+              "2026-10-17"
+            ],
+            "clicks": 0,
+            "impressions": 7,
+            "ctr": 0,
+            "position": 6.4
+          },
+          {
+            "keys": [
+              "2026-10-18"
+            ],
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 8.7
+          },
+          {
+            "keys": [
+              "2026-10-19"
+            ],
+            "clicks": 0,
+            "impressions": 25,
+            "ctr": 0,
+            "position": 4.8
+          },
+          {
+            "keys": [
+              "2026-10-20"
+            ],
+            "clicks": 1,
+            "impressions": 10,
+            "ctr": 0.1,
+            "position": 4.2
+          },
+          {
+            "keys": [
+              "2026-10-21"
+            ],
+            "clicks": 0,
+            "impressions": 52,
+            "ctr": 0,
+            "position": 5.1
+          },
+          {
+            "keys": [
+              "2026-10-22"
+            ],
+            "clicks": 1,
+            "impressions": 10,
+            "ctr": 0.1,
+            "position": 8.1
+          },
+          {
+            "keys": [
+              "2026-10-23"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 4.6
+          },
+          {
+            "keys": [
+              "2026-10-24"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 6.1
+          }
+        ],
+        "hasMore": false,
+        "meta": {
+          "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+          "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+        }
+      }
+    },
+    "historyPages": {
+      "request": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "type": "web",
+        "dataState": "final",
+        "rowLimit": 1000,
+        "filters": [
+          {
+            "dimension": "page",
+            "operator": "contains",
+            "expression": "https://isome.isolated.tech/"
+          }
+        ],
+        "dimensions": [
+          "page"
+        ],
+        "startDate": "2026-09-30",
+        "endDate": "2026-10-27"
+      },
+      "response": {
+        "ok": true,
+        "siteUrl": "sc-domain:isolated.tech",
+        "startDate": "2026-09-30",
+        "endDate": "2026-10-27",
+        "dimensions": [
+          "page"
+        ],
+        "rowCount": 19,
+        "rows": [
+          {
+            "keys": [
+              "https://isome.isolated.tech/"
+            ],
+            "clicks": 3,
+            "impressions": 146,
+            "ctr": 0.0205,
+            "position": 3.8
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/#faq"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/#features"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/#pricing"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/#use-cases"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/about"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 6
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/blog/"
+            ],
+            "clicks": 0,
+            "impressions": 16,
+            "ctr": 0,
+            "position": 16.4
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/blog/private-location-journal-iphone/"
+            ],
+            "clicks": 0,
+            "impressions": 56,
+            "ctr": 0,
+            "position": 8.8
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/blog/view-location-history-iphone/"
+            ],
+            "clicks": 0,
+            "impressions": 8,
+            "ctr": 0,
+            "position": 25.3
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/"
+            ],
+            "clicks": 0,
+            "impressions": 25,
+            "ctr": 0,
+            "position": 10.7
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/apple-watch/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 3
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/getting-started/"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 3.2
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/photos/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 6
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/siri-shortcuts/"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 9.6
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/timeline-outings/"
+            ],
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "position": 2.5
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/tracking/"
+            ],
+            "clicks": 0,
+            "impressions": 5,
+            "ctr": 0,
+            "position": 1
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/docs/webhooks/"
+            ],
+            "clicks": 0,
+            "impressions": 9,
+            "ctr": 0,
+            "position": 5.1
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/privacy"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 9
+          },
+          {
+            "keys": [
+              "https://isome.isolated.tech/terms"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 7
+          }
+        ],
+        "hasMore": false,
+        "meta": {
+          "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+          "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+        }
+      }
+    },
+    "historyQueries": {
+      "request": {
+        "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+        "type": "web",
+        "dataState": "final",
+        "rowLimit": 1000,
+        "filters": [
+          {
+            "dimension": "page",
+            "operator": "contains",
+            "expression": "https://isome.isolated.tech/"
+          }
+        ],
+        "dimensions": [
+          "query",
+          "page"
+        ],
+        "startDate": "2026-09-30",
+        "endDate": "2026-10-27"
+      },
+      "response": {
+        "ok": true,
+        "siteUrl": "sc-domain:isolated.tech",
+        "startDate": "2026-09-30",
+        "endDate": "2026-10-27",
+        "dimensions": [
+          "query",
+          "page"
+        ],
+        "rowCount": 18,
+        "rows": [
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/"
+            ],
+            "clicks": 1,
+            "impressions": 72,
+            "ctr": 0.0139,
+            "position": 2.3
+          },
+          {
+            "keys": [
+              "export isochrones",
+              "https://isome.isolated.tech/blog/"
+            ],
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "position": 55.5
+          },
+          {
+            "keys": [
+              "gps tracking apps for iphone",
+              "https://isome.isolated.tech/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "how to see detailed location history and travel routes of a child on an iphone?",
+              "https://isome.isolated.tech/blog/view-location-history-iphone/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 5
+          },
+          {
+            "keys": [
+              "iphone location tracker app",
+              "https://isome.isolated.tech/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 3
+          },
+          {
+            "keys": [
+              "iso location",
+              "https://isome.isolated.tech/blog/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 10
+          },
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/#faq"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/#features"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/#pricing"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/#use-cases"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/blog/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 2
+          },
+          {
+            "keys": [
+              "iso me",
+              "https://isome.isolated.tech/docs/"
+            ],
+            "clicks": 0,
+            "impressions": 12,
+            "ctr": 0,
+            "position": 7.3
+          },
+          {
+            "keys": [
+              "iso tracking",
+              "https://isome.isolated.tech/blog/"
+            ],
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "position": 16
+          },
+          {
+            "keys": [
+              "iso tracking",
+              "https://isome.isolated.tech/docs/"
+            ],
+            "clicks": 0,
+            "impressions": 1,
+            "ctr": 0,
+            "position": 29
+          },
+          {
+            "keys": [
+              "isotopologs",
+              "https://isome.isolated.tech/"
+            ],
+            "clicks": 0,
+            "impressions": 4,
+            "ctr": 0,
+            "position": 17.3
+          },
+          {
+            "keys": [
+              "isotopologs",
+              "https://isome.isolated.tech/blog/"
+            ],
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 13
+          },
+          {
+            "keys": [
+              "isotopologs",
+              "https://isome.isolated.tech/docs/"
+            ],
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "position": 12.5
+          },
+          {
+            "keys": [
+              "will location store in iphone locally",
+              "https://isome.isolated.tech/blog/private-location-journal-iphone/"
+            ],
+            "clicks": 0,
+            "impressions": 2,
+            "ctr": 0,
+            "position": 10.5
+          }
+        ],
+        "hasMore": false,
+        "meta": {
+          "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+          "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/search-performance"
+        }
+      }
+    }
+  },
+  "totals": {
+    "previous28": {
+      "clicks": 5,
+      "impressions": 396,
+      "days": 28
+    },
+    "current28": {
+      "clicks": 3,
+      "impressions": 286,
+      "days": 28
+    },
+    "baselineOverlap": {
+      "clicks": 5,
+      "impressions": 297,
+      "days": 28
+    },
+    "preMove28": {
+      "clicks": 5,
+      "impressions": 293,
+      "days": 28
+    },
+    "moveDays": {
+      "clicks": 0,
+      "impressions": 20,
+      "days": 2
+    }
+  }
+}

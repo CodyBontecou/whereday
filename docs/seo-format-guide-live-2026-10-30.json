@@ -1,0 +1,74 @@
+{
+  "deployment": "https://6c1ef163.spotted-8ez.pages.dev",
+  "checks": [
+    {
+      "path": "/blog/gpx-kml-geojson-location-history/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/blog/gpx-kml-geojson-location-history/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/samples/synthetic-format-trip.gpx",
+      "status": 200,
+      "type": "application/gpx+xml",
+      "sha256": "b195eb121bdaf23414062cae772c891df9bfdf9e533443faefe54169d588be33",
+      "disposition": null
+    },
+    {
+      "path": "/samples/synthetic-format-trip.kml",
+      "status": 200,
+      "type": "application/vnd.google-earth.kml+xml",
+      "sha256": "0775c0f4e654cf018c63ca0b9ec3bb25503debdd2313473e290ed4021dd383cd",
+      "disposition": "attachment; filename=\"synthetic-format-trip.kml\""
+    },
+    {
+      "path": "/samples/synthetic-format-trip.geojson",
+      "status": 200,
+      "type": "application/geo+json",
+      "sha256": "5dd92a8a0b47aba8b17320a5b5f2a57a7e42465bf5e5764420dd1715df168f6f",
+      "disposition": "attachment; filename=\"synthetic-format-trip.geojson\""
+    },
+    {
+      "path": "/samples/synthetic-format-trip.csv",
+      "status": 200,
+      "type": "text/csv",
+      "sha256": "2993e34a2f9542073f1b2ac577663d46feabe52451f9d7789b70ad44bbf12b83",
+      "disposition": "attachment; filename=\"synthetic-format-trip.csv\""
+    },
+    {
+      "path": "/blog/",
+      "status": 200,
+      "linksNewGuide": true
+    },
+    {
+      "path": "/blog/check-gpx-file/",
+      "status": 200,
+      "linksNewGuide": true
+    },
+    {
+      "path": "/blog/record-iphone-route-gpx/",
+      "status": 200,
+      "linksNewGuide": true
+    },
+    {
+      "path": "/docs/export-import/",
+      "status": 200,
+      "linksNewGuide": true
+    },
+    {
+      "path": "/tools/",
+      "status": 200,
+      "linksNewGuide": true
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "status": 200,
+      "linksNewGuide": true
+    }
+  ],
+  "sitemapVerified": true
+}

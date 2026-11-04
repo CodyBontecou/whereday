@@ -1,0 +1,189 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "sc-domain:whereday.com · inspected 8 URLs\n\nhttps://whereday.com/tools/ — NEUTRAL: URL is unknown to Google\n  robots.txt: ROBOTS_TXT_STATE_UNSPECIFIED · indexing: INDEXING_STATE_UNSPECIFIED · page fetch: PAGE_FETCH_STATE_UNSPECIFIED\n  mobile usability: VERDICT_UNSPECIFIED\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=WMQxUz9Uq9SVXaPdvigK9Q&utm_medium=link&utm_source=api\n\nhttps://whereday.com/tools/gpx-viewer/ — NEUTRAL: URL is unknown to Google\n  robots.txt: ROBOTS_TXT_STATE_UNSPECIFIED · indexing: INDEXING_STATE_UNSPECIFIED · page fetch: PAGE_FETCH_STATE_UNSPECIFIED\n  mobile usability: VERDICT_UNSPECIFIED\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=W78b-jyFwe_OHqWYKCYPHQ&utm_medium=link&utm_source=api\n\nhttps://whereday.com/tools/google-timeline-inspector/ — NEUTRAL: URL is unknown to Google\n  robots.txt: ROBOTS_TXT_STATE_UNSPECIFIED · indexing: INDEXING_STATE_UNSPECIFIED · page fetch: PAGE_FETCH_STATE_UNSPECIFIED\n  mobile usability: VERDICT_UNSPECIFIED\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=wKFYGKD0EcJWh2zRz6rdfw&utm_medium=link&utm_source=api\n\nhttps://whereday.com/blog/check-gpx-file/ — NEUTRAL: URL is unknown to Google\n  robots.txt: ROBOTS_TXT_STATE_UNSPECIFIED · indexing: INDEXING_STATE_UNSPECIFIED · page fetch: PAGE_FETCH_STATE_UNSPECIFIED\n  mobile usability: VERDICT_UNSPECIFIED\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=yb-0IQTmJEJ6vy7Z5rezHw&utm_medium=link&utm_source=api\n\nhttps://whereday.com/blog/gpx-kml-geojson-location-history/ — NEUTRAL: URL is unknown to Google\n  robots.txt: ROBOTS_TXT_STATE_UNSPECIFIED · indexing: INDEXING_STATE_UNSPECIFIED · page fetch: PAGE_FETCH_STATE_UNSPECIFIED\n  mobile usability: VERDICT_UNSPECIFIED\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=-Vie7gIIzWfWIYOH_JB0Dw&utm_medium=link&utm_source=api\n\nhttps://whereday.com/blog/google-timeline-json-formats/ — NEUTRAL: URL is unknown to Google\n  robots.txt: ROBOTS_TXT_STATE_UNSPECIFIED · indexing: INDEXING_STATE_UNSPECIFIED · page fetch: PAGE_FETCH_STATE_UNSPECIFIED\n  mobile usability: VERDICT_UNSPECIFIED\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=vTsqUR3Z2Jc-Zn5wLCVUXw&utm_medium=link&utm_source=api\n\nhttps://whereday.com/blog/import-google-timeline-iphone/ — PASS: Submitted and indexed\n  robots.txt: ALLOWED · indexing: INDEXING_ALLOWED · page fetch: SUCCESSFUL\n  last crawl: 2026-10-30T19:24:33Z · crawled as: MOBILE\n  canonical: https://whereday.com/blog/import-google-timeline-iphone/ (declared canonical matches)\n  mobile usability: VERDICT_UNSPECIFIED · rich results: PASS\n  referring URLs: https://whereday.com/?ref=appcustomerservice.com\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=UsJt6_WSmZ8BRUfClkoqNA&utm_medium=link&utm_source=api\n\nhttps://whereday.com/blog/iphone-location-journal-obsidian/ — PASS: Submitted and indexed\n  robots.txt: ALLOWED · indexing: INDEXING_ALLOWED · page fetch: SUCCESSFUL\n  last crawl: 2026-10-30T18:09:40Z · crawled as: MOBILE\n  canonical: https://whereday.com/blog/iphone-location-journal-obsidian/ (declared canonical matches)\n  mobile usability: VERDICT_UNSPECIFIED · rich results: PASS\n  sitemaps: https://whereday.com/sitemap.xml · referring URLs: https://whereday.com/docs/automatic-exports/\n  details: https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=7CoD7C1TxlzZmReMRpc43A&utm_medium=link&utm_source=api"
+    }
+  ],
+  "structuredContent": {
+    "ok": true,
+    "siteUrl": "sc-domain:whereday.com",
+    "results": [
+      {
+        "url": "https://whereday.com/tools/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=WMQxUz9Uq9SVXaPdvigK9Q&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "NEUTRAL",
+            "coverageState": "URL is unknown to Google",
+            "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+            "indexingState": "INDEXING_STATE_UNSPECIFIED",
+            "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/tools/gpx-viewer/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=W78b-jyFwe_OHqWYKCYPHQ&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "NEUTRAL",
+            "coverageState": "URL is unknown to Google",
+            "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+            "indexingState": "INDEXING_STATE_UNSPECIFIED",
+            "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/tools/google-timeline-inspector/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=wKFYGKD0EcJWh2zRz6rdfw&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "NEUTRAL",
+            "coverageState": "URL is unknown to Google",
+            "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+            "indexingState": "INDEXING_STATE_UNSPECIFIED",
+            "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/blog/check-gpx-file/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=yb-0IQTmJEJ6vy7Z5rezHw&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "NEUTRAL",
+            "coverageState": "URL is unknown to Google",
+            "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+            "indexingState": "INDEXING_STATE_UNSPECIFIED",
+            "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/blog/gpx-kml-geojson-location-history/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=-Vie7gIIzWfWIYOH_JB0Dw&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "NEUTRAL",
+            "coverageState": "URL is unknown to Google",
+            "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+            "indexingState": "INDEXING_STATE_UNSPECIFIED",
+            "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/blog/google-timeline-json-formats/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=vTsqUR3Z2Jc-Zn5wLCVUXw&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "NEUTRAL",
+            "coverageState": "URL is unknown to Google",
+            "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+            "indexingState": "INDEXING_STATE_UNSPECIFIED",
+            "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/blog/import-google-timeline-iphone/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=UsJt6_WSmZ8BRUfClkoqNA&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "PASS",
+            "coverageState": "Submitted and indexed",
+            "robotsTxtState": "ALLOWED",
+            "indexingState": "INDEXING_ALLOWED",
+            "lastCrawlTime": "2026-10-30T19:24:33Z",
+            "pageFetchState": "SUCCESSFUL",
+            "googleCanonical": "https://whereday.com/blog/import-google-timeline-iphone/",
+            "userCanonical": "https://whereday.com/blog/import-google-timeline-iphone/",
+            "referringUrls": [
+              "https://whereday.com/?ref=appcustomerservice.com"
+            ],
+            "crawledAs": "MOBILE"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          },
+          "richResultsResult": {
+            "verdict": "PASS",
+            "detectedItems": [
+              {
+                "richResultType": "Breadcrumbs",
+                "items": [
+                  {
+                    "name": "Unnamed item"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "url": "https://whereday.com/blog/iphone-location-journal-obsidian/",
+        "result": {
+          "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=sc-domain:whereday.com&id=7CoD7C1TxlzZmReMRpc43A&utm_medium=link&utm_source=api",
+          "indexStatusResult": {
+            "verdict": "PASS",
+            "coverageState": "Submitted and indexed",
+            "robotsTxtState": "ALLOWED",
+            "indexingState": "INDEXING_ALLOWED",
+            "lastCrawlTime": "2026-10-30T18:09:40Z",
+            "pageFetchState": "SUCCESSFUL",
+            "googleCanonical": "https://whereday.com/blog/iphone-location-journal-obsidian/",
+            "userCanonical": "https://whereday.com/blog/iphone-location-journal-obsidian/",
+            "sitemap": [
+              "https://whereday.com/sitemap.xml"
+            ],
+            "referringUrls": [
+              "https://whereday.com/docs/automatic-exports/"
+            ],
+            "crawledAs": "MOBILE"
+          },
+          "mobileUsabilityResult": {
+            "verdict": "VERDICT_UNSPECIFIED"
+          },
+          "richResultsResult": {
+            "verdict": "PASS",
+            "detectedItems": [
+              {
+                "richResultType": "Breadcrumbs",
+                "items": [
+                  {
+                    "name": "Unnamed item"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/settings/integrations"
+    }
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "checkedOn": "2026-10-30",
+  "method": "GET, follow HTTP redirects, first128KiB only; no browser execution",
+  "results": [
+    {
+      "url": "https://dawarich.app/docs/getting-started/track-your-location/",
+      "pages": [
+        "docs/webhooks/index.html",
+        "integrations/dawarich/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://dawarich.app/docs/getting-started/track-your-location/",
+      "title": "Track Your Location | Dawarich"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/backgroundtasks/bgtaskrequest/earliestbegindate",
+      "pages": [
+        "docs/automatic-exports/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://developer.apple.com/documentation/backgroundtasks/bgtaskrequest/earliestbegindate",
+      "title": "earliestBeginDate | Apple Developer Documentation"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/watchconnectivity/wcsession",
+      "pages": [
+        "docs/apple-watch/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://developer.apple.com/documentation/watchconnectivity/wcsession",
+      "title": "WCSession | Apple Developer Documentation"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/xcode/accessing-the-device-s-location-efficiently",
+      "pages": [
+        "blog/iphone-location-tracking-battery/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://developer.apple.com/documentation/xcode/accessing-the-device-s-location-efficiently",
+      "title": "Accessing the device\u2019s location efficiently | Apple Developer Documentation"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/isome-maps",
+      "pages": [
+        "blog/iphone-location-journal-obsidian/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/isome-maps",
+      "title": "GitHub - CodyBontecou/isome-maps: Obsidian plugin that renders Leaflet maps inline from iso.me location exports \u2014 visits, routes, and heatmaps. \u00b7 GitHub"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/isome-maps/blob/0.7.15/SECURITY.md",
+      "pages": [
+        "blog/iphone-location-journal-obsidian/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/isome-maps/blob/0.7.15/SECURITY.md",
+      "title": "isome-maps/SECURITY.md at 0.7.15 \u00b7 CodyBontecou/isome-maps \u00b7 GitHub"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/isome-maps/releases/tag/0.7.15",
+      "pages": [
+        "blog/iphone-location-journal-obsidian/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/isome-maps/releases/tag/0.7.15",
+      "title": "Release 0.7.15 \u00b7 CodyBontecou/isome-maps \u00b7 GitHub"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/whereday",
+      "pages": [
+        "about.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/whereday",
+      "title": "GitHub - CodyBontecou/whereday: Source code for Whereday (formerly iso.me), a private iPhone and Apple Watch location journal. \u00b7 GitHub"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/whereday/blob/main/LICENSE",
+      "pages": [
+        "terms.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/whereday/blob/main/LICENSE",
+      "title": "whereday/LICENSE at main \u00b7 CodyBontecou/whereday \u00b7 GitHub"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/whereday/discussions",
+      "pages": [
+        "contact.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/whereday/discussions",
+      "title": "CodyBontecou/whereday \u00b7 Discussions \u00b7 GitHub"
+    },
+    {
+      "url": "https://github.com/CodyBontecou/whereday/issues",
+      "pages": [
+        "contact.html"
+      ],
+      "status": 200,
+      "finalURL": "https://github.com/CodyBontecou/whereday/issues",
+      "title": "Issues \u00b7 CodyBontecou/whereday \u00b7 GitHub"
+    },
+    {
+      "url": "https://gpx.studio/app",
+      "pages": [
+        "blog/record-iphone-route-gpx/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://gpx.studio/app",
+      "title": "gpx.studio \u2014 app"
+    },
+    {
+      "url": "https://gpx.studio/app?files=%5B%22https%3A%2F%2Fwhereday.com%2Fsamples%2Fsynthetic-app-export.gpx%22%5D",
+      "pages": [
+        "blog/record-iphone-route-gpx/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://gpx.studio/app?files=%5B%22https%3A%2F%2Fwhereday.com%2Fsamples%2Fsynthetic-app-export.gpx%22%5D",
+      "title": "gpx.studio \u2014 app"
+    },
+    {
+      "url": "https://gpx.studio/app?files=%5B%22https%3A%2F%2Fwhereday.com%2Fsamples%2Fsynthetic-ui-export.gpx%22%5D",
+      "pages": [
+        "blog/record-iphone-route-gpx/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://gpx.studio/app?files=%5B%22https%3A%2F%2Fwhereday.com%2Fsamples%2Fsynthetic-ui-export.gpx%22%5D",
+      "title": "gpx.studio \u2014 app"
+    },
+    {
+      "url": "https://gpx.studio/help/menu/file",
+      "pages": [
+        "blog/record-iphone-route-gpx/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://gpx.studio/help/menu/file",
+      "title": "gpx.studio \u2014 help | File actions"
+    },
+    {
+      "url": "https://gpx.studio/help/menu/view",
+      "pages": [
+        "blog/record-iphone-route-gpx/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://gpx.studio/help/menu/view",
+      "title": "gpx.studio \u2014 help | View options"
+    },
+    {
+      "url": "https://isolated.tech",
+      "pages": [
+        "404.html",
+        "about.html",
+        "blog/back-up-iphone-location-history/index.html",
+        "blog/import-google-timeline-iphone/index.html",
+        "blog/iphone-location-journal-obsidian/index.html",
+        "blog/iphone-location-tracking-battery/index.html",
+        "blog/missing-location-history-iphone/index.html",
+        "blog/record-iphone-route-gpx/index.html",
+        "blog/track-days-in-country-iphone/index.html",
+        "blog/view-location-history-iphone/index.html",
+        "compare/google-maps-timeline/index.html",
+        "compare/index.html",
+        "contact.html",
+        "integrations/dawarich/index.html",
+        "integrations/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://isolated.tech",
+      "title": "ISOLATED.TECH \u2014 We build software."
+    },
+    {
+      "url": "https://myself.md/privacy",
+      "pages": [
+        "privacy.html"
+      ],
+      "status": 200,
+      "finalURL": "https://myself.md/privacy",
+      "title": "myself.md Privacy Policy \u00b7 myself.md"
+    },
+    {
+      "url": "https://obsidian.md/help/Files%2Band%2Bfolders/How%2BObsidian%2Bstores%2Bdata",
+      "pages": [
+        "blog/iphone-location-journal-obsidian/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://obsidian.md/help/Files%2Band%2Bfolders/How%2BObsidian%2Bstores%2Bdata",
+      "title": "How Obsidian stores data - Obsidian Help"
+    },
+    {
+      "url": "https://obsidian.md/help/import/markdown",
+      "pages": [
+        "blog/iphone-location-journal-obsidian/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://obsidian.md/help/import/markdown",
+      "title": "Import Markdown files - Obsidian Help"
+    },
+    {
+      "url": "https://obsidian.md/help/sync-notes",
+      "pages": [
+        "blog/iphone-location-journal-obsidian/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://obsidian.md/help/sync-notes",
+      "title": "Sync your notes across devices - Obsidian Help"
+    },
+    {
+      "url": "https://support.apple.com/en-us/102515",
+      "pages": [
+        "blog/missing-location-history-iphone/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://support.apple.com/en-us/102515",
+      "title": "About privacy and Location Services in iOS, iPadOS, and watchOS - Apple Support"
+    },
+    {
+      "url": "https://support.apple.com/en-us/120745",
+      "pages": [
+        "blog/iphone-location-tracking-battery/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://support.apple.com/en-us/120745",
+      "title": "If the battery in your iPhone or iPad drains too quickly - Apple Support"
+    },
+    {
+      "url": "https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios",
+      "pages": [
+        "blog/view-location-history-iphone/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios",
+      "title": "Set up Maps on iPhone - Apple Support"
+    },
+    {
+      "url": "https://support.apple.com/guide/iphone/view-and-manage-visited-places-iph0c2597c4f/26/ios/26",
+      "pages": [
+        "blog/view-location-history-iphone/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://support.apple.com/guide/iphone/view-and-manage-visited-places-iph0c2597c4f/26/ios/26",
+      "title": "View and manage Visited Places in Maps on iPhone - Apple Support"
+    },
+    {
+      "url": "https://support.apple.com/guide/shortcuts/create-a-custom-shortcut-apd84c576f8c/ios",
+      "pages": [
+        "docs/siri-shortcuts/index.html"
+      ],
+      "error": "The read operation timed out"
+    },
+    {
+      "url": "https://support.apple.com/guide/shortcuts/share-actions-apdaf74d75a5/ios",
+      "pages": [
+        "docs/siri-shortcuts/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://support.apple.com/guide/shortcuts/share-actions-apdaf74d75a5/ios",
+      "title": "About share actions in Shortcuts on iPhone or iPad - Apple Support"
+    },
+    {
+      "url": "https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en",
+      "pages": [
+        "blog/import-google-timeline-iphone/index.html",
+        "blog/view-location-history-iphone/index.html",
+        "compare/google-maps-timeline/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en",
+      "title": "Manage your Google Maps Timeline - iPhone &amp; iPad - Google Maps Help"
+    },
+    {
+      "url": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+      "pages": [
+        "terms.html"
+      ],
+      "status": 200,
+      "finalURL": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+      "title": "Legal - Licensed Application End User License Agreement - Apple"
+    },
+    {
+      "url": "https://www.topografix.com/GPX/1/1/",
+      "pages": [
+        "blog/record-iphone-route-gpx/index.html"
+      ],
+      "status": 200,
+      "finalURL": "https://www.topografix.com/GPX/1/1/",
+      "title": "GPX 1.1 Schema Documentation"
+    }
+  ],
+  "followup": {
+    "url": "https://support.apple.com/guide/shortcuts/create-a-custom-shortcut-apd84c576f8c/ios",
+    "method": "web tool fetch",
+    "status": 429,
+    "classification": "unverified due to timeout and rate limit, not a confirmed broken link"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Audit 15a7cbdd-9427-4990-9f0e-56eb6ecc0c35 found no issues across 58 crawled pages."
+    }
+  ],
+  "structuredContent": {
+    "summary": [],
+    "issues": [],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=15a7cbdd-9427-4990-9f0e-56eb6ecc0c35"
+    }
+  }
+}

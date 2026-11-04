@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import CoreLocation
 import UniformTypeIdentifiers
 
 struct CountryDaysView: View {
@@ -8,6 +9,7 @@ struct CountryDaysView: View {
     @Query(filter: #Predicate<Visit> { $0.countryCode != nil }) private var visits: [Visit]
     @Query(filter: #Predicate<LocationPoint> { $0.countryCode != nil && !$0.isOutlier }) private var points: [LocationPoint]
     @Query(sort: \CountryStay.firstDay, order: .reverse) private var stays: [CountryStay]
+    @Query(filter: #Predicate<SavedPlace> { $0.kindRaw == "home" }) private var homePlaces: [SavedPlace]
     @StateObject private var resolver = CountryDayResolver()
     @ObservedObject private var storeManager = StoreManager.shared
     @State private var period: CountryDayPeriod = .year
@@ -27,7 +29,10 @@ struct CountryDaysView: View {
 
     var body: some View {
         let summaries = summaries
-        let atlas = CountryAtlas(summaries: summaries)
+        // Same inks as the Atlas: Home first, then all-time order, whatever the period.
+        let inkOrder = CountryDayCalculator.summaries(visits: visits, points: points, stays: stays).map(\.countryCode)
+        let atlas = CountryAtlas(summaries: summaries, inkOrder: inkOrder,
+                                 homeCountryCode: CountryAtlas.homeCountryCode(homePlaces: homePlaces, visits: visits, points: points))
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 2) {
@@ -210,6 +215,12 @@ struct CountryDaysView: View {
                                                 .foregroundStyle(TE.textPrimary)
                                             Text(CountryCivilDate.range(stay.firstDay, stay.lastDay))
                                                 .font(TE.mono(.caption2)).foregroundStyle(TE.textMuted)
+                                            if let note = stay.note?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty {
+                                                Text(note)
+                                                    .font(.footnote)
+                                                    .foregroundStyle(TE.textMuted)
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                            }
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     }
@@ -339,19 +350,24 @@ enum CountryCivilDate {
 /// One country's days, grouped into trips of consecutive days (artboard "Country day").
 struct CountryDayDetailView: View {
     let summary: CountryDaySummary
-    var ink: Color = TE.placeInks[0]
+    var ink: Color = CountryAtlas.inks[0]
     /// Other countries present on the same local date, for travel days.
     var otherCountries: [String: [String]] = [:]
     /// Days already counted per country, so a new stay can say how many days it adds.
     var countedDays: [String: Set<String>] = [:]
     var periodTitle: LocalizedStringKey?
 
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \CountryStay.firstDay) private var stays: [CountryStay]
     @ObservedObject private var storeManager = StoreManager.shared
+    @ObservedObject private var localities = LocalityResolver.shared
     @State private var showingAddStay = false
     @State private var showingPaywall = false
     @State private var showingExport = false
     @State private var exportDocument = CountryDaysCSVDocument(text: "")
     @State private var errorMessage: String?
+    /// One representative recorded coordinate per day, used to name the day's city.
+    @State private var dayCoordinates: [String: CLLocationCoordinate2D] = [:]
 
     private struct Segment: Identifiable {
         enum Kind: Equatable {
@@ -362,6 +378,8 @@ struct CountryDayDetailView: View {
         var last: String
         var count: Int
         let kind: Kind
+        /// The city for recorded days, or the stay's note for manual days.
+        let label: String?
         var id: String { first }
     }
 
@@ -378,26 +396,81 @@ struct CountryDayDetailView: View {
         return presence.manual ? .manual : .recorded
     }
 
+    private func label(for presence: CountryPresence, kind: Segment.Kind) -> String? {
+        switch kind {
+        case .manual:
+            return stays.first { stay in
+                stay.countryCode == summary.countryCode && stay.firstDay <= presence.day && presence.day <= stay.lastDay
+            }?.note?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+        case .recorded, .both:
+            guard let coordinate = dayCoordinates[presence.day] else { return nil }
+            return localities.locality(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        case .travel:
+            return nil
+        }
+    }
+
     private var trips: [Trip] {
+        _ = localities.revision
         var trips: [Trip] = []
         for presence in summary.days.sorted(by: { $0.day < $1.day }) {
             let kind = kind(presence)
+            let label = label(for: presence, kind: kind)
             if var trip = trips.last, CountryCivilDate.next(trip.last) == presence.day {
                 trip.last = presence.day
-                if var segment = trip.segments.last, segment.kind == kind, !kind.isTravel {
+                if var segment = trip.segments.last, segment.kind == kind, segment.label == label, !kind.isTravel {
                     segment.last = presence.day
                     segment.count += 1
                     trip.segments[trip.segments.count - 1] = segment
                 } else {
-                    trip.segments.append(Segment(first: presence.day, last: presence.day, count: 1, kind: kind))
+                    trip.segments.append(Segment(first: presence.day, last: presence.day, count: 1, kind: kind, label: label))
                 }
                 trips[trips.count - 1] = trip
             } else {
                 trips.append(Trip(first: presence.day, last: presence.day,
-                                  segments: [Segment(first: presence.day, last: presence.day, count: 1, kind: kind)]))
+                                  segments: [Segment(first: presence.day, last: presence.day, count: 1, kind: kind, label: label)]))
             }
         }
         return trips.reversed()
+    }
+
+    /// Picks the longest visit of each recorded day (or its first route point) and queues city lookups.
+    private func loadDayCoordinates() {
+        let code = summary.countryCode
+        let recordedDays = Set(summary.days.filter(\.recorded).map(\.day))
+        guard !recordedDays.isEmpty else { return }
+        var best: [String: (coordinate: CLLocationCoordinate2D, duration: TimeInterval)] = [:]
+        let now = Date()
+        if let visits = try? modelContext.fetch(FetchDescriptor<Visit>(predicate: #Predicate { $0.countryCode == code })) {
+            for visit in visits {
+                guard let identifier = visit.countryTimeZoneIdentifier, let zone = TimeZone(identifier: identifier) else { continue }
+                let day = CountryDayCalculator.dayIdentifier(visit.arrivedAt, timeZone: zone)
+                guard recordedDays.contains(day) else { continue }
+                let duration = (visit.departedAt ?? now).timeIntervalSince(visit.arrivedAt)
+                if duration > best[day]?.duration ?? -1 {
+                    best[day] = (CLLocationCoordinate2D(latitude: visit.latitude, longitude: visit.longitude), duration)
+                }
+            }
+        }
+        var coordinates = best.mapValues(\.coordinate)
+        if coordinates.count < recordedDays.count {
+            var descriptor = FetchDescriptor<LocationPoint>(
+                predicate: #Predicate { $0.countryCode == code && !$0.isOutlier },
+                sortBy: [SortDescriptor(\.timestamp)]
+            )
+            descriptor.propertiesToFetch = [\.latitude, \.longitude, \.timestamp, \.countryTimeZoneIdentifier]
+            if let points = try? modelContext.fetch(descriptor) {
+                for point in points {
+                    guard let identifier = point.countryTimeZoneIdentifier, let zone = TimeZone(identifier: identifier) else { continue }
+                    let day = CountryDayCalculator.dayIdentifier(point.timestamp, timeZone: zone)
+                    guard recordedDays.contains(day), coordinates[day] == nil else { continue }
+                    coordinates[day] = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
+                }
+            }
+        }
+        dayCoordinates = coordinates
+        // Newest days first, so the top of the list fills in before older trips.
+        localities.request(coordinates.sorted { $0.key > $1.key }.map(\.value))
     }
 
     var body: some View {
@@ -494,6 +567,7 @@ struct CountryDayDetailView: View {
         .alert("Could Not Complete Action", isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
             Button("OK", role: .cancel) { errorMessage = nil }
         } message: { Text(errorMessage ?? "") }
+        .task(id: summary.days.count) { loadDayCoordinates() }
         .tint(TE.accent)
     }
 
@@ -518,7 +592,7 @@ struct CountryDayDetailView: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(CountryCivilDate.range(segment.first, segment.last))
                     .font(TE.editorial(.title3))
-                Text(detail(segment.kind))
+                Text(detail(segment))
                     .font(TE.mono(.caption2))
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
@@ -545,11 +619,14 @@ struct CountryDayDetailView: View {
         }
     }
 
-    private func detail(_ kind: Segment.Kind) -> String {
-        switch kind {
-        case .recorded: String(localized: "Recorded")
-        case .both: String(localized: "Recorded + manual")
-        case .manual: String(localized: "Manual stay · no record")
+    private func detail(_ segment: Segment) -> String {
+        switch segment.kind {
+        case .recorded:
+            segment.label.map { String(localized: "Recorded · \($0)") } ?? String(localized: "Recorded")
+        case .both:
+            segment.label.map { String(localized: "Recorded + manual · \($0)") } ?? String(localized: "Recorded + manual")
+        case .manual:
+            segment.label.map { String(localized: "Manual stay · \($0)") } ?? String(localized: "Manual stay · no record")
         case .travel(let others):
             String(localized: "Travel day · also \(others.formatted(.list(type: .and)))")
         }
@@ -593,6 +670,7 @@ struct CountryStayEditor: View {
     @State private var countryCode = Locale.current.region?.identifier ?? "PT"
     @State private var firstDate = Date()
     @State private var lastDate = Date()
+    @State private var note = ""
     @State private var errorMessage: String?
     @State private var hasInitialized = false
 
@@ -655,6 +733,23 @@ struct CountryStayEditor: View {
                         VStack(alignment: .leading, spacing: 10) { datePickers }
                     }
 
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("NOTE · OPTIONAL")
+                            .font(TE.mono(.caption2))
+                            .tracking(1.2)
+                            .foregroundStyle(TE.textMuted)
+                            .accessibilityHidden(true)
+                        TextField("Phone was off — day trip to Puebla", text: $note, axis: .vertical)
+                            .lineLimit(1...3)
+                            .font(.body)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+                            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
+                            .accessibilityLabel("Note, optional")
+                    }
+
                     if firstDay > lastDay {
                         Text("Departure must be on or after arrival.")
                             .font(.footnote)
@@ -667,7 +762,7 @@ struct CountryStayEditor: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text(impactTitle)
                             .font(TE.editorial(.title3))
-                        Text("Both dates count, including a same-day visit. Recorded presence in other countries is kept, and days that already have records won't be counted twice. You'll see these days outlined in the Atlas.")
+                        Text(impactExplanation)
                             .font(.footnote)
                             .foregroundStyle(TE.textMuted)
                             .fixedSize(horizontal: false, vertical: true)
@@ -688,7 +783,7 @@ struct CountryStayEditor: View {
             }
             .background(TE.surface.ignoresSafeArea())
             .foregroundStyle(TE.textPrimary)
-            .navigationTitle(stay == nil ? "Add Country Stay" : "Edit Country Stay")
+            .navigationTitle(stay == nil ? "Add a stay" : "Edit stay")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
@@ -708,6 +803,7 @@ struct CountryStayEditor: View {
                 hasInitialized = true
                 if let stay {
                     countryCode = stay.countryCode
+                    note = stay.note ?? ""
                     // Convert civil dates to noon in the device's current zone for the date picker.
                     firstDate = pickerDate(stay.firstDay) ?? Date()
                     lastDate = pickerDate(stay.lastDay) ?? Date()
@@ -748,6 +844,13 @@ struct CountryStayEditor: View {
         .frame(maxWidth: .infinity)
     }
 
+    /// "this day" for a single date, "these days" for a range.
+    private var impactExplanation: String {
+        CountryDayCalculator.inclusiveDays(from: firstDay, through: lastDay).count > 1
+            ? String(localized: "Dates that already have records won't be counted twice. You'll see these days outlined in the Atlas.")
+            : String(localized: "Dates that already have records won't be counted twice. You'll see this day outlined in the Atlas.")
+    }
+
     private var impactTitle: String {
         let days = CountryDayCalculator.inclusiveDays(from: firstDay, through: lastDay)
         guard !days.isEmpty else { return String(localized: "No days selected") }
@@ -773,14 +876,19 @@ struct CountryStayEditor: View {
         return local.date(from: components)
     }
 
+    private var trimmedNote: String? {
+        note.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+    }
+
     private func save() {
         guard canSave else { return }
         if let stay {
             stay.countryCode = countryCode
             stay.firstDay = firstDay
             stay.lastDay = lastDay
+            stay.note = trimmedNote
         } else {
-            modelContext.insert(CountryStay(countryCode: countryCode, firstDay: firstDay, lastDay: lastDay))
+            modelContext.insert(CountryStay(countryCode: countryCode, firstDay: firstDay, lastDay: lastDay, note: trimmedNote))
         }
         do { try modelContext.save(); dismiss() } catch { errorMessage = error.localizedDescription }
     }
@@ -818,6 +926,10 @@ private struct CountrySelectionView: View {
             if countries.isEmpty { ContentUnavailableView.search(text: search) }
         }
     }
+}
+
+private extension String {
+    var nilIfEmpty: String? { isEmpty ? nil : self }
 }
 
 struct CountryDaysCSVDocument: FileDocument {

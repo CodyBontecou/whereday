@@ -1,0 +1,52 @@
+{
+  "release": "1.8/build52",
+  "checks": [
+    {
+      "file": "IsoMe/Utilities/ExportService.swift",
+      "sha256": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
+      "frozen1_8Build52Match": true
+    },
+    {
+      "file": "IsoMe/Utilities/IsoMeExportKitAdapter.swift",
+      "sha256": "53e3a1f6dd4216b61e46aba1a4eb1470088dcb9acd622bbe2a126a4f7ff4ca8b",
+      "frozen1_8Build52Match": true
+    },
+    {
+      "file": "IsoMe/Views/ExportView.swift",
+      "sha256": "1854035a932cbb27a23b2a6e66a12cbd56a7e84e6c5a541c71c5316d3f9ed66e",
+      "frozen1_8Build52Match": true
+    },
+    {
+      "file": "IsoMe/Utilities/TimelineImportService.swift",
+      "sha256": "b5100d03345a4d3223e50e52f0b87861f0c4a6a756489f7e8b237d68ba4df0a3",
+      "frozen1_8Build52Match": true
+    },
+    {
+      "file": "IsoMe/Services/StoreManager.swift",
+      "frozenSHA256": "1282ca704f92e3495a1911cc00b89851656408523bc1c19952859f4fb8b63c75",
+      "frozenManifestMatch": true,
+      "wholeCurrentFileMatches": false,
+      "difference": "Current product-ID mapping no longer uses analytics enum; documented canExport policy matches frozen source.",
+      "policy": "canExport = !legacy || purchased; new cohort keeps exports after expiration, legacy free cohort needs purchase."
+    }
+  ],
+  "nativeVerification": {
+    "runner": "scripts/test-ios.sh from frozen1.8/build52 source",
+    "policy": {
+      "tests": 1,
+      "failures": 0,
+      "case": "StoreManagerTests/testNewUsersMustPurchaseButExpiredUsersKeepHistoryAndExport",
+      "resultBundle": ".asc/artifacts/stage-1.8-52/source/artifacts/test-results/IsoMe-20261030-172851-73985.xcresult"
+    },
+    "formats": {
+      "tests": 2,
+      "failures": 0,
+      "cases": [
+        "ExportRoundTripTests/testAllExportFormatsRoundTripRepresentativeDataWithoutSchemaDrift",
+        "ExportKitIntegrationTests/testOutingTrackingProtocolFormatKeepsOutingsDataKind"
+      ],
+      "resultBundle": ".asc/artifacts/stage-1.8-52/source/artifacts/test-results/IsoMe-20261030-173120-78802.xcresult"
+    },
+    "limits": "Export round-trip test uses test-specific readers for eight formats, not the native Whereday importer. No fresh physical recording, purchase or end-to-end export UI test."
+  }
+}

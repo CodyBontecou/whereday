@@ -1,0 +1,77 @@
+{
+  "deployment": "https://9ebdea41.spotted-8ez.pages.dev",
+  "checkedAtUTC": "2026-10-30T21:10:05.866808+00:00",
+  "checks": [
+    {
+      "path": "/tools/gpx-viewer/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/tools/gpx-viewer/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/blog/check-gpx-file/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/blog/check-gpx-file/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/blog/gpx-kml-geojson-location-history/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/blog/gpx-kml-geojson-location-history/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/tools/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/tools/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/blog/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/blog/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/assets/gpx-geojson.mjs",
+      "status": 200,
+      "type": "application/javascript",
+      "sha256": "a04e33c2ae441a7b581463a1da37aeedaae3b3bd65382a846bcb7e139e5429a4"
+    },
+    {
+      "path": "/assets/gpx-viewer.mjs",
+      "status": 200,
+      "type": "application/javascript",
+      "sha256": "f7ee125fe5295aea4ae39bf0e3d397226b8520b5c17bcb711334b10bc7fc49e4"
+    },
+    {
+      "path": "/samples/synthetic-gpx-converted.geojson",
+      "status": 200,
+      "type": "application/geo+json",
+      "sha256": "7e00f68df5b141f39b3216188b052e6ceebc1d6b2f7623ea777241bf60201d96"
+    }
+  ],
+  "toolPrivacyVerified": true,
+  "browserDownloadMatchedFixture": true,
+  "csvDownloadStillMatchedExporter": true
+}

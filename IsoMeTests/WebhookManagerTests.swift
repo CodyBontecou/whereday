@@ -236,6 +236,33 @@ final class WebhookManagerTests: XCTestCase {
         XCTAssertTrue(body?.contains("-20.2") == true)
     }
 
+    func testFlushBatchRecordsAndPersistsLastStatusCode() async {
+        MockWebhookURLProtocol.enqueue(statusCode: 201)
+        let manager = makeWebhookManager(retryPolicy: .init(maxAttempts: 1, baseDelay: 0, multiplier: 1))
+        manager.urlString = "https://example.com/hooks/location"
+        manager.enqueuePendingPoint(makePoint())
+
+        await manager.flushBatch()
+
+        XCTAssertEqual(manager.lastStatusCode, 201)
+        XCTAssertEqual(defaults.object(forKey: "webhook.lastStatusCode") as? Int, 201)
+        XCTAssertEqual(WebhookManager.statusText(200), "200 OK")
+        XCTAssertEqual(WebhookManager.statusText(299), "299")
+    }
+
+    func testClearQueueDiscardsWaitingPointsWithoutSending() {
+        let manager = makeWebhookManager(retryPolicy: .init(maxAttempts: 1, baseDelay: 0, multiplier: 1))
+        manager.urlString = "https://example.com/hooks/location"
+        manager.enqueuePendingPoint(makePoint())
+        manager.enqueuePendingPoint(makePoint())
+
+        manager.clearQueue()
+
+        XCTAssertEqual(manager.queuedPointCount, 0)
+        XCTAssertTrue(MockWebhookURLProtocol.requests.isEmpty)
+        XCTAssertNil(manager.lastSentAt)
+    }
+
     func testFlushBatchRetainsQueueAndRecordsUserVisibleErrorOnNon2xx() async {
         MockWebhookURLProtocol.enqueue(statusCode: 500)
         let manager = makeWebhookManager(retryPolicy: .init(maxAttempts: 1, baseDelay: 0, multiplier: 1))

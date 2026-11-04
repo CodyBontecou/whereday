@@ -1,0 +1,56 @@
+{
+  "deployment": "https://f9d3870d.spotted-8ez.pages.dev",
+  "checkedAtUTC": "2026-10-30T21:04:16.684069+00:00",
+  "checks": [
+    {
+      "path": "/blog/iphone-location-journal-obsidian/",
+      "accept": "text/html",
+      "status": 200
+    },
+    {
+      "path": "/blog/iphone-location-journal-obsidian/",
+      "accept": "text/markdown",
+      "status": 200
+    },
+    {
+      "path": "/samples/travel-journal-template.md",
+      "status": 200,
+      "type": "text/markdown",
+      "sha256": "73cdfe1935ddac30da48f14d4d730609e32e8b84afa5479d0e6da3f474e9db75",
+      "bytes": 870,
+      "disposition": "attachment; filename=\"travel-journal-template.md\""
+    },
+    {
+      "path": "/samples/synthetic-trip-reflections.md",
+      "status": 200,
+      "type": "text/markdown",
+      "sha256": "ed50a10e81359fee63c10451956a2445add9a9f23d7c3f68657ef651844ee8b0",
+      "bytes": 1292,
+      "disposition": "attachment; filename=\"synthetic-trip-reflections.md\""
+    },
+    {
+      "path": "/samples/whereday-travel-journal-example.zip",
+      "status": 200,
+      "type": "application/zip",
+      "sha256": "dcf722e3bf8232bb26ddc6256881d5903fef8f339645b43f6e224c51cf01783a",
+      "bytes": 2976,
+      "disposition": "attachment; filename=\"whereday-travel-journal-example.zip\""
+    },
+    {
+      "path": "/screenshots/obsidian-travel-journal-template.webp",
+      "status": 200,
+      "type": "image/webp",
+      "sha256": "a29b2479ede0bb5e9a7c2803a51853fa1222f8238757a162ffc23e2bca588be9",
+      "bytes": 276080,
+      "disposition": null
+    }
+  ],
+  "guideHubAnchor": true,
+  "descriptionLength": 153,
+  "bundleEntries": [
+    "Whereday-travel-journal-example/Location/synthetic-obsidian-export.md",
+    "Whereday-travel-journal-example/README.md",
+    "Whereday-travel-journal-example/Templates/Travel journal.md",
+    "Whereday-travel-journal-example/Trip reflections.md"
+  ]
+}

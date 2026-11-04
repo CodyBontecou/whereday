@@ -180,7 +180,7 @@ final class DailyExportScheduler: ObservableObject {
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {
-            print("DailyExportScheduler: failed to submit BG task: \(error)")
+            LogManager.shared.warning("Couldn't schedule background export · \(error.localizedDescription)", category: .export)
         }
 
         if requestNotificationPermission {
@@ -267,7 +267,7 @@ final class DailyExportScheduler: ObservableObject {
 
         switch outcome {
         case .exported:
-            print("DailyExportScheduler: completed scheduled export from \(source)")
+            LogManager.shared.info("Scheduled export completed · from \(source)", category: .export)
             scheduleNextBackgroundRun()
         case .failed(let message):
             await sendImmediateRetryNotification(fireDate: fireDate, reason: message)
@@ -283,7 +283,9 @@ final class DailyExportScheduler: ObservableObject {
         guard let container = await waitForModelContainer() else {
             return fail(String(localized: "No model container attached"))
         }
-        guard ExportFolderManager.shared.hasDefaultFolder else {
+        // An Archive recipe sending to Obsidian makes the vault the scheduled target.
+        let writesToVault = ObsidianVaultStore.shared.isScheduledDestination
+        guard writesToVault || ExportFolderManager.shared.hasDefaultFolder else {
             return fail(String(localized: "No export folder configured"))
         }
 
@@ -307,16 +309,32 @@ final class DailyExportScheduler: ObservableObject {
                 calendar: Calendar.current
             )
 
-            let urls = try ExportService.saveToDefaultFolder(
-                visits: visits,
-                points: points,
-                recordingSessions: recordingSessions,
-                options: plan.options,
-                filenamePattern: plan.filenamePattern,
-                filenameDate: plan.filenameDate,
-                writeMode: plan.writeMode,
-                mergeStrategy: plan.mergeStrategy
-            )
+            let urls: [URL]
+            if writesToVault {
+                let files = try IsoMeExportKitAdapter.plannedFiles(
+                    visits: visits,
+                    points: points,
+                    recordingSessions: recordingSessions,
+                    options: plan.options,
+                    filenamePattern: plan.filenamePattern,
+                    aggregateFilenameDate: plan.filenameDate
+                )
+                let strategies: [String: any ExportMergeStrategy] = plan.mergeStrategy.map {
+                    [plan.options.format.exportKitFormatID: $0]
+                } ?? [:]
+                urls = try ObsidianVaultStore.shared.write(files, mode: plan.writeMode, mergeStrategies: strategies)
+            } else {
+                urls = try ExportService.saveToDefaultFolder(
+                    visits: visits,
+                    points: points,
+                    recordingSessions: recordingSessions,
+                    options: plan.options,
+                    filenamePattern: plan.filenamePattern,
+                    filenameDate: plan.filenameDate,
+                    writeMode: plan.writeMode,
+                    mergeStrategy: plan.mergeStrategy
+                )
+            }
 
             ExportToastCenter.shared.show(.success(savedURLs: urls))
             recordSuccess(now)
@@ -359,7 +377,7 @@ final class DailyExportScheduler: ObservableObject {
     private func recordError(_ message: String) {
         lastError = message
         defaults.set(message, forKey: lastErrorKey)
-        print("DailyExportScheduler error: \(message)")
+        LogManager.shared.error("Scheduled export failed · \(message)", category: .export)
     }
 
     // MARK: - Local fallback notifications

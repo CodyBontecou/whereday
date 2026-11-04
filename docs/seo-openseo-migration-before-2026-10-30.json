@@ -1,0 +1,31 @@
+{
+  "auditId": "99561094-509e-422f-a482-d9e24fee6191",
+  "issues": {
+    "summary": [
+      {
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "severity": "info",
+        "count": 1
+      }
+    ],
+    "issues": [
+      {
+        "severity": "info",
+        "issueType": "meta-description-too-long",
+        "title": "Meta description too long",
+        "url": "https://whereday.com/blog/import-google-timeline-iphone/",
+        "details": {
+          "length": 165,
+          "max": 160,
+          "description": "Import Google Timeline JSON into Whereday on iPhone. Preview visits, points, duplicates, and skipped…"
+        },
+        "howToFix": "Trim the description to roughly 70–160 characters while keeping the core message and call to action."
+      }
+    ],
+    "meta": {
+      "projectId": "0e1fd2af-8434-4364-a635-ef57be220fa4",
+      "url": "https://app.openseo.so/p/0e1fd2af-8434-4364-a635-ef57be220fa4/audit?auditId=99561094-509e-422f-a482-d9e24fee6191"
+    }
+  }
+}
