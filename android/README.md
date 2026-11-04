@@ -196,7 +196,7 @@ The test produces 150 build-only Android-rendered files across JSON/CSV/Markdown
 
 ### Android place provenance through SwiftData
 
-The iOS model recognizes the approved geoapify wire key. Its existing String storage does not need a migration; legacy source keys and the import fallback for unknown sources remain unchanged. The original frozen model fingerprint is retained in ios-baseline.json, with this intentional compatibility amendment recorded in ios-baseline-amendments.json.
+Whereday iOS does not recognize Android's `geoapify` place source. It stores those visits with the `import` source, its fallback for any source it doesn't know, and keeps every other place and audit field. This is the accepted behavior; the earlier iso.me iOS model had a `geoapify` case, Whereday's does not.
 
 On macOS, run:
 
@@ -205,9 +205,9 @@ On macOS, run:
 python3 android/scripts/verify_place_provenance.py
 ```
 
-The Kotlin test writes twelve actual JSON/CSV/Markdown backups using list and streaming renderers, for manual and corrected nearby selections. The Swift check compiles the complete current Visit/LocationPoint models and ImportService/GoogleTimelineImportService/TimelineImportService, extracting only ExportFormat from its UIKit-dependent file. It previews and commits every file to isolated in-memory SwiftData containers, checks all represented place/audit fields and provider distance through fresh contexts, and repeats imports to prove duplicate handling. It also checks five Codable wire keys and six real commit source policies, including the existing unknown-provider fallback. No app UI, device, personal database or network provider is used.
+The Kotlin test writes twelve actual JSON/CSV/Markdown backups using list and streaming renderers, for manual and corrected nearby selections. The Swift check compiles the complete current Visit/LocationPoint models and ImportService/GoogleTimelineImportService/TimelineImportService, extracting only ExportFormat from its UIKit-dependent file. It previews and commits every file to isolated in-memory SwiftData containers, checks all represented place/audit fields and provider distance through fresh contexts, and repeats imports to prove duplicate handling. It also checks four Codable wire keys and six real commit source policies, including the unknown-provider fallback that `geoapify` uses. No app UI, device, personal database or network provider is used.
 
-The build-only inputs and source-hashed acceptance report are under export/build/place-provenance/. The input is a declared Gradle test output, so missing files regenerate and cached outputs can be restored. Android CI uploads those exact synthetic inputs to a dependent macOS SwiftData acceptance job; remote CI remains unrun until the branch is pushed. This supplements the parser-only compatibility evidence with actual model commits; full iOS simulator, physical-transfer and release validation remain separate.
+The build-only inputs and source-hashed acceptance report are under export/build/place-provenance/. The input is a declared Gradle test output, so missing files regenerate and cached outputs can be restored. Android CI uploads those exact synthetic inputs to a dependent macOS SwiftData acceptance job. This supplements the parser-only compatibility evidence with actual model commits; full iOS simulator, physical-transfer and release validation remain separate.
 
 This evidence is an algorithm/file contract check. GPX, KML, GeoJSON, OwnTracks and Overland now have actual Swift renderer fixtures as described below. Actual renderer comparisons now cover all eight formats within the documented scope; expanded malformed/provider/locale/physical-transfer matrices and release budgets remain required. No actual journal, device permission or network service participates in these checks.
 

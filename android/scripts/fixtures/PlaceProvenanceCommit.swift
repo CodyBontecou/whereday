@@ -39,8 +39,11 @@ private struct PlaceProvenanceAcceptance {
             let values = try context.fetch(FetchDescriptor<Visit>())
             try require(values.count == 1, "\(name): expected one stored visit")
             let visit = values[0]
-            try equal(visit.placeSourceRaw, expected["placeSource"] as? String, "\(name): stored placeSource")
-            try equal(visit.placeSource?.rawValue, expected["placeSource"] as? String, "\(name): recognized placeSource")
+            // iOS keeps a place source it recognizes and stores any other one (such as Android's
+            // geoapify) as import, the same policy checked for every source below.
+            let placeSource = (expected["placeSource"] as? String).map { VisitPlaceSource(rawValue: $0)?.rawValue ?? "import" }
+            try equal(visit.placeSourceRaw, placeSource, "\(name): stored placeSource")
+            try equal(visit.placeSource?.rawValue, placeSource, "\(name): recognized placeSource")
             try equal(visit.placeDistanceMeters, number(expected, "placeDistanceMeters"), "\(name): distance")
             try equal(visit.latitude, number(expected, "latitude"), "\(name): latitude")
             try equal(visit.longitude, number(expected, "longitude"), "\(name): longitude")
@@ -67,13 +70,12 @@ private struct PlaceProvenanceAcceptance {
             accepted.append(name)
         }
         try require(Set(accepted).count == 12, "Duplicate acceptance case names")
-        for raw in ["coreLocationGeocode", "appleMaps", "geoapify", "userEntered", "import"] {
+        for raw in ["coreLocationGeocode", "appleMaps", "userEntered", "import"] {
             let value = VisitPlaceSource(rawValue: raw)
             try require(value != nil, "Missing recognized place source \(raw)")
             let decoded = try JSONDecoder().decode(VisitPlaceSource.self, from: JSONEncoder().encode(value!))
             try require(decoded.rawValue == raw, "Changed source wire key \(raw)")
         }
-        try require(VisitPlaceSource(rawValue: "geoapify")?.displayName == "Geoapify", "Provider display name mismatch")
         try require(VisitPlaceSource(rawValue: "future-provider") == nil, "Unknown source policy changed")
         var policies: [String: String] = [:]
         let jsonCase = cases.first {($0["name"] as? String) == "manual-list-json"}!
@@ -90,7 +92,7 @@ private struct PlaceProvenanceAcceptance {
             policies[raw] = expected
         }
         let result: [String: Any] = ["accepted": accepted, "count": accepted.count,
-            "store": "isolated in-memory SwiftData", "legacyWireKeys": "verified", "geoapifyDisplayName": "verified", "sourcePolicies": policies]
+            "store": "isolated in-memory SwiftData", "legacyWireKeys": "verified", "sourcePolicies": policies]
         FileHandle.standardOutput.write(try JSONSerialization.data(withJSONObject: result, options: [.prettyPrinted, .sortedKeys]))
     }
 
