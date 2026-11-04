@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Private iPhone Location History &amp; Route Journal — Whereday</title>
-  <meta name="description" content="Keep visits and GPS routes on your iPhone with Whereday. No account or location server. Record with Apple Watch and export your history in eight formats.">
+  <title>On-Device Location Tracker &amp; History Export — Whereday</title>
+  <meta name="description" content="Continuous location tracking that stays on your phone. Whereday records visits and GPS routes on-device and exports your location history to GPX, CSV, GeoJSON and more.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://whereday.com/">
   <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
@@ -15,8 +15,8 @@
   <link rel="alternate" type="text/markdown" href="https://whereday.com/" title="Whereday as Markdown">
   <link rel="help" type="text/plain" href="/llms.txt" title="Whereday agent guide">
 
-  <meta property="og:title" content="Private iPhone Location History &amp; Route Journal — Whereday">
-  <meta property="og:description" content="Automatically build a private timeline of places and routes. No account, no Whereday location server, no ads. Export your location history when needed.">
+  <meta property="og:title" content="On-Device Location Tracker &amp; History Export — Whereday">
+  <meta property="og:description" content="Continuous GPS capture that never leaves your phone. No account, no server. Export your location history anytime.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://whereday.com/">
   <meta property="og:site_name" content="Whereday">
@@ -26,8 +26,8 @@
   <meta property="og:image:alt" content="Whereday map screen showing private visits and routes">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Private iPhone Location History &amp; Route Journal — Whereday">
-  <meta name="twitter:description" content="A calm Google Timeline alternative that keeps your location journal on your iPhone.">
+  <meta name="twitter:title" content="On-Device Location Tracker &amp; History Export — Whereday">
+  <meta name="twitter:description" content="Continuous location history, captured on-device and exported on your terms.">
   <meta name="twitter:image" content="https://whereday.com/assets/whereday-field-notes-v1/social-preview-1200x630.png">
 
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -55,7 +55,7 @@
       "downloadUrl": "https://apps.apple.com/app/id6761960794",
       "operatingSystem": "iOS, watchOS",
       "applicationCategory": "LifestyleApplication",
-      "description": "A private iPhone location journal that records visits and GPS routes while tracking is on, with no account required and portable exports.",
+      "description": "An on-device location tracker that continuously records visits and GPS routes while tracking is on, with no account and location history export to GPX, CSV, GeoJSON, KML, JSON, Markdown, OwnTracks and Overland.",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -92,42 +92,34 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Will Whereday drain my battery?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Whereday is built around iOS location services and gives you controls such as Start and Stop, distance filters, and auto-stop timers. High-accuracy route recording uses more battery, so it is best for intentional trips, walks, hikes, or sessions you want recorded in detail."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "Where is my location data stored?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your visits and routes are stored locally on your iPhone. Whereday does not require an account and does not store your location history on Whereday servers."
+            "text": "On your phone. Whereday has no account and no location server, so your history never reaches us."
           }
         },
         {
           "@type": "Question",
-          "name": "Does Whereday use Apple geocoding?",
+          "name": "Does Whereday track continuously in the background?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The app can optionally use Apple's geocoding service to turn coordinates into readable place names or addresses. That request is handled by Apple and is governed by Apple's privacy policies."
+            "text": "Yes, while tracking is on. Whereday logs visits and GPS points in the background. Accuracy, distance filters and auto-stop timers keep battery use in check."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I delete my location history?",
+          "name": "How do I export my location history?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. You can delete your data from the app settings. Because Whereday does not keep a server copy, deleting the app also removes the local data from that device unless you exported or backed it up first."
+            "text": "Export any date range as GPX, GeoJSON, KML, CSV, JSON, Markdown, OwnTracks or Overland. Auto Export can save a dated file to a folder daily, or as often as hourly."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I export or import my history?",
+          "name": "Can I import my Google Timeline?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. There are eight export choices, with content depending on record type. OwnTracks and Overland carry GPS points. Import accepts supported Whereday JSON, CSV or Markdown visits and points, plus supported Google Timeline JSON. GPX, KML, GeoJSON, OwnTracks and Overland exports are not Whereday restore files. Supported import and Export Preview are free; export access follows the new-user and existing-user rules. Keep original files and check the export/import reference."
+            "text": "Yes, for free. Whereday imports supported Google Timeline JSON, plus Whereday JSON, CSV and Markdown files. Keep your original archive as well."
           }
         },
         {
@@ -135,7 +127,7 @@
           "name": "Does Whereday work with Apple Watch?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status."
+            "text": "Yes. The Watch records GPS routes on its own and syncs them to your iPhone when they reconnect."
           }
         },
         {
@@ -143,47 +135,23 @@
           "name": "Does Whereday sync with iCloud?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Whereday stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud."
+            "text": "No. Your history stays local. Export and import are the backup path."
           }
         },
         {
           "@type": "Question",
-          "name": "What is free and what is Pro?",
+          "name": "Can I send points to my own server?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The download and supported import are free. With version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to start tracking. Existing users retain free tracking and their previous export purchase requirements; prior lifetime purchases remain valid. Current U.S. Lifetime prices are $49.99 Individual, $89.99 Family, and $40.00 for an eligible Family Upgrade. Apple shows storefront prices and renewal terms before confirmation."
+            "text": "Yes. Webhooks POST GPS points in OwnTracks or Overland format to a receiver you run, such as Dawarich. They are off by default."
           }
         },
         {
           "@type": "Question",
-          "name": "Does Whereday work with OwnTracks, Overland, or Dawarich?",
+          "name": "What does it cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Whereday can POST GPS points to a configured receiver. An Overland batch sent by the released native webhook code was stored in Dawarich 1.18.0 and survived a receiver and database restart. Physical recording and unattended delivery remain separate checks. Webhooks follow your export access and are off by default."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What can Siri and Shortcuts do?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Start and stop tracking, read saved visits and outings, rename journal records, ask for today's stats, or export a chosen date range as a file. Use Whereday actions in Shortcuts; built-in Siri phrases cover recording, stats, renaming, and Export Data. Test a shortcut manually before scheduling it."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can exports run automatically?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Whereday a Google Timeline alternative?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Whereday records your own visits and routes without a Google account. Google Timeline also stores history on your device and offers encrypted backup; Whereday differs in account requirements, export formats, and recording workflow. Whereday 1.8 can preview supported Google Timeline JSON and import visits and timed points. Keep the original archive: selected records do not reproduce every Google activity or replace its device-transfer backup. Follow the import walkthrough or read the comparison."
+            "text": "Free to download, and import is free. New users since version 1.8 choose a subscription, with a 7-day trial when eligible, or Lifetime: $49.99 Individual or $89.99 Family. Existing users keep the access they already had."
           }
         }
       ]
@@ -241,6 +209,13 @@
     .hero h1 em, .closer h2 em { color: var(--accent); font-weight: 300; }
     .hero-lede { margin: 0; max-width: 520px; font-size: 19px; color: var(--text-3); }
     .cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .store-badges { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .closer .store-badges { justify-content: center; }
+    .store-badge { display: inline-flex; align-items: center; justify-content: center; height: 48px; border-radius: 9px; overflow: hidden; }
+    .store-badge img { display: block; width: auto; height: 48px; }
+    .store-badge-google { width: 162px; }
+    .store-badge-google img { height: 72px; max-width: none; }
+    .store-badge:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
     .meta-row { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; padding: 0; list-style: none; font-family: var(--mono); font-size: 12px; letter-spacing: 1.2px; color: var(--mute); text-transform: uppercase; }
     .meta-row li + li::before { content: "·"; margin-right: 22px; }
     .hero-art { flex: 1 1 460px; min-width: 0; display: flex; justify-content: center; }
@@ -299,15 +274,6 @@
     .grid h3 a { text-decoration: none; }
     .grid h3 a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
     .grid p { margin: 0; font-size: 16px; color: var(--text-2); }
-    .checked { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 32px 56px; padding: clamp(28px, 4vw, 44px); border-radius: 28px; background: var(--card); border: 1px solid var(--rule-soft); }
-    .checked h3 { font-size: clamp(28px, 3vw, 38px); line-height: 1.1; margin-bottom: 14px; }
-    .checked p { margin: 0 0 14px; color: var(--text-2); font-size: 16px; }
-    .checked ul { margin: 0 0 14px; padding-left: 20px; color: var(--text-2); font-size: 16px; display: grid; gap: 10px; }
-    .checked aside { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-    .checked aside h3 { margin: 0; }
-    .checked aside p { margin: 0; }
-    .qr { display: block; width: 136px; padding: 8px; border-radius: 14px; background: #FBF9F4; border: 1px solid var(--rule-soft); }
-    .qr img { display: block; width: 100%; height: auto; }
 
     /* § 03 Inside the app */
     .inside { display: flex; flex-direction: column; gap: 56px; padding-block: clamp(64px, 9vw, 120px); }
@@ -414,7 +380,6 @@
       .phone { outline: 1px solid #2C3754; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); }
       .plan.feature { border-color: #2C3754; }
       .privacy { border-block: 1px solid #2C3754; }
-      .qr { background: #FBF9F4; }
       .site-footer { --ink: #ECE6D8; --paper: #0F1626; border: 0; border-top: 1px solid #2C3754; }
     }
   </style>
@@ -423,8 +388,7 @@
 <link rel="alternate" hreflang="x-default" href="https://whereday.com/">
 <style id="shared-navigation-styles">/* Whereday "Reimagined" theme — shared fonts, tokens and base type. Inlined on every page by build_navigation.py, after each page's own styles, so these tokens win. */
 @font-face { font-family: "Inter"; src: url("/assets/fonts/inter-latin-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: "Newsreader"; src: url("/assets/fonts/newsreader-latin-var.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: "Newsreader"; src: url("/assets/fonts/newsreader-latin-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root {
@@ -436,7 +400,7 @@
   --ochre: #B7862B; --sage: #5E7F5A; --slate: #7A86A8;
   --lcd: #3F5C3C; --lcd-bright: #5E7F5A; --lcd-bg: #DFE6D6;
   --danger: #A8381F; --warning: #8A6420;
-  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --display: var(--serif);
@@ -446,7 +410,8 @@
 html { background: var(--paper); }
 body { font-family: var(--sans); color: var(--ink); background: var(--paper); }
 ::selection { background: rgba(194, 70, 42, 0.18); }
-:where(h1, h2, h3) { font-family: var(--serif); }
+:where(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.02em; }
+:where(h1, h2, h3) em { font-style: normal; }
 :where(a):focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; border-radius: 4px; }
 /* Shared components across hand-built pages */
 .btn { border-radius: 999px; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
@@ -523,15 +488,15 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <main id="main">
     <header class="hero wrap" id="top">
       <div class="hero-copy">
-        <p class="kicker quiet">A private location journal · iPhone &amp; Apple Watch</p>
-        <h1>Where the day went, kept on your phone <em>and nowhere else.</em></h1>
-        <p class="hero-lede">While tracking is on, Whereday notes the places you stop and the routes between them, then reads your day back like a page in a journal. No account. No Whereday location server. The history lives on your iPhone.</p>
-        <div class="cta-row">
-          <a class="pill solid big" data-placement="inline" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download free on the App Store</a>
-          <a class="pill big" href="#day">See how it reads a day</a>
+        <p class="kicker quiet">On-device location tracking</p>
+        <h1>Your location history, <em>kept on your phone.</em></h1>
+        <p class="hero-lede">Continuous GPS capture that never leaves your device. Export it anytime as GPX, CSV, GeoJSON or JSON.</p>
+        <div class="store-badges">
+          <a class="store-badge" data-placement="hero" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8"><img src="/assets/store-badges/download-on-app-store.svg" width="120" height="40" alt="Download Whereday on the App Store"></a>
+          <a class="store-badge store-badge-google" data-placement="hero" href="https://play.google.com/store/apps/details?id=com.bontecou.whereday"><img src="/assets/store-badges/get-it-on-google-play.png" width="646" height="250" alt="Get Whereday on Google Play"></a>
         </div>
         <ul class="meta-row" aria-label="At a glance">
-          <li>Free to download</li><li>7-day trial on eligible plans</li><li>Version 1.8</li>
+          <li>No account</li><li>No server</li><li>8 export formats</li>
         </ul>
       </div>
       <div class="hero-art">
@@ -665,10 +630,10 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
       <div class="day wrap">
         <div class="section-head">
           <div>
-            <p class="kicker">§ 01 — One day, read back</p>
-            <h2 class="h2" id="day-title">You live it once. Whereday writes it down.</h2>
+            <p class="kicker">§ 01 — Automatic timeline</p>
+            <h2 class="h2" id="day-title">Every stop and route, logged for you.</h2>
           </div>
-          <p class="lede-2">Each stop becomes a line in the journal: when you arrived, how long you stayed, where you went next. Wrong guess? Confirm or correct it, or add a past stop yourself.</p>
+          <p class="lede-2">Arrivals, departures and the GPS path between them, in order. Fix a stop with one tap.</p>
         </div>
         <figure class="ribbon-fig">
           <div class="ribbon-meta"><span>Sample day · Sun · Nov 1</span> <span>6.4 km moved · 5 stops</span></div>
@@ -683,9 +648,9 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <section class="stack wrap" id="features" aria-labelledby="features-title">
       <div class="stack-head">
         <p class="kicker">§ 02 — What it does</p>
-        <h2 class="h2" id="features-title">An instrument, not a feed.</h2>
+        <h2 class="h2" id="features-title">Capture everything. Keep it local.</h2>
       </div>
-      <div class="grid"><article><span class="n">01</span><h3>A journal that writes itself</h3><p>While tracking is on, arrivals and departures are logged as visits, with when you came and how long you stayed.</p></article><article><span class="n">02</span><h3>Routes, recorded</h3><p>Record walks, rides, hikes and road trips with the full GPS line, start and end points, distance and duration.</p></article><article><span class="n">03</span><h3>Private by default</h3><p>Stored on your iPhone. No account, no ads, no third-party analytics SDKs, and no Whereday server receiving your location.</p></article><article><span class="n">04</span><h3>Easy on the battery</h3><p>Start and Stop, distance filters and auto-stop timers keep precise sessions from running longer than you meant.</p></article><article><span class="n">05</span><h3>Export and import</h3><p>Eight export formats, including GPX, with daily files and optional scheduling. Supported Whereday files and Google Timeline JSON import free.</p></article><article><span class="n">06</span><h3>Apple Watch recording</h3><p>The Watch app records routes on its own, even with your phone left at home. Complications show today at a glance.</p></article><article><span class="n">07</span><h3>Daily timeline and outings</h3><p>Visits and movement merge into one day. Trips away are grouped into outings you can rename, annotate and replay.</p></article><article><span class="n">08</span><h3>Correct a visit</h3><p>Confirm or fix a detected stop with nearby suggestions, undo any change, and save places that name future visits.</p></article><article><span class="n">09</span><h3>Photos on the map</h3><p>Opt in and geotagged photos appear beside the visits where you took them. Photo files never leave your library.</p></article></div>
+      <div class="grid"><article><span class="n">01</span><h3>Continuous background tracking</h3><p>Visits and GPS points are logged automatically while tracking is on.</p></article><article><span class="n">02</span><h3>GPS route recording</h3><p>Walks, rides and road trips with the full path, distance and duration.</p></article><article><span class="n">03</span><h3>Stored on-device</h3><p>No account, no ads, no server. Your history stays on your phone.</p></article><article><span class="n">04</span><h3>Location history export</h3><p>GPX, GeoJSON, KML, CSV, JSON, Markdown, OwnTracks and Overland.</p></article><article><span class="n">05</span><h3>Scheduled auto export</h3><p>Save a dated file to any folder daily, or as often as hourly.</p></article><article><span class="n">06</span><h3>Apple Watch recording</h3><p>Record routes from your wrist, even with your phone at home.</p></article></div>
     </section>
 
     <section class="band deep-bg" id="inside" aria-labelledby="inside-title">
@@ -695,7 +660,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
             <p class="kicker">§ 03 — Inside the app</p>
             <h2 class="h2" id="inside-title">Scrub a day. See a year. Learn a place.</h2>
           </div>
-          <p class="lede-2">Calm screens built for looking back. Replay any route with a moving playhead, browse a year one day at a time, and see the rhythm of the places you return to.</p>
+          <p class="lede-2">Replay any route, browse a year of days, and see the places you return to.</p>
         </div>
         <div class="screens">
           <figure>
@@ -1473,15 +1438,15 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <section class="privacy" id="trust" aria-labelledby="trust-title">
       <div class="wrap">
         <div class="privacy-copy">
-          <p class="kicker">§ 04 — Private by construction</p>
+          <p class="kicker">§ 04 — On-device by design</p>
           <h2 id="trust-title">There is no Whereday server to send it to.</h2>
-          <p>Privacy here isn't a setting you have to find. Visits and routes stay on your iPhone unless you export them or point a webhook at a receiver you choose. Apple services provide place names and map features. Production version 1.8 disables onboarding and purchase analytics; earlier versions can still send the technical events described in the policy.</p>
-          <p><a href="/privacy">Read the network and storage details</a></p>
+          <p>Your location data stays on your device unless you export it or send it to a server you choose.</p>
+          <p><a href="/privacy">Privacy details</a></p>
         </div>
         <div class="ledger-wrap">
           <table class="ledger">
             <caption>THE LEDGER</caption>
-            <tbody><tr><th scope="row">Location sent to Whereday</th><td>Never</td></tr><tr><th scope="row">Account required</th><td>No</td></tr><tr><th scope="row">Where history is stored</th><td>On your iPhone</td></tr><tr><th scope="row">iCloud sync</th><td>Not used</td></tr><tr><th scope="row">Place names</th><td>Optional Apple lookup</td></tr><tr><th scope="row">Onboarding analytics</th><td>Off in 1.8</td></tr><tr><th scope="row">Who owns the exports</th><td>You</td></tr></tbody>
+            <tbody><tr><th scope="row">Location sent to Whereday</th><td>Never</td></tr><tr><th scope="row">Account required</th><td>No</td></tr><tr><th scope="row">Where history is stored</th><td>On your device</td></tr><tr><th scope="row">Cloud sync</th><td>Not used</td></tr><tr><th scope="row">Who owns the exports</th><td>You</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -1490,8 +1455,8 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <section class="pair wrap" id="use-cases" aria-label="Exports and Apple Watch">
       <div class="card">
         <p class="kicker">§ 05 — Yours to take</p>
-        <h2>Export in eight formats. Leave whenever you like.</h2>
-        <p class="lede-2">GPX and GeoJSON for maps, CSV for spreadsheets, Markdown for your notes, OwnTracks and Overland for a server you run. Bring a Google Timeline archive in, free.</p>
+        <h2>Export your location data in eight formats.</h2>
+        <p class="lede-2">Maps, spreadsheets, notes or your own server. Schedule daily exports, or import Google Timeline free.</p>
         <ul class="chips" aria-label="Export formats"><li>GPX</li><li>GeoJSON</li><li>KML</li><li>CSV</li><li>JSON</li><li>Markdown</li><li>OwnTracks</li><li>Overland</li></ul>
         <ul class="text-links">
           <li><a href="/blog/import-google-timeline-iphone/">Import Google Timeline</a></li>
@@ -1503,7 +1468,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
       <div class="card">
         <p class="kicker">§ 06 — On your wrist</p>
         <h2>Record a route from Apple Watch.</h2>
-        <p class="lede-2">Leave the phone behind on a run or a walk. The Watch keeps its own GPS session, queues the route offline, and hands it to your iPhone when they reconnect.</p>
+        <p class="lede-2">Leave the phone at home. The Watch logs GPS offline and syncs when you're back.</p>
         <ul class="text-links">
           <li><a href="/docs/apple-watch/">Apple Watch guide</a></li>
           <li><a href="/docs/siri-shortcuts/">Siri and Shortcuts actions</a></li>
@@ -1557,27 +1522,11 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <section class="band card-bg" id="guides" aria-labelledby="guides-title">
       <div class="stack wrap">
         <div class="stack-head">
-          <p class="kicker">§ 07 — Field guides</p>
+          <p class="kicker">§ 07 — Guides</p>
           <h2 class="h2" id="guides-title">Start with what you need.</h2>
         </div>
-        <div class="grid"><article><span class="n">01</span><h3><a href="/blog/private-location-journal-iphone/">Keep a private location journal</a></h3><p>Set permissions, record your first route, review the timeline, and keep a portable copy.</p></article><article><span class="n">02</span><h3><a href="/compare/google-maps-timeline/">Compare Whereday and Google Timeline</a></h3><p>Understand the differences in accounts, storage, backups, and formats. For an existing archive, follow the <a href="/blog/import-google-timeline-iphone/">Google Timeline import steps</a>.</p></article><article><span class="n">03</span><h3><a href="/blog/record-iphone-route-gpx/">Record a route and export GPX</a></h3><p>Choose GPS points, preview a route file, and inspect a synthetic app export in gpx.studio.</p></article><article><span class="n">04</span><h3><a href="/blog/view-location-history-iphone/">Find your iPhone location history</a></h3><p>Check Apple Maps, Google Timeline, and your existing recordings before starting a new journal.</p></article><article><span class="n">05</span><h3><a href="/blog/back-up-iphone-location-history/">Back up your location history</a></h3><p>Keep separate visits and points, verify the saved files, and restore supported records later.</p></article><article><span class="n">06</span><h3><a href="/docs/apple-watch/">Record without your iPhone nearby</a></h3><p>Use Apple Watch GPS recording and transfer the queued points to your phone when it reconnects.</p></article><article><span class="n">07</span><h3><a href="/blog/track-days-in-country-iphone/">Track days spent in each country</a></h3><p>Review local dates, account for travel days, and add a manual stay when a trip was not recorded.</p></article><article><span class="n">08</span><h3><a href="/integrations/">Use your records in another tool</a></h3><p>Choose Markdown for Obsidian or Overland for Dawarich. Each walkthrough includes a checked synthetic example.</p></article><article><span class="n">09</span><h3><a href="/docs/places/">Save places and correct visits</a></h3><p>Manage reusable pins, correct a visit, or add a past stop. Includes a tested saved locations CSV.</p></article></div>
-        <div class="checked" id="checked-examples">
-          <div>
-            <h3 id="checked-examples-title">Inspect the files before you start.</h3>
-            <p>These walkthroughs include downloadable examples, screenshots, and the result of each check. They use invented records in an isolated test app or vault.</p>
-            <ul>
-              <li><a href="/blog/record-iphone-route-gpx/#checked-ui-export">Follow a GPX export into Files and gpx.studio</a>. Three stored points become one file; compare the preview with the saved track.</li>
-              <li><a href="/blog/back-up-iphone-location-history/#checked-picker">See imported records survive an app restart</a>. The simulator check retains one visit and three points after import and reconciliation.</li>
-              <li><a href="/blog/iphone-location-journal-obsidian/#map-plugin">Inspect the Markdown in Obsidian Maps</a>. The desktop plugin displays two synthetic visit markers and their popups.</li>
-            </ul>
-            <p>Checked October 26, 2026. These examples do not verify a physical recording, a transfer between phones, or scheduled delivery. <a href="/blog/">Browse every guide</a>.</p>
-          </div>
-          <aside aria-labelledby="install-iphone-title">
-            <h3 id="install-iphone-title">Try your own first recording</h3>
-            <p>Supported import is free. New users joining with version 1.8 choose a tracking plan; existing users retain their free tracking and prior purchase rights. See <a href="#pricing">access and pricing</a>.</p>
-            <a class="qr" data-placement="qr" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8"><img src="/assets/app-store-qr.png" width="160" height="160" alt="Scan with your iPhone camera to open Whereday in the App Store" loading="lazy" decoding="async"></a>
-          </aside>
-        </div>
+        <div class="grid"><article><span class="n">01</span><h3><a href="/blog/record-iphone-route-gpx/">Record a route and export GPX</a></h3><p>From GPS points to a GPX file you can open anywhere.</p></article><article><span class="n">02</span><h3><a href="/blog/back-up-iphone-location-history/">Back up your location history</a></h3><p>Save visits and points, then restore them later.</p></article><article><span class="n">03</span><h3><a href="/compare/google-maps-timeline/">Whereday vs Google Timeline</a></h3><p>Accounts, storage and formats compared. <a href="/blog/import-google-timeline-iphone/">Import your Timeline</a>.</p></article><article><span class="n">04</span><h3><a href="/blog/view-location-history-iphone/">Find your iPhone location history</a></h3><p>Where your past locations already live.</p></article><article><span class="n">05</span><h3><a href="/blog/track-days-in-country-iphone/">Track days in each country</a></h3><p>Count travel days from your own records.</p></article><article><span class="n">06</span><h3><a href="/integrations/">Use your data in other tools</a></h3><p>Obsidian, Dawarich and more.</p></article></div>
+        <p class="text-links"><a href="/blog/">Browse every guide</a> · <a href="/docs/places/">Save places and correct visits</a> · <a href="/blog/private-location-journal-iphone/">Keep a private location journal</a></p>
       </div>
     </section>
 
@@ -1586,13 +1535,13 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
         <div class="pricing-head">
           <p class="kicker">§ 08 — Pricing</p>
           <h2 class="h2" id="pricing-title">Free to download. Pay once, if you like.</h2>
-          <p class="lede-2">Download and supported imports are free. Starting with version 1.8, new users choose Individual or Family access through a weekly or yearly subscription, or a one-time Lifetime purchase. Existing users keep the access they already have.</p>
+          <p class="lede-2">Subscribe weekly or yearly, or buy Lifetime once. Existing users keep the access they already have.</p>
         </div>
         <div class="plans">
           <div class="plan">
             <span class="label">SUBSCRIPTION</span>
             <span class="price words">Weekly <small>or</small> yearly</span>
-            <p>Individual or Family access. Eligible subscriptions start with a 7-day free trial, then renew at Apple's displayed price and interval unless canceled.</p>
+            <p>Individual or Family. 7-day free trial when eligible; renews until canceled.</p>
             <a class="pill" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8">Start free trial</a>
           </div>
           <div class="plan feature">
@@ -1604,13 +1553,13 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
           <div class="plan">
             <span class="label">LIFETIME · FAMILY</span>
             <span class="price">$89.99</span>
-            <p>Lifetime for your Family Sharing group. Eligible Individual owners can upgrade for $40.00.</p>
+            <p>For your Family Sharing group. Individual owners can upgrade for $40.00.</p>
             <a class="pill" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8">Get Family</a>
           </div>
         </div>
         <div class="fine">
-          <p><strong>Existing users are protected.</strong> If you used Whereday before version 1.8, you keep free tracking, your previous export purchase requirements, and all prior lifetime rights. Current U.S. prices; storefront prices and taxes may vary. See our <a href="/terms">purchase and cancellation terms</a>.</p>
-          <p id="export-access" style="scroll-margin-top: 128px"><strong>Keep access to your files.</strong> New users from version 1.8 retain file exports after tracking access expires. Existing free users keep their earlier export-unlock requirement. Auto Export and webhook settings follow the same export access, with their own folder, scheduling and receiver setup. A map export is not a full journal backup; use <a href="/blog/back-up-iphone-location-history/">supported visit and point copies</a> for restoration.</p>
+          <p><strong>Existing users keep their access.</strong> Used Whereday before 1.8? You keep free tracking, your earlier export terms and any lifetime purchase. U.S. prices shown. <a href="/terms">Terms</a>.</p>
+          <p id="export-access" style="scroll-margin-top: 128px"><strong>Your exports stay yours.</strong> New users keep file export after a subscription ends. Existing free users keep their earlier export-unlock requirement. <a href="/blog/back-up-iphone-location-history/">Back up your history</a>.</p>
         </div>
       </div>
     </section>
@@ -1619,7 +1568,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
       <div class="maker">
         <p class="kicker">§ 09 — Who makes it</p>
         <p class="statement">Whereday is an independent, open-source app made by Cody Bontecou at isolated.tech.</p>
-        <p class="lede-2">No investors to answer to and no data business behind it. A question or a bug report reaches the person who wrote the code.</p>
+        <p class="lede-2">No investors, no data business. Support goes straight to the developer.</p>
         <div class="pills">
           <a class="pill" href="/about">About Whereday</a>
           <a class="pill" href="/contact">Get support</a>
@@ -1628,18 +1577,14 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
       </div>
       <div class="faq-list">
         <h2>QUESTIONS</h2>
-        <details><summary><span>Will Whereday drain my battery?</span><span class="plus" aria-hidden="true">+</span></summary><p>Whereday uses iOS location services and gives you controls such as Start and Stop, distance filters, and auto-stop timers. High-accuracy route recording uses more battery, so use it for intentional sessions like trips, walks, hikes, or site visits.</p></details>
-        <details><summary><span>Where is my location data stored?</span><span class="plus" aria-hidden="true">+</span></summary><p>Your visits and routes are stored locally on your iPhone. Whereday does not require an account and does not store your location history on Whereday servers.</p></details>
-        <details><summary><span>Does Whereday use Apple geocoding?</span><span class="plus" aria-hidden="true">+</span></summary><p>It can, if you choose features that turn coordinates into readable place names or addresses. Those geocoding requests go through Apple's system service and are governed by Apple's privacy policies, not a Whereday location database.</p></details>
-        <details><summary><span>Can I delete my location history?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes. Delete data from the app settings. Since Whereday does not keep a server copy, deleting the app also removes the local data from that device unless you exported or backed it up first.</p></details>
-        <details><summary><span>Can I export or import my history?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes. There are eight export choices, with content depending on record type. OwnTracks and Overland carry GPS points. Import accepts supported Whereday JSON, CSV or Markdown visits and points, plus supported Google Timeline JSON. GPX, KML, GeoJSON, OwnTracks and Overland exports are not Whereday restore files. Supported import and Export Preview are free; export access follows the new-user and existing-user rules. Keep original files and check the <a href="/docs/export-import/">export/import reference</a>.</p></details>
-        <details><summary><span>Does Whereday work with Apple Watch?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes — and the Watch app records independently. It keeps its own GPS session, works without your iPhone nearby, and queues routes offline until it can sync them back. Watch complications also show today's visits, distance, and tracking status.</p></details>
-        <details><summary><span>Does Whereday sync with iCloud?</span><span class="plus" aria-hidden="true">+</span></summary><p>No. Whereday stores your journal locally and does not sync through iCloud. Export and import are the portable backup path, and the Apple Watch syncs directly with your iPhone rather than through the cloud.</p></details>
-        <details><summary><span>What is free and what is Pro?</span><span class="plus" aria-hidden="true">+</span></summary><p>The download and supported import are free. New users joining with version 1.8 need an eligible trial, subscription, or Lifetime purchase to begin tracking. Existing users retain free tracking and their earlier export purchase requirements; prior lifetime purchases remain valid. Current U.S. Lifetime prices are $49.99 Individual, $89.99 Family, and $40.00 for an eligible Family Upgrade. Apple shows local prices, trial eligibility, and renewal terms before confirmation. See <a href="/terms">the complete terms</a>.</p></details>
-        <details><summary><span>Does Whereday work with OwnTracks, Overland, or Dawarich?</span><span class="plus" aria-hidden="true">+</span></summary><p>Whereday can POST GPS points to a configured receiver. An Overland batch sent by the released native webhook code was stored in Dawarich 1.18.0 and survived a receiver and database restart. Physical recording and unattended delivery remain separate checks. Webhooks follow your export access and are off by default. <a href="/integrations/dawarich/">Follow the checked Dawarich setup</a>, or <a href="/integrations/">choose another records workflow</a>.</p></details>
-        <details><summary><span>What can Siri and Shortcuts do?</span><span class="plus" aria-hidden="true">+</span></summary><p>Start and stop tracking, read saved visits and outings, rename journal records, ask for today's stats, or export a chosen date range as a file. Use Whereday actions in Shortcuts; built-in Siri phrases cover recording, stats, renaming, and Export Data. Test a shortcut manually before scheduling it. See the <a href="/docs/siri-shortcuts/">action list and export recipe</a>.</p></details>
-        <details><summary><span>Can exports run automatically?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes. Auto Export saves your day to a folder you pick, once daily or as often as every hour, keeping one consistent dated file per day. Wake-ups are best effort: background refresh plus a scheduling service that sends timing-only pushes and never sees your location.</p></details>
-        <details><summary><span>Is Whereday a Google Timeline alternative?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes. Whereday records your own visits and routes without a Google account. Google Timeline also stores history on your device and offers encrypted backup; Whereday differs in account requirements, export formats, and recording workflow. Whereday 1.8 can preview supported Google Timeline JSON and import visits and timed points. Keep the original archive: selected records do not reproduce every Google activity or replace its device-transfer backup. <a href="/blog/import-google-timeline-iphone/">Follow the import walkthrough</a> or <a href="/compare/google-maps-timeline/">read the comparison</a>.</p></details>
+        <details><summary><span>Where is my location data stored?</span><span class="plus" aria-hidden="true">+</span></summary><p>On your phone. Whereday has no account and no location server, so your history never reaches us.</p></details>
+        <details><summary><span>Does Whereday track continuously in the background?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes, while tracking is on. Whereday logs visits and GPS points in the background. Accuracy, distance filters and auto-stop timers keep battery use in check.</p></details>
+        <details><summary><span>How do I export my location history?</span><span class="plus" aria-hidden="true">+</span></summary><p>Export any date range as GPX, GeoJSON, KML, CSV, JSON, Markdown, OwnTracks or Overland. Auto Export can save a dated file to a folder daily, or as often as hourly. See the <a href="/docs/export-import/">export reference</a>.</p></details>
+        <details><summary><span>Can I import my Google Timeline?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes, for free. Whereday imports supported Google Timeline JSON, plus Whereday JSON, CSV and Markdown files. Keep your original archive as well. <a href="/blog/import-google-timeline-iphone/">Follow the import steps</a>.</p></details>
+        <details><summary><span>Does Whereday work with Apple Watch?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes. The Watch records GPS routes on its own and syncs them to your iPhone when they reconnect.</p></details>
+        <details><summary><span>Does Whereday sync with iCloud?</span><span class="plus" aria-hidden="true">+</span></summary><p>No. Your history stays local. Export and import are the backup path.</p></details>
+        <details><summary><span>Can I send points to my own server?</span><span class="plus" aria-hidden="true">+</span></summary><p>Yes. Webhooks POST GPS points in OwnTracks or Overland format to a receiver you run, such as Dawarich. They are off by default. <a href="/integrations/dawarich/">Set up Dawarich</a>.</p></details>
+        <details><summary><span>What does it cost?</span><span class="plus" aria-hidden="true">+</span></summary><p>Free to download, and import is free. New users since version 1.8 choose a subscription, with a 7-day trial when eligible, or Lifetime: $49.99 Individual or $89.99 Family. Existing users keep the access they already had. See the <a href="/terms">purchase terms</a>.</p></details>
       </div>
     </section>
 
@@ -1647,8 +1592,11 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
       <div class="wrap">
         <svg width="88" height="88" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15" fill="none" stroke="#DCD4C2" stroke-width="5"/><g transform="rotate(-90 20 20)" fill="none" stroke-width="5"><circle cx="20" cy="20" r="15" stroke="#1E2B45" class="ink-arc" stroke-dasharray="32 94.2" stroke-dashoffset="0"/><circle cx="20" cy="20" r="15" stroke="#C2462A" stroke-dasharray="6 94.2" stroke-dashoffset="-35"/><circle cx="20" cy="20" r="15" stroke="#B7862B" stroke-dasharray="14 94.2" stroke-dashoffset="-44"/><circle cx="20" cy="20" r="15" stroke="#5E7F5A" stroke-dasharray="6 94.2" stroke-dashoffset="-61"/></g></svg>
         <h2 id="closing-title">Start keeping <em>your days.</em></h2>
-        <a class="pill solid big" data-placement="inline" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8">Download free on the App Store</a>
-        <span class="mono">IPHONE · APPLE WATCH · NO ACCOUNT NEEDED</span>
+        <div class="store-badges">
+        <a class="store-badge" data-placement="closer" href="https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&amp;ct=seo-home&amp;mt=8"><img src="/assets/store-badges/download-on-app-store.svg" width="120" height="40" alt="Download Whereday on the App Store"></a>
+        <a class="store-badge store-badge-google" data-placement="closer" href="https://play.google.com/store/apps/details?id=com.bontecou.whereday"><img src="/assets/store-badges/get-it-on-google-play.png" width="646" height="250" alt="Get Whereday on Google Play"></a>
+      </div>
+        <span class="mono">ON-DEVICE · NO ACCOUNT · EXPORT ANYTIME</span>
       </div>
     </section>
   </main>

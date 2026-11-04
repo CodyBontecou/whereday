@@ -8,7 +8,7 @@
   --rule-soft: #E4DED0;
   --accent: #A8381F;
   --rust: #C2462A;
-  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }

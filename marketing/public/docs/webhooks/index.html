@@ -31,7 +31,7 @@
   --lcd-bg: #DFE6D6;
   --warn-bg: #fdf3e4;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  --display: "Newsreader", Georgia, "Times New Roman", serif; --serif: var(--display); --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --serif: var(--display); --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --radius: 14px;
 }
 body {
@@ -322,8 +322,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 </style>
 <style id="shared-navigation-styles">/* Whereday "Reimagined" theme — shared fonts, tokens and base type. Inlined on every page by build_navigation.py, after each page's own styles, so these tokens win. */
 @font-face { font-family: "Inter"; src: url("/assets/fonts/inter-latin-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: "Newsreader"; src: url("/assets/fonts/newsreader-latin-var.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: "Newsreader"; src: url("/assets/fonts/newsreader-latin-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root {
@@ -335,7 +334,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   --ochre: #B7862B; --sage: #5E7F5A; --slate: #7A86A8;
   --lcd: #3F5C3C; --lcd-bright: #5E7F5A; --lcd-bg: #DFE6D6;
   --danger: #A8381F; --warning: #8A6420;
-  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --display: var(--serif);
@@ -345,7 +344,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 html { background: var(--paper); }
 body { font-family: var(--sans); color: var(--ink); background: var(--paper); }
 ::selection { background: rgba(194, 70, 42, 0.18); }
-:where(h1, h2, h3) { font-family: var(--serif); }
+:where(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.02em; }
+:where(h1, h2, h3) em { font-style: normal; }
 :where(a):focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; border-radius: 4px; }
 /* Shared components across hand-built pages */
 .btn { border-radius: 999px; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
