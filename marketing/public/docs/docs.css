@@ -15,7 +15,7 @@
   --lcd-bg: #DFE6D6;
   --warn-bg: #fdf3e4;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  --display: "Newsreader", Georgia, "Times New Roman", serif; --serif: var(--display); --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --serif: var(--display); --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --radius: 14px;
 }
 body {
