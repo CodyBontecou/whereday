@@ -91,7 +91,7 @@ The simulator pipeline (`scripts/capture_localized_screenshots.py`) was also fix
 - Release archive and App Store Connect export (`destination=export`, not upload): **succeeded**. All four bundles in the IPA (phone, phone widget, Watch, Watch widget) are **2.0 / 62**; see `ipa-verification.json`.
 - Upload processed **VALID** in App Store Connect. No physical-device check yet; build 62 can go to internal TestFlight testers for one.
 - Logs, archive and IPA: `.asc/artifacts/stage-2.0-62/`.
-- After the Debug-only screenshot-seeder change (`f6f4a6ef`'s parent), `scripts/test-ios.sh` passed again: 364 XCTest + 11 Swift Testing tests. That change compiles out of Release, so uploaded build 62 is unaffected.
+- After the Debug-only screenshot-seeder change (`176221cd`), `scripts/test-ios.sh` passed again: 364 XCTest + 11 Swift Testing tests. That change compiles out of Release, so uploaded build 62 is unaffected.
 
 ## Still to do (owner)
 
