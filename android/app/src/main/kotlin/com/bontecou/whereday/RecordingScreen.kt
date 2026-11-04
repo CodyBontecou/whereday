@@ -41,12 +41,12 @@ fun distanceText(meters: Double, metric: Boolean,locale:Locale=Locale.getDefault
 fun timeText(time: java.time.Instant): String = DateTimeFormatter.ofPattern("MMM d, HH:mm").withZone(ZoneId.systemDefault()).format(time)
 
 /** The Trace header (mono date caption over a serif title) and the recording card: ink with a live dot while recording, paper on standby. */
-@Composable fun RecordingControls(active: Boolean,state: RecordingRow?,record: () -> Unit) {
+@Composable fun RecordingControls(active: Boolean,state: RecordingRow?,header:Boolean=true,record: () -> Unit) {
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val today=remember(locale) {DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale).format(LocalDate.now())}
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        WdPageHeader(stringResource(R.string.recording_journal_title),eyebrow=stringResource(R.string.map_redesign_header_eyebrow,today),compact=true)
-        Column(Modifier.fillMaxWidth().padding(horizontal=20.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+        if(header) WdPageHeader(stringResource(R.string.recording_journal_title),eyebrow=stringResource(R.string.map_redesign_header_eyebrow,today),compact=true)
+        Column(Modifier.fillMaxWidth().padding(horizontal=16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
             val summary=stringResource(if (active) R.string.recording_active_summary else R.string.recording_idle_summary)
             val label=stringResource(if (active) R.string.shortcut_stop else R.string.shortcut_start)
             if(active) WdInkCard {
@@ -56,8 +56,8 @@ fun timeText(time: java.time.Instant): String = DateTimeFormatter.ofPattern("MMM
                     Text(summary,style=MaterialTheme.typography.bodyMedium,color=wd.onInkCard)
                 }
                 RecordingStopPill(label,record)
-            } else WdCard(radius=18.dp) {
-                Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+            } else WdCard {
+                Column(Modifier.padding(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
                     Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
                         Box(Modifier.size(8.dp).clip(CircleShape).background(wd.textMuted.copy(alpha=0.35f)))
                         Text(stringResource(R.string.map_redesign_standby).uppercase(),style=WdType.eyebrow,color=wd.textMuted)
@@ -67,11 +67,11 @@ fun timeText(time: java.time.Instant): String = DateTimeFormatter.ofPattern("MMM
                 }
             }
             state?.interruption?.let {
-                val shape=RoundedCornerShape(14.dp)
-                Row(Modifier.fillMaxWidth().clip(shape).background(wd.inkRust.copy(alpha=if(wd.dark) 0.14f else 0.07f)).border(1.dp,wd.inkRust.copy(alpha=0.35f),shape).padding(14.dp),
+                val shape=RoundedCornerShape(16.dp)
+                Row(Modifier.fillMaxWidth().clip(shape).background(wd.secondaryContainer).padding(16.dp),
                     horizontalArrangement=Arrangement.spacedBy(10.dp),verticalAlignment=Alignment.Top) {
-                    Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(20.dp),tint=wd.inkRust)
-                    Text(recordingInterruptionText(it), Modifier.weight(1f).testTag("recording-interruption"), color = wd.inkRust,style=MaterialTheme.typography.bodyMedium)
+                    Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(20.dp),tint=wd.onSecondaryContainer)
+                    Text(recordingInterruptionText(it), Modifier.weight(1f).testTag("recording-interruption"), color = wd.onSecondaryContainer,style=MaterialTheme.typography.bodyMedium)
                 }
             }
         }

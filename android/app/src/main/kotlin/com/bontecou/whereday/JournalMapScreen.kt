@@ -45,7 +45,7 @@ import com.bontecou.whereday.domain.ManualVisitMode
     var replayShowing by remember {mutableStateOf(false)}
     Box(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        RecordingControls(active,recording,onRecord)
+        RecordingControls(active,recording,record=onRecord)
         access?.let {RecordingAccessNotice(it,onAccessOptions)}
         // The iOS trace chrome: a floating date capsule beside the log-a-stop capsules.
         FlowRow(Modifier.fillMaxWidth().padding(horizontal=20.dp).padding(top=14.dp),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {

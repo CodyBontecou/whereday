@@ -71,11 +71,8 @@ import kotlinx.coroutines.*
     WorkspaceDialog(fillRegion=true,onDismissRequest=::cancel,properties=DialogProperties(usePlatformDefaultWidth=false)) {
         Surface(Modifier.fillMaxSize(),color=wd.surface,contentColor=wd.textPrimary) {
             Column(Modifier.fillMaxSize().imePadding()) {
-                Box(Modifier.fillMaxWidth().heightIn(min=56.dp).padding(horizontal=12.dp)) {
-                    PlaceEditorPill(stringResource(R.string.visit_cancel),::cancel,Modifier.align(Alignment.CenterStart).testTag("saved-editor-cancel"),enabled=!busy)
-                    Text(stringResource(if(place==null) R.string.saved_editor_add else R.string.saved_editor_edit),style=WdType.title3,color=wd.textPrimary,maxLines=1,overflow=TextOverflow.Ellipsis,textAlign=TextAlign.Center,
-                        modifier=Modifier.align(Alignment.Center).padding(horizontal=104.dp).semantics {heading()})
-                }
+                WdFormTopBar(stringResource(if(place==null) R.string.saved_editor_add else R.string.saved_editor_edit),{if(!busy) cancel()},stringResource(R.string.visit_cancel),
+                    Modifier.statusBarsPadding(),closeTag="saved-editor-cancel")
                 Column(Modifier.weight(1f).semantics {testTagsAsResourceId=true}.testTag("saved-editor-fields").verticalScroll(rememberScrollState()).padding(bottom=16.dp)) {
                     WdSectionHeader(stringResource(R.string.redesign_places_section_details))
                     Column(Modifier.padding(horizontal=16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
@@ -89,6 +86,10 @@ import kotlinx.coroutines.*
                         OutlinedTextField(lon,{lon=it},label={Text(stringResource(R.string.visit_longitude))},enabled=!busy,shape=fieldShape,colors=wdTextFieldColors(),textStyle=WdType.monoBody,modifier=Modifier.fillMaxWidth().testTag("saved-longitude"))
                     }
                     WdSectionHeader(stringResource(R.string.redesign_places_section_radius))
+                    // Edit place board: the match radius as a slider (25–300 m) above its exact value.
+                    val radiusValue=radius.trim().replace(',','.').toDoubleOrNull()
+                    androidx.compose.material3.Slider((radiusValue ?: 60.0).toFloat().coerceIn(25f,300f),{radius=(Math.round(it/5f)*5).toString()},Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-radius-slider"),
+                        enabled=!busy,valueRange=25f..300f,colors=androidx.compose.material3.SliderDefaults.colors(thumbColor=wd.placeInks[3],activeTrackColor=wd.placeInks[3],inactiveTrackColor=wd.dialTrack))
                     OutlinedTextField(radius,{radius=it},label={Text(stringResource(R.string.saved_editor_radius))},enabled=!busy,shape=fieldShape,colors=wdTextFieldColors(),textStyle=WdType.monoBody,modifier=Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-radius"))
                     error?.let {val notice=RoundedCornerShape(14.dp)
                         Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.inkRust,modifier=Modifier.padding(start=16.dp,end=16.dp,top=16.dp).fillMaxWidth().clip(notice)

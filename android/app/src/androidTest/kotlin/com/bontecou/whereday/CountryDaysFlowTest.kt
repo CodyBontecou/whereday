@@ -72,7 +72,7 @@ class CountryDaysFlowTest {
         compose.waitUntil(5000) {compose.onAllNodesWithText(text).fetchSemanticsNodes().isNotEmpty()}
         find("country-analysis-status").assertTextEquals(text)
     }
-    private fun allTime() {compose.onNodeWithText("Este año").performClick();compose.onNodeWithText("Todo el tiempo").performClick()}
+    private fun allTime() {compose.onNodeWithText("Todo el tiempo").performClick()}
     private fun stays(recorded:Boolean=false)=runBlocking {
         graph.history.dao.put(StayRow(CountryStay("pr-main","PR",LocalDate.parse("2024-10-27"),LocalDate.parse("2024-10-28"))))
         graph.history.dao.put(StayRow(CountryStay("es-main","ES",LocalDate.parse("2024-10-28"),LocalDate.parse("2024-10-28"))))
@@ -141,7 +141,7 @@ class CountryDaysFlowTest {
         show();allTime()
         find("country-summary-countries").assertTextEquals("1 país")
         find("country-summary-days").assertTextEquals("1.001 días con presencia registrada o manual")
-        compose.onNodeWithText("Todo el tiempo").performScrollTo().performClick();compose.onNodeWithText("Este año").performClick()
+        compose.onNodeWithText("Este año").performScrollTo().performClick()
         find("country-summary-countries").assertTextEquals("0 países")
         find("country-summary-days").assertTextEquals("0 días con presencia registrada o manual")
         assertEquals(1,graph.history.dao.stays().size);assertEquals(0,calls.get())

@@ -10,7 +10,7 @@ internal data class WorkspaceRect(val left:Int,val top:Int,val right:Int,val bot
     val area:Long get()=width.toLong()*height
 }
 internal enum class WorkspaceFoldAxis { vertical,horizontal }
-internal data class WorkspaceFold(val bounds:WorkspaceRect,val axis:WorkspaceFoldAxis,val separating:Boolean,val occluding:Boolean=false)
+internal data class WorkspaceFold(val bounds:WorkspaceRect,val axis:WorkspaceFoldAxis,val separating:Boolean,val occluding:Boolean=false,val halfOpened:Boolean=false)
 internal data class WorkspaceArrangement(val primary:WorkspaceRect?,val companion:WorkspaceRect?=null,val safeRegions:List<WorkspaceRect> =listOfNotNull(primary,companion)) {
     val paired:Boolean get()=companion!=null
 }
@@ -21,7 +21,9 @@ internal object JournalWorkspaceGeometry {
         require(width>=0 && height>=0 && density.isFinite() && density>0)
         if(width==0 || height==0) return WorkspaceArrangement(null)
         val gap=ceil(24.0*density).toInt().coerceAtLeast(1)
-        val minWidth=ceil(360.0*density).toInt();val minHeight=ceil(360.0*density).toInt()
+        // Tabletop (a separating horizontal hinge: half-open, or a dual screen) pairs shorter panes: the map above the fold, Today below it.
+        val tabletop=folds.any {it.axis==WorkspaceFoldAxis.horizontal && (it.halfOpened || it.separating)}
+        val minWidth=ceil(360.0*density).toInt();val minHeight=ceil((if(tabletop) 240.0 else 360.0)*density).toInt()
         var regions=listOf(WorkspaceRect(0,0,width,height))
         for(fold in folds.filter {it.separating || it.occluding}.sortedWith(compareBy({it.bounds.left},{it.bounds.top},{it.axis.ordinal}))) {
             regions=regions.flatMap {region->

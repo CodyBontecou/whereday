@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="16dp" android:background="@drawable/widget_background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="bottom">
+        <TextView android:id="@+id/widget_place" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:fontFamily="@font/newsreader" android:textSize="22sp" android:textColor="@color/widget_on_surface"
+            android:maxLines="1" android:ellipsize="end" android:text="@string/widget_no_stop" />
+        <TextView android:id="@+id/widget_since" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:fontFamily="@font/plex_mono_regular" android:textSize="10sp" android:letterSpacing="0.1"
+            android:textColor="@color/widget_on_surface_variant" />
+    </LinearLayout>
+    <ImageView android:id="@+id/widget_strip" android:layout_width="match_parent" android:layout_height="14dp"
+        android:layout_marginTop="12dp" android:scaleType="fitXY" android:importantForAccessibility="no" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="4dp">
+        <TextView style="@style/WidgetHour" android:text="00" />
+        <TextView style="@style/WidgetHour" android:text="06" />
+        <TextView style="@style/WidgetHour" android:text="12" />
+        <TextView style="@style/WidgetHour" android:text="18" />
+        <TextView style="@style/WidgetHour" android:gravity="end" android:text="24" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10dp">
+        <LinearLayout style="@style/WidgetStat">
+            <TextView android:id="@+id/widget_stat_places" style="@style/WidgetStatValue" />
+            <TextView android:id="@+id/widget_stat_places_label" style="@style/WidgetStatLabel" />
+        </LinearLayout>
+        <LinearLayout style="@style/WidgetStat">
+            <TextView android:id="@+id/widget_stat_moved" style="@style/WidgetStatValue" />
+            <TextView android:id="@+id/widget_stat_moved_label" style="@style/WidgetStatLabel" />
+        </LinearLayout>
+        <LinearLayout style="@style/WidgetStat">
+            <TextView android:id="@+id/widget_stat_day" style="@style/WidgetStatValue" />
+            <TextView android:id="@+id/widget_stat_day_label" style="@style/WidgetStatLabel" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

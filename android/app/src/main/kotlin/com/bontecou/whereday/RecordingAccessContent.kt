@@ -31,10 +31,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 @Composable internal fun RecordingAccessNotice(state:RecordingAccessState,options:(PermissionAccessKind)->Unit,location:Boolean=true,notifications:Boolean=true,
     contentPadding:PaddingValues=PaddingValues(horizontal=20.dp,vertical=12.dp)) {
     if((!location || state.location==LocationPrecision.precise) && (!notifications || state.notifications) && state.failure==null) return
-    val shape=RoundedCornerShape(14.dp)
-    val ink=wd.inkRust
+    val shape=RoundedCornerShape(16.dp)
+    val ink=wd.onSecondaryContainer
+    // The Location-off board: a secondary-container status band with its own actions.
     Column(Modifier.fillMaxWidth().padding(contentPadding).testTag("recording-access-notice").semantics {liveRegion=LiveRegionMode.Polite}
-        .clip(shape).background(wd.card).background(ink.copy(alpha=if(wd.dark) 0.10f else 0.05f)).border(1.dp,ink.copy(alpha=0.35f),shape)
+        .clip(shape).background(wd.secondaryContainer)
         .padding(vertical=6.dp)) {
         var first=true
         if(location && state.location!=LocationPrecision.precise) {
@@ -61,10 +62,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 @Composable private fun AccessNoticeItem(icon:ImageVector,text:String,action:String,actionModifier:Modifier,onClick:()->Unit) {
     Row(Modifier.fillMaxWidth().padding(start=14.dp,end=14.dp,top=10.dp,bottom=4.dp),horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-        Icon(icon,null,Modifier.size(20.dp),tint=wd.inkRust)
+        Icon(icon,null,Modifier.size(20.dp),tint=wd.onSecondaryContainer)
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
-            Text(text,style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
-            TextButton(onClick=onClick,modifier=actionModifier.offset(x=(-12).dp),colors=ButtonDefaults.textButtonColors(contentColor=wd.accent)) {
+            Text(text,style=MaterialTheme.typography.bodyMedium,color=wd.onSecondaryContainer)
+            TextButton(onClick=onClick,modifier=actionModifier.align(Alignment.End),colors=ButtonDefaults.buttonColors(containerColor=wd.inkRust,contentColor=wd.onSecondary)) {
                 Text(action,style=WdType.caption.copy(fontWeight=FontWeight.SemiBold))
                 Spacer(Modifier.width(4.dp))
                 Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(16.dp))

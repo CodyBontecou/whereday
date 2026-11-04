@@ -18,7 +18,7 @@ class SettingsGraphIntegrationTest {
     private val target get()=InstrumentationRegistry.getInstrumentation().targetContext
     private fun settings() {
         compose.waitUntil(15000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-        compose.onNodeWithText("Settings").performClick();compose.onNodeWithTag("settings-screen").assertExists()
+        compose.onNodeWithTag("today-settings").performClick();compose.onNodeWithTag("settings-screen").assertExists()
     }
     private fun click(text:String) {compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(text));compose.onNodeWithText(text).performClick()}
     @Test fun preferenceCommandsReachDataStoreAndChildRecreationKeepsTheOverviewPosition():Unit=runBlocking {
@@ -31,9 +31,7 @@ class SettingsGraphIntegrationTest {
             compose.onNode(hasText("100 m") and hasAnyAncestor(isPopup())).performClick()
             withTimeout(5000) {graph.preferences.settings.first {it.distanceFilter==100}}
             compose.onNodeWithTag("settings-screen").performScrollToNode(hasTestTag("settings-theme"))
-            val theme=when(original.appearance) {"light"->"Light";"dark"->"Dark";else->"System"}
-            compose.onNode(hasText(theme) and hasAnyAncestor(hasTestTag("settings-theme"))).performClick()
-            compose.onNode(hasText("Dark") and hasAnyAncestor(isPopup())).performClick()
+            compose.onNode(hasText("Dark") and hasAnyAncestor(hasTestTag("settings-theme"))).performClick()
             click("Support and about");compose.onNodeWithTag("support-screen").assertExists()
             withTimeout(5000) {graph.settingsActions.state.first {!it.busy};graph.preferences.settings.first {it.appearance=="dark" && it.distanceFilter==100}}
             compose.activityRule.scenario.recreate();compose.waitUntil(10000) {compose.onAllNodesWithTag("support-screen").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}

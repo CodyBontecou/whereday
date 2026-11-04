@@ -121,6 +121,17 @@ class ReplayArchive internal constructor(private val directory:File,private val 
         val accuracy=data.readDouble();val altitude=data.readDouble().takeUnless {it.isNaN()};val speed=data.readDouble().takeUnless {it.isNaN()}
         return TrackPoint(id=String(idBytes,Charsets.UTF_8),coordinate=coordinate,time=time,accuracy=accuracy,altitude=altitude,speed=speed,outlier=data.readBoolean()) to distance
     }
+    /** The last point recorded at or before [time] (the first point when [time] precedes the route), by binary search on the
+     *  time-ordered cache. Trace uses it to scrub by clock time rather than by point count. */
+    suspend fun indexAt(time:Instant):Long=withContext(Dispatchers.IO) {lock.withLock {
+        check(!closed) {"Replay was closed."}
+        var low=0L;var high=count-1;var found=0L
+        while(low<=high) {
+            val mid=(low+high) ushr 1
+            if(!read(mid).first.time.isAfter(time)) {found=mid;low=mid+1} else high=mid-1
+        }
+        found
+    }}
     suspend fun frame(index:Long):ReplayFrame=withContext(Dispatchers.IO) {lock.withLock {
         check(!closed) {"Replay was closed."}
         val cursor=index.coerceIn(0,count-1)

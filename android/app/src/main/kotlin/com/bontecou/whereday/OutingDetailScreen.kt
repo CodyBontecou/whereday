@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bontecou.whereday.domain.*
 import com.bontecou.whereday.platform.*
 import com.bontecou.whereday.export.*
@@ -76,6 +77,11 @@ private sealed interface OutingState {
                 val photos=matchedPhotos(graph,photoRange)
                 val photoLayer=photoMapLayer(graph,photoRange,photos.count!=null,validationFailed=photos.error!=null)
                 val live=session.endedAt==null
+                JournalMap(detail.points,detail.visits,followMetric=metric,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
+                    roadController=graph.roadDisplay,roadVisible=!visitInspectionActive && !editing && !deleting && selectedVisit==null && !replayShowing,
+                    pointMarkerSource=rememberHistoryPointMarkerSource(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader)))
+                RouteReplayButton(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader),metric,
+                    ((detail.summary.count-detail.summary.outlierCount).takeIf {it>0} ?: detail.summary.count)>=2,onShowingChange={replayShowing=it})
                 Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
                     Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                         Text(session.startedAt.atZone(java.time.ZoneId.systemDefault()).toLocalDate().format(java.time.format.DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.FULL).withLocale(locale)).uppercase(locale),
@@ -83,28 +89,27 @@ private sealed interface OutingState {
                         if(live) WdBadge(stringResource(R.string.timeline_recording),color=wd.inkRust)
                         else if(detail.inferred) WdBadge(stringResource(R.string.timeline_inferred),color=wd.textMuted)
                     }
-                    Text(session.name ?: stringResource(if(detail.inferred) R.string.timeline_inferred else R.string.outing_details),style=WdType.title,color=wd.textPrimary,modifier=Modifier.semantics {heading()}.testTag("outing-title"))
+                    Text(session.name ?: stringResource(if(detail.inferred) R.string.timeline_inferred else R.string.outing_details),style=WdType.title.copy(fontWeight=FontWeight.Normal),color=wd.textPrimary,modifier=Modifier.semantics {heading()}.testTag("outing-title"))
                     Text(timelineRange(session.startedAt,session.endedAt,R.string.timeline_recording),style=WdType.caption,color=if(live) wd.inkRust else wd.textMuted)
                 }
-                WdCard(radius=16.dp) {
-                    Row(Modifier.padding(horizontal=16.dp,vertical=14.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-                        WdStat(distanceText(detail.summary.distanceMeters,metric,locale),stringResource(R.string.timeline_redesign_distance),Modifier.weight(1f))
+                // Outing board: the route first, then the title, then the figures in one surface-container row.
+                WdCard {
+                    val duration=java.time.Duration.between(session.startedAt,session.endedAt ?: java.time.Instant.now()).toMinutes().coerceAtLeast(0)
+                    Row(Modifier.padding(horizontal=20.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                        OutingFigure(todayDistance(detail.summary.distanceMeters,metric,locale),stringResource(R.string.timeline_redesign_distance),Modifier.weight(1f))
+                        OutingFigure(if(duration<60) stringResource(R.string.timeline_redesign_minutes,duration.toInt()) else stringResource(R.string.timeline_redesign_hours,(duration/60).toInt(),"%02d".format(duration%60)),
+                            stringResource(R.string.outing_figure_duration),Modifier.weight(1f))
+                        OutingFigure(java.text.NumberFormat.getIntegerInstance(locale).format(detail.summary.count),stringResource(R.string.today_stat_points),Modifier.weight(1f))
                         if(live) WdLiveDot()
                     }
-                    WdDivider(Modifier.padding(start=16.dp))
-                    Column(Modifier.padding(horizontal=16.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-                        val duration=java.time.Duration.between(session.startedAt,session.endedAt ?: java.time.Instant.now()).toMinutes().coerceAtLeast(0)
+                    WdDivider(Modifier.padding(start=20.dp))
+                    Column(Modifier.padding(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
                         val average=detail.summary.averageSpeed?.let {speed->stringResource(R.string.outing_average_speed,distanceText(speed*3600,metric,locale))} ?: stringResource(R.string.outing_average_unavailable)
                         Text(stringResource(R.string.outing_duration_summary,duration/60,duration%60,average),style=WdType.caption.copy(fontWeight=FontWeight.Medium),color=wd.textPrimary,modifier=Modifier.testTag("outing-duration"))
                         Text(stringResource(R.string.outing_point_summary,resources.getQuantityString(R.plurals.timeline_point_count,detail.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.count),resources.getQuantityString(R.plurals.outing_glitch_count,detail.summary.outlierCount.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.outlierCount)),
                             style=WdType.caption,color=wd.textMuted,modifier=Modifier.testTag("outing-point-summary"))
                     }
                 }
-                RouteReplayButton(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader),metric,
-                    ((detail.summary.count-detail.summary.outlierCount).takeIf {it>0} ?: detail.summary.count)>=2,onShowingChange={replayShowing=it})
-                JournalMap(detail.points,detail.visits,followMetric=metric,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
-                    roadController=graph.roadDisplay,roadVisible=!visitInspectionActive && !editing && !deleting && selectedVisit==null && !replayShowing,
-                    pointMarkerSource=rememberHistoryPointMarkerSource(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader)))
                 if(detail.summary.count>detail.points.size) Text(resources.getQuantityString(R.plurals.outing_sampled,detail.summary.count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),detail.summary.count),style=WdType.caption2,color=wd.textMuted)
                 session.notes?.takeIf { it.isNotBlank() }?.let {
                     OutingSectionLabel(stringResource(R.string.timeline_redesign_notes))
@@ -183,3 +188,10 @@ private sealed interface OutingState {
 }
 
 @Composable private fun outingDialogButtonColors(ink:androidx.compose.ui.graphics.Color)=ButtonDefaults.textButtonColors(contentColor=ink,disabledContentColor=wd.textMuted.copy(alpha=0.6f))
+
+@Composable private fun OutingFigure(value:String,label:String,modifier:Modifier=Modifier) {
+    Column(modifier,verticalArrangement=Arrangement.spacedBy(2.dp)) {
+        Text(value,style=WdType.figure.copy(fontSize=24.sp),color=wd.textPrimary,maxLines=1)
+        Text(label.uppercase(),style=WdType.caption2.copy(fontSize=10.sp,letterSpacing=0.1.em),color=wd.textMuted,maxLines=2)
+    }
+}

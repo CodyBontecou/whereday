@@ -45,4 +45,12 @@ class JournalWorkspaceGeometryTest {
         val result=JournalWorkspaceGeometry.arrange(800,900,1f,listOf(WorkspaceFold(WorkspaceRect(-100,0,10,900),WorkspaceFoldAxis.vertical,true)))
         assertEquals(WorkspaceRect(10,0,800,900),result.primary)
     }
+    @Test fun tabletopPairsShorterPanesThanAFlatCrease() {
+        // 800 wide stays below the side-by-side threshold, so only the hinge can pair it.
+        val crease=WorkspaceFold(WorkspaceRect(0,330,800,350),WorkspaceFoldAxis.horizontal,false)
+        assertFalse(JournalWorkspaceGeometry.arrange(800,680,1f,listOf(crease)).paired)
+        val tabletop=JournalWorkspaceGeometry.arrange(800,680,1f,listOf(crease.copy(separating=true,halfOpened=true)))
+        assertEquals(WorkspaceRect(0,0,800,328),tabletop.primary);assertEquals(WorkspaceRect(0,352,800,680),tabletop.companion)
+        assertFalse(JournalWorkspaceGeometry.arrange(800,400,1f,listOf(WorkspaceFold(WorkspaceRect(0,190,800,210),WorkspaceFoldAxis.horizontal,true,halfOpened=true))).paired)
+    }
 }

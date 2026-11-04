@@ -106,9 +106,9 @@ class WebhookScreenTest {
         show()
         compose.onNodeWithTag("webhook-url").performTextReplacement("http://example.invalid/unsafe")
         click("Save webhook settings");compose.onNodeWithText("Use an HTTPS endpoint URL.").assertExists();assertTrue(saves.isEmpty())
-        click("Back to settings");compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Back to settings").performClick();compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()
         compose.onNodeWithText("Cancel").performClick();compose.runOnIdle {assertTrue(editor.dirty);assertTrue(calls.isEmpty())}
-        click("Back to settings");compose.onNodeWithText("Discard edits").performClick()
+        compose.onNodeWithContentDescription("Back to settings").performClick();compose.onNodeWithText("Discard edits").performClick()
         compose.runOnIdle {assertFalse(editor.dirty);assertEquals(saved.settings.endpoint,editor.draft.settings.endpoint);assertEquals(listOf("back"),calls)}
     }
     @Test fun systemBackAfterPurchaseInformationStillGuardsUnsavedEdits() {

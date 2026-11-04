@@ -57,6 +57,14 @@ class WorkspaceActivityResizeTest {
         if(::graph.isInitialized) graph.journalClear.clear().join()
         Unit
     }
+    /** The journal map sits behind Today's dial (Trace) in compact windows and behind Trace's action beside Today in expanded ones. */
+    private fun openJournalMap() {
+        compose.waitUntil(15000) {nodes("today-dial").size==1 || nodes("trace-open-map").isNotEmpty()}
+        if(nodes("trace-open-map").isEmpty()) compose.onNodeWithTag("today-dial").performClick()
+        compose.waitUntil(15000) {nodes("trace-open-map").isNotEmpty()}
+        compose.onAllNodesWithTag("trace-open-map").onFirst().performClick()
+        compose.waitUntil(15000) {nodes("journal-native-map").size==1 && nodes("trace-open-map").isEmpty()}
+    }
     private fun nodes(tag:String)=compose.onAllNodesWithTag(tag).fetchSemanticsNodes(atLeastOneRootRequired=false)
     private fun awaitTag(tag:String)=compose.waitUntil(15000) {nodes(tag).size==1}
     private fun awaitName(value:String)=compose.waitUntil(15000) {runCatching {compose.onNodeWithTag("visit-name").assertTextContains(value,substring=true)}.isSuccess}
@@ -71,9 +79,8 @@ class WorkspaceActivityResizeTest {
         return result.get()
     }
     private fun awaitNativeMaps() {
-        for(role in listOf("workspace-primary","workspace-companion")) {
-            compose.onNode(hasTestTag("journal-native-map") and hasAnyAncestor(hasTestTag(role))).performScrollTo()
-        }
+        // Today has no map of its own now; the map lives in the companion (Trace or the journal map).
+        runCatching {compose.onNode(hasTestTag("journal-native-map") and hasAnyAncestor(hasTestTag("workspace-companion"))).performScrollTo()}
         val views=AtomicReference<List<org.maplibre.android.maps.MapView>>()
         instrumentation.runOnMainSync {
             fun android.view.View.maps():List<org.maplibre.android.maps.MapView> = when(this) {
@@ -109,7 +116,7 @@ class WorkspaceActivityResizeTest {
     private fun open() {
         awaitTag("navigation-timeline");compose.onNodeWithTag("navigation-timeline").performClick()
         compose.waitUntil(15000) {compose.onAllNodesWithText(original.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-        compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName(original.name!!)
+        compose.onNode(hasText(original.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick();awaitName(original.name!!)
     }
     private fun closeKeyboard() {androidx.test.espresso.Espresso.closeSoftKeyboard()}
     private fun capture(stage:String) {
@@ -188,7 +195,7 @@ class WorkspaceActivityResizeTest {
         }
     }
     private fun nativeMap():Pair<org.maplibre.android.maps.MapView,org.maplibre.android.maps.MapLibreMap> {
-        awaitTag("journal-native-map");compose.onNodeWithTag("journal-native-map").performScrollTo()
+        awaitTag("journal-native-map");runCatching {compose.onNodeWithTag("journal-native-map").performScrollTo()}
         val view=AtomicReference<org.maplibre.android.maps.MapView>()
         instrumentation.runOnMainSync {view.set(checkNotNull(findNativeMapView()))}
         val map=AtomicReference<org.maplibre.android.maps.MapLibreMap>()
@@ -198,6 +205,7 @@ class WorkspaceActivityResizeTest {
     }
     @Test fun manuallyPositionedCameraSurvivesBothActualWindowRecreationDirections():Unit=runBlocking {
         launch().use {
+            openJournalMap()
             val (_,map)=nativeMap()
             val requested=org.maplibre.android.camera.CameraPosition.Builder().target(org.maplibre.android.geometry.LatLng(18.2,-66.2)).zoom(11.0).bearing(25.0).tilt(30.0).build()
             instrumentation.runOnMainSync {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
@@ -226,7 +234,9 @@ class WorkspaceActivityResizeTest {
             instrumentation.runOnMainSync {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
             resize(true);val (_,wide)=nativeMap()
             compose.runOnIdle {assertEquals(18.2,wide.cameraPosition.target!!.latitude,0.000001);assertEquals(-66.2,wide.cameraPosition.target!!.longitude,0.000001)}
-            compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName(original.name!!)
+            // The journal map page stays open across the resize; return to Today to pick the visit again.
+            if(nodes("timeline-content").isEmpty()) {compose.onNodeWithTag("map-back").performClick();awaitTag("timeline-content")}
+            compose.onNode(hasText(original.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick();awaitName(original.name!!)
             compose.onNodeWithTag("visit-view-map").performScrollTo().performClick()
             compose.waitUntil(10000) {model().mapSelection.value.visitFocus?.requestId!=focusBefore?.requestId}
             val (_,focused)=nativeMap()
@@ -261,7 +271,7 @@ class WorkspaceActivityResizeTest {
     }
     private fun approval(tag:String)=compose.onNodeWithTag(tag).fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsActions.OnClick].action!!
     private fun openAutomaticClock():com.bontecou.whereday.platform.AutomaticExportSettings {
-        awaitTag("navigation-settings");compose.onNodeWithTag("navigation-settings").performClick()
+        awaitTag("today-settings");compose.onNodeWithTag("today-settings").performClick()
         compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(target.getString(R.string.settings_automatic_exports)))
         compose.onNodeWithText(target.getString(R.string.settings_automatic_exports)).performClick()
         awaitTag("automatic-export-anchor")
@@ -448,14 +458,15 @@ class WorkspaceActivityResizeTest {
 
     private val savedPlace=SavedPlace("actual-resize-place","Actual resize place",Coordinate(18.0,-66.0),"Stored address",150.0)
     private fun openPlaceLibrary() {
-        awaitTag("navigation-settings");compose.onNodeWithTag("navigation-settings").performClick()
+        awaitTag("today-settings");compose.onNodeWithTag("today-settings").performClick()
         compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(target.getString(R.string.settings_manage_places)))
         compose.onNodeWithText(target.getString(R.string.settings_manage_places)).performClick();awaitTag("saved-places-content")
     }
     private fun openStoredPlace() {
         openPlaceLibrary()
         compose.waitUntil(10000) {compose.onAllNodesWithText(savedPlace.name).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-        compose.onNodeWithText(savedPlace.name).performScrollTo().performClick();awaitTag("saved-name")
+        compose.onNodeWithText(savedPlace.name).performScrollTo().performClick()
+        awaitTag("place-detail-edit");compose.onNodeWithTag("place-detail-edit").performClick();awaitTag("saved-name")
     }
     private fun openStoredOuting() {
         awaitTag("navigation-timeline");compose.onNodeWithTag("navigation-timeline").performClick()
@@ -495,7 +506,7 @@ class WorkspaceActivityResizeTest {
     @Test fun libraryCurrentPhotoSurvivesActualRecreationBeyondItsOpeningAsset():Unit=runBlocking {
         val references=seedPhotoFixture()
         launch().use {
-            awaitTag("navigation-settings");compose.onNodeWithTag("navigation-settings").performClick()
+            awaitTag("today-settings");compose.onNodeWithTag("today-settings").performClick()
             compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(target.getString(R.string.settings_photos)))
             compose.onNodeWithText(target.getString(R.string.settings_photos)).performClick();awaitTag("photo-library-content")
             compose.onNodeWithTag("photo-library-content").performScrollToNode(hasTestTag("photo-library-card"))
@@ -529,7 +540,7 @@ class WorkspaceActivityResizeTest {
         runCatching {compose.onNodeWithTag("photo-places-page").assertTextEquals("Page $page")}.isSuccess
     }
     private fun openMapPhotoPlaces() {
-        awaitTag("navigation-map")
+        openJournalMap()
         compose.waitUntil(15000) {nodes("browse-photo-places").size==1}
         compose.onNodeWithTag("browse-photo-places").performScrollTo().performClick();awaitDirectoryPage(1)
     }
@@ -590,7 +601,7 @@ class WorkspaceActivityResizeTest {
     }
     @Test fun mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes():Unit=runBlocking {
         launch().use {
-            awaitTag("navigation-map")
+            openJournalMap()
             compose.onNodeWithText("Replay route").performScrollTo().performClick();awaitTag("replay-progress")
             compose.onNodeWithTag("replay-end").performScrollTo().performClick();awaitReplayPoint(2,2)
             // Observe the real 30-second live-window cadence, without changing its selection.
@@ -627,7 +638,7 @@ class WorkspaceActivityResizeTest {
     @Test fun newPlaceDraftSurvivesRealRecreationWithoutCreatingAnythingBeforeSave():Unit=runBlocking {
         graph.savedPlaces.save(savedPlace,null)
         launch().use {
-            openPlaceLibrary();compose.onNodeWithText(target.getString(R.string.saved_add)).performScrollTo().performClick();awaitTag("saved-name")
+            openPlaceLibrary();compose.onNodeWithTag("saved-places-add").performClick();awaitTag("saved-name")
             compose.onNodeWithTag("saved-name").performTextReplacement("New resized library place")
             compose.onNodeWithTag("saved-latitude").performScrollTo().performTextReplacement("18.1")
             compose.onNodeWithTag("saved-longitude").performScrollTo().performTextReplacement("-66.1");closeKeyboard()

@@ -45,7 +45,8 @@ class VisitEditorRestorationTest {
     private fun awaitText(text:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithText(text).assertExists()}.isSuccess}}
     private fun manualDraft(label:String,timeline:Boolean=false)=runBlocking {
         val tester=screen(timeline)
-        compose.onNodeWithText(label).performScrollTo().performClick()
+        // On Today, "Log a stop" in the top bar opens the past-visit editor; the map keeps its labelled capsules.
+        if(timeline) compose.onNodeWithTag("today-log-stop-header").performClick() else compose.onNodeWithText(label).performScrollTo().performClick()
         compose.onNodeWithText("Name").performTextInput("Restored QA visit")
         compose.onNodeWithText("Address").performTextInput("Synthetic address")
         compose.onNodeWithText("Latitude").performScrollTo().performTextInput("48.8584")
@@ -73,7 +74,9 @@ class VisitEditorRestorationTest {
 
     @Test fun restoredExistingEditRetainsItsOriginalConcurrentChangeGuard()=runBlocking {
         val now=Instant.ofEpochMilli(System.currentTimeMillis())
-        val original=Visit("restore-existing",Coordinate(48.8584,2.2945),now.minusSeconds(3600),now.minusSeconds(1800),name="Original QA visit")
+        // Seed inside today's civil day so the Today list shows it whatever the wall-clock time (just after midnight included).
+        val dayStart=java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()
+        val original=Visit("restore-existing",Coordinate(48.8584,2.2945),dayStart.plusSeconds(1),dayStart.plusSeconds(61),name="Original QA visit")
         graph.history.dao.put(VisitRow(original))
         val tester=screen(true);awaitText("Original QA visit")
         compose.onNodeWithText("Original QA visit").performClick()

@@ -1,5 +1,6 @@
 package com.bontecou.whereday
 
+import androidx.compose.ui.unit.sp
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -114,13 +115,13 @@ import java.util.concurrent.atomic.AtomicBoolean
                 }
             }
         } else {
-            item {WdCard(card) {Box(Modifier.fillMaxWidth().heightIn(min=52.dp).padding(horizontal=16.dp,vertical=8.dp),contentAlignment=Alignment.CenterStart) {
-                Choice(stringResource(R.string.country_period),periodName,CountryDayPeriod.entries.map {it.name},labelFor={periods.getValue(it)}) {periodName=it}
-            }}}
-            if(current!=null) item {WdCard(card.padding(top=12.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                Text(pluralStringResource(R.plurals.country_country_count,countries.size,number.format(countries.size)),Modifier.testTag("country-summary-countries"),style=WdType.title2,color=wd.textPrimary)
+            // Country Days board: period segments, then the total in a large serif figure.
+            item {WdSegmented(CountryDayPeriod.entries.map {it.name},periodName,{periods.getValue(it)},{periodName=it},card.testTag("country-period"))}
+            if(current!=null) item {Column(card.padding(top=12.dp).fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(wd.containerLow).padding(horizontal=20.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                Text(number.format(uniqueDays),style=WdType.pageTitle.copy(fontSize=44.sp,lineHeight=48.sp),color=wd.textPrimary)
                 Text(pluralStringResource(R.plurals.country_unique_days,uniqueDays,number.format(uniqueDays)),Modifier.testTag("country-summary-days"),style=WdType.caption,color=wd.textMuted)
-            }}}
+                Text(pluralStringResource(R.plurals.country_country_count,countries.size,number.format(countries.size)),Modifier.testTag("country-summary-countries"),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
+            }}
             item {WdSectionFooter(stringResource(R.string.country_rules))}
             item {WdButton(stringResource(R.string.stay_add),{adding=true},card.padding(top=16.dp).testTag("country-add-stay"),icon=Icons.Outlined.Add)}
             item {WdCard(card.padding(top=12.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
@@ -172,7 +173,7 @@ import java.util.concurrent.atomic.AtomicBoolean
         }
     }
     }
-    if(adding || editing!=null) CountryStayEditor(editing,{adding=false;editing=null},{value,expected->graph.history.saveCountryStay(value,expected)},{expected->graph.history.deleteCountryStay(expected)})
+    if(adding || editing!=null) CountryStayEditor(editing,{adding=false;editing=null},{value,expected->graph.history.saveCountryStay(value,expected)},{expected->graph.history.deleteCountryStay(expected)},recorded=remember(report) {report?.days?.filter {it.recorded}?.map {it.day}?.toSet().orEmpty()})
     if(preview && current!=null) WorkspaceAlertDialog(onDismissRequest={preview=false},title={Text(stringResource(R.string.country_preview_title))},text={Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Text(stringResource(R.string.country_preview_help));Text(countryDaysCsv(current.days.take(100)),style=MaterialTheme.typography.bodySmall)
     }},confirmButton={TextButton(onClick={preview=false}) {Text(stringResource(R.string.country_done))}})

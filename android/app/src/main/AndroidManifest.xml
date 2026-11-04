@@ -9,6 +9,29 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".TodayWidget" android:exported="false" android:label="@string/widget_today_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_today_info" />
+        </receiver>
+        <receiver android:name=".DialWidget" android:exported="false" android:label="@string/widget_dial_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_dial_info" />
+        </receiver>
+        <receiver android:name=".RecordingWidget" android:exported="false" android:label="@string/widget_recording_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_recording_info" />
+        </receiver>
+        <receiver android:name=".AtlasWidget" android:exported="false" android:label="@string/widget_atlas_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_atlas_info" />
+        </receiver>
+        <receiver android:name=".WidgetRefreshReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.bontecou.whereday.widgets.REFRESH" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
         <activity android:name=".AutomationActivity" android:exported="true" android:excludeFromRecents="true">
             <intent-filter><action android:name="com.bontecou.whereday.automation.RUN" /><category android:name="android.intent.category.DEFAULT" /></intent-filter>
         </activity>

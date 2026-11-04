@@ -67,7 +67,7 @@ class VisitMapFocusTest {
         compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("navigation-timeline").assertExists()}.isSuccess}
         compose.onNodeWithTag("navigation-timeline").performClick()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
-        compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName()
+        compose.onNode(hasText(original.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick();awaitName()
     }
     private fun keyboard() {androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())}
     private fun viewMap() {keyboard();compose.onNodeWithTag("visit-view-map").performScrollTo().performClick()}
@@ -158,7 +158,7 @@ class VisitMapFocusTest {
         show();compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("navigation-timeline").assertExists()}.isSuccess}
         compose.onNodeWithTag("navigation-timeline").performClick()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithText(session.name!!).assertExists()}.isSuccess}
-        compose.onNodeWithText(session.name!!).performScrollTo().performClick()
+        compose.onNode(hasText(session.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
         compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName();viewMap();selectedMap();assertUnchanged()
         assertEquals(session,graph.history.dao.session(session.id)!!.value)

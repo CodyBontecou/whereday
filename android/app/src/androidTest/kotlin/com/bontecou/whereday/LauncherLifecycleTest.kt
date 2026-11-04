@@ -30,7 +30,7 @@ class LauncherLifecycleTest {
             scenario.recreate();await("Start recording?")
             assertFalse(RecordingRuntime.active.value)
             compose.onNodeWithText("Cancel").performClick();compose.waitForIdle()
-            scenario.recreate();await("Your location journal")
+            scenario.recreate();await("Today")
             compose.onNodeWithText("Start recording?").assertDoesNotExist()
             assertFalse(RecordingRuntime.active.value)
             assertEquals(PackageManager.PERMISSION_DENIED,context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION))
@@ -49,9 +49,9 @@ class LauncherLifecycleTest {
     }
     @Test fun exportDestinationSurvivesRecreationWithoutStarting() {
         launch(LauncherAction.export).use {scenario ->
-            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Export") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Archive") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             scenario.recreate()
-            compose.onNode(hasText("Export") and isSelected()).assertExists()
+            compose.onNode(hasText("Archive") and isSelected()).assertExists()
             assertFalse(RecordingRuntime.active.value)
         }
     }
@@ -64,12 +64,12 @@ class LauncherLifecycleTest {
         fun resumed():MainActivity=ActivityLifecycleMonitorRegistry.getInstance()
             .getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Timeline") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Today") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             instrumentation.runOnMainSync {activity.startActivity(Intent(activity,MainActivity::class.java).setAction(LauncherAction.export.action)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))}
-            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Export") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Archive") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             instrumentation.runOnMainSync {resumed().recreate()}
-            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Export") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15_000) {compose.onAllNodes(hasText("Archive") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             instrumentation.runOnMainSync {val current=resumed();current.startActivity(Intent(current,MainActivity::class.java).setAction(LauncherAction.stop.action)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))}
             await("Recording is stopped")

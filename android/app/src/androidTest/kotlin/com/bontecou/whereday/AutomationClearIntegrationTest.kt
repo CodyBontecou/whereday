@@ -39,7 +39,7 @@ class AutomationClearIntegrationTest {
             pending=write
             entered.await()
             compose.waitUntil(10_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithText("Settings").performClick()
+            compose.onNodeWithTag("today-settings").performClick()
             compose.onNode(hasScrollAction()).performScrollToNode(hasText("Clear all journal data"))
             compose.onNodeWithText("Clear all journal data").performClick()
             compose.onNodeWithText("Clear all journal data?").assertIsDisplayed()

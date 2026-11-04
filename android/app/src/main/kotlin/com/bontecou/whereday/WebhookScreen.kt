@@ -146,7 +146,9 @@ internal data class WebhookActions(
                     Text(stringResource(R.string.webhook_endpoint_help),style=WdType.caption2,color=wd.textMuted)
                 }
                 WdDivider()
-                WebhookMenu(stringResource(R.string.webhook_format),settings.format,ExportFormat.entries.map {it to when(it) {ExportFormat.owntracks->"OwnTracks";ExportFormat.overland->"Overland";ExportFormat.markdown->"Markdown";else->it.name.uppercase() }},editable) {edit(draft.copy(settings=settings.copy(format=it)))}
+                // Webhook board: format and send mode as chips rather than menus.
+                WebhookChips(stringResource(R.string.webhook_format),"webhook-format-chips",ExportFormat.entries.map {it to recipeFormatName(it)},settings.format,editable) {edit(draft.copy(settings=settings.copy(format=it)))}
+                WdDivider(Modifier.padding(start=20.dp))
                 WebhookMenu(stringResource(R.string.webhook_auth),settings.auth,listOf(WebhookAuth.none to stringResource(R.string.webhook_auth_none),WebhookAuth.apiKeyQuery to stringResource(R.string.webhook_auth_query),WebhookAuth.bearer to stringResource(R.string.webhook_auth_bearer),WebhookAuth.basic to stringResource(R.string.webhook_auth_basic),WebhookAuth.customHeader to stringResource(R.string.webhook_auth_header)),editable,divider=settings.auth!=WebhookAuth.none) {
                     edit(draft.copy(settings=settings.copy(auth=it),credentials=WebhookCredentials(key=if(it==WebhookAuth.customHeader) "X-API-Key" else "api_key")))
                 }
@@ -159,7 +161,7 @@ internal data class WebhookActions(
             }
             WdSectionHeader(stringResource(R.string.export_redesign_section_sending))
             ExportCard {
-                WebhookMenu(stringResource(R.string.webhook_mode),settings.mode,listOf(WebhookMode.realtime to stringResource(R.string.webhook_mode_realtime),WebhookMode.batchCount to stringResource(R.string.webhook_mode_count),WebhookMode.batchTime to stringResource(R.string.webhook_mode_time),WebhookMode.manual to stringResource(R.string.webhook_mode_manual)),editable,divider=settings.mode in setOf(WebhookMode.batchCount,WebhookMode.batchTime)) {edit(draft.copy(settings=settings.copy(mode=it)))}
+                WebhookChips(stringResource(R.string.webhook_mode),"webhook-mode-chips",listOf(WebhookMode.realtime to stringResource(R.string.webhook_mode_realtime),WebhookMode.batchCount to stringResource(R.string.webhook_mode_count),WebhookMode.batchTime to stringResource(R.string.webhook_mode_time),WebhookMode.manual to stringResource(R.string.webhook_mode_manual)),settings.mode,editable) {edit(draft.copy(settings=settings.copy(mode=it)))}
                 if(settings.mode==WebhookMode.batchCount) WebhookMenu(stringResource(R.string.webhook_batch_size),settings.batchCount,listOf(5,10,25,50,100).map {it to pluralStringResource(R.plurals.webhook_points,it,number.format(it))},editable,divider=false) {edit(draft.copy(settings=settings.copy(batchCount=it)))}
                 if(settings.mode==WebhookMode.batchTime) WebhookMenu(stringResource(R.string.webhook_batch_interval),settings.batchMinutes,listOf(1,5,15,30,60).map {it to if(it==60) stringResource(R.string.webhook_hour) else stringResource(R.string.webhook_minutes,number.format(it))},editable,divider=false) {edit(draft.copy(settings=settings.copy(batchMinutes=it)))}
             }
@@ -245,4 +247,14 @@ internal data class WebhookActions(
 }
 @Composable private fun <T> WebhookMenu(label:String,value:T,choices:List<Pair<T,String>>,enabled:Boolean,divider:Boolean=true,change:(T)->Unit) {
     ExportMenuRow(label,value,choices,enabled,divider,change=change)
+}
+
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+@Composable private fun <T> WebhookChips(label:String,tag:String,options:List<Pair<T,String>>,selected:T,enabled:Boolean,change:(T)->Unit) {
+    Column(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+        Text(label.uppercase(),style=WdType.eyebrow,color=wd.textMuted)
+        androidx.compose.foundation.layout.FlowRow(Modifier.testTag(tag),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            options.forEach {(value,text)->WdChip(text,value==selected,{if(value!=selected) change(value)},enabled=enabled)}
+        }
+    }
 }

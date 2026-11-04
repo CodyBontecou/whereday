@@ -50,7 +50,7 @@ import com.bontecou.whereday.platform.PhotoLibraryAccess
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
 
-@Composable internal fun PhotosScreen(graph:AppGraph,back:()->Unit) {
+@Composable internal fun PhotosScreen(graph:AppGraph,back:()->Unit,backLabel:String?=null) {
     val scope=rememberCoroutineScope()
     val context=LocalContext.current
     val resources=context.resources
@@ -107,7 +107,7 @@ import kotlinx.coroutines.flow.catch
     BackHandler(onBack=back)
     val entries=page?.entries.orEmpty()
     Column(Modifier.fillMaxSize().background(wd.surface)) {
-    PlacesBackBar(stringResource(R.string.photo_back_settings),back)
+    PlacesBackBar(backLabel ?: stringResource(R.string.photo_back_settings),back)
     LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("photo-library-content"),contentPadding=PaddingValues(bottom=32.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
         item {WdPageHeader(stringResource(R.string.photo_title),Modifier.padding(bottom=4.dp))}
         item {Text(stringResource(R.string.photo_privacy),Modifier.padding(horizontal=24.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}

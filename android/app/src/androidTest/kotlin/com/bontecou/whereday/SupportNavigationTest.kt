@@ -14,7 +14,7 @@ class SupportNavigationTest {
         check(context.packageName=="com.bontecou.whereday.mapqa")
         AppGraph.from(context).preferences.update {it.copy(onboarded=true)}
         compose.waitUntil(15_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes().isNotEmpty()}
-        compose.onNodeWithText("Settings").performClick()
+        compose.onNodeWithTag("today-settings").performClick()
         compose.onNode(hasScrollAction()).performScrollToNode(hasText("Support and about"))
         compose.onNodeWithText("Support and about").performClick()
         compose.onNodeWithTag("support-screen").assertExists()

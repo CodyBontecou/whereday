@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation (Whereday Material 3) -->
+    <string name="shell_today">Today</string>
+    <string name="shell_atlas">Atlas</string>
+    <string name="shell_places">Places</string>
+    <string name="shell_archive">Archive</string>
+
+    <!-- Today -->
+    <string name="today_title">Today</string>
+    <string name="today_pick_day">Pick a day</string>
+    <string name="today_pick_day_confirm">Show day</string>
+    <string name="today_pick_day_cancel">Cancel</string>
+    <string name="today_back_to_today">Back to today</string>
+    <string name="today_log_stop">Log a stop</string>
+    <string name="today_replay_hint">tap to replay</string>
+    <string name="today_replay_label">Replay the day on the map</string>
+    <string name="today_dial_listening">Listening since</string>
+    <string name="today_dial_last_fix">Last fix</string>
+    <string name="today_location_off_hint">location off</string>
+    <string name="today_stat_moved">Moved</string>
+    <string name="today_stat_away">Away from places</string>
+    <string name="today_stat_points">Points kept</string>
+    <string name="today_you_are_at">You\'re at · since %1$s</string>
+    <string name="today_rename">Rename</string>
+    <string name="today_empty_title">The page is blank for now.</string>
+    <string name="today_empty_body">Stay somewhere for a few minutes and it becomes your first stop. Moves between stops fill the ring as you go.</string>
+    <string name="today_empty_import">Bring in your Google Timeline</string>
+    <string name="today_list_title">The day so far</string>
+    <string name="today_list_title_approximate">The day so far · approximate</string>
+    <string name="today_list_empty">No places yet today. Stops show up here once you\'ve stayed somewhere for a few minutes.</string>
+    <string name="today_moments_title">Moments</string>
+    <string name="today_moments_body">Photos matched to today\'s places</string>
+
+    <!-- Outing -->
+    <string name="outing_figure_duration">Duration</string>
+
+    <!-- Automatic exports -->
+    <string name="automatic_export_next_title">Next planned run</string>
+    <string name="automatic_export_next_caption">Android may delay it. Daily anchor: %1$s · Time zone: %2$s</string>
+    <string name="automatic_export_folder_title">Export folder</string>
+
+    <!-- Activity logs -->
+    <string name="support_logs_filter_all">All</string>
+    <string name="support_logs_filter_recording">Recording</string>
+    <string name="support_logs_filter_automation">Automation</string>
+    <string name="support_logs_filter_errors">Errors · %1$d</string>
+    <string name="support_logs_tag_app">App</string>
+
+    <!-- History import -->
+    <string name="history_import_years_title">What arrives</string>
+
+    <!-- Country stay -->
+    <string name="stay_calendar_title">Choose stay dates</string>
+    <string name="stay_calendar_recorded">Recorded</string>
+
+    <!-- Place detail -->
+    <string name="place_detail_edit">Edit</string>
+    <string name="place_detail_kind">Saved place</string>
+    <string name="place_detail_radius">Match radius %1$d m</string>
+    <string name="place_detail_visits">Visits</string>
+    <string name="place_detail_typical">Typical stay</string>
+    <string name="place_detail_this_year">In %1$d</string>
+    <string name="place_detail_rhythm">When you come here</string>
+    <string name="place_detail_recent">Recent</string>
+    <string name="place_detail_no_visits">No visits here yet. Visits inside the match radius show up here.</string>
+    <string name="place_detail_map_description">Sketch of the place with its %1$d metre match radius</string>
+    <string name="place_rhythm_mornings">mornings</string>
+    <string name="place_rhythm_midday">midday</string>
+    <string name="place_rhythm_afternoons">afternoons</string>
+    <string name="place_rhythm_evenings">evenings</string>
+    <string name="place_rhythm_nights">nights</string>
+    <string name="place_rhythm_weekday">mostly weekday %1$s</string>
+    <string name="place_rhythm_weekend">mostly weekend %1$s</string>
+    <string name="place_rhythm_any">mostly %1$s</string>
+
+    <!-- How Whereday listens -->
+    <string name="listening_bar">Recording</string>
+    <string name="listening_title">How Whereday listens</string>
+    <string name="listening_status_on">Recording places and routes</string>
+    <string name="listening_status_off">Not recording right now</string>
+    <string name="listening_remember">How much should it remember?</string>
+    <string name="listening_mode_routes">Places and routes</string>
+    <string name="listening_mode_routes_body">Every stop and the path between them, using GPS while recording runs.</string>
+    <string name="listening_mode_visits_body">Only where you stay, with balanced-power location and no route between stops.</string>
+    <string name="listening_stays_leaves">What stays · what leaves</string>
+    <string name="listening_journal">Your journal</string>
+    <string name="listening_journal_where">This phone only</string>
+    <string name="listening_place_names">Place names</string>
+    <string name="listening_place_names_body">Network geocoding asks a map service</string>
+    <string name="listening_sends">Webhooks and automatic exports</string>
+    <string name="listening_footer">No account. No server copy of where you\'ve been. Recording shows an ongoing notification while it runs.</string>
+
+    <!-- Trace -->
+    <string name="trace_title">Trace</string>
+    <string name="trace_empty">No route recorded on this day yet.</string>
+    <string name="trace_open_map">Journal map and layers</string>
+    <string name="trace_later">Later today</string>
+    <string name="trace_not_lived">Not lived yet</string>
+    <string name="trace_moving">Moving</string>
+    <string name="trace_between">Between places</string>
+    <string name="trace_staying">Staying at</string>
+    <string name="trace_scrub">Time of day</string>
+    <string name="trace_scrub_state">%1$s, %2$s</string>
+    <string name="trace_so_far">%1$s so far</string>
+    <string name="trace_drag_hint">Drag to replay · now %1$s</string>
+
+    <!-- Atlas -->
+    <string name="atlas_eyebrow">Atlas · A year in days</string>
+    <string name="atlas_previous_year">Previous year</string>
+    <string name="atlas_next_year">Next year</string>
+    <string name="atlas_range_year">Year</string>
+    <string name="atlas_range_all">All</string>
+    <string name="atlas_all_years">All years</string>
+    <string name="atlas_legend_none">No record</string>
+    <string name="atlas_legend_manual">Manual stay</string>
+    <string name="atlas_legend_ahead">Ahead</string>
+    <string name="atlas_by_country">Days by country</string>
+    <string name="atlas_grid_description">Calendar of %1$s colored by country</string>
+    <string name="atlas_footnote">Travel days count in both countries.</string>
+    <string name="atlas_empty">No country days yet. Record or import history to fill the year.</string>
+    <string name="atlas_error">Country days couldn\'t be loaded.</string>
+    <string name="atlas_all_countries">All countries</string>
+    <string name="atlas_pick_country">Pick a country to see its days in the year.</string>
+    <string name="atlas_view_dates">View dates</string>
+    <string name="atlas_add_stay">Add a stay</string>
+    <plurals name="atlas_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>
+    <plurals name="atlas_selected_days">
+        <item quantity="one">Selected · %s day</item>
+        <item quantity="other">Selected · %s days</item>
+    </plurals>
+    <plurals name="atlas_countries_in">
+        <item quantity="one">%1$s country in %2$s</item>
+        <item quantity="other">%1$s countries in %2$s</item>
+    </plurals>
+    <plurals name="atlas_footnote_gaps">
+        <item quantity="one">Travel days count in both countries. %s day has no record — open Country days to add a stay.</item>
+        <item quantity="other">Travel days count in both countries. %s days have no record — open Country days to add a stay.</item>
+    </plurals>
+
+    <!-- Month recap -->
+    <string name="recap_title">Month recap</string>
+    <string name="recap_done">Done</string>
+    <string name="recap_previous">Previous month</string>
+    <string name="recap_next">Next month</string>
+    <string name="recap_share">Share card</string>
+    <string name="recap_visits">Visits</string>
+    <string name="recap_new_places">New places</string>
+    <string name="recap_biggest">Biggest day</string>
+    <string name="recap_biggest_distance">Biggest day · %1$s</string>
+    <string name="recap_dials_description">Small day dials for each day of %1$s, inked by place</string>
+    <string name="recap_privacy">Made on-device · no map coordinates included</string>
+    <plurals name="recap_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>
+
+    <!-- Archive -->
+    <string name="archive_recipe_sentence">Export my %1$s as %2$s, %3$s.</string>
+    <string name="archive_recipe_all">Visits &amp; points</string>
+    <string name="archive_recipe_split">one file per day</string>
+    <string name="archive_recipe_single">all in one file</string>
+    <string name="archive_recipe_hint">Tap any underlined word to change it</string>
+
+    <!-- Settings plan card -->
+    <string name="settings_plan_kicker">Whereday plan</string>
+    <string name="settings_plan_kicker_ending">Whereday plan · ending</string>
+    <string name="settings_plan_kicker_none">Whereday plans</string>
+    <string name="settings_plan_title_none">Choose a plan</string>
+    <string name="settings_plan_title_subscription">Subscription</string>
+    <string name="settings_plan_body_none">Recording, every export format and automation. Subscriptions start with a free week.</string>
+    <string name="settings_plan_body_subscription">Renews automatically. Change plan or manage in Google Play.</string>
+    <string name="settings_plan_body_ending">Ends with this period. Manage in Google Play.</string>
+
+    <!-- Home screen widgets -->
+    <string name="widget_today_label">Today</string>
+    <string name="widget_today_description">Where you are and the day so far</string>
+    <string name="widget_dial_label">Day dial</string>
+    <string name="widget_dial_description">The day as a 24-hour ring</string>
+    <string name="widget_recording_label">Recording</string>
+    <string name="widget_recording_description">Start or stop recording</string>
+    <string name="widget_recording">Recording</string>
+    <string name="widget_not_recording">Not recording</string>
+    <string name="widget_since">Since %1$s</string>
+    <string name="widget_no_stop">No stop yet today</string>
+    <string name="widget_places">Places</string>
+    <string name="widget_moved">Moved</string>
+    <string name="widget_day">Day %1$d</string>
+    <string name="widget_recorded">Recorded</string>
+    <string name="widget_stop">Stop</string>
+    <string name="widget_start">Start</string>
+    <string name="widget_mode">Places + routes</string>
+    <string name="widget_atlas_label">Atlas</string>
+    <string name="widget_atlas_description">The last 30 days by country</string>
+    <plurals name="widget_countries">
+        <item quantity="one">%s country</item>
+        <item quantity="other">%s countries</item>
+    </plurals>
+    <plurals name="widget_days_recorded">
+        <item quantity="one">%1$s day recorded in %2$s</item>
+        <item quantity="other">%1$s days recorded in %2$s</item>
+    </plurals>
+</resources>

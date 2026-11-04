@@ -47,8 +47,12 @@ class JournalVisitInspectionTest {
         if(timeline) {
             compose.onNodeWithTag("navigation-timeline").performClick()
             compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
-            compose.onNodeWithText(original.name!!).performScrollTo().performClick()
+            compose.onNode(hasText(original.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick()
         } else {
+            // The journal map now sits behind Today's dial (Trace) and its "Journal map" action.
+            compose.onNodeWithTag("today-dial").performClick()
+            compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("trace-open-map").assertExists()}.isSuccess}
+            compose.onNodeWithTag("trace-open-map").performClick()
             compose.waitUntil(10000) {runCatching {compose.onNodeWithText("Visits on map").assertExists()}.isSuccess}
             compose.onNodeWithText("Visits on map").performScrollTo().performClick()
             compose.onNodeWithText(original.name!!).performClick()

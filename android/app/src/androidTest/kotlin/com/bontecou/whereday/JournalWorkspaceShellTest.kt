@@ -46,12 +46,12 @@ class JournalWorkspaceShellTest {
         compose.onNodeWithTag("navigation-timeline").assertIsSelected()
         compose.onNodeWithTag("timeline-content").assertIsDisplayed()
         compose.runOnIdle {assertSame(original,findNativeMapView())}
-        compose.onNodeWithTag("navigation-map").performClick()
+        compose.onNodeWithTag("today-dial").performClick()
         compose.runOnIdle {assertSame(original,findNativeMapView())}
     }
     @Test fun showOnMapUpdatesTheCompanionAndRetainsTimelineOutingNavigation() {
         show();compose.onNodeWithTag("navigation-timeline").performClick()
-        compose.onNodeWithText(session.name!!).performScrollTo().performClick()
+        compose.onNode(hasText(session.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick()
         compose.onNodeWithTag("outing-title").assertTextEquals(session.name!!)
         compose.onNodeWithText(compose.activity.getString(R.string.outing_show_map)).performScrollTo().performClick()
         compose.onNodeWithTag("navigation-timeline").assertIsSelected()
@@ -59,7 +59,7 @@ class JournalWorkspaceShellTest {
         compose.runOnIdle {assertNotNull(model.mapSelection.value.outingRange)}
     }
     @Test fun sharedVisitFocusAndUnsavedEditorSurviveCompactAndExpandedPolicyTransitions() {
-        show();compose.onNodeWithText(visit.name!!).performScrollTo().performClick()
+        show();compose.onNode(hasText(visit.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick()
         compose.waitUntil(5000) {model.mapSelection.value.visitFocus?.id==visit.id}
         compose.onNodeWithTag("visit-name").performTextReplacement("Unfinished workspace visit")
         compose.runOnIdle {density.value=maxOf(compose.activity.resources.displayMetrics.density,compose.activity.window.decorView.width/600f)}
@@ -89,11 +89,14 @@ class JournalWorkspaceShellTest {
     @Test fun systemWindowUsesItsActualDensityForCompactOrExpandedNavigation() {
         val expected=InstrumentationRegistry.getArguments().getString("expectedWorkspaceExpanded")=="true"
         compose.setContent {WheredayApp(graph,model,{},{},{},{})}
+        // Compact windows reach the map through Today's dial (Trace); expanded windows show it beside Today.
+        if(!expected) {compose.waitUntil(10000) {compose.onAllNodesWithTag("today-dial").fetchSemanticsNodes().size==1};compose.onNodeWithTag("today-dial").performClick()}
         compose.waitUntil(10000) {compose.onAllNodesWithTag("journal-native-map").fetchSemanticsNodes().size==1}
         if(expected) {
             compose.onNodeWithTag("workspace-companion").assertIsDisplayed();compose.onNodeWithTag("timeline-content").assertIsDisplayed()
         } else compose.onNodeWithTag("workspace-companion").assertDoesNotExist()
-        compose.onNodeWithTag("journal-native-map").performScrollTo()
+        // Trace's map fills its pane; only scroll when the map sits in a scrolling page.
+        runCatching {compose.onNodeWithTag("journal-native-map").performScrollTo()}
         val view=compose.runOnIdle {checkNotNull(findNativeMapView())}
         val map=java.util.concurrent.atomic.AtomicReference<org.maplibre.android.maps.MapLibreMap>()
         compose.runOnUiThread {view.getMapAsync {map.set(it)}}

@@ -43,12 +43,17 @@ class VisitLinkActivityTest {
             assertFalse(RecordingRuntime.active.value);assertEquals(0L,graph.history.dao.totalVisitCount())
         }
     }
+    /** Today's "Log a stop" opens the past-visit editor: the rail FAB on wide windows, the floating button on phones. */
+    private fun logStop() {
+        compose.waitUntil(15000) {listOf("rail-log-stop","today-log-stop").any {compose.onAllNodesWithTag(it).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}}
+        val tag=if(compose.onAllNodesWithTag("rail-log-stop").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()) "rail-log-stop" else "today-log-stop"
+        compose.onNodeWithTag(tag).performClick()
+    }
     @Test fun warmBrowsableDeliveryReusesMainActivityAndWaitsForTheUnfinishedEditor()=runBlocking {
         val activity=instrumentation.startActivitySync(Intent(context,MainActivity::class.java).setAction(Intent.ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         fun resumed()=ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15000) {compose.onAllNodesWithText(context.getString(R.string.map_add_past)).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithText(context.getString(R.string.map_add_past)).performClick()
+            logStop()
             compose.onNodeWithTag("visit-name").performTextReplacement("Unfinished native draft")
             val url="isome://check-in?name=Warm%20link"
             instrumentation.runOnMainSync {activity.startActivity(intent(url))}
@@ -68,8 +73,7 @@ class VisitLinkActivityTest {
         val activity=instrumentation.startActivitySync(Intent(context,MainActivity::class.java).setAction(Intent.ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         fun resumed()=ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15000) {compose.onAllNodesWithText(context.getString(R.string.map_add_past)).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithText(context.getString(R.string.map_add_past)).performClick()
+            logStop()
             compose.onNodeWithTag("visit-name").performTextReplacement("Retained map draft")
             instrumentation.runOnMainSync {activity.startActivity(Intent(activity,MainActivity::class.java).setAction(LauncherAction.timeline.action))}
             compose.waitUntil(15000) {compose.onAllNodes(hasTestTag("navigation-timeline") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
@@ -86,8 +90,8 @@ class VisitLinkActivityTest {
         val activity=instrumentation.startActivitySync(Intent(context,MainActivity::class.java).setAction(Intent.ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         fun resumed()=ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15000) {compose.onAllNodesWithTag("navigation-settings").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithTag("navigation-settings").performClick()
+            compose.waitUntil(15000) {compose.onAllNodesWithTag("today-settings").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.onNodeWithTag("today-settings").performClick()
             compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(context.getString(R.string.settings_manage_places)))
             compose.onNodeWithText(context.getString(R.string.settings_manage_places)).performClick()
             compose.onNodeWithText(context.getString(R.string.saved_add)).performClick()
@@ -97,7 +101,7 @@ class VisitLinkActivityTest {
             compose.waitUntil(5000) {runCatching {compose.runOnUiThread {resumed().intent.dataString==url}}.getOrDefault(false)}
             compose.mainClock.advanceTimeByFrame();compose.mainClock.advanceTimeByFrame();compose.waitForIdle()
             compose.onNodeWithTag("saved-name").assertTextContains("Unfinished saved place")
-            compose.onNode(hasTestTag("navigation-settings") and isSelected()).assertExists()
+            compose.onNodeWithTag("saved-places-content").assertExists()
             androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
             compose.onNodeWithTag("saved-editor-cancel").performClick()
             compose.onNodeWithText(context.getString(R.string.saved_discard_action)).performClick()
@@ -108,7 +112,7 @@ class VisitLinkActivityTest {
         val link=intent("whereday://stop")
         assertEquals(MainActivity::class.java.name,context.packageManager.resolveActivity(link,0)!!.activityInfo.name)
         ActivityScenario.launch<MainActivity>(link).use {
-            compose.waitUntil(15000) {compose.onAllNodesWithTag("navigation-map").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15000) {compose.onAllNodesWithTag("navigation-timeline").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             compose.onNodeWithTag("visit-name").assertDoesNotExist()
             assertFalse(RecordingRuntime.active.value);assertTrue(graph.history.dao.recording()?.requested!=true)
             assertEquals(0L,graph.history.dao.totalVisitCount())
@@ -120,7 +124,7 @@ class VisitLinkActivityTest {
             graph.journalClear.clear().join()
             compose.waitUntil(15000) {compose.onAllNodesWithTag("visit-name").fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty()}
             scenario.recreate()
-            compose.waitUntil(15000) {compose.onAllNodesWithTag("navigation-map").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15000) {compose.onAllNodesWithTag("navigation-timeline").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             compose.onNodeWithTag("visit-name").assertDoesNotExist();assertEquals(0L,graph.history.dao.totalVisitCount())
         }
     }

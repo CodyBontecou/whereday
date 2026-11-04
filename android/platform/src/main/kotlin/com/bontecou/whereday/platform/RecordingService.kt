@@ -112,6 +112,7 @@ class RecordingService : Service() {
                 }}},onError={scope.launch {commands.withLock {if(epoch==generation) finish(RecordingInterruption.locationUnavailable,startId)}}})
                 if(ticket!=null && !RecordingStartTickets.valid(ticket)) throw CancellationException()
                 RecordingRuntime.update(true)
+                refreshWidgets()
                 ActivityLog.process.record(AppEvent.recordingStarted)
                 summaryJob?.cancel();summary=null
                 val sessionId=requireNotNull(recording.sessionId)
@@ -136,8 +137,15 @@ class RecordingService : Service() {
                         metric=graph.preferences.settings.first().metric
                         val count=state.sessionId?.let {graph.history.dao.sessionPointCount(it)} ?: 0L
                         val detail=RecordingNotification.detail(this@RecordingService,Duration.ofSeconds(elapsed),count,summary?.distanceMeters,metric,remaining)
+                        // The open, named stay heads the notification, as on the Notification board.
+                        val stay=try {
+                            val now=Instant.now()
+                            graph.history.dao.rangeVisits(now.minus(Duration.ofDays(2)),now.plusSeconds(1)).map {it.value}
+                                .filter {it.departedAt==null && !it.name.isNullOrBlank()}.maxByOrNull {it.arrivedAt}
+                                ?.let {RecordingNotification.Stay(it.name!!,it.arrivedAt)}
+                        } catch(e:CancellationException) {throw e} catch(_:Exception) {null}
                         if(ContextCompat.checkSelfPermission(this@RecordingService,Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED || android.os.Build.VERSION.SDK_INT<33)
-                            getSystemService(NotificationManager::class.java).notify(NOTIFICATION,notification(detail))
+                            getSystemService(NotificationManager::class.java).notify(NOTIFICATION,notification(detail,stay=stay))
                         delay(5_000)
                     }
                 }
@@ -177,16 +185,20 @@ class RecordingService : Service() {
             if(wasActive) ActivityLog.process.record(if(reason==null) AppEvent.recordingStopped else AppEvent.recordingInterrupted)
         } finally {
             RecordingRuntime.update(false);startedAt=null
+            refreshWidgets()
             stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf(startId)
             previousTicker?.cancel()
         }
     }
-    private fun notification(detail:String,preparing:Boolean=false):Notification=RecordingNotification.build(this,CHANNEL,detail,preparing)
+    /** Home-screen widgets live in the app module; a package-scoped broadcast asks them to re-render. */
+    private fun refreshWidgets() {runCatching {sendBroadcast(Intent(WIDGET_REFRESH).setPackage(packageName))}}
+    private fun notification(detail:String,preparing:Boolean=false,stay:RecordingNotification.Stay?=null):Notification=RecordingNotification.build(this,CHANNEL,detail,preparing,startedAt,stay)
     override fun onDestroy() {if(RecordingRuntime.active.value) ActivityLog.process.record(AppEvent.recordingInterrupted);generation++;source.stop();scope.cancel();RecordingRuntime.update(false);super.onDestroy()}
     override fun onBind(intent:Intent?):IBinder?=null
     companion object {
         const val STOP="com.bontecou.whereday.STOP"
+        const val WIDGET_REFRESH="com.bontecou.whereday.widgets.REFRESH"
         private const val START="com.bontecou.whereday.START"
         private const val REPLY="recording.reply"
         private const val TICKET="recording.ticket"

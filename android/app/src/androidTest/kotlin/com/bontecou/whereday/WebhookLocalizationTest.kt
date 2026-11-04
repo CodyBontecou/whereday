@@ -52,6 +52,9 @@ class WebhookLocalizationTest {
     }
     private fun click(text:String)=compose.onNodeWithText(text).performScrollTo().performClick()
     private fun choose(current:String,next:String) {
+        // Format and send mode are chips now; other settings still open a menu.
+        val chip=hasText(next) and (hasAnyAncestor(hasTestTag("webhook-format-chips")) or hasAnyAncestor(hasTestTag("webhook-mode-chips")))
+        if(compose.onAllNodes(chip).fetchSemanticsNodes().isNotEmpty()) {compose.onNode(chip).performScrollTo().performClick();return}
         click(current)
         compose.onNode(hasText(next) and hasAnyAncestor(isPopup())).performScrollTo().performClick()
     }
@@ -60,7 +63,7 @@ class WebhookLocalizationTest {
         compose.onNodeWithTag("webhook-url").assert(SemanticsMatcher.expectValue(SemanticsProperties.Password,Unit))
         compose.onNodeWithContentDescription("Mostrar URL de destino").assertExists()
         var current=ExportFormat.json
-        fun title(f:ExportFormat)=when(f) {ExportFormat.owntracks->"OwnTracks";ExportFormat.overland->"Overland";ExportFormat.markdown->"Markdown";else->f.name.uppercase(Locale.ROOT)}
+        fun title(f:ExportFormat)=recipeFormatName(f)
         for(format in ExportFormat.entries) {
             if(format!=current) choose(title(current),title(format))
             current=format

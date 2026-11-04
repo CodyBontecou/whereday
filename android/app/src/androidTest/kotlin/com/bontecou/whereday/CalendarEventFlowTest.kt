@@ -188,12 +188,14 @@ class CalendarEventFlowTest {
         compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("calendar-add").assertExists()}.isSuccess}
         compose.onNodeWithTag("timeline-content").performScrollToNode(hasTestTag("calendar-add"))
     }
+    @org.junit.Ignore("Material 3 Today rows no longer carry a calendar action; it lives in the visit editor and outing detail, covered above.")
     @Test fun timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor()=runBlocking {
         graph.history.dao.put(VisitRow(visit));intercept();timeline();click();awaitIntent()
         assertEquals("Saved Cafe",intents.single().getStringExtra(CalendarContract.Events.TITLE))
         compose.onNodeWithTag("visit-save").assertDoesNotExist()
         assertEquals(visit,graph.history.dao.visit(visit.id)!!.value)
     }
+    @org.junit.Ignore("Material 3 Today rows no longer carry a calendar action; it lives in the visit editor and outing detail, covered above.")
     @Test fun timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence()=runBlocking {
         val session=RecordingSession("calendar-timeline",now,now.plusSeconds(60))
         val first=TrackPoint("calendar-timeline-first",coordinate,now,5.0)

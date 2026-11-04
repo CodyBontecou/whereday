@@ -48,7 +48,7 @@ class InlineVisitInspectorTest {
     private fun awaitName(name:String=original.name!!) {compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("visit-name").assertTextContains(name)}.isSuccess}}
     private fun open() {
         compose.waitUntil(10000) {compose.onAllNodesWithTag("timeline-content").fetchSemanticsNodes().size==1}
-        compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName()
+        compose.onNode(hasText(original.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick();awaitName()
     }
     private fun compact() {compose.runOnIdle {density.value=maxOf(target.resources.displayMetrics.density,compose.activity.window.decorView.width/600f)}}
     private fun expanded() {compose.runOnIdle {density.value=if(InstrumentationRegistry.getArguments().getString("useSystemDensity")=="true") target.resources.displayMetrics.density else 1f}}

@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
             val b=feature.bounds
             WorkspaceFold(WorkspaceRect(b.left,b.top,b.right,b.bottom),
                 if(feature.orientation==FoldingFeature.Orientation.VERTICAL) WorkspaceFoldAxis.vertical else WorkspaceFoldAxis.horizontal,
-                feature.isSeparating,feature.occlusionType==FoldingFeature.OcclusionType.FULL)
+                feature.isSeparating,feature.occlusionType==FoldingFeature.OcclusionType.FULL,feature.state==FoldingFeature.State.HALF_OPENED)
         }
     }}
     return source.collectAsStateWithLifecycle(initialValue=null).value
@@ -44,7 +44,7 @@ import kotlin.math.roundToInt
 }
 
 /** The full primary Scaffold and companion chrome are measured inside fold-safe window rectangles. */
-@Composable internal fun JournalWorkspaceFrame(allowCompanion:Boolean,modifier:Modifier=Modifier,semanticsTags:Boolean=true,folds:List<WorkspaceFold>?=rememberJournalWindowFolds(),inspectionActive:Boolean=false,inspectionInPrimary:Boolean=false,inspection:@Composable (Boolean)->Unit={},modal:(@Composable ()->Unit)?=null,primary:@Composable (Boolean)->Unit,companion:@Composable ()->Unit) {
+@Composable internal fun JournalWorkspaceFrame(allowCompanion:Boolean,modifier:Modifier=Modifier,semanticsTags:Boolean=true,folds:List<WorkspaceFold>?=rememberJournalWindowFolds(),inspectionActive:Boolean=false,inspectionInPrimary:Boolean=false,companionFirst:Boolean=false,inspection:@Composable (Boolean)->Unit={},modal:(@Composable ()->Unit)?=null,primary:@Composable (Boolean)->Unit,companion:@Composable ()->Unit) {
     val density=LocalDensity.current.density
     val rtl=LocalLayoutDirection.current==LayoutDirection.Rtl
     var origin by remember {mutableStateOf<IntOffset?>(null)}
@@ -59,7 +59,9 @@ import kotlin.math.roundToInt
             val b=f.bounds
             f.copy(bounds=WorkspaceRect(b.left-offset.x,b.top-offset.y,b.right-offset.x,b.bottom-offset.y))
         }
-        val arrangement=if(local==null) WorkspaceArrangement(null) else JournalWorkspaceGeometry.arrange(width,height,density,local,rtl,allowCompanion)
+        val arranged=if(local==null) WorkspaceArrangement(null) else JournalWorkspaceGeometry.arrange(width,height,density,local,rtl,allowCompanion)
+        // Posture-aware: the companion can take the first (top) pane, e.g. the map above a half-open tabletop hinge.
+        val arrangement=if(companionFirst && arranged.paired) arranged.copy(primary=arranged.companion,companion=arranged.primary) else arranged
         fun screenRegion(rect:WorkspaceRect?):Rect? {
             val start=screenOrigin ?: return null
             return rect?.let {Rect(it.left+start.x,it.top+start.y,it.right+start.x,it.bottom+start.y)}

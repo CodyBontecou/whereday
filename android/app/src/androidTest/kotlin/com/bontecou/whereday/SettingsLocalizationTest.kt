@@ -45,6 +45,7 @@ class SettingsLocalizationTest {
     private fun show(dark:Boolean=false) {compose.setContent {MaterialTheme(colorScheme=if(dark) darkColorScheme() else lightColorScheme()) {Surface(Modifier.systemBarsPadding()) {if(visible.value) SettingsContent(settings.value,places.intValue,points.longValue,commands.value,clear.value,actions)}}}}
     private fun row(tag:String) {compose.onNodeWithTag("settings-screen").performScrollToNode(hasTestTag(tag))}
     private fun click(text:String) {compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(text));compose.onNodeWithText(text).performClick()}
+    private fun chooseSegment(tag:String,next:String) {row(tag);compose.onNode(hasText(next) and hasAnyAncestor(hasTestTag(tag))).performClick()}
     private fun choose(tag:String,current:String,next:String) {
         row(tag);compose.onNode(hasText(current) and hasAnyAncestor(hasTestTag(tag))).performClick()
         compose.onNode(hasText(next) and hasAnyAncestor(isPopup())).performScrollTo().performClick()
@@ -84,9 +85,9 @@ class SettingsLocalizationTest {
         compose.runOnIdle {assertEquals(240,settings.value.inferredGapMinutes);assertEquals(60,settings.value.inferredMinimumMinutes);assertEquals(10,settings.value.inferredMinimumPoints)}
     }
     @Test fun themeUnitsAndNetworkConsentUseStableKeysAndIndependentUpdates() {
-        show();choose("settings-theme","Sistema","Oscuro");assertEquals("dark",settings.value.appearance)
-        choose("settings-theme","Oscuro","Claro");assertEquals("light",settings.value.appearance)
-        choose("settings-theme","Claro","Sistema");assertEquals("system",settings.value.appearance)
+        show();chooseSegment("settings-theme","Oscuro");assertEquals("dark",settings.value.appearance)
+        chooseSegment("settings-theme","Claro");assertEquals("light",settings.value.appearance)
+        chooseSegment("settings-theme","Sistema");assertEquals("system",settings.value.appearance)
         row("settings-metric");compose.onNodeWithTag("settings-metric").performClick().assertIsOff()
         row("settings-geocoding");compose.onNodeWithTag("settings-geocoding").assertContentDescriptionEquals("Permitir la geocodificación en línea").performClick().assertIsOff()
         compose.runOnIdle {assertFalse(settings.value.metric);assertFalse(settings.value.networkGeocoding);assertTrue(settings.value.inferredEnabled);assertEquals(5,settings.value.distanceFilter)}
@@ -131,8 +132,8 @@ class SettingsLocalizationTest {
         assertTrue(calls.isEmpty());assertTrue(updates.isEmpty())
     }
     @Test fun staleMenuActionCannotWriteWhileSettingsAreSaving() {
-        show();row("settings-theme");compose.onNode(hasText("Sistema") and hasAnyAncestor(hasTestTag("settings-theme"))).performClick()
-        val held=compose.onNode(hasText("Oscuro") and hasAnyAncestor(isPopup())).fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
+        show();row("settings-theme")
+        val held=compose.onNode(hasText("Oscuro") and hasAnyAncestor(hasTestTag("settings-theme"))).fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
         compose.runOnIdle {commands.value=SettingsActionState(pending=1)};compose.waitForIdle()
         compose.runOnIdle {held();assertTrue(updates.isEmpty());assertEquals("system",settings.value.appearance)}
     }

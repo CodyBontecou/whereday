@@ -20,7 +20,7 @@ class WebhookNavigationIntegrationTest {
         try {
             graph.preferences.update {it.copy(onboarded=true)}
             compose.waitUntil(10_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes().isNotEmpty()}
-            compose.onNodeWithText("Settings").performClick()
+            compose.onNodeWithTag("today-settings").performClick()
             compose.onNode(hasScrollAction()).performScrollToNode(hasText("Webhooks"))
             compose.onNodeWithText("Webhooks").performClick()
             compose.waitUntil(10_000) {compose.onAllNodesWithTag("webhook-url").fetchSemanticsNodes().isNotEmpty()}

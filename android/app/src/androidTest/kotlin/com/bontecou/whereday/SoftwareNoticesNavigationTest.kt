@@ -14,7 +14,7 @@ class SoftwareNoticesNavigationTest {
         check(target.packageName=="com.bontecou.whereday.mapqa")
         AppGraph.from(target).preferences.update {it.copy(onboarded=true)}
         compose.waitUntil(15_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-        compose.onNodeWithText("Settings").performClick()
+        compose.onNodeWithTag("today-settings").performClick()
         compose.onNodeWithTag("settings-screen").performScrollToNode(hasTestTag("settings-software-notices"))
         compose.onNodeWithTag("settings-software-notices").performClick()
         compose.waitUntil(10_000) {compose.onAllNodesWithTag("software-notices-list").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}

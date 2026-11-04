@@ -36,7 +36,7 @@ internal val LocalWorkspaceDialogRegion=staticCompositionLocalOf<Rect?> {null}
 internal val LocalWorkspaceDialogRegions=staticCompositionLocalOf<List<Rect>> {emptyList()}
 
 /** Whereday sheet chrome shared by every workspace dialog: paper card, 20 dp corners, hairline border. */
-private val WorkspaceSheetShape=RoundedCornerShape(20.dp)
+private val WorkspaceSheetShape=RoundedCornerShape(28.dp)
 
 /** Date picker in ink on paper, matching the iOS graphical calendar tint. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -114,12 +114,12 @@ private val WorkspaceSheetShape=RoundedCornerShape(20.dp)
     val states=rememberSaveableStateHolder()
     val body=rememberWorkspaceContent {states.SaveableStateProvider("dialog-body") {text?.invoke()}}
     if(LocalWorkspaceDialogRegion.current==null) {
-        AlertDialog(onDismissRequest,confirmButton,modifier.border(1.dp,wd.border,WorkspaceSheetShape),dismissButton=dismissButton,
+        AlertDialog(onDismissRequest,confirmButton,modifier,dismissButton=dismissButton,
             title=title?.let {heading->@Composable {ProvideTextStyle(WdType.title2) {heading()}}},text=if(text==null) null else { {body()} },
-            shape=WorkspaceSheetShape,containerColor=wd.card,titleContentColor=wd.textPrimary,textContentColor=wd.textMuted,tonalElevation=0.dp)
+            shape=WorkspaceSheetShape,containerColor=wd.containerHigh,titleContentColor=wd.textPrimary,textContentColor=wd.textMuted,tonalElevation=0.dp)
     } else WorkspaceDialog(onDismissRequest) {
         Surface(modifier.widthIn(min=280.dp).testTag("workspace-alert"),shape=WorkspaceSheetShape,
-            color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {
+            color=wd.containerHigh,contentColor=wd.textPrimary) {
             Column(Modifier.padding(24.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
                 title?.let {Box(Modifier.semantics {heading()}) {CompositionLocalProvider(LocalContentColor provides wd.textPrimary) {ProvideTextStyle(WdType.title2) {it()}}}}
                 if(text!=null) Box(Modifier.weight(1f,fill=false)) {CompositionLocalProvider(LocalContentColor provides wd.textMuted) {ProvideTextStyle(MaterialTheme.typography.bodyMedium) {body()}}}
