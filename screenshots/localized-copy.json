@@ -1,299 +1,299 @@
 {
   "en-US": [
     {
-      "name": "01-quiet-map",
-      "title": "A quiet map of your days",
-      "subtitle": "Passively detect visits and record detailed routes — all on-device."
+      "name": "01-today-dial",
+      "title": "Your whole day on one dial.",
+      "subtitle": "Every stop and every route, laid out on a 24-hour clock."
     },
     {
-      "name": "02-total-control",
-      "title": "One panel. Total control.",
-      "subtitle": "Tune tracking, distance filters, auto-stop, and location naming in seconds."
+      "name": "02-trace-replay",
+      "title": "Replay any day on the map.",
+      "subtitle": "Scrub through the route and stops, minute by minute."
     },
     {
-      "name": "03-open-formats",
-      "title": "Export in open formats.",
-      "subtitle": "Take your history as JSON, CSV, Markdown, GPX, OwnTracks, or Overland."
+      "name": "03-atlas-year",
+      "title": "A year in days.",
+      "subtitle": "See every day of the year, colored by the country you were in."
     },
     {
-      "name": "04-exact-export",
-      "title": "Choose exactly what to export.",
-      "subtitle": "Filter by date range, time of day, completed visits, and duration."
+      "name": "04-places",
+      "title": "The places you return to.",
+      "subtitle": "Name your places and see how often you're there."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "Your data. Your endpoint.",
-      "subtitle": "POST location updates to your own API in real time or batches."
+      "name": "05-export-sentence",
+      "title": "Export it as a sentence.",
+      "subtitle": "JSON, CSV, Markdown, GPX, or KML. Your history, your files."
     }
   ],
   "ar-SA": [
     {
-      "name": "01-quiet-map",
-      "title": "خريطة هادئة لأيامك",
-      "subtitle": "اكتشف الزيارات تلقائيًا وسجّل المسارات بالتفصيل — كل ذلك على جهازك."
+      "name": "01-today-dial",
+      "title": "يومك كله على قرص واحد.",
+      "subtitle": "كل توقف وكل مسار على ساعة من 24 ساعة."
     },
     {
-      "name": "02-total-control",
-      "title": "لوحة واحدة. السيطرة الكاملة.",
-      "subtitle": "اضبط التتبع وفلاتر المسافة والتوقف التلقائي وأسماء المواقع في ثوانٍ."
+      "name": "02-trace-replay",
+      "title": "أعد عرض أي يوم على الخريطة.",
+      "subtitle": "تنقّل في المسار والتوقفات دقيقة بدقيقة."
     },
     {
-      "name": "03-open-formats",
-      "title": "تصدير بتنسيقات مفتوحة.",
-      "subtitle": "خذ سجلك بتنسيق JSON أو CSV أو Markdown أو GPX أو OwnTracks أو Overland."
+      "name": "03-atlas-year",
+      "title": "سنة من الأيام.",
+      "subtitle": "كل يوم في السنة، ملوّن حسب البلد الذي كنت فيه."
     },
     {
-      "name": "04-exact-export",
-      "title": "اختر بالضبط ما تريد تصديره.",
-      "subtitle": "قم بالتصفية حسب النطاق الزمني، والوقت من اليوم، والزيارات المكتملة، والمدة."
+      "name": "04-places",
+      "title": "الأماكن التي تعود إليها.",
+      "subtitle": "سمِّ أماكنك واعرف كم مرة تكون فيها."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "بياناتك. خادمك.",
-      "subtitle": "أرسل تحديثات الموقع إلى واجهة API الخاصة بك فورًا أو على دفعات."
+      "name": "05-export-sentence",
+      "title": "صدّر سجلك كجملة.",
+      "subtitle": "JSON وCSV وMarkdown وGPX وKML. سجلك، ملفاتك."
     }
   ],
   "bn": [
     {
-      "name": "01-quiet-map",
-      "title": "আপনার দিনগুলির একটি শান্ত মানচিত্র",
-      "subtitle": "স্বয়ংক্রিয়ভাবে ভিজিট শনাক্ত করুন এবং বিস্তারিত রুট রেকর্ড করুন — সবকিছু আপনার ডিভাইসেই।"
+      "name": "01-today-dial",
+      "title": "আপনার পুরো দিন একটি ডায়ালে।",
+      "subtitle": "প্রতিটি থামা ও প্রতিটি রুট, ২৪ ঘণ্টার ঘড়িতে।"
     },
     {
-      "name": "02-total-control",
-      "title": "একটি প্যানেল। মোট নিয়ন্ত্রণ।",
-      "subtitle": "সেকেন্ডেই ট্র্যাকিং, দূরত্ব ফিল্টার, অটো-স্টপ ও স্থানের নাম ঠিক করুন।"
+      "name": "02-trace-replay",
+      "title": "ম্যাপে যেকোনো দিন আবার দেখুন।",
+      "subtitle": "রুট আর থামাগুলো মিনিট ধরে ধরে দেখুন।"
     },
     {
-      "name": "03-open-formats",
-      "title": "উন্মুক্ত ফরম্যাটে রপ্তানি করুন",
-      "subtitle": "আপনার ইতিহাসকে JSON , CSV , Markdown , GPX , OwnTracks , বা Overland হিসাবে নিন৷"
+      "name": "03-atlas-year",
+      "title": "এক বছর, দিনে দিনে।",
+      "subtitle": "বছরের প্রতিটি দিন, যে দেশে ছিলেন সেই রঙে।"
     },
     {
-      "name": "04-exact-export",
-      "title": "ঠিক কি রপ্তানি করতে হবে তা বেছে নিন।",
-      "subtitle": "তারিখ পরিসর, দিনের সময়, সম্পূর্ণ পরিদর্শন এবং সময়কাল দ্বারা ফিল্টার করুন।"
+      "name": "04-places",
+      "title": "যে জায়গাগুলোতে আপনি ফিরে যান।",
+      "subtitle": "জায়গার নাম দিন, দেখুন কতবার সেখানে যান।"
     },
     {
-      "name": "05-your-endpoint",
-      "title": "আপনার ডেটা। আপনার এন্ডপয়েন্ট।",
-      "subtitle": "লোকেশন আপডেট আপনার নিজস্ব API-তে রিয়েল টাইমে বা ব্যাচে পাঠান।"
+      "name": "05-export-sentence",
+      "title": "এক্সপোর্ট করুন একটি বাক্যে।",
+      "subtitle": "JSON, CSV, Markdown, GPX বা KML। আপনার ইতিহাস, আপনার ফাইল।"
     }
   ],
   "es-ES": [
     {
-      "name": "01-quiet-map",
-      "title": "Un mapa tranquilo de tus días.",
-      "subtitle": "Detecta visitas automáticamente y registra rutas detalladas, todo en el dispositivo."
+      "name": "01-today-dial",
+      "title": "Todo tu día en un solo dial.",
+      "subtitle": "Cada parada y cada ruta, en un reloj de 24 horas."
     },
     {
-      "name": "02-total-control",
-      "title": "Un panel. Control total.",
-      "subtitle": "Ajusta el seguimiento, los filtros de distancia, la parada automática y los nombres en segundos."
+      "name": "02-trace-replay",
+      "title": "Revive cualquier día en el mapa.",
+      "subtitle": "Recorre la ruta y las paradas, minuto a minuto."
     },
     {
-      "name": "03-open-formats",
-      "title": "Exporta en formatos abiertos.",
-      "subtitle": "Lleva tu historial en JSON, CSV, Markdown, GPX, OwnTracks u Overland."
+      "name": "03-atlas-year",
+      "title": "Un año en días.",
+      "subtitle": "Cada día del año, coloreado según el país donde estabas."
     },
     {
-      "name": "04-exact-export",
-      "title": "Elija exactamente qué exportar.",
-      "subtitle": "Filtre por rango de fechas, hora del día, visitas completadas y duración."
+      "name": "04-places",
+      "title": "Los lugares a los que vuelves.",
+      "subtitle": "Ponles nombre y descubre cada cuánto vas."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "Tus datos. Tu endpoint.",
-      "subtitle": "Envía actualizaciones de ubicación a tu propia API en tiempo real o por lotes."
+      "name": "05-export-sentence",
+      "title": "Expórtalo como una frase.",
+      "subtitle": "JSON, CSV, Markdown, GPX o KML. Tu historial, tus archivos."
     }
   ],
   "fr-FR": [
     {
-      "name": "01-quiet-map",
-      "title": "Une carte tranquille de vos journées",
-      "subtitle": "Détectez passivement les visites et enregistrez des itinéraires détaillés, le tout sur l'appareil."
+      "name": "01-today-dial",
+      "title": "Toute votre journée sur un cadran.",
+      "subtitle": "Chaque arrêt et chaque trajet, sur une horloge de 24 heures."
     },
     {
-      "name": "02-total-control",
-      "title": "Une interface. Contrôle total.",
-      "subtitle": "Réglez le suivi, les filtres de distance, l’arrêt automatique et les noms de lieux en quelques secondes."
+      "name": "02-trace-replay",
+      "title": "Rejouez n'importe quel jour.",
+      "subtitle": "Parcourez le trajet et les arrêts, minute par minute."
     },
     {
-      "name": "03-open-formats",
-      "title": "Exportez dans des formats ouverts.",
-      "subtitle": "Emportez votre historique en JSON, CSV, Markdown, GPX, OwnTracks ou Overland."
+      "name": "03-atlas-year",
+      "title": "Une année en jours.",
+      "subtitle": "Chaque jour de l'année, coloré selon le pays où vous étiez."
     },
     {
-      "name": "04-exact-export",
-      "title": "Choisissez exactement ce que vous souhaitez exporter.",
-      "subtitle": "Filtrez par plage de dates, heure de la journée, visites terminées et durée."
+      "name": "04-places",
+      "title": "Les lieux où vous revenez.",
+      "subtitle": "Nommez vos lieux et voyez à quelle fréquence vous y êtes."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "Vos données. Votre endpoint.",
-      "subtitle": "Envoyez les mises à jour de position à votre propre API en temps réel ou par lots."
+      "name": "05-export-sentence",
+      "title": "Exportez comme une phrase.",
+      "subtitle": "JSON, CSV, Markdown, GPX ou KML. Votre historique, vos fichiers."
     }
   ],
   "hi": [
     {
-      "name": "01-quiet-map",
-      "title": "आपके दिनों का शांत मानचित्र",
-      "subtitle": "विज़िट अपने-आप पहचानें और विस्तृत रूट रिकॉर्ड करें — सब कुछ आपके डिवाइस पर।"
+      "name": "01-today-dial",
+      "title": "आपका पूरा दिन, एक डायल पर।",
+      "subtitle": "हर ठहराव और हर रूट, 24 घंटे की घड़ी पर।"
     },
     {
-      "name": "02-total-control",
-      "title": "एक पैनल. पूर्ण नियंत्रण.",
-      "subtitle": "ट्रैकिंग, दूरी फ़िल्टर, ऑटो-स्टॉप और स्थान के नाम कुछ ही सेकंड में सेट करें।"
+      "name": "02-trace-replay",
+      "title": "किसी भी दिन को मैप पर दोबारा देखें।",
+      "subtitle": "रूट और ठहराव को मिनट-दर-मिनट देखें।"
     },
     {
-      "name": "03-open-formats",
-      "title": "खुले फ़ॉर्मैट में एक्सपोर्ट करें",
-      "subtitle": "अपना इतिहास JSON, CSV, Markdown, GPX, OwnTracks या Overland में लें।"
+      "name": "03-atlas-year",
+      "title": "एक साल, दिन-ब-दिन।",
+      "subtitle": "साल का हर दिन, उस देश के रंग में जहाँ आप थे।"
     },
     {
-      "name": "04-exact-export",
-      "title": "बिल्कुल वही चुनें जिसे निर्यात करना है।",
-      "subtitle": "दिनांक सीमा, दिन का समय, पूर्ण विज़िट और अवधि के अनुसार फ़िल्टर करें।"
+      "name": "04-places",
+      "title": "वे जगहें जहाँ आप लौटते हैं।",
+      "subtitle": "अपनी जगहों को नाम दें और देखें कि आप कितनी बार जाते हैं।"
     },
     {
-      "name": "05-your-endpoint",
-      "title": "आपका डेटा। आपका एंडपॉइंट।",
-      "subtitle": "स्थान अपडेट अपने API पर रीयल टाइम में या बैच में भेजें।"
+      "name": "05-export-sentence",
+      "title": "एक वाक्य में एक्सपोर्ट करें।",
+      "subtitle": "JSON, CSV, Markdown, GPX या KML। आपका इतिहास, आपकी फ़ाइलें।"
     }
   ],
   "ja": [
     {
-      "name": "01-quiet-map",
-      "title": "日々を静かに描くマップ",
-      "subtitle": "訪問を自動で検出し、詳細なルートを記録。すべてデバイス上で完結します。"
+      "name": "01-today-dial",
+      "title": "一日をひとつのダイヤルに。",
+      "subtitle": "すべての滞在先とルートを24時間の時計に。"
     },
     {
-      "name": "02-total-control",
-      "title": "ひとつの画面ですべてを操作",
-      "subtitle": "追跡、距離フィルター、自動停止、場所の名前をすばやく調整できます。"
+      "name": "02-trace-replay",
+      "title": "どの日も地図で振り返る。",
+      "subtitle": "ルートと滞在先を1分ごとにたどれます。"
     },
     {
-      "name": "03-open-formats",
-      "title": "オープン形式で書き出し",
-      "subtitle": "履歴をJSON、CSV、Markdown、GPX、OwnTracks、Overland形式で保存できます。"
+      "name": "03-atlas-year",
+      "title": "1年を、日ごとに。",
+      "subtitle": "1年のすべての日を、いた国の色で表示。"
     },
     {
-      "name": "04-exact-export",
-      "title": "書き出す内容を細かく選択",
-      "subtitle": "日付範囲、時間帯、完了した訪問、滞在時間で絞り込めます。"
+      "name": "04-places",
+      "title": "また訪れる場所。",
+      "subtitle": "場所に名前を付けて、訪れる頻度を確認。"
     },
     {
-      "name": "05-your-endpoint",
-      "title": "あなたのデータ。あなたのエンドポイント。",
-      "subtitle": "位置情報の更新を独自のAPIへリアルタイムまたは一括で送信します。"
+      "name": "05-export-sentence",
+      "title": "一文で書き出す。",
+      "subtitle": "JSON、CSV、Markdown、GPX、KML。あなたの履歴を、あなたのファイルに。"
     }
   ],
   "pt-BR": [
     {
-      "name": "01-quiet-map",
-      "title": "Um mapa tranquilo dos seus dias",
-      "subtitle": "Detecte visitas automaticamente e registre trajetos detalhados — tudo no dispositivo."
+      "name": "01-today-dial",
+      "title": "Seu dia inteiro em um mostrador.",
+      "subtitle": "Cada parada e cada rota em um relógio de 24 horas."
     },
     {
-      "name": "02-total-control",
-      "title": "Um painel. Controle total.",
-      "subtitle": "Ajuste o rastreamento, filtros de distância, parada automática e nomeação de localização em segundos."
+      "name": "02-trace-replay",
+      "title": "Reveja qualquer dia no mapa.",
+      "subtitle": "Percorra a rota e as paradas, minuto a minuto."
     },
     {
-      "name": "03-open-formats",
-      "title": "Exporte em formatos abertos.",
-      "subtitle": "Leve seu histórico em JSON, CSV, Markdown, GPX, OwnTracks ou Overland."
+      "name": "03-atlas-year",
+      "title": "Um ano em dias.",
+      "subtitle": "Cada dia do ano, colorido pelo país onde você estava."
     },
     {
-      "name": "04-exact-export",
-      "title": "Escolha exatamente o que exportar.",
-      "subtitle": "Filtre por período, hora do dia, visitas concluídas e duração."
+      "name": "04-places",
+      "title": "Os lugares aonde você volta.",
+      "subtitle": "Dê nome aos lugares e veja com que frequência você vai."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "Seus dados. Seu endpoint.",
-      "subtitle": "Envie atualizações de localização para sua própria API em tempo real ou em lotes."
+      "name": "05-export-sentence",
+      "title": "Exporte como uma frase.",
+      "subtitle": "JSON, CSV, Markdown, GPX ou KML. Seu histórico, seus arquivos."
     }
   ],
   "ru": [
     {
-      "name": "01-quiet-map",
-      "title": "Тихая карта ваших дней",
-      "subtitle": "Пассивно отслеживайте посещения и записывайте подробные маршруты — и все это на устройстве."
+      "name": "01-today-dial",
+      "title": "Весь день на одном циферблате.",
+      "subtitle": "Каждая остановка и каждый маршрут на 24-часовых часах."
     },
     {
-      "name": "02-total-control",
-      "title": "Одна панель. Полный контроль.",
-      "subtitle": "Настройте отслеживание, фильтры расстояний, автоостановку и присвоение названий местоположению за считанные секунды."
+      "name": "02-trace-replay",
+      "title": "Повторите любой день на карте.",
+      "subtitle": "Пролистайте маршрут и остановки минута за минутой."
     },
     {
-      "name": "03-open-formats",
-      "title": "Экспорт в открытых форматах.",
-      "subtitle": "Сохраняйте историю в JSON, CSV, Markdown, GPX, OwnTracks или Overland."
+      "name": "03-atlas-year",
+      "title": "Год по дням.",
+      "subtitle": "Каждый день года в цвете страны, где вы были."
     },
     {
-      "name": "04-exact-export",
-      "title": "Выберите, что именно экспортировать.",
-      "subtitle": "Фильтрация по диапазону дат, времени суток, завершенным посещениям и продолжительности."
+      "name": "04-places",
+      "title": "Места, куда вы возвращаетесь.",
+      "subtitle": "Дайте местам имена и узнайте, как часто вы там бываете."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "Ваши данные. Ваш сервер.",
-      "subtitle": "Отправляйте геоданные в собственный API в реальном времени или пакетами."
+      "name": "05-export-sentence",
+      "title": "Экспорт одной фразой.",
+      "subtitle": "JSON, CSV, Markdown, GPX или KML. Ваша история, ваши файлы."
     }
   ],
   "zh-Hans": [
     {
-      "name": "01-quiet-map",
-      "title": "记录每一天的静谧地图",
-      "subtitle": "自动检测访问并记录详细路线 — 一切都在设备上完成。"
+      "name": "01-today-dial",
+      "title": "一整天，尽在一个表盘。",
+      "subtitle": "每个停留地点和每条路线，都在 24 小时时钟上。"
     },
     {
-      "name": "02-total-control",
-      "title": "一个面板，全面掌控",
-      "subtitle": "几秒内调整跟踪、距离过滤、自动停止和地点命名。"
+      "name": "02-trace-replay",
+      "title": "在地图上回放任意一天。",
+      "subtitle": "逐分钟浏览路线和停留地点。"
     },
     {
-      "name": "03-open-formats",
-      "title": "导出为开放格式",
-      "subtitle": "将历史记录保存为 JSON、CSV、Markdown、GPX、OwnTracks 或 Overland。"
+      "name": "03-atlas-year",
+      "title": "一年，按天展开。",
+      "subtitle": "一年中的每一天，按您所在的国家着色。"
     },
     {
-      "name": "04-exact-export",
-      "title": "精确选择导出内容",
-      "subtitle": "按日期范围、时段、已完成访问和持续时间筛选。"
+      "name": "04-places",
+      "title": "您常回去的地方。",
+      "subtitle": "为地点命名，看看您多久去一次。"
     },
     {
-      "name": "05-your-endpoint",
-      "title": "你的数据，你的端点",
-      "subtitle": "将位置更新实时或分批发送到你自己的 API。"
+      "name": "05-export-sentence",
+      "title": "像写一句话一样导出。",
+      "subtitle": "JSON、CSV、Markdown、GPX 或 KML。您的历史，您的文件。"
     }
   ],
   "pl": [
     {
-      "name": "01-quiet-map",
-      "title": "Spokojna mapa Twoich dni",
-      "subtitle": "Automatycznie wykrywaj wizyty i rejestruj dokładne trasy — wszystko na urządzeniu."
+      "name": "01-today-dial",
+      "title": "Cały dzień na jednej tarczy.",
+      "subtitle": "Każdy postój i każda trasa na 24-godzinnym zegarze."
     },
     {
-      "name": "02-total-control",
-      "title": "Jeden panel. Pełna kontrola.",
-      "subtitle": "Dostosuj śledzenie, filtry odległości, automatyczne zatrzymywanie i nazwy miejsc."
+      "name": "02-trace-replay",
+      "title": "Odtwórz dowolny dzień na mapie.",
+      "subtitle": "Przewijaj trasę i postoje minuta po minucie."
     },
     {
-      "name": "03-open-formats",
-      "title": "Eksport w otwartych formatach.",
-      "subtitle": "Zabierz swoją historię w formacie JSON, CSV, Markdown, GPX, OwnTracks lub Overland."
+      "name": "03-atlas-year",
+      "title": "Rok w dniach.",
+      "subtitle": "Każdy dzień roku w kolorze kraju, w którym byłeś."
     },
     {
-      "name": "04-exact-export",
-      "title": "Wybierz, co eksportować.",
-      "subtitle": "Filtruj według dat, pory dnia, zakończonych wizyt i czasu trwania."
+      "name": "04-places",
+      "title": "Miejsca, do których wracasz.",
+      "subtitle": "Nazwij swoje miejsca i zobacz, jak często w nich bywasz."
     },
     {
-      "name": "05-your-endpoint",
-      "title": "Twoje dane. Twój serwer.",
-      "subtitle": "Wysyłaj lokalizację do własnego API na bieżąco lub partiami."
+      "name": "05-export-sentence",
+      "title": "Eksport w jednym zdaniu.",
+      "subtitle": "JSON, CSV, Markdown, GPX lub KML. Twoja historia, Twoje pliki."
     }
   ]
 }
