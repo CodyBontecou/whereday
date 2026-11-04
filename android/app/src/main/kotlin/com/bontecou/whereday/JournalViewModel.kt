@@ -25,10 +25,9 @@ sealed interface WindowState {
 @OptIn(ExperimentalCoroutinesApi::class)
 class JournalViewModel(private val graph: AppGraph,private val clock:Clock=Clock.systemUTC(),private val zone:()->ZoneId={ZoneId.systemDefault()}): ViewModel() {
     val mapSelection=MutableStateFlow(MapSelection())
-    internal fun mapDateDraft():MapDateDraft {
-        val selectedZone=zone()
-        return MapDateDraft(mapSelection.value.range(clock.instant(),selectedZone),selectedZone)
-    }
+    internal fun mapRangeDraft()=MapRangeDraft.open(mapSelection.value,clock.instant(),zone())
+    internal fun mapNow():Instant=clock.instant()
+    internal fun mapZone():ZoneId=zone()
     val timelineDay=MutableStateFlow(clock.instant().atZone(zone()).toLocalDate())
     private val refresh=MutableStateFlow(0)
     private var clearGeneration=graph.journalClear.state.value.generation

@@ -17,11 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 // Stable selection keys drive range logic. Locale changes affect labels only.
-internal val mapDatePresets=listOf("Today","Yesterday","7 days","30 days","All","Custom")
+internal val mapDatePresets=listOf("Today","Yesterday","7 days","This month","30 days","All","Custom")
 
 /** The day scrubber's paper capsule: a mono "Dates" caption and the chosen range, opening the preset menu. */
 @Composable internal fun MapDateFilter(selected:String,change:(String)->Unit) {
-    val ids=listOf(R.string.map_date_today,R.string.map_date_yesterday,R.string.map_date_week,R.string.map_date_month,R.string.map_date_all,R.string.map_date_custom)
+    val ids=listOf(R.string.map_date_today,R.string.map_date_yesterday,R.string.map_date_week,R.string.map_date_this_month,R.string.map_date_month,R.string.map_date_all,R.string.map_date_custom)
     val labels=mapDatePresets.zip(ids.map {stringResource(it)}).toMap()+mapOf("Visit" to stringResource(R.string.map_date_visit))
     val labelFor={value:String->labels[value] ?: value}
     var expanded by remember {mutableStateOf(false)}

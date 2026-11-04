@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "d05b66d3ed3d3c485162884640920135abd6c4ca80cbbb04901ba7d93d1c7443",
+  "defaultSourceSha256": "02c739fbd4e97caf9abb7eab3bd593c2cc3015fe7b52e75568e94a73700420eb",
   "catalog": {
     "shell_map": "Map",
     "shell_timeline": "Timeline",
@@ -149,10 +149,24 @@
     "map_date_today": "Hoy",
     "map_date_yesterday": "Ayer",
     "map_date_week": "7 días",
+    "map_date_this_month": "Mes",
     "map_date_month": "30 días",
     "map_date_all": "Todo",
     "map_date_custom": "Personalizado",
     "map_choose_dates": "Elegir fechas",
+    "map_show_days": "Mostrar días",
+    "map_reset_dates": "Reiniciar",
+    "map_range_last_7_days": "Últimos 7 días",
+    "map_range_this_month": "Este mes",
+    "map_range_last_30_days": "Últimos 30 días",
+    "map_range_all_time": "Todo el tiempo",
+    "map_range_previous_month": "Mes anterior",
+    "map_range_next_month": "Mes siguiente",
+    "map_range_has_visits": "Tiene visitas",
+    "map_show_day_count": {
+      "one": "Mostrar %d día",
+      "other": "Mostrar %d días"
+    },
     "map_apply_dates": "Aplicar",
     "map_cancel_dates": "Cancelar",
     "map_save_current": "Guardar lugar actual",
