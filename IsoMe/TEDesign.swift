@@ -11,28 +11,42 @@ enum TE {
         })
     }
 
-    static let accent = adaptive(UIColor(red: 0.208, green: 0.310, blue: 0.525, alpha: 1),
-                                 UIColor(red: 0.69, green: 0.77, blue: 0.95, alpha: 1))
-    static let surface = adaptive(UIColor(red: 0.969, green: 0.957, blue: 0.922, alpha: 1),
-                                  UIColor(red: 0.106, green: 0.125, blue: 0.169, alpha: 1))
+    static func adaptive(_ light: UInt32, _ dark: UInt32) -> Color {
+        adaptive(UIColor(hex: light), UIColor(hex: dark))
+    }
+
+    /// Navy ink on paper; amber in the night appearance.
+    static let accent = adaptive(0x1E2B45, 0xE0B565)
+    static let surface = adaptive(0xF3EFE6, 0x0F1626)
     static let surfaceDark = Color(red: 0.12, green: 0.12, blue: 0.12)
-    static let card = adaptive(UIColor(red: 1, green: 0.992, blue: 0.965, alpha: 1),
-                              UIColor(red: 0.145, green: 0.18, blue: 0.235, alpha: 1))
-    static let border = adaptive(UIColor(red: 0.847, green: 0.843, blue: 0.804, alpha: 1),
-                                 UIColor(red: 0.267, green: 0.302, blue: 0.365, alpha: 1))
+    static let card = adaptive(0xFBF9F4, 0x18213A)
+    static let border = adaptive(0xD8D2C3, 0x2C3754)
     static let borderDark = Color(red: 0.25, green: 0.25, blue: 0.25)
-    static let textPrimary = adaptive(UIColor(red: 0.141, green: 0.231, blue: 0.357, alpha: 1),
-                                      UIColor(red: 0.95, green: 0.95, blue: 0.93, alpha: 1))
-    static let textMuted = adaptive(UIColor(red: 0.44, green: 0.43, blue: 0.41, alpha: 1),
-                                    UIColor(red: 0.68, green: 0.67, blue: 0.64, alpha: 1))
+    static let textPrimary = adaptive(0x1E2B45, 0xECE6D8)
+    static let textMuted = adaptive(0x66645D, 0x9AA3B8)
     static let lcdGreen = Color(red: 0.0, green: 0.78, blue: 0.45)
     static let lcdBackground = adaptive(UIColor(red: 0.88, green: 0.90, blue: 0.85, alpha: 1),
                                         UIColor(red: 0.17, green: 0.21, blue: 0.17, alpha: 1))
     static let danger = Color(uiColor: .systemRed)
     static let warning = Color(uiColor: .systemOrange)
     static let success = Color(uiColor: .systemGreen)
-    static let inkRust = adaptive(UIColor(red: 0.64, green: 0.28, blue: 0.20, alpha: 1),
-                                  UIColor(red: 0.93, green: 0.67, blue: 0.59, alpha: 1))
+    static let inkRust = adaptive(0xA8381F, 0xF0805F)
+
+    // MARK: - Day dial
+    /// Place inks cycle in this order so a day's places stay distinguishable on the dial.
+    static let placeInks: [Color] = [
+        adaptive(0x1E2B45, 0xECE6D8),
+        adaptive(0xC2462A, 0xF0805F),
+        adaptive(0xB7862B, 0xE0B565),
+        adaptive(0x5E7F5A, 0x9DC097)
+    ]
+    static let dialTrack = adaptive(0xE4DED0, 0x222C46)
+    static let dialTick = adaptive(0x9A9585, 0x4A5573)
+    /// The inverted "you're at" card: navy on paper, amber at night.
+    static let inkCard = adaptive(0x1E2B45, 0xE0B565)
+    static let onInkCard = adaptive(0xF3EFE6, 0x0F1626)
+    static let onInkCardMuted = adaptive(0xC9CEDA, 0x5A4A2A)
+    static let liveDot = adaptive(0xF08A6B, 0xC2462A)
 
     // MARK: - Typography
     static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
@@ -41,6 +55,17 @@ enum TE {
 
     static func editorial(_ style: Font.TextStyle) -> Font {
         Font.system(style, design: .serif)
+    }
+}
+
+private extension UIColor {
+    convenience init(hex: UInt32) {
+        self.init(
+            red: CGFloat((hex >> 16) & 0xFF) / 255,
+            green: CGFloat((hex >> 8) & 0xFF) / 255,
+            blue: CGFloat(hex & 0xFF) / 255,
+            alpha: 1
+        )
     }
 }
 
@@ -54,7 +79,6 @@ struct TEActionButtonStyle: ButtonStyle {
 
     var emphasis: Emphasis = .secondary
     @Environment(\.isEnabled) private var isEnabled
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private var ink: Color {
         if !isEnabled { return TE.textMuted }
@@ -65,30 +89,27 @@ struct TEActionButtonStyle: ButtonStyle {
         let filled = emphasis == .primary && isEnabled
 
         configuration.label
-            .font(TE.mono(.caption, weight: .bold))
-            .textCase(.uppercase)
-            .tracking(dynamicTypeSize.isAccessibilitySize ? 0.5 : 2)
+            .font(.body.weight(.semibold))
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
-            .frame(maxWidth: .infinity, minHeight: filled ? 48 : 44)
+            .frame(maxWidth: .infinity, minHeight: filled ? 52 : 44)
             .foregroundStyle(filled ? TE.surface : ink)
             // Opaque paper keeps the decorative artwork from reducing label contrast.
             .background {
                 ZStack {
-                    TE.surface
-                    filled ? ink : ink.opacity(0.08)
+                    filled ? ink : TE.card
                     if configuration.isPressed {
-                        filled ? Color.black.opacity(0.12) : ink.opacity(0.04)
+                        filled ? Color.black.opacity(0.12) : ink.opacity(0.06)
                     }
                 }
             }
             .overlay {
-                RoundedRectangle(cornerRadius: 4)
-                    .strokeBorder(ink, lineWidth: 1)
+                RoundedRectangle(cornerRadius: 16)
+                    .strokeBorder(filled ? ink : (emphasis == .destructive ? ink : TE.border), lineWidth: 1)
             }
-            .clipShape(RoundedRectangle(cornerRadius: 4))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 

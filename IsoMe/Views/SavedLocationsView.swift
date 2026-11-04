@@ -1,109 +1,44 @@
+import CoreLocation
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// The Places library. Hosted in a NavigationStack by its caller (the Places tab or Settings).
 struct SavedLocationsView: View {
     @Bindable var viewModel: LocationViewModel
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var searchText = ""
+    @State private var filter: PlacesFilter = .mostVisited
+    @State private var selectedPlaceID: UUID?
     @State private var sheet: SavedLocationSheet?
     @State private var showingImportPicker = false
     @State private var isReadingFile = false
     @State private var pendingDeletion: SavedPlace?
     @State private var errorMessage: String?
+    @FocusState private var searchFocused: Bool
 
-    private var filteredPlaces: [SavedPlace] {
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        return viewModel.savedPlaces.filter {
-            query.isEmpty || $0.name.localizedCaseInsensitiveContains(query)
-                || ($0.address?.localizedCaseInsensitiveContains(query) ?? false)
-        }
-    }
+    private var isTwoPane: Bool { horizontalSizeClass == .regular }
 
     var body: some View {
-        List {
-            Section {
-                if viewModel.savedPlaces.isEmpty {
-                    ContentUnavailableView {
-                        Label("No Saved Locations", systemImage: "mappin.and.ellipse")
-                    } description: {
-                        Text("Add places you visit to reuse their names, including places missing from Maps.")
-                    } actions: {
-                        Button("Add Location") { sheet = .editor(SavedPlaceDraft()) }
-                            .buttonStyle(TEActionButtonStyle(emphasis: .primary))
-                            .disabled(isReadingFile)
-                    }
-                } else if filteredPlaces.isEmpty {
-                    ContentUnavailableView.search(text: searchText)
-                } else {
-                    ForEach(filteredPlaces) { place in
-                        Button {
-                            sheet = .editor(SavedPlaceDraft(place))
-                        } label: {
-                            HStack(spacing: 12) {
-                                Image(systemName: "mappin.and.ellipse")
-                                    .foregroundStyle(TE.accent)
-                                    .accessibilityHidden(true)
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(place.name)
-                                        .font(TE.editorial(.headline))
-                                        .foregroundStyle(TE.textPrimary)
-                                    if let address = place.address, !address.isEmpty {
-                                        Text(address).font(.subheadline).foregroundStyle(.secondary)
-                                    }
-                                }
-                                Spacer(minLength: 8)
-                                Image(systemName: "chevron.right")
-                                    .font(.caption).foregroundStyle(.tertiary)
-                                    .accessibilityHidden(true)
-                            }
-                            .frame(minHeight: 44)
-                            .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(isReadingFile)
-                        .accessibilityHint("Edits this saved location.")
-                        .swipeActions {
-                            Button("Delete", role: .destructive) { pendingDeletion = place }
-                                .tint(.red)
-                        }
-                    }
+        let library = PlacesLibrary(places: viewModel.savedPlaces, visits: viewModel.allVisits)
+        Group {
+            if isTwoPane {
+                HStack(spacing: 0) {
+                    listPane(library)
+                        .frame(maxWidth: 420)
+                    Rectangle().fill(TE.border).frame(width: 1).ignoresSafeArea()
+                    detailPane(library)
+                        .frame(maxWidth: .infinity)
                 }
-            } footer: {
-                Text("Saved locations name nearby future visits. Editing or deleting one keeps your past visits unchanged.")
+            } else {
+                listPane(library)
             }
-            .listRowBackground(TE.card.opacity(0.94))
-
-            Section {
-                Button {
-                    showingImportPicker = true
-                } label: {
-                    HStack(spacing: 12) {
-                        Label("Import Locations from CSV", systemImage: "square.and.arrow.down")
-                        if isReadingFile { Spacer(); ProgressView() }
-                    }
-                    .frame(minHeight: 44)
-                }
-                .disabled(isReadingFile)
-            } footer: {
-                Text("Use name, latitude, longitude, address, and radius_meters columns. Address and radius are optional; the default radius is 150 meters. You can review the locations before importing.")
-            }
-            .listRowBackground(TE.card.opacity(0.94))
         }
-        .listStyle(.insetGrouped)
-        .scrollContentBackground(.hidden)
-        .background(FieldNotesBackground())
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
-        .searchable(text: $searchText, prompt: "Search saved locations")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button { sheet = .editor(SavedPlaceDraft()) } label: {
-                    Image(systemName: "plus")
-                }
-                .accessibilityLabel("Add Location")
-                .disabled(isReadingFile)
-            }
-        }
         .sheet(item: $sheet) { item in
             switch item {
             case .editor(let draft):
@@ -138,6 +73,7 @@ struct SavedLocationsView: View {
         .confirmationDialog("Delete Saved Location?", isPresented: Binding(get: { pendingDeletion != nil }, set: { if !$0 { pendingDeletion = nil } }), titleVisibility: .visible) {
             if let place = pendingDeletion {
                 Button("Delete", role: .destructive) {
+                    if selectedPlaceID == place.id { selectedPlaceID = nil }
                     do { try viewModel.deleteManagedPlace(place) }
                     catch { errorMessage = error.localizedDescription }
                     pendingDeletion = nil
@@ -152,6 +88,419 @@ struct SavedLocationsView: View {
         } message: { Text(errorMessage ?? "") }
         .onAppear { viewModel.loadSavedPlaces() }
         .tint(TE.accent)
+    }
+
+    // MARK: - List
+
+    private func listPane(_ library: PlacesLibrary) -> some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                header(library)
+                searchField
+                    .padding(.horizontal, 16)
+                    .padding(.top, 14)
+                filterChips(library)
+                    .padding(.top, 12)
+                placesCard(library)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 12)
+                actions(library)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 12)
+                footnotes
+                    .padding(.horizontal, 24)
+                    .padding(.top, 14)
+            }
+            .padding(.bottom, 24)
+        }
+        .scrollIndicators(.hidden)
+        .scrollDismissesKeyboard(.immediately)
+    }
+
+    private func header(_ library: PlacesLibrary) -> some View {
+        HStack(alignment: .bottom, spacing: 12) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(viewModel.savedPlaces.count) SAVED · \(viewModel.allVisits.count) VISITS")
+                    .font(TE.mono(.caption2))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.textMuted)
+                Text("Places")
+                    .font(TE.editorial(.largeTitle))
+                    .accessibilityAddTraits(.isHeader)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Button { sheet = .editor(SavedPlaceDraft()) } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(TE.surface)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(TE.accent))
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Add Location")
+            .disabled(isReadingFile)
+        }
+        .padding(.horizontal, 24)
+        .padding(.top, 12)
+    }
+
+    private var searchField: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(TE.textMuted)
+                .accessibilityHidden(true)
+            TextField("Search saved locations", text: $searchText, prompt: Text("Find a place"))
+                .focused($searchFocused)
+                .submitLabel(.search)
+                .autocorrectionDisabled()
+            if !searchText.isEmpty {
+                Button { searchText = "" } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(TE.textMuted)
+                        .frame(width: 44, height: 44)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Clear search")
+            }
+        }
+        .padding(.leading, 14)
+        .frame(minHeight: 44)
+        .background(RoundedRectangle(cornerRadius: 14).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(TE.border, lineWidth: 1))
+        .contentShape(RoundedRectangle(cornerRadius: 14))
+        .onTapGesture { searchFocused = true }
+    }
+
+    private func filterChips(_ library: PlacesLibrary) -> some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 8) {
+                chip(.mostVisited, title: "Most visited")
+                chip(.recent, title: "Recent")
+                if !library.suggestions.isEmpty {
+                    chip(.unsaved, title: "Unsaved · \(library.suggestions.count)", dot: TE.inkRust)
+                }
+                chip(.alphabetical, title: "A–Z")
+            }
+            .padding(.horizontal, 16)
+        }
+        .scrollIndicators(.hidden)
+    }
+
+    private func chip(_ value: PlacesFilter, title: LocalizedStringKey, dot: Color? = nil) -> some View {
+        let isOn = filter == value
+        return Button { filter = value } label: {
+            HStack(spacing: 6) {
+                if let dot {
+                    Circle().fill(dot).frame(width: 8, height: 8).accessibilityHidden(true)
+                }
+                Text(title)
+                    .font(.footnote.weight(.medium))
+                    .lineLimit(1)
+            }
+            .foregroundStyle(isOn ? TE.surface : TE.textPrimary)
+            .padding(.horizontal, 14)
+            .frame(minHeight: 36)
+            .background(Capsule().fill(isOn ? TE.accent : TE.card))
+            .overlay { if !isOn { Capsule().strokeBorder(TE.border, lineWidth: 1) } }
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isOn ? .isSelected : [])
+    }
+
+    @ViewBuilder
+    private func placesCard(_ library: PlacesLibrary) -> some View {
+        if filter == .unsaved {
+            suggestionsCard(library)
+        } else if viewModel.savedPlaces.isEmpty {
+            placesCardFrame {
+                ContentUnavailableView {
+                    Label("No Saved Locations", systemImage: "mappin.and.ellipse")
+                } description: {
+                    Text("Add places you visit to reuse their names, including places missing from Maps.")
+                } actions: {
+                    Button("Add Location") { sheet = .editor(SavedPlaceDraft()) }
+                        .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
+                        .disabled(isReadingFile)
+                }
+            }
+        } else {
+            let places = library.sorted(filter: filter, query: searchText)
+            if places.isEmpty {
+                placesCardFrame { ContentUnavailableView.search(text: searchText) }
+            } else {
+                placesCardFrame {
+                    LazyVStack(spacing: 0) {
+                        ForEach(places, id: \.id) { place in
+                            placeLink(place, library: library)
+                            if place.id != places.last?.id {
+                                Rectangle().fill(TE.dialTrack).frame(height: 1)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func placesCardFrame<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        content()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 4)
+            .frame(maxWidth: .infinity)
+            .background(RoundedRectangle(cornerRadius: 16).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
+    }
+
+    @ViewBuilder
+    private func placeLink(_ place: SavedPlace, library: PlacesLibrary) -> some View {
+        let row = placeRow(place, library: library)
+        Group {
+            if isTwoPane {
+                Button { selectedPlaceID = place.id } label: { row }
+                    .accessibilityAddTraits(selectedPlaceID == place.id ? .isSelected : [])
+            } else {
+                NavigationLink { PlaceDetailView(place: place, viewModel: viewModel) } label: { row }
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(isReadingFile)
+        .accessibilityHint("Shows this place's visits and rhythm.")
+        .contextMenu {
+            Button("Edit", systemImage: "pencil") { sheet = .editor(SavedPlaceDraft(place)) }
+            Button("Delete", systemImage: "trash", role: .destructive) { pendingDeletion = place }
+        }
+        .accessibilityAction(named: "Edit") { sheet = .editor(SavedPlaceDraft(place)) }
+        .accessibilityAction(named: "Delete") { pendingDeletion = place }
+    }
+
+    private func placeRow(_ place: SavedPlace, library: PlacesLibrary) -> some View {
+        let visits = library.index.visits(for: place)
+        let selected = isTwoPane && selectedPlaceID == place.id
+        return HStack(spacing: 12) {
+            Circle()
+                .fill(PlaceVisitIndex.ink(for: place, in: viewModel.savedPlaces))
+                .frame(width: 12, height: 12)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(place.name)
+                    .font(TE.editorial(.title3))
+                    .multilineTextAlignment(.leading)
+                Text(subtitle(place, lastVisit: visits.first))
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Text(visits.count == 1 ? String(localized: "1 visit") : String(localized: "\(visits.count) visits"))
+                .font(TE.mono(.caption))
+                .foregroundStyle(selected ? TE.inkRust : TE.textMuted)
+        }
+        .frame(minHeight: 58)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+    }
+
+    private func subtitle(_ place: SavedPlace, lastVisit: Visit?) -> String {
+        if let lastVisit {
+            if viewModel.isCurrentVisit(lastVisit) { return String(localized: "here now") }
+            return String(localized: "last \(Self.relativeDay(lastVisit.arrivedAt))")
+        }
+        if let address = place.address, !address.isEmpty { return address }
+        return String(localized: "No visits yet")
+    }
+
+    private static func relativeDay(_ date: Date, now: Date = Date()) -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(date) { return String(localized: "today") }
+        if calendar.isDateInYesterday(date) { return String(localized: "yesterday") }
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: date), to: calendar.startOfDay(for: now)).day ?? 0
+        if days < 7 { return date.formatted(.dateTime.weekday(.abbreviated)) }
+        if calendar.isDate(date, equalTo: now, toGranularity: .year) {
+            return date.formatted(.dateTime.month(.abbreviated).day())
+        }
+        return date.formatted(.dateTime.month(.abbreviated).day().year())
+    }
+
+    private func suggestionsCard(_ library: PlacesLibrary) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Places you return to that aren't saved yet. Save one to name its future visits.")
+                .font(.footnote)
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 8)
+            let suggestions = library.suggestions.filter {
+                searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText)
+            }
+            placesCardFrame {
+                if suggestions.isEmpty {
+                    ContentUnavailableView.search(text: searchText)
+                } else {
+                    LazyVStack(spacing: 0) {
+                        ForEach(suggestions) { suggestion in
+                            Button { sheet = .editor(suggestion.draft) } label: {
+                                suggestionRow(suggestion)
+                            }
+                            .buttonStyle(.plain)
+                            .disabled(isReadingFile)
+                            .accessibilityHint("Saves this place so future visits use its name.")
+                            if suggestion.id != suggestions.last?.id {
+                                Rectangle().fill(TE.dialTrack).frame(height: 1)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func suggestionRow(_ suggestion: UnsavedPlaceSuggestion) -> some View {
+        HStack(spacing: 12) {
+            Circle()
+                .strokeBorder(TE.inkRust, lineWidth: 1.5)
+                .frame(width: 12, height: 12)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(suggestion.name)
+                    .font(TE.editorial(.title3))
+                    .multilineTextAlignment(.leading)
+                Text("\(suggestion.visitCount) visits · last \(Self.relativeDay(suggestion.lastVisit))")
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Text("Save")
+                .font(TE.mono(.caption, weight: .semibold))
+                .foregroundStyle(TE.inkRust)
+        }
+        .frame(minHeight: 58)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+    }
+
+    private func actions(_ library: PlacesLibrary) -> some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            Button {
+                showingImportPicker = true
+            } label: {
+                HStack(spacing: 8) {
+                    Text("Import CSV")
+                    if isReadingFile { ProgressView() }
+                }
+            }
+            .buttonStyle(PlacesInkButtonStyle())
+            .disabled(isReadingFile)
+            .accessibilityLabel("Import Locations from CSV")
+
+            if !library.suggestions.isEmpty && filter != .unsaved {
+                Button("Save \(library.suggestions.count) places") { filter = .unsaved }
+                    .buttonStyle(PlacesInkButtonStyle())
+                    .accessibilityHint("Shows frequent places that aren't saved yet.")
+            }
+        }
+    }
+
+    private var footnotes: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Saved locations name nearby future visits. Editing or deleting one keeps your past visits unchanged.")
+            Text("Use name, latitude, longitude, address, and radius_meters columns. Address and radius are optional; the default radius is 150 meters. You can review the locations before importing.")
+        }
+        .font(TE.mono(.caption2))
+        .foregroundStyle(TE.textMuted)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    // MARK: - Detail pane
+
+    @ViewBuilder
+    private func detailPane(_ library: PlacesLibrary) -> some View {
+        let fallback = library.sorted(filter: .mostVisited, query: "").first
+        if let place = viewModel.savedPlaces.first(where: { $0.id == selectedPlaceID }) ?? fallback {
+            PlaceDetailView(place: place, viewModel: viewModel, isEmbedded: true)
+                .id(place.id)
+        } else {
+            ContentUnavailableView("Choose a Place", systemImage: "mappin.and.ellipse",
+                                   description: Text("Its visits, typical stay, and weekly rhythm appear here."))
+                .foregroundStyle(TE.textMuted)
+        }
+    }
+}
+
+private enum PlacesFilter: Hashable {
+    case mostVisited, recent, alphabetical, unsaved
+}
+
+/// Saved places with their matched visits, plus frequent spots that aren't saved yet.
+private struct PlacesLibrary {
+    let places: [SavedPlace]
+    let index: PlaceVisitIndex
+    let suggestions: [UnsavedPlaceSuggestion]
+
+    init(places: [SavedPlace], visits: [Visit]) {
+        self.places = places
+        index = PlaceVisitIndex(places: places, visits: visits)
+        suggestions = UnsavedPlaceSuggestion.suggestions(from: index.unmatched)
+    }
+
+    func sorted(filter: PlacesFilter, query: String) -> [SavedPlace] {
+        let query = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let matching = places.filter {
+            query.isEmpty || $0.name.localizedCaseInsensitiveContains(query)
+                || ($0.address?.localizedCaseInsensitiveContains(query) ?? false)
+        }
+        switch filter {
+        case .alphabetical, .unsaved:
+            return matching
+        case .mostVisited:
+            return matching.sorted { index.visits(for: $0).count > index.visits(for: $1).count }
+        case .recent:
+            return matching.sorted {
+                (index.visits(for: $0).first?.arrivedAt ?? .distantPast) > (index.visits(for: $1).first?.arrivedAt ?? .distantPast)
+            }
+        }
+    }
+}
+
+/// A spot visited at least three times with no saved place around it.
+struct UnsavedPlaceSuggestion: Identifiable {
+    let id: String
+    let name: String
+    let address: String?
+    let coordinate: CLLocationCoordinate2D
+    let visitCount: Int
+    let lastVisit: Date
+
+    var draft: SavedPlaceDraft {
+        SavedPlaceDraft(name: name, address: address ?? "", latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+
+    /// Visits are grouped on a ~150 m grid; `visits` are expected newest first.
+    static func suggestions(from visits: [Visit], minimumVisits: Int = 3, limit: Int = 12) -> [UnsavedPlaceSuggestion] {
+        let step = 0.0014
+        var groups: [String: [Visit]] = [:]
+        for visit in visits where visit.latitude.isFinite && visit.longitude.isFinite {
+            let key = "\(Int((visit.latitude / step).rounded())):\(Int((visit.longitude / step).rounded()))"
+            groups[key, default: []].append(visit)
+        }
+        return groups.compactMap { key, group -> UnsavedPlaceSuggestion? in
+            guard group.count >= minimumVisits, let latest = group.first else { return nil }
+            let names = Dictionary(grouping: group, by: \.displayName).mapValues(\.count)
+            let name = names.max { $0.value == $1.value ? $0.key > $1.key : $0.value < $1.value }?.key ?? latest.displayName
+            let latitude = group.map(\.latitude).reduce(0, +) / Double(group.count)
+            let longitude = group.map(\.longitude).reduce(0, +) / Double(group.count)
+            return UnsavedPlaceSuggestion(
+                id: key, name: name, address: group.lazy.compactMap(\.address).first,
+                coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
+                visitCount: group.count, lastVisit: latest.arrivedAt
+            )
+        }
+        .sorted { $0.visitCount == $1.visitCount ? $0.lastVisit > $1.lastVisit : $0.visitCount > $1.visitCount }
+        .prefix(limit)
+        .map { $0 }
     }
 }
 

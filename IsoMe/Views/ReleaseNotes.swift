@@ -1,4 +1,5 @@
 import SwiftUI
+import AVKit
 import Notelet
 
 // MARK: - In-app release notes
@@ -21,7 +22,8 @@ enum IsoMeReleaseNotes {
         return URL(fileURLWithPath: "/dev/null")
     }
 
-    static let notes: [NoteletVersionNotes] = [
+    /// Newest first; the first entry is what Settings opens as "What's new".
+    static let notes: [ReleaseNotesVersion] = [
         .init(
             version: "1.7.17",
             items: [
@@ -456,27 +458,348 @@ enum IsoMeReleaseNotes {
         )
     ]
 
-    static var presentedVersion: NoteletPresentedVersion? {
+    /// The version whose notes open automatically once, or nil when automatic presentation is off.
+    static var presentedVersion: String? {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--seed-screenshot-data") { return nil }
         #endif
 
-        return .current
+        return AppInfo.version
     }
-
-    static let configuration = NoteletConfiguration(
-        nextButtonLabel: "Next",
-        doneButtonLabel: "Done",
-        accentColor: TE.accent
-    )
 }
 
+// MARK: - Model
+
+/// The same shape the Notelet package used, so the notes above read unchanged.
+struct ReleaseNotesVersion: Identifiable {
+    let version: String
+    let items: [ReleaseNoteItem]
+    var id: String { version }
+
+    init(version: String, items: [ReleaseNoteItem]) {
+        self.version = version
+        self.items = items
+    }
+
+    var hasMedia: Bool {
+        items.contains { if case .media = $0 { return true } else { return false } }
+    }
+
+    /// The first media title, or the first list title, leads the page.
+    var headline: LocalizedStringResource? {
+        for item in items {
+            if case .media(_, _, let title, _) = item { return title }
+        }
+        for item in items {
+            if case .list(let title, _) = item { return title }
+        }
+        return nil
+    }
+}
+
+enum ReleaseNoteItem {
+    enum MediaKind {
+        case video
+    }
+
+    struct Row {
+        let symbolSystemName: String
+        let title: LocalizedStringResource
+        let description: LocalizedStringResource
+
+        init(symbolSystemName: String, title: LocalizedStringResource, description: LocalizedStringResource) {
+            self.symbolSystemName = symbolSystemName
+            self.title = title
+            self.description = description
+        }
+    }
+
+    case media(kind: MediaKind, url: URL, title: LocalizedStringResource, description: LocalizedStringResource)
+    case list(title: LocalizedStringResource, rows: [Row])
+}
+
+// MARK: - Presentation
+
 extension View {
+    /// Shows the current version's notes once, then remembers it was seen.
     func isoMeReleaseNotesSheet() -> some View {
-        noteletSheet(
-            notes: IsoMeReleaseNotes.notes,
-            version: IsoMeReleaseNotes.presentedVersion,
-            configuration: IsoMeReleaseNotes.configuration
-        )
+        modifier(ReleaseNotesPresenter())
+    }
+}
+
+private struct ReleaseNotesPresenter: ViewModifier {
+    @State private var presented: ReleaseNotesVersion?
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                guard presented == nil,
+                      let version = IsoMeReleaseNotes.presentedVersion,
+                      // Keep Notelet's key so versions seen before this sheet existed stay seen.
+                      UserDefaults.standard.string(forKey: NoteletStorageKey.latestSeenAppVersion) != version,
+                      let release = IsoMeReleaseNotes.notes.first(where: { $0.version == version }),
+                      !release.items.isEmpty else { return }
+                presented = release
+            }
+            .sheet(item: $presented, onDismiss: {
+                if let version = IsoMeReleaseNotes.presentedVersion {
+                    UserDefaults.standard.set(version, forKey: NoteletStorageKey.latestSeenAppVersion)
+                }
+            }) { release in
+                WhatsNewSheet(release: release)
+            }
+    }
+}
+
+/// One release: headline, looping clip, highlights, and a way back to earlier releases.
+struct WhatsNewSheet: View {
+    let release: ReleaseNotesVersion
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ReleaseNotesPage(release: release, onClose: { dismiss() })
+                .toolbar(.hidden, for: .navigationBar)
+                .navigationTitle("What's new")
+        }
+        .presentationDragIndicator(.visible)
+        .presentationBackground(TE.surface)
+    }
+}
+
+private struct ReleaseNotesPage: View {
+    let release: ReleaseNotesVersion
+    var onClose: (() -> Void)?
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("WHAT'S NEW · \(release.version)")
+                            .font(TE.mono(.caption2))
+                            .tracking(1.5)
+                            .foregroundStyle(TE.textMuted)
+                        if let headline = release.headline {
+                            Text(headline)
+                                .font(TE.editorial(.largeTitle))
+                                .fixedSize(horizontal: false, vertical: true)
+                                .accessibilityAddTraits(.isHeader)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    if let onClose {
+                        BackPageCircleButton(systemImage: "xmark", label: "Close", action: onClose)
+                    }
+                }
+                .padding(.leading, 24)
+                .padding(.trailing, 20)
+                .padding(.top, 24)
+
+                ForEach(Array(release.items.enumerated()), id: \.offset) { index, item in
+                    itemView(item, isFirst: index == 0)
+                }
+            }
+            .padding(.bottom, 24)
+        }
+        .scrollIndicators(.hidden)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            if onClose != nil {
+                VStack(spacing: 4) {
+                    Button("Continue") { onClose?() }
+                        .buttonStyle(BackPagePillButtonStyle(kind: .filled))
+                    if IsoMeReleaseNotes.notes.count > 1 {
+                        NavigationLink("Earlier releases") {
+                            EarlierReleasesView(current: release.version)
+                        }
+                        .font(.footnote)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                .padding(.bottom, 8)
+                .background(TE.surface.ignoresSafeArea(edges: .bottom))
+            }
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .tint(TE.textPrimary)
+    }
+
+    @ViewBuilder
+    private func itemView(_ item: ReleaseNoteItem, isFirst: Bool) -> some View {
+        switch item {
+        case .media(_, let url, let title, let description):
+            VStack(alignment: .leading, spacing: 0) {
+                if !isFirst {
+                    Text(title)
+                        .font(TE.editorial(.title2))
+                        .padding(.horizontal, 24)
+                        .padding(.top, 26)
+                }
+                ReleaseNoteVideo(url: url, title: title)
+                    .padding(.horizontal, 16)
+                    .padding(.top, isFirst ? 18 : 12)
+                Text(description)
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 14)
+            }
+        case .list(let title, let rows):
+            VStack(alignment: .leading, spacing: 0) {
+                if !(isFirst && !release.hasMedia) {
+                    Text(title)
+                        .font(TE.mono(.caption2))
+                        .tracking(1.5)
+                        .textCase(.uppercase)
+                        .foregroundStyle(TE.textMuted)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 22)
+                        .padding(.bottom, 8)
+                        .accessibilityAddTraits(.isHeader)
+                }
+                BackPageCard {
+                    ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
+                        if index > 0 { BackPageDivider() }
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: row.symbolSystemName)
+                                .font(.body)
+                                .foregroundStyle(TE.inkRust)
+                                .frame(width: 28)
+                                .accessibilityHidden(true)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(row.title)
+                                    .font(.subheadline.weight(.semibold))
+                                Text(row.description)
+                                    .font(.footnote)
+                                    .foregroundStyle(TE.textMuted)
+                            }
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .accessibilityElement(children: .combine)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, isFirst && !release.hasMedia ? 18 : 0)
+            }
+        }
+    }
+}
+
+private struct EarlierReleasesView: View {
+    let current: String
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                BackPageHeader(caption: "RELEASE NOTES", title: "Earlier releases")
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+                BackPageCard {
+                    let releases = IsoMeReleaseNotes.notes.filter { $0.version != current }
+                    ForEach(Array(releases.enumerated()), id: \.element.id) { index, release in
+                        if index > 0 { BackPageDivider() }
+                        NavigationLink {
+                            ReleaseNotesPage(release: release)
+                        } label: {
+                            BackPageRowLabel(
+                                title: release.headline.map { Text($0) } ?? Text(verbatim: release.version),
+                                value: Text(verbatim: release.version).font(TE.mono(.caption))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 18)
+            }
+            .padding(.bottom, 32)
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
+    }
+}
+
+/// A muted, looping clip on the ink card. Paused under Reduce Motion; tap to play or pause.
+private struct ReleaseNoteVideo: View {
+    let url: URL
+    let title: LocalizedStringResource
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var player: AVQueuePlayer?
+    @State private var looper: AVPlayerLooper?
+    @State private var isPlaying = false
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            RoundedRectangle(cornerRadius: 20).fill(TE.inkCard)
+            ReleaseNotePlayerLayer(player: player)
+            Label(isPlaying ? "Pause" : "Play", systemImage: isPlaying ? "pause.fill" : "play.fill")
+                .labelStyle(.iconOnly)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(TE.onInkCard)
+                .frame(width: 32, height: 32)
+                .background(Circle().fill(TE.inkCard.opacity(0.7)))
+                .padding(12)
+                .accessibilityHidden(true)
+        }
+        .frame(height: 236)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .contentShape(RoundedRectangle(cornerRadius: 20))
+        .onTapGesture { togglePlayback() }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Video: \(Text(title))"))
+        .accessibilityAddTraits(.isButton)
+        .accessibilityHint(isPlaying ? "Pauses the video" : "Plays the video")
+        .task(id: url) {
+            let item = AVPlayerItem(url: url)
+            let queue = AVQueuePlayer(playerItem: item)
+            queue.isMuted = true
+            looper = AVPlayerLooper(player: queue, templateItem: item)
+            player = queue
+            if !reduceMotion {
+                queue.play()
+                isPlaying = true
+            }
+        }
+        .onDisappear {
+            player?.pause()
+            isPlaying = false
+        }
+    }
+
+    private func togglePlayback() {
+        guard let player else { return }
+        if isPlaying { player.pause() } else { player.play() }
+        isPlaying.toggle()
+    }
+}
+
+private struct ReleaseNotePlayerLayer: UIViewRepresentable {
+    final class PlayerView: UIView {
+        override static var layerClass: AnyClass { AVPlayerLayer.self }
+        var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
+    }
+
+    let player: AVPlayer?
+
+    func makeUIView(context: Context) -> PlayerView {
+        let view = PlayerView()
+        view.playerLayer.videoGravity = .resizeAspectFill
+        view.clipsToBounds = true
+        view.isUserInteractionEnabled = false
+        return view
+    }
+
+    func updateUIView(_ uiView: PlayerView, context: Context) {
+        uiView.playerLayer.player = player
     }
 }

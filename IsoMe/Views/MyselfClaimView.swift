@@ -16,33 +16,132 @@ struct MyselfClaimView: View {
     @State private var openedClaim = false
 
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    Text("Your existing purchase includes complimentary lifetime access to myself.md.")
-                    Text("We’ll send your App Store purchase proof to myself.md to verify eligibility. Your health and location data stay on your device.")
-                    Text("Then sign in to choose the myself.md account that receives access. Each original purchase can be linked to one account. Family-shared access alone does not qualify; the purchaser can claim.")
-                } header: {
-                    Text("Claim free myself.md access")
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top) {
+                    BackPageHeader(caption: "A GIFT WITH YOUR PURCHASE", title: "Claim free myself.md access")
+                    BackPageCircleButton(systemImage: "xmark", label: "Close") { dismiss() }
                 }
-                Section {
-                    Button {
-                        Task { await claim() }
-                    } label: {
-                        if busy { ProgressView("Verifying purchase…") }
-                        else { Text(openedClaim ? "Open claim again" : "Verify purchase and continue") }
+                .padding(.leading, 24)
+                .padding(.trailing, 20)
+                .padding(.top, 20)
+
+                Text("Your existing purchase includes complimentary lifetime access to myself.md.")
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 14)
+
+                BackPageCard {
+                    step(1, title: "Verify your purchase",
+                         detail: "We’ll send your App Store purchase proof to myself.md to verify eligibility. Your health and location data stay on your device.",
+                         fill: openedClaim ? TE.placeInks[1] : TE.textPrimary, ink: TE.surface)
+                    BackPageDivider()
+                    step(2, title: "Choose the account that gets it",
+                         detail: "Then sign in to choose the myself.md account that receives access. Each original purchase can be linked to one account. Family-shared access alone does not qualify; the purchaser can claim.",
+                         fill: openedClaim ? TE.textPrimary : TE.dialTrack, ink: openedClaim ? TE.surface : TE.textPrimary)
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 20)
+
+                if let errorMessage {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("COULDN'T VERIFY")
+                            .font(TE.mono(.caption2))
+                            .tracking(1.2)
+                            .foregroundStyle(TE.inkRust)
+                        Text(errorMessage)
+                            .font(.footnote)
+                            .foregroundStyle(TE.textMuted)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    .disabled(busy)
-                    if openedClaim {
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+                    .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.placeInks[1], lineWidth: 1.5))
+                    .padding(.horizontal, 16)
+                    .padding(.top, 14)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityAddTraits(.updatesFrequently)
+                } else if openedClaim {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("VERIFIED")
+                            .font(TE.mono(.caption2))
+                            .tracking(1.2)
+                            .foregroundStyle(TE.onInkCardMuted)
                         Text("Finish signing in on myself.md, then sign in with the same account in the myself.md app on iOS or Android.")
+                            .font(.footnote)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    if let errorMessage { Text(errorMessage).foregroundStyle(.red).accessibilityAddTraits(.updatesFrequently) }
+                    .foregroundStyle(TE.onInkCard)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(RoundedRectangle(cornerRadius: 18).fill(TE.inkCard))
+                    .padding(.horizontal, 16)
+                    .padding(.top, 14)
+                    .accessibilityElement(children: .combine)
                 }
             }
-            .navigationTitle("myself.md access")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Done") { dismiss() } } }
+            .padding(.bottom, 24)
         }
+        .scrollIndicators(.hidden)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            VStack(spacing: 6) {
+                Button {
+                    Task { await claim() }
+                } label: {
+                    HStack(spacing: 10) {
+                        if busy {
+                            ProgressView().tint(TE.surface)
+                            Text("Verifying purchase…")
+                        } else if errorMessage != nil {
+                            Text("Try again")
+                        } else {
+                            Text(openedClaim ? "Open claim again" : "Verify purchase and continue")
+                        }
+                    }
+                }
+                .buttonStyle(BackPagePillButtonStyle(kind: .filled, font: .body.weight(.semibold), minHeight: 56))
+                .disabled(busy)
+
+                Button("Not now") { dismiss() }
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                    .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 12)
+            .padding(.bottom, 12)
+            .background(TE.surface.ignoresSafeArea(edges: .bottom))
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+    }
+
+    private func step(_ number: Int, title: LocalizedStringKey, detail: LocalizedStringKey, fill: Color, ink: Color) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Text(verbatim: "\(number)")
+                .font(TE.editorial(.subheadline))
+                .foregroundStyle(ink)
+                .frame(width: 28, height: 28)
+                .background(Circle().fill(fill))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.footnote.weight(.semibold))
+                Text(detail)
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .accessibilityElement(children: .combine)
     }
 
     @MainActor

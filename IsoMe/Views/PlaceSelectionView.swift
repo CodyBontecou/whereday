@@ -141,30 +141,51 @@ struct PlaceSelectionView: View {
             List {
                 Section {
                     locationMap
-                        .frame(height: 260)
+                        .frame(height: 240)
+                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
                         .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
 
                     Button {
                         guard let mapCenterCoordinate else { return }
                         selectMapPin(at: mapCenterCoordinate)
                     } label: {
                         Label("Drop Pin at Map Center", systemImage: "mappin")
-                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(mapCenterCoordinate == nil ? TE.textMuted : TE.textPrimary)
+                            .frame(maxWidth: .infinity, minHeight: 48)
+                            .background(RoundedRectangle(cornerRadius: 14).fill(TE.card))
+                            .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(TE.border, lineWidth: 1))
                     }
+                    .buttonStyle(.plain)
                     .disabled(mapCenterCoordinate == nil)
+                    .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                    .listRowBackground(Color.clear)
                 } footer: {
                     Text("Tap the map to place the pin exactly where you want it.")
+                        .font(.caption)
+                        .foregroundStyle(TE.textMuted)
                 }
+                .listRowSeparator(.hidden)
 
                 if let selection {
-                    Section("Selected Location") {
+                    Section {
                         selectedLocationRow(selection)
+                    } header: {
+                        sectionHeader("SELECTED LOCATION")
                     }
+                    .listRowBackground(TE.card)
                 }
 
                 searchStateContent
+                    .listRowBackground(TE.card)
             }
             .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(TE.surface.ignoresSafeArea())
+            .foregroundStyle(TE.textPrimary)
+            .tint(TE.inkRust)
             .navigationTitle("Choose Location")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchModel.query, prompt: "Search places or addresses")
@@ -219,7 +240,7 @@ struct PlaceSelectionView: View {
                         systemImage: "mappin",
                         coordinate: selection.coordinate
                     )
-                    .tint(.red)
+                    .tint(TE.inkRust)
                 }
             }
             .mapStyle(.standard(elevation: .flat))
@@ -252,7 +273,8 @@ struct PlaceSelectionView: View {
                 HStack(spacing: 12) {
                     ProgressView()
                     Text("Searching Apple Maps…")
-                        .foregroundStyle(.secondary)
+                        .font(TE.editorial(.body).italic())
+                        .foregroundStyle(TE.textMuted)
                 }
             }
         } else if let errorMessage = searchModel.errorMessage {
@@ -267,18 +289,19 @@ struct PlaceSelectionView: View {
                 }
             }
         } else if !searchModel.results.isEmpty {
-            Section("Search Results") {
+            Section {
                 ForEach(searchModel.results) { result in
                     Button {
                         selectSearchResult(result)
                     } label: {
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: 3) {
                             Text(result.name)
-                                .foregroundStyle(.primary)
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(TE.textPrimary)
                             if let address = result.address, !address.isEmpty {
                                 Text(address)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .font(TE.mono(.caption2))
+                                    .foregroundStyle(TE.textMuted)
                             }
                         }
                         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
@@ -289,6 +312,8 @@ struct PlaceSelectionView: View {
                     .accessibilityValue(result.address ?? "")
                     .accessibilityHint("Selects this location.")
                 }
+            } header: {
+                sectionHeader("SEARCH RESULTS")
             }
         } else if trimmedQuery.count >= 2 {
             Section {
@@ -307,26 +332,30 @@ struct PlaceSelectionView: View {
 
     private func selectedLocationRow(_ selection: ManualLocationSelection) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            HStack(spacing: 8) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Image(systemName: selection.source == .mapPin ? "mappin" : "checkmark.circle.fill")
-                    .foregroundStyle(selection.source == .mapPin ? .red : .green)
+                    .foregroundStyle(TE.inkRust)
+                    .accessibilityHidden(true)
                 Text(selection.name.isEmpty ? "Pinned location" : selection.name)
-                    .font(.headline)
+                    .font(TE.editorial(.title3))
             }
 
             if let address = selection.address, !address.isEmpty {
                 Text(address)
-                    .foregroundStyle(.secondary)
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textMuted)
             } else if isReverseGeocoding {
                 HStack(spacing: 6) {
                     ProgressView()
                         .controlSize(.small)
                     Text("Finding address…")
-                        .foregroundStyle(.secondary)
+                        .font(.subheadline)
+                        .foregroundStyle(TE.textMuted)
                 }
             } else {
                 Text("Add a name after selecting this location.")
-                    .foregroundStyle(.secondary)
+                    .font(.subheadline)
+                    .foregroundStyle(TE.textMuted)
             }
 
             Text(String(
@@ -334,11 +363,18 @@ struct PlaceSelectionView: View {
                 selection.coordinate.latitude,
                 selection.coordinate.longitude
             ))
-            .font(.caption)
-            .foregroundStyle(.secondary)
-            .monospaced()
+            .font(TE.mono(.caption2))
+            .foregroundStyle(TE.textMuted)
         }
+        .padding(.vertical, 4)
         .accessibilityElement(children: .combine)
+    }
+
+    private func sectionHeader(_ title: LocalizedStringKey) -> some View {
+        Text(title)
+            .font(TE.mono(.caption2))
+            .tracking(1.5)
+            .foregroundStyle(TE.textMuted)
     }
 
     private func selectSearchResult(_ result: PlaceSearchResult) {

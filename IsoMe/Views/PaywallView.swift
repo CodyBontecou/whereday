@@ -6,125 +6,34 @@ struct PaywallView: View {
     var context: PaywallContext = .export
     var isRequired = false
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var family = false
     @State private var selectedOption: IsoMePurchaseOption = .individualYearly
     @State private var showSubscriptionManagement = false
-    private var ink: Color { InkPaperPalette.ink }
-    private var paper: Color { InkPaperPalette.paper }
-    private var pencil: Color { InkPaperPalette.pencil }
 
     private var managing: Bool { context == .settings && storeManager.isPurchased }
     private var options: [IsoMePurchaseOption] {
         family ? [.familyWeekly, .familyYearly, .family] : [.individualWeekly, .individualYearly, .individual]
     }
-    private var hasTrial: Bool { storeManager.trialEligibleProductIDs.contains(selectedOption.productID) }
+    /// Only plans the App Store actually returned are offered.
+    private var offeredOptions: [IsoMePurchaseOption] {
+        options.filter { storeManager.product(for: $0) != nil }
+    }
+    private var usesTwoPanes: Bool { horizontalSizeClass == .regular && !dynamicTypeSize.isAccessibilitySize }
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text(managing ? String(localized: "Your Whereday plan") : String(localized: "A life of places.\nYours to keep."))
-                            .font(.system(.largeTitle, design: .serif).weight(.medium))
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
-                        Text(managing ? String(localized: "Manage your purchase and Family Sharing.") : String(localized: "Track your days. Revisit your places.\nKeep your history private and on-device."))
-                            .font(.subheadline).foregroundStyle(pencil)
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom, 8)
-                    if managing {
-                        Text(storeManager.activePurchaseOption?.title ?? String(localized: "Active purchase")).font(.headline)
-                        if storeManager.canBuyFamilyUpgrade {
-                            Text("Add Apple Family Sharing to your lifetime purchase.")
-                            if let product = storeManager.product(for: .familyUpgrade) {
-                                Text("\(product.displayPrice), one-time purchase").font(.headline)
-                            }
-                        }
-                    } else {
-                        Picker("Who is this for?", selection: $family) {
-                            Text("Individual").tag(false)
-                            Text("Family").tag(true)
-                        }.pickerStyle(.segmented).frame(minHeight: 44)
-                        if family {
-                            Text("Family Sharing shares access, not your location journal.")
-                                .font(.caption).foregroundStyle(pencil)
-                            Label("Share with up to 5 family members using Apple Family Sharing", systemImage: "person.3.fill")
-                                .font(.subheadline).foregroundStyle(pencil)
-                        }
-                        VStack(spacing: 10) {
-                            ForEach(options) { option in
-                                planRow(option)
-                            }
-                        }
-                        if let product = storeManager.product(for: selectedOption) {
-                            VStack(spacing: 4) {
-                                Text(PaywallCopy.disclosure(for: selectedOption, displayPrice: product.displayPrice, hasTrial: hasTrial))
-                                if selectedOption.isSubscription {
-                                    Text("Cancel in Apple subscription settings at least 24 hours before renewal.")
-                                }
-                            }
-                            .font(.footnote).foregroundStyle(pencil).multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(12)
-                            .frame(maxWidth: .infinity)
-                            .background(paper.opacity(0.96), in: RoundedRectangle(cornerRadius: 12))
-                        }
-                    }
-                    if let error = storeManager.purchaseError ?? storeManager.productLoadError {
-                        Text(error).font(.footnote).foregroundStyle(.red).multilineTextAlignment(.center)
-                    }
-                    if !managing && storeManager.product(for: selectedOption) == nil {
-                        Button("Retry loading plans") { Task { await storeManager.loadProducts() } }
-                            .disabled(storeManager.isLoading)
-                    }
-                    Button { restore() } label: {
-                        Text("Restore Purchases").frame(minHeight: 44)
-                    }
-                    .padding(.horizontal, 16)
-                    .background(paper.opacity(0.96), in: Capsule())
-                    .disabled(storeManager.isLoading)
-                    HStack(spacing: 24) {
-                        if let url = IsoMeURLs.privacyPolicy {
-                            Link(destination: url) { Text("Privacy").frame(minHeight: 44) }
-                        }
-                        if let url = IsoMeURLs.termsOfService {
-                            Link(destination: url) { Text("Terms").frame(minHeight: 44) }
-                        }
-                    }
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .background(paper.opacity(0.96), in: Capsule())
-                    VStack(spacing: 8) {
-                        Text("Your existing records remain available to view and export if your subscription ends.")
-                        Text("Deleting the app or buying Lifetime does not cancel an existing subscription. Manage it in Apple Account settings.")
-                    }
-                        .font(.caption).foregroundStyle(pencil).multilineTextAlignment(.center)
-                        .padding(12)
-                        .background(paper.opacity(0.96), in: RoundedRectangle(cornerRadius: 12))
-                }
-                .padding(.horizontal, 24).padding(.top, isRequired ? 52 : 24).padding(.bottom, 24)
-                .frame(maxWidth: 560).frame(maxWidth: .infinity)
+        Group {
+            if usesTwoPanes {
+                twoPaneLayout
+            } else {
+                singleColumnLayout
             }
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                purchaseFooter
-            }
-            .background {
-                InkJournalBackground()
-            }
-            .tint(ink)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbar(isRequired ? .hidden : .visible, for: .navigationBar)
-            .toolbar {
-                if !isRequired {
-                    ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } }
-                }
-            }
-            .manageSubscriptionsSheet(isPresented: $showSubscriptionManagement)
         }
-        .modifier(JournalFlowPresentation())
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .tint(TE.textPrimary)
+        .manageSubscriptionsSheet(isPresented: $showSubscriptionManagement)
         .interactiveDismissDisabled(isRequired)
         .onChange(of: family) { _, value in
             switch selectedOption {
@@ -132,7 +41,9 @@ struct PaywallView: View {
             case .individual, .family: selectedOption = value ? .family : .individual
             default: selectedOption = value ? .familyYearly : .individualYearly
             }
+            keepSelectionOffered()
         }
+        .onChange(of: storeManager.productsByID.count) { _, _ in keepSelectionOffered() }
         .onAppear {
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("--review-family-paywall") {
@@ -146,65 +57,335 @@ struct PaywallView: View {
         }
     }
 
-    @ViewBuilder
-    private var purchaseFooter: some View {
-        if !managing || storeManager.canBuyFamilyUpgrade || storeManager.activePurchaseOption?.isSubscription == true {
-            VStack(spacing: 0) {
-                if !managing {
-                    purchaseButton(selectedOption)
-                } else if storeManager.canBuyFamilyUpgrade {
-                    purchaseButton(.familyUpgrade)
-                } else {
-                    Button("Manage subscription") { showSubscriptionManagement = true }
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, minHeight: 52)
-                        .foregroundStyle(paper)
-                        .background(ink, in: RoundedRectangle(cornerRadius: 12))
-                        .buttonStyle(PaywallInkPressStyle())
+    /// If the chosen plan isn't on sale, fall back to yearly, then whatever is.
+    private func keepSelectionOffered() {
+        let offered = offeredOptions
+        guard !offered.isEmpty, !offered.contains(selectedOption) else { return }
+        selectedOption = offered.first(where: { $0 == .individualYearly || $0 == .familyYearly }) ?? offered[0]
+    }
+
+    // MARK: - Layouts
+
+    private var singleColumnLayout: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    eyebrow
+                    Spacer(minLength: 12)
+                    closeButton
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+
+                VStack(alignment: .leading, spacing: 10) {
+                    JourneyMapIllustration(ink: TE.textPrimary, paper: TE.card)
+                        .frame(height: 96)
+                        .accessibilityHidden(true)
+                    headline
+                        .font(TE.editorial(.largeTitle))
+                    subheadline
+                        .font(.subheadline)
+                        .foregroundStyle(TE.textMuted)
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 14)
+
+                planContent
+                    .padding(.horizontal, 20)
+                    .padding(.top, 18)
+
+                notes
+                    .padding(.horizontal, 24)
+                    .padding(.top, 18)
             }
-            .frame(maxWidth: 512)
-            .padding(.horizontal, 24)
-            .padding(.top, 12)
             .padding(.bottom, 16)
+            .frame(maxWidth: 560)
             .frame(maxWidth: .infinity)
-            .background(paper.ignoresSafeArea(edges: .bottom))
+        }
+        .scrollIndicators(.hidden)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            footer
+                .frame(maxWidth: 560)
+                .frame(maxWidth: .infinity)
+                .background(TE.surface.ignoresSafeArea(edges: .bottom))
         }
     }
 
-    private func planRow(_ option: IsoMePurchaseOption) -> some View {
-        Button { selectedOption = option } label: {
-            HStack(spacing: 12) {
-                Image(systemName: selectedOption == option ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(selectedOption == option ? ink : pencil)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(option.title).font(.headline.weight(.medium))
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                    if storeManager.trialEligibleProductIDs.contains(option.productID) {
-                        Text("7 days free").font(.caption).foregroundStyle(pencil)
-                    } else if !option.isSubscription {
-                        Text("One-time purchase").font(.caption).foregroundStyle(pencil)
-                    }
-                }
-                Spacer(minLength: 4)
-                if let product = storeManager.product(for: option) {
-                    VStack(alignment: .trailing) {
-                        Text(product.displayPrice).font(.headline).monospacedDigit()
-                        Text(option.billingCaption).font(.caption).foregroundStyle(pencil)
-                    }
-                } else {
-                    Text("Unavailable").font(.caption).foregroundStyle(pencil)
+    /// The wide layout: the promise on an ink page, the plans beside it.
+    private var twoPaneLayout: some View {
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("YOUR WHEREDAY PLAN")
+                    .font(TE.mono(.caption2))
+                    .tracking(1.5)
+                    .foregroundStyle(TE.onInkCardMuted)
+                Spacer(minLength: 16)
+                JourneyMapIllustration(ink: TE.onInkCard, paper: TE.inkCard)
+                    .frame(height: 150)
+                    .accessibilityHidden(true)
+                Spacer(minLength: 16)
+                VStack(alignment: .leading, spacing: 10) {
+                    headline
+                        .font(TE.editorial(.largeTitle))
+                    subheadline
+                        .font(.subheadline)
+                        .foregroundStyle(TE.onInkCardMuted)
                 }
             }
-            .foregroundStyle(.primary).padding(.horizontal, 16).padding(.vertical, 12)
-            .frame(maxWidth: .infinity, minHeight: 68)
-            .background(paper.opacity(0.96), in: RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).fill(ink.opacity(selectedOption == option ? 0.05 : 0)).allowsHitTesting(false))
-            .overlay(RoundedRectangle(cornerRadius: 12).stroke(ink.opacity(selectedOption == option ? 1 : 0.24), lineWidth: selectedOption == option ? 1.5 : 0.75))
+            .foregroundStyle(TE.onInkCard)
+            .padding(.horizontal, 36)
+            .padding(.vertical, 40)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .background(TE.inkCard.ignoresSafeArea())
+
+            VStack(spacing: 0) {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            Spacer(minLength: 0)
+                            closeButton
+                        }
+                        planContent
+                            .padding(.top, 8)
+                        notes
+                            .padding(.top, 16)
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 20)
+                }
+                .scrollIndicators(.hidden)
+                footer
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    // MARK: - Pieces
+
+    private var eyebrow: some View {
+        Text("YOUR WHEREDAY PLAN")
+            .font(TE.mono(.caption2))
+            .tracking(1.5)
+            .foregroundStyle(TE.textMuted)
+    }
+
+    @ViewBuilder
+    private var closeButton: some View {
+        if !isRequired {
+            BackPageCircleButton(systemImage: "xmark", label: "Close") { dismiss() }
+        }
+    }
+
+    private var headline: Text {
+        if managing {
+            return Text("Your Whereday plan")
+        }
+        // The second line is set in italic, as on the printed page.
+        let lines = String(localized: "A life of places.\nYours to keep.").split(separator: "\n", maxSplits: 1)
+        guard lines.count == 2 else { return Text(String(localized: "A life of places.\nYours to keep.")) }
+        return Text(verbatim: "\(lines[0])\n") + Text(verbatim: String(lines[1])).italic()
+    }
+
+    private var subheadline: Text {
+        managing
+            ? Text("Manage your purchase and Family Sharing.")
+            : Text("Track your days. Revisit your places.\nKeep your history private and on-device.")
+    }
+
+    @ViewBuilder
+    private var planContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if managing {
+                activePlanCard
+            } else {
+                audiencePicker
+                if offeredOptions.isEmpty {
+                    unavailablePlans
+                } else {
+                    ForEach(offeredOptions) { option in
+                        planCard(option)
+                    }
+                }
+                if family {
+                    HStack(alignment: .top, spacing: 10) {
+                        Image(systemName: "person.3")
+                            .foregroundStyle(TE.textMuted)
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Share with up to 5 family members using Apple Family Sharing")
+                            Text("Family Sharing shares access, not your location journal.")
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+                    .accessibilityElement(children: .combine)
+                }
+                if selectedOption.isSubscription, storeManager.product(for: selectedOption) != nil {
+                    Text("Cancel in Apple subscription settings at least 24 hours before renewal.")
+                        .font(.caption)
+                        .foregroundStyle(TE.textMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            if let error = storeManager.purchaseError ?? storeManager.productLoadError {
+                Text(error)
+                    .font(.footnote)
+                    .foregroundStyle(TE.inkRust)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private var audiencePicker: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 10))
+        return layout {
+            Text("WHO IS THIS FOR?")
+                .font(TE.mono(.caption2))
+                .tracking(1.2)
+                .foregroundStyle(TE.textMuted)
+            if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: 0) }
+            BackPageSegmented(
+                label: "Who is this for?",
+                options: [(false, "Individual"), (true, "Family")],
+                selection: $family
+            )
+        }
+    }
+
+    private var unavailablePlans: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if storeManager.isLoadingProducts {
+                ProgressView("Loading plans…")
+                    .font(.footnote)
+            } else {
+                Button("Retry loading plans") { Task { await storeManager.loadProducts() } }
+                    .buttonStyle(BackPagePillButtonStyle(kind: .outlined, minHeight: 48))
+                    .disabled(storeManager.isLoading)
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 88)
+    }
+
+    private func planCard(_ option: IsoMePurchaseOption) -> some View {
+        let isSelected = selectedOption == option
+        let trial = storeManager.trialEligibleProductIDs.contains(option.productID)
+        let product = storeManager.product(for: option)
+        return Button { selectedOption = option } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(verbatim: option.title)
+                        .font(TE.editorial(.title3))
+                    Spacer(minLength: 4)
+                    if trial {
+                        Text("7 DAYS FREE")
+                            .font(TE.mono(.caption2))
+                            .foregroundStyle(TE.card)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(RoundedRectangle(cornerRadius: 10).fill(TE.placeInks[1]))
+                    } else if let product {
+                        Text(verbatim: product.displayPrice)
+                            .font(TE.mono(.footnote))
+                            .monospacedDigit()
+                    }
+                }
+                if let product {
+                    Text(PaywallCopy.disclosure(for: option, displayPrice: product.displayPrice, hasTrial: trial))
+                        .font(.footnote)
+                        .foregroundStyle(TE.textMuted)
+                }
+            }
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .overlay(
+                RoundedRectangle(cornerRadius: 18)
+                    .strokeBorder(isSelected ? TE.placeInks[1] : TE.border, lineWidth: isSelected ? 2 : 1)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 18))
         }
         .buttonStyle(PaywallInkPressStyle())
-        .accessibilityAddTraits(selectedOption == option ? .isSelected : [])
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    private var activePlanCard: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(verbatim: storeManager.activePurchaseOption?.title ?? String(localized: "Active purchase"))
+                .font(TE.editorial(.title3))
+            if let expiration = storeManager.trackingExpiration, storeManager.activePurchaseOption?.isSubscription == true {
+                Text("Current period ends \(expiration.formatted(date: .abbreviated, time: .omitted)).")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+            }
+            if storeManager.canBuyFamilyUpgrade {
+                Text("Add Apple Family Sharing to your lifetime purchase.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+                if let product = storeManager.product(for: .familyUpgrade) {
+                    Text("\(product.displayPrice), one-time purchase")
+                        .font(TE.mono(.footnote))
+                }
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.placeInks[1], lineWidth: 2))
+        .accessibilityElement(children: .combine)
+    }
+
+    private var notes: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Your existing records remain available to view and export if your subscription ends.")
+            Text("Deleting the app or buying Lifetime does not cancel an existing subscription. Manage it in Apple Account settings.")
+        }
+        .font(.caption)
+        .foregroundStyle(TE.textMuted)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var footer: some View {
+        VStack(spacing: 6) {
+            if !managing {
+                purchaseButton(selectedOption)
+            } else if storeManager.canBuyFamilyUpgrade {
+                purchaseButton(.familyUpgrade)
+            } else if storeManager.activePurchaseOption?.isSubscription == true {
+                Button("Manage subscription") { showSubscriptionManagement = true }
+                    .buttonStyle(BackPagePillButtonStyle(kind: .filled, font: .body.weight(.semibold), minHeight: 56))
+            }
+            HStack(spacing: 4) {
+                Button("Restore Purchases") { restore() }
+                    .disabled(storeManager.isLoading)
+                    .padding(.horizontal, 10)
+                    .frame(minHeight: 44)
+                if let url = IsoMeURLs.privacyPolicy {
+                    Link("Privacy", destination: url)
+                        .padding(.horizontal, 10)
+                        .frame(minHeight: 44)
+                }
+                if let url = IsoMeURLs.termsOfService {
+                    Link("Terms", destination: url)
+                        .padding(.horizontal, 10)
+                        .frame(minHeight: 44)
+                }
+            }
+            .font(.footnote)
+            .buttonStyle(.plain)
+            .modifier(BackPageWrapIfNeeded())
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
     }
 
     private func purchaseButton(_ option: IsoMePurchaseOption) -> some View {
@@ -214,19 +395,13 @@ struct PaywallView: View {
                 if result == .succeeded && !isRequired { dismiss() }
             }
         } label: {
-            HStack {
-                Spacer()
-                if storeManager.purchasingOption == option { ProgressView().tint(paper) }
-                Text(PaywallCopy.purchaseButtonTitle(for: option, hasTrial: hasTrial))
-                    .font(.headline)
-                Spacer()
-            }.padding(.vertical, 17)
-                .foregroundStyle(paper)
-                .background(ink, in: RoundedRectangle(cornerRadius: 12))
+            HStack(spacing: 10) {
+                if storeManager.purchasingOption == option { ProgressView().tint(TE.surface) }
+                Text(PaywallCopy.purchaseButtonTitle(for: option, hasTrial: storeManager.trialEligibleProductIDs.contains(option.productID)))
+            }
         }
-        .buttonStyle(PaywallInkPressStyle())
+        .buttonStyle(BackPagePillButtonStyle(kind: .filled, font: .body.weight(.semibold), minHeight: 56))
         .accessibilityIdentifier("paywall-purchase")
-        .opacity(storeManager.product(for: option) == nil || storeManager.isLoading ? 0.5 : 1)
         .disabled(storeManager.product(for: option) == nil || storeManager.isLoading)
     }
 

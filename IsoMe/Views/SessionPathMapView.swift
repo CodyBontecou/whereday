@@ -1,8 +1,8 @@
 import SwiftUI
 import MapKit
 
-/// A map view that displays a session's recorded path with start/end markers
-/// and a gradient polyline showing direction of travel
+/// A map view that displays a session's recorded path in navy ink, with a green
+/// start dot and a red end square as on the Route artboard
 struct SessionPathMapView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let points: [LocationPoint]
@@ -38,22 +38,14 @@ struct SessionPathMapView: View {
                 ForEach(displayedRoadSegments(from: roadSnappedRoute)) { segment in
                     MapPolyline(coordinates: segment.coordinates)
                         .stroke(
-                            LinearGradient(
-                                colors: [.blue.opacity(0.4), .blue],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            ),
+                            TE.textPrimary,
                             style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
                         )
                 }
             } else if showsRawPathFallback, displayedPoints.count >= 2 {
                 MapPolyline(coordinates: displayedPoints.map { $0.coordinate })
                     .stroke(
-                        LinearGradient(
-                            colors: [.blue.opacity(0.4), .blue],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        ),
+                        TE.textPrimary,
                         style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
                     )
             }
@@ -86,8 +78,9 @@ struct SessionPathMapView: View {
             ForEach(intermediatePoints) { point in
                 Annotation("", coordinate: point.coordinate) {
                     Circle()
-                        .fill(.blue.opacity(0.6))
+                        .fill(TE.surface)
                         .frame(width: 6, height: 6)
+                        .overlay(Circle().strokeBorder(TE.textPrimary, lineWidth: 1.5))
                         .accessibilityHidden(true)
                 }
             }
@@ -98,7 +91,7 @@ struct SessionPathMapView: View {
                 }
             }
         }
-        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+        .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll))
         .mapControls {
             // Minimal controls for the mini map
         }
@@ -219,25 +212,19 @@ struct StartMarker: View {
     var accessibilityValue = ""
 
     var body: some View {
-        ZStack {
-            Circle()
-                .fill(.green)
-                .frame(width: 24, height: 24)
-                .accessibilityHidden(true)
-            
-            Image(systemName: "flag.fill")
-                .font(.caption)
-                .foregroundStyle(.white)
-                .accessibilityHidden(true)
-        }
-        .frame(width: 44, height: 44)
-        .shadow(color: .green.opacity(0.3), radius: 4, y: 2)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(accessibilityLabel)
-        .accessibilityValue(accessibilityValue)
+        Circle()
+            .fill(TE.placeInks[3])
+            .frame(width: 16, height: 16)
+            .overlay(Circle().strokeBorder(TE.surface, lineWidth: 3))
+            .shadow(color: .black.opacity(0.18), radius: 2, y: 1)
+            .frame(width: 44, height: 44)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(accessibilityLabel)
+            .accessibilityValue(accessibilityValue)
     }
 }
 
+/// The path's latest point: a red ink square, pulsing softly while the session is live.
 struct CurrentLocationMarker: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     var accessibilityLabel = String(localized: "Current location")
@@ -246,26 +233,24 @@ struct CurrentLocationMarker: View {
     
     var body: some View {
         ZStack {
-            // Pulse effect
-            Circle()
-                .fill(.blue.opacity(0.3))
-                .frame(width: 32, height: 32)
-                .scaleEffect(isPulsing ? 1.5 : 1.0)
-                .opacity(isPulsing ? 0 : 0.5)
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                .fill(TE.liveDot.opacity(0.35))
+                .frame(width: 28, height: 28)
+                .scaleEffect(isPulsing ? 1.4 : 1.0)
+                .opacity(isPulsing ? 0 : 0.6)
                 .accessibilityHidden(true)
-            
-            Circle()
-                .fill(.blue)
-                .frame(width: 20, height: 20)
-                .accessibilityHidden(true)
-            
-            Circle()
-                .fill(.white)
-                .frame(width: 8, height: 8)
+
+            RoundedRectangle(cornerRadius: 3, style: .continuous)
+                .fill(TE.placeInks[1])
+                .frame(width: 18, height: 18)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 3, style: .continuous)
+                        .strokeBorder(TE.surface, lineWidth: 3)
+                )
+                .shadow(color: .black.opacity(0.18), radius: 2, y: 1)
                 .accessibilityHidden(true)
         }
         .frame(width: 44, height: 44)
-        .shadow(color: .blue.opacity(0.3), radius: 4, y: 2)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityValue(accessibilityValue)

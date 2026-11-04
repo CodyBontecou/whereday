@@ -1,59 +1,71 @@
 import SwiftUI
 
 struct LogViewerView: View {
-    @ObservedObject private var logManager = LogManager.shared
-    @State private var showingCopyConfirmation = false
+    private enum Filter: CaseIterable, Identifiable {
+        case all, warnings, errors
+        var id: Self { self }
 
-    var body: some View {
-        ZStack {
-            TE.surface.ignoresSafeArea()
-
-            if logManager.entries.isEmpty {
-                VStack(spacing: 8) {
-                    Image(systemName: "doc.text")
-                        .font(.title3.weight(.light))
-                        .foregroundStyle(TE.textMuted)
-                    Text("NO LOG ENTRIES")
-                        .font(TE.mono(.caption, weight: .medium))
-                        .tracking(2)
-                        .foregroundStyle(TE.textMuted)
-                }
-            } else {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(logManager.entries.reversed()) { entry in
-                            logRow(entry)
-                        }
-                    }
-                    .padding(.bottom, 32)
-                }
+        var title: LocalizedStringKey {
+            switch self {
+            case .all: "All"
+            case .warnings: "Warnings"
+            case .errors: "Errors"
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("LOGS")
-                    .font(TE.mono(.caption, weight: .bold))
-                    .tracking(3)
-                    .foregroundStyle(TE.textMuted)
+
+        func includes(_ level: LogManager.LogEntry.Level) -> Bool {
+            switch self {
+            case .all: true
+            case .warnings: level == .warning
+            case .errors: level == .error
             }
-            ToolbarItemGroup(placement: .topBarTrailing) {
+        }
+    }
+
+    @ObservedObject private var logManager = LogManager.shared
+    @State private var showingCopyConfirmation = false
+    @State private var filter: Filter = .all
+
+    private var visibleEntries: [LogManager.LogEntry] {
+        logManager.entries.reversed().filter { filter.includes($0.level) }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            BackPageHeader(caption: "WHAT THE APP WROTE DOWN", title: "Diagnostics")
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
+
+            if logManager.entries.isEmpty {
+                emptyState
+            } else {
+                filterChips
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+                entryList
+                    .padding(.horizontal, 16)
+                    .padding(.top, 14)
+            }
+
+            actions
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+                .padding(.bottom, 16)
+        }
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
                 if !logManager.entries.isEmpty {
-                    Button {
-                        UIPasteboard.general.string = logManager.exportText
-                        showingCopyConfirmation = true
-                    } label: {
-                        Image(systemName: "doc.on.doc")
-                            .font(.callout.weight(.medium))
-                            .foregroundStyle(TE.accent)
-                    }
                     Button {
                         logManager.clear()
                     } label: {
                         Image(systemName: "trash")
-                            .font(.callout.weight(.medium))
-                            .foregroundStyle(TE.danger)
+                            .foregroundStyle(TE.inkRust)
                     }
+                    .accessibilityLabel("Clear logs")
                 }
             }
         }
@@ -62,24 +74,112 @@ struct LogViewerView: View {
         }
     }
 
+    private var emptyState: some View {
+        VStack(spacing: 8) {
+            Text("NO LOG ENTRIES")
+                .font(TE.mono(.caption2))
+                .tracking(1.5)
+                .foregroundStyle(TE.textMuted)
+            Text("Nothing to report yet.")
+                .font(TE.editorial(.title2))
+        }
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, 40)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement(children: .combine)
+    }
+
+    private var filterChips: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 6) {
+                ForEach(Filter.allCases) { option in
+                    let isSelected = option == filter
+                    Button { filter = option } label: {
+                        Text(option.title)
+                            .font(.caption.weight(.medium))
+                            .padding(.horizontal, 14)
+                            .frame(minHeight: 44)
+                            .foregroundStyle(isSelected ? TE.surface : (option == .errors ? TE.inkRust : TE.textPrimary))
+                            .background(Capsule().fill(isSelected ? TE.textPrimary : Color.clear))
+                            .overlay(Capsule().strokeBorder(isSelected ? TE.textPrimary : TE.border, lineWidth: 1))
+                            .contentShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(isSelected ? .isSelected : [])
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+    }
+
+    private var entryList: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                if visibleEntries.isEmpty {
+                    Text("No entries match this filter.")
+                        .font(.footnote)
+                        .foregroundStyle(TE.textMuted)
+                        .padding(16)
+                }
+                ForEach(Array(visibleEntries.enumerated()), id: \.element.id) { index, entry in
+                    if index > 0 {
+                        BackPageDivider()
+                    }
+                    logRow(entry)
+                }
+            }
+        }
+        .frame(maxHeight: .infinity)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .clipShape(RoundedRectangle(cornerRadius: 18))
+    }
+
     private func logRow(_ entry: LogManager.LogEntry) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(entry.display)
-                .font(TE.mono(.caption2, weight: .regular))
-                .foregroundStyle(colorForLevel(entry.level))
-                .lineLimit(nil)
+            HStack(spacing: 10) {
+                Text(entry.timestamp.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).second(.twoDigits)))
+                    .font(TE.mono(.caption))
+                    .foregroundStyle(TE.textMuted)
+                Text(verbatim: entry.level.rawValue)
+                    .font(TE.mono(.caption2))
+                    .tracking(1)
+                    .foregroundStyle(colorForLevel(entry.level))
+            }
+            Text(verbatim: entry.message)
+                .font(TE.mono(.footnote))
+                .foregroundStyle(entry.level == .info ? TE.textPrimary : colorForLevel(entry.level))
+                .fixedSize(horizontal: false, vertical: true)
                 .textSelection(.enabled)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
     }
 
     private func colorForLevel(_ level: LogManager.LogEntry.Level) -> Color {
         switch level {
-        case .info: return TE.textPrimary
-        case .warning: return TE.warning
-        case .error: return TE.danger
+        case .info: return TE.textMuted
+        case .warning: return TE.placeInks[2]
+        case .error: return TE.inkRust
         }
+    }
+
+    private var actions: some View {
+        let layout = AnyLayout(HStackLayout(spacing: 8))
+        return layout {
+            Button("Copy") {
+                UIPasteboard.general.string = logManager.exportText
+                showingCopyConfirmation = true
+            }
+            .buttonStyle(BackPagePillButtonStyle(kind: .outlined, minHeight: 48))
+
+            ShareLink(item: logManager.exportText) {
+                Text("Share with support")
+            }
+            .buttonStyle(BackPagePillButtonStyle(kind: .filled, minHeight: 48))
+        }
+        .disabled(logManager.entries.isEmpty)
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Configuration UI for the HTTP webhook delivery feature.
-/// Embedded in SettingsView via a NavigationLink.
+/// Pushed from Settings and from the Archive destination options.
 struct WebhookSettingsView: View {
     @ObservedObject private var storeManager = StoreManager.shared
     @ObservedObject private var webhook = WebhookManager.shared
@@ -17,336 +17,271 @@ struct WebhookSettingsView: View {
     }
 
     var body: some View {
-        ZStack {
-            TE.surface.ignoresSafeArea()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                header
 
-            if storeManager.canExport {
-                ScrollView {
-                    VStack(spacing: 0) {
-                        if !privacyWarningDismissed {
-                            privacyWarning
-                        }
-                        enableSection
-                        if webhook.isEnabled {
-                            endpointSection
-                            authSection
-                            sendModeSection
-                            statusSection
-                            actionsSection
-                        }
-                        Spacer().frame(height: usesAccessibilityLayout ? 200 : 96)
+                if storeManager.canExport {
+                    if !privacyWarningDismissed {
+                        privacyWarning
                     }
+                    enableSection
+                    if webhook.isEnabled {
+                        endpointSection
+                        authSection
+                        sendModeSection
+                        statusSection
+                    }
+                } else {
+                    lockedState
                 }
-            } else {
-                lockedState
             }
+            .padding(.bottom, usesAccessibilityLayout ? 200 : 96)
         }
+        .scrollIndicators(.hidden)
+        .background(TE.surface.ignoresSafeArea())
+        .foregroundStyle(TE.textPrimary)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("WEBHOOK")
-                    .font(TE.mono(.caption, weight: .bold))
-                    .tracking(3)
-                    .foregroundStyle(TE.textMuted)
-            }
-        }
         .sheet(isPresented: $showingPaywall) {
             PaywallView(storeManager: storeManager, context: .webhook)
         }
     }
 
+    // MARK: - Header
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("SEND TO YOUR OWN SERVER")
+                .font(TE.mono(.caption2))
+                .tracking(1.5)
+                .foregroundStyle(TE.textMuted)
+            Text("Webhook")
+                .font(TE.editorial(.largeTitle))
+                .accessibilityAddTraits(.isHeader)
+        }
+        .padding(.horizontal, 24)
+        .padding(.top, 8)
+    }
+
     // MARK: - Locked
 
     private var lockedState: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "lock.fill")
-                .font(.title.weight(.light))
-                .foregroundStyle(TE.textMuted)
-            Text("WEBHOOK LOCKED")
-                .font(TE.mono(.caption, weight: .bold))
-                .tracking(2)
-                .foregroundStyle(TE.textPrimary)
+        VStack(spacing: 12) {
+            Image(systemName: "lock")
+                .font(.largeTitle.weight(.light))
+                .accessibilityHidden(true)
+            Text("Webhook is part of a plan")
+                .font(TE.editorial(.title))
+                .multilineTextAlignment(.center)
             Text("Choose a Whereday plan to unlock export features.")
-                .font(TE.mono(.caption2, weight: .medium))
+                .font(.subheadline)
                 .foregroundStyle(TE.textMuted)
                 .multilineTextAlignment(.center)
-                .lineSpacing(3)
-                .padding(.horizontal, 32)
+                .fixedSize(horizontal: false, vertical: true)
             Button {
                 showingPaywall = true
             } label: {
-                Text("UNLOCK EXPORT")
+                Text("See plans")
             }
-            .buttonStyle(TEActionButtonStyle(emphasis: .primary))
+            .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
+            .frame(maxWidth: 240)
+            .padding(.top, 8)
         }
-        .padding()
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 40)
+        .padding(.top, 80)
     }
 
     // MARK: - Privacy
 
     private var privacyWarning: some View {
-        VStack(spacing: 0) {
-            TECard {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(alignment: .top, spacing: 10) {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .font(.callout)
-                            .foregroundStyle(TE.warning)
-                            .accessibilityHidden(true)
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.title3)
+                .foregroundStyle(TE.placeInks[1])
+                .accessibilityHidden(true)
 
-                        Text("DATA LEAVES YOUR DEVICE")
-                            .font(TE.mono(.caption2, weight: .bold))
-                            .tracking(usesAccessibilityLayout ? 0.5 : 1.5)
-                            .foregroundStyle(TE.warning)
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        Spacer(minLength: 0)
-
-                        Button {
-                            privacyWarningDismissed = true
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.caption.weight(.bold))
-                                .foregroundStyle(TE.textMuted)
-                                .frame(width: 32, height: 32)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel("Dismiss warning")
-                    }
-
-                    Text("Enabling webhook delivery sends your location data to an external server you configure. Whereday does not have access to this server or the transmitted data.")
-                        .font(TE.mono(.caption2, weight: .regular))
-                        .foregroundStyle(TE.textMuted)
-                        .lineSpacing(2)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(12)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("DATA LEAVES YOUR DEVICE")
+                    .font(TE.mono(.caption2))
+                    .tracking(usesAccessibilityLayout ? 0.5 : 1.2)
+                    .foregroundStyle(TE.inkRust)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Enabling webhook delivery sends your location data to an external server you configure. Whereday does not have access to this server or the transmitted data.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button {
+                privacyWarningDismissed = true
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(TE.textMuted)
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .padding(.top, -12)
+            .padding(.trailing, -12)
+            .accessibilityLabel("Dismiss warning")
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.placeInks[1], lineWidth: 1.5))
+        .padding(.horizontal, 16)
+        .padding(.top, 18)
     }
 
     // MARK: - Enable
 
     private var enableSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "ENABLE")
-
-            TECard {
-                TERow(showDivider: false) {
-                    Toggle(isOn: $webhook.isEnabled) {
-                        Text("WEBHOOK DELIVERY")
-                            .font(TE.mono(.caption, weight: .medium))
-                            .tracking(1)
-                            .foregroundStyle(TE.textPrimary)
-                    }
-                    .toggleStyle(TEToggleStyle())
-                }
+        Toggle(isOn: $webhook.isEnabled) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Webhook delivery")
+                    .font(.subheadline)
+                Text(webhook.isEnabled
+                     ? LocalizedStringKey("Location data will be POSTed to the configured endpoint.")
+                     : LocalizedStringKey("Send location data to an external API or self-hosted server."))
+                    .font(.caption)
+                    .foregroundStyle(TE.textMuted)
             }
-            .padding(.horizontal, 16)
-
-            TESectionFooter(text: webhook.isEnabled
-                ? "Location data will be POSTed to the configured endpoint."
-                : "Send location data to an external API or self-hosted server.")
         }
+        .toggleStyle(TEToggleStyle())
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .frame(minHeight: 56)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
     }
 
     // MARK: - Endpoint
 
-    private var endpointSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "ENDPOINT")
+    private static let formatChoices: [ExportFormat] = [
+        .json, .geojson, .csv, .gpx, .kml, .markdown, .owntracks, .overland
+    ]
 
-            TECard {
-                TERow {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("URL")
-                            .font(TE.mono(.caption2, weight: .semibold))
-                            .tracking(1)
-                            .foregroundStyle(TE.textMuted)
-                        TextField("https://example.com/api/location", text: $webhook.urlString)
-                            .font(TE.mono(.caption, weight: .medium))
-                            .foregroundStyle(TE.textPrimary)
-                            .textInputAutocapitalization(.never)
-                            .autocorrectionDisabled(true)
-                            .keyboardType(.URL)
+    private var endpointSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeading("WHERE")
+            card {
+                fieldLabel("URL")
+                TextField("https://example.com/api/location", text: $webhook.urlString)
+                    .font(TE.mono(.subheadline))
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .keyboardType(.URL)
+                    .modifier(WebhookFieldStyle())
+
+                fieldLabel("FORMAT")
+                    .padding(.top, 6)
+                WebhookFlowLayout(spacing: 6) {
+                    ForEach(Self.formatChoices, id: \.self) { format in
+                        chip(format.displayName, isSelected: webhook.format == format) {
+                            webhook.format = format
+                        }
                     }
                 }
-
-                webhookPickerRow("FORMAT", selection: $webhook.format, showDivider: false) {
-                    Text("OWNTRACKS").tag(ExportFormat.owntracks)
-                    Text("OVERLAND").tag(ExportFormat.overland)
-                    Text("JSON").tag(ExportFormat.json)
-                    Text("CSV").tag(ExportFormat.csv)
-                    Text("GPX").tag(ExportFormat.gpx)
-                    Text("KML").tag(ExportFormat.kml)
-                    Text("GEOJSON").tag(ExportFormat.geojson)
-                    Text("MARKDOWN").tag(ExportFormat.markdown)
-                }
             }
-            .padding(.horizontal, 16)
-
-            TESectionFooter(text: "OwnTracks format works with Dawarich (api/v1/owntracks/points), OwnTracks Recorder (/pub), and Traccar.")
+            sectionFooter("OwnTracks format works with Dawarich (api/v1/owntracks/points), OwnTracks Recorder (/pub), and Traccar.")
         }
     }
 
     // MARK: - Auth
 
     private var authSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "AUTH")
-
-            TECard {
-                webhookPickerRow("TYPE", selection: $webhook.authType, mutedTitle: true) {
-                    ForEach(WebhookManager.AuthType.allCases) { type in
-                        Text(verbatim: type.label).tag(type)
-                    }
-                }
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeading("SIGN-IN")
+            card {
+                segmented(
+                    WebhookManager.AuthType.allCases.map { ($0, shortLabel(for: $0), $0.label) },
+                    selection: $webhook.authType,
+                    groupLabel: "Authentication"
+                )
 
                 switch webhook.authType {
                 case .none:
                     EmptyView()
-
                 case .apiKeyQuery:
-                    TERow {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("PARAM NAME")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            TextField("api_key", text: $webhook.authKey)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                                .autocorrectionDisabled(true)
-                                .textInputAutocapitalization(.never)
-                        }
-                    }
-                    TERow(showDivider: false) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("API KEY")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            SecureField("••••••••", text: $webhook.authValue)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                        }
-                    }
-
+                    textField("PARAM NAME", prompt: "api_key", text: $webhook.authKey)
+                    secureField("API KEY", text: $webhook.authValue)
                 case .bearer:
-                    TERow(showDivider: false) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("TOKEN")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            SecureField("••••••••", text: $webhook.authValue)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                        }
-                    }
-
+                    secureField("TOKEN", text: $webhook.authValue)
                 case .basic:
-                    TERow {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("USERNAME")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            TextField("user", text: $webhook.authUsername)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                                .autocorrectionDisabled(true)
-                                .textInputAutocapitalization(.never)
-                        }
-                    }
-                    TERow(showDivider: false) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("PASSWORD")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            SecureField("••••••••", text: $webhook.authValue)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                        }
-                    }
-
+                    textField("USERNAME", prompt: "user", text: $webhook.authUsername)
+                    secureField("PASSWORD", text: $webhook.authValue)
                 case .customHeader:
-                    TERow {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("HEADER NAME")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            TextField("X-API-Key", text: $webhook.authKey)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                                .autocorrectionDisabled(true)
-                                .textInputAutocapitalization(.never)
-                        }
-                    }
-                    TERow(showDivider: false) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("HEADER VALUE")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1)
-                                .foregroundStyle(TE.textMuted)
-                            SecureField("••••••••", text: $webhook.authValue)
-                                .font(TE.mono(.caption, weight: .medium))
-                                .foregroundStyle(TE.textPrimary)
-                        }
-                    }
+                    textField("HEADER NAME", prompt: "X-API-Key", text: $webhook.authKey)
+                    secureField("HEADER VALUE", text: $webhook.authValue)
                 }
             }
-            .padding(.horizontal, 16)
-
-            TESectionFooter(text: webhook.authType == .apiKeyQuery
+            sectionFooter(webhook.authType == .apiKeyQuery
                 ? "The key and value are appended as a query string (?key=value)."
                 : "Credentials are sent as HTTP headers and stored in the device keychain.")
+        }
+    }
+
+    private func shortLabel(for type: WebhookManager.AuthType) -> String {
+        switch type {
+        case .none: return String(localized: "None")
+        case .apiKeyQuery: return String(localized: "Query")
+        case .bearer: return String(localized: "Token")
+        case .basic: return String(localized: "Basic")
+        case .customHeader: return String(localized: "Header")
         }
     }
 
     // MARK: - Send mode
 
     private var sendModeSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "SEND MODE")
-
-            TECard {
-                webhookPickerRow(
-                    "MODE",
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeading("HOW OFTEN")
+            card {
+                segmented(
+                    WebhookManager.SendMode.allCases.map { ($0, shortLabel(for: $0), $0.label) },
                     selection: $webhook.sendMode,
-                    showDivider: webhook.sendMode == .batchCount || webhook.sendMode == .batchTime
-                ) {
-                    ForEach(WebhookManager.SendMode.allCases) { mode in
-                        Text(verbatim: mode.label).tag(mode)
-                    }
-                }
+                    groupLabel: "Send mode"
+                )
 
                 if webhook.sendMode == .batchCount {
-                    webhookPickerRow("COUNT", selection: $webhook.batchCount, showDivider: false) {
-                        Text("5").tag(5)
-                        Text("10").tag(10)
-                        Text("25").tag(25)
-                        Text("50").tag(50)
-                        Text("100").tag(100)
-                    }
+                    fieldLabel("POINTS PER BATCH")
+                        .padding(.top, 4)
+                    segmented(
+                        [5, 10, 25, 50, 100].map { ($0, $0.formatted(), $0.formatted()) },
+                        selection: $webhook.batchCount,
+                        groupLabel: "Points per batch"
+                    )
                 } else if webhook.sendMode == .batchTime {
-                    webhookPickerRow("INTERVAL", selection: $webhook.batchTimeMinutes, showDivider: false) {
-                        Text("1 min").tag(1)
-                        Text("5 min").tag(5)
-                        Text("15 min").tag(15)
-                        Text("30 min").tag(30)
-                        Text("1 hour").tag(60)
-                    }
+                    fieldLabel("INTERVAL")
+                        .padding(.top, 4)
+                    segmented(
+                        [
+                            (1, String(localized: "1 min")),
+                            (5, String(localized: "5 min")),
+                            (15, String(localized: "15 min")),
+                            (30, String(localized: "30 min")),
+                            (60, String(localized: "1 hour"))
+                        ].map { ($0.0, $0.1, $0.1) },
+                        selection: $webhook.batchTimeMinutes,
+                        groupLabel: "Interval"
+                    )
                 }
             }
-            .padding(.horizontal, 16)
+            sectionFooter(sendModeFooter)
+        }
+    }
 
-            TESectionFooter(text: sendModeFooter)
+    private func shortLabel(for mode: WebhookManager.SendMode) -> String {
+        switch mode {
+        case .realtime: return String(localized: "Live")
+        case .batchCount: return String(localized: "Count")
+        case .batchTime: return String(localized: "Timer")
+        case .manual: return String(localized: "Manual")
         }
     }
 
@@ -363,65 +298,51 @@ struct WebhookSettingsView: View {
         }
     }
 
-    // MARK: - Status
+    // MARK: - Status and actions
 
     private var statusSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "STATUS")
-
-            TECard {
-                webhookValueRow(
-                    "LAST SENT",
-                    value: lastSentText,
-                    showDivider: hasQueuedPoints || webhook.lastError != nil
-                )
-
-                if hasQueuedPoints {
-                    webhookValueRow(
-                        "QUEUED",
-                        value: "\(webhook.queuedPointCount) POINTS",
-                        valueColor: TE.accent
-                    )
-
-                    TERow(showDivider: webhook.lastError != nil) {
-                        Button {
-                            Task { await webhook.flushBatch() }
-                        } label: {
-                            webhookButtonLabel("FLUSH QUEUE", systemImage: "paperplane.fill", showsTrailingArrow: false)
-                        }
-                        .buttonStyle(.plain)
-                    }
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 12) {
+                let titleLayout = usesAccessibilityLayout
+                    ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+                    : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: 8))
+                titleLayout {
+                    Text(queueTitle)
+                        .font(TE.editorial(.title2))
+                    if !usesAccessibilityLayout { Spacer(minLength: 0) }
+                    Text("LAST SENT \(lastSentText)")
+                        .font(TE.mono(.caption2))
+                        .foregroundStyle(TE.onInkCardMuted)
                 }
+                .accessibilityElement(children: .combine)
 
                 if let error = webhook.lastError {
-                    webhookMessageRow(error, systemImage: "xmark.circle.fill", color: TE.danger, showDivider: false)
+                    statusMessage(error, systemImage: "xmark.circle")
                 }
-            }
-            .padding(.horizontal, 16)
-        }
-    }
 
-    private var hasQueuedPoints: Bool {
-        webhook.sendMode != .manual && webhook.queuedPointCount > 0
-    }
-
-    private var lastSentText: String {
-        guard let last = webhook.lastSentAt else { return String(localized: "NEVER") }
-        let fmt = DateFormatter()
-        fmt.dateStyle = .short
-        fmt.timeStyle = .short
-        return fmt.string(from: last)
-    }
-
-    // MARK: - Actions
-
-    private var actionsSection: some View {
-        VStack(spacing: 0) {
-            TESectionHeader(title: "ACTIONS")
-
-            TECard {
-                TERow {
+                let buttonLayout = usesAccessibilityLayout
+                    ? AnyLayout(VStackLayout(spacing: 8))
+                    : AnyLayout(HStackLayout(spacing: 8))
+                buttonLayout {
                     Button {
+                        Task { await webhook.sendNow() }
+                    } label: {
+                        Text("Send now")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(TE.inkCard)
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                            .background(Capsule().fill(TE.onInkCard))
+                            .contentShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+
+                    if hasQueuedPoints {
+                        inkOutlineButton("Flush queue") {
+                            Task { await webhook.flushBatch() }
+                        }
+                    }
+
+                    inkOutlineButton(isTesting ? "Testing…" : "Test connection") {
                         isTesting = true
                         testResult = nil
                         testError = nil
@@ -433,195 +354,247 @@ struct WebhookSettingsView: View {
                             }
                             isTesting = false
                         }
-                    } label: {
-                        webhookButtonLabel(
-                            isTesting ? "TESTING…" : "TEST CONNECTION",
-                            systemImage: "antenna.radiowaves.left.and.right",
-                            isLoading: isTesting
-                        )
                     }
-                    .buttonStyle(.plain)
                     .disabled(isTesting)
                 }
 
                 if let result = testResult {
-                    webhookMessageRow(result, systemImage: "checkmark.circle.fill", color: TE.success)
+                    statusMessage(result, systemImage: "checkmark.circle")
                 }
-
                 if let error = testError {
-                    webhookMessageRow(error, systemImage: "xmark.circle.fill", color: TE.danger)
-                }
-
-                TERow(showDivider: false) {
-                    Button {
-                        Task { await webhook.sendNow() }
-                    } label: {
-                        webhookButtonLabel("SEND NOW", systemImage: "paperplane.fill")
-                    }
-                    .buttonStyle(.plain)
+                    statusMessage(error, systemImage: "xmark.circle")
                 }
             }
+            .foregroundStyle(TE.onInkCard)
+            .padding(16)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.inkCard))
             .padding(.horizontal, 16)
+            .padding(.top, 20)
 
-            TESectionFooter(text: "Use Test Connection to verify the endpoint URL and credentials without sending real data. Send Now posts all saved location data to the endpoint.")
+            sectionFooter("Use Test Connection to verify the endpoint URL and credentials without sending real data. Send Now posts all saved location data to the endpoint.")
         }
     }
 
-    // MARK: - Responsive Rows
+    private var hasQueuedPoints: Bool {
+        webhook.sendMode != .manual && webhook.queuedPointCount > 0
+    }
 
-    private func rowTitle(_ title: LocalizedStringKey, muted: Bool = false) -> some View {
+    private var queueTitle: String {
+        guard hasQueuedPoints else { return String(localized: "Nothing waiting") }
+        return webhook.queuedPointCount == 1
+            ? String(localized: "1 point waiting")
+            : String(localized: "\(webhook.queuedPointCount.formatted()) points waiting")
+    }
+
+    private var lastSentText: String {
+        guard let last = webhook.lastSentAt else { return String(localized: "NEVER") }
+        let fmt = DateFormatter()
+        fmt.dateStyle = .short
+        fmt.timeStyle = .short
+        return fmt.string(from: last)
+    }
+
+    private func inkOutlineButton(_ title: LocalizedStringKey, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(TE.onInkCard)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 10)
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .overlay(Capsule().strokeBorder(TE.onInkCard.opacity(0.35), lineWidth: 1))
+                .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func statusMessage(_ message: String, systemImage: String) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: systemImage)
+                .font(.footnote)
+                .accessibilityHidden(true)
+            Text(message)
+                .font(TE.mono(.caption))
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .foregroundStyle(TE.onInkCardMuted)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - Building blocks
+
+    private func sectionHeading(_ title: LocalizedStringKey) -> some View {
         Text(title)
-            .font(TE.mono(muted ? .caption2 : .caption, weight: muted ? .semibold : .medium))
-            .tracking(usesAccessibilityLayout ? 0.5 : 1)
-            .foregroundStyle(muted ? TE.textMuted : TE.textPrimary)
+            .font(TE.mono(.caption2))
+            .tracking(1.5)
+            .foregroundStyle(TE.textMuted)
+            .padding(.horizontal, 24)
+            .padding(.top, 24)
+            .padding(.bottom, 8)
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    private func sectionFooter(_ text: LocalizedStringKey) -> some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(TE.textMuted)
             .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 24)
+            .padding(.top, 8)
     }
 
-    private func webhookPickerRow<SelectionValue: Hashable, Content: View>(
-        _ title: LocalizedStringKey,
-        selection: Binding<SelectionValue>,
-        showDivider: Bool = true,
-        mutedTitle: Bool = false,
-        @ViewBuilder options: () -> Content
-    ) -> some View {
-        TERow(showDivider: showDivider) {
-            if usesAccessibilityLayout {
-                VStack(alignment: .leading, spacing: 10) {
-                    rowTitle(title, muted: mutedTitle)
+    private func card<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            content()
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .padding(.horizontal, 16)
+    }
 
-                    Picker(title, selection: selection) {
-                        options()
-                    }
-                    .pickerStyle(.menu)
-                    .tint(TE.accent)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                HStack(alignment: .center, spacing: 12) {
-                    rowTitle(title, muted: mutedTitle)
-                    Spacer(minLength: 12)
-                    Picker(title, selection: selection) {
-                        options()
-                    }
-                    .labelsHidden()
-                    .tint(TE.accent)
-                }
-            }
+    private func fieldLabel(_ title: LocalizedStringKey) -> some View {
+        Text(title)
+            .font(TE.mono(.caption2))
+            .tracking(1)
+            .foregroundStyle(TE.textMuted)
+    }
+
+    private func textField(_ title: LocalizedStringKey, prompt: String, text: Binding<String>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            fieldLabel(title)
+            TextField(prompt, text: text)
+                .font(TE.mono(.subheadline))
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .modifier(WebhookFieldStyle())
         }
     }
 
-    private func webhookValueRow(
-        _ title: LocalizedStringKey,
-        value: String,
-        valueColor: Color = TE.textMuted,
-        showDivider: Bool = true
-    ) -> some View {
-        TERow(showDivider: showDivider) {
-            if usesAccessibilityLayout {
-                VStack(alignment: .leading, spacing: 8) {
-                    rowTitle(title)
-                    Text(value)
-                        .font(TE.mono(.caption2, weight: .medium))
-                        .foregroundStyle(valueColor)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityElement(children: .combine)
-            } else {
-                HStack(alignment: .firstTextBaseline, spacing: 12) {
-                    rowTitle(title)
-                    Spacer(minLength: 12)
-                    Text(value)
-                        .font(TE.mono(.caption2, weight: .medium))
-                        .foregroundStyle(valueColor)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.trailing)
-                }
-                .accessibilityElement(children: .combine)
-            }
+    private func secureField(_ title: LocalizedStringKey, text: Binding<String>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            fieldLabel(title)
+            SecureField("••••••••", text: text)
+                .font(TE.mono(.subheadline))
+                .modifier(WebhookFieldStyle())
         }
     }
 
-    private func webhookMessageRow(
-        _ message: String,
-        systemImage: String,
-        color: Color,
-        showDivider: Bool = true
-    ) -> some View {
-        TERow(showDivider: showDivider) {
-            HStack(alignment: .top, spacing: usesAccessibilityLayout ? 10 : 6) {
-                Image(systemName: systemImage)
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-
-                Text(message)
-                    .font(TE.mono(.caption2, weight: .medium))
-                    .foregroundStyle(color)
-                    .lineSpacing(usesAccessibilityLayout ? 4 : 2)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityElement(children: .combine)
+    private func chip(_ title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(verbatim: title)
+                .font(TE.mono(.caption, weight: .medium))
+                .foregroundStyle(isSelected ? TE.surface : TE.textPrimary)
+                .padding(.horizontal, 12)
+                .frame(minHeight: 36)
+                .background(Capsule().fill(isSelected ? TE.accent : Color.clear))
+                .overlay(Capsule().strokeBorder(isSelected ? TE.accent : TE.border, lineWidth: 1))
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
+    /// A capsule segmented control; stacks vertically at accessibility sizes so labels never truncate.
     @ViewBuilder
-    private func webhookButtonLabel(
-        _ title: LocalizedStringKey,
-        systemImage: String,
-        showsTrailingArrow: Bool = true,
-        isLoading: Bool = false
+    private func segmented<Value: Hashable>(
+        _ items: [(Value, String, String)],
+        selection: Binding<Value>,
+        groupLabel: LocalizedStringKey
     ) -> some View {
-        if usesAccessibilityLayout {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
-                    Image(systemName: systemImage)
+        let layout = usesAccessibilityLayout
+            ? AnyLayout(VStackLayout(spacing: 0))
+            : AnyLayout(HStackLayout(spacing: 0))
+        layout {
+            ForEach(Array(items.enumerated()), id: \.offset) { _, item in
+                let isSelected = selection.wrappedValue == item.0
+                Button {
+                    selection.wrappedValue = item.0
+                } label: {
+                    Text(verbatim: item.1)
                         .font(.caption.weight(.medium))
-                        .foregroundStyle(TE.accent)
-                        .accessibilityHidden(true)
-
-                    Text(title)
-                        .font(TE.mono(.caption, weight: .medium))
-                        .tracking(0.5)
-                        .foregroundStyle(TE.accent)
-                        .fixedSize(horizontal: false, vertical: true)
-
-                    if isLoading {
-                        ProgressView()
-                            .tint(TE.accent)
-                    }
+                        .lineLimit(usesAccessibilityLayout ? nil : 1)
+                        .minimumScaleFactor(0.8)
+                        .foregroundStyle(isSelected ? TE.surface : TE.textPrimary)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .background(isSelected ? TE.accent : Color.clear)
+                        .contentShape(Rectangle())
                 }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        } else {
-            HStack(spacing: 8) {
-                Image(systemName: systemImage)
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(TE.accent)
-                    .accessibilityHidden(true)
-
-                Text(title)
-                    .font(TE.mono(.caption, weight: .medium))
-                    .tracking(1)
-                    .foregroundStyle(TE.accent)
-
-                Spacer()
-
-                if isLoading {
-                    ProgressView()
-                        .scaleEffect(0.6)
-                        .tint(TE.accent)
-                } else if showsTrailingArrow {
-                    Image(systemName: "arrow.right")
-                        .font(.caption2.weight(.bold))
-                        .foregroundStyle(TE.accent.opacity(0.5))
-                        .accessibilityHidden(true)
-                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(verbatim: item.2))
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
+        .clipShape(RoundedRectangle(cornerRadius: 22))
+        .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(groupLabel)
+    }
+}
+
+private struct WebhookFieldStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(TE.textPrimary)
+            .padding(.horizontal, 12)
+            .frame(minHeight: 44)
+            .background(RoundedRectangle(cornerRadius: 10).fill(TE.surface))
+            .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(TE.border, lineWidth: 1))
+    }
+}
+
+/// Wraps chips onto as many rows as the width needs.
+private struct WebhookFlowLayout: Layout {
+    var spacing: CGFloat = 6
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let rows = arrange(width: proposal.width ?? .infinity, subviews: subviews)
+        let height = rows.map(\.height).reduce(0, +) + spacing * CGFloat(max(rows.count - 1, 0))
+        let width = rows.map(\.width).max() ?? 0
+        return CGSize(width: proposal.width ?? width, height: height)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        var y = bounds.minY
+        for row in arrange(width: bounds.width, subviews: subviews) {
+            var x = bounds.minX
+            for index in row.indices {
+                let size = subviews[index].sizeThatFits(.unspecified)
+                let width = min(size.width, bounds.width)
+                subviews[index].place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(width: width, height: size.height))
+                x += width + spacing
+            }
+            y += row.height + spacing
+        }
+    }
+
+    private struct Row {
+        var indices: [Int] = []
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+    }
+
+    private func arrange(width: CGFloat, subviews: Subviews) -> [Row] {
+        var rows: [Row] = []
+        var current = Row()
+        for index in subviews.indices {
+            let size = subviews[index].sizeThatFits(.unspecified)
+            let itemWidth = min(size.width, width)
+            let proposedWidth = current.indices.isEmpty ? itemWidth : current.width + spacing + itemWidth
+            if proposedWidth > width, !current.indices.isEmpty {
+                rows.append(current)
+                current = Row()
+            }
+            current.width = current.indices.isEmpty ? itemWidth : current.width + spacing + itemWidth
+            current.height = max(current.height, size.height)
+            current.indices.append(index)
+        }
+        if !current.indices.isEmpty { rows.append(current) }
+        return rows
     }
 }
 
