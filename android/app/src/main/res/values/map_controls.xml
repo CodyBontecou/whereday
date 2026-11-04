@@ -15,12 +15,23 @@
     <string name="map_date_today">Today</string>
     <string name="map_date_yesterday">Yesterday</string>
     <string name="map_date_week">7 days</string>
+    <string name="map_date_this_month">Month</string>
     <string name="map_date_month">30 days</string>
     <string name="map_date_all">All</string>
     <string name="map_date_custom">Custom</string>
     <string name="map_choose_dates">Choose dates</string>
     <string name="map_apply_dates">Apply</string>
     <string name="map_cancel_dates">Cancel</string>
+    <string name="map_show_days">Show days</string>
+    <string name="map_reset_dates">Reset</string>
+    <string name="map_range_last_7_days">Last 7 days</string>
+    <string name="map_range_this_month">This month</string>
+    <string name="map_range_last_30_days">Last 30 days</string>
+    <string name="map_range_all_time">All time</string>
+    <string name="map_range_previous_month">Previous month</string>
+    <string name="map_range_next_month">Next month</string>
+    <string name="map_range_has_visits">Has visits</string>
+    <plurals name="map_show_day_count"><item quantity="one">Show %d day</item><item quantity="other">Show %d days</item></plurals>
     <string name="map_save_current">Save current place</string>
     <string name="map_add_past">Add past visit</string>
     <string name="map_visit_saved">Visit saved. Review it in Timeline.</string>

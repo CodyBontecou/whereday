@@ -1,147 +1,359 @@
 {
   "provenance": {
-    "sheetFragmentSha256": "3bb4c934b668d5283c0e84268a841646c803688085e3e2afb18855eaf70caada",
+    "sourceFragments": {
+      "DateRangeFilterSheet": "c3ff40f55e95bb1beaeefe2311e45b2fd161a6bc114e2e6b98d5b0b00b01d231",
+      "MapDatePreset": "fb2fdf9222fa9b46e72312c4a6d7028e415859e15cddc1773cb09571c34d1cfd",
+      "MapRangeCalendar": "3fdcb995bcc6afe58d170095b14227546f5bf86c0449a6ae66f7bade51b768a8",
+      "TE": "12ed79b4a26440da7f47534b8b759d061e67d182a57b8b5801a868dc2fef11b7",
+      "TEToggleStyle": "c8800b7ee8ce814a6b0f771a5963970d3a96ae49143746d298f412a1b31ae561"
+    },
     "harness": {
-      "android/parity/ios-custom-dates/App/HarnessApp.swift": "92b789f1730375350129faf904b9d791b71b653b8d9142d1f77d23e19951c095",
-      "android/parity/ios-custom-dates/Tests/PickerTests.swift": "83464ca9bc621e0c89b00b6d2b0f59ad5dec1e27450aed70979d531ab11eaa8b",
+      "android/parity/ios-custom-dates/App/HarnessApp.swift": "11dc492da90cc746889908d2819a21081c4102497c8f39d5403f5371c524d6cc",
+      "android/parity/ios-custom-dates/App/HarnessFonts.swift": "b4c113a5dbcf9f743ca2b75d0f4926f7b342ed1cb6fc716bf36d5d3b700d7b90",
+      "android/parity/ios-custom-dates/Tests/RangeCalendarTests.swift": "1e1bb556807b8b6b3f64aa3cc97eeb362056592c334d0c240546599a880bd42b",
       "android/parity/ios-custom-dates/project.yml": "ddfdf2f95876130bb4fdb0f6ad222b00b09bd53b800c0d8e2507c409e1527515"
     },
-    "platform": "iOS Simulator 27.0 / iPhone 18 Pro / en_US / Gregorian"
+    "platform": "iOS Simulator 27.0 (24A434) / iPhone 18 Pro / en_US / Gregorian",
+    "toolchain": "Xcode 27.2 (27B52)",
+    "observedOn": "2026-11-04",
+    "notes": "Native reference-date seconds; the closed upper bound is the nextDown of the exclusive Android until. Relative cases record the shape around the clock, with the observed run for audit."
   },
   "cases": [
     {
-      "name": "start only",
+      "name": "unchanged",
       "zone": "UTC",
       "first": "2026-10-10T18:12:34.125Z",
       "last": "2026-10-12T20:34:56.875Z",
-      "steps": [
-        {
-          "bound": "first",
-          "date": "2026-10-11"
-        }
-      ],
-      "expectedFirst": "2026-10-11T18:12:00Z",
-      "expectedLast": "2026-10-12T20:34:56.875Z"
+      "steps": [],
+      "expected": {
+        "from": "2026-10-10T00:00:00Z",
+        "until": "2026-10-13T00:00:00Z"
+      },
+      "native": "813283200.0|813542399.9999999",
+      "titleDays": 3
     },
     {
-      "name": "end only",
+      "name": "single day",
       "zone": "UTC",
       "first": "2026-10-10T18:12:34.125Z",
       "last": "2026-10-12T20:34:56.875Z",
       "steps": [
         {
-          "bound": "last",
-          "date": "2026-10-13"
+          "day": "2026-10-11"
         }
       ],
-      "expectedFirst": "2026-10-10T18:12:34.125Z",
-      "expectedLast": "2026-10-13T20:34:00Z"
+      "expected": {
+        "from": "2026-10-11T00:00:00Z",
+        "until": "2026-10-12T00:00:00Z"
+      },
+      "native": "813369600.0|813455999.9999999",
+      "titleDays": 1
     },
     {
-      "name": "same start day",
+      "name": "forward range",
       "zone": "UTC",
       "first": "2026-10-10T18:12:34.125Z",
       "last": "2026-10-12T20:34:56.875Z",
       "steps": [
         {
-          "bound": "first",
-          "date": "2026-10-10"
-        }
-      ],
-      "expectedFirst": "2026-10-10T18:12:34.125Z",
-      "expectedLast": "2026-10-12T20:34:56.875Z"
-    },
-    {
-      "name": "start round trip",
-      "zone": "UTC",
-      "first": "2026-10-10T18:12:34.125Z",
-      "last": "2026-10-12T20:34:56.875Z",
-      "steps": [
-        {
-          "bound": "first",
-          "date": "2026-10-11"
+          "day": "2026-10-11"
         },
         {
-          "bound": "first",
-          "date": "2026-10-10"
+          "day": "2026-10-13"
         }
       ],
-      "expectedFirst": "2026-10-10T18:12:00Z",
-      "expectedLast": "2026-10-12T20:34:56.875Z"
+      "expected": {
+        "from": "2026-10-11T00:00:00Z",
+        "until": "2026-10-14T00:00:00Z"
+      },
+      "native": "813369600.0|813628799.9999999",
+      "titleDays": 3
     },
     {
-      "name": "spring gap",
+      "name": "reverse range",
+      "zone": "UTC",
+      "first": "2026-10-10T18:12:34.125Z",
+      "last": "2026-10-12T20:34:56.875Z",
+      "steps": [
+        {
+          "day": "2026-10-13"
+        },
+        {
+          "day": "2026-10-11"
+        }
+      ],
+      "expected": {
+        "from": "2026-10-11T00:00:00Z",
+        "until": "2026-10-14T00:00:00Z"
+      },
+      "native": "813369600.0|813628799.9999999",
+      "titleDays": 3
+    },
+    {
+      "name": "third tap",
+      "zone": "UTC",
+      "first": "2026-10-10T18:12:34.125Z",
+      "last": "2026-10-12T20:34:56.875Z",
+      "steps": [
+        {
+          "day": "2026-10-11"
+        },
+        {
+          "day": "2026-10-13"
+        },
+        {
+          "day": "2026-10-05"
+        }
+      ],
+      "expected": {
+        "from": "2026-10-05T00:00:00Z",
+        "until": "2026-10-06T00:00:00Z"
+      },
+      "native": "812851200.0|812937599.9999999",
+      "titleDays": 1
+    },
+    {
+      "name": "across months",
+      "zone": "UTC",
+      "first": "2026-10-10T18:12:34.125Z",
+      "last": "2026-10-12T20:34:56.875Z",
+      "steps": [
+        {
+          "month": -1
+        },
+        {
+          "day": "2026-09-28"
+        },
+        {
+          "month": 1
+        },
+        {
+          "day": "2026-10-03"
+        }
+      ],
+      "expected": {
+        "from": "2026-09-28T00:00:00Z",
+        "until": "2026-10-04T00:00:00Z"
+      },
+      "native": "812246400.0|812764799.9999999",
+      "titleDays": 6
+    },
+    {
+      "name": "new york spring",
       "zone": "America/New_York",
       "first": "2026-03-01T07:30:34.125Z",
       "last": "2026-03-10T19:20:56.875Z",
       "steps": [
         {
-          "bound": "first",
-          "date": "2026-03-08"
+          "day": "2026-03-08"
         }
       ],
-      "expectedFirst": "2026-03-08T07:30:00Z",
-      "expectedLast": "2026-03-10T19:20:56.875Z"
+      "expected": {
+        "from": "2026-03-08T05:00:00Z",
+        "until": "2026-03-09T04:00:00Z"
+      },
+      "native": "794638800.0|794721599.9999999",
+      "titleDays": 1
     },
     {
-      "name": "after spring gap",
-      "zone": "America/New_York",
-      "first": "2026-03-01T07:30:34.125Z",
-      "last": "2026-03-10T19:20:56.875Z",
-      "steps": [
-        {
-          "bound": "first",
-          "date": "2026-03-08"
-        },
-        {
-          "bound": "first",
-          "date": "2026-03-09"
-        }
-      ],
-      "expectedFirst": "2026-03-09T07:30:00Z",
-      "expectedLast": "2026-03-10T19:20:56.875Z"
-    },
-    {
-      "name": "first repeated hour from daylight time",
+      "name": "new york fall",
       "zone": "America/New_York",
       "first": "2026-10-25T05:30:34.125Z",
-      "last": "2026-11-03T19:20:56.875Z",
+      "last": "2026-11-02T19:20:56.875Z",
       "steps": [
         {
-          "bound": "first",
-          "date": "2026-11-01"
+          "day": "2026-11-01"
         }
       ],
-      "expectedFirst": "2026-11-01T05:30:00Z",
-      "expectedLast": "2026-11-03T19:20:56.875Z"
+      "expected": {
+        "from": "2026-11-01T04:00:00Z",
+        "until": "2026-11-02T05:00:00Z"
+      },
+      "native": "815198400.0|815288399.9999999",
+      "titleDays": 1
     },
     {
-      "name": "first repeated hour from standard time",
-      "zone": "America/New_York",
-      "first": "2026-11-02T06:30:34.125Z",
-      "last": "2026-11-03T19:20:56.875Z",
-      "steps": [
-        {
-          "bound": "first",
-          "date": "2026-11-01"
-        }
-      ],
-      "expectedFirst": "2026-11-01T05:30:00Z",
-      "expectedLast": "2026-11-03T19:20:56.875Z"
-    },
-    {
-      "name": "half hour gap",
+      "name": "lord howe spring",
       "zone": "Australia/Lord_Howe",
       "first": "2026-09-26T15:45:34.125Z",
       "last": "2026-10-05T12:20:56.875Z",
       "steps": [
         {
-          "bound": "first",
-          "date": "2026-10-04"
+          "day": "2026-10-04"
         }
       ],
-      "expectedFirst": "2026-10-03T15:45:00Z",
-      "expectedLast": "2026-10-05T12:20:56.875Z"
+      "expected": {
+        "from": "2026-10-03T13:30:00Z",
+        "until": "2026-10-04T13:00:00Z"
+      },
+      "native": "812727000.0|812811599.9999999",
+      "titleDays": 1
+    },
+    {
+      "name": "santiago midnight gap",
+      "zone": "America/Santiago",
+      "first": "2026-09-01T12:00:00.000Z",
+      "last": "2026-09-10T12:00:00.000Z",
+      "steps": [
+        {
+          "day": "2026-09-06"
+        }
+      ],
+      "expected": {
+        "from": "2026-09-06T04:00:00Z",
+        "until": "2026-09-07T04:00:00Z"
+      },
+      "native": "810360000.0|810446399.9999999",
+      "titleDays": 1
+    },
+    {
+      "name": "month chip",
+      "zone": "UTC",
+      "steps": [
+        {
+          "preset": "This month"
+        }
+      ],
+      "expected": {
+        "preset": "This month"
+      },
+      "observed": {
+        "native": "815184000.0|815507790.16111",
+        "title": "Show 4 days"
+      },
+      "titleDays": "dayOfMonth"
+    },
+    {
+      "name": "seven day chip",
+      "zone": "UTC",
+      "steps": [
+        {
+          "preset": "7 days"
+        }
+      ],
+      "expected": {
+        "preset": "7 days"
+      },
+      "observed": {
+        "native": "814903038.211476|815507838.211476",
+        "title": "Show 8 days"
+      },
+      "titleDays": 8
+    },
+    {
+      "name": "yesterday chip",
+      "zone": "UTC",
+      "first": "2026-10-10T18:12:34.125Z",
+      "last": "2026-10-12T20:34:56.875Z",
+      "steps": [
+        {
+          "preset": "Yesterday"
+        }
+      ],
+      "expected": {
+        "preset": "Yesterday"
+      },
+      "observed": {
+        "native": "815356800.0|815443199.9999999",
+        "title": "Show 1 day"
+      },
+      "titleDays": 1
+    },
+    {
+      "name": "all time chip",
+      "zone": "UTC",
+      "steps": [
+        {
+          "preset": "All"
+        }
+      ],
+      "expected": {
+        "preset": "All"
+      },
+      "observed": {
+        "native": "-63114076800.0|815507752.3111",
+        "title": "Show 1 day"
+      },
+      "titleDays": 1
+    },
+    {
+      "name": "reset",
+      "zone": "UTC",
+      "first": "2026-10-10T18:12:34.125Z",
+      "last": "2026-10-12T20:34:56.875Z",
+      "steps": [
+        {
+          "reset": true
+        }
+      ],
+      "expected": {
+        "preset": "Today"
+      },
+      "observed": {
+        "native": "815443200.0|815507819.777883",
+        "title": "Show 1 day"
+      },
+      "titleDays": 1
+    },
+    {
+      "name": "tap today",
+      "zone": "UTC",
+      "first": "2026-10-10T18:12:34.125Z",
+      "last": "2026-10-12T20:34:56.875Z",
+      "steps": [
+        {
+          "daysFromToday": 0
+        }
+      ],
+      "expected": {
+        "preset": "Today"
+      },
+      "observed": {
+        "native": "815443200.0|815507886.22842",
+        "title": "Show 1 day"
+      },
+      "titleDays": 1
+    },
+    {
+      "name": "tap month span",
+      "zone": "UTC",
+      "steps": [
+        {
+          "dayOfThisMonth": 1
+        },
+        {
+          "daysFromToday": 0
+        }
+      ],
+      "expected": {
+        "preset": "This month",
+        "presetOnFirstOfMonth": "Today"
+      },
+      "observed": {
+        "native": "815184000.0|815507876.895153",
+        "title": "Show 4 days"
+      },
+      "titleDays": "dayOfMonth"
+    },
+    {
+      "name": "span ending today",
+      "zone": "UTC",
+      "steps": [
+        {
+          "daysFromToday": -1
+        },
+        {
+          "daysFromToday": 0
+        }
+      ],
+      "expected": {
+        "clampedFromDaysAgo": 1
+      },
+      "observed": {
+        "native": "815356800.0|815507857.395064",
+        "title": "Show 2 days"
+      },
+      "titleDays": 2
     }
   ]
 }

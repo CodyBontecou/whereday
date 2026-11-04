@@ -88,8 +88,7 @@ jobs:
           python3 scripts/generate_photo_marker_fixtures.py --check-source
           python3 scripts/generate_point_marker_fixtures.py --check-source
           python3 scripts/generate_map_date_fixtures.py --check-source
-          # verify_custom_date_reference.py is not run: iOS 2.0 replaced the date pickers it
-          # references with a whole-day range calendar, so its native harness no longer applies.
+          python3 scripts/verify_custom_date_reference.py --check-source
           python3 scripts/generate_manual_visit_overlap_fixtures.py --check-source
       - name: Verify native 16 KB page alignment
         run: python3 scripts/verify_native_page_sizes.py app/build/outputs/apk/debug/app-debug.apk

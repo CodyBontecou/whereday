@@ -159,11 +159,13 @@ private val WorkspaceSheetShape=RoundedCornerShape(20.dp)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable internal fun WorkspaceModalBottomSheet(onDismissRequest:()->Unit,content:@Composable ColumnScope.()->Unit) {
+@Composable internal fun WorkspaceModalBottomSheet(onDismissRequest:()->Unit,fullHeight:Boolean=false,content:@Composable ColumnScope.()->Unit) {
     if(!LocalWorkspaceDialogsReady.current) return
     val states=rememberSaveableStateHolder()
     val body=rememberWorkspaceContent {states.SaveableStateProvider("sheet-body") {Column(content=content)}}
-    if(LocalWorkspaceDialogRegion.current==null) ModalBottomSheet(onDismissRequest,containerColor=wd.card,contentColor=wd.textPrimary,tonalElevation=0.dp) {body()}
+    // A full-height sheet opens expanded, like an iOS .large detent.
+    val sheetState=rememberModalBottomSheetState(skipPartiallyExpanded=fullHeight)
+    if(LocalWorkspaceDialogRegion.current==null) ModalBottomSheet(onDismissRequest,sheetState=sheetState,containerColor=wd.card,contentColor=wd.textPrimary,tonalElevation=0.dp) {body()}
     else WorkspaceDialog(onDismissRequest,bottomAligned=true) {
         Surface(shape=BottomSheetDefaults.ExpandedShape,color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {body()}
     }

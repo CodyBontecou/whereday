@@ -101,8 +101,11 @@ import com.bontecou.whereday.domain.ManualVisitMode
         visitSaved=true
     },null,visitMode)
     if(custom) {
-        val draft=rememberSaveable(selected,saver=mapDateDraftSaver) {model.mapDateDraft()}
-        CustomMapDateRange(draft,{custom=false}) {selection->
+        val draft=remember(selected) {model.mapRangeDraft()}
+        val arrivals by remember(graph) {graph.history.observeVisitArrivals()}.collectAsStateWithLifecycle(emptyList())
+        val zone=model.mapZone()
+        val recordedDays=remember(arrivals,zone) {arrivals.mapTo(HashSet()) {it.atZone(zone).toLocalDate()}}
+        MapRangeSheet(draft,recordedDays,model::mapNow,zone,{custom=false}) {selection->
             model.mapSelection.value=selection;custom=false
         }
     }
@@ -117,15 +120,3 @@ import com.bontecou.whereday.domain.ManualVisitMode
         Text(text,style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=color)
     }
 }
-
-internal val mapDateDraftSaver=listSaver<MapDateDraft,String>(
-    save={listOf(it.range.from.toString(),it.range.until.toString(),it.zone.id,
-        it.pendingFirst.toString(),it.pendingLast.toString(),it.selectedFirst.toString(),it.selectedLast.toString(),
-        it.firstEdited.toString(),it.lastEdited.toString())},
-    restore={values->
-        val range=HistoryRange(Instant.parse(values[0]),Instant.parse(values[1]));val zone=ZoneId.of(values[2])
-        if(values.size==3) MapDateDraft(range,zone) else MapDateDraft(range,zone,
-            Instant.parse(values[3]),Instant.parse(values[4]),LocalDate.parse(values[5]),LocalDate.parse(values[6]),
-            values[7].toBooleanStrict(),values[8].toBooleanStrict())
-    }
-)

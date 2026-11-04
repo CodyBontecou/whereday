@@ -379,6 +379,9 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         return InterruptionEvidence(routeEnd,dao.dwell()?.state?.lastTime ?: routeEnd)
     }
 
+    /** Every visit arrival, for marking recorded days in the map date calendar. */
+    fun observeVisitArrivals():Flow<List<Instant>> = dao.observeVisitArrivals()
+
     fun observeWindow(range:HistoryRange,inference:InferenceRules?=null,includeOutliers:Boolean=true):Flow<HistoryWindow> = observeWindow({range},inference,includeOutliers)
     /** Live map presets resolve their clock boundary again when durable history changes. */
     fun observeWindow(range:()->HistoryRange,inference:InferenceRules?=null,includeOutliers:Boolean=true):Flow<HistoryWindow> = database.invalidationTracker.createFlow("points","visits","sessions")
