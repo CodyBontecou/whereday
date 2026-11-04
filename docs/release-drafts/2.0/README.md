@@ -1,19 +1,18 @@
 # Whereday 2.0 / build 62
 
-**Status: blocked. `main` does not archive in Release.** Nothing was uploaded, created or submitted in App Store Connect, and no prices, products, availability or public pages were changed. App Store Connect has no 2.0 App Store version yet.
+**Status: archived and exported locally as 2.0 (62), not uploaded.** Nothing was uploaded, created or submitted in App Store Connect, and no prices, products, availability or public pages were changed. App Store Connect has no 2.0 App Store version yet.
 
-## Blocker: Release archive fails
+## Release-build fix (`2e295a2f`)
 
-`xcodebuild … -configuration Release … archive` on `fd2a348c` fails with:
+`main` at `fd2a348c` did not archive in Release:
 
 ```
 IsoMe/Services/StoreManager.swift:259:45: error: 'offer' is only available in iOS 17.2 or newer
-    if offersTrial, transaction.offer?.type == .introductory, let trialEnds = transaction.expirationDate {
 ```
 
-The line came in with the trial reminder in `d494de4a` (paywall carousel). The iPhone app's deployment target is iOS 17.0. The Debug simulator builds and `scripts/test-ios.sh` don't fail on it, so the test run below passed anyway. A fix is to guard the reminder with `if #available(iOS 17.2, *)` (no reminder on 17.0–17.1) and requalify. That changes app source, so the tests must be rerun and the archive retried as build 62.
+The trial reminder from `d494de4a` (paywall carousel) read `Transaction.offer`, which needs iOS 17.2, while the iPhone app targets iOS 17.0. Debug simulator builds and `scripts/test-ios.sh` didn't catch it. `StoreManager.isIntroductoryOffer(_:)` now uses `offer` on 17.2+ and falls back to `offerType` on 17.0–17.1, so the reminder still works on every supported version. This branch carries the fix; it must land on `main` before (or with) the release.
 
-2.0 is the "Whereday Reimagined" redesign of the iPhone app, widgets, Live Activity and Apple Watch app, merged to `main` on November 4, 2026 as #97 (app) and #98 (site, paywall carousel, Lifetime StoreKit test prices, 24-hour clocks). The release candidate is `main` at `fd2a348c`.
+2.0 is the "Whereday Reimagined" redesign of the iPhone app, widgets, Live Activity and Apple Watch app, merged to `main` on November 4, 2026 as #97 (app) and #98 (site, paywall carousel, Lifetime StoreKit test prices, 24-hour clocks). The release candidate is `main` at `fd2a348c` plus the fix above (`2e295a2f` on `release/2.0-build-62`).
 
 ## Build number: 62, not 60
 
@@ -78,12 +77,14 @@ An en-US trial capture on the iPhone 18 Pro Max (iOS 27.0) ran end to end, but `
 
 ## Qualification
 
-- `scripts/test-ios.sh --destination 'platform=iOS Simulator,id=<iPhone 18 Pro, iOS 27.0>'` on `fd2a348c`: **364 XCTest cases passed, 0 failures; 11 Swift Testing cases passed** (`** TEST SUCCEEDED **`). The log and result bundle are in `.asc/artifacts/stage-2.0-62/`. iOS 27.2 simulators aren't installed, so the default destination wasn't used.
-- This branch changes no app source (`IsoMe*`, project, StoreKit file). But the Release archive of the same source failed (see Blocker), so there's no build to stage yet.
+- `scripts/test-ios.sh --destination 'platform=iOS Simulator,id=<iPhone 18 Pro, iOS 27.0>'` on the fixed source: **364 XCTest cases passed, 0 failures; 11 Swift Testing cases passed** (`** TEST SUCCEEDED **`). iOS 27.2 simulators aren't installed, so the default destination wasn't used. The same result on `fd2a348c` before the fix is kept in `failed-archive-fd2a348c/`.
+- Release archive and App Store Connect export (`destination=export`, not upload): **succeeded**. All four bundles in the IPA (phone, phone widget, Watch, Watch widget) are **2.0 / 62**; see `ipa-verification.json`.
+- No physical-device check and no App Store Connect validation yet: validation needs the upload.
+- Logs, archive and IPA: `.asc/artifacts/stage-2.0-62/`.
 
 ## Still to do
 
-1. Fix the `transaction.offer` availability error on `main`, rerun `scripts/test-ios.sh`, then archive/export 2.0 (62) and upload it (the 1.8.2 commands with `MARKETING_VERSION=2.0 CURRENT_PROJECT_VERSION=62`).
+1. Merge this branch (it carries the Release-build fix), then upload `.asc/artifacts/stage-2.0-62/export/IsoMe.ipa` (2.0 / 62) once approved. The IPA was built from `2e295a2f`; if anything else lands first, re-archive.
 2. Make `--seed-screenshot-data` populate Today, Trace, Atlas and Places. Then run `scripts/capture_localized_screenshots.py --devices iphone` for the nine listing locales, and capture iPad and Watch on a Mac with those simulators. Redo the en-US Duo set.
 3. Get a native-language read of the drafted metadata and captions.
 4. In App Store Connect (owner): create the 2.0 iOS version with manual release, apply `metadata/whereday/version/2.0/*.json` and the reviewer notes, attach build **62 (not 60)**, replace the iPhone, iPad, Watch and Duo screenshots, and check App Privacy is unchanged. Submitting for review needs the owner's go-ahead.
