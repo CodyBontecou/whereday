@@ -83,6 +83,22 @@ def load_font(font_path, size, ttc_index=0, variation=None):
     return font
 
 
+NO_LINE_START = set("。、，．・：；！？）」』】〉》,.:;!?)")
+
+
+def unbreakable_units(text):
+    """Split unspaced (CJK) text into wrap units: Latin words stay whole, and closing
+    punctuation stays with the character before it, so lines never start with "。"."""
+    units = []
+    for character in text:
+        latin = character.isascii() and character.isalnum()
+        if units and (character in NO_LINE_START or (latin and units[-1][-1].isascii() and units[-1][-1].isalnum())):
+            units[-1] += character
+        else:
+            units.append(character)
+    return units
+
+
 def word_wrap(draw, text, font, max_w, transform=None):
     def rendered(value):
         return transform(value) if transform else value
@@ -95,11 +111,11 @@ def word_wrap(draw, text, font, max_w, transform=None):
                 lines.append(cur)
                 cur = ""
             chunk = ""
-            for character in w:
-                candidate = chunk + character
+            for unit in unbreakable_units(w):
+                candidate = chunk + unit
                 if chunk and draw.textlength(rendered(candidate), font=font) > max_w:
                     lines.append(chunk)
-                    chunk = character
+                    chunk = unit
                 else:
                     chunk = candidate
             cur = chunk
@@ -140,17 +156,20 @@ def draw_centered(draw, y, text, font, fill, max_w=None, transform=None):
     for line in lines:
         if transform:
             line = transform(line)
-        bbox = draw.textbbox((0, 0), line, font=font)
-        h = bbox[3] - bbox[1]
-        draw.text(
-            (CANVAS_W // 2, y - bbox[1]),
-            line,
-            fill=fill,
-            font=font,
-            anchor="mt",
-        )
-        y += h + DESC_LINE_GAP
+        draw.text((CANVAS_W // 2, y), line, fill=fill, font=font, anchor="mt")
+        y += line_height(font) + DESC_LINE_GAP
     return y
+
+
+def line_height(font):
+    """Font metrics, not ink: accents and descenders must not change line spacing."""
+    ascent, descent = font.getmetrics()
+    return ascent + descent
+
+
+def text_block_height(draw, text, font, max_w, transform):
+    lines = word_wrap(draw, text, font, max_w, transform)
+    return len(lines) * (line_height(font) + DESC_LINE_GAP)
 
 
 def compose(
@@ -183,14 +202,22 @@ def compose(
     desc_text = cased(desc)
     line_transform = shape_arabic if is_arabic else None
 
-    verb_font = fit_wrapped_font(
-        verb_text, MAX_VERB_W, 2, VERB_SIZE_MAX, VERB_SIZE_MIN, font_path, ttc_index, variation,
-        line_transform,
-    )
-    desc_font = fit_wrapped_font(
-        desc_text, MAX_TEXT_W, 3, DESC_SIZE_MAX, DESC_SIZE_MIN, font_path, ttc_index, variation,
-        line_transform,
-    )
+    # Shrink both lines together until the copy clears the device frame.
+    shrink = 0
+    while True:
+        verb_font = fit_wrapped_font(
+            verb_text, MAX_VERB_W, 2, VERB_SIZE_MAX - shrink, VERB_SIZE_MIN, font_path, ttc_index, variation,
+            line_transform,
+        )
+        desc_font = fit_wrapped_font(
+            desc_text, MAX_TEXT_W, 3, DESC_SIZE_MAX - shrink // 2, DESC_SIZE_MIN, font_path, ttc_index,
+            variation, line_transform,
+        )
+        bottom = (190 + text_block_height(draw, verb_text, verb_font, MAX_VERB_W, line_transform)
+                  + VERB_DESC_GAP + text_block_height(draw, desc_text, desc_font, MAX_TEXT_W, line_transform))
+        if bottom <= DEVICE_Y - 30 or VERB_SIZE_MAX - shrink <= VERB_SIZE_MIN:
+            break
+        shrink += 8
 
     brand_font = load_font(DEFAULT_FONT, 48)
     draw_centered(draw, 92, "Whereday", brand_font, text_color)

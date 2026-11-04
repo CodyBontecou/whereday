@@ -164,12 +164,12 @@
   "ja": [
     {
       "name": "01-today-dial",
-      "title": "一日をひとつのダイヤルに。",
+      "title": "一日をダイヤルに。",
       "subtitle": "すべての滞在先とルートを24時間の時計に。"
     },
     {
       "name": "02-trace-replay",
-      "title": "どの日も地図で振り返る。",
+      "title": "どの日も、地図で。",
       "subtitle": "ルートと滞在先を1分ごとにたどれます。"
     },
     {
@@ -185,7 +185,7 @@
     {
       "name": "05-export-sentence",
       "title": "一文で書き出す。",
-      "subtitle": "JSON、CSV、Markdown、GPX、KML。あなたの履歴を、あなたのファイルに。"
+      "subtitle": "JSON、CSV、GPX、KMLなど。履歴はあなたの手元に。"
     }
   ],
   "pt-BR": [
@@ -245,12 +245,12 @@
   "zh-Hans": [
     {
       "name": "01-today-dial",
-      "title": "一整天，尽在一个表盘。",
+      "title": "一天，一个表盘。",
       "subtitle": "每个停留地点和每条路线，都在 24 小时时钟上。"
     },
     {
       "name": "02-trace-replay",
-      "title": "在地图上回放任意一天。",
+      "title": "回放任意一天。",
       "subtitle": "逐分钟浏览路线和停留地点。"
     },
     {
@@ -265,7 +265,7 @@
     },
     {
       "name": "05-export-sentence",
-      "title": "像写一句话一样导出。",
+      "title": "像写句子一样导出。",
       "subtitle": "JSON、CSV、Markdown、GPX 或 KML。您的历史，您的文件。"
     }
   ],

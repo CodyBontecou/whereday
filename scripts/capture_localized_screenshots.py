@@ -37,19 +37,19 @@ LOCALES = {
 }
 
 # Launch tabs (see MainTabView.tabTag): 0 = Trace over Today, 1 = Archive, 3 = Timeline over Today,
-# 4 = Today, 5 = Atlas, 6 = Places.
+# 4 = Today, 5 = Atlas, 6 = Places. Each launch re-seeds a year of sample data, hence the long waits.
 IPHONE_STORY = (
-    ("01-today-dial", ("--seed-screenshot-data", "--default-tab=4"), 6.0),
-    ("02-trace-replay", ("--seed-screenshot-data", "--default-tab=0"), 6.0),
+    ("01-today-dial", ("--seed-screenshot-data", "--default-tab=4"), 10.0),
+    ("02-trace-replay", ("--seed-screenshot-data", "--default-tab=0"), 10.0),
     ("03-atlas-year", ("--seed-screenshot-data", "--default-tab=5"), 12.0),
-    ("04-places", ("--seed-screenshot-data", "--default-tab=6"), 3.0),
-    ("05-export-sentence", ("--seed-screenshot-data", "--default-tab=1"), 3.0),
+    ("04-places", ("--seed-screenshot-data", "--default-tab=6"), 10.0),
+    ("05-export-sentence", ("--seed-screenshot-data", "--default-tab=1"), 10.0),
 )
 # Onboarding has three pages since 2.0 (OnboardingView.pageCount).
 IPAD_STORY = (
     ("01-welcome", 0),
-    ("02-how-much-to-remember", 1),
-    ("03-permissions", 2),
+    ("02-stays-on-this-phone", 1),
+    ("03-how-much-to-remember", 2),
 )
 
 
@@ -248,15 +248,18 @@ def capture_ipad(store_locale: str, language: str, apple_locale: str, app: Path,
     for name, page in IPAD_STORY:
         launch_and_capture(
             ipad_id, BUNDLE_ID, language, apple_locale, (f"--onboarding-page={page}",),
-            OUTPUT_ROOT / "appstore" / store_locale / "ipad-129" / f"{name}.png", 2.0,
+            OUTPUT_ROOT / "appstore" / store_locale / "ipad-129" / f"{name}.png", 6.0,
+            minimum_entropy=1.0,
         )
 
 
 def capture_watch(store_locale: str, language: str, apple_locale: str, watch_app: Path, watch_id: str) -> None:
     reinstall(watch_id, WATCH_BUNDLE_ID, watch_app)
+    # Without location access the glance shows a permission prompt instead of the dial.
+    simctl("privacy", watch_id, "grant", "location", WATCH_BUNDLE_ID, check=False)
     launch_and_capture(
         watch_id, WATCH_BUNDLE_ID, language, apple_locale, (),
-        OUTPUT_ROOT / "appstore" / store_locale / "watch-series-10" / "01-main.png", 2.0,
+        OUTPUT_ROOT / "appstore" / store_locale / "watch-series-10" / "01-main.png", 5.0,
     )
 
 
