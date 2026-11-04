@@ -1,7 +1,7 @@
 {
   "provenance": {
     "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
-    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
     "android/scripts/fixtures/HistoryTableFixtures.swift": "16bdf141202b62cc1a665487d632e7c7da8e4b850283ca3d27206bfc0a8d03ce",
     "android/scripts/fixtures/history-table-inputs.json": "e2137f85f363b3d31b9195e4b15bf9e2cbee9f6e4f16602dbbb03a29651f3d0b",
     "android/scripts/generate_history_table_fixtures.py": "395e4288a74d77cfd2ada2698624d5d149ce1757e284ef6bf693e8026ca179c1"

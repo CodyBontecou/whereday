@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "IsoMe/Services/GeocodingService.swift": "78b54611c92c425f4049e395b6f742ac9f8cd8d9330e4a6f3fd1d5ea713f1044",
+    "IsoMe/Services/GeocodingService.swift": "3aa0eff181ba53851b90bd008ba65165808740beded8c7dcffadc303c65bded1",
     "IsoMe/Services/PlaceSearchService.swift": "7e37553ffbda840eda62ff4c70a5d35a89ee72b46300f27a27ca4da060b54785",
     "android/scripts/fixtures/NearbyPlaceFixtures.swift": "78fe385795d3e8f5269537b70c2ef03c364304f347be58c2d1d335ebd830b9ef",
     "android/scripts/generate_nearby_place_fixtures.py": "3625ae032849980899699caeeb321b143cb7dafe259b393cdcb1ef9a54b2bdc6"

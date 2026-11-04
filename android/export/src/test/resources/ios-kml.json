@@ -1,7 +1,7 @@
 {
   "provenance": {
     "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
-    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
     "android/scripts/fixtures/KmlFixtures.swift": "79b471d03fdcb5860954aa9193a1725b61bbf950e8db1f0cf185483a8fc59e07",
     "android/scripts/fixtures/kml-inputs.json": "887ed003b81fbfe86bcaa933d262b30624e3e505d98537345e1e2be1c225cad4",
     "android/scripts/generate_kml_fixtures.py": "2f63c33f9311c328b5ef7a645a0d749eafcab827dbf224e6214964ce9a97c1c4"

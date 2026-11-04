@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "algorithm": "d894cc20865aad2c042a658936ab0d1335c8ddb1465eb471a68348760a70006e",
-    "harness": "95593e60b0f7ab7d3919512942d7fa98e66b2c415211e99a27e23c212bad61f6",
+    "algorithm": "7c6ffb1adcd06a7cef8d6cf2e7f6ae96e7065dabfa41462848afd6aaa058c2c9",
+    "harness": "4170d0d5429e7040c1c099e2fd0032ed486ca74fc25c70b93db86794f1bed16d",
     "inputs": "0dadd4eb9753c3672786926955b35fb1004b5442153dd7f9a45ed3856ad73c2d",
-    "generator": "444d9eb9337b871c427e6b868193342aa76c84dbf11bc2b96bc08296d615a02e"
+    "generator": "94457ace129934562aecd448fe8b2eef0ed5b32b63c368bbb1a8aa699cf8295f"
   },
   "cases": [
     {
@@ -23,6 +23,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1790812800000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "UTC"
@@ -63,6 +70,13 @@
       "zone": "UTC"
     },
     {
+      "fromMillis": 1772323200000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "UTC"
+    },
+    {
       "fromMillis": 1770363000000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -93,6 +107,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1772323200000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "UTC"
@@ -133,6 +154,13 @@
       "zone": "UTC"
     },
     {
+      "fromMillis": 1793491200000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "UTC"
+    },
+    {
       "fromMillis": 1791527400000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -163,6 +191,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1790812800000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "UTC"
@@ -203,6 +238,13 @@
       "zone": "UTC"
     },
     {
+      "fromMillis": 1775001600000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "UTC"
+    },
+    {
       "fromMillis": 1772810100000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -233,6 +275,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1325376000000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "UTC"
@@ -273,6 +322,13 @@
       "zone": "UTC"
     },
     {
+      "fromMillis": -142128000000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "UTC"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -303,6 +359,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 1793491200000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "UTC"
@@ -343,6 +406,13 @@
       "zone": "UTC"
     },
     {
+      "fromMillis": -7948800000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "UTC"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -373,6 +443,13 @@
     {
       "fromMillis": 745677000000,
       "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "UTC"
+    },
+    {
+      "fromMillis": 744163200000,
+      "preset": "thisMonth",
       "reference": "1993-08-25T12:30:00.000Z",
       "untilMillis": 746281800001,
       "zone": "UTC"
@@ -413,6 +490,13 @@
       "zone": "UTC"
     },
     {
+      "fromMillis": 1322697600000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "UTC"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -443,6 +527,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1790827200000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "America/New_York"
@@ -483,6 +574,13 @@
       "zone": "America/New_York"
     },
     {
+      "fromMillis": 1772341200000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/New_York"
+    },
+    {
       "fromMillis": 1770366600000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -513,6 +611,13 @@
     {
       "fromMillis": 1772955000000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1772341200000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "America/New_York"
@@ -553,6 +658,13 @@
       "zone": "America/New_York"
     },
     {
+      "fromMillis": 1793505600000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/New_York"
+    },
+    {
       "fromMillis": 1791523800000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -583,6 +695,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1790827200000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "America/New_York"
@@ -623,6 +742,13 @@
       "zone": "America/New_York"
     },
     {
+      "fromMillis": 1775016000000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/New_York"
+    },
+    {
       "fromMillis": 1772813700000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -653,6 +779,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1325394000000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "America/New_York"
@@ -693,6 +826,13 @@
       "zone": "America/New_York"
     },
     {
+      "fromMillis": -142113600000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/New_York"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -723,6 +863,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1790827200000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "America/New_York"
@@ -763,6 +910,13 @@
       "zone": "America/New_York"
     },
     {
+      "fromMillis": -7934400000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/New_York"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -798,6 +952,13 @@
       "zone": "America/New_York"
     },
     {
+      "fromMillis": 744177600000,
+      "preset": "thisMonth",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/New_York"
+    },
+    {
       "fromMillis": 743689800000,
       "preset": "thirtyDays",
       "reference": "1993-08-25T12:30:00.000Z",
@@ -828,6 +989,13 @@
     {
       "fromMillis": 1324641600000,
       "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/New_York"
+    },
+    {
+      "fromMillis": 1322715600000,
+      "preset": "thisMonth",
       "reference": "2011-12-30T12:00:00.000Z",
       "untilMillis": 1325246400001,
       "zone": "America/New_York"
@@ -868,6 +1036,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 1790805600000,
+      "preset": "thisMonth",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 1790874754125,
       "preset": "thirtyDays",
       "reference": "2026-10-31T18:12:34.125Z",
@@ -898,6 +1073,13 @@
     {
       "fromMillis": 1772350200000,
       "preset": "sevenDays",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1772319600000,
+      "preset": "thisMonth",
       "reference": "2026-03-08T07:30:00.000Z",
       "untilMillis": 1772955000001,
       "zone": "Europe/Berlin"
@@ -938,6 +1120,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 1772319600000,
+      "preset": "thisMonth",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 1770964200000,
       "preset": "thirtyDays",
       "reference": "2026-03-15T06:30:00.000Z",
@@ -968,6 +1157,13 @@
     {
       "fromMillis": 1793514600000,
       "preset": "sevenDays",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1793487600000,
+      "preset": "thisMonth",
       "reference": "2026-11-08T06:30:00.000Z",
       "untilMillis": 1794119400001,
       "zone": "Europe/Berlin"
@@ -1008,6 +1204,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 1790805600000,
+      "preset": "thisMonth",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 1790296200000,
       "preset": "thirtyDays",
       "reference": "2026-10-25T01:30:00.000Z",
@@ -1038,6 +1241,13 @@
     {
       "fromMillis": 1774797300000,
       "preset": "sevenDays",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": 1774994400000,
+      "preset": "thisMonth",
       "reference": "2026-04-05T15:15:00.000Z",
       "untilMillis": 1775402100001,
       "zone": "Europe/Berlin"
@@ -1078,6 +1288,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 1325372400000,
+      "preset": "thisMonth",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 1323167400000,
       "preset": "thirtyDays",
       "reference": "2012-01-05T10:30:00.000Z",
@@ -1108,6 +1325,13 @@
     {
       "fromMillis": -141782400000,
       "preset": "sevenDays",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -142131600000,
+      "preset": "thisMonth",
       "reference": "1965-07-12T00:00:00.000Z",
       "untilMillis": -141177599999,
       "zone": "Europe/Berlin"
@@ -1148,6 +1372,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 1793487600000,
+      "preset": "thisMonth",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 1790895600000,
       "preset": "thirtyDays",
       "reference": "2026-11-01T00:00:00.000Z",
@@ -1178,6 +1409,13 @@
     {
       "fromMillis": -8163000000,
       "preset": "sevenDays",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Europe/Berlin"
+    },
+    {
+      "fromMillis": -7952400000,
+      "preset": "thisMonth",
       "reference": "1969-10-05T12:30:00.000Z",
       "untilMillis": -7558199999,
       "zone": "Europe/Berlin"
@@ -1218,6 +1456,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 744156000000,
+      "preset": "thisMonth",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 743689800000,
       "preset": "thirtyDays",
       "reference": "1993-08-25T12:30:00.000Z",
@@ -1253,6 +1498,13 @@
       "zone": "Europe/Berlin"
     },
     {
+      "fromMillis": 1322694000000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Europe/Berlin"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -1283,6 +1535,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793451600000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "Australia/Lord_Howe"
@@ -1323,6 +1582,13 @@
       "zone": "Australia/Lord_Howe"
     },
     {
+      "fromMillis": 1772283600000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
       "fromMillis": 1770363000000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -1353,6 +1619,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1772283600000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "Australia/Lord_Howe"
@@ -1393,6 +1666,13 @@
       "zone": "Australia/Lord_Howe"
     },
     {
+      "fromMillis": 1793451600000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
       "fromMillis": 1791527400000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -1423,6 +1703,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1790775000000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "Australia/Lord_Howe"
@@ -1463,6 +1750,13 @@
       "zone": "Australia/Lord_Howe"
     },
     {
+      "fromMillis": 1774962000000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
       "fromMillis": 1772808300000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -1493,6 +1787,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1325336400000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "Australia/Lord_Howe"
@@ -1533,6 +1834,13 @@
       "zone": "Australia/Lord_Howe"
     },
     {
+      "fromMillis": -142164000000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -1563,6 +1871,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 1793451600000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "Australia/Lord_Howe"
@@ -1603,6 +1918,13 @@
       "zone": "Australia/Lord_Howe"
     },
     {
+      "fromMillis": -7984800000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -1633,6 +1955,13 @@
     {
       "fromMillis": 745677000000,
       "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
+      "fromMillis": 744125400000,
+      "preset": "thisMonth",
       "reference": "1993-08-25T12:30:00.000Z",
       "untilMillis": 746281800001,
       "zone": "Australia/Lord_Howe"
@@ -1673,6 +2002,13 @@
       "zone": "Australia/Lord_Howe"
     },
     {
+      "fromMillis": 1322658000000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Australia/Lord_Howe"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -1703,6 +2039,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793444400000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "Pacific/Apia"
@@ -1743,6 +2086,13 @@
       "zone": "Pacific/Apia"
     },
     {
+      "fromMillis": 1772276400000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Apia"
+    },
+    {
       "fromMillis": 1770363000000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -1773,6 +2123,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1772276400000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "Pacific/Apia"
@@ -1813,6 +2170,13 @@
       "zone": "Pacific/Apia"
     },
     {
+      "fromMillis": 1793444400000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Apia"
+    },
+    {
       "fromMillis": 1791527400000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -1843,6 +2207,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1790766000000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "Pacific/Apia"
@@ -1883,6 +2254,13 @@
       "zone": "Pacific/Apia"
     },
     {
+      "fromMillis": 1774954800000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Apia"
+    },
+    {
       "fromMillis": 1772810100000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -1913,6 +2291,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1325325600000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "Pacific/Apia"
@@ -1953,6 +2338,13 @@
       "zone": "Pacific/Apia"
     },
     {
+      "fromMillis": -142088400000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Apia"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -1983,6 +2375,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 1793444400000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "Pacific/Apia"
@@ -2023,6 +2422,13 @@
       "zone": "Pacific/Apia"
     },
     {
+      "fromMillis": -7909200000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Apia"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -2053,6 +2459,13 @@
     {
       "fromMillis": 745677000000,
       "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Apia"
+    },
+    {
+      "fromMillis": 744202800000,
+      "preset": "thisMonth",
       "reference": "1993-08-25T12:30:00.000Z",
       "untilMillis": 746281800001,
       "zone": "Pacific/Apia"
@@ -2093,6 +2506,13 @@
       "zone": "Pacific/Apia"
     },
     {
+      "fromMillis": 1322733600000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Apia"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -2123,6 +2543,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1790792100000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "Asia/Kathmandu"
@@ -2163,6 +2590,13 @@
       "zone": "Asia/Kathmandu"
     },
     {
+      "fromMillis": 1772302500000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
       "fromMillis": 1770363000000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -2193,6 +2627,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1772302500000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "Asia/Kathmandu"
@@ -2233,6 +2674,13 @@
       "zone": "Asia/Kathmandu"
     },
     {
+      "fromMillis": 1793470500000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
       "fromMillis": 1791527400000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -2263,6 +2711,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1790792100000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "Asia/Kathmandu"
@@ -2303,6 +2758,13 @@
       "zone": "Asia/Kathmandu"
     },
     {
+      "fromMillis": 1774980900000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
       "fromMillis": 1772810100000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -2333,6 +2795,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1325355300000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "Asia/Kathmandu"
@@ -2373,6 +2842,13 @@
       "zone": "Asia/Kathmandu"
     },
     {
+      "fromMillis": -142147800000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -2403,6 +2879,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 1793470500000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "Asia/Kathmandu"
@@ -2443,6 +2926,13 @@
       "zone": "Asia/Kathmandu"
     },
     {
+      "fromMillis": -7968600000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Asia/Kathmandu"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -2473,6 +2963,13 @@
     {
       "fromMillis": 745677000000,
       "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "fromMillis": 744142500000,
+      "preset": "thisMonth",
       "reference": "1993-08-25T12:30:00.000Z",
       "untilMillis": 746281800001,
       "zone": "Asia/Kathmandu"
@@ -2513,6 +3010,13 @@
       "zone": "Asia/Kathmandu"
     },
     {
+      "fromMillis": 1322676900000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Asia/Kathmandu"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -2543,6 +3047,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1790827200000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "America/Havana"
@@ -2583,6 +3094,13 @@
       "zone": "America/Havana"
     },
     {
+      "fromMillis": 1772341200000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "America/Havana"
+    },
+    {
       "fromMillis": 1770366600000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -2613,6 +3131,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1772341200000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "America/Havana"
@@ -2653,6 +3178,13 @@
       "zone": "America/Havana"
     },
     {
+      "fromMillis": 1793505600000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "America/Havana"
+    },
+    {
       "fromMillis": 1791523800000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -2683,6 +3215,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1790827200000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "America/Havana"
@@ -2723,6 +3262,13 @@
       "zone": "America/Havana"
     },
     {
+      "fromMillis": 1775016000000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "America/Havana"
+    },
+    {
       "fromMillis": 1772813700000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -2753,6 +3299,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1325394000000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "America/Havana"
@@ -2793,6 +3346,13 @@
       "zone": "America/Havana"
     },
     {
+      "fromMillis": -142113600000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "America/Havana"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -2823,6 +3383,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 1790827200000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "America/Havana"
@@ -2863,6 +3430,13 @@
       "zone": "America/Havana"
     },
     {
+      "fromMillis": -7934400000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "America/Havana"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -2893,6 +3467,13 @@
     {
       "fromMillis": 745677000000,
       "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "America/Havana"
+    },
+    {
+      "fromMillis": 744177600000,
+      "preset": "thisMonth",
       "reference": "1993-08-25T12:30:00.000Z",
       "untilMillis": 746281800001,
       "zone": "America/Havana"
@@ -2933,6 +3514,13 @@
       "zone": "America/Havana"
     },
     {
+      "fromMillis": 1322715600000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "America/Havana"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -2963,6 +3551,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793441700000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "Pacific/Chatham"
@@ -3003,6 +3598,13 @@
       "zone": "Pacific/Chatham"
     },
     {
+      "fromMillis": 1772273700000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Chatham"
+    },
+    {
       "fromMillis": 1770363000000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -3033,6 +3635,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1772273700000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "Pacific/Chatham"
@@ -3073,6 +3682,13 @@
       "zone": "Pacific/Chatham"
     },
     {
+      "fromMillis": 1793441700000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
       "fromMillis": 1791527400000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -3103,6 +3719,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1790763300000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "Pacific/Chatham"
@@ -3143,6 +3766,13 @@
       "zone": "Pacific/Chatham"
     },
     {
+      "fromMillis": 1774952100000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Chatham"
+    },
+    {
       "fromMillis": 1772806500000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -3173,6 +3803,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1325326500000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "Pacific/Chatham"
@@ -3213,6 +3850,13 @@
       "zone": "Pacific/Chatham"
     },
     {
+      "fromMillis": -142173900000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Chatham"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -3243,6 +3887,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 1793441700000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "Pacific/Chatham"
@@ -3283,6 +3934,13 @@
       "zone": "Pacific/Chatham"
     },
     {
+      "fromMillis": -7994700000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Chatham"
+    },
+    {
       "fromMillis": -10150200000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -3313,6 +3971,13 @@
     {
       "fromMillis": 745677000000,
       "preset": "sevenDays",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Chatham"
+    },
+    {
+      "fromMillis": 744117300000,
+      "preset": "thisMonth",
       "reference": "1993-08-25T12:30:00.000Z",
       "untilMillis": 746281800001,
       "zone": "Pacific/Chatham"
@@ -3353,6 +4018,13 @@
       "zone": "Pacific/Chatham"
     },
     {
+      "fromMillis": 1322648100000,
+      "preset": "thisMonth",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Chatham"
+    },
+    {
       "fromMillis": 1322654400000,
       "preset": "thirtyDays",
       "reference": "2011-12-30T12:00:00.000Z",
@@ -3383,6 +4055,13 @@
     {
       "fromMillis": 1792865554125,
       "preset": "sevenDays",
+      "reference": "2026-10-31T18:12:34.125Z",
+      "untilMillis": 1793470354126,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793448000000,
+      "preset": "thisMonth",
       "reference": "2026-10-31T18:12:34.125Z",
       "untilMillis": 1793470354126,
       "zone": "Pacific/Kwajalein"
@@ -3423,6 +4102,13 @@
       "zone": "Pacific/Kwajalein"
     },
     {
+      "fromMillis": 1772280000000,
+      "preset": "thisMonth",
+      "reference": "2026-03-08T07:30:00.000Z",
+      "untilMillis": 1772955000001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
       "fromMillis": 1770363000000,
       "preset": "thirtyDays",
       "reference": "2026-03-08T07:30:00.000Z",
@@ -3453,6 +4139,13 @@
     {
       "fromMillis": 1772951400000,
       "preset": "sevenDays",
+      "reference": "2026-03-15T06:30:00.000Z",
+      "untilMillis": 1773556200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1772280000000,
+      "preset": "thisMonth",
       "reference": "2026-03-15T06:30:00.000Z",
       "untilMillis": 1773556200001,
       "zone": "Pacific/Kwajalein"
@@ -3493,6 +4186,13 @@
       "zone": "Pacific/Kwajalein"
     },
     {
+      "fromMillis": 1793448000000,
+      "preset": "thisMonth",
+      "reference": "2026-11-08T06:30:00.000Z",
+      "untilMillis": 1794119400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
       "fromMillis": 1791527400000,
       "preset": "thirtyDays",
       "reference": "2026-11-08T06:30:00.000Z",
@@ -3523,6 +4223,13 @@
     {
       "fromMillis": 1792287000000,
       "preset": "sevenDays",
+      "reference": "2026-10-25T01:30:00.000Z",
+      "untilMillis": 1792891800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1790769600000,
+      "preset": "thisMonth",
       "reference": "2026-10-25T01:30:00.000Z",
       "untilMillis": 1792891800001,
       "zone": "Pacific/Kwajalein"
@@ -3563,6 +4270,13 @@
       "zone": "Pacific/Kwajalein"
     },
     {
+      "fromMillis": 1774958400000,
+      "preset": "thisMonth",
+      "reference": "2026-04-05T15:15:00.000Z",
+      "untilMillis": 1775402100001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
       "fromMillis": 1772810100000,
       "preset": "thirtyDays",
       "reference": "2026-04-05T15:15:00.000Z",
@@ -3593,6 +4307,13 @@
     {
       "fromMillis": 1325154600000,
       "preset": "sevenDays",
+      "reference": "2012-01-05T10:30:00.000Z",
+      "untilMillis": 1325759400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1325332800000,
+      "preset": "thisMonth",
       "reference": "2012-01-05T10:30:00.000Z",
       "untilMillis": 1325759400001,
       "zone": "Pacific/Kwajalein"
@@ -3633,6 +4354,13 @@
       "zone": "Pacific/Kwajalein"
     },
     {
+      "fromMillis": -142167600000,
+      "preset": "thisMonth",
+      "reference": "1965-07-12T00:00:00.000Z",
+      "untilMillis": -141177599999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
       "fromMillis": -143769600000,
       "preset": "thirtyDays",
       "reference": "1965-07-12T00:00:00.000Z",
@@ -3663,6 +4391,13 @@
     {
       "fromMillis": 1792886400000,
       "preset": "sevenDays",
+      "reference": "2026-11-01T00:00:00.000Z",
+      "untilMillis": 1793491200001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1793448000000,
+      "preset": "thisMonth",
       "reference": "2026-11-01T00:00:00.000Z",
       "untilMillis": 1793491200001,
       "zone": "Pacific/Kwajalein"
@@ -3703,6 +4438,13 @@
       "zone": "Pacific/Kwajalein"
     },
     {
+      "fromMillis": -7905600000,
+      "preset": "thisMonth",
+      "reference": "1969-10-05T12:30:00.000Z",
+      "untilMillis": -7558199999,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
       "fromMillis": -10233000000,
       "preset": "thirtyDays",
       "reference": "1969-10-05T12:30:00.000Z",
@@ -3738,6 +4480,13 @@
       "zone": "Pacific/Kwajalein"
     },
     {
+      "fromMillis": 744206400000,
+      "preset": "thisMonth",
+      "reference": "1993-08-25T12:30:00.000Z",
+      "untilMillis": 746281800001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
       "fromMillis": 743689800000,
       "preset": "thirtyDays",
       "reference": "1993-08-25T12:30:00.000Z",
@@ -3768,6 +4517,13 @@
     {
       "fromMillis": 1324641600000,
       "preset": "sevenDays",
+      "reference": "2011-12-30T12:00:00.000Z",
+      "untilMillis": 1325246400001,
+      "zone": "Pacific/Kwajalein"
+    },
+    {
+      "fromMillis": 1322654400000,
+      "preset": "thisMonth",
       "reference": "2011-12-30T12:00:00.000Z",
       "untilMillis": 1325246400001,
       "zone": "Pacific/Kwajalein"

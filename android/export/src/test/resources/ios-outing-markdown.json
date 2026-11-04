@@ -1,12 +1,13 @@
 {
   "provenance": {
     "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
-    "IsoMe/Models/RecordingSession.swift": "fab67599d5d9c92ee69a65c2b3825ae6c620ec4d595233af1d0257898b4bb7c3",
+    "IsoMe/Models/RecordingSession.swift": "a831aa891b4e5ad18352bbe3bd2309cffc10147a9256b8a5719a41fff331ef11",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
-    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
+    "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
     "android/scripts/fixtures/OutingMarkdownFixtures.swift": "6ecfc7978f8ee9630d24e6a4d30df5df7a9a6d8a53821fe3f605b0b2275de71a",
     "android/scripts/fixtures/outing-markdown-inputs.json": "7325fc9051c6c35bd0804849dd8bec1b6e2b6a70906bbdcf77462b3863198833",
-    "android/scripts/generate_outing_markdown_fixtures.py": "b9590a397bdcb6379ba23a2a3c2b9543cb0f24a25319afd3c4b26bba139847a0"
+    "android/scripts/generate_outing_markdown_fixtures.py": "640bb94322e19e359ed189596c57f45381890bdce45bb53983dca40faecc2557"
   },
   "normalization": "Only generated bulk export dates are normalized; all outing data and locale display remain.",
   "cases": [

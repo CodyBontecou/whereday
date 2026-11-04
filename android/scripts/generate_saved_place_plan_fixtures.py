@@ -23,10 +23,18 @@ if args.check_source:
     print('PASS: saved-place plan fixture source hashes match');raise SystemExit(0)
 original=model.read_text();start=original.index('final class SavedPlace');end=original.index('\nextension Visit',start)
 selected='import Foundation\nimport CoreLocation\n'+original[start:end]
+# SavedPlace stores an optional SavedPlaceKind; copy that enum verbatim so the model compiles.
+kind=original.index('enum SavedPlaceKind:');depth=0;stop=original.index('{',kind)
+for stop in range(stop,len(original)):
+    depth+=(original[stop]=='{')-(original[stop]=='}')
+    if depth==0:break
+selected+='\n'+original[kind:stop+1]+'\n'
 with tempfile.TemporaryDirectory(prefix='whereday-place-plans-') as directory:
     work=Path(directory);source=work/'Model.swift';main=work/'main.swift';binary=work/'fixtures'
     source.write_text(selected);main.write_bytes(harness.read_bytes())
-    subprocess.run(['swiftc','-module-cache-path',str(work/'modules'),str(source),str(csv),str(management),str(main),'-o',str(binary)],check=True)
+    # Planning ends where merging and the view-model extension begin; those need the app's Visit index.
+    planning=work/'Planning.swift';text=management.read_text();planning.write_text(text[:text.index('// MARK: - Merging')])
+    subprocess.run(['swiftc','-module-cache-path',str(work/'modules'),str(source),str(csv),str(planning),str(main),'-o',str(binary)],check=True)
     cases=json.loads(subprocess.run([str(binary),str(inputs)],capture_output=True,text=True,check=True).stdout)
     output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(json.dumps({'provenance':provenance,'cases':cases},ensure_ascii=False,indent=2)+'\n')

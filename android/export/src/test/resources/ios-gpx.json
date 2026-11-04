@@ -1,7 +1,7 @@
 {
   "provenance": {
     "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
-    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
     "android/scripts/fixtures/GpxFixtures.swift": "46ed533b458ea0561f6e10251fc133db65cd7b3f689688a6995616ca07296e36",
     "android/scripts/fixtures/gpx-inputs.json": "cc7dd46fcf926289ef9108173791f82743765a3cff2ac0ff58b1aff4e80922fb",
     "android/scripts/generate_gpx_fixtures.py": "9ee8581bdd56484b83290c9d0c5e3cb145eb91044975ad649d5cded51abbaf24"

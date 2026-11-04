@@ -11,10 +11,11 @@ root=Path(__file__).resolve().parents[2]
 export=root/'IsoMe/Utilities/ExportService.swift'
 session=root/'IsoMe/Models/RecordingSession.swift'
 point=root/'IsoMe/Models/LocationPoint.swift'
+travel=root/'Shared/DistanceFormatter.swift'
 harness=root/'android/scripts/fixtures/OutingFixtures.swift'
 inputs=root/'android/scripts/fixtures/outing-inputs.json'
 output=root/'android/export/src/test/resources/ios-outings.json'
-provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [export,session,point,harness,inputs]}
+provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [export,session,point,travel,harness,inputs]}
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check-source',action='store_true');args=parser.parse_args()
 if args.check_source:
     if json.loads(output.read_text())['provenance']!=provenance: raise SystemExit('Outing fixture sources changed; regenerate on macOS')
@@ -27,7 +28,7 @@ def declaration(source,marker):
         depth+=(source[end]=='{')-(source[end]=='}');end+=1
     return source[start:end]
 
-e=export.read_text();s=session.read_text();p=point.read_text()
+e=export.read_text();s=session.read_text();p=point.read_text();t=travel.read_text()
 # Keep actual model behavior without SwiftData persistence, UI-only summary properties or previews.
 recording=declaration(s,'final class RecordingSession')
 summary=s[s.index('struct RecordingSessionSummary:'):s.index('    var formattedTimeRange:')]+ '\n}\n'
@@ -39,9 +40,10 @@ parts=[declaration(e,marker) for marker in ['struct ExportableOuting:', 'struct 
     'private static func escapeCSVField(']]
 # The formatter is an immediately invoked closure in the original declaration.
 parts[2]+='()'
-selected='import Foundation\nimport CoreLocation\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'
+selected='import Foundation\nimport CoreLocation\n'+declaration(t,'enum TravelMode:')+'\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'
 # Only arrival participates in these two renderers; no personal or persisted Visit is loaded.
-selected+='struct Visit {let arrivedAt: Date}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
+# Coordinates and name exist only so the outing title helpers compile; the renderers never read them.
+selected+='struct Visit {let arrivedAt: Date;var latitude: Double=0;var longitude: Double=0;var displayName: String=""}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
 with tempfile.TemporaryDirectory(prefix='whereday-outings-') as directory:
     work=Path(directory);source=work/'Selected.swift';main=work/'main.swift';binary=work/'fixtures'
     source.write_text(selected);main.write_bytes(harness.read_bytes())

@@ -10,7 +10,11 @@ import tempfile
 
 root=Path(__file__).resolve().parents[2]
 source=(root/'IsoMe/Views/MapView.swift').read_text()
-algorithm=source[source.index('enum MapDatePreset: CaseIterable, Hashable {'):source.index('\nstruct FilterBarToggle: View {')]
+def declaration(text,marker):
+    start=text.index(marker);end=text.index('{',start)+1;depth=1
+    while depth:depth+=(text[end]=='{')-(text[end]=='}');end+=1
+    return text[start:end]
+algorithm=declaration(source,'enum MapDatePreset: CaseIterable, Hashable {')
 references=['2026-10-31T18:12:34.125Z','2026-03-08T07:30:00.000Z','2026-03-15T06:30:00.000Z',
             '2026-11-08T06:30:00.000Z','2026-10-25T01:30:00.000Z','2026-04-05T15:15:00.000Z',
             '2012-01-05T10:30:00.000Z','1965-07-12T00:00:00.000Z','2026-11-01T00:00:00.000Z','1969-10-05T12:30:00.000Z','1993-08-25T12:30:00.000Z','2011-12-30T12:00:00.000Z']

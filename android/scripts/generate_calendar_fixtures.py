@@ -31,9 +31,10 @@ def main():
     # The model seams provide already resolved display titles; draft constructor bodies are verbatim.
     harness='''import Foundation
 import CoreLocation
-struct Visit {let displayName:String;let arrivedAt:Date;let departedAt:Date?;let coordinate:CLLocationCoordinate2D;let address:String?;let locationName:String?}
+struct Visit {let displayName:String;let arrivedAt:Date;let departedAt:Date?;let coordinate:CLLocationCoordinate2D;let address:String?;let locationName:String?;var notes:String?=nil}
+struct StoredSession {let notes:String?}
 struct Point {let coordinate:CLLocationCoordinate2D}
-struct RecordingSessionSummary {let title:String;let startedAt:Date;let effectiveEndDate:Date;let isActive:Bool;let startPoint:Point?}
+struct RecordingSessionSummary {let title:String;let startedAt:Date;let effectiveEndDate:Date;let isActive:Bool;let startPoint:Point?;var storedSession:StoredSession?=nil}
 '''+extracted()+'''
 let cases=try JSONSerialization.jsonObject(with:FileHandle.standardInput.readDataToEndOfFile()) as! [[String:Any]]
 var results=[[String:Any]]()

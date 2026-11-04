@@ -5,8 +5,11 @@ import argparse, hashlib, json, subprocess, tempfile
 
 root=Path(__file__).resolve().parents[2]
 source=(root/'IsoMe/Views/MapView.swift').read_text()
-algorithm=source[source.index('@MainActor\nenum MapPointMarkerSampler {'):].strip()
-assert algorithm.endswith('}')
+def declaration(text,marker):
+    start=text.index(marker);end=text.index('{',start)+1;depth=1
+    while depth:depth+=(text[end]=='{')-(text[end]=='}');end+=1
+    return text[start:end]
+algorithm='@MainActor\n'+declaration(source,'enum MapPointMarkerSampler {')
 harness='''import Foundation
 import MapKit
 struct LocationPoint {

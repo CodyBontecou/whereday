@@ -4071,13 +4071,13 @@
     "os": "Version 27.2 (Build 26B123)"
   },
   "provenance": {
-    "IsoMe/Models/CountryStay.swift": "e37d7d778d2e35212e5668a8680768190800335b6943108e36929f06d3e772b1",
-    "IsoMe/Models/Visit.swift": "e2452d7566e388e5c4b074b9fcbde7d3abe97d2771dcf7b3983d7142639d3cb2",
+    "IsoMe/Models/CountryStay.swift": "23a0f5c42ce774dde5c0f2fdd95f76042b01343a62bae5e892102b70533fd318",
+    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
     "android/scripts/fixtures/CountryRegions.swift": "d9474c951745cd3901979ec3515b32312f8927dc896fb9303cee8af71ba9473d",
     "android/scripts/generate_country_regions.py": "03ce9764dbde4bf72726ea01e388e84707173d9471d9b87d459e0987de157afc",
     "IsoMe/Views/CountryDaysView.swift#CountryStayEditor.countries": "600bfa3d82cff5d6a732bb00b3509e9584cd9c73f94f4f6ddb16921458c32ed5",
     "IsoMe/Views/CountryDaysView.swift#CountrySelectionView.countries": "5ff7e7cf71f331df5997309c9c08b7f392fc868014fbf223334b096c2ccd9080"
   },
-  "pickerSourceContextSHA256": "67fefbe1c2ffb73bde3678138353ed3f4d2a028603f25c198b9b4be43b2b686c"
+  "pickerSourceContextSHA256": "883b1d181c1001e936c797cb0ec593863ca46ec883d57e5fb04c23679e244d88"
 }

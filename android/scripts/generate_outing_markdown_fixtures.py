@@ -3,11 +3,11 @@
 from pathlib import Path
 import argparse,hashlib,json,re,subprocess,tempfile
 root=Path(__file__).resolve().parents[2]
-export=root/'IsoMe/Utilities/ExportService.swift';session=root/'IsoMe/Models/RecordingSession.swift';point=root/'IsoMe/Models/LocationPoint.swift';visit=root/'IsoMe/Models/Visit.swift'
+export=root/'IsoMe/Utilities/ExportService.swift';session=root/'IsoMe/Models/RecordingSession.swift';point=root/'IsoMe/Models/LocationPoint.swift';visit=root/'IsoMe/Models/Visit.swift';travel=root/'Shared/DistanceFormatter.swift'
 harness=root/'android/scripts/fixtures/OutingMarkdownFixtures.swift';inputs=root/'android/scripts/fixtures/outing-markdown-inputs.json';output=root/'android/export/src/test/resources/ios-outing-markdown.json'
 native_output=root/'android/platform/src/androidTest/assets/ios-outing-markdown.json'
 def native_cases(cases):return [c for c in cases if c['name']=='rich-default-single' or (c['name'].startswith('locale-') and c['shape']=='single')]
-provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [export,session,point,visit,harness,inputs,Path(__file__).resolve()]}
+provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [export,session,point,visit,travel,harness,inputs,Path(__file__).resolve()]}
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check-source',action='store_true');args=parser.parse_args()
 if args.check_source:
     if json.loads(output.read_text())['provenance']!=provenance:raise SystemExit('Outing Markdown references are stale; regenerate on macOS')
@@ -17,7 +17,7 @@ def declaration(source,marker):
     start=source.index(marker);brace=source.index('{',start);end=brace+1;depth=1
     while depth:depth+=(source[end]=='{')-(source[end]=='}');end+=1
     return source[start:end]
-e=export.read_text();s=session.read_text();p=point.read_text();v=visit.read_text()
+e=export.read_text();s=session.read_text();p=point.read_text();v=visit.read_text();t=travel.read_text()
 recording=declaration(s,'final class RecordingSession')
 summary=s[s.index('struct RecordingSessionSummary:'):s.index('    var formattedTimeRange:')]+'\n}\n'
 location=p[p.index('final class LocationPoint'):p.index('    var accessibilityTimestamp:')]+'\n}\n'
@@ -27,7 +27,7 @@ parts[0]+='()'
 audit=e[e.index('struct VisitAuditMetadata:'):e.index('\nstruct ExportService {')]
 display=v[v.index('    var automaticDisplayName:'):v.index('    var hasCustomName:')]
 duration=declaration(v,'var durationMinutes:')
-selected='import Foundation\nimport CoreLocation\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'+audit+'\nstruct RecordingSessionFormatter {\n'+declaration(s,'static func duration(')+'\n}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
+selected='import Foundation\nimport CoreLocation\n'+declaration(t,'enum TravelMode:')+'\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'+audit+'\nstruct RecordingSessionFormatter {\n'+declaration(s,'static func duration(')+'\n}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
 with tempfile.TemporaryDirectory(prefix='whereday-outing-markdown-') as directory:
     work=Path(directory);(work/'Selected.swift').write_text(selected);(work/'main.swift').write_text(harness.read_text().replace('// ACTUAL_VISIT_DISPLAY',display).replace('// ACTUAL_VISIT_DURATION',duration))
     binary=work/'fixtures';subprocess.run(['swiftc','-module-cache-path',str(work/'modules'),str(work/'Selected.swift'),str(work/'main.swift'),'-o',str(binary)],check=True)

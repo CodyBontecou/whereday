@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "IsoMe/Utilities/ImportService.swift": "f3a4f33b6f67c853e10b9fdafb6de7dc04f0eebed99e7fc3a93bb2be509b943e",
+    "IsoMe/Utilities/ImportService.swift": "8f1eac4695828bedb50495d77c448e6f025a06e0fe0ea2f550669f3c190eabca",
     "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
     "android/scripts/fixtures/HistoryImportFixtures.swift": "69bcec7dc56fd81b23726ddc2803a699bf5509280b61d86ba1953343b7cb3275",
     "android/scripts/fixtures/history-import-inputs.json": "2582b0237a8a230d7499c1d5f24b2b4a07855222af8b5296243103d20a6646b0",
