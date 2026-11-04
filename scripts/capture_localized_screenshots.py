@@ -36,18 +36,20 @@ LOCALES = {
     "zh-Hans": ("zh-Hans", "zh_CN"),
 }
 
+# Launch tabs (see MainTabView.tabTag): 0 = Trace over Today, 1 = Archive, 3 = Timeline over Today,
+# 4 = Today, 5 = Atlas, 6 = Places. Each launch re-seeds a year of sample data, hence the long waits.
 IPHONE_STORY = (
-    ("01-quiet-map", ("--seed-screenshot-data", "--default-tab=0"), 6.0),
-    ("02-total-control", ("--seed-screenshot-data", "--default-tab=2"), 3.0),
-    ("03-open-formats", ("--seed-screenshot-data", "--default-tab=1"), 3.0),
-    ("04-exact-export", ("--seed-screenshot-data", "--default-tab=1", "--demo-export-filters"), 3.0),
-    ("05-your-endpoint", ("--seed-screenshot-data", "--default-tab=1", "--demo-webhook-settings"), 3.0),
+    ("01-today-dial", ("--seed-screenshot-data", "--default-tab=4"), 10.0),
+    ("02-trace-replay", ("--seed-screenshot-data", "--default-tab=0"), 10.0),
+    ("03-atlas-year", ("--seed-screenshot-data", "--default-tab=5"), 12.0),
+    ("04-places", ("--seed-screenshot-data", "--default-tab=6"), 10.0),
+    ("05-export-sentence", ("--seed-screenshot-data", "--default-tab=1"), 10.0),
 )
+# Onboarding has three pages since 2.0 (OnboardingView.pageCount).
 IPAD_STORY = (
     ("01-welcome", 0),
-    ("02-features", 1),
-    ("03-permissions", 2),
-    ("04-ready", 4),
+    ("02-stays-on-this-phone", 1),
+    ("03-how-much-to-remember", 2),
 )
 
 
@@ -139,7 +141,7 @@ def launch_and_capture(
             print(f"Retrying low-entropy capture: {destination} (attempt {attempt + 1})", flush=True)
             simctl("terminate", device_id, bundle_id, check=False)
         simctl(*launch_arguments)
-        time.sleep(wait_seconds if attempt == 0 else 2.0)
+        time.sleep(wait_seconds)
         simctl("io", device_id, "screenshot", "--type=png", str(destination))
         if minimum_entropy is None or screenshot_entropy(destination) >= minimum_entropy:
             return
@@ -166,7 +168,8 @@ def warm_up_iphone(device_id: str, language: str, apple_locale: str) -> None:
 
 def status_bar(device_id: str, *, ipad: bool = False) -> None:
     arguments = [
-        "status_bar", device_id, "override", "--time", "9:41",
+        # Screenshot mode seeds today up to the real time, so the clock has to agree with Today's dial.
+        "status_bar", device_id, "override", "--time", time.strftime("%H:%M"),
         "--wifiBars", "3", "--batteryLevel", "100", "--batteryState", "charged",
     ]
     if not ipad:
@@ -211,10 +214,24 @@ def capture_locale(
     watch_id: str,
     copy: dict,
     python: str,
+    devices: set[str],
 ) -> None:
     print(f"\n=== {store_locale} ===", flush=True)
     raw_root = OUTPUT_ROOT / "raw" / store_locale
 
+    if "iphone" in devices:
+        capture_iphone(store_locale, language, apple_locale, app, iphone_id, copy, python, raw_root)
+    if "ipad" in devices:
+        capture_ipad(store_locale, language, apple_locale, app, ipad_id)
+    if "watch" in devices:
+        capture_watch(store_locale, language, apple_locale, watch_app, watch_id)
+
+
+def capture_iphone(
+    store_locale: str, language: str, apple_locale: str, app: Path, iphone_id: str,
+    copy: dict, python: str, raw_root: Path,
+) -> None:
+    status_bar(iphone_id)
     reinstall(iphone_id, BUNDLE_ID, app)
     warm_up_iphone(iphone_id, language, apple_locale)
     for name, arguments, wait_seconds in IPHONE_STORY:
@@ -225,26 +242,34 @@ def capture_locale(
         )
     compose_iphone(python, copy[store_locale], store_locale, language, raw_root / "iphone")
 
+
+def capture_ipad(store_locale: str, language: str, apple_locale: str, app: Path, ipad_id: str) -> None:
     reinstall(ipad_id, BUNDLE_ID, app)
     for name, page in IPAD_STORY:
         launch_and_capture(
             ipad_id, BUNDLE_ID, language, apple_locale, (f"--onboarding-page={page}",),
-            OUTPUT_ROOT / "appstore" / store_locale / "ipad-129" / f"{name}.png", 2.0,
+            OUTPUT_ROOT / "appstore" / store_locale / "ipad-129" / f"{name}.png", 6.0,
+            minimum_entropy=1.0,
         )
 
+
+def capture_watch(store_locale: str, language: str, apple_locale: str, watch_app: Path, watch_id: str) -> None:
     reinstall(watch_id, WATCH_BUNDLE_ID, watch_app)
+    # Without location access the glance shows a permission prompt instead of the dial.
+    simctl("privacy", watch_id, "grant", "location", WATCH_BUNDLE_ID, check=False)
     launch_and_capture(
         watch_id, WATCH_BUNDLE_ID, language, apple_locale, (),
-        OUTPUT_ROOT / "appstore" / store_locale / "watch-series-10" / "01-main.png", 2.0,
+        OUTPUT_ROOT / "appstore" / store_locale / "watch-series-10" / "01-main.png", 5.0,
     )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--locales", default=",".join(LOCALES), help="comma-separated store locales")
-    parser.add_argument("--iphone", default="iPhone 17 Pro Max")
+    parser.add_argument("--iphone", default="iPhone 18 Pro Max")
     parser.add_argument("--ipad", default="iPad Pro 13-inch (M5)")
     parser.add_argument("--watch", default="Apple Watch Series 11 (46mm)")
+    parser.add_argument("--devices", default="iphone,ipad,watch", help="comma-separated: iphone, ipad, watch")
     parser.add_argument("--derived-data", type=Path, default=Path("/tmp/isome-localization-screenshot-derived"))
     parser.add_argument("--skip-build", action="store_true")
     parser.add_argument("--python", default=sys.executable, help="Python with Pillow and Arabic shaping dependencies")
@@ -255,21 +280,29 @@ def main() -> int:
     if unknown:
         raise RuntimeError(f"Unknown locales: {', '.join(unknown)}")
 
+    devices = {device.strip() for device in args.devices.split(",") if device.strip()}
+    unknown_devices = sorted(devices - {"iphone", "ipad", "watch"})
+    if unknown_devices:
+        raise RuntimeError(f"Unknown devices: {', '.join(unknown_devices)}")
+
     copy = json.loads(COPY_PATH.read_text())
-    iphone_id = find_device(args.iphone, "iOS")
-    ipad_id = find_device(args.ipad, "iOS")
-    watch_id = find_device(args.watch, "watchOS")
+    iphone_id = find_device(args.iphone, "iOS") if "iphone" in devices else ""
+    ipad_id = find_device(args.ipad, "iOS") if "ipad" in devices else ""
+    watch_id = find_device(args.watch, "watchOS") if "watch" in devices else ""
     for device_id in (iphone_id, ipad_id, watch_id):
-        boot(device_id)
-    status_bar(iphone_id)
-    status_bar(ipad_id, ipad=True)
+        if device_id:
+            boot(device_id)
+    if iphone_id:
+        status_bar(iphone_id)
+    if ipad_id:
+        status_bar(ipad_id, ipad=True)
 
     app, watch_app = build_products(args.derived_data, args.skip_build)
     for store_locale in requested:
         language, apple_locale = LOCALES[store_locale]
         capture_locale(
             store_locale, language, apple_locale, app, watch_app,
-            iphone_id, ipad_id, watch_id, copy, args.python,
+            iphone_id, ipad_id, watch_id, copy, args.python, devices,
         )
     return 0
 

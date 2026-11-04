@@ -139,7 +139,7 @@ final class LocationViewModel {
         loadSavedPlaces()
         refreshLocationPointCount()
         refreshPhotoLibraryAuthorizationState()
-        if locationManager.isTrackingEnabled {
+        if locationManager.isTrackingEnabled || Self.showsSeededScreenshotDay {
             loadTodayLocationPoints()
         } else {
             todayLocationPoints = []
@@ -439,6 +439,15 @@ final class LocationViewModel {
         }
 
         loadMapPhotoMoments(in: mapDateRange)
+    }
+
+    /// Screenshot mode seeds today's routes with tracking off, so Today would otherwise read as empty.
+    private static var showsSeededScreenshotDay: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("--seed-screenshot-data")
+        #else
+        false
+        #endif
     }
 
     func loadTodayLocationPoints() {

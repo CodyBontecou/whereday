@@ -1132,12 +1132,15 @@ private enum ScreenshotFeatureDemoSeeder {
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today) ?? today.addingTimeInterval(-86_400)
             let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: today) ?? today.addingTimeInterval(-172_800)
 
-            let morningStart = date(on: today, hour: 8, minute: 5)
-            let morningEnd = date(on: today, hour: 8, minute: 56)
-            let lunchStart = date(on: today, hour: 12, minute: 10)
-            let lunchEnd = date(on: today, hour: 12, minute: 46)
-            let eveningStart = date(on: today, hour: 17, minute: 20)
-            let eveningEnd = Date()
+            // Today's day ends at capture time, so the dial never shows stops in the future.
+            let now = Date()
+            func ago(_ hours: Double) -> Date { now.addingTimeInterval(-hours * 3_600) }
+            let morningStart = ago(6.2)
+            let morningEnd = ago(5.35)
+            let lunchStart = ago(2.9)
+            let lunchEnd = ago(2.3)
+            let eveningStart = ago(0.7)
+            let eveningEnd = now
 
             let morningSession = RecordingSession(
                 startedAt: morningStart,
@@ -1238,8 +1241,8 @@ private enum ScreenshotFeatureDemoSeeder {
                 Visit(
                     latitude: 37.7765,
                     longitude: -122.4258,
-                    arrivedAt: date(on: today, hour: 11, minute: 54),
-                    departedAt: date(on: today, hour: 12, minute: 18),
+                    arrivedAt: ago(3.4),
+                    departedAt: ago(3.0),
                     customName: nil,
                     locationName: "Valencia Street Stop",
                     address: "375 Valencia St, San Francisco, CA",
@@ -1249,8 +1252,8 @@ private enum ScreenshotFeatureDemoSeeder {
                 Visit(
                     latitude: 37.7877,
                     longitude: -122.4077,
-                    arrivedAt: date(on: today, hour: 12, minute: 28),
-                    departedAt: date(on: today, hour: 13, minute: 12),
+                    arrivedAt: ago(2.3),
+                    departedAt: ago(1.55),
                     customName: "Client Lunch — The Grove",
                     locationName: "Market Street Stop",
                     address: "690 Mission St, San Francisco, CA",
@@ -1260,7 +1263,7 @@ private enum ScreenshotFeatureDemoSeeder {
                 Visit(
                     latitude: 37.7951,
                     longitude: -122.3938,
-                    arrivedAt: date(on: today, hour: 17, minute: 42),
+                    arrivedAt: ago(0.3),
                     departedAt: nil,
                     customName: "Ferry Building Errand",
                     locationName: "Ferry Building",
@@ -1289,10 +1292,58 @@ private enum ScreenshotFeatureDemoSeeder {
             ]
 
             visits.forEach { context.insert($0) }
+            pointSets.flatMap { $0 }.forEach { $0.countryCode = "US" }
+            visits.forEach { $0.countryCode = "US" }
+            seedPlaces(in: context, today: today)
+            seedCountryStays(in: context, today: today)
             try context.save()
         } catch {
             assertionFailure("Failed to seed screenshot demo data: \(error)")
         }
+    }
+
+    /// Saved places plus eight weeks of earlier visits, so Places shows real visit counts.
+    private static func seedPlaces(in context: ModelContext, today: Date) {
+        let places: [(name: String, latitude: Double, longitude: Double, kind: SavedPlaceKind, every: Int)] = [
+            ("Home", 37.7599, -122.4148, .home, 1),
+            ("Studio on Mission", 37.7877, -122.4077, .work, 2),
+            ("Valencia Coffee", 37.7765, -122.4258, .cafe, 3),
+            ("Dolores Park", 37.7617, -122.4350, .other, 6),
+            ("Ferry Building", 37.7951, -122.3938, .other, 9),
+            ("Mission Cliffs Gym", 37.7646, -122.4120, .gym, 4)
+        ]
+        for (offset, place) in places.enumerated() {
+            context.insert(SavedPlace(name: place.name, latitude: place.latitude, longitude: place.longitude,
+                                      address: nil, radiusMeters: 150, kind: place.kind))
+            for daysAgo in stride(from: 3 + offset, through: 56, by: place.every) {
+                let day = Calendar.current.date(byAdding: .day, value: -daysAgo, to: today) ?? today
+                let arrival = date(on: day, hour: 8 + (offset * 2) % 11, minute: (daysAgo * 7) % 60)
+                let visit = Visit(latitude: place.latitude, longitude: place.longitude, arrivedAt: arrival,
+                                  departedAt: arrival.addingTimeInterval(Double(35 + (daysAgo * 13) % 80) * 60),
+                                  locationName: place.name, geocodingCompleted: true)
+                visit.countryCode = "US"
+                context.insert(visit)
+            }
+        }
+    }
+
+    /// Trips abroad between stretches at home, so Atlas shows a colored year.
+    private static func seedCountryStays(in context: ModelContext, today: Date) {
+        let trips: [(country: String, from: Int, to: Int)] = [
+            ("MX", 300, 291), ("CA", 262, 257), ("JP", 214, 199), ("PT", 142, 128), ("FR", 97, 90), ("GB", 47, 41)
+        ]
+        let timeZone = TimeZone.current
+        func day(_ daysAgo: Int) -> String {
+            CountryDayCalculator.dayIdentifier(
+                Calendar.current.date(byAdding: .day, value: -daysAgo, to: today) ?? today, timeZone: timeZone)
+        }
+        var homeFrom = 310
+        for trip in trips {
+            context.insert(CountryStay(countryCode: "US", firstDay: day(homeFrom), lastDay: day(trip.from + 1)))
+            context.insert(CountryStay(countryCode: trip.country, firstDay: day(trip.from), lastDay: day(trip.to)))
+            homeFrom = trip.to - 1
+        }
+        context.insert(CountryStay(countryCode: "US", firstDay: day(homeFrom), lastDay: day(0)))
     }
 
     private static func clearExistingData(in context: ModelContext) throws {
@@ -1304,6 +1355,12 @@ private enum ScreenshotFeatureDemoSeeder {
         }
         for session in try context.fetch(FetchDescriptor<RecordingSession>()) {
             context.delete(session)
+        }
+        for place in try context.fetch(FetchDescriptor<SavedPlace>()) {
+            context.delete(place)
+        }
+        for stay in try context.fetch(FetchDescriptor<CountryStay>()) {
+            context.delete(stay)
         }
         try context.save()
     }
