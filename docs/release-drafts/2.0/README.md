@@ -1,6 +1,13 @@
 # Whereday 2.0 / build 62
 
-**Status: build 62 uploaded and processed; no App Store version yet.** On November 4, 2026 (10:09 PT), at the owner's request, the 2.0 (62) IPA built from `2e295a2f` was uploaded. App Store Connect processed it as **VALID**: build ID `176ecaeb-e401-4844-9235-8bed28663383`, minimum iOS 17.0, encryption exempt. No 2.0 App Store version was created and nothing was submitted to App Review. No prices, products, availability or public pages were changed. Upload receipts and the IPA's SHA-256 are in `.asc/artifacts/stage-2.0-62/`.
+**Status: staged in App Store Connect, not submitted.** On November 4, 2026, at the owner's request:
+
+- The 2.0 (62) IPA built from `2e295a2f` was uploaded and processed **VALID**: build `176ecaeb-e401-4844-9235-8bed28663383`, minimum iOS 17.0, encryption exempt.
+- iOS App Store version **2.0** was created: `41f370e9-3029-4ff5-9664-90ba13a871c9`, **PREPARE_FOR_SUBMISSION**, **MANUAL** release, © 2026 Whereday. Nine-locale metadata was copied from 1.8.3, then replaced with the drafts in `metadata/whereday/version/2.0/`. The read-back matches in every locale.
+- Build 62 is attached, and the App Review notes are set from `reviewer-notes.txt`.
+- New screenshots and header are in place for all nine locales (see Screenshots).
+
+It was **not submitted for review**. No prices, products, availability, App Privacy or public pages were changed, and no TestFlight group was touched. Receipts are in `.asc/artifacts/stage-2.0-62/`.
 
 ## Release-build fix (`2e295a2f`)
 
@@ -62,18 +69,21 @@ Pricing check: the description and reviewer notes do not quote prices. The live 
 
 ## Screenshots
 
-The redesign makes every live screenshot set stale:
+Every locale of version 2.0 now has the redesign's artwork. Live 1.8.x listings are unchanged.
 
-| Set | Live (from 1.8 / 1.8.2) | 2.0 status |
+| Slot | Per locale | Source |
 | --- | --- | --- |
-| iPhone 6.7"/6.9" (`APP_IPHONE_67`), 9 locales × 5 | old map, settings, export and webhook screens | **story and captions ready, captures not usable yet**: see below |
-| iPad 12.9"/13" (`APP_IPAD_PRO_3GEN_129`) | old four-page onboarding | **not regenerated**: no iPad simulator is installed on this Mac. The capture script now uses the three 2.0 onboarding pages |
-| Apple Watch | old Watch UI | **not regenerated**: no watchOS simulator runtime is installed |
-| iPhone Duo (en-US only, from 1.8.2) | old design | **not regenerated**: these come from the separate `marketing/brand/whereday-duo-v1` pipeline |
+| iPhone 6.9" (`APP_IPHONE_67`) | 10 | "One Long Day" design artifact, rendered and translated by `marketing/brand/whereday-appstore-2.0/render.py` |
+| iPad 13" (`APP_IPAD_PRO_3GEN_129`) | 5 | same |
+| iPhone Duo (Asset Library) | 8 (7 inner, 1 outer) | same, placed by `place-assets.py` |
+| Product page header (Asset Library) | 1 | same, `StoreHeaderB`, 3840×1646 |
+| Apple Watch (`APP_WATCH_SERIES_10`) | 1 | simulator capture of the redesigned Watch glance (Standby; the Watch app has no sample-data mode) |
 
-`scripts/capture_localized_screenshots.py` had the pre-2.0 tab numbers (PR #97 noted this). It now uses the 2.0 launch tabs and takes `--devices iphone,ipad,watch`, so the iPad and Watch sets can be captured separately on a Mac with those runtimes. New captions for all 11 caption locales are in `screenshots/localized-copy.json`. They are hand-written, so don't rerun `scripts/localize_screenshot_copy.py`: it machine-translates from en-US and applies the pre-2.0 positional `OVERRIDES`.
+Previously only en-US had a header and Duo screenshots; all nine locales have them now. Overlay copy is translated per locale. The mock app screens inside the frames are drawings and stay in English everywhere; `marketing/brand/whereday-appstore-2.0/README.md` explains why.
 
-An en-US trial capture on the iPhone 18 Pro Max (iOS 27.0) ran end to end, but `--seed-screenshot-data` doesn't fill the redesigned screens. Today shows "0 m moved, 0 points kept", Trace "Nothing recorded", Atlas "No country days yet", and Places "No Saved Locations". Only the Archive recipe screen looks right. The seed data needs to cover today's date, country stays and saved places (Debug-only app code) before the nine-locale run is worth doing. The composed images are git-ignored under `screenshots/whereday/` and weren't uploaded.
+Not replaced: the en-US **App Store search-results video** (`APP_STORE_SEARCH_RESULTS_ASSET`) inherited from 1.8.x still shows the old design. The design artifact only has a storyboard for it.
+
+The simulator pipeline (`scripts/capture_localized_screenshots.py`) was also fixed for 2.0: the new tab numbers, a Debug-only seeder that fills Today, Trace, Atlas and Places, iPad and Watch support, and caption-layout fixes. Its captures were superseded by the design set; the Watch capture is the one still used.
 
 ## Qualification
 
@@ -81,10 +91,13 @@ An en-US trial capture on the iPhone 18 Pro Max (iOS 27.0) ran end to end, but `
 - Release archive and App Store Connect export (`destination=export`, not upload): **succeeded**. All four bundles in the IPA (phone, phone widget, Watch, Watch widget) are **2.0 / 62**; see `ipa-verification.json`.
 - Upload processed **VALID** in App Store Connect. No physical-device check yet; build 62 can go to internal TestFlight testers for one.
 - Logs, archive and IPA: `.asc/artifacts/stage-2.0-62/`.
+- After the Debug-only screenshot-seeder change (`f6f4a6ef`'s parent), `scripts/test-ios.sh` passed again: 364 XCTest + 11 Swift Testing tests. That change compiles out of Release, so uploaded build 62 is unaffected.
 
-## Still to do
+## Still to do (owner)
 
-1. Merge this branch so `main` carries the Release-build fix that is in uploaded build 62 (`2e295a2f`).
-2. Make `--seed-screenshot-data` populate Today, Trace, Atlas and Places. Then run `scripts/capture_localized_screenshots.py --devices iphone` for the nine listing locales, and capture iPad and Watch on a Mac with those simulators. Redo the en-US Duo set.
-3. Get a native-language read of the drafted metadata and captions.
-4. In App Store Connect (owner): create the 2.0 iOS version with manual release, apply `metadata/whereday/version/2.0/*.json` and the reviewer notes, attach build **62 (not 60)**, replace the iPhone, iPad, Watch and Duo screenshots, and check App Privacy is unchanged. Submitting for review needs the owner's go-ahead.
+1. **Native-language read** of the nine-locale metadata, What's New and screenshot copy (written by Claude), especially ar-SA, hi and ja.
+2. **Review the version in App Store Connect**: metadata, screenshots, header and Duo set. Decide whether to replace or remove the old en-US search-results video.
+3. Optionally, put build 62 on a phone through TestFlight. There is no internal tester group; the only group is the public "Beta Testers" link, which needs Beta App Review. No physical-device check has been done.
+4. Confirm App Privacy is still accurate (no new data types in 2.0).
+5. **Submit 2.0 for review** when ready; manual release is set.
+6. Add a 2.0 entry to the in-app What's New (`IsoMe/Views/ReleaseNotes.swift` stops at 1.7.17). Build 62 doesn't have one.
