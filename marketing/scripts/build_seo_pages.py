@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render articles and comparisons as static, crawlable HTML."""
 from html import escape
+from datetime import date
 import json
 from pathlib import Path
 
@@ -65,7 +66,8 @@ PAGES = [
         "type": "BlogPosting",
         "title": "How to See Your Location History on iPhone — Whereday",
         "headline": "How to see your location history on iPhone",
-        "description": "Find iPhone location history in Apple Maps or Google Timeline, check Significant Locations settings, and preserve existing records before changing devices.",
+        "description": "Find iPhone location history in Apple Maps, Google Timeline or Whereday. Choose a download, check its dates and records, and keep the original before moving.",
+        "modified": "2026-10-31",
         "lede": "Find the app and date that hold your saved visits, distinguish iPhone location settings from recorded history, and check existing copies before changing your setup.",
         "source": "view-location-history-iphone.html",
     },
@@ -140,7 +142,7 @@ PAGES = [
 for page in PAGES:
     if page.get("source") in {
         "google-maps-timeline.html", "record-iphone-route-gpx.html",
-        "view-location-history-iphone.html", "back-up-iphone-location-history.html",
+        "back-up-iphone-location-history.html",
         "iphone-location-tracking-battery.html", "missing-location-history-iphone.html",
         "iphone-location-journal-obsidian.html", "dawarich.html",
         "track-days-in-country-iphone.html",
@@ -171,7 +173,7 @@ DRAFTS = []
 PAGES.extend([
     {"path": "/tools/", "section": "Tools", "section_path": "/tools/", "title": "Free Location File Tools — Whereday", "headline": "Make sense of your location files", "description": "Inspect GPX routes and Google Timeline JSON locally with free browser tools. Check coordinates, timestamps and known structures without uploading your files.", "lede": "Practical tools for checking your own files before importing or converting them.", "modified": "2026-10-30", "content": '<section class="card"><h2><a href="/tools/gpx-viewer/">GPX viewer and file inspector</a></h2><p>Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.</p><p><a href="/blog/check-gpx-file/">Follow the worked inspection tutorial</a> with an invented five-point example.</p><p>Have a different file type? <a href="/blog/gpx-kml-geojson-location-history/">Compare GPX, KML, GeoJSON and CSV</a> before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.</p></section><section class="card"><h2><a href="/tools/google-timeline-inspector/">Google Timeline JSON inspector</a></h2><p>Identify supported raw, semantic and device Timeline structures. Check coordinates and times, inspect findings and try invented examples before opening your own archive.</p><p><a href="/blog/google-timeline-json-formats/">Learn which Timeline JSON file you have</a> and why browser counts can differ from a native import preview. Your selected file stays in the tool page.</p></section>'},
     {"path": "/tools/gpx-viewer/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "GPX viewer", "title": "Free GPX Viewer and File Inspector — Whereday", "headline": "See your route. Understand your GPX.", "description": "View GPX files locally, check tracks and timestamps, and convert GPX to CSV or GeoJSON. Keep segments separate without uploading your location file.", "lede": "A free GPX viewer with clear file checks and a local route plot. Your file stays on your device.", "modified": "2026-10-30", "local_file_tool": True, "source": "gpx-viewer.html"},
-    {"path": "/blog/check-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Check a GPX file", "type": "BlogPosting", "title": "Check a GPX File Before Importing It — Whereday", "headline": "Check your GPX before you import it", "description": "Inspect GPX points, segments and timestamps locally. Follow a five-point example, understand warnings, and check documented CSV and GeoJSON downloads.", "lede": "Start with a known example, check your file’s actual records, and keep the original before making changes.", "published": "2026-10-30", "modified": "2026-10-30", "source": "check-gpx-file.html"}
+    {"path": "/blog/check-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Check a GPX file", "type": "BlogPosting", "title": "Check a GPX File Before Importing It — Whereday", "headline": "Check your GPX before you import it", "description": "Inspect GPX points, segments and timestamps locally. Follow a five-point example, understand warnings, and check documented CSV and GeoJSON downloads.", "lede": "Start with a known example, check your file’s actual records, and keep the original before making changes.", "published": "2026-10-30", "modified": "2026-11-01", "source": "check-gpx-file.html"}
 ])
 
 PAGES.append({
@@ -180,7 +182,7 @@ PAGES.append({
     "headline": "GPX, KML or GeoJSON: choose a file you can use",
     "description": "Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.",
     "lede": "Choose for your destination, check what the file preserves, and keep an original you can return to.",
-    "published": "2026-10-30", "modified": "2026-10-30", "source": "gpx-kml-geojson-location-history.html"
+    "published": "2026-10-30", "modified": "2026-11-03", "source": "gpx-kml-geojson-location-history.html"
 })
 
 PAGES.extend([
@@ -283,7 +285,8 @@ def render(page):
     # Apple public US lookup confirmed Whereday 1.8 on October 30, 2026.
     store_notice = ""
     modified = page.get("modified", REVIEWED)
-    reviewed_label = "October 30, 2026" if modified == "2026-10-30" else "October 26, 2026"
+    reviewed_date = date.fromisoformat(modified)
+    reviewed_label = f"{reviewed_date:%B} {reviewed_date.day}, {reviewed_date.year}"
     schema = json.dumps({"@context": "https://schema.org", "@graph": [webpage, breadcrumb]}, ensure_ascii=False, indent=2)
     nav_crumbs = "".join(f'<li>{escape(name)}</li>' if target == path else f'<li><a href="{target}">{escape(name)}</a></li>' for name, target in crumbs)
     # Preserve the site's existing production-host and analytics-gate behavior.

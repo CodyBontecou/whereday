@@ -657,7 +657,7 @@ private enum TimelineEvent: Identifiable {
 
 private enum TimelineRowFormat {
     static func clock(_ date: Date) -> String {
-        date.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
     }
 
     static func duration(_ interval: TimeInterval) -> String {

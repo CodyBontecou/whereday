@@ -799,7 +799,7 @@ struct TodayView: View {
     private func compactStayRow(_ stay: TodayDay.Stay, minHeight: CGFloat = 46) -> some View {
         let isSelected = isCompanion && stay.visit != nil && stay.visit?.id == selectedVisitID
         return HStack(spacing: 10) {
-            Text(stay.start.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)))
+            Text(stay.start.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current)))
                 .font(TE.mono(.caption))
                 .foregroundStyle(TE.textMuted)
                 .frame(minWidth: 44, alignment: .leading)
@@ -962,7 +962,7 @@ private struct DayDial: View {
                             .foregroundStyle(TE.textMuted)
                     }
                     // Sized to the ring, not to Dynamic Type; the dial is hidden from VoiceOver and gives way at large sizes.
-                    Text((recordingSince ?? now).formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)))
+                    Text((recordingSince ?? now).formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current)))
                         .font(.custom(WheredayFont.serifFamily, fixedSize: size * (captions == .timeOnly ? 0.21 : 0.19)))
                         .monospacedDigit()
                     if recordingSince == nil && captions == .full {
