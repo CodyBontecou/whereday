@@ -1,3 +1,6 @@
 .dev.vars
 .wrangler/
 node_modules/
+# Lease signing key and Play service-account key from the setup steps.
+*.pem
+*service-account*.json
