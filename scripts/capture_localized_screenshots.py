@@ -41,7 +41,7 @@ LOCALES = {
 IPHONE_STORY = (
     ("01-today-dial", ("--seed-screenshot-data", "--default-tab=4"), 6.0),
     ("02-trace-replay", ("--seed-screenshot-data", "--default-tab=0"), 6.0),
-    ("03-atlas-year", ("--seed-screenshot-data", "--default-tab=5"), 3.0),
+    ("03-atlas-year", ("--seed-screenshot-data", "--default-tab=5"), 12.0),
     ("04-places", ("--seed-screenshot-data", "--default-tab=6"), 3.0),
     ("05-export-sentence", ("--seed-screenshot-data", "--default-tab=1"), 3.0),
 )
@@ -141,7 +141,7 @@ def launch_and_capture(
             print(f"Retrying low-entropy capture: {destination} (attempt {attempt + 1})", flush=True)
             simctl("terminate", device_id, bundle_id, check=False)
         simctl(*launch_arguments)
-        time.sleep(wait_seconds if attempt == 0 else 2.0)
+        time.sleep(wait_seconds)
         simctl("io", device_id, "screenshot", "--type=png", str(destination))
         if minimum_entropy is None or screenshot_entropy(destination) >= minimum_entropy:
             return
@@ -168,7 +168,8 @@ def warm_up_iphone(device_id: str, language: str, apple_locale: str) -> None:
 
 def status_bar(device_id: str, *, ipad: bool = False) -> None:
     arguments = [
-        "status_bar", device_id, "override", "--time", "9:41",
+        # Screenshot mode seeds today up to the real time, so the clock has to agree with Today's dial.
+        "status_bar", device_id, "override", "--time", time.strftime("%H:%M"),
         "--wifiBars", "3", "--batteryLevel", "100", "--batteryState", "charged",
     ]
     if not ipad:
@@ -230,6 +231,7 @@ def capture_iphone(
     store_locale: str, language: str, apple_locale: str, app: Path, iphone_id: str,
     copy: dict, python: str, raw_root: Path,
 ) -> None:
+    status_bar(iphone_id)
     reinstall(iphone_id, BUNDLE_ID, app)
     warm_up_iphone(iphone_id, language, apple_locale)
     for name, arguments, wait_seconds in IPHONE_STORY:
