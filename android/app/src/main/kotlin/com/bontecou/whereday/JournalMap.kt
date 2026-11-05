@@ -174,7 +174,8 @@ private class JournalMapRenderer {
                 style.addLayer(CircleLayer("journal-active-position","journal-active-current").withProperties(circleColor(ink.live),circleRadius(10f),circleStrokeColor(ink.paper),circleStrokeWidth(3f)))
                 style.addLayer(SymbolLayer("journal-photo","journal-photos").withProperties(iconImage(Expression.get("icon")),iconAnchor(Property.ICON_ANCHOR_BOTTOM),iconAllowOverlap(true),iconIgnorePlacement(true)))
                 style.addLayer(CircleLayer("journal-photo-dot","journal-photos").withProperties(circleColor(ink.photo),circleRadius(Expression.get("dotRadius")),circlePitchScale("viewport"),circlePitchAlignment("viewport"),circleStrokeColor(ink.paper),circleStrokeWidth(2f),visibility(Property.NONE)))
-                style.addLayer(CircleLayer("journal-focused-visit","journal-visits").withProperties(circleColor(ink.visit),circleRadius(11f),circleStrokeColor(ink.highlight),circleStrokeWidth(3f),visibility(Property.NONE)))
+                style.addLayer(CircleLayer("journal-focused-visit","journal-visits").withProperties(circleColor(Expression.switchCase(Expression.has("color"),Expression.toColor(Expression.get("color")),Expression.color(ink.visit))),
+                    circleRadius(11f),circleStrokeColor(ink.highlight),circleStrokeWidth(3f),visibility(Property.NONE)))
                 style.addLayer(CircleLayer("journal-selected-point","journal-points").withProperties(circleColor(ink.highlight),circleRadius(8f),circleStrokeColor(ink.paper),circleStrokeWidth(3f),visibility(Property.NONE)))
                 style.addLayer(CircleLayer("journal-selected-outlier","journal-outliers").withProperties(circleColor(ink.highlight),circleRadius(9f),circleStrokeColor(ink.paper),circleStrokeWidth(3f),visibility(Property.NONE)))
                 MapHomeLayers.install(style,ink)
@@ -210,7 +211,7 @@ private class JournalMapRenderer {
         style.getLayerAs<CircleLayer>("journal-focused-visit")?.let {layer->
             visitFocus?.let {layer.setFilter(Expression.eq(Expression.get("id"),Expression.literal(it.id)))}
             // The home map marks a focused visit with its own pin and dashed radius instead.
-            layer.setProperties(visibility(if(layers.visits && visitFocus!=null && home==null) Property.VISIBLE else Property.NONE))
+            layer.setProperties(visibility(if(layers.visits && visitFocus!=null) Property.VISIBLE else Property.NONE))
         }
         set("journal-start",listOfNotNull(presentation.start?.let {it.coordinate to it.id}))
         set("journal-end",listOfNotNull(presentation.end?.let {it.coordinate to it.id}))
@@ -264,9 +265,7 @@ private class JournalMapRenderer {
         appliedVisitFocus=focus;fitted=true;autoFitted=false
         // A deliberate saved-visit action selects a centered region, like iOS.
         // The default bounds update retains tilt, which shifts its target away from the visit.
-        val inset=chromePadding
-        if(inset!=null) target.moveCamera(CameraUpdateFactory.newLatLngBounds(LatLngBounds.from(bounds.north,bounds.east,bounds.south,bounds.west),inset[0],inset[1],inset[2],inset[3]))
-        else target.moveCamera(CameraUpdateFactory.newLatLngBounds(LatLngBounds.from(bounds.north,bounds.east,bounds.south,bounds.west),0.0,0.0,0))
+        target.moveCamera(CameraUpdateFactory.newLatLngBounds(LatLngBounds.from(bounds.north,bounds.east,bounds.south,bounds.west),0.0,0.0,0))
     }
     fun fit() {
         val fitPoints=points.filter {layers.outliers || !it.outlier}.ifEmpty {if(fallback) points else emptyList()}
@@ -343,6 +342,7 @@ private class JournalMapRenderer {
     val layers=MapLayers(showPath,showPoints,showVisits,showEnds,showOutliers)
     val contents=remember(points,visits,endpoints,layers,replay,allOutlierFallback) {MapPresentation.build(points,visits,endpoints,layers,replay,allOutlierFallback)}
     var viewport by remember(mapView) {mutableStateOf<MapPointViewport?>(null)}
+    var metersPerDp by remember(mapView) {mutableStateOf<Double?>(null)}
     var viewportSize by remember(mapView) {mutableStateOf(0 to 0)}
     fun refreshViewport() {
         val map=renderer.map ?: return
@@ -531,7 +531,9 @@ private class JournalMapRenderer {
             if(renderer.disposed) return@getMapAsync
             renderer.map=map
             renderer.restoreCamera(savedCamera)
-            map.addOnCameraIdleListener {refreshViewport();renderer.cameraSnapshot()?.let {savedCamera=it}}
+            map.addOnCameraIdleListener {refreshViewport();renderer.cameraSnapshot()?.let {savedCamera=it}
+                // The home map's scale bar reads metres per dp at the camera's latitude.
+                map.cameraPosition.target?.let {target->metersPerDp=map.projection.getMetersPerPixelAtLatitude(target.latitude)*context.resources.displayMetrics.density}}
             map.addOnCameraMoveStartedListener {reason->if(reason==MapLibreMap.OnCameraMoveStartedListener.REASON_API_GESTURE) {renderer.autoFitted=false;latestFollow?.stop?.invoke()}}
             renderer.follow(latestFollow?.fix,latestFollow?.enabled==true && latestVisitFocus==null)
             map.addOnMapClickListener {coordinate->
@@ -578,10 +580,13 @@ private class JournalMapRenderer {
         }
     } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null)
         // The home map credits tiles itself; MapLibre's own logo would sit under the tab bar.
-        renderer.map?.uiSettings?.let {ui->val homeMap=home!=null;if(ui.isLogoEnabled==homeMap) ui.isLogoEnabled=!homeMap;if(ui.isAttributionEnabled==homeMap) ui.isAttributionEnabled=!homeMap}
+        renderer.map?.uiSettings?.let {ui->val homeMap=home!=null;if(ui.isLogoEnabled==homeMap) ui.isLogoEnabled=!homeMap;if(ui.isAttributionEnabled==homeMap) ui.isAttributionEnabled=!homeMap
+            // The compass appears when the map is rotated; on the home map it sits below the header, left of the rail.
+            renderer.chromePadding?.let {inset->ui.setCompassMargins(0,inset[1],inset[2],0)}}
         renderer.render(points,visits,online,dark,layers,replay,endpoints,allOutlierFallback,photoClusters,photoLayer?.icons.orEmpty(),activeSnapshot,roadGeometry,photoLayer?.dots==true,visitFocus) },modifier=mapModifier.testTag("journal-native-map"))}
     if(home!=null) {
-        JournalMapHomeFrame(modifier,home,nativeMap,markerLoad,selectedPoint,followMetric,{selectPoint(null)},renderer.error,roadGeometry.roads.isNotEmpty(),displayedRoad?.attributions.orEmpty(),photoLayer,online,
+        JournalMapHomeFrame(modifier,home,nativeMap,markerLoad,selectedPoint,followMetric,metersPerDp,
+            focusedVisit=visitFocus?.let {focus->visits.find {it.id==focus.id}}.takeIf {home.showsFocusLabel},{selectPoint(null)},renderer.error,roadGeometry.roads.isNotEmpty(),displayedRoad?.attributions.orEmpty(),photoLayer,online,
             browsePoints={pickingPoint=true},browseVisits=if(onVisitSelected!=null && visits.isNotEmpty()) ({selectedPointId=null;candidateVisits=null;pickingVisit=true}) else null)
         return
     }

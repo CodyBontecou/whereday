@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 
 /** M4 "Layers": every old map layer with its help text (LayerToggleHelp), persisted in app preferences. */
 @Composable internal fun MapLayersSheet(graph:AppGraph,settings:MapLayerSettings,onSettings:(MapLayerSettings)->Unit,showOutliers:Boolean,onOutliers:(Boolean)->Unit,
-    photoLayer:PhotoMapLayer?,liveAvailable:Boolean,dismiss:()->Unit) {
+    photoLayer:PhotoMapLayer?,liveAvailable:Boolean,endpoints:com.bontecou.whereday.domain.RouteEndpoints=com.bontecou.whereday.domain.RouteEndpoints(),dismiss:()->Unit) {
     val colors=wd
     val app by graph.preferences.settings.collectAsStateWithLifecycle(initialValue=null)
     var roads by remember {mutableStateOf(false)}
@@ -64,7 +64,14 @@ import kotlinx.coroutines.launch
                     }
                     LayerDivider()
                     LayerRow(Icons.Outlined.ScatterPlot,R.string.map_home_layer_points,R.string.map_home_layer_points_help,settings.points,"map-layer-points") {onSettings(settings.copy(points=it))}
-                    LayerRow(Icons.Outlined.Flag,R.string.map_home_layer_endpoints,R.string.map_home_layer_endpoints_help,settings.endpoints,"map-layer-endpoints") {onSettings(settings.copy(endpoints=it))}
+                    LayerRow(Icons.Outlined.Flag,R.string.map_home_layer_endpoints,R.string.map_home_layer_endpoints_help,settings.endpoints,"map-layer-endpoints",divider=false) {onSettings(settings.copy(endpoints=it))}
+                    // The range's first and latest fixes, with their times (the old start and end marker tooltips).
+                    val (start,end)=endpoints.selected(showOutliers)
+                    Column(Modifier.padding(start=48.dp,bottom=10.dp).testTag("map-layer-endpoint-times"),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                        start?.let {Text(stringResource(R.string.map_route_start,timeText(it.time)),style=WdType.caption2,color=colors.textMuted)}
+                        end?.takeIf {it.id!=start?.id}?.let {Text(stringResource(R.string.map_route_end,timeText(it.time)),style=WdType.caption2,color=colors.textMuted)}
+                    }
+                    LayerDivider()
                     LayerRow(Icons.Outlined.FiberManualRecord,R.string.map_home_layer_live,R.string.map_home_layer_live_help,settings.liveSession,"map-layer-active-recording",enabled=liveAvailable || settings.liveSession) {onSettings(settings.copy(liveSession=it))}
                     val photosOn=photoLayer?.enabled ?: (app?.showPhotoMarkers==true)
                     LayerRow(Icons.Outlined.PhotoLibrary,R.string.map_home_layer_photos,R.string.map_home_layer_photos_help,photosOn,"map-layer-photos",divider=!photosOn) {value->

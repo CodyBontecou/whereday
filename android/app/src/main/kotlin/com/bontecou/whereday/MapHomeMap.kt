@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
@@ -66,7 +67,9 @@ internal data class MapHomeOptions(val controller:JournalMapController,val layer
     val focusCandidates:List<Coordinate> = emptyList(),
     val focusRadiusMeters:Double=60.0,
     /** The overlay column starts below the floating header and keeps clear of the right rail. */
-    val overlayTop:androidx.compose.ui.unit.Dp=0.dp)
+    val overlayTop:androidx.compose.ui.unit.Dp=0.dp,
+    /** "Selected visit: …" over the map when a saved visit is shown without its quick view (View on map, links). */
+    val showsFocusLabel:Boolean=true)
 
 internal data class MapHomeStrings(val now:String,val minutes:String,val hours:String)
 @Composable internal fun mapHomeStrings()=MapHomeStrings(stringResource(R.string.map_home_now_label),stringResource(R.string.map_home_minutes),stringResource(R.string.map_home_hours))
@@ -152,7 +155,7 @@ private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
 }
 
 /** The full-bleed map with the journal's status lines floating under the header instead of below a frame. */
-@Composable internal fun JournalMapHomeFrame(modifier:Modifier,home:MapHomeOptions,nativeMap:@Composable (Modifier)->Unit,markerLoad:MapPointMarkerLoad,selectedPoint:TrackPoint?,metric:Boolean,
+@Composable internal fun JournalMapHomeFrame(modifier:Modifier,home:MapHomeOptions,nativeMap:@Composable (Modifier)->Unit,markerLoad:MapPointMarkerLoad,selectedPoint:TrackPoint?,metric:Boolean,metersPerDp:Double?,focusedVisit:Visit?,
     closePoint:()->Unit,tilesFailed:Boolean,roadEstimate:Boolean,credits:List<RoadAttribution>,photoLayer:PhotoMapLayer?,online:Boolean,browsePoints:()->Unit,browseVisits:(()->Unit)?) {
     val colors=wd
     val pointsLabel=stringResource(R.string.map_point_browse)
@@ -164,6 +167,13 @@ private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
             customActions=listOfNotNull(CustomAccessibilityAction(pointsLabel) {browsePoints();true},browseVisits?.let {CustomAccessibilityAction(visitsLabel) {it();true}})
         })
         Column(Modifier.align(Alignment.TopStart).padding(top=home.overlayTop,start=12.dp,end=80.dp).widthIn(max=420.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            focusedVisit?.let {visit->
+                Row(Modifier.wdFloating(CircleShape,colors,4.dp).padding(horizontal=14.dp,vertical=10.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                    Box(Modifier.size(10.dp).clip(CircleShape).background(colors.placeInks[1]))
+                    Text(stringResource(R.string.map_selected_visit,visit.name?.takeIf {it.isNotBlank()} ?: stringResource(R.string.timeline_visit)),Modifier.testTag("map-focused-visit"),
+                        style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=colors.textPrimary)
+                }
+            }
             selectedPoint?.let {MapPointTooltip(it,metric,closePoint)}
             if(markerLoad.loading) Row(Modifier.wdFloating(CircleShape,colors,4.dp).padding(horizontal=12.dp,vertical=8.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 CircularProgressIndicator(Modifier.size(14.dp),color=colors.accent,trackColor=colors.dialTrack,strokeWidth=2.dp)
@@ -186,6 +196,7 @@ private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
                         Modifier.clip(CircleShape).background(colors.card.copy(alpha=0.85f)).padding(horizontal=8.dp,vertical=3.dp).clickable(role=androidx.compose.ui.semantics.Role.Button) {runCatching {uri.openUri(credit.url)}},style=WdType.caption2,color=colors.textMuted)
                 }
             }
+            metersPerDp?.let {MapScaleBar(it,metric)}
             if(online) Text(stringResource(R.string.map_home_tiles_credit),Modifier.clip(CircleShape).background(colors.card.copy(alpha=0.7f)).padding(horizontal=6.dp,vertical=1.dp),style=WdType.caption2.copy(fontSize=androidx.compose.ui.unit.TextUnit(8.5f,androidx.compose.ui.unit.TextUnitType.Sp),letterSpacing=0.01.em),color=colors.textMuted)
         }
     }
@@ -207,3 +218,30 @@ private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
         if(point.outlier) Text(stringResource(R.string.map_point_outlier),style=WdType.caption2.copy(fontWeight=FontWeight.SemiBold),color=colors.liveDot)
     }
 }
+
+/** The map scale (parity with the old map's MapScaleView): a hairline bar with a round distance, up to 80dp long. */
+@Composable internal fun MapScaleBar(metersPerDp:Double,metric:Boolean) {
+    val colors=wd
+    val unit=if(metric) 1.0 else 0.3048
+    val maxUnits=80*metersPerDp/unit
+    if(!maxUnits.isFinite() || maxUnits<=0) return
+    val magnitude=Math.pow(10.0,kotlin.math.floor(kotlin.math.log10(maxUnits)))
+    val step=listOf(5.0,2.0,1.0).map {it*magnitude}.first {it<=maxUnits}
+    val widthDp=(step*unit/metersPerDp).toFloat()
+    val label=when {
+        metric && step>=1000->"${(step/1000).let {if(it%1.0==0.0) it.toInt().toString() else it.toString()}} km"
+        metric->"${step.toInt()} m"
+        step>=5280->"${(step/5280).let {if(it%1.0==0.0) it.toInt().toString() else "%.1f".format(Locale.ROOT,it)}} mi"
+        else->"${step.toInt()} ft"
+    }
+    Row(Modifier.semantics(mergeDescendants=true) {}.testTag("map-scale"),verticalAlignment=Alignment.Bottom,horizontalArrangement=Arrangement.spacedBy(4.dp)) {
+        Box(Modifier.width(widthDp.dp).height(5.dp).drawBehindCompat(colors.textMuted))
+        Text(label,style=WdType.caption2.copy(fontSize=androidx.compose.ui.unit.TextUnit(9f,androidx.compose.ui.unit.TextUnitType.Sp)),color=colors.textMuted)
+    }
+}
+private fun Modifier.drawBehindCompat(color:Color)=this.then(Modifier.drawBehind {
+    val stroke=1.dp.toPx()
+    drawLine(color,androidx.compose.ui.geometry.Offset(0f,size.height),androidx.compose.ui.geometry.Offset(size.width,size.height),stroke)
+    drawLine(color,androidx.compose.ui.geometry.Offset(0f,0f),androidx.compose.ui.geometry.Offset(0f,size.height),stroke)
+    drawLine(color,androidx.compose.ui.geometry.Offset(size.width,0f),androidx.compose.ui.geometry.Offset(size.width,size.height),stroke)
+})

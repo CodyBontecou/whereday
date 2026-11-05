@@ -156,7 +156,7 @@ import kotlinx.coroutines.flow.drop
                     val layers by graph.preferences.settings.collectAsStateWithLifecycle(initialValue=null)
                     JournalMap(current.visiblePoints,visits,Modifier.fillMaxSize(),followMetric=metric,replay=current,endpoints=archive?.endpoints ?: RouteEndpoints(),showOutliers=(request as? ReplayRequest.Range)?.includeOutliers ?: false,
                         allOutlierFallback=request !is ReplayRequest.Range,roadController=graph.roadDisplay,roadVisible=foreground && !changed,pointMarkerSource=markerSource,
-                        home=MapHomeOptions(controller,(layers?.map ?: com.bontecou.whereday.data.MapLayerSettings()).copy(endpoints=false),padding,MapHomeMode.Day(current.current.time,false),replayAhead=ahead,overlayTop=top+84.dp))
+                        home=MapHomeOptions(controller,(layers?.map ?: com.bontecou.whereday.data.MapLayerSettings()).copy(endpoints=false,points=true),padding,MapHomeMode.Day(current.current.time,false),replayAhead=ahead,overlayTop=top+84.dp))
                 } else Box(Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color(MapStyles.land(colors.dark))))
                 // Header card: the moment's date and clock over the serif "Replay", with Close.
                 Row(Modifier.align(Alignment.TopCenter).padding(top=top+8.dp,start=12.dp,end=12.dp).fillMaxWidth().wdFloating(RoundedCornerShape(22.dp),colors,8.dp)

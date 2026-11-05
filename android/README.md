@@ -243,6 +243,12 @@ App startup also repairs multiple open visits, retaining the latest open arrival
 `python3 android/scripts/generate_visit_reconciliation_fixtures.py` executes the current Swift matching/gap/merge/inferred-departure method bodies and constants with synthetic model adapters. Fourteen cases verify represented fields and Android distance decisions. `--check-source` checks source/harness/generator provenance and the native fixture copy. The adapters do not prove SwiftData persistence, every iOS-only model field, physical visit calibration, passive detection or release performance. Those remain separate acceptance work.
 
 
+## Map-first home
+
+The app opens on a full-bleed map of the selected range (Map · Atlas · Places · Archive, with Settings still a tab). The day's timeline opens over the map from the day sheet or the Timeline launcher shortcut; launcher actions, visit links and the manual-visit router land through `MainTabs`. The map draws a custom MapLibre style (`res/raw/map_style_paper.json` and `map_style_night.json`) over OpenFreeMap vector tiles; street tiles stay opt-in through the Layers sheet's Street map switch, and offline the style keeps only its paper background. Layer choices persist in `MapLayerSettings`.
+
+For screenshots, the disposable QA package has a demo journal: `adb shell am start -n com.bontecou.whereday.mapqa/com.bontecou.whereday.DemoJournalActivity` clears that package's history and seeds a synthetic San Francisco week (extras: `online`, `suggestions`). It never runs in the owner package.
+
 ## Follow the current location
 
 The main map has a default-off **Follow my location** control, independent of recording and history filters. If location access is missing, an explanation precedes Android's foreground coarse/fine request. Approximate access works; accuracy limits camera zoom and is shown in the chosen metric/imperial units. The marker uses fresh monotonic fix ages, rejects stale/future/invalid fixes and disappears after thirty seconds without a usable update. No map-only position is stored as history or passed to analytics.

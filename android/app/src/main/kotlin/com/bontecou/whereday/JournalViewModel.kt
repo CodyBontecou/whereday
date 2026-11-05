@@ -29,6 +29,8 @@ class JournalViewModel(private val graph: AppGraph,private val clock:Clock=Clock
         val selectedZone=zone()
         return MapDateDraft(mapSelection.value.range(clock.instant(),selectedZone),selectedZone)
     }
+    /** The zone the map's presets are computed in (the device zone in the app; fixed in tests). */
+    internal fun mapZone():ZoneId=zone()
     val timelineDay=MutableStateFlow(clock.instant().atZone(zone()).toLocalDate())
     private val refresh=MutableStateFlow(0)
     private var clearGeneration=graph.journalClear.state.value.generation

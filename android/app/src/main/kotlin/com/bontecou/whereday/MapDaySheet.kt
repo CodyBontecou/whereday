@@ -93,12 +93,17 @@ internal enum class DaySheetDetent {peek,half,full}
     }
     val title=(current ?: last)?.let {it.name ?: stringResource(R.string.timeline_visit)} ?: stringResource(R.string.map_home_no_places)
     val open=stringResource(R.string.map_home_open_day)
-    Row(modifier.fillMaxWidth().heightIn(min=64.dp).wdFloating(RoundedCornerShape(22.dp),colors,8.dp).clickable(role=Role.Button,onClickLabel=open,onClick=onOpen)
-        .padding(start=8.dp,end=14.dp,top=6.dp,bottom=6.dp).testTag("map-day-peek"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+    val distance=story?.let {dayDistance(it.distanceMeters,metric,locale)}
+    val places=story?.let {pluralStringResource(R.plurals.map_home_places_count,it.placeCount,it.placeCount)}
+    val spoken=listOfNotNull(kicker,title,distance,places).joinToString(". ")
+    // One spoken summary for the whole card, so its place name is not read (or matched) twice beside the timeline.
+    Row(modifier.fillMaxWidth().heightIn(min=64.dp).testTag("map-day-peek").wdFloating(RoundedCornerShape(22.dp),colors,8.dp).clickable(role=Role.Button,onClickLabel=open,onClick=onOpen)
+        .clearAndSetSemantics {contentDescription=spoken;role=Role.Button;onClick(open) {onOpen();true}}
+        .padding(start=8.dp,end=14.dp,top=6.dp,bottom=6.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
         if(story!=null) WdDayDial(dayDialSegments(story),now=dayNowFraction(story,now),size=48.dp,ring=0.13f) else Spacer(Modifier.size(48.dp))
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
             Text(kicker.uppercase(locale),style=WdType.caption2.copy(fontSize=9.sp,lineHeight=12.sp,letterSpacing=0.13.em,fontWeight=FontWeight.Medium),color=colors.textMuted,maxLines=1,overflow=TextOverflow.Ellipsis)
-            Text(title,style=WdType.title3.copy(fontSize=18.sp,lineHeight=21.sp),color=colors.textPrimary,maxLines=2,overflow=TextOverflow.Ellipsis,modifier=Modifier.testTag("map-day-peek-place"))
+            Text(title,style=WdType.title3.copy(fontSize=18.sp,lineHeight=21.sp),color=colors.textPrimary,maxLines=2,overflow=TextOverflow.Ellipsis)
         }
         if(story!=null) Column(horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(2.dp)) {
             Text(dayDistance(story.distanceMeters,metric,locale),style=WdType.title3.copy(fontSize=16.sp,lineHeight=19.sp),color=colors.textPrimary,maxLines=1)

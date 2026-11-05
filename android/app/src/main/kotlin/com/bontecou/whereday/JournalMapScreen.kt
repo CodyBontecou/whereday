@@ -49,7 +49,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
 @Composable internal fun JournalMapScreen(graph:AppGraph,model:JournalViewModel,active:Boolean,recording:RecordingRow?,metric:Boolean,onRecord:()->Unit,showOutliers:Boolean,onOutliers:(Boolean)->Unit,
     access:RecordingAccessState?=null,onAccessOptions:(PermissionAccessKind)->Unit={},onVisitOpened:((Visit)->Unit)?=null,visitInspectionActive:Boolean=false,onOpenTimeline:()->Unit={}) {
     val colors=wd
-    val zone=ZoneId.systemDefault()
+    val zone=remember(model) {model.mapZone()}
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val scope=rememberCoroutineScope()
     val selected by model.mapSelection.collectAsStateWithLifecycle()
@@ -70,6 +70,8 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     var replayShowing by remember {mutableStateOf(false)}
     var detent by rememberSaveable {mutableStateOf(DaySheetDetent.peek)}
     var quickVisitId by rememberSaveable {mutableStateOf<String?>(null)}
+    // Without a shared journal inspector (a standalone map), Details opens the editor here, as the old map did.
+    var detailVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<Visit?>(null)}
     var selectedDay by rememberSaveable(selected.copy(visitFocus=null).toString()) {mutableStateOf<String?>(null)}
     var hereDismissed by rememberSaveable(stateSaver=coordinateListSaver) {mutableStateOf<List<Coordinate>>(emptyList())}
     var now by remember {mutableStateOf(Instant.now())}
@@ -78,10 +80,12 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     val range=window?.range ?: selected.range(now,zone)
     val firstDay=range.from.atZone(zone).toLocalDate()
     val lastDay=minOf(range.until.minusMillis(1),now).atZone(zone).toLocalDate().coerceAtLeast(firstDay)
-    val multiDay=selected.outingRange==null && lastDay>firstDay
+    // Presets decide: Today, Yesterday, an outing or a focused visit are one day; 7D, 30D and All are ranges; a custom range is a range when it spans days.
+    val multiDay=when(selected.preset) {"7 days","30 days","All"->true;"Custom"->lastDay>firstDay;else->false}
     val today=LocalDate.now(zone)
     val story=remember(window,firstDay,now.epochSecond/60) {window?.takeIf {!multiDay}?.let {DayStory.build(firstDay,zone,it.visits,it.points,now,it.summary.distanceMeters)}}
-    val totals by remember(range,multiDay) {if(multiDay) graph.history.observeDayTotals({selected.range(Instant.now(),zone)},zone) else flowOf(null)}.collectAsStateWithLifecycle(initialValue=null)
+    // One per-day scan per selection; Room invalidation (not the live clock tick) refreshes it.
+    val totals by remember(selected.copy(visitFocus=null),multiDay) {if(multiDay) graph.history.observeDayTotals({selected.range(Instant.now(),zone)},zone) else flowOf(null)}.collectAsStateWithLifecycle(initialValue=null)
     val summary=remember(window,totals,multiDay) {if(!multiDay || window==null) null else MapRangeAggregation.summarize(range,zone,now,window.visits,totals?.distances.orEmpty(),totals?.counts.orEmpty())}
     val activeDay=selectedDay?.let(LocalDate::parse) ?: summary?.latestActiveDay
     val dayPaths=remember(window,multiDay) {if(multiDay && window!=null) MapRangeAggregation.dayPaths(window.points,zone) else emptyMap()}
@@ -116,6 +120,8 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     Box(Modifier.fillMaxSize().background(colors.surface).semantics {testTagsAsResourceId=true}) {
         JournalMap(window?.points.orEmpty(),window?.visits.orEmpty(),Modifier.fillMaxSize(),endpoints=window?.endpoints ?: RouteEndpoints(),showOutliers=showOutliers,onOutliers=onOutliers,
             onVisitSelected={visit->
+                // With the shared inspector already open, another visit queues there (it waits for an explicit close).
+                if(visitInspectionActive && onVisitOpened!=null) {onVisitOpened(visit);return@JournalMap}
                 if(multiDay) {selectedDay=visit.arrivedAt.atZone(zone).toLocalDate().toString()}
                 // M5: focus the visit on this map and open its quick view.
                 model.mapSelection.value=model.mapSelection.value.copy(visitFocus=VisitMapFocus(visit.id,visit.coordinate))
@@ -126,7 +132,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
             visitFocus=selected.visitFocus?.let {target->window?.visits?.find {it.id==target.id}?.let {target.copy(coordinate=it.coordinate)}},
             onVisitFocusCleared={model.mapSelection.value=model.mapSelection.value.copy(visitFocus=null)},inspectionScope=selected.copy(visitFocus=null),
             pointMarkerSource=rememberHistoryPointMarkerSource(graph,replayRequest),
-            home=MapHomeOptions(controller,layers,mapPadding,homeMode,focusCandidates=focusCandidates,overlayTop=headerBottom+8.dp))
+            home=MapHomeOptions(controller,layers,mapPadding,homeMode,focusCandidates=focusCandidates,overlayTop=headerBottom+8.dp,showsFocusLabel=quickVisit==null))
 
         // Header card and range chips.
         Column(Modifier.align(Alignment.TopCenter).padding(top=top+8.dp,start=12.dp,end=12.dp).widthIn(max=560.dp)
@@ -185,7 +191,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
             val available=maxHeight
             if(quickVisit!=null) MapVisitSheet(graph,quickVisit,candidates,metric,
                 onClose={quickVisitId=null;model.mapSelection.value=model.mapSelection.value.copy(visitFocus=null)},
-                onNotHere={quickVisitId=null;onVisitOpened?.invoke(quickVisit)},onDetails={quickVisitId=null;onVisitOpened?.invoke(quickVisit)},
+                onNotHere={quickVisitId=null;if(onVisitOpened!=null) onVisitOpened(quickVisit) else detailVisit=quickVisit},onDetails={quickVisitId=null;if(onVisitOpened!=null) onVisitOpened(quickVisit) else detailVisit=quickVisit},
                 modifier=Modifier.align(Alignment.BottomCenter).widthIn(max=640.dp))
             else if(detent!=DaySheetDetent.peek) MapDetentSheet(detent,{detent=it},available,headerBottom,Modifier.align(Alignment.BottomCenter).widthIn(max=640.dp)) {
                 val large=LocalDensity.current.fontScale>=1.3f
@@ -193,13 +199,16 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
                 else if(story!=null) MapDayContent(story,metric,now,{stay->
                     model.mapSelection.value=model.mapSelection.value.copy(visitFocus=VisitMapFocus(stay.visit.id,stay.visit.coordinate))
                     quickVisitId=stay.visit.id;detent=DaySheetDetent.peek
-                },onOpenTimeline,large)
+                },{detent=DaySheetDetent.peek;onOpenTimeline()},large)
                 else WdLoading()
                 access?.let {RecordingAccessNotice(it,onAccessOptions,contentPadding=PaddingValues(top=8.dp))}
             }
         }
     }
 
+    detailVisit?.let {visit->key(visit.id) {
+        VisitEditor(graph,visit,{detailVisit=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,visit,reuse,remember,overlap)},{graph.history.deleteVisit(visit)})
+    }}
     editorMode?.let {mode->
         VisitEditor(graph,null,{editorMode=null;editorSeed=null},{value,reuse,remember,overlap->
             graph.history.saveVisit(value,null,reuse,remember,overlap);visitSaved=true
@@ -209,7 +218,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
         val draft=rememberSaveable(selected,saver=mapDateDraftSaver) {model.mapDateDraft()}
         CustomMapDateRange(draft,{custom=false}) {selection->model.mapSelection.value=selection;custom=false}
     }
-    if(layersOpen) MapLayersSheet(graph,layers,::setLayers,showOutliers,onOutliers,photoLayer,active) {layersOpen=false}
+    if(layersOpen) MapLayersSheet(graph,layers,::setLayers,showOutliers,onOutliers,photoLayer,active,window?.endpoints ?: RouteEndpoints()) {layersOpen=false}
     if(searching) MapSearchDialog(graph,{searching=false}) {result->
         searching=false
         when(result) {
