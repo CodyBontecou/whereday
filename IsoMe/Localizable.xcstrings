@@ -3794,7 +3794,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "%lld点"
+            "value": "%lld 个位置点"
           }
         }
       }
@@ -5302,7 +5302,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 分"
+            "value": "1 个位置点"
           }
         }
       }
@@ -8592,7 +8592,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "一层新鲜的抛光剂"
+            "value": "焕然一新的细节打磨"
           }
         }
       }
@@ -13775,7 +13775,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "申请"
+            "value": "应用"
           }
         }
       }
@@ -15595,7 +15595,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "建筑预览..."
+            "value": "正在生成预览…"
           }
         }
       }
@@ -15665,7 +15665,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "构建时间表..."
+            "value": "正在生成时间线…"
           }
         }
       }
@@ -16085,7 +16085,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "袖珍的"
+            "value": "紧凑"
           }
         }
       }
@@ -16435,7 +16435,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "数数"
+            "value": "数量"
           }
         }
       }
@@ -17065,7 +17065,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "风俗"
+            "value": "自定义"
           }
         }
       }
@@ -18046,7 +18046,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "检查您的照片库中是否有这次郊游期间拍摄的照片。"
+            "value": "正在检查你的照片库中是否有这次出行期间拍摄的照片。"
           }
         }
       }
@@ -19239,7 +19239,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "清洁出口组织"
+            "value": "更整洁的导出文件组织"
           }
         }
       }
@@ -19869,7 +19869,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "近距离参观建议"
+            "value": "关闭到访建议"
           }
         }
       }
@@ -20219,7 +20219,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "连接照片以在地图和郊游上显示图片。 Whereday仅存储本地照片元数据。"
+            "value": "连接照片，即可在地图和出行中显示图片。Whereday 仅存储本地照片元数据。"
           }
         }
       }
@@ -20429,7 +20429,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "连接照片可让Whereday显示这次郊游期间拍摄的照片。"
+            "value": "连接照片后，Whereday 可以显示这次出行期间拍摄的照片。"
           }
         }
       }
@@ -21759,7 +21759,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "当前郊游重命名为%@ 。"
+            "value": "当前出行已重命名为 %@。"
           }
         }
       }
@@ -21829,7 +21829,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "当前郊游：%@。"
+            "value": "当前出行：%@。"
           }
         }
       }
@@ -22039,7 +22039,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "正在录制中"
+            "value": "正在记录"
           }
         }
       }
@@ -22109,7 +22109,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "风俗"
+            "value": "自定义"
           }
         }
       }
@@ -22319,7 +22319,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "每日出口"
+            "value": "每日导出"
           }
         }
       }
@@ -22949,7 +22949,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "删除郊游"
+            "value": "删除出行"
           }
         }
       }
@@ -23229,7 +23229,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "期间"
+            "value": "时长"
           }
         }
       }
@@ -23299,7 +23299,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "日常出口需要注意的事项"
+            "value": "每日导出需要处理"
           }
         }
       }
@@ -23369,7 +23369,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "每日出口就绪"
+            "value": "每日导出已就绪"
           }
         }
       }
@@ -24209,7 +24209,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "删除郊游？"
+            "value": "删除出行？"
           }
         }
       }
@@ -24699,7 +24699,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "确认后删除本次郊游及其GPS点。访问被保留。"
+            "value": "确认后删除此次出行及其 GPS 点。到访会保留。"
           }
         }
       }
@@ -25680,7 +25680,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "解雇"
+            "value": "关闭"
           }
         }
       }
@@ -25750,7 +25750,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "关闭不和谐横幅。"
+            "value": "关闭 Discord 横幅。"
           }
         }
       }
@@ -26871,7 +26871,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "期间"
+            "value": "时长"
           }
         }
       }
@@ -26941,7 +26941,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "期间%@"
+            "value": "时长 %@"
           }
         }
       }
@@ -27011,7 +27011,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "过去"
+            "value": "已用时"
           }
         }
       }
@@ -27081,7 +27081,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "使能够"
+            "value": "启用"
           }
         }
       }
@@ -27571,7 +27571,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口"
+            "value": "导出"
           }
         }
       }
@@ -27641,7 +27641,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口%@"
+            "value": "导出 %@"
           }
         }
       }
@@ -28015,7 +28015,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口锁定"
+            "value": "导出已锁定"
           }
         }
       }
@@ -28155,7 +28155,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口解锁"
+            "value": "导出已解锁"
           }
         }
       }
@@ -28435,7 +28435,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "每个新的GPS修复都会立即发布。"
+            "value": "每个新的 GPS 定位点都会立即 POST 发送。"
           }
         }
       }
@@ -29415,7 +29415,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入当前郊游的名称。"
+            "value": "输入当前出行的名称。"
           }
         }
       }
@@ -30327,7 +30327,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口"
+            "value": "导出"
           }
         }
       }
@@ -30537,7 +30537,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "将选定日期范围内的 Whereday 访问、位置点或郊游导出为文件。"
+            "value": "将选定日期范围内的 Whereday 到访、位置点或出行导出为文件。"
           }
         }
       }
@@ -30607,7 +30607,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口郊游"
+            "value": "导出出行"
           }
         }
       }
@@ -30747,7 +30747,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日出口"
+            "value": "导出今天"
           }
         }
       }
@@ -30887,7 +30887,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导出今天的郊游"
+            "value": "导出今天的出行"
           }
         }
       }
@@ -30957,7 +30957,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "昨天导出"
+            "value": "导出昨天"
           }
         }
       }
@@ -31587,7 +31587,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导出设置棒"
+            "value": "导出设置会被记住"
           }
         }
       }
@@ -31727,7 +31727,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "将今天的 Whereday 郊游导出为文件。"
+            "value": "将今天的 Whereday 出行导出为文件。"
           }
         }
       }
@@ -32357,7 +32357,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "以选定的格式导出此郊游。"
+            "value": "以选定的格式导出此次出行。"
           }
         }
       }
@@ -32987,7 +32987,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "无法结束录制会话： %@"
+            "value": "无法结束记录会话：%@"
           }
         }
       }
@@ -33197,7 +33197,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "无法协调录制会话： %@"
+            "value": "无法协调记录会话：%@"
           }
         }
       }
@@ -33617,7 +33617,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "无法开始录制会话： %@"
+            "value": "无法开始记录会话：%@"
           }
         }
       }
@@ -34247,7 +34247,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "现在，当不存在外出标题时，使用{title}或{name}的文件路径会显示访问、积分和全部导出的合理数据类型后备。"
+            "value": "现在，当没有出行标题时，使用 {title} 或 {name} 的文件路径会为到访、位置点和全部导出显示合理的数据类型后备名称。"
           }
         }
       }
@@ -34317,7 +34317,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "文件名可以使用外部名称"
+            "value": "文件名可使用出行名称"
           }
         }
       }
@@ -35719,7 +35719,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "适合活动会话"
+            "value": "缩放至当前记录"
           }
         }
       }
@@ -35789,7 +35789,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "适合所有访问"
+            "value": "缩放至所有到访"
           }
         }
       }
@@ -35859,7 +35859,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "适合地图"
+            "value": "缩放以适应地图"
           }
         }
       }
@@ -35929,7 +35929,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "灵活的出口"
+            "value": "灵活导出"
           }
         }
       }
@@ -36699,7 +36699,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "获取当前郊游名称"
+            "value": "获取当前出行名称"
           }
         }
       }
@@ -37539,7 +37539,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "隐"
+            "value": "已隐藏"
           }
         }
       }
@@ -38379,7 +38379,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "推断的郊游"
+            "value": "推断的出行"
           }
         }
       }
@@ -38799,7 +38799,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "进口"
+            "value": "导入"
           }
         }
       }
@@ -39499,7 +39499,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "从JSON 、 CSV或 Markdown 导入访问或积分。 KML 、 GPX和GeoJSON是单向地图导出。"
+            "value": "从 JSON、CSV 或 Markdown 导入到访或位置点。KML、GPX 和 GeoJSON 是单向地图导出。"
           }
         }
       }
@@ -39569,7 +39569,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "进口"
+            "value": "已导入"
           }
         }
       }
@@ -39663,7 +39663,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "已导入%d点。"
+            "value": "已导入 %d 个位置点。"
           }
         }
       }
@@ -39733,7 +39733,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入%d访问和%d点积分。"
+            "value": "已导入 %d 次到访和 %d 个位置点。"
           }
         }
       }
@@ -39827,7 +39827,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入%d次访问和 1 分。"
+            "value": "已导入 %d 次到访和 1 个位置点。"
           }
         }
       }
@@ -39991,7 +39991,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入1分。"
+            "value": "已导入 1 个位置点。"
           }
         }
       }
@@ -40085,7 +40085,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入 1 次访问和%d积分。"
+            "value": "已导入 1 次到访和 %d 个位置点。"
           }
         }
       }
@@ -40155,7 +40155,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入 1 次访问和 1 点。"
+            "value": "已导入 1 次到访和 1 个位置点。"
           }
         }
       }
@@ -40225,7 +40225,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "进口 1 次访问。"
+            "value": "已导入 1 次到访。"
           }
         }
       }
@@ -41625,7 +41625,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "加入不和谐"
+            "value": "加入 DISCORD"
           }
         }
       }
@@ -41835,7 +41835,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON和CSV导出外出摘要。 Markdown添加了YAML前端内容以及访问和路由点。 GPX 、 KML 、 GeoJSON 、 OwnTracks和Overland导出郊游路线点。"
+            "value": "JSON 和 CSV 导出出行摘要。Markdown 添加 YAML 前置元数据以及到访和路线点。GPX、KML、GeoJSON、OwnTracks 和 Overland 导出出行路线点。"
           }
         }
       }
@@ -41905,7 +41905,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON和CSV总结每次外出，而GPX 、 KML 、 GeoJSON 、 OwnTracks和Overland则导出路线修正。"
+            "value": "JSON 和 CSV 汇总每次出行，而 GPX、KML、GeoJSON、OwnTracks 和 Overland 导出路线定位点。"
           }
         }
       }
@@ -42185,7 +42185,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "加入不和谐社区。"
+            "value": "加入 Discord 社区。"
           }
         }
       }
@@ -42255,7 +42255,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "从郊游跳转到地图"
+            "value": "从出行跳转到地图"
           }
         }
       }
@@ -43235,7 +43235,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "居住"
+            "value": "实时"
           }
         }
       }
@@ -44495,7 +44495,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "让Whereday自动在您的地图和郊游中显示iPhone照片。照片保留在您的照片库中。"
+            "value": "让 Whereday 自动在你的地图和出行中显示 iPhone 照片。照片保留在你的照片库中。"
           }
         }
       }
@@ -47156,7 +47156,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "最小 GPS 点"
+            "value": "最少 GPS 点数"
           }
         }
       }
@@ -47926,7 +47926,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "地图波兰语"
+            "value": "地图优化"
           }
         }
       }
@@ -49396,7 +49396,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "对外出出口加强控制"
+            "value": "更好地控制出行导出"
           }
         }
       }
@@ -49466,7 +49466,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "更可靠的日常出口"
+            "value": "更可靠的每日导出"
           }
         }
       }
@@ -49676,7 +49676,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "分数最高的优先"
+            "value": "位置点最多的优先"
           }
         }
       }
@@ -50026,7 +50026,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "姓名"
+            "value": "名称"
           }
         }
       }
@@ -50096,7 +50096,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "绝不"
+            "value": "从不"
           }
         }
       }
@@ -50726,7 +50726,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "姓名"
+            "value": "名称"
           }
         }
       }
@@ -50796,7 +50796,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "姓名访问速度更快"
+            "value": "更快地为到访命名"
           }
         }
       }
@@ -50866,7 +50866,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "录制会话时，姓名和备注会保留在设备上。"
+            "value": "名称和备注会随记录会话保留在设备上。"
           }
         }
       }
@@ -51146,7 +51146,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "绝不"
+            "value": "从不"
           }
         }
       }
@@ -52126,7 +52126,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "尚未为这次郊游保存GPS点。"
+            "value": "这次出行尚未保存任何 GPS 点。"
           }
         }
       }
@@ -52686,7 +52686,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "未提供出口目的地。"
+            "value": "未提供导出目的地。"
           }
         }
       }
@@ -53386,7 +53386,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "此次郊游期间未找到带有GPS数据或附近Whereday路线/访问匹配的照片。"
+            "value": "此次出行期间未找到带有 GPS 数据或与附近 Whereday 路线/到访匹配的照片。"
           }
         }
       }
@@ -53946,7 +53946,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "本次郊游期间未发现有人来访。"
+            "value": "本次出行期间未检测到到访。"
           }
         }
       }
@@ -54856,7 +54856,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "入职"
+            "value": "新手引导"
           }
         }
       }
@@ -55276,7 +55276,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "郊游"
+            "value": "出行"
           }
         }
       }
@@ -55346,7 +55346,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "郊游出口"
+            "value": "出行导出"
           }
         }
       }
@@ -55416,7 +55416,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "郊游"
+            "value": "出行"
           }
         }
       }
@@ -55766,7 +55766,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "离开"
+            "value": "关闭"
           }
         }
       }
@@ -56256,7 +56256,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开郊游，观看路径回放，其中包含移动标记、滑块、经过时间、持续时间和距离统计数据。"
+            "value": "打开一次出行，即可观看路径回放，包含移动标记、拖动条、已用时间、时长和距离统计。"
           }
         }
       }
@@ -56326,7 +56326,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开任何郊游并直接以JSON 、 CSV 、 Markdown 、 OwnTracks 、 Overland 、 GPX 、 KML或 GeoJSON 格式导出。"
+            "value": "打开任意出行，直接以 JSON、CSV、Markdown、OwnTracks、Overland、GPX、KML 或 GeoJSON 格式导出。"
           }
         }
       }
@@ -56396,7 +56396,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开任何记录或推断的外出并将其从详细信息屏幕中删除。它的GPS路线点将被删除，同一时间的访问会保留在您的历史记录中，并且删除实时郊游会首先停止跟踪。"
+            "value": "打开任意记录或推断的出行，并在详情页面中删除。其 GPS 路线点将被删除，同一时间的到访会保留在你的历史记录中；删除进行中的出行会先停止追踪。"
           }
         }
       }
@@ -56816,7 +56816,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "开放路线回放"
+            "value": "打开路线回放"
           }
         }
       }
@@ -57026,7 +57026,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在地图中开放参观"
+            "value": "在地图中打开到访"
           }
         }
       }
@@ -57376,7 +57376,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开郊游详细信息。"
+            "value": "打开出行详情。"
           }
         }
       }
@@ -57446,7 +57446,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开本次郊游的路线重播控件。"
+            "value": "打开此次出行的路线回放控件。"
           }
         }
       }
@@ -58076,7 +58076,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "选修的"
+            "value": "可选"
           }
         }
       }
@@ -58356,7 +58356,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "郊游名称"
+            "value": "出行名称"
           }
         }
       }
@@ -58426,7 +58426,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "郊游"
+            "value": "出行"
           }
         }
       }
@@ -58496,7 +58496,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "每次旅行都有郊游"
+            "value": "每次旅程都有出行记录"
           }
         }
       }
@@ -59126,7 +59126,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "小路"
+            "value": "路径"
           }
         }
       }
@@ -59196,7 +59196,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "允许"
+            "value": "权限"
           }
         }
       }
@@ -59616,7 +59616,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "郊游游玩"
+            "value": "回放出行"
           }
         }
       }
@@ -59686,7 +59686,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "观点"
+            "value": "位置点"
           }
         }
       }
@@ -59756,7 +59756,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "点场"
+            "value": "位置点字段"
           }
         }
       }
@@ -59826,7 +59826,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "积分"
+            "value": "位置点"
           }
         }
       }
@@ -59896,7 +59896,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "将所有数据类型（访问量、积分或两者）实时或批量发布到外部API或自托管服务器。支持OwnTracks 、 Overland 、 Dawarich 和通用JSON端点。"
+            "value": "将所有数据类型（到访、位置点或两者）实时或批量 POST 到外部 API 或自托管服务器。支持 OwnTracks、Overland、Dawarich 和通用 JSON 端点。"
           }
         }
       }
@@ -63002,7 +63002,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld的点%2$lld 。时间%3$@ 。已过去%4$@ （共%5$@ 。 %6$@的距离%7$@ 。"
+            "value": "第 %1$lld 个点，共 %2$lld 个。时间 %3$@。已用时 %4$@，共 %5$@。距离 %6$@，共 %7$@。"
           }
         }
       }
@@ -63142,7 +63142,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "指向索引%lld点缺少时间戳"
+            "value": "索引 %lld 处的点缺少时间戳"
           }
         }
       }
@@ -63282,7 +63282,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "积分"
+            "value": "位置点"
           }
         }
       }
@@ -63352,7 +63352,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "点每 N 分钟排队并刷新一次。如果应用程序终止，未发送的积分将会丢失。"
+            "value": "位置点每 N 分钟排队并发送一次。如果应用被终止，未发送的位置点将会丢失。"
           }
         }
       }
@@ -63422,7 +63422,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "点在内存中排队并在达到计数时发送。如果应用程序终止，未发送的积分将会丢失。"
+            "value": "位置点在内存中排队，达到数量时发送。如果应用被终止，未发送的位置点将会丢失。"
           }
         }
       }
@@ -63842,7 +63842,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "预览是免费的。通过一次性购买解锁出口。"
+            "value": "预览免费。一次性购买即可解锁导出。"
           }
         }
       }
@@ -65522,7 +65522,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "重播入职流程"
+            "value": "重看新手引导"
           }
         }
       }
@@ -66503,7 +66503,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "录制的会话现在位于专用的“外出”选项卡中，其中包含总计、实时/当前状态、推断徽章以及对每条路线的快速访问。"
+            "value": "记录的会话现在位于专用的“出行”标签页中，包含总计、实时/当前状态、推断标记以及每条路线的快速入口。"
           }
         }
       }
@@ -66573,7 +66573,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "消除"
+            "value": "移除"
           }
         }
       }
@@ -66713,7 +66713,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "重命名当前郊游"
+            "value": "重命名当前出行"
           }
         }
       }
@@ -66853,7 +66853,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "重命名郊游"
+            "value": "重命名出行"
           }
         }
       }
@@ -66993,7 +66993,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "从Shortcuts重命名郊游"
+            "value": "从快捷指令重命名出行"
           }
         }
       }
@@ -70143,7 +70143,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "支持"
+            "value": "待机"
           }
         }
       }
@@ -70353,7 +70353,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "地位"
+            "value": "状态"
           }
         }
       }
@@ -70633,7 +70633,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "贮存"
+            "value": "存储"
           }
         }
       }
@@ -70913,7 +70913,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "节省"
+            "value": "保存"
           }
         }
       }
@@ -71123,7 +71123,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "节省更改时间"
+            "value": "保存时间更改"
           }
         }
       }
@@ -73769,7 +73769,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "选择一种或多种格式。 OwnTracks和Overland郊游导出包含郊游路线的GPS修正；访问行和郊游笔记没有体现。"
+            "value": "选择一种或多种格式。OwnTracks 和 Overland 出行导出包含出行路线的 GPS 定位点；不包含到访行和出行备注。"
           }
         }
       }
@@ -74472,7 +74472,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "会议详情"
+            "value": "记录详情"
           }
         }
       }
@@ -74612,7 +74612,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "会议总结"
+            "value": "记录摘要"
           }
         }
       }
@@ -74962,7 +74962,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "设置当前正在记录的 Whereday 郊游的名称。"
+            "value": "设置当前正在记录的 Whereday 出行的名称。"
           }
         }
       }
@@ -75172,7 +75172,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "分享一次郊游"
+            "value": "分享单次出行"
           }
         }
       }
@@ -75592,7 +75592,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "在主地图上显示一次郊游，以关注确切的路线、起点和终点标记，并清理当前的访问状态。"
+            "value": "在主地图上显示一次出行，聚焦确切的路线、起点和终点标记，并清理当前到访状态。"
           }
         }
       }
@@ -75942,7 +75942,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "如图所示"
+            "value": "已显示"
           }
         }
       }
@@ -76082,7 +76082,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "显示用于清理和重播可见路线的控件。"
+            "value": "显示用于拖动浏览和回放可见路线的控件。"
           }
         }
       }
@@ -76292,7 +76292,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "显示在所选日期范围内检测为停靠点Whereday地点。当您想要一个整洁的纯路线地图时，请将它们隐藏起来。"
+            "value": "显示 Whereday 在所选日期范围内检测为停留点的地点。若想要只显示路线的整洁地图，可将其隐藏。"
           }
         }
       }
@@ -76922,7 +76922,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "出口更加顺畅"
+            "value": "导出更顺畅"
           }
         }
       }
@@ -77062,7 +77062,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "对郊游进行排序和过滤"
+            "value": "对出行进行排序和筛选"
           }
         }
       }
@@ -77902,7 +77902,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "从“地图”选项卡或Shortcuts ”自动化开始跟踪。参观和活动会议每天都会出现在这里。"
+            "value": "从“地图”选项卡或快捷指令自动化开始追踪。到访和移动记录将按天显示在这里。"
           }
         }
       }
@@ -78882,7 +78882,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "当所选格式支持时，将包含存储的外出名称和注释。推断出游导出来源：推断。"
+            "value": "如果所选格式支持，将包含已存储的出行名称和备注。推断的出行导出时标注 source: inferred。"
           }
         }
       }
@@ -79302,7 +79302,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "采取"
+            "value": "拍摄时间"
           }
         }
       }
@@ -81823,7 +81823,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday 在选定日期范围内记录的移动（即郊游）。默认为今天。"
+            "value": "Whereday 在选定日期范围内记录的移动（即出行）。默认为今天。"
           }
         }
       }
@@ -81893,7 +81893,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday 当前正在记录的郊游的名称。"
+            "value": "Whereday 当前正在记录的出行的名称。"
           }
         }
       }
@@ -82944,7 +82944,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "此次郊游及其GPS点将被永久删除。在此期间的访问将被保留。"
+            "value": "此次出行及其 GPS 点将被永久删除。这段时间内的到访将会保留。"
           }
         }
       }
@@ -83014,7 +83014,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "目前，这次外出活动正在录制中。"
+            "value": "这次出行正在记录中。"
           }
         }
       }
@@ -83084,7 +83084,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "这次郊游是使用您推断的郊游设置从您的GPS历史记录自动推断的。新的快捷方式开始/停止录音被准确保存并可以命名。"
+            "value": "这次出行是根据你的推断出行设置，从 GPS 历史记录中自动推断的。通过快捷指令开始/停止的新记录会被准确保存并可命名。"
           }
         }
       }
@@ -83224,7 +83224,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "此路线格式导出郊游的GPS路线点。注释和访问行未表示。"
+            "value": "此路线格式导出出行的 GPS 路线点。不包含备注和到访行。"
           }
         }
       }
@@ -85114,7 +85114,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "跟踪记录访问、重大变化和连续的高精度路径。距离过滤器控制移动时保存点的频率。停止 自动停止后作为安全网。"
+            "value": "追踪会记录到访、重大位置变化和连续的高精度路径。距离过滤器控制移动时保存位置点的频率。“停止时间”会作为安全措施自动停止记录。"
           }
         }
       }
@@ -87846,7 +87846,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "使用 / 表示文件夹。代币： %@ 。 {title} / {name}使用郊游标题（如果可用），否则使用数据类型。如果省略，则会添加格式扩展名。"
+            "value": "使用 / 表示文件夹。占位符：%@。{title}/{name} 在有出行标题时使用该标题，否则使用数据类型。如果省略格式扩展名，将自动添加。"
           }
         }
       }
@@ -89177,7 +89177,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "参观田野"
+            "value": "到访字段"
           }
         }
       }
@@ -89317,7 +89317,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "访问量"
+            "value": "到访"
           }
         }
       }
@@ -90787,7 +90787,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "等待郊游路径与道路匹配。"
+            "value": "等待出行路径与道路匹配。"
           }
         }
       }
@@ -91557,7 +91557,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "当不存在确切的开始/停止会话时， Whereday可以根据保存的GPS点推断外出活动。这些设置仅影响自动生成的推断外出；录制的会话保持完整。"
+            "value": "当不存在确切的开始/停止会话时，Whereday 可以根据已保存的 GPS 点推断出行。这些设置仅影响自动生成的推断出行；记录的会话保持不变。"
           }
         }
       }
@@ -91767,7 +91767,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "记录路线时，可以使用Shortcuts或Siri中的新“重命名当前外出”操作来命名行程，而无需打开 Whereday。"
+            "value": "记录路线时，可以使用快捷指令或 Siri 中新的“重命名当前出行”操作为行程命名，无需打开 Whereday。"
           }
         }
       }

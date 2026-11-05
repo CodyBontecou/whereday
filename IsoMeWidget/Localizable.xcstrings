@@ -130,7 +130,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld小时%2$lld米"
+            "value": "%1$lld小时%2$lld分钟"
           }
         },
         "pl": {

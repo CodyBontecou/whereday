@@ -60,7 +60,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@左边"
+            "value": "剩余 %@"
           }
         },
         "pl": {
@@ -340,7 +340,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld小时%2$lld米"
+            "value": "%1$lld小时%2$lld分钟"
           }
         },
         "pl": {
@@ -550,7 +550,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "离开"
+            "value": "关闭"
           }
         },
         "pl": {
