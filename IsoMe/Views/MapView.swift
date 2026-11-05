@@ -41,8 +41,8 @@ struct LocationMapView: View {
     @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
     /// A time the person dragged to; cleared when playback or a new range takes over.
     @State private var scrubbedTime: Date?
-    @State private var isTracePanelCollapsed = false
     @State private var showsCompanionReplay = false
+    @State private var trackingPillExpanded = false
     @State private var tracePanelHeight: CGFloat = 0
     @State private var dismissedFocusedVisitID: UUID?
     @State private var selectedVisit: Visit?
@@ -55,12 +55,12 @@ struct LocationMapView: View {
     @State private var currentPlaceLookupFailed = false
     @State private var dismissedCurrentPlaceLookupKey: String?
     @State private var dismissedCurrentPlaceArea: CurrentPlacePromptSuppression?
-    @State private var trackingPillExpanded = false
-    @State private var showTravelPath = true
-    @State private var showPointMarkers = true
-    @State private var showStartEndMarkers = true
-    @State private var showSessionPath = false
-    @State private var showVisitMarkers = true
+    // Layers persist between launches (MapLayerPreferences), so the map opens the way it was left.
+    @AppStorage(MapLayerPreferences.travelPathKey) private var showTravelPath = true
+    @AppStorage(MapLayerPreferences.pointMarkersKey) private var showPointMarkers = false
+    @AppStorage(MapLayerPreferences.startEndKey) private var showStartEndMarkers = true
+    @AppStorage(MapLayerPreferences.sessionPathKey) private var showSessionPath = false
+    @AppStorage(MapLayerPreferences.visitsKey) private var showVisitMarkers = true
     @AppStorage(LocationViewModel.showPhotoMarkersKey) private var showPhotoMarkers = false
     @AppStorage(LocationViewModel.showVisitSuggestionsKey) private var showVisitSuggestions = false
     @AppStorage(PhotoMapMarkerStyle.imagesKey) private var showPhotoMarkerImages = true
@@ -81,6 +81,20 @@ struct LocationMapView: View {
     @AppStorage("showOutliers") private var showOutliers = false
     @AppStorage(MapLayerSettings.minimumStayMinutesKey) private var minimumStayMinutes = 0
     @AppStorage("photoPlacesPromptDismissed") private var photoPlacesPromptDismissed = false
+    @AppStorage("allowNetworkGeocoding") private var allowNetworkGeocoding = true
+    @Environment(\.floatingTabBarInset) private var tabBarInset
+    // Map home
+    @State private var sheetDetent: MapSheetDetent
+    @State private var showsLayers = false
+    @State private var showsSearch = false
+    @State private var showsAddMenu = false
+    /// The day highlighted in a multi-day range (M6).
+    @State private var selectedRangeDay: Date?
+    /// Numbered "Where were you?" places around the tapped visit (M5).
+    @State private var visitCandidates: [NearbyPlaceSuggestion] = []
+    @State private var replaySpeed: ReplaySpeed = .ten
+    @State private var peekHeight: CGFloat = 64
+    @State private var hasFramedContent = false
 
     init(
         viewModel: LocationViewModel,
@@ -105,6 +119,7 @@ struct LocationMapView: View {
         self.presentation = presentation
         self.replayBridge = replayBridge
         self.locationManager = viewModel.locationManager
+        _sheetDetent = State(initialValue: expandsDaySheet ? .medium : .peek)
     }
 
     private static var initialFilterSheetVisibility: Bool {
@@ -286,6 +301,13 @@ struct LocationMapView: View {
                 syncPhotoMomentsForCurrentRangeIfAuthorized()
                 validateRouteReplayState()
 
+                // The map home opens framed on the day's route rather than wherever the phone is.
+                if presentation == .home, !hasFramedContent {
+                    hasFramedContent = true
+                    // After the first layout pass; MapKit drops camera changes made before it has a size.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { fitMapToContent() }
+                }
+
                 if locationManager.isTrackingEnabled {
                     pendingSessionAutoFocus = true
                     attemptAutoFocusSession()
@@ -382,9 +404,10 @@ struct LocationMapView: View {
                 isPresented: $showingFilters,
                 activePreset: activePreset,
                 recordedDays: recordedDays,
-                layers: layerSettings,
+                layers: presentation == .home ? nil : layerSettings,
                 onApply: { preset in
                     activePreset = preset
+                    selectedRangeDay = nil
                     if let preset {
                         viewModel.mapDateRange = preset.range()
                     }
@@ -393,11 +416,25 @@ struct LocationMapView: View {
                     syncPhotoMomentsForCurrentRangeIfAuthorized()
                     scrubbedTime = nil
                     validateRouteReplayState()
+                    if presentation == .home { fitMapToContent() }
                 }
             )
         }
+        .sheet(isPresented: $showsLayers) {
+            MapLayersSheet(hasSessionPoints: !activeSessionPoints.isEmpty)
+        }
+        .sheet(isPresented: $showsSearch) {
+            MapSearchSheet(viewModel: viewModel, onSelect: focusSearchResult)
+        }
         .onChange(of: selectedVisit?.id) { _, _ in
             showSelectedVisitInCompanion()
+            if presentation == .home, onSelectVisit == nil, let selectedVisit {
+                showsAddMenu = false
+                focusSelectedVisit(selectedVisit)
+            }
+        }
+        .task(id: selectedVisit?.id) {
+            await loadVisitCandidates()
         }
         .onChange(of: focusedVisit?.id, initial: true) { _, id in
             // A new focus (or the owner clearing it) reopens the inspector for the next tap.
@@ -405,8 +442,10 @@ struct LocationMapView: View {
             focusCompanionVisit()
         }
         .sheet(item: selectedVisitSheet) { visit in
-            VisitQuickView(visit: visit, viewModel: viewModel)
+            VisitQuickView(visit: visit, viewModel: viewModel, candidates: presentation == .home ? visitCandidates : nil)
                 .presentationDetents([.medium, .large])
+                // The map stays live above the sheet, so its numbered pins can be tapped too.
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
         }
         .sheet(item: $photoDetails.cluster) { cluster in
             if cluster.isArea {
@@ -459,69 +498,607 @@ struct LocationMapView: View {
         let day = traceDay
         return GeometryReader { container in
             ZStack(alignment: .bottom) {
-                traceMap(day: day, photoDetails: photoDetails)
-                    .safeAreaPadding(.bottom, showsTracePanel ? tracePanelHeight : 0)
-
-                VStack(spacing: 8) {
-                    topChrome
-                    Spacer(minLength: 0)
-                    floatingCards(photoDetails: photoDetails)
-                        .padding(.horizontal, 12)
-
-                    if let replayBridge {
-                        TimelineView(.everyMinute) { context in
-                            publishTracePanel(day: day, now: context.date, to: replayBridge)
-                        }
-                    } else if showsTracePanel {
-                        TimelineView(.everyMinute) { context in
-                            tracePanel(day: day, now: context.date, maxHeight: container.size.height * 0.62)
-                        }
-                        .background {
-                            GeometryReader { geometry in
-                                Color.clear
-                                    .onAppear { tracePanelHeight = geometry.size.height }
-                                    .onChange(of: geometry.size.height) { _, height in
-                                        tracePanelHeight = height
-                                    }
-                            }
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
+                if presentation == .home {
+                    traceMap(day: day, photoDetails: photoDetails)
+                        .ignoresSafeArea()
+                    homeChrome(day: day, container: container, photoDetails: photoDetails)
+                } else {
+                    traceMap(day: day, photoDetails: photoDetails)
+                        .safeAreaPadding(.bottom, showsTracePanel ? tracePanelHeight : 0)
+                    companionChrome(day: day, container: container, photoDetails: photoDetails)
                 }
             }
         }
         .mapScope(mapScope)
+        .preference(key: HidesFloatingTabBarKey.self, value: presentation == .home && isReplayChromeShown)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isTracking)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isRouteReplayEnabled)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isCompanionReplayShown)
         .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: inspectorVisit?.id)
-        .onChange(of: isTracking) { _, newValue in
-            if !newValue {
-                withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
-                    trackingPillExpanded = false
+        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.86), value: showsAddMenu)
+    }
+
+    /// The companion pane beside the timeline keeps its own slim chrome and opens replay on request.
+    private func companionChrome(day: TraceDay, container: GeometryProxy, photoDetails: PhotoMomentDetailSelection) -> some View {
+        VStack(spacing: 8) {
+            topChrome
+            Spacer(minLength: 0)
+            floatingCards(photoDetails: photoDetails)
+                .padding(.horizontal, 12)
+
+            if let replayBridge {
+                TimelineView(.everyMinute) { context in
+                    publishTracePanel(day: day, now: context.date, to: replayBridge)
                 }
+            } else if showsTracePanel {
+                TimelineView(.everyMinute) { context in
+                    tracePanel(day: day, now: context.date, maxHeight: container.size.height * 0.62)
+                }
+                .background {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .onAppear { tracePanelHeight = geometry.size.height }
+                            .onChange(of: geometry.size.height) { _, height in
+                                tracePanelHeight = height
+                            }
+                    }
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
     }
 
+    // MARK: - Map home chrome (boards M1–M7)
+
+    /// Replay owns the screen: header, chips and the replay panel, no rail, bar or tab bar.
+    private var isReplayChromeShown: Bool {
+        isCompanionReplayShown
+    }
+
+    private var isTodayRange: Bool {
+        let range = viewModel.mapDateRange
+        return range.lowerBound != .distantPast && Calendar.current.isDateInToday(range.lowerBound)
+            && Calendar.current.isDate(range.lowerBound, inSameDayAs: range.upperBound)
+    }
+
+    /// Bottom space the closed sheet takes, so the floating controls sit above it.
+    private var bottomChromeInset: CGFloat {
+        guard showsDaySheet else { return tabBarInset + 8 }
+        return tabBarInset + 8 + peekHeight + 8
+    }
+
+    @ViewBuilder
+    private func homeChrome(day: TraceDay, container: GeometryProxy, photoDetails: PhotoMomentDetailSelection) -> some View {
+        let replaying = isReplayChromeShown
+        ZStack(alignment: .bottom) {
+            if showsAddMenu {
+                Color.black.opacity(0.001)
+                    .ignoresSafeArea()
+                    .onTapGesture { showsAddMenu = false }
+                    .accessibilityHidden(true)
+            }
+
+            VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 8) {
+                    TimelineView(.everyMinute) { context in
+                        MapHeaderCard(
+                            kicker: headerKicker(day: day, now: context.date),
+                            title: headerTitle(day: day),
+                            onSearch: { showsSearch = true }
+                        )
+                    }
+                    MapRangeChips(
+                        selected: activePreset,
+                        onSelect: selectPreset,
+                        onCustom: { showingFilters = true }
+                    )
+                }
+                .padding(.horizontal, 12)
+                .padding(.top, 4)
+
+                HStack(alignment: .top, spacing: 8) {
+                    if replayBridge != nil {
+                        tabletopLabel
+                    }
+                    Spacer(minLength: 0)
+                    if !replaying {
+                        rightRail(day: day)
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.top, 10)
+
+                Spacer(minLength: 0)
+
+                if !replaying || replayBridge != nil {
+                    bottomControls(photoDetails: photoDetails)
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, bottomChromeInset)
+                        .opacity(sheetDetent == .peek || !showsDaySheet ? 1 : 0)
+                        .allowsHitTesting(sheetDetent == .peek || !showsDaySheet)
+                        .accessibilityHidden(sheetDetent != .peek && showsDaySheet)
+                        .zIndex(showsAddMenu ? 1 : 0)
+                }
+            }
+
+            if let replayBridge {
+                TimelineView(.everyMinute) { context in
+                    publishTracePanel(day: day, now: context.date, to: replayBridge)
+                }
+            } else if replaying {
+                TimelineView(.everyMinute) { context in
+                    tracePanel(day: day, now: context.date, maxHeight: container.size.height * 0.55)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+
+            if showsDaySheet && !replaying {
+                daySheet(day: day, container: container)
+            }
+        }
+    }
+
+    private var tabletopLabel: some View {
+        // Half-open: the replay controls sit below the fold.
+        Text("TABLETOP · MAP ABOVE THE FOLD")
+            .font(TE.mono(.caption2, weight: .medium))
+            .tracking(1)
+            .foregroundStyle(TE.textPrimary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .padding(.horizontal, 12)
+            .frame(minHeight: 32)
+            .background(Capsule().fill(TE.card.opacity(0.92)))
+            .accessibilityLabel("Tabletop. Map above the fold.")
+    }
+
+    private func rightRail(day: TraceDay) -> some View {
+        VStack(spacing: 10) {
+            TimelineView(.everyMinute) { context in
+                MapMiniDialButton(
+                    arcs: dialArcs(day: day, now: context.date),
+                    now: context.date,
+                    showsNow: isTodayRange,
+                    accessibilityValue: miniDialAccessibilityValue(day: day, now: context.date),
+                    action: openReplay
+                )
+            }
+            .frame(width: 56, height: 56)
+            .disabled(!canReplayRoute)
+            .opacity(canReplayRoute ? 1 : 0.6)
+
+            MapToolStack(
+                onLayers: { showsLayers = true },
+                onFitContent: { fitMapToContent() },
+                onFitSession: !activeSessionPoints.isEmpty ? { fitMapToSession() } : nil,
+                onMyLocation: showUserLocation
+            )
+
+            MapCompass(scope: mapScope)
+        }
+    }
+
+    /// The photo prompt, "Are you here?", the wide-layout inspector, the scale, and the recording bar with "+".
+    private func bottomControls(photoDetails: PhotoMomentDetailSelection) -> some View {
+        VStack(alignment: .trailing, spacing: 8) {
+            photoPlacesPrompt(photoDetails: photoDetails)
+
+            if shouldShowCurrentPlacePrompt {
+                currentPlaceCard
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+
+            if let inspectorVisit {
+                inspectorCard(for: inspectorVisit)
+                    .frame(maxWidth: 440)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+
+            HStack {
+                MapScaleView(scope: mapScope)
+                Spacer(minLength: 0)
+            }
+
+            HStack(spacing: 8) {
+                MapRecordingBar(
+                    viewModel: viewModel,
+                    locationManager: locationManager,
+                    isTracking: isTracking,
+                    onPrimaryTap: handleTrackingTap
+                )
+                MapAddButton(isOpen: showsAddMenu) { showsAddMenu.toggle() }
+                    .overlay(alignment: .bottomTrailing) {
+                        if showsAddMenu {
+                            MapAddMenu(
+                                onSaveCurrentPlace: { showsAddMenu = false; openSaveCurrentPlaceSheet() },
+                                onAddPastVisit: { showsAddMenu = false; openPastVisitSheet() },
+                                onDropPin: { showsAddMenu = false; openBlankManualVisitSheet() }
+                            )
+                            .fixedSize()
+                            .padding(.bottom, 58)
+                            .transition(.scale(scale: 0.9, anchor: .bottomTrailing).combined(with: .opacity))
+                        }
+                    }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+    }
+
+    private var currentPlaceCard: some View {
+        let suggestion = currentPlaceSuggestion
+        let isSaved = suggestion?.id.hasPrefix("saved-") ?? false
+        let minutes = viewModel.currentVisit.map { Int(Date().timeIntervalSince($0.arrivedAt) / 60) }
+        return MapHereCard(
+            suggestion: suggestion,
+            isSavedPlace: isSaved,
+            minutesHere: minutes,
+            isLoading: isLoadingCurrentPlace,
+            lookupFailed: currentPlaceLookupFailed,
+            hasFreshLocation: freshManualLocation != nil,
+            hasLocationPermission: locationManager.hasLocationPermission,
+            onSave: openSaveCurrentPlaceSheet,
+            onSomewhereElse: openBlankManualVisitSheet,
+            onRequestLocation: locationManager.requestCurrentLocationForManualVisit,
+            onDismiss: dismissCurrentPlacePrompt
+        )
+    }
+
+    @ViewBuilder
+    private func photoPlacesPrompt(photoDetails: PhotoMomentDetailSelection) -> some View {
+        if showPhotoMarkers, !viewModel.mapPhotoPlaces.isEmpty, !photoPlacesPromptDismissed {
+            HStack(spacing: 0) {
+                Button {
+                    photoDetails.showsPlaces = true
+                } label: {
+                    Label("Browse \(viewModel.mapPhotoPlaces.count) photo places", systemImage: "photo.stack")
+                        .font(.footnote.weight(.medium))
+                        .padding(.leading, 14)
+                        .padding(.trailing, 4)
+                        .frame(minHeight: 44)
+                }
+                .accessibilityHint("Lists every matched place, including places outside the visible map area.")
+
+                Button {
+                    photoPlacesPromptDismissed = true
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(TE.textMuted)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .accessibilityLabel("Close")
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(TE.textPrimary)
+            .background(Capsule().fill(TE.card))
+            .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
+        }
+    }
+
+    // MARK: Day sheet
+
+    private func daySheet(day: TraceDay, container: GeometryProxy) -> some View {
+        MapDaySheet(
+            detent: $sheetDetent,
+            bottomInset: tabBarInset,
+            containerHeight: container.size.height + container.safeAreaInsets.bottom
+        ) {
+            TimelineView(.everyMinute) { context in
+                peekView(day: day, now: context.date)
+            }
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { peekHeight = $0 }
+        } content: {
+            sheetContent(day: day)
+        }
+    }
+
+    @ViewBuilder
+    private func peekView(day: TraceDay, now: Date) -> some View {
+        if day.isSingleDay {
+            MapPeekCard(content: peekContent(day: day, now: now), now: now) {
+                sheetDetent = .medium
+            }
+        } else {
+            MapRangeCard(
+                summary: rangeSummary(day: day),
+                selectedDay: selectedRangeDay ?? rangeSummary(day: day).defaultSelectedDay,
+                usesMetric: usesMetricDistanceUnits,
+                onSelectDay: selectRangeDay,
+                onExpand: { sheetDetent = .medium }
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func sheetContent(day: TraceDay) -> some View {
+        if !day.isSingleDay {
+            MapRangeDayList(
+                summary: rangeSummary(day: day),
+                selectedDay: selectedRangeDay ?? rangeSummary(day: day).defaultSelectedDay,
+                usesMetric: usesMetricDistanceUnits,
+                onSelectDay: { selectRangeDay($0); sheetDetent = .peek }
+            )
+        } else {
+            TodayView(
+                viewModel: viewModel,
+                onReplay: openReplay,
+                onPickDay: { onOpenTimeline?() ?? (showingFilters = true) },
+                onSelectVisit: selectVisitFromSheet,
+                style: .mapSheet,
+                pastDay: isTodayRange ? nil : day.domain.lowerBound
+            )
+        }
+    }
+
+    /// "YOU'RE AT · SINCE 13:50 / Mission Office / 6.4 km / 4 PLACES" for today; a finished day's summary otherwise.
+    private func peekContent(day: TraceDay, now: Date) -> MapPeekContent {
+        let arcs = dialArcs(day: day, now: now)
+        if isTodayRange {
+            let today = TodayDay(viewModel: viewModel, now: now, home: homePlace)
+            let distance = DistanceFormatter.format(meters: viewModel.todayDistanceTraveled, usesMetric: usesMetricDistanceUnits)
+            let places = Self.placesCaption(today.placeCount)
+            if let current = today.currentStay {
+                return MapPeekContent(
+                    kicker: String(localized: "YOU'RE AT · SINCE \(Self.clockText(current.since))"),
+                    title: current.name, value: distance, caption: places, arcs: arcs, showsNow: true)
+            }
+            if let last = today.stays.last {
+                return MapPeekContent(
+                    kicker: String(localized: "LAST STOP · LEFT \(Self.clockText(last.end))"),
+                    title: last.name, value: distance, caption: places, arcs: arcs, showsNow: true)
+            }
+            return MapPeekContent(
+                kicker: String(localized: "THE DAY SO FAR"),
+                title: String(localized: "No places yet"), value: distance, caption: places, arcs: arcs, showsNow: true)
+        }
+        let distance = DistanceFormatter.format(meters: RouteReplayCalculator.totalDistance(in: filteredPoints), usesMetric: usesMetricDistanceUnits)
+        let first = day.visits.first.map { Self.clockText(max($0.arrivedAt, day.domain.lowerBound)) }
+        return MapPeekContent(
+            kicker: first.map { String(localized: "THE DAY · FROM \($0)") } ?? String(localized: "THE DAY"),
+            title: day.visits.last.map(day.placeKey(for:)) ?? String(localized: "Nothing recorded"),
+            value: distance,
+            caption: Self.placesCaption(day.places.count),
+            arcs: arcs,
+            showsNow: false
+        )
+    }
+
+    private static func placesCaption(_ count: Int) -> String {
+        count == 1 ? String(localized: "1 PLACE") : String(localized: "\(count) PLACES")
+    }
+
+    private var homePlace: SavedPlace? {
+        viewModel.savedPlaces.first { $0.kind == .home }
+    }
+
+    /// Today's dial matches the day sheet (TodayDay); other days use the trace's own stays.
+    private func dialArcs(day: TraceDay, now: Date) -> [DialArc] {
+        if isTodayRange {
+            return TodayDay(viewModel: viewModel, now: now, home: homePlace).segments
+        }
+        return day.segments.map { DialArc(id: $0.id.uuidString, start: $0.start, end: $0.end, ink: $0.ink) }
+    }
+
+    private func miniDialAccessibilityValue(day: TraceDay, now: Date) -> String {
+        if isTodayRange { return TodayDay(viewModel: viewModel, now: now, home: homePlace).dialAccessibilityLabel }
+        return day.places.map(\.name).formatted(.list(type: .and))
+    }
+
+    // MARK: Header
+
+    /// "SUN · NOV 1 · DAY 305" for one day, "OCT 26 – NOV 1 · 7 DAYS" for a range, "SUN · NOV 1 · 09:41" in replay.
+    private func headerKicker(day: TraceDay, now: Date) -> String {
+        let style = Date.FormatStyle.dateTime.month(.abbreviated).day()
+        if isReplayChromeShown {
+            let focus = focusTime(day: day, now: now)
+            let weekday = focus.formatted(.dateTime.weekday(.abbreviated))
+            return "\(weekday) · \(focus.formatted(style)) · \(Self.clockText(focus))".uppercased()
+        }
+        if day.isSingleDay {
+            let date = day.domain.lowerBound
+            let weekday = date.formatted(.dateTime.weekday(.abbreviated))
+            let monthDay = date.formatted(style)
+            if let number = locationManager.recordedDayNumber(on: date) {
+                return String(localized: "\(weekday) · \(monthDay) · DAY \(number)").uppercased()
+            }
+            return String(localized: "\(weekday) · \(monthDay)").uppercased()
+        }
+        let calendar = Calendar.current
+        let lower = calendar.startOfDay(for: day.domain.lowerBound)
+        let upper = calendar.startOfDay(for: min(viewModel.mapDateRange.upperBound, now))
+        let count = (calendar.dateComponents([.day], from: lower, to: upper).day ?? 0) + 1
+        let days = count == 1 ? String(localized: "1 DAY") : String(localized: "\(count) DAYS")
+        return "\(lower.formatted(style)) – \(upper.formatted(style)) · \(days)".uppercased()
+    }
+
+    private func headerTitle(day: TraceDay) -> String {
+        if isReplayChromeShown { return String(localized: "Replay") }
+        if let activePreset, activePreset != .thisMonth || !day.isSingleDay {
+            switch activePreset {
+            case .today, .yesterday: return activePreset.label
+            default: return activePreset.accessibilityLabel
+            }
+        }
+        if day.isSingleDay {
+            let calendar = Calendar.current
+            let date = day.domain.lowerBound
+            if calendar.isDateInToday(date) { return String(localized: "Today") }
+            if calendar.isDateInYesterday(date) { return String(localized: "Yesterday") }
+            return date.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())
+        }
+        return String(localized: "Custom range")
+    }
+
+    // MARK: Home actions
+
+    private func selectPreset(_ preset: MapDatePreset) {
+        activePreset = preset
+        let range = preset.range()
+        viewModel.mapDateRange = range
+        viewModel.loadMapLocationPoints(in: range)
+        viewModel.loadMapPhotoMoments(in: range)
+        syncPhotoMomentsForCurrentRangeIfAuthorized()
+        scrubbedTime = nil
+        selectedRangeDay = nil
+        validateRouteReplayState()
+        fitMapToContent()
+    }
+
+    private func selectRangeDay(_ day: Date) {
+        selectedRangeDay = day
+        let calendar = Calendar.current
+        let coordinates = filteredPoints.filter { calendar.isDate($0.timestamp, inSameDayAs: day) }.map(\.coordinate)
+            + filteredVisits.filter { calendar.isDate($0.arrivedAt, inSameDayAs: day) }.map(\.coordinate)
+        guard !coordinates.isEmpty else { return }
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+            cameraPosition = .region(regionClearOfChrome(MKCoordinateRegion(coordinates: coordinates)))
+        }
+    }
+
+    /// A stay tapped in the day sheet: the sheet steps aside and the map focuses the visit (M5).
+    private func selectVisitFromSheet(_ visit: Visit) {
+        sheetDetent = .peek
+        selectedPointID = nil
+        if let onSelectVisit {
+            onSelectVisit(visit)
+        } else {
+            selectedVisit = visit
+        }
+    }
+
+    private func openReplay() {
+        showsAddMenu = false
+        sheetDetent = .peek
+        withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
+            if let companionReplay {
+                companionReplay.wrappedValue = true
+            } else {
+                showsCompanionReplay = true
+            }
+        }
+        guard canReplayRoute, let domain = replayDomain else { return }
+        fitMapToContent()
+        isRouteReplayEnabled = true
+        setPlayhead(domain.lowerBound)
+        // Reduce Motion: no auto-play; Play then jumps stop to stop.
+        isRouteReplayPlaying = !reduceMotion
+    }
+
+    private func closeReplay() {
+        disableRouteReplay()
+        withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
+            if let companionReplay {
+                companionReplay.wrappedValue = false
+            } else {
+                showsCompanionReplay = false
+            }
+        }
+    }
+
+    private func showUserLocation() {
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+            cameraPosition = .userLocation(fallback: cameraPosition)
+        }
+    }
+
+    /// The tapped visit sits above the sheet: center a little south of it.
+    private func focusSelectedVisit(_ visit: Visit) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)
+        let center = CLLocationCoordinate2D(latitude: visit.latitude - span.latitudeDelta * 0.22, longitude: visit.longitude)
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+            cameraPosition = .region(MKCoordinateRegion(center: center, span: span))
+        }
+    }
+
+    private func loadVisitCandidates() async {
+        visitCandidates = []
+        guard presentation == .home, onSelectVisit == nil, let visit = selectedVisit, allowNetworkGeocoding else { return }
+        let suggestions = try? await NearbyPlaceSearchService.shared.suggestions(near: visit.coordinate, limit: 3)
+        guard !Task.isCancelled, selectedVisit?.id == visit.id else { return }
+        visitCandidates = Array((suggestions ?? []).prefix(3))
+    }
+
+    private func correctSelectedVisit(with candidate: NearbyPlaceSuggestion) {
+        guard let visit = selectedVisit else { return }
+        viewModel.correctVisit(
+            visit,
+            name: candidate.name,
+            address: candidate.address,
+            coordinate: candidate.coordinate,
+            placeSource: .appleMaps,
+            distanceMeters: candidate.distanceMeters
+        )
+    }
+
+    private func focusSearchResult(_ result: MapSearchResult) {
+        switch result {
+        case .place(let place):
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+                cameraPosition = .region(MKCoordinateRegion(center: place.coordinate, latitudinalMeters: 900, longitudinalMeters: 900))
+            }
+        case .visit(let visit):
+            let calendar = Calendar.current
+            let start = calendar.startOfDay(for: visit.arrivedAt)
+            let end = calendar.date(byAdding: .day, value: 1, to: start).map { Date(timeIntervalSinceReferenceDate: $0.timeIntervalSinceReferenceDate.nextDown) } ?? visit.arrivedAt
+            let range = start...min(end, max(Date(), start))
+            activePreset = calendar.isDateInToday(start) ? .today : (calendar.isDateInYesterday(start) ? .yesterday : nil)
+            viewModel.mapDateRange = range
+            viewModel.loadMapLocationPoints(in: range)
+            viewModel.loadMapPhotoMoments(in: range)
+            scrubbedTime = nil
+            validateRouteReplayState()
+            selectVisitFromSheet(visit)
+        }
+    }
+
+    // MARK: Multi-day
+
+    private func rangeSummary(day: TraceDay) -> RangeSummary {
+        MultiDayAggregator.summarize(
+            visits: filteredVisits.map { DayVisitSample(placeKey: day.placeKey(for: $0), arrivedAt: $0.arrivedAt) },
+            points: filteredPoints.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
+            range: viewModel.mapDateRange.lowerBound...min(viewModel.mapDateRange.upperBound, Date())
+        )
+    }
+
     private func traceMap(day: TraceDay, photoDetails: PhotoMomentDetailSelection) -> some View {
-        MapReader { mapProxy in
+        let legs = routeLegs(day: day)
+        let replayIndex = isRouteReplayEnabled ? routeReplaySnapshot?.index : nil
+        let focusedVisitID = presentation == .home && onSelectVisit == nil ? selectedVisit?.id : nil
+        let replayFocus = isRouteReplayEnabled ? routeReplaySnapshot?.currentPoint.timestamp : nil
+        return MapReader { mapProxy in
             Map(position: $cameraPosition, selection: $selectedVisit, scope: mapScope) {
                 // Current user location
                 UserAnnotation()
 
-                // Travel path from location points. In replay mode the whole
-                // route stays faint and only the stretch the playhead has
-                // reached is inked. When road snapping is enabled, sparse GPS
-                // gaps are replaced with MapKit route polylines so the path
-                // follows roads instead of drawing abrupt straight chords.
-                if isRouteReplayEnabled, let routeReplaySnapshot {
-                    if showTravelPath {
-                        travelPath(upTo: nil, visiblePoints: filteredPoints, ink: TE.textPrimary.opacity(0.18))
+                // The travel path. Each leg is inked like the place it leads to on the dial, over a paper casing.
+                // In replay the route ahead of the playhead is faint and the stretch behind it full.
+                // Several days draw each day faintly with the selected day in vermilion (M6).
+                if day.isSingleDay {
+                    if isRouteReplayEnabled, let replayIndex {
+                        coloredRoute(legs: legs, day: day, upTo: nil, opacity: 0.35)
+                        coloredRoute(legs: legs, day: day, upTo: replayIndex, opacity: 1)
+                    } else if showTravelPath && filteredPoints.count >= 2 {
+                        coloredRoute(legs: legs, day: day, upTo: nil, opacity: 1)
                     }
-                    travelPath(upTo: routeReplaySnapshot.index, visiblePoints: routeReplaySnapshot.visiblePoints, ink: TE.textPrimary)
-                } else if showTravelPath && filteredPoints.count >= 2 {
-                    travelPath(upTo: nil, visiblePoints: filteredPoints, ink: TE.textPrimary)
+                } else if showTravelPath || isRouteReplayEnabled {
+                    rangeRoute(day: day)
+                    if isRouteReplayEnabled, let replayIndex {
+                        travelPath(upTo: replayIndex, visiblePoints: routeReplaySnapshot?.visiblePoints ?? [], ink: MapHomeStyle.vermilion)
+                    }
+                }
+
+                // Departure times at the start of the day's main legs.
+                if day.isSingleDay, showTravelPath, !isRouteReplayEnabled, presentation == .home {
+                    ForEach(timeChips(legs: legs)) { chip in
+                        Annotation("", coordinate: chip.coordinate, anchor: .bottom) {
+                            MapTimeChip(text: chip.text)
+                                .padding(.bottom, 6)
+                        }
+                        .annotationTitles(.hidden)
+                    }
                 }
 
                 if isRouteReplayEnabled, let routeReplaySnapshot {
@@ -560,24 +1137,29 @@ struct LocationMapView: View {
                     .annotationTitles(.hidden)
                 }
 
-                // Start marker (oldest point in range)
+                // Start of the range: a small ink diamond.
                 if showStartEndMarkers, let firstPoint = filteredPoints.first {
                     Annotation("", coordinate: firstPoint.coordinate) {
-                        PathStartMarker(timestamp: firstPoint.timestamp)
+                        if presentation == .home {
+                            MapStartDiamond(timestamp: firstPoint.timestamp)
+                        } else {
+                            PathStartMarker(timestamp: firstPoint.timestamp)
+                        }
                     }
                 }
 
                 // End marker (newest point in range, if different from start)
                 if showStartEndMarkers,
                    let lastPoint = filteredPoints.last,
-                   filteredPoints.count > 1 {
+                   filteredPoints.count > 1,
+                   !(presentation == .home && day.isSingleDay && isTodayRange && viewModel.currentVisit != nil) {
                     Annotation("", coordinate: lastPoint.coordinate) {
                         PathEndMarker(timestamp: lastPoint.timestamp)
                     }
                 }
 
-                // Point markers (spaced apart)
-                if showPointMarkers {
+                // Sampled GPS points; replay shows them along the stretch already travelled.
+                if showPointMarkers || isRouteReplayEnabled {
                     ForEach(spacedPoints) { point in
                         Annotation("", coordinate: point.coordinate) {
                             PathPointMarker(
@@ -589,30 +1171,64 @@ struct LocationMapView: View {
                     }
                 }
 
-                // Visit markers, inked like the day's places on the dial.
-                if showVisitMarkers {
-                    ForEach(filteredVisits) { visit in
-                        Annotation(
-                            visit.displayName,
-                            coordinate: visit.coordinate,
-                            anchor: .center
-                        ) {
-                            Button {
-                                selectedPointID = nil
-                                selectedVisit = visit
-                            } label: {
-                                VisitMarker(
-                                    visit: visit,
-                                    ink: day.ink(for: visit),
-                                    isSelected: selectedVisit?.id == visit.id || focusedVisit?.id == visit.id,
-                                    isCurrentVisit: viewModel.isCurrentVisit(visit),
-                                    showsLabel: day.places.count <= 6 || selectedVisit?.id == visit.id || focusedVisit?.id == visit.id
-                                )
+                // The tapped visit: a dashed radius and the numbered places it might have been (M5).
+                if let selected = filteredVisits.first(where: { $0.id == focusedVisitID }) {
+                    MapCircle(center: selected.coordinate, radius: 120)
+                        .foregroundStyle(day.ink(for: selected).opacity(0.12))
+                        .stroke(day.ink(for: selected), style: StrokeStyle(lineWidth: 1.5, dash: [5, 5]))
+                    ForEach(Array(visitCandidates.enumerated()), id: \.element.id) { index, candidate in
+                        Annotation(candidate.name, coordinate: candidate.coordinate) {
+                            MapCandidatePin(number: index + 1, name: candidate.name, isSelected: candidate.name == selected.displayName) {
+                                correctSelectedVisit(with: candidate)
                             }
-                            .buttonStyle(.plain)
                         }
                         .annotationTitles(.hidden)
-                        .tag(visit)
+                    }
+                }
+
+                // Visits: dots in their place's ink (one day), or count bubbles for several days.
+                if showVisitMarkers {
+                    if day.isSingleDay || presentation != .home {
+                        ForEach(filteredVisits) { visit in
+                            Annotation(
+                                visit.displayName,
+                                coordinate: visit.coordinate,
+                                anchor: .center
+                            ) {
+                                Button {
+                                    selectedPointID = nil
+                                    selectedVisit = visit
+                                } label: {
+                                    visitPin(visit, day: day, isDimmed: isPinDimmed(visit, focusedVisitID: focusedVisitID, replayFocus: replayFocus))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .annotationTitles(.hidden)
+                            .tag(visit)
+                        }
+                    } else {
+                        let summary = rangeSummary(day: day)
+                        let maximum = summary.placeDayCounts.values.max() ?? 1
+                        ForEach(rangePlaces(day: day)) { place in
+                            Annotation(place.name, coordinate: place.visit.coordinate, anchor: .center) {
+                                Button {
+                                    selectedPointID = nil
+                                    selectedVisit = place.visit
+                                } label: {
+                                    MapCountBubble(
+                                        name: place.name,
+                                        dayCount: summary.placeDayCounts[place.name] ?? 1,
+                                        ink: place.ink,
+                                        diameter: MultiDayAggregator.bubbleDiameter(
+                                            dayCount: summary.placeDayCounts[place.name] ?? 1, maximumDayCount: maximum),
+                                        isDimmed: focusedVisitID != nil && focusedVisitID != place.visit.id
+                                    )
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .annotationTitles(.hidden)
+                            .tag(place.visit)
+                        }
                     }
                 }
 
@@ -659,9 +1275,10 @@ struct LocationMapView: View {
                     }
                 }
             }
-            .mapStyle(.standard(emphasis: .muted))
+            // The muted paper look: no points of interest competing with the day's places. Follows system appearance.
+            .mapStyle(.standard(emphasis: .muted, pointsOfInterest: .excludingAll))
             .mapControls {
-                // Location, compass and scale live in the trace chrome.
+                // Location, compass and scale live in the map's own chrome.
             }
             .onMapCameraChange(frequency: .onEnd) { context in
                 visibleMapRegion = context.region
@@ -685,6 +1302,175 @@ struct LocationMapView: View {
             )
             .accessibilityLabel("Location map")
             .accessibilityValue(mapAccessibilitySummary)
+        }
+    }
+
+    /// Other pins step back while one visit is inspected, and stops ahead of the replay playhead are faint.
+    private func isPinDimmed(_ visit: Visit, focusedVisitID: UUID?, replayFocus: Date?) -> Bool {
+        if let focusedVisitID, focusedVisitID != visit.id { return true }
+        if let replayFocus, visit.arrivedAt > replayFocus { return true }
+        return false
+    }
+
+    private func visitPin(_ visit: Visit, day: TraceDay, isDimmed: Bool) -> some View {
+        let isSelected = selectedVisit?.id == visit.id || focusedVisit?.id == visit.id
+        if presentation != .home {
+            return AnyView(VisitMarker(
+                visit: visit,
+                ink: day.ink(for: visit),
+                isSelected: isSelected,
+                isCurrentVisit: viewModel.isCurrentVisit(visit),
+                showsLabel: day.places.count <= 6 || isSelected
+            ))
+        }
+        return AnyView(MapVisitPin(
+            visit: visit,
+            name: day.placeKey(for: visit),
+            ink: day.ink(for: visit),
+            durationText: pinCaption(visit, day: day),
+            isSelected: isSelected,
+            isCurrent: viewModel.isCurrentVisit(visit),
+            isDimmed: isDimmed,
+            showsLabel: day.places.count <= 6 || isSelected
+        ))
+    }
+
+    /// "45 min", "00:00 – 08:12" for a stay that ran from the night before, "NOW · 30 MIN", or the times in replay.
+    private func pinCaption(_ visit: Visit, day: TraceDay) -> String {
+        let end = visit.departedAt ?? Date()
+        if viewModel.isCurrentVisit(visit) {
+            let duration = TodayDay.formatMoveDuration(Date().timeIntervalSince(visit.arrivedAt))
+            return String(localized: "NOW · \(duration)").uppercased()
+        }
+        let start = max(visit.arrivedAt, day.domain.lowerBound)
+        if isRouteReplayEnabled || visit.arrivedAt < day.domain.lowerBound {
+            return "\(Self.clockText(start)) – \(Self.clockText(end))"
+        }
+        return TodayDay.formatMoveDuration(end.timeIntervalSince(visit.arrivedAt))
+    }
+
+    // MARK: Route drawing
+
+    private static let casingStroke = StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round)
+    private static let pathStroke5 = StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round)
+
+    private func routeLegs(day: TraceDay) -> [RouteLeg] {
+        guard day.isSingleDay else { return [] }
+        let stays = day.visits.map { RouteStay(key: day.placeKey(for: $0), arrival: $0.arrivedAt, departure: $0.departedAt) }
+        return RouteLegPlanner.legs(pointTimes: filteredPoints.map(\.timestamp), stays: stays, now: Date())
+    }
+
+    private struct RoutePiece: Identifiable {
+        let id: String
+        let coordinates: [CLLocationCoordinate2D]
+        let ink: Color
+    }
+
+    private func legInk(at sourceIndex: Int, legs: [RouteLeg], day: TraceDay) -> Color {
+        guard let index = RouteLegPlanner.legIndex(containing: sourceIndex, in: legs) else { return TE.textPrimary }
+        return day.ink(forPlace: legs[index].destinationKey)
+    }
+
+    /// The route split into inked pieces: road-matched segments when ready, otherwise the legs' own points.
+    private func routePieces(legs: [RouteLeg], day: TraceDay, upTo sourceIndex: Int?) -> [RoutePiece] {
+        if let route = preparedRoadSnappedRoute {
+            return displayedRoadSegments(from: route, upTo: sourceIndex).map { segment in
+                RoutePiece(id: segment.id, coordinates: segment.coordinates, ink: legInk(at: segment.startIndex, legs: legs, day: day))
+            }
+        }
+        guard shouldDrawStraightLinePath else { return [] }
+        let points = filteredPoints
+        let limit = sourceIndex ?? (points.count - 1)
+        return legs.compactMap { leg in
+            guard leg.startIndex < limit else { return nil }
+            let end = min(leg.endIndex, limit)
+            guard end > leg.startIndex else { return nil }
+            return RoutePiece(
+                id: "\(leg.startIndex)-\(end)",
+                coordinates: points[leg.startIndex...end].map(\.coordinate),
+                ink: day.ink(forPlace: leg.destinationKey)
+            )
+        }
+    }
+
+    @MapContentBuilder
+    private func coloredRoute(legs: [RouteLeg], day: TraceDay, upTo sourceIndex: Int?, opacity: Double) -> some MapContent {
+        let pieces = routePieces(legs: legs, day: day, upTo: sourceIndex)
+        ForEach(pieces) { piece in
+            MapPolyline(coordinates: piece.coordinates)
+                .stroke(TE.surface.opacity(opacity), style: Self.casingStroke)
+        }
+        ForEach(pieces) { piece in
+            MapPolyline(coordinates: piece.coordinates)
+                .stroke(piece.ink.opacity(opacity), style: Self.pathStroke5)
+        }
+    }
+
+    private struct DayPath: Identifiable {
+        let id: Date
+        let coordinates: [CLLocationCoordinate2D]
+    }
+
+    /// One thinned polyline per day; long ranges stay cheap to draw.
+    private func dayPaths() -> [DayPath] {
+        let calendar = Calendar.current
+        let grouped = Dictionary(grouping: filteredPoints) { calendar.startOfDay(for: $0.timestamp) }
+        return grouped.keys.sorted().compactMap { day in
+            let points = MultiDayAggregator.thinned(grouped[day] ?? [], limit: 400)
+            guard points.count >= 2 else { return nil }
+            return DayPath(id: day, coordinates: points.map(\.coordinate))
+        }
+    }
+
+    @MapContentBuilder
+    private func rangeRoute(day: TraceDay) -> some MapContent {
+        let paths = dayPaths()
+        let selected = selectedRangeDay ?? rangeSummary(day: day).defaultSelectedDay
+        ForEach(paths.filter { $0.id != selected }) { path in
+            MapPolyline(coordinates: path.coordinates)
+                .stroke(TE.textPrimary.opacity(0.28), style: StrokeStyle(lineWidth: 3.5, lineCap: .round, lineJoin: .round))
+        }
+        ForEach(paths.filter { $0.id == selected }) { path in
+            MapPolyline(coordinates: path.coordinates)
+                .stroke(TE.surface, style: Self.casingStroke)
+            MapPolyline(coordinates: path.coordinates)
+                .stroke(MapHomeStyle.vermilion, style: Self.pathStroke5)
+        }
+    }
+
+    private struct RangePlace: Identifiable {
+        var id: String { name }
+        let name: String
+        let ink: Color
+        /// The latest visit there, opened when the bubble is tapped.
+        let visit: Visit
+    }
+
+    private func rangePlaces(day: TraceDay) -> [RangePlace] {
+        var latest: [String: Visit] = [:]
+        for visit in filteredVisits {
+            let key = day.placeKey(for: visit)
+            if let current = latest[key], current.arrivedAt >= visit.arrivedAt { continue }
+            latest[key] = visit
+        }
+        return latest.map { RangePlace(name: $0.key, ink: day.ink(forPlace: $0.key), visit: $0.value) }
+            .sorted { $0.name < $1.name }
+    }
+
+    private struct TimeChip: Identifiable {
+        let id: Int
+        let coordinate: CLLocationCoordinate2D
+        let text: String
+    }
+
+    private func timeChips(legs: [RouteLeg]) -> [TimeChip] {
+        let points = filteredPoints
+        let distances = legs.map { leg in
+            RouteReplayCalculator.totalDistance(in: Array(points[leg.startIndex...leg.endIndex]))
+        }
+        return RouteLegPlanner.mainLegIndices(legs, distances: distances).map { index in
+            let point = points[legs[index].startIndex]
+            return TimeChip(id: index, coordinate: point.coordinate, text: Self.clockText(point.timestamp))
         }
     }
 
@@ -814,18 +1600,9 @@ struct LocationMapView: View {
             }
 
             if shouldShowCurrentPlacePrompt {
-                CurrentPlaceCard(
-                    suggestion: currentPlaceSuggestion,
-                    isLoading: isLoadingCurrentPlace,
-                    lookupFailed: currentPlaceLookupFailed,
-                    hasFreshLocation: freshManualLocation != nil,
-                    hasLocationPermission: locationManager.hasLocationPermission,
-                    onSave: openSaveCurrentPlaceSheet,
-                    onNotHere: openBlankManualVisitSheet,
-                    onRequestLocation: locationManager.requestCurrentLocationForManualVisit,
-                    onDismiss: dismissCurrentPlacePrompt
-                )
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                currentPlaceCard
+                    .frame(maxWidth: 440)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
 
             if let inspectorVisit, !(presentation == .companion && isCompanionReplayShown) {
@@ -970,20 +1747,29 @@ struct LocationMapView: View {
             onScrub: { fraction in scrub(to: day.date(at: fraction), day: day) },
             onStep: { delta in scrub(to: focus.addingTimeInterval(delta), day: day) },
             onJump: { place in jump(to: place, day: day) },
-            onPlayPause: {
-                scrubbedTime = nil
-                toggleRouteReplayPlayback()
-            },
-            onDone: disableRouteReplay
+            onPlayPause: toggleRouteReplayPlayback,
+            onDone: presentation == .home ? closeReplay : disableRouteReplay,
+            speed: replaySpeed,
+            onSpeed: { replaySpeed = $0 },
+            pointsText: replayPointsText,
+            playsByStop: reduceMotion
         )
+    }
+
+    /// "612 OF 1,182 PTS" while replaying, the day's point count otherwise.
+    private var replayPointsText: String {
+        let total = routeReplaySourcePoints.count
+        if isRouteReplayEnabled, let routeReplaySnapshot {
+            return String(localized: "\((routeReplaySnapshot.index + 1).formatted()) OF \(total.formatted()) PTS")
+        }
+        return String(localized: "\(total.formatted()) PTS")
     }
 
     private func tracePanel(day: TraceDay, now: Date, maxHeight: CGFloat) -> some View {
         TraceScrubPanel(
             model: tracePanelModel(day: day, now: now),
             isExpandedLayout: horizontalSizeClass == .regular,
-            maxHeight: maxHeight,
-            isCollapsed: $isTracePanelCollapsed
+            maxHeight: maxHeight
         )
     }
 
@@ -1161,12 +1947,26 @@ struct LocationMapView: View {
         guard canReplayRoute else { return }
 
         if !isRouteReplayEnabled {
-            showTravelPath = true
             isRouteReplayEnabled = true
         }
 
         let points = routeReplaySourcePoints
         let index = RouteReplayCalculator.index(atOrBefore: clamped, in: points) ?? 0
+        routeReplayProgress = RouteReplayCalculator.progress(forIndex: index, pointCount: points.count)
+    }
+
+    /// Replay runs over the recorded stretch only, never the empty night.
+    private var replayDomain: ClosedRange<Date>? {
+        let points = routeReplaySourcePoints
+        guard let first = points.first?.timestamp, let last = points.last?.timestamp, last > first else { return nil }
+        return first...last
+    }
+
+    /// Puts the playhead at a moment without pausing; the path is inked up to the last point recorded by then.
+    private func setPlayhead(_ time: Date) {
+        scrubbedTime = time
+        let points = routeReplaySourcePoints
+        let index = RouteReplayCalculator.index(atOrBefore: time, in: points) ?? 0
         routeReplayProgress = RouteReplayCalculator.progress(forIndex: index, pointCount: points.count)
     }
 
@@ -1228,6 +2028,7 @@ struct LocationMapView: View {
 
     private var canPresentVisitRoute: Bool {
         manualVisitDraft == nil && selectedVisit == nil && deepLinkedVisit == nil && !showingFilters
+            && !showsLayers && !showsSearch
             && viewModel.photoDetails.cluster == nil && !viewModel.photoDetails.showsPlaces && viewModel.photoDetails.photo == nil
     }
 
@@ -1443,14 +2244,38 @@ struct LocationMapView: View {
         guard !coordinates.isEmpty else { return }
 
         let region = MKCoordinateRegion(coordinates: coordinates)
-        cameraPosition = .region(region)
+        cameraPosition = .region(regionClearOfChrome(region))
     }
 
     private func fitMapToSession() {
         guard !activeSessionPoints.isEmpty else { return }
         let coordinates = activeSessionPoints.map { $0.coordinate }
         let region = MKCoordinateRegion(coordinates: coordinates)
-        cameraPosition = .region(region)
+        cameraPosition = .region(regionClearOfChrome(region))
+    }
+
+    /// The home's map runs under its header, rail and bottom controls; widen and shift a fitted region so the
+    /// content lands in the clear area between them.
+    private func regionClearOfChrome(_ region: MKCoordinateRegion) -> MKCoordinateRegion {
+        guard presentation == .home, mapViewportSize.height > 0, mapViewportSize.width > 0 else { return region }
+        let height = mapViewportSize.height
+        let width = mapViewportSize.width
+        let top = min(0.35, 175 / height)
+        let bottom = min(0.4, (bottomChromeInset + 100) / height)
+        let trailing = min(0.3, 72 / width)
+        let visibleHeight = max(0.25, 1 - top - bottom)
+        let visibleWidth = max(0.5, 1 - trailing)
+        let latitudeDelta = region.span.latitudeDelta / visibleHeight
+        let longitudeDelta = region.span.longitudeDelta / visibleWidth
+        // Move the map's center so the content's center sits in the middle of the clear area.
+        let center = CLLocationCoordinate2D(
+            latitude: region.center.latitude + (top - bottom) / 2 * latitudeDelta,
+            longitude: region.center.longitude + trailing / 2 * longitudeDelta
+        )
+        return MKCoordinateRegion(
+            center: center,
+            span: MKCoordinateSpan(latitudeDelta: min(latitudeDelta, 170), longitudeDelta: min(longitudeDelta, 350))
+        )
     }
 
     private func attemptAutoFocusSession() {
@@ -1535,7 +2360,6 @@ struct LocationMapView: View {
             disableRouteReplay()
         } else {
             guard canReplayRoute else { return }
-            showTravelPath = true
             routeReplayProgress = 0
             withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
                 isRouteReplayEnabled = true
@@ -1557,34 +2381,41 @@ struct LocationMapView: View {
             return
         }
 
+        guard let domain = replayDomain else { return }
         if !isRouteReplayEnabled {
             toggleRouteReplayMode()
         }
 
-        if !isRouteReplayPlaying,
-           let currentIndex = RouteReplayCalculator.index(for: routeReplayProgress, pointCount: routeReplaySourcePoints.count),
-           currentIndex >= routeReplaySourcePoints.count - 1 {
-            routeReplayProgress = 0
+        let current = scrubbedTime ?? routeReplaySnapshot?.currentPoint.timestamp ?? domain.lowerBound
+        // Reduce Motion: no animated playback; each Play jumps to the next stop.
+        if reduceMotion {
+            isRouteReplayPlaying = false
+            setPlayhead(current >= domain.upperBound
+                ? domain.lowerBound
+                : ReplayClock.jumpTarget(after: current, arrivals: traceDay.visits.map(\.arrivedAt), domain: domain))
+            return
         }
 
-        isRouteReplayPlaying.toggle()
+        var clock = ReplayClock(domain: domain, time: current, speed: replaySpeed)
+        clock.isPlaying = isRouteReplayPlaying
+        clock.togglePlayback()
+        setPlayhead(clock.time)
+        isRouteReplayPlaying = clock.isPlaying
     }
 
+    /// Playback is timed: each tick moves the playhead by the chosen speed (1× a minute of the day per second).
     private func advanceRouteReplayIfNeeded() {
         guard isRouteReplayEnabled, isRouteReplayPlaying else { return }
-        guard canReplayRoute,
-              let currentIndex = RouteReplayCalculator.index(for: routeReplayProgress, pointCount: routeReplaySourcePoints.count) else {
+        guard canReplayRoute, let domain = replayDomain else {
             disableRouteReplay()
             return
         }
 
-        let lastIndex = routeReplaySourcePoints.count - 1
-        let nextIndex = min(currentIndex + RouteReplayCalculator.playbackStepSize(pointCount: routeReplaySourcePoints.count), lastIndex)
-        routeReplayProgress = RouteReplayCalculator.progress(forIndex: nextIndex, pointCount: routeReplaySourcePoints.count)
-
-        if nextIndex >= lastIndex {
-            isRouteReplayPlaying = false
-        }
+        var clock = ReplayClock(domain: domain, time: scrubbedTime ?? domain.lowerBound, speed: replaySpeed)
+        clock.isPlaying = true
+        clock.advance(byWallSeconds: 0.25)
+        setPlayhead(clock.time)
+        isRouteReplayPlaying = clock.isPlaying
     }
 
     private func validateRouteReplayState() {
@@ -1985,12 +2816,13 @@ struct PathPointMarker: View {
                         .frame(width: 26, height: 26)
                 }
 
+                // A paper dot ringed in ink, as on the replay board; selected points fill in rust.
                 Circle()
-                    .fill(markerColor)
+                    .fill(isSelected ? markerColor : TE.card)
                     .frame(width: isSelected ? 11 : 7, height: isSelected ? 11 : 7)
                     .overlay {
                         Circle()
-                            .stroke(TE.surface, lineWidth: isSelected ? 2 : 1.5)
+                            .stroke(isSelected ? TE.surface : markerColor, lineWidth: isSelected ? 2 : 1.5)
                     }
             }
             .frame(width: 44, height: 44)
@@ -2202,13 +3034,13 @@ struct RouteReplayMarker: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(TE.inkRust.opacity(0.18))
-                .frame(width: 32, height: 32)
+                .fill(MapHomeStyle.vermilion.opacity(0.18))
+                .frame(width: 40, height: 40)
 
             Circle()
                 .fill(TE.surface)
-                .frame(width: 14, height: 14)
-                .overlay(Circle().stroke(TE.inkRust, lineWidth: 3))
+                .frame(width: 18, height: 18)
+                .overlay(Circle().strokeBorder(MapHomeStyle.vermilion, lineWidth: 4))
         }
         .frame(minWidth: 44, minHeight: 44)
         .accessibilityElement(children: .ignore)
@@ -2366,153 +3198,6 @@ private struct CurrentPlacePromptSuppression {
         let currentLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         return currentLocation.distance(from: dismissedLocation) <= radiusMeters
     }
-}
-
-private struct CurrentPlaceCard: View {
-    let suggestion: NearbyPlaceSuggestion?
-    let isLoading: Bool
-    let lookupFailed: Bool
-    let hasFreshLocation: Bool
-    let hasLocationPermission: Bool
-    let onSave: () -> Void
-    let onNotHere: () -> Void
-    let onRequestLocation: () -> Void
-    let onDismiss: () -> Void
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 8) {
-            iconView
-            Text(title)
-                .font(.footnote.weight(.medium))
-                .foregroundStyle(TE.textPrimary)
-                .lineLimit(1)
-                .frame(maxWidth: 160, alignment: .leading)
-
-            actionView
-        }
-        .padding(.leading, 8)
-        .padding(.trailing, suggestion == nil ? 6 : 14)
-        .background(cardBackground)
-        .overlay(alignment: .topTrailing) {
-            if suggestion != nil {
-                Button(action: onDismiss) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 9, weight: .bold))
-                        .foregroundStyle(TE.textPrimary)
-                        .frame(width: 20, height: 20)
-                        .background(Circle().fill(TE.card))
-                        .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
-                        .frame(width: 44, height: 44)
-                        .contentShape(Circle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Close visit suggestion")
-                .accessibilityHint("Hides this suggested place from the map.")
-                .offset(x: 17, y: -17)
-            }
-        }
-        .accessibilityElement(children: .contain)
-    }
-
-    private var iconView: some View {
-        ZStack {
-            Circle()
-                .fill(iconTint.opacity(0.14))
-            Image(systemName: iconName)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(iconTint)
-        }
-        .frame(width: 32, height: 32)
-    }
-
-    @ViewBuilder
-    private var actionView: some View {
-        if canSave {
-            Button { onSave() } label: {
-                Text("Save")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(TE.onInkCard)
-                    .padding(.horizontal, 14)
-                    .frame(minHeight: 32)
-                    .background(Capsule().fill(TE.accent))
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityHint("Opens visit details prefilled with this place.")
-
-            Button { onNotHere() } label: {
-                Image(systemName: "ellipsis")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(TE.textPrimary)
-                    .frame(width: 36, height: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Not here")
-            .accessibilityHint("Opens manual place entry.")
-        } else {
-            Button { onRequestLocation() } label: {
-                Text(hasLocationPermission ? "Find" : "Allow")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(TE.textPrimary)
-                    .padding(.horizontal, 14)
-                    .frame(minHeight: 32)
-                    .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityHint("Requests a fresh current location.")
-        }
-    }
-
-    private var cardBackground: some View {
-        Capsule()
-            .fill(TE.card)
-            .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
-    }
-
-    private var canSave: Bool {
-        suggestion != nil || hasFreshLocation
-    }
-
-    private var iconName: String {
-        if isLoading { return "location.viewfinder" }
-        if suggestion != nil { return "mappin.and.ellipse" }
-        if !hasLocationPermission { return "location.slash" }
-        if lookupFailed { return "exclamationmark.triangle" }
-        return "location"
-    }
-
-    private var iconTint: Color {
-        if !hasLocationPermission || lookupFailed { return TE.inkRust }
-        if canSave { return TE.accent }
-        return TE.textMuted
-    }
-
-    private var title: String {
-        if let suggestion { return suggestion.name }
-        if isLoading { return String(localized: "Finding place…") }
-        if !hasLocationPermission { return String(localized: "Use location") }
-        if lookupFailed { return String(localized: "Add this place") }
-        return String(localized: "Save place")
-    }
-
-    private var subtitle: String {
-        if let suggestion {
-            if let address = suggestion.address, !address.isEmpty {
-                return address
-            }
-            return suggestion.distanceLabel
-        }
-        if isLoading { return String(localized: "Checking nearby Apple Maps places") }
-        if !hasLocationPermission { return String(localized: "Allow location to save a visit") }
-        if lookupFailed { return String(localized: "You can still add details manually") }
-        if hasFreshLocation { return String(localized: "Add a visit at your current location") }
-        return String(localized: "Waiting for fresh GPS accuracy")
-    }
-
 }
 
 private struct MapAddPlaceMenu: View {
@@ -3850,358 +4535,6 @@ struct DateRangeFilterSheet: View {
     }
 }
 
-/// A tapped visit (board M5): its status, name and times, the nearest places numbered to match their pins
-/// on the map ("Where were you?"), and Not here / Details / Confirm.
-struct VisitQuickView: View {
-    @Environment(\.dismiss) private var dismiss
-    @Bindable var visit: Visit
-    @Bindable var viewModel: LocationViewModel
-    /// Nearby places the map has already pinned (numbered 1, 2, 3); nil looks them up here instead.
-    var candidates: [NearbyPlaceSuggestion]? = nil
-    @State private var checkoutError: String?
-    @State private var nameText: String = ""
-    @State private var showingPlaceSearch = false
-    @FocusState private var isNameFieldFocused: Bool
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    header
-                    whereWereYou
-
-                    if let notes = visit.notes, !notes.isEmpty {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("NOTE")
-                                .font(TE.mono(.caption2, weight: .semibold))
-                                .tracking(1.2)
-                                .foregroundStyle(TE.textMuted)
-                            Text(notes)
-                                .font(TE.editorial(.body))
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(16)
-                        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(TE.card))
-                        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
-                    }
-
-                    actions
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 18)
-                .padding(.bottom, 30)
-            }
-            .foregroundStyle(TE.textPrimary)
-            .background(TE.surface.ignoresSafeArea())
-            .toolbar(.hidden, for: .navigationBar)
-            .onAppear {
-                nameText = visit.displayName
-            }
-            .alert("Unable to Check Out", isPresented: Binding(
-                get: { checkoutError != nil },
-                set: { if !$0 { checkoutError = nil } }
-            )) {
-                Button("OK", role: .cancel) { checkoutError = nil }
-            } message: {
-                Text(checkoutError ?? "")
-            }
-            .sheet(isPresented: $showingPlaceSearch) {
-                PlaceSelectionView(
-                    initialRegion: MKCoordinateRegion(center: visit.coordinate, latitudinalMeters: 1_000, longitudinalMeters: 1_000),
-                    onSelect: correctVisit(with:)
-                )
-                .presentationDetents([.large])
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        isNameFieldFocused = false
-                        saveName()
-                    }
-                }
-            }
-        }
-    }
-
-    private var header: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .top, spacing: 8) {
-                statusBadge
-                Spacer(minLength: 0)
-                if visit.hasCustomName {
-                    Button("Reset") {
-                        resetName()
-                    }
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(TE.inkRust)
-                    .frame(minHeight: 44)
-                    .buttonStyle(.plain)
-                    .accessibilityHint("Restores the automatically detected visit name.")
-                }
-                Button {
-                    saveName()
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.footnote.weight(.semibold))
-                        .frame(width: 40, height: 40)
-                        .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
-                        .frame(width: 44, height: 44)
-                        .contentShape(Circle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Close")
-            }
-
-            TextField("Visit name", text: $nameText, axis: .vertical)
-                .font(WheredayFont.serif(size: 26, relativeTo: .title))
-                .textFieldStyle(.plain)
-                .submitLabel(.done)
-                .focused($isNameFieldFocused)
-                .onSubmit(saveName)
-                .onChange(of: isNameFieldFocused) { _, focused in
-                    if !focused {
-                        saveName()
-                    }
-                }
-                .accessibilityLabel("Name")
-
-            Text(timeLine)
-                .font(TE.mono(.caption, weight: .medium))
-                .tracking(1)
-                .foregroundStyle(TE.textMuted)
-                .accessibilityLabel(Text("\(dayWord), \(timeRange). Duration \(visit.formattedDuration)"))
-
-            if let address = visit.address, !address.isEmpty, address != visit.displayName {
-                Text(address)
-                    .font(.footnote)
-                    .foregroundStyle(TE.textMuted)
-            }
-
-            if visit.hasCustomName, visit.automaticDisplayName != visit.displayName {
-                Text("Detected as \(visit.automaticDisplayName)")
-                    .font(.caption)
-                    .foregroundStyle(TE.textMuted)
-            }
-        }
-    }
-
-    /// "DETECTED · NOT CONFIRMED" in ochre while it is still a guess.
-    private var statusBadge: some View {
-        let isUnconfirmed = visit.confirmationStatus == .unconfirmed
-        return HStack(spacing: 6) {
-            if viewModel.isCurrentVisit(visit) {
-                Circle().fill(TE.liveDot).frame(width: 7, height: 7)
-                    .accessibilityHidden(true)
-            }
-            Text(statusCaption)
-                .font(TE.mono(.caption2, weight: .semibold))
-                .tracking(1)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .foregroundStyle(isUnconfirmed ? TE.adaptive(0x8A5A12, 0xE0B565) : TE.textMuted)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(RoundedRectangle(cornerRadius: 6).fill(isUnconfirmed ? TE.adaptive(0xF1E3C6, 0x2E2A22) : TE.dialTrack))
-        .padding(.top, 10)
-    }
-
-    @ViewBuilder
-    private var whereWereYou: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("WHERE WERE YOU?")
-                .font(TE.mono(.caption2, weight: .semibold))
-                .tracking(1.2)
-                .foregroundStyle(TE.textMuted)
-                .accessibilityAddTraits(.isHeader)
-            if let candidates, !candidates.isEmpty {
-                ForEach(Array(candidates.enumerated()), id: \.element.id) { index, candidate in
-                    candidateRow(candidate, number: index + 1)
-                }
-            } else {
-                NearbyVisitNameSuggestionSection(visit: visit, selectedName: visit.displayName, showsControls: false) { suggestion in
-                    correctVisit(with: suggestion)
-                }
-            }
-        }
-    }
-
-    private func candidateRow(_ candidate: NearbyPlaceSuggestion, number: Int) -> some View {
-        let isSelected = candidate.name == visit.displayName
-        return Button {
-            correctVisit(with: candidate)
-        } label: {
-            HStack(spacing: 10) {
-                Text(number.formatted())
-                    .font(.system(size: 11, weight: .semibold))
-                    .frame(width: 20, height: 20)
-                    .overlay(Circle().strokeBorder(TE.textPrimary, lineWidth: 1.5))
-                    .accessibilityHidden(true)
-                Text(candidate.name)
-                    .font(.system(size: 14, weight: .medium))
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(candidate.distanceLabel)
-                    .font(TE.mono(.caption2))
-                    .foregroundStyle(TE.textMuted)
-            }
-            .foregroundStyle(TE.textPrimary)
-            .padding(.horizontal, 12)
-            .frame(minHeight: 44)
-            .background(RoundedRectangle(cornerRadius: 14).fill(TE.card))
-            .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(isSelected ? TE.textPrimary : TE.border, lineWidth: isSelected ? 2 : 1))
-            .contentShape(RoundedRectangle(cornerRadius: 14))
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Correct visit to \(candidate.name)")
-        .accessibilityValue(candidate.distanceLabel)
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-    }
-
-    @ViewBuilder
-    private var actions: some View {
-        let isUnconfirmed = visit.confirmationStatus == .unconfirmed
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: 8) {
-                notHereButton.frame(maxWidth: .infinity)
-                detailsButton(filled: !isUnconfirmed).frame(maxWidth: .infinity)
-                if isUnconfirmed { confirmButton.frame(maxWidth: .infinity).layoutPriority(1.4) }
-            }
-            VStack(spacing: 8) {
-                if isUnconfirmed { confirmButton }
-                detailsButton(filled: !isUnconfirmed)
-                notHereButton
-            }
-        }
-
-        if visit.source == .manual, visit.departedAt == nil {
-            Button {
-                if !viewModel.checkoutVisit(visit) {
-                    checkoutError = viewModel.visitMutationError?.localizedDescription
-                }
-            } label: {
-                actionLabel("Check Out", filled: false)
-            }
-            .buttonStyle(.plain)
-            .disabled(visit.arrivedAt > Date())
-            .accessibilityHint("Ends this manual visit at the current time.")
-        }
-    }
-
-    private var notHereButton: some View {
-        Button {
-            saveName()
-            showingPlaceSearch = true
-        } label: {
-            actionLabel("Not here", filled: false)
-        }
-        .buttonStyle(.plain)
-        .accessibilityHint("Search Apple Maps or drop a pin to correct this visit.")
-    }
-
-    private func detailsButton(filled: Bool) -> some View {
-        NavigationLink {
-            VisitDetailView(visit: visit, viewModel: viewModel)
-        } label: {
-            actionLabel("Details", filled: filled)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("More Details")
-    }
-
-    private var confirmButton: some View {
-        Button {
-            saveName()
-            viewModel.confirmVisit(visit)
-        } label: {
-            actionLabel("Confirm", filled: true)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Confirm Place")
-    }
-
-    private func actionLabel(_ title: LocalizedStringKey, filled: Bool) -> some View {
-        Text(title)
-            .font(.subheadline.weight(filled ? .semibold : .medium))
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-            .foregroundStyle(filled ? MapHomeStyle.invertedText : TE.textPrimary)
-            .frame(maxWidth: .infinity, minHeight: 46)
-            .background(Capsule().fill(filled ? MapHomeStyle.invertedFill : TE.card))
-            .overlay(Capsule().strokeBorder(filled ? Color.clear : TE.border, lineWidth: 1))
-            .contentShape(Capsule())
-    }
-
-    /// "DETECTED · NOT CONFIRMED", in the artboard's words, from the visit's source and status.
-    private var statusCaption: String {
-        var parts = [visit.source.displayName, visit.confirmationStatus.displayName]
-        if viewModel.isCurrentVisit(visit) {
-            parts.insert(String(localized: "Now"), at: 0)
-        }
-        return parts.joined(separator: " · ").uppercased()
-    }
-
-    private var dayWord: String {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(visit.arrivedAt) { return String(localized: "Today") }
-        if calendar.isDateInYesterday(visit.arrivedAt) { return String(localized: "Yesterday") }
-        return visit.arrivedAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
-    }
-
-    private var timeRange: String {
-        let start = LocationMapView.clockText(visit.arrivedAt)
-        let end = visit.departedAt.map(LocationMapView.clockText) ?? String(localized: "now")
-        return "\(start) – \(end)"
-    }
-
-    /// "TODAY · 08:40 – 09:25 · 45 MIN".
-    private var timeLine: String {
-        "\(dayWord) · \(timeRange) · \(visit.formattedDuration)".uppercased()
-    }
-
-    private func saveName() {
-        viewModel.updateVisitName(visit, customName: nameText)
-        nameText = visit.displayName
-    }
-
-    private func resetName() {
-        viewModel.clearVisitName(visit)
-        nameText = visit.displayName
-    }
-
-    private func correctVisit(with suggestion: NearbyPlaceSuggestion) {
-        isNameFieldFocused = false
-        viewModel.correctVisit(
-            visit,
-            name: suggestion.name,
-            address: suggestion.address,
-            coordinate: suggestion.coordinate,
-            placeSource: .appleMaps,
-            distanceMeters: suggestion.distanceMeters
-        )
-        nameText = visit.displayName
-    }
-
-    /// A searched place or dropped pin; an unnamed pin keeps the visit's current name.
-    private func correctVisit(with selection: ManualLocationSelection) {
-        isNameFieldFocused = false
-        let trimmedName = selection.name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let original = CLLocation(latitude: visit.latitude, longitude: visit.longitude)
-        let chosen = CLLocation(latitude: selection.coordinate.latitude, longitude: selection.coordinate.longitude)
-        viewModel.correctVisit(
-            visit,
-            name: trimmedName.isEmpty ? visit.displayName : trimmedName,
-            address: selection.address,
-            coordinate: selection.coordinate,
-            placeSource: selection.visitPlaceSource,
-            distanceMeters: original.distance(from: chosen)
-        )
-        nameText = visit.displayName
-    }
-}
-
 // MARK: - Quick Filter Bar
 
 enum MapDatePreset: CaseIterable, Hashable {
@@ -4409,741 +4742,6 @@ struct MapChromeButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(label))
-    }
-}
-
-// MARK: - Trace the day
-
-/// The selected range laid out as a time axis: stays as inked segments, and the places to jump between.
-@MainActor
-struct TraceDay {
-    struct Segment: Identifiable {
-        let id: UUID
-        let start: Double
-        let end: Double
-        let ink: Color
-    }
-
-    struct Place: Identifiable {
-        var id: String { name }
-        let name: String
-        let ink: Color
-        /// The first stay at this place within the range.
-        let visit: Visit
-    }
-
-    let domain: ClosedRange<Date>
-    let isSingleDay: Bool
-    let visits: [Visit]
-    let segments: [Segment]
-    let places: [Place]
-    let tickLabels: [String]
-    private let inks: [String: Color]
-    private let home: SavedPlace?
-
-    init(range: ClosedRange<Date>, visits: [Visit], points: [LocationPoint], now: Date, home: SavedPlace? = nil) {
-        let calendar = Calendar.current
-        let sorted = visits.sorted { $0.arrivedAt < $1.arrivedAt }
-        self.visits = sorted
-        self.home = home
-
-        // Places take inks as on the Today dial: Home first when saved, then in order of first arrival.
-        var order = PlaceInkOrder(leading: home?.name)
-        var inks: [String: Color] = [:]
-        var places: [Place] = []
-        for visit in sorted {
-            let name = PlaceInkOrder.placeName(for: visit, home: home)
-            guard inks[name] == nil else { continue }
-            let ink = PlaceInkOrder.ink(at: order.index(for: name))
-            inks[name] = ink
-            places.append(Place(name: name, ink: ink, visit: visit))
-        }
-        self.inks = inks
-        self.places = places
-
-        let isSingleDay = range.lowerBound != .distantPast
-            && calendar.isDate(range.lowerBound, inSameDayAs: range.upperBound)
-        self.isSingleDay = isSingleDay
-
-        let domain: ClosedRange<Date>
-        if isSingleDay {
-            let start = calendar.startOfDay(for: range.lowerBound)
-            let end = calendar.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(86_400)
-            domain = start...end
-        } else {
-            // Longer ranges span only the recorded stretch, never the empty past.
-            let upper = min(range.upperBound, now)
-            let earliest = [points.first?.timestamp, sorted.first?.arrivedAt].compactMap { $0 }.min()
-            var lower = max(range.lowerBound, earliest ?? range.lowerBound)
-            if lower == .distantPast || lower >= upper {
-                lower = upper.addingTimeInterval(-86_400)
-            }
-            domain = lower...upper
-        }
-        self.domain = domain
-
-        let span = domain.upperBound.timeIntervalSince(domain.lowerBound)
-        segments = sorted.compactMap { visit in
-            let start = max(visit.arrivedAt, domain.lowerBound)
-            let end = min(visit.departedAt ?? now, now, domain.upperBound)
-            guard end > start, span > 0 else { return nil }
-            return Segment(
-                id: visit.id,
-                start: start.timeIntervalSince(domain.lowerBound) / span,
-                end: end.timeIntervalSince(domain.lowerBound) / span,
-                ink: inks[PlaceInkOrder.placeName(for: visit, home: home)] ?? TE.accent
-            )
-        }
-
-        if isSingleDay {
-            tickLabels = ["00", "06", "12", "18", "24"]
-        } else {
-            let middle = domain.lowerBound.addingTimeInterval(span / 2)
-            tickLabels = [domain.lowerBound, middle, domain.upperBound]
-                .map { $0.formatted(.dateTime.month(.abbreviated).day()) }
-        }
-    }
-
-    private var span: TimeInterval {
-        domain.upperBound.timeIntervalSince(domain.lowerBound)
-    }
-
-    func ink(for visit: Visit) -> Color {
-        inks[placeKey(for: visit)] ?? TE.accent
-    }
-
-    /// The name a visit's place goes by on the dial and the map (Home inside a saved Home).
-    func placeKey(for visit: Visit) -> String {
-        PlaceInkOrder.placeName(for: visit, home: home)
-    }
-
-    func ink(forPlace key: String?) -> Color {
-        key.flatMap { inks[$0] } ?? TE.textPrimary
-    }
-
-    func fraction(of date: Date) -> Double {
-        guard span > 0 else { return 1 }
-        return min(max(date.timeIntervalSince(domain.lowerBound) / span, 0), 1)
-    }
-
-    func date(at fraction: Double) -> Date {
-        domain.lowerBound.addingTimeInterval(span * min(max(fraction, 0), 1))
-    }
-
-    /// Where "now" falls on a single day's axis; the rest of the day is drawn as not yet lived.
-    func nowFraction(_ now: Date) -> Double? {
-        guard isSingleDay, domain.contains(now) else { return nil }
-        return fraction(of: now)
-    }
-
-    func visit(at time: Date, now: Date) -> Visit? {
-        visits.last { $0.arrivedAt <= time && ($0.departedAt ?? now) >= time }
-    }
-}
-
-/// The paper sheet under the map: where you were at the scrubbed moment, the day's
-/// stays as a bar, a time scrubber, and the places to jump between.
-/// Everything the replay controls show and do at one moment of the trace.
-@MainActor
-struct TraceReplayPanelModel {
-    let kicker: String
-    let title: String
-    let clock: String
-    let day: TraceDay
-    let nowFraction: Double?
-    let focusFraction: Double
-    let focusedPlaceID: String?
-    let distanceText: String
-    /// "Drag to replay · now 14:20".
-    let hint: String?
-    let isReplaying: Bool
-    let isPlaying: Bool
-    let canPlay: Bool
-    let onScrub: (Double) -> Void
-    let onStep: (TimeInterval) -> Void
-    let onJump: (TraceDay.Place) -> Void
-    let onPlayPause: () -> Void
-    let onDone: () -> Void
-
-    /// Changes whenever anything drawn changes, so a published copy is replaced in step.
-    var signature: [String] {
-        [
-            kicker, title, clock, distanceText, hint ?? "",
-            focusedPlaceID ?? "",
-            String(format: "%.5f", focusFraction),
-            nowFraction.map { String(format: "%.5f", $0) } ?? "-",
-            "\(isReplaying)\(isPlaying)\(canPlay)",
-            "\(day.domain.lowerBound.timeIntervalSinceReferenceDate)-\(day.domain.upperBound.timeIntervalSinceReferenceDate)",
-            day.places.map(\.name).joined(separator: "|"),
-            day.segments.map { "\($0.id)\($0.start)\($0.end)" }.joined(separator: "|")
-        ]
-    }
-}
-
-/// Carries the trace's replay controls from the map to another pane: on a half-open
-/// Duo the map stays above the fold and the scrubber, places and steps sit below it.
-@MainActor
-@Observable
-final class TraceReplayBridge {
-    var panel: TraceReplayPanelModel?
-    var isCollapsed = false
-
-    init() {}
-}
-
-/// The pane below the fold on a half-open Duo: the trace's replay controls, full width.
-struct TraceTabletopReplayPane: View {
-    @Bindable var bridge: TraceReplayBridge
-
-    var body: some View {
-        Group {
-            if let panel = bridge.panel {
-                TraceScrubPanel(
-                    model: panel,
-                    isExpandedLayout: true,
-                    maxHeight: .infinity,
-                    isCollapsed: .constant(false),
-                    showsGrabber: false
-                )
-                .frame(maxHeight: .infinity, alignment: .top)
-            } else {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-        }
-        .background(TE.surface.ignoresSafeArea())
-    }
-}
-
-struct TraceScrubPanel: View {
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    let kicker: String
-    let title: String
-    let clock: String
-    let day: TraceDay
-    let nowFraction: Double?
-    let focusFraction: Double
-    let focusedPlaceID: String?
-    let distanceText: String
-    let isReplaying: Bool
-    let isPlaying: Bool
-    let canPlay: Bool
-    /// Wide and tabletop layouts get larger type, wrapped chips and step buttons.
-    let isExpandedLayout: Bool
-    let maxHeight: CGFloat
-    @Binding var isCollapsed: Bool
-    let onScrub: (Double) -> Void
-    let onStep: (TimeInterval) -> Void
-    let onJump: (TraceDay.Place) -> Void
-    let onPlayPause: () -> Void
-    let onDone: () -> Void
-    /// "Drag to replay · now 14:20", shown in the footer.
-    var hint: String? = nil
-    /// A pane of its own (half-open) has nothing to collapse.
-    var showsGrabber = true
-
-    init(
-        model: TraceReplayPanelModel,
-        isExpandedLayout: Bool,
-        maxHeight: CGFloat,
-        isCollapsed: Binding<Bool>,
-        showsGrabber: Bool = true
-    ) {
-        self.init(
-            kicker: model.kicker,
-            title: model.title,
-            clock: model.clock,
-            day: model.day,
-            nowFraction: model.nowFraction,
-            focusFraction: model.focusFraction,
-            focusedPlaceID: model.focusedPlaceID,
-            distanceText: model.distanceText,
-            isReplaying: model.isReplaying,
-            isPlaying: model.isPlaying,
-            canPlay: model.canPlay,
-            isExpandedLayout: isExpandedLayout,
-            maxHeight: maxHeight,
-            isCollapsed: isCollapsed,
-            onScrub: model.onScrub,
-            onStep: model.onStep,
-            onJump: model.onJump,
-            onPlayPause: model.onPlayPause,
-            onDone: model.onDone,
-            hint: model.hint,
-            showsGrabber: showsGrabber
-        )
-    }
-
-    init(
-        kicker: String,
-        title: String,
-        clock: String,
-        day: TraceDay,
-        nowFraction: Double?,
-        focusFraction: Double,
-        focusedPlaceID: String?,
-        distanceText: String,
-        isReplaying: Bool,
-        isPlaying: Bool,
-        canPlay: Bool,
-        isExpandedLayout: Bool,
-        maxHeight: CGFloat,
-        isCollapsed: Binding<Bool>,
-        onScrub: @escaping (Double) -> Void,
-        onStep: @escaping (TimeInterval) -> Void,
-        onJump: @escaping (TraceDay.Place) -> Void,
-        onPlayPause: @escaping () -> Void,
-        onDone: @escaping () -> Void,
-        hint: String? = nil,
-        showsGrabber: Bool = true
-    ) {
-        self.kicker = kicker
-        self.title = title
-        self.clock = clock
-        self.day = day
-        self.nowFraction = nowFraction
-        self.focusFraction = focusFraction
-        self.focusedPlaceID = focusedPlaceID
-        self.distanceText = distanceText
-        self.isReplaying = isReplaying
-        self.isPlaying = isPlaying
-        self.canPlay = canPlay
-        self.isExpandedLayout = isExpandedLayout
-        self.maxHeight = maxHeight
-        _isCollapsed = isCollapsed
-        self.onScrub = onScrub
-        self.onStep = onStep
-        self.onJump = onJump
-        self.onPlayPause = onPlayPause
-        self.onDone = onDone
-        self.hint = hint
-        self.showsGrabber = showsGrabber
-    }
-
-    var body: some View {
-        // Hug the content, scrolling only once it would pass the cap.
-        CappedHeightLayout(maxHeight: maxHeight) {
-            panel
-        }
-    }
-
-    private var panel: some View {
-        VStack(spacing: 0) {
-            if showsGrabber {
-                grabber
-            } else {
-                Color.clear.frame(height: 28)
-            }
-
-            VStack(alignment: .leading, spacing: isExpandedLayout ? 18 : 12) {
-                header
-
-                if !isCollapsed {
-                    ViewThatFits(in: .vertical) {
-                        details
-                        ScrollView {
-                            details
-                        }
-                        .scrollIndicators(.hidden)
-                    }
-                    .transition(.opacity)
-                }
-            }
-            .frame(maxWidth: 720, alignment: .leading)
-            .padding(.horizontal, isExpandedLayout ? 32 : 24)
-            .padding(.bottom, isExpandedLayout ? 24 : 12)
-        }
-        .frame(maxWidth: .infinity)
-        .foregroundStyle(TE.textPrimary)
-        .background {
-            if showsGrabber {
-                UnevenRoundedRectangle(topLeadingRadius: 26, topTrailingRadius: 26, style: .continuous)
-                    .fill(TE.surface)
-                    .shadow(color: .black.opacity(0.12), radius: 30, x: 0, y: -10)
-                    .ignoresSafeArea(edges: .bottom)
-            } else {
-                TE.surface.ignoresSafeArea()
-            }
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("Replay controls")
-    }
-
-    private var grabber: some View {
-        Button {
-            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.85)) {
-                isCollapsed.toggle()
-            }
-        } label: {
-            Capsule()
-                .fill(TE.border)
-                .frame(width: 36, height: 4)
-                .frame(maxWidth: .infinity, minHeight: 44)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(isCollapsed ? "Show replay controls" : "Hide replay controls")
-    }
-
-    private var header: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
-            : AnyLayout(HStackLayout(alignment: .lastTextBaseline, spacing: 12))
-        return layout {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(kicker)
-                    .font(TE.mono(.caption2))
-                    .tracking(1.4)
-                    .foregroundStyle(TE.textMuted)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(title)
-                    .font(TE.editorial(isExpandedLayout ? .largeTitle : .title))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text(clock)
-                .font(WheredayFont.serif(size: isExpandedLayout ? 60 : 44, relativeTo: .largeTitle))
-                .monospacedDigit()
-                .lineLimit(1)
-                .fixedSize()
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private var details: some View {
-        VStack(alignment: .leading, spacing: isExpandedLayout ? 18 : 12) {
-            VStack(spacing: 0) {
-                TraceDayBar(segments: day.segments, nowFraction: nowFraction)
-                    .frame(height: isExpandedLayout ? 12 : 8)
-
-                TraceScrubber(
-                    fraction: focusFraction,
-                    accessibilityValue: "\(clock). \(title)",
-                    onScrub: onScrub,
-                    onStep: onStep
-                )
-
-                HStack(spacing: 0) {
-                    ForEach(Array(day.tickLabels.enumerated()), id: \.offset) { index, label in
-                        if index > 0 { Spacer(minLength: 4) }
-                        Text(label)
-                    }
-                }
-                .font(TE.mono(.caption2))
-                .foregroundStyle(TE.textMuted)
-                .padding(.top, -6)
-                .accessibilityHidden(true)
-            }
-
-            if !day.places.isEmpty {
-                chips
-            }
-
-            if isExpandedLayout {
-                stepButtons
-            }
-
-            footer
-        }
-    }
-
-    @ViewBuilder
-    private var chips: some View {
-        if isExpandedLayout {
-            TraceFlowLayout(spacing: 8) {
-                chipViews
-            }
-        } else {
-            ScrollView(.horizontal) {
-                HStack(spacing: 8) {
-                    chipViews
-                }
-            }
-            .scrollIndicators(.hidden)
-        }
-    }
-
-    private var chipViews: some View {
-        ForEach(day.places) { place in
-            TracePlaceChip(place: place, isSelected: place.id == focusedPlaceID) {
-                onJump(place)
-            }
-        }
-    }
-
-    private var stepButtons: some View {
-        HStack(spacing: 10) {
-            Button { onStep(-15 * 60) } label: {
-                Text("−15 min").stepLabel(filled: false)
-            }
-            .accessibilityLabel("Back 15 minutes")
-
-            Button(action: onPlayPause) {
-                Text(isPlaying ? "Pause" : "Play day").stepLabel(filled: true)
-            }
-            .disabled(!canPlay)
-
-            Button { onStep(15 * 60) } label: {
-                Text("+15 min").stepLabel(filled: false)
-            }
-            .accessibilityLabel("Forward 15 minutes")
-        }
-        .buttonStyle(.plain)
-    }
-
-    private var footer: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: 12) {
-                Text(distanceText)
-                Spacer(minLength: 8)
-                hintText
-                footerActions
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 12) {
-                    Text(distanceText)
-                    Spacer(minLength: 8)
-                    hintText
-                }
-                .frame(minHeight: 32)
-                HStack(spacing: 16) { footerActions }
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                Text(distanceText)
-                hintText
-                HStack(spacing: 16) { footerActions }
-            }
-        }
-        .font(TE.mono(.caption))
-        .foregroundStyle(TE.textMuted)
-        .padding(.top, 4)
-        .overlay(alignment: .top) {
-            Rectangle().fill(TE.border).frame(height: 1)
-        }
-    }
-
-    @ViewBuilder
-    private var hintText: some View {
-        if let hint {
-            Text(hint)
-                .lineLimit(1)
-                .accessibilityHidden(true)
-        }
-    }
-
-    @ViewBuilder
-    private var footerActions: some View {
-        if !isExpandedLayout {
-            Button(action: onPlayPause) {
-                Label(isPlaying ? "Pause" : "Play day", systemImage: isPlaying ? "pause.fill" : "play.fill")
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(canPlay ? TE.inkRust : TE.textMuted)
-            .disabled(!canPlay)
-            .accessibilityHint("Plays the recorded route from the playhead.")
-        }
-
-        if isReplaying {
-            Button(action: onDone) {
-                Text("Show all")
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(TE.textPrimary)
-            .accessibilityHint("Ends the replay and draws the whole route.")
-        }
-    }
-}
-
-private extension Text {
-    func stepLabel(filled: Bool) -> some View {
-        self
-            .font(.subheadline.weight(filled ? .semibold : .medium))
-            .foregroundStyle(filled ? TE.onInkCard : TE.textPrimary)
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, minHeight: 56)
-            .background(Capsule().fill(filled ? TE.accent : TE.card))
-            .overlay(Capsule().strokeBorder(filled ? Color.clear : TE.border, lineWidth: 1))
-            .contentShape(Capsule())
-    }
-}
-
-/// The day's stays as one bar; the part of today not yet lived is hatched.
-/// Offers its content at most `maxHeight` and takes only the height the content uses,
-/// unlike `.frame(maxHeight:)`, which grows to the cap.
-private struct CappedHeightLayout: Layout {
-    let maxHeight: CGFloat
-
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        guard let content = subviews.first else { return .zero }
-        return content.sizeThatFits(cappedProposal(proposal))
-    }
-
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        subviews.first?.place(at: bounds.origin, proposal: ProposedViewSize(width: bounds.width, height: bounds.height))
-    }
-
-    private func cappedProposal(_ proposal: ProposedViewSize) -> ProposedViewSize {
-        ProposedViewSize(width: proposal.width, height: min(proposal.height ?? maxHeight, maxHeight))
-    }
-}
-
-struct TraceDayBar: View {
-    let segments: [TraceDay.Segment]
-    let nowFraction: Double?
-
-    var body: some View {
-        Canvas { context, size in
-            let bar = Path(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: size.height / 2)
-            context.clip(to: bar)
-            context.fill(bar, with: .color(TE.dialTrack))
-
-            for segment in segments {
-                let rect = CGRect(
-                    x: size.width * segment.start,
-                    y: 0,
-                    width: max(1, size.width * (segment.end - segment.start)),
-                    height: size.height
-                )
-                context.fill(Path(rect), with: .color(segment.ink))
-            }
-
-            if let nowFraction {
-                var stripe = size.width * nowFraction + 4
-                while stripe < size.width {
-                    context.fill(Path(CGRect(x: stripe, y: 0, width: 4, height: size.height)), with: .color(TE.surface))
-                    stripe += 8
-                }
-            }
-        }
-        .accessibilityHidden(true)
-    }
-}
-
-/// A rust-ringed thumb on a hairline; VoiceOver adjusts it in 15-minute steps.
-struct TraceScrubber: View {
-    let fraction: Double
-    let accessibilityValue: String
-    let onScrub: (Double) -> Void
-    let onStep: (TimeInterval) -> Void
-
-    private let thumbSize: CGFloat = 26
-
-    var body: some View {
-        GeometryReader { geometry in
-            let width = geometry.size.width
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(TE.border)
-                    .frame(height: 4)
-
-                Circle()
-                    .fill(TE.surface)
-                    .overlay(Circle().strokeBorder(TE.inkRust, lineWidth: 3))
-                    .frame(width: thumbSize, height: thumbSize)
-                    .position(x: width * fraction, y: geometry.size.height / 2)
-            }
-            .frame(maxHeight: .infinity)
-            .contentShape(Rectangle())
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        guard width > 0 else { return }
-                        onScrub(Double(value.location.x / width))
-                    }
-            )
-        }
-        .frame(height: 44)
-        .accessibilityElement()
-        .accessibilityLabel("Time of day")
-        .accessibilityValue(accessibilityValue)
-        .accessibilityAdjustableAction { direction in
-            switch direction {
-            case .increment: onStep(15 * 60)
-            case .decrement: onStep(-15 * 60)
-            @unknown default: break
-            }
-        }
-    }
-}
-
-struct TracePlaceChip: View {
-    let place: TraceDay.Place
-    let isSelected: Bool
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 8) {
-                Circle()
-                    .fill(place.ink)
-                    .frame(width: 8, height: 8)
-                Text(place.name)
-                    .lineLimit(1)
-            }
-            .font(.footnote.weight(.medium))
-            .foregroundStyle(TE.textPrimary)
-            .padding(.horizontal, 14)
-            .frame(minHeight: 44)
-            .background(Capsule().fill(TE.card))
-            .overlay(Capsule().strokeBorder(isSelected ? TE.inkRust : TE.border, lineWidth: isSelected ? 1.5 : 1))
-            .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(place.name)
-        .accessibilityHint("Moves the replay to this place.")
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-    }
-}
-
-/// Wraps chips onto new lines when there is room for the whole set.
-struct TraceFlowLayout: Layout {
-    var spacing: CGFloat = 8
-
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let maxWidth = proposal.width ?? .infinity
-        var x: CGFloat = 0
-        var y: CGFloat = 0
-        var rowHeight: CGFloat = 0
-        var width: CGFloat = 0
-        for subview in subviews {
-            var size = subview.sizeThatFits(.unspecified)
-            size.width = min(size.width, maxWidth)
-            if x > 0, x + size.width > maxWidth {
-                x = 0
-                y += rowHeight + spacing
-                rowHeight = 0
-            }
-            width = max(width, x + size.width)
-            x += size.width + spacing
-            rowHeight = max(rowHeight, size.height)
-        }
-        return CGSize(width: width, height: y + rowHeight)
-    }
-
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        var x = bounds.minX
-        var y = bounds.minY
-        var rowHeight: CGFloat = 0
-        for subview in subviews {
-            var size = subview.sizeThatFits(.unspecified)
-            size.width = min(size.width, bounds.width)
-            if x > bounds.minX, x + size.width > bounds.maxX {
-                x = bounds.minX
-                y += rowHeight + spacing
-                rowHeight = 0
-            }
-            subview.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(size))
-            x += size.width + spacing
-            rowHeight = max(rowHeight, size.height)
-        }
     }
 }
 

@@ -447,6 +447,7 @@ struct MapHereCard: View {
     let onDismiss: () -> Void
 
     @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private var canSave: Bool { suggestion != nil || hasFreshLocation }
 
@@ -486,9 +487,18 @@ struct MapHereCard: View {
             }
 
             if canSave {
-                ViewThatFits(in: .horizontal) {
-                    HStack(spacing: 8) { actions }
+                if dynamicTypeSize.isAccessibilitySize {
                     VStack(spacing: 8) { actions }
+                } else {
+                    // Somewhere else · Save this place, 1 : 1.4.
+                    GeometryReader { geometry in
+                        let unit = (geometry.size.width - 8) / 2.4
+                        HStack(spacing: 8) {
+                            somewhereElseButton.frame(width: unit)
+                            saveButton.frame(width: unit * 1.4)
+                        }
+                    }
+                    .frame(height: 44)
                 }
             } else {
                 Button(action: onRequestLocation) {
@@ -505,19 +515,24 @@ struct MapHereCard: View {
 
     @ViewBuilder
     private var actions: some View {
+        saveButton
+        somewhereElseButton
+    }
+
+    private var somewhereElseButton: some View {
         Button(action: onSomewhereElse) {
             actionLabel("Somewhere else", filled: false)
         }
         .buttonStyle(.plain)
         .accessibilityHint("Opens manual place entry.")
-        .layoutPriority(1)
+    }
 
+    private var saveButton: some View {
         Button(action: onSave) {
             actionLabel("Save this place", filled: true)
         }
         .buttonStyle(.plain)
         .accessibilityHint("Opens visit details prefilled with this place.")
-        .layoutPriority(1.4)
     }
 
     private func actionLabel(_ title: LocalizedStringKey, filled: Bool) -> some View {

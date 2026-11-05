@@ -69,6 +69,8 @@
 		AE932AE7E58305551CB29F36 /* MapDaySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF0932AE7E58305551CB29F /* MapDaySheet.swift */; };
 		AE8FAE051C54214DF72D21EC /* MapLayersSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD478FAE051C54214DF72D21 /* MapLayersSheet.swift */; };
 		AE8ACC971CD0CEC842A69276 /* MapSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD978ACC971CD0CEC842A692 /* MapSearchSheet.swift */; };
+		AEBA408BD651B93DEFAE0A07 /* MapReplayPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5BA408BD651B93DEFAE0A /* MapReplayPanel.swift */; };
+		AE33209E6CDFA1F75C5AE053 /* MapVisitSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF133209E6CDFA1F75C5AE0 /* MapVisitSheet.swift */; };
 		A100000B212F00010000000B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000B212F00000000000B /* MapView.swift */; };
 		A100000C212F00010000000C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C212F00000000000C /* SettingsView.swift */; };
 		A100000D212F00010000000D /* VisitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000D212F00000000000D /* VisitDetailView.swift */; };
@@ -346,6 +348,8 @@
 		ADF0932AE7E58305551CB29F /* MapDaySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHome/MapDaySheet.swift; sourceTree = "<group>"; };
 		AD478FAE051C54214DF72D21 /* MapLayersSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHome/MapLayersSheet.swift; sourceTree = "<group>"; };
 		AD978ACC971CD0CEC842A692 /* MapSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHome/MapSearchSheet.swift; sourceTree = "<group>"; };
+		ADD5BA408BD651B93DEFAE0A /* MapReplayPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHome/MapReplayPanel.swift; sourceTree = "<group>"; };
+		ADF133209E6CDFA1F75C5AE0 /* MapVisitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHome/MapVisitSheet.swift; sourceTree = "<group>"; };
 		A100000B212F00000000000B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		A100000C212F00000000000C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A100000D212F00000000000D /* VisitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitDetailView.swift; sourceTree = "<group>"; };
@@ -639,6 +643,8 @@
 				A1000002212F000000000002 /* ContentView.swift */,
 				BEE50001212F000000000001 /* ReleaseNotes.swift */,
 				A100000B212F00000000000B /* MapView.swift */,
+				ADF133209E6CDFA1F75C5AE0 /* MapVisitSheet.swift */,
+				ADD5BA408BD651B93DEFAE0A /* MapReplayPanel.swift */,
 				AD978ACC971CD0CEC842A692 /* MapSearchSheet.swift */,
 				AD478FAE051C54214DF72D21 /* MapLayersSheet.swift */,
 				ADF0932AE7E58305551CB29F /* MapDaySheet.swift */,
@@ -1099,6 +1105,8 @@
 				A30F32016A3C45B08E910CC2 /* GoogleTimelineImportService.swift in Sources */,
 				A1000008212F000100000008 /* LocationViewModel.swift in Sources */,
 				A100000B212F00010000000B /* MapView.swift in Sources */,
+				AE33209E6CDFA1F75C5AE053 /* MapVisitSheet.swift in Sources */,
+				AEBA408BD651B93DEFAE0A07 /* MapReplayPanel.swift in Sources */,
 				AE8ACC971CD0CEC842A69276 /* MapSearchSheet.swift in Sources */,
 				AE8FAE051C54214DF72D21EC /* MapLayersSheet.swift in Sources */,
 				AE932AE7E58305551CB29F36 /* MapDaySheet.swift in Sources */,
