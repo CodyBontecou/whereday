@@ -46,7 +46,7 @@ import java.time.*
 import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
 
-@Composable fun CountryDaysScreen(graph:AppGraph,analysisController:CountryAnalysisController=graph.countryAnalysis,back:()->Unit) {
+@Composable fun CountryDaysScreen(graph:AppGraph,analysisController:CountryAnalysisController=graph.countryAnalysis,back:(()->Unit)?) {
     var periodName by rememberSaveable {mutableStateOf(CountryDayPeriod.year.name)}
     val period=CountryDayPeriod.valueOf(periodName)
     var report by remember {mutableStateOf<CountryDayReport?>(null)}
@@ -79,8 +79,9 @@ import java.util.concurrent.atomic.AtomicBoolean
         onDispose {active.set(false);lifecycle.removeObserver(observer);analysisController.stop()}
     }
     LaunchedEffect(selected,analysisController) {if(selected!=null) analysisController.stop()}
-    fun goBack() {if(selected!=null) selected=null else {active.set(false);analysisController.stop();back()}}
-    BackHandler {goBack()}
+    fun goBack() {if(selected!=null) selected=null else {active.set(false);analysisController.stop();back?.invoke()}}
+    // As the Atlas tab the overview is a root page: Back leaves the app as from any other tab.
+    BackHandler(enabled=back!=null || selected!=null) {goBack()}
     val overviewState=rememberLazyListState()
     val detailState=rememberSaveable(selected,saver=LazyListState.Saver) {LazyListState()}
     val loadingState=rememberLazyListState()
@@ -98,7 +99,8 @@ import java.util.concurrent.atomic.AtomicBoolean
     val card=Modifier.padding(horizontal=16.dp)
     val maximum=countries.firstOrNull()?.value?.size ?: 1
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("country-days-content"),state=if(current==null) loadingState else if(selectedCountry==null) overviewState else detailState,contentPadding=PaddingValues(bottom=32.dp)) {
-        item {SettingsBackHeader(selectedCountry?.let {CountryRegions.displayName(it,locale)} ?: stringResource(R.string.country_title),
+        item {if(back==null && selectedCountry==null) WdPageHeader(stringResource(R.string.shell_atlas),Modifier.statusBarsPadding(),eyebrow=stringResource(R.string.country_title))
+            else SettingsBackHeader(selectedCountry?.let {CountryRegions.displayName(it,locale)} ?: stringResource(R.string.country_title),
             stringResource(if(selectedCountry!=null) R.string.country_back_days else R.string.country_back_settings),{goBack()},backTag="country-back")}
         if(failure) item {SettingsNotice(card.padding(bottom=12.dp),warning=true) {Text(stringResource(R.string.country_load_error));SettingsTextAction(stringResource(R.string.country_retry),{retry++})}}
         if(current==null && !failure) item {SettingsProgress(stringResource(R.string.country_loading),card.padding(bottom=12.dp))}

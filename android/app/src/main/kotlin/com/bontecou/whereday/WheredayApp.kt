@@ -54,7 +54,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         if(clear.blocked) JournalWorkspaceFrame(false,primary={JournalClearBarrier(clear,graph.journalClear::clear)},companion={})
         JournalReadyState(clear) {
             if(current==null) JournalWorkspaceFrame(false,primary={Box(Modifier.fillMaxSize().background(wd.surface),contentAlignment=androidx.compose.ui.Alignment.Center) {WdLoading()}},companion={})
-            else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) 3 else 0,access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused,
+            else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) MainTabs.index(MainTabs.afterClear.tab) else MainTabs.index(MainTabs.launch),access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused,
                 trackingPaywall,onTrackingPaywallDismiss)
         }
         if(!clear.blocked) WorkspaceRootDialogScope {PermissionAccessReview(accessReview?.takeIf {it.generation==clear.generation},onAccessDismiss,onAccessRequest,onAccessSettings)}
@@ -108,22 +108,23 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         val recording by graph.history.dao.observeRecording().collectAsStateWithLifecycle(null)
         val active by RecordingRuntime.active.collectAsStateWithLifecycle()
         var tab by rememberSaveable { mutableIntStateOf(initialTab) }
+        // The day's timeline opens over the map (from the day sheet or the launcher), as Today's timeline did on iOS 2.0.
+        var timelineOpen by rememberSaveable {mutableStateOf(false)}
+        val onMapTab=MainTabs.at(tab)==MainTab.map
+        val timelineShown=onMapTab && timelineOpen
+        val mapShown=onMapTab && !timelineOpen
+        fun go(destination:MainTabs.Destination) {tab=MainTabs.index(destination.tab);timelineOpen=destination.timeline}
         // One journal-level owner survives changes to the primary/companion arrangement.
         // Keep the original snapshot so a background edit cannot replace its optimistic-lock baseline.
         var inspectedVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<com.bontecou.whereday.domain.Visit?>(null)}
         var queuedVisitId by rememberSaveable {mutableStateOf<String?>(null)}
         val tabState=rememberSaveableStateHolder()
+        // The map's day, visit and replay sheets take the floating tab bar's place while open.
+        val tabBarHidden=remember {mutableStateOf(false)}
         LaunchedEffect(launcherAction) {
-            when(launcherAction) {
-                LauncherAction.timeline->{tab=1;onLauncherActionHandled()}
-                LauncherAction.export->{tab=2;onLauncherActionHandled()}
-                else->Unit
-            }
+            launcherAction?.let(MainTabs::destination)?.let {go(it);onLauncherActionHandled()}
         }
-        val titles = listOf(R.string.shell_map,R.string.shell_timeline,R.string.shell_export,R.string.shell_settings).map {androidx.compose.ui.res.stringResource(it)}
-        val icons = listOf(Icons.Outlined.Map, Icons.Outlined.Schedule, Icons.Outlined.Inventory2, Icons.Outlined.Settings)
-        val selectedIcons = listOf(Icons.Filled.Map, Icons.Filled.Schedule, Icons.Filled.Inventory2, Icons.Filled.Settings)
-        val navigationIds=listOf("map","timeline","export","settings")
+        val wdTabs=MainTabs.order.map {WdTab(it.id,androidx.compose.ui.res.stringResource(it.title),it.icon,it.selectedIcon)}
         var paired by remember {mutableStateOf(false)}
         val workspaceContext=LocalContext.current
         val workspaceMessages=remember {SnackbarHostState()}
@@ -155,48 +156,53 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         val inspector=rememberWorkspaceContent {
             inspectedVisit?.let {visit->key(visit.id) {
                 VisitEditor(graph,visit,{inspectedVisit=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,visit,reuse,remember,overlap)},{graph.history.deleteVisit(visit)},
-                    onShowOnMap={stored->journal.showVisitOnMap(stored);inspectedVisit=null;if(!paired) tab=0},inline=LocalInlineVisitEditor.current,inlineBackLabel=if(tab==0) R.string.shell_timeline else R.string.common_back)
+                    onShowOnMap={stored->journal.showVisitOnMap(stored);inspectedVisit=null;if(!paired) go(MainTabs.visitLink)},inline=LocalInlineVisitEditor.current,inlineBackLabel=if(mapShown) R.string.shell_timeline else R.string.common_back)
             }}
         }
         val mapPage=rememberWorkspaceContent {
             tabState.SaveableStateProvider(0) {
-                JournalMapScreen(graph,journal,active,recording,current.metric,onRecord,current.showOutliers,{value->scope.launch {graph.preferences.update {it.copy(showOutliers=value)}}},access,onAccessOptions,onVisitOpened=::focusVisit,visitInspectionActive=inspectedVisit!=null)
+                JournalMapScreen(graph,journal,active,recording,current.metric,onRecord,current.showOutliers,{value->scope.launch {graph.preferences.update {it.copy(showOutliers=value)}}},access,onAccessOptions,onVisitOpened=::focusVisit,visitInspectionActive=inspectedVisit!=null,
+                    onOpenTimeline={timelineOpen=true})
             }
         }
         val timelinePage=rememberWorkspaceContent {
             tabState.SaveableStateProvider(1) {
-                TimelineScreen(graph,journal,current.metric,showOnMap={session->journal.showOutingOnMap(session);if(!paired) tab=0},onVisitOpened=::focusVisit,visitInspectionActive=inspectedVisit!=null)
+                TimelineScreen(graph,journal,current.metric,showOnMap={session->journal.showOutingOnMap(session);if(!paired) timelineOpen=false},onVisitOpened=::focusVisit,visitInspectionActive=inspectedVisit!=null,
+                    onClose=if(timelineShown) ({timelineOpen=false}) else null)
             }
         }
-        JournalWorkspaceFrame(allowCompanion=tab in 0..1,modifier=Modifier.background(MaterialTheme.colorScheme.background),inspectionActive=inspectedVisit!=null,inspectionInPrimary=tab==1,
+        JournalWorkspaceFrame(allowCompanion=onMapTab,modifier=Modifier.background(MaterialTheme.colorScheme.background),inspectionActive=inspectedVisit!=null,inspectionInPrimary=timelineShown,
             modal={LauncherRecordingConfirmation(launcherAction,active,onLauncherActionHandled) {start ->
             onLauncherActionHandled()
-            tab=0
+            go(MainTabs.visitLink)
             if(start) onStartRecording() else onStopRecording()
         }
-            VisitLinkHost(graph,visitLink,onVisitLinkHandled,windowFocused=windowFocused,showVisitOnMap={stored->journal.showVisitOnMap(stored);tab=0}) {tab=0}},
-            inspection={inline->CompositionLocalProvider(LocalInlineVisitEditor provides inline) {Box(Modifier.fillMaxSize()) {inspector();if(inline && tab==1) SnackbarHost(workspaceMessages,Modifier.align(androidx.compose.ui.Alignment.BottomCenter))}}},primary={hasCompanion->
+            VisitLinkHost(graph,visitLink,onVisitLinkHandled,windowFocused=windowFocused,showVisitOnMap={stored->journal.showVisitOnMap(stored);go(MainTabs.visitLink)}) {go(MainTabs.visitLink)}},
+            inspection={inline->CompositionLocalProvider(LocalInlineVisitEditor provides inline) {Box(Modifier.fillMaxSize()) {inspector();if(inline && timelineShown) SnackbarHost(workspaceMessages,Modifier.align(androidx.compose.ui.Alignment.BottomCenter))}}},primary={hasCompanion->
             SideEffect {paired=hasCompanion}
-            if(!(hasCompanion && tab==1 && inspectedVisit!=null)) {
-                val wdTabs=titles.indices.map {WdTab(navigationIds[it],titles[it],icons[it],selectedIcons[it])}
+            if(!(hasCompanion && timelineShown && inspectedVisit!=null)) {
                 // The floating bar sits below each page so lists end above it, as on iOS.
                 Scaffold(containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
                     snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
-                    bottomBar={WdFloatingTabBar(wdTabs,tab,{tab=it},Modifier.semantics {testTagsAsResourceId=true})}) {padding->
-                    Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {
-                        when(tab) {
-                            0->mapPage()
-                            1->timelinePage()
-                            else->tabState.SaveableStateProvider(tab) {when(tab) {
-                                2->ExportScreen(graph)
-                                3->SettingsScreen(graph,current,places.map {it.value},count)
+                    bottomBar={if(!(mapShown && tabBarHidden.value)) WdFloatingTabBar(wdTabs,tab,{tab=it;if(MainTabs.at(it)==MainTab.map) timelineOpen=false},Modifier.semantics {testTagsAsResourceId=true})}) {padding->
+                    // The map runs full-bleed under the status bar and the floating tab bar; its chrome keeps clear of both.
+                    if(mapShown) CompositionLocalProvider(LocalMapChromePadding provides padding,LocalTabBarHidden provides tabBarHidden) {Box(Modifier.fillMaxSize()) {mapPage()}}
+                    else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {
+                        when(MainTabs.at(tab)) {
+                            MainTab.map->timelinePage()
+                            else->tabState.SaveableStateProvider(tab) {when(MainTabs.at(tab)) {
+                                MainTab.atlas->CountryDaysScreen(graph,back=null)
+                                MainTab.places->SavedPlacesScreen(graph,places.map {it.value},null)
+                                MainTab.archive->ExportScreen(graph)
+                                MainTab.settings->SettingsScreen(graph,current,places.map {it.value},count)
+                                MainTab.map->Unit
                             }}
                         }
                     }
                 }
             }
         },companion={
-            if(!(tab==0 && inspectedVisit!=null)) Box(Modifier.fillMaxSize().background(wd.surface).statusBarsPadding()) {if(tab==0) timelinePage() else mapPage()}
+            if(!(mapShown && inspectedVisit!=null)) Box(Modifier.fillMaxSize().background(wd.surface).statusBarsPadding()) {if(mapShown) timelinePage() else mapPage()}
         })
 
 }

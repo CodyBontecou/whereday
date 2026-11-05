@@ -52,7 +52,7 @@ import java.util.Locale
 private class PlaceReadError(val resource:Int):IllegalArgumentException()
 private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:List<SavedPlace>,val policy:SavedPlaceDuplicatePolicy,val plan:SavedPlaceImportPlan)
 
-@Composable fun SavedPlacesScreen(graph:AppGraph,places:List<SavedPlace>,back:()->Unit) {
+@Composable fun SavedPlacesScreen(graph:AppGraph,places:List<SavedPlace>,back:(()->Unit)?) {
     val context=LocalContext.current;val scope=rememberCoroutineScope()
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     fun number(value:Double)=NumberFormat.getNumberInstance(locale).apply {maximumFractionDigits=2}.format(value)
@@ -66,8 +66,9 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
     var job by remember {mutableStateOf<Job?>(null)}
     var message by remember {mutableStateOf<PlaceUiText?>(null)}
     var confirmation by remember {mutableStateOf<PlaceReview?>(null)}
-    fun leave() {if(busy) job?.cancel() else if(preview!=null) {preview=null;message=null} else back()}
-    BackHandler(onBack=::leave)
+    fun leave() {if(busy) job?.cancel() else if(preview!=null) {preview=null;message=null} else back?.invoke()}
+    // As the Places tab the library is a root page: Back leaves the app as from any other tab.
+    BackHandler(enabled=back!=null || busy || preview!=null,onBack=::leave)
     val picker=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {uri ->
         if(uri!=null) job=scope.launch {
             busy=true;message=null
@@ -153,7 +154,7 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
         }
     }
     Column(Modifier.fillMaxSize().background(wd.surface)) {
-    PlacesBackBar(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_settings),::leave)
+    if(back!=null || busy) PlacesBackBar(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_settings),::leave) else Spacer(Modifier.statusBarsPadding())
     LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(bottom=32.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
         item {WdPageHeader(stringResource(R.string.saved_title),Modifier.padding(bottom=4.dp),eyebrow=pluralStringResource(R.plurals.redesign_places_saved_eyebrow,places.size,places.size))}
         item {OutlinedTextField(query,{query=it},label={Text(stringResource(R.string.visit_saved_search))},singleLine=true,shape=RoundedCornerShape(14.dp),colors=wdTextFieldColors(),
