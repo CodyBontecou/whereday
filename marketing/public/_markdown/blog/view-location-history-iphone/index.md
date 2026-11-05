@@ -8,11 +8,11 @@ Practical iPhone guides
 
 Find the app and date that hold your saved visits, distinguish iPhone location settings from recorded history, and check existing copies before changing your setup.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 31, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 5, 2026
 
 ## Check the recorder you already used
 
-For saved iPhone location history, open Maps → Places → Visited Places, where available, or Google Maps → profile picture → Your Timeline and select a date. In Whereday, open Timeline. Start with the app that recorded the day; these histories are separate.
+For saved iPhone location history, open Maps → Places → Visited Places, where available, or Google Maps → profile picture → Your Timeline and select a date. In Whereday, open the Map and choose a date range, or tap Pick a day in the day sheet. Start with the app that recorded the day; these histories are separate.
 
 This guide covers your own visits and routes. If you want a record of future trips, you can start one in Whereday, but installing it cannot reconstruct earlier movement.
 
@@ -32,7 +32,7 @@ Start with the service that recorded the day
 | Apple Maps | Places → Visited Places, where available | Whether the feature was enabled and the visit is retained
 | Significant Locations setting | Settings → Privacy & Security → Location Services → System Services | A location-related Maps setting; check the recorder for the history you need
 | Google Maps | Profile picture → Your Timeline | The account, selected device history, and date
-| Whereday | Timeline or the date range on Map | Whether tracking was enabled for that period
+| Whereday | The Map’s date range, or Pick a day in its day sheet | Whether tracking was enabled for that period
 | No enabled recorder | There may be no route record to open | Start a new recording before the next trip
 
 Directions you requested, places you searched for, and a recorded visit are different kinds of information. A search for a restaurant does not by itself establish when you arrived or how you travelled there.
@@ -94,7 +94,7 @@ For Whereday records, follow the [backup and restore checklist](https://whereday
 
 ## Why a day can be empty
 
-First check the date, account, and app rather than assuming the history is gone. A map showing today may simply be the wrong view for last month’s trip. In Whereday, use Timeline’s date controls or change the Map date range.
+First check the date, account, and app rather than assuming the history is gone. A map showing today may simply be the wrong view for last month’s trip. In Whereday, change the Map’s date range or use Pick a day in the day sheet.
 
 - Recording was off. A location permission lets an app request locations; it is not proof that the app recorded that day.
 - The record was removed. Look for retained files or supported backups before clearing more data or replacing a device.
@@ -111,7 +111,7 @@ If you want a separate journal without a Whereday account, try a short recording
 
 - Install Whereday and complete permission setup. Always location access allows recording in the background.
 - On Map, tap the recording control before you leave. Start enables GPS recording and visit monitoring together.
-- Stop when you finish. Open Timeline, choose the day, and open the outing. Check its Points count, Path, and times; a saved outing alone does not prove a GPS route was captured.
+- Stop when you finish. In the map’s day sheet, tap Pick a day, choose the day, and open the outing. Check its Points count, Path, and times; a saved outing alone does not prove a GPS route was captured.
 - If you need a portable route file, follow [the iPhone route and GPX guide](https://whereday.com/blog/record-iphone-route-gpx/).
 
 From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. Read [the setup walkthrough](https://whereday.com/blog/private-location-journal-iphone/) for permissions, battery controls, and keeping supported copies.
@@ -132,9 +132,9 @@ No. In Whereday, a saved location is a reusable name and pin for future matching
 
 Permission allows location requests; it does not establish what was saved. Check the day’s actual visits and route points. The [checked recording-state example](https://whereday.com/blog/private-location-journal-iphone/#first-recording) shows an outing with a running timer but no saved GPS points.
 
-![Example Whereday map showing visit markers and recorded route points](https://whereday.com/screenshots/map-480.webp)
+![Whereday’s map home: today’s route coloured by place, visit names, date range chips from Today to All, and the day card](https://whereday.com/screenshots/map-home-480.webp)
 
-Whereday’s map interface. This illustrative screenshot may contain sample data or earlier labels.
+Whereday opens on a map of the day; swipe up the day card for the day so far. This illustrative screenshot uses an invented journal.
 
 ## Remember your next trip.
 Start recording before you go.

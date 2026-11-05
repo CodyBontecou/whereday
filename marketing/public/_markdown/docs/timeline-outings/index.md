@@ -22,7 +22,7 @@ Back to
 
 ## The day view
 
-Whereday opens on a map of today. Each leg of the route takes the colour of the place it led to, and each visit shows its name and how long you stayed. Swipe up the day card at the bottom for the day sheet: the day dial, three stats (moved, away, and places), and the day so far, your stays and the moves between them in order. Tap a stay to focus it on the map and open it. Pick a day in the sheet opens an earlier date.
+Whereday opens on a map of today. Each leg of the route takes the colour of the place it led to, and each visit shows its name and how long you stayed. Swipe up the day card at the bottom for the day sheet: the day dial, three stats (moved, away, and places), and the day so far, your stays and the moves between them in order. Tap a stay to focus it on the map and open it. Pick a day in the sheet opens the day-by-day timeline over the map: step through days, pick any date, and open an outing.
 
 The chips under the map’s header choose what the map shows: Today, Yesterday, 7D, 30D, All, or the calendar for a custom range. For more than one day, each place shows the number of days you visited it, and a row of days below the map lets you highlight one day’s route.
 
