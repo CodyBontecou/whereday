@@ -108,8 +108,13 @@ private class JournalMapRenderer {
     }
     fun cameraSnapshot():JournalMapCamera? {
         if(disposed || !queryReady) return null
-        val position=map?.cameraPosition ?: return null
-        val target=position.target ?: return null
+        val current=map ?: return null
+        val position=current.cameraPosition
+        // A fit inside the floating chrome pads the camera, so its target is the padded centre; restoring
+        // without that padding would shift the view, so remember what sits at the middle of the screen instead.
+        val padded=position.padding?.any {it!=0.0}==true && viewWidthPx>0 && viewHeightPx>0
+        val target=(if(padded) runCatching {current.projection.fromScreenLocation(android.graphics.PointF(viewWidthPx/2f,viewHeightPx/2f))}.getOrNull() else null)
+            ?: position.target ?: return null
         val longitude=((target.longitude+180)%360+360)%360-180
         return runCatching {JournalMapCamera(Coordinate(target.latitude,longitude),position.zoom,position.bearing,position.tilt,fitted,appliedVisitFocus)}.getOrNull()
     }
@@ -258,6 +263,7 @@ private class JournalMapRenderer {
     }
     fun pulse(scale:Float) {map?.style?.let {MapHomeLayers.pulse(it,scale)}}
     var viewWidthPx=0
+    var viewHeightPx=0
     var densityScale=1f
     /** Flip a pin's label to its left when the route runs off to the right or the label would slide under the right rail. */
     private fun labelGoesLeft(marker:MapHomeMarker):Boolean {
@@ -366,6 +372,7 @@ private class JournalMapRenderer {
         val scale=context.resources.displayMetrics.density.toDouble()
         viewport=MapPointViewport.geographic(bounds[0],bounds[1],bounds[2],bounds[3],mapView.width/scale,mapView.height/scale).takeIf {it.usable}
         viewportSize=mapView.width to mapView.height
+        renderer.viewWidthPx=mapView.width;renderer.viewHeightPx=mapView.height
     }
     val markerLoad=rememberMapPointMarkers(contents.points,viewport,selectedPointId,pointMarkerSource,replay?.index,showPoints,inspectionScope)
     val displayPoints=markerLoad.markers.points
@@ -601,7 +608,7 @@ private class JournalMapRenderer {
             }
             renderer.render(latestPoints,latestVisits,latestOnline,latestDark,latestLayers,latestReplay,latestEnds,latestFallback,latestPhotoLayer?.visibleClusters.orEmpty(),latestPhotoLayer?.icons.orEmpty(),latestActiveRecording,latestRoadGeometry,latestPhotoLayer?.dots==true,latestVisitFocus)
         }
-    } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null);renderer.viewWidthPx=view.width;renderer.densityScale=context.resources.displayMetrics.density
+    } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null);renderer.viewWidthPx=view.width;renderer.viewHeightPx=view.height;renderer.densityScale=context.resources.displayMetrics.density
         // The home map credits tiles itself; MapLibre's own logo would sit under the tab bar.
         renderer.map?.uiSettings?.let {ui->val homeMap=home!=null;if(ui.isLogoEnabled==homeMap) ui.isLogoEnabled=!homeMap;if(ui.isAttributionEnabled==homeMap) ui.isAttributionEnabled=!homeMap
             // The compass appears when the map is rotated; on the home map it sits below the header, left of the rail.
