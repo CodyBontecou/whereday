@@ -31,25 +31,33 @@ class JournalMapRangeTest {
     private suspend fun awaitWindow(predicate:(HistoryWindow)->Boolean)=withTimeout(10_000) {
         model.mapWindow.filterIsInstance<WindowState.Ready>().map {it.window}.first(predicate)
     }
-    @Test fun rollingPresetIncludesItsFirstPartialDayAndAdvancesOnRealRoomInvalidation()=runBlocking {
+    @Test fun sevenDaysStartsAtTheFirstOfSevenCalendarDaysAndAdvancesOnRealRoomInvalidation()=runBlocking {
+        // 7D is today and the six calendar days before it (iOS 2.0), not the last 168 hours.
         val now=clock.now
-        put("old",now.minus(Duration.ofDays(7)).minusMillis(1))
-        put("edge",now.minus(Duration.ofDays(7)))
-        put("previously-missing",now.minus(Duration.ofDays(7)).plusSeconds(3600))
+        val firstDay=Instant.parse("2026-10-25T00:00:00Z")
+        put("old",firstDay.minusMillis(1))
+        put("rolling-only",now.minus(Duration.ofDays(7)).plusSeconds(3600))
+        put("edge",firstDay);put("first-day",firstDay.plusSeconds(3600))
         put("now",now);put("future",now.plusSeconds(600))
         model.mapSelection.value=MapSelection("7 days")
         val values=CopyOnWriteArrayList<WindowState>()
         val collector=launch {model.mapWindow.collect {values.add(it)}}
         try {
             val first=awaitWindow {it.summary.count==3L}
-            assertEquals(setOf("edge","previously-missing","now"),first.points.map {it.id}.toSet())
+            assertEquals(setOf("edge","first-day","now"),first.points.map {it.id}.toSet())
+            assertEquals(firstDay,first.range.from)
             val loadingBefore=values.count {it==WindowState.Loading}
             clock.now=now.plusSeconds(60);put("new-live-fix",clock.now)
             val next=awaitWindow {it.points.any {point->point.id=="new-live-fix"}}
-            assertEquals(setOf("previously-missing","now","new-live-fix"),next.points.map {it.id}.toSet())
+            assertEquals(setOf("edge","first-day","now","new-live-fix"),next.points.map {it.id}.toSet())
             assertEquals(clock.now.plusMillis(1),next.range.until)
             assertEquals(loadingBefore,values.count {it==WindowState.Loading})
             assertFalse(next.points.any {it.id=="future"})
+            // After midnight the window drops the oldest calendar day.
+            clock.now=Instant.parse("2026-11-01T00:00:30Z");put("after-midnight",clock.now)
+            val rolled=awaitWindow {it.points.any {point->point.id=="after-midnight"}}
+            assertEquals(Instant.parse("2026-10-26T00:00:00Z"),rolled.range.from)
+            assertEquals(setOf("now","new-live-fix","future","after-midnight"),rolled.points.map {it.id}.toSet())
         } finally {collector.cancelAndJoin()}
     }
     @Test fun allStopsAtNowWhileExplicitCustomAndOutingWindowsKeepTheirBounds()=runBlocking {
