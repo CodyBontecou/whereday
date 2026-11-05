@@ -136,7 +136,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
             visitFocus=selected.visitFocus?.let {target->window?.visits?.find {it.id==target.id}?.let {target.copy(coordinate=it.coordinate)}},
             onVisitFocusCleared={model.mapSelection.value=model.mapSelection.value.copy(visitFocus=null)},inspectionScope=selected.copy(visitFocus=null),
             pointMarkerSource=rememberHistoryPointMarkerSource(graph,replayRequest),
-            home=MapHomeOptions(controller,layers,mapPadding,homeMode,focusCandidates=focusCandidates,overlayTop=headerBottom+8.dp,showsFocusLabel=quickVisit==null))
+            home=MapHomeOptions(controller,layers,mapPadding,homeMode,focusCandidates=focusCandidates,overlayTop=headerBottom+8.dp,overlayBottom=sheetCover,showsFocusLabel=quickVisit==null))
 
         // Header card and range chips.
         Column(Modifier.align(Alignment.TopCenter).padding(top=top+8.dp,start=12.dp,end=12.dp).widthIn(max=560.dp)

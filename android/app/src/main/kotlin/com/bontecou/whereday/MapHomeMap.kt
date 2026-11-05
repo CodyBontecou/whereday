@@ -68,6 +68,8 @@ internal data class MapHomeOptions(val controller:JournalMapController,val layer
     val focusRadiusMeters:Double=60.0,
     /** The overlay column starts below the floating header and keeps clear of the right rail. */
     val overlayTop:androidx.compose.ui.unit.Dp=0.dp,
+    /** Where the scale bar and tile credit sit, just above the bottom chrome (below the fitted route). */
+    val overlayBottom:androidx.compose.ui.unit.Dp?=null,
     /** "Selected visit: …" over the map when a saved visit is shown without its quick view (View on map, links). */
     val showsFocusLabel:Boolean=true)
 
@@ -116,7 +118,7 @@ internal fun buildMapHomeRender(options:MapHomeOptions,contents:MapPresentation,
             val ahead=options.replayAhead?.takeIf {layers.path}?.let {all->
                 RouteLegs.build(splitAtGaps(all.filter {layers.outliers || !it.outlier}),sorted).map {leg->MapHomeLine(leg.points.map {it.coordinate},inkFor(leg.ink),4f,0.35f,halo=false)}
             }.orEmpty()
-            val chips=if(replaying) emptyList() else RouteLegs.chipLegs(legs,minimumMeters=400.0,limit=3).map {leg->leg.points[leg.points.size/5].coordinate to art.chip(clock.format(leg.start.atZone(zone)),images)}
+            val chips=if(replaying) emptyList() else RouteLegs.chipLegs(legs,minimumMeters=400.0,limit=3).map {leg->leg.points[leg.points.size*2/5].coordinate to art.chip(clock.format(leg.start.atZone(zone)),images)}
             val current=sorted.lastOrNull {it.departedAt==null}?.takeIf {mode.today}
             val focused=focus?.id
             val opacity=when {replaying->0.45f;focused!=null->0.5f;else->1f}
@@ -142,16 +144,14 @@ internal fun buildMapHomeRender(options:MapHomeOptions,contents:MapPresentation,
     }
 }
 
-/** True when the day's path around a stay runs mostly east of it, so its label reads better on the west (left) side. */
+/** True when more of the day's path runs level with a stay on its east side than on its west, so the label (a band to the
+ *  pin's right, about 150 m tall) reads better on the left. */
 internal fun routeLeavesRight(visit:Visit,legs:List<RouteLeg>):Boolean {
-    val around=legs.flatMap {it.points}.filter {point->
-        val near=point.time<=visit.arrivedAt && Duration.between(point.time,visit.arrivedAt)<=Duration.ofMinutes(20) ||
-            visit.departedAt?.let {point.time>=it && Duration.between(it,point.time)<=Duration.ofMinutes(20)}==true
-        near && point.coordinate.distanceTo(visit.coordinate) in 30.0..1500.0
+    val level=legs.flatMap {it.points}.filter {point->
+        kotlin.math.abs(point.coordinate.latitude-visit.coordinate.latitude)*111_000<=150 && point.coordinate.distanceTo(visit.coordinate) in 30.0..2000.0
     }
-    if(around.isEmpty()) return false
-    val east=around.count {it.coordinate.longitude>visit.coordinate.longitude}
-    return east*2>around.size
+    val east=level.count {it.coordinate.longitude>visit.coordinate.longitude}
+    return east>level.size-east
 }
 
 private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
@@ -205,7 +205,7 @@ private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
             photoLayer?.directoryMessage?.let {Text(it,Modifier.wdFloating(RoundedCornerShape(12.dp),colors,2.dp).padding(horizontal=10.dp,vertical=6.dp),style=MaterialTheme.typography.bodySmall,color=colors.textMuted)}
         }
         // Road estimates name their sources; street tiles carry OpenFreeMap / OpenMapTiles / OpenStreetMap credit.
-        Column(Modifier.align(Alignment.BottomStart).padding(bottom=home.padding.calculateBottomPadding()+4.dp,start=10.dp,end=80.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+        Column(Modifier.align(Alignment.BottomStart).padding(bottom=(home.overlayBottom ?: home.padding.calculateBottomPadding())+4.dp,start=10.dp,end=80.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
             if(roadEstimate) Row(horizontalArrangement=Arrangement.spacedBy(6.dp),modifier=Modifier.testTag("road-attributions")) {
                 credits.distinct().forEach {credit->
                     Text(stringResource(if(credit.kind==RoadAttributionKind.provider) R.string.map_road_provider_credit else R.string.map_road_data_credit,credit.name),

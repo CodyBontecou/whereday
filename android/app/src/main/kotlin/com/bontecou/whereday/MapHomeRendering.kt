@@ -77,7 +77,7 @@ internal object MapHomeLayers {
         style.addLayerBelow(CircleLayer("home-now-inner",MapHomeRender.nowSource).withProperties(circleColor(inks.live),circleOpacity(0.22f),circleRadius(14f)),"journal-visit")
         val top="journal-replay-position"
         style.addLayerBelow(SymbolLayer("home-start",MapHomeRender.startSource).withProperties(iconImage("home-diamond"),iconAllowOverlap(true),iconIgnorePlacement(true)),top)
-        style.addLayerBelow(SymbolLayer("home-chips",MapHomeRender.chipSource).withProperties(iconImage(Expression.get("icon")),iconAllowOverlap(true),iconIgnorePlacement(true)),top)
+        style.addLayerBelow(SymbolLayer("home-chips",MapHomeRender.chipSource).withProperties(iconImage(Expression.get("icon")),iconAllowOverlap(false),iconPadding(2f)),top)
         style.addLayerBelow(SymbolLayer("home-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Expression.get("anchor")),
             iconOpacity(Expression.get("opacity"))).withFilter(Expression.eq(Expression.get("kind"),Expression.literal("label"))),top)
         style.addLayerBelow(SymbolLayer("home-priority-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Expression.get("anchor")),iconAllowOverlap(true),
