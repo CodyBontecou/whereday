@@ -660,7 +660,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ GAUCHE"
+            "value": "RESTE %@"
           }
         },
         "hi": {
@@ -940,7 +940,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "CAPTURER LE CHEMIN DE SURVEILLANCE"
+            "value": "ENREGISTREMENT DU TRAJET DE LA MONTRE"
           }
         },
         "hi": {
@@ -1570,7 +1570,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La localisation est refusée. Activez-le dans Paramètres pour suivre depuis Apple Watch."
+            "value": "La localisation est refusée. Activez-la dans Paramètres pour suivre depuis Apple Watch."
           }
         },
         "hi": {
@@ -1710,7 +1710,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "EMPLACEMENT REQUIS"
+            "value": "POSITION REQUISE"
           }
         },
         "hi": {
@@ -2130,7 +2130,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ATTENDRE"
+            "value": "EN VEILLE"
           }
         },
         "hi": {
@@ -2340,7 +2340,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ARRÊT"
+            "value": "ARRÊTER"
           }
         },
         "hi": {

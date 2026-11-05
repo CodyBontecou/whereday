@@ -30,7 +30,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ gauche"
+            "value": "reste %@"
           }
         },
         "hi": {
@@ -660,7 +660,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Suivi"
+            "value": "Suivi désactivé"
           }
         },
         "hi": {

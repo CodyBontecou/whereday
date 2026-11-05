@@ -946,7 +946,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ + %2$lld plus"
+            "value": "%1$@ + %2$lld autres"
           }
         },
         "hi": {
@@ -8906,7 +8906,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "CAP DE PRÉCISION"
+            "value": "PLAFOND DE PRÉCISION"
           }
         },
         "hi": {
@@ -12548,7 +12548,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Toutes les données stockées localement. Jamais téléchargé sur un serveur."
+            "value": "Toutes les données sont stockées localement. Jamais envoyées à un serveur."
           }
         },
         "hi": {
@@ -12688,7 +12688,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Permettre"
+            "value": "Autoriser"
           }
         },
         "hi": {
@@ -12828,7 +12828,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Autoriser l'emplacement à enregistrer une visite"
+            "value": "Autorisez la localisation pour enregistrer une visite"
           }
         },
         "hi": {
@@ -13528,7 +13528,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Application : Whereday %1$@ Plateforme : %2$@ Appareil : %3$@"
+            "value": "Application : Whereday %1$@\nPlateforme : %2$@\nAppareil : %3$@"
           }
         },
         "hi": {
@@ -15209,7 +15209,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La détection des visites en arrière-plan nécessite un accès étendu à la localisation afin Whereday continue d'enregistrer lorsque l'application est fermée."
+            "value": "La détection des visites en arrière-plan nécessite un accès étendu à la localisation afin que Whereday continue d'enregistrer lorsque l'application est fermée."
           }
         },
         "hi": {
@@ -15559,7 +15559,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aperçu du bâtiment…"
+            "value": "Création de l’aperçu…"
           }
         },
         "hi": {
@@ -15629,7 +15629,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chronologie de construction…"
+            "value": "Création de la chronologie…"
           }
         },
         "hi": {
@@ -16399,7 +16399,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "COMPTER"
+            "value": "NOMBRE"
           }
         },
         "hi": {
@@ -17029,7 +17029,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "COUTUME"
+            "value": "PERSONNALISÉ"
           }
         },
         "hi": {
@@ -17940,7 +17940,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vérifier les lieux Apple Maps à proximité"
+            "value": "Vérification des lieux Apple Maps à proximité"
           }
         },
         "hi": {
@@ -19273,7 +19273,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Clair"
+            "value": "Effacer"
           }
         },
         "hi": {
@@ -20393,7 +20393,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connecting Photos permet à Whereday d'afficher les photos prises lors de cette sortie."
+            "value": "Connecter Photos permet à Whereday d’afficher les photos prises lors de cette sortie."
           }
         },
         "hi": {
@@ -20743,7 +20743,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Emplacement principal"
+            "value": "Core Location"
           }
         },
         "hi": {
@@ -20813,7 +20813,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visite correcte à %@"
+            "value": "Corriger la visite en %@"
           }
         },
         "hi": {
@@ -22073,7 +22073,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coutume"
+            "value": "Personnalisé"
           }
         },
         "hi": {
@@ -22143,7 +22143,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gamme personnalisée"
+            "value": "Plage personnalisée"
           }
         },
         "hi": {
@@ -23333,7 +23333,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Prêt pour l'exportation quotidienne"
+            "value": "Exportation quotidienne prête"
           }
         },
         "hi": {
@@ -24943,7 +24943,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Défunt"
+            "value": "Départ"
           }
         },
         "hi": {
@@ -25644,7 +25644,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rejeter"
+            "value": "Ignorer"
           }
         },
         "hi": {
@@ -26064,7 +26064,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fait"
+            "value": "OK"
           }
         },
         "hi": {
@@ -26275,7 +26275,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Déposer une épingle sur Map Center"
+            "value": "Déposer une épingle au centre de la carte"
           }
         },
         "hi": {
@@ -27675,7 +27675,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "EXPORTER LES FICHIERS %lld"
+            "value": "EXPORTER %lld FICHIERS"
           }
         },
         "hi": {
@@ -30571,7 +30571,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sorties Export"
+            "value": "Exporter les sorties"
           }
         },
         "hi": {
@@ -31551,7 +31551,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bâton des paramètres d'exportation"
+            "value": "Les paramètres d’exportation sont mémorisés"
           }
         },
         "hi": {
@@ -35263,7 +35263,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Trouver une adresse…"
+            "value": "Recherche de l’adresse…"
           }
         },
         "hi": {
@@ -35333,7 +35333,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Trouver un endroit…"
+            "value": "Recherche du lieu…"
           }
         },
         "hi": {
@@ -35753,7 +35753,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Adapté à toutes les visites"
+            "value": "Ajuster à toutes les visites"
           }
         },
         "hi": {
@@ -37923,7 +37923,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Jusqu'où vous avez parcouru aujourd'hui, selon Whereday."
+            "value": "Distance parcourue aujourd’hui, selon Whereday."
           }
         },
         "hi": {
@@ -37993,7 +37993,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Depuis combien de temps la session de suivi Whereday actuelle est-elle en cours d'exécution ?"
+            "value": "Durée de la session de suivi Whereday en cours."
           }
         },
         "hi": {
@@ -41449,7 +41449,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Articles"
+            "value": "Éléments"
           }
         },
         "hi": {
@@ -41589,7 +41589,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "REJOIGNEZ DISCORDE"
+            "value": "REJOINDRE DISCORD"
           }
         },
         "hi": {
@@ -41799,7 +41799,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON et CSV exportent les résumés des sorties. Markdown ajoute des éléments de présentation YAML ainsi que des visites et des points d'itinéraire. GPX , KML , GeoJSON , OwnTracks et Overland exportent les points d'itinéraire de sortie."
+            "value": "JSON et CSV exportent les résumés des sorties. Markdown ajoute un en-tête YAML (front matter) ainsi que des visites et des points d'itinéraire. GPX , KML , GeoJSON , OwnTracks et Overland exportent les points d'itinéraire de sortie."
           }
         },
         "hi": {
@@ -41869,7 +41869,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON et CSV résument chaque sortie, tandis que GPX , KML , GeoJSON , OwnTracks et Overland exportent les correctifs d'itinéraire."
+            "value": "JSON et CSV résument chaque sortie, tandis que GPX , KML , GeoJSON , OwnTracks et Overland exportent les positions GPS de l'itinéraire."
           }
         },
         "hi": {
@@ -43059,7 +43059,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "DERNIER ENVOYÉ"
+            "value": "DERNIER ENVOI"
           }
         },
         "hi": {
@@ -46420,7 +46420,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous cherchez des lieux à proximité de cette visite…"
+            "value": "Recherche de lieux à proximité de cette visite…"
           }
         },
         "hi": {
@@ -46910,7 +46910,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "CHEMIN CORRESPONDANT AUX ROUTES…"
+            "value": "ALIGNEMENT DU TRACÉ SUR LES ROUTES…"
           }
         },
         "hi": {
@@ -47330,7 +47330,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "SE DÉPLACE"
+            "value": "DÉPLACEMENTS"
           }
         },
         "hi": {
@@ -48100,7 +48100,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Markdown exporte cette sortie sous forme de page avec des présentations YAML , des visites et des points d'itinéraire."
+            "value": "Markdown exporte cette sortie sous forme de page avec un en-tête YAML (front matter), des visites et des points d'itinéraire."
           }
         },
         "hi": {
@@ -48170,7 +48170,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les exportations de sorties Markdown incluent les présentations YAML , les notes, les visites et les points d'itinéraire afin qu'ils soient déposés proprement dans un journal ou un système PKM."
+            "value": "Les exportations de sorties Markdown incluent l'en-tête YAML (front matter), les notes, les visites et les points d'itinéraire afin qu'ils soient déposés proprement dans un journal ou un système PKM."
           }
         },
         "hi": {
@@ -49360,7 +49360,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Plus de contrôle sur les exportations sortantes"
+            "value": "Plus de contrôle sur l’exportation des sorties"
           }
         },
         "hi": {
@@ -49640,7 +49640,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La plupart des points en premier"
+            "value": "Le plus de points en premier"
           }
         },
         "hi": {
@@ -50760,7 +50760,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visites de noms plus rapides"
+            "value": "Nommer les visites plus vite"
           }
         },
         "hi": {
@@ -55310,7 +55310,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "SORTIE EXPORT"
+            "value": "EXPORT DES SORTIES"
           }
         },
         "hi": {
@@ -55520,7 +55520,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "SORTIR"
+            "value": "RÉSULTAT"
           }
         },
         "hi": {
@@ -56010,7 +56010,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Incluez uniquement les données capturées entre ces heures chaque jour. Termine minuit si la fin est avant le début."
+            "value": "Incluez uniquement les données capturées entre ces heures chaque jour. La plage passe minuit si la fin est avant le début."
           }
         },
         "hi": {
@@ -56220,7 +56220,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ouvrez une sortie pour regarder le parcours lu avec un marqueur mobile, un épurateur, le temps écoulé, la durée et les statistiques de distance."
+            "value": "Ouvrez une sortie pour revoir le parcours avec un marqueur mobile, un curseur de lecture, le temps écoulé, la durée et les statistiques de distance."
           }
         },
         "hi": {
@@ -56780,7 +56780,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Replay de l'itinéraire ouvert"
+            "value": "Ouvrir la relecture de l’itinéraire"
           }
         },
         "hi": {
@@ -56990,7 +56990,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visite ouverte dans Maps"
+            "value": "Ouvrir la visite dans Maps"
           }
         },
         "hi": {
@@ -59580,7 +59580,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "JOUER À LA SORTIE"
+            "value": "REJOUER LA SORTIE"
           }
         },
         "hi": {
@@ -60000,7 +60000,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "APERÇU DES FICHIERS %lld"
+            "value": "APERÇU DE %lld FICHIERS"
           }
         },
         "hi": {
@@ -63036,7 +63036,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Point à l'index %lld latitude/longitude manquante"
+            "value": "Latitude/longitude manquante pour le point à l’index %lld"
           }
         },
         "hi": {
@@ -63106,7 +63106,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pointez sur l'index %lld horodatage manquant"
+            "value": "Horodatage manquant pour le point à l’index %lld"
           }
         },
         "hi": {
@@ -63876,7 +63876,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aperçu du fichier %1$lld le plus récent %2$@ avec les données. L'exportation traitera chaque fichier sélectionné."
+            "value": "Aperçu de %1$lld fichier%2$@ (les plus récents contenant des données). L’exportation traitera chaque fichier sélectionné."
           }
         },
         "hi": {
@@ -65766,7 +65766,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "COUREZ MAINTENANT"
+            "value": "EXÉCUTER MAINTENANT"
           }
         },
         "hi": {
@@ -66957,7 +66957,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Renommer les sorties à partir Shortcuts"
+            "value": "Renommer les sorties depuis Shortcuts"
           }
         },
         "hi": {
@@ -67237,7 +67237,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Emplacement de la demande"
+            "value": "Demander la position"
           }
         },
         "hi": {
@@ -67727,7 +67727,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Limité"
+            "value": "Restreint"
           }
         },
         "hi": {
@@ -68987,7 +68987,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ligne %lld : date d'arrivée_at non valide"
+            "value": "Ligne %lld : date arrived_at non valide"
           }
         },
         "hi": {
@@ -70107,7 +70107,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ATTENDRE"
+            "value": "EN VEILLE"
           }
         },
         "hi": {
@@ -70177,7 +70177,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "COMMENCER"
+            "value": "DÉBUT"
           }
         },
         "hi": {
@@ -70877,7 +70877,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sauvegarder"
+            "value": "Enregistrer"
           }
         },
         "hi": {
@@ -71647,7 +71647,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fichiers %lld enregistrés"
+            "value": "%lld fichiers enregistrés"
           }
         },
         "hi": {
@@ -71741,7 +71741,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fichiers %1$lld enregistrés dans %2$@"
+            "value": "%1$lld fichiers enregistrés dans %2$@"
           }
         },
         "hi": {
@@ -72606,7 +72606,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recherchez Apple Maps ou choisissez sur la carte"
+            "value": "Recherchez dans Apple Maps ou choisissez sur la carte"
           }
         },
         "hi": {
@@ -73453,7 +73453,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recherche d’ Apple Maps …"
+            "value": "Recherche dans Apple Maps…"
           }
         },
         "hi": {
@@ -75066,7 +75066,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager la feuille"
+            "value": "Feuille de partage"
           }
         },
         "hi": {
@@ -75276,7 +75276,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager la feuille"
+            "value": "Feuille de partage"
           }
         },
         "hi": {
@@ -77866,7 +77866,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Démarrez le suivi à partir de l'onglet Carte ou de votre automatisation Shortcuts . Des visites et des séances de déplacement apparaîtront ici de jour."
+            "value": "Démarrez le suivi à partir de l'onglet Carte ou de votre automatisation Shortcuts . Des visites et des séances de déplacement apparaîtront ici par jour."
           }
         },
         "hi": {
@@ -78846,7 +78846,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les noms et notes de sorties stockés sont inclus lorsque le format sélectionné les prend en charge. Export sorties déduites avec source : déduite."
+            "value": "Les noms et notes de sorties stockés sont inclus lorsque le format sélectionné les prend en charge. Les sorties déduites sont exportées avec source: inferred."
           }
         },
         "hi": {
@@ -84798,7 +84798,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le suivi est actif. Un nouveau mouvement apparaîtra ici après Whereday ait enregistré le premier point de localisation."
+            "value": "Le suivi est actif. Un nouveau mouvement apparaîtra ici après que Whereday a enregistré le premier point de localisation."
           }
         },
         "hi": {
@@ -88581,7 +88581,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisateur entré"
+            "value": "Saisi par l’utilisateur"
           }
         },
         "hi": {
@@ -89141,7 +89141,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "VISITER LES CHAMPS"
+            "value": "CHAMPS DE VISITE"
           }
         },
         "hi": {
@@ -89841,7 +89841,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visitez à %@"
+            "value": "Visite à %@"
           }
         },
         "hi": {
@@ -89911,7 +89911,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visite à l'index %lld champs obligatoires manquants (latitude, longitude, arrivé à)"
+            "value": "Visite à l’index %lld : champs obligatoires manquants (latitude, longitude, arrivedAt)"
           }
         },
         "hi": {
@@ -89981,7 +89981,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visiter la carte"
+            "value": "Carte de la visite"
           }
         },
         "hi": {
@@ -90401,7 +90401,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visiter la chronologie"
+            "value": "Chronologie des visites"
           }
         },
         "hi": {
@@ -91171,7 +91171,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Accueillir"
+            "value": "Bienvenue"
           }
         },
         "hi": {
@@ -91871,7 +91871,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "X- API -Key"
+            "value": "X-API-Key"
           }
         },
         "hi": {
@@ -92431,7 +92431,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous avez suivi %@ ."
+            "value": "Suivi en cours depuis %@."
           }
         },
         "hi": {
@@ -92501,7 +92501,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous êtes parti %@ aujourd'hui."
+            "value": "Vous avez parcouru %@ aujourd’hui."
           }
         },
         "hi": {
