@@ -843,6 +843,12 @@
     },
     "%lld min": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld د"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -877,6 +883,12 @@
     },
     "%lldh": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld س"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -911,6 +923,12 @@
     },
     "%@, %@ today": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@، %@ اليوم"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -945,6 +963,12 @@
     },
     "● ROUTE": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● مسار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -979,6 +1003,12 @@
     },
     "WHEREDAY": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1013,6 +1043,12 @@
     },
     "%lld VISITS · %@ LEFT": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld زيارة · متبقٍ %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1047,6 +1083,12 @@
     },
     "%lld VISITS · %lld PTS": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld زيارة · %lld نقطة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1081,6 +1123,12 @@
     },
     "Walk": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشي"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1115,6 +1163,12 @@
     },
     "Run": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جري"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1149,6 +1203,12 @@
     },
     "Bike": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دراجة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1183,6 +1243,12 @@
     },
     "Drive": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قيادة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1217,6 +1283,12 @@
     },
     "Train": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قطار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1251,6 +1323,12 @@
     },
     "Flight": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طيران"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1285,6 +1363,12 @@
     },
     "Walking": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشيًا"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1319,6 +1403,12 @@
     },
     "Running": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جريًا"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1353,6 +1443,12 @@
     },
     "Cycling": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالدراجة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1387,6 +1483,12 @@
     },
     "Driving": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالسيارة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1421,6 +1523,12 @@
     },
     "On a train": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في القطار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1455,6 +1563,12 @@
     },
     "Flying": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في الطائرة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",

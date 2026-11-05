@@ -3,6 +3,12 @@
   "strings": {
     "Sync Now": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "زامن الآن"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -37,6 +43,12 @@
     },
     "Nothing to sync.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا شيء للمزامنة."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -71,6 +83,12 @@
     },
     "iPhone sync is unavailable.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مزامنة iPhone غير متاحة."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -105,6 +123,12 @@
     },
     "Connecting to iPhone…": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ الاتصال بـ iPhone…"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -139,6 +163,12 @@
     },
     "Sync queued. Open Whereday on your iPhone.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المزامنة في الانتظار. افتح Whereday على iPhone."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -173,6 +203,12 @@
     },
     "Sync failed. Please try again.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشلت المزامنة. حاول مجددًا."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -207,6 +243,12 @@
     },
     "Synced with iPhone.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تمت المزامنة مع iPhone."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -241,6 +283,12 @@
     },
     "Couldn’t connect. Please try again.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر الاتصال. حاول مجددًا."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2515,6 +2563,12 @@
     },
     "%lld min": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld د"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2549,6 +2603,12 @@
     },
     "%lldh": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld س"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2583,6 +2643,12 @@
     },
     "Open Whereday on iPhone to choose or restore a plan.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح Whereday على iPhone لاختيار خطة أو استعادتها."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2617,6 +2683,12 @@
     },
     "Mark queued for iPhone.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التعليم في الانتظار لـ iPhone."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2651,6 +2723,12 @@
     },
     "Marking…": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ التعليم…"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2685,6 +2763,12 @@
     },
     "Marked on iPhone.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم التعليم على iPhone."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2719,6 +2803,12 @@
     },
     "Marked %@.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم تعليم %@."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2753,6 +2843,12 @@
     },
     "Couldn’t mark this place.": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر تعليم هذا المكان."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2787,6 +2883,12 @@
     },
     "Whereday, recording a route": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday، يسجّل مسارًا"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2821,6 +2923,12 @@
     },
     "Whereday, today": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday، اليوم"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2855,6 +2963,12 @@
     },
     "● Route": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● مسار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2889,6 +3003,12 @@
     },
     "Today": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اليوم"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2923,6 +3043,12 @@
     },
     "Today's dial, %lld stays, %@ moved": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قرص اليوم، %lld إقامة، تنقّل %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2957,6 +3083,12 @@
     },
     "Today's dial, %@ moved": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قرص اليوم، تنقّل %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2991,6 +3123,12 @@
     },
     "Standby": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استعداد"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3025,6 +3163,12 @@
     },
     "Location needed": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الموقع مطلوب"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3059,6 +3203,12 @@
     },
     "Check permission": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحقّق من الإذن"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3093,6 +3243,12 @@
     },
     "since %@ · %@": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "منذ %@ · %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3127,6 +3283,12 @@
     },
     "%@ · %@": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3161,6 +3323,12 @@
     },
     "last fix %@": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آخر قراءة %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3195,6 +3363,12 @@
     },
     "ready to record": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جاهز للتسجيل"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3229,6 +3403,12 @@
     },
     "%@ until auto-off": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ حتى الإيقاف التلقائي"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3263,6 +3443,12 @@
     },
     "%@ THIS ROUTE": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ هذا المسار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3297,6 +3483,12 @@
     },
     "%lld pts waiting for iPhone": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld نقطة بانتظار iPhone"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3331,6 +3523,12 @@
     },
     "Mark this place": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علِّم هذا المكان"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3365,6 +3563,12 @@
     },
     "Checks in here on your iPhone": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يسجّل الوصول هنا على iPhone"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3399,6 +3603,12 @@
     },
     "Mark": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علِّم"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3433,6 +3643,12 @@
     },
     "Stop": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إيقاف"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3467,6 +3683,12 @@
     },
     "Start route": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدء مسار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3501,6 +3723,12 @@
     },
     "Enable location": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل الموقع"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3535,6 +3763,12 @@
     },
     "Walk": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشي"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3569,6 +3803,12 @@
     },
     "Run": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جري"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3603,6 +3843,12 @@
     },
     "Bike": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دراجة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3637,6 +3883,12 @@
     },
     "Drive": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قيادة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3671,6 +3923,12 @@
     },
     "Train": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قطار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3705,6 +3963,12 @@
     },
     "Flight": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طيران"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3739,6 +4003,12 @@
     },
     "Walking": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشيًا"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3773,6 +4043,12 @@
     },
     "Running": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جريًا"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3807,6 +4083,12 @@
     },
     "Cycling": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالدراجة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3841,6 +4123,12 @@
     },
     "Driving": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالسيارة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3875,6 +4163,12 @@
     },
     "On a train": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في القطار"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3909,6 +4203,12 @@
     },
     "Flying": {
       "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في الطائرة"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
