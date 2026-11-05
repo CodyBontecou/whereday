@@ -468,7 +468,7 @@ struct LocationMapView: View {
     private static let pathStroke = StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
 
     private var traceDay: TraceDay {
-        TraceDay(range: viewModel.mapDateRange, visits: filteredVisits, points: filteredPoints, now: Date())
+        TraceDay(range: viewModel.mapDateRange, visits: filteredVisits, points: filteredPoints, now: Date(), home: homePlace)
     }
 
     /// Wide layouts inspect a visit in place, like the unfolded companion; phones keep the sheet.
