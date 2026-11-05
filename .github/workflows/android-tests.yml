@@ -25,6 +25,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0' "ndk;$(python3 scripts/verify_native_provenance.py --print-ndk-version)"
       - name: Verify domains, formats and Android build
@@ -175,6 +177,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - name: Run synthetic persistence, migration and country-analysis regressions
@@ -287,6 +291,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - name: Review, import, deduplicate and clear one million records per format
@@ -323,6 +329,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - name: Sample viewport markers from one million synthetic disk records
@@ -357,6 +365,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - name: Verify real location-service process and reboot recovery
