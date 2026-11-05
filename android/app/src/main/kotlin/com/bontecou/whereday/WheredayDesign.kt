@@ -532,12 +532,12 @@ internal data class WdDialSegment(val start:Float,val end:Float,val ink:Color)
 /** iOS's 24-hour day dial: a track ring, place-ink arcs for each stay and a coral "now" marker.
  *  Decorative only; the list beside it carries the same information for accessibility. */
 @Composable internal fun WdDayDial(segments:List<WdDialSegment>,modifier:Modifier=Modifier,now:Float?=null,nowCaption:String?=null,
-    centerText:String?=null,size:Dp=200.dp) {
+    centerText:String?=null,size:Dp=200.dp,ring:Float=0.07f) {
     val track=wd.dialTrack;val tick=wd.dialTick;val live=wd.liveDot;val card=wd.card
     Box(modifier.size(size).clearAndSetSemantics {},contentAlignment=Alignment.Center) {
         androidx.compose.foundation.Canvas(Modifier.matchParentSize()) {
             val side=this.size.minDimension
-            val stroke=side*0.07f
+            val stroke=side*ring
             val inset=side*0.06f+stroke/2
             val arcSize=androidx.compose.ui.geometry.Size(side-inset*2,side-inset*2)
             val topLeft=androidx.compose.ui.geometry.Offset(inset,inset)

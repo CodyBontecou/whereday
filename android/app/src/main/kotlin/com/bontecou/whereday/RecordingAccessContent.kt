@@ -2,6 +2,7 @@ package com.bontecou.whereday
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -125,4 +126,23 @@ import java.util.concurrent.atomic.AtomicBoolean
             confirmButton={InkDialogButton(stringResource(if(ticket.requestAllowed) action else R.string.permission_open_settings),{consume {if(ticket.requestAllowed) latestRequest.value(ticket.id) else latestSettings.value(ticket.id)}},Modifier.testTag("permission-review-confirm"))},
             dismissButton={InkDialogButton(stringResource(R.string.permission_not_now),{consume {latestDismiss.value(ticket.id)}},Modifier.testTag("permission-review-dismiss"),muted=true)})
     }}
+}
+
+/** The map home's compact form of the access notice: one rust capsule; the full notice lives in the day sheet. */
+@Composable internal fun RecordingAccessPill(state:RecordingAccessState,options:(PermissionAccessKind)->Unit,modifier:Modifier=Modifier) {
+    val location=state.location!=LocationPrecision.precise
+    if(!location && state.notifications && state.failure==null) return
+    val kind=when {state.location==LocationPrecision.approximate->PermissionAccessKind.precise;location->PermissionAccessKind.location;else->PermissionAccessKind.notifications}
+    val text=stringResource(when {
+        state.location==LocationPrecision.approximate->R.string.map_home_access_approximate
+        location->R.string.map_home_access_location
+        else->R.string.map_home_access_notifications
+    })
+    val ink=wd.inkRust
+    Row(modifier.heightIn(min=44.dp).wdFloating(CircleShape,wd,4.dp).clickable(role=Role.Button) {options(kind)}.padding(horizontal=14.dp)
+        .testTag("recording-access-pill").semantics {liveRegion=LiveRegionMode.Polite},verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+        Icon(if(location) Icons.Outlined.LocationOff else Icons.Outlined.NotificationsOff,null,Modifier.size(16.dp),tint=ink)
+        Text(text,style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=ink,maxLines=2)
+        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(16.dp),tint=ink)
+    }
 }

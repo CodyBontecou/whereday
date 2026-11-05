@@ -16,7 +16,9 @@ data class AppSettings(val onboarded: Boolean = false, val appearance: String = 
     val inferenceRules get()=com.bontecou.whereday.domain.InferenceRules(java.time.Duration.ofMinutes(inferredGapMinutes.toLong()),java.time.Duration.ofMinutes(inferredMinimumMinutes.toLong()),inferredMinimumPoints)
 }
 /** The map's persisted layer choices, mirroring iOS's @AppStorage keys where they exist. */
-data class MapLayerSettings(val path:Boolean=true,val points:Boolean=true,val visits:Boolean=true,val endpoints:Boolean=true,
+data class MapLayerSettings(val path:Boolean=true,
+    /** GPS dots start hidden on the map-first home, as in the design; one switch brings them back. */
+    val points:Boolean=false,val visits:Boolean=true,val endpoints:Boolean=true,
     /** iOS showStraightLinePathSegments: fallback straight gaps beside road-matched stretches. */
     val straightGaps:Boolean=false,
     /** The route of the recording that is running now. */
@@ -62,7 +64,7 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
         p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
-        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: true,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: false))
+        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: false))
     val settings = context.preferenceStore.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { context.preferenceStore.edit { p ->
         val previous=read(p)

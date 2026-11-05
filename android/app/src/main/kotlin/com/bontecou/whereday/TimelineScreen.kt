@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
 import java.time.*
 
 @OptIn(ExperimentalLayoutApi::class)
-@Composable fun TimelineScreen(graph: AppGraph, model: JournalViewModel, metric: Boolean, showOnMap: (RecordingSession) -> Unit,onVisitOpened:((Visit)->Unit)?=null,visitInspectionActive:Boolean=false) {
+@Composable fun TimelineScreen(graph: AppGraph, model: JournalViewModel, metric: Boolean, showOnMap: (RecordingSession) -> Unit,onVisitOpened:((Visit)->Unit)?=null,visitInspectionActive:Boolean=false,onClose:(()->Unit)?=null) {
     val day by model.timelineDay.collectAsStateWithLifecycle()
     val state by model.timelineWindow.collectAsStateWithLifecycle()
     val resources=LocalContext.current.resources
@@ -83,7 +83,10 @@ import java.time.*
     }
     val eyebrow=stringResource(R.string.timeline_redesign_eyebrow,day.format(DateTimeFormatter.ofPattern("EEE",locale)),
         day.format(DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,if(day.year==LocalDate.now().year) "MMMd" else "MMMdyyyy"),locale)),day.dayOfYear)
+    if(onClose!=null) androidx.activity.compose.BackHandler(onBack=onClose)
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("timeline-content"),contentPadding=PaddingValues(bottom=28.dp)) {
+        // Opened over the map, the timeline returns to it.
+        if(onClose!=null) item("timeline-close") {WdBackChip(stringResource(R.string.shell_map),onClose,Modifier.padding(start=16.dp,top=8.dp).testTag("timeline-close"))}
         item { WdPageHeader(stringResource(R.string.shell_timeline),eyebrow=eyebrow) {
             TimelineCapsule(stringResource(R.string.map_add_past),{ adding=true },icon=Icons.Outlined.Add)
         } }
@@ -112,7 +115,7 @@ import java.time.*
                 val chronological=(window.sessions.map {it.id to it.startedAt}+window.inferred.map {it.id to it.startedAt}).sortedWith(compareBy({it.second},{it.first}))
                 val sequences=chronological.mapIndexed {index,entry->entry.first to index+1}.toMap()
                 val entries=(window.visits.map { TimelineEntry(it.id,it.arrivedAt,visit=it) }+window.sessions.map { TimelineEntry(it.id,it.startedAt,session=it) }+window.inferred.map { TimelineEntry(it.id,it.startedAt,inferred=it) }).sortedByDescending { it.time }
-                val inks=journalInkIndex(window.visits.sortedBy {it.arrivedAt}.map {it.name?.takeIf {n->n.isNotBlank()} ?: it.id})
+                val inks=PlaceInks.index(window.visits)
                 // Like iOS at accessibility sizes, large text drops the dial so the stays stay within reach.
                 if(!largeText) item("day-dial") {
                     // The iOS Today dial: each stay inked around the 24-hour ring, with the coral "now" marker on today.
@@ -121,9 +124,9 @@ import java.time.*
                     fun fraction(at:java.time.Instant)=(java.time.Duration.between(dayStart,at).toMillis()/86_400_000f).coerceIn(0f,1f)
                     val nowInstant=java.time.Instant.now()
                     val isToday=day==LocalDate.now()
-                    val segments=window.sessions.map {WdDialSegment(fraction(it.startedAt),fraction(it.endedAt ?: nowInstant),wd.textMuted.copy(alpha=0.45f))}+
-                        window.visits.map {visit->WdDialSegment(fraction(visit.arrivedAt),fraction(visit.departedAt ?: nowInstant),
-                            wd.placeInks[(inks[visit.name?.takeIf {it.isNotBlank()} ?: visit.id] ?: 0)%wd.placeInks.size])}
+                    // The same day story as the map's day sheet: outings faint beneath, each stay in its place ink.
+                    val story=remember(window,day,nowInstant.epochSecond/60) {DayStory.build(day,zone,window.visits,window.points,nowInstant,window.summary.distanceMeters)}
+                    val segments=window.sessions.map {WdDialSegment(fraction(it.startedAt),fraction(it.endedAt ?: nowInstant),wd.textMuted.copy(alpha=0.45f))}+dayDialSegments(story)
                     Box(Modifier.fillMaxWidth().padding(top=6.dp,bottom=14.dp),contentAlignment=Alignment.Center) {
                         WdDayDial(segments,now=if(isToday) fraction(nowInstant) else null,nowCaption=if(isToday) stringResource(R.string.timeline_redesign_now) else null,
                             // The dial is a 00–24 ring, so its clock reads 24-hour time like iOS, whatever the system setting.
@@ -134,7 +137,7 @@ import java.time.*
                 items(entries,key={ if(it.visit!=null) "visit:${it.id}" else "session:${it.id}" }) { entry ->
                     val visit=entry.visit
                     if(visit!=null) {
-                        val ink=wd.placeInks[(inks[visit.name?.takeIf {it.isNotBlank()} ?: visit.id] ?: 0)%wd.placeInks.size]
+                        val ink=dayInk(inks[placeKey(visit)] ?: 0)
                         val ongoing=visit.departedAt==null
                         val inspected=visitInspectionActive && openedVisitId==visit.id
                         val fg=if(ongoing) wd.onInkCard else wd.textPrimary
