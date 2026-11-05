@@ -83,8 +83,8 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     val range=window?.range ?: selected.range(now,zone)
     val firstDay=range.from.atZone(zone).toLocalDate()
     val lastDay=minOf(range.until.minusMillis(1),now).atZone(zone).toLocalDate().coerceAtLeast(firstDay)
-    // Presets decide: Today, Yesterday, an outing or a focused visit are one day; 7D, 30D and All are ranges; a custom range is a range when it spans days.
-    val multiDay=when(selected.preset) {"7 days","30 days","All"->true;"Custom"->lastDay>firstDay;else->false}
+    // Presets decide: Today, Yesterday, an outing or a focused visit are one day; 7D, 30D and All are ranges; This month and a custom range are ranges when they span days.
+    val multiDay=when(selected.preset) {"7 days","30 days","All"->true;"This month","Custom"->lastDay>firstDay;else->false}
     val today=LocalDate.now(zone)
     val story=remember(window,firstDay,now.epochSecond/60) {window?.takeIf {!multiDay}?.let {DayStory.build(firstDay,zone,it.visits,it.points,now,it.summary.distanceMeters)}}
     // One per-day scan per selection; Room invalidation (not the live clock tick) refreshes it.
@@ -233,8 +233,11 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
         },null,ManualVisitMode.valueOf(mode),seed=editorSeed)
     }
     if(custom) {
-        val draft=rememberSaveable(selected,saver=mapDateDraftSaver) {model.mapDateDraft()}
-        CustomMapDateRange(draft,{custom=false}) {selection->model.mapSelection.value=selection;custom=false}
+        val draft=remember(selected) {model.mapRangeDraft()}
+        val arrivals by remember(graph) {graph.history.observeVisitArrivals()}.collectAsStateWithLifecycle(emptyList())
+        val zone=model.mapZone()
+        val recordedDays=remember(arrivals,zone) {arrivals.mapTo(HashSet()) {it.atZone(zone).toLocalDate()}}
+        MapRangeSheet(draft,recordedDays,model::mapNow,zone,{custom=false}) {selection->model.mapSelection.value=selection;custom=false}
     }
     if(layersOpen) MapLayersSheet(graph,layers,::setLayers,showOutliers,onOutliers,photoLayer,active,window?.endpoints ?: RouteEndpoints()) {layersOpen=false}
     if(searching) MapSearchDialog(graph,{searching=false}) {result->
@@ -354,18 +357,6 @@ internal sealed interface MapSearchResult {
         }
     }
 }
-
-internal val mapDateDraftSaver=listSaver<MapDateDraft,String>(
-    save={listOf(it.range.from.toString(),it.range.until.toString(),it.zone.id,
-        it.pendingFirst.toString(),it.pendingLast.toString(),it.selectedFirst.toString(),it.selectedLast.toString(),
-        it.firstEdited.toString(),it.lastEdited.toString())},
-    restore={values->
-        val range=HistoryRange(Instant.parse(values[0]),Instant.parse(values[1]));val zone=ZoneId.of(values[2])
-        if(values.size==3) MapDateDraft(range,zone) else MapDateDraft(range,zone,
-            Instant.parse(values[3]),Instant.parse(values[4]),LocalDate.parse(values[5]),LocalDate.parse(values[6]),
-            values[7].toBooleanStrict(),values[8].toBooleanStrict())
-    }
-)
 
 /** The visit moved to the place picked for it (iOS correctVisit(with:)), with the same name and address rules as the
  *  visit editor's picker (VisitDraft.selectLocation): a picked place brings its own; a moved pin alone keeps them. */

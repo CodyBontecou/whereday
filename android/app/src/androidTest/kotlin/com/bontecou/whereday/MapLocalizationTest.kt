@@ -60,7 +60,7 @@ class MapLocalizationTest {
             selectedKey=selected
             MapDateFilter(selected) {selected=it;picked+=it}
         }}
-        val labels=listOf("Hoy","Ayer","7 días","30 días","Todo","Personalizado")
+        val labels=listOf("Hoy","Ayer","7 días","Mes","30 días","Todo","Personalizado")
         for((index,key) in mapDatePresets.withIndex()) {
             compose.onNodeWithText(labels.getOrElse(index-1) {"Hoy"}).performClick()
             compose.onNode(hasText(labels[index]) and hasAnyAncestor(isPopup())).performClick()

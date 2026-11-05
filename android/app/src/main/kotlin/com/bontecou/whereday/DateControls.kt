@@ -36,15 +36,6 @@ import java.util.concurrent.atomic.AtomicReference
     zone:ZoneId?=ZoneId.systemDefault(),enabled:Boolean=true,save:(LocalDate,LocalDate)->Unit
 ) = CustomDateRangeEditor(first,last,dismiss,latestDate,zone,{_,_->null},{_,_->},enabled,save)
 
-@Composable internal fun CustomMapDateRange(draft:MapDateDraft,dismiss:()->Unit,save:(MapSelection)->Unit) {
-    var edited by rememberSaveable(draft,stateSaver=mapDateDraftSaver) {mutableStateOf(draft)}
-    CustomDateRangeEditor(draft.first,draft.last,dismiss,null,draft.zone,edited::error,
-        onDates={a,b->
-            // Invalid/overflowing text is displayed for correction, never committed as a binding.
-            runCatching {edited.edit(a,b)}.getOrNull()?.let {edited=it}
-        },save={a,b->save(edited.apply(a,b))})
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable private fun CustomDateRangeEditor(
     first:LocalDate,last:LocalDate,dismiss:()->Unit,latestDate:LocalDate?,zone:ZoneId?,

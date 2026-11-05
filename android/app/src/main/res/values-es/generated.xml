@@ -501,6 +501,7 @@
     <string name="map_date_all">Todo</string>
     <string name="map_date_custom">Personalizado</string>
     <string name="map_date_month">30 días</string>
+    <string name="map_date_this_month">Mes</string>
     <string name="map_date_today">Hoy</string>
     <string name="map_date_visit">Día de la visita</string>
     <string name="map_date_week">7 días</string>
@@ -653,6 +654,13 @@
     <string name="map_point_speed_imperial">Velocidad: %s mph</string>
     <string name="map_point_speed_metric">Velocidad: %s km/h</string>
     <string name="map_point_title">Punto GPS registrado</string>
+    <string name="map_range_all_time">Todo el tiempo</string>
+    <string name="map_range_has_visits">Tiene visitas</string>
+    <string name="map_range_last_30_days">Últimos 30 días</string>
+    <string name="map_range_last_7_days">Últimos 7 días</string>
+    <string name="map_range_next_month">Mes siguiente</string>
+    <string name="map_range_previous_month">Mes anterior</string>
+    <string name="map_range_this_month">Este mes</string>
     <string name="map_redesign_header_eyebrow">Whereday · %1$s</string>
     <string name="map_redesign_live_path">Ruta en directo</string>
     <string name="map_redesign_on_map">En este mapa</string>
@@ -662,6 +670,7 @@
     <string name="map_redesign_standby">En espera</string>
     <string name="map_refresh_photos">Actualizar fotos vinculadas</string>
     <string name="map_replay">Reproducir ruta</string>
+    <string name="map_reset_dates">Reiniciar</string>
     <string name="map_retry_history">Intentar de nuevo</string>
     <string name="map_retry_photos">Reintentar los lugares con fotos</string>
     <string name="map_road_data_credit">© colaboradores de %1$s</string>
@@ -671,6 +680,11 @@
     <string name="map_route_start">Inicio de la ruta · %1$s</string>
     <string name="map_save_current">Guardar lugar actual</string>
     <string name="map_selected_visit">Visita seleccionada: %s</string>
+    <plurals name="map_show_day_count">
+        <item quantity="one">Mostrar %d día</item>
+        <item quantity="other">Mostrar %d días</item>
+    </plurals>
+    <string name="map_show_days">Mostrar días</string>
     <string name="map_tiles_disclosure">Mapas: OpenFreeMap / OpenMapTiles / OpenStreetMap. El proveedor del mapa recibe solicitudes sobre la zona visible.</string>
     <string name="map_tiles_failed">No se pudo cargar el mapa. Tu historial está a salvo. Desactiva Mapa en línea para ver la ruta sin conexión.</string>
     <string name="map_visit_saved">Visita guardada. Revísala en la línea de tiempo.</string>

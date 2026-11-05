@@ -37,48 +37,39 @@ class CustomDateRangesTest {
         val outside=Instant.ofEpochMilli(Long.MAX_VALUE).atZone(ZoneOffset.UTC).toLocalDate()
         assertEquals(CustomDateError.unsupported,customDateError(outside,outside,null,ZoneOffset.UTC))
     }
-    @Test fun changingOneDateRetainsItsClockMinuteAndTheOtherExactInstant() {
-        val start=Instant.parse("2026-10-10T18:12:34.125Z")
-        val end=Instant.parse("2026-10-12T20:34:56.875Z")
-        val draft=MapDateDraft(HistoryRange(start,end.plusMillis(1)),ZoneOffset.UTC)
-        val changedStart=draft.apply(LocalDate.of(2026,10,11),draft.last).range(Instant.EPOCH,ZoneOffset.UTC)
-        assertEquals(Instant.parse("2026-10-11T18:12:00Z"),changedStart.from)
-        assertEquals(end.plusMillis(1),changedStart.until)
-        val changedEnd=draft.apply(draft.first,LocalDate.of(2026,10,13)).range(Instant.EPOCH,ZoneOffset.UTC)
-        assertEquals(start,changedEnd.from)
-        assertEquals(Instant.parse("2026-10-13T20:34:00.001Z"),changedEnd.until)
-    }
-
-    @Test fun daylightSavingEditsRetainTheOriginalClockMinutes() {
-        val zone=ZoneId.of("America/New_York")
-        val draft=MapDateDraft(HistoryRange.days(LocalDate.of(2026,3,1),LocalDate.of(2026,3,2),zone),zone)
-        val day=LocalDate.of(2026,3,8)
-        val edited=draft.apply(day,day).range(Instant.EPOCH,zone)
-        assertEquals(Instant.parse("2026-03-08T05:00:00Z"),edited.from)
-        assertEquals(Instant.parse("2026-03-09T03:59:00.001Z"),edited.until)
-        assertTrue(edited.contains(edited.until.minusMillis(1)));assertFalse(edited.contains(edited.until))
-    }
-    @Test fun unchangedPresetOrOutingKeepsItsExactBounds() {
-        val now=Instant.parse("2026-10-31T18:12:34.125Z")
-        val zone=ZoneId.of("Pacific/Honolulu")
-        val selections=listOf("Today","Yesterday","7 days","30 days","All").map {MapSelection(it)}+
-            MapSelection("Outing",outingRange=HistoryRange(now.minusSeconds(3600),now))
-        for(selection in selections) {
-            val initial=selection.range(now,zone);val draft=MapDateDraft(initial,zone)
-            assertEquals(initial,draft.apply(draft.first,draft.last).range(now.plusSeconds(3600),zone))
+    private val now=Instant.parse("2026-11-04T15:30:12.345Z")
+    @Test fun openingOnAPresetKeepsItAndAnOutingOpensOnItsWholeDays() {
+        val zone=ZoneOffset.UTC;val today=LocalDate.of(2026,11,4)
+        for(preset in MapRangeDraft.presets) {
+            val draft=MapRangeDraft.open(MapSelection(preset),now,zone)
+            assertEquals(preset,draft.preset)
+            assertEquals(MapSelection(preset),draft.apply(now,zone))
+            assertEquals(today.takeUnless {preset=="Yesterday"} ?: today.minusDays(1),draft.upper)
         }
+        assertEquals(today,MapRangeDraft.open(MapSelection("All"),now,zone).lower)
+        val outing=MapSelection("Outing",outingRange=HistoryRange(Instant.parse("2026-10-10T18:12:34Z"),Instant.parse("2026-10-12T00:00:00Z")))
+        val draft=MapRangeDraft.open(outing,now,zone)
+        assertEquals(listOf(null,LocalDate.of(2026,10,10),LocalDate.of(2026,10,11)),listOf(draft.preset,draft.lower,draft.upper))
+        assertEquals(HistoryRange(Instant.parse("2026-10-10T00:00:00Z"),Instant.parse("2026-10-12T00:00:00Z")),draft.apply(now,zone).range(now,zone))
     }
-    @Test fun retainedClockOrderIsCheckedAfterDateEdits() {
-        val range=HistoryRange(Instant.parse("2026-10-10T20:00:00Z"),Instant.parse("2026-10-11T10:00:00.001Z"))
-        val draft=MapDateDraft(range,ZoneOffset.UTC)
-        val day=LocalDate.of(2026,10,11)
-        assertEquals(CustomDateError.retainedTimes,draft.error(day,day))
-        assertThrows(IllegalArgumentException::class.java) {draft.apply(day,day)}
-        assertNull(draft.error(day,day.plusDays(1)))
+    @Test fun aWindowEndingInTheFutureOpensOnToday() {
+        val zone=ZoneOffset.UTC
+        val draft=MapRangeDraft.open(MapSelection("Custom",outingRange=HistoryRange(now.minusSeconds(86_400),now.plusSeconds(864_000))),now,zone)
+        assertEquals(LocalDate.of(2026,11,4),draft.upper);assertEquals(YearMonth.of(2026,11),draft.month)
+        assertFalse(draft.canShowNextMonth(now,zone));assertTrue(draft.showMonth(-1).canShowNextMonth(now,zone))
     }
-    @Test fun aHalfOpenMidnightEndSeedsThePreviousCivilDay() {
-        val first=LocalDate.of(1850,12,31);val last=LocalDate.of(1851,1,2)
-        val draft=MapDateDraft(HistoryRange.days(first,last,ZoneOffset.UTC),ZoneOffset.UTC)
-        assertEquals(first,draft.first);assertEquals(last,draft.last)
+    @Test fun allTimeCountsEveryDaySinceTheFirstRecordedDay() {
+        val zone=ZoneOffset.UTC;val draft=MapRangeDraft.open(MapSelection("Today"),now,zone).select("All",now,zone)
+        assertEquals(1,draft.applyDayCount(null,now,zone))
+        assertEquals(1,draft.applyDayCount(LocalDate.of(2026,11,4),now,zone))
+        assertEquals(35,draft.applyDayCount(LocalDate.of(2026,10,1),now,zone))
+        assertEquals(1,draft.select("Today",now,zone).applyDayCount(LocalDate.of(2026,10,1),now,zone))
+    }
+    @Test fun aCustomSpanEndingTodayStopsAtNow() {
+        val zone=ZoneId.of("America/New_York")
+        val draft=MapRangeDraft.open(MapSelection("Today"),now,zone).tap(LocalDate.of(2026,11,2),now,zone).tap(LocalDate.of(2026,11,4),now,zone)
+        assertNull(draft.preset)
+        assertEquals(HistoryRange(Instant.parse("2026-11-02T05:00:00Z"),now.plusMillis(1)),draft.apply(now,zone).range(now,zone))
+        assertEquals(3,draft.dayCount)
     }
 }

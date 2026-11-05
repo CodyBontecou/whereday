@@ -161,6 +161,7 @@ interface HistoryDao {
     @Upsert suspend fun put(row: CountryAnalysisRow)
     @Query("SELECT * FROM points ORDER BY value_time DESC LIMIT :limit") fun observePoints(limit: Int = 2500): Flow<List<PointRow>>
     @Query("SELECT * FROM visits ORDER BY value_arrivedAt DESC") fun observeVisits(): Flow<List<VisitRow>>
+    @Query("SELECT DISTINCT value_arrivedAt FROM visits ORDER BY value_arrivedAt") fun observeVisitArrivals(): Flow<List<Instant>>
     @Query("SELECT * FROM sessions ORDER BY value_startedAt DESC") fun observeSessions(): Flow<List<SessionRow>>
     @Query("SELECT * FROM places ORDER BY value_name COLLATE NOCASE") fun observePlaces(): Flow<List<PlaceRow>>
     @Query("SELECT * FROM country_stays") fun observeStays(): Flow<List<StayRow>>
