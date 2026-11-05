@@ -98096,7 +98096,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Guardar dónde estoy"
+            "value": "Guardar donde estoy"
           }
         },
         "fr": {
@@ -98238,7 +98238,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Soltar un pin"
+            "value": "Colocar un marcador"
           }
         },
         "fr": {
@@ -100865,7 +100865,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pines"
+            "value": "Marcadores"
           }
         },
         "fr": {
@@ -127163,7 +127163,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Soltar un pin aquí"
+            "value": "Colocar un marcador aquí"
           }
         },
         "fr": {
