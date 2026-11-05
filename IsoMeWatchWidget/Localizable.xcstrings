@@ -866,6 +866,12 @@
             "state": "translated",
             "value": "%lld min"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
         }
       }
     },
@@ -890,6 +896,12 @@
           }
         },
         "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
+          }
+        },
+        "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
@@ -922,6 +934,12 @@
             "state": "translated",
             "value": "%@、今日%@"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@，今天 %@"
+          }
         }
       }
     },
@@ -950,6 +968,12 @@
             "state": "translated",
             "value": "● ルート"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● 路线"
+          }
         }
       }
     },
@@ -974,6 +998,12 @@
           }
         },
         "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
+        "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "WHEREDAY"
@@ -1006,6 +1036,12 @@
             "state": "translated",
             "value": "訪問%lld件 · 残り%@"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 次到访 · 剩余 %@"
+          }
         }
       }
     },
@@ -1033,6 +1069,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "訪問%lld件 · %lld PTS"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 次到访 · %lld 个点"
           }
         }
       }
@@ -1062,6 +1104,12 @@
             "state": "translated",
             "value": "徒歩"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "步行"
+          }
         }
       }
     },
@@ -1089,6 +1137,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ラン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跑步"
           }
         }
       }
@@ -1118,6 +1172,12 @@
             "state": "translated",
             "value": "自転車"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "骑行"
+          }
         }
       }
     },
@@ -1145,6 +1205,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "車"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "驾车"
           }
         }
       }
@@ -1174,6 +1240,12 @@
             "state": "translated",
             "value": "電車"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "火车"
+          }
         }
       }
     },
@@ -1201,6 +1273,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行機"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飞行"
           }
         }
       }
@@ -1230,6 +1308,12 @@
             "state": "translated",
             "value": "徒歩"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "步行中"
+          }
         }
       }
     },
@@ -1257,6 +1341,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ランニング"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跑步中"
           }
         }
       }
@@ -1286,6 +1376,12 @@
             "state": "translated",
             "value": "サイクリング"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "骑行中"
+          }
         }
       }
     },
@@ -1313,6 +1409,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "運転中"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "驾车中"
           }
         }
       }
@@ -1342,6 +1444,12 @@
             "state": "translated",
             "value": "電車で移動中"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "乘火车中"
+          }
         }
       }
     },
@@ -1369,6 +1477,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行中"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飞行中"
           }
         }
       }

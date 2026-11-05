@@ -446,6 +446,12 @@
             "state": "translated",
             "value": "今日はまだ場所がありません"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今天还没有地点"
+          }
         }
       }
     },
@@ -473,6 +479,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@（%@から）"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@，从 %@ 起"
           }
         }
       }
@@ -502,6 +514,12 @@
             "state": "translated",
             "value": "今日の場所"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今天的地点"
+          }
         }
       }
     },
@@ -529,6 +547,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日の滞在を24時間の帯で表示。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以 24 小时条形图显示今天的停留。"
           }
         }
       }
@@ -558,6 +582,12 @@
             "state": "translated",
             "value": "今日"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今天"
+          }
         }
       }
     },
@@ -585,6 +615,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@から"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自 %@ 起"
           }
         }
       }
@@ -614,6 +650,12 @@
             "state": "translated",
             "value": "滞在なし"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚无停留"
+          }
         }
       }
     },
@@ -641,6 +683,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "移動中"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移动中"
           }
         }
       }
@@ -670,6 +718,12 @@
             "state": "translated",
             "value": "%lld日目"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %lld 天"
+          }
         }
       }
     },
@@ -697,6 +751,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "場所"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "地点"
           }
         }
       }
@@ -726,6 +786,12 @@
             "state": "translated",
             "value": "移動"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移动"
+          }
         }
       }
     },
@@ -753,6 +819,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "滞在"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停留"
           }
         }
       }
@@ -782,6 +854,12 @@
             "state": "translated",
             "value": "記録"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已记录"
+          }
         }
       }
     },
@@ -809,6 +887,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "1日のダイヤル"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日表盘"
           }
         }
       }
@@ -838,6 +922,12 @@
             "state": "translated",
             "value": "今日の場所を24時間のダイヤルで表示。"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 24 小时表盘上显示今天的地点。"
+          }
         }
       }
     },
@@ -865,6 +955,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "24時間ダイヤル：%@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 小时表盘：%@"
           }
         }
       }
@@ -894,6 +990,12 @@
             "state": "translated",
             "value": "この場所を記録"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "标记此地点"
+          }
         }
       }
     },
@@ -921,6 +1023,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wheredayのライブアクティビティから現在地にチェックインします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从 Whereday 实时活动在你当前的地点签到。"
           }
         }
       }
@@ -950,6 +1058,12 @@
             "state": "translated",
             "value": "場所の名前"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "地点名称"
+          }
         }
       }
     },
@@ -977,6 +1091,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "緯度"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "纬度"
           }
         }
       }
@@ -1006,6 +1126,12 @@
             "state": "translated",
             "value": "経度"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "经度"
+          }
         }
       }
     },
@@ -1033,6 +1159,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ルートを停止"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止路线"
           }
         }
       }
@@ -1062,6 +1194,12 @@
             "state": "translated",
             "value": "ライブアクティビティから現在のWheredayの記録を停止します。"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从实时活动停止当前的 Whereday 记录。"
+          }
         }
       }
     },
@@ -1089,6 +1227,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "● 記録中 · %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● 记录中 · %@"
           }
         }
       }
@@ -1118,6 +1262,12 @@
             "state": "translated",
             "value": "● 記録中"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● 记录中"
+          }
         }
       }
     },
@@ -1145,6 +1295,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ PTS · 残り%@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 个点 · 剩余 %@"
           }
         }
       }
@@ -1174,6 +1330,12 @@
             "state": "translated",
             "value": "%@ PTS"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 个点"
+          }
         }
       }
     },
@@ -1201,6 +1363,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "記録中"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记录中"
           }
         }
       }
@@ -1230,6 +1398,12 @@
             "state": "translated",
             "value": "今日のダイヤル：%@"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今天的表盘：%@"
+          }
         }
       }
     },
@@ -1257,6 +1431,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今天"
           }
         }
       }
@@ -1286,6 +1466,12 @@
             "state": "translated",
             "value": "ポイント"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置点"
+          }
         }
       }
     },
@@ -1313,6 +1499,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "記録時間"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已记录"
           }
         }
       }
@@ -1342,6 +1534,12 @@
             "state": "translated",
             "value": "自動停止まで"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "距自动停止"
+          }
         }
       }
     },
@@ -1369,6 +1567,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "現在地にチェックインします"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在你当前的地点签到"
           }
         }
       }
@@ -1398,6 +1602,12 @@
             "state": "translated",
             "value": "記録を停止します"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止记录"
+          }
         }
       }
     },
@@ -1425,6 +1635,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "この場所を記録"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "标记此地点"
           }
         }
       }
@@ -1454,6 +1670,12 @@
             "state": "translated",
             "value": "ルートを停止"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止路线"
+          }
         }
       }
     },
@@ -1481,6 +1703,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "徒歩"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "步行"
           }
         }
       }
@@ -1510,6 +1738,12 @@
             "state": "translated",
             "value": "ラン"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跑步"
+          }
         }
       }
     },
@@ -1537,6 +1771,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "自転車"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "骑行"
           }
         }
       }
@@ -1566,6 +1806,12 @@
             "state": "translated",
             "value": "車"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "驾车"
+          }
         }
       }
     },
@@ -1593,6 +1839,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "電車"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "火车"
           }
         }
       }
@@ -1622,6 +1874,12 @@
             "state": "translated",
             "value": "飛行機"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飞行"
+          }
         }
       }
     },
@@ -1649,6 +1907,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "徒歩"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "步行中"
           }
         }
       }
@@ -1678,6 +1942,12 @@
             "state": "translated",
             "value": "ランニング"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跑步中"
+          }
         }
       }
     },
@@ -1705,6 +1975,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "サイクリング"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "骑行中"
           }
         }
       }
@@ -1734,6 +2010,12 @@
             "state": "translated",
             "value": "運転中"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "驾车中"
+          }
         }
       }
     },
@@ -1762,6 +2044,12 @@
             "state": "translated",
             "value": "電車で移動中"
           }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "乘火车中"
+          }
         }
       }
     },
@@ -1789,6 +2077,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行中"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飞行中"
           }
         }
       }
