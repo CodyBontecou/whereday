@@ -455,11 +455,10 @@ final class LocationViewModelPointScalingTests: XCTestCase {
     }
 
     func testCorrectedOpenVisitReceivesDepartureAtDetectedCoordinate() async throws {
-        let previous = UserDefaults.standard.object(forKey: "allowNetworkGeocoding")
-        UserDefaults.standard.set(false, forKey: "allowNetworkGeocoding")
-        defer { UserDefaults.standard.set(previous, forKey: "allowNetworkGeocoding") }
+        let defaults = makeIsolatedDefaults()
+        defaults.set(false, forKey: "allowNetworkGeocoding")
         let container = try makeInMemoryContainer()
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager(defaults: defaults)
         manager.setModelContext(container.mainContext)
         let arrival = Date().addingTimeInterval(-1800)
         let visit = Visit(latitude: 18.4, longitude: -66.1, arrivedAt: arrival)
@@ -481,9 +480,10 @@ final class LocationViewModelPointScalingTests: XCTestCase {
     }
 
     func testLiveBatchAppendAddsEveryPointToMapAndSessionCaches() async throws {
-        UserDefaults.standard.set(false, forKey: "allowNetworkGeocoding")
+        let defaults = makeIsolatedDefaults()
+        defaults.set(false, forKey: "allowNetworkGeocoding")
         let container = try makeInMemoryContainer()
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager(defaults: defaults)
         let start = Date()
         manager.isTrackingEnabled = true
         manager.isLiveActivityEnabled = false
@@ -625,7 +625,7 @@ final class LocationViewModelPointScalingTests: XCTestCase {
     func testDeletingActiveOutingStopsTrackingAndIncludesNewPoints() throws {
         let container = try makeInMemoryContainer()
         let context = container.mainContext
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager()
         let start = Date().addingTimeInterval(-5 * 60)
         manager.isTrackingEnabled = true
         manager.isLiveActivityEnabled = false
@@ -889,12 +889,7 @@ final class LocationViewModelPointScalingTests: XCTestCase {
     }
 
     private func resetUserDefaults() {
-        UserDefaults.standard.removeObject(forKey: "isTrackingEnabled")
-        UserDefaults.standard.removeObject(forKey: "stopAfterHours")
-        UserDefaults.standard.removeObject(forKey: "distanceFilter")
-        UserDefaults.standard.removeObject(forKey: "isLiveActivityEnabled")
-        UserDefaults.standard.removeObject(forKey: "allowNetworkGeocoding")
-        UserDefaults.standard.removeObject(forKey: "activeRecordingSessionID")
+        // LocationManager state lives in each test's own suite (makeIsolatedLocationManager), not here.
         UserDefaults.standard.removeObject(forKey: RecordingSessionInferenceConfiguration.includesInferredSessionsKey)
         UserDefaults.standard.removeObject(forKey: RecordingSessionInferenceConfiguration.gapPresetKey)
         UserDefaults.standard.removeObject(forKey: RecordingSessionInferenceConfiguration.minimumDurationPresetKey)
@@ -912,7 +907,7 @@ final class LocationViewModelPointScalingTests: XCTestCase {
     }
 
     private func makeViewModel(container: ModelContainer) -> LocationViewModel {
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager()
         manager.isTrackingEnabled = false
         manager.trackingStartTime = nil
         return LocationViewModel(

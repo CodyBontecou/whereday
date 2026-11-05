@@ -182,7 +182,7 @@ PAGES.append({
     "headline": "GPX, KML or GeoJSON: choose a file you can use",
     "description": "Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.",
     "lede": "Choose for your destination, check what the file preserves, and keep an original you can return to.",
-    "published": "2026-10-30", "modified": "2026-10-30", "source": "gpx-kml-geojson-location-history.html"
+    "published": "2026-10-30", "modified": "2026-11-03", "source": "gpx-kml-geojson-location-history.html"
 })
 
 PAGES.extend([

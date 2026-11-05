@@ -1,4 +1,4 @@
-"""Coverage checks for the illustrated onboarding's editorial headlines."""
+"""Coverage checks for the onboarding's editorial headlines (the 2.0 three-page flow)."""
 import json
 import unittest
 
@@ -6,11 +6,9 @@ import localization_catalog as catalog
 
 
 HEADLINES = (
-    "Every day\nhas a story.",
-    "The shape\nof your day.",
-    "Your places,\nautomatically.",
-    "Your places.\nYour photographs.",
-    "Ready for your\nnext chapter.",
+    "Every day\nis a page.",
+    "It stays\non this phone.",
+    "How much\nshould it remember?",
 )
 
 

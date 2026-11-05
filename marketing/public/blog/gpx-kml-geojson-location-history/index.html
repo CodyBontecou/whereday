@@ -119,7 +119,7 @@ pre code { overflow-wrap: normal; }
       "name": "GPX vs KML vs GeoJSON: Choose a Location File — Whereday",
       "description": "Compare GPX, KML, GeoJSON and CSV for location history. Download the same invented trip in four formats and check coordinates, times and segment boundaries.",
       "inLanguage": "en",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-11-03",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -260,12 +260,12 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Choose a file format</li></ol></nav>
     <article aria-labelledby="article-title">
-    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">GPX, KML or GeoJSON: choose a file you can use</h1><p class="lede">Choose for your destination, check what the file preserves, and keep an original you can return to.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-10-30">October 30, 2026</time></p></header>
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">GPX, KML or GeoJSON: choose a file you can use</h1><p class="lede">Choose for your destination, check what the file preserves, and keep an original you can return to.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-03">November 3, 2026</time></p></header>
     <section aria-labelledby="quick-answer">
   <h2 id="quick-answer">Choose the format your next tool can use</h2>
   <p><strong>GPX</strong> is a useful starting point for a GPS track or route. Choose <strong>KML</strong> when your destination expects Google Earth-style features, <strong>GeoJSON</strong> for mapping or GIS work, and <strong>CSV</strong> for a point table. Check the destination’s actual import requirements before converting.</p>
   <p>The extension does not tell you everything a file preserves. A line on a map, a timed recording, and a restorable location journal are different outputs. Keep the original file alongside any converted copy.</p>
-  <nav class="article-toc" aria-label="In this guide"><ol><li><a href="#choose">Match a format to your task</a></li><li><a href="#example">Download the same invented trip in four formats</a></li><li><a href="#differences">Inspect coordinates, timestamps and segments</a></li><li><a href="#check">Check a conversion before relying on it</a></li><li><a href="#whereday">Choose a Whereday export or restore workflow</a></li></ol></nav>
+  <nav class="article-toc" aria-label="In this guide"><ol><li><a href="#choose">Match a format to your task</a></li><li><a href="#example">Download the same invented trip in four formats</a></li><li><a href="#differences">Inspect coordinates, timestamps and segments</a></li><li><a href="#spreadsheet">Check a CSV in a spreadsheet</a></li><li><a href="#check">Check a conversion before relying on it</a></li><li><a href="#whereday">Choose a Whereday export or restore workflow</a></li></ol></nav>
 </section>
 <section aria-labelledby="choose">
   <h2 id="choose">GPX vs KML vs GeoJSON vs CSV</h2>
@@ -307,6 +307,25 @@ CSV:     latitude=0, longitude=10</code></pre>
   <h3>Keep the break instead of inventing a connection</h3>
   <p>The GPX uses two <code>trkseg</code> elements. The KML has two timed tracks and <code>gx:interpolate</code> set to 0. The GeoJSON has two separate LineString features. In CSV, <code>group</code> is 1 for the first three rows and 2 for the last two; point numbering restarts in each group.</p>
   <p>A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.</p>
+</section>
+<section aria-labelledby="spreadsheet">
+  <h2 id="spreadsheet">Open a GPX-derived CSV without losing its meaning</h2>
+  <p>Start with the <a href="/samples/synthetic-format-trip.csv" download>five-row synthetic CSV</a> above, or open its <a href="/samples/synthetic-format-trip.gpx" download>source GPX</a> in the <a href="/tools/gpx-viewer/">local viewer</a> and choose <strong>Download points as CSV</strong>. This is a point table for inspection, not a Whereday restore file.</p>
+  <ol>
+    <li><strong>Import a copy with a preview.</strong> Select a comma delimiter and check that the header becomes nine columns, from <code>kind</code> through <code>original_time</code>. If everything appears in one column, fix the delimiter before editing any values.</li>
+    <li><strong>Keep timestamps as text initially.</strong> Preserve both <code>time_utc</code> and <code>original_time</code> exactly. Automatic date conversion can hide the offset or change the display; make a separate column if you need spreadsheet date calculations.</li>
+    <li><strong>Check decimal coordinates.</strong> The second row of data should have latitude <code>0.001</code> and longitude <code>10.001</code>. Use import settings that interpret the decimal point correctly, and do not swap the two columns.</li>
+    <li><strong>Keep whole rows together.</strong> Retain the original order for comparison. If you sort a working copy, include every column and sort by group, then point; point numbering restarts in each segment.</li>
+  </ol>
+  <div class="table-scroll" role="region" aria-label="Synthetic CSV import checks" tabindex="0"><table><caption>Expected values after importing the invented example</caption><thead><tr><th scope="col">Check</th><th scope="col">Expected result</th><th scope="col">Why it matters</th></tr></thead><tbody>
+    <tr><th scope="row">Rows and groups</th><td>Five data rows; group 1 has three, group 2 has two</td><td>A header is not a point, and the two segments must remain distinguishable.</td></tr>
+    <tr><th scope="row">First timestamp</th><td><code>2000-01-01T12:00:00.000Z</code> in <code>time_utc</code></td><td>The Z means UTC, not the spreadsheet computer’s local time.</td></tr>
+    <tr><th scope="row">Original timestamp</th><td><code>2000-01-01T12:00:00Z</code> in <code>original_time</code></td><td>These two strings describe the same instant; the extra zeros are fractional seconds.</td></tr>
+    <tr><th scope="row">Elevation</th><td>Five blank <code>elevation_m</code> cells</td><td>Missing elevation is not measured sea-level elevation. Do not replace blanks with zero.</td></tr>
+  </tbody></table></div>
+  <p>For a separate invented timezone example, <code>2000-01-01T08:00:00-04:00</code> and <code>2000-01-01T12:00:00Z</code> identify the same instant. Removing the offset would lose that meaning. A timestamp’s offset also does not identify a named timezone or its daylight-saving rules; keep the source text alongside any display conversion.</p>
+  <p>Before sending a saved CSV to another tool, reopen it as text and compare the header, first and last timestamps, blank elevations and group values with the untouched copy. A spreadsheet workbook can retain formatting and formulas that a CSV cannot. Keep calculations in a separate workbook and preserve the original export.</p>
+  <p>Microsoft’s <a href="https://support.microsoft.com/en-us/excel/get-started/import-or-export-text-txt-or-csv-files">Excel text and CSV import guidance</a> explains import previews and automatic column interpretation. The <a href="https://www.rfc-editor.org/rfc/rfc3339">RFC 3339 timestamp specification</a> explains UTC and numeric offsets. This checklist verifies file values; it is not a tested Excel, Numbers or Google Sheets import walkthrough. Use synthetic data to check your chosen application before opening personal location history, particularly in a cloud spreadsheet.</p>
 </section>
 <section aria-labelledby="check">
   <h2 id="check">Check a conversion with a small file first</h2>

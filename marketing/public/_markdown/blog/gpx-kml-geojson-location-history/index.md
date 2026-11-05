@@ -8,7 +8,7 @@ Practical iPhone guides
 
 Choose for your destination, check what the file preserves, and keep an original you can return to.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 3, 2026
 
 ## Choose the format your next tool can use
 
@@ -19,6 +19,7 @@ The extension does not tell you everything a file preserves. A line on a map, a 
 - [Match a format to your task](https://whereday.com/blog/gpx-kml-geojson-location-history/#choose)
 - [Download the same invented trip in four formats](https://whereday.com/blog/gpx-kml-geojson-location-history/#example)
 - [Inspect coordinates, timestamps and segments](https://whereday.com/blog/gpx-kml-geojson-location-history/#differences)
+- [Check a CSV in a spreadsheet](https://whereday.com/blog/gpx-kml-geojson-location-history/#spreadsheet)
 - [Check a conversion before relying on it](https://whereday.com/blog/gpx-kml-geojson-location-history/#check)
 - [Choose a Whereday export or restore workflow](https://whereday.com/blog/gpx-kml-geojson-location-history/#whereday)
 
@@ -78,6 +79,28 @@ The CSV includes both `time_utc` and `original_time`. The first is normalized to
 The GPX uses two `trkseg` elements. The KML has two timed tracks and `gx:interpolate` set to 0. The GeoJSON has two separate LineString features. In CSV, `group` is 1 for the first three rows and 2 for the last two; point numbering restarts in each group.
 
 A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.
+
+## Open a GPX-derived CSV without losing its meaning
+
+Start with the [five-row synthetic CSV](https://whereday.com/samples/synthetic-format-trip.csv) above, or open its [source GPX](https://whereday.com/samples/synthetic-format-trip.gpx) in the [local viewer](https://whereday.com/tools/gpx-viewer/) and choose Download points as CSV. This is a point table for inspection, not a Whereday restore file.
+
+- Import a copy with a preview. Select a comma delimiter and check that the header becomes nine columns, from `kind` through `original_time`. If everything appears in one column, fix the delimiter before editing any values.
+- Keep timestamps as text initially. Preserve both `time_utc` and `original_time` exactly. Automatic date conversion can hide the offset or change the display; make a separate column if you need spreadsheet date calculations.
+- Check decimal coordinates. The second row of data should have latitude `0.001` and longitude `10.001`. Use import settings that interpret the decimal point correctly, and do not swap the two columns.
+- Keep whole rows together. Retain the original order for comparison. If you sort a working copy, include every column and sort by group, then point; point numbering restarts in each segment.
+
+Expected values after importing the invented example
+| Check | Expected result | Why it matters
+| Rows and groups | Five data rows; group 1 has three, group 2 has two | A header is not a point, and the two segments must remain distinguishable.
+| First timestamp | `2000-01-01T12:00:00.000Z` in `time_utc` | The Z means UTC, not the spreadsheet computer’s local time.
+| Original timestamp | `2000-01-01T12:00:00Z` in `original_time` | These two strings describe the same instant; the extra zeros are fractional seconds.
+| Elevation | Five blank `elevation_m` cells | Missing elevation is not measured sea-level elevation. Do not replace blanks with zero.
+
+For a separate invented timezone example, `2000-01-01T08:00:00-04:00` and `2000-01-01T12:00:00Z` identify the same instant. Removing the offset would lose that meaning. A timestamp’s offset also does not identify a named timezone or its daylight-saving rules; keep the source text alongside any display conversion.
+
+Before sending a saved CSV to another tool, reopen it as text and compare the header, first and last timestamps, blank elevations and group values with the untouched copy. A spreadsheet workbook can retain formatting and formulas that a CSV cannot. Keep calculations in a separate workbook and preserve the original export.
+
+Microsoft’s [Excel text and CSV import guidance](https://support.microsoft.com/en-us/excel/get-started/import-or-export-text-txt-or-csv-files) explains import previews and automatic column interpretation. The [RFC 3339 timestamp specification](https://www.rfc-editor.org/rfc/rfc3339) explains UTC and numeric offsets. This checklist verifies file values; it is not a tested Excel, Numbers or Google Sheets import walkthrough. Use synthetic data to check your chosen application before opening personal location history, particularly in a cloud spreadsheet.
 
 ## Check a conversion with a small file first
 

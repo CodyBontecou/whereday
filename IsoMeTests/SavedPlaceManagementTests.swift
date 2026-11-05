@@ -5,30 +5,6 @@ import SwiftData
 
 @MainActor
 final class SavedPlaceManagementTests: XCTestCase {
-    private let defaultsKeys = ["isTrackingEnabled", "activeRecordingSessionID"]
-    private var originalDefaults: [String: Any] = [:]
-
-    override func setUp() {
-        super.setUp()
-        originalDefaults = Dictionary(uniqueKeysWithValues: defaultsKeys.compactMap { key in
-            UserDefaults.standard.object(forKey: key).map { (key, $0) }
-        })
-        UserDefaults.standard.set(false, forKey: "isTrackingEnabled")
-        UserDefaults.standard.removeObject(forKey: "activeRecordingSessionID")
-    }
-
-    override func tearDown() {
-        for key in defaultsKeys {
-            if let value = originalDefaults[key] {
-                UserDefaults.standard.set(value, forKey: key)
-            } else {
-                UserDefaults.standard.removeObject(forKey: key)
-            }
-        }
-        originalDefaults = [:]
-        super.tearDown()
-    }
-
     func testManagedCreationSavesReusableLocationWithoutCreatingAVisit() throws {
         let (container, viewModel) = try makeEnvironment()
         let draft = SavedPlaceDraft(
@@ -376,7 +352,7 @@ final class SavedPlaceManagementTests: XCTestCase {
         let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self])
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, allowsSave: true)
         let container = try ModelContainer(for: schema, configurations: [configuration])
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager()
         manager.isTrackingEnabled = false
         manager.trackingStartTime = nil
         return (container, LocationViewModel(modelContext: container.mainContext, locationManager: manager))

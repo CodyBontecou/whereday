@@ -227,10 +227,10 @@ struct NearbyPlaceSuggestion: Identifiable {
     let coordinate: CLLocationCoordinate2D
     let distanceMeters: CLLocationDistance
 
-    var distanceLabel: String {
-        let formatter = MKDistanceFormatter()
-        formatter.unitStyle = .abbreviated
-        return formatter.string(fromDistance: distanceMeters)
+    /// The distance in the app's unit setting (`usesMetricDistanceUnits`), like the rest of the map, not the
+    /// locale's measurement system.
+    func distanceLabel(usesMetric: Bool) -> String {
+        DistanceFormatter.format(meters: distanceMeters, usesMetric: usesMetric)
     }
 }
 

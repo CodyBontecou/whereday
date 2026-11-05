@@ -256,7 +256,7 @@ final class StoreManager: ObservableObject {
                 rememberPurchase()
                 await transaction.finish()
                 await checkEntitlement()
-                if offersTrial, transaction.offer?.type == .introductory, let trialEnds = transaction.expirationDate {
+                if offersTrial, Self.isIntroductoryOffer(transaction), let trialEnds = transaction.expirationDate {
                     await TrialReminder.schedule(trialEnds: trialEnds, displayPrice: product.displayPrice)
                 }
                 return .succeeded
@@ -371,6 +371,14 @@ final class StoreManager: ObservableObject {
         } ?? statuses.first
         guard let matching, case .verified(let renewal) = matching.renewalInfo else { return nil }
         return renewal.willAutoRenew
+    }
+
+    /// `Transaction.offer` is iOS 17.2+; earlier iOS 17 releases only have `offerType`.
+    nonisolated static func isIntroductoryOffer(_ transaction: Transaction) -> Bool {
+        if #available(iOS 17.2, *) {
+            return transaction.offer?.type == .introductory
+        }
+        return transaction.offerType == .introductory
     }
 
     nonisolated static func isActive(revocationDate: Date?, expirationDate: Date?, isUpgraded: Bool, now: Date = Date()) -> Bool {

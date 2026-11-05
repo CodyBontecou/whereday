@@ -530,6 +530,7 @@ private struct PlaceMergePicker: View {
     let place: SavedPlace
     let onConfirm: (SavedPlaceMergePlan) -> Void
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
     @State private var searchText = ""
     @State private var pendingMerge: SavedPlaceMergePlan?
 
@@ -557,7 +558,7 @@ private struct PlaceMergePicker: View {
                                     Text(other.name)
                                         .font(TE.editorial(.title3))
                                         .foregroundStyle(TE.textPrimary)
-                                    Text(Self.distanceLabel(place.distanceMeters(to: other.coordinate)))
+                                    Text(Self.distanceLabel(place.distanceMeters(to: other.coordinate), usesMetric: usesMetricDistanceUnits))
                                         .font(TE.mono(.caption2))
                                         .foregroundStyle(TE.textMuted)
                                 }
@@ -605,9 +606,9 @@ private struct PlaceMergePicker: View {
         .tint(TE.accent)
     }
 
-    private static func distanceLabel(_ meters: Double) -> String {
-        let distance = Measurement(value: meters, unit: UnitLength.meters)
-        return String(localized: "\(distance.formatted(.measurement(width: .abbreviated, usage: .road))) away")
+    private static func distanceLabel(_ meters: Double, usesMetric: Bool) -> String {
+        let distance = DistanceFormatter.format(meters: meters, usesMetric: usesMetric)
+        return String(localized: "\(distance) away")
     }
 }
 
