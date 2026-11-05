@@ -17,6 +17,7 @@ steps:
       text: Your history, in your format
 - await:
     idle: true
+- scroll-to: { target: { text: Preview export }, direction: down }
 - tap:
     text: Preview export
 - scroll-to: { target: { text: '"exportDate"' }, direction: down }
