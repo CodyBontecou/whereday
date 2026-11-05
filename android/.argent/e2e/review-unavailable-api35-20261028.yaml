@@ -7,7 +7,8 @@ steps:
       selector:
         text: Your location journal
   - await: {idle: true}
-  - tap: {text: Settings}
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
   - await: {visible: {id: settings-screen}}
   - await: {idle: true}
   - scroll-to: {target: {text: Support and about}}

@@ -4,7 +4,9 @@ steps:
   - await: { visible: { text: Your location journal } }
   - await: { idle: true }
   - tap:
-      text: Settings
+      id: navigation-archive
+  - tap:
+      id: archive-settings
   - await: { visible: { text: Location and notification permissions } }
   - await: { idle: true }
   - scroll-to: { target: { text: Country Days }, direction: down }

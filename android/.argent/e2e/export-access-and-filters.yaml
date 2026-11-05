@@ -36,6 +36,7 @@ steps:
   - scroll-to: { target: { text: '"exportDate"' }, direction: down }
   - await: { visible: { text: '"exportDate"' } }
   - await: { idle: true }
-  - tap: { text: Settings }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
   - await: { visible: { text: Distance filter } }
   - await: { idle: true }

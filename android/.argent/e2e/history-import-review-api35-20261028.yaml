@@ -201,7 +201,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Settings
+    id: navigation-archive
+- tap:
+    id: archive-settings
 - tool: button
   args:
     button: home

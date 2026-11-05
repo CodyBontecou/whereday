@@ -9,7 +9,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Settings
+    id: navigation-archive
+- tap:
+    id: archive-settings
 - await:
     visible:
       text: Distance filter

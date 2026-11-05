@@ -4,7 +4,8 @@ steps:
   - await:
       visible: {text: Start recording}
   - await: {idle: true}
-  - tap: {text: Settings}
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
   - await:
       visible: {text: Distance filter}
   - await: {idle: true}

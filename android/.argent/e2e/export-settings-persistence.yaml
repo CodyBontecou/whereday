@@ -29,6 +29,7 @@ steps:
   - tap: { text: { matches: '^Readable$' } }
   - await: { visible: { text: 'Whereday - {day} {date} - {type}' } }
   - await: { idle: true }
-  - tap: { text: Settings }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
   - await: { visible: { text: Distance filter } }
   - await: { idle: true }

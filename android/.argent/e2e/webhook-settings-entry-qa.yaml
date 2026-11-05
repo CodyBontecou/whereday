@@ -3,7 +3,9 @@ executionPrerequisite: At the Map in the onboarded idle isolated com.bontecou.wh
   UI. No recording, permissions, real credentials or owner-package access.
 steps:
 - tap:
-    text: Settings
+    id: navigation-archive
+- tap:
+    id: archive-settings
 - await:
     visible:
       text: Distance filter

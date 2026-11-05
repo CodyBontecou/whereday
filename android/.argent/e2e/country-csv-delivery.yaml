@@ -3,7 +3,8 @@ steps:
   - launch: com.bontecou.whereday
   - await: { visible: { id: map-header } }
   - await: { idle: true }
-  - tap: { text: Settings }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
   - await: { visible: { text: Distance filter } }
   - scroll-to: { target: { text: { matches: '^Country Days$' } }, direction: down }
   - tap: { text: { matches: '^Country Days$' } }

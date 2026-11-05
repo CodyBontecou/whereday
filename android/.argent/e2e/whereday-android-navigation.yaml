@@ -1,5 +1,5 @@
 steps:
-- echo: Map-first navigation (tabs Map · Atlas · Places · Archive · Settings). Requires an onboarded idle app. Opens on the map, renders a free JSON preview from Archive, opens the day's timeline over the map, visits Atlas and Places, and ends on Settings. No recording, purchase or history change.
+- echo: Map-first navigation (tabs Map · Atlas · Places · Archive; Settings behind Archive's gear on a phone). Requires an onboarded idle app on a compact window. Opens on the map, renders a free JSON preview from Archive, opens the day's timeline over the map, visits Atlas and Places, and ends on Settings. No recording, purchase or history change.
 - launch: com.bontecou.whereday
 - await:
     visible:
@@ -73,7 +73,15 @@ steps:
 - await:
     idle: true
 - tap:
-    id: navigation-settings
+    id: navigation-archive
+- await:
+    visible:
+      id: archive-settings
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      id: settings-screen
 - await:
     visible:
       text: Distance filter
