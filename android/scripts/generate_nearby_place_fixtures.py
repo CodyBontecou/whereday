@@ -5,9 +5,11 @@ import argparse,hashlib,json,subprocess,tempfile
 root=Path(__file__).resolve().parents[2]
 source=root/'IsoMe/Services/GeocodingService.swift'
 formatter=root/'IsoMe/Services/PlaceSearchService.swift'
+# NearbyPlaceSuggestion.distanceLabel formats with the shared DistanceFormatter.
+distance=root/'Shared/DistanceFormatter.swift'
 harness=root/'android/scripts/fixtures/NearbyPlaceFixtures.swift'
 output=root/'android/domain/src/test/resources/ios-nearby-places.json'
-inputs=[source,formatter,harness,Path(__file__).resolve()]
+inputs=[source,formatter,distance,harness,Path(__file__).resolve()]
 provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check-source',action='store_true');args=parser.parse_args()
 if args.check_source:
@@ -22,6 +24,7 @@ def block(text,marker):
 selected='import Foundation\nimport CoreLocation\nimport MapKit\n'
 selected+=block(text,'struct NearbyPlaceSuggestion: Identifiable {')+'\n'
 selected+=block(format_text,'enum MapItemPlaceFormatter {')+'\n'
+selected+=block(distance.read_text(),'enum DistanceFormatter {')+'\n'
 selected+='enum Reference {\n'+block(text,'    static func makeSuggestions(')+'\n'+block(text,'    private static func suggestionID(')+'\n}\n'
 with tempfile.TemporaryDirectory(prefix='whereday-nearby-') as directory:
     work=Path(directory);(work/'Reference.swift').write_text(selected);(work/'main.swift').write_bytes(harness.read_bytes())

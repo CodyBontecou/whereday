@@ -1,9 +1,10 @@
 {
   "provenance": {
-    "IsoMe/Services/GeocodingService.swift": "3aa0eff181ba53851b90bd008ba65165808740beded8c7dcffadc303c65bded1",
+    "IsoMe/Services/GeocodingService.swift": "b1519cace56d397e904928cd1602d4e32545f37cdd7532935f1a5268ee57b075",
     "IsoMe/Services/PlaceSearchService.swift": "7e37553ffbda840eda62ff4c70a5d35a89ee72b46300f27a27ca4da060b54785",
+    "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
     "android/scripts/fixtures/NearbyPlaceFixtures.swift": "78fe385795d3e8f5269537b70c2ef03c364304f347be58c2d1d335ebd830b9ef",
-    "android/scripts/generate_nearby_place_fixtures.py": "3625ae032849980899699caeeb321b143cb7dafe259b393cdcb1ef9a54b2bdc6"
+    "android/scripts/generate_nearby_place_fixtures.py": "007609c00c87768e281b3506ca3d1ba455f59400869f9b8343966d8a7dbe6952"
   },
   "cases": [
     {
