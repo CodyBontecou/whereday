@@ -434,6 +434,12 @@
             "state": "translated",
             "value": "Aún no hay lugares hoy"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun lieu aujourd’hui pour l’instant"
+          }
         }
       }
     },
@@ -449,6 +455,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ desde %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ depuis %@"
           }
         }
       }
@@ -466,6 +478,12 @@
             "state": "translated",
             "value": "Lugares de hoy"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lieux du jour"
+          }
         }
       }
     },
@@ -481,6 +499,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Las estancias de hoy en una franja de 24 horas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les arrêts du jour sur une bande de 24 heures."
           }
         }
       }
@@ -498,6 +522,12 @@
             "state": "translated",
             "value": "Hoy"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aujourd’hui"
+          }
         }
       }
     },
@@ -513,6 +543,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "DESDE %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DEPUIS %@"
           }
         }
       }
@@ -530,6 +566,12 @@
             "state": "translated",
             "value": "SIN ESTANCIAS AÚN"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUCUN ARRÊT"
+          }
         }
       }
     },
@@ -545,6 +587,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "EN MOVIMIENTO"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EN MOUVEMENT"
           }
         }
       }
@@ -562,6 +610,12 @@
             "state": "translated",
             "value": "Día %lld"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jour %lld"
+          }
         }
       }
     },
@@ -577,6 +631,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LUGARES"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LIEUX"
           }
         }
       }
@@ -594,6 +654,12 @@
             "state": "translated",
             "value": "RECORRIDO"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PARCOURU"
+          }
         }
       }
     },
@@ -609,6 +675,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ESTANCIAS"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARRÊTS"
           }
         }
       }
@@ -626,6 +698,12 @@
             "state": "translated",
             "value": "GRABADO"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENREGISTRÉ"
+          }
         }
       }
     },
@@ -641,6 +719,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esfera del día"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadran du jour"
           }
         }
       }
@@ -658,6 +742,12 @@
             "state": "translated",
             "value": "Los lugares de hoy en una esfera de 24 horas."
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les lieux du jour autour d’un cadran de 24 heures."
+          }
         }
       }
     },
@@ -673,6 +763,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esfera de 24 horas: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadran 24 heures : %@"
           }
         }
       }
@@ -690,6 +786,12 @@
             "state": "translated",
             "value": "Marcar este lugar"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marquer ce lieu"
+          }
         }
       }
     },
@@ -705,6 +807,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Registra la llegada a tu lugar actual desde la Actividad en Vivo de Whereday."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez votre arrivée au lieu actuel depuis l’activité en direct Whereday."
           }
         }
       }
@@ -722,6 +830,12 @@
             "state": "translated",
             "value": "Nombre del lugar"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nom du lieu"
+          }
         }
       }
     },
@@ -737,6 +851,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Latitud"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latitude"
           }
         }
       }
@@ -754,6 +874,12 @@
             "state": "translated",
             "value": "Longitud"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Longitude"
+          }
         }
       }
     },
@@ -769,6 +895,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Detener ruta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêter le trajet"
           }
         }
       }
@@ -786,6 +918,12 @@
             "state": "translated",
             "value": "Detén la grabación actual de Whereday desde la Actividad en Vivo."
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêtez l’enregistrement Whereday en cours depuis l’activité en direct."
+          }
         }
       }
     },
@@ -801,6 +939,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "● GRABANDO · %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● ENREGISTREMENT · %@"
           }
         }
       }
@@ -818,6 +962,12 @@
             "state": "translated",
             "value": "● GRABANDO"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● ENREGISTREMENT"
+          }
         }
       }
     },
@@ -834,6 +984,12 @@
             "state": "translated",
             "value": "%@ PTS · QUEDAN %@"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS · RESTE %@"
+          }
         }
       }
     },
@@ -846,6 +1002,12 @@
           }
         },
         "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS"
+          }
+        },
+        "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ PTS"
@@ -866,6 +1028,12 @@
             "state": "translated",
             "value": "Grabando"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrement"
+          }
         }
       }
     },
@@ -881,6 +1049,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esfera de hoy: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadran du jour : %@"
           }
         }
       }
@@ -898,6 +1072,12 @@
             "state": "translated",
             "value": "HOY"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUJOURD’HUI"
+          }
         }
       }
     },
@@ -913,6 +1093,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "AGUJAS"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POINTS"
           }
         }
       }
@@ -930,6 +1116,12 @@
             "state": "translated",
             "value": "GRABANDO DESDE HACE"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENREGISTRE DEPUIS"
+          }
         }
       }
     },
@@ -945,6 +1137,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "HASTA APAGARSE"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AVANT ARRÊT AUTO"
           }
         }
       }
@@ -962,6 +1160,12 @@
             "state": "translated",
             "value": "Registra la llegada a tu lugar actual"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistre votre arrivée au lieu actuel"
+          }
         }
       }
     },
@@ -977,6 +1181,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Detiene la grabación"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’enregistrement"
           }
         }
       }
@@ -994,6 +1204,12 @@
             "state": "translated",
             "value": "Marcar este lugar"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marquer ce lieu"
+          }
         }
       }
     },
@@ -1009,6 +1225,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Detener ruta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêter le trajet"
           }
         }
       }
@@ -1026,6 +1248,12 @@
             "state": "translated",
             "value": "A pie"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marche"
+          }
         }
       }
     },
@@ -1041,6 +1269,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Carrera"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Course"
           }
         }
       }
@@ -1058,6 +1292,12 @@
             "state": "translated",
             "value": "Bici"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vélo"
+          }
         }
       }
     },
@@ -1073,6 +1313,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Coche"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voiture"
           }
         }
       }
@@ -1090,6 +1336,12 @@
             "state": "translated",
             "value": "Tren"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Train"
+          }
         }
       }
     },
@@ -1105,6 +1357,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vuelo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avion"
           }
         }
       }
@@ -1122,6 +1380,12 @@
             "state": "translated",
             "value": "Caminando"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À pied"
+          }
         }
       }
     },
@@ -1137,6 +1401,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corriendo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Course à pied"
           }
         }
       }
@@ -1154,6 +1424,12 @@
             "state": "translated",
             "value": "En bici"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À vélo"
+          }
         }
       }
     },
@@ -1169,6 +1445,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Conduciendo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En voiture"
           }
         }
       }
@@ -1186,6 +1468,12 @@
             "state": "translated",
             "value": "En tren"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En train"
+          }
         }
       }
     },
@@ -1201,6 +1489,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Volando"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En avion"
           }
         }
       }

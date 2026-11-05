@@ -854,6 +854,12 @@
             "state": "translated",
             "value": "%lld min"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
         }
       }
     },
@@ -866,6 +872,12 @@
           }
         },
         "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
+          }
+        },
+        "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
@@ -886,6 +898,12 @@
             "state": "translated",
             "value": "%@, %@ hoy"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@ aujourd’hui"
+          }
         }
       }
     },
@@ -902,6 +920,12 @@
             "state": "translated",
             "value": "● RUTA"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● TRAJET"
+          }
         }
       }
     },
@@ -914,6 +938,12 @@
           }
         },
         "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
+        "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "WHEREDAY"
@@ -934,6 +964,12 @@
             "state": "translated",
             "value": "%lld VISITAS · QUEDAN %@"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld VISITES · RESTE %@"
+          }
         }
       }
     },
@@ -949,6 +985,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld VISITAS · %lld PTS"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld VISITES · %lld PTS"
           }
         }
       }
@@ -966,6 +1008,12 @@
             "state": "translated",
             "value": "A pie"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marche"
+          }
         }
       }
     },
@@ -981,6 +1029,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Carrera"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Course"
           }
         }
       }
@@ -998,6 +1052,12 @@
             "state": "translated",
             "value": "Bici"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vélo"
+          }
         }
       }
     },
@@ -1013,6 +1073,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Coche"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voiture"
           }
         }
       }
@@ -1030,6 +1096,12 @@
             "state": "translated",
             "value": "Tren"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Train"
+          }
         }
       }
     },
@@ -1045,6 +1117,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vuelo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avion"
           }
         }
       }
@@ -1062,6 +1140,12 @@
             "state": "translated",
             "value": "Caminando"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À pied"
+          }
         }
       }
     },
@@ -1077,6 +1161,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corriendo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Course à pied"
           }
         }
       }
@@ -1094,6 +1184,12 @@
             "state": "translated",
             "value": "En bici"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À vélo"
+          }
         }
       }
     },
@@ -1109,6 +1205,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Conduciendo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En voiture"
           }
         }
       }
@@ -1126,6 +1228,12 @@
             "state": "translated",
             "value": "En tren"
           }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En train"
+          }
         }
       }
     },
@@ -1141,6 +1249,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Volando"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En avion"
           }
         }
       }
