@@ -54,7 +54,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ левый"
+            "value": "осталось %@"
           }
         },
         "zh-Hans": {
@@ -544,7 +544,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выключенный"
+            "value": "Выкл."
           }
         },
         "zh-Hans": {

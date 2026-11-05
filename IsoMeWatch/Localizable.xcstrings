@@ -684,7 +684,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ ЛЕВЫЙ"
+            "value": "ОСТАЛОСЬ %@"
           }
         },
         "zh-Hans": {
@@ -964,7 +964,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ЗАХВАТ ПУТИ ПРОСМОТРА"
+            "value": "ЗАПИСЬ ПУТИ НА ЧАСАХ"
           }
         },
         "zh-Hans": {
@@ -1874,7 +1874,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выключенный"
+            "value": "Выкл."
           }
         },
         "zh-Hans": {
@@ -1944,7 +1944,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ОЧКИ"
+            "value": "ТОЧКИ"
           }
         },
         "zh-Hans": {
@@ -2224,7 +2224,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "НАЧИНАТЬ"
+            "value": "СТАРТ"
           }
         },
         "zh-Hans": {
@@ -2364,7 +2364,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "ОСТАНАВЛИВАТЬСЯ"
+            "value": "СТОП"
           }
         },
         "zh-Hans": {
