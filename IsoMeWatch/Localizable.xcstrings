@@ -27,6 +27,12 @@
             "value": "Synchroniser"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी सिंक करें"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -83,6 +89,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rien à synchroniser."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिंक को कुछ नहीं।"
           }
         },
         "ja": {
@@ -143,6 +155,12 @@
             "value": "Synchro iPhone indisponible."
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone सिंक उपलब्ध नहीं।"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -199,6 +217,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connexion à l’iPhone…"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone से जुड़ रहा है…"
           }
         },
         "ja": {
@@ -259,6 +283,12 @@
             "value": "Synchro en attente. Ouvrez Whereday sur l’iPhone."
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिंक कतार में। iPhone पर Whereday खोलें।"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -315,6 +345,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de la synchro. Réessayez."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिंक विफल। फिर कोशिश करें।"
           }
         },
         "ja": {
@@ -375,6 +411,12 @@
             "value": "Synchronisé avec l’iPhone."
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone से सिंक हुआ।"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -431,6 +473,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connexion impossible. Réessayez."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कनेक्ट नहीं हो सका। फिर कोशिश करें।"
           }
         },
         "ja": {
@@ -2731,6 +2779,12 @@
             "value": "%lld min"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -2784,6 +2838,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
+          }
+        },
+        "hi": {
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
@@ -2847,6 +2907,12 @@
             "value": "Ouvrez Whereday sur l’iPhone pour choisir ou restaurer une formule."
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्लान चुनने या बहाल करने के लिए iPhone पर Whereday खोलें।"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -2903,6 +2969,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marquage en attente de l’iPhone."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone के लिए कतार में।"
           }
         },
         "ja": {
@@ -2963,6 +3035,12 @@
             "value": "Marquage…"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दर्ज हो रहा है…"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3019,6 +3097,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marqué sur l’iPhone."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone पर दर्ज हुआ।"
           }
         },
         "ja": {
@@ -3079,6 +3163,12 @@
             "value": "%@ marqué."
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ दर्ज हुआ।"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3135,6 +3225,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible de marquer ce lieu."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह जगह दर्ज नहीं हो सकी।"
           }
         },
         "ja": {
@@ -3195,6 +3291,12 @@
             "value": "Whereday, enregistrement d’un trajet"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday, रूट रिकॉर्ड हो रहा है"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3251,6 +3353,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Whereday, aujourd’hui"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday, आज"
           }
         },
         "ja": {
@@ -3311,6 +3419,12 @@
             "value": "● Trajet"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● रूट"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3367,6 +3481,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aujourd’hui"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज"
           }
         },
         "ja": {
@@ -3427,6 +3547,12 @@
             "value": "Cadran du jour, %lld arrêts, %@ parcourus"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज का डायल, %lld ठहराव, %@ चले"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3483,6 +3609,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cadran du jour, %@ parcourus"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज का डायल, %@ चले"
           }
         },
         "ja": {
@@ -3543,6 +3675,12 @@
             "value": "En veille"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्टैंडबाय"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3599,6 +3737,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Position requise"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थान ज़रूरी"
           }
         },
         "ja": {
@@ -3659,6 +3803,12 @@
             "value": "Vérifier l’accès"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अनुमति जाँचें"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3717,6 +3867,12 @@
             "value": "depuis %@ · %@"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ से · %@"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3770,6 +3926,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
+        "hi": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ · %@"
@@ -3833,6 +3995,12 @@
             "value": "dernière position %@"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पिछला फ़िक्स %@"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -3889,6 +4057,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "prêt à enregistrer"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रिकॉर्ड के लिए तैयार"
           }
         },
         "ja": {
@@ -3949,6 +4123,12 @@
             "value": "%@ avant arrêt auto"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ में अपने-आप बंद"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4005,6 +4185,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ CE TRAJET"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस रूट में %@"
           }
         },
         "ja": {
@@ -4065,6 +4251,12 @@
             "value": "%lld pts en attente de l’iPhone"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld पॉइंट iPhone की प्रतीक्षा में"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4121,6 +4313,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marquer ce lieu"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह जगह दर्ज करें"
           }
         },
         "ja": {
@@ -4181,6 +4379,12 @@
             "value": "Enregistre votre arrivée ici sur l’iPhone"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके iPhone पर यहाँ चेक इन करता है"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4237,6 +4441,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marquer"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दर्ज करें"
           }
         },
         "ja": {
@@ -4297,6 +4507,12 @@
             "value": "Arrêter"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रुकना"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4353,6 +4569,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Démarrer un trajet"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रूट शुरू करें"
           }
         },
         "ja": {
@@ -4413,6 +4635,12 @@
             "value": "Activer la position"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थान चालू करें"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4469,6 +4697,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marche"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पैदल"
           }
         },
         "ja": {
@@ -4529,6 +4763,12 @@
             "value": "Course"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दौड़"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4585,6 +4825,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vélo"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साइकिल"
           }
         },
         "ja": {
@@ -4645,6 +4891,12 @@
             "value": "Voiture"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ड्राइव"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4701,6 +4953,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Train"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्रेन"
           }
         },
         "ja": {
@@ -4761,6 +5019,12 @@
             "value": "Avion"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उड़ान"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4817,6 +5081,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "À pied"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पैदल चल रहे"
           }
         },
         "ja": {
@@ -4877,6 +5147,12 @@
             "value": "Course à pied"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दौड़ रहे"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -4933,6 +5209,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "À vélo"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साइकिल चला रहे"
           }
         },
         "ja": {
@@ -4993,6 +5275,12 @@
             "value": "En voiture"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ड्राइव कर रहे"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -5051,6 +5339,12 @@
             "value": "En train"
           }
         },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्रेन में"
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -5107,6 +5401,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En avion"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उड़ान में"
           }
         },
         "ja": {
