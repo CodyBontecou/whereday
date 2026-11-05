@@ -7,10 +7,11 @@ import java.time.*
 class MapSelectionTest {
     private val now=Instant.parse("2026-10-31T18:12:34.125Z")
     private val zone=ZoneOffset.UTC
-    @Test fun sevenDaysRetainsTheFirstPartialDayFromTheSwiftWindow() {
+    @Test fun sevenDaysIsTodayAndTheSixWholeDaysBeforeIt() {
         val range=MapSelection("7 days").range(now,zone)
-        assertEquals(Instant.parse("2026-10-24T18:12:34.125Z"),range.from)
-        assertTrue(range.contains(Instant.parse("2026-10-24T20:00:00Z")))
+        assertEquals(Instant.parse("2026-10-25T00:00:00Z"),range.from)
+        assertTrue(range.contains(Instant.parse("2026-10-25T00:00:00Z")));assertFalse(range.contains(Instant.parse("2026-10-24T23:59:59.999Z")))
+        assertTrue(range.contains(now));assertFalse(range.contains(now.plusMillis(1)))
     }
     @Test fun thirtyDaysRetainsTheFirstPartialDayFromTheSwiftWindow() {
         val range=MapSelection("30 days").range(now,zone)

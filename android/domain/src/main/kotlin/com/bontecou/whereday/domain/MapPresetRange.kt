@@ -23,7 +23,8 @@ fun mapPresetRange(preset:String,reference:Instant,zone:ZoneId):HistoryRange {
     }
     return when(preset) {
         "Yesterday"->HistoryRange(daysAgo(start,1),start)
-        "7 days"->HistoryRange(daysAgo(reference,7),until)
+        // 7D is today plus the six days before it: seven whole calendar days (the map-first home's "7 DAYS").
+        "7 days"->HistoryRange(daysAgo(start,6),until)
         "This month"->HistoryRange(day.withDayOfMonth(1).atStartOfDay(zone).toInstant(),until)
         "30 days"->HistoryRange(daysAgo(reference,30),until)
         "All"->HistoryRange(Instant.ofEpochMilli(-62_135_769_600_000L),until)
