@@ -242,8 +242,8 @@ BODIES["photos"] = """
 <h2>Controls</h2>
 <ul>
 <li><strong>Automatic syncing</strong> (off by default) re-scans your library in the background, at most every 10 minutes, and re-syncs whenever your library changes.</li>
-<li><strong>Map markers</strong> (off by default) — enable from the map's filter bar or Settings; nearby photos group into stacked clusters with a count badge.</li>
-<li><strong>Thumbnails on markers</strong> can be turned off if you prefer plain pins.</li>
+<li><strong>Map markers</strong> (off by default) — enable with <strong>Photos</strong> in the map's Layers sheet or in Settings; nearby photos group into stacked clusters with a count badge.</li>
+<li><strong>Images, Pins, or Dots</strong> — the Photos row in Layers chooses thumbnails, plain pins, or small dots for the markers.</li>
 <li>Tap any marker for a quick view, or open it full-screen to swipe through the day's photos.</li>
 </ul>
 <p>If a photo disappears from your library (with full access), Whereday cleans up its record automatically.</p>
