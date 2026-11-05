@@ -12,6 +12,18 @@ internal fun ComposeTestRule.openTimeline(timeoutMillis:Long=15_000) {
     waitUntil(timeoutMillis) {onAllNodesWithTag("timeline-content").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
 }
 
+/** Settings is its own rail destination on wide windows and lives behind Archive's gear on the phone tab bar, as on iOS. */
+internal fun ComposeTestRule.openSettings(timeoutMillis:Long=15_000) {
+    waitUntil(timeoutMillis) {onAllNodesWithTag("navigation-archive").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+    if(onAllNodesWithTag("navigation-settings").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()) onNodeWithTag("navigation-settings").performClick()
+    else {
+        onNodeWithTag("navigation-archive").performClick()
+        waitUntil(timeoutMillis) {onAllNodesWithTag("archive-settings").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+        onNodeWithTag("archive-settings").performClick()
+    }
+    waitUntil(timeoutMillis) {onAllNodesWithTag("settings-screen").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+}
+
 /** A visit picked on the map opens its quick view first; Details opens the shared editor. */
 internal fun ComposeTestRule.openVisitDetails(timeoutMillis:Long=10_000) {
     waitUntil(timeoutMillis) {onAllNodesWithTag("map-visit-details").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}

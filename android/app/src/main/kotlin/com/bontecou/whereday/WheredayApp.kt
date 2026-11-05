@@ -54,7 +54,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         if(clear.blocked) JournalWorkspaceFrame(false,primary={JournalClearBarrier(clear,graph.journalClear::clear)},companion={})
         JournalReadyState(clear) {
             if(current==null) JournalWorkspaceFrame(false,primary={Box(Modifier.fillMaxSize().background(wd.surface),contentAlignment=androidx.compose.ui.Alignment.Center) {WdLoading()}},companion={})
-            else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) MainTabs.index(MainTabs.afterClear.tab) else MainTabs.index(MainTabs.launch),access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused,
+            else ReadyJournal(graph,journal,current,onRecord,onRequestLocation,onRequestNotifications,onOnboardingStart,launcherAction,onLauncherActionHandled,onStartRecording,onStopRecording,onboardingAuthorization,if(returnToSettings) MainTabs.afterClear else MainTabs.Destination(MainTabs.launch),access,onAccessOptions,visitLink,onVisitLinkHandled,windowFocused,
                 trackingPaywall,onTrackingPaywallDismiss)
         }
         if(!clear.blocked) WorkspaceRootDialogScope {PermissionAccessReview(accessReview?.takeIf {it.generation==clear.generation},onAccessDismiss,onAccessRequest,onAccessSettings)}
@@ -66,7 +66,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
 @Composable private fun ReadyJournal(graph:AppGraph,journal:JournalViewModel,current:AppSettings,onRecord:()->Unit,
     onRequestLocation:()->Unit,onRequestNotifications:()->Unit,onOnboardingStart:suspend()->Unit,
     launcherAction:LauncherAction?,onLauncherActionHandled:()->Unit,onStartRecording:()->Unit,onStopRecording:()->Unit,
-    onboardingAuthorization:UsageAuthorization,initialTab:Int,access:RecordingAccessState?,onAccessOptions:(PermissionAccessKind)->Unit,visitLink:VisitLinkRequest?,onVisitLinkHandled:(String)->Unit,windowFocused:Boolean,
+    onboardingAuthorization:UsageAuthorization,initialDestination:MainTabs.Destination,access:RecordingAccessState?,onAccessOptions:(PermissionAccessKind)->Unit,visitLink:VisitLinkRequest?,onVisitLinkHandled:(String)->Unit,windowFocused:Boolean,
     trackingPaywall:Boolean,onTrackingPaywallDismiss:()->Unit) {
         val scope = rememberCoroutineScope()
         val purchase by graph.purchases.state.collectAsStateWithLifecycle()
@@ -107,13 +107,21 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         val count by graph.history.dao.pointCount().collectAsStateWithLifecycle(0L)
         val recording by graph.history.dao.observeRecording().collectAsStateWithLifecycle(null)
         val active by RecordingRuntime.active.collectAsStateWithLifecycle()
-        var tab by rememberSaveable { mutableIntStateOf(initialTab) }
+        // Starts on the bar's form of the destination; the rail turns Settings-behind-Archive into its own tab.
+        val start=MainTabs.resolve(initialDestination,usesRail=false)
+        var tab by rememberSaveable { mutableIntStateOf(MainTabs.index(start.tab)) }
+        // On the phone tab bar Settings opens behind Archive (iOS's gear on the Archive page).
+        var archiveSettings by rememberSaveable {mutableStateOf(start.settings)}
+        var usesRail by remember {mutableStateOf(false)}
         // The day's timeline opens over the map (from the day sheet or the launcher), as Today's timeline did on iOS 2.0.
         var timelineOpen by rememberSaveable {mutableStateOf(false)}
         val onMapTab=MainTabs.at(tab)==MainTab.map
         val timelineShown=onMapTab && timelineOpen
         val mapShown=onMapTab && !timelineOpen
-        fun go(destination:MainTabs.Destination) {tab=MainTabs.index(destination.tab);timelineOpen=destination.timeline}
+        fun go(destination:MainTabs.Destination) {
+            val resolved=MainTabs.resolve(destination,usesRail)
+            tab=MainTabs.index(resolved.tab);timelineOpen=resolved.timeline;archiveSettings=resolved.settings
+        }
         // One journal-level owner survives changes to the primary/companion arrangement.
         // Keep the original snapshot so a background edit cannot replace its optimistic-lock baseline.
         var inspectedVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<com.bontecou.whereday.domain.Visit?>(null)}
@@ -124,7 +132,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         LaunchedEffect(launcherAction) {
             launcherAction?.let(MainTabs::destination)?.let {go(it);onLauncherActionHandled()}
         }
-        val wdTabs=MainTabs.order.map {WdTab(it.id,androidx.compose.ui.res.stringResource(it.title),it.icon,it.selectedIcon)}
+        val wdTabs=MainTabs.rail.map {WdTab(it.id,androidx.compose.ui.res.stringResource(it.title),it.icon,it.selectedIcon)}
         var paired by remember {mutableStateOf(false)}
         val workspaceContext=LocalContext.current
         val workspaceMessages=remember {SnackbarHostState()}
@@ -180,23 +188,37 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             VisitLinkHost(graph,visitLink,onVisitLinkHandled,windowFocused=windowFocused,showVisitOnMap={stored->journal.showVisitOnMap(stored);go(MainTabs.visitLink)}) {go(MainTabs.visitLink)}},
             inspection={inline->CompositionLocalProvider(LocalInlineVisitEditor provides inline) {Box(Modifier.fillMaxSize()) {inspector();if(inline && timelineShown) SnackbarHost(workspaceMessages,Modifier.align(androidx.compose.ui.Alignment.BottomCenter))}}},primary={hasCompanion->
             SideEffect {paired=hasCompanion}
-            if(!(hasCompanion && timelineShown && inspectedVisit!=null)) {
-                // The floating bar sits below each page so lists end above it, as on iOS.
-                Scaffold(containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
-                    snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
-                    bottomBar={if(!(mapShown && tabBarHidden.value)) WdFloatingTabBar(wdTabs,tab,{tab=it;if(MainTabs.at(it)==MainTab.map) timelineOpen=false},Modifier.semantics {testTagsAsResourceId=true})}) {padding->
-                    // The map runs full-bleed under the status bar and the floating tab bar; its chrome keeps clear of both.
-                    if(mapShown) CompositionLocalProvider(LocalMapChromePadding provides padding,LocalTabBarHidden provides tabBarHidden) {Box(Modifier.fillMaxSize()) {mapPage()}}
-                    else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {
-                        when(MainTabs.at(tab)) {
-                            MainTab.map->timelinePage()
-                            else->tabState.SaveableStateProvider(tab) {when(MainTabs.at(tab)) {
-                                MainTab.atlas->CountryDaysScreen(graph,back=null)
-                                MainTab.places->SavedPlacesScreen(graph,places.map {it.value},null)
-                                MainTab.archive->ExportScreen(graph)
-                                MainTab.settings->SettingsScreen(graph,current,places.map {it.value},count)
-                                MainTab.map->Unit
-                            }}
+            if(!(hasCompanion && timelineShown && inspectedVisit!=null)) BoxWithConstraints(Modifier.fillMaxSize()) {
+                val railed=maxWidth>=MainTabs.railMinWidthDp.dp
+                SideEffect {usesRail=railed}
+                LaunchedEffect(railed) {
+                    // Settings has no slot in the closed tab bar: shrinking from the rail falls back to Archive, as on iOS.
+                    if(!railed && MainTabs.at(tab)==MainTab.settings) tab=MainTabs.index(MainTabs.onBar(MainTab.settings))
+                    // The rail carries Settings itself.
+                    if(railed && archiveSettings) {tab=MainTabs.index(MainTab.settings);archiveSettings=false}
+                }
+                val selectTab:(Int)->Unit={index->tab=index;archiveSettings=false;if(MainTabs.at(index)==MainTab.map) timelineOpen=false}
+                Row(Modifier.fillMaxSize()) {
+                    if(railed) WdNavigationRail(wdTabs,tab,selectTab,Modifier.padding(start=14.dp).semantics {testTagsAsResourceId=true},ruleBefore=MainTabs.bar.size)
+                    // The floating bar sits below each page so lists end above it, as on iOS.
+                    Scaffold(Modifier.weight(1f),containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
+                        snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
+                        bottomBar={if(!railed && !(mapShown && tabBarHidden.value)) WdFloatingTabBar(wdTabs.take(MainTabs.bar.size),tab.coerceAtMost(MainTabs.bar.size-1),selectTab,Modifier.semantics {testTagsAsResourceId=true})}) {padding->
+                        // The map runs full-bleed under the status bar and the floating tab bar; its chrome keeps clear of both.
+                        if(mapShown) CompositionLocalProvider(LocalMapChromePadding provides padding,LocalTabBarHidden provides tabBarHidden) {Box(Modifier.fillMaxSize()) {mapPage()}}
+                        else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {
+                            when(MainTabs.at(tab)) {
+                                MainTab.map->timelinePage()
+                                else->tabState.SaveableStateProvider(tab) {when(MainTabs.at(tab)) {
+                                    MainTab.atlas->CountryDaysScreen(graph,back=null)
+                                    MainTab.places->SavedPlacesScreen(graph,places.map {it.value},null)
+                                    MainTab.archive->if(archiveSettings && !railed) tabState.SaveableStateProvider("archive-settings") {
+                                        SettingsScreen(graph,current,places.map {it.value},count,onClose={archiveSettings=false})
+                                    } else ExportScreen(graph,onSettings=if(railed) null else ({archiveSettings=true}))
+                                    MainTab.settings->SettingsScreen(graph,current,places.map {it.value},count)
+                                    MainTab.map->Unit
+                                }}
+                            }
                         }
                     }
                 }

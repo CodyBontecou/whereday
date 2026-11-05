@@ -24,16 +24,17 @@ class RecordingAccessIntegrationTest {
         assertEquals(PackageManager.PERMISSION_DENIED,target.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION))
         graph.journalClear.awaitReady();onboarded=graph.preferences.settings.first().onboarded
         graph.preferences.update {it.copy(onboarded=true)}
-        compose.waitUntil(15000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+        compose.waitUntil(15000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
         assertEquals(LocationPrecision.none,recordingAccess(target).location)
         assertFalse(RecordingRuntime.active.value)
     }
     @After fun cleanup():Unit=runBlocking {graph.preferences.update {it.copy(onboarded=onboarded)}}
-    private fun options() {compose.onNodeWithTag("location-access-options").performScrollTo().performClick();compose.onNodeWithTag("permission-access-review").assertExists()}
+    // On the map home the access notice is the compact pill above the recording bar; it opens the same review.
+    private fun options() {compose.onNodeWithTag("recording-access-pill").performClick();compose.onNodeWithTag("permission-access-review").assertExists()}
     @Test fun recreationDiscardsAnUnacceptedReviewAndReturningNeverStartsRecording():Unit=runBlocking {
         options();val old=compose.onNodeWithTag("permission-review-confirm").fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
         compose.activityRule.scenario.recreate()
-        compose.waitUntil(15000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+        compose.waitUntil(15000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
         compose.runOnIdle {old()}
         compose.onNodeWithTag("permission-access-review").assertDoesNotExist()
         assertFalse(RecordingRuntime.active.value);assertTrue(graph.history.dao.recording()?.requested!=true)

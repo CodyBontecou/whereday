@@ -499,10 +499,12 @@ internal data class WdTab(val id:String,val title:String,val icon:ImageVector,va
 }
 
 /** On wide windows a slim capsule rail on the leading edge replaces the floating bar. */
-@Composable internal fun WdNavigationRail(tabs:List<WdTab>,selected:Int,onSelect:(Int)->Unit,modifier:Modifier=Modifier) {
+@Composable internal fun WdNavigationRail(tabs:List<WdTab>,selected:Int,onSelect:(Int)->Unit,modifier:Modifier=Modifier,ruleBefore:Int?=null) {
     Column(modifier.width(64.dp).fillMaxHeight().systemBarsPadding().padding(vertical=20.dp).clip(CircleShape).background(wd.card)
         .border(1.dp,wd.border,CircleShape),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(6.dp,Alignment.CenterVertically)) {
         tabs.forEachIndexed {index,tab->
+            // A hairline sets Settings apart from the four destinations, as on the iOS rail.
+            if(index==ruleBefore) Box(Modifier.padding(vertical=6.dp).width(24.dp).height(1.dp).background(wd.border))
             val isSelected=index==selected
             val ink=if(isSelected) wd.inkRust else wd.textMuted
             Column(Modifier.size(56.dp).testTag("navigation-${tab.id}").selectable(isSelected,role=Role.Tab) {onSelect(index)},

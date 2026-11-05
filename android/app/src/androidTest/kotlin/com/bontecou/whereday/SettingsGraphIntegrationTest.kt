@@ -17,8 +17,8 @@ class SettingsGraphIntegrationTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
     private val target get()=InstrumentationRegistry.getInstrumentation().targetContext
     private fun settings() {
-        compose.waitUntil(15000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-        compose.onNodeWithText("Settings").performClick();compose.onNodeWithTag("settings-screen").assertExists()
+        compose.waitUntil(15000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+        compose.openSettings();compose.onNodeWithTag("settings-screen").assertExists()
     }
     private fun click(text:String) {compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(text));compose.onNodeWithText(text).performClick()}
     @Test fun preferenceCommandsReachDataStoreAndChildRecreationKeepsTheOverviewPosition():Unit=runBlocking {

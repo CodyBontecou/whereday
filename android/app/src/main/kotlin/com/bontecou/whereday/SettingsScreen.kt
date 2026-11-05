@@ -43,7 +43,7 @@ import com.bontecou.whereday.platform.*
 
 internal enum class SettingsDestination {usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly}
 
-@Composable fun SettingsScreen(graph:AppGraph,settings:AppSettings,places:List<SavedPlace>,count:Long) {
+@Composable fun SettingsScreen(graph:AppGraph,settings:AppSettings,places:List<SavedPlace>,count:Long,onClose:(()->Unit)?=null) {
     val context=LocalContext.current
     // The overview owns its position while a child destination is shown.
     val scroll=rememberLazyListState()
@@ -75,7 +75,15 @@ internal enum class SettingsDestination {usage,support,countries,licenses,softwa
         {if(it==SettingsDestination.addPlace) addingPlace=true else destination=it},
         {graph.journalClear.clear()},graph.journalClear::dismiss,graph.settingsActions::dismiss,
     )
-    SettingsContent(settings,places.size,count,commands,clear,actions,scroll)
+    if(onClose==null) SettingsContent(settings,places.size,count,commands,clear,actions,scroll)
+    else {
+        // Opened from Archive on the phone tab bar: a back chip returns there.
+        androidx.activity.compose.BackHandler(onBack=onClose)
+        Column(Modifier.fillMaxSize().background(wd.surface)) {
+            WdBackChip(androidx.compose.ui.res.stringResource(R.string.shell_archive),onClose,Modifier.padding(start=16.dp,top=8.dp).testTag("settings-close"))
+            Box(Modifier.weight(1f)) {SettingsContent(settings,places.size,count,commands,clear,actions,scroll)}
+        }
+    }
     if(addingPlace) PlaceEditor(null,{addingPlace=false},{graph.savedPlaces.save(it,null)},null)
 }
 

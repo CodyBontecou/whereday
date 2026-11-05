@@ -261,7 +261,7 @@ class WorkspaceActivityResizeTest {
     }
     private fun approval(tag:String)=compose.onNodeWithTag(tag).fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsActions.OnClick].action!!
     private fun openAutomaticClock():com.bontecou.whereday.platform.AutomaticExportSettings {
-        awaitTag("navigation-settings");compose.onNodeWithTag("navigation-settings").performClick()
+        compose.openSettings()
         compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(target.getString(R.string.settings_automatic_exports)))
         compose.onNodeWithText(target.getString(R.string.settings_automatic_exports)).performClick()
         awaitTag("automatic-export-anchor")
@@ -448,7 +448,7 @@ class WorkspaceActivityResizeTest {
 
     private val savedPlace=SavedPlace("actual-resize-place","Actual resize place",Coordinate(18.0,-66.0),"Stored address",150.0)
     private fun openPlaceLibrary() {
-        awaitTag("navigation-settings");compose.onNodeWithTag("navigation-settings").performClick()
+        compose.openSettings()
         compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(target.getString(R.string.settings_manage_places)))
         compose.onNodeWithText(target.getString(R.string.settings_manage_places)).performClick();awaitTag("saved-places-content")
     }
@@ -495,7 +495,7 @@ class WorkspaceActivityResizeTest {
     @Test fun libraryCurrentPhotoSurvivesActualRecreationBeyondItsOpeningAsset():Unit=runBlocking {
         val references=seedPhotoFixture()
         launch().use {
-            awaitTag("navigation-settings");compose.onNodeWithTag("navigation-settings").performClick()
+            compose.openSettings()
             compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(target.getString(R.string.settings_photos)))
             compose.onNodeWithText(target.getString(R.string.settings_photos)).performClick();awaitTag("photo-library-content")
             compose.onNodeWithTag("photo-library-content").performScrollToNode(hasTestTag("photo-library-card"))

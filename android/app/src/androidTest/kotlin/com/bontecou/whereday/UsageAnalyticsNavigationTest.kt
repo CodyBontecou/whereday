@@ -27,8 +27,8 @@ class UsageAnalyticsNavigationTest {
         val graph=AppGraph.from(context)
         val before=analyticsFiles(context.filesDir)
         graph.preferences.update {it.copy(onboarded=true)}
-        compose.waitUntil(15_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes().isNotEmpty()}
-        compose.onNodeWithText("Settings").performClick()
+        compose.waitUntil(15_000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+        compose.openSettings()
         compose.onNode(hasScrollAction()).performScrollToNode(hasText("Usage analytics"))
         compose.onNodeWithText("Usage analytics").performClick()
         compose.onNodeWithTag("usage-analytics-screen").assertExists()

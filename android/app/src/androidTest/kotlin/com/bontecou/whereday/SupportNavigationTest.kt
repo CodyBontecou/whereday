@@ -13,8 +13,8 @@ class SupportNavigationTest {
         val context=InstrumentationRegistry.getInstrumentation().targetContext
         check(context.packageName=="com.bontecou.whereday.mapqa")
         AppGraph.from(context).preferences.update {it.copy(onboarded=true)}
-        compose.waitUntil(15_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes().isNotEmpty()}
-        compose.onNodeWithText("Settings").performClick()
+        compose.waitUntil(15_000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+        compose.openSettings()
         compose.onNode(hasScrollAction()).performScrollToNode(hasText("Support and about"))
         compose.onNodeWithText("Support and about").performClick()
         compose.onNodeWithTag("support-screen").assertExists()

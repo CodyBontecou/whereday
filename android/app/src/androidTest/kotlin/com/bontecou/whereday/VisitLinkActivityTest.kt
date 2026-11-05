@@ -86,8 +86,7 @@ class VisitLinkActivityTest {
         val activity=instrumentation.startActivitySync(Intent(context,MainActivity::class.java).setAction(Intent.ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         fun resumed()=ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15000) {compose.onAllNodesWithTag("navigation-settings").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithTag("navigation-settings").performClick()
+            compose.openSettings()
             compose.onNodeWithTag("settings-screen").performScrollToNode(hasText(context.getString(R.string.settings_manage_places)))
             compose.onNodeWithText(context.getString(R.string.settings_manage_places)).performClick()
             compose.onNodeWithText(context.getString(R.string.saved_add)).performClick()
@@ -97,7 +96,7 @@ class VisitLinkActivityTest {
             compose.waitUntil(5000) {runCatching {compose.runOnUiThread {resumed().intent.dataString==url}}.getOrDefault(false)}
             compose.mainClock.advanceTimeByFrame();compose.mainClock.advanceTimeByFrame();compose.waitForIdle()
             compose.onNodeWithTag("saved-name").assertTextContains("Unfinished saved place")
-            compose.onNode(hasTestTag("navigation-settings") and isSelected()).assertExists()
+            compose.onNodeWithTag("settings-screen").assertExists()
             androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
             compose.onNodeWithTag("saved-editor-cancel").performClick()
             compose.onNodeWithText(context.getString(R.string.saved_discard_action)).performClick()

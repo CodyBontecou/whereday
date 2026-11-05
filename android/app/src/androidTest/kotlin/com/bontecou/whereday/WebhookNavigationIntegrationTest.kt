@@ -19,8 +19,8 @@ class WebhookNavigationIntegrationTest {
         val graph=AppGraph.from(context)
         try {
             graph.preferences.update {it.copy(onboarded=true)}
-            compose.waitUntil(10_000) {compose.onAllNodesWithText("Start recording").fetchSemanticsNodes().isNotEmpty()}
-            compose.onNodeWithText("Settings").performClick()
+            compose.waitUntil(10_000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.openSettings()
             compose.onNode(hasScrollAction()).performScrollToNode(hasText("Webhooks"))
             compose.onNodeWithText("Webhooks").performClick()
             compose.waitUntil(10_000) {compose.onAllNodesWithTag("webhook-url").fetchSemanticsNodes().isNotEmpty()}

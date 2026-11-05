@@ -1,5 +1,7 @@
 package com.bontecou.whereday
 
+import androidx.compose.material.icons.outlined.Settings
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -56,7 +58,7 @@ private data class ExportPreviewRequest(val format:ExportFormat,val options:Expo
 private data class ExportPreviewResult(val request:ExportPreviewRequest,val text:String)
 
 @OptIn(ExperimentalLayoutApi::class)
-@Composable fun ExportScreen(graph: AppGraph,renderPreview:suspend (ExportFormat,ExportOptions,Boolean,InferenceRules?)->String={f,o,outings,inference->graph.exports.preview(f,o,outings,inference)}) {
+@Composable fun ExportScreen(graph: AppGraph,renderPreview:suspend (ExportFormat,ExportOptions,Boolean,InferenceRules?)->String={f,o,outings,inference->graph.exports.preview(f,o,outings,inference)},onSettings:(()->Unit)?=null) {
     val importing by graph.historyImports.state.collectAsStateWithLifecycle()
     if(importing.phase!=com.bontecou.whereday.platform.HistoryImportPhase.idle) {HistoryImportScreen(graph.historyImports);return}
     val count by graph.history.dao.pointCount().collectAsStateWithLifecycle(0L)
@@ -162,7 +164,10 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
     val stacked=LocalDensity.current.fontScale>=1.3f
     Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("export-screen")) {
         Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom=20.dp)) {
-            WdPageHeader(stringResource(R.string.export_title),eyebrow=stringResource(R.string.export_redesign_eyebrow))
+            WdPageHeader(stringResource(R.string.export_title),eyebrow=stringResource(R.string.export_redesign_eyebrow)) {
+                // Beside the phone tab bar Settings lives behind Archive; the wide rail carries Settings itself (iOS ExportView's gear).
+                if(onSettings!=null) WdCircleButton(androidx.compose.material.icons.Icons.Outlined.Settings,stringResource(R.string.shell_settings),onSettings,Modifier.testTag("archive-settings"))
+            }
             Text(pluralStringResource(R.plurals.export_stored_points,count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(count)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)
             if(count==0L) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
             Box(Modifier.exportInset().padding(top=16.dp)) {
