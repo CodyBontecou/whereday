@@ -47,8 +47,9 @@ class VisitLinkActivityTest {
         val activity=instrumentation.startActivitySync(Intent(context,MainActivity::class.java).setAction(Intent.ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         fun resumed()=ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15000) {compose.onAllNodesWithText(context.getString(R.string.map_add_past)).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithText(context.getString(R.string.map_add_past)).performClick()
+            // The home map's + opens the add menu; "Log a past stop" is the old Add past visit.
+            compose.waitUntil(15000) {compose.onAllNodesWithTag("map-add").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.onNodeWithTag("map-add").performClick();compose.onNodeWithTag("map-add-past").performClick()
             compose.onNodeWithTag("visit-name").performTextReplacement("Unfinished native draft")
             val url="isome://check-in?name=Warm%20link"
             instrumentation.runOnMainSync {activity.startActivity(intent(url))}
@@ -68,8 +69,9 @@ class VisitLinkActivityTest {
         val activity=instrumentation.startActivitySync(Intent(context,MainActivity::class.java).setAction(Intent.ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         fun resumed()=ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).filterIsInstance<MainActivity>().single()
         try {
-            compose.waitUntil(15000) {compose.onAllNodesWithText(context.getString(R.string.map_add_past)).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-            compose.onNodeWithText(context.getString(R.string.map_add_past)).performClick()
+            // The home map's + opens the add menu; "Log a past stop" is the old Add past visit.
+            compose.waitUntil(15000) {compose.onAllNodesWithTag("map-add").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.onNodeWithTag("map-add").performClick();compose.onNodeWithTag("map-add-past").performClick()
             compose.onNodeWithTag("visit-name").performTextReplacement("Retained map draft")
             instrumentation.runOnMainSync {activity.startActivity(Intent(activity,MainActivity::class.java).setAction(LauncherAction.timeline.action))}
             compose.waitUntil(15000) {compose.onAllNodes(hasTestTag("timeline-content")).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
@@ -96,7 +98,8 @@ class VisitLinkActivityTest {
             compose.waitUntil(5000) {runCatching {compose.runOnUiThread {resumed().intent.dataString==url}}.getOrDefault(false)}
             compose.mainClock.advanceTimeByFrame();compose.mainClock.advanceTimeByFrame();compose.waitForIdle()
             compose.onNodeWithTag("saved-name").assertTextContains("Unfinished saved place")
-            compose.onNodeWithTag("settings-screen").assertExists()
+            // Settings (behind Archive on the phone bar) keeps the saved-place editor open over its page.
+            compose.onNode(hasTestTag("navigation-archive") and isSelected()).assertExists()
             androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
             compose.onNodeWithTag("saved-editor-cancel").performClick()
             compose.onNodeWithText(context.getString(R.string.saved_discard_action)).performClick()
