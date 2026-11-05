@@ -88958,6 +88958,7964 @@
           }
         }
       }
+    },
+    "Choose a Whereday plan before adding new visits.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a Whereday plan before adding new visits."
+          }
+        }
+      }
+    },
+    "COUNTRY DAYS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COUNTRY DAYS"
+          }
+        }
+      }
+    },
+    "Countries": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countries"
+          }
+        }
+      }
+    },
+    "COUNTRY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COUNTRY"
+          }
+        }
+      }
+    },
+    "DAYS WITH RECORDED OR MANUAL PRESENCE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DAYS WITH RECORDED OR MANUAL PRESENCE"
+          }
+        }
+      }
+    },
+    "DAYS BY COUNTRY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DAYS BY COUNTRY"
+          }
+        }
+      }
+    },
+    "DAYS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DAYS"
+          }
+        }
+      }
+    },
+    "TRIP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TRIP"
+          }
+        }
+      }
+    },
+    "TRIPS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TRIPS"
+          }
+        }
+      }
+    },
+    "TRAVEL DAYS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TRAVEL DAYS"
+          }
+        }
+      }
+    },
+    "Dates use the local time zone of each place. Unknown gaps stay empty — nothing is guessed.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates use the local time zone of each place. Unknown gaps stay empty — nothing is guessed."
+          }
+        }
+      }
+    },
+    "COUNTRY · ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COUNTRY · "
+          }
+        }
+      }
+    },
+    "Export CSV": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export CSV"
+          }
+        }
+      }
+    },
+    "Add a stay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a stay"
+          }
+        }
+      }
+    },
+    "Travel day · also %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel day · also %@"
+          }
+        }
+      }
+    },
+    "Recorded · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recorded · %@"
+          }
+        }
+      }
+    },
+    "Recorded + manual · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recorded + manual · %@"
+          }
+        }
+      }
+    },
+    "Manual stay · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual stay · %@"
+          }
+        }
+      }
+    },
+    "Manual stay · no record": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual stay · no record"
+          }
+        }
+      }
+    },
+    "Edit stay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit stay"
+          }
+        }
+      }
+    },
+    "Choose the country for this stay.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the country for this stay."
+          }
+        }
+      }
+    },
+    "Save stay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save stay"
+          }
+        }
+      }
+    },
+    "Change ›": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change ›"
+          }
+        }
+      }
+    },
+    "NOTE · OPTIONAL": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NOTE · OPTIONAL"
+          }
+        }
+      }
+    },
+    "Phone was off — day trip to Puebla": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phone was off — day trip to Puebla"
+          }
+        }
+      }
+    },
+    "Note, optional": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note, optional"
+          }
+        }
+      }
+    },
+    "Covers 1 day in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Covers 1 day in %@"
+          }
+        }
+      }
+    },
+    "Covers %lld days in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Covers %lld days in %@"
+          }
+        }
+      }
+    },
+    "Already counted in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already counted in %@"
+          }
+        }
+      }
+    },
+    "Adds 1 day to %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adds 1 day to %@"
+          }
+        }
+      }
+    },
+    "Adds %lld days to %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adds %lld days to %@"
+          }
+        }
+      }
+    },
+    "No days selected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No days selected"
+          }
+        }
+      }
+    },
+    "Dates that already have records won't be counted twice. You'll see these days outlined in the Atlas.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates that already have records won't be counted twice. You'll see these days outlined in the Atlas."
+          }
+        }
+      }
+    },
+    "Dates that already have records won't be counted twice. You'll see this day outlined in the Atlas.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dates that already have records won't be counted twice. You'll see this day outlined in the Atlas."
+          }
+        }
+      }
+    },
+    "Discard 1 waiting point?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard 1 waiting point?"
+          }
+        }
+      }
+    },
+    "Discard %@ waiting points?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard %@ waiting points?"
+          }
+        }
+      }
+    },
+    "Clear queue": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear queue"
+          }
+        }
+      }
+    },
+    "Waiting points won't be sent. Your saved location history stays on this iPhone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting points won't be sent. Your saved location history stays on this iPhone."
+          }
+        }
+      }
+    },
+    "SEND TO YOUR OWN SERVER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SEND TO YOUR OWN SERVER"
+          }
+        }
+      }
+    },
+    "Webhook": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhook"
+          }
+        }
+      }
+    },
+    "Webhook is part of a plan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhook is part of a plan"
+          }
+        }
+      }
+    },
+    "Choose a Whereday plan to unlock export features.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a Whereday plan to unlock export features."
+          }
+        }
+      }
+    },
+    "See plans": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See plans"
+          }
+        }
+      }
+    },
+    "Delivery sends your location data to a server you configure. Whereday has no access to that server or what it receives.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delivery sends your location data to a server you configure. Whereday has no access to that server or what it receives."
+          }
+        }
+      }
+    },
+    "Webhook delivery": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhook delivery"
+          }
+        }
+      }
+    },
+    "Sends only when you tap Send now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sends only when you tap Send now"
+          }
+        }
+      }
+    },
+    "Sends new points as they're kept": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sends new points as they're kept"
+          }
+        }
+      }
+    },
+    "WHERE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHERE"
+          }
+        }
+      }
+    },
+    "SIGN-IN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SIGN-IN"
+          }
+        }
+      }
+    },
+    "Authentication": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authentication"
+          }
+        }
+      }
+    },
+    "Query": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Query"
+          }
+        }
+      }
+    },
+    "Token": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Token"
+          }
+        }
+      }
+    },
+    "Basic": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basic"
+          }
+        }
+      }
+    },
+    "Header": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Header"
+          }
+        }
+      }
+    },
+    "Live": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live"
+          }
+        }
+      }
+    },
+    "When full": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When full"
+          }
+        }
+      }
+    },
+    "HOW OFTEN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOW OFTEN"
+          }
+        }
+      }
+    },
+    "How often": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How often"
+          }
+        }
+      }
+    },
+    "Points per batch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points per batch"
+          }
+        }
+      }
+    },
+    "Points are queued in memory and sent when the batch is full. Unsent points are lost if the app is terminated.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points are queued in memory and sent when the batch is full. Unsent points are lost if the app is terminated."
+          }
+        }
+      }
+    },
+    "Points are queued and sent on the interval, or sooner when a batch fills. Unsent points are lost if the app is terminated.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points are queued and sent on the interval, or sooner when a batch fills. Unsent points are lost if the app is terminated."
+          }
+        }
+      }
+    },
+    "Send now posts the waiting points. Clear queue discards them without sending. Send all history posts all saved location data to the endpoint.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send now posts the waiting points. Clear queue discards them without sending. Send all history posts all saved location data to the endpoint."
+          }
+        }
+      }
+    },
+    "1 point waiting": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 point waiting"
+          }
+        }
+      }
+    },
+    "%@ points waiting": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ points waiting"
+          }
+        }
+      }
+    },
+    "Nothing waiting": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing waiting"
+          }
+        }
+      }
+    },
+    "LAST SENT %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LAST SENT %@"
+          }
+        }
+      }
+    },
+    "LAST SENT NEVER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LAST SENT NEVER"
+          }
+        }
+      }
+    },
+    "Send now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send now"
+          }
+        }
+      }
+    },
+    "Testing…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testing…"
+          }
+        }
+      }
+    },
+    "Test connection": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test connection"
+          }
+        }
+      }
+    },
+    "Send all history": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send all history"
+          }
+        }
+      }
+    },
+    "Export Failed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export Failed"
+          }
+        }
+      }
+    },
+    "PLAN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PLAN"
+          }
+        }
+      }
+    },
+    "RECORDING & PLACES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDING & PLACES"
+          }
+        }
+      }
+    },
+    "LOOK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LOOK"
+          }
+        }
+      }
+    },
+    "YOUR DATA · ON-DEVICE ONLY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOUR DATA · ON-DEVICE ONLY"
+          }
+        }
+      }
+    },
+    "HELP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HELP"
+          }
+        }
+      }
+    },
+    "Your existing free tracking access is preserved. Choose a plan to unlock export.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your existing free tracking access is preserved. Choose a plan to unlock export."
+          }
+        }
+      }
+    },
+    "Choose a plan to track. Your existing records remain available to view and export.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a plan to track. Your existing records remain available to view and export."
+          }
+        }
+      }
+    },
+    "Recording & places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording & places"
+          }
+        }
+      }
+    },
+    "Look": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look"
+          }
+        }
+      }
+    },
+    "Import a file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import a file"
+          }
+        }
+      }
+    },
+    "Shortcuts & Siri": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts & Siri"
+          }
+        }
+      }
+    },
+    "Help & diagnostics": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help & diagnostics"
+          }
+        }
+      }
+    },
+    "On": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        }
+      }
+    },
+    "No plan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No plan"
+          }
+        }
+      }
+    },
+    "Not allowed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not allowed"
+          }
+        }
+      }
+    },
+    "Not set": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not set"
+          }
+        }
+      }
+    },
+    "Paper": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paper"
+          }
+        }
+      }
+    },
+    "Night": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night"
+          }
+        }
+      }
+    },
+    "Google Timeline JSON, or Whereday JSON, CSV, Markdown. Duplicates are skipped.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Timeline JSON, or Whereday JSON, CSV, Markdown. Duplicates are skipped."
+          }
+        }
+      }
+    },
+    "Clear all data…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear all data…"
+          }
+        }
+      }
+    },
+    "Archive": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archive"
+          }
+        }
+      }
+    },
+    "THE BACK PAGES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE BACK PAGES"
+          }
+        }
+      }
+    },
+    "Opens purchases and Family Sharing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens purchases and Family Sharing"
+          }
+        }
+      }
+    },
+    "Manage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage"
+          }
+        }
+      }
+    },
+    "Renews %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews %@"
+          }
+        }
+      }
+    },
+    "Through %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Through %@"
+          }
+        }
+      }
+    },
+    "Family Sharing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Family Sharing"
+          }
+        }
+      }
+    },
+    "Unlock export": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock export"
+          }
+        }
+      }
+    },
+    "Choose a plan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a plan"
+          }
+        }
+      }
+    },
+    "Claim myself.md access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claim myself.md access"
+          }
+        }
+      }
+    },
+    "Restore purchase": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore purchase"
+          }
+        }
+      }
+    },
+    "Name places automatically": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name places automatically"
+          }
+        }
+      }
+    },
+    "Looks up street and business names": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Looks up street and business names"
+          }
+        }
+      }
+    },
+    "Visit suggestions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visit suggestions"
+          }
+        }
+      }
+    },
+    "A compact Save Place prompt on the map near a likely place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A compact Save Place prompt on the map near a likely place"
+          }
+        }
+      }
+    },
+    "Show GPS glitches": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show GPS glitches"
+          }
+        }
+      }
+    },
+    "Hidden by default; turn on to inspect raw data": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden by default; turn on to inspect raw data"
+          }
+        }
+      }
+    },
+    "How Whereday listens": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How Whereday listens"
+          }
+        }
+      }
+    },
+    "Manage saved places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage saved places"
+          }
+        }
+      }
+    },
+    "Units": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Units"
+          }
+        }
+      }
+    },
+    "Metric": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metric"
+          }
+        }
+      }
+    },
+    "US": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "US"
+          }
+        }
+      }
+    },
+    "What's new": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What's new"
+          }
+        }
+      }
+    },
+    "Diagnostics & logs": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics & logs"
+          }
+        }
+      }
+    },
+    "Send feedback": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send feedback"
+          }
+        }
+      }
+    },
+    "Replay the welcome": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replay the welcome"
+          }
+        }
+      }
+    },
+    "Privacy policy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy policy"
+          }
+        }
+      }
+    },
+    "Terms of service": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terms of service"
+          }
+        }
+      }
+    },
+    "Webhook is part of a plan. Choose a Whereday plan to unlock export features.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhook is part of a plan. Choose a Whereday plan to unlock export features."
+          }
+        }
+      }
+    },
+    "Delivery sends your location data to a server you configure.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delivery sends your location data to a server you configure."
+          }
+        }
+      }
+    },
+    "Sign-in, interval and batch size": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign-in, interval and batch size"
+          }
+        }
+      }
+    },
+    "More…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More…"
+          }
+        }
+      }
+    },
+    "Your data": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data"
+          }
+        }
+      }
+    },
+    "This permanently deletes all visits, location points, outings, saved places, photo matches and manual country stays. It can't be undone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This permanently deletes all visits, location points, outings, saved places, photo matches and manual country stays. It can't be undone."
+          }
+        }
+      }
+    },
+    "Erase %@ of days from this iPhone?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase %@ of days from this iPhone?"
+          }
+        }
+      }
+    },
+    "Erase everything Whereday has kept on this iPhone?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase everything Whereday has kept on this iPhone?"
+          }
+        }
+      }
+    },
+    "Export everything first": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export everything first"
+          }
+        }
+      }
+    },
+    "Erase all data": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase all data"
+          }
+        }
+      }
+    },
+    "Back to %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to %@"
+          }
+        }
+      }
+    },
+    "Logged by Whereday · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logged by Whereday · %@"
+          }
+        }
+      }
+    },
+    "Times come from the visit. Editing them here changes only the calendar event, not your record.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Times come from the visit. Editing them here changes only the calendar event, not your record."
+          }
+        }
+      }
+    },
+    "Opens Calendar's editor to choose a calendar and save.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens Calendar's editor to choose a calendar and save."
+          }
+        }
+      }
+    },
+    "Add event": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add event"
+          }
+        }
+      }
+    },
+    "ADD TO CALENDAR": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ADD TO CALENDAR"
+          }
+        }
+      }
+    },
+    "TITLE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TITLE"
+          }
+        }
+      }
+    },
+    "Event title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Event title"
+          }
+        }
+      }
+    },
+    "Title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        }
+      }
+    },
+    "Chosen in the next step": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chosen in the next step"
+          }
+        }
+      }
+    },
+    "Starts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starts"
+          }
+        }
+      }
+    },
+    "Ends": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ends"
+          }
+        }
+      }
+    },
+    "Calendar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendar"
+          }
+        }
+      }
+    },
+    "Mark This Place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark This Place"
+          }
+        }
+      }
+    },
+    "Check in at your current place from the Whereday Live Activity.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check in at your current place from the Whereday Live Activity."
+          }
+        }
+      }
+    },
+    "Stop Route": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Route"
+          }
+        }
+      }
+    },
+    "Stop the current Whereday recording from the Live Activity.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop the current Whereday recording from the Live Activity."
+          }
+        }
+      }
+    },
+    "Add a note — who you met, what you had…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a note — who you met, what you had…"
+          }
+        }
+      }
+    },
+    "Reset name": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset name"
+          }
+        }
+      }
+    },
+    "Detected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detected"
+          }
+        }
+      }
+    },
+    "Added by you": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added by you"
+          }
+        }
+      }
+    },
+    "Not confirmed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not confirmed"
+          }
+        }
+      }
+    },
+    "ARRIVED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARRIVED"
+          }
+        }
+      }
+    },
+    "LEFT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LEFT"
+          }
+        }
+      }
+    },
+    "still here": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "still here"
+          }
+        }
+      }
+    },
+    "Day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
+          }
+        }
+      }
+    },
+    "nearest first": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nearest first"
+          }
+        }
+      }
+    },
+    "Search…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search…"
+          }
+        }
+      }
+    },
+    "Search for the place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search for the place"
+          }
+        }
+      }
+    },
+    "None of these places. Type the name yourself.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None of these places. Type the name yourself."
+          }
+        }
+      }
+    },
+    "PHOTOS FROM THIS VISIT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PHOTOS FROM THIS VISIT"
+          }
+        }
+      }
+    },
+    "Month Recap": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Month Recap"
+          }
+        }
+      }
+    },
+    "The shared image shows place names and totals only. It never includes map coordinates.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The shared image shows place names and totals only. It never includes map coordinates."
+          }
+        }
+      }
+    },
+    "Previous month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous month"
+          }
+        }
+      }
+    },
+    "Next month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next month"
+          }
+        }
+      }
+    },
+    "Whereday · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday · %@"
+          }
+        }
+      }
+    },
+    "Share recap": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share recap"
+          }
+        }
+      }
+    },
+    "\n": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\n"
+          }
+        }
+      }
+    },
+    "Made on-device · no map coordinates included": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made on-device · no map coordinates included"
+          }
+        }
+      }
+    },
+    "Whereday": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday"
+          }
+        }
+      }
+    },
+    "1 day,": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 day,"
+          }
+        }
+      }
+    },
+    "%lld days,": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld days,"
+          }
+        }
+      }
+    },
+    "1 place,": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 place,"
+          }
+        }
+      }
+    },
+    "%lld places,": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld places,"
+          }
+        }
+      }
+    },
+    "one city.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one city."
+          }
+        }
+      }
+    },
+    "%lld cities.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld cities."
+          }
+        }
+      }
+    },
+    "one visit.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one visit."
+          }
+        }
+      }
+    },
+    "%lld visits.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld visits."
+          }
+        }
+      }
+    },
+    "one country.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one country."
+          }
+        }
+      }
+    },
+    "%lld countries.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld countries."
+          }
+        }
+      }
+    },
+    "Distance moved each day in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance moved each day in %@"
+          }
+        }
+      }
+    },
+    "Places visited each day in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places visited each day in %@"
+          }
+        }
+      }
+    },
+    "NEW PLACES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NEW PLACES"
+          }
+        }
+      }
+    },
+    "BIGGEST DAY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BIGGEST DAY"
+          }
+        }
+      }
+    },
+    "%@ · %@ · DAY %lld%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ · DAY %lld%@"
+          }
+        }
+      }
+    },
+    "Movement options": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movement options"
+          }
+        }
+      }
+    },
+    "Inferred movement": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inferred movement"
+          }
+        }
+      }
+    },
+    "Split after": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Split after"
+          }
+        }
+      }
+    },
+    "now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "now"
+          }
+        }
+      }
+    },
+    "live": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "live"
+          }
+        }
+      }
+    },
+    "inferred": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "inferred"
+          }
+        }
+      }
+    },
+    "MOVING": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MOVING"
+          }
+        }
+      }
+    },
+    "AVG": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AVG"
+          }
+        }
+      }
+    },
+    "CLIMB": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CLIMB"
+          }
+        }
+      }
+    },
+    "GPX exported": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPX exported"
+          }
+        }
+      }
+    },
+    "Replays this outing on the map.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replays this outing on the map."
+          }
+        }
+      }
+    },
+    "Pause": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "RECORDED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDED"
+          }
+        }
+      }
+    },
+    "MATCHED TO ROADS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MATCHED TO ROADS"
+          }
+        }
+      }
+    },
+    "MATCHING TO ROADS…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MATCHING TO ROADS…"
+          }
+        }
+      }
+    },
+    "%@ · %@ – now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ – now"
+          }
+        }
+      }
+    },
+    "Speed over the outing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed over the outing"
+          }
+        }
+      }
+    },
+    "top %lld %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "top %lld %@"
+          }
+        }
+      }
+    },
+    "Speed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        }
+      }
+    },
+    "Top %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top %@"
+          }
+        }
+      }
+    },
+    "%@ of %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of %@"
+          }
+        }
+      }
+    },
+    "%@ points": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ points"
+          }
+        }
+      }
+    },
+    "Every %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every %@"
+          }
+        }
+      }
+    },
+    "Every fix": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every fix"
+          }
+        }
+      }
+    },
+    "±%@ accuracy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "±%@ accuracy"
+          }
+        }
+      }
+    },
+    "%lld m": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld m"
+          }
+        }
+      }
+    },
+    "%lld ft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ft"
+          }
+        }
+      }
+    },
+    "Points kept": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points kept"
+          }
+        }
+      }
+    },
+    "Snap to roads": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snap to roads"
+          }
+        }
+      }
+    },
+    "Cleans up GPS drift": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cleans up GPS drift"
+          }
+        }
+      }
+    },
+    "Show on map": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show on map"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share"
+          }
+        }
+      }
+    },
+    "Opens the share sheet with this outing as %@. Touch and hold to choose another format.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the share sheet with this outing as %@. Touch and hold to choose another format."
+          }
+        }
+      }
+    },
+    "Export GPX": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export GPX"
+          }
+        }
+      }
+    },
+    "Saves this route as GPX to your export folder.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saves this route as GPX to your export folder."
+          }
+        }
+      }
+    },
+    "Saves this route as a GPX file.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saves this route as a GPX file."
+          }
+        }
+      }
+    },
+    "Share format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share format"
+          }
+        }
+      }
+    },
+    "tap to replay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tap to replay"
+          }
+        }
+      }
+    },
+    "LISTENING SINCE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LISTENING SINCE"
+          }
+        }
+      }
+    },
+    "after a %@ walk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after a %@ walk"
+          }
+        }
+      }
+    },
+    "after a %@ run": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after a %@ run"
+          }
+        }
+      }
+    },
+    "after a %@ ride": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after a %@ ride"
+          }
+        }
+      }
+    },
+    "after a %@ drive": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after a %@ drive"
+          }
+        }
+      }
+    },
+    "after a %@ train ride": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after a %@ train ride"
+          }
+        }
+      }
+    },
+    "after a %@ flight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after a %@ flight"
+          }
+        }
+      }
+    },
+    "after %@ on the move": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "after %@ on the move"
+          }
+        }
+      }
+    },
+    "24-hour dial: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24-hour dial: %@"
+          }
+        }
+      }
+    },
+    "24-hour dial, no places yet today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24-hour dial, no places yet today"
+          }
+        }
+      }
+    },
+    "%@ until %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ until %@"
+          }
+        }
+      }
+    },
+    "%@ from %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ from %@"
+          }
+        }
+      }
+    },
+    "SELECTED LOCATION": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SELECTED LOCATION"
+          }
+        }
+      }
+    },
+    "SEARCH RESULTS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SEARCH RESULTS"
+          }
+        }
+      }
+    },
+    "Open for the map": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open for the map"
+          }
+        }
+      }
+    },
+    "%@ · %@ · DAY %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ · DAY %lld"
+          }
+        }
+      }
+    },
+    "AWAY FROM HOME": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AWAY FROM HOME"
+          }
+        }
+      }
+    },
+    "AWAY FROM PLACES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AWAY FROM PLACES"
+          }
+        }
+      }
+    },
+    "Shows today's route on the map": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows today's route on the map"
+          }
+        }
+      }
+    },
+    "POINTS KEPT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "POINTS KEPT"
+          }
+        }
+      }
+    },
+    "moved": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "moved"
+          }
+        }
+      }
+    },
+    "away from home": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "away from home"
+          }
+        }
+      }
+    },
+    "away from places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "away from places"
+          }
+        }
+      }
+    },
+    "Replay the day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replay the day"
+          }
+        }
+      }
+    },
+    "Empty 24-hour dial; recording started at %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empty 24-hour dial; recording started at %@"
+          }
+        }
+      }
+    },
+    "Empty 24-hour dial": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empty 24-hour dial"
+          }
+        }
+      }
+    },
+    "The page is blank for now.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The page is blank for now."
+          }
+        }
+      }
+    },
+    "Stay somewhere for a few minutes and it becomes your first stop. Moves between stops fill the ring as you go.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay somewhere for a few minutes and it becomes your first stop. Moves between stops fill the ring as you go."
+          }
+        }
+      }
+    },
+    "Save Home so days start there": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save Home so days start there"
+          }
+        }
+      }
+    },
+    "Bring in your Google Timeline": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring in your Google Timeline"
+          }
+        }
+      }
+    },
+    "APPROXIMATE LOCATION ONLY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "APPROXIMATE LOCATION ONLY"
+          }
+        }
+      }
+    },
+    "ONLY WHILE USING THE APP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ONLY WHILE USING THE APP"
+          }
+        }
+      }
+    },
+    "Whereday can’t record today.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday can’t record today."
+          }
+        }
+      }
+    },
+    "Today’s places are approximate.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today’s places are approximate."
+          }
+        }
+      }
+    },
+    "Today has gaps when Whereday is closed.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today has gaps when Whereday is closed."
+          }
+        }
+      }
+    },
+    "Nothing new is being kept. Your past days, places and exports are all still here.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing new is being kept. Your past days, places and exports are all still here."
+          }
+        }
+      }
+    },
+    "Precise Location is off, so stops and routes come from rough positions and some stretches go unrecorded.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Precise Location is off, so stops and routes come from rough positions and some stretches go unrecorded."
+          }
+        }
+      }
+    },
+    "Allow Always so the day records around the clock, even in your pocket.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Always so the day records around the clock, even in your pocket."
+          }
+        }
+      }
+    },
+    "1. Settings → Whereday → Location": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. Settings → Whereday → Location"
+          }
+        }
+      }
+    },
+    "2. Choose **Always**": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2. Choose **Always**"
+          }
+        }
+      }
+    },
+    "3. Keep **Precise Location** on": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3. Keep **Precise Location** on"
+          }
+        }
+      }
+    },
+    "Rename": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename"
+          }
+        }
+      }
+    },
+    "YOU'RE AT · SINCE %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YOU'RE AT · SINCE %@"
+          }
+        }
+      }
+    },
+    "Leave it empty to use the detected place.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leave it empty to use the detected place."
+          }
+        }
+      }
+    },
+    "You're at, since %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're at, since %@"
+          }
+        }
+      }
+    },
+    "THE DAY SO FAR · WHILE OPEN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE DAY SO FAR · WHILE OPEN"
+          }
+        }
+      }
+    },
+    "THE DAY SO FAR · APPROXIMATE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE DAY SO FAR · APPROXIMATE"
+          }
+        }
+      }
+    },
+    "THE DAY SO FAR": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "THE DAY SO FAR"
+          }
+        }
+      }
+    },
+    "No places yet today. Stops show up here once you've stayed somewhere for a few minutes.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No places yet today. Stops show up here once you've stayed somewhere for a few minutes."
+          }
+        }
+      }
+    },
+    "Log a stop by hand": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log a stop by hand"
+          }
+        }
+      }
+    },
+    "Nothing has been recorded yet. Turn location on to start your first day.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing has been recorded yet. Turn location on to start your first day."
+          }
+        }
+      }
+    },
+    "LAST RECORDED · YESTERDAY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LAST RECORDED · YESTERDAY"
+          }
+        }
+      }
+    },
+    "LAST RECORDED · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LAST RECORDED · %@"
+          }
+        }
+      }
+    },
+    "Not recorded": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not recorded"
+          }
+        }
+      }
+    },
+    "Places only": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places only"
+          }
+        }
+      }
+    },
+    "Places + routes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places + routes"
+          }
+        }
+      }
+    },
+    "Every step": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every step"
+          }
+        }
+      }
+    },
+    "Where you stop. Lightest on battery.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where you stop. Lightest on battery."
+          }
+        }
+      }
+    },
+    "Your path while moving, quiet when still.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your path while moving, quiet when still."
+          }
+        }
+      }
+    },
+    "High-detail tracks for hikes and rides.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "High-detail tracks for hikes and rides."
+          }
+        }
+      }
+    },
+    "Places + routes while moving": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places + routes while moving"
+          }
+        }
+      }
+    },
+    "Notes where you stop. No path between. Lightest on battery.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes where you stop. No path between. Lightest on battery."
+          }
+        }
+      }
+    },
+    "Draws your path when you're out, sleeps when you're still.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Draws your path when you're out, sleeps when you're still."
+          }
+        }
+      }
+    },
+    "A point every 5 m, always. For hikes and rides. Stops on its own after 2 h.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A point every 5 m, always. For hikes and rides. Stops on its own after 2 h."
+          }
+        }
+      }
+    },
+    "Atlas": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atlas"
+          }
+        }
+      }
+    },
+    "Places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places"
+          }
+        }
+      }
+    },
+    "TABLETOP · MAP ABOVE THE FOLD": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TABLETOP · MAP ABOVE THE FOLD"
+          }
+        }
+      }
+    },
+    "Tabletop. Map above the fold.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabletop. Map above the fold."
+          }
+        }
+      }
+    },
+    "Log a stop": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log a stop"
+          }
+        }
+      }
+    },
+    "This month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This month"
+          }
+        }
+      }
+    },
+    "Month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Month"
+          }
+        }
+      }
+    },
+    "Shows the time scrubber for replaying the day.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the time scrubber for replaying the day."
+          }
+        }
+      }
+    },
+    "Map layers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map layers"
+          }
+        }
+      }
+    },
+    "Choose the days and layers the map shows.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the days and layers the map shows."
+          }
+        }
+      }
+    },
+    "Close replay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close replay"
+          }
+        }
+      }
+    },
+    "Drag to replay · now %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to replay · now %@"
+          }
+        }
+      }
+    },
+    "LATER TODAY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LATER TODAY"
+          }
+        }
+      }
+    },
+    "Not lived yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not lived yet"
+          }
+        }
+      }
+    },
+    "STAYING AT · SINCE %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STAYING AT · SINCE %@"
+          }
+        }
+      }
+    },
+    "ON THE MOVE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ON THE MOVE"
+          }
+        }
+      }
+    },
+    "Along %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Along %@"
+          }
+        }
+      }
+    },
+    "Toward %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toward %@"
+          }
+        }
+      }
+    },
+    "After %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After %@"
+          }
+        }
+      }
+    },
+    "On the move": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the move"
+          }
+        }
+      }
+    },
+    "NO RECORD": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NO RECORD"
+          }
+        }
+      }
+    },
+    "%@ so far": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ so far"
+          }
+        }
+      }
+    },
+    "%@ moved": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ moved"
+          }
+        }
+      }
+    },
+    "ARRIVING · %@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARRIVING · %@ %@"
+          }
+        }
+      }
+    },
+    "ARRIVING · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARRIVING · %@"
+          }
+        }
+      }
+    },
+    "ROUTE REPLAY · %lld/%lld PTS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ROUTE REPLAY · %lld/%lld PTS"
+          }
+        }
+      }
+    },
+    "No pin yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No pin yet"
+          }
+        }
+      }
+    },
+    "Pin placed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pin placed"
+          }
+        }
+      }
+    },
+    "Map preview": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map preview"
+          }
+        }
+      }
+    },
+    "%@ (%@–%@) falls inside this stop, so it can’t be trimmed. Review the times, or save to keep both visits.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (%@–%@) falls inside this stop, so it can’t be trimmed. Review the times, or save to keep both visits."
+          }
+        }
+      }
+    },
+    "Search Apple Maps or saved places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search Apple Maps or saved places"
+          }
+        }
+      }
+    },
+    "Searching Apple Maps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Searching Apple Maps"
+          }
+        }
+      }
+    },
+    "Clear search": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear search"
+          }
+        }
+      }
+    },
+    "Choose on a larger map": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose on a larger map"
+          }
+        }
+      }
+    },
+    "Delete saved location": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete saved location"
+          }
+        }
+      }
+    },
+    "Saved": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved"
+          }
+        }
+      }
+    },
+    "Delete Saved Location": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Saved Location"
+          }
+        }
+      }
+    },
+    "No places match “%@”.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No places match “%@”."
+          }
+        }
+      }
+    },
+    "Pins the stop where the map preview is centred.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pins the stop where the map preview is centred."
+          }
+        }
+      }
+    },
+    "Drop a pin here": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop a pin here"
+          }
+        }
+      }
+    },
+    "Use the map centre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the map centre"
+          }
+        }
+      }
+    },
+    "Overlaps %@, which is still in progress. Saving will end that visit at %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overlaps %@, which is still in progress. Saving will end that visit at %@."
+          }
+        }
+      }
+    },
+    "Overlaps %@ by %lld min (until %@). Saving will end that visit at %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overlaps %@ by %lld min (until %@). Saving will end that visit at %@."
+          }
+        }
+      }
+    },
+    "Overlaps %@ by %lld min (from %@). Saving will start that visit at %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overlaps %@ by %lld min (from %@). Saving will start that visit at %@."
+          }
+        }
+      }
+    },
+    "PLACE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PLACE"
+          }
+        }
+      }
+    },
+    "ADDRESS OR NOTE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ADDRESS OR NOTE"
+          }
+        }
+      }
+    },
+    "DEPARTED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DEPARTED"
+          }
+        }
+      }
+    },
+    "No location yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No location yet"
+          }
+        }
+      }
+    },
+    "Add %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add %@"
+          }
+        }
+      }
+    },
+    "Show 1 day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show 1 day"
+          }
+        }
+      }
+    },
+    "Show %lld days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show %lld days"
+          }
+        }
+      }
+    },
+    "Show days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show days"
+          }
+        }
+      }
+    },
+    "Routes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Routes"
+          }
+        }
+      }
+    },
+    "Paths between stops": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paths between stops"
+          }
+        }
+      }
+    },
+    "Matched by time and place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matched by time and place"
+          }
+        }
+      }
+    },
+    "Thumbnails in photo markers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thumbnails in photo markers"
+          }
+        }
+      }
+    },
+    "Small dots instead of images": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small dots instead of images"
+          }
+        }
+      }
+    },
+    "Bends GPS gaps onto roads": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bends GPS gaps onto roads"
+          }
+        }
+      }
+    },
+    "Shows unmatched gaps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows unmatched gaps"
+          }
+        }
+      }
+    },
+    "Sampled GPS dots": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sampled GPS dots"
+          }
+        }
+      }
+    },
+    "First and latest points": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First and latest points"
+          }
+        }
+      }
+    },
+    "The session running now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The session running now"
+          }
+        }
+      }
+    },
+    "Stops longer than %lld min": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stops longer than %lld min"
+          }
+        }
+      }
+    },
+    "Selected visit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected visit"
+          }
+        }
+      }
+    },
+    "Close inspector": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close inspector"
+          }
+        }
+      }
+    },
+    "%@ visit this month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ visit this month"
+          }
+        }
+      }
+    },
+    "1 photo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 photo"
+          }
+        }
+      }
+    },
+    "About %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About %@"
+          }
+        }
+      }
+    },
+    "Has visits": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has visits"
+          }
+        }
+      }
+    },
+    "Unsupported file format. KML, GPX, GeoJSON, OwnTracks and Overland exports are one-way map files.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unsupported file format. KML, GPX, GeoJSON, OwnTracks and Overland exports are one-way map files."
+          }
+        }
+      }
+    },
+    "Invalid Markdown visit departure time": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid Markdown visit departure time"
+          }
+        }
+      }
+    },
+    "Duplicate Markdown columns": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate Markdown columns"
+          }
+        }
+      }
+    },
+    "Moves the replay to this place.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moves the replay to this place."
+          }
+        }
+      }
+    },
+    "Work": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Work"
+          }
+        }
+      }
+    },
+    "Café": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Café"
+          }
+        }
+      }
+    },
+    "Gym": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gym"
+          }
+        }
+      }
+    },
+    "Other": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        }
+      }
+    },
+    "Save Recipe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save Recipe"
+          }
+        }
+      }
+    },
+    "Obsidian vault: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obsidian vault: %@"
+          }
+        }
+      }
+    },
+    "Saved recipes appear above the sentence. Tap one to load its choices.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved recipes appear above the sentence. Tap one to load its choices."
+          }
+        }
+      }
+    },
+    "Change data": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change data"
+          }
+        }
+      }
+    },
+    "Change date range": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change date range"
+          }
+        }
+      }
+    },
+    "Change format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change format"
+          }
+        }
+      }
+    },
+    "Change file layout": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change file layout"
+          }
+        }
+      }
+    },
+    "Change destination": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change destination"
+          }
+        }
+      }
+    },
+    "WHAT GETS RECORDED · WHAT STAYS ON THIS IPHONE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHAT GETS RECORDED · WHAT STAYS ON THIS IPHONE"
+          }
+        }
+      }
+    },
+    "ARCHIVE · YOUR DATA, YOUR FILES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ARCHIVE · YOUR DATA, YOUR FILES"
+          }
+        }
+      }
+    },
+    "New recipe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New recipe"
+          }
+        }
+      }
+    },
+    "Save this recipe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save this recipe"
+          }
+        }
+      }
+    },
+    "Loaded": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loaded"
+          }
+        }
+      }
+    },
+    "Loads this saved recipe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loads this saved recipe"
+          }
+        }
+      }
+    },
+    "Delete Recipe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Recipe"
+          }
+        }
+      }
+    },
+    "+ Save this": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+ Save this"
+          }
+        }
+      }
+    },
+    "Export my %@ from %@ as %@, %@, into %@.": {
+      "comment": "Archive recipe sentence. Each placeholder is a tappable choice: data, date range, format, file layout, destination.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export my %@ from %@ as %@, %@, into %@."
+          }
+        }
+      }
+    },
+    "visits": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "visits"
+          }
+        }
+      }
+    },
+    "routes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "routes"
+          }
+        }
+      }
+    },
+    "outings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "outings"
+          }
+        }
+      }
+    },
+    "visits & routes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "visits & routes"
+          }
+        }
+      }
+    },
+    "all time": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "all time"
+          }
+        }
+      }
+    },
+    "today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "today"
+          }
+        }
+      }
+    },
+    "yesterday": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "yesterday"
+          }
+        }
+      }
+    },
+    "the last 7 days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the last 7 days"
+          }
+        }
+      }
+    },
+    "the last 30 days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the last 30 days"
+          }
+        }
+      }
+    },
+    "this month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "this month"
+          }
+        }
+      }
+    },
+    "all of %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "all of %@"
+          }
+        }
+      }
+    },
+    "one file per outing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one file per outing"
+          }
+        }
+      }
+    },
+    "one file per day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one file per day"
+          }
+        }
+      }
+    },
+    "all in one file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "all in one file"
+          }
+        }
+      }
+    },
+    "Files › %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Files › %@"
+          }
+        }
+      }
+    },
+    "the share sheet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the share sheet"
+          }
+        }
+      }
+    },
+    "my Obsidian vault": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "my Obsidian vault"
+          }
+        }
+      }
+    },
+    "my Dawarich server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "my Dawarich server"
+          }
+        }
+      }
+    },
+    "my server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "my server"
+          }
+        }
+      }
+    },
+    "TAP ANY UNDERLINED WORD TO CHANGE IT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TAP ANY UNDERLINED WORD TO CHANGE IT"
+          }
+        }
+      }
+    },
+    "Shows filters, fields, file path and every other export option": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows filters, fields, file path and every other export option"
+          }
+        }
+      }
+    },
+    "ALL OPTIONS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ALL OPTIONS"
+          }
+        }
+      }
+    },
+    "your folder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your folder"
+          }
+        }
+      }
+    },
+    "WHAT YOU'LL GET": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHAT YOU'LL GET"
+          }
+        }
+      }
+    },
+    "%@ outings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ outings"
+          }
+        }
+      }
+    },
+    "%@ visits": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ visits"
+          }
+        }
+      }
+    },
+    "%@ pts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ pts"
+          }
+        }
+      }
+    },
+    "Nothing matches this recipe yet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing matches this recipe yet."
+          }
+        }
+      }
+    },
+    "Too much data to sample here. Tap to open the full preview.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too much data to sample here. Tap to open the full preview."
+          }
+        }
+      }
+    },
+    "Couldn't sample these files. Tap to open the full preview.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't sample these files. Tap to open the full preview."
+          }
+        }
+      }
+    },
+    "+ 1 more file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+ 1 more file"
+          }
+        }
+      }
+    },
+    "+ %lld more files": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+ %lld more files"
+          }
+        }
+      }
+    },
+    "1 of %lld files": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 of %lld files"
+          }
+        }
+      }
+    },
+    "PREVIEW · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PREVIEW · %@"
+          }
+        }
+      }
+    },
+    "OPEN FULL PREVIEW": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OPEN FULL PREVIEW"
+          }
+        }
+      }
+    },
+    "Repeat every %lld h from %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat every %lld h from %@"
+          }
+        }
+      }
+    },
+    "Repeat every night at %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat every night at %@"
+          }
+        }
+      }
+    },
+    "Appends only what's new": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appends only what's new"
+          }
+        }
+      }
+    },
+    "Rewrites the day's file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rewrites the day's file"
+          }
+        }
+      }
+    },
+    "Change schedule": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change schedule"
+          }
+        }
+      }
+    },
+    "Repeat automatically": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat automatically"
+          }
+        }
+      }
+    },
+    "Choose a folder for scheduled files first": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a folder for scheduled files first"
+          }
+        }
+      }
+    },
+    "Part of a Whereday plan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part of a Whereday plan"
+          }
+        }
+      }
+    },
+    "Use this recipe's format and data": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use this recipe's format and data"
+          }
+        }
+      }
+    },
+    "What to export": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What to export"
+          }
+        }
+      }
+    },
+    "File layout": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "File layout"
+          }
+        }
+      }
+    },
+    "Schedule": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule"
+          }
+        }
+      }
+    },
+    "All options": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All options"
+          }
+        }
+      }
+    },
+    "Daily note → Obsidian": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily note → Obsidian"
+          }
+        }
+      }
+    },
+    "Weekly GPX": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weekly GPX"
+          }
+        }
+      }
+    },
+    "Your existing free tracking access is preserved. Choose a plan to unlock data export.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your existing free tracking access is preserved. Choose a plan to unlock data export."
+          }
+        }
+      }
+    },
+    "SEND TO": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SEND TO"
+          }
+        }
+      }
+    },
+    "FILES FOLDER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FILES FOLDER"
+          }
+        }
+      }
+    },
+    "OBSIDIAN VAULT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OBSIDIAN VAULT"
+          }
+        }
+      }
+    },
+    "DAWARICH SERVER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DAWARICH SERVER"
+          }
+        }
+      }
+    },
+    "A folder in Files, or the share sheet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A folder in Files, or the share sheet"
+          }
+        }
+      }
+    },
+    "Markdown daily notes in your vault": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markdown daily notes in your vault"
+          }
+        }
+      }
+    },
+    "Route points sent through your webhook": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Route points sent through your webhook"
+          }
+        }
+      }
+    },
+    "Pick your vault, or a folder inside it, in Files. Each day becomes a Markdown note; the file path below decides where in the vault it lands. Nothing leaves this iPhone except through Files.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick your vault, or a folder inside it, in Files. Each day becomes a Markdown note; the file path below decides where in the vault it lands. Nothing leaves this iPhone except through Files."
+          }
+        }
+      }
+    },
+    "CHOOSE VAULT FOLDER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CHOOSE VAULT FOLDER"
+          }
+        }
+      }
+    },
+    "FORGET VAULT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FORGET VAULT"
+          }
+        }
+      }
+    },
+    "SERVER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SERVER"
+          }
+        }
+      }
+    },
+    "Sends this recipe's route points to the server set up under Webhook, in its format and with its sign-in. For Dawarich, use OwnTracks with /api/v1/owntracks/points. Visits stay on this iPhone; one request goes out per file.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sends this recipe's route points to the server set up under Webhook, in its format and with its sign-in. For Dawarich, use OwnTracks with /api/v1/owntracks/points. Visits stay on this iPhone; one request goes out per file."
+          }
+        }
+      }
+    },
+    "NOT CONNECTED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NOT CONNECTED"
+          }
+        }
+      }
+    },
+    "SERVER SETTINGS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SERVER SETTINGS"
+          }
+        }
+      }
+    },
+    "CONNECT DAWARICH OR ANOTHER SERVER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CONNECT DAWARICH OR ANOTHER SERVER"
+          }
+        }
+      }
+    },
+    "not chosen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not chosen"
+          }
+        }
+      }
+    },
+    "Obsidian": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obsidian"
+          }
+        }
+      }
+    },
+    "MONTH": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MONTH"
+          }
+        }
+      }
+    },
+    "ALL OF %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ALL OF %@"
+          }
+        }
+      }
+    },
+    "YEAR": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YEAR"
+          }
+        }
+      }
+    },
+    "All of %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All of %@"
+          }
+        }
+      }
+    },
+    "CHOOSE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CHOOSE"
+          }
+        }
+      }
+    },
+    "Preview is free. Choose a plan to unlock export.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview is free. Choose a plan to unlock export."
+          }
+        }
+      }
+    },
+    "Sending…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sending…"
+          }
+        }
+      }
+    },
+    "Connect a server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect a server"
+          }
+        }
+      }
+    },
+    "No points to send": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No points to send"
+          }
+        }
+      }
+    },
+    "Send 1 file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send 1 file"
+          }
+        }
+      }
+    },
+    "Send %lld files": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send %lld files"
+          }
+        }
+      }
+    },
+    "Nothing to export": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to export"
+          }
+        }
+      }
+    },
+    "Choose Obsidian vault": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Obsidian vault"
+          }
+        }
+      }
+    },
+    "Export 1 file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export 1 file"
+          }
+        }
+      }
+    },
+    "Export %lld files": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export %lld files"
+          }
+        }
+      }
+    },
+    "your server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your server"
+          }
+        }
+      }
+    },
+    "Sent 1 file to %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent 1 file to %@"
+          }
+        }
+      }
+    },
+    "Sent %lld files to %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent %lld files to %@"
+          }
+        }
+      }
+    },
+    "Sent %lld of %lld files. %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent %lld of %lld files. %@"
+          }
+        }
+      }
+    },
+    "The server didn't accept the request.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server didn't accept the request."
+          }
+        }
+      }
+    },
+    "Unable to Update Place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unable to Update Place"
+          }
+        }
+      }
+    },
+    "This saved place no longer exists. Your past visits are kept.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This saved place no longer exists. Your past visits are kept."
+          }
+        }
+      }
+    },
+    "Place Removed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Place Removed"
+          }
+        }
+      }
+    },
+    "Edit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        }
+      }
+    },
+    "Move, resize, change the kind of, or delete this saved place.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move, resize, change the kind of, or delete this saved place."
+          }
+        }
+      }
+    },
+    "Edits this note.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edits this note."
+          }
+        }
+      }
+    },
+    "Renames this place.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renames this place."
+          }
+        }
+      }
+    },
+    "CONFIRMED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CONFIRMED"
+          }
+        }
+      }
+    },
+    "%@ · SAVED PLACE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · SAVED PLACE"
+          }
+        }
+      }
+    },
+    "Save name": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save name"
+          }
+        }
+      }
+    },
+    "What makes this place yours?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What makes this place yours?"
+          }
+        }
+      }
+    },
+    "Note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
+          }
+        }
+      }
+    },
+    "Note about this place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note about this place"
+          }
+        }
+      }
+    },
+    "Save note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save note"
+          }
+        }
+      }
+    },
+    "Rename, move, resize, or delete this saved place.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename, move, resize, or delete this saved place."
+          }
+        }
+      }
+    },
+    "Merge…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merge…"
+          }
+        }
+      }
+    },
+    "Folds another saved place and its visits into this one.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Folds another saved place and its visits into this one."
+          }
+        }
+      }
+    },
+    "Edit note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit note"
+          }
+        }
+      }
+    },
+    "Add note": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add note"
+          }
+        }
+      }
+    },
+    "VISITED · SINCE %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VISITED · SINCE %@"
+          }
+        }
+      }
+    },
+    "UNSAVED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UNSAVED"
+          }
+        }
+      }
+    },
+    "You keep coming back here. Save it to name its future visits and follow its rhythm.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You keep coming back here. Save it to name its future visits and follow its rhythm."
+          }
+        }
+      }
+    },
+    "Saves this spot so future visits use its name.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saves this spot so future visits use its name."
+          }
+        }
+      }
+    },
+    "TYPICAL STAY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TYPICAL STAY"
+          }
+        }
+      }
+    },
+    "IN %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IN %@"
+          }
+        }
+      }
+    },
+    "%@ is removed and its %lld visits become %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is removed and its %lld visits become %@."
+          }
+        }
+      }
+    },
+    "The match radius grows to %@ to cover both.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The match radius grows to %@ to cover both."
+          }
+        }
+      }
+    },
+    "The places are too far apart for one circle, so only visits named after %@ move.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The places are too far apart for one circle, so only visits named after %@ move."
+          }
+        }
+      }
+    },
+    "This can't be undone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This can't be undone."
+          }
+        }
+      }
+    },
+    "%lldd %lldh": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldd %lldh"
+          }
+        }
+      }
+    },
+    "No visits here yet. Visits inside the match radius show up here.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No visits here yet. Visits inside the match radius show up here."
+          }
+        }
+      }
+    },
+    "WHEN YOU COME HERE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEN YOU COME HERE"
+          }
+        }
+      }
+    },
+    "mornings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mornings"
+          }
+        }
+      }
+    },
+    "midday": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "midday"
+          }
+        }
+      }
+    },
+    "afternoons": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "afternoons"
+          }
+        }
+      }
+    },
+    "evenings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "evenings"
+          }
+        }
+      }
+    },
+    "nights": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nights"
+          }
+        }
+      }
+    },
+    "mostly weekend %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mostly weekend %@"
+          }
+        }
+      }
+    },
+    "mostly weekday %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mostly weekday %@"
+          }
+        }
+      }
+    },
+    "mostly %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mostly %@"
+          }
+        }
+      }
+    },
+    "RECENT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECENT"
+          }
+        }
+      }
+    },
+    "%@ · since %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · since %@"
+          }
+        }
+      }
+    },
+    "%@ · %@ – %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ – %@"
+          }
+        }
+      }
+    },
+    "Find a place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find a place"
+          }
+        }
+      }
+    },
+    "Merge into %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merge into %@"
+          }
+        }
+      }
+    },
+    "Merges this place into %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merges this place into %@."
+          }
+        }
+      }
+    },
+    "1 visit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 visit"
+          }
+        }
+      }
+    },
+    "%@ away": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ away"
+          }
+        }
+      }
+    },
+    "The place you pick is removed. Its visits, kind, address and note join %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The place you pick is removed. Its visits, kind, address and note join %@."
+          }
+        }
+      }
+    },
+    "Merge %@ into %@?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merge %@ into %@?"
+          }
+        }
+      }
+    },
+    "Merge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merge"
+          }
+        }
+      }
+    },
+    "Map around %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map around %@"
+          }
+        }
+      }
+    },
+    "RADIUS %lld M": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RADIUS %lld M"
+          }
+        }
+      }
+    },
+    "Visit rhythm by weekday and hour": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visit rhythm by weekday and hour"
+          }
+        }
+      }
+    },
+    "Most often %@ around %@. %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most often %@ around %@. %@"
+          }
+        }
+      }
+    },
+    "No visits yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No visits yet"
+          }
+        }
+      }
+    },
+    "By place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By place"
+          }
+        }
+      }
+    },
+    "By day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By day"
+          }
+        }
+      }
+    },
+    "On map": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On map"
+          }
+        }
+      }
+    },
+    "No photos matched yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No photos matched yet"
+          }
+        }
+      }
+    },
+    "Photos you take while Whereday records are matched to your stops by time and place.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos you take while Whereday records are matched to your stops by time and place."
+          }
+        }
+      }
+    },
+    "Photos are off": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos are off"
+          }
+        }
+      }
+    },
+    "Allow photo access in Settings to match your pictures to the places you stopped.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow photo access in Settings to match your pictures to the places you stopped."
+          }
+        }
+      }
+    },
+    "Opens the photos taken here.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the photos taken here."
+          }
+        }
+      }
+    },
+    "PHOTOS · MATCHED TO YOUR DAYS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PHOTOS · MATCHED TO YOUR DAYS"
+          }
+        }
+      }
+    },
+    "+%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%lld"
+          }
+        }
+      }
+    },
+    "Photos are read on this iPhone and never copied.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos are read on this iPhone and never copied."
+          }
+        }
+      }
+    },
+    "Use a saved place, enter coordinates, or your current location when permission allows.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use a saved place, enter coordinates, or your current location when permission allows."
+          }
+        }
+      }
+    },
+    "Shortcuts warns about overlaps. Turn on Allow Overlap only when you want both records.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcuts warns about overlaps. Turn on Allow Overlap only when you want both records."
+          }
+        }
+      }
+    },
+    "Links can open Check In, Add Past Visit, or a visit's details.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Links can open Check In, Add Past Visit, or a visit's details."
+          }
+        }
+      }
+    },
+    "Watch sync and smoother maps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch sync and smoother maps"
+          }
+        }
+      }
+    },
+    "Sync your Watch visits": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync your Watch visits"
+          }
+        }
+      }
+    },
+    "Watch recordings now include visited places. Open Whereday on your iPhone and tap Sync Now in the Watch app to retry a transfer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch recordings now include visited places. Open Whereday on your iPhone and tap Sync Now in the Watch app to retry a transfer."
+          }
+        }
+      }
+    },
+    "Keep completed outings up to date": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep completed outings up to date"
+          }
+        }
+      }
+    },
+    "The iPhone app refreshes when your Watch sends an outing's completion update.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The iPhone app refreshes when your Watch sends an outing's completion update."
+          }
+        }
+      }
+    },
+    "Smoother GPS maps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smoother GPS maps"
+          }
+        }
+      }
+    },
+    "GPS dots adjust to the visible map area and zoom level to keep large location histories responsive.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS dots adjust to the visible map area and zoom level to keep large location histories responsive."
+          }
+        }
+      }
+    },
+    "WHAT'S NEW · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHAT'S NEW · %@"
+          }
+        }
+      }
+    },
+    "Earlier releases": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Earlier releases"
+          }
+        }
+      }
+    },
+    "RELEASE NOTES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RELEASE NOTES"
+          }
+        }
+      }
+    },
+    "Video: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video: %@"
+          }
+        }
+      }
+    },
+    "Pauses the video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pauses the video"
+          }
+        }
+      }
+    },
+    "Plays the video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plays the video"
+          }
+        }
+      }
+    },
+    "VIDEO": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VIDEO"
+          }
+        }
+      }
+    },
+    "VIDEO · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VIDEO · %@"
+          }
+        }
+      }
+    },
+    "Start %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start %@"
+          }
+        }
+      }
+    },
+    "Stop tracking with %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop tracking with %@"
+          }
+        }
+      }
+    },
+    "Check in with %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check in with %@"
+          }
+        }
+      }
+    },
+    "How far have I gone with %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How far have I gone with %@"
+          }
+        }
+      }
+    },
+    "How long have I been tracking with %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long have I been tracking with %@"
+          }
+        }
+      }
+    },
+    "How many visits today in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How many visits today in %@"
+          }
+        }
+      }
+    },
+    "Rename current outing in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename current outing in %@"
+          }
+        }
+      }
+    },
+    "Rename a visit in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename a visit in %@"
+          }
+        }
+      }
+    },
+    "Rename a movement in %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename a movement in %@"
+          }
+        }
+      }
+    },
+    "Export %@ data": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export %@ data"
+          }
+        }
+      }
+    },
+    "RECORD": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORD"
+          }
+        }
+      }
+    },
+    "Begin a recorded outing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin a recorded outing"
+          }
+        }
+      }
+    },
+    "End the current outing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End the current outing"
+          }
+        }
+      }
+    },
+    "Start a manual visit at a saved place or coordinates": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a manual visit at a saved place or coordinates"
+          }
+        }
+      }
+    },
+    "Finish an open visit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish an open visit"
+          }
+        }
+      }
+    },
+    "ASK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ASK"
+          }
+        }
+      }
+    },
+    "Kilometres or miles moved since midnight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilometres or miles moved since midnight"
+          }
+        }
+      }
+    },
+    "How long recording has run": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long recording has run"
+          }
+        }
+      }
+    },
+    "Places stopped at today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places stopped at today"
+          }
+        }
+      }
+    },
+    "Visits in a date range, for other shortcuts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visits in a date range, for other shortcuts"
+          }
+        }
+      }
+    },
+    "Walks, rides and drives in a range": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walks, rides and drives in a range"
+          }
+        }
+      }
+    },
+    "The name of what you are recording": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The name of what you are recording"
+          }
+        }
+      }
+    },
+    "Give the live recording a name": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give the live recording a name"
+          }
+        }
+      }
+    },
+    "Fix a place name after the fact": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fix a place name after the fact"
+          }
+        }
+      }
+    },
+    "Label a walk, ride or drive": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Label a walk, ride or drive"
+          }
+        }
+      }
+    },
+    "Run an export in any format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run an export in any format"
+          }
+        }
+      }
+    },
+    "ASK, LOG AND RENAME WITHOUT OPENING THE APP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ASK, LOG AND RENAME WITHOUT OPENING THE APP"
+          }
+        }
+      }
+    },
+    "TRY SAYING": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TRY SAYING"
+          }
+        }
+      }
+    },
+    "“Hey Siri, how far have I gone with %@?”": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Hey Siri, how far have I gone with %@?”"
+          }
+        }
+      }
+    },
+    "%@ since midnight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ since midnight"
+          }
+        }
+      }
+    },
+    "You haven't moved yet today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You haven't moved yet today"
+          }
+        }
+      }
+    },
+    "Add %@ to Shortcuts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add %@ to Shortcuts"
+          }
+        }
+      }
+    },
+    "In the Shortcuts app": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In the Shortcuts app"
+          }
+        }
+      }
+    },
+    "Range": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Range"
+          }
+        }
+      }
+    },
+    "ATLAS · A YEAR IN DAYS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ATLAS · A YEAR IN DAYS"
+          }
+        }
+      }
+    },
+    "All years": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All years"
+          }
+        }
+      }
+    },
+    "Year": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Year"
+          }
+        }
+      }
+    },
+    "Previous year": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous year"
+          }
+        }
+      }
+    },
+    "Next year": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next year"
+          }
+        }
+      }
+    },
+    "No record": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No record"
+          }
+        }
+      }
+    },
+    "Manual stay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual stay"
+          }
+        }
+      }
+    },
+    "Travel day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel day"
+          }
+        }
+      }
+    },
+    "Ahead": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahead"
+          }
+        }
+      }
+    },
+    "Travel days count in both countries.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel days count in both countries."
+          }
+        }
+      }
+    },
+    "Travel days count in both countries. %lld days have no record — tap one to add a stay.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel days count in both countries. %lld days have no record — tap one to add a stay."
+          }
+        }
+      }
+    },
+    "Countries appear as you record. Identify countries in your earlier history or add a manual stay to fill the year.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countries appear as you record. Identify countries in your earlier history or add a manual stay to fill the year."
+          }
+        }
+      }
+    },
+    "Shows the days and trips in this country.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows the days and trips in this country."
+          }
+        }
+      }
+    },
+    "Opens a shareable card for this month.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens a shareable card for this month."
+          }
+        }
+      }
+    },
+    "Country days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Country days"
+          }
+        }
+      }
+    },
+    "Export, analyze history, and manage manual stays.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export, analyze history, and manage manual stays."
+          }
+        }
+      }
+    },
+    "%@ recap": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ recap"
+          }
+        }
+      }
+    },
+    "SELECTED · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SELECTED · %@"
+          }
+        }
+      }
+    },
+    "Open the day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the day"
+          }
+        }
+      }
+    },
+    "Calendar of recorded days, colored by country": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendar of recorded days, colored by country"
+          }
+        }
+      }
+    },
+    "%lld days with no record": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld days with no record"
+          }
+        }
+      }
+    },
+    "%@, 1 day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, 1 day"
+          }
+        }
+      }
+    },
+    "%@, %lld days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %lld days"
+          }
+        }
+      }
+    },
+    "A GIFT WITH YOUR PURCHASE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A GIFT WITH YOUR PURCHASE"
+          }
+        }
+      }
+    },
+    "Verify your purchase": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verify your purchase"
+          }
+        }
+      }
+    },
+    "We send your App Store purchase proof to myself.md. Your health and location data stay on your device.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We send your App Store purchase proof to myself.md. Your health and location data stay on your device."
+          }
+        }
+      }
+    },
+    "Choose the account that gets it": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the account that gets it"
+          }
+        }
+      }
+    },
+    "Each original purchase links to one myself.md account. Family-shared access alone doesn’t qualify — the purchaser can claim.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each original purchase links to one myself.md account. Family-shared access alone doesn’t qualify — the purchaser can claim."
+          }
+        }
+      }
+    },
+    "NO QUALIFYING PURCHASE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NO QUALIFYING PURCHASE"
+          }
+        }
+      }
+    },
+    "Use the Apple Account that bought this app or its lifetime unlock, then try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the Apple Account that bought this app or its lifetime unlock, then try again."
+          }
+        }
+      }
+    },
+    "Use the Apple Account that bought Whereday or its lifetime unlock, then try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the Apple Account that bought Whereday or its lifetime unlock, then try again."
+          }
+        }
+      }
+    },
+    "COULDN'T VERIFY": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COULDN'T VERIFY"
+          }
+        }
+      }
+    },
+    "VERIFIED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VERIFIED"
+          }
+        }
+      }
+    },
+    "Not now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now"
+          }
+        }
+      }
+    },
+    "Try again": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "No qualifying purchase was found. Use the Apple Account that bought this app or its lifetime unlock, then try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No qualifying purchase was found. Use the Apple Account that bought this app or its lifetime unlock, then try again."
+          }
+        }
+      }
+    },
+    "Main": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Main"
+          }
+        }
+      }
+    },
+    "Every day\nis a page.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every day\nis a page."
+          }
+        }
+      }
+    },
+    "Whereday quietly writes down where you were, so you can look back at any day, place or trip.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday quietly writes down where you were, so you can look back at any day, place or trip."
+          }
+        }
+      }
+    },
+    "It stays\non this phone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It stays\non this phone."
+          }
+        }
+      }
+    },
+    "No account. Nothing to sign up for.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No account. Nothing to sign up for."
+          }
+        }
+      }
+    },
+    "No server keeps a copy of where you've been.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No server keeps a copy of where you've been."
+          }
+        }
+      }
+    },
+    "Export it anytime, in open formats. The code is open too.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export it anytime, in open formats. The code is open too."
+          }
+        }
+      }
+    },
+    "How much\nshould it remember?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How much\nshould it remember?"
+          }
+        }
+      }
+    },
+    "Match photos to places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match photos to places"
+          }
+        }
+      }
+    },
+    "Shows your iPhone photos on the days and places they were taken. Photos stay in your library.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows your iPhone photos on the days and places they were taken. Photos stay in your library."
+          }
+        }
+      }
+    },
+    "Allow Always so Whereday records when it's closed. You can change this anytime.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Always so Whereday records when it's closed. You can change this anytime."
+          }
+        }
+      }
+    },
+    "Location access is off. Turn it on in iPhone Settings → Whereday → Location.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Location access is off. Turn it on in iPhone Settings → Whereday → Location."
+          }
+        }
+      }
+    },
+    "You can change this anytime.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can change this anytime."
+          }
+        }
+      }
+    },
+    "Allow location": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow location"
+          }
+        }
+      }
+    },
+    "Allow Always": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Always"
+          }
+        }
+      }
+    },
+    "Start recording": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start recording"
+          }
+        }
+      }
+    },
+    "I already have data — import": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I already have data — import"
+          }
+        }
+      }
+    },
+    "Finish without Always": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish without Always"
+          }
+        }
+      }
+    },
+    "An empty day dial with the first place starting to fill in": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An empty day dial with the first place starting to fill in"
+          }
+        }
+      }
+    },
+    "%@ %@ to %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ to %@"
+          }
+        }
+      }
+    },
+    "%@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@"
+          }
+        }
+      }
+    },
+    "Afternoon": {
+      "comment": "Part of day in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afternoon"
+          }
+        }
+      }
+    },
+    "Evening": {
+      "comment": "Part of day in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Evening"
+          }
+        }
+      }
+    },
+    "walk": {
+      "comment": "Travel noun in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "walk"
+          }
+        }
+      }
+    },
+    "run": {
+      "comment": "Travel noun in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "run"
+          }
+        }
+      }
+    },
+    "ride": {
+      "comment": "Travel noun in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ride"
+          }
+        }
+      }
+    },
+    "drive": {
+      "comment": "Travel noun in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "drive"
+          }
+        }
+      }
+    },
+    "trip": {
+      "comment": "Travel noun in an automatic outing title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "trip"
+          }
+        }
+      }
+    },
+    "NOTHING IS SAVED UNTIL YOU SAY SO": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NOTHING IS SAVED UNTIL YOU SAY SO"
+          }
+        }
+      }
+    },
+    "Review import": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review import"
+          }
+        }
+      }
+    },
+    "IMPORT COMPLETE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMPORT COMPLETE"
+          }
+        }
+      }
+    },
+    "%@ and %@ added": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ and %@ added"
+          }
+        }
+      }
+    },
+    "%@ added": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ added"
+          }
+        }
+      }
+    },
+    "%@ now shows in Atlas.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ now shows in Atlas."
+          }
+        }
+      }
+    },
+    "%@ of days now show in Atlas.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of days now show in Atlas."
+          }
+        }
+      }
+    },
+    "They now show in Atlas.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They now show in Atlas."
+          }
+        }
+      }
+    },
+    "%@ DUPLICATES SKIPPED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ DUPLICATES SKIPPED"
+          }
+        }
+      }
+    },
+    "IMPORT FAILED · NOTHING WAS SAVED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMPORT FAILED · NOTHING WAS SAVED"
+          }
+        }
+      }
+    },
+    "This import couldn't be saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This import couldn't be saved."
+          }
+        }
+      }
+    },
+    "This file isn't one Whereday can read.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This file isn't one Whereday can read."
+          }
+        }
+      }
+    },
+    "Your existing records weren't touched. Try importing the file again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your existing records weren't touched. Try importing the file again."
+          }
+        }
+      }
+    },
+    "Try a Google Timeline JSON export, or a Whereday JSON, CSV or Markdown file. Your existing records weren't touched.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a Google Timeline JSON export, or a Whereday JSON, CSV or Markdown file. Your existing records weren't touched."
+          }
+        }
+      }
+    },
+    "Saving import…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving import…"
+          }
+        }
+      }
+    },
+    "RECORDS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDS"
+          }
+        }
+      }
+    },
+    "%@ OF %@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ OF %@ %@"
+          }
+        }
+      }
+    },
+    "NEW · %@ DUPLICATES SKIPPED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NEW · %@ DUPLICATES SKIPPED"
+          }
+        }
+      }
+    },
+    "point": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "point"
+          }
+        }
+      }
+    },
+    "points": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "points"
+          }
+        }
+      }
+    },
+    "visit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "visit"
+          }
+        }
+      }
+    },
+    "%@ INVALID": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ INVALID"
+          }
+        }
+      }
+    },
+    "%@ UNSUPPORTED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ UNSUPPORTED"
+          }
+        }
+      }
+    },
+    "%@ ENTRIES SKIPPED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ENTRIES SKIPPED"
+          }
+        }
+      }
+    },
+    "Choose another file": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose another file"
+          }
+        }
+      }
+    },
+    "Import selected records": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import selected records"
+          }
+        }
+      }
+    },
+    "Saving…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving…"
+          }
+        }
+      }
+    },
+    "RECORDING · WHAT STAYS ON THIS IPHONE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDING · WHAT STAYS ON THIS IPHONE"
+          }
+        }
+      }
+    },
+    "RECORDING": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDING"
+          }
+        }
+      }
+    },
+    "Every mode also notes the places you stop and large moves, even when Whereday is closed.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every mode also notes the places you stop and large moves, even when Whereday is closed."
+          }
+        }
+      }
+    },
+    "FINE-TUNE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FINE-TUNE"
+          }
+        }
+      }
+    },
+    "Distance filter controls how often points are saved while moving. Stop After auto-stops as a safety net.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance filter controls how often points are saved while moving. Stop After auto-stops as a safety net."
+          }
+        }
+      }
+    },
+    "OUTINGS FROM SAVED POINTS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OUTINGS FROM SAVED POINTS"
+          }
+        }
+      }
+    },
+    "WHAT STAYS · WHAT LEAVES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHAT STAYS · WHAT LEAVES"
+          }
+        }
+      }
+    },
+    "Record my days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record my days"
+          }
+        }
+      }
+    },
+    "Recording now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording now"
+          }
+        }
+      }
+    },
+    "Paused": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused"
+          }
+        }
+      }
+    },
+    "Open iOS Settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open iOS Settings"
+          }
+        }
+      }
+    },
+    "Choose Always so Whereday can keep notes in the background.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose Always so Whereday can keep notes in the background."
+          }
+        }
+      }
+    },
+    "Distance filter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance filter"
+          }
+        }
+      }
+    },
+    "Stop after": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop after"
+          }
+        }
+      }
+    },
+    "Live Activity": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activity"
+          }
+        }
+      }
+    },
+    "Tracking progress on the Lock Screen and Dynamic Island": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking progress on the Lock Screen and Dynamic Island"
+          }
+        }
+      }
+    },
+    "Auto-generate outings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto-generate outings"
+          }
+        }
+      }
+    },
+    "Ignore shorter than": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignore shorter than"
+          }
+        }
+      }
+    },
+    "Minimum GPS points": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimum GPS points"
+          }
+        }
+      }
+    },
+    "Your journal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your journal"
+          }
+        }
+      }
+    },
+    "This iPhone only": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This iPhone only"
+          }
+        }
+      }
+    },
+    "Place names": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Place names"
+          }
+        }
+      }
+    },
+    "Asks Apple Maps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asks Apple Maps"
+          }
+        }
+      }
+    },
+    "Webhooks & scheduled sends": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhooks & scheduled sends"
+          }
+        }
+      }
+    },
+    "Webhook on": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhook on"
+          }
+        }
+      }
+    },
+    "Webhook off": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webhook off"
+          }
+        }
+      }
+    },
+    "no scheduled files": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no scheduled files"
+          }
+        }
+      }
+    },
+    "files every %lld h": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "files every %lld h"
+          }
+        }
+      }
+    },
+    "a daily file at %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "a daily file at %@"
+          }
+        }
+      }
+    },
+    "last run failed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "last run failed"
+          }
+        }
+      }
+    },
+    "last %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "last %@"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        }
+      }
+    },
+    "Apple Watch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Watch"
+          }
+        }
+      }
+    },
+    "Not available": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not available"
+          }
+        }
+      }
+    },
+    "No watch paired": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No watch paired"
+          }
+        }
+      }
+    },
+    "Whereday not installed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday not installed"
+          }
+        }
+      }
+    },
+    "Auto": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto"
+          }
+        }
+      }
+    },
+    "%@ · auto": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · auto"
+          }
+        }
+      }
+    },
+    "No account. No server copy of where you've been.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No account. No server copy of where you've been."
+          }
+        }
+      }
+    },
+    "Open source — read every line on GitHub.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open source — read every line on GitHub."
+          }
+        }
+      }
+    },
+    "Synced just now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synced just now"
+          }
+        }
+      }
+    },
+    "Synced %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synced %@"
+          }
+        }
+      }
+    },
+    "Not synced yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not synced yet"
+          }
+        }
+      }
+    },
+    "Not available on this iPhone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not available on this iPhone"
+          }
+        }
+      }
+    },
+    "Checking…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking…"
+          }
+        }
+      }
+    },
+    "No": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No"
+          }
+        }
+      }
+    },
+    "Yes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes"
+          }
+        }
+      }
+    },
+    "SYNC · FROM YOUR WRIST": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SYNC · FROM YOUR WRIST"
+          }
+        }
+      }
+    },
+    "LAST SYNC": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LAST SYNC"
+          }
+        }
+      }
+    },
+    "Paired": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paired"
+          }
+        }
+      }
+    },
+    "Whereday installed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday installed"
+          }
+        }
+      }
+    },
+    "In range now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In range now"
+          }
+        }
+      }
+    },
+    "Last points received": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last points received"
+          }
+        }
+      }
+    },
+    "Points waiting on the watch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points waiting on the watch"
+          }
+        }
+      }
+    },
+    "—": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "—"
+          }
+        }
+      }
+    },
+    "Asking the watch…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asking the watch…"
+          }
+        }
+      }
+    },
+    "Sync now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync now"
+          }
+        }
+      }
+    },
+    "Install Whereday from the Watch app on this iPhone to record from your wrist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install Whereday from the Watch app on this iPhone to record from your wrist."
+          }
+        }
+      }
+    },
+    "Pair an Apple Watch to record outings from your wrist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pair an Apple Watch to record outings from your wrist."
+          }
+        }
+      }
+    },
+    "The watch sends what it recorded on its own whenever it's near this iPhone. Sync now asks it to send right away; the watch has to be in range.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The watch sends what it recorded on its own whenever it's near this iPhone. Sync now asks it to send right away; the watch has to be in range."
+          }
+        }
+      }
+    },
+    "The watch isn't in range. Open Whereday on it and try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The watch isn't in range. Open Whereday on it and try again."
+          }
+        }
+      }
+    },
+    "Nothing was waiting.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing was waiting."
+          }
+        }
+      }
+    },
+    "Sending %lld points from the watch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sending %lld points from the watch."
+          }
+        }
+      }
+    },
+    "Edit place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit place"
+          }
+        }
+      }
+    },
+    "KIND": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KIND"
+          }
+        }
+      }
+    },
+    "ADDRESS · OPTIONAL": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ADDRESS · OPTIONAL"
+          }
+        }
+      }
+    },
+    "Saved Location": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved Location"
+          }
+        }
+      }
+    },
+    "Visits inside the circle get this name automatically.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visits inside the circle get this name automatically."
+          }
+        }
+      }
+    },
+    "Choose 25–10,000 meters; type a value above 500. Past visits keep their names.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose 25–10,000 meters; type a value above 500. Past visits keep their names."
+          }
+        }
+      }
+    },
+    "%lld meters": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld meters"
+          }
+        }
+      }
+    },
+    "MATCH RADIUS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MATCH RADIUS"
+          }
+        }
+      }
+    },
+    "DRAG PIN TO MOVE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DRAG PIN TO MOVE"
+          }
+        }
+      }
+    },
+    "Search for a place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search for a place"
+          }
+        }
+      }
+    },
+    "Search for an address or place a pin on a larger map.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search for an address or place a pin on a larger map."
+          }
+        }
+      }
+    },
+    "Move pin north": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move pin north"
+          }
+        }
+      }
+    },
+    "Move pin south": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move pin south"
+          }
+        }
+      }
+    },
+    "Move pin east": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move pin east"
+          }
+        }
+      }
+    },
+    "Move pin west": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move pin west"
+          }
+        }
+      }
+    },
+    "Open Whereday to choose a plan before tracking.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Whereday to choose a plan before tracking."
+          }
+        }
+      }
+    },
+    "Marked place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marked place"
+          }
+        }
+      }
+    },
+    "Its visits, typical stay, and weekly rhythm appear here.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Its visits, typical stay, and weekly rhythm appear here."
+          }
+        }
+      }
+    },
+    "Choose a Place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a Place"
+          }
+        }
+      }
+    },
+    "%lld SAVED · %lld VISITED": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld SAVED · %lld VISITED"
+          }
+        }
+      }
+    },
+    "Most visited": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most visited"
+          }
+        }
+      }
+    },
+    "Recent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent"
+          }
+        }
+      }
+    },
+    "Unnamed · %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unnamed · %lld"
+          }
+        }
+      }
+    },
+    "A–Z": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A–Z"
+          }
+        }
+      }
+    },
+    "Shows this place's visits and rhythm.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows this place's visits and rhythm."
+          }
+        }
+      }
+    },
+    "here now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "here now"
+          }
+        }
+      }
+    },
+    "Places you return to that aren't saved yet. Save one to name its future visits.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places you return to that aren't saved yet. Save one to name its future visits."
+          }
+        }
+      }
+    },
+    "Shows this spot's visits and rhythm, with an option to save it.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows this spot's visits and rhythm, with an option to save it."
+          }
+        }
+      }
+    },
+    "%lld visits · last %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld visits · last %@"
+          }
+        }
+      }
+    },
+    "Name %lld places": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name %lld places"
+          }
+        }
+      }
+    },
+    "Shows frequent places that aren't saved yet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows frequent places that aren't saved yet."
+          }
+        }
+      }
+    },
+    "Import CSV": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import CSV"
+          }
+        }
+      }
+    },
+    "Walk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walk"
+          }
+        }
+      }
+    },
+    "Run": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run"
+          }
+        }
+      }
+    },
+    "Bike": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bike"
+          }
+        }
+      }
+    },
+    "Drive": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drive"
+          }
+        }
+      }
+    },
+    "Train": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Train"
+          }
+        }
+      }
+    },
+    "Flight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flight"
+          }
+        }
+      }
+    },
+    "Walking": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walking"
+          }
+        }
+      }
+    },
+    "Running": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running"
+          }
+        }
+      }
+    },
+    "Cycling": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cycling"
+          }
+        }
+      }
+    },
+    "Driving": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Driving"
+          }
+        }
+      }
+    },
+    "On a train": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On a train"
+          }
+        }
+      }
+    },
+    "Flying": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flying"
+          }
+        }
+      }
+    },
+    "Errors": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errors"
+          }
+        }
+      }
+    },
+    "WHAT THE APP WROTE DOWN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHAT THE APP WROTE DOWN"
+          }
+        }
+      }
+    },
+    "Diagnostics": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics"
+          }
+        }
+      }
+    },
+    "Clear logs": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear logs"
+          }
+        }
+      }
+    },
+    "Nothing to report yet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to report yet."
+          }
+        }
+      }
+    },
+    "No entries match this filter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No entries match this filter."
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy"
+          }
+        }
+      }
+    },
+    "Share with support": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share with support"
+          }
+        }
+      }
+    },
+    "Join": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Join"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
