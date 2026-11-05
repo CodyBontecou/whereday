@@ -2031,9 +2031,12 @@ struct LocationMapView: View {
     private func focusCompanionVisit() {
         guard let focusedVisit else { return }
         selectedPointID = nil
-        let start = Calendar.current.startOfDay(for: focusedVisit.arrivedAt)
-        let end = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(86400)
-        let range = start...end
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: focusedVisit.arrivedAt)
+        let nextDay = calendar.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(86400)
+        // The visit's own day, ending just before the next midnight so the map treats it as one day.
+        let range = start...Date(timeIntervalSinceReferenceDate: nextDay.timeIntervalSinceReferenceDate.nextDown)
+        activePreset = calendar.isDateInToday(start) ? .today : (calendar.isDateInYesterday(start) ? .yesterday : nil)
         viewModel.mapDateRange = range
         viewModel.loadMapLocationPoints(in: range)
         viewModel.loadMapPhotoMoments(in: range)
