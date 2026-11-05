@@ -642,7 +642,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ غادر"
+            "value": "متبقٍ %@"
           }
         },
         "bn": {
@@ -922,7 +922,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "التقاط مسار المراقبة"
+            "value": "جارٍ التقاط مسار الساعة"
           }
         },
         "bn": {
@@ -1412,7 +1412,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يعيش"
+            "value": "مباشر"
           }
         },
         "bn": {
@@ -1832,7 +1832,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عن"
+            "value": "متوقف"
           }
         },
         "bn": {
@@ -2112,7 +2112,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تعليق"
+            "value": "استعداد"
           }
         },
         "bn": {
@@ -2182,7 +2182,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يبدأ"
+            "value": "بدء"
           }
         },
         "bn": {
@@ -2322,7 +2322,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قف"
+            "value": "إيقاف"
           }
         },
         "bn": {
@@ -2392,7 +2392,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقف عن التتبع"
+            "value": "أوقف التتبع"
           }
         },
         "bn": {

@@ -12,7 +12,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ غادر"
+            "value": "متبقٍ %@"
           }
         },
         "bn": {
@@ -496,7 +496,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عن"
+            "value": "متوقف"
           }
         },
         "bn": {
@@ -636,7 +636,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تتبع قبالة"
+            "value": "التتبع متوقف"
           }
         },
         "bn": {

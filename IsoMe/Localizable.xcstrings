@@ -6292,7 +6292,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "15 متر فجوات"
+            "value": "فجوات 15 دقيقة"
           }
         },
         "bn": {
@@ -6502,7 +6502,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ساعاتين"
+            "value": "ساعتان"
           }
         },
         "bn": {
@@ -8532,7 +8532,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "طبقة جديدة من البولندية"
+            "value": "لمسات تحسين جديدة"
           }
         },
         "bn": {
@@ -9092,7 +9092,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الجميع"
+            "value": "الكل"
           }
         },
         "bn": {
@@ -10002,7 +10002,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "متوسط ​​السرعة"
+            "value": "متوسط السرعة"
           }
         },
         "bn": {
@@ -12314,7 +12314,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الجميع"
+            "value": "الكل"
           }
         },
         "bn": {
@@ -12664,7 +12664,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يسمح"
+            "value": "السماح"
           }
         },
         "bn": {
@@ -13504,7 +13504,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "التطبيق: Whereday %1$@ النظام الأساسي: %2$@ الجهاز: %3$@"
+            "value": "التطبيق: Whereday %1$@\nالنظام الأساسي: %2$@\nالجهاز: %3$@"
           }
         },
         "bn": {
@@ -13715,7 +13715,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يتقدم"
+            "value": "تطبيق"
           }
         },
         "bn": {
@@ -14345,7 +14345,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لحظات الصورة المزامنة التلقائية"
+            "value": "مزامنة لحظات الصور تلقائيًا"
           }
         },
         "bn": {
@@ -14625,7 +14625,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "خلف"
+            "value": "رجوع"
           }
         },
         "bn": {
@@ -15045,7 +15045,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تتبع الخلفية"
+            "value": "التتبع في الخلفية"
           }
         },
         "bn": {
@@ -15535,7 +15535,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "معاينة البناء…"
+            "value": "جارٍ إنشاء المعاينة…"
           }
         },
         "bn": {
@@ -15815,7 +15815,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يتغير"
+            "value": "تغيير"
           }
         },
         "bn": {
@@ -16165,7 +16165,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الضوابط"
+            "value": "عناصر التحكم"
           }
         },
         "bn": {
@@ -17145,7 +17145,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يلغي"
+            "value": "إلغاء"
           }
         },
         "bn": {
@@ -19179,7 +19179,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "منظمة التصدير الأنظف"
+            "value": "تنظيم أوضح لملفات التصدير"
           }
         },
         "bn": {
@@ -19249,7 +19249,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "واضح"
+            "value": "مسح"
           }
         },
         "bn": {
@@ -20439,7 +20439,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يكمل"
+            "value": "متابعة"
           }
         },
         "bn": {
@@ -20789,7 +20789,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الزيارة الصحيحة إلى %@"
+            "value": "تصحيح الزيارة إلى %@"
           }
         },
         "bn": {
@@ -20859,7 +20859,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تصحيح"
+            "value": "مُصحَّح"
           }
         },
         "bn": {
@@ -24079,7 +24079,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يمسح"
+            "value": "حذف"
           }
         },
         "bn": {
@@ -24849,7 +24849,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "رفض"
+            "value": "مرفوض"
           }
         },
         "bn": {
@@ -25620,7 +25620,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "رفض"
+            "value": "إغلاق"
           }
         },
         "bn": {
@@ -26040,7 +26040,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "منتهي"
+            "value": "تم"
           }
         },
         "bn": {
@@ -27021,7 +27021,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يُمكَِن"
+            "value": "تفعيل"
           }
         },
         "bn": {
@@ -27511,7 +27511,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يصدّر"
+            "value": "تصدير"
           }
         },
         "bn": {
@@ -27581,7 +27581,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يصدّر %@"
+            "value": "تصدير %@"
           }
         },
         "bn": {
@@ -28375,7 +28375,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يتم نشر كل إصلاح GPS جديد على الفور."
+            "value": "تُرسَل كل قراءة GPS جديدة فورًا عبر POST."
           }
         },
         "bn": {
@@ -30267,7 +30267,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يصدّر"
+            "value": "تصدير"
           }
         },
         "bn": {
@@ -30547,7 +30547,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "نزهات التصدير"
+            "value": "تصدير النزهات"
           }
         },
         "bn": {
@@ -31527,7 +31527,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عصا إعدادات التصدير"
+            "value": "إعدادات التصدير تبقى محفوظة"
           }
         },
         "bn": {
@@ -31737,7 +31737,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قم بتصدير زيارات Whereday اليوم وتوجيهها كملف."
+            "value": "قم بتصدير زيارات Whereday ومسار اليوم كملف."
           }
         },
         "bn": {
@@ -31877,7 +31877,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قم بتصدير زيارات Whereday بالأمس وتوجيهها كملف."
+            "value": "قم بتصدير زيارات Whereday ومسار الأمس كملف."
           }
         },
         "bn": {
@@ -32227,7 +32227,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يتم تصدير الحفظ مباشرة إلى هذا المجلد عند تشغيل الحفظ التلقائي. وإلا سيتم فتح ورقة المشاركة."
+            "value": "تُحفظ ملفات التصدير مباشرة في هذا المجلد عند تشغيل الحفظ التلقائي. وإلا ستُفتح ورقة المشاركة."
           }
         },
         "bn": {
@@ -32717,7 +32717,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "شكل"
+            "value": "التنسيق"
           }
         },
         "bn": {
@@ -34187,7 +34187,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تُظهر الآن مسارات الملفات التي تستخدم {title} أو {name} احتياطيًا معقولاً لنوع البيانات للزيارات والنقاط وجميع الصادرات في حالة عدم وجود عنوان للنزهة."
+            "value": "تُظهر الآن مسارات الملفات التي تستخدم {title} أو {name} بديلًا معقولًا حسب نوع البيانات لعمليات تصدير الزيارات والنقاط والكل عند عدم وجود عنوان للنزهة."
           }
         },
         "bn": {
@@ -34887,7 +34887,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يجد"
+            "value": "بحث"
           }
         },
         "bn": {
@@ -35659,7 +35659,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تناسب الجلسة النشطة"
+            "value": "عرض الجلسة النشطة كاملة"
           }
         },
         "bn": {
@@ -35729,7 +35729,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تناسب كافة الزيارات"
+            "value": "عرض كل الزيارات"
           }
         },
         "bn": {
@@ -35799,7 +35799,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "خريطة ملائمة"
+            "value": "ملاءمة الخريطة"
           }
         },
         "bn": {
@@ -35869,7 +35869,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "صادرات مرنة"
+            "value": "تصدير مرن"
           }
         },
         "bn": {
@@ -35939,7 +35939,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "شكل"
+            "value": "التنسيق"
           }
         },
         "bn": {
@@ -36429,7 +36429,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "GPS غريب"
+            "value": "نقطة GPS شاذة"
           }
         },
         "bn": {
@@ -37199,7 +37199,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "امنح الوصول إلى الموقع في إعدادات iPhone → Whereday → الموقع."
+            "value": "امنح الوصول إلى الموقع في إعدادات iPhone‏ ← Whereday ← الموقع."
           }
         },
         "bn": {
@@ -38179,7 +38179,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "استنتج"
+            "value": "مستنتَج"
           }
         },
         "bn": {
@@ -38739,7 +38739,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يستورد"
+            "value": "استيراد"
           }
         },
         "bn": {
@@ -39931,7 +39931,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "المستوردة 1 نقطة."
+            "value": "تم استيراد نقطة واحدة."
           }
         },
         "bn": {
@@ -40585,7 +40585,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يستنتج من الطريق"
+            "value": "مستنتَج من المسار"
           }
         },
         "bn": {
@@ -40655,7 +40655,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يستنتج من الزيارة"
+            "value": "مستنتَج من الزيارة"
           }
         },
         "bn": {
@@ -41425,7 +41425,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أغراض"
+            "value": "العناصر"
           }
         },
         "bn": {
@@ -41495,7 +41495,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ينضم"
+            "value": "انضم"
           }
         },
         "bn": {
@@ -41565,7 +41565,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "انضم إلى الفتنة"
+            "value": "انضم إلى Discord"
           }
         },
         "bn": {
@@ -41845,7 +41845,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يلخص JSON و CSV كل رحلة، بينما يقوم GPX و KML و GeoJSON و OwnTracks و Overland بتصدير إصلاحات المسار."
+            "value": "يلخص JSON و CSV كل رحلة، بينما يقوم GPX و KML و GeoJSON و OwnTracks و Overland بتصدير قراءات GPS للمسار."
           }
         },
         "bn": {
@@ -43175,7 +43175,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يعيش"
+            "value": "مباشر"
           }
         },
         "bn": {
@@ -45555,7 +45555,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "سيتم نشر بيانات الموقع إلى نقطة النهاية التي تم تكوينها."
+            "value": "ستُرسَل بيانات الموقع عبر POST إلى نقطة النهاية المُعدّة."
           }
         },
         "bn": {
@@ -47796,7 +47796,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "رسم خريطة"
+            "value": "الخريطة"
           }
         },
         "bn": {
@@ -48146,7 +48146,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تشتمل صادرات نزهة Markdown على مادة YAML الأمامية والملاحظات والزيارات ونقاط المسار بحيث يتم إسقاطها بشكل نظيف في دفتر اليومية أو نظام PKM."
+            "value": "تشتمل ملفات Markdown المصدّرة للنزهات على مادة YAML الأمامية والملاحظات والزيارات ونقاط المسار بحيث يتم إسقاطها بشكل نظيف في دفتر اليومية أو نظام PKM."
           }
         },
         "bn": {
@@ -48566,7 +48566,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تطابق نصف القطر"
+            "value": "نطاق المطابقة"
           }
         },
         "bn": {
@@ -49336,7 +49336,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مزيد من السيطرة على الصادرات نزهة"
+            "value": "تحكم أكبر في تصدير النزهات"
           }
         },
         "bn": {
@@ -49406,7 +49406,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "صادرات يومية أكثر موثوقية"
+            "value": "تصدير يومي أكثر موثوقية"
           }
         },
         "bn": {
@@ -49616,7 +49616,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "معظم النقاط أولا"
+            "value": "الأكثر نقاطًا أولًا"
           }
         },
         "bn": {
@@ -50316,7 +50316,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا أحد"
+            "value": "بدون"
           }
         },
         "bn": {
@@ -50736,7 +50736,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اسم الزيارات بشكل أسرع"
+            "value": "سمِّ الزيارات بشكل أسرع"
           }
         },
         "bn": {
@@ -53956,7 +53956,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا توجد زيارات بعد اليوم."
+            "value": "لا توجد زيارات اليوم بعد."
           }
         },
         "bn": {
@@ -54026,7 +54026,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا أحد"
+            "value": "بدون"
           }
         },
         "bn": {
@@ -54586,7 +54586,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عدد الزيارات التي قام بها Whereday اليوم."
+            "value": "عدد الزيارات التي سجّلها Whereday اليوم."
           }
         },
         "bn": {
@@ -55426,7 +55426,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "العلم الخارجي"
+            "value": "علامة النقطة الشاذة"
           }
         },
         "bn": {
@@ -55706,7 +55706,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عن"
+            "value": "متوقف"
           }
         },
         "bn": {
@@ -56196,7 +56196,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "افتح نزهة لمشاهدة المسار وهو يعمل باستخدام علامة متحركة وجهاز غسل والوقت المنقضي والمدة وإحصائيات المسافة."
+            "value": "افتح نزهة لمشاهدة إعادة تشغيل المسار مع علامة متحركة وشريط تمرير زمني والوقت المنقضي والمدة وإحصائيات المسافة."
           }
         },
         "bn": {
@@ -56756,7 +56756,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "إعادة تشغيل المسار المفتوح"
+            "value": "فتح إعادة تشغيل المسار"
           }
         },
         "bn": {
@@ -58016,7 +58016,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "خياري"
+            "value": "اختياري"
           }
         },
         "bn": {
@@ -58506,7 +58506,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "نقطة المسار الخارجية"
+            "value": "نقطة مسار شاذة"
           }
         },
         "bn": {
@@ -58926,7 +58926,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اسم بارام"
+            "value": "اسم المعامل"
           }
         },
         "bn": {
@@ -59556,7 +59556,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لعب نزهة"
+            "value": "تشغيل النزهة"
           }
         },
         "bn": {
@@ -63012,7 +63012,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أشر إلى الفهرس %lld الذي يفتقد خط الطول/العرض"
+            "value": "النقطة في الفهرس %lld ينقصها خط العرض/الطول"
           }
         },
         "bn": {
@@ -63082,7 +63082,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أشر إلى الطابع الزمني المفقود في الفهرس %lld"
+            "value": "النقطة في الفهرس %lld ينقصها الطابع الزمني"
           }
         },
         "bn": {
@@ -63292,7 +63292,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يتم وضع النقاط في قائمة الانتظار ومسحها كل N دقيقة. يتم فقدان النقاط غير المرسلة إذا تم إنهاء التطبيق."
+            "value": "يتم وضع النقاط في قائمة الانتظار وإرسالها كل N دقيقة. يتم فقدان النقاط غير المرسلة إذا تم إنهاء التطبيق."
           }
         },
         "bn": {
@@ -65112,7 +65112,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "في الوقت الحالى"
+            "value": "في الوقت الفعلي"
           }
         },
         "bn": {
@@ -65182,7 +65182,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ينعش"
+            "value": "تحديث"
           }
         },
         "bn": {
@@ -65462,7 +65462,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "إعادة التشغيل"
+            "value": "إعادة عرض الترحيب"
           }
         },
         "bn": {
@@ -66022,7 +66022,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مستعد"
+            "value": "جاهز"
           }
         },
         "bn": {
@@ -66513,7 +66513,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يزيل"
+            "value": "إزالة"
           }
         },
         "bn": {
@@ -68403,7 +68403,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "موقف إعادة تشغيل الطريق"
+            "value": "موضع إعادة تشغيل المسار"
           }
         },
         "bn": {
@@ -69663,7 +69663,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يشارك %@"
+            "value": "مشاركة %@"
           }
         },
         "bn": {
@@ -70013,7 +70013,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "انقسام بعد"
+            "value": "التقسيم بعد"
           }
         },
         "bn": {
@@ -70083,7 +70083,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تعليق"
+            "value": "استعداد"
           }
         },
         "bn": {
@@ -70153,7 +70153,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يبدأ"
+            "value": "بدء"
           }
         },
         "bn": {
@@ -70503,7 +70503,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقف بعد"
+            "value": "الإيقاف بعد"
           }
         },
         "bn": {
@@ -70853,7 +70853,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يحفظ"
+            "value": "حفظ"
           }
         },
         "bn": {
@@ -73639,7 +73639,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حدد تنسيقًا واحدًا أو أكثر. يحمل OwnTracks و Overland فقط إصلاحات GPS )؛ تستخدم التنسيقات الأخرى المحددة نوع البيانات المحدد."
+            "value": "حدد تنسيقًا واحدًا أو أكثر. يحمل OwnTracks و Overland قراءات GPS فقط؛ تستخدم التنسيقات الأخرى المحددة نوع البيانات المحدد."
           }
         },
         "bn": {
@@ -73709,7 +73709,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حدد تنسيقًا واحدًا أو أكثر. تحتوي صادرات OwnTracks وOwnTracks على إصلاحات نظام تحديد المواقع Overland GPS لمسار النزهة؛ لا يتم تمثيل صفوف الزيارة وملاحظات النزهة."
+            "value": "حدد تنسيقًا واحدًا أو أكثر. تحتوي ملفات OwnTracks وOverland المصدّرة للنزهات على قراءات GPS لمسار النزهة؛ لا يتم تمثيل صفوف الزيارة وملاحظات النزهة."
           }
         },
         "bn": {
@@ -74622,7 +74622,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قم بتعيين مجلد افتراضي لحفظ الصادرات بدون ورقة المشاركة."
+            "value": "قم بتعيين مجلد افتراضي لحفظ ملفات التصدير بدون ورقة المشاركة."
           }
         },
         "bn": {
@@ -75042,7 +75042,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مشاركة الورقة"
+            "value": "ورقة المشاركة"
           }
         },
         "bn": {
@@ -75112,7 +75112,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "شارك في نزهة واحدة"
+            "value": "مشاركة نزهة واحدة"
           }
         },
         "bn": {
@@ -75252,7 +75252,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مشاركة الورقة"
+            "value": "ورقة المشاركة"
           }
         },
         "bn": {
@@ -76022,7 +76022,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يعرض عناصر التحكم لتنقية المسار المرئي وإعادة تشغيله."
+            "value": "يعرض عناصر التحكم في التنقل عبر المسار المرئي وإعادة تشغيله."
           }
         },
         "bn": {
@@ -76862,7 +76862,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "صادرات أكثر سلاسة"
+            "value": "تصدير أكثر سلاسة"
           }
         },
         "bn": {
@@ -78332,7 +78332,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقف عن التتبع"
+            "value": "أوقف التتبع"
           }
         },
         "bn": {
@@ -78472,7 +78472,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقف عن التتبع"
+            "value": "أوقف التتبع"
           }
         },
         "bn": {
@@ -78612,7 +78612,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقف في %@ ."
+            "value": "يتوقف خلال %@."
           }
         },
         "bn": {
@@ -79242,7 +79242,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مأخوذ"
+            "value": "وقت الالتقاط"
           }
         },
         "bn": {
@@ -79872,7 +79872,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ل"
+            "value": "إلى"
           }
         },
         "bn": {
@@ -80152,7 +80152,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يكتب"
+            "value": "النوع"
           }
         },
         "bn": {
@@ -81693,7 +81693,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يتم إلحاق المفتاح والقيمة كسلسلة استعلام (؟مفتاح=قيمة)."
+            "value": "يتم إلحاق المفتاح والقيمة كسلسلة استعلام (?key=value)."
           }
         },
         "bn": {
@@ -84004,7 +84004,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ل"
+            "value": "إلى"
           }
         },
         "bn": {
@@ -84494,7 +84494,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "المسار من معصمك"
+            "value": "تتبّع من معصمك"
           }
         },
         "bn": {
@@ -84704,7 +84704,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تتبع الإيقاف التلقائي"
+            "value": "الإيقاف التلقائي للتتبع"
           }
         },
         "bn": {
@@ -85054,7 +85054,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تتبع الزيارات والتغييرات الهامة ومسار مستمر عالي الدقة. يتحكم مرشح المسافة في عدد مرات حفظ النقاط أثناء التحرك. توقف بعد التوقف التلقائي كشبكة أمان."
+            "value": "يسجّل التتبع الزيارات والتغييرات الهامة ومسارًا مستمرًا عالي الدقة. يتحكم مرشح المسافة في عدد مرات حفظ النقاط أثناء التحرك. يتوقف «الإيقاف بعد» تلقائيًا كشبكة أمان."
           }
         },
         "bn": {
@@ -85895,7 +85895,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "معيارنا الأمريكي"
+            "value": "المعيار الأمريكي"
           }
         },
         "bn": {
@@ -87716,7 +87716,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يستخدم"
+            "value": "استخدام"
           }
         },
         "bn": {
@@ -88557,7 +88557,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "دخل المستخدم"
+            "value": "أدخله المستخدم"
           }
         },
         "bn": {
@@ -89047,7 +89047,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يزور"
+            "value": "زيارة"
           }
         },
         "bn": {
@@ -89117,7 +89117,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "زيارة الحقول"
+            "value": "حقول الزيارة"
           }
         },
         "bn": {
@@ -89187,7 +89187,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "زيارة الاقتراحات"
+            "value": "اقتراحات الزيارات"
           }
         },
         "bn": {
@@ -89817,7 +89817,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "قم بزيارة %@"
+            "value": "زيارة في %@"
           }
         },
         "bn": {
@@ -89957,7 +89957,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "زيارة الخريطة"
+            "value": "خريطة الزيارة"
           }
         },
         "bn": {
@@ -90027,7 +90027,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "زيارة العلامات"
+            "value": "علامات الزيارات"
           }
         },
         "bn": {
@@ -90377,7 +90377,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "زيارة الجدول الزمني"
+            "value": "الجدول الزمني للزيارات"
           }
         },
         "bn": {
@@ -90657,7 +90657,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تم قفل خط الويب"
+            "value": "Webhook مقفل"
           }
         },
         "bn": {
@@ -91077,7 +91077,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "مشاهدة مضاعفات الوجه"
+            "value": "إضافات واجهة الساعة"
           }
         },
         "bn": {
@@ -91847,7 +91847,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "X- API -مفتاح"
+            "value": "X-API-Key"
           }
         },
         "bn": {
@@ -92407,7 +92407,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لقد قمت بتتبع %@ ."
+            "value": "تتتبّع منذ %@."
           }
         },
         "bn": {
@@ -105755,7 +105755,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تغيير ›"
+            "value": "تغيير ‹"
           }
         },
         "bn": {
@@ -122485,7 +122485,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "1. الإعدادات → Whereday → الموقع"
+            "value": "1. الإعدادات ← Whereday ← الموقع"
           }
         },
         "bn": {
@@ -128995,7 +128995,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "نحو %@"
+            "value": "حول %@"
           }
         },
         "bn": {
@@ -131866,7 +131866,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الملفات › %@"
+            "value": "الملفات ‹ %@"
           }
         },
         "bn": {
@@ -134246,7 +134246,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ملاحظة يومية → Obsidian"
+            "value": "ملاحظة يومية ← Obsidian"
           }
         },
         "bn": {
@@ -148666,7 +148666,7 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الوصول إلى الموقع متوقف. فعّله من إعدادات iPhone → Whereday → الموقع."
+            "value": "الوصول إلى الموقع متوقف. فعّله من إعدادات iPhone‏ ← Whereday ← الموقع."
           }
         },
         "bn": {
