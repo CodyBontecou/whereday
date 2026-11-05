@@ -24,6 +24,10 @@ struct MapVisitPin: View {
     let isCurrent: Bool
     var isDimmed = false
     var showsLabel = true
+    /// Puts the label on the pin's left, where the right would run under the map's rail or off screen.
+    var labelOnLeading = false
+    /// The room the label has before the rail or the screen edge; longer names truncate.
+    var labelMaxWidth: CGFloat? = nil
     @State private var pulses = false
 
     private var state: VisitMarkerState { VisitMarkerState(visit: visit) }
@@ -67,9 +71,9 @@ struct MapVisitPin: View {
                 }
         }
         .frame(width: 44, height: 44)
-        .overlay(alignment: .leading) {
+        .overlay(alignment: labelOnLeading ? .trailing : .leading) {
             if showsLabel {
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: labelOnLeading ? .trailing : .leading, spacing: 0) {
                     Text(name)
                         .font(WheredayFont.serif(size: 15, relativeTo: .subheadline).italic())
                         .foregroundStyle(TE.textPrimary)
@@ -78,9 +82,10 @@ struct MapVisitPin: View {
                         .foregroundStyle(isCurrent ? MapHomeStyle.vermilion : MapHomeStyle.secondaryText)
                 }
                 .lineLimit(1)
+                .frame(maxWidth: labelMaxWidth, alignment: labelOnLeading ? .trailing : .leading)
                 .paperHalo()
                 .fixedSize()
-                .offset(x: 40)
+                .offset(x: labelOnLeading ? -40 : 40)
                 .allowsHitTesting(false)
             }
         }

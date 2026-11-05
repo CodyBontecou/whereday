@@ -1230,7 +1230,8 @@ struct LocationMapView: View {
                                     selectedPointID = nil
                                     selectedVisit = visit
                                 } label: {
-                                    visitPin(visit, day: day, isDimmed: isPinDimmed(visit, focusedVisitID: focusedVisitID, replayFocus: replayFocus))
+                                    visitPin(visit, day: day, isDimmed: isPinDimmed(visit, focusedVisitID: focusedVisitID, replayFocus: replayFocus),
+                                             label: labelPlacement(visit, day: day, proxy: mapProxy))
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -1343,7 +1344,26 @@ struct LocationMapView: View {
         return false
     }
 
-    private func visitPin(_ visit: Visit, day: TraceDay, isDimmed: Bool) -> some View {
+    /// Keeps a pin's label clear of the right rail and the screen edges: it stays on the right when it fits,
+    /// moves to the left when that side has more room, and truncates to whatever room the chosen side has.
+    private func labelPlacement(_ visit: Visit, day: TraceDay, proxy: MapProxy) -> (onLeading: Bool, maxWidth: CGFloat?) {
+        guard presentation == .home, mapViewportSize.width > 0,
+              let point = proxy.convert(visit.coordinate, to: .local) else { return (false, nil) }
+        let name = day.placeKey(for: visit)
+        let caption = pinCaption(visit, day: day)
+        // Serif italic 15 and mono 9, roughly; enough to tell which side has room.
+        let labelWidth = max(CGFloat(name.count) * 7.6, CGFloat(caption.count) * 6)
+        let gap: CGFloat = 20
+        let clearRight = mapViewportSize.width - (isReplayChromeShown ? 12 : 80)
+        let roomRight = clearRight - point.x - gap
+        let roomLeft = point.x - gap - 8
+        if labelWidth <= roomRight { return (false, nil) }
+        if labelWidth <= roomLeft { return (true, nil) }
+        return roomLeft > roomRight ? (true, max(40, roomLeft)) : (false, max(40, roomRight))
+    }
+
+    private func visitPin(_ visit: Visit, day: TraceDay, isDimmed: Bool,
+                          label: (onLeading: Bool, maxWidth: CGFloat?) = (false, nil)) -> some View {
         let isSelected = selectedVisit?.id == visit.id || focusedVisit?.id == visit.id
         if presentation != .home {
             return AnyView(VisitMarker(
@@ -1362,7 +1382,9 @@ struct LocationMapView: View {
             isSelected: isSelected,
             isCurrent: viewModel.isCurrentVisit(visit),
             isDimmed: isDimmed,
-            showsLabel: day.places.count <= 6 || isSelected
+            showsLabel: day.places.count <= 6 || isSelected,
+            labelOnLeading: label.onLeading,
+            labelMaxWidth: label.maxWidth
         ))
     }
 
@@ -2296,7 +2318,8 @@ struct LocationMapView: View {
         let width = mapViewportSize.width
         let top = min(0.35, 175 / height)
         let bottom = min(0.4, (bottomChromeInset + 100) / height)
-        let trailing = min(0.3, 72 / width)
+        // The rail, plus room for the pin labels that sit to the right of their pins.
+        let trailing = min(0.35, 104 / width)
         let visibleHeight = max(0.25, 1 - top - bottom)
         let visibleWidth = max(0.5, 1 - trailing)
         let latitudeDelta = region.span.latitudeDelta / visibleHeight
