@@ -612,6 +612,7 @@
     <string name="map_home_source_nearby">Lugar cercano</string>
     <string name="map_home_source_saved">Lugar guardado</string>
     <string name="map_home_tiles_credit">© OpenFreeMap · OpenMapTiles · OpenStreetMap</string>
+    <string name="map_home_tiles_failed">No se pudieron cargar los mosaicos del mapa. Tu historial grabado está a salvo. Desactiva Mapa de calles en Capas para ver la ruta sin conexión.</string>
     <string name="map_home_title_all">Todo el historial</string>
     <string name="map_home_title_month">Últimos 30 días</string>
     <string name="map_home_title_week">Últimos 7 días</string>

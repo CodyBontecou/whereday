@@ -103,4 +103,5 @@
     <string name="map_home_access_approximate">Location is approximate</string>
     <string name="map_home_access_notifications">Notifications are off</string>
     <string name="map_home_layers_title">Layers</string>
+    <string name="map_home_tiles_failed">Map tiles could not load. Your recorded history is safe. Turn Street map off in Layers to view the route offline.</string>
 </resources>

@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "a799c1d273761db40b7b5625d51d59cf7397c1fb9c9972abf6d4cf6efd750a74",
+  "defaultSourceSha256": "f8041599fac71fb03c8bbb8440ddd12570972b25c0dc9774581b02fbb9886fc4",
   "catalog": {
     "shell_map": "Map",
     "shell_timeline": "Timeline",
@@ -1661,6 +1661,7 @@
     "map_home_access_approximate": "Ubicación aproximada",
     "map_home_access_location": "Ubicación desactivada",
     "map_home_access_notifications": "Notificaciones desactivadas",
-    "map_home_layers_title": "Capas"
+    "map_home_layers_title": "Capas",
+    "map_home_tiles_failed": "No se pudieron cargar los mosaicos del mapa. Tu historial grabado está a salvo. Desactiva Mapa de calles en Capas para ver la ruta sin conexión."
   }
 }

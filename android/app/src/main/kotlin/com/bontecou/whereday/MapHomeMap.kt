@@ -199,7 +199,7 @@ private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {
                 Text(stringResource(R.string.map_point_load_failed),Modifier.weight(1f,fill=false).testTag("map-point-load-failed"),style=MaterialTheme.typography.bodySmall,color=colors.inkRust)
                 TraceCapsule(stringResource(R.string.map_point_retry),markerLoad.retry,Modifier.testTag("map-point-retry"),icon=Icons.Outlined.Refresh,compact=true)
             }
-            if(tilesFailed) WdNotice(stringResource(R.string.map_tiles_failed),icon=Icons.Outlined.CloudOff,warning=true)
+            if(tilesFailed) WdNotice(stringResource(R.string.map_home_tiles_failed),icon=Icons.Outlined.CloudOff,warning=true)
             photoLayer?.browsePlaces?.let {browse->TraceCapsule(stringResource(R.string.map_browse_photos),browse,Modifier.testTag("browse-photo-places"),icon=Icons.Outlined.PhotoAlbum,floating=true)}
             photoLayer?.retryDirectory?.let {retry->TraceCapsule(stringResource(R.string.map_retry_photos),retry,icon=Icons.Outlined.Refresh,floating=true)}
             photoLayer?.directoryMessage?.let {Text(it,Modifier.wdFloating(RoundedCornerShape(12.dp),colors,2.dp).padding(horizontal=10.dp,vertical=6.dp),style=MaterialTheme.typography.bodySmall,color=colors.textMuted)}
