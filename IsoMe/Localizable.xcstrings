@@ -1670,7 +1670,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ . Estado %2$@ . Fonte %3$@ ."
+            "value": "%1$@. Estado %2$@. Fonte %3$@."
           }
         },
         "ru": {
@@ -8580,7 +8580,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Uma nova camada de esmalte"
+            "value": "Um novo acabamento"
           }
         },
         "ru": {
@@ -9280,7 +9280,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "TODOS OS TEMPOS"
+            "value": "TODO O PERÍODO"
           }
         },
         "ru": {
@@ -12502,7 +12502,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos os tempos"
+            "value": "Todo o período"
           }
         },
         "ru": {
@@ -12572,7 +12572,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos os dados armazenados localmente. Nunca carregado em nenhum servidor."
+            "value": "Todos os dados armazenados localmente. Nunca enviados a nenhum servidor."
           }
         },
         "ru": {
@@ -13552,7 +13552,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aplicativo: Whereday %1$@ Plataforma: %2$@ Dispositivo: %3$@"
+            "value": "Aplicativo: Whereday %1$@\nPlataforma: %2$@\nDispositivo: %3$@"
           }
         },
         "ru": {
@@ -15583,7 +15583,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visualização do edifício…"
+            "value": "Gerando prévia…"
           }
         },
         "ru": {
@@ -15653,7 +15653,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Construindo cronograma…"
+            "value": "Montando a linha do tempo…"
           }
         },
         "ru": {
@@ -16073,7 +16073,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "COMPACTAR"
+            "value": "COMPACTO"
           }
         },
         "ru": {
@@ -16423,7 +16423,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "CONTAR"
+            "value": "QUANTIDADE"
           }
         },
         "ru": {
@@ -17964,7 +17964,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verificando lugares próximos Apple Maps"
+            "value": "Verificando lugares próximos no Apple Mapas"
           }
         },
         "ru": {
@@ -20347,7 +20347,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conectado ( HTTP %lld )"
+            "value": "Conectado (HTTP %lld)"
           }
         },
         "ru": {
@@ -20767,7 +20767,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Localização central"
+            "value": "Core Location"
           }
         },
         "ru": {
@@ -20837,7 +20837,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visita correta a %@"
+            "value": "Corrigir visita para %@"
           }
         },
         "ru": {
@@ -21747,7 +21747,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saída atual renomeada para %@ ."
+            "value": "Passeio atual renomeado para %@."
           }
         },
         "ru": {
@@ -23357,7 +23357,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pronto para exportação diária"
+            "value": "Exportação diária pronta"
           }
         },
         "ru": {
@@ -23427,7 +23427,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cronograma diário"
+            "value": "Linha do tempo diária"
           }
         },
         "ru": {
@@ -24687,7 +24687,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apaga este passeio e seus pontos GPS após confirmação. As visitas estão mantidas."
+            "value": "Apaga este passeio e seus pontos GPS após confirmação. As visitas são mantidas."
           }
         },
         "ru": {
@@ -25668,7 +25668,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Liberar"
+            "value": "Dispensar"
           }
         },
         "ru": {
@@ -26299,7 +26299,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coloque o alfinete no Map Center"
+            "value": "Colocar alfinete no centro do mapa"
           }
         },
         "ru": {
@@ -28213,7 +28213,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada dia do calendário se torna um arquivo por formato selecionado. Use {date} , {day} ou {format} no nome do arquivo para mantê-los distintos."
+            "value": "Cada dia do calendário se torna um arquivo por formato selecionado. Use {date}, {day} ou {format} no nome do arquivo para mantê-los distintos."
           }
         },
         "ru": {
@@ -28493,7 +28493,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada saída se torna um arquivo por formato selecionado. Use {title} , {date} , {time} ou {format} no caminho do arquivo."
+            "value": "Cada passeio se torna um arquivo por formato selecionado. Use {title}, {date}, {time} ou {format} no caminho do arquivo."
           }
         },
         "ru": {
@@ -30805,7 +30805,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exporte os dados atuais"
+            "value": "Exportar dados de hoje"
           }
         },
         "ru": {
@@ -31575,7 +31575,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configurações de exportação fixas"
+            "value": "Configurações de exportação ficam salvas"
           }
         },
         "ru": {
@@ -31645,7 +31645,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportar para JSON , CSV ou Markdown"
+            "value": "Exportar para JSON, CSV ou Markdown"
           }
         },
         "ru": {
@@ -31715,7 +31715,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exporte as saídas Whereday de hoje como um arquivo."
+            "value": "Exporte os passeios de hoje do Whereday como um arquivo."
           }
         },
         "ru": {
@@ -32275,7 +32275,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As exportações são salvas diretamente nesta pasta quando o salvamento automático está ativado. Caso contrário, a planilha de compartilhamento será aberta."
+            "value": "As exportações são salvas diretamente nesta pasta quando o salvamento automático está ativado. Caso contrário, o menu de compartilhamento será aberto."
           }
         },
         "ru": {
@@ -32415,7 +32415,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As exportações usarão a planilha de compartilhamento em vez de serem salvas diretamente em uma pasta."
+            "value": "As exportações usarão o menu de compartilhamento em vez de serem salvas diretamente em uma pasta."
           }
         },
         "ru": {
@@ -32765,7 +32765,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "FORMATAR"
+            "value": "FORMATO"
           }
         },
         "ru": {
@@ -34235,7 +34235,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Caminhos de arquivo usando {title} ou {name} agora mostram um substituto de tipo de dados sensato para visitas, pontos e todas as exportações quando não existe título de saída."
+            "value": "Caminhos de arquivo usando {title} ou {name} agora mostram um substituto de tipo de dados sensato para visitas, pontos e todas as exportações quando não existe título de passeio."
           }
         },
         "ru": {
@@ -34305,7 +34305,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Os nomes de arquivos podem usar nomes de saída"
+            "value": "Os nomes de arquivos podem usar nomes de passeios"
           }
         },
         "ru": {
@@ -34725,7 +34725,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Os dados filtrados são condensados ​​em um arquivo por formato selecionado."
+            "value": "Os dados filtrados são condensados em um arquivo por formato selecionado."
           }
         },
         "ru": {
@@ -34795,7 +34795,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As saídas filtradas são condensadas em um arquivo por formato selecionado."
+            "value": "Os passeios filtrados são condensados em um arquivo por formato selecionado."
           }
         },
         "ru": {
@@ -35987,7 +35987,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Formatar"
+            "value": "Formato"
           }
         },
         "ru": {
@@ -37247,7 +37247,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conceda acesso à localização em Configurações iPhone → Whereday → Localização."
+            "value": "Conceda acesso à localização em Configurações do iPhone → Whereday → Localização."
           }
         },
         "ru": {
@@ -37457,7 +37457,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "PONTO FINAL HTTP"
+            "value": "ENDPOINT HTTP"
           }
         },
         "ru": {
@@ -39487,7 +39487,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importe visitas ou pontos de JSON , CSV ou Markdown. KML , GPX e GeoJSON são exportações de mapas unidirecionais."
+            "value": "Importe visitas ou pontos de JSON, CSV ou Markdown. KML, GPX e GeoJSON são exportações de mapa de mão única."
           }
         },
         "ru": {
@@ -40213,7 +40213,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importado 1 visita."
+            "value": "1 visita importada."
           }
         },
         "ru": {
@@ -41403,7 +41403,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday precisa de permissão de localização. Abra o aplicativo para habilitá-lo."
+            "value": "O Whereday precisa de permissão de localização. Abra o app para ativá-la."
           }
         },
         "ru": {
@@ -41473,7 +41473,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Unid"
+            "value": "Itens"
           }
         },
         "ru": {
@@ -41613,7 +41613,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "JUNTE-SE À DISCÓRDIA"
+            "value": "ENTRAR NO DISCORD"
           }
         },
         "ru": {
@@ -41823,7 +41823,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Resumos de saída de exportação JSON e CSV . Markdown adiciona assunto YAML além de visitas e pontos de rota. GPX , KML , GeoJSON , OwnTracks e Overland exportam os pontos da rota do passeio."
+            "value": "JSON e CSV exportam resumos dos passeios. O Markdown adiciona front matter YAML, além de visitas e pontos do trajeto. GPX, KML, GeoJSON, OwnTracks e Overland exportam os pontos do trajeto do passeio."
           }
         },
         "ru": {
@@ -41893,7 +41893,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON e CSV resumem cada passeio, enquanto GPX , KML , GeoJSON , OwnTracks e Overland exportam as correções de rota."
+            "value": "JSON e CSV resumem cada passeio, enquanto GPX, KML, GeoJSON, OwnTracks e Overland exportam os pontos GPS do trajeto."
           }
         },
         "ru": {
@@ -41963,7 +41963,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON , CSV ou Markdown — sempre que você precisar."
+            "value": "JSON, CSV ou Markdown — sempre que você precisar."
           }
         },
         "ru": {
@@ -44343,7 +44343,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Latitude %1$.4f , longitude %2$.4f"
+            "value": "Latitude %1$.4f, longitude %2$.4f"
           }
         },
         "ru": {
@@ -44483,7 +44483,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deixe Whereday mostrar automaticamente as fotos iPhone no seu mapa e passeios. As fotos permanecem na sua biblioteca de fotos."
+            "value": "Deixe o Whereday mostrar automaticamente as fotos do iPhone no seu mapa e passeios. As fotos permanecem na sua biblioteca de fotos."
           }
         },
         "ru": {
@@ -46934,7 +46934,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "CAMINHO CORRESPONDENTE ÀS ESTRADAS…"
+            "value": "AJUSTANDO O CAMINHO ÀS RUAS…"
           }
         },
         "ru": {
@@ -47914,7 +47914,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Polonês de mapa"
+            "value": "Mapa mais refinado"
           }
         },
         "ru": {
@@ -48124,7 +48124,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Markdown exporta este passeio como uma página com assunto inicial, visitas e pontos de rota YAML ."
+            "value": "O Markdown exporta este passeio como uma página com front matter YAML, visitas e pontos do trajeto."
           }
         },
         "ru": {
@@ -48194,7 +48194,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As exportações de saída Markdown incluem matéria inicial YAML , notas, visitas e pontos de rota para que caiam de forma limpa em um diário ou sistema PKM."
+            "value": "As exportações de passeios em Markdown incluem front matter YAML, notas, visitas e pontos do trajeto, para entrarem sem ajustes em um diário ou sistema PKM."
           }
         },
         "ru": {
@@ -48894,7 +48894,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Matriz de 'pontos' ausente"
+            "value": "Matriz 'points' ausente"
           }
         },
         "ru": {
@@ -48964,7 +48964,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Matriz de 'visitas' ausente"
+            "value": "Matriz 'visits' ausente"
           }
         },
         "ru": {
@@ -53164,7 +53164,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nenhuma empresa próxima corresponde a “ %@ ”."
+            "value": "Nenhuma empresa próxima corresponde a “%@”."
           }
         },
         "ru": {
@@ -53864,7 +53864,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nenhuma visita ou sessão de movimento foi encontrada para %@ . Escolha outro dia ou ative o movimento inferido para o histórico GPS mais antigo."
+            "value": "Nenhuma visita ou sessão de movimento foi encontrada para %@. Escolha outro dia ou ative o movimento inferido para o histórico GPS mais antigo."
           }
         },
         "ru": {
@@ -55054,7 +55054,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "UM ARQUIVO POR SAÍDA"
+            "value": "UM ARQUIVO POR PASSEIO"
           }
         },
         "ru": {
@@ -55474,7 +55474,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "BANDEIRA ATÍPICA"
+            "value": "MARCAÇÃO DE PONTO ATÍPICO"
           }
         },
         "ru": {
@@ -56034,7 +56034,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inclua apenas dados capturados entre esses horários todos os dias. Termina à meia-noite se o fim for antes do início."
+            "value": "Inclua apenas dados capturados entre esses horários todos os dias. Passa da meia-noite se o fim for antes do início."
           }
         },
         "ru": {
@@ -56104,7 +56104,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Somente as fotos que você selecionou para Whereday podem aparecer. Adicione mais nas configurações de privacidade iOS Photos."
+            "value": "Somente as fotos que você selecionou para o Whereday podem aparecer. Adicione mais nas configurações de privacidade de Fotos do iOS."
           }
         },
         "ru": {
@@ -56314,7 +56314,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abra qualquer saída e exporte-a diretamente em JSON , CSV , Markdown , OwnTracks , Overland , GPX , KML ou GeoJSON."
+            "value": "Abra qualquer passeio e exporte-o diretamente em JSON, CSV, Markdown, OwnTracks, Overland, GPX, KML ou GeoJSON."
           }
         },
         "ru": {
@@ -56384,7 +56384,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abra qualquer saída gravada ou inferida e exclua-a da tela de detalhes. Seus pontos de rota GPS são removidos, as visitas do mesmo horário permanecem em seu histórico e a exclusão de um passeio ao vivo interrompe o rastreamento primeiro."
+            "value": "Abra qualquer passeio gravado ou inferido e exclua-o da tela de detalhes. Seus pontos de rota GPS são removidos, as visitas do mesmo horário permanecem em seu histórico e a exclusão de um passeio ao vivo interrompe o rastreamento primeiro."
           }
         },
         "ru": {
@@ -56524,7 +56524,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abra as configurações iPhone"
+            "value": "Abrir Configurações do iPhone"
           }
         },
         "ru": {
@@ -56804,7 +56804,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Repetição de rota aberta"
+            "value": "Abrir repetição da rota"
           }
         },
         "ru": {
@@ -57014,7 +57014,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visita aberta no Maps"
+            "value": "Abrir visita no Mapas"
           }
         },
         "ru": {
@@ -58274,7 +58274,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As exportações de saída agora planejam nomes de arquivos com mais precisão, preservam detalhes de correção de visitas e apresentam compartilhamento de forma mais confiável."
+            "value": "As exportações de passeios agora planejam nomes de arquivos com mais precisão, preservam detalhes de correção de visitas e apresentam compartilhamento de forma mais confiável."
           }
         },
         "ru": {
@@ -59604,7 +59604,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "BRINCAR DE PASSEIO"
+            "value": "REPRODUZIR PASSEIO"
           }
         },
         "ru": {
@@ -59674,7 +59674,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "APONTAR"
+            "value": "PONTO"
           }
         },
         "ru": {
@@ -59884,7 +59884,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "POST todos os tipos de dados (visitas, pontos ou ambos) para uma API externa ou servidor auto-hospedado em tempo real ou em lotes. Suporta OwnTracks , Overland , Dawarich e endpoints JSON genéricos."
+            "value": "POST todos os tipos de dados (visitas, pontos ou ambos) para uma API externa ou servidor auto-hospedado em tempo real ou em lotes. Suporta OwnTracks, Overland, Dawarich e endpoints JSON genéricos."
           }
         },
         "ru": {
@@ -62009,7 +62009,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O acesso às fotos está desativado. Você pode habilitá-lo mais tarde nas configurações iPhone ."
+            "value": "O acesso às fotos está desativado. Você pode ativá-lo mais tarde nas Configurações do iPhone."
           }
         },
         "ru": {
@@ -62990,7 +62990,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ponto %1$lld de %2$lld . Hora %3$@ . %4$@ decorrido de %5$@ . Distância %6$@ de %7$@ ."
+            "value": "Ponto %1$lld de %2$lld. Hora %3$@. Decorrido: %4$@ de %5$@. Distância: %6$@ de %7$@."
           }
         },
         "ru": {
@@ -63060,7 +63060,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aponte no índice %lld sem latitude/longitude"
+            "value": "Ponto no índice %lld sem latitude/longitude"
           }
         },
         "ru": {
@@ -63130,7 +63130,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aponte para o índice %lld faltando carimbo de data/hora"
+            "value": "Ponto no índice %lld sem data/hora"
           }
         },
         "ru": {
@@ -63900,7 +63900,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visualizando o arquivo %1$lld mais recente %2$@ com dados. A exportação processará todos os arquivos selecionados."
+            "value": "Visualizando os arquivos mais recentes com dados (%1$lld arquivo%2$@). A exportação processará todos os arquivos selecionados."
           }
         },
         "ru": {
@@ -64950,7 +64950,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Concentre-se rapidamente em ontem"
+            "value": "Vá direto para ontem"
           }
         },
         "ru": {
@@ -65510,7 +65510,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "INTEGRAÇÃO DE REPETIÇÃO"
+            "value": "REVER AS BOAS-VINDAS"
           }
         },
         "ru": {
@@ -65790,7 +65790,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "CORRA AGORA"
+            "value": "EXECUTAR AGORA"
           }
         },
         "ru": {
@@ -66070,7 +66070,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preparar"
+            "value": "Pronto"
           }
         },
         "ru": {
@@ -66491,7 +66491,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As sessões gravadas agora ficam em uma guia dedicada de Passeios, com totais, status ao vivo/atual, crachás inferidos e acesso rápido a todas as rotas."
+            "value": "As sessões gravadas agora ficam em uma guia dedicada de Passeios, com totais, status ao vivo/atual, selos de inferido e acesso rápido a todas as rotas."
           }
         },
         "ru": {
@@ -67191,7 +67191,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Repita sua rota"
+            "value": "Reveja seu trajeto"
           }
         },
         "ru": {
@@ -68941,7 +68941,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Linha %1$lld : %2$lld colunas esperadas, encontradas %3$lld"
+            "value": "Linha %1$lld: %2$lld colunas esperadas, encontradas %3$lld"
           }
         },
         "ru": {
@@ -69011,7 +69011,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Linha %lld : data de chegada_em inválida"
+            "value": "Linha %lld: data arrived_at inválida"
           }
         },
         "ru": {
@@ -69081,7 +69081,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Linha %lld : latitude inválida"
+            "value": "Linha %lld: latitude inválida"
           }
         },
         "ru": {
@@ -69151,7 +69151,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Linha %lld : longitude inválida"
+            "value": "Linha %lld: longitude inválida"
           }
         },
         "ru": {
@@ -69221,7 +69221,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Linha %lld : carimbo de data/hora inválido"
+            "value": "Linha %lld: carimbo de data/hora inválido"
           }
         },
         "ru": {
@@ -70551,7 +70551,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "PARE DEPOIS"
+            "value": "PARAR DEPOIS DE"
           }
         },
         "ru": {
@@ -70621,7 +70621,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "ARMAZENAR"
+            "value": "ARMAZENAMENTO"
           }
         },
         "ru": {
@@ -70691,7 +70691,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "APOIAR"
+            "value": "SUPORTE"
           }
         },
         "ru": {
@@ -72489,7 +72489,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As exportações agendadas agora usam ativações em segundo plano iOS , alertas de servidor e uma notificação de fallback de toque para tentar novamente para serem executadas mais perto do horário escolhido."
+            "value": "As exportações agendadas agora usam ativações em segundo plano do iOS, alertas do servidor e uma notificação alternativa de toque para tentar novamente, para rodar mais perto do horário escolhido."
           }
         },
         "ru": {
@@ -72559,7 +72559,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pesquise um local ou endereço Apple Maps , confirme-o no mapa e salve a visita sem usar sua localização GPS atual."
+            "value": "Pesquise um lugar ou endereço no Apple Mapas, confirme-o no mapa e salve a visita sem usar sua localização GPS atual."
           }
         },
         "ru": {
@@ -72630,7 +72630,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pesquise Apple Maps ou escolha no mapa"
+            "value": "Pesquise no Apple Mapas ou escolha no mapa"
           }
         },
         "ru": {
@@ -73477,7 +73477,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pesquisando no Apple Maps …"
+            "value": "Pesquisando no Apple Mapas…"
           }
         },
         "ru": {
@@ -73687,7 +73687,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Selecione um ou vários formatos. OwnTracks e Overland carregam apenas correções GPS ; outros formatos selecionados usam o tipo de dados selecionado."
+            "value": "Selecione um ou vários formatos. OwnTracks e Overland levam apenas pontos GPS; os outros formatos selecionados usam o tipo de dados selecionado."
           }
         },
         "ru": {
@@ -73757,7 +73757,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Selecione um ou vários formatos. As exportações de passeios OwnTracks e Overland contêm as correções GPS da rota de passeio; as linhas de visita e as notas de saída não são representadas."
+            "value": "Selecione um ou vários formatos. As exportações de passeios OwnTracks e Overland contêm os pontos GPS do trajeto do passeio; as linhas de visita e as notas do passeio não são representadas."
           }
         },
         "ru": {
@@ -74670,7 +74670,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Defina uma pasta padrão para salvar as exportações sem a planilha de compartilhamento."
+            "value": "Defina uma pasta padrão para salvar as exportações sem o menu de compartilhamento."
           }
         },
         "ru": {
@@ -75090,7 +75090,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Compartilhar planilha"
+            "value": "Menu de compartilhamento"
           }
         },
         "ru": {
@@ -75300,7 +75300,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Compartilhar planilha"
+            "value": "Menu de compartilhamento"
           }
         },
         "ru": {
@@ -75370,7 +75370,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Planilha de compartilhamento aberta"
+            "value": "Menu de compartilhamento aberto"
           }
         },
         "ru": {
@@ -75860,7 +75860,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mostrando uma prévia leve deste arquivo %@ . A exportação completa ainda incluirá todos os dados."
+            "value": "Mostrando uma prévia leve deste arquivo %@. A exportação completa ainda incluirá todos os dados."
           }
         },
         "ru": {
@@ -76070,7 +76070,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mostra controles para limpar e reproduzir a rota visível."
+            "value": "Mostra controles para percorrer e reproduzir a rota visível."
           }
         },
         "ru": {
@@ -77890,7 +77890,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comece o rastreamento na guia Mapa ou na automação Shortcuts . Visitas e sessões de movimento aparecerão aqui durante o dia."
+            "value": "Comece o rastreamento na guia Mapa ou pela sua automação dos Atalhos. Visitas e sessões de movimento aparecerão aqui, organizadas por dia."
           }
         },
         "ru": {
@@ -78660,7 +78660,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pára em %@ ."
+            "value": "Para em %@."
           }
         },
         "ru": {
@@ -78870,7 +78870,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nomes e notas de passeios armazenados são incluídos quando o formato selecionado os suporta. Exportação de passeios inferidos com fonte: inferido."
+            "value": "Nomes e notas de passeios armazenados são incluídos quando o formato selecionado os suporta. Passeios inferidos são exportados com source: inferred."
           }
         },
         "ru": {
@@ -79290,7 +79290,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "LEVADO"
+            "value": "TIRADA EM"
           }
         },
         "ru": {
@@ -80480,7 +80480,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Toque em vários formatos de exportação ao mesmo tempo – JSON , CSV , Markdown , GPX , KML , GeoJSON , OwnTracks e Overland – e Whereday prepara um arquivo separado para cada um."
+            "value": "Toque em vários formatos de exportação ao mesmo tempo – JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks e Overland – e Whereday prepara um arquivo separado para cada um."
           }
         },
         "ru": {
@@ -81391,7 +81391,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "A guia Exportar agora pode gravar um arquivo por saída, com visualizações que mostram o formato exato, a contagem e os nomes dos arquivos antes de você compartilhar ou salvar."
+            "value": "A guia Exportar agora pode gravar um arquivo por passeio, com visualizações que mostram o formato exato, a contagem e os nomes dos arquivos antes de você compartilhar ou salvar."
           }
         },
         "ru": {
@@ -83842,7 +83842,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "A linha do tempo combina visitas e sessões de movimento para o dia selecionado. O movimento vem de gravações exatas, além de saídas GPS inferidas opcionais."
+            "value": "A linha do tempo combina visitas e sessões de movimento para o dia selecionado. O movimento vem de gravações exatas, além de passeios GPS inferidos opcionais."
           }
         },
         "ru": {
@@ -84752,7 +84752,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rastreamento de desligamento automático"
+            "value": "Desligamento automático do rastreamento"
           }
         },
         "ru": {
@@ -85102,7 +85102,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Acompanhamento de visitas a registros, alterações significativas e um caminho contínuo de alta precisão. O filtro de distância controla a frequência com que os pontos são salvos durante o movimento. Parar Após paradas automáticas como rede de segurança."
+            "value": "O rastreamento registra visitas, mudanças significativas e um caminho contínuo de alta precisão. O filtro de distância controla com que frequência os pontos são salvos em movimento. Parar depois de encerra a gravação automaticamente, por segurança."
           }
         },
         "ru": {
@@ -86223,7 +86223,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não é possível acessar a pasta de exportação. Selecione-o novamente."
+            "value": "Não é possível acessar a pasta de exportação. Selecione-a novamente."
           }
         },
         "ru": {
@@ -86363,7 +86363,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não autorizado ( HTTP 401). Verifique suas credenciais."
+            "value": "Não autorizado (HTTP 401). Verifique suas credenciais."
           }
         },
         "ru": {
@@ -87203,7 +87203,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Formato de arquivo não suportado. Atualmente, a importação oferece suporte a arquivos JSON , CSV ou Markdown exportados de Whereday. As exportações KML , GPX e GeoJSON são arquivos de mapas unidirecionais."
+            "value": "Formato de arquivo não suportado. Atualmente, a importação oferece suporte a arquivos JSON, CSV ou Markdown exportados de Whereday. As exportações KML, GPX e GeoJSON são arquivos de mapas unidirecionais."
           }
         },
         "ru": {
@@ -87834,7 +87834,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use / para pastas. Tokens: %@ . {title} / {name} use o título do passeio quando disponível, caso contrário, o tipo de dados. A extensão de formato é adicionada se for omitida."
+            "value": "Use / para pastas. Tokens: %@. {title}/{name} usam o título do passeio quando disponível; caso contrário, o tipo de dados. A extensão do formato é adicionada se for omitida."
           }
         },
         "ru": {
@@ -87974,7 +87974,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use Test Connection para verificar o URL e as credenciais do endpoint sem enviar dados reais. Enviar agora publica todos os dados de localização salvos no endpoint."
+            "value": "Use Testar conexão para verificar o URL e as credenciais do endpoint sem enviar dados reais. Enviar agora envia todos os dados de localização salvos ao endpoint."
           }
         },
         "ru": {
@@ -88535,7 +88535,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use {title} ou {name} nos caminhos de exportação e Whereday mantém as exportações de um arquivo por saída distintas automaticamente."
+            "value": "Use {title} ou {name} nos caminhos de exportação e o Whereday mantém distintas automaticamente as exportações de um arquivo por passeio."
           }
         },
         "ru": {
@@ -88605,7 +88605,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usuário inserido"
+            "value": "Inserido pelo usuário"
           }
         },
         "ru": {
@@ -88675,7 +88675,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usa rotas Apple Maps para desviar lacunas esparsas GPS em estradas próximas quando possível, em vez de desenhar linhas ásperas ponto a ponto."
+            "value": "Usa rotas do Apple Mapas para ajustar lacunas esparsas do GPS às ruas próximas quando possível, em vez de desenhar linhas toscas de ponto a ponto."
           }
         },
         "ru": {
@@ -89165,7 +89165,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "VISITE CAMPOS"
+            "value": "CAMPOS DE VISITA"
           }
         },
         "ru": {
@@ -89865,7 +89865,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visite em %@"
+            "value": "Visita em %@"
           }
         },
         "ru": {
@@ -89935,7 +89935,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visita no índice %lld faltando campos obrigatórios (latitude, longitude, chegouAt)"
+            "value": "Visita no índice %lld sem campos obrigatórios (latitude, longitude, arrivedAt)"
           }
         },
         "ru": {
@@ -90005,7 +90005,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visitar mapa"
+            "value": "Mapa da visita"
           }
         },
         "ru": {
@@ -90285,7 +90285,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Status da visita: %1$@ , fonte: %2$@"
+            "value": "Status da visita: %1$@, fonte: %2$@"
           }
         },
         "ru": {
@@ -91125,7 +91125,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Observe as complicações faciais"
+            "value": "Complicações do mostrador"
           }
         },
         "ru": {
@@ -91545,7 +91545,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quando não existem sessões exatas de início/parada, Whereday pode inferir saídas a partir de pontos GPS salvos. Essas configurações afetam apenas saídas inferidas geradas automaticamente; as sessões gravadas permanecem intactas."
+            "value": "Quando não existem sessões exatas de início/parada, o Whereday pode inferir passeios a partir de pontos GPS salvos. Essas configurações afetam apenas passeios inferidos gerados automaticamente; as sessões gravadas permanecem intactas."
           }
         },
         "ru": {
@@ -91895,7 +91895,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "X- API -Key"
+            "value": "X-API-Key"
           }
         },
         "ru": {
@@ -92035,7 +92035,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "VOCÊ ESTÁ TUDO PRONTO"
+            "value": "TUDO PRONTO"
           }
         },
         "ru": {
@@ -92455,7 +92455,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Você está monitorando %@ ."
+            "value": "Você está rastreando há %@."
           }
         },
         "ru": {
@@ -92525,7 +92525,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Você foi %@ hoje."
+            "value": "Você percorreu %@ hoje."
           }
         },
         "ru": {
@@ -93367,7 +93367,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday pede iOS e ao trabalhador de notificação do servidor para ativar próximo a esse horário. Se a exportação não for concluída, toque na notificação alternativa ou abra o aplicativo para executá-lo."
+            "value": "O Whereday pede ao iOS e ao serviço de notificações do servidor para despertar perto desse horário. Se a exportação não for concluída, toque na notificação alternativa ou abra o app para executá-la."
           }
         },
         "ru": {
@@ -93437,7 +93437,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday tem um ícone de aplicativo atualizado e uma versão atualizada em toda a experiência do aplicativo."
+            "value": "O Whereday tem um ícone renovado e mais refinamento em toda a experiência do app."
           }
         },
         "ru": {
@@ -94631,7 +94631,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Excluir o aplicativo ou comprar o Lifetime não cancela uma assinatura existente. Gerencie-o nas configurações Apple Account ."
+            "value": "Excluir o app ou comprar o plano vitalício não cancela uma assinatura existente. Gerencie-a nos ajustes da Conta Apple."
           }
         },
         "ru": {
@@ -94701,7 +94701,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Family Sharing compartilha o acesso, não seu diário de localização."
+            "value": "O Compartilhamento Familiar compartilha o acesso, não seu diário de localização."
           }
         },
         "ru": {
@@ -119453,7 +119453,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abre a planilha de compartilhamento com este passeio em %@. Toque e segure para escolher outro formato."
+            "value": "Abre o menu de compartilhamento com este passeio em %@. Toque e segure para escolher outro formato."
           }
         },
         "ru": {

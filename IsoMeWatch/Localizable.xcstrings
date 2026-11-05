@@ -678,7 +678,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ ESQUERDA"
+            "value": "RESTAM %@"
           }
         },
         "ru": {
@@ -958,7 +958,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "CAPTURANDO CAMINHO DE OBSERVAÇÃO"
+            "value": "CAPTURANDO TRAJETO NO RELÓGIO"
           }
         },
         "ru": {
@@ -1588,7 +1588,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "A localização foi negada. Ative-o em Configurações para rastrear no Apple Watch."
+            "value": "A localização foi negada. Ative-a em Configurações para rastrear no Apple Watch."
           }
         },
         "ru": {
