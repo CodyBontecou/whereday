@@ -102,7 +102,8 @@ internal enum class DaySheetDetent {peek,half,full}
         .padding(start=8.dp,end=14.dp,top=6.dp,bottom=6.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
         if(story!=null) WdDayDial(dayDialSegments(story),now=dayNowFraction(story,now),size=48.dp,ring=0.13f) else Spacer(Modifier.size(48.dp))
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
-            Text(kicker.uppercase(locale),style=WdType.caption2.copy(fontSize=9.sp,lineHeight=12.sp,letterSpacing=0.13.em,fontWeight=FontWeight.Medium),color=colors.textMuted,maxLines=1,overflow=TextOverflow.Ellipsis)
+            // Two lines at large text sizes keep the "since" time instead of truncating it.
+            Text(kicker.uppercase(locale),style=WdType.caption2.copy(fontSize=9.sp,lineHeight=12.sp,letterSpacing=0.13.em,fontWeight=FontWeight.Medium),color=colors.textMuted,maxLines=2,overflow=TextOverflow.Ellipsis)
             Text(title,style=WdType.title3.copy(fontSize=18.sp,lineHeight=21.sp),color=colors.textPrimary,maxLines=2,overflow=TextOverflow.Ellipsis)
         }
         if(story!=null) Column(horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(2.dp)) {
