@@ -45,8 +45,8 @@ class VisitEditorRestorationTest {
     private fun awaitText(text:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithText(text).assertExists()}.isSuccess}}
     private fun manualDraft(label:String,timeline:Boolean=false)=runBlocking {
         val tester=screen(timeline)
-        // On the map, manual stops start from the + menu; Timeline keeps its own Add past visit capsule.
-        if(timeline) compose.onNodeWithText(label).performScrollTo().performClick()
+        // The map starts manual stops from its + menu; Timeline's header has "Log a stop".
+        if(timeline) compose.onNodeWithTag("today-log-stop-header").performClick()
         else {
             compose.waitUntil(10000) {compose.onAllNodesWithTag("map-add").fetchSemanticsNodes().isNotEmpty()}
             compose.onNodeWithTag("map-add").performClick()
@@ -79,7 +79,9 @@ class VisitEditorRestorationTest {
 
     @Test fun restoredExistingEditRetainsItsOriginalConcurrentChangeGuard()=runBlocking {
         val now=Instant.ofEpochMilli(System.currentTimeMillis())
-        val original=Visit("restore-existing",Coordinate(48.8584,2.2945),now.minusSeconds(3600),now.minusSeconds(1800),name="Original QA visit")
+        // Seed inside today's civil day so the Today list shows it whatever the wall-clock time (just after midnight included).
+        val dayStart=java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()
+        val original=Visit("restore-existing",Coordinate(48.8584,2.2945),dayStart.plusSeconds(1),dayStart.plusSeconds(61),name="Original QA visit")
         graph.history.dao.put(VisitRow(original))
         val tester=screen(true);awaitText("Original QA visit")
         compose.onNodeWithText("Original QA visit").performClick()

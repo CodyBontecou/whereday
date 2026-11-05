@@ -15,7 +15,7 @@ interface HistoryImportInput {fun open():InputStream;fun cancel() {}}
 data class HistoryImportSelection(val visits:Boolean=true,val points:Boolean=true)
 enum class HistoryImportPhase {idle,reading,review,applying,canceling,complete,canceled,failed}
 data class HistoryImportReview(val id:String,val format:ExportFormat,val visits:Int,val points:Int,val existing:Int,val repeated:Int,
-    val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val locale:String,val zone:String,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val replaceable:Int=existing)
+    val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val locale:String,val zone:String,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val replaceable:Int=existing,val years:Map<Int,Int> = emptyMap())
 data class HistoryImportState(val phase:HistoryImportPhase=HistoryImportPhase.idle,val review:HistoryImportReview?=null,
     val counts:HistoryImportCounts?=null,val error:String?=null) {
     val busy get()=phase in setOf(HistoryImportPhase.reading,HistoryImportPhase.applying,HistoryImportPhase.canceling)
@@ -50,7 +50,7 @@ class HistoryImportController(private val target:StagedHistoryImportTarget,priva
                 val parsed=owned.prepare(locale,zone,check)
                 val inspected=target.inspectPlan(owned.stage,check);check();owned.stage.seal(check);check()
                 val review=HistoryImportReview(UUID.randomUUID().toString(),parsed.format,parsed.visits-inspected.repeated.visits,parsed.points-inspected.repeated.points,inspected.existing,parsed.repeated+inspected.repeated.visits+inspected.repeated.points,
-                    parsed.rejected,parsed.errors,parsed.from,parsed.until,locale.toLanguageTag(),zone.id,parsed.source,parsed.unsupported,inspected.replaceable)
+                    parsed.rejected,parsed.errors,parsed.from,parsed.until,locale.toLanguageTag(),zone.id,parsed.source,parsed.unsupported,inspected.replaceable,parsed.years)
                 synchronized(monitor) {if(ticket==revision && !flag.get()) {retained=true;mutable.value=HistoryImportState(HistoryImportPhase.review,review)}}
             } catch(error:Exception) {failed(ticket,flag,error)}
             finally {

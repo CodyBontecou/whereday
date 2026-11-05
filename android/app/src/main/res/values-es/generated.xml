@@ -12,6 +12,45 @@
     <string name="active_recording_map_retry">Reintentar la ruta de la grabación actual</string>
     <string name="active_recording_map_start">Inicio de la grabación actual · %1$s · %2$s</string>
     <string name="active_recording_map_summary">Ruta de la grabación actual: se muestran %1$d de %2$d puntos.</string>
+    <string name="archive_recipe_all">Visitas y puntos</string>
+    <string name="archive_recipe_hint">Toca cualquier palabra subrayada para cambiarla</string>
+    <string name="archive_recipe_sentence">Exportar mis %1$s como %2$s, %3$s.</string>
+    <string name="archive_recipe_single">todo en un archivo</string>
+    <string name="archive_recipe_split">un archivo por día</string>
+    <string name="atlas_add_stay">Añadir estancia</string>
+    <string name="atlas_all_countries">Todos los países</string>
+    <string name="atlas_all_years">Todos los años</string>
+    <string name="atlas_by_country">Días por país</string>
+    <plurals name="atlas_countries_in">
+        <item quantity="one">%1$s país en %2$s</item>
+        <item quantity="other">%1$s países en %2$s</item>
+    </plurals>
+    <plurals name="atlas_days">
+        <item quantity="one">%s día</item>
+        <item quantity="other">%s días</item>
+    </plurals>
+    <string name="atlas_empty">Aún no hay días por país. Graba o importa historial para llenar el año.</string>
+    <string name="atlas_error">No se pudieron cargar los días por país.</string>
+    <string name="atlas_eyebrow">Atlas · Un año en días</string>
+    <string name="atlas_footnote">Los días de viaje cuentan en ambos países.</string>
+    <plurals name="atlas_footnote_gaps">
+        <item quantity="one">Los días de viaje cuentan en ambos países. %s día no tiene registro: abre Días por país para añadir una estancia.</item>
+        <item quantity="other">Los días de viaje cuentan en ambos países. %s días no tienen registro: abre Días por país para añadir una estancia.</item>
+    </plurals>
+    <string name="atlas_grid_description">Calendario de %1$s coloreado por país</string>
+    <string name="atlas_legend_ahead">Por venir</string>
+    <string name="atlas_legend_manual">Estancia manual</string>
+    <string name="atlas_legend_none">Sin registro</string>
+    <string name="atlas_next_year">Año siguiente</string>
+    <string name="atlas_pick_country">Elige un país para ver sus días en el año.</string>
+    <string name="atlas_previous_year">Año anterior</string>
+    <string name="atlas_range_all">Todo</string>
+    <string name="atlas_range_year">Año</string>
+    <plurals name="atlas_selected_days">
+        <item quantity="one">Seleccionado · %s día</item>
+        <item quantity="other">Seleccionado · %s días</item>
+    </plurals>
+    <string name="atlas_view_dates">Ver fechas</string>
     <string name="automatic_export_action_canceled">Exportación pendiente cancelada. Los archivos externos permanecen en su carpeta.</string>
     <string name="automatic_export_action_reset">Ajustes de exportaciones automáticas restablecidos.</string>
     <string name="automatic_export_action_saved">Ajustes de exportaciones automáticas guardados.</string>
@@ -34,6 +73,7 @@
     <string name="automatic_export_file_mode">Actualizar el archivo del día</string>
     <string name="automatic_export_folder_missing">Elige una carpeta de exportación en Ajustes antes de ejecutar.</string>
     <string name="automatic_export_folder_ready">Carpeta de exportación seleccionada. Se usa la plantilla de nombre de archivo de Exportar.</string>
+    <string name="automatic_export_folder_title">Carpeta de exportación</string>
     <string name="automatic_export_format">Formato de exportación</string>
     <plurals name="automatic_export_interval">
         <item quantity="one">Cada %1$s hora</item>
@@ -43,6 +83,8 @@
     <string name="automatic_export_last_success">Última exportación completada: %1$s</string>
     <string name="automatic_export_loading">Cargando los ajustes de exportaciones automáticas…</string>
     <string name="automatic_export_next">Próxima ejecución prevista: %1$s. Android puede retrasarla.</string>
+    <string name="automatic_export_next_caption">Android puede retrasarla. Hora diaria: %1$s · Zona horaria: %2$s</string>
+    <string name="automatic_export_next_title">Próxima ejecución prevista</string>
     <string name="automatic_export_no_success">Aún no se ha completado ninguna exportación automática.</string>
     <string name="automatic_export_notice_canceled">Exportación pendiente cancelada. Los documentos y las copias de seguridad ya escritos permanecen en su carpeta.</string>
     <string name="automatic_export_notice_json">No se pudo combinar el JSON existente; se sobrescribió el día completo capturado.</string>
@@ -449,6 +491,7 @@
         <item quantity="one">%d visita</item>
         <item quantity="other">%d visitas</item>
     </plurals>
+    <string name="history_import_years_title">Qué llega</string>
     <string name="launcher_already_active">La grabación ya está activa</string>
     <string name="launcher_already_stopped">La grabación está detenida</string>
     <string name="launcher_cancel">Cancelar</string>
@@ -459,6 +502,21 @@
     <string name="launcher_start_title">¿Iniciar grabación?</string>
     <string name="launcher_stop_body">Finaliza la grabación actual y conserva el historial guardado.</string>
     <string name="launcher_stop_title">¿Detener grabación?</string>
+    <string name="listening_bar">Grabación</string>
+    <string name="listening_footer">Sin cuenta. Sin copia en servidores de dónde has estado. La grabación muestra una notificación continua mientras funciona.</string>
+    <string name="listening_journal">Tu diario</string>
+    <string name="listening_journal_where">Solo en este teléfono</string>
+    <string name="listening_mode_routes">Lugares y rutas</string>
+    <string name="listening_mode_routes_body">Cada parada y el camino entre ellas, con GPS mientras graba.</string>
+    <string name="listening_mode_visits_body">Solo dónde te quedas, con ubicación de bajo consumo y sin la ruta entre paradas.</string>
+    <string name="listening_place_names">Nombres de lugares</string>
+    <string name="listening_place_names_body">La geocodificación en red consulta un servicio de mapas</string>
+    <string name="listening_remember">¿Cuánto debe recordar?</string>
+    <string name="listening_sends">Webhooks y exportaciones automáticas</string>
+    <string name="listening_status_off">Sin grabar ahora mismo</string>
+    <string name="listening_status_on">Grabando lugares y rutas</string>
+    <string name="listening_stays_leaves">Qué se queda · qué sale</string>
+    <string name="listening_title">Cómo escucha Whereday</string>
     <plurals name="map_a11y_areas">
         <item quantity="one">%d grupo de zonas.</item>
         <item quantity="other">%d grupos de zonas.</item>
@@ -756,6 +814,7 @@
     <string name="outing_duration_summary">%1$d h %2$d min · %3$s</string>
     <string name="outing_edit">Editar salida</string>
     <string name="outing_export">Exportar salida</string>
+    <string name="outing_figure_duration">Duración</string>
     <string name="outing_format">Formato del archivo de la salida</string>
     <string name="outing_format_explanation">JSON y CSV contienen el resumen de la salida. Markdown también incluye las visitas y todos los puntos de la ruta. Los formatos de ruta solo contienen puntos.</string>
     <plurals name="outing_glitch_count">
@@ -965,6 +1024,16 @@
     <string name="photo_title">Fotos</string>
     <string name="photo_unavailable">Foto no disponible</string>
     <string name="photo_unavailable_access">No disponible · vuelve a seleccionarla para restaurar el acceso</string>
+    <string name="place_detail_edit">Editar</string>
+    <string name="place_detail_kind">Lugar guardado</string>
+    <string name="place_detail_map_description">Boceto del lugar con su radio de coincidencia de %1$d metros</string>
+    <string name="place_detail_no_visits">Aún no hay visitas aquí. Las visitas dentro del radio de coincidencia aparecen aquí.</string>
+    <string name="place_detail_radius">Radio de coincidencia %1$d m</string>
+    <string name="place_detail_recent">Recientes</string>
+    <string name="place_detail_rhythm">Cuándo vienes aquí</string>
+    <string name="place_detail_this_year">En %1$d</string>
+    <string name="place_detail_typical">Estancia habitual</string>
+    <string name="place_detail_visits">Visitas</string>
     <string name="place_pin_cancel">Cancelar</string>
     <string name="place_pin_center">Centro del mapa: %1$s, %2$s</string>
     <string name="place_pin_disabled">La geocodificación en línea está desactivada. Puedes usar coordenadas sin conexión.</string>
@@ -991,6 +1060,14 @@
     <string name="place_pin_timeout">Se agotó el tiempo de búsqueda de la dirección. Inténtalo de nuevo o introduce una dirección en el editor.</string>
     <string name="place_pin_title">Elegir ubicación</string>
     <string name="place_pin_use">Usar esta ubicación</string>
+    <string name="place_rhythm_afternoons">por la tarde</string>
+    <string name="place_rhythm_any">sobre todo %1$s</string>
+    <string name="place_rhythm_evenings">al anochecer</string>
+    <string name="place_rhythm_midday">a mediodía</string>
+    <string name="place_rhythm_mornings">por la mañana</string>
+    <string name="place_rhythm_nights">de noche</string>
+    <string name="place_rhythm_weekday">sobre todo entre semana %1$s</string>
+    <string name="place_rhythm_weekend">sobre todo el fin de semana %1$s</string>
     <string name="place_search_cancel">Cancelar búsqueda de lugares</string>
     <string name="place_search_clear">Borrar búsqueda</string>
     <string name="place_search_coordinate">%1$s, %2$s</string>
@@ -1006,6 +1083,21 @@
     <string name="place_search_submit">Buscar</string>
     <string name="place_search_timeout">Se agotó el tiempo de búsqueda. Inténtalo de nuevo o elige coordenadas sin conexión.</string>
     <string name="place_search_title">Buscar lugares</string>
+    <string name="recap_biggest">Día más largo</string>
+    <string name="recap_biggest_distance">Día más largo · %1$s</string>
+    <plurals name="recap_days">
+        <item quantity="one">%s día</item>
+        <item quantity="other">%s días</item>
+    </plurals>
+    <string name="recap_dials_description">Pequeñas esferas para cada día de %1$s, coloreadas por lugar</string>
+    <string name="recap_done">Listo</string>
+    <string name="recap_new_places">Lugares nuevos</string>
+    <string name="recap_next">Mes siguiente</string>
+    <string name="recap_previous">Mes anterior</string>
+    <string name="recap_privacy">Hecho en el dispositivo · sin coordenadas de mapa</string>
+    <string name="recap_share">Compartir tarjeta</string>
+    <string name="recap_title">Resumen del mes</string>
+    <string name="recap_visits">Visitas</string>
     <string name="recording_active_summary">La grabación continúa con la pantalla apagada.</string>
     <string name="recording_distance_label">Distancia</string>
     <string name="recording_idle_summary">Inicia una grabación para guardar tu próxima salida.</string>
@@ -1230,6 +1322,14 @@
         <item quantity="other">%1$s lugares guardados</item>
     </plurals>
     <string name="settings_places">Lugares guardados</string>
+    <string name="settings_plan_body_ending">Termina con este periodo. Gestiónalo en Google Play.</string>
+    <string name="settings_plan_body_none">Grabación, todos los formatos de exportación y automatización. Las suscripciones empiezan con una semana gratis.</string>
+    <string name="settings_plan_body_subscription">Se renueva automáticamente. Cambia de plan o gestiónalo en Google Play.</string>
+    <string name="settings_plan_kicker">Plan de Whereday</string>
+    <string name="settings_plan_kicker_ending">Plan de Whereday · termina</string>
+    <string name="settings_plan_kicker_none">Planes de Whereday</string>
+    <string name="settings_plan_title_none">Elige un plan</string>
+    <string name="settings_plan_title_subscription">Suscripción</string>
     <plurals name="settings_point_count">
         <item quantity="one">%1$s punto registrado. El historial de ubicaciones se guarda en este teléfono. La copia automática en la nube y la transferencia entre dispositivos están desactivadas.</item>
         <item quantity="other">%1$s puntos registrados. El historial de ubicaciones se guarda en este teléfono. La copia automática en la nube y la transferencia entre dispositivos están desactivadas.</item>
@@ -1251,6 +1351,7 @@
     <string name="shell_places">Lugares</string>
     <string name="shell_settings">Ajustes</string>
     <string name="shell_timeline">Línea de tiempo</string>
+    <string name="shell_today">Hoy</string>
     <string name="shortcut_export">Exportar</string>
     <string name="shortcut_start">Iniciar grabación</string>
     <string name="shortcut_stop">Detener grabación</string>
@@ -1264,6 +1365,8 @@
     <string name="software_notices_search">Buscar software</string>
     <string name="software_notices_title">Avisos de software</string>
     <string name="stay_add">Añadir estancia en un país</string>
+    <string name="stay_calendar_recorded">Registrado</string>
+    <string name="stay_calendar_title">Elige las fechas de la estancia</string>
     <string name="stay_cancel">Cancelar</string>
     <string name="stay_changed">Esta estancia ha cambiado. Cierra el editor y revisa la estancia actual.</string>
     <string name="stay_choose_country">Elegir país</string>
@@ -1302,7 +1405,12 @@
     <string name="support_feedback_description">Se abrirá tu app de correo con la versión de la app, la versión de Android y el modelo del dispositivo. Revisa el mensaje y envíalo cuando quieras. No se adjuntan tu diario ni los registros.</string>
     <string name="support_logs_copied">Registros copiados al portapapeles.</string>
     <string name="support_logs_empty">No hay registros.</string>
+    <string name="support_logs_filter_all">Todo</string>
+    <string name="support_logs_filter_automation">Automatización</string>
+    <string name="support_logs_filter_errors">Errores · %1$d</string>
+    <string name="support_logs_filter_recording">Grabación</string>
     <string name="support_logs_privacy">Se conservan en memoria hasta 500 eventos recientes de la app y se borran cuando termina su proceso. Las horas están en UTC. Los registros contienen mensajes de estado fijos, sin coordenadas, nombres, URL ni credenciales. La copia incluye datos de la app y del dispositivo; el contenido del portapapeles puede compartirse con otras apps.</string>
+    <string name="support_logs_tag_app">App</string>
     <string name="support_logs_title">Registros de actividad</string>
     <string name="support_no_handler">Ninguna app pudo abrir este enlace. Para enviar comentarios, copia el correo de soporte y usa tu app de correo preferida.</string>
     <string name="support_platform">API de Android %1$d</string>
@@ -1359,6 +1467,42 @@
         <item quantity="one">%d visita</item>
         <item quantity="other">%d visitas</item>
     </plurals>
+    <string name="today_back_to_today">Volver a hoy</string>
+    <string name="today_dial_last_fix">Última posición</string>
+    <string name="today_dial_listening">Escuchando desde</string>
+    <string name="today_empty_body">Quédate en un sitio unos minutos y se convertirá en tu primera parada. Los trayectos entre paradas llenan el anillo a medida que avanzas.</string>
+    <string name="today_empty_import">Importa tu Google Timeline</string>
+    <string name="today_empty_title">Por ahora la página está en blanco.</string>
+    <string name="today_list_empty">Todavía no hay lugares hoy. Las paradas aparecen aquí cuando te quedas en un sitio unos minutos.</string>
+    <string name="today_list_title">El día hasta ahora</string>
+    <string name="today_list_title_approximate">El día hasta ahora · aproximado</string>
+    <string name="today_location_off_hint">ubicación desactivada</string>
+    <string name="today_log_stop">Registrar una parada</string>
+    <string name="today_moments_body">Fotos asociadas a los lugares de hoy</string>
+    <string name="today_moments_title">Momentos</string>
+    <string name="today_pick_day">Elegir un día</string>
+    <string name="today_pick_day_cancel">Cancelar</string>
+    <string name="today_pick_day_confirm">Ver día</string>
+    <string name="today_rename">Renombrar</string>
+    <string name="today_replay_hint">toca para repetir</string>
+    <string name="today_replay_label">Repetir el día en el mapa</string>
+    <string name="today_stat_away">Fuera de lugares</string>
+    <string name="today_stat_moved">Recorrido</string>
+    <string name="today_stat_points">Puntos guardados</string>
+    <string name="today_title">Hoy</string>
+    <string name="today_you_are_at">Estás en · desde %1$s</string>
+    <string name="trace_between">Entre lugares</string>
+    <string name="trace_drag_hint">Arrastra para repetir · ahora %1$s</string>
+    <string name="trace_empty">Aún no hay ruta registrada en este día.</string>
+    <string name="trace_later">Más tarde hoy</string>
+    <string name="trace_moving">En movimiento</string>
+    <string name="trace_not_lived">Aún no vivido</string>
+    <string name="trace_open_map">Mapa del diario y capas</string>
+    <string name="trace_scrub">Hora del día</string>
+    <string name="trace_scrub_state">%1$s, %2$s</string>
+    <string name="trace_so_far">%1$s hasta ahora</string>
+    <string name="trace_staying">Estás en</string>
+    <string name="trace_title">Recorrido</string>
     <string name="travel_bike">Bici</string>
     <string name="travel_cycling">En bici</string>
     <string name="travel_drive">Coche</string>
@@ -1646,5 +1790,32 @@
         <item quantity="one">%1$s punto en tiempo real en espera</item>
         <item quantity="other">%1$s puntos en tiempo real en espera</item>
     </plurals>
+    <string name="widget_atlas_description">Los últimos 30 días por país</string>
+    <string name="widget_atlas_label">Atlas</string>
+    <plurals name="widget_countries">
+        <item quantity="one">%s país</item>
+        <item quantity="other">%s países</item>
+    </plurals>
+    <string name="widget_day">Día %1$d</string>
+    <plurals name="widget_days_recorded">
+        <item quantity="one">%1$s día registrado en %2$s</item>
+        <item quantity="other">%1$s días registrados en %2$s</item>
+    </plurals>
+    <string name="widget_dial_description">El día como un anillo de 24 horas</string>
+    <string name="widget_dial_label">Esfera del día</string>
+    <string name="widget_mode">Lugares + rutas</string>
+    <string name="widget_moved">Recorrido</string>
+    <string name="widget_no_stop">Aún no hay paradas hoy</string>
+    <string name="widget_not_recording">Sin grabar</string>
+    <string name="widget_places">Lugares</string>
+    <string name="widget_recorded">Registrado</string>
+    <string name="widget_recording">Grabando</string>
+    <string name="widget_recording_description">Iniciar o detener la grabación</string>
+    <string name="widget_recording_label">Grabación</string>
+    <string name="widget_since">Desde %1$s</string>
+    <string name="widget_start">Iniciar</string>
+    <string name="widget_stop">Detener</string>
+    <string name="widget_today_description">Dónde estás y el día hasta ahora</string>
+    <string name="widget_today_label">Hoy</string>
     <string name="workspace_visit_wait">Termina de editar esta visita para abrir la visita seleccionada.</string>
 </resources>

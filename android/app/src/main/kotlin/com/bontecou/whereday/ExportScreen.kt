@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.FileUpload
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.IosShare
 import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -173,6 +174,21 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom=20.dp)) {
             WdPageHeader(stringResource(R.string.export_title),eyebrow=stringResource(R.string.export_redesign_eyebrow)) {
                 if(onSettings!=null) Spacer(Modifier.size(44.dp).onGloballyPositioned {gearSlotY=it.positionInRoot().y})
+            }
+            // The Archive board's sentence: each underlined word cycles one recipe choice; the full form follows below.
+            run {
+                val dataChoices=DataKind.entries.map {it.name}+"outings"
+                val current=if(selection.outings) "outings" else kind.name
+                val dataLabels=mapOf("visits" to stringResource(R.string.export_data_visits),"points" to stringResource(R.string.export_data_points),"all" to stringResource(R.string.archive_recipe_all),"outings" to stringResource(R.string.export_data_outings))
+                val formats=ExportFormat.entries
+                ArchiveRecipeSentence(stringResource(R.string.archive_recipe_sentence),listOf(
+                    RecipeToken(dataLabels.getValue(current).lowercase(LocalConfiguration.current.locales[0]),"recipe-data") {
+                        val next=dataChoices[(dataChoices.indexOf(current)+1)%dataChoices.size]
+                        graph.exportSettings.update(if(next=="outings") selection.copy(outings=true) else selection.copy(outings=false,options=options.copy(kind=DataKind.valueOf(next))))
+                    },
+                    RecipeToken(recipeFormatName(format),"recipe-format") {graph.exportSettings.update(selection.copy(format=formats[(formats.indexOf(format)+1)%formats.size]))},
+                    RecipeToken(stringResource(if(splitDays) R.string.archive_recipe_split else R.string.archive_recipe_single),"recipe-split") {graph.exportSettings.update(selection.copy(splitDays=!splitDays))},
+                ),enabled=canEdit,Modifier.exportInset().padding(top=8.dp))
             }
             Text(pluralStringResource(R.plurals.export_stored_points,count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(count)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)
             if(count==0L) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))

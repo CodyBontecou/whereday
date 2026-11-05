@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.automirrored.outlined.Article
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,6 +18,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.draw.clip
+import androidx.activity.compose.BackHandler
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -122,6 +125,8 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             val resolved=MainTabs.resolve(destination,usesRail)
             tab=MainTabs.index(resolved.tab);timelineOpen=resolved.timeline;archiveSettings=resolved.settings
         }
+        // Atlas opens the Month recap as a page above the tabs.
+        var recapOpen by rememberSaveable {mutableStateOf(false)}
         // One journal-level owner survives changes to the primary/companion arrangement.
         // Keep the original snapshot so a background edit cannot replace its optimistic-lock baseline.
         var inspectedVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<com.bontecou.whereday.domain.Visit?>(null)}
@@ -176,6 +181,8 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         val timelinePage=rememberWorkspaceContent {
             tabState.SaveableStateProvider(1) {
                 TimelineScreen(graph,journal,current.metric,showOnMap={session->journal.showOutingOnMap(session);if(!paired) timelineOpen=false},onVisitOpened=::focusVisit,visitInspectionActive=inspectedVisit!=null,
+                    today=TodayChrome(active,recording,onRecord,access,onAccessOptions,onOpenMap={timelineOpen=false},onSettings={go(MainTabs.Destination(MainTab.settings))},
+                        onImport={go(MainTabs.Destination(MainTab.archive))},onMoments=null),
                     onClose=if(timelineShown) ({timelineOpen=false}) else null)
             }
         }
@@ -197,20 +204,25 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                     // The rail carries Settings itself.
                     if(railed && archiveSettings) {tab=MainTabs.index(MainTab.settings);archiveSettings=false}
                 }
-                val selectTab:(Int)->Unit={index->tab=index;archiveSettings=false;if(MainTabs.at(index)==MainTab.map) timelineOpen=false}
+                val selectTab:(Int)->Unit={index->tab=index;archiveSettings=false;recapOpen=false;if(MainTabs.at(index)==MainTab.map) timelineOpen=false}
+                BackHandler(enabled=recapOpen) {recapOpen=false}
                 Row(Modifier.fillMaxSize()) {
-                    if(railed) WdNavigationRail(wdTabs,tab,selectTab,Modifier.padding(start=14.dp).semantics {testTagsAsResourceId=true},ruleBefore=MainTabs.bar.size)
+                    // On the rail, Atlas's Month recap is the rail's FAB, as in the Material 3 layout.
+                    if(railed) WdNavigationRail(wdTabs,tab,selectTab,Modifier.semantics {testTagsAsResourceId=true},ruleBefore=MainTabs.bar.size,
+                        header=if(MainTabs.at(tab)==MainTab.atlas) {{WdExtendedFab(androidx.compose.ui.res.stringResource(R.string.recap_title),Icons.AutoMirrored.Outlined.Article,{recapOpen=true},
+                            Modifier.testTag("rail-month-recap"),expanded=false,primary=true)}} else null)
                     // The floating bar sits below each page so lists end above it, as on iOS.
                     Scaffold(Modifier.weight(1f),containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
                         snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
-                        bottomBar={if(!railed && !(mapShown && tabBarHidden.value)) WdFloatingTabBar(wdTabs.take(MainTabs.bar.size),tab.coerceAtMost(MainTabs.bar.size-1),selectTab,Modifier.semantics {testTagsAsResourceId=true})}) {padding->
+                        bottomBar={if(!railed && !(mapShown && tabBarHidden.value)) WdNavigationBar(wdTabs.take(MainTabs.bar.size),tab.coerceAtMost(MainTabs.bar.size-1),selectTab,Modifier.semantics {testTagsAsResourceId=true})}) {padding->
                         // The map runs full-bleed under the status bar and the floating tab bar; its chrome keeps clear of both.
                         if(mapShown) CompositionLocalProvider(LocalMapChromePadding provides padding,LocalTabBarHidden provides tabBarHidden) {Box(Modifier.fillMaxSize()) {mapPage()}}
-                        else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {
-                            when(MainTabs.at(tab)) {
+                        else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {CompositionLocalProvider(LocalJournalRail provides railed) {
+                            if(recapOpen) MonthRecapScreen(graph,current.metric) {recapOpen=false}
+                            else when(MainTabs.at(tab)) {
                                 MainTab.map->timelinePage()
                                 else->tabState.SaveableStateProvider(tab) {when(MainTabs.at(tab)) {
-                                    MainTab.atlas->CountryDaysScreen(graph,back=null)
+                                    MainTab.atlas->AtlasScreen(graph,onMonthRecap=if(railed) null else {{recapOpen=true}})
                                     MainTab.places->SavedPlacesScreen(graph,places.map {it.value},null)
                                     MainTab.archive->if(archiveSettings && !railed) tabState.SaveableStateProvider("archive-settings") {
                                         SettingsScreen(graph,current,places.map {it.value},count,onClose={archiveSettings=false})
@@ -219,7 +231,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                                     MainTab.map->Unit
                                 }}
                             }
-                        }
+                        }}
                     }
                 }
             }
@@ -228,3 +240,6 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         })
 
 }
+
+/** True inside the navigation-rail layout, where Today's "Log a stop" lives on the rail instead of a floating button. */
+internal val LocalJournalRail=staticCompositionLocalOf {false}

@@ -74,7 +74,7 @@ class TimelineLocalizationTest {
         }
         compose.onNodeWithText("Visita").assertExists()
         compose.onNodeWithTag("timeline-content").performScrollToIndex(0)
-        compose.onNodeWithTag("timeline-summary").assertTextEquals("1 salida · 3 visitas · 0,00 km")
+        compose.onNodeWithTag("today-dial").assertContentDescriptionEquals("1 salida · 3 visitas · 0,00 km")
         for(visit in visits) assertEquals(visit,graph.history.dao.visit(visit.id)!!.value)
     }
     @Test fun openVisitRangeAndEditorNavigationAreLocalized()=runBlocking {
@@ -92,7 +92,7 @@ class TimelineLocalizationTest {
             val point=TrackPoint("unassigned",Coordinate(48.8584,2.2945),at,5.0)
             graph.history.dao.putPoints(listOf(PointRow(point,null)))
             show();awaitText("Salida inferida")
-            compose.onNodeWithTag("timeline-summary").assertTextEquals("1 salida · 0 visitas · 0,00 km")
+            compose.onNodeWithTag("today-dial").assertContentDescriptionEquals("1 salida · 0 visitas · 0,00 km")
             assertEquals("unassigned",graph.history.dao.exportFirstPoints(at.minusSeconds(1),at.plusSeconds(1),null).single().value.id)
             assertTrue(graph.history.dao.rangeSessions(at.minusSeconds(1),at.plusSeconds(1)).isEmpty())
         } finally {graph.preferences.update {it.copy(inferredEnabled=original.inferredEnabled,inferredGapMinutes=original.inferredGapMinutes,inferredMinimumMinutes=original.inferredMinimumMinutes,inferredMinimumPoints=original.inferredMinimumPoints)}}

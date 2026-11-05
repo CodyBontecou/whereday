@@ -35,7 +35,7 @@ internal data class SettingsActions(val update:((AppSettings)->AppSettings)->Uni
 private data class ClearConfirmation(val id:Long,val attempt:Long)
 
 @Composable internal fun SettingsContent(settings:AppSettings,placeCount:Int,count:Long,commands:SettingsActionState,clear:JournalClearState,
-    actions:SettingsActions,scroll:LazyListState=rememberLazyListState()) {
+    actions:SettingsActions,scroll:LazyListState=rememberLazyListState(),onBack:(()->Unit)?=null,planCard:(@Composable ()->Unit)?=null) {
     val resources=LocalContext.current.resources
     val number=NumberFormat.getIntegerInstance(LocalConfiguration.current.locales[0])
     val busy=clear.busy
@@ -63,9 +63,14 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
     val geocoding=stringResource(R.string.settings_allow_geocoding)
     val card=Modifier.padding(horizontal=16.dp)
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("settings-screen"),state=scroll,contentPadding=PaddingValues(bottom=32.dp)) {
-        item("header") {WdPageHeader(stringResource(R.string.shell_settings),Modifier.padding(bottom=4.dp),eyebrow=stringResource(R.string.redesign_settings_eyebrow))}
+        item("header") {
+            if(onBack!=null) SettingsBackHeader(stringResource(R.string.shell_settings),stringResource(R.string.common_back),onBack,backTag="settings-back",eyebrow=stringResource(R.string.redesign_settings_eyebrow))
+            else WdPageHeader(stringResource(R.string.shell_settings),Modifier.padding(bottom=4.dp),eyebrow=stringResource(R.string.redesign_settings_eyebrow))
+        }
+        if(planCard!=null) item("plan") {Box(card.padding(top=8.dp)) {planCard()}}
         item("recording") {WdSectionHeader(stringResource(R.string.settings_recording))}
         item("recording-card") {WdCard(card) {
+            WdNavRow(stringResource(R.string.listening_title),Modifier.testTag("settings-listening"),icon=Icons.Outlined.Hearing,enabled=!busy,onClick={navigate(SettingsDestination.listening)})
             SettingsChoiceRow("settings-distance") {Choice(stringResource(R.string.settings_distance),settings.distanceFilter.toString(),meters.keys.toList(),editable,labelFor={meters[it] ?: resources.getString(R.string.settings_meters,number.format(it.toInt()))}) {key->edit {it.copy(distanceFilter=key.toInt())}}}
             SettingsChoiceRow("settings-stop") {Choice(stringResource(R.string.settings_stop_after),settings.stopAfterHours.toString(),hours.keys.toList(),editable,labelFor={hours[it] ?: resources.getString(R.string.settings_hours,number.format(it.toInt()))}) {key->edit {it.copy(stopAfterHours=key.toInt())}}}
             WdNavRow(stringResource(R.string.settings_permissions),icon=Icons.Outlined.LocationOn,divider=false,enabled=!busy,onClick={if(foreground() && !currentClear.busy) actions.permissions()})
@@ -82,7 +87,11 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
         }}
         item("appearance") {WdSectionHeader(stringResource(R.string.settings_appearance))}
         item("appearance-card") {WdCard(card) {
-            SettingsChoiceRow("settings-theme") {Choice(stringResource(R.string.settings_theme),settings.appearance,themes.keys.toList(),editable,labelFor={themes[it] ?: themes.getValue("system")}) {key->edit {it.copy(appearance=key)}}}
+            // Settings board: the theme is a three-way segmented control under its label.
+            SettingsChoiceRow("settings-theme") {Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                Text(stringResource(R.string.settings_theme),style=MaterialTheme.typography.bodyLarge,color=if(editable) wd.textPrimary else wd.textMuted)
+                WdSegmented(themes.keys.toList(),settings.appearance.takeIf {it in themes} ?: "system",{themes.getValue(it)},{key->edit {it.copy(appearance=key)}},enabled=editable)
+            }}
             SettingsToggle(stringResource(R.string.settings_metric),settings.metric,editable,Modifier.testTag("settings-metric"),divider=false) {value->edit {it.copy(metric=value)}}
         }}
         item("places") {WdSectionHeader(stringResource(R.string.settings_places))}

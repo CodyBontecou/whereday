@@ -98,9 +98,9 @@ internal val BillingState.trialProduct:StoreProduct? get()=(product(StorePlan.ye
         ?: listOf(StorePlan.yearly,StorePlan.weekly,StorePlan.lifetime).firstOrNull {it in available}
     val largeText=LocalDensity.current.fontScale>=1.5f
     Column(modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("paywall")) {
-        Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start=16.dp,end=20.dp,top=12.dp).heightIn(min=44.dp),verticalAlignment=Alignment.CenterVertically,
+        Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start=8.dp,end=20.dp,top=16.dp).heightIn(min=44.dp),verticalAlignment=Alignment.CenterVertically,
             horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-            if(dismissible) WdCircleButton(Icons.Outlined.Close,stringResource(R.string.paywall_close),dismiss,Modifier.testTag("paywall-close"))
+            if(dismissible) WdIconButton(Icons.Outlined.Close,stringResource(R.string.paywall_close),dismiss,Modifier.testTag("paywall-close"))
             Text(stringResource(R.string.paywall_eyebrow).uppercase(),style=WdType.eyebrow.copy(fontWeight=FontWeight.Normal,letterSpacing=0.145.em),color=wd.textMuted)
         }
         HorizontalPager(pager,Modifier.weight(1f).fillMaxWidth().testTag("paywall-pager"),verticalAlignment=Alignment.Top) {index->
@@ -186,9 +186,9 @@ private val formatChips=listOf(FormatChip("GPX",0),FormatChip("GeoJSON",1),Forma
 
 @Composable private fun PaywallBenefit(icon:ImageVector,@StringRes title:Int,@StringRes body:Int) {
     Row(Modifier.fillMaxWidth().semantics(mergeDescendants=true) {},horizontalArrangement=Arrangement.spacedBy(14.dp)) {
-        val shape=RoundedCornerShape(10.dp)
-        Box(Modifier.size(36.dp).clip(shape).background(wd.card).border(1.dp,wd.border,shape),contentAlignment=Alignment.Center) {
-            Icon(icon,null,Modifier.size(18.dp),tint=wd.textPrimary)
+        // Board: a 40dp secondary-container disc per perk.
+        Box(Modifier.size(40.dp).clip(RoundedCornerShape(20.dp)).background(wd.secondaryContainer),contentAlignment=Alignment.Center) {
+            Icon(icon,null,Modifier.size(20.dp),tint=wd.onSecondaryContainer)
         }
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
             Text(stringResource(title),style=MaterialTheme.typography.bodyLarge.copy(fontWeight=FontWeight.SemiBold),color=wd.textPrimary)
@@ -216,21 +216,22 @@ private val formatChips=listOf(FormatChip("GPX",0),FormatChip("GeoJSON",1),Forma
     val days=trial.freeTrialDays
     val ends=stringResource(if(trial.plan==StorePlan.yearly) R.string.paywall_trial_begins_yearly else R.string.paywall_trial_begins_weekly,trial.formattedPrice)
     Column(Modifier.testTag("paywall-trial-steps")) {
-        PaywallTrialStep(Icons.Outlined.LockOpen,stringResource(R.string.paywall_trial_today),stringResource(R.string.paywall_trial_today_body),wd.accent,last=false)
-        PaywallTrialStep(Icons.Outlined.NotificationsActive,stringResource(R.string.paywall_trial_reminder,days-2),stringResource(R.string.paywall_trial_reminder_body),wd.placeInks[2],last=false)
-        PaywallTrialStep(Icons.Outlined.Star,stringResource(R.string.paywall_trial_begins,days),ends,wd.inkRust,last=true)
+        // Board inks: rust, sage, ochre.
+        PaywallTrialStep(Icons.Outlined.LockOpen,stringResource(R.string.paywall_trial_today),stringResource(R.string.paywall_trial_today_body),wd.inkRust,last=false)
+        PaywallTrialStep(Icons.Outlined.NotificationsActive,stringResource(R.string.paywall_trial_reminder,days-2),stringResource(R.string.paywall_trial_reminder_body),if(wd.dark) wd.placeInks[3] else Color(0xFF3F5C3C),last=false)
+        PaywallTrialStep(Icons.Outlined.Star,stringResource(R.string.paywall_trial_begins,days),ends,if(wd.dark) wd.placeInks[2] else Color(0xFF7A5A1C),last=true)
     }
 }
 
 @Composable private fun PaywallTrialStep(icon:ImageVector,title:String,body:String,ink:Color,last:Boolean) {
     Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).semantics(mergeDescendants=true) {},horizontalArrangement=Arrangement.spacedBy(14.dp)) {
         Column(horizontalAlignment=Alignment.CenterHorizontally) {
-            Box(Modifier.size(36.dp).clip(RoundedCornerShape(18.dp)).background(ink.copy(alpha=if(wd.dark) 0.22f else 0.12f)),contentAlignment=Alignment.Center) {
-                Icon(icon,null,Modifier.size(18.dp),tint=ink)
+            Box(Modifier.size(40.dp).clip(RoundedCornerShape(20.dp)).background(ink),contentAlignment=Alignment.Center) {
+                Icon(icon,null,Modifier.size(20.dp),tint=wd.surface)
             }
-            if(!last) Box(Modifier.width(2.dp).weight(1f).background(wd.border))
+            if(!last) Box(Modifier.width(2.dp).weight(1f).heightIn(min=24.dp).background(wd.border))
         }
-        Column(Modifier.weight(1f).padding(bottom=if(last) 0.dp else 22.dp),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+        Column(Modifier.weight(1f).padding(top=8.dp,bottom=if(last) 0.dp else 28.dp),verticalArrangement=Arrangement.spacedBy(2.dp)) {
             Text(title,style=MaterialTheme.typography.bodyLarge.copy(fontWeight=FontWeight.SemiBold),color=wd.textPrimary)
             Text(body,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
         }
@@ -290,26 +291,27 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
 }
 
 @Composable private fun PaywallPlanCard(product:StoreProduct,selected:Boolean,onSelect:()->Unit) {
-    val shape=RoundedCornerShape(12.dp)
+    val shape=RoundedCornerShape(16.dp)
     val name=planName(product.plan);val detail=planDetail(product)
+    val ring=wd.inkRust
     val badge=when {
         product.freeTrialDays>0->stringResource(R.string.paywall_badge_trial,product.freeTrialDays)
         product.plan==StorePlan.lifetime->stringResource(R.string.paywall_badge_once)
         else->null
     }
-    Row(Modifier.fillMaxWidth().heightIn(min=64.dp).clip(shape).background(if(selected) wd.accent.copy(alpha=if(wd.dark) 0.16f else 0.06f) else wd.card)
-        .border(if(selected) 2.dp else 1.dp,if(selected) wd.accent else wd.border,shape)
+    Row(Modifier.fillMaxWidth().heightIn(min=68.dp).clip(shape).background(if(selected) ring.copy(alpha=if(wd.dark) 0.12f else 0.08f).compositeOverWd(wd.surface) else wd.containerLow)
+        .border(2.dp,if(selected) ring else Color.Transparent,shape)
         .selectable(selected,role=Role.RadioButton,onClick=onSelect).padding(horizontal=16.dp,vertical=12.dp)
         .testTag("paywall-plan-${product.plan.name}"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-        Box(Modifier.size(20.dp).clip(RoundedCornerShape(10.dp)).border(2.dp,if(selected) wd.accent else wd.border,RoundedCornerShape(10.dp)),contentAlignment=Alignment.Center) {
-            if(selected) Box(Modifier.size(10.dp).clip(RoundedCornerShape(5.dp)).background(wd.accent))
+        Box(Modifier.size(20.dp).clip(RoundedCornerShape(10.dp)).border(2.dp,if(selected) ring else wd.outline,RoundedCornerShape(10.dp)),contentAlignment=Alignment.Center) {
+            if(selected) Box(Modifier.size(10.dp).clip(RoundedCornerShape(5.dp)).background(ring))
         }
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
             FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(4.dp),itemVerticalAlignment=Alignment.CenterVertically) {
                 Text(name,style=MaterialTheme.typography.bodyLarge.copy(fontWeight=FontWeight.SemiBold),color=wd.textPrimary)
-                if(badge!=null) Text(badge.uppercase(),Modifier.clip(RoundedCornerShape(6.dp)).background(if(product.freeTrialDays>0) wd.success.copy(alpha=0.14f) else wd.dialTrack)
-                    .padding(horizontal=6.dp,vertical=2.dp),style=WdType.caption2.copy(fontSize=10.sp,letterSpacing=0.08.em,fontWeight=FontWeight.SemiBold),
-                    color=if(product.freeTrialDays>0) wd.success else wd.textMuted)
+                if(badge!=null) Text(badge,Modifier.clip(RoundedCornerShape(8.dp)).background(if(product.plan==StorePlan.lifetime) wd.primaryContainer else wd.secondaryContainer)
+                    .padding(horizontal=8.dp,vertical=2.dp),style=WdType.caption2.copy(fontSize=10.sp,letterSpacing=0.04.em,fontWeight=FontWeight.Medium),
+                    color=if(product.plan==StorePlan.lifetime) wd.onPrimaryContainer else wd.onSecondaryContainer)
             }
             Text(detail,style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
         }
@@ -318,12 +320,14 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
 }
 
 @Composable private fun PaywallStatus(text:String,ink:Color,icon:ImageVector,modifier:Modifier=Modifier,strong:Boolean=false) {
-    val shape=RoundedCornerShape(12.dp)
-    Row(modifier.fillMaxWidth().clip(shape).background(ink.copy(alpha=if(wd.dark) 0.12f else 0.06f)).border(1.dp,ink.copy(alpha=0.35f),shape)
-        .padding(12.dp).semantics(mergeDescendants=true) {liveRegion=LiveRegionMode.Polite},horizontalArrangement=Arrangement.spacedBy(10.dp)) {
-        Icon(icon,null,Modifier.size(18.dp),tint=ink)
-        Text(text,Modifier.weight(1f),style=MaterialTheme.typography.bodyMedium.copy(fontSize=13.sp,fontWeight=if(strong) FontWeight.SemiBold else FontWeight.Normal),
-            color=if(strong) ink else wd.textPrimary)
+    // Board: pending sits on the primary container, verified on a sage container, both without outlines.
+    val shape=RoundedCornerShape(16.dp)
+    val container=if(strong) (if(wd.dark) Color(0xFF2E4230) else Color(0xFFD9E6D4)) else wd.primaryContainer
+    val content=if(strong) (if(wd.dark) Color(0xFFD5EBD0) else Color(0xFF22351F)) else wd.onPrimaryContainer
+    Row(modifier.fillMaxWidth().clip(shape).background(container)
+        .padding(horizontal=16.dp,vertical=12.dp).semantics(mergeDescendants=true) {liveRegion=LiveRegionMode.Polite},horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+        Icon(icon,null,Modifier.size(18.dp),tint=content)
+        Text(text,Modifier.weight(1f),style=MaterialTheme.typography.bodyMedium.copy(fontWeight=if(strong) FontWeight.SemiBold else FontWeight.Normal),color=content)
     }
 }
 
@@ -342,11 +346,11 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
             repeat(pages.size) {page->
                 val current=pager.currentPage==page
                 val label=stringResource(R.string.paywall_page,page+1,pages.size)
-                Box(Modifier.size(width=if(current) 30.dp else 18.dp,height=32.dp).clickable(role=Role.Tab) {scope.launch {pager.animateScrollToPage(page)}}
+                Box(Modifier.size(32.dp).clickable(role=Role.Tab) {scope.launch {pager.animateScrollToPage(page)}}
                     .semantics {contentDescription=label;this.selected=current}.testTag("paywall-dot-${page+1}"),
                     contentAlignment=Alignment.Center) {
                     Box(Modifier.size(width=if(current) 18.dp else 6.dp,height=6.dp).clip(RoundedCornerShape(3.dp))
-                        .background(if(current) wd.accent else wd.border))
+                        .background(if(current) wd.inkRust else wd.containerHighest))
                 }
             }
         }
@@ -356,16 +360,16 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
         val busy=purchase.busy || checkout
         when {
             purchase.access==AccessState.active->{}
-            purchase.access==AccessState.pending->WdButton(stringResource(R.string.paywall_buy_pending),{},Modifier.testTag("paywall-buy"),
+            purchase.access==AccessState.pending->WdButton(stringResource(R.string.paywall_buy_pending),{},Modifier.heightIn(min=56.dp).testTag("paywall-buy"),
                 emphasis=WdEmphasis.primary,enabled=false,icon=Icons.Outlined.Schedule)
             product!=null->WdButton(when {
                 product.freeTrialDays>0->stringResource(R.string.paywall_cta_trial,product.freeTrialDays)
                 product.isSubscription->stringResource(R.string.paywall_cta_subscribe)
                 else->stringResource(R.string.paywall_cta_lifetime)
-            },{buy(product.plan)},Modifier.testTag("paywall-buy"),emphasis=WdEmphasis.primary,busy=busy)
-            purchase.access==AccessState.checking->WdButton(stringResource(R.string.export_access_checking),{},Modifier.testTag("paywall-buy"),
+            },{buy(product.plan)},Modifier.heightIn(min=56.dp).testTag("paywall-buy"),emphasis=WdEmphasis.primary,busy=busy)
+            purchase.access==AccessState.checking->WdButton(stringResource(R.string.export_access_checking),{},Modifier.heightIn(min=56.dp).testTag("paywall-buy"),
                 emphasis=WdEmphasis.primary,enabled=false,busy=true)
-            else->WdButton(stringResource(R.string.paywall_buy_unavailable),{},Modifier.testTag("paywall-buy"),emphasis=WdEmphasis.primary,
+            else->WdButton(stringResource(R.string.paywall_buy_unavailable),{},Modifier.heightIn(min=56.dp).testTag("paywall-buy"),emphasis=WdEmphasis.primary,
                 enabled=false,icon=Icons.Outlined.Lock)
         }
         FlowRow(horizontalArrangement=Arrangement.Center) {
@@ -398,4 +402,9 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
         contentAlignment=Alignment.Center) {
         Text(text,style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.Medium),color=if(enabled) wd.textPrimary else wd.textMuted)
     }
+}
+
+private fun Color.compositeOverWd(background:Color):Color {
+    val a=alpha
+    return Color(red*a+background.red*(1-a),green*a+background.green*(1-a),blue*a+background.blue*(1-a),1f)
 }

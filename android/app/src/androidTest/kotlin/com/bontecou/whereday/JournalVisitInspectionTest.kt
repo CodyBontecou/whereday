@@ -47,7 +47,7 @@ class JournalVisitInspectionTest {
         if(timeline) {
             compose.openTimeline()
             compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
-            compose.onNodeWithText(original.name!!).performScrollTo().performClick()
+            compose.onNode(hasText(original.name!!) and hasAnyAncestor(hasTestTag("timeline-content"))).performScrollTo().performClick()
         } else {
             compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("journal-native-map").assertExists()}.isSuccess}
             compose.onNodeWithTag("journal-native-map").performMapAction("Visits on map")

@@ -17,4 +17,8 @@
         <item quantity="other">%s min left</item>
     </plurals>
     <string name="notification_recording_brand" translatable="false">Whereday</string>
+    <string name="notification_recording_at">At %1$s since %2$s</string>
+    <string name="notification_recording_since">Recording since %1$s</string>
+    <string name="notification_recording_stop_full">Stop recording</string>
+    <string name="notification_recording_log_stop">Log a stop</string>
 </resources>

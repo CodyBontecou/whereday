@@ -317,7 +317,7 @@ private class JournalMapRenderer {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable internal fun JournalMap(points: List<TrackPoint>, visits: List<Visit>, modifier: Modifier=Modifier,replay:ReplayFrame?=null,endpoints:RouteEndpoints=RouteEndpoints.from(points),showOutliers:Boolean=false,onOutliers:((Boolean)->Unit)?=null,allOutlierFallback:Boolean=false,onVisitSelected:((Visit)->Unit)?=null,photoLayer:PhotoMapLayer?=null,follow:MapFollowUi?=null,followMetric:Boolean=true,activeRecording:ActiveRecordingMapUi?=null,roadRoute:RoadRoute?=null,showStraightSegments:Boolean=true,roadController:com.bontecou.whereday.platform.RoadDisplayController?=null,roadVisible:Boolean=true,visitFocus:VisitMapFocus?=null,onVisitFocusCleared:()->Unit={},inspectionScope:Any?=null,pointMarkerSource:MapPointMarkerSource?=null,
-    home:MapHomeOptions?=null) {
+    home:MapHomeOptions?=null,fullBleed:Boolean=false) {
     val context=LocalContext.current
     val pointLocale=LocalConfiguration.current.locales[0]
     val lifecycle=LocalLifecycleOwner.current.lifecycle
@@ -625,10 +625,15 @@ private class JournalMapRenderer {
             onlineControl();layersControl();fitControl()
         }
         if(!overlay) followControl()
-        val frame=RoundedCornerShape(20.dp)
-        Box(Modifier.fillMaxWidth().height(300.dp).clip(frame).background(colors.dialTrack).border(1.dp,colors.border,frame)) {
+        val frame=RoundedCornerShape(if(fullBleed) 0.dp else 20.dp)
+        // Trace fills its page edge to edge; elsewhere the map is a 300dp framed card.
+        Box(Modifier.fillMaxWidth().then(if(fullBleed) Modifier.weight(1f) else Modifier.height(300.dp)).clip(frame).background(colors.dialTrack)
+            .then(if(fullBleed) Modifier else Modifier.border(1.dp,colors.border,frame))) {
             nativeMap(Modifier.fillMaxSize())
-            if(overlay) {
+            if(overlay && fullBleed) {
+                // Trace owns the top edge (back pill); its map controls sit just below it, on the trailing side.
+                Column(Modifier.align(Alignment.TopEnd).statusBarsPadding().padding(top=72.dp,end=16.dp),horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(8.dp)) {onlineControl();layersControl();fitControl()}
+            } else if(overlay) {
                 Box(Modifier.align(Alignment.TopStart).padding(10.dp)) {onlineControl()}
                 Column(Modifier.align(Alignment.TopEnd).padding(10.dp),horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(8.dp)) {layersControl();fitControl()}
                 // Bottom-end keeps the MapLibre logo and attribution (bottom-start) visible and tappable.
@@ -682,7 +687,7 @@ private class JournalMapRenderer {
         val browsePoints=displayPoints.isNotEmpty()
         val browseVisits=onVisitSelected!=null && visits.isNotEmpty()
         val photoActions=photoClusters.isNotEmpty() || photoLayer?.browsePlaces!=null || photoLayer?.retryDirectory!=null
-        if(browsePoints || browseVisits || photoActions) FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+        if(!fullBleed && (browsePoints || browseVisits || photoActions)) FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             if(browsePoints) TraceCapsule(stringResource(R.string.map_point_browse),{pickingPoint=true},Modifier.testTag("map-point-browse"),icon=Icons.Outlined.ScatterPlot)
             if(browseVisits) TraceCapsule(stringResource(R.string.map_visits),{selectedPointId=null;candidateVisits=null;pickingVisit=true},icon=Icons.Outlined.Place)
             if(photoClusters.isNotEmpty()) TraceCapsule(stringResource(R.string.map_photos),{photoLayer?.open?.invoke(photoClusters)},icon=Icons.Outlined.PhotoLibrary)
@@ -702,7 +707,7 @@ private class JournalMapRenderer {
         }
         if(renderer.error) WdNotice(stringResource(R.string.map_tiles_failed),icon=Icons.Outlined.CloudOff,warning=true)
         if(online) Text(stringResource(R.string.map_tiles_disclosure),style=WdType.caption2,color=colors.textMuted)
-        if(!online) Text(stringResource(R.string.map_offline),style=WdType.caption2,color=colors.textMuted)
+        if(!online && !fullBleed) Text(stringResource(R.string.map_offline),style=WdType.caption2,color=colors.textMuted)
     }
 }
 

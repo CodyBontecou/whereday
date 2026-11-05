@@ -98,7 +98,7 @@ class SavedPlacesLocalizationTest {
         assertEquals(1L,graph.history.dao.totalPointCount());assertEquals(1L,graph.history.dao.totalVisitCount())
     }
     @Test fun commaDecimalEditorSearchAndConfirmedDeletionPreserveTheJournal()=runBlocking {
-        screen();click("Añadir lugar")
+        screen();compose.onNodeWithTag("saved-places-add").performClick()
         compose.onNodeWithText("Guardar").performClick()
         compose.onNodeWithTag("saved-editor-error").performScrollTo().assertTextEquals("Introduce un nombre, coordenadas válidas y un radio de entre 25 y 10 000 metros.")
         compose.onNodeWithTag("saved-name").performScrollTo().performTextInput("CAFÉ QA")
@@ -113,6 +113,8 @@ class SavedPlacesLocalizationTest {
         waitText("Radio de coincidencia: 250,5 m")
         compose.onNodeWithTag("saved-places-search").performScrollTo().performTextInput("cafe")
         waitText("CAFÉ QA");click("Borrar búsqueda");click("CAFÉ QA")
+        // A place opens its detail first; Edit opens the editor.
+        compose.onNodeWithTag("place-detail-edit").performClick()
         compose.onNodeWithTag("saved-radius").performScrollTo().assertTextContains("250.5")
         compose.onNodeWithText("Eliminar lugar guardado").performScrollTo().performClick()
         compose.onNodeWithTag("saved-delete-cancel").performClick()
@@ -126,7 +128,7 @@ class SavedPlacesLocalizationTest {
         val managed=SavedPlace("managed","Café QA",Coordinate(18.0001,-66.0),"Managed address",333.0)
         graph.history.dao.put(PlaceRow(managed))
         csv("name,latitude,longitude,address,radius_meters\nCAFÉ QA,18,-66,Incoming address,250\nNew QA,19,-67,New address,150\nInvalid QA,91,-66,,150\n")
-        screen();click("Importar CSV")
+        screen();compose.onNodeWithTag("saved-places-import").performClick()
         plan("1 añadido · 0 actualizados · 1 omitido")
         find("2 filas válidas · 1 fila no válida. Las filas no válidas no se importarán.")
         find("La latitud debe ser un número de entre -90 y 90.")
@@ -139,7 +141,7 @@ class SavedPlacesLocalizationTest {
         waitText("Añadidos: 1. Actualizados: 0. Omitidos: 1.")
         assertEquals(managed,graph.history.dao.place(managed.id)!!.value)
         assertEquals(2,graph.history.dao.places().size)
-        click("Importar CSV");plan("0 añadidos · 0 actualizados · 2 omitidos")
+        compose.onNodeWithTag("saved-places-import").performClick();plan("0 añadidos · 0 actualizados · 2 omitidos")
         click("Conservar lugares existentes")
         compose.onNodeWithText("Actualizar lugares coincidentes").performClick()
         plan("0 añadidos · 2 actualizados · 0 omitidos")
@@ -149,7 +151,7 @@ class SavedPlacesLocalizationTest {
         assertEquals(2,graph.history.dao.places().size);unchangedJournal()
     }
     @Test fun aChangedLibraryRejectsTheConfirmedImportWithoutPartialWrites()=runBlocking {
-        csv("name,latitude,longitude\nIncoming QA,18,-66\n");screen();click("Importar CSV")
+        csv("name,latitude,longitude\nIncoming QA,18,-66\n");screen();compose.onNodeWithTag("saved-places-import").performClick()
         plan("1 añadido · 0 actualizados · 0 omitidos");click("Importar lugares válidos")
         val concurrent=SavedPlace("concurrent","Concurrent QA",Coordinate(20.0,-60.0));graph.history.dao.put(PlaceRow(concurrent))
         compose.onNodeWithText("Importar lugares").performClick()
@@ -157,7 +159,7 @@ class SavedPlacesLocalizationTest {
         assertEquals(listOf(concurrent),graph.history.dao.places().map {it.value});unchangedJournal()
     }
     @Test fun missingHeaderDiagnosticKeepsProtocolKeysAndWritesNothing()=runBlocking {
-        csv("name,latitude\nPlace,18\n");screen();click("Importar CSV")
+        csv("name,latitude\nPlace,18\n");screen();compose.onNodeWithTag("saved-places-import").performClick()
         waitText("Faltan columnas CSV obligatorias: longitude.")
         assertTrue(graph.history.dao.places().isEmpty());unchangedJournal()
     }

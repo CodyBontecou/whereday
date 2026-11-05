@@ -195,16 +195,16 @@ class AutomationLocalizationTest {
         compose.onNodeWithText("Saved automation access could not be opened. Disable access to reset it.").assertExists()
     }
     @Test fun unsavedDiscardAndBusyNavigationNeverChangeTheSavedGrant() {
-        show();toggle(AutomationScope.visits);click("Volver a Ajustes")
+        show();toggle(AutomationScope.visits);compose.onNodeWithContentDescription("Volver a Ajustes").performScrollTo().performClick()
         compose.onNodeWithText("¿Descartar las opciones de automatización sin guardar?").assertIsDisplayed()
         val canceled=held("automation-discard");compose.onNodeWithText("Cancelar").performClick()
         compose.runOnIdle {canceled();assertTrue(calls.isEmpty())}
-        click("Volver a Ajustes");compose.onNodeWithTag("automation-discard").performClick()
+        compose.onNodeWithContentDescription("Volver a Ajustes").performScrollTo().performClick();compose.onNodeWithTag("automation-discard").performClick()
         assertEquals(listOf("back"),calls);assertTrue(grants.isEmpty())
         compose.runOnIdle {ui.value=ui.value.copy(busy=true,consentRevision=1)}
         compose.onNodeWithTag("automation-scope-visits").performScrollTo().assertIsNotEnabled()
         compose.onNodeWithTag("automation-save").performScrollTo().assertIsNotEnabled()
-        click("Volver a Ajustes");assertEquals(listOf("back","back"),calls);assertTrue(grants.isEmpty())
+        compose.onNodeWithContentDescription("Volver a Ajustes").performScrollTo().performClick();assertEquals(listOf("back","back"),calls);assertTrue(grants.isEmpty())
     }
     @Test fun largeTextDarkScopeRowsAndAccessFailureRemainReadable() {
         ui.value=ui.value.copy(failure=AutomationFailure.load)

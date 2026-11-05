@@ -71,6 +71,10 @@ class JournalViewModel(private val graph: AppGraph,private val clock:Clock=Clock
         mapSelection.value=MapSelection();timelineDay.value=clock.instant().atZone(zone()).toLocalDate();lastMapLoad=null;refresh.value++
     }
     fun retry() {refresh.value++;graph.automaticPhotos.refresh()}
+    /** Today's dial opens the map on its own day: live for today, a fixed civil day otherwise. */
+    fun showDayOnMap(day:LocalDate) {
+        mapSelection.value=if(day==clock.instant().atZone(zone()).toLocalDate()) MapSelection() else MapSelection("Custom",day,day)
+    }
     fun showVisitOnMap(visit:Visit) {mapSelection.value=visitMapSelection(visit,zone())}
     fun showOutingOnMap(session: RecordingSession) {
         mapSelection.value=MapSelection(preset="Outing",outingRange=HistoryRange(session.startedAt,(session.endedAt ?: clock.instant()).plusMillis(1)))

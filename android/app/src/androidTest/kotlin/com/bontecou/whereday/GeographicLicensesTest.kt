@@ -47,7 +47,7 @@ class GeographicLicensesTest {
         for(item in GeographicDocument.entries) {
             document(item)
             val expected=target.assets.open("licenses/${item.asset}").bufferedReader(Charsets.UTF_8).use {it.readText()}
-            awaitText(expected);compose.onNodeWithText("Volver a los datos geográficos").assertIsDisplayed();back()
+            awaitText(expected);compose.onNodeWithContentDescription("Volver a los datos geográficos").assertIsDisplayed();back()
         }
         assertEquals(0,backs);assertTrue(links.isEmpty());back();assertEquals(1,backs)
     }
@@ -58,7 +58,7 @@ class GeographicLicensesTest {
         tester.emulateSavedInstanceStateRestore();awaitText("SYNTHETIC geometry")
         compose.onNodeWithText("Licencia del motor geométrico").assertIsDisplayed();back()
         compose.onNodeWithTag("geo-license-document-geometry").assertIsDisplayed()
-        compose.onNodeWithText("Volver a Ajustes").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Volver a Ajustes").assertIsDisplayed()
     }
     @Test fun failedReadIsSanitizedAndOnlyExplicitRetryLoadsTheSameDocument() {
         var attempts=0

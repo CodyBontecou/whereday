@@ -72,6 +72,8 @@ class MainActivity : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Home-screen widgets follow recording state while the journal is open.
+        lifecycleScope.launch {RecordingRuntime.active.collect {WheredayWidgets.refresh(this@MainActivity)}}
         enableEdgeToEdge()
         refreshAccess()
         lifecycleScope.launch {
@@ -150,7 +152,7 @@ class MainActivity : ComponentActivity() {
                 reviewWindowFocused.value=window.decorView.hasWindowFocus()
         }
     }
-    override fun onStop() {roadSession?.background();foregroundEpoch++;permissionReview=null;permissionHandoff?.cancel();super.onStop()}
+    override fun onStop() {roadSession?.background();foregroundEpoch++;permissionReview=null;permissionHandoff?.cancel();WheredayWidgets.refresh(this);super.onStop()}
     override fun onPause() {roadSession?.background();graph.automaticPhotos.background();super.onPause()}
     override fun onDestroy() {roadSession?.close();roadSession=null;super.onDestroy()}
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); handleIntent(intent) }

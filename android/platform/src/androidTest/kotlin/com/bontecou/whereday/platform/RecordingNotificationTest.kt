@@ -45,9 +45,10 @@ class RecordingNotificationTest {
         assertEquals("Whereday está grabando",notification.extras.getCharSequence(Notification.EXTRA_TITLE).toString())
         assertEquals("La grabación de ubicación está activa",notification.publicVersion!!.extras.getCharSequence(Notification.EXTRA_TEXT).toString())
         assertFalse(notification.publicVersion!!.extras.toString().contains("SYNTHETIC PRIVATE DETAILS"))
-        assertEquals("Detener",notification.actions.single().title)
-        assertEquals(notification.actions.single().actionIntent,notification.publicVersion!!.actions.single().actionIntent)
-        assertEquals(es.packageName,notification.actions.single().actionIntent.creatorPackage)
+        assertEquals("Detener grabación",notification.actions.first().title)
+        assertEquals("Registrar una parada",notification.actions[1].title);assertEquals(1,notification.publicVersion!!.actions.count {it.title=="Detener grabación"})
+        assertEquals(notification.actions.first().actionIntent,notification.publicVersion!!.actions.first().actionIntent)
+        assertEquals(es.packageName,notification.actions.first().actionIntent.creatorPackage)
     }
     @Test fun channelNameIsLocalizedWithoutChangingItsStableIdentityOrImportance() {
         val en=RecordingNotification.channel(context(),"recording")
@@ -62,7 +63,7 @@ class RecordingNotificationTest {
             assertEquals("Whereday",value.extras.getCharSequence(Notification.EXTRA_TITLE).toString())
             assertEquals(context.getString(R.string.notification_recording_preparing),value.publicVersion!!.extras.getCharSequence(Notification.EXTRA_TEXT).toString())
             assertFalse(value.publicVersion!!.extras.toString().contains("SYNTHETIC PRIVATE PREPARATION"))
-            assertEquals(value.actions.single().actionIntent,value.publicVersion!!.actions.single().actionIntent)
+            assertEquals(value.actions.first().actionIntent,value.publicVersion!!.actions.first().actionIntent)
         }
     }
     @Test fun notificationStopPendingIntentClosesTheIsolatedSessionWithoutAnActivity()=runBlocking {
@@ -73,7 +74,7 @@ class RecordingNotificationTest {
         val session=graph.history.start(0).sessionId!!
         try {
             val notification=RecordingNotification.build(context,"test-recording","Synthetic only")
-            notification.actions.single().actionIntent.send()
+            notification.actions.first().actionIntent.send()
             withTimeout(10_000) {
                 while(graph.history.dao.recording()?.requested==true) delay(25)
             }
@@ -95,7 +96,7 @@ class RecordingNotificationTest {
         assertFalse(public.extras.toString().contains(detail))
         for(value in listOf(notification,public)) {
             assertTrue(value.flags and Notification.FLAG_ONGOING_EVENT !=0)
-            val action=value.actions.single();assertEquals("Stop",action.title)
+            val action=value.actions.first();assertEquals("Stop recording",action.title)
             assertEquals(context.packageName,action.actionIntent.creatorPackage)
             if(Build.VERSION.SDK_INT>=31) assertTrue(action.actionIntent.isImmutable)
         }

@@ -31,9 +31,7 @@ class SettingsGraphIntegrationTest {
             compose.onNode(hasText("100 m") and hasAnyAncestor(isPopup())).performClick()
             withTimeout(5000) {graph.preferences.settings.first {it.distanceFilter==100}}
             compose.onNodeWithTag("settings-screen").performScrollToNode(hasTestTag("settings-theme"))
-            val theme=when(original.appearance) {"light"->"Light";"dark"->"Dark";else->"System"}
-            compose.onNode(hasText(theme) and hasAnyAncestor(hasTestTag("settings-theme"))).performClick()
-            compose.onNode(hasText("Dark") and hasAnyAncestor(isPopup())).performClick()
+            compose.onNode(hasText("Dark") and hasAnyAncestor(hasTestTag("settings-theme"))).performClick()
             click("Support and about");compose.onNodeWithTag("support-screen").assertExists()
             withTimeout(5000) {graph.settingsActions.state.first {!it.busy};graph.preferences.settings.first {it.appearance=="dark" && it.distanceFilter==100}}
             compose.activityRule.scenario.recreate();compose.waitUntil(10000) {compose.onAllNodesWithTag("support-screen").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}

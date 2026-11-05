@@ -455,7 +455,9 @@ class WorkspaceActivityResizeTest {
     private fun openStoredPlace() {
         openPlaceLibrary()
         compose.waitUntil(10000) {compose.onAllNodesWithText(savedPlace.name).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
-        compose.onNodeWithText(savedPlace.name).performScrollTo().performClick();awaitTag("saved-name")
+        compose.onNodeWithText(savedPlace.name).performScrollTo().performClick()
+        // A saved place opens its detail page; Edit opens the editor.
+        awaitTag("place-detail-edit");compose.onNodeWithTag("place-detail-edit").performClick();awaitTag("saved-name")
     }
     private fun openStoredOuting() {
         awaitTag("map-day-peek");compose.openTimeline()
@@ -627,7 +629,7 @@ class WorkspaceActivityResizeTest {
     @Test fun newPlaceDraftSurvivesRealRecreationWithoutCreatingAnythingBeforeSave():Unit=runBlocking {
         graph.savedPlaces.save(savedPlace,null)
         launch().use {
-            openPlaceLibrary();compose.onNodeWithText(target.getString(R.string.saved_add)).performScrollTo().performClick();awaitTag("saved-name")
+            openPlaceLibrary();compose.onNodeWithTag("saved-places-add").performClick();awaitTag("saved-name")
             compose.onNodeWithTag("saved-name").performTextReplacement("New resized library place")
             compose.onNodeWithTag("saved-latitude").performScrollTo().performTextReplacement("18.1")
             compose.onNodeWithTag("saved-longitude").performScrollTo().performTextReplacement("-66.1");closeKeyboard()

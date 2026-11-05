@@ -10,6 +10,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.outlined.AddLocationAlt
+import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -52,13 +55,16 @@ import java.util.Locale
 private class PlaceReadError(val resource:Int):IllegalArgumentException()
 private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:List<SavedPlace>,val policy:SavedPlaceDuplicatePolicy,val plan:SavedPlaceImportPlan)
 
-@Composable fun SavedPlacesScreen(graph:AppGraph,places:List<SavedPlace>,back:(()->Unit)?) {
+@Composable fun SavedPlacesScreen(graph:AppGraph,places:List<SavedPlace>,back:(()->Unit)?,showAddFab:Boolean=true) {
     val context=LocalContext.current;val scope=rememberCoroutineScope()
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     fun number(value:Double)=NumberFormat.getNumberInstance(locale).apply {maximumFractionDigits=2}.format(value)
     var query by rememberSaveable {mutableStateOf("")}
     var adding by rememberSaveable {mutableStateOf(false)}
     var editing by rememberSaveable(stateSaver=SavedPlaceSnapshot.Saver) {mutableStateOf<SavedPlace?>(null)}
+    // Tapping a place opens its detail (the Place board); the editor is one tap further.
+    var detailId by rememberSaveable {mutableStateOf<String?>(null)}
+    var openedVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<com.bontecou.whereday.domain.Visit?>(null)}
     var preview by remember {mutableStateOf<SavedPlaceImportPreview?>(null)}
     var policyName by rememberSaveable {mutableStateOf(SavedPlaceDuplicatePolicy.keepExisting.name)}
     val policy=SavedPlaceDuplicatePolicy.valueOf(policyName)
@@ -153,21 +159,26 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
                 .sortedWith {a,b->collator.compare(a.name,b.name).takeIf {it!=0} ?: a.id.compareTo(b.id)}
         }
     }
-    Column(Modifier.fillMaxSize().background(wd.surface)) {
+    Box(Modifier.fillMaxSize().background(wd.surface)) {
+    Column(Modifier.fillMaxSize()) {
     if(back!=null || busy) PlacesBackBar(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_settings),::leave) else Spacer(Modifier.statusBarsPadding())
-    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(bottom=32.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-        item {WdPageHeader(stringResource(R.string.saved_title),Modifier.padding(bottom=4.dp),eyebrow=pluralStringResource(R.plurals.redesign_places_saved_eyebrow,places.size,places.size))}
-        item {OutlinedTextField(query,{query=it},label={Text(stringResource(R.string.visit_saved_search))},singleLine=true,shape=RoundedCornerShape(14.dp),colors=wdTextFieldColors(),
-            modifier=Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-places-search"),
+    val importCsv={picker.launch(arrayOf("text/*","application/csv","application/octet-stream"))}
+    LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(bottom=if(showAddFab) 104.dp else 32.dp)) {
+        // The Places board: tracked count over the serif title, with CSV import behind the header's overflow action.
+        item {WdPageHeader(stringResource(R.string.saved_title),eyebrow=pluralStringResource(R.plurals.redesign_places_saved_eyebrow,places.size,places.size)) {
+            WdIconButton(Icons.Outlined.UploadFile,stringResource(R.string.saved_import_csv),importCsv,Modifier.testTag("saved-places-import"),enabled=!busy)
+        }}
+        item {OutlinedTextField(query,{query=it},placeholder={Text(stringResource(R.string.visit_saved_search))},singleLine=true,shape=RoundedCornerShape(28.dp),
+            colors=wdTextFieldColors().copy(focusedContainerColor=wd.container,unfocusedContainerColor=wd.container,unfocusedIndicatorColor=androidx.compose.ui.graphics.Color.Transparent),
+            modifier=Modifier.padding(horizontal=16.dp).padding(top=4.dp).fillMaxWidth().heightIn(min=56.dp).testTag("saved-places-search"),
             leadingIcon={Icon(Icons.Outlined.Search,null,tint=wd.textMuted)},trailingIcon={
             if(query.isNotEmpty()) TextButton(onClick={query=""}) {Text(stringResource(R.string.visit_saved_clear),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.accent)}
         })}
-        item {Row(Modifier.padding(horizontal=16.dp),horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+        if(!showAddFab) item {Row(Modifier.padding(horizontal=16.dp).padding(top=12.dp),horizontalArrangement=Arrangement.spacedBy(10.dp)) {
             WdButton(stringResource(R.string.saved_add),{adding=true},Modifier.weight(1f),emphasis=WdEmphasis.primary,enabled=!busy,icon=Icons.Outlined.Add)
-            WdButton(stringResource(R.string.saved_import_csv),{picker.launch(arrayOf("text/*","application/csv","application/octet-stream"))},Modifier.weight(1f).align(Alignment.CenterVertically),enabled=!busy,icon=Icons.Outlined.UploadFile)
         }}
-        item {WdSectionFooter(stringResource(R.string.saved_csv_help),Modifier.padding(horizontal=4.dp))}
-        message?.let {item {WdNotice(it.text(),Modifier.padding(horizontal=16.dp))}}
+        item {WdSectionFooter(stringResource(R.string.saved_csv_help),Modifier.padding(horizontal=4.dp).padding(top=6.dp))}
+        message?.let {item {WdNotice(it.text(),Modifier.padding(horizontal=16.dp).padding(top=12.dp))}}
         if(busy) item {Column {PlacesProgress();Text(stringResource(R.string.saved_csv_reading),Modifier.padding(horizontal=20.dp,vertical=6.dp),style=WdType.caption,color=wd.textMuted)}}
         val matches=filtered
         if(matches==null) item {PlacesProgress()}
@@ -176,22 +187,33 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
             WdEmptyState(stringResource(if(blank) R.string.redesign_places_empty_title else R.string.redesign_places_no_match_title),stringResource(if(blank) R.string.saved_empty else R.string.saved_no_match),icon=if(blank) Icons.Outlined.Place else Icons.Outlined.SearchOff)
         }
         else {
-            item {Text(pluralStringResource(R.plurals.saved_count,places.size,matches.size,places.size),Modifier.padding(start=24.dp,end=24.dp,top=8.dp),style=WdType.caption.copy(fontWeight=FontWeight.SemiBold),color=wd.textMuted)}
-            items(matches,key={it.id}) {place ->
-                val shape=RoundedCornerShape(16.dp)
-                Row(Modifier.padding(horizontal=16.dp).fillMaxWidth().clip(shape).background(wd.card).border(1.dp,wd.border,shape).clickable(enabled=!busy,role=Role.Button) {editing=place}
-                    .heightIn(min=58.dp).padding(horizontal=16.dp,vertical=14.dp),horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
-                    Box(Modifier.size(12.dp).clip(CircleShape).background(placeInk(place.id)))
-                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
-                        Text(place.name,style=WdType.title3,color=wd.textPrimary);place.address?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
-                        Text(stringResource(R.string.saved_radius,number(place.radius)),style=WdType.caption2,color=wd.textMuted)
+            item {Text(pluralStringResource(R.plurals.saved_count,places.size,matches.size,places.size),Modifier.padding(start=20.dp,end=20.dp,top=20.dp,bottom=8.dp),style=WdType.eyebrow,color=wd.textMuted)}
+            itemsIndexed(matches,key={_,it->it.id}) {index,place ->
+                val ink=placeInk(place.id)
+                Row(Modifier.padding(horizontal=16.dp).settingsSegment(index==0,index==matches.lastIndex).clickable(enabled=!busy,role=Role.Button) {detailId=place.id}.testTag("saved-place-${place.id}")
+                    .heightIn(min=72.dp).padding(start=16.dp,end=20.dp,top=8.dp,bottom=8.dp),horizontalArrangement=Arrangement.spacedBy(16.dp),verticalAlignment=Alignment.CenterVertically) {
+                    Box(Modifier.size(40.dp).clip(CircleShape).background(ink.copy(alpha=0.16f)),contentAlignment=Alignment.Center) {
+                        Icon(Icons.Outlined.Place,null,Modifier.size(20.dp),tint=ink)
                     }
-                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(18.dp),tint=wd.textMuted)
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                        Text(place.name,style=WdType.title3.copy(fontWeight=FontWeight.Normal,lineHeight=26.sp),color=wd.textPrimary);place.address?.let {Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)}
+                    }
+                    Text(stringResource(R.string.saved_radius,number(place.radius)),style=WdType.caption,color=wd.textMuted)
                 }
             }
         }
     }
     }
+    if(showAddFab) WdExtendedFab(stringResource(R.string.saved_add),Icons.Outlined.AddLocationAlt,{if(!busy) adding=true},
+        Modifier.align(Alignment.BottomEnd).padding(16.dp).testTag("saved-places-add"))
+    // The place detail covers the library inside the same box, whatever column hosts this screen.
+    places.find {it.id==detailId}?.let {place->
+        Box(Modifier.fillMaxSize()) {PlaceDetailScreen(graph,place,{detailId=null},{editing=place}) {openedVisit=it}}
+    }
+    }
+    openedVisit?.let {visit->key(visit.id) {
+        VisitEditor(graph,visit,{openedVisit=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,visit,reuse,remember,overlap)},{graph.history.deleteVisit(visit)})
+    }}
     if(adding || editing!=null) {
         val expected=editing
         key(expected!=null,expected?.id) {

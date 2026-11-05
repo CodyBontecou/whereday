@@ -1,5 +1,9 @@
 package com.bontecou.whereday
 
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -78,6 +82,11 @@ import java.util.Locale
                     if(review.unsupported>0) Text(pluralStringResource(R.plurals.history_import_unsupported,review.unsupported,review.unsupported),style=MaterialTheme.typography.bodyMedium,color=wd.warning)
                 }
             }
+            // Import board: what arrives, as records per year.
+            if(review.years.size>1) {
+                WdSectionHeader(stringResource(R.string.history_import_years_title))
+                ExportCard {ImportYearChart(review.years)}
+            }
             if(review.visits>0 || review.points>0) {
                 WdSectionHeader(stringResource(R.string.export_redesign_section_include))
                 ExportCard {
@@ -133,5 +142,21 @@ import java.util.Locale
             Checkbox(selected,onCheckedChange=null,colors=CheckboxDefaults.colors(checkedColor=wd.accent,uncheckedColor=wd.textMuted,checkmarkColor=wd.surface));Text(label,Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge,color=wd.textPrimary)
         }
         if(divider) WdDivider(Modifier.padding(start=16.dp))
+    }
+}
+
+/** Bars for records per year, tallest year full height, labelled under each bar. */
+@Composable private fun ImportYearChart(years:Map<Int,Int>) {
+    val max=(years.values.maxOrNull() ?: 1).coerceAtLeast(1)
+    val number=java.text.NumberFormat.getIntegerInstance(androidx.compose.ui.platform.LocalConfiguration.current.locales[0])
+    val description=years.entries.joinToString {"${it.key}: ${number.format(it.value)}"}
+    Row(Modifier.fillMaxWidth().height(140.dp).padding(horizontal=20.dp,vertical=14.dp).testTag("history-import-years")
+        .semantics {contentDescription=description},horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.Bottom) {
+        years.entries.forEach {(year,count)->
+            Column(Modifier.weight(1f).fillMaxHeight(),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.Bottom) {
+                Box(Modifier.fillMaxWidth().fillMaxHeight((count.toFloat()/max).coerceIn(0.04f,0.8f)).clip(RoundedCornerShape(topStart=4.dp,topEnd=4.dp)).background(wd.accent))
+                Text("'"+(year%100).toString().padStart(2,'0'),style=WdType.caption2.copy(fontSize=10.sp),color=wd.textMuted,modifier=Modifier.padding(top=4.dp))
+            }
+        }
     }
 }

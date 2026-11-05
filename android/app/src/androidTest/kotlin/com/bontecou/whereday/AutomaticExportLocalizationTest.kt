@@ -67,18 +67,18 @@ class AutomaticExportLocalizationTest {
     @Test fun formatAndDataLabelsPreserveWireKeysAndHiddenOutingPreferences() {
         show();var format=ExportFormat.json
         for(next in ExportFormat.entries) {
-            if(next!=format) choose(format.name.replaceFirstChar {it.uppercase()},next.name.replaceFirstChar {it.uppercase()})
+            if(next!=format) click(recipeFormatName(next))
             format=next;compose.runOnIdle {assertEquals(next,ui.value.state.settings.format)}
         }
-        choose("Puntos","Salidas");compose.onNodeWithText("Las salidas se seleccionan por su hora de inicio y se incluyen sus rutas completas. Las salidas inferidas siguen los Ajustes; un reintento pendiente conserva las opciones de inferencia capturadas.").assertExists()
+        click("Salidas");compose.onNodeWithText("Las salidas se seleccionan por su hora de inicio y se incluyen sus rutas completas. Las salidas inferidas siguen los Ajustes; un reintento pendiente conserva las opciones de inferencia capturadas.").assertExists()
         compose.runOnIdle {assertTrue(ui.value.state.settings.outings);assertEquals(DataKind.points,ui.value.state.settings.kind)}
-        choose("Salidas","Visitas");compose.runOnIdle {assertFalse(ui.value.state.settings.outings);assertEquals(DataKind.visits,ui.value.state.settings.kind)}
-        choose("Visitas","Todo");compose.runOnIdle {assertEquals(DataKind.all,ui.value.state.settings.kind);assertEquals(ExportFormat.overland,ui.value.state.settings.format)}
+        click("Visitas");compose.runOnIdle {assertFalse(ui.value.state.settings.outings);assertEquals(DataKind.visits,ui.value.state.settings.kind)}
+        click("Todo");compose.runOnIdle {assertEquals(DataKind.all,ui.value.state.settings.kind);assertEquals(ExportFormat.overland,ui.value.state.settings.format)}
         assertTrue(calls.isEmpty())
     }
     @Test fun fileModesAndContainerExplanationDoNotChangeTheScheduleOrStoredMode() {
         show();choose("Una vez al día","Cada 9 horas");choose("Sobrescribir","Añadir")
-        choose("Json","Gpx");compose.onNodeWithText("GPX y KML siempre sobrescriben el día completo hasta el momento.").assertExists()
+        click("GPX");compose.onNodeWithText("GPX y KML siempre sobrescriben el día completo hasta el momento.").assertExists()
         compose.runOnIdle {assertEquals(ScheduledFileMode.append,ui.value.state.settings.fileMode);assertEquals(9,ui.value.state.settings.schedule.intervalHours)}
         choose("Cada 9 horas","Una vez al día");compose.onNodeWithText("Actualizar el archivo del día").assertDoesNotExist()
         compose.runOnIdle {assertEquals(ScheduledFileMode.append,ui.value.state.settings.fileMode)}

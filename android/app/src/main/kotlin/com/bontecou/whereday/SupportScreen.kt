@@ -1,5 +1,14 @@
 package com.bontecou.whereday
 
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
@@ -81,12 +90,12 @@ internal object SupportIntents {
     val card=Modifier.padding(horizontal=16.dp)
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("support-screen"),contentPadding=PaddingValues(bottom=32.dp)) {
         item {SettingsBackHeader(stringResource(R.string.support_title),stringResource(R.string.support_back),dismiss)}
-        item {WdCard(card) {WdRow(divider=false) {
-            Icon(Icons.Outlined.Info,null,Modifier.size(20.dp),tint=wd.textMuted)
-            Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
-                Text(stringResource(R.string.support_version,info.version),style=WdType.monoBody,color=wd.textPrimary)
-                Text(stringResource(R.string.support_platform,info.api),style=WdType.caption,color=wd.textMuted)
-            }
+        // Support board: the app's dial mark above the version and platform, centred.
+        item {WdCard(card) {Column(Modifier.fillMaxWidth().padding(vertical=20.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(6.dp)) {
+            val inks=wd.placeInks
+            WdDayDial(listOf(WdDialSegment(0f,0.34f,inks[0]),WdDialSegment(0.36f,0.4f,inks[1]),WdDialSegment(0.41f,0.52f,inks[2]),WdDialSegment(0.53f,0.57f,inks[3])),size=72.dp)
+            Text(stringResource(R.string.support_version,info.version),style=WdType.title3.copy(fontWeight=FontWeight.Normal),color=wd.textPrimary)
+            Text(stringResource(R.string.support_platform,info.api).uppercase(),style=WdType.caption2.copy(letterSpacing=0.1.em),color=wd.textMuted)
         }}}
         item {Spacer(Modifier.height(16.dp))}
         item {WdCard(card) {
@@ -120,6 +129,8 @@ internal object SupportIntents {
     BackHandler(onBack=dismiss)
     var clearing by remember {mutableStateOf(false)}
     var copied by remember {mutableStateOf(false)}
+    var filter by rememberSaveable {mutableStateOf(LogFilter.all)}
+    val logClock=remember {java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss").withZone(java.time.ZoneId.systemDefault())}
     val card=Modifier.padding(horizontal=16.dp)
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("activity-logs-screen"),contentPadding=PaddingValues(bottom=32.dp)) {
         item {SettingsBackHeader(stringResource(R.string.support_logs_title),stringResource(R.string.support_back),dismiss)}
@@ -129,13 +140,29 @@ internal object SupportIntents {
             WdButton(stringResource(R.string.support_clear_logs),{clearing=true},Modifier.weight(1f),emphasis=WdEmphasis.destructive,enabled=entries.isNotEmpty(),icon=Icons.Outlined.DeleteOutline)
         }}
         if(copied) item {SettingsNotice(card.padding(top=12.dp),icon=Icons.Outlined.CheckCircle) {Text(stringResource(R.string.support_logs_copied))}}
+        // Logs board: filter chips (All, Recording, Automation, Errors · n) over a list of time, level dot, tag and message.
+        item {
+            val errors=entries.count {it.event.level=="ERROR"}
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal=16.dp).padding(top=16.dp).testTag("activity-log-filters"),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                LogFilter.entries.forEach {option->
+                    WdChip(if(option==LogFilter.errors) stringResource(R.string.support_logs_filter_errors,errors) else stringResource(option.label),filter==option,{filter=option})
+                }
+            }
+        }
         item {WdSectionHeader(stringResource(R.string.support_logs_title))}
-        if(entries.isEmpty()) item {WdCard(card) {WdEmptyState(stringResource(R.string.support_logs_empty),null,icon=Icons.AutoMirrored.Outlined.ReceiptLong)}}
-        val ordered=entries.asReversed()
+        val ordered=entries.asReversed().filter {filter.matches(it.event)}
+        if(ordered.isEmpty()) item {WdCard(card) {WdEmptyState(stringResource(R.string.support_logs_empty),null,icon=Icons.AutoMirrored.Outlined.ReceiptLong)}}
         itemsIndexed(ordered,key={_,it->it.id}) {index,entry->
-            val error=entry.event.level=="ERROR"
+            val ink=when(entry.event.level) {"ERROR"->wd.inkRust;"WARN"->wd.warning;else->wd.accent}
             SelectionContainer(card.settingsSegment(index==0,index==ordered.lastIndex)) {
-                Text(entry.display,Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=10.dp),style=WdType.caption2,color=if(error) wd.inkRust else wd.textPrimary)
+                Row(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=10.dp).semantics(mergeDescendants=true) {contentDescription=entry.display},horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+                    Text(logClock.format(entry.time),style=WdType.caption2,color=wd.textMuted)
+                    Box(Modifier.padding(top=4.dp).size(8.dp).clip(CircleShape).background(ink))
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                        Text(stringResource(LogFilter.tagFor(entry.event)).uppercase(),style=WdType.caption2.copy(fontSize=10.sp,letterSpacing=0.1.em),color=ink)
+                        Text(entry.event.message,style=MaterialTheme.typography.bodySmall,color=if(entry.event.level=="ERROR") wd.inkRust else wd.textPrimary)
+                    }
+                }
             }
         }
     }
@@ -154,5 +181,23 @@ internal object SupportIntents {
                 Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
             }
         }}}
+    }
+}
+
+/** Activity-log filters; each event belongs to one area, and errors cut across areas. */
+internal enum class LogFilter(val label:Int) {
+    all(R.string.support_logs_filter_all),recording(R.string.support_logs_filter_recording),automation(R.string.support_logs_filter_automation),errors(R.string.support_logs_filter_all);
+    fun matches(event:com.bontecou.whereday.platform.AppEvent)=when(this) {
+        all->true
+        recording->event.name.startsWith("recording")
+        automation->event.name.startsWith("automation")
+        errors->event.level=="ERROR"
+    }
+    companion object {
+        fun tagFor(event:com.bontecou.whereday.platform.AppEvent)=when {
+            event.name.startsWith("recording")->R.string.support_logs_filter_recording
+            event.name.startsWith("automation")->R.string.support_logs_filter_automation
+            else->R.string.support_logs_tag_app
+        }
     }
 }

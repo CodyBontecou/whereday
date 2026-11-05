@@ -72,6 +72,9 @@ class HistoryImportWorkspace internal constructor(private val directory:File,val
     fun prepare(locale:Locale,zone:ZoneId,check:()->Unit):PreparedHistoryImport {
         val format=reader().use {HistoryImporter.detect(it,check)}
         var visits=0;var points=0;var repeated=0;var explicitIdentity=false;var from:Instant?=null;var until:Instant?=null
+        // Records per civil year in the import's zone, for the review's coverage chart.
+        val years=java.util.TreeMap<Int,Int>()
+        fun year(value:Instant)=runCatching {value.atZone(zone).year}.getOrNull()?.let {years.merge(it,1,Int::plus)}
         fun time(value:Instant?) {if(value!=null) {
             require(runCatching {value.toEpochMilli()}.isSuccess) {"This file contains a timestamp outside the supported history range."}
             from=from?.let {minOf(it,value)} ?: value;until=until?.let {maxOf(it,value)} ?: value
@@ -79,14 +82,14 @@ class HistoryImportWorkspace internal constructor(private val directory:File,val
         val scanned=HistoryImporter.scanSource({reader()},format,locale,zone,check,onVisit={visit->
             check();time(visit.arrivedAt);time(visit.departedAt)
             for(value in listOf(visit.confirmedAt,visit.updatedAt)) require(value==null || runCatching {value.toEpochMilli()}.isSuccess) {"This file contains a timestamp outside the supported history range."}
-            if(stage.add(ImportStageRow(ImportRecordKind.visit,visit.id,ImportStageCodec.gson.toJson(visit),explicitIdentity=explicitIdentity))) visits=Math.addExact(visits,1) else repeated=Math.addExact(repeated,1)
+            if(stage.add(ImportStageRow(ImportRecordKind.visit,visit.id,ImportStageCodec.gson.toJson(visit),explicitIdentity=explicitIdentity))) {visits=Math.addExact(visits,1);year(visit.arrivedAt)} else repeated=Math.addExact(repeated,1)
         },onPoint={point->
             check();time(point.time)
-            if(stage.add(ImportStageRow(ImportRecordKind.point,point.id,ImportStageCodec.gson.toJson(point),explicitIdentity=explicitIdentity))) points=Math.addExact(points,1) else repeated=Math.addExact(repeated,1)
+            if(stage.add(ImportStageRow(ImportRecordKind.point,point.id,ImportStageCodec.gson.toJson(point),explicitIdentity=explicitIdentity))) {points=Math.addExact(points,1);year(point.time)} else repeated=Math.addExact(repeated,1)
         },scratch={File.createTempFile("google-row-",".json",directory)},onSource={stage.source=it},onIdentity={explicitIdentity=it})
         check();stage.finishRecords()
         check(source.delete() || !source.exists()) {"Import staging cleanup failed"}
-        return PreparedHistoryImport(format,visits,points,repeated,scanned.rejected,scanned.errors,from,until,scanned.source,scanned.unsupported)
+        return PreparedHistoryImport(format,visits,points,repeated,scanned.rejected,scanned.errors,from,until,scanned.source,scanned.unsupported,years.toMap())
     }
     override fun close() {
         synchronized(this) {
@@ -98,7 +101,7 @@ class HistoryImportWorkspace internal constructor(private val directory:File,val
         }
     }
 }
-data class PreparedHistoryImport(val format:ExportFormat,val visits:Int,val points:Int,val repeated:Int,val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0)
+data class PreparedHistoryImport(val format:ExportFormat,val visits:Int,val points:Int,val repeated:Int,val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val years:Map<Int,Int> = emptyMap())
 
 internal inline fun HistoryImportStage.batches(check:()->Unit,consume:(List<ImportStageRow>)->Unit) {
     var after:Pair<ImportRecordKind,String>?=null

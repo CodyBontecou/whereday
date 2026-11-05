@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.heading
 
@@ -34,5 +36,22 @@ internal val LocalInlineVisitEditor=staticCompositionLocalOf {false}
                 Box(Modifier.weight(1f)) {confirmButton()}
             }
         }
-    } else WorkspaceAlertDialog(onDismissRequest=onDismissRequest,title=title,text={fields()},confirmButton=confirmButton,dismissButton=dismissButton)
+    } else WorkspaceDialog(fillRegion=true,onDismissRequest=onDismissRequest,properties=androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false)) {
+        // Visit and Log a stop boards: a full-screen form with a close/title bar and the actions pinned under the fields.
+        Surface(Modifier.fillMaxSize().testTag("visit-editor-sheet"),color=wd.surface,contentColor=wd.textPrimary) {
+            Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
+                Row(Modifier.fillMaxWidth().heightIn(min=64.dp).padding(horizontal=4.dp),verticalAlignment=Alignment.CenterVertically) {
+                    WdIconButton(androidx.compose.material.icons.Icons.Outlined.Close,stringResource(R.string.visit_cancel),onDismissRequest,Modifier.testTag("visit-editor-close"))
+                    Box(Modifier.weight(1f).padding(horizontal=4.dp).semantics(mergeDescendants=true) {heading()}) {
+                        CompositionLocalProvider(LocalContentColor provides wd.textPrimary) {ProvideTextStyle(MaterialTheme.typography.titleLarge.copy(fontFamily=androidx.compose.ui.text.font.FontFamily.Default,fontSize=22.sp)) {title()}}
+                    }
+                }
+                Box(Modifier.weight(1f).fillMaxWidth().padding(horizontal=20.dp)) {fields()}
+                Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=12.dp),horizontalArrangement=Arrangement.spacedBy(10.dp),verticalAlignment=Alignment.CenterVertically) {
+                    Box(Modifier.weight(1f)) {dismissButton()}
+                    Box(Modifier.weight(1f)) {confirmButton()}
+                }
+            }
+        }
+    }
 }
