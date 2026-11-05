@@ -3,7 +3,7 @@ steps:
   - launch: com.bontecou.whereday.mapqa
   - await: {visible: {text: Your location journal}}
   - await: {idle: true}
-  - tap: {text: Export}
+  - tap: { id: navigation-archive }
   - await: {visible: {text: 'Your history, in your format'}}
   - await: {idle: true}
   - tap: {text: {matches: '^Json$'}}
@@ -41,6 +41,6 @@ steps:
   - tap: {text: {matches: '^Json$'}}
   - await: {visible: {text: Json}}
   - await: {idle: true}
-  - tap: {text: Map}
+  - tap: { id: navigation-map }
   - await: {visible: {text: Your location journal}}
   - await: {idle: true}

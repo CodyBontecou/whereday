@@ -1,7 +1,7 @@
 steps:
   - echo: Requires onboarded idle app, empty saved-place library and the synthetic .argent/fixtures/saved-place-import.csv copied to Downloads as whereday-place-qa-8d5c31a7.csv and indexed for the native picker. Imports only the QA place, checks duplicate policies/search/radius persistence and removes it. Never clear the journal to satisfy this prerequisite.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }
@@ -81,7 +81,7 @@ steps:
   - await: { visible: { text: 'Match radius: 500 m' } }
   - await: { idle: true }
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }

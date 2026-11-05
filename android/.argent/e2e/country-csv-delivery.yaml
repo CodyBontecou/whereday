@@ -1,7 +1,7 @@
 steps:
   - echo: Requires completed onboarding, idle recording, no country days or manual stays, and unconfigured lifetime access. Adds and removes one default one-day manual stay; does not analyze or export personal history.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }

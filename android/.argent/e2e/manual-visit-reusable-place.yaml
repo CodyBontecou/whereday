@@ -6,11 +6,13 @@ steps:
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: Add past visit
@@ -94,11 +96,13 @@ steps:
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: Codex reuse QA 20261027

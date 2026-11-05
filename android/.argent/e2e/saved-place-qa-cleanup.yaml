@@ -1,7 +1,7 @@
 steps:
   - echo: Removes only the known temporary Codex QA Place 20261027 after the interrupted import replay.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }

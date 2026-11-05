@@ -1,7 +1,7 @@
 steps:
   - echo: Requires completed onboarding, idle recording, disabled default 21:00 once-daily automatic exports and unconfigured purchase verification. Temporarily selects three hours, verifies persistence, restores once daily and checks denied enable. No destination writes.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }
@@ -19,7 +19,7 @@ steps:
   - await: { visible: { text: Update day file } }
   - await: { idle: true }
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }

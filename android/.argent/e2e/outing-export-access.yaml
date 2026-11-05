@@ -1,9 +1,10 @@
 steps:
   - echo: Requires onboarded idle app, JSON export format, unconfigured lifetime access, and one stopped unnamed outing yesterday. Changes format to Markdown and restores JSON; preserves all history and returns to today.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
-  - tap: { text: Timeline }
+  - tap: { id: map-day-peek }
+  - tap: { id: map-open-timeline }
   - await: { visible: { text: Previous } }
   - tap: { text: Previous }
   - await: { visible: { text: View outing } }

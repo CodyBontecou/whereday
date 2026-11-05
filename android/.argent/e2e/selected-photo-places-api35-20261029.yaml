@@ -11,7 +11,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - await:
     visible:
       text: Import history file
@@ -164,7 +164,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Start recording
@@ -288,7 +288,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Fit route
+    id: map-fit
 - tap:
     text: Photos on map
 - await:
@@ -304,7 +304,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: Add past visit
@@ -435,7 +437,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: 0 GPS markers. 0 visit markers.

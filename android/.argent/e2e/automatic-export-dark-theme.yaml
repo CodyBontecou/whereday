@@ -1,7 +1,7 @@
 steps:
   - echo: Requires completed onboarding, idle recording and System app theme. Inspects automatic exports in Dark theme and restores System. Does not enable a schedule or write a destination.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }

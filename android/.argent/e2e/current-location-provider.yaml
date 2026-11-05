@@ -50,7 +50,7 @@ steps:
     text: Discard changes
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - await:

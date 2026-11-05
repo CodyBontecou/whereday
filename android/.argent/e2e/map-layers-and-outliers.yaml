@@ -4,15 +4,17 @@ steps:
     on 2026-10-27 before midnight. Stage map-layers.csv as Downloads/whereday-map-layers-qa-20261027.csv.
     Imports 12 public-coordinate good fixes and two outliers; checks layer visibility,
     exact filtered/raw endpoints and persisted outlier choice; restores outliers off
-    and deletes only this synthetic outing. Never clear user history.
+    and deletes only this synthetic outing. Never clear user history. In the map-first build
+    Archive holds import, the Layers sheet holds the switches (GPS points start off),
+    and the timeline opens over the map from the day sheet.
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - await:
     visible:
       text: Import history file
@@ -34,34 +36,31 @@ steps:
       text: Imported 0 visits and 14 points. 0 rows could not be read.
     direction: down
 - tap:
-    text: Map
+    id: navigation-map
+- tap:
+    id: map-range-today
 - await:
     visible:
-      text: Journal map. Travel path shown. 12 GPS markers. 0 visit markers. Start
+      text: Journal map. Travel path shown. 0 GPS markers. 0 visit markers. Start
         and end flags shown. Scroll by dragging two fingers. Zoom by pinching two
         fingers.
 - await:
     idle: true
 - tap:
-    text: Map layers
+    id: map-layers
 - await:
     visible:
-      text: Route start · Oct 27, 10:00
+      id: map-layers-content
 - await:
     idle: true
-- await:
-    visible:
-      text: Route end · Oct 27, 10:11
 - tap:
-    text: Travel path
+    id: map-layer-path
 - tap:
-    text: GPS points
+    id: map-layer-visits
 - tap:
-    text: Visit markers
+    id: map-layer-endpoints
 - tap:
-    text: Start and end markers
-- tap:
-    text: Done map layers
+    id: map-layers-done
 - await:
     visible:
       text: Journal map. Travel path hidden. 0 GPS markers. 0 visit markers. Start
@@ -70,27 +69,24 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map layers
-- tap:
-    text: Travel path
-- tap:
-    text: GPS points
-- tap:
-    text: Visit markers
-- tap:
-    text: Start and end markers
-- tap:
-    text: Show GPS outliers
+    id: map-layers
 - await:
     visible:
-      text: Route start · Oct 27, 09:59
+      id: map-layers-content
 - await:
     idle: true
-- await:
-    visible:
-      text: Route end · Oct 27, 10:12
 - tap:
-    text: Done map layers
+    id: map-layer-path
+- tap:
+    id: map-layer-points
+- tap:
+    id: map-layer-visits
+- tap:
+    id: map-layer-endpoints
+- tap:
+    id: map-layer-outliers
+- tap:
+    id: map-layers-done
 - launch: com.bontecou.whereday
 - await:
     visible:
@@ -100,26 +96,32 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map layers
+    id: map-layers
 - await:
     visible:
-      text: Route start · Oct 27, 09:59
+      id: map-layers-content
 - await:
     idle: true
 - tap:
-    text: Show GPS outliers
+    id: map-layer-outliers
+- tap:
+    id: map-layer-points
+- tap:
+    id: map-layers-done
 - await:
     visible:
-      text: Route start · Oct 27, 10:00
+      text: Journal map. Travel path shown. 0 GPS markers. 0 visit markers. Start
+        and end flags shown. Scroll by dragging two fingers. Zoom by pinching two
+        fingers.
 - await:
     idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
-      text: Route end · Oct 27, 10:11
-- tap:
-    text: Done map layers
-- tap:
-    text: Timeline
+      id: timeline-content
 - await:
     visible:
       text: 1 outing · 0 visits · 0.15 km

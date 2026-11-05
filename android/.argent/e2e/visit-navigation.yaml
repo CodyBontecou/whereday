@@ -8,11 +8,11 @@ steps:
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - await:
     visible:
       text: Import history file
@@ -24,7 +24,7 @@ steps:
     text:
       matches: ^whereday-visit-navigation-qa-20261027\.json
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Visits on map
@@ -65,7 +65,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: Confirmed

@@ -1,8 +1,8 @@
 steps:
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
-  - tap: { text: Export }
+  - tap: { id: navigation-archive }
   - await: { visible: { text: Lifetime export access } }
   - await: { idle: true }
   - tap: { text: Restore purchases }
@@ -13,7 +13,7 @@ steps:
   - scroll-to: { target: { text: '"exportDate"' }, direction: down }
   - await: { visible: { text: '"exportDate"' } }
   - await: { idle: true }
-  - tap: { text: Map }
+  - tap: { id: navigation-map }
   - await: { visible: { text: Start recording } }
   - tap: { text: Settings }
   - await: { visible: { text: Distance filter } }

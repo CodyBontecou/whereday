@@ -1,9 +1,9 @@
 steps:
   - echo: Requires onboarded idle app, unconfigured lifetime access, JSON/All data, no splitting or extra formats, and one historical outing. Previews outing summaries, checks delivery gates, changes split/extra CSV across restart, then restores every choice and returns to Map.
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
-  - tap: { text: Export }
+  - tap: { id: navigation-archive }
   - await: { visible: { text: "Your history, in your format" } }
   - await: { idle: true }
   - tap: { text: { matches: '^All$' } }
@@ -27,9 +27,9 @@ steps:
   - tap: { text: { matches: '^csv$' } }
   - await: { idle: true }
   - launch: com.bontecou.whereday
-  - await: { visible: { text: Fit route } }
+  - await: { visible: { id: map-header } }
   - await: { idle: true }
-  - tap: { text: Export }
+  - tap: { id: navigation-archive }
   - await: { visible: { text: { matches: '^Outings$' } } }
   - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
@@ -48,6 +48,6 @@ steps:
   - tap: { text: { matches: '^All$' } }
   - await: { visible: { text: { matches: '^All$' } } }
   - await: { idle: true }
-  - tap: { text: Map }
+  - tap: { id: navigation-map }
   - await: { visible: { text: Your location journal } }
   - await: { idle: true }

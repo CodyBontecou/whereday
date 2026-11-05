@@ -8,7 +8,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - await:
     visible:
       id: export-screen
@@ -246,7 +246,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - tool: button
   args:
     button: home

@@ -3,7 +3,8 @@ steps:
   - launch: com.bontecou.whereday
   - await: { visible: { text: Your location journal } }
   - await: { idle: true }
-  - tap: { text: Timeline }
+  - tap: { id: map-day-peek }
+  - tap: { id: map-open-timeline }
   - await: { visible: { text: View outing } }
   - await: { idle: true }
   - tap: { text: View outing }

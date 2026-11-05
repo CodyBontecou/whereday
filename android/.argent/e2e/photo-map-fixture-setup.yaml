@@ -8,7 +8,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - await:
     visible:
       text: Import history file
@@ -90,7 +90,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Map layers
@@ -165,7 +165,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: "Oct 27, 10:00 \u2192 Oct 27, 10:11"

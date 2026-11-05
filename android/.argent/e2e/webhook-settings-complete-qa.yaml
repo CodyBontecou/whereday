@@ -43,7 +43,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Start recording
@@ -83,7 +83,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Start recording

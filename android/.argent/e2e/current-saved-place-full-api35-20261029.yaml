@@ -91,7 +91,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Save current place
@@ -166,7 +166,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: QA Current Library 20261029
@@ -278,7 +280,7 @@ steps:
 - tap:
     text: Allow network geocoding
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Start recording

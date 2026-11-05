@@ -4,7 +4,7 @@ steps:
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - tap:

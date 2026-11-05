@@ -7,11 +7,11 @@ steps:
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Fit route
+      id: map-header
 - await:
     idle: true
 - tap:
-    text: Export
+    id: navigation-archive
 - await:
     visible:
       text: Import history file
@@ -37,7 +37,7 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Map
+    id: navigation-map
 - await:
     visible:
       text: Replay route
@@ -112,7 +112,9 @@ steps:
 - await:
     idle: true
 - tap:
-    text: Timeline
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
 - await:
     visible:
       text: Add past visit
