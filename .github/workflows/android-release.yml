@@ -47,8 +47,8 @@ jobs:
           if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?', name):
               raise SystemExit('Invalid Android version name')
           PY
-      - name: Set up Android SDK command-line tools
-        uses: android-actions/setup-android@v3
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0' "ndk;$(python3 android/scripts/verify_native_provenance.py --print-ndk-version)"
       - name: Verify artifact guards and resources
