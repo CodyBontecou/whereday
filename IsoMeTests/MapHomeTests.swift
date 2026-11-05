@@ -323,12 +323,27 @@ final class MapDatePresetTests: XCTestCase {
         XCTAssertEqual(range.lowerBound, calendar.date(from: DateComponents(year: 2026, month: 2, day: 24))!)
     }
 
+    func testThirtyDaysIsTodayAndTheTwentyNineDaysBefore() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 11, day: 5, hour: 9, minute: 40))!
+        let range = MapDatePreset.thirtyDays.range(referenceDate: now)
+
+        XCTAssertEqual(range.upperBound, now)
+        XCTAssertEqual(range.lowerBound, calendar.date(from: DateComponents(year: 2026, month: 10, day: 7))!)
+        XCTAssertEqual(dayCount(range), 30)
+        XCTAssertEqual(MultiDayAggregator.dayList(range: range, recordedDays: [], calendar: calendar).count, 30)
+    }
+
+    func testThirtyDaysAcrossAMonthBoundaryJustAfterMidnight() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 3, day: 1, hour: 0, minute: 1))!
+        let range = MapDatePreset.thirtyDays.range(referenceDate: now)
+        XCTAssertEqual(dayCount(range), 30)
+        XCTAssertEqual(range.lowerBound, calendar.date(from: DateComponents(year: 2026, month: 1, day: 31))!)
+    }
+
     func testOtherPresetsKeepTheirMeaning() {
         let now = calendar.date(from: DateComponents(year: 2026, month: 11, day: 1, hour: 14, minute: 20))!
         XCTAssertEqual(MapDatePreset.today.range(referenceDate: now).lowerBound, calendar.startOfDay(for: now))
         XCTAssertEqual(dayCount(MapDatePreset.yesterday.range(referenceDate: now)), 1)
-        XCTAssertEqual(MapDatePreset.thirtyDays.range(referenceDate: now).lowerBound,
-                       calendar.date(byAdding: .day, value: -30, to: now))
         XCTAssertEqual(MapDatePreset.all.range(referenceDate: now).lowerBound, .distantPast)
     }
 }

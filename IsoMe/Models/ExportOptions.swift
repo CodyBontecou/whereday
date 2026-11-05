@@ -110,6 +110,9 @@ struct ExportOptions: Codable, Equatable {
             let end = Date(timeIntervalSinceReferenceDate: startOfToday.timeIntervalSinceReferenceDate.nextDown)
             return start...end
         case .last7Days:
+            // Midnight seven days ago to now: eight calendar days, unlike the map's 7D chip (today plus six).
+            // The weekly scheduled export relies on this overlap; a seven-day window would drop a day
+            // whenever a run fires later in the day than the previous one.
             let start = cal.date(byAdding: .day, value: -7, to: cal.startOfDay(for: now)) ?? now
             return start...now
         case .last30Days:

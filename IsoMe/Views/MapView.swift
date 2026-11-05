@@ -4644,7 +4644,9 @@ enum MapDatePreset: CaseIterable, Hashable {
                 ?? calendar.startOfDay(for: referenceDate)
             return startOfMonth...referenceDate
         case .thirtyDays:
-            return calendar.date(byAdding: .day, value: -30, to: referenceDate)!...referenceDate
+            // Today and the 29 days before it: thirty calendar days, like 7D.
+            let startOfToday = calendar.startOfDay(for: referenceDate)
+            return (calendar.date(byAdding: .day, value: -29, to: startOfToday) ?? startOfToday)...referenceDate
         case .all:
             return Date.distantPast...referenceDate
         }
