@@ -42,7 +42,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@左"
+            "value": "残り%@"
           }
         },
         "pt-BR": {
@@ -742,7 +742,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "未知"
+            "value": "不明"
           }
         },
         "pt-BR": {

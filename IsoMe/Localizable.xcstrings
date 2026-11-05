@@ -958,7 +958,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ + %2$lld詳細"
+            "value": "%1$@ + 他%2$lld件"
           }
         },
         "pl": {
@@ -4040,7 +4040,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日は%lldが訪問しました。"
+            "value": "今日の訪問は%lld件。"
           }
         },
         "pl": {
@@ -5278,7 +5278,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1点"
+            "value": "1ポイント"
           }
         },
         "pl": {
@@ -8568,7 +8568,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "新たなポリッシュコート"
+            "value": "細部を磨き上げました"
           }
         },
         "pl": {
@@ -8778,7 +8778,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "について"
+            "value": "情報"
           }
         },
         "pl": {
@@ -12630,7 +12630,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ずっと"
+            "value": "全期間"
           }
         },
         "pl": {
@@ -13540,7 +13540,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "アプリ: Whereday %1$@プラットフォーム: %2$@デバイス: %3$@"
+            "value": "アプリ: Whereday %1$@\nプラットフォーム: %2$@\nデバイス: %3$@"
           }
         },
         "pl": {
@@ -13610,7 +13610,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apple Maps"
+            "value": "Apple マップ"
           }
         },
         "pl": {
@@ -13681,7 +13681,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "現在、 Apple Maps検索は利用できません。もう一度試してください。"
+            "value": "現在、Apple マップの検索は利用できません。もう一度試してください。"
           }
         },
         "pl": {
@@ -15571,7 +15571,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "建物のプレビュー…"
+            "value": "プレビューを作成中…"
           }
         },
         "pl": {
@@ -15851,7 +15851,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "変化"
+            "value": "変更"
           }
         },
         "pl": {
@@ -17952,7 +17952,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "近くのApple Maps場所を確認する"
+            "value": "近くのApple マップの場所を確認中"
           }
         },
         "pl": {
@@ -19215,7 +19215,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "よりクリーンな輸出組織"
+            "value": "エクスポートをすっきり整理"
           }
         },
         "pl": {
@@ -19495,7 +19495,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クリアフィルター"
+            "value": "フィルターをクリア"
           }
         },
         "pl": {
@@ -19775,7 +19775,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クローズルートリプレイ"
+            "value": "ルートリプレイを閉じる"
           }
         },
         "pl": {
@@ -20195,7 +20195,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "写真を接続すると、地図上や外出先の写真を表示できます。 Wheredayローカルの写真メタデータのみを保存します。"
+            "value": "写真を接続すると、地図上や外出先の写真を表示できます。Wheredayはローカルの写真メタデータのみを保存します。"
           }
         },
         "pl": {
@@ -20475,7 +20475,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "続く"
+            "value": "続ける"
           }
         },
         "pl": {
@@ -20755,7 +20755,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "中心となる場所"
+            "value": "Core Location"
           }
         },
         "pl": {
@@ -20825,7 +20825,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@に正しくアクセスしてください"
+            "value": "訪問を%@に修正"
           }
         },
         "pl": {
@@ -22015,7 +22015,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "現在録音中"
+            "value": "現在記録中"
           }
         },
         "pl": {
@@ -22575,7 +22575,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "データがデバイスから流出する"
+            "value": "データがデバイスの外に送信されます"
           }
         },
         "pl": {
@@ -23205,7 +23205,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "間隔"
+            "value": "継続時間"
           }
         },
         "pl": {
@@ -23345,7 +23345,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "毎日のエクスポートに対応"
+            "value": "毎日のエクスポートの準備ができました"
           }
         },
         "pl": {
@@ -25656,7 +25656,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "却下する"
+            "value": "閉じる"
           }
         },
         "pl": {
@@ -25796,7 +25796,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "警告を無視する"
+            "value": "警告を閉じる"
           }
         },
         "pl": {
@@ -26076,7 +26076,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "終わり"
+            "value": "完了"
           }
         },
         "pl": {
@@ -26287,7 +26287,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "マップセンターにピンをドロップ"
+            "value": "マップの中心にピンを置く"
           }
         },
         "pl": {
@@ -26847,7 +26847,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "間隔"
+            "value": "継続時間"
           }
         },
         "pl": {
@@ -26917,7 +26917,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "間隔%@"
+            "value": "継続時間%@"
           }
         },
         "pl": {
@@ -27197,7 +27197,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "終わり"
+            "value": "終了"
           }
         },
         "pl": {
@@ -27477,7 +27477,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gps の不具合を除外する"
+            "value": "GPSの不具合を除外する"
           }
         },
         "pl": {
@@ -27547,7 +27547,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "輸出"
+            "value": "エクスポート"
           }
         },
         "pl": {
@@ -27617,7 +27617,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "輸出%@"
+            "value": "%@をエクスポート"
           }
         },
         "pl": {
@@ -28411,7 +28411,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "新しいGPS修正はそれぞれすぐに POST されます。"
+            "value": "新しいGPS測位データはそれぞれすぐにPOSTされます。"
           }
         },
         "pl": {
@@ -29041,7 +29041,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "有効。写真カードは、 Wheredayマップ上に配置できるときに自動的に表示されます。"
+            "value": "有効。写真カードは、Wheredayがマップ上に配置できるときに自動的に表示されます。"
           }
         },
         "pl": {
@@ -29111,7 +29111,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webhook 配信を有効にすると、位置データが設定した外部サーバーに送信されます。 Whereday 、このサーバーまたは送信されたデータにアクセスできません。"
+            "value": "Webhook 配信を有効にすると、位置データが設定した外部サーバーに送信されます。Wheredayは、このサーバーまたは送信されたデータにアクセスできません。"
           }
         },
         "pl": {
@@ -30303,7 +30303,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "輸出"
+            "value": "エクスポート"
           }
         },
         "pl": {
@@ -30723,7 +30723,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今すぐエクスポート"
+            "value": "今日の分をエクスポート"
           }
         },
         "pl": {
@@ -30933,7 +30933,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "昨日のエクスポート"
+            "value": "昨日の分をエクスポート"
           }
         },
         "pl": {
@@ -31563,7 +31563,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "エクスポート設定スティック"
+            "value": "エクスポート設定を記憶"
           }
         },
         "pl": {
@@ -34293,7 +34293,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ファイル名にはアウティング名を使用できます"
+            "value": "ファイル名に外出名を使用できます"
           }
         },
         "pl": {
@@ -34573,7 +34573,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "フィルター事業"
+            "value": "お店を絞り込む"
           }
         },
         "pl": {
@@ -35695,7 +35695,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "アクティブなセッションに適合"
+            "value": "記録中のセッション全体を表示"
           }
         },
         "pl": {
@@ -35765,7 +35765,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "すべての訪問に適合"
+            "value": "すべての訪問を表示"
           }
         },
         "pl": {
@@ -35835,7 +35835,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "フィットマップ"
+            "value": "全体を表示"
           }
         },
         "pl": {
@@ -35905,7 +35905,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "柔軟な輸出"
+            "value": "柔軟なエクスポート"
           }
         },
         "pl": {
@@ -37235,7 +37235,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "iPhone 「設定」→ Whereday 」→「位置情報」で位置情報へのアクセスを許可します。"
+            "value": "iPhoneの「設定」→「Whereday」→「位置情報」で位置情報へのアクセスを許可してください。"
           }
         },
         "pl": {
@@ -37515,7 +37515,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "隠れた"
+            "value": "非表示"
           }
         },
         "pl": {
@@ -37935,7 +37935,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday によると、今日あなたはどれくらいの距離を移動しましたか。"
+            "value": "Wheredayによる今日の移動距離。"
           }
         },
         "pl": {
@@ -38775,7 +38775,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "輸入"
+            "value": "インポート"
           }
         },
         "pl": {
@@ -39545,7 +39545,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "輸入品"
+            "value": "インポート済み"
           }
         },
         "pl": {
@@ -39967,7 +39967,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "輸入品1点。"
+            "value": "1ポイントをインポートしました。"
           }
         },
         "pl": {
@@ -41811,7 +41811,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "外出の概要をJSONおよびCSVエクスポートします。 Markdown 、 YAML前付に加え、訪問とルート ポイントを追加します。 GPX 、 KML 、 GeoJSON 、 OwnTracks 、およびOverland 、外出ルート ポイントをエクスポートします。"
+            "value": "JSONとCSVは外出の概要をエクスポートします。MarkdownはYAMLフロントマターに加えて訪問とルートポイントを含めます。GPX、KML、GeoJSON、OwnTracks、Overlandは外出のルートポイントをエクスポートします。"
           }
         },
         "pl": {
@@ -41881,7 +41881,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSONとCSV各外出を要約し、 GPX 、 KML 、 GeoJSON 、 OwnTracks 、およびOverlandはルート修正をエクスポートします。"
+            "value": "JSONとCSVは各外出を要約し、GPX、KML、GeoJSON、OwnTracks、Overlandはルートの測位データをエクスポートします。"
           }
         },
         "pl": {
@@ -43001,7 +43001,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ラストラン"
+            "value": "最終実行"
           }
         },
         "pl": {
@@ -44471,7 +44471,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday使用すると、 iPhone写真が地図や外出先上に自動的に表示されます。写真は写真ライブラリに残ります。"
+            "value": "Wheredayで、iPhoneの写真を地図や外出に自動的に表示します。写真は写真ライブラリに残ります。"
           }
         },
         "pl": {
@@ -46222,7 +46222,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "最長期間が最初"
+            "value": "時間が長い順"
           }
         },
         "pl": {
@@ -46572,7 +46572,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "マニュアル"
+            "value": "手動"
           }
         },
         "pl": {
@@ -46922,7 +46922,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "パスと道路が一致しています…"
+            "value": "経路を道路に合わせています…"
           }
         },
         "pl": {
@@ -46992,7 +46992,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "メトリック"
+            "value": "メートル法"
           }
         },
         "pl": {
@@ -47692,7 +47692,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "マニュアル"
+            "value": "手動"
           }
         },
         "pl": {
@@ -47902,7 +47902,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "マップポリッシュ"
+            "value": "マップの改善"
           }
         },
         "pl": {
@@ -48112,7 +48112,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Markdown 、この外出をYAML前付、訪問、およびルート ポイントを含むページとしてエクスポートします。"
+            "value": "Markdownは、この外出をYAMLフロントマター、訪問、ルートポイントを含むページとしてエクスポートします。"
           }
         },
         "pl": {
@@ -48182,7 +48182,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "MarkdownエクスポートにはYAML前付、メモ、訪問、およびルート ポイントが含まれるため、ジャーナルまたは PKM システムにきれいにドロップされます。"
+            "value": "MarkdownでエクスポートしたファイルにはYAMLフロントマター、メモ、訪問、ルートポイントが含まれるため、ジャーナルやPKMシステムにそのまま取り込めます。"
           }
         },
         "pl": {
@@ -48602,7 +48602,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "半径を一致させる"
+            "value": "照合半径"
           }
         },
         "pl": {
@@ -49652,7 +49652,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "最も多くのポイントが最初に"
+            "value": "ポイントが多い順"
           }
         },
         "pl": {
@@ -50072,7 +50072,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "一度もない"
+            "value": "なし"
           }
         },
         "pl": {
@@ -50422,7 +50422,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "注意事項"
+            "value": "メモ"
           }
         },
         "pl": {
@@ -50772,7 +50772,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "名前の訪問が早くなる"
+            "value": "訪問にすばやく名前を付ける"
           }
         },
         "pl": {
@@ -50912,7 +50912,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "近隣の企業"
+            "value": "近くのお店"
           }
         },
         "pl": {
@@ -51122,7 +51122,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "一度もない"
+            "value": "なし"
           }
         },
         "pl": {
@@ -51822,7 +51822,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "次"
+            "value": "次へ"
           }
         },
         "pl": {
@@ -54482,7 +54482,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "注意事項"
+            "value": "メモ"
           }
         },
         "pl": {
@@ -56022,7 +56022,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "毎日この時間帯に取得されたデータのみを含めます。 end が start より前にある場合は、午前 0 時をラップします。"
+            "value": "毎日この時間帯に取得されたデータのみを含めます。終了が開始より前の場合は、午前0時をまたぎます。"
           }
         },
         "pl": {
@@ -56792,7 +56792,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "オープンルートリプレイ"
+            "value": "ルートリプレイを開く"
           }
         },
         "pl": {
@@ -57212,7 +57212,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "動きの詳細を開きます。"
+            "value": "移動の詳細を開きます。"
           }
         },
         "pl": {
@@ -59592,7 +59592,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "お出かけ遊び"
+            "value": "外出を再生"
           }
         },
         "pl": {
@@ -62067,7 +62067,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "写真はタイムスタンプによって照合されます。 Whereday 、利用可能な場合は写真GPSを使用し、そうでない場合は最寄りのルート ポイントまたは訪問先を使用します。写真ファイルは「写真」に残ります。"
+            "value": "写真はタイムスタンプによって照合されます。Wheredayは、利用可能な場合は写真GPSを使用し、そうでない場合は最寄りのルート ポイントまたは訪問先を使用します。写真ファイルは「写真」に残ります。"
           }
         },
         "pl": {
@@ -62768,7 +62768,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "フィルターが開いている間、配置プロンプトは同じエリアの周囲で閉じられたままになり、追加/配置コントロールは邪魔になりません。"
+            "value": "同じエリアでは閉じた場所の提案が再表示されなくなり、フィルターを開いている間は場所の追加コントロールが邪魔にならないようになりました。"
           }
         },
         "pl": {
@@ -62978,7 +62978,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "% %1$lld %2$lld 。時刻%3$@ 。 %4$@ %5$@が経過しました。 %6$@ %7$@ 。"
+            "value": "ポイント %1$lld / %2$lld。時刻 %3$@。経過 %4$@ / %5$@。距離 %6$@ / %7$@。"
           }
         },
         "pl": {
@@ -63538,7 +63538,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "プレビューエクスポート"
+            "value": "エクスポートをプレビュー"
           }
         },
         "pl": {
@@ -63958,7 +63958,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "以前に検出されたクラッシュ"
+            "value": "前回のクラッシュを検出しました"
           }
         },
         "pl": {
@@ -65498,7 +65498,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "リプレイオンボーディング"
+            "value": "オンボーディングをもう一度見る"
           }
         },
         "pl": {
@@ -66058,7 +66058,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "準備ができて"
+            "value": "準備完了"
           }
         },
         "pl": {
@@ -67039,7 +67039,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "必要に応じていつでも、近くのビジネス候補から停留所の名前を変更し、リストをフィルタリングして、検出された場所にリセットします。"
+            "value": "近くのお店の候補から立ち寄り先の名前を変更し、リストを絞り込み、必要なときはいつでも検出された場所に戻せます。"
           }
         },
         "pl": {
@@ -67249,7 +67249,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "リクエストの場所"
+            "value": "現在地をリクエスト"
           }
         },
         "pl": {
@@ -69699,7 +69699,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "共有%@"
+            "value": "%@を共有"
           }
         },
         "pl": {
@@ -70049,7 +70049,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "後で分割"
+            "value": "分割する間隔"
           }
         },
         "pl": {
@@ -70119,7 +70119,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "待機する"
+            "value": "待機中"
           }
         },
         "pl": {
@@ -70189,7 +70189,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "始める"
+            "value": "開始"
           }
         },
         "pl": {
@@ -70749,7 +70749,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "写真を同期する"
+            "value": "写真を同期中"
           }
         },
         "pl": {
@@ -71659,7 +71659,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "保存された%lldファイル"
+            "value": "%lldファイルを保存しました"
           }
         },
         "pl": {
@@ -72547,7 +72547,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "現在のGPS位置情報を使用せずに、 Apple Mapsで場所や住所を検索し、地図上で確認し、訪問を保存します。"
+            "value": "現在のGPS位置情報を使用せずに、Apple マップで場所や住所を検索し、地図上で確認し、訪問を保存します。"
           }
         },
         "pl": {
@@ -72618,7 +72618,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apple Maps検索するか、地図上で選択します"
+            "value": "Apple マップで検索するか、地図上で選択します"
           }
         },
         "pl": {
@@ -73253,7 +73253,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ピンを検索またはドロップします"
+            "value": "検索するかピンを置く"
           }
         },
         "pl": {
@@ -73465,7 +73465,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apple Mapsを検索しています…"
+            "value": "Apple マップを検索しています…"
           }
         },
         "pl": {
@@ -73675,7 +73675,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 つまたは複数の形式を選択します。 OwnTracksとOverland GPS修正のみを提供します。選択した他の形式では、選択したデータ型が使用されます。"
+            "value": "1つまたは複数の形式を選択します。OwnTracksとOverlandにはGPS測位データのみが含まれます。選択した他の形式では、選択したデータ型が使用されます。"
           }
         },
         "pl": {
@@ -73745,7 +73745,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 つまたは複数の形式を選択します。 OwnTracksおよびOverland外出エクスポートには、外出ルートのGPS修正が含まれています。訪問行や外出メモは表示されません。"
+            "value": "1つまたは複数の形式を選択します。OwnTracksとOverlandの外出エクスポートには、外出ルートのGPS測位データが含まれます。訪問行や外出メモは含まれません。"
           }
         },
         "pl": {
@@ -75078,7 +75078,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "シートを共有する"
+            "value": "共有シート"
           }
         },
         "pl": {
@@ -75288,7 +75288,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "シートを共有する"
+            "value": "共有シート"
           }
         },
         "pl": {
@@ -75918,7 +75918,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "示されている"
+            "value": "表示"
           }
         },
         "pl": {
@@ -75988,7 +75988,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "選択した日付範囲のフォト ライブラリの写真を表示します。 Whereday 、利用可能な場合は写真GPSを使用し、そうでない場合は最寄りのルート ポイントまたは訪問先を使用します。写真ファイルは「写真」に残ります。"
+            "value": "選択した日付範囲のフォト ライブラリの写真を表示します。Wheredayは、利用可能な場合は写真GPSを使用し、そうでない場合は最寄りのルート ポイントまたは訪問先を使用します。写真ファイルは「写真」に残ります。"
           }
         },
         "pl": {
@@ -79908,7 +79908,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "に"
+            "value": "まで"
           }
         },
         "pl": {
@@ -80468,7 +80468,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "複数のエクスポート形式 ( JSON 、 CSV 、 Markdown 、 GPX 、 KML 、 GeoJSON 、 OwnTracks 、 Overland ) を一度にタップすると、 Wheredayそれぞれに個別のファイルを準備します。"
+            "value": "複数のエクスポート形式 (JSON、CSV、Markdown、GPX、KML、GeoJSON、OwnTracks、Overland) を一度にタップすると、Wheredayがそれぞれに個別のファイルを準備します。"
           }
         },
         "pl": {
@@ -82920,7 +82920,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "この外出とそのGPSポイントは完全に削除されます。この間の訪問は継続されます。"
+            "value": "この外出とそのGPSポイントは完全に削除されます。この間の訪問は残ります。"
           }
         },
         "pl": {
@@ -84040,7 +84040,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "に"
+            "value": "まで"
           }
         },
         "pl": {
@@ -84250,7 +84250,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日の追跡期間"
+            "value": "今日の追跡時間"
           }
         },
         "pl": {
@@ -84670,7 +84670,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "追跡期間"
+            "value": "追跡時間"
           }
         },
         "pl": {
@@ -84810,7 +84810,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "追跡はアクティブです。 Whereday最初の位置ポイントを保存した後、新しい動きがここに表示されます。"
+            "value": "追跡はアクティブです。Wheredayが最初の位置ポイントを保存した後、新しい移動がここに表示されます。"
           }
         },
         "pl": {
@@ -85090,7 +85090,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "追跡は、訪問、重大な変更、継続的な高精度パスを記録します。距離フィルターは、移動中にポイントを保存する頻度を制御します。セーフティネットとして自動停止後に停止します。"
+            "value": "追跡では、訪問、大幅な位置の変化、継続的な高精度の経路を記録します。距離フィルターは、移動中にポイントを保存する頻度を決めます。「次の時間後に停止」は安全策として自動で停止します。"
           }
         },
         "pl": {
@@ -85441,7 +85441,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "もう一度やり直してください"
+            "value": "もう一度試す"
           }
         },
         "pl": {
@@ -86701,7 +86701,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "未知"
+            "value": "不明"
           }
         },
         "pl": {
@@ -86911,7 +86911,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "エクスポートのロックを解除します — %@"
+            "value": "エクスポートのロックを解除 — %@"
           }
         },
         "pl": {
@@ -88523,7 +88523,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "エクスポート パスで{title}または{name}を使用すると、 Whereday出力ごとに 1 つのファイルのエクスポートを自動的に区別します。"
+            "value": "エクスポート パスで{title}または{name}を使用すると、Wheredayは外出ごとに 1 つのファイルのエクスポートを自動的に区別します。"
           }
         },
         "pl": {
@@ -88663,7 +88663,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apple Mapsルートを使用して、大まかなポイント間の線を描くのではなく、可能であれば近くの道路にまばらなGPSギャップを曲げます。"
+            "value": "Apple マップのルートを使用して、大まかなポイント間の線を描くのではなく、可能であれば近くの道路にまばらなGPSギャップを曲げます。"
           }
         },
         "pl": {
@@ -89153,7 +89153,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "フィールドを訪ねる"
+            "value": "訪問フィールド"
           }
         },
         "pl": {
@@ -89853,7 +89853,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@にアクセスしてください"
+            "value": "%@での訪問"
           }
         },
         "pl": {
@@ -89923,7 +89923,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "インデックス%lldでの訪問に必須フィールド (緯度、経度、到着地) がありません"
+            "value": "インデックス%lldの訪問に必須フィールド (緯度、経度、到着時刻) がありません"
           }
         },
         "pl": {
@@ -90343,7 +90343,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday近くの場所を見つけたときに、訪問の提案により、地図上にコンパクトな場所の保存プロンプトが表示されます。 GPS不具合はデフォルトでは非表示になっています。生データを検査するにはオンにします。"
+            "value": "Wheredayが近くの場所を見つけたときに、訪問の提案により、地図上にコンパクトな場所の保存プロンプトが表示されます。GPSの不具合はデフォルトでは非表示になっています。生データを確認するにはオンにします。"
           }
         },
         "pl": {
@@ -90763,7 +90763,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "往路が道路と一致するまで待ちます。"
+            "value": "外出の経路が道路に合わせられるまでお待ちください。"
           }
         },
         "pl": {
@@ -91113,7 +91113,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ウォッチフェイスの合併症"
+            "value": "ウォッチフェイスのコンプリケーション"
           }
         },
         "pl": {
@@ -91183,7 +91183,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "いらっしゃいませ"
+            "value": "ようこそ"
           }
         },
         "pl": {
@@ -91533,7 +91533,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "正確な開始/停止セッションが存在しない場合、 Whereday保存されたGPSポイントから外出を推測できます。これらの設定は、自動生成された推定された外出にのみ影響します。記録されたセッションはそのまま残ります。"
+            "value": "正確な開始/停止セッションが存在しない場合、Wheredayは保存されたGPSポイントから外出を推測できます。これらの設定は、自動生成された推定された外出にのみ影響します。記録されたセッションはそのまま残ります。"
           }
         },
         "pl": {
@@ -91883,7 +91883,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "X- APIキー"
+            "value": "X-API-Key"
           }
         },
         "pl": {
@@ -92443,7 +92443,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@を追跡しています。"
+            "value": "%@追跡しています。"
           }
         },
         "pl": {
@@ -92513,7 +92513,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日は%@に行きました。"
+            "value": "今日は%@移動しました。"
           }
         },
         "pl": {
@@ -93355,7 +93355,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday 、 iOSとサーバー側の通知ワーカーに、この時間近くに起動するように要求します。エクスポートが完了していない場合は、フォールバック通知をタップするか、アプリを開いて実行します。"
+            "value": "Wheredayは、iOSとサーバー側の通知ワーカーに、この時間近くに起動するように要求します。エクスポートが完了していない場合は、フォールバック通知をタップするか、アプリを開いて実行します。"
           }
         },
         "pl": {
@@ -93425,7 +93425,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wheredayでは、アプリ アイコンが更新され、アプリ エクスペリエンス全体のリリースが更新されました。"
+            "value": "Wheredayのアプリアイコンが新しくなり、アプリ全体の仕上がりが向上しました。"
           }
         },
         "pl": {
@@ -93495,7 +93495,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Whereday 、この写真のローカル識別子、タイムスタンプ、および座標のみを保存します。写真ファイルは写真ライブラリに残ります。"
+            "value": "Wheredayは、この写真のローカル識別子、タイムスタンプ、および座標のみを保存します。写真ファイルは写真ライブラリに残ります。"
           }
         },
         "pl": {
@@ -93565,7 +93565,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wheredayあなたの位置情報を使用して、あなたが訪れた場所を検出し、毎日の経路を追跡します。"
+            "value": "Wheredayはあなたの位置情報を使用して、あなたが訪れた場所を検出し、毎日の経路を記録します。"
           }
         },
         "pl": {
@@ -94689,7 +94689,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Family Sharing 、位置情報ジャーナルではなく、アクセスを共有します。"
+            "value": "ファミリー共有で共有されるのはアクセス権で、位置情報の記録ではありません。"
           }
         },
         "pl": {

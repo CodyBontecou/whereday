@@ -672,7 +672,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@左"
+            "value": "残り%@"
           }
         },
         "pt-BR": {
@@ -952,7 +952,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "監視パスのキャプチャ"
+            "value": "Watchの経路を記録中"
           }
         },
         "pt-BR": {
@@ -1722,7 +1722,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "必要な場所"
+            "value": "位置情報が必要です"
           }
         },
         "pt-BR": {
@@ -2142,7 +2142,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "待機する"
+            "value": "待機中"
           }
         },
         "pt-BR": {
@@ -2212,7 +2212,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "始める"
+            "value": "開始"
           }
         },
         "pt-BR": {
@@ -2702,7 +2702,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "未知"
+            "value": "不明"
           }
         },
         "pt-BR": {
