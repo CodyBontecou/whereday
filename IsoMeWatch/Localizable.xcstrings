@@ -20,6 +20,12 @@
             "state": "translated",
             "value": "Synchroniser"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今すぐ同期"
+          }
         }
       }
     },
@@ -41,6 +47,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rien à synchroniser."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同期するものはありません。"
           }
         }
       }
@@ -64,6 +76,12 @@
             "state": "translated",
             "value": "Synchro iPhone indisponible."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneと同期できません。"
+          }
         }
       }
     },
@@ -85,6 +103,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connexion à l’iPhone…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneに接続中…"
           }
         }
       }
@@ -108,6 +132,12 @@
             "state": "translated",
             "value": "Synchro en attente. Ouvrez Whereday sur l’iPhone."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同期を予約しました。iPhoneでWheredayを開いてください。"
+          }
         }
       }
     },
@@ -129,6 +159,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de la synchro. Réessayez."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同期できませんでした。もう一度お試しください。"
           }
         }
       }
@@ -152,6 +188,12 @@
             "state": "translated",
             "value": "Synchronisé avec l’iPhone."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneと同期しました。"
+          }
         }
       }
     },
@@ -173,6 +215,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connexion impossible. Réessayez."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接続できませんでした。もう一度お試しください。"
           }
         }
       }
@@ -2436,6 +2484,12 @@
             "state": "translated",
             "value": "%lld min"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
         }
       }
     },
@@ -2454,6 +2508,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
+          }
+        },
+        "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
@@ -2480,6 +2540,12 @@
             "state": "translated",
             "value": "Ouvrez Whereday sur l’iPhone pour choisir ou restaurer une formule."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プランを選択または復元するには、iPhoneでWheredayを開いてください。"
+          }
         }
       }
     },
@@ -2501,6 +2567,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marquage en attente de l’iPhone."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneへの記録を待機中。"
           }
         }
       }
@@ -2524,6 +2596,12 @@
             "state": "translated",
             "value": "Marquage…"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録中…"
+          }
         }
       }
     },
@@ -2545,6 +2623,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marqué sur l’iPhone."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneに記録しました。"
           }
         }
       }
@@ -2568,6 +2652,12 @@
             "state": "translated",
             "value": "%@ marqué."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@を記録しました。"
+          }
         }
       }
     },
@@ -2589,6 +2679,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible de marquer ce lieu."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この場所を記録できませんでした。"
           }
         }
       }
@@ -2612,6 +2708,12 @@
             "state": "translated",
             "value": "Whereday, enregistrement d’un trajet"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday、ルートを記録中"
+          }
         }
       }
     },
@@ -2633,6 +2735,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Whereday, aujourd’hui"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday、今日"
           }
         }
       }
@@ -2656,6 +2764,12 @@
             "state": "translated",
             "value": "● Trajet"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● ルート"
+          }
         }
       }
     },
@@ -2677,6 +2791,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aujourd’hui"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
           }
         }
       }
@@ -2700,6 +2820,12 @@
             "state": "translated",
             "value": "Cadran du jour, %lld arrêts, %@ parcourus"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のダイヤル、滞在%lld件、%@移動"
+          }
         }
       }
     },
@@ -2721,6 +2847,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cadran du jour, %@ parcourus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のダイヤル、%@移動"
           }
         }
       }
@@ -2744,6 +2876,12 @@
             "state": "translated",
             "value": "En veille"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "待機中"
+          }
         }
       }
     },
@@ -2765,6 +2903,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Position requise"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置情報が必要です"
           }
         }
       }
@@ -2788,6 +2932,12 @@
             "state": "translated",
             "value": "Vérifier l’accès"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可を確認"
+          }
         }
       }
     },
@@ -2810,6 +2960,12 @@
             "state": "translated",
             "value": "depuis %@ · %@"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@から · %@"
+          }
         }
       }
     },
@@ -2828,6 +2984,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
+        "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ · %@"
@@ -2854,6 +3016,12 @@
             "state": "translated",
             "value": "dernière position %@"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最終測位 %@"
+          }
         }
       }
     },
@@ -2875,6 +3043,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "prêt à enregistrer"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録の準備完了"
           }
         }
       }
@@ -2898,6 +3072,12 @@
             "state": "translated",
             "value": "%@ avant arrêt auto"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自動停止まで%@"
+          }
         }
       }
     },
@@ -2919,6 +3099,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ CE TRAJET"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このルート %@"
           }
         }
       }
@@ -2942,6 +3128,12 @@
             "state": "translated",
             "value": "%lld pts en attente de l’iPhone"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone待ち %lld pts"
+          }
         }
       }
     },
@@ -2963,6 +3155,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marquer ce lieu"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この場所を記録"
           }
         }
       }
@@ -2986,6 +3184,12 @@
             "state": "translated",
             "value": "Enregistre votre arrivée ici sur l’iPhone"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhoneでここにチェックインします"
+          }
         }
       }
     },
@@ -3007,6 +3211,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marquer"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録"
           }
         }
       }
@@ -3030,6 +3240,12 @@
             "state": "translated",
             "value": "Arrêter"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止"
+          }
         }
       }
     },
@@ -3051,6 +3267,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Démarrer un trajet"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルートを開始"
           }
         }
       }
@@ -3074,6 +3296,12 @@
             "state": "translated",
             "value": "Activer la position"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置情報を有効に"
+          }
         }
       }
     },
@@ -3095,6 +3323,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marche"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "徒歩"
           }
         }
       }
@@ -3118,6 +3352,12 @@
             "state": "translated",
             "value": "Course"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ラン"
+          }
         }
       }
     },
@@ -3139,6 +3379,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vélo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自転車"
           }
         }
       }
@@ -3162,6 +3408,12 @@
             "state": "translated",
             "value": "Voiture"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "車"
+          }
         }
       }
     },
@@ -3183,6 +3435,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Train"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電車"
           }
         }
       }
@@ -3206,6 +3464,12 @@
             "state": "translated",
             "value": "Avion"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飛行機"
+          }
         }
       }
     },
@@ -3227,6 +3491,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "À pied"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "徒歩"
           }
         }
       }
@@ -3250,6 +3520,12 @@
             "state": "translated",
             "value": "Course à pied"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランニング"
+          }
         }
       }
     },
@@ -3271,6 +3547,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "À vélo"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サイクリング"
           }
         }
       }
@@ -3294,6 +3576,12 @@
             "state": "translated",
             "value": "En voiture"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "運転中"
+          }
         }
       }
     },
@@ -3316,6 +3604,12 @@
             "state": "translated",
             "value": "En train"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電車で移動中"
+          }
         }
       }
     },
@@ -3337,6 +3631,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En avion"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飛行中"
           }
         }
       }

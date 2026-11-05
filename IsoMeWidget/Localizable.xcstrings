@@ -440,6 +440,12 @@
             "state": "translated",
             "value": "Aucun lieu aujourd’hui pour l’instant"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日はまだ場所がありません"
+          }
         }
       }
     },
@@ -461,6 +467,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ depuis %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@（%@から）"
           }
         }
       }
@@ -484,6 +496,12 @@
             "state": "translated",
             "value": "Lieux du jour"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の場所"
+          }
         }
       }
     },
@@ -505,6 +523,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les arrêts du jour sur une bande de 24 heures."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の滞在を24時間の帯で表示。"
           }
         }
       }
@@ -528,6 +552,12 @@
             "state": "translated",
             "value": "Aujourd’hui"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
+          }
         }
       }
     },
@@ -549,6 +579,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "DEPUIS %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@から"
           }
         }
       }
@@ -572,6 +608,12 @@
             "state": "translated",
             "value": "AUCUN ARRÊT"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "滞在なし"
+          }
         }
       }
     },
@@ -593,6 +635,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "EN MOUVEMENT"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移動中"
           }
         }
       }
@@ -616,6 +664,12 @@
             "state": "translated",
             "value": "Jour %lld"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld日目"
+          }
         }
       }
     },
@@ -637,6 +691,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LIEUX"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "場所"
           }
         }
       }
@@ -660,6 +720,12 @@
             "state": "translated",
             "value": "PARCOURU"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移動"
+          }
         }
       }
     },
@@ -681,6 +747,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ARRÊTS"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "滞在"
           }
         }
       }
@@ -704,6 +776,12 @@
             "state": "translated",
             "value": "ENREGISTRÉ"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録"
+          }
         }
       }
     },
@@ -725,6 +803,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cadran du jour"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1日のダイヤル"
           }
         }
       }
@@ -748,6 +832,12 @@
             "state": "translated",
             "value": "Les lieux du jour autour d’un cadran de 24 heures."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の場所を24時間のダイヤルで表示。"
+          }
         }
       }
     },
@@ -769,6 +859,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cadran 24 heures : %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24時間ダイヤル：%@"
           }
         }
       }
@@ -792,6 +888,12 @@
             "state": "translated",
             "value": "Marquer ce lieu"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この場所を記録"
+          }
         }
       }
     },
@@ -813,6 +915,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Enregistrez votre arrivée au lieu actuel depuis l’activité en direct Whereday."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wheredayのライブアクティビティから現在地にチェックインします。"
           }
         }
       }
@@ -836,6 +944,12 @@
             "state": "translated",
             "value": "Nom du lieu"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "場所の名前"
+          }
         }
       }
     },
@@ -857,6 +971,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Latitude"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "緯度"
           }
         }
       }
@@ -880,6 +1000,12 @@
             "state": "translated",
             "value": "Longitude"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "経度"
+          }
         }
       }
     },
@@ -901,6 +1027,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Arrêter le trajet"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルートを停止"
           }
         }
       }
@@ -924,6 +1056,12 @@
             "state": "translated",
             "value": "Arrêtez l’enregistrement Whereday en cours depuis l’activité en direct."
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ライブアクティビティから現在のWheredayの記録を停止します。"
+          }
         }
       }
     },
@@ -945,6 +1083,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "● ENREGISTREMENT · %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● 記録中 · %@"
           }
         }
       }
@@ -968,6 +1112,12 @@
             "state": "translated",
             "value": "● ENREGISTREMENT"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● 記録中"
+          }
         }
       }
     },
@@ -990,6 +1140,12 @@
             "state": "translated",
             "value": "%@ PTS · RESTE %@"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS · 残り%@"
+          }
         }
       }
     },
@@ -1008,6 +1164,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS"
+          }
+        },
+        "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ PTS"
@@ -1034,6 +1196,12 @@
             "state": "translated",
             "value": "Enregistrement"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録中"
+          }
         }
       }
     },
@@ -1055,6 +1223,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cadran du jour : %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のダイヤル：%@"
           }
         }
       }
@@ -1078,6 +1252,12 @@
             "state": "translated",
             "value": "AUJOURD’HUI"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
+          }
         }
       }
     },
@@ -1099,6 +1279,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "POINTS"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ポイント"
           }
         }
       }
@@ -1122,6 +1308,12 @@
             "state": "translated",
             "value": "ENREGISTRE DEPUIS"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録時間"
+          }
         }
       }
     },
@@ -1143,6 +1335,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "AVANT ARRÊT AUTO"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自動停止まで"
           }
         }
       }
@@ -1166,6 +1364,12 @@
             "state": "translated",
             "value": "Enregistre votre arrivée au lieu actuel"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在地にチェックインします"
+          }
         }
       }
     },
@@ -1187,6 +1391,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Arrête l’enregistrement"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録を停止します"
           }
         }
       }
@@ -1210,6 +1420,12 @@
             "state": "translated",
             "value": "Marquer ce lieu"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この場所を記録"
+          }
         }
       }
     },
@@ -1231,6 +1447,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Arrêter le trajet"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルートを停止"
           }
         }
       }
@@ -1254,6 +1476,12 @@
             "state": "translated",
             "value": "Marche"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "徒歩"
+          }
         }
       }
     },
@@ -1275,6 +1503,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Course"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ラン"
           }
         }
       }
@@ -1298,6 +1532,12 @@
             "state": "translated",
             "value": "Vélo"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自転車"
+          }
         }
       }
     },
@@ -1319,6 +1559,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voiture"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "車"
           }
         }
       }
@@ -1342,6 +1588,12 @@
             "state": "translated",
             "value": "Train"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電車"
+          }
         }
       }
     },
@@ -1363,6 +1615,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Avion"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飛行機"
           }
         }
       }
@@ -1386,6 +1644,12 @@
             "state": "translated",
             "value": "À pied"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "徒歩"
+          }
         }
       }
     },
@@ -1407,6 +1671,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Course à pied"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランニング"
           }
         }
       }
@@ -1430,6 +1700,12 @@
             "state": "translated",
             "value": "À vélo"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サイクリング"
+          }
         }
       }
     },
@@ -1451,6 +1727,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En voiture"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "運転中"
           }
         }
       }
@@ -1474,6 +1756,12 @@
             "state": "translated",
             "value": "En train"
           }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "電車で移動中"
+          }
         }
       }
     },
@@ -1495,6 +1783,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En avion"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "飛行中"
           }
         }
       }
