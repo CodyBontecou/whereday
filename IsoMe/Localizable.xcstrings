@@ -24541,7 +24541,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usuń podróży"
+            "value": "Usuń podróże"
           }
         },
         "pt-BR": {
@@ -30519,7 +30519,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eksportuj wizyty, punkty lub podróży Whereday dla wybranego zakresu dat jako plik."
+            "value": "Eksportuj wizyty, punkty lub podróże Whereday dla wybranego zakresu dat jako plik."
           }
         },
         "pt-BR": {
@@ -30869,7 +30869,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eksportuj dzisiejsze podróży"
+            "value": "Eksportuj dzisiejsze podróże"
           }
         },
         "pt-BR": {
@@ -31709,7 +31709,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eksportuj dzisiejsze podróży Whereday jako plik."
+            "value": "Eksportuj dzisiejsze podróże Whereday jako plik."
           }
         },
         "pt-BR": {
@@ -32269,7 +32269,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eksportuje zapis bezpośrednio do tego folderu, gdy włączone jest automatyczne zapisywanie. W przeciwnym razie otworzy się arkusz udostępniania."
+            "value": "Eksporty są zapisywane bezpośrednio w tym folderze, gdy włączone jest automatyczne zapisywanie. W przeciwnym razie otworzy się arkusz udostępniania."
           }
         },
         "pt-BR": {
@@ -34789,7 +34789,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Odfiltrowane podróży są gromadzone w jednym pliku w wybranym formacie."
+            "value": "Odfiltrowane podróże są gromadzone w jednym pliku w wybranym formacie."
           }
         },
         "pt-BR": {
@@ -50848,7 +50848,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nazwy i notatki pozostają na urządzeniu podczas sesji nagraniowej."
+            "value": "Nazwy i notatki pozostają na urządzeniu razem z zarejestrowaną sesją."
           }
         },
         "pt-BR": {
@@ -62073,7 +62073,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zdjęcia są dopasowywane według sygnatury czasowej. Whereday korzysta ze zdjęć GPS jeśli jest dostępny, w przeciwnym razie najbliższy punkt trasy lub wizyta. Pliki zdjęć pozostają w Zdjęciach."
+            "value": "Zdjęcia są dopasowywane według sygnatury czasowej. Whereday korzysta z danych GPS zdjęcia, jeśli są dostępne, a w przeciwnym razie z najbliższego punktu trasy lub wizyty. Pliki zdjęć pozostają w Zdjęciach."
           }
         },
         "pt-BR": {
@@ -67045,7 +67045,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zmień nazwy przystanków na podstawie sugestii biznesowych w pobliżu, przefiltruj listę i zresetuj do wykrytej lokalizacji, kiedy tylko zajdzie taka potrzeba."
+            "value": "Zmieniaj nazwy postojów na podstawie podpowiedzi pobliskich miejsc, przefiltruj listę i przywróć wykrytą lokalizację, kiedy tylko zajdzie taka potrzeba."
           }
         },
         "pt-BR": {
@@ -76274,7 +76274,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pokazuje miejsca wykryte przez Whereday jako przystanki w wybranym zakresie dat. Ukryj je, jeśli chcesz mieć przejrzystą mapę zawierającą tylko trasy."
+            "value": "Pokazuje miejsca wykryte przez Whereday jako postoje w wybranym zakresie dat. Ukryj je, jeśli chcesz mieć przejrzystą mapę zawierającą tylko trasy."
           }
         },
         "pt-BR": {
@@ -87828,7 +87828,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Użyj / dla folderów. Tokeny: %@. {title} / {name} użyj tytułu podróży, jeśli jest dostępny, w przeciwnym razie typ danych. W przypadku pominięcia dodawane jest rozszerzenie formatu."
+            "value": "Użyj / dla folderów. Tokeny: %@. {title} / {name} używają tytułu podróży, jeśli jest dostępny, a w przeciwnym razie typu danych. W przypadku pominięcia dodawane jest rozszerzenie formatu."
           }
         },
         "pt-BR": {
@@ -88529,7 +88529,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Użyj {title} lub {name} w ścieżkach eksportu, a Whereday automatycznie rozróżnia eksporty jednego pliku na wyjście."
+            "value": "Użyj {title} lub {name} w ścieżkach eksportu, a Whereday automatycznie rozróżni pliki przy eksporcie jednego pliku na podróż."
           }
         },
         "pt-BR": {
