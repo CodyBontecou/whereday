@@ -36,7 +36,7 @@ class MapPointSamplingFlowTest {
         Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState())) {JournalMap(points,emptyList(),pointMarkerSource=source)}
     }}}}
     private fun native():Pair<MapView,MapLibreMap> {
-        compose.onNodeWithTag("journal-native-map").assertExists()
+        compose.onNodeWithTag("journal-native-map").performScrollTo()
         val view=compose.runOnIdle {checkNotNull(findNativeMapView())};val map=AtomicReference<MapLibreMap>()
         compose.runOnUiThread {view.getMapAsync {map.set(it)}}
         compose.waitUntil(10000) {compose.runOnIdle {map.get()?.style?.isFullyLoaded==true}}
