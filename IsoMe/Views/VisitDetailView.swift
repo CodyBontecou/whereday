@@ -20,6 +20,7 @@ struct VisitDetailView: View {
     @State private var checkoutError: String?
     @State private var calendarDraft: CalendarEventDraft?
     @State private var showingPlaceSearch = false
+    @State private var showingSplit = false
     @State private var photoMoments: [PhotoMoment] = []
     @State private var selectedPhotoMoment: PhotoMoment?
     @FocusState private var focusedField: FocusedField?
@@ -123,6 +124,12 @@ struct VisitDetailView: View {
                 ),
                 onSelect: correctVisit(with:)
             )
+            .presentationDetents([.large])
+        }
+        .sheet(isPresented: $showingSplit) {
+            SplitVisitSheet(visit: visit, viewModel: viewModel) {
+                syncEditableStateFromVisit()
+            }
             .presentationDetents([.large])
         }
         .sheet(item: $selectedPhotoMoment) { photo in
@@ -561,8 +568,21 @@ struct VisitDetailView: View {
     private var secondaryActions: some View {
         let showsCheckOut = visit.source == .manual && visit.departedAt == nil
         let showsUndo = visit.confirmationStatus == .corrected && visit.originalCoordinate != nil
-        if showsCheckOut || showsUndo {
+        let showsSplit = ManualVisitStore.canSplit(visit)
+        if showsCheckOut || showsUndo || showsSplit {
             VStack(spacing: 8) {
+                if showsSplit {
+                    Button {
+                        focusedField = nil
+                        showingSplit = true
+                    } label: {
+                        Label("Split Visit", systemImage: "scissors")
+                    }
+                    .buttonStyle(VisitPillButtonStyle())
+                    .disabled(hasUnsavedTimeChanges)
+                    .accessibilityHint("Splits this stop into two visits, for places next door to each other.")
+                }
+
                 if showsCheckOut {
                     Button {
                         if viewModel.checkoutVisit(visit) {
@@ -815,17 +835,21 @@ struct NearbyVisitNameSuggestionSection: View {
     var selectedName: String?
     /// The visit screen supplies its own header and search, so it hides these.
     var showsControls = true
+    /// What choosing a suggestion does, for VoiceOver.
+    var accessibilityAction: (String) -> String = { String(localized: "Correct visit to \($0)") }
     let onSelect: (NearbyPlaceSuggestion) -> Void
 
     init(
         visit: Visit,
         selectedName: String? = nil,
         showsControls: Bool = true,
+        accessibilityAction: ((String) -> String)? = nil,
         onSelect: @escaping (NearbyPlaceSuggestion) -> Void
     ) {
         self.visit = visit
         self.selectedName = selectedName
         self.showsControls = showsControls
+        if let accessibilityAction { self.accessibilityAction = accessibilityAction }
         self.onSelect = onSelect
     }
 
@@ -1021,7 +1045,7 @@ struct NearbyVisitNameSuggestionSection: View {
                     .contentShape(RoundedRectangle(cornerRadius: 14))
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Correct visit to \(suggestion.name)")
+                .accessibilityLabel(accessibilityAction(suggestion.name))
                 .accessibilityValue(suggestion.distanceLabel(usesMetric: usesMetricDistanceUnits))
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
@@ -1066,6 +1090,231 @@ struct NearbyVisitNameSuggestionSection: View {
             suggestions = []
             loadFailed = true
         }
+    }
+}
+
+/// Splits one detected stop into two back-to-back visits: pick when you moved on and where you went.
+struct SplitVisitSheet: View {
+    let visit: Visit
+    @Bindable var viewModel: LocationViewModel
+    var onSplit: () -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var splitAt: Date
+    @State private var choice: Choice?
+    @State private var showingPlaceSearch = false
+    @State private var errorMessage: String?
+
+    struct Choice {
+        var name: String
+        var address: String?
+        var coordinate: CLLocationCoordinate2D
+        var placeSource: VisitPlaceSource
+        var distanceMeters: Double?
+    }
+
+    init(visit: Visit, viewModel: LocationViewModel, onSplit: @escaping () -> Void = {}) {
+        self.visit = visit
+        self.viewModel = viewModel
+        self.onSplit = onSplit
+        let end = visit.departedAt ?? visit.arrivedAt
+        // Start in the middle, rounded to the minute like the time pickers.
+        let midpoint = visit.arrivedAt.addingTimeInterval(end.timeIntervalSince(visit.arrivedAt) / 2)
+        let rounded = Date(timeIntervalSinceReferenceDate: (midpoint.timeIntervalSinceReferenceDate / 60).rounded() * 60)
+        let range = ManualVisitStore.splitRange(for: visit)
+        _splitAt = State(initialValue: range.map { min(max(rounded, $0.lowerBound), $0.upperBound) } ?? midpoint)
+    }
+
+    private var range: ClosedRange<Date> {
+        ManualVisitStore.splitRange(for: visit) ?? visit.arrivedAt...visit.arrivedAt
+    }
+
+    private var spansDays: Bool {
+        !Calendar.current.isDate(visit.arrivedAt, inSameDayAs: visit.departedAt ?? visit.arrivedAt)
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Split visit")
+                            .font(TE.editorial(.title))
+                            .accessibilityAddTraits(.isHeader)
+                        Text("Places next door can be detected as one stop. Choose when you moved on and where you went next.")
+                            .font(TE.editorial(.subheadline).italic())
+                            .foregroundStyle(TE.textMuted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        sectionLabel("MOVED ON AT")
+                        DatePicker(
+                            "Moved on at",
+                            selection: $splitAt,
+                            in: range,
+                            displayedComponents: spansDays ? [.date, .hourAndMinute] : .hourAndMinute
+                        )
+                        .labelsHidden()
+                        .padding(.horizontal, 8)
+                        .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
+                        .background(RoundedRectangle(cornerRadius: 12).fill(TE.card))
+                        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(TE.border, lineWidth: 1))
+                    }
+
+                    VStack(spacing: 8) {
+                        partRow(index: 1, name: visit.displayName, start: visit.arrivedAt, end: splitAt)
+                        partRow(index: 2, name: choice?.name, start: splitAt, end: visit.departedAt ?? splitAt)
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(alignment: .firstTextBaseline) {
+                            sectionLabel("WHERE DID YOU GO NEXT?")
+                            Spacer(minLength: 8)
+                            Text("nearest first")
+                                .font(TE.editorial(.subheadline).italic())
+                                .foregroundStyle(TE.textMuted)
+                        }
+
+                        NearbyVisitNameSuggestionSection(
+                            visit: visit,
+                            selectedName: choice?.name,
+                            showsControls: false,
+                            accessibilityAction: { String(localized: "Second visit at \($0)") }
+                        ) { suggestion in
+                            choose(Choice(
+                                name: suggestion.name,
+                                address: suggestion.address,
+                                coordinate: suggestion.coordinate,
+                                placeSource: .appleMaps,
+                                distanceMeters: suggestion.distanceMeters
+                            ))
+                        }
+
+                        Button("Search…") {
+                            showingPlaceSearch = true
+                        }
+                        .buttonStyle(VisitPillButtonStyle())
+                        .accessibilityLabel("Search for the second place")
+                        .accessibilityHint("Search Apple Maps or drop a pin.")
+                    }
+
+                    if let errorMessage {
+                        Text(errorMessage)
+                            .font(.footnote)
+                            .foregroundStyle(TE.inkRust)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 8)
+            }
+            .safeAreaInset(edge: .bottom) {
+                Button("Split Visit") { split() }
+                    .buttonStyle(VisitPillButtonStyle(kind: .primary))
+                    .disabled(choice == nil)
+                    .accessibilityHint("Saves two visits, one for each place.")
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(TE.surface)
+            }
+            .background(TE.surface.ignoresSafeArea())
+            .foregroundStyle(TE.textPrimary)
+            .tint(TE.accent)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+            }
+            .sheet(isPresented: $showingPlaceSearch) {
+                PlaceSelectionView(
+                    initialRegion: MKCoordinateRegion(
+                        center: visit.coordinate,
+                        latitudinalMeters: 1_000,
+                        longitudinalMeters: 1_000
+                    ),
+                    onSelect: choose(_:)
+                )
+                .presentationDetents([.large])
+            }
+        }
+    }
+
+    private func sectionLabel(_ text: LocalizedStringKey) -> some View {
+        Text(text)
+            .font(TE.mono(.caption2))
+            .tracking(1.5)
+            .foregroundStyle(TE.textMuted)
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    private func partRow(index: Int, name: String?, start: Date, end: Date) -> some View {
+        let duration = VisitDetailDurationFormatter.format(max(0, end.timeIntervalSince(start)))
+        let times = "\(start.formatted(date: .omitted, time: .shortened)) – \(end.formatted(date: .omitted, time: .shortened))"
+        return HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Text(String(index))
+                .font(TE.mono(.caption))
+                .foregroundStyle(TE.textMuted)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(name ?? String(localized: "Choose a place below"))
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(name == nil ? TE.textMuted : TE.textPrimary)
+                Text(times)
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Text(duration)
+                .font(TE.editorial(.body))
+                .monospacedDigit()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(RoundedRectangle(cornerRadius: 14).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityElement(children: .combine)
+    }
+
+    private func choose(_ choice: Choice) {
+        errorMessage = nil
+        self.choice = choice
+    }
+
+    /// A searched place or dropped pin; an unnamed pin cannot name the second visit.
+    private func choose(_ selection: ManualLocationSelection) {
+        let name = selection.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else {
+            errorMessage = String(localized: "Name the place to split the visit.")
+            return
+        }
+        let original = CLLocation(latitude: visit.latitude, longitude: visit.longitude)
+        let chosen = CLLocation(latitude: selection.coordinate.latitude, longitude: selection.coordinate.longitude)
+        choose(Choice(
+            name: name,
+            address: selection.address,
+            coordinate: selection.coordinate,
+            placeSource: selection.visitPlaceSource,
+            distanceMeters: original.distance(from: chosen)
+        ))
+    }
+
+    private func split() {
+        guard let choice else { return }
+        let second = viewModel.splitVisit(
+            visit,
+            at: splitAt,
+            secondPlaceName: choice.name,
+            address: choice.address,
+            coordinate: choice.coordinate,
+            placeSource: choice.placeSource,
+            distanceMeters: choice.distanceMeters
+        )
+        guard second != nil else {
+            errorMessage = viewModel.visitMutationError?.localizedDescription
+            return
+        }
+        onSplit()
+        dismiss()
     }
 }
 

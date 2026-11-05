@@ -240,6 +240,8 @@ extension VisitMutationError: CustomLocalizedStringResourceConvertible {
         case .trackingAccessRequired: return "Choose a Whereday plan before adding new visits."
         case .overlap(let name): return "These times overlap your visit to \(name). Review the times or save both visits."
         case .persistence: return "The visit could not be saved. Please try again."
+        case .invalidSplit: return "Choose a split time at least a minute after arrival and before departure."
+        case .sameSplitPlace: return "Choose a different place for the second visit."
         }
     }
 }

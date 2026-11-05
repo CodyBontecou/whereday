@@ -135,6 +135,7 @@
 		AB000001212F0BB100000B2 /* RenameIntentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B2 /* RenameIntentsTests.swift */; };
 		6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */; };
 		D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10003212F000000000003 /* RemotePastVisitTests.swift */; };
+		5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11700000000000000000A1 /* SplitVisitTests.swift */; };
 		B2000005212F000100000005 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000001212F000000000001 /* Localizable.xcstrings */; };
 		B2000006212F000100000006 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000002212F000000000002 /* InfoPlist.xcstrings */; };
 		B2000007212F000100000007 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000003212F000000000003 /* Localizable.xcstrings */; };
@@ -407,6 +408,7 @@
 		AB000001212F0BB000000B2 /* RenameIntentsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RenameIntentsTests.swift; sourceTree = "<group>"; };
 		6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationViewModelPointScalingTests.swift; sourceTree = "<group>"; };
 		D2A10003212F000000000003 /* RemotePastVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemotePastVisitTests.swift; sourceTree = "<group>"; };
+		5B11700000000000000000A1 /* SplitVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplitVisitTests.swift; sourceTree = "<group>"; };
 		B1000001212F000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B1000002212F000000000002 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B1000003212F000000000003 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -791,6 +793,7 @@
 				6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */,
 				76AB00000000000000000031 /* ManualVisitAutomationTests.swift */,
 				D2A10003212F000000000003 /* RemotePastVisitTests.swift */,
+				5B11700000000000000000A1 /* SplitVisitTests.swift */,
 				8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */,
 				A0660001212F000000000001 /* PhotoMomentMembershipTests.swift */,
 				5F000007212F000000000001 /* IntervalScheduledExportTests.swift */,
@@ -1242,6 +1245,7 @@
 				6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */,
 				76AB00000000000000000032 /* ManualVisitAutomationTests.swift in Sources */,
 				D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */,
+				5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */,
 				F2DCEC8ADF4641F4AFEBB1BA /* TimelineImportTests.swift in Sources */,
 				A0660001212F000100000001 /* PhotoMomentMembershipTests.swift in Sources */,
 			);

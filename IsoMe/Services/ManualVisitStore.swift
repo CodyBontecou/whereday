@@ -8,6 +8,8 @@ enum VisitMutationError: LocalizedError {
     case trackingAccessRequired
     case overlap(String)
     case persistence
+    case invalidSplit
+    case sameSplitPlace
 
     var errorDescription: String? {
         switch self {
@@ -19,6 +21,10 @@ enum VisitMutationError: LocalizedError {
             return String(format: String(localized: "These times overlap your visit to %@. Review the times or save both visits."), name)
         case .persistence:
             return String(localized: "The visit could not be saved. Please try again.")
+        case .invalidSplit:
+            return String(localized: "Choose a split time at least a minute after arrival and before departure.")
+        case .sameSplitPlace:
+            return String(localized: "Choose a different place for the second visit.")
         }
     }
 }
@@ -311,6 +317,113 @@ final class ManualVisitStore {
             return false
         }
         return true
+    }
+
+    /// The shortest part a split may leave on either side.
+    static let minimumSplitPartDuration: TimeInterval = 60
+
+    /// Whether a visit can be split: it must have ended and be long enough for two parts.
+    static func canSplit(_ visit: Visit) -> Bool {
+        guard let departedAt = visit.departedAt else { return false }
+        return departedAt.timeIntervalSince(visit.arrivedAt) >= 2 * minimumSplitPartDuration
+    }
+
+    /// The split times a visit allows, or nil when it cannot be split.
+    static func splitRange(for visit: Visit) -> ClosedRange<Date>? {
+        guard canSplit(visit), let departedAt = visit.departedAt else { return nil }
+        return visit.arrivedAt.addingTimeInterval(minimumSplitPartDuration)...departedAt.addingTimeInterval(-minimumSplitPartDuration)
+    }
+
+    /// Splits one stop into two back-to-back visits, e.g. two businesses next door that
+    /// detection reported as a single stop. The visit keeps its place and ends at `splitAt`;
+    /// a new visit at the chosen place runs from `splitAt` to the original departure.
+    ///
+    /// Both parts are marked reviewed and named after different places, which is what
+    /// keeps automatic duplicate merging from joining them back together.
+    @discardableResult
+    func splitVisit(
+        _ visit: Visit,
+        at splitAt: Date,
+        secondPlaceName name: String,
+        address: String?,
+        coordinate: CLLocationCoordinate2D,
+        placeSource: VisitPlaceSource,
+        distanceMeters: Double? = nil
+    ) -> Visit? {
+        visitMutationError = nil
+        guard let range = Self.splitRange(for: visit),
+              splitAt.timeIntervalSinceReferenceDate.isFinite,
+              range.contains(splitAt) else {
+            visitMutationError = .invalidSplit
+            return nil
+        }
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty,
+              CLLocationCoordinate2DIsValid(coordinate),
+              coordinate.latitude.isFinite,
+              coordinate.longitude.isFinite else {
+            visitMutationError = .invalidInput
+            return nil
+        }
+        guard trimmedName.compare(visit.displayName, options: [.caseInsensitive, .diacriticInsensitive]) != .orderedSame else {
+            visitMutationError = .sameSplitPlace
+            return nil
+        }
+
+        let now = Date()
+        let previous = (
+            visit.departedAt, visit.countryDepartureIsInferred, visit.confirmationStatusRaw,
+            visit.confirmedAt, visit.updatedAt
+        )
+        let second = Visit(
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            arrivedAt: splitAt,
+            departedAt: visit.departedAt,
+            locationName: trimmedName,
+            address: address?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
+            geocodingCompleted: true,
+            source: visit.source,
+            confirmationStatus: .corrected,
+            confirmedAt: now,
+            updatedAt: now,
+            // Undo Correction on the second part returns it to what detection saw.
+            originalLatitude: visit.detectedLatitude ?? visit.latitude,
+            originalLongitude: visit.detectedLongitude ?? visit.longitude,
+            originalLocationName: visit.detectedLocationName,
+            originalAddress: visit.detectedAddress,
+            detectedLatitude: visit.detectedLatitude,
+            detectedLongitude: visit.detectedLongitude,
+            detectedLocationName: visit.detectedLocationName,
+            detectedAddress: visit.detectedAddress,
+            placeSource: placeSource,
+            placeDistanceMeters: distanceMeters
+        )
+        second.countryDepartureIsInferred = visit.countryDepartureIsInferred
+        second.countryCode = visit.countryCode
+        second.countryTimeZoneIdentifier = visit.countryTimeZoneIdentifier
+        second.countryResolutionAttemptedAt = visit.countryResolutionAttemptedAt
+
+        // The first part now has an observed end: the user just placed it.
+        visit.departedAt = splitAt
+        visit.countryDepartureIsInferred = false
+        if visit.confirmationStatus == .unconfirmed {
+            visit.confirmationStatus = .confirmed
+            visit.confirmedAt = now
+        }
+        visit.updatedAt = now
+
+        modelContext.insert(second)
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.delete(second)
+            (visit.departedAt, visit.countryDepartureIsInferred, visit.confirmationStatusRaw,
+             visit.confirmedAt, visit.updatedAt) = previous
+            visitMutationError = .persistence
+            return nil
+        }
+        return second
     }
 
     @discardableResult
