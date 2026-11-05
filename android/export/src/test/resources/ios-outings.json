@@ -1,0 +1,894 @@
+{
+  "provenance": {
+    "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
+    "IsoMe/Models/RecordingSession.swift": "a831aa891b4e5ad18352bbe3bd2309cffc10147a9256b8a5719a41fff331ef11",
+    "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
+    "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
+    "android/scripts/fixtures/OutingFixtures.swift": "90cd471b722dda95bc8557d49008870cae8e19f9331ce098bd7661013427a284",
+    "android/scripts/fixtures/outing-inputs.json": "af1e4a6f001d67131fb6f13377a3d4a8fe9ca16937306ed844f6d55c64d864b9"
+  },
+  "cases": [
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,0,0,2,false,false,,,,,\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "title": "Outing 3",
+            "visitCount": 2
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,0,0,2,false,false,,,,,\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "title": "Outing 3",
+            "visitCount": 2
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "completed",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": [
+        "2020-02-29T11:59:59.000Z",
+        "2020-02-29T12:00:00.000Z",
+        "2020-02-29T12:01:00.000Z",
+        "2020-02-29T12:01:00.001Z"
+      ]
+    },
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,\"Café, \"\"quoted\"\" | café\",3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,0,0,2,false,false,\"First line\nSecond line\",,,,\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "notes": "First line\nSecond line",
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "title": "Café, \"quoted\" | café",
+            "visitCount": 2
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,\"Café, \"\"quoted\"\" | café\",3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,0,0,2,false,false,\"First line\nSecond line\",,,,\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "notes": "First line\nSecond line",
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "title": "Café, \"quoted\" | café",
+            "visitCount": 2
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "unicode-multiline",
+      "notes": "  First line\nSecond line  ",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "title": "  Café, \"quoted\" | café  ",
+      "visits": [
+        "2020-02-29T11:59:59.000Z",
+        "2020-02-29T12:00:00.000Z",
+        "2020-02-29T12:01:00.000Z",
+        "2020-02-29T12:01:00.001Z"
+      ]
+    },
+    {
+      "end": null,
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,,2020-02-29T13:00:00.000Z,3600,0.00,,0,0,0,false,true,,,,,\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 3600,
+            "effectiveEndAt": "2020-02-29T13:00:00.000Z",
+            "id": "outing",
+            "isActive": true,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,,2020-02-29T13:00:00.000Z,3600,0.00,,0,0,0,false,true,,,,,\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 3600,
+            "effectiveEndAt": "2020-02-29T13:00:00.000Z",
+            "id": "outing",
+            "isActive": true,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "active-empty",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": []
+    },
+    {
+      "end": null,
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,,2020-02-29T12:00:03.250Z,3,0.00,,2,1,1,false,true,,0.0,0.0,0.0,0.0\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 3.25,
+            "effectiveEndAt": "2020-02-29T12:00:03.250Z",
+            "endLatitude": 0,
+            "endLongitude": 0,
+            "id": "outing",
+            "isActive": true,
+            "isInferred": false,
+            "outlierCount": 1,
+            "pointCount": 2,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 0,
+            "title": "Outing 3",
+            "visitCount": 1
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,,2020-02-29T12:00:03.250Z,3,0.00,,2,1,1,false,true,,0.0,0.0,0.0,0.0\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 3.25,
+            "effectiveEndAt": "2020-02-29T12:00:03.250Z",
+            "endLatitude": 0,
+            "endLongitude": 0,
+            "id": "outing",
+            "isActive": true,
+            "isInferred": false,
+            "outlierCount": 1,
+            "pointCount": 2,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 0,
+            "title": "Outing 3",
+            "visitCount": 1
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "active-last-fix",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "outlier": false,
+          "time": "2020-02-29T12:00:02.125Z"
+        },
+        {
+          "lat": 0,
+          "lon": 0,
+          "outlier": true,
+          "time": "2020-02-29T12:00:03.250Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": [
+        "2020-02-29T11:59:59.000Z",
+        "2020-02-29T12:00:00.000Z",
+        "2020-02-29T12:01:00.000Z",
+        "2020-02-29T12:01:00.001Z"
+      ]
+    },
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,2,1,2,true,false,,0.0,0.0,0.0,0.0\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 0,
+            "endLongitude": 0,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 1,
+            "pointCount": 2,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 0,
+            "title": "Outing 3",
+            "visitCount": 2
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,2,1,2,true,false,,0.0,0.0,0.0,0.0\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 0,
+            "endLongitude": 0,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 1,
+            "pointCount": 2,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 0,
+            "title": "Outing 3",
+            "visitCount": 2
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": true,
+      "name": "inferred",
+      "notes": "Ignored inferred notes",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "outlier": false,
+          "time": "2020-02-29T12:00:02.125Z"
+        },
+        {
+          "lat": 0,
+          "lon": 0,
+          "outlier": true,
+          "time": "2020-02-29T12:00:03.250Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "title": "Ignored inferred title",
+      "visits": [
+        "2020-02-29T11:59:59.000Z",
+        "2020-02-29T12:00:00.000Z",
+        "2020-02-29T12:01:00.000Z",
+        "2020-02-29T12:01:00.001Z"
+      ]
+    },
+    {
+      "end": "2020-02-29T12:00:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:00:00.000Z,2020-02-29T12:00:00.000Z,0,0.00,,1,0,1,false,false,,0.0,0.0,0.0,0.0\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 0,
+            "effectiveEndAt": "2020-02-29T12:00:00.000Z",
+            "endedAt": "2020-02-29T12:00:00.000Z",
+            "endLatitude": 0,
+            "endLongitude": 0,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 1,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 0,
+            "title": "Outing 3",
+            "visitCount": 1
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:00:00.000Z,2020-02-29T12:00:00.000Z,0,0.00,,1,0,1,false,false,,0.0,0.0,0.0,0.0\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 0,
+            "effectiveEndAt": "2020-02-29T12:00:00.000Z",
+            "endedAt": "2020-02-29T12:00:00.000Z",
+            "endLatitude": 0,
+            "endLongitude": 0,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 1,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 0,
+            "title": "Outing 3",
+            "visitCount": 1
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "zero-duration",
+      "notes": "   ",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 0,
+          "lon": 0,
+          "outlier": false,
+          "time": "2020-02-29T12:00:02.125Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "title": "  ",
+      "visits": [
+        "2020-02-29T11:59:59.000Z",
+        "2020-02-29T12:00:00.000Z",
+        "2020-02-29T12:01:00.000Z",
+        "2020-02-29T12:01:00.001Z"
+      ]
+    },
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,391.48,6.525,3,0,0,false,false,,18.4655,-66.1057,18.4675,-66.1067\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "averageSpeedMetersPerSecond": 6.524723648611641,
+            "distanceMeters": 391.48341891669844,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 18.4675,
+            "endLongitude": -66.1067,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 18.4655,
+            "startLongitude": -66.1057,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,391.48,6.525,3,0,0,false,false,,18.4655,-66.1057,18.4675,-66.1067\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "averageSpeedMetersPerSecond": 6.524723648611641,
+            "distanceMeters": 391.48341891669844,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 18.4675,
+            "endLongitude": -66.1067,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 18.4655,
+            "startLongitude": -66.1057,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "nonzero-walk",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 18.4655,
+          "lon": -66.1057,
+          "outlier": false,
+          "time": "2020-02-29T12:00:00.000Z"
+        },
+        {
+          "lat": 18.4665,
+          "lon": -66.1047,
+          "outlier": false,
+          "time": "2020-02-29T12:00:20.000Z"
+        },
+        {
+          "lat": 18.4675,
+          "lon": -66.1067,
+          "outlier": false,
+          "time": "2020-02-29T12:00:40.000Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": []
+    },
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,245.28,4.088,3,1,0,false,false,,18.4655,-66.1057,18.4675,-66.1067\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "averageSpeedMetersPerSecond": 4.087978326315676,
+            "distanceMeters": 245.2786995789406,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 18.4675,
+            "endLongitude": -66.1067,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 1,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 18.4655,
+            "startLongitude": -66.1057,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,245.28,4.088,3,1,0,false,false,,18.4655,-66.1057,18.4675,-66.1067\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "averageSpeedMetersPerSecond": 4.087978326315676,
+            "distanceMeters": 245.2786995789406,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 18.4675,
+            "endLongitude": -66.1067,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 1,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 18.4655,
+            "startLongitude": -66.1057,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "nonzero-outlier-bridge",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 18.4655,
+          "lon": -66.1057,
+          "outlier": false,
+          "time": "2020-02-29T12:00:00.000Z"
+        },
+        {
+          "lat": 18.4665,
+          "lon": -66.1047,
+          "outlier": true,
+          "time": "2020-02-29T12:00:20.000Z"
+        },
+        {
+          "lat": 18.4675,
+          "lon": -66.1067,
+          "outlier": false,
+          "time": "2020-02-29T12:00:40.000Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": []
+    },
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,391.48,6.525,3,3,0,false,false,,18.4655,-66.1057,18.4675,-66.1067\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "averageSpeedMetersPerSecond": 6.524723648611641,
+            "distanceMeters": 391.48341891669844,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 18.4675,
+            "endLongitude": -66.1067,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 3,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 18.4655,
+            "startLongitude": -66.1057,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,391.48,6.525,3,3,0,false,false,,18.4655,-66.1057,18.4675,-66.1067\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "averageSpeedMetersPerSecond": 6.524723648611641,
+            "distanceMeters": 391.48341891669844,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 18.4675,
+            "endLongitude": -66.1067,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 3,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 18.4655,
+            "startLongitude": -66.1057,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "nonzero-all-outliers",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 18.4655,
+          "lon": -66.1057,
+          "outlier": true,
+          "time": "2020-02-29T12:00:00.000Z"
+        },
+        {
+          "lat": 18.4665,
+          "lon": -66.1047,
+          "outlier": true,
+          "time": "2020-02-29T12:00:20.000Z"
+        },
+        {
+          "lat": 18.4675,
+          "lon": -66.1067,
+          "outlier": true,
+          "time": "2020-02-29T12:00:40.000Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": []
+    },
+    {
+      "end": "2020-02-29T12:01:00.000Z",
+      "expectedCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,405.49,6.758,3,0,0,false,false,,0.0,179.999,0.002,-179.998\n",
+      "expectedJSON": {
+        "outings": [
+          {
+            "averageSpeedMetersPerSecond": 6.758150731652991,
+            "distanceMeters": 405.4890438991795,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 0.002,
+            "endLongitude": -179.998,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 179.999,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 1
+      },
+      "expectedPairCSV": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nearlier,Outing 1,1,2020-02-29T11:00:00.000Z,2020-02-29T11:01:40.000Z,2020-02-29T11:01:40.000Z,100,0.00,,0,0,0,true,false,,,,,\nouting,Outing 3,3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,405.49,6.758,3,0,0,false,false,,0.0,179.999,0.002,-179.998\n",
+      "expectedPairJSON": {
+        "outings": [
+          {
+            "distanceMeters": 0,
+            "durationSeconds": 100,
+            "effectiveEndAt": "2020-02-29T11:01:40.000Z",
+            "endedAt": "2020-02-29T11:01:40.000Z",
+            "id": "earlier",
+            "isActive": false,
+            "isInferred": true,
+            "outlierCount": 0,
+            "pointCount": 0,
+            "sequenceNumber": 1,
+            "startedAt": "2020-02-29T11:00:00.000Z",
+            "title": "Outing 1",
+            "visitCount": 0
+          },
+          {
+            "averageSpeedMetersPerSecond": 6.758150731652991,
+            "distanceMeters": 405.4890438991795,
+            "durationSeconds": 60,
+            "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+            "endedAt": "2020-02-29T12:01:00.000Z",
+            "endLatitude": 0.002,
+            "endLongitude": -179.998,
+            "id": "outing",
+            "isActive": false,
+            "isInferred": false,
+            "outlierCount": 0,
+            "pointCount": 3,
+            "sequenceNumber": 3,
+            "startedAt": "2020-02-29T12:00:00.000Z",
+            "startLatitude": 0,
+            "startLongitude": 179.999,
+            "title": "Outing 3",
+            "visitCount": 0
+          }
+        ],
+        "totalOutings": 2
+      },
+      "id": "outing",
+      "inferred": false,
+      "name": "nonzero-dateline",
+      "now": "2020-02-29T13:00:00.000Z",
+      "points": [
+        {
+          "lat": 0,
+          "lon": 179.999,
+          "outlier": false,
+          "time": "2020-02-29T12:00:00.000Z"
+        },
+        {
+          "lat": 0.001,
+          "lon": -179.999,
+          "outlier": false,
+          "time": "2020-02-29T12:00:20.000Z"
+        },
+        {
+          "lat": 0.002,
+          "lon": -179.998,
+          "outlier": false,
+          "time": "2020-02-29T12:00:40.000Z"
+        }
+      ],
+      "sequence": 3,
+      "start": "2020-02-29T12:00:00.000Z",
+      "visits": []
+    }
+  ]
+}

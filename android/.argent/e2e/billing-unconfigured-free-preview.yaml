@@ -1,0 +1,21 @@
+steps:
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - await: { visible: { text: Lifetime export access } }
+  - await: { idle: true }
+  - tap: { text: Restore purchases }
+  - await: { visible: { text: Purchases are not available in this build. } }
+  - assert: { visible: { text: Import history file } }
+  - assert: { hidden: { text: Buy lifetime access } }
+  - tap: { text: Preview export }
+  - scroll-to: { target: { text: '"exportDate"' }, direction: down }
+  - await: { visible: { text: '"exportDate"' } }
+  - await: { idle: true }
+  - tap: { id: navigation-map }
+  - await: { visible: { text: Start recording } }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

@@ -1,0 +1,32 @@
+steps:
+  - echo: Requires one stopped unnamed outing on the current day; restores its default name after checking persistence.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Your location journal } }
+  - await: { idle: true }
+  - tap: { id: map-day-peek }
+  - tap: { id: map-open-timeline }
+  - await: { visible: { text: View outing } }
+  - await: { idle: true }
+  - tap: { text: View outing }
+  - await: { visible: { text: Outing details } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Edit outing }, direction: down }
+  - await: { visible: { text: Edit outing } }
+  - tap: { text: Edit outing }
+  - await: { visible: { text: Save outing } }
+  - await: { idle: true }
+  - type: { into: { text: Name }, text: Pixel QA outing, submit: false }
+  - tool: button
+    args: { button: back }
+  - await: { visible: { text: Pixel QA outing, role: TextField } }
+  - tap: { text: Save outing }
+  - await: { hidden: { text: Save outing } }
+  - await: { idle: true }
+  - tap: { text: Edit outing }
+  - await: { visible: { text: Pixel QA outing, role: TextField } }
+  - await: { visible: { text: Save outing } }
+  - await: { idle: true }
+  - tap: { text: Use default name }
+  - tap: { text: Save outing }
+  - await: { hidden: { text: Save outing } }
+  - await: { idle: true }

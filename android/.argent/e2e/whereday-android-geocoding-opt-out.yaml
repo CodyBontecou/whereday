@@ -1,0 +1,32 @@
+steps:
+  - echo: Requires network geocoding enabled and analysis idle; temporarily disables it and restores the original enabled state. No analysis starts.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: "Your location journal" } }
+  - await: { idle: true }
+  - tap:
+      id: navigation-archive
+  - tap:
+      id: archive-settings
+  - await: { visible: { text: "Location and notification permissions" } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Allow network geocoding }, direction: down }
+  - await: { visible: { text: "Allow network geocoding" } }
+  - tap:
+      text: Allow network geocoding
+  - tap:
+      text: Country Days
+  - await: { visible: { text: "Back to settings" } }
+  - await: { idle: true }
+  - await: { visible: { text: "Network geocoding is disabled." } }
+  - tap:
+      text: Back to settings
+  - await: { visible: { text: "Location and notification permissions" } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Allow network geocoding }, direction: down }
+  - tap:
+      text: Allow network geocoding
+  - tap:
+      text: Country Days
+  - await: { visible: { text: "Back to settings" } }
+  - await: { idle: true }
+  - await: { hidden: { text: "Network geocoding is disabled." } }

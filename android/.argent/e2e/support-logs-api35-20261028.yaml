@@ -1,0 +1,73 @@
+steps:
+  - echo: Onboarded idle disposable mapQa only, English API35 emulator. Copy the current process log to its clipboard, clear only that log, inspect development release notes and return to Settings. No email is sent and no journal history or permissions are changed. Home/resume steps retain the recorded workaround for the live inspection bridge.
+  - launch: com.bontecou.whereday.mapqa
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: {visible: {id: settings-screen}}
+  - await: {idle: true}
+  - scroll-to: {target: {text: Support and about}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - scroll-to: {target: {text: Support and about}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {text: Support and about}}
+  - await: {idle: true}
+  - tap: {text: Support and about}
+  - await: {visible: {id: support-screen}}
+  - await: {idle: true}
+  - tap: {text: View activity logs}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {text: {matches: '^Activity logs$'}}}
+  - await: {idle: true}
+  - tap: {text: Copy logs}
+  - await: {visible: {text: Logs copied to clipboard.}}
+  - tap: {text: Clear logs}
+  - await: {visible: {text: 'Clear activity logs?'}}
+  - await: {idle: true}
+  - tap: {text: Clear logs, next: {text: Cancel}}
+  - await: {visible: {text: No log entries.}}
+  - await: {hidden: {text: Logs copied to clipboard.}}
+  - tool: run-sequence
+    args:
+      steps:
+        - {tool: button, args: {button: back}}
+        - {tool: button, args: {button: home}}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {text: Support and about}}
+  - await: {idle: true}
+  - tap: {text: Release notes}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {text: Android development preview}}
+  - await: {idle: true}
+  - tool: run-sequence
+    args:
+      steps:
+        - {tool: button, args: {button: back}}
+        - {tool: button, args: {button: home}}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {text: Support and about}}
+  - await: {idle: true}
+  - tool: run-sequence
+    args:
+      steps:
+        - {tool: button, args: {button: back}}
+        - {tool: button, args: {button: home}}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {id: settings-screen}}
+  - await: {idle: true}

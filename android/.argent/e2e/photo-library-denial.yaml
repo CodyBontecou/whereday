@@ -1,0 +1,39 @@
+steps:
+  - echo: English Android permission UI. Isolated onboarded com.bontecou.whereday.mapqa only, idle with zero history/photo references and no full/partial media grant. Android permission dialog must still be requestable; reinstall only this QA package if denied permanently. Deny all library access and return to the selected-photo gallery. Never grant access or scan owner photos.
+  - launch: com.bontecou.whereday.mapqa
+  - await:
+      visible: {text: Start recording}
+  - await: {idle: true}
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await:
+      visible: {text: Distance filter}
+  - await: {idle: true}
+  - scroll-to:
+      target: {text: Photos}
+      direction: down
+  - await:
+      visible: {text: Photos}
+  - await: {idle: true}
+  - tap: {text: Photos}
+  - await:
+      visible: {text: Back to Settings}
+  - await: {idle: true}
+  - tap: {text: Library access and sync}
+  - await:
+      visible: {text: 'Library access: not allowed'}
+  - await: {idle: true}
+  - tap: {text: Choose library access}
+  - await:
+      visible: {text: 'Don’t allow'}
+  - await: {idle: true}
+  - tap: {text: 'Don’t allow'}
+  - await:
+      visible: {text: 'Library access: not allowed'}
+  - await: {idle: true}
+  - tap: {text: Close library options}
+  - await:
+      visible: {text: Add photos}
+  - await: {idle: true}
+  - await:
+      visible: {text: No photos selected yet.}

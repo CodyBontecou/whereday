@@ -1,0 +1,693 @@
+{
+  "provenance": {
+    "IsoMe/Utilities/ImportService.swift": "8f1eac4695828bedb50495d77c448e6f025a06e0fe0ea2f550669f3c190eabca",
+    "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
+    "android/scripts/fixtures/HistoryImportFixtures.swift": "69bcec7dc56fd81b23726ddc2803a699bf5509280b61d86ba1953343b7cb3275",
+    "android/scripts/fixtures/history-import-inputs.json": "2582b0237a8a230d7499c1d5f24b2b4a07855222af8b5296243103d20a6646b0",
+    "android/scripts/generate_history_import_fixtures.py": "6351300eadb5f49d943db4ceb9f128f13cf9bfc0f3d887bd63f07403978865c6"
+  },
+  "cases": [
+    {
+      "expectedVisits": [
+        {
+          "address": "Line 1\r\nLine 2",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": "2026-10-26T13:30:00.250Z",
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.625Z",
+          "detectedAddress": "Detected address",
+          "detectedLatitude": 18.11,
+          "detectedLocationName": "Detected",
+          "detectedLongitude": -66.11,
+          "latitude": 18.123456,
+          "locationName": "Café, \"北\" 🗺️",
+          "longitude": -66.123456,
+          "notes": "Pipe | slash \\ and\nnew line",
+          "originalAddress": "Original address",
+          "originalLatitude": 18.1,
+          "originalLocationName": "Original",
+          "originalLongitude": -66.1,
+          "placeDistanceMeters": 42.25,
+          "placeSource": "appleMaps",
+          "source": "automatic",
+          "updatedAt": "2026-10-26T13:45:00.750Z"
+        }
+      ],
+      "format": "json",
+      "name": "corrected-visit-metadata",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Café, \\\"北\\\" 🗺️\", \"address\": \"Line 1\\r\\nLine 2\", \"notes\": \"Pipe | slash \\\\ and\\nnew line\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "Line 1\r\nLine 2",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": "2026-10-26T13:30:00.250Z",
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.625Z",
+          "detectedAddress": "Detected address",
+          "detectedLatitude": 18.11,
+          "detectedLocationName": "Detected",
+          "detectedLongitude": -66.11,
+          "latitude": 18.123456,
+          "locationName": "Café, \"北\" 🗺️",
+          "longitude": -66.123456,
+          "notes": "Pipe | slash \\ and\nnew line",
+          "originalAddress": "Original address",
+          "originalLatitude": 18.1,
+          "originalLocationName": "Original",
+          "originalLongitude": -66.1,
+          "placeDistanceMeters": 42.25,
+          "placeSource": "appleMaps",
+          "source": "automatic",
+          "updatedAt": "2026-10-26T13:45:00.750Z"
+        }
+      ],
+      "format": "json",
+      "name": "unknown-nested-visit-fields",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Café, \\\"北\\\" 🗺️\", \"address\": \"Line 1\\r\\nLine 2\", \"notes\": \"Pipe | slash \\\\ and\\nnew line\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25, \"future\": {\"nested\": [1, {\"name\": \"future\"}]}, \"futureArray\": [true, null]}]}"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": -1.5,
+          "horizontalAccuracy": 5.25,
+          "isOutlier": true,
+          "latitude": 18.123456,
+          "longitude": -66.123456,
+          "speed": 1.75,
+          "timestamp": "2026-10-26T13:00:00.125Z"
+        }
+      ],
+      "format": "json",
+      "name": "unknown-nested-point-fields",
+      "subject": "points",
+      "text": "{\"points\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"2026-10-26T09:00:00.125-04:00\", \"horizontalAccuracy\": 5.25, \"altitude\": -1.5, \"speed\": 1.75, \"isOutlier\": true, \"future\": {\"nested\": [1, 2]}, \"futureArray\": [{\"a\": 3}]}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": null,
+          "arrivedAt": "2026-10-26T13:00:00.000Z",
+          "confirmationStatus": null,
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": null,
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": null,
+          "longitude": -66,
+          "notes": null,
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": null,
+          "updatedAt": null
+        }
+      ],
+      "format": "json",
+      "name": "open-visit-null-optionals",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18, \"longitude\": -66, \"arrivedAt\": \"2026-10-26T13:00:00Z\", \"departedAt\": null, \"notes\": null}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "null",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": "2026-10-26T13:30:00.250Z",
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.625Z",
+          "detectedAddress": "Detected address",
+          "detectedLatitude": 18.11,
+          "detectedLocationName": "Detected",
+          "detectedLongitude": -66.11,
+          "latitude": 18.123456,
+          "locationName": "null",
+          "longitude": -66.123456,
+          "notes": "null",
+          "originalAddress": "Original address",
+          "originalLatitude": 18.1,
+          "originalLocationName": "Original",
+          "originalLongitude": -66.1,
+          "placeDistanceMeters": 42.25,
+          "placeSource": "appleMaps",
+          "source": "automatic",
+          "updatedAt": "2026-10-26T13:45:00.750Z"
+        }
+      ],
+      "format": "json",
+      "name": "literal-text-4",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"null\", \"address\": \"null\", \"notes\": \"null\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "Ongoing",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": "2026-10-26T13:30:00.250Z",
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.625Z",
+          "detectedAddress": "Detected address",
+          "detectedLatitude": 18.11,
+          "detectedLocationName": "Detected",
+          "detectedLongitude": -66.11,
+          "latitude": 18.123456,
+          "locationName": "Ongoing",
+          "longitude": -66.123456,
+          "notes": "Ongoing",
+          "originalAddress": "Original address",
+          "originalLatitude": 18.1,
+          "originalLocationName": "Original",
+          "originalLongitude": -66.1,
+          "placeDistanceMeters": 42.25,
+          "placeSource": "appleMaps",
+          "source": "automatic",
+          "updatedAt": "2026-10-26T13:45:00.750Z"
+        }
+      ],
+      "format": "json",
+      "name": "literal-text-5",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Ongoing\", \"address\": \"Ongoing\", \"notes\": \"Ongoing\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "Still here",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": "2026-10-26T13:30:00.250Z",
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.625Z",
+          "detectedAddress": "Detected address",
+          "detectedLatitude": 18.11,
+          "detectedLocationName": "Detected",
+          "detectedLongitude": -66.11,
+          "latitude": 18.123456,
+          "locationName": "Still here",
+          "longitude": -66.123456,
+          "notes": "Still here",
+          "originalAddress": "Original address",
+          "originalLatitude": 18.1,
+          "originalLocationName": "Original",
+          "originalLongitude": -66.1,
+          "placeDistanceMeters": 42.25,
+          "placeSource": "appleMaps",
+          "source": "automatic",
+          "updatedAt": "2026-10-26T13:45:00.750Z"
+        }
+      ],
+      "format": "json",
+      "name": "literal-text-6",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Still here\", \"address\": \"Still here\", \"notes\": \"Still here\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "—",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": "2026-10-26T13:30:00.250Z",
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.625Z",
+          "detectedAddress": "Detected address",
+          "detectedLatitude": 18.11,
+          "detectedLocationName": "Detected",
+          "detectedLongitude": -66.11,
+          "latitude": 18.123456,
+          "locationName": "—",
+          "longitude": -66.123456,
+          "notes": "—",
+          "originalAddress": "Original address",
+          "originalLatitude": 18.1,
+          "originalLocationName": "Original",
+          "originalLongitude": -66.1,
+          "placeDistanceMeters": 42.25,
+          "placeSource": "appleMaps",
+          "source": "automatic",
+          "updatedAt": "2026-10-26T13:45:00.750Z"
+        }
+      ],
+      "format": "json",
+      "name": "literal-text-7",
+      "subject": "visits",
+      "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"—\", \"address\": \"—\", \"notes\": \"—\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": -1.5,
+          "horizontalAccuracy": 5.25,
+          "isOutlier": true,
+          "latitude": 18.123456,
+          "longitude": -66.123456,
+          "speed": 1.75,
+          "timestamp": "2026-10-26T13:00:00.125Z"
+        },
+        {
+          "altitude": null,
+          "horizontalAccuracy": 5.25,
+          "isOutlier": false,
+          "latitude": 18.123456,
+          "longitude": -66.123456,
+          "speed": null,
+          "timestamp": "2026-10-26T13:01:00.999Z"
+        }
+      ],
+      "format": "json",
+      "name": "point-optionals-and-offset",
+      "subject": "points",
+      "text": "{\"points\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"2026-10-26T09:00:00.125-04:00\", \"horizontalAccuracy\": 5.25, \"altitude\": -1.5, \"speed\": 1.75, \"isOutlier\": true}, {\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"2026-10-26T13:01:00.999Z\", \"horizontalAccuracy\": 5.25, \"altitude\": null, \"speed\": null, \"isOutlier\": false}]}"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": -1.5,
+          "horizontalAccuracy": 5.25,
+          "isOutlier": true,
+          "latitude": 18.123456,
+          "longitude": -66.123456,
+          "speed": 1.75,
+          "timestamp": "2026-10-26T13:00:00.125Z"
+        }
+      ],
+      "format": "json",
+      "name": "point-unix-fallback",
+      "subject": "points",
+      "text": "{\"points\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"invalid\", \"horizontalAccuracy\": 5.25, \"altitude\": -1.5, \"speed\": 1.75, \"isOutlier\": true, \"timestampUnix\": 1793019600.125}]}"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": null,
+          "horizontalAccuracy": 0,
+          "isOutlier": false,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": null,
+          "timestamp": "1969-12-31T23:59:59.875Z"
+        }
+      ],
+      "format": "json",
+      "name": "point-negative-unix",
+      "subject": "points",
+      "text": "{\"points\": [{\"latitude\": 18, \"longitude\": -66, \"timestampUnix\": -0.125}]}"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "Address",
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": "confirmed",
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": null,
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Café, \"北\"",
+          "longitude": -66,
+          "notes": "One\r\nTwo",
+          "originalAddress": "Original address",
+          "originalLatitude": null,
+          "originalLocationName": "Original",
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": "manual",
+          "updatedAt": null
+        }
+      ],
+      "format": "csv",
+      "name": "quoted-multiline-unicode-csv",
+      "subject": "visits",
+      "text": "arrived_at,departed_at,latitude,longitude,location_name,address,notes,source,confirmation_status,original_location_name,original_address\n2026-10-26T13:00:00.125Z,,18,-66,\"Café, \"\"北\"\"\",Address,\"One\r\nTwo\",manual,confirmed,Original,Original address\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": null,
+          "horizontalAccuracy": 4.5,
+          "isOutlier": true,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": null,
+          "timestamp": "1969-12-31T23:59:59.875Z"
+        }
+      ],
+      "format": "csv",
+      "name": "point-csv-unix-fallback",
+      "subject": "points",
+      "text": "timestamp,timestamp_unix,latitude,longitude,altitude,speed,horizontal_accuracy,is_outlier\ninvalid,-0.125,18,-66,,,4.5,true\n"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "Address",
+          "arrivedAt": "2026-10-26T13:00:00.000Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": "2026-10-26T14:15:00.000Z",
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Cafe",
+          "longitude": -66,
+          "notes": "One\nTwo",
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": "automatic",
+          "updatedAt": null
+        }
+      ],
+      "format": "markdown",
+      "name": "legacy-title-case-source-and-status",
+      "subject": "visits",
+      "text": "# Whereday Export\n## Monday, October 26, 2026\n| Arrived | Departed | Lat | Lon | Location | Address | Notes | Source | Status |\n|---|---|---|---|---|---|---|---|---|\n| 9:00 AM | 10:15 AM | 18 | -66 | Cafe | Address | One<br>Two | Automatic | Corrected |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": 10,
+          "horizontalAccuracy": 5,
+          "isOutlier": true,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": 1.5,
+          "timestamp": "2026-10-26T13:00:15.000Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "legacy-point-table",
+      "subject": "points",
+      "text": "# Whereday Location Points Export\n## Monday, October 26, 2026\n| Time | Lat | Lon | Speed | Altitude | Accuracy | Outlier |\n|---|---|---|---|---|---|---|\n| 9:00:15 AM | 18 | -66 | 1.5 m/s | 10 m | 5 m | Yes |\n"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "C:\\folder\\",
+          "arrivedAt": "2026-10-27T03:59:30.125Z",
+          "confirmationStatus": "corrected",
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": "2026-10-27T04:15:30.625Z",
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Cafe | 北",
+          "longitude": -66,
+          "notes": "One\nTwo | three ---",
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": "automatic",
+          "updatedAt": null
+        }
+      ],
+      "format": "markdown",
+      "name": "iso-visit-escaped-pipes-and-slashes",
+      "subject": "visits",
+      "text": "# Whereday Complete Export\n## Visits\n| Arrived | Departed | Lat | Lon | Location | Address | Notes | Source | Status |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 2026-10-26T23:59:30.125-04:00 | 2026-10-27T00:15:30.625-04:00 | 18 | -66 | Cafe \\| 北 | C:\\\\folder\\\\ | One<br>Two \\| three --- | automatic | corrected |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": -1.5,
+          "horizontalAccuracy": 0,
+          "isOutlier": true,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": null,
+          "timestamp": "2026-10-26T13:00:00.125Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "iso-point-omitted-middle-fields",
+      "subject": "points",
+      "text": "## Location Points\n| Time | Lat | Lon | Altitude | Outlier |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | 18 | -66 | -1.5 m | Yes |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": null,
+          "horizontalAccuracy": 0,
+          "isOutlier": false,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": null,
+          "timestamp": "2026-10-26T13:00:00.125Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "iso-point-empty-optionals",
+      "subject": "points",
+      "text": "| Time | Lat | Lon | Speed | Altitude | Accuracy | Outlier |\n| --- | --- | --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | 18 | -66 | | | | No |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": null,
+          "horizontalAccuracy": 4.25,
+          "isOutlier": false,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": 1.5,
+          "timestamp": "2026-10-26T13:00:00.125Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "iso-point-reordered-alias-columns",
+      "subject": "points",
+      "text": "| Time | Longitude | Latitude | Accuracy | Speed |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | -66 | 18 | 4.25 m | 1.5 m/s |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": null,
+          "horizontalAccuracy": 0,
+          "isOutlier": false,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": null,
+          "timestamp": "2026-10-26T16:00:00.125Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "iso-point-ignores-old-local-context",
+      "subject": "points",
+      "text": "## Monday, October 26, 2026\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 2026-10-27T01:00:00.125+09:00 | 18 | -66 |\n"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": null,
+          "arrivedAt": "2026-10-26T13:00:00.125Z",
+          "confirmationStatus": null,
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": null,
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Ongoing",
+          "longitude": -66,
+          "notes": null,
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": null,
+          "updatedAt": null
+        }
+      ],
+      "format": "markdown",
+      "name": "combined-typed-visit-table",
+      "subject": "visits",
+      "text": "## Visits\n| Arrived | Departed | Lat | Lon | Location |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | | 18 | -66 | Ongoing |\n## Location Points\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 2026-10-26T13:01:00.125Z | 18.1 | -66.1 |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": null,
+          "horizontalAccuracy": 0,
+          "isOutlier": false,
+          "latitude": 18.1,
+          "longitude": -66.1,
+          "speed": null,
+          "timestamp": "2026-10-26T13:01:00.125Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "combined-typed-point-table",
+      "subject": "points",
+      "text": "## Visits\n| Arrived | Departed | Lat | Lon | Location |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | | 18 | -66 | Ongoing |\n## Location Points\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 2026-10-26T13:01:00.125Z | 18.1 | -66.1 |\n"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": null,
+          "arrivedAt": "2026-10-26T13:00:00.000Z",
+          "confirmationStatus": null,
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": null,
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Ongoing",
+          "longitude": -66,
+          "notes": "Ongoing",
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": null,
+          "updatedAt": null
+        }
+      ],
+      "format": "markdown",
+      "name": "markdown-literal-Ongoing",
+      "subject": "visits",
+      "text": "| Arrived | Departed | Lat | Lon | Location | Notes |\n| --- | --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | | 18 | -66 | Ongoing | Ongoing |\n"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": null,
+          "arrivedAt": "2026-10-26T13:00:00.000Z",
+          "confirmationStatus": null,
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": null,
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Still here",
+          "longitude": -66,
+          "notes": "Still here",
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": null,
+          "updatedAt": null
+        }
+      ],
+      "format": "markdown",
+      "name": "markdown-literal-Still-here",
+      "subject": "visits",
+      "text": "| Arrived | Departed | Lat | Lon | Location | Notes |\n| --- | --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | | 18 | -66 | Still here | Still here |\n"
+    },
+    {
+      "expectedPoints": [
+        {
+          "altitude": 10,
+          "horizontalAccuracy": 5,
+          "isOutlier": true,
+          "latitude": 18,
+          "longitude": -66,
+          "speed": 1.5,
+          "timestamp": "2026-10-26T13:00:15.000Z"
+        }
+      ],
+      "format": "markdown",
+      "name": "legacy-positional-points",
+      "subject": "points",
+      "text": "## Monday, October 26, 2026\n| 9:00:15 AM | 18 | -66 | 1.5 m/s | 10 m | 5 m | Yes |\n"
+    },
+    {
+      "expectedVisits": [
+        {
+          "address": "C:\\",
+          "arrivedAt": "2026-10-26T13:00:00.000Z",
+          "confirmationStatus": null,
+          "confirmedAt": null,
+          "customName": null,
+          "departedAt": null,
+          "detectedAddress": null,
+          "detectedLatitude": null,
+          "detectedLocationName": null,
+          "detectedLongitude": null,
+          "latitude": 18,
+          "locationName": "Cafe | 北",
+          "longitude": -66,
+          "notes": "One\nTwo",
+          "originalAddress": null,
+          "originalLatitude": null,
+          "originalLocationName": null,
+          "originalLongitude": null,
+          "placeDistanceMeters": null,
+          "placeSource": null,
+          "source": null,
+          "updatedAt": null
+        }
+      ],
+      "format": "markdown",
+      "name": "legacy-escaped-visit-table",
+      "subject": "visits",
+      "text": "## Monday, October 26, 2026\n| Arrived | Departed | Lat | Lon | Location | Address | Notes |\n| --- | --- | --- | --- | --- | --- | --- |\n| 9:00 AM | - | 18 | -66 | Cafe \\| 北 | C:\\\\ | One<br>Two |\n"
+    },
+    {
+      "expectedError": "Invalid data: Duplicate Markdown columns",
+      "format": "markdown",
+      "name": "duplicate-markdown-aliases-rejected",
+      "subject": "points",
+      "text": "| Time | Lat | Latitude | Lon |\n| --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | 18 | 19 | -66 |\n"
+    },
+    {
+      "expectedError": "Invalid data: Invalid Markdown visit departure time",
+      "format": "markdown",
+      "name": "invalid-departure-does-not-open-visit",
+      "subject": "visits",
+      "text": "| Arrived | Departed | Lat | Lon |\n| --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | broken | 18 | -66 |\n"
+    },
+    {
+      "expectedError": "Invalid data: No location points found in Markdown file",
+      "format": "markdown",
+      "name": "bad-heading-does-not-reuse-previous-date",
+      "subject": "points",
+      "text": "## Monday, October 26, 2026\n## Invalid date\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 9:00:00 AM | 18 | -66 |\n"
+    }
+  ]
+}

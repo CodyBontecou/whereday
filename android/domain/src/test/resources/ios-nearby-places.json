@@ -1,0 +1,580 @@
+{
+  "provenance": {
+    "IsoMe/Services/GeocodingService.swift": "3aa0eff181ba53851b90bd008ba65165808740beded8c7dcffadc303c65bded1",
+    "IsoMe/Services/PlaceSearchService.swift": "7e37553ffbda840eda62ff4c70a5d35a89ee72b46300f27a27ca4da060b54785",
+    "android/scripts/fixtures/NearbyPlaceFixtures.swift": "78fe385795d3e8f5269537b70c2ef03c364304f347be58c2d1d335ebd830b9ef",
+    "android/scripts/generate_nearby_place_fixtures.py": "3625ae032849980899699caeeb321b143cb7dafe259b393cdcb1ef9a54b2bdc6"
+  },
+  "cases": [
+    {
+      "name": "empty",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [],
+      "results": []
+    },
+    {
+      "name": "trim-and-reserved-names",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "10 Main Street",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "  Cafe  "
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": "none"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": " UNKNOWN "
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Current Location"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": " "
+        }
+      ],
+      "results": [
+        {
+          "address": "10 Main Street",
+          "distance": 110.57427582167891,
+          "id": "cafe-100-0",
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "Cafe"
+        }
+      ]
+    },
+    {
+      "name": "first-eligible-name-before-sort",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 884.5942065734313,
+          "latitude": 0.008,
+          "longitude": 0,
+          "name": "Chain"
+        },
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "CHAIN"
+        },
+        {
+          "address": "United States",
+          "distance": 442.29710328671564,
+          "latitude": 0.004,
+          "longitude": 0,
+          "name": "Different"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 442.29710328671564,
+          "id": "different-400-0",
+          "latitude": 0.004,
+          "longitude": 0,
+          "name": "Different"
+        },
+        {
+          "address": "United States",
+          "distance": 884.5942065734313,
+          "id": "chain-800-0",
+          "latitude": 0.008,
+          "longitude": 0,
+          "name": "Chain"
+        }
+      ]
+    },
+    {
+      "name": "outside-name-does-not-suppress-inside",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 2211.485516433578,
+          "latitude": 0.02,
+          "longitude": 0,
+          "name": "Chain"
+        },
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "CHAIN"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "id": "chain-100-0",
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "CHAIN"
+        }
+      ]
+    },
+    {
+      "name": "near-before-far",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 884.5942065734313,
+          "latitude": 0.008,
+          "longitude": 0,
+          "name": "Far"
+        },
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "Near"
+        },
+        {
+          "address": "United States",
+          "distance": 442.29710328671564,
+          "latitude": 0.004,
+          "longitude": 0,
+          "name": "Middle"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "id": "near-100-0",
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "Near"
+        },
+        {
+          "address": "United States",
+          "distance": 442.29710328671564,
+          "id": "middle-400-0",
+          "latitude": 0.004,
+          "longitude": 0,
+          "name": "Middle"
+        },
+        {
+          "address": "United States",
+          "distance": 884.5942065734313,
+          "id": "far-800-0",
+          "latitude": 0.008,
+          "longitude": 0,
+          "name": "Far"
+        }
+      ]
+    },
+    {
+      "name": "same-distance-name-tie",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Zoo"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": "apple"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Banana"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 0,
+          "id": "apple-0-0",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "apple"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "id": "banana-0-0",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Banana"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "id": "zoo-0-0",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "Zoo"
+        }
+      ]
+    },
+    {
+      "name": "radius-twenty-percent-slack",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 1161.0298961276285,
+          "latitude": 0.0105,
+          "longitude": 0,
+          "name": "Within slack"
+        },
+        {
+          "address": "United States",
+          "distance": 1216.317034038468,
+          "latitude": 0.011,
+          "longitude": 0,
+          "name": "Outside slack"
+        },
+        {
+          "address": "United States",
+          "distance": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "name": "At origin"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 0,
+          "id": "at origin-0-0",
+          "latitude": 0,
+          "longitude": 0,
+          "name": "At origin"
+        },
+        {
+          "address": "United States",
+          "distance": 1161.0298961276285,
+          "id": "within slack-1050-0",
+          "latitude": 0.0105,
+          "longitude": 0,
+          "name": "Within slack"
+        }
+      ]
+    },
+    {
+      "name": "unicode-equivalent-names",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "Café"
+        },
+        {
+          "address": "United States",
+          "distance": 221.14855164335782,
+          "latitude": 0.002,
+          "longitude": 0,
+          "name": "Café"
+        },
+        {
+          "address": "United States",
+          "distance": 331.72282746503674,
+          "latitude": 0.003,
+          "longitude": 0,
+          "name": "CAFÉ"
+        },
+        {
+          "address": "United States",
+          "distance": 442.29710328671564,
+          "latitude": 0.004,
+          "longitude": 0,
+          "name": "Cafe"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "id": "café-100-0",
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "Café"
+        },
+        {
+          "address": "United States",
+          "distance": 442.29710328671564,
+          "id": "cafe-400-0",
+          "latitude": 0.004,
+          "longitude": 0,
+          "name": "Cafe"
+        }
+      ]
+    },
+    {
+      "name": "id-away-from-zero-rounding",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 1.7589409599346881,
+          "latitude": -5e-06,
+          "longitude": -1.5e-05,
+          "name": "Negative"
+        },
+        {
+          "address": "United States",
+          "distance": 1.7589409579297688,
+          "latitude": 5e-06,
+          "longitude": 1.5e-05,
+          "name": "Positive"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 1.7589409579297688,
+          "id": "positive-1-2",
+          "latitude": 5e-06,
+          "longitude": 1.5e-05,
+          "name": "Positive"
+        },
+        {
+          "address": "United States",
+          "distance": 1.7589409599346881,
+          "id": "negative--1--2",
+          "latitude": -5e-06,
+          "longitude": -1.5e-05,
+          "name": "Negative"
+        }
+      ]
+    },
+    {
+      "name": "date-line",
+      "origin": [
+        0,
+        179.999
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 222.63898157918948,
+          "latitude": 0,
+          "longitude": -179.999,
+          "name": "Across"
+        },
+        {
+          "address": "United States",
+          "distance": 111.31949078959474,
+          "latitude": 0,
+          "longitude": 179.998,
+          "name": "Same side"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 111.31949078959474,
+          "id": "same side-0-17999800",
+          "latitude": 0,
+          "longitude": 179.998,
+          "name": "Same side"
+        },
+        {
+          "address": "United States",
+          "distance": 222.63898157918948,
+          "id": "across-0--17999900",
+          "latitude": 0,
+          "longitude": -179.999,
+          "name": "Across"
+        }
+      ]
+    },
+    {
+      "name": "near-pole",
+      "origin": [
+        89.999,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 157.95914072441536,
+          "latitude": 89.999,
+          "longitude": 90,
+          "name": "East"
+        },
+        {
+          "address": "United States",
+          "distance": 157.95914072441536,
+          "latitude": 89.999,
+          "longitude": -90,
+          "name": "West"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 157.95914072441536,
+          "id": "east-8999900-9000000",
+          "latitude": 89.999,
+          "longitude": 90,
+          "name": "East"
+        },
+        {
+          "address": "United States",
+          "distance": 157.95914072441536,
+          "id": "west-8999900--9000000",
+          "latitude": 89.999,
+          "longitude": -90,
+          "name": "West"
+        }
+      ]
+    },
+    {
+      "name": "small-radius",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 25,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 11.057427582167891,
+          "latitude": 0.0001,
+          "longitude": 0,
+          "name": "Very near"
+        },
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "Too far"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 11.057427582167891,
+          "id": "very near-10-0",
+          "latitude": 0.0001,
+          "longitude": 0,
+          "name": "Very near"
+        }
+      ]
+    },
+    {
+      "name": "missing-address",
+      "origin": [
+        0,
+        0
+      ],
+      "radius": 1000,
+      "records": [
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "No street"
+        },
+        {
+          "address": "2 Other Road",
+          "distance": 221.14855164335782,
+          "latitude": 0.002,
+          "longitude": 0,
+          "name": "Street"
+        }
+      ],
+      "results": [
+        {
+          "address": "United States",
+          "distance": 110.57427582167891,
+          "id": "no street-100-0",
+          "latitude": 0.001,
+          "longitude": 0,
+          "name": "No street"
+        },
+        {
+          "address": "2 Other Road",
+          "distance": 221.14855164335782,
+          "id": "street-200-0",
+          "latitude": 0.002,
+          "longitude": 0,
+          "name": "Street"
+        }
+      ]
+    }
+  ],
+  "maximumRadius": 2000
+}

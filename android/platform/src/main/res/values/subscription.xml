@@ -1,0 +1,6 @@
+<resources>
+    <string name="trial_reminder_channel">Free trial reminders</string>
+    <string name="trial_reminder_title">Your free week ends in 2 days</string>
+    <string name="trial_reminder_body_weekly">Your Whereday plan begins at %1$s a week. Cancel before then in Google Play and you won\'t be charged.</string>
+    <string name="trial_reminder_body_yearly">Your Whereday plan begins at %1$s a year. Cancel before then in Google Play and you won\'t be charged.</string>
+</resources>

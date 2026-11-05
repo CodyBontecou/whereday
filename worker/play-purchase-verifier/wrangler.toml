@@ -1,0 +1,22 @@
+name = "whereday-play-purchase-verifier"
+main = "src/index.ts"
+compatibility_date = "2026-05-30"
+
+[vars]
+PACKAGE_NAME = "com.bontecou.whereday"
+LIFETIME_PRODUCT_ID = "whereday_export_lifetime"
+SUBSCRIPTION_PRODUCT_ID = "whereday_individual"
+
+# Create once with `wrangler d1 create whereday-play-purchases`, put its id here, then apply migrations.
+[[d1_databases]]
+binding = "DB"
+database_name = "whereday-play-purchases"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[observability]
+enabled = false
+
+# Secrets (set with `wrangler secret put`, never committed):
+#   GOOGLE_SERVICE_ACCOUNT — Play Console service-account JSON key
+#   LEASE_PRIVATE_KEY      — PKCS#8 PEM RSA key (2048 bits or more) that signs device leases

@@ -1,0 +1,20 @@
+steps:
+  - echo: Removes only the known temporary Codex QA Place 20261027 after the interrupted import replay.
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: Manage saved places }, direction: down }
+  - tap: { text: Manage saved places }
+  - await: { visible: { text: Search saved places } }
+  - await: { visible: { text: Codex QA Place 20261027 } }
+  - tap: { text: Codex QA Place 20261027 }
+  - await: { visible: { text: Edit saved place } }
+  - tap: { text: Delete saved place }
+  - await: { visible: { text: Delete this saved place? } }
+  - tap: { text: { matches: '^Delete place$' } }
+  - await: { visible: { text: No saved places yet. Add a place or import a CSV file. } }
+  - tap: { text: Back to settings }
+  - await: { visible: { text: Distance filter } }

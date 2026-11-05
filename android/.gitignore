@@ -1,0 +1,15 @@
+.gradle/
+.kotlin/
+local.properties
+**/build/
+*.jks
+*.keystore
+captures/
+*.p12
+*.aab
+*.apk
+# Play Console service-account keys and any other credentials.
+*service-account*.json
+# Local Argent screen recordings and run output; e2e flows and fixtures are committed.
+.argent/recordings/
+.argent/runs/

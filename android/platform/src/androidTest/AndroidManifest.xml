@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application android:usesCleartextTraffic="true">
+        <activity android:name="com.bontecou.whereday.platform.ReviewTestActivity" android:exported="false" android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+        <activity android:name="com.bontecou.whereday.platform.PhotoIdentityActivity" android:exported="false" android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+        <provider android:name="com.bontecou.whereday.platform.PhotoLibraryTestProvider" android:authorities="${applicationId}.library-test" android:exported="false" />
+        <provider android:name="com.bontecou.whereday.platform.PhotoTestProvider" android:authorities="${applicationId}.photo-test" android:exported="false" />
+        <provider android:name="com.bontecou.whereday.platform.ExportTestDocuments" android:authorities="com.bontecou.whereday.export-test-documents" android:exported="true" android:permission="android.permission.MANAGE_DOCUMENTS" android:grantUriPermissions="true" />
+    </application>
+</manifest>

@@ -1,0 +1,203 @@
+steps:
+- echo: Requires onboarded idle app, zero points/visits on 2026-10-27 and inferred outings enabled with
+    30-minute gaps and no duration minimum. Run on 2026-10-27 before midnight. Stage only replay-route.csv
+    as Downloads/whereday-replay-qa-20261027.csv. Imports 12 public-coordinate synthetic points, verifies
+    day and inferred-outing replay, and deletes only that inferred outing to restore the baseline. Never
+    clear user history.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      text: Import history file
+- await:
+    idle: true
+- tap:
+    text: Import history file
+- await:
+    visible:
+      text: whereday-replay-qa-20261027.csv
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-replay-qa-20261027\.csv
+- scroll-to:
+    target:
+      text: Imported 0 visits and 12 points. 0 rows could not be read.
+    direction: down
+- await:
+    visible:
+      text: Imported 0 visits and 12 points. 0 rows could not be read.
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: Replay route
+- await:
+    idle: true
+- tap:
+    text: Replay route
+- await:
+    visible:
+      text: Close route replay
+- await:
+    idle: true
+- await:
+    visible:
+      text: Point 12 of 12
+- await:
+    visible:
+      text: Elapsed 11:00 / 11:00
+- await:
+    visible:
+      text: Distance 0.15 km / 0.15 km
+- tap:
+    text: Replay start
+- await:
+    visible:
+      text: Point 1 of 12
+- await:
+    visible:
+      text: Elapsed 0:00 / 11:00
+- await:
+    visible:
+      text: Route replay progress
+- tap:
+    text: Route replay progress
+- await:
+    visible:
+      text: Point 7 of 12
+- await:
+    visible:
+      text: Elapsed 6:00 / 11:00
+- await:
+    visible:
+      text: Distance 0.08 km / 0.15 km
+- tap:
+    text: Replay start
+- await:
+    visible:
+      text: Point 1 of 12
+- tap:
+    text: Play route replay
+- tap:
+    text: Pause route replay
+- await:
+    visible:
+      text: Play route replay
+- tap:
+    text: Replay end
+- await:
+    visible:
+      text: Point 12 of 12
+- await:
+    visible:
+      text: Point 12 of 12
+- tap:
+    text: Close route replay
+- await:
+    hidden:
+      text: Close route replay
+- await:
+    visible:
+      text: Save current place
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      text: Add past visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: "12 points \xB7 0.15 km"
+- tap:
+    text: View outing
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- await:
+    visible:
+      text: "12 points \xB7 0 GPS glitches"
+- tap:
+    text: Replay route
+- await:
+    visible:
+      text: Close route replay
+- await:
+    idle: true
+- await:
+    visible:
+      text: Point 12 of 12
+- await:
+    visible:
+      text: Elapsed 11:00 / 11:00
+- await:
+    visible:
+      text: Distance 0.15 km / 0.15 km
+- tap:
+    text: Close route replay
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Close route replay
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Show on map
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Show on map
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Delete outing
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Delete outing
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: Delete this outing?
+- await:
+    idle: true
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true
+- await:
+    hidden:
+      text: "12 points \xB7 0.15 km"

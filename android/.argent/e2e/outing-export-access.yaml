@@ -1,0 +1,45 @@
+steps:
+  - echo: Requires onboarded idle app, JSON export format, unconfigured lifetime access, and one stopped unnamed outing yesterday. Changes format to Markdown and restores JSON; preserves all history and returns to today.
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: map-day-peek }
+  - tap: { id: map-open-timeline }
+  - await: { visible: { text: Previous } }
+  - tap: { text: Previous }
+  - await: { visible: { text: View outing } }
+  - tap: { text: View outing }
+  - await: { visible: { text: Outing details } }
+  - scroll-to: { target: { text: Export outing }, direction: down }
+  - await: { visible: { text: Outing file format } }
+  - tap: { text: { matches: '^Json$' } }
+  - await: { visible: { text: { matches: '^Csv$' } } }
+  - await: { visible: { text: { matches: '^Markdown$' } } }
+  - await: { visible: { text: { matches: '^Geojson$' } } }
+  - await: { visible: { text: { matches: '^Gpx$' } } }
+  - await: { visible: { text: { matches: '^Kml$' } } }
+  - await: { visible: { text: { matches: '^Owntracks$' } } }
+  - await: { visible: { text: { matches: '^Overland$' } } }
+  - tap: { text: { matches: '^Markdown$' } }
+  - await: { visible: { text: { matches: '^Markdown$' } } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Export outing$' } }
+  - await: { visible: { text: Share file } }
+  - tap: { text: Share file }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - tap: { text: Save file as… }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - scroll-to: { target: { text: { matches: '^Done$' } }, direction: down }
+  - tap: { text: { matches: '^Done$' } }
+  - await: { visible: { text: Outing file format } }
+  - tap: { text: { matches: '^Markdown$' } }
+  - await: { visible: { text: { matches: '^Json$' } } }
+  - tap: { text: { matches: '^Json$' } }
+  - await: { visible: { text: { matches: '^Json$' } } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Back to timeline }, direction: up }
+  - tap: { text: Back to timeline }
+  - await: { visible: { text: Next } }
+  - tap: { text: Next }
+  - await: { visible: { text: No outings or visits for this day. } }
+  - await: { idle: true }

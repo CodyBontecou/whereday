@@ -1,0 +1,15 @@
+<resources>
+    <string name="map_point_title">Recorded GPS point</string>
+    <string name="map_point_browse">Inspect recorded points</string>
+    <string name="map_point_close">Close point details</string>
+    <string name="map_point_coordinates">Coordinates: %s</string>
+    <string name="map_point_accuracy">Accuracy: ±%s</string>
+    <string name="map_point_altitude">Altitude: %s</string>
+    <string name="map_point_speed_metric">Speed: %s km/h</string>
+    <string name="map_point_speed_imperial">Speed: %s mph</string>
+    <string name="map_point_outlier">GPS outlier</string>
+    <string name="map_point_sampled">Choose from the points currently displayed on this map.</string>
+    <string name="map_point_loading">Loading GPS dots…</string>
+    <string name="map_point_load_failed">GPS dots could not be loaded.</string>
+    <string name="map_point_retry">Retry GPS dots</string>
+</resources>

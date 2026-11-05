@@ -1,0 +1,42 @@
+steps:
+- run: spanish-onboarding-api35-20261029.yaml
+- tap:
+    text: Línea de tiempo
+- await:
+    visible:
+      id: timeline-empty
+- await:
+    idle: true
+- await:
+    visible:
+      text: No hay salidas ni visitas para este día.
+- await:
+    idle: true
+- tap:
+    id: timeline-previous
+- await:
+    visible:
+      id: timeline-empty
+- await:
+    idle: true
+- tap:
+    id: timeline-next
+- await:
+    visible:
+      id: timeline-empty
+- await:
+    idle: true
+- tap:
+    id: timeline-today
+- await:
+    visible:
+      id: timeline-empty
+- await:
+    idle: true
+- tap:
+    text: Mapa
+- await:
+    visible:
+      text: Iniciar grabación
+- await:
+    idle: true

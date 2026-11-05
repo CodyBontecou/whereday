@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="map_redesign_header_eyebrow">Whereday · %1$s</string>
+    <string name="map_redesign_recording">Recording</string>
+    <string name="map_redesign_standby">Standby</string>
+    <string name="map_redesign_selected_dates">Selected dates</string>
+    <string name="map_redesign_on_map">On this map</string>
+    <string name="map_redesign_live_path">Live path</string>
+    <string name="map_redesign_point_eyebrow">GPS fix</string>
+</resources>

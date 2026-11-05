@@ -1,0 +1,42 @@
+steps:
+  - echo: Requires completed onboarding, idle recording and an unconfigured purchase verifier. Does not buy, start recording or write a destination file.
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - await: { visible: { text: Lifetime export access } }
+  - scroll-to: { target: { text: { matches: '^Share export$' } }, direction: down }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Share export$' } }
+  - await: { visible: { text: Verified lifetime export access is required. } }
+  - tap: { text: Save export as… }
+  - await: { visible: { text: Verified lifetime export access is required. } }
+  - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
+  - tap: { text: { matches: '^Filters and fields$' } }
+  - scroll-to: { target: { text: { matches: '^Time of day$' } }, direction: down }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Time of day$' } }
+  - scroll-to: { target: { text: 'From time: 08:00' }, direction: down }
+  - await: { visible: { text: 'From time: 08:00' } }
+  - tap: { text: 'From time: 08:00' }
+  - await: { visible: { id: 'android:id/timePicker' } }
+  - tap: { id: 'android:id/button2' }
+  - await: { visible: { text: { matches: '^Time of day$' } } }
+  - tap: { text: { matches: '^Time of day$' } }
+  - await: { idle: true }
+  - await: { hidden: { text: 'From time:' } }
+  - scroll-to: { target: { text: { matches: '^All dates$' } }, direction: up }
+  - tap: { text: { matches: '^All dates$' } }
+  - await: { visible: { text: Choose dates } }
+  - tap: { text: { matches: '^Cancel$' } }
+  - scroll-to: { target: { text: { matches: '^Hide filters and fields$' } }, direction: up }
+  - tap: { text: { matches: '^Hide filters and fields$' } }
+  - scroll-to: { target: { text: { matches: '^Preview export$' } }, direction: up }
+  - tap: { text: { matches: '^Preview export$' } }
+  - scroll-to: { target: { text: '"exportDate"' }, direction: down }
+  - await: { visible: { text: '"exportDate"' } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

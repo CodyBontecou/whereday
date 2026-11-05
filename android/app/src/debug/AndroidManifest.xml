@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <provider android:name="com.bontecou.whereday.DebugDiagnosticsProvider" android:authorities="com.bontecou.whereday.diagnostics" android:exported="true" android:readPermission="android.permission.DUMP" />
+    </application>
+</manifest>

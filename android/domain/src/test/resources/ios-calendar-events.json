@@ -1,0 +1,178 @@
+{
+  "scope": "Verbatim current Swift draft constructors with synthetic model seams; no EventKit UI or writes",
+  "provenance": {
+    "calendarSourceSha256": "05e7e4ef8dcf9636cd5afbf4175405a608a5f54378e24d408ceabbc6dca4addd",
+    "extractedDraftSha256": "da08394c1653c5b1b9afaf4de05095cace600b837d663fe2b9e4df1358ed63e2",
+    "generatorSha256": "fc4cf6547421f71c037221cc68688963385942f9c0de2d95c7e735da2ffb0fe1"
+  },
+  "cases": [
+    {
+      "input": {
+        "id": "named-address",
+        "kind": "visit",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "coordinate": [
+          18.1234567,
+          -66.9876543
+        ],
+        "fallback": "Ubicación desconocida",
+        "name": "  Cafe 日本語  ",
+        "address": "  Calle 1  ",
+        "end": 1793511120123
+      },
+      "expected": {
+        "end": 1793511120123,
+        "location": "Calle 1",
+        "start": 1793511000123,
+        "title": "Cafe 日本語"
+      }
+    },
+    {
+      "input": {
+        "id": "name-fallback",
+        "kind": "visit",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "coordinate": [
+          18.1234567,
+          -66.9876543
+        ],
+        "fallback": "Ubicación desconocida",
+        "name": "Cafe",
+        "address": "  "
+      },
+      "expected": {
+        "end": 1793511060123,
+        "location": "Cafe",
+        "start": 1793511000123,
+        "title": "Cafe"
+      }
+    },
+    {
+      "input": {
+        "id": "coordinate-fallback",
+        "kind": "visit",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "coordinate": [
+          18.1234567,
+          -66.9876543
+        ],
+        "fallback": "Ubicación desconocida"
+      },
+      "expected": {
+        "end": 1793511060123,
+        "location": "18.123457, -66.987654",
+        "start": 1793511000123,
+        "title": "Ubicación desconocida"
+      }
+    },
+    {
+      "input": {
+        "id": "address-title",
+        "kind": "visit",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "coordinate": [
+          18.1234567,
+          -66.9876543
+        ],
+        "fallback": "Ubicación desconocida",
+        "address": "Street"
+      },
+      "expected": {
+        "end": 1793511060123,
+        "location": "Street",
+        "start": 1793511000123,
+        "title": "Street"
+      }
+    },
+    {
+      "input": {
+        "id": "future-open",
+        "kind": "visit",
+        "start": 1793511000123,
+        "now": 1793510940123,
+        "coordinate": [
+          18.1234567,
+          -66.9876543
+        ],
+        "fallback": "Ubicación desconocida"
+      },
+      "expected": {
+        "end": 1793511000123,
+        "location": "18.123457, -66.987654",
+        "start": 1793511000123,
+        "title": "Ubicación desconocida"
+      }
+    },
+    {
+      "input": {
+        "id": "exact",
+        "kind": "outing",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "fallback": "Salida 2",
+        "end": 1793511120123,
+        "name": "  Walk  ",
+        "coordinate": [
+          18.1234567,
+          -66.9876543
+        ]
+      },
+      "expected": {
+        "end": 1793511120123,
+        "location": "18.123457, -66.987654",
+        "start": 1793511000123,
+        "title": "Walk"
+      }
+    },
+    {
+      "input": {
+        "id": "inferred",
+        "kind": "outing",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "fallback": "Salida 2",
+        "end": 1793511030123
+      },
+      "expected": {
+        "end": 1793511030123,
+        "location": null,
+        "start": 1793511000123,
+        "title": "Salida 2"
+      }
+    },
+    {
+      "input": {
+        "id": "active",
+        "kind": "outing",
+        "start": 1793511000123,
+        "now": 1793511060123,
+        "fallback": "Salida 2"
+      },
+      "expected": {
+        "end": 1793511060123,
+        "location": null,
+        "start": 1793511000123,
+        "title": "Salida 2"
+      }
+    },
+    {
+      "input": {
+        "id": "future-active",
+        "kind": "outing",
+        "start": 1793511000123,
+        "now": 1793510999123,
+        "fallback": "Salida 2"
+      },
+      "expected": {
+        "end": 1793511000123,
+        "location": null,
+        "start": 1793511000123,
+        "title": "Salida 2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "scope": "Verbatim Swift focus method body with model/camera seams; real Foundation Gregorian calendar; no MapKit rendering, UI or persistence",
+  "provenance": {
+    "focusMethodSha256": "25b78030867d2d04effec1a69c2498d7fec8aec5366ee726b9c118f6b9ec738e",
+    "generatorSha256": "ab550695b380ff53172b28ae0eac655f0ebc02fde4b1cef45023b7afa55dd1f1"
+  },
+  "sourceContextSha256": "962ffbce5e62432b771d5cb8ecfacce329c59e68c53a2a8740c509c17451dec9",
+  "cases": [
+    {
+      "input": {
+        "id": "utc",
+        "zone": "UTC",
+        "arrival": "2026-11-01T12:34:56.125Z",
+        "coordinate": [
+          18.0,
+          -66.0
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          18,
+          -66
+        ],
+        "from": 1793491200000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1793577600000,
+        "zone": "GMT"
+      }
+    },
+    {
+      "input": {
+        "id": "spring-gap",
+        "zone": "America/New_York",
+        "arrival": "2026-03-08T07:30:00Z",
+        "coordinate": [
+          40.7,
+          -74.0
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          40.7,
+          -74
+        ],
+        "from": 1772946000000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1773028800000,
+        "zone": "America/New_York"
+      }
+    },
+    {
+      "input": {
+        "id": "second-repeated-hour",
+        "zone": "America/New_York",
+        "arrival": "2026-11-01T06:30:00Z",
+        "coordinate": [
+          40.7,
+          -74.0
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          40.7,
+          -74
+        ],
+        "from": 1793505600000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1793595600000,
+        "zone": "America/New_York"
+      }
+    },
+    {
+      "input": {
+        "id": "half-hour-overlap",
+        "zone": "Australia/Lord_Howe",
+        "arrival": "2026-04-04T15:15:00Z",
+        "coordinate": [
+          -31.5,
+          159.0
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          -31.5,
+          159
+        ],
+        "from": 1775307600000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1775395800000,
+        "zone": "Australia/Lord_Howe"
+      }
+    },
+    {
+      "input": {
+        "id": "quarter-hour-zone",
+        "zone": "Asia/Kathmandu",
+        "arrival": "2026-10-31T20:30:00Z",
+        "coordinate": [
+          27.7,
+          85.3
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          27.7,
+          85.3
+        ],
+        "from": 1793470500000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1793556900000,
+        "zone": "Asia/Kathmandu"
+      }
+    },
+    {
+      "input": {
+        "id": "date-line",
+        "zone": "Pacific/Kiritimati",
+        "arrival": "2026-11-01T12:00:00Z",
+        "coordinate": [
+          1.8,
+          179.999
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          1.8,
+          179.999
+        ],
+        "from": 1793527200000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1793613600000,
+        "zone": "Pacific/Kiritimati"
+      }
+    },
+    {
+      "input": {
+        "id": "skipped-civil-day",
+        "zone": "Pacific/Apia",
+        "arrival": "2011-12-30T10:15:00Z",
+        "coordinate": [
+          -13.8,
+          -171.8
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          -13.8,
+          -171.8
+        ],
+        "from": 1325239200000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": 1325325600000,
+        "zone": "Pacific/Apia"
+      }
+    },
+    {
+      "input": {
+        "id": "historical-offset",
+        "zone": "Europe/Paris",
+        "arrival": "1850-01-01T08:23:45Z",
+        "coordinate": [
+          48.85,
+          2.35
+        ]
+      },
+      "expected": {
+        "calendar": "gregorian",
+        "coordinate": [
+          48.85,
+          2.35
+        ],
+        "from": -3786826161000,
+        "photoCalls": 1,
+        "pointCalls": 1,
+        "pointSelectionCleared": true,
+        "span": [
+          0.008,
+          0.008
+        ],
+        "through": -3786739761000,
+        "zone": "Europe/Paris"
+      }
+    }
+  ]
+}

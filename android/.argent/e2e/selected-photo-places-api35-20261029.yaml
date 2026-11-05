@@ -1,0 +1,479 @@
+# Public synthetic fixture walkthrough; NOT accepted until a complete replay passes.
+steps:
+- echo: Verified current area-marker APK, disposable mapQa only; onboarded/idle with zero history or photo refs.
+    Stage only the three named public QA files. Import twelve points through review, select only images A/B, verify
+    actual thumbnails and complete-place/outing viewers, then delete only these fixtures and restore layers/dates.
+    Owner app and personal assets prohibited.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      text: Import history file
+- await:
+    idle: true
+- tap:
+    text: Import history file
+- await:
+    visible:
+      text: Show roots
+- await:
+    idle: true
+- tap:
+    text: Show roots
+- await:
+    visible:
+      text: Open from
+- await:
+    idle: true
+- tap:
+    text: Downloads
+    within:
+      id: com.google.android.documentsui:id/roots_list
+- await:
+    visible:
+      id: com.google.android.documentsui:id/header_title
+- await:
+    idle: true
+- await:
+    visible:
+      text: whereday-photo-map-qa-20261027.csv
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-photo-map-qa-20261027\.csv
+- await:
+    visible:
+      text: Review history import
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        id: history-import-summary
+      equals: CSV · 0 visits · 12 points
+- await:
+    idle: true
+- tap:
+    text: Import valid records
+- echo: Refresh the emulator accessibility window through Home and foregrounding; the completed review remains in
+    the running app.
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    text:
+      in:
+        id: history-import-result
+      equals: Imported 0 visits and 12 points. Kept 0 existing records.
+- await:
+    idle: true
+- tap:
+    text: Done
+- await:
+    visible:
+      text: Import history file
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Photos
+    direction: down
+    within:
+      id: settings-screen
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Photos
+- await:
+    idle: true
+- tap:
+    text: Photos
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- tap:
+    text: Choose photo files
+- await:
+    visible:
+      text: whereday-public-photo-qa-a.jpg
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-public-photo-qa-a\.jpg
+- await:
+    visible:
+      text: 1 saved photo reference
+    timeout: 10000
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:00. Photo GPS
+- await:
+    idle: true
+- tap:
+    text: Choose photo files
+- await:
+    visible:
+      text: whereday-public-photo-qa-b.jpg
+    timeout: 10000
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-public-photo-qa-b\.jpg
+- await:
+    visible:
+      text: 2 saved photo references
+    timeout: 10000
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:05. Photo GPS
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    text: Today
+- await:
+    visible:
+      text: Custom
+- await:
+    idle: true
+- tap:
+    text: All
+- await:
+    visible:
+      text: Map layers
+- await:
+    idle: true
+- tap:
+    text: Map layers
+- await:
+    visible:
+      id: map-layer-photos
+- await:
+    idle: true
+- tap:
+    id: map-layer-photos
+- tap:
+    text: Done map layers
+- await:
+    visible:
+      id: browse-photo-places
+    timeout: 10000
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Refresh matched photos
+    direction: down
+    within:
+      id: journal-map-scroll-margin
+- await:
+    visible:
+      text: 1 photo groups containing 2 photos across 1 places.
+- await:
+    idle: true
+- tap:
+    text: Browse all photo places
+- await:
+    visible:
+      id: photo-place-directory-title
+- await:
+    idle: true
+- await:
+    visible:
+      text: 1 places · 2 photos
+- await:
+    idle: true
+- tap:
+    text: Open this place
+- await:
+    visible:
+      id: photo-place-collection-title
+- await:
+    idle: true
+- tap:
+    text: Selected photo / Oct 27, 10:00 / Open photo
+- await:
+    visible:
+      text: Photo 1 of 2
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo GPS
+- await:
+    idle: true
+- tap:
+    text: Next photo
+- await:
+    visible:
+      text: Photo 2 of 2
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Previous photo
+- await:
+    visible:
+      text: Photo 1 of 2
+- await:
+    idle: true
+- tap:
+    text: Close photo
+- await:
+    hidden:
+      text: Photo 1 of 2
+- await:
+    visible:
+      id: photo-place-collection-title
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      id: photo-place-directory-title
+- await:
+    idle: true
+- tap:
+    text: Close photo places
+- await:
+    visible:
+      id: browse-photo-places
+- await:
+    idle: true
+- tap:
+    id: map-fit
+- tap:
+    text: Photos on map
+- await:
+    visible:
+      id: photo-place-collection-title
+- await:
+    idle: true
+- tap:
+    text: Close photo places
+- await:
+    visible:
+      id: browse-photo-places
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      text: Add past visit
+- await:
+    idle: true
+- tap:
+    text: Previous
+- tap:
+    text: Previous
+- await:
+    visible:
+      text: Inferred outing
+- await:
+    idle: true
+- tap:
+    text: View outing
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: 2 matched photos
+    direction: down
+    within:
+      id: outing-detail-scroll-margin
+- await:
+    visible:
+      text: 2 matched photos
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Refresh matched photos
+    direction: down
+    within:
+      id: outing-detail-scroll-margin
+- tap:
+    text: Photo taken at Oct 27, 10:05
+- await:
+    visible:
+      text: Photo 2 of 2
+    timeout: 10000
+- await:
+    idle: true
+- tap:
+    text: Previous photo
+- await:
+    visible:
+      text: Photo 1 of 2
+- await:
+    idle: true
+- tap:
+    text: Close photo
+- await:
+    visible:
+      text: Refresh matched photos
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Delete outing
+    direction: down
+    within:
+      id: outing-detail-scroll-margin
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: Delete this outing?
+- await:
+    idle: true
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: 2 saved photo references
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:00. Photo GPS
+- await:
+    visible:
+      text: Remove photo from Whereday
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: 1 saved photo reference
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:05. Photo GPS
+- await:
+    visible:
+      text: Photo 1 of 1
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: 0 GPS markers. 0 visit markers.
+- await:
+    idle: true
+- tap:
+    text: Map layers
+- await:
+    visible:
+      id: map-layer-photos
+- await:
+    idle: true
+- tap:
+    id: map-layer-photos
+- tap:
+    text: Done map layers
+- await:
+    visible:
+      text: Follow my location
+- await:
+    idle: true
+- tap:
+    text: All
+- await:
+    visible:
+      text: Custom
+- await:
+    idle: true
+- tap:
+    text: Today
+- await:
+    visible:
+      text: Follow my location
+- await:
+    idle: true

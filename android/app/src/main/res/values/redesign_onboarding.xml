@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_kicker_welcome">Welcome</string>
+    <string name="onboarding_kicker_journal">Your journal</string>
+    <string name="onboarding_kicker_background">Location</string>
+    <string name="onboarding_kicker_notification">Notifications</string>
+    <string name="onboarding_kicker_ready">Ready</string>
+    <string name="onboarding_step_count">Step %1$d of %2$d</string>
+    <string name="onboarding_point_on_device">Location history stays on this phone</string>
+    <string name="onboarding_point_no_account">No account needed to record</string>
+    <string name="onboarding_point_browse">Browse and edit your journal anytime</string>
+    <string name="onboarding_point_routes">Record routes as you move</string>
+    <string name="onboarding_point_visits">Remember the places you visit</string>
+    <string name="onboarding_point_notes">Add saved places and notes</string>
+    <string name="clear_recovery_kicker">Journal maintenance</string>
+    <string name="export_access_kicker">Exports</string>
+    <string name="launcher_kicker_recording">Recording</string>
+</resources>

@@ -1,0 +1,292 @@
+# Requires onboarded idle English API35 mapQa, empty history/places, network geocoding initially on, staged fixture and simulated GPS as named in the echo.
+steps:
+- echo: Only onboarded idle mapQa on the dedicated API35 emulator. Empty history and saved-place library; stage
+    only whereday-current-saved-place-20261029.csv and simulated GPS at 48.8584,2.2945. Import one synthetic saved
+    place, request one foreground fix, explicitly choose its suggestion, commit/reopen the visit, and remove both
+    fixtures. Never start recording or use owner data.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Allow network geocoding
+    direction: down
+    within:
+      id: settings-screen
+- echo: QA network geocoding was initially enabled. Turn it off for local-only suggestion proof, then restore that
+    initial setting during cleanup.
+- await:
+    visible:
+      text: Allow network geocoding
+- await:
+    idle: true
+- tap:
+    text: Allow network geocoding
+- tap:
+    text: Manage saved places
+- await:
+    visible:
+      text: No saved places yet. Add a place or import a CSV file.
+- await:
+    idle: true
+- tap:
+    text: Import CSV
+- await:
+    visible:
+      text: Show roots
+    timeout: 10000
+- await:
+    idle: true
+- tap:
+    text: Show roots
+- await:
+    visible:
+      text: Open from
+- await:
+    idle: true
+- tap:
+    text: Downloads
+    within:
+      id: com.google.android.documentsui:id/roots_list
+- await:
+    visible:
+      text: whereday-current-saved-place-20261029.csv
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-current-saved-place-20261029\.csv
+- await:
+    visible:
+      text: CSV import preview
+- await:
+    idle: true
+- await:
+    visible:
+      text: 1 added · 0 updated · 0 skipped
+- await:
+    idle: true
+- tap:
+    text: Import valid places
+- await:
+    visible:
+      text: Import saved places?
+- await:
+    idle: true
+- tap:
+    text: Import places
+- await:
+    visible:
+      text: 'Added: 1. Updated: 0. Skipped: 0.'
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: Save current place
+- await:
+    idle: true
+- tap:
+    text: Save current place
+- await:
+    visible:
+      text: Choose saved place
+- await:
+    idle: true
+- tap:
+    text: Find current location
+- await:
+    visible:
+      text: Request location
+- await:
+    idle: true
+- tap:
+    text: Request location
+- when:
+    visible:
+      id: com.android.permissioncontroller:id/permission_allow_foreground_only_button
+  steps:
+  - await:
+      visible:
+        id: com.android.permissioncontroller:id/permission_allow_foreground_only_button
+  - tap:
+      id: com.android.permissioncontroller:id/permission_allow_foreground_only_button
+- await:
+    visible:
+      text: Suggested saved place
+    timeout: 35000
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA Current Library 20261029
+- await:
+    idle: true
+- tap:
+    text: Use saved place
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA Current Library 20261029
+      role: TextField
+- await:
+    idle: true
+- await:
+    visible:
+      text: '48.8584'
+      role: TextField
+- await:
+    idle: true
+- tap:
+    text: Save
+- await:
+    visible:
+      text: Visit saved. Review it in Timeline.
+- await:
+    idle: true
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      text: QA Current Library 20261029
+- await:
+    idle: true
+- tap:
+    text: QA Current Library 20261029
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: Synthetic public-coordinate fixture
+      role: TextField
+- await:
+    idle: true
+- await:
+    visible:
+      text: '48.8584'
+      role: TextField
+- await:
+    idle: true
+- await:
+    visible:
+      text: '2.2945'
+      role: TextField
+- await:
+    idle: true
+- tap:
+    text: Delete visit
+- await:
+    visible:
+      text: Delete this visit?
+- await:
+    idle: true
+- tap:
+    text: Delete
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Manage saved places
+    direction: down
+    within:
+      id: settings-screen
+- await:
+    visible:
+      text: Manage saved places
+- await:
+    idle: true
+- tap:
+    text: Manage saved places
+- await:
+    visible:
+      text: QA Current Library 20261029
+- await:
+    idle: true
+- tap:
+    text: QA Current Library 20261029
+- await:
+    visible:
+      text: Edit saved place
+- await:
+    idle: true
+- tap:
+    text: Delete saved place
+- await:
+    visible:
+      text: Delete this saved place?
+- await:
+    idle: true
+- tap:
+    text: Delete place
+- await:
+    visible:
+      text: No saved places yet. Add a place or import a CSV file.
+- await:
+    idle: true
+- tap:
+    text: Back to settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Allow network geocoding
+    direction: down
+    within:
+      id: settings-screen
+- await:
+    visible:
+      text: 0 saved places
+- await:
+    idle: true
+- tap:
+    text: Allow network geocoding
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

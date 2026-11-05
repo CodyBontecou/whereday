@@ -1,0 +1,14 @@
+<resources>
+    <string name="launcher_already_active">Recording is already active</string>
+    <string name="launcher_already_stopped">Recording is stopped</string>
+    <string name="launcher_start_title">Start recording?</string>
+    <string name="launcher_stop_title">Stop recording?</string>
+    <string name="launcher_check_journal">Open the map to check your journal.</string>
+    <string name="launcher_start_body">Whereday will save your location while recording, including with the screen off. You can stop at any time.</string>
+    <string name="launcher_stop_body">End the current recording and keep its saved history.</string>
+    <string name="launcher_done">Done</string>
+    <string name="launcher_cancel">Cancel</string>
+    <string name="automation_command_title">Completing Whereday command</string>
+    <string name="automation_command_help">You can cancel and check the journal if the result is interrupted.</string>
+    <string name="automation_command_cancel">Cancel</string>
+</resources>

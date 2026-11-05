@@ -1,0 +1,520 @@
+{
+  "provenance": {
+    "IsoMe/Utilities/SavedPlaceImportService.swift": "8277a3af27714d7fbb5af734a9bf182a588b15c77a892b3a890cadd82185095f",
+    "android/scripts/fixtures/SavedPlaceCsvFixtures.swift": "286b16b2811ef28ce493f575e2b17f96da91acfbdb667971c83867feb797bfc2",
+    "android/scripts/fixtures/saved-place-csv-inputs.json": "db4c076ee3aab089326ec7a3a5b673587a26ed6d862a2fbbb94aa427b895d759"
+  },
+  "cases": [
+    {
+      "csv": " LONGITUDE ,name,latitude,radius_meters,address,extra\r\n-9.1393, Home ,38.7223,,  Lisbon  ,ignored\r\n-9.14,Office,38.73,25,,ignored",
+      "name": "reordered-bom",
+      "rows": [
+        {
+          "errors": [],
+          "name": "Home",
+          "place": {
+            "address": "Lisbon",
+            "latitude": 38.7223,
+            "longitude": -9.1393,
+            "name": "Home",
+            "radius": 150
+          },
+          "rowNumber": 2
+        },
+        {
+          "errors": [],
+          "name": "Office",
+          "place": {
+            "address": null,
+            "latitude": 38.73,
+            "longitude": -9.14,
+            "name": "Office",
+            "radius": 25
+          },
+          "rowNumber": 3
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude,address\r\n\"Café, \"\"Rue\"\"\",38,-9,\"Floor 1\r\n10 Example Street, Lisbon\"\r\nPark,39,-8,Green\r\n",
+      "name": "quoted-multiline",
+      "rows": [
+        {
+          "errors": [],
+          "name": "Café, \"Rue\"",
+          "place": {
+            "address": "Floor 1\r\n10 Example Street, Lisbon",
+            "latitude": 38,
+            "longitude": -9,
+            "name": "Café, \"Rue\"",
+            "radius": 150
+          },
+          "rowNumber": 2
+        },
+        {
+          "errors": [],
+          "name": "Park",
+          "place": {
+            "address": "Green",
+            "latitude": 39,
+            "longitude": -8,
+            "name": "Park",
+            "radius": 150
+          },
+          "rowNumber": 4
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude,radius_meters\nValid,90,-180,10000\n,38,-9,150\nBad latitude,91,-9,150\nBad longitude,38,-181,150\nShort,38,-9\nLong,38,-9,150,unexpected\nAnother valid,-90,180,25",
+      "name": "invalid-neighbors",
+      "rows": [
+        {
+          "errors": [],
+          "name": "Valid",
+          "place": {
+            "address": null,
+            "latitude": 90,
+            "longitude": -180,
+            "name": "Valid",
+            "radius": 10000
+          },
+          "rowNumber": 2
+        },
+        {
+          "errors": [
+            "A saved place needs a name."
+          ],
+          "name": "",
+          "place": null,
+          "rowNumber": 3
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Bad latitude",
+          "place": null,
+          "rowNumber": 4
+        },
+        {
+          "errors": [
+            "Longitude must be a number from -180 to 180."
+          ],
+          "name": "Bad longitude",
+          "place": null,
+          "rowNumber": 5
+        },
+        {
+          "errors": [
+            "Expected 4 columns, found 3."
+          ],
+          "name": "Short",
+          "place": null,
+          "rowNumber": 6
+        },
+        {
+          "errors": [
+            "Expected 4 columns, found 5."
+          ],
+          "name": "Long",
+          "place": null,
+          "rowNumber": 7
+        },
+        {
+          "errors": [],
+          "name": "Another valid",
+          "place": {
+            "address": null,
+            "latitude": -90,
+            "longitude": 180,
+            "name": "Another valid",
+            "radius": 25
+          },
+          "rowNumber": 8
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude\n\"Bad\"suffix,38,-9\nUn\"escaped,38,-9\nGood,38,-9\n\"Unclosed,38,-9",
+      "name": "malformed-records",
+      "rows": [
+        {
+          "errors": [
+            "Unexpected text after a quoted field."
+          ],
+          "name": "Badsuffix",
+          "place": null,
+          "rowNumber": 2
+        },
+        {
+          "errors": [
+            "Quotation marks must enclose the whole field; escape an inner quote with two quotation marks."
+          ],
+          "name": "Un\"escaped",
+          "place": null,
+          "rowNumber": 3
+        },
+        {
+          "errors": [],
+          "name": "Good",
+          "place": {
+            "address": null,
+            "latitude": 38,
+            "longitude": -9,
+            "name": "Good",
+            "radius": 150
+          },
+          "rowNumber": 4
+        },
+        {
+          "errors": [
+            "A quoted field is missing its closing quotation mark.",
+            "Expected 3 columns, found 1."
+          ],
+          "name": "Unclosed,38,-9",
+          "place": null,
+          "rowNumber": 5
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude\n\n   \nGood,38,-9\n,,\n\nAnother,39,-8\n",
+      "name": "blank-lines",
+      "rows": [
+        {
+          "errors": [],
+          "name": "Good",
+          "place": {
+            "address": null,
+            "latitude": 38,
+            "longitude": -9,
+            "name": "Good",
+            "radius": 150
+          },
+          "rowNumber": 4
+        },
+        {
+          "errors": [
+            "A saved place needs a name.",
+            "Latitude must be a number from -90 to 90.",
+            "Longitude must be a number from -180 to 180."
+          ],
+          "name": "",
+          "place": null,
+          "rowNumber": 5
+        },
+        {
+          "errors": [],
+          "name": "Another",
+          "place": {
+            "address": null,
+            "latitude": 39,
+            "longitude": -8,
+            "name": "Another",
+            "radius": 150
+          },
+          "rowNumber": 7
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude\n\"\"\nGood,38,-9",
+      "name": "empty-quoted",
+      "rows": [
+        {
+          "errors": [
+            "Expected 3 columns, found 1."
+          ],
+          "name": "",
+          "place": null,
+          "rowNumber": 2
+        },
+        {
+          "errors": [],
+          "name": "Good",
+          "place": {
+            "address": null,
+            "latitude": 38,
+            "longitude": -9,
+            "name": "Good",
+            "radius": 150
+          },
+          "rowNumber": 3
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude\nHome,38,-9\nHome,38,-9",
+      "name": "duplicates",
+      "rows": [
+        {
+          "errors": [],
+          "name": "Home",
+          "place": {
+            "address": null,
+            "latitude": 38,
+            "longitude": -9,
+            "name": "Home",
+            "radius": 150
+          },
+          "rowNumber": 2
+        },
+        {
+          "errors": [],
+          "name": "Home",
+          "place": {
+            "address": null,
+            "latitude": 38,
+            "longitude": -9,
+            "name": "Home",
+            "radius": 150
+          },
+          "rowNumber": 3
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude,longitude\nNumber 0,1f,0\nNumber 1,1D,0\nNumber 2,0x1p0,0\nNumber 3,+1.2,0\nNumber 4,.5,0\nNumber 5,1.,0\nNumber 6,1e1,0\nNumber 7,nan,0\nNumber 8,inf,0\nNumber 9,1e309,0\nNumber 10,１２,0\nHex 0,0x1,0\nHex 1,0X1.8p+1,0\nHex 2,+0x1p0,0\nHex 3,-0x1p0,0\nHex 4,0x.p0,0\nHex 5,01,0\nHex 6,0x1.2,0\nHex 7,.e0,0",
+      "name": "numeric-grammar",
+      "rows": [
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Number 0",
+          "place": null,
+          "rowNumber": 2
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Number 1",
+          "place": null,
+          "rowNumber": 3
+        },
+        {
+          "errors": [],
+          "name": "Number 2",
+          "place": {
+            "address": null,
+            "latitude": 1,
+            "longitude": 0,
+            "name": "Number 2",
+            "radius": 150
+          },
+          "rowNumber": 4
+        },
+        {
+          "errors": [],
+          "name": "Number 3",
+          "place": {
+            "address": null,
+            "latitude": 1.2,
+            "longitude": 0,
+            "name": "Number 3",
+            "radius": 150
+          },
+          "rowNumber": 5
+        },
+        {
+          "errors": [],
+          "name": "Number 4",
+          "place": {
+            "address": null,
+            "latitude": 0.5,
+            "longitude": 0,
+            "name": "Number 4",
+            "radius": 150
+          },
+          "rowNumber": 6
+        },
+        {
+          "errors": [],
+          "name": "Number 5",
+          "place": {
+            "address": null,
+            "latitude": 1,
+            "longitude": 0,
+            "name": "Number 5",
+            "radius": 150
+          },
+          "rowNumber": 7
+        },
+        {
+          "errors": [],
+          "name": "Number 6",
+          "place": {
+            "address": null,
+            "latitude": 10,
+            "longitude": 0,
+            "name": "Number 6",
+            "radius": 150
+          },
+          "rowNumber": 8
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Number 7",
+          "place": null,
+          "rowNumber": 9
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Number 8",
+          "place": null,
+          "rowNumber": 10
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Number 9",
+          "place": null,
+          "rowNumber": 11
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Number 10",
+          "place": null,
+          "rowNumber": 12
+        },
+        {
+          "errors": [],
+          "name": "Hex 0",
+          "place": {
+            "address": null,
+            "latitude": 1,
+            "longitude": 0,
+            "name": "Hex 0",
+            "radius": 150
+          },
+          "rowNumber": 13
+        },
+        {
+          "errors": [],
+          "name": "Hex 1",
+          "place": {
+            "address": null,
+            "latitude": 3,
+            "longitude": 0,
+            "name": "Hex 1",
+            "radius": 150
+          },
+          "rowNumber": 14
+        },
+        {
+          "errors": [],
+          "name": "Hex 2",
+          "place": {
+            "address": null,
+            "latitude": 1,
+            "longitude": 0,
+            "name": "Hex 2",
+            "radius": 150
+          },
+          "rowNumber": 15
+        },
+        {
+          "errors": [],
+          "name": "Hex 3",
+          "place": {
+            "address": null,
+            "latitude": -1,
+            "longitude": 0,
+            "name": "Hex 3",
+            "radius": 150
+          },
+          "rowNumber": 16
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Hex 4",
+          "place": null,
+          "rowNumber": 17
+        },
+        {
+          "errors": [],
+          "name": "Hex 5",
+          "place": {
+            "address": null,
+            "latitude": 1,
+            "longitude": 0,
+            "name": "Hex 5",
+            "radius": 150
+          },
+          "rowNumber": 18
+        },
+        {
+          "errors": [],
+          "name": "Hex 6",
+          "place": {
+            "address": null,
+            "latitude": 1.125,
+            "longitude": 0,
+            "name": "Hex 6",
+            "radius": 150
+          },
+          "rowNumber": 19
+        },
+        {
+          "errors": [
+            "Latitude must be a number from -90 to 90."
+          ],
+          "name": "Hex 7",
+          "place": null,
+          "rowNumber": 20
+        }
+      ]
+    },
+    {
+      "csv": "name,latitude\nPlace,38",
+      "error": "Missing required CSV columns: longitude.",
+      "name": "invalid-file-0"
+    },
+    {
+      "csv": "name,latitude,longitude,name\nPlace,38,-9,Other",
+      "error": "The CSV header contains duplicate column names.",
+      "name": "invalid-file-1"
+    },
+    {
+      "csv": "name,latitude,longitude, LATITUDE \nPlace,38,-9,38",
+      "error": "The CSV header contains duplicate column names.",
+      "name": "invalid-file-2"
+    },
+    {
+      "csv": "name,latitude,longitude,\nPlace,38,-9,",
+      "error": "Every CSV column must have a header.",
+      "name": "invalid-file-3"
+    },
+    {
+      "csv": "\"name\"junk,latitude,longitude\nPlace,38,-9",
+      "error": "The CSV header contains invalid quotation marks.",
+      "name": "invalid-file-4"
+    },
+    {
+      "csv": "\"name,latitude,longitude\nPlace,38,-9",
+      "error": "The CSV header contains invalid quotation marks.",
+      "name": "invalid-file-5"
+    },
+    {
+      "csv": "",
+      "error": "The CSV file is empty.",
+      "name": "invalid-file-6"
+    },
+    {
+      "csv": "name,latitude,longitude\n",
+      "error": "The CSV file has no saved-place rows.",
+      "name": "invalid-file-7"
+    }
+  ]
+}

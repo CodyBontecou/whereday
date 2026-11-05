@@ -1,0 +1,46 @@
+steps:
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Show on map
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Show on map
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Delete outing
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Delete outing
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: Delete this outing?
+- await:
+    idle: true
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true
+- await:
+    hidden:
+      text: "12 points \xB7 0.15 km"
+executionPrerequisite: Synthetic 12-point replay outing details open at top on 2026-10-27. This is only
+  for the public-coordinate replay fixture with no other points/visits on that date; do not use against
+  personal outings.

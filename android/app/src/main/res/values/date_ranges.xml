@@ -1,0 +1,15 @@
+<resources>
+    <string name="date_range_from">From</string>
+    <string name="date_range_through">Through</string>
+    <string name="date_range_label_value">%1$s: %2$s</string>
+    <string name="date_range_not_selected">Not selected</string>
+    <string name="date_enter_iso">Enter ISO dates</string>
+    <string name="date_use_calendar">Use calendar</string>
+    <string name="date_iso_help">Use ISO dates, such as 2026-10-31. Year 0000 is 1 BCE; earlier years start with a minus sign.</string>
+    <string name="date_range_invalid">Enter two valid ISO dates.</string>
+    <string name="date_range_order">The end date must be on or after the start date.</string>
+    <string name="date_range_future">Choose dates on or before today.</string>
+    <string name="date_range_skipped">These dates did not occur in the selected time zone. Choose a range that includes an existing day.</string>
+    <string name="date_range_unsupported">These dates are outside the supported history range.</string>
+    <string name="date_range_retained_times">The retained start time is after the end time. Choose different dates.</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_redesign_eyebrow">Archive · Your data, your files</string>
+    <string name="export_redesign_empty_title">Nothing recorded yet</string>
+    <string name="export_redesign_empty_body">Record a day or import a history file, then come back here to export it.</string>
+    <string name="export_redesign_section_recipe">What to export</string>
+    <string name="export_redesign_section_preview">What you\'ll get</string>
+    <string name="export_redesign_section_send">Send to</string>
+    <string name="export_redesign_section_import">Bring history in</string>
+    <string name="export_redesign_section_options">All options</string>
+    <string name="export_redesign_section_filters">Filters</string>
+    <string name="export_redesign_section_files">Files</string>
+    <string name="export_redesign_section_schedule">Schedule</string>
+    <string name="export_redesign_section_contents">Contents</string>
+    <string name="export_redesign_section_delivery">Delivery</string>
+    <string name="export_redesign_section_endpoint">Endpoint</string>
+    <string name="export_redesign_section_sending">Sending</string>
+    <string name="export_redesign_section_actions">Actions</string>
+    <string name="export_redesign_section_more">More</string>
+    <string name="export_redesign_section_review">Review</string>
+    <string name="export_redesign_section_include">Include</string>
+    <string name="export_redesign_section_problems">Skipped records</string>
+    <string name="export_redesign_import_eyebrow">Archive · Import</string>
+    <string name="export_redesign_section_status">Status</string>
+</resources>

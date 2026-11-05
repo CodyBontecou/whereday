@@ -1,0 +1,176 @@
+[
+  {
+    "name": "corrected-visit-metadata",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Café, \\\"北\\\" 🗺️\", \"address\": \"Line 1\\r\\nLine 2\", \"notes\": \"Pipe | slash \\\\ and\\nnew line\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+  },
+  {
+    "name": "unknown-nested-visit-fields",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Café, \\\"北\\\" 🗺️\", \"address\": \"Line 1\\r\\nLine 2\", \"notes\": \"Pipe | slash \\\\ and\\nnew line\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25, \"future\": {\"nested\": [1, {\"name\": \"future\"}]}, \"futureArray\": [true, null]}]}"
+  },
+  {
+    "name": "unknown-nested-point-fields",
+    "subject": "points",
+    "format": "json",
+    "text": "{\"points\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"2026-10-26T09:00:00.125-04:00\", \"horizontalAccuracy\": 5.25, \"altitude\": -1.5, \"speed\": 1.75, \"isOutlier\": true, \"future\": {\"nested\": [1, 2]}, \"futureArray\": [{\"a\": 3}]}]}"
+  },
+  {
+    "name": "open-visit-null-optionals",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18, \"longitude\": -66, \"arrivedAt\": \"2026-10-26T13:00:00Z\", \"departedAt\": null, \"notes\": null}]}"
+  },
+  {
+    "name": "literal-text-4",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"null\", \"address\": \"null\", \"notes\": \"null\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+  },
+  {
+    "name": "literal-text-5",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Ongoing\", \"address\": \"Ongoing\", \"notes\": \"Ongoing\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+  },
+  {
+    "name": "literal-text-6",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"Still here\", \"address\": \"Still here\", \"notes\": \"Still here\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+  },
+  {
+    "name": "literal-text-7",
+    "subject": "visits",
+    "format": "json",
+    "text": "{\"visits\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"arrivedAt\": \"2026-10-26T09:00:00.125-04:00\", \"departedAt\": \"2026-10-26T10:15:00.625-04:00\", \"locationName\": \"—\", \"address\": \"—\", \"notes\": \"—\", \"source\": \"automatic\", \"confirmationStatus\": \"corrected\", \"confirmedAt\": \"2026-10-26T13:30:00.250Z\", \"updatedAt\": \"2026-10-26T13:45:00.750Z\", \"originalLatitude\": 18.1, \"originalLongitude\": -66.1, \"originalLocationName\": \"Original\", \"originalAddress\": \"Original address\", \"detectedLatitude\": 18.11, \"detectedLongitude\": -66.11, \"detectedLocationName\": \"Detected\", \"detectedAddress\": \"Detected address\", \"placeSource\": \"appleMaps\", \"placeDistanceMeters\": 42.25}]}"
+  },
+  {
+    "name": "point-optionals-and-offset",
+    "subject": "points",
+    "format": "json",
+    "text": "{\"points\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"2026-10-26T09:00:00.125-04:00\", \"horizontalAccuracy\": 5.25, \"altitude\": -1.5, \"speed\": 1.75, \"isOutlier\": true}, {\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"2026-10-26T13:01:00.999Z\", \"horizontalAccuracy\": 5.25, \"altitude\": null, \"speed\": null, \"isOutlier\": false}]}"
+  },
+  {
+    "name": "point-unix-fallback",
+    "subject": "points",
+    "format": "json",
+    "text": "{\"points\": [{\"latitude\": 18.123456, \"longitude\": -66.123456, \"timestamp\": \"invalid\", \"horizontalAccuracy\": 5.25, \"altitude\": -1.5, \"speed\": 1.75, \"isOutlier\": true, \"timestampUnix\": 1793019600.125}]}"
+  },
+  {
+    "name": "point-negative-unix",
+    "subject": "points",
+    "format": "json",
+    "text": "{\"points\": [{\"latitude\": 18, \"longitude\": -66, \"timestampUnix\": -0.125}]}"
+  },
+  {
+    "name": "quoted-multiline-unicode-csv",
+    "subject": "visits",
+    "format": "csv",
+    "text": "arrived_at,departed_at,latitude,longitude,location_name,address,notes,source,confirmation_status,original_location_name,original_address\n2026-10-26T13:00:00.125Z,,18,-66,\"Café, \"\"北\"\"\",Address,\"One\r\nTwo\",manual,confirmed,Original,Original address\n"
+  },
+  {
+    "name": "point-csv-unix-fallback",
+    "subject": "points",
+    "format": "csv",
+    "text": "timestamp,timestamp_unix,latitude,longitude,altitude,speed,horizontal_accuracy,is_outlier\ninvalid,-0.125,18,-66,,,4.5,true\n"
+  },
+  {
+    "name": "legacy-title-case-source-and-status",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "# Whereday Export\n## Monday, October 26, 2026\n| Arrived | Departed | Lat | Lon | Location | Address | Notes | Source | Status |\n|---|---|---|---|---|---|---|---|---|\n| 9:00 AM | 10:15 AM | 18 | -66 | Cafe | Address | One<br>Two | Automatic | Corrected |\n"
+  },
+  {
+    "name": "legacy-point-table",
+    "subject": "points",
+    "format": "markdown",
+    "text": "# Whereday Location Points Export\n## Monday, October 26, 2026\n| Time | Lat | Lon | Speed | Altitude | Accuracy | Outlier |\n|---|---|---|---|---|---|---|\n| 9:00:15 AM | 18 | -66 | 1.5 m/s | 10 m | 5 m | Yes |\n"
+  },
+  {
+    "name": "iso-visit-escaped-pipes-and-slashes",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "# Whereday Complete Export\n## Visits\n| Arrived | Departed | Lat | Lon | Location | Address | Notes | Source | Status |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 2026-10-26T23:59:30.125-04:00 | 2026-10-27T00:15:30.625-04:00 | 18 | -66 | Cafe \\| 北 | C:\\\\folder\\\\ | One<br>Two \\| three --- | automatic | corrected |\n"
+  },
+  {
+    "name": "iso-point-omitted-middle-fields",
+    "subject": "points",
+    "format": "markdown",
+    "text": "## Location Points\n| Time | Lat | Lon | Altitude | Outlier |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | 18 | -66 | -1.5 m | Yes |\n"
+  },
+  {
+    "name": "iso-point-empty-optionals",
+    "subject": "points",
+    "format": "markdown",
+    "text": "| Time | Lat | Lon | Speed | Altitude | Accuracy | Outlier |\n| --- | --- | --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | 18 | -66 | | | | No |\n"
+  },
+  {
+    "name": "iso-point-reordered-alias-columns",
+    "subject": "points",
+    "format": "markdown",
+    "text": "| Time | Longitude | Latitude | Accuracy | Speed |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | -66 | 18 | 4.25 m | 1.5 m/s |\n"
+  },
+  {
+    "name": "iso-point-ignores-old-local-context",
+    "subject": "points",
+    "format": "markdown",
+    "text": "## Monday, October 26, 2026\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 2026-10-27T01:00:00.125+09:00 | 18 | -66 |\n"
+  },
+  {
+    "name": "combined-typed-visit-table",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "## Visits\n| Arrived | Departed | Lat | Lon | Location |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | | 18 | -66 | Ongoing |\n## Location Points\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 2026-10-26T13:01:00.125Z | 18.1 | -66.1 |\n"
+  },
+  {
+    "name": "combined-typed-point-table",
+    "subject": "points",
+    "format": "markdown",
+    "text": "## Visits\n| Arrived | Departed | Lat | Lon | Location |\n| --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00.125Z | | 18 | -66 | Ongoing |\n## Location Points\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 2026-10-26T13:01:00.125Z | 18.1 | -66.1 |\n"
+  },
+  {
+    "name": "markdown-literal-Ongoing",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "| Arrived | Departed | Lat | Lon | Location | Notes |\n| --- | --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | | 18 | -66 | Ongoing | Ongoing |\n"
+  },
+  {
+    "name": "markdown-literal-Still-here",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "| Arrived | Departed | Lat | Lon | Location | Notes |\n| --- | --- | --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | | 18 | -66 | Still here | Still here |\n"
+  },
+  {
+    "name": "legacy-positional-points",
+    "subject": "points",
+    "format": "markdown",
+    "text": "## Monday, October 26, 2026\n| 9:00:15 AM | 18 | -66 | 1.5 m/s | 10 m | 5 m | Yes |\n"
+  },
+  {
+    "name": "legacy-escaped-visit-table",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "## Monday, October 26, 2026\n| Arrived | Departed | Lat | Lon | Location | Address | Notes |\n| --- | --- | --- | --- | --- | --- | --- |\n| 9:00 AM | - | 18 | -66 | Cafe \\| 北 | C:\\\\ | One<br>Two |\n"
+  },
+  {
+    "name": "duplicate-markdown-aliases-rejected",
+    "subject": "points",
+    "format": "markdown",
+    "text": "| Time | Lat | Latitude | Lon |\n| --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | 18 | 19 | -66 |\n"
+  },
+  {
+    "name": "invalid-departure-does-not-open-visit",
+    "subject": "visits",
+    "format": "markdown",
+    "text": "| Arrived | Departed | Lat | Lon |\n| --- | --- | --- | --- |\n| 2026-10-26T13:00:00Z | broken | 18 | -66 |\n"
+  },
+  {
+    "name": "bad-heading-does-not-reuse-previous-date",
+    "subject": "points",
+    "format": "markdown",
+    "text": "## Monday, October 26, 2026\n## Invalid date\n| Time | Lat | Lon |\n| --- | --- | --- |\n| 9:00:00 AM | 18 | -66 |\n"
+  }
+]

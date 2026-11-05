@@ -1,0 +1,43 @@
+steps:
+  - echo: Onboarded idle disposable mapQa only, API35 English, Play reviews disabled. Verify unavailable message and disabled rate action remains in Support. Native Compose tests separately assert disabled semantics. Home/resume refreshes the known stale native inspection tree.
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Your location journal
+  - await: {idle: true}
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: {visible: {id: settings-screen}}
+  - await: {idle: true}
+  - scroll-to: {target: {text: Support and about}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - scroll-to: {target: {text: Support and about}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - await: {visible: {text: Support and about}}
+  - await: {idle: true}
+  - tap: {text: Support and about}
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: support-screen
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Google Play reviews are unavailable for this build.
+  - await: {idle: true}
+  - tap: {id: support-rate-app}
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: support-screen

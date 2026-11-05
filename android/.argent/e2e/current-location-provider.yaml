@@ -1,0 +1,58 @@
+steps:
+- echo: Requires onboarded idle physical phone with location permission already granted, device location
+    enabled and a fresh fix available within 30 seconds/100 m. Requests live GPS only in an unsaved draft;
+    never starts recording, geocodes, or saves a visit. Cancels and discards the draft.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Save current place
+- await:
+    idle: true
+- tap:
+    text: Save current place
+- await:
+    visible:
+      text: Choose saved place
+- await:
+    idle: true
+- tap:
+    text: Find current location
+- await:
+    visible:
+      text: Request location
+- await:
+    idle: true
+- tap:
+    text: Request location
+- await:
+    visible:
+      text: Current location ready
+    timeout: 35000
+- tap:
+    text: Use current location
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- await:
+    visible:
+      text: Current location ready
+- tap:
+    text:
+      matches: ^Cancel$
+- await:
+    visible:
+      text: Discard visit changes?
+- await:
+    idle: true
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Choose visit location

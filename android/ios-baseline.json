@@ -1,0 +1,468 @@
+{
+  "observedAt": "2026-10-26T23:40:58.246789+00:00",
+  "head": "65365fc02c8383d4f4f15e0785f6062564605b3b",
+  "includesExistingWorkingTreeEdits": true,
+  "purpose": "Source parity baseline; hashes identify the reviewed iOS working-tree source without changing it.",
+  "files": [
+    {
+      "path": "IsoMe/AppDelegate.swift",
+      "sha256": "33bf5649ae8ca2a27b62befaa38f432f64f08ff373eff645f22d64d78c25f077"
+    },
+    {
+      "path": "IsoMe/AppShortcuts.xcstrings",
+      "sha256": "103a527d1a3ab16bd74f38a31834fadb6dd9f5267b89ab1a0902bb100a7c783b"
+    },
+    {
+      "path": "IsoMe/Debug/DebugSelfie.swift",
+      "sha256": "61c40fbee725a45141a3a26b098e210fa083f90a0d2cf1a3be0b33f3b1f0a3e6"
+    },
+    {
+      "path": "IsoMe/Info.plist",
+      "sha256": "d5c3176b7884f54f103add845ae72cd9dd8079f34a7ec3d1aecbdefa0db24d8e"
+    },
+    {
+      "path": "IsoMe/InfoPlist.xcstrings",
+      "sha256": "f9ecf707ecf7a6b9188aeaaf143c5394ce30e8aabcb9775b298d664903138b8c"
+    },
+    {
+      "path": "IsoMe/IsoMe.entitlements",
+      "sha256": "5ac1d811cebc36e006c00c55481263960b91c717d1a896c07a6561ce0dbd1d25"
+    },
+    {
+      "path": "IsoMe/IsoMeApp.swift",
+      "sha256": "442503b337eba55c0d5e9230879ab43156cc501fe03c268716713679f6a1a133"
+    },
+    {
+      "path": "IsoMe/Localizable.xcstrings",
+      "sha256": "1168c39e0eaf1c86f9f217a85f8da9ee22e061e1ef1c7e360a78269c9079dc36"
+    },
+    {
+      "path": "IsoMe/Models/CountryStay.swift",
+      "sha256": "e37d7d778d2e35212e5668a8680768190800335b6943108e36929f06d3e772b1"
+    },
+    {
+      "path": "IsoMe/Models/ExportOptions.swift",
+      "sha256": "d09ce6823793c51946b02e897b7958b9fe082c4d8b48327f9000445d84562046"
+    },
+    {
+      "path": "IsoMe/Models/FilenameTemplate.swift",
+      "sha256": "4491102d94e6e9288cb6fd0c1df9538564ffac0591bb289c59c8cff8bfdd7bfe"
+    },
+    {
+      "path": "IsoMe/Models/LocationActivityAttributes.swift",
+      "sha256": "53d070a27806c705b89f913fe8332de990553cde192a01cf484fbe556846f0ad"
+    },
+    {
+      "path": "IsoMe/Models/LocationPoint.swift",
+      "sha256": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8"
+    },
+    {
+      "path": "IsoMe/Models/PhotoMoment.swift",
+      "sha256": "24fde6e3a6cd564a0efdb7257232c388f4fdb6a5dc945aa106e0ff31aa6554f3"
+    },
+    {
+      "path": "IsoMe/Models/RecordingSession.swift",
+      "sha256": "fab67599d5d9c92ee69a65c2b3825ae6c620ec4d595233af1d0257898b4bb7c3"
+    },
+    {
+      "path": "IsoMe/Models/Visit.swift",
+      "sha256": "137ffd7c2df9e91c3a8665ccc15f84076df326c7fd93996026b933887eb64f9f"
+    },
+    {
+      "path": "IsoMe/Services/Analytics/CloudflareOnboardingAnalyticsTransport.swift",
+      "sha256": "3e1bb510d1ad44a97e73d2f9a209ff39ccba8ffd0d5df498afbf8e29ac197c84"
+    },
+    {
+      "path": "IsoMe/Services/Analytics/OnboardingAnalyticsClient.swift",
+      "sha256": "5b5b7c3c3bf2a73320ee0ecec6705fab1a1846f017a6b3c508506f82cf89d751"
+    },
+    {
+      "path": "IsoMe/Services/Analytics/OnboardingAnalyticsEvent.swift",
+      "sha256": "4d924170a8835054b8762efa926a648d04d849af5d47594f887de6ba06bbbe00"
+    },
+    {
+      "path": "IsoMe/Services/Analytics/OnboardingAnalyticsFunnel.swift",
+      "sha256": "299dd7b9ec860c1913964b8bd5601059e599b0284ac9f3969c363a4b08efca32"
+    },
+    {
+      "path": "IsoMe/Services/Analytics/OnboardingAnalyticsTransport.swift",
+      "sha256": "67dafbc6337c87e5a23f3c4d4ad6dfe3b90cf8b368f4ff3cddf351fc50b41603"
+    },
+    {
+      "path": "IsoMe/Services/CountryDayResolver.swift",
+      "sha256": "e247fe838e328923bd8f603b6fb63919daf26af5fc716bccd9b9d0e7d062768b"
+    },
+    {
+      "path": "IsoMe/Services/DailyDistanceTracker.swift",
+      "sha256": "195b5fc5f700112a39c283648ea9e431cfc25568d7ee6e07592139b2ec9c537e"
+    },
+    {
+      "path": "IsoMe/Services/DailyExportNotificationScheduler.swift",
+      "sha256": "d102a0aa6130b5c2132b6d9b531faa3d650a4fe95b4e66bd711fe0633c00af70"
+    },
+    {
+      "path": "IsoMe/Services/DailyExportScheduler.swift",
+      "sha256": "773159209d4d68c19e9c8f745c1b0da34a74423dc2e1f187a22a072914a394ed"
+    },
+    {
+      "path": "IsoMe/Services/GeocodingService.swift",
+      "sha256": "158c0b75424c3f2478b4e7dc79f5a57f840ae6a97403a07e592487dde9716263"
+    },
+    {
+      "path": "IsoMe/Services/IntervalExportScheduleDateMath.swift",
+      "sha256": "9270599d041afd00a9f40fb5d3117d1fd88753a91bbaf2be6c048205a97a9a0d"
+    },
+    {
+      "path": "IsoMe/Services/IsoMeEntities.swift",
+      "sha256": "8ab298dacc25c4ea5d67813c71f6e5b8e4133d06e1eb677c3cafd56332e21d58"
+    },
+    {
+      "path": "IsoMe/Services/IsoMeExportIntents.swift",
+      "sha256": "04a2ecf86d9d40f14880c75a83045cbdc623caa7a304c851cb7dd25ed46b174e"
+    },
+    {
+      "path": "IsoMe/Services/IsoMeIntents.swift",
+      "sha256": "3c6b3781ebe97c59021433c33db79b93c317e167fbd0fdbb652d2c73f5d146fb"
+    },
+    {
+      "path": "IsoMe/Services/IsoMeReadIntents.swift",
+      "sha256": "aa2192ba51ae72054ce4385c928cd7fb04b4917af2197246fe412bbe1401f25c"
+    },
+    {
+      "path": "IsoMe/Services/IsoMeRenameIntents.swift",
+      "sha256": "bc0d73cbe16d62a65944bd6f10255075f12e3b41ff2b8b7b3cd8169054f5969d"
+    },
+    {
+      "path": "IsoMe/Services/LiveActivityManager.swift",
+      "sha256": "0bf6f6eaa3e4fdc83319ef4ec659f364a10f1e5e1eb4f1675adfe699a7f0b755"
+    },
+    {
+      "path": "IsoMe/Services/LocationManager.swift",
+      "sha256": "03a93ba8760b392af2a7d45dd2232e0541ab6541afe63ea7eb9f4d6b8a20e8f6"
+    },
+    {
+      "path": "IsoMe/Services/LogManager.swift",
+      "sha256": "022b75215dc89f61bde6a6f0ccc41612bfd029e00356eb8fb208a09269686407"
+    },
+    {
+      "path": "IsoMe/Services/PhotoLibraryManager.swift",
+      "sha256": "61ed583dd5e48ab3661557c0a2da58c3a975d64a9b1558fe9d270e58f6f764bb"
+    },
+    {
+      "path": "IsoMe/Services/PlaceSearchService.swift",
+      "sha256": "26e3a9d271558da3227aa82a71ac9b0887364a1e9c08f6cb85850a5e8256ada9"
+    },
+    {
+      "path": "IsoMe/Services/PushRegistrationManager.swift",
+      "sha256": "7410234828a079d3b80ea1cbc7ae45b53c28f0aad24383945fa74378b5a65c61"
+    },
+    {
+      "path": "IsoMe/Services/StoreManager.swift",
+      "sha256": "48fc4c0efe0b37fd772361c0b2c4382060b70b13bd4f1b6e890e2063f6d5db29"
+    },
+    {
+      "path": "IsoMe/Services/WatchLocationSyncReceiver.swift",
+      "sha256": "efa2cda5b6e46059a574c0f8880cf38f05e1163e6e217ad7ad88e3d20b8f883d"
+    },
+    {
+      "path": "IsoMe/Services/WebhookManager.swift",
+      "sha256": "6bad33962deac983aace089a873b4d005d9d070256bd3ad491e3362f66ce49fe"
+    },
+    {
+      "path": "IsoMe/TEDesign.swift",
+      "sha256": "6a48af250dbb3d80f3e2e0e4257f8a5084e0d69c3f709d5839076859198639f1"
+    },
+    {
+      "path": "IsoMe/Utilities/AppInfo.swift",
+      "sha256": "451c0e4d471d56051afeef876bd09097c3bb6547f299a9bd6290f335d09417de"
+    },
+    {
+      "path": "IsoMe/Utilities/ExportFolderManager.swift",
+      "sha256": "d9a964ce7932c368947a3abbf71aae1eb8f1a20265dc8dd68bc9f859582ecbc1"
+    },
+    {
+      "path": "IsoMe/Utilities/ExportService.swift",
+      "sha256": "1fd0d8fb7cbfe3135a1ca29d555b863012ba85ff236afe5951c8c4de640fe5b8"
+    },
+    {
+      "path": "IsoMe/Utilities/ImportService.swift",
+      "sha256": "5f5ccafb18924496f794e3a70935245b5158bf5ae361f6e458a2dc168215a2d8"
+    },
+    {
+      "path": "IsoMe/Utilities/IsoMeExportKitAdapter.swift",
+      "sha256": "53e3a1f6dd4216b61e46aba1a4eb1470088dcb9acd622bbe2a126a4f7ff4ca8b"
+    },
+    {
+      "path": "IsoMe/Utilities/SavedPlaceImportService.swift",
+      "sha256": "8277a3af27714d7fbb5af734a9bf182a588b15c77a892b3a890cadd82185095f"
+    },
+    {
+      "path": "IsoMe/Utilities/SavedPlaceManagement.swift",
+      "sha256": "0f52b35937ee5cf72f47397fca53afb2c9dad5c34549609b73a3d0527e5d7dc9"
+    },
+    {
+      "path": "IsoMe/Utilities/ScheduledExportMergeStrategies.swift",
+      "sha256": "136d5e5883d00d5f84cd892bee98e4945ae57e93c7a8e8ea6fef53cba8a929c6"
+    },
+    {
+      "path": "IsoMe/Utilities/VisitMapOpener.swift",
+      "sha256": "6ed3421f515a174a6a6a876136f0b7341162b80bd6eeb2c1b566f662f1725c58"
+    },
+    {
+      "path": "IsoMe/ViewModels/LocationViewModel.swift",
+      "sha256": "9916145cd89ccb0c072ba5e33b7fc66d11e19a37ac6d9212a8482856eb3f591d"
+    },
+    {
+      "path": "IsoMe/Views/ContentView.swift",
+      "sha256": "f9781a95fe710923b3c56767294ffe01c298d3fb6a63b56625cd0b8037036f91"
+    },
+    {
+      "path": "IsoMe/Views/CountryDaysView.swift",
+      "sha256": "b3c73714819068798e709769f7f319d0e76480724e503bc4e8e23ac59d3e212d"
+    },
+    {
+      "path": "IsoMe/Views/DiscordPromoBanner.swift",
+      "sha256": "aa52ad5442affc0bb947e21c1f2e284f67e7072c3636c3b789184f9f3e7d7d7c"
+    },
+    {
+      "path": "IsoMe/Views/ExportView.swift",
+      "sha256": "cf8070912e924da9e23ac1286d5e96bb5984690babf76b4f936d514b454a9c25"
+    },
+    {
+      "path": "IsoMe/Views/LogViewerView.swift",
+      "sha256": "0f72dab29e9e35af8360ca077725b3bed8474ee0ec155b463336ad79c9e86ac3"
+    },
+    {
+      "path": "IsoMe/Views/MapView.swift",
+      "sha256": "b590852368423ef3e79787c76e6f5c7c7c6a9c918dd7ccc5cf8db7ec4aee9392"
+    },
+    {
+      "path": "IsoMe/Views/MyselfClaimView.swift",
+      "sha256": "9cf558aab7fbaa757717782fdf6da0288f96f3cf8f4f0dfa73e2bd286fa72d48"
+    },
+    {
+      "path": "IsoMe/Views/OutingsView.swift",
+      "sha256": "a20db17009a747925bac2b40c83e774d3930e8d0953a7bd9bb1e627d737f5b59"
+    },
+    {
+      "path": "IsoMe/Views/PaywallView.swift",
+      "sha256": "9601e4d5b416656d6a5d5188fd782a52ec75274e8a2d8d1515cf495e9ab5df44"
+    },
+    {
+      "path": "IsoMe/Views/PhotoMomentViews.swift",
+      "sha256": "6f61e754789a53fcfaa6543217f101eb1021e9c1b2472f4939210f013aea445c"
+    },
+    {
+      "path": "IsoMe/Views/PlaceSelectionView.swift",
+      "sha256": "175161ea0e34cc84e1e6ae388055cc12f721997ed1325fb9da6535af97ea83b2"
+    },
+    {
+      "path": "IsoMe/Views/ReleaseNotes.swift",
+      "sha256": "a37fd599b712f4063ee14bc6996dc029a7ee2d6379da0b1b17a7d12701faf283"
+    },
+    {
+      "path": "IsoMe/Views/SavedLocationsView.swift",
+      "sha256": "7537518f7b0592cfea1b0250544f2a74e5d7eb36ecb64124522f2422e59deea2"
+    },
+    {
+      "path": "IsoMe/Views/SavedPlaceEditorView.swift",
+      "sha256": "342f6d0064ef4e8aab1bc326b707809f87320eb502a7bb2ef4d245c7279a0198"
+    },
+    {
+      "path": "IsoMe/Views/SessionPathMapView.swift",
+      "sha256": "3d1856a0a3761e7d3cc3179052f4453f6d0c0f30b0f53786d4cdcebb7c81e711"
+    },
+    {
+      "path": "IsoMe/Views/SettingsView.swift",
+      "sha256": "90f57f008c5a0168f43703c27416cfe2fbb16a953ce533539f3d78ebeb4dd792"
+    },
+    {
+      "path": "IsoMe/Views/VisitDetailView.swift",
+      "sha256": "aa3f0bb41e9d4330283e659933e793b10d371ee0b121f7d7d68da623f7447f3f"
+    },
+    {
+      "path": "IsoMe/Views/WebhookSettingsView.swift",
+      "sha256": "1e8605b41c03622cba431745c10bf1e280abc420a665082711a2ef951185cc4c"
+    },
+    {
+      "path": "Shared/DistanceFormatter.swift",
+      "sha256": "068c61c3b2952b25faa798ec3b427287a97a57ce6af3a97bcfe9ae9bb84dbb70"
+    },
+    {
+      "path": "Shared/SharedLocationData.swift",
+      "sha256": "daab57fbc49594fa60c953ea4eefb51c8967ef59fddff0040053ffcdd664d031"
+    },
+    {
+      "path": "Shared/WatchLocationSyncPayload.swift",
+      "sha256": "dcdfb42e79c5bd2bd16e1e8ca44d61aaee905195fdf751f488bc1af53a04671a"
+    },
+    {
+      "path": "Shared/WatchLocationSyncState.swift",
+      "sha256": "c6bc03c61ee19b9f32e52943fca378c992c5e0b9a676361b2dd5dfccc24a3785"
+    },
+    {
+      "path": "IsoMeWatch/ContentView.swift",
+      "sha256": "39d1b3f844b9957fd49fcbb8d94a38cba67b6dc142d7b970da8ee0c648d4e5d6"
+    },
+    {
+      "path": "IsoMeWatch/Info.plist",
+      "sha256": "37c0aa9cb2ae04d3345a59a7c107200a84f36bac77d192f7ea1e3af01d532c17"
+    },
+    {
+      "path": "IsoMeWatch/InfoPlist.xcstrings",
+      "sha256": "ee8276ffb22f383605dd06badec7f26d367e9db3669e61705d746e4f88ce8a23"
+    },
+    {
+      "path": "IsoMeWatch/IsoMeWatch.entitlements",
+      "sha256": "9e529037596612d5c3de425ab2bcd0046affa8b01af3ce552626107b1a88c4cb"
+    },
+    {
+      "path": "IsoMeWatch/IsoMeWatchApp.swift",
+      "sha256": "78d691f84dec8b006ae61ddc18a4ec4491450f2121e5c0cc471a526c37509ba0"
+    },
+    {
+      "path": "IsoMeWatch/Localizable.xcstrings",
+      "sha256": "145156f2b1b915f58eade5a6bea2dabf7c2e133214d557e558a0f213d8b3e247"
+    },
+    {
+      "path": "IsoMeWatch/WatchLocationSyncClient.swift",
+      "sha256": "45c2a30b077d6c5d3ef3e730eee46d792e2c34c00618611f7d65461d3162d997"
+    },
+    {
+      "path": "IsoMeWatch/WatchLocationTracker.swift",
+      "sha256": "cc6dd56535c7601a451310f990f96d4cf0dc1a6f768217bef0c24f08a73faadd"
+    },
+    {
+      "path": "IsoMeWidget/Info.plist",
+      "sha256": "7dd535b88d76671c21c718a764fb3430f7cc62b5aa86907a618cb9ec0578adb3"
+    },
+    {
+      "path": "IsoMeWidget/InfoPlist.xcstrings",
+      "sha256": "9b3079a0bfca390b61c5fd447634d69ccae55d5e390008c5db2412ca18627c3e"
+    },
+    {
+      "path": "IsoMeWidget/IsoMeLiveActivity.swift",
+      "sha256": "9084a0a411b1743a508c56d6269dfd0ab82e24da8dd6c519e04c3b27151a6c3d"
+    },
+    {
+      "path": "IsoMeWidget/IsoMeWidget.entitlements",
+      "sha256": "9e529037596612d5c3de425ab2bcd0046affa8b01af3ce552626107b1a88c4cb"
+    },
+    {
+      "path": "IsoMeWidget/IsoMeWidgetBundle.swift",
+      "sha256": "e28c760cf488e4ccc66297e2271f8d3ef35a025cd99bf4460290e09352492851"
+    },
+    {
+      "path": "IsoMeWidget/Localizable.xcstrings",
+      "sha256": "7081f03f67a9ef611de5d43bd724ac82b519f95a790d24eaffa192135fdc4920"
+    },
+    {
+      "path": "IsoMeWatchWidget/Info.plist",
+      "sha256": "c8234de0b1d64a287606cf0300ac673db08b8d81a9fe940e9b42ec5203ee317d"
+    },
+    {
+      "path": "IsoMeWatchWidget/InfoPlist.xcstrings",
+      "sha256": "4bbe799cad33094ca7407a3e0a2b5b3e108405c7046c9258213b362372f57045"
+    },
+    {
+      "path": "IsoMeWatchWidget/IsoMeWatchWidget.entitlements",
+      "sha256": "9e529037596612d5c3de425ab2bcd0046affa8b01af3ce552626107b1a88c4cb"
+    },
+    {
+      "path": "IsoMeWatchWidget/IsoMeWatchWidget.swift",
+      "sha256": "af87fc2562d5160566e54bd59b32970c254a400ef1abfa42eb1953e9663dcc28"
+    },
+    {
+      "path": "IsoMeWatchWidget/IsoMeWatchWidgetBundle.swift",
+      "sha256": "b9a9fc17d8837ad0ffb2d873782399a71e1ece6b0c18cfc671616e5d8f592b45"
+    },
+    {
+      "path": "IsoMeWatchWidget/Localizable.xcstrings",
+      "sha256": "91e7e1e69ffaf7e3dbefe3f19820d182a357b6626fbad39539e5941ff434cc0c"
+    },
+    {
+      "path": "IsoMeTests/CountryDayTests.swift",
+      "sha256": "88abc296068a0363ae6c1aee08a02898d6d481cc534f046df0a538854e4e1c07"
+    },
+    {
+      "path": "IsoMeTests/ExportDataIntentTests.swift",
+      "sha256": "d5cb6428c547cbc667bcdae7b7764868d42324ec7d52cabfec78fe8be33236b8"
+    },
+    {
+      "path": "IsoMeTests/ExportKitIntegrationTests.swift",
+      "sha256": "b9f01350ae7782544c11866f88984db3097a9277018a9868fe9350b304e7e1a2"
+    },
+    {
+      "path": "IsoMeTests/ExportRoundTripTests.swift",
+      "sha256": "2e7d1fd22bded6bb34c6557f5c346c8ffbcb43404962b3bcf0e3f0232559777f"
+    },
+    {
+      "path": "IsoMeTests/ExportServiceRoundTripTests.swift",
+      "sha256": "4325cb79c7487aec89be17d1d0022140ad809b8f60d9760e83b99822cf95bed1"
+    },
+    {
+      "path": "IsoMeTests/GetCurrentOutingNameIntentTests.swift",
+      "sha256": "b221a06f034c93471b38edf4cc2862dd209a90ae6b60c7ab3d71a7df13c1118f"
+    },
+    {
+      "path": "IsoMeTests/GetVisitsGetMovementsIntentTests.swift",
+      "sha256": "a3c6675a78048e6090ee8c53bc45d59027c723cb6307de9e625361a29b5a4053"
+    },
+    {
+      "path": "IsoMeTests/IntervalPickerCrashReproTests.swift",
+      "sha256": "f406fb464e99157297f08abc30d322e233291015e5074ad624e6ed031b1073ae"
+    },
+    {
+      "path": "IsoMeTests/IntervalScheduledExportTests.swift",
+      "sha256": "d4a6d33475da74885f635cf57a008827d936985bbc6f7aa3c6a14651a77a8bbf"
+    },
+    {
+      "path": "IsoMeTests/IsoMeEntityQueryTests.swift",
+      "sha256": "8dac2b527411229b381dee54dbcd7d80a05d111b11613a1ca62526295e6991d3"
+    },
+    {
+      "path": "IsoMeTests/LocationManagerTrackingTests.swift",
+      "sha256": "b837d7f1307c6eab0ca3873850ff383d94e416a21033c60c7abb58c5b0558a2f"
+    },
+    {
+      "path": "IsoMeTests/LocationViewModelPointScalingTests.swift",
+      "sha256": "c8de53a63d1674e589720c28cf7718c9f3b9eb50aa1c507fee74c6fb84e6b826"
+    },
+    {
+      "path": "IsoMeTests/RemotePastVisitTests.swift",
+      "sha256": "d6f83dbec9f912b71ebaa6371728d9601d9628741c232496abe1c3964ec03ee3"
+    },
+    {
+      "path": "IsoMeTests/RenameIntentsTests.swift",
+      "sha256": "e40ae3640abd1763e1ed64578f71c05561be41810716bd0fa226a0e4a3f2b5ea"
+    },
+    {
+      "path": "IsoMeTests/SavedPlaceImportTests.swift",
+      "sha256": "d27072a90fa7fbff97aa44a3f6ffde03f0b8581c2b3052cc8e22fa4baa723278"
+    },
+    {
+      "path": "IsoMeTests/SavedPlaceManagementTests.swift",
+      "sha256": "77fe0734f1fb710e96a3f5449734f228da39d4ce9db2d5158f96a981acf0fe9b"
+    },
+    {
+      "path": "IsoMeTests/SharedLocationDataTests.swift",
+      "sha256": "0594a0694d5622cab79b4e66ef6bb16226591b22a00084f1222cd3cb0200d7e9"
+    },
+    {
+      "path": "IsoMeTests/StoreManagerTests.swift",
+      "sha256": "8290c9bee160ceadaecc0c4136fc71fd980fc35edacb76cee4bc4fad63605c17"
+    },
+    {
+      "path": "IsoMeTests/VisitMapOpenerTests.swift",
+      "sha256": "46484de5cd22d6b0601693fd80fc88566a84687e3332fe0c6956da8bf3c5077b"
+    },
+    {
+      "path": "IsoMeTests/WatchLocationSyncTests.swift",
+      "sha256": "2324a9838eddac5eba16d014608c65d1373b5153a280b1bb00109f289118e7b0"
+    },
+    {
+      "path": "IsoMeTests/WebhookManagerTests.swift",
+      "sha256": "454a0b142cf8452a3784c205635d339053a2599bb49fe215aa97237e657d4e57"
+    }
+  ]
+}

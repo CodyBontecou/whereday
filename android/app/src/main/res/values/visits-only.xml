@@ -1,0 +1,20 @@
+<resources>
+    <string name="visits_title">Visits only</string>
+    <string name="visits_explanation">Detect visits when route recording is off. This optional mode uses balanced-power location and keeps an ongoing notification. It uses battery; detection can be delayed or unavailable when location quality is insufficient.</string>
+    <string name="visits_handoff">During route recording, visits use its location updates. When the route stops, Visits only resumes balanced-power updates. Each mode has its own Stop action.</string>
+    <string name="visits_recovery">After a phone restart, force-stop or service interruption, open Whereday and start again. Visits only does not restart automatically.</string>
+    <string name="visits_off">Off</string>
+    <string name="visits_preparing">Preparing…</string>
+    <string name="visits_active">Detecting visits</string>
+    <string name="visits_route">Using route recording for visits</string>
+    <string name="visits_interrupted">Visit detection stopped. Review location access and start again when ready.</string>
+    <string name="visits_start">Start Visits only</string>
+    <string name="visits_stop">Stop Visits only</string>
+    <string name="visits_location">Review location access</string>
+    <string name="visits_notifications">Review notifications</string>
+    <string name="visits_notification_warning">Notifications are disabled. Android may hide the notification from the shade; the foreground service remains visible in the system active-apps controls.</string>
+    <string name="visits_approximate">Approximate location may be too imprecise to detect visits. You can review precise access in system settings.</string>
+    <string name="visits_settings">Open app settings</string>
+    <string name="visits_error">The change could not be completed. Check location access and the current status, then try again.</string>
+    <string name="visits_notification_warning_legacy">Notifications are disabled. You may not see the ongoing notification. You can stop Visits only here in Whereday.</string>
+</resources>

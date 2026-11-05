@@ -1,0 +1,120 @@
+steps:
+- echo: Only isolated com.bontecou.whereday.mapqa, with the two generated photo refs at Oct 27 10:00/10:05
+    and no synthetic outing remaining. Remove only these refs; originals remain. Restore Photo markers
+    off. Never run against the owner app or select other photos.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Photos
+    direction: down
+- await:
+    visible:
+      text: Photos
+- await:
+    idle: true
+- tap:
+    text: Photos
+- await:
+    visible:
+      text: 2 saved photo references
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:00.
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:00. No location match
+- await:
+    visible:
+      text: Photo 1 of 2
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: 1 saved photo reference
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Photo taken at Oct 27, 10:00.
+- await:
+    visible:
+      text: Photo taken at Oct 27, 10:05.
+- await:
+    idle: true
+- tap:
+    text: Photo taken at Oct 27, 10:05. No location match
+- await:
+    visible:
+      text: Photo 1 of 1
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- await:
+    visible:
+      text: 0 saved photo references
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: Map layers
+- await:
+    idle: true
+- tap:
+    text: Map layers
+- await:
+    visible:
+      text: Photo markers
+- await:
+    idle: true
+- tap:
+    text: Photo markers
+- await:
+    idle: true
+- tap:
+    text: Done map layers
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true

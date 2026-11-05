@@ -1,0 +1,8 @@
+<resources>
+    <string name="redesign_visit_section_where">Where</string>
+    <string name="redesign_visit_section_coordinates">Coordinates</string>
+    <string name="redesign_visit_section_when">When</string>
+    <string name="redesign_visit_section_notes">Field notes</string>
+    <string name="redesign_visit_section_reuse">Reuse</string>
+    <string name="redesign_visit_section_more">More</string>
+</resources>

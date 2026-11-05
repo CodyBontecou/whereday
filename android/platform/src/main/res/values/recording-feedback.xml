@@ -1,0 +1,20 @@
+<resources>
+    <string name="notification_recording_channel">Location recording</string>
+    <string name="notification_recording_preparing">Preparing location recording</string>
+    <string name="notification_recording_title">Whereday is recording</string>
+    <string name="notification_recording_public">Location recording is active</string>
+    <string name="notification_recording_stop">Stop</string>
+    <string name="notification_recording_distance_pending">Distance updating</string>
+    <string name="notification_recording_duration">%1$sh %2$sm</string>
+    <string name="notification_recording_detail">%1$s · %2$s · %3$s</string>
+    <string name="notification_recording_countdown_detail">%1$s · %2$s</string>
+    <plurals name="notification_recording_points">
+        <item quantity="one">%s point</item>
+        <item quantity="other">%s points</item>
+    </plurals>
+    <plurals name="notification_recording_remaining">
+        <item quantity="one">%s min left</item>
+        <item quantity="other">%s min left</item>
+    </plurals>
+    <string name="notification_recording_brand" translatable="false">Whereday</string>
+</resources>

@@ -1,0 +1,147 @@
+executionPrerequisite: At the Map in the onboarded idle isolated com.bontecou.whereday.mapqa
+  app, with webhook settings reset and no endpoint. Unconfigured purchases and English
+  UI. No recording, permissions, real credentials or owner-package access.
+steps:
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Webhooks
+    direction: down
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Webhooks
+- await:
+    idle: true
+- tap:
+    text: Webhooks
+- await:
+    visible:
+      id: webhook-screen
+- await:
+    idle: true
+- type:
+    into:
+      id: webhook-url
+    text: https://example.invalid/qa
+    submit: true
+- tap:
+    text: Show Endpoint URL
+- await:
+    visible:
+      text: Hide Endpoint URL
+- tap:
+    text: Hide Endpoint URL
+- scroll-to:
+    target:
+      text: Save webhook settings
+    direction: down
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Save webhook settings
+- await:
+    idle: true
+- tap:
+    text: Save webhook settings
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Webhook settings saved.
+- await:
+    idle: true
+- tap:
+    text: Test connection
+- await:
+    visible:
+      text: Lifetime export access
+- await:
+    idle: true
+- await:
+    visible:
+      text: Purchases are not available in this build.
+- tap:
+    text: Restore purchases
+- await:
+    visible:
+      text: Purchases are not available in this build.
+- tap:
+    text: Close
+- await:
+    hidden:
+      text: Lifetime export access
+- await:
+    visible:
+      id: webhook-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: webhook-enabled
+    direction: up
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: webhook-enabled
+- await:
+    idle: true
+- await:
+    visible:
+      text: Show Endpoint URL
+- tap:
+    id: webhook-enabled
+- scroll-to:
+    target:
+      text: Save webhook settings
+    direction: down
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Unsaved changes
+- tap:
+    text: Save webhook settings
+- await:
+    visible:
+      text: Lifetime export access
+- await:
+    idle: true
+- tap:
+    text: Close
+- await:
+    visible:
+      id: webhook-screen
+- await:
+    idle: true
