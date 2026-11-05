@@ -9,27 +9,19 @@ import SwiftData
 final class LocationManagerTrackingTests: XCTestCase {
 
     private var manager: LocationManager!
+    private var defaults: UserDefaults!
 
     override func setUp() {
         super.setUp()
         // Clear any persisted state from prior runs before instantiating
-        UserDefaults.standard.removeObject(forKey: "isTrackingEnabled")
-        UserDefaults.standard.removeObject(forKey: "stopAfterHours")
-        UserDefaults.standard.removeObject(forKey: "distanceFilter")
-        UserDefaults.standard.removeObject(forKey: "isLiveActivityEnabled")
-        UserDefaults.standard.removeObject(forKey: "allowNetworkGeocoding")
-        UserDefaults.standard.removeObject(forKey: "activeRecordingSessionID")
-        manager = LocationManager()
+        // Each test gets its own defaults suite; nothing is read from or written to the host app's.
+        defaults = makeIsolatedDefaults()
+        manager = makeIsolatedLocationManager(defaults: defaults)
     }
 
     override func tearDown() {
         manager = nil
-        UserDefaults.standard.removeObject(forKey: "isTrackingEnabled")
-        UserDefaults.standard.removeObject(forKey: "stopAfterHours")
-        UserDefaults.standard.removeObject(forKey: "distanceFilter")
-        UserDefaults.standard.removeObject(forKey: "isLiveActivityEnabled")
-        UserDefaults.standard.removeObject(forKey: "allowNetworkGeocoding")
-        UserDefaults.standard.removeObject(forKey: "activeRecordingSessionID")
+        defaults = nil
         super.tearDown()
     }
 
@@ -79,7 +71,7 @@ final class LocationManagerTrackingTests: XCTestCase {
     /// setStopAfterHours persists across reinstantiation.
     func testStopAfterHoursIsPersisted() {
         manager.setStopAfterHours(2.0)
-        let fresh = LocationManager()
+        let fresh = makeIsolatedLocationManager(defaults: defaults)
         XCTAssertEqual(fresh.stopAfterHours, 2.0)
     }
 
@@ -91,7 +83,7 @@ final class LocationManagerTrackingTests: XCTestCase {
     /// Live Activity monitor preference persists across reinstantiation.
     func testLiveActivityEnabledIsPersisted() {
         manager.setLiveActivityEnabled(false)
-        let fresh = LocationManager()
+        let fresh = makeIsolatedLocationManager(defaults: defaults)
         XCTAssertFalse(fresh.isLiveActivityEnabled)
     }
 
@@ -99,7 +91,7 @@ final class LocationManagerTrackingTests: XCTestCase {
     /// Tracking must persist every valid point, not just `locations.last`, otherwise
     /// background batches render as long straight-line jumps on the map.
     func testDidUpdateLocationsPersistsEveryValidLocationInBatch() async throws {
-        UserDefaults.standard.set(false, forKey: "allowNetworkGeocoding")
+        defaults.set(false, forKey: "allowNetworkGeocoding")
         let container = try makeInMemoryContainer()
         manager.setModelContext(container.mainContext)
         manager.isTrackingEnabled = true

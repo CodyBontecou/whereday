@@ -162,6 +162,7 @@
 		54EC7C2E1B7D4635BF1F1422 /* SavedPlaceManagementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */; };
 		A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */; };
 		AE16151E6D0BFAAE919E3458 /* MapHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC016151E6D0BFAAE919E34 /* MapHomeTests.swift */; };
+		AE37E94B1711039976CE90B8 /* IsolatedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4137E94B1711039976CE90 /* IsolatedDefaults.swift */; };
 		34314394A69B4C38B941108A /* VisitMapOpenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */; };
 		C0DE0301212F000100000301 /* CountryStay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0301212F000000000301 /* CountryStay.swift */; };
 		C0DE0302212F000100000302 /* CountryDayResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0302212F000000000302 /* CountryDayResolver.swift */; };
@@ -423,6 +424,7 @@
 		3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPlaceManagementTests.swift; sourceTree = "<group>"; };
 		EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPlaceImportTests.swift; sourceTree = "<group>"; };
 		ADC016151E6D0BFAAE919E34 /* MapHomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHomeTests.swift; sourceTree = "<group>"; };
+		AD4137E94B1711039976CE90 /* IsolatedDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsolatedDefaults.swift; sourceTree = "<group>"; };
 		E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitMapOpenerTests.swift; sourceTree = "<group>"; };
 		C0DE0301212F000000000301 /* CountryStay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryStay.swift; sourceTree = "<group>"; };
 		C0DE0302212F000000000302 /* CountryDayResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDayResolver.swift; sourceTree = "<group>"; };
@@ -769,6 +771,7 @@
 				D24C10C00000000000000002 /* ClockTextTests.swift */,
 				CA1E00870000000000000002 /* TEActionContrastTests.swift */,
 				E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */,
+				AD4137E94B1711039976CE90 /* IsolatedDefaults.swift */,
 				ADC016151E6D0BFAAE919E34 /* MapHomeTests.swift */,
 				EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */,
 				3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */,
@@ -1217,6 +1220,7 @@
 				D24C10C00000000000000001 /* ClockTextTests.swift in Sources */,
 				CA1E00870000000000000001 /* TEActionContrastTests.swift in Sources */,
 				34314394A69B4C38B941108A /* VisitMapOpenerTests.swift in Sources */,
+				AE37E94B1711039976CE90B8 /* IsolatedDefaults.swift in Sources */,
 				AE16151E6D0BFAAE919E3458 /* MapHomeTests.swift in Sources */,
 				A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */,
 				54EC7C2E1B7D4635BF1F1422 /* SavedPlaceManagementTests.swift in Sources */,
