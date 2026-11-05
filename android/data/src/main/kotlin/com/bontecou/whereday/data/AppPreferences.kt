@@ -25,8 +25,8 @@ data class MapLayerSettings(val path:Boolean=true,
     val liveSession:Boolean=true,
     /** iOS showVisitSuggestions: the "Are you here?" card. */
     val visitSuggestions:Boolean=false,
-    /** Street tiles from the online provider stay opt-in; this remembers the explicit choice. */
-    val online:Boolean=false) {
+    /** Street tiles from the online provider show by default; Layers turns them off, and that choice is remembered. */
+    val online:Boolean=true) {
     fun layers(outliers:Boolean)=com.bontecou.whereday.domain.MapLayers(path,points,visits,endpoints,outliers)
 }
 class AppPreferences(private val context: Context,private val beforeRoadPolicyChange:(String)->Unit={}) {
@@ -64,7 +64,7 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
         p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
-        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: false))
+        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: true))
     val settings = context.preferenceStore.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { context.preferenceStore.edit { p ->
         val previous=read(p)

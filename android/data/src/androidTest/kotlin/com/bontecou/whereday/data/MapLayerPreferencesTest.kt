@@ -17,7 +17,7 @@ class MapLayerPreferencesTest {
             assertEquals(MapLayerSettings(),AppPreferences(context).settings.first().map)
             val flips:List<(MapLayerSettings)->MapLayerSettings> = listOf(
                 {it.copy(path=false)},{it.copy(points=true)},{it.copy(visits=false)},{it.copy(endpoints=false)},
-                {it.copy(straightGaps=true)},{it.copy(liveSession=false)},{it.copy(visitSuggestions=true)},{it.copy(online=true)})
+                {it.copy(straightGaps=true)},{it.copy(liveSession=false)},{it.copy(visitSuggestions=true)},{it.copy(online=false)})
             for(flip in flips) {
                 val before=preferences.settings.first()
                 preferences.update {it.copy(map=flip(MapLayerSettings()))}
