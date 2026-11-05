@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+November 5, 2026
 
 Reading
 
@@ -26,7 +26,7 @@ Whereday records visits (arrivals and departures) and routes (GPS paths). Start 
 
 ## Starting and stopping
 
-- Map pill — the floating control on the Map tab shows live duration and distance while recording.
+- Recording bar — the bar above the day card on the map reads Recording with the number of saved points, and any auto-stop countdown, while tracking is on. In standby it offers a start button.
 - Live Activity — lock screen and Dynamic Island show progress and include a Stop button.
 - Siri / Shortcuts — “Start Whereday” and “Stop tracking with Whereday” phrases work hands-free.
 - Auto-stop timer — optional safety net that ends tracking automatically.
@@ -44,7 +44,7 @@ New visits are reverse-geocoded to a name and address automatically, unless you'
 ## Route recording quality
 
 - Only fixes with reported accuracy of 100 m or better are saved; wilder fixes are dropped.
-- Obvious glitches — impossible jumps and out-and-back spikes — are flagged as GPS glitches and excluded from distances and maps by default. Enable Settings → Map display → Show GPS glitches to see them.
+- Obvious glitches — impossible jumps and out-and-back spikes — are flagged as GPS glitches and excluded from distances and maps by default. Enable Settings → Map display → Show GPS glitches, or Show outliers in the map’s Layers sheet, to see them.
 
 ## Tracking settings reference
 

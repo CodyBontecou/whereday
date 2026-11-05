@@ -430,7 +430,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <p class="lede">Save a reusable location for future visit names, correct an existing visit, or add a past stop. Choose the right action before changing your journal.</p>
     <div class="meta-strip">
       <div><div class="k">Platform</div><div class="v">iOS 17+</div></div>
-      <div><div class="k">Updated</div><div class="v">October 30, 2026</div></div>
+      <div><div class="k">Updated</div><div class="v">November 5, 2026</div></div>
       <div><div class="k">Reading</div><div class="v">5 min</div></div>
       <div><div class="k">Back to</div><div class="v"><a href="/docs/">All docs</a></div></div>
     </div>
@@ -445,7 +445,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <tr><th scope="col">Your goal</th><th scope="col">Use</th></tr>
 <tr><th scope="row">Name a place you will revisit</th><td>Settings → Saved Locations → Manage Locations.</td></tr>
 <tr><th scope="row">Fix a stop already in your journal</th><td>Open that visit and confirm or correct it.</td></tr>
-<tr><th scope="row">Add a stop from an earlier day</th><td>Map → + → Add past visit.</td></tr>
+<tr><th scope="row">Add a stop from an earlier day</th><td>Map → + → Log a past stop.</td></tr>
 </table>
 <p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. See <a href="/#pricing">current pricing</a>.</p>
 
@@ -482,17 +482,17 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <p>Those are parser and in-memory storage checks. The file-picker handoff and a complete on-device CSV import have not been newly verified here. Try a small test file and review the preview before importing your own locations.</p>
 
 <h2>Confirm or correct an existing visit</h2>
-<p>Open the visit from Map or Timeline. <strong>Confirm place</strong> accepts the detected place; correcting a name, address, or position records your chosen values. Arrival, departure, and notes can also be edited. Nearby business suggestions use Apple Maps around the visit’s coordinate.</p>
+<p>Tap the visit on the map, or in the day sheet’s list. Its sheet shows whether the stop is confirmed and, under <em>Where were you?</em>, numbered nearby places that match numbered pins on the map. <strong>Confirm</strong> accepts the detected place, choosing a nearby place corrects it, <strong>Not here</strong> lets you search Apple Maps or drop a pin for the right spot, and <strong>Details</strong> opens the full visit; correcting a name, address, or position records your chosen values. Arrival, departure, and notes can also be edited. Nearby business suggestions use Apple Maps around the visit’s coordinate.</p>
 <p>Visits can be unconfirmed, confirmed, or corrected. Automatic geocoding does not overwrite a visit that is protected by its confirmation or correction state. <strong>Undo correction</strong> restores the original detected place information. Confirming or correcting a visit can also save reusable place knowledge; that is different from editing a saved location without changing a past visit.</p>
 
 <h2>Add a missing past visit</h2>
-<p>On the Map tab, open <strong>+</strong> and choose <strong>Add past visit</strong>. Select the location explicitly by search, pin, or saved place, then enter the arrival and departure times. Past visits do not silently use the phone’s current position when a location is missing.</p>
-<p>The same menu offers <strong>Save current place</strong> and <strong>Add place manually</strong> for other entry tasks. Current-position workflows depend on location access; choosing a known past place is a different task. A manual entry records what you enter. It cannot recreate missing GPS points or prove an automatic visit occurred.</p>
+<p>On the map, tap <strong>+</strong> and choose <strong>Log a past stop</strong>. Select the location explicitly by search, pin, or saved place, then enter the arrival and departure times. Past visits do not silently use the phone’s current position when a location is missing.</p>
+<p>The same menu offers <strong>Save where I am</strong> and <strong>Drop a pin</strong> for other entry tasks. Current-position workflows depend on location access; choosing a known past place is a different task. A manual entry records what you enter. It cannot recreate missing GPS points or prove an automatic visit occurred.</p>
 <p>For a gap in recorded history, use the <a href="/blog/missing-location-history-iphone/">missing visits and routes checklist</a>. Keep a <a href="/blog/back-up-iphone-location-history/">separate backup</a> before making extensive journal edits.</p>
 
 <h2>Optional current-place suggestions</h2>
-<p><strong>Settings → Map display → Visit suggestions</strong> is off by default. When enabled, a nearby saved place or business can be offered as a Save Place prompt. This does not replace tracking permission or guarantee that every stop becomes a detected visit.</p>
-<p>Reviewed October 26, 2026 against released Whereday 1.7.16. The editor screenshot and native fixture tests have the limits described above; no new physical route or visit-detection test is claimed.</p>
+<p><strong>Settings → Map display → Visit suggestions</strong>, also the <em>“Are you here?”</em> switch in the map’s Layers sheet, is off by default. When enabled, a nearby saved place or business can be offered as an <em>Are you here?</em> card with <strong>Save this place</strong> and <strong>Somewhere else</strong>. This does not replace tracking permission or guarantee that every stop becomes a detected visit.</p>
+<p>Reviewed October 26, 2026 against released Whereday 1.7.16. The editor screenshot and native fixture tests have the limits described above; no new physical route or visit-detection test is claimed. Map menu and visit sheet names were updated on November 5, 2026 for the map-first home.</p>
     </div>
     <nav class="pager" aria-label="Guides">
       <a class="prev" href="/docs/timeline-outings/"><span class="dir">← Previous</span><span class="title">Timeline &amp; outings</span></a>

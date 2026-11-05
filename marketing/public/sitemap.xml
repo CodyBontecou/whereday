@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://whereday.com/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/about</loc>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://whereday.com/blog/view-location-history-iphone/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/compare/</loc>
@@ -89,7 +89,7 @@
   </url>
   <url>
     <loc>https://whereday.com/docs/getting-started/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/photos/</loc>
@@ -97,7 +97,7 @@
   </url>
   <url>
     <loc>https://whereday.com/docs/places/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/privacy-data/</loc>
@@ -109,11 +109,11 @@
   </url>
   <url>
     <loc>https://whereday.com/docs/timeline-outings/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/tracking/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/docs/webhooks/</loc>
@@ -149,6 +149,6 @@
   </url>
   <url>
     <loc>https://whereday.com/zh-hans/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
 </urlset>

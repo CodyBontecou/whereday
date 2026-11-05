@@ -41,8 +41,8 @@ Photo files never leave your Photos library. Whereday stores only each photo's l
 ## Controls
 
 - Automatic syncing (off by default) re-scans your library in the background, at most every 10 minutes, and re-syncs whenever your library changes.
-- Map markers (off by default) — enable from the map's filter bar or Settings; nearby photos group into stacked clusters with a count badge.
-- Thumbnails on markers can be turned off if you prefer plain pins.
+- Map markers (off by default) — enable with Photos in the map's Layers sheet or in Settings; nearby photos group into stacked clusters with a count badge.
+- Images, Pins, or Dots — the Photos row in Layers chooses thumbnails, plain pins, or small dots for the markers.
 - Tap any marker for a quick view, or open it full-screen to swipe through the day's photos.
 
 If a photo disappears from your library (with full access), Whereday cleans up its record automatically.
