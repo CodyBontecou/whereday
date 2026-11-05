@@ -654,7 +654,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ IZQUIERDA"
+            "value": "QUEDAN %@"
           }
         },
         "fr": {
@@ -934,7 +934,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "CAPTURAR LA RUTA DE VIGILANCIA"
+            "value": "CAPTURANDO LA RUTA DEL RELOJ"
           }
         },
         "fr": {
@@ -1424,7 +1424,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "VIVIR"
+            "value": "EN VIVO"
           }
         },
         "fr": {
@@ -1914,7 +1914,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "AGUJAS"
+            "value": "PUNTOS"
           }
         },
         "fr": {
@@ -2124,7 +2124,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "APOYAR"
+            "value": "EN ESPERA"
           }
         },
         "fr": {

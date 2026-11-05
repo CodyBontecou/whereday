@@ -8970,7 +8970,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "COMPORTAMIENTO"
+            "value": "ACCIONES"
           }
         },
         "fr": {
@@ -11072,7 +11072,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Agregue Whereday a las esferas de reloj compatibles para realizar un seguimiento rápido del estado y los totales de hoy."
+            "value": "Agregue Whereday a las esferas de reloj compatibles para ver de un vistazo el estado del seguimiento y los totales de hoy."
           }
         },
         "fr": {
@@ -15553,7 +15553,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vista previa del edificio..."
+            "value": "Generando vista previa…"
           }
         },
         "fr": {
@@ -16393,7 +16393,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "CONTAR"
+            "value": "CANTIDAD"
           }
         },
         "fr": {
@@ -17023,7 +17023,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "COSTUMBRE"
+            "value": "PERSONALIZADO"
           }
         },
         "fr": {
@@ -17934,7 +17934,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comprobar lugares cercanos Apple Maps"
+            "value": "Comprobando lugares cercanos de Apple Maps"
           }
         },
         "fr": {
@@ -19197,7 +19197,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Organización exportadora más limpia"
+            "value": "Organización de exportaciones más clara"
           }
         },
         "fr": {
@@ -19267,7 +19267,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Claro"
+            "value": "Borrar"
           }
         },
         "fr": {
@@ -20387,7 +20387,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connecting Photos permite Whereday mostrar fotografías tomadas durante esta excursión."
+            "value": "Conectar Fotos permite a Whereday mostrar las fotos tomadas durante esta salida."
           }
         },
         "fr": {
@@ -20737,7 +20737,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ubicación principal"
+            "value": "Core Location"
           }
         },
         "fr": {
@@ -20807,7 +20807,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visita correcta a %@"
+            "value": "Corregir visita a %@"
           }
         },
         "fr": {
@@ -22067,7 +22067,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Costumbre"
+            "value": "Personalizado"
           }
         },
         "fr": {
@@ -22767,7 +22767,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "ANTICUADO"
+            "value": "CON FECHA"
           }
         },
         "fr": {
@@ -24937,7 +24937,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salido"
+            "value": "Salió"
           }
         },
         "fr": {
@@ -25638,7 +25638,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Despedir"
+            "value": "Descartar"
           }
         },
         "fr": {
@@ -27903,7 +27903,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "EXPORTAR CARPETA"
+            "value": "CARPETA DE EXPORTACIÓN"
           }
         },
         "fr": {
@@ -28393,7 +28393,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada nueva posición GPS se PUBLICA inmediatamente."
+            "value": "Cada nueva posición GPS se envía por POST inmediatamente."
           }
         },
         "fr": {
@@ -30565,7 +30565,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salidas de Exportación"
+            "value": "Exportar salidas"
           }
         },
         "fr": {
@@ -35677,7 +35677,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sesión activa en forma"
+            "value": "Ajustar a la sesión activa"
           }
         },
         "fr": {
@@ -36937,7 +36937,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vistable, consciente de la batería y profundamente contextual cuando lo necesita."
+            "value": "Fácil de consultar de un vistazo, eficiente con la batería y con todo el contexto cuando lo necesitas."
           }
         },
         "fr": {
@@ -40019,7 +40019,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importé 1 visita y %d puntos."
+            "value": "Se importaron 1 visita y %d puntos."
           }
         },
         "fr": {
@@ -40113,7 +40113,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importó 1 visita y 1 punto."
+            "value": "Se importaron 1 visita y 1 punto."
           }
         },
         "fr": {
@@ -41583,7 +41583,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "ÚNETE A LA DISCORDIA"
+            "value": "ÚNETE A DISCORD"
           }
         },
         "fr": {
@@ -41793,7 +41793,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportación de resúmenes de salidas en JSON y CSV . Markdown agrega información preliminar YAML más visitas y puntos de ruta. GPX , KML , GeoJSON , OwnTracks y Overland exportan los puntos de la ruta de salida."
+            "value": "JSON y CSV exportan resúmenes de las salidas. Markdown añade front matter YAML más visitas y puntos de ruta. GPX, KML, GeoJSON, OwnTracks y Overland exportan los puntos de ruta de la salida."
           }
         },
         "fr": {
@@ -41863,7 +41863,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "JSON y CSV resumen cada salida, mientras que GPX , KML , GeoJSON , OwnTracks y Overland exportan las correcciones de ruta."
+            "value": "JSON y CSV resumen cada salida, mientras que GPX, KML, GeoJSON, OwnTracks y Overland exportan las posiciones GPS de la ruta."
           }
         },
         "fr": {
@@ -43193,7 +43193,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "VIVIR"
+            "value": "EN VIVO"
           }
         },
         "fr": {
@@ -45573,7 +45573,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los datos de ubicación se publicarán en el punto final configurado."
+            "value": "Los datos de ubicación se enviarán por POST al endpoint configurado."
           }
         },
         "fr": {
@@ -46904,7 +46904,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "CAMINO A JUEGO CON LAS CARRETERAS..."
+            "value": "AJUSTANDO RUTA A LAS CALLES…"
           }
         },
         "fr": {
@@ -47324,7 +47324,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "SE MUEVE"
+            "value": "MOVIMIENTOS"
           }
         },
         "fr": {
@@ -48094,7 +48094,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Markdown exporta esta salida como una página con portada, visitas y puntos de ruta YAML ."
+            "value": "Markdown exporta esta salida como una página con front matter YAML, visitas y puntos de ruta."
           }
         },
         "fr": {
@@ -49634,7 +49634,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La mayoría de los puntos primero"
+            "value": "Más puntos primero"
           }
         },
         "fr": {
@@ -50754,7 +50754,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visitas de nombres más rápido"
+            "value": "Pon nombre a las visitas más rápido"
           }
         },
         "fr": {
@@ -51804,7 +51804,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Próximo"
+            "value": "Siguiente"
           }
         },
         "fr": {
@@ -51874,7 +51874,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "dia siguiente"
+            "value": "Día siguiente"
           }
         },
         "fr": {
@@ -55514,7 +55514,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "PRODUCCIÓN"
+            "value": "RESULTADO"
           }
         },
         "fr": {
@@ -56004,7 +56004,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Incluya únicamente los datos capturados entre estas horas cada día. Termina a medianoche si el final es antes del comienzo."
+            "value": "Incluya únicamente los datos capturados entre estas horas cada día. Pasa de la medianoche si el final es anterior al comienzo."
           }
         },
         "fr": {
@@ -56214,7 +56214,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abra una salida para ver cómo se reproduce la ruta con un marcador en movimiento, un depurador, tiempo transcurrido, duración y estadísticas de distancia."
+            "value": "Abra una salida para ver cómo se reproduce la ruta con un marcador en movimiento, un control deslizante de tiempo, tiempo transcurrido, duración y estadísticas de distancia."
           }
         },
         "fr": {
@@ -56774,7 +56774,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Repetición de ruta abierta"
+            "value": "Abrir repetición de ruta"
           }
         },
         "fr": {
@@ -56984,7 +56984,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visita abierta en Maps"
+            "value": "Abrir visita en Mapas"
           }
         },
         "fr": {
@@ -59574,7 +59574,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "JUGAR SALIDA"
+            "value": "REPRODUCIR SALIDA"
           }
         },
         "fr": {
@@ -59784,7 +59784,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "AGUJAS"
+            "value": "PUNTOS"
           }
         },
         "fr": {
@@ -59854,7 +59854,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "PUBLICAR todos los tipos de datos (visitas, puntos o ambos) en una API externa o en un servidor autohospedado en tiempo real o por lotes. Admite puntos finales OwnTracks , Overland , Dawarich y JSON genéricos."
+            "value": "Envía por POST todos los tipos de datos (visitas, puntos o ambos) a una API externa o a un servidor autohospedado en tiempo real o por lotes. Admite endpoints de OwnTracks, Overland, Dawarich y JSON genéricos."
           }
         },
         "fr": {
@@ -59924,7 +59924,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "AVANCE"
+            "value": "VISTA PREVIA"
           }
         },
         "fr": {
@@ -60509,7 +60509,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las visitas anteriores funcionan sin permiso de ubicación y nunca vuelven a su posición GPS actual."
+            "value": "Las visitas anteriores funcionan sin permiso de ubicación y nunca recurren a su posición GPS actual."
           }
         },
         "fr": {
@@ -62680,7 +62680,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Topónimo"
+            "value": "Nombre del lugar"
           }
         },
         "fr": {
@@ -63240,7 +63240,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Agujas"
+            "value": "Puntos"
           }
         },
         "fr": {
@@ -63520,7 +63520,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vista previa Exportación"
+            "value": "Previsualizar exportación"
           }
         },
         "fr": {
@@ -63940,7 +63940,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Accidente anterior detectado"
+            "value": "Se detectó un cierre inesperado anterior"
           }
         },
         "fr": {
@@ -64010,7 +64010,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "dia anterior"
+            "value": "Día anterior"
           }
         },
         "fr": {
@@ -64920,7 +64920,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Concéntrate rápidamente en el ayer"
+            "value": "Ve rápidamente al día de ayer"
           }
         },
         "fr": {
@@ -65480,7 +65480,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "INCORPORACIÓN DE REPETICIÓN"
+            "value": "VOLVER A VER LA BIENVENIDA"
           }
         },
         "fr": {
@@ -66461,7 +66461,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las sesiones grabadas ahora se encuentran en una pestaña dedicada a Salidas, con totales, estado en vivo/actual, credenciales inferidas y acceso rápido a cada ruta."
+            "value": "Las sesiones grabadas ahora se encuentran en una pestaña dedicada a Salidas, con totales, estado en vivo/actual, etiquetas de inferidas y acceso rápido a cada ruta."
           }
         },
         "fr": {
@@ -67931,7 +67931,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Revela segmentos rectos alternativos donde la coincidencia de carreteras no tiene una ruta segura. Útil cuando desea inspeccionar espacios sin procesar."
+            "value": "Muestra segmentos rectos alternativos donde el ajuste a calles no encuentra una ruta fiable. Útil cuando quieres inspeccionar los huecos sin procesar."
           }
         },
         "fr": {
@@ -68351,7 +68351,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Camino igualado por carretera"
+            "value": "Ruta ajustada a las calles"
           }
         },
         "fr": {
@@ -70101,7 +70101,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "APOYAR"
+            "value": "EN ESPERA"
           }
         },
         "fr": {
@@ -70661,7 +70661,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "APOYO"
+            "value": "SOPORTE"
           }
         },
         "fr": {
@@ -70871,7 +70871,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ahorrar"
+            "value": "Guardar"
           }
         },
         "fr": {
@@ -71641,7 +71641,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Archivos %lld guardados"
+            "value": "%lld archivos guardados"
           }
         },
         "fr": {
@@ -71735,7 +71735,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Guardado %1$lld en %2$@"
+            "value": "Se guardaron %1$lld archivos en %2$@"
           }
         },
         "fr": {
@@ -72600,7 +72600,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Busque Apple Maps o elija en el mapa"
+            "value": "Busque en Apple Maps o elija en el mapa"
           }
         },
         "fr": {
@@ -73447,7 +73447,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Buscando Apple Maps ..."
+            "value": "Buscando en Apple Maps…"
           }
         },
         "fr": {
@@ -73657,7 +73657,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Seleccione uno o varios formatos. OwnTracks y Overland solo ofrecen conexiones GPS ; otros formatos seleccionados utilizan el tipo de datos seleccionado."
+            "value": "Seleccione uno o varios formatos. OwnTracks y Overland solo contienen posiciones GPS; los demás formatos seleccionados utilizan el tipo de datos seleccionado."
           }
         },
         "fr": {
@@ -75060,7 +75060,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Compartir hoja"
+            "value": "Hoja para compartir"
           }
         },
         "fr": {
@@ -75270,7 +75270,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Compartir hoja"
+            "value": "Hoja para compartir"
           }
         },
         "fr": {
@@ -75340,7 +75340,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Compartir hoja abierta"
+            "value": "Hoja para compartir abierta"
           }
         },
         "fr": {
@@ -76040,7 +76040,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muestra controles para limpiar y reproducir la ruta visible."
+            "value": "Muestra controles para desplazarse por la ruta visible y reproducirla."
           }
         },
         "fr": {
@@ -77860,7 +77860,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comience a rastrear desde la pestaña Mapa o la automatización de sus Shortcuts . Las visitas y sesiones de movimiento aparecerán aquí durante el día."
+            "value": "Comience a rastrear desde la pestaña Mapa o desde una automatización de Atajos. Las visitas y sesiones de movimiento aparecerán aquí agrupadas por día."
           }
         },
         "fr": {
@@ -78840,7 +78840,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los nombres y notas de las salidas almacenadas se incluyen cuando el formato seleccionado los admite. Exportación de salidas inferidas con fuente: inferida."
+            "value": "Los nombres y notas de las salidas almacenadas se incluyen cuando el formato seleccionado los admite. Las salidas inferidas se exportan con source: inferred."
           }
         },
         "fr": {
@@ -85703,7 +85703,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "DESBLOQUEAR EXPORTAR"
+            "value": "DESBLOQUEAR EXPORTACIÓN"
           }
         },
         "fr": {
@@ -86403,7 +86403,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Indisponible"
+            "value": "No disponible"
           }
         },
         "fr": {
@@ -86473,7 +86473,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inconfirmado"
+            "value": "Sin confirmar"
           }
         },
         "fr": {
@@ -87804,7 +87804,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilice / para carpetas. Fichas: %@ . {title} / {name} usa el título de la salida cuando esté disponible; de ​​lo contrario, el tipo de datos. La extensión de formato se agrega si se omite."
+            "value": "Utilice / para carpetas. Tokens: %@. {title}/{name} usan el título de la salida cuando está disponible; de lo contrario, el tipo de datos. La extensión de formato se agrega si se omite."
           }
         },
         "fr": {
@@ -87944,7 +87944,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilice Test Connection para verificar la URL del punto final y las credenciales sin enviar datos reales. Enviar ahora publica todos los datos de ubicación guardados en el punto final."
+            "value": "Utilice Probar conexión para verificar la URL del endpoint y las credenciales sin enviar datos reales. Enviar ahora envía todos los datos de ubicación guardados al endpoint."
           }
         },
         "fr": {
@@ -88575,7 +88575,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usuario ingresado"
+            "value": "Introducido por el usuario"
           }
         },
         "fr": {
@@ -88645,7 +88645,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utiliza rutas Apple Maps para doblar los escasos espacios GPS hacia carreteras cercanas cuando sea posible, en lugar de dibujar líneas toscas de punto a punto."
+            "value": "Usa rutas de Apple Maps para ajustar los huecos de GPS a las calles cercanas cuando es posible, en lugar de dibujar líneas toscas de punto a punto."
           }
         },
         "fr": {
@@ -89135,7 +89135,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "VISITAR CAMPOS"
+            "value": "CAMPOS DE VISITA"
           }
         },
         "fr": {
@@ -89975,7 +89975,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visitar mapa"
+            "value": "Mapa de la visita"
           }
         },
         "fr": {
@@ -90395,7 +90395,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visitar cronograma"
+            "value": "Cronología de visitas"
           }
         },
         "fr": {
@@ -90745,7 +90745,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Espere a que el camino de salida coincida con las carreteras."
+            "value": "Espere a que la ruta de la salida se ajuste a las calles."
           }
         },
         "fr": {
@@ -91865,7 +91865,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "X- API -Clave"
+            "value": "X-API-Key"
           }
         },
         "fr": {
@@ -92495,7 +92495,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Te has ido %@ hoy."
+            "value": "Hoy has recorrido %@."
           }
         },
         "fr": {
@@ -95218,17 +95218,72 @@
     "Every day, recorded for you": {
       "comment": "Carousel paywall.",
       "localizations": {
-        "ar": {"stringUnit": {"state": "translated", "value": "كل يوم يُسجَّل لك"}},
-        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিটি দিন, আপনার জন্য রেকর্ড করা"}},
-        "en": {"stringUnit": {"state": "translated", "value": "Every day, recorded for you"}},
-        "es": {"stringUnit": {"state": "translated", "value": "Cada día, registrado por ti"}},
-        "fr": {"stringUnit": {"state": "translated", "value": "Chaque jour, enregistré pour vous"}},
-        "hi": {"stringUnit": {"state": "translated", "value": "हर दिन, आपके लिए रिकॉर्ड"}},
-        "ja": {"stringUnit": {"state": "translated", "value": "毎日を自動で記録"}},
-        "pl": {"stringUnit": {"state": "translated", "value": "Każdy dzień zapisany za Ciebie"}},
-        "pt-BR": {"stringUnit": {"state": "translated", "value": "Cada dia registrado para você"}},
-        "ru": {"stringUnit": {"state": "translated", "value": "Каждый день записывается сам"}},
-        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每一天，都为你记录"}}
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل يوم يُسجَّل لك"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "প্রতিটি দিন, আপনার জন্য রেকর্ড করা"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every day, recorded for you"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada día, registrado para ti"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour, enregistré pour vous"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर दिन, आपके लिए रिकॉर्ड"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日を自動で記録"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Każdy dzień zapisany za Ciebie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada dia registrado para você"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каждый день записывается сам"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每一天，都为你记录"
+          }
+        }
       }
     },
     "Visits and routes log in the background. No check-ins.": {
@@ -95362,17 +95417,72 @@
     "A file a day, saved for you": {
       "comment": "Carousel paywall.",
       "localizations": {
-        "ar": {"stringUnit": {"state": "translated", "value": "ملف كل يوم، يُحفظ لك"}},
-        "bn": {"stringUnit": {"state": "translated", "value": "প্রতিদিন একটি ফাইল, আপনার জন্য সেভ করা"}},
-        "en": {"stringUnit": {"state": "translated", "value": "A file a day, saved for you"}},
-        "es": {"stringUnit": {"state": "translated", "value": "Un archivo al día, guardado por ti"}},
-        "fr": {"stringUnit": {"state": "translated", "value": "Un fichier par jour, enregistré pour vous"}},
-        "hi": {"stringUnit": {"state": "translated", "value": "हर दिन एक फ़ाइल, आपके लिए सेव"}},
-        "ja": {"stringUnit": {"state": "translated", "value": "毎日1ファイル、自動で保存"}},
-        "pl": {"stringUnit": {"state": "translated", "value": "Jeden plik dziennie, zapisany za Ciebie"}},
-        "pt-BR": {"stringUnit": {"state": "translated", "value": "Um arquivo por dia, salvo para você"}},
-        "ru": {"stringUnit": {"state": "translated", "value": "Файл каждый день, сохраняется сам"}},
-        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每天一个文件，自动保存"}}
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملف كل يوم، يُحفظ لك"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "প্রতিদিন একটি ফাইল, আপনার জন্য সেভ করা"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A file a day, saved for you"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un archivo al día, guardado para ti"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un fichier par jour, enregistré pour vous"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर दिन एक फ़ाइल, आपके लिए सेव"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日1ファイル、自動で保存"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden plik dziennie, zapisany za Ciebie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um arquivo por dia, salvo para você"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файл каждый день, сохраняется сам"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天一个文件，自动保存"
+          }
+        }
       }
     },
     "Scheduled exports land in your folder or Obsidian vault.": {
@@ -108393,7 +108503,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enviar ahora publica los puntos en espera. Vaciar cola los descarta sin enviarlos. Enviar todo el historial publica todos los datos de ubicación guardados en el endpoint."
+            "value": "Enviar ahora envía los puntos en espera. Vaciar cola los descarta sin enviarlos. Enviar todo el historial envía todos los datos de ubicación guardados al endpoint."
           }
         },
         "fr": {
