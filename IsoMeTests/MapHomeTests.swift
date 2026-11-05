@@ -1,4 +1,5 @@
 import XCTest
+import CoreLocation
 @testable import IsoMe
 
 final class MainTabLaunchTests: XCTestCase {
@@ -379,3 +380,21 @@ final class MapDatePresetTests: XCTestCase {
     }
 }
 
+/// Regression: the visit sheet's "Where were you?" candidates used MKDistanceFormatter, which follows the locale
+/// (miles in the US), while the rest of the map follows the app's unit setting.
+final class NearbyPlaceDistanceLabelTests: XCTestCase {
+    private let suggestion = NearbyPlaceSuggestion(
+        id: "grove",
+        name: "The Grove",
+        address: nil,
+        coordinate: CLLocationCoordinate2D(latitude: 37.7877, longitude: -122.4077),
+        distanceMeters: 1_127
+    )
+
+    func testCandidateDistanceFollowsTheUnitSetting() {
+        XCTAssertEqual(suggestion.distanceLabel(usesMetric: true), DistanceFormatter.format(meters: 1_127, usesMetric: true))
+        XCTAssertEqual(suggestion.distanceLabel(usesMetric: false), DistanceFormatter.format(meters: 1_127, usesMetric: false))
+        XCTAssertTrue(suggestion.distanceLabel(usesMetric: true).contains("km"), suggestion.distanceLabel(usesMetric: true))
+        XCTAssertTrue(suggestion.distanceLabel(usesMetric: false).contains("mi"), suggestion.distanceLabel(usesMetric: false))
+    }
+}

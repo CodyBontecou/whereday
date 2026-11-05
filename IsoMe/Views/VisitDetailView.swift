@@ -830,6 +830,7 @@ struct NearbyVisitNameSuggestionSection: View {
     }
 
     @AppStorage("allowNetworkGeocoding") private var allowNetworkGeocoding = true
+    @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
     @State private var suggestions: [NearbyPlaceSuggestion] = []
     @State private var isLoading = false
     @State private var hasSearched = false
@@ -1005,7 +1006,7 @@ struct NearbyVisitNameSuggestionSection: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text(suggestion.distanceLabel)
+                        Text(suggestion.distanceLabel(usesMetric: usesMetricDistanceUnits))
                             .font(TE.mono(.caption2))
                             .foregroundStyle(TE.textMuted)
                     }
@@ -1021,7 +1022,7 @@ struct NearbyVisitNameSuggestionSection: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Correct visit to \(suggestion.name)")
-                .accessibilityValue(suggestion.distanceLabel)
+                .accessibilityValue(suggestion.distanceLabel(usesMetric: usesMetricDistanceUnits))
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }

@@ -12,6 +12,7 @@ struct VisitQuickView: View {
     @Bindable var viewModel: LocationViewModel
     /// Nearby places the map has already pinned (numbered 1, 2, 3); nil looks them up here instead.
     var candidates: [NearbyPlaceSuggestion]? = nil
+    @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
     @State private var checkoutError: String?
     @State private var nameText: String = ""
     @State private var showingPlaceSearch = false
@@ -196,7 +197,7 @@ struct VisitQuickView: View {
                     .font(.system(size: 14, weight: .medium))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(candidate.distanceLabel)
+                Text(candidate.distanceLabel(usesMetric: usesMetricDistanceUnits))
                     .font(TE.mono(.caption2))
                     .foregroundStyle(TE.textMuted)
             }
@@ -209,7 +210,7 @@ struct VisitQuickView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Correct visit to \(candidate.name)")
-        .accessibilityValue(candidate.distanceLabel)
+        .accessibilityValue(candidate.distanceLabel(usesMetric: usesMetricDistanceUnits))
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
