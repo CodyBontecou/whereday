@@ -68,7 +68,7 @@ import kotlin.math.ceil
         val custom=selected=="Custom"
         val colors=wd
         Box(Modifier.size(44.dp).selectable(custom,role=Role.Button,onClick=onCustom).testTag("map-range-custom"),contentAlignment=Alignment.Center) {
-            Box(Modifier.size(34.dp).clip(CircleShape).background(if(custom) colors.accent else colors.card).border(1.dp,if(custom) colors.accent else colors.border,CircleShape),contentAlignment=Alignment.Center) {
+            Box(Modifier.size(34.dp).clip(CircleShape).background(if(custom) colors.textPrimary else colors.card).border(1.dp,if(custom) colors.textPrimary else colors.border,CircleShape),contentAlignment=Alignment.Center) {
                 Icon(Icons.Outlined.CalendarMonth,stringResource(R.string.map_home_custom_range),Modifier.size(16.dp),tint=if(custom) colors.surface else colors.textPrimary)
             }
         }
@@ -79,7 +79,7 @@ import kotlin.math.ceil
 @Composable internal fun MapChip(text:String,selected:Boolean,modifier:Modifier=Modifier,spoken:String?=null,onClick:()->Unit) {
     val colors=wd
     Box(modifier.heightIn(min=44.dp).selectable(selected,role=Role.Tab,onClick=onClick).then(if(spoken!=null) Modifier.semantics {contentDescription=spoken} else Modifier),contentAlignment=Alignment.Center) {
-        Box(Modifier.heightIn(min=34.dp).clip(CircleShape).background(if(selected) colors.accent else colors.card).border(1.dp,if(selected) colors.accent else colors.border,CircleShape)
+        Box(Modifier.heightIn(min=34.dp).clip(CircleShape).background(if(selected) colors.textPrimary else colors.card).border(1.dp,if(selected) colors.textPrimary else colors.border,CircleShape)
             .padding(horizontal=12.dp),contentAlignment=Alignment.Center) {
             Text(text,style=MaterialTheme.typography.bodySmall.copy(fontWeight=FontWeight.Medium,fontSize=12.sp),color=if(selected) colors.surface else colors.textPrimary,maxLines=1)
         }
@@ -151,8 +151,8 @@ import kotlin.math.ceil
         val minutes=ceil(left.seconds/60.0).toLong()
         stringResource(R.string.map_home_auto_off,"%d:%02d".format(minutes/60,minutes%60))
     } else stringResource(R.string.map_home_not_recording)
-    val ink=if(active) colors.inkCard else colors.card
-    val text=if(active) colors.onInkCard else colors.textPrimary
+    val ink=if(active) colors.textPrimary else colors.card
+    val text=if(active) colors.surface else colors.textPrimary
     Row(modifier.heightIn(min=48.dp).wdFloating(shape,colors,8.dp).background(ink).padding(start=16.dp,end=5.dp,top=5.dp,bottom=5.dp).testTag("map-recording-pill")
         .semantics(mergeDescendants=true) {liveRegion=LiveRegionMode.Polite},verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
         Box(Modifier.size(17.dp),contentAlignment=Alignment.Center) {
@@ -161,11 +161,11 @@ import kotlin.math.ceil
         }
         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(1.dp)) {
             Text(primary.uppercase(locale),style=WdType.caption2.copy(fontSize=10.sp,lineHeight=13.sp,fontWeight=FontWeight.SemiBold,letterSpacing=0.12.em),color=text,maxLines=2,modifier=Modifier.testTag("map-recording-status"))
-            secondary?.let {Text(it.uppercase(locale),style=WdType.caption2.copy(fontSize=9.sp,lineHeight=12.sp,letterSpacing=0.12.em),color=if(active) colors.onInkCard else colors.textMuted,maxLines=2,modifier=Modifier.testTag("map-auto-off"))}
+            secondary?.let {Text(it.uppercase(locale),style=WdType.caption2.copy(fontSize=9.sp,lineHeight=12.sp,letterSpacing=0.12.em),color=if(active) colors.surface else colors.textMuted,maxLines=2,modifier=Modifier.testTag("map-auto-off"))}
         }
-        Box(Modifier.size(38.dp).clip(CircleShape).background(if(active) colors.placeInks[1] else colors.accent).clickable(role=Role.Button,onClickLabel=label,onClick=onRecord)
+        Box(Modifier.size(38.dp).clip(CircleShape).background(if(active) colors.placeInks[1] else colors.textPrimary).clickable(role=Role.Button,onClickLabel=label,onClick=onRecord)
             .semantics {contentDescription=label}.testTag(if(active) "recording-stop" else "recording-start"),contentAlignment=Alignment.Center) {
-            if(active) Box(Modifier.size(12.dp).clip(RoundedCornerShape(3.dp)).background(if(colors.dark) colors.card else colors.card))
+            if(active) Box(Modifier.size(12.dp).clip(RoundedCornerShape(3.dp)).background(colors.card))
             else Icon(Icons.Filled.FiberManualRecord,null,Modifier.size(16.dp),tint=colors.surface)
         }
     }
@@ -180,10 +180,10 @@ import kotlin.math.ceil
             .testTag("map-add"),contentAlignment=Alignment.Center) {
             Icon(Icons.Outlined.Add,stringResource(R.string.map_home_add_place),Modifier.size(22.dp),tint=if(enabled) colors.textPrimary else colors.textMuted)
         }
-        DropdownMenu(open,{open=false},shape=RoundedCornerShape(18.dp),containerColor=colors.inkCard,modifier=Modifier.widthIn(min=250.dp)) {
+        DropdownMenu(open,{open=false},shape=RoundedCornerShape(18.dp),containerColor=colors.textPrimary,modifier=Modifier.widthIn(min=250.dp)) {
             @Composable fun item(text:Int,icon:ImageVector,tag:String,action:()->Unit) {
-                DropdownMenuItem(text={Text(stringResource(text),style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.Medium),color=colors.onInkCard)},
-                    leadingIcon={Icon(icon,null,Modifier.size(18.dp),tint=colors.onInkCard)},onClick={open=false;action()},modifier=Modifier.heightIn(min=48.dp).testTag(tag))
+                DropdownMenuItem(text={Text(stringResource(text),style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.Medium),color=colors.surface)},
+                    leadingIcon={Icon(icon,null,Modifier.size(18.dp),tint=colors.surface)},onClick={open=false;action()},modifier=Modifier.heightIn(min=48.dp).testTag(tag))
             }
             item(R.string.map_home_save_here,Icons.Outlined.MyLocation,"map-add-current",onSaveHere)
             item(R.string.map_home_log_past,Icons.Outlined.History,"map-add-past",onPastStop)
@@ -207,8 +207,8 @@ import kotlin.math.ceil
             IconButton(onClick=onDismiss,modifier=Modifier.size(44.dp).testTag("map-here-dismiss")) {Icon(Icons.Outlined.Close,stringResource(R.string.map_home_here_dismiss),tint=colors.textMuted)}
         }
         Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-            WdButton(stringResource(R.string.map_home_somewhere_else),onSomewhereElse,Modifier.weight(1f).testTag("map-here-else"))
-            WdButton(stringResource(R.string.map_home_save_this_place),onSave,Modifier.weight(1.4f).testTag("map-here-save"),emphasis=WdEmphasis.primary)
+            WdButton(stringResource(R.string.map_home_somewhere_else),onSomewhereElse,Modifier.weight(1.15f).testTag("map-here-else"))
+            WdButton(stringResource(R.string.map_home_save_this_place),onSave,Modifier.weight(1.25f).testTag("map-here-save"),emphasis=WdEmphasis.primary)
         }
     }
 }

@@ -44,6 +44,9 @@ class DemoJournalActivity:androidx.activity.ComponentActivity() {
         val zone=ZoneId.systemDefault()
         val now=Instant.now()
         val dao=graph.history.dao
+        // Saved places beside the Ferry Building give its visit "Where were you?" candidates.
+        listOf(Stop("Blue Bottle Coffee",Coordinate(37.7958,-122.3932)),Stop("Hog Island Oyster Co.",Coordinate(37.7963,-122.3934)),Stop("Ferry Plaza Farmers Market",Coordinate(37.7950,-122.3945)))
+            .forEach {dao.put(PlaceRow(SavedPlace(name=it.name,coordinate=it.coordinate,radius=60.0)))}
         listOf(home,ferry,office,tartine).forEach {dao.put(PlaceRow(SavedPlace(name=it.name,coordinate=it.coordinate,radius=120.0)))}
         var serial=0
         fun id(prefix:String)="demo-$prefix-${serial++}"

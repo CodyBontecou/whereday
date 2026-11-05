@@ -150,7 +150,7 @@ internal enum class DaySheetDetent {peek,half,full}
                     .selectable(isSelected,role=Role.Tab) {onSelect(item.day)}.semantics {contentDescription=label}.padding(vertical=8.dp).testTag("map-range-day-${item.day}"),
                     horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.Bottom) {
                     val fraction=(item.distanceMeters/longest).toFloat().coerceIn(0f,1f)
-                    Box(Modifier.width(8.dp).height((4+30*fraction).dp).clip(RoundedCornerShape(2.dp))
+                    Box(Modifier.width(8.dp).height((4+20*fraction).dp).clip(RoundedCornerShape(2.dp))
                         .background(if(isSelected) colors.surface.copy(alpha=0.85f) else colors.textPrimary.copy(alpha=0.35f)))
                     Spacer(Modifier.height(5.dp))
                     Text(item.day.dayOfWeek.getDisplayName(TextStyle.NARROW,locale)+(if(summary.days.size>7) "" else ""),style=WdType.caption2.copy(fontSize=11.sp),

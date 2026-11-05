@@ -102,7 +102,9 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     var headerHeight by remember {mutableStateOf(112.dp)}
     var bottomChrome by remember {mutableStateOf(130.dp)}
     val headerBottom=top+8.dp+headerHeight
-    val mapPadding=PaddingValues(start=12.dp,top=headerBottom+8.dp,end=76.dp,bottom=bottom+bottomChrome+8.dp)
+    val screenHeight=LocalConfiguration.current.screenHeightDp.dp
+    val sheetCover=when {quickVisit!=null->320.dp;detent==DaySheetDetent.half->screenHeight*0.6f;detent==DaySheetDetent.full->screenHeight*0.6f;else->bottom+bottomChrome}
+    val mapPadding=PaddingValues(start=12.dp,top=headerBottom+8.dp,end=76.dp,bottom=sheetCover+8.dp)
     val photoBrowsing=rememberPhotoBrowserRange(selected,range)
     val photos=matchedPhotos(graph,photoBrowsing.range,settings?.showPhotoMarkers==true)
     val photoLayer=photoMapLayer(graph,photoBrowsing.range,photos.count!=null,onBrowserRange=photoBrowsing.hold,validationFailed=photos.error!=null)
@@ -129,7 +131,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
         // Header card and range chips.
         Column(Modifier.align(Alignment.TopCenter).padding(top=top+8.dp,start=12.dp,end=12.dp).widthIn(max=560.dp)
             .onHeight {headerHeight=with(density) {it.toDp()}},verticalArrangement=Arrangement.spacedBy(6.dp)) {
-            MapHomeHeader(headerKicker(range,multiDay,firstDay,lastDay,locale,zone,now),headerTitle(selected,firstDay,lastDay,today,locale),{searching=true})
+            MapHomeHeader(headerKicker(range,multiDay,summary?.days?.firstOrNull()?.day ?: firstDay,summary?.days?.lastOrNull()?.day ?: lastDay,locale,zone,now),headerTitle(selected,firstDay,lastDay,today,locale),{searching=true})
             MapRangeChips(selected.preset,{preset->quickVisitId=null;model.mapSelection.value=MapSelection(preset)},{custom=true})
             if(state is WindowState.Loading) Row(Modifier.wdFloating(CircleShape,colors,4.dp).padding(horizontal=12.dp,vertical=8.dp).testTag("map-loading"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 CircularProgressIndicator(Modifier.size(14.dp),color=colors.accent,trackColor=colors.dialTrack,strokeWidth=2.dp)

@@ -199,7 +199,7 @@ import kotlinx.coroutines.flow.drop
                         }
                         FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp),itemVerticalAlignment=Alignment.CenterVertically) {
                             val playLabel=stringResource(if(playing) R.string.replay_pause else R.string.replay_play)
-                            Box(Modifier.size(52.dp).clip(CircleShape).background(colors.accent).clickable(role=Role.Button,onClickLabel=playLabel) {
+                            Box(Modifier.size(52.dp).clip(CircleShape).background(colors.textPrimary).clickable(role=Role.Button,onClickLabel=playLabel) {
                                 val next=ReplayPlayback(cursor,current.count,playing,ReplaySpeed.restore(speed)).toggle(reduceMotion)
                                 cursor=next.index;playing=next.playing
                             }.semantics {contentDescription=playLabel}.testTag("replay-toggle"),contentAlignment=Alignment.Center) {
@@ -215,7 +215,7 @@ import kotlinx.coroutines.flow.drop
                             horizontalArrangement=Arrangement.SpaceBetween) {
                             val footer=WdType.caption2.copy(fontSize=10.5.sp,letterSpacing=0.1.em,fontWeight=FontWeight.Medium)
                             Text(stringResource(R.string.map_home_replay_so_far,dayDistance(current.distanceMeters,metric,locale)).uppercase(),style=footer,color=colors.textMuted)
-                            Text(stringResource(R.string.map_home_replay_points,java.text.NumberFormat.getIntegerInstance(locale).format(current.index+1),java.text.NumberFormat.getIntegerInstance(locale).format(current.count)),
+                            Text(stringResource(R.string.map_home_replay_points,java.text.NumberFormat.getIntegerInstance(locale).format(current.index+1),java.text.NumberFormat.getIntegerInstance(locale).format(current.count)).uppercase(locale),
                                 Modifier.testTag("replay-counter"),style=footer,color=colors.textMuted)
                         }
                         Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(12.dp)) {
@@ -274,7 +274,7 @@ private fun replayKicker(time:java.time.Instant,locale:Locale):String {
 
 @Composable private fun ReplayChip(text:String,selected:Boolean,modifier:Modifier=Modifier,onClick:()->Unit) {
     val colors=wd
-    Box(modifier.heightIn(min=40.dp).clip(CircleShape).background(if(selected) colors.accent else colors.card).border(1.dp,if(selected) colors.accent else colors.border,CircleShape)
+    Box(modifier.heightIn(min=40.dp).clip(CircleShape).background(if(selected) colors.textPrimary else colors.card).border(1.dp,if(selected) colors.textPrimary else colors.border,CircleShape)
         .selectable(selected,role=Role.Button,onClick=onClick).padding(horizontal=14.dp),contentAlignment=Alignment.Center) {
         Text(text,style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.Medium),color=if(selected) colors.surface else colors.textPrimary)
     }

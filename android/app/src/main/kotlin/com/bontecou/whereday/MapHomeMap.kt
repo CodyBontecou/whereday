@@ -101,7 +101,7 @@ internal fun buildMapHomeRender(options:MapHomeOptions,contents:MapPresentation,
                 val radius=(9f+3f*kotlin.math.sqrt(place.days.toFloat())).coerceAtMost(20f)
                 MapHomeMarker(place.visit.id,place.coordinate,inkFor(place.ink),radius,centeredIcon=art.number(place.days.toString(),if(colors.dark && place.ink%inks.size==0) colors.surface.toArgb() else 0xFFFBF9F4.toInt(),images))
             }
-            return MapHomeRender(lines,emptyList(),markers,null,null,null,images,replacesPath=true)
+            return MapHomeRender(lines,emptyList(),markers,null,null,null,images,replacesPath=true,hidesEndpoints=true)
         }
         is MapHomeMode.Day->{
             val sorted=visits.sortedWith(compareBy({it.arrivedAt},{it.id}))
@@ -113,7 +113,7 @@ internal fun buildMapHomeRender(options:MapHomeOptions,contents:MapPresentation,
             val ahead=options.replayAhead?.takeIf {layers.path}?.let {all->
                 RouteLegs.build(splitAtGaps(all.filter {layers.outliers || !it.outlier}),sorted).map {leg->MapHomeLine(leg.points.map {it.coordinate},inkFor(leg.ink),4f,0.35f,halo=false)}
             }.orEmpty()
-            val chips=if(replaying) emptyList() else RouteLegs.chipLegs(legs).map {leg->leg.points.first().coordinate to art.chip(clock.format(leg.start.atZone(zone)),images)}
+            val chips=if(replaying) emptyList() else RouteLegs.chipLegs(legs,minimumMeters=400.0,limit=3).map {leg->leg.points[leg.points.size/5].coordinate to art.chip(clock.format(leg.start.atZone(zone)),images)}
             val current=sorted.lastOrNull {it.departedAt==null}?.takeIf {mode.today}
             val focused=focus?.id
             val opacity=when {replaying->0.45f;focused!=null->0.5f;else->1f}

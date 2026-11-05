@@ -50,10 +50,10 @@ import kotlinx.coroutines.launch
                 Row(Modifier.fillMaxWidth().padding(start=20.dp,end=16.dp,top=18.dp,bottom=6.dp),verticalAlignment=Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text(stringResource(R.string.map_home_layers_kicker).uppercase(),style=WdType.caption2.copy(fontSize=10.sp,letterSpacing=0.15.em,fontWeight=FontWeight.Medium),color=colors.textMuted)
-                        Text(stringResource(R.string.map_layers),style=WdType.title.copy(fontSize=28.sp),color=colors.textPrimary,modifier=Modifier.semantics {heading()})
+                        Text(stringResource(R.string.map_home_layers_title),style=WdType.title.copy(fontSize=28.sp),color=colors.textPrimary,modifier=Modifier.semantics {heading()})
                     }
-                    Box(Modifier.heightIn(min=44.dp).clip(CircleShape).background(colors.accent).clickable(role=Role.Button,onClick=dismiss).padding(horizontal=18.dp).testTag("map-layers-done"),
-                        contentAlignment=Alignment.Center) {Text(stringResource(R.string.map_layers_done),style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.SemiBold,fontSize=14.sp),color=colors.surface)}
+                    Box(Modifier.heightIn(min=44.dp).clip(CircleShape).background(colors.textPrimary).clickable(role=Role.Button,onClick=dismiss).padding(horizontal=18.dp).testTag("map-layers-done"),
+                        contentAlignment=Alignment.Center) {Text(stringResource(R.string.map_home_done),style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.SemiBold,fontSize=14.sp),color=colors.surface)}
                 }
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal=20.dp).padding(bottom=30.dp).navigationBarsPadding()) {
                     LayerRow(Icons.Outlined.Place,R.string.map_home_layer_visits,R.string.map_home_layer_visits_help,settings.visits,"map-layer-visits") {onSettings(settings.copy(visits=it))}
@@ -119,7 +119,7 @@ import kotlinx.coroutines.launch
     val colors=wd
     Box(Modifier.heightIn(min=44.dp).then(if(radio) Modifier.selectable(selected,role=Role.RadioButton,onClick=onClick) else Modifier.toggleable(selected,role=Role.Checkbox) {onClick()}).testTag(tag),
         contentAlignment=Alignment.Center) {
-        Box(Modifier.heightIn(min=32.dp).clip(CircleShape).background(if(selected) colors.accent else colors.card).border(1.dp,if(selected) colors.accent else colors.border,CircleShape).padding(horizontal=12.dp),
+        Box(Modifier.heightIn(min=32.dp).clip(CircleShape).background(if(selected) colors.textPrimary else colors.card).border(1.dp,if(selected) colors.textPrimary else colors.border,CircleShape).padding(horizontal=12.dp),
             contentAlignment=Alignment.Center) {
             Text(text,style=MaterialTheme.typography.bodySmall.copy(fontWeight=FontWeight.Medium),color=if(selected) colors.surface else colors.textPrimary,maxLines=1)
         }

@@ -49,6 +49,8 @@ internal data class MapHomeRender(
     val images:Map<String,Bitmap> = emptyMap(),
     /** Replace the single-ink journal path with these coloured legs. */
     val replacesPath:Boolean=false,
+    /** Ranges mark places by visit-days; start and end flags would only add noise. */
+    val hidesEndpoints:Boolean=false,
 ) {
     companion object {
         const val lineSource="home-lines";const val chipSource="home-chips";const val markerSource="journal-visits"
@@ -73,7 +75,7 @@ internal object MapHomeLayers {
         style.addLayerBelow(CircleLayer("home-now-inner",MapHomeRender.nowSource).withProperties(circleColor(inks.live),circleOpacity(0.22f),circleRadius(14f)),"journal-visit")
         val top="journal-replay-position"
         style.addLayerBelow(SymbolLayer("home-start",MapHomeRender.startSource).withProperties(iconImage("home-diamond"),iconAllowOverlap(true),iconIgnorePlacement(true)),top)
-        style.addLayerBelow(SymbolLayer("home-chips",MapHomeRender.chipSource).withProperties(iconImage(Expression.get("icon")),iconAllowOverlap(false),iconPadding(2f)),top)
+        style.addLayerBelow(SymbolLayer("home-chips",MapHomeRender.chipSource).withProperties(iconImage(Expression.get("icon")),iconAllowOverlap(true),iconIgnorePlacement(true)),top)
         style.addLayerBelow(SymbolLayer("home-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Property.ICON_ANCHOR_LEFT),
             iconOpacity(Expression.get("opacity"))).withFilter(Expression.eq(Expression.get("kind"),Expression.literal("label"))),top)
         style.addLayerBelow(SymbolLayer("home-priority-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Property.ICON_ANCHOR_LEFT),iconAllowOverlap(true),
@@ -125,9 +127,9 @@ internal object MapHomeLayers {
         val replaced=home?.replacesPath==true
         listOf("journal-path","journal-road-path").forEach {style.getLayer(it)?.setProperties(visibility(if(replaced) Property.NONE else Property.VISIBLE))}
         // Flags give way to the ink diamond when the home map marks where the range starts.
-        style.getLayer("journal-start-flag")?.setProperties(visibility(if(home?.start!=null) Property.NONE else Property.VISIBLE))
+        style.getLayer("journal-start-flag")?.setProperties(visibility(if(home?.start!=null || home?.hidesEndpoints==true) Property.NONE else Property.VISIBLE))
         // Where you are now is the latest point; the pulsing now pin replaces the end flag.
-        style.getLayer("journal-end-flag")?.setProperties(visibility(if(home?.now!=null) Property.NONE else Property.VISIBLE))
+        style.getLayer("journal-end-flag")?.setProperties(visibility(if(home?.now!=null || home?.hidesEndpoints==true) Property.NONE else Property.VISIBLE))
     }
 
     fun pulse(style:Style,scale:Float) {

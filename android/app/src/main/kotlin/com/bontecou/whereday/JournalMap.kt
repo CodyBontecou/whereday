@@ -209,7 +209,8 @@ private class JournalMapRenderer {
         MapHomeLayers.publish(style,home,inks,homeImages)
         style.getLayerAs<CircleLayer>("journal-focused-visit")?.let {layer->
             visitFocus?.let {layer.setFilter(Expression.eq(Expression.get("id"),Expression.literal(it.id)))}
-            layer.setProperties(visibility(if(layers.visits && visitFocus!=null) Property.VISIBLE else Property.NONE))
+            // The home map marks a focused visit with its own pin and dashed radius instead.
+            layer.setProperties(visibility(if(layers.visits && visitFocus!=null && home==null) Property.VISIBLE else Property.NONE))
         }
         set("journal-start",listOfNotNull(presentation.start?.let {it.coordinate to it.id}))
         set("journal-end",listOfNotNull(presentation.end?.let {it.coordinate to it.id}))
@@ -260,7 +261,7 @@ private class JournalMapRenderer {
         if(focus==appliedVisitFocus || visits.none {it.id==focus.id}) return
         val target=map ?: return
         val bounds=focus.bounds()
-        appliedVisitFocus=focus;fitted=true
+        appliedVisitFocus=focus;fitted=true;autoFitted=false
         // A deliberate saved-visit action selects a centered region, like iOS.
         // The default bounds update retains tilt, which shifts its target away from the visit.
         val inset=chromePadding
@@ -412,7 +413,7 @@ private class JournalMapRenderer {
             home.padding.calculateRightPadding(direction).roundToPx(),home.padding.calculateBottomPadding().roundToPx())}
         SideEffect {home.controller.attach(fit={latestFollow?.stop?.invoke();renderer.follow(latestFollow?.fix,false);renderer.fit()},
             fitActive={latestFollow?.stop?.invoke();renderer.follow(latestFollow?.fix,false);renderer.fitActiveRecording()},
-            focus={coordinates->latestFollow?.stop?.invoke();renderer.follow(latestFollow?.fix,false);renderer.fitCoordinates(coordinates)},
+            focus={coordinates->latestFollow?.stop?.invoke();renderer.follow(latestFollow?.fix,false);renderer.fitCoordinates(coordinates);renderer.autoFitted=false},
             center={renderer.cameraSnapshot()?.target})}
         val pulsing=renderer.home?.now!=null && !rememberReduceMotion()
         LaunchedEffect(pulsing) {
