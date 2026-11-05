@@ -296,3 +296,39 @@ final class MapLayerPreferencesTests: XCTestCase {
         XCTAssertTrue(PhotoMarkerDisplay.images.storedFlags(previousImages: false) == (true, false))
     }
 }
+
+final class MapDatePresetTests: XCTestCase {
+    private var calendar: Calendar { Calendar.current }
+
+    private func dayCount(_ range: ClosedRange<Date>) -> Int {
+        let first = calendar.startOfDay(for: range.lowerBound)
+        let last = calendar.startOfDay(for: range.upperBound)
+        return (calendar.dateComponents([.day], from: first, to: last).day ?? 0) + 1
+    }
+
+    func testSevenDaysIsTodayAndTheSixDaysBefore() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 11, day: 1, hour: 14, minute: 20))!
+        let range = MapDatePreset.sevenDays.range(referenceDate: now)
+
+        XCTAssertEqual(range.upperBound, now)
+        XCTAssertEqual(range.lowerBound, calendar.date(from: DateComponents(year: 2026, month: 10, day: 26))!)
+        XCTAssertEqual(dayCount(range), 7)
+        XCTAssertEqual(MultiDayAggregator.dayList(range: range, recordedDays: [], calendar: calendar).count, 7)
+    }
+
+    func testSevenDaysJustAfterMidnightStillCoversSevenDays() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 3, day: 2, hour: 0, minute: 5))!
+        let range = MapDatePreset.sevenDays.range(referenceDate: now)
+        XCTAssertEqual(dayCount(range), 7)
+        XCTAssertEqual(range.lowerBound, calendar.date(from: DateComponents(year: 2026, month: 2, day: 24))!)
+    }
+
+    func testOtherPresetsKeepTheirMeaning() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 11, day: 1, hour: 14, minute: 20))!
+        XCTAssertEqual(MapDatePreset.today.range(referenceDate: now).lowerBound, calendar.startOfDay(for: now))
+        XCTAssertEqual(dayCount(MapDatePreset.yesterday.range(referenceDate: now)), 1)
+        XCTAssertEqual(MapDatePreset.thirtyDays.range(referenceDate: now).lowerBound,
+                       calendar.date(byAdding: .day, value: -30, to: now))
+        XCTAssertEqual(MapDatePreset.all.range(referenceDate: now).lowerBound, .distantPast)
+    }
+}

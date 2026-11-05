@@ -4613,7 +4613,9 @@ enum MapDatePreset: CaseIterable, Hashable {
             let endOfYesterday = Date(timeIntervalSinceReferenceDate: startOfToday.timeIntervalSinceReferenceDate.nextDown)
             return startOfYesterday...endOfYesterday
         case .sevenDays:
-            return calendar.date(byAdding: .day, value: -7, to: referenceDate)!...referenceDate
+            // Today and the six days before it: seven calendar days, as the "7D" chip and "7 DAYS" header say.
+            let startOfToday = calendar.startOfDay(for: referenceDate)
+            return (calendar.date(byAdding: .day, value: -6, to: startOfToday) ?? startOfToday)...referenceDate
         case .thisMonth:
             let startOfMonth = calendar.dateInterval(of: .month, for: referenceDate)?.start
                 ?? calendar.startOfDay(for: referenceDate)
