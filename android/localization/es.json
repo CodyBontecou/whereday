@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "2cf74f8cb11de396817204b18df3dae72f34171fc3be83feb01af126c03c6798",
+  "defaultSourceSha256": "a799c1d273761db40b7b5625d51d59cf7397c1fb9c9972abf6d4cf6efd750a74",
   "catalog": {
     "shell_map": "Map",
     "shell_timeline": "Timeline",
@@ -1660,6 +1660,7 @@
     "travel_walking": "Caminando",
     "map_home_access_approximate": "Ubicación aproximada",
     "map_home_access_location": "Ubicación desactivada",
-    "map_home_access_notifications": "Notificaciones desactivadas"
+    "map_home_access_notifications": "Notificaciones desactivadas",
+    "map_home_layers_title": "Capas"
   }
 }

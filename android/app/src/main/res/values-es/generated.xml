@@ -564,6 +564,7 @@
     <string name="map_home_layer_visits">Visitas</string>
     <string name="map_home_layer_visits_help">Paradas de más de 5 min, coloreadas por lugar</string>
     <string name="map_home_layers_kicker">Qué muestra el mapa</string>
+    <string name="map_home_layers_title">Capas</string>
     <string name="map_home_log_past">Registrar una parada anterior</string>
     <string name="map_home_minutes">%d min</string>
     <string name="map_home_moved">Recorrido</string>
