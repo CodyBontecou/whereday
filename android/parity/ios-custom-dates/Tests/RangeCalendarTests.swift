@@ -86,8 +86,8 @@ final class RangeCalendarTests: XCTestCase {
                 switch preset {
                 case "Today": XCTAssertEqual(lower, start)
                 case "This month": XCTAssertEqual(lower, calendar.dateInterval(of: .month, for: upper)!.start)
-                case "Last 7 days": XCTAssertEqual(lower, calendar.date(byAdding: .day, value: -7, to: upper))
-                case "Last 30 days": XCTAssertEqual(lower, calendar.date(byAdding: .day, value: -30, to: upper))
+                case "Last 7 days": XCTAssertEqual(lower, calendar.date(byAdding: .day, value: -6, to: start))
+                case "Last 30 days": XCTAssertEqual(lower, calendar.date(byAdding: .day, value: -29, to: start))
                 case "All time": XCTAssertEqual(lower, .distantPast)
                 default: XCTFail(preset)
                 }
@@ -153,7 +153,7 @@ final class RangeCalendarTests: XCTestCase {
         run("month chip", steps: [.chip("This month")], expected: .preset("This month"), title: days(dayOfMonth))
     }
     @MainActor func testSevenDayChip() {
-        run("seven day chip", steps: [.chip("Last 7 days")], expected: .preset("Last 7 days"), title: days(8))
+        run("seven day chip", steps: [.chip("Last 7 days")], expected: .preset("Last 7 days"), title: days(7))
     }
     @MainActor func testYesterdayChip() {
         run("yesterday chip", first: first, last: last, steps: [.chip("Yesterday")], expected: .preset("Yesterday"), title: days(1))

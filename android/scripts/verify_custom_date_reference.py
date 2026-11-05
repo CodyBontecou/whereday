@@ -14,7 +14,7 @@ MAP_VIEW = 'IsoMe/Views/MapView.swift'
 DESIGN = 'IsoMe/TEDesign.swift'
 # MapView.swift: the range sheet, its presets and layer-help values, and the layer rows plus MapRangeCalendar.
 FRAGMENTS = {
-    'DateRangeFilterSheet': ('struct DateRangeFilterSheet: View {', '\nstruct VisitQuickView: View {'),
+    'DateRangeFilterSheet': ('struct DateRangeFilterSheet: View {', '\n// MARK: - Quick Filter Bar'),
     'MapDatePreset': ('enum MapDatePreset: CaseIterable, Hashable {', '\nstruct FitMenuButton: View {'),
     'MapRangeCalendar': ('struct MapLayerSettings {', '\n// MARK: - Route Replay Helpers'),
 }
