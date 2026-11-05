@@ -604,6 +604,9 @@ struct LocationMapView: View {
                         onCustom: { showingFilters = true }
                     )
                 }
+                // The floating chrome wraps rather than clips, up to the first accessibility size; the day sheet
+                // carries the full large-text layout.
+                .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                 .padding(.horizontal, 12)
                 .padding(.top, 4)
 
@@ -624,6 +627,7 @@ struct LocationMapView: View {
 
                 if !replaying || replayBridge != nil {
                     bottomControls(photoDetails: photoDetails)
+                        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                         .padding(.horizontal, 12)
                         .padding(.bottom, bottomChromeInset)
                         .opacity(sheetDetent == .peek || !showsDaySheet ? 1 : 0)
@@ -799,6 +803,7 @@ struct LocationMapView: View {
             TimelineView(.everyMinute) { context in
                 peekView(day: day, now: context.date)
             }
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
             .onGeometryChange(for: CGFloat.self) { $0.size.height.rounded() } action: { height in
                 if abs(height - peekHeight) > 1 { peekHeight = height }
             }

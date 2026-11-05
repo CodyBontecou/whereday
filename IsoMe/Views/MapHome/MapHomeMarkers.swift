@@ -86,6 +86,8 @@ struct MapVisitPin: View {
         }
         .opacity(isDimmed ? 0.45 : 1)
         .contentShape(Circle())
+        // Map labels grow with text size only so far, or they would cover the route.
+        .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
         .onAppear { pulses = isCurrent && !reduceMotion }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(isCurrent ? "Current visit at \(name)" : "Visit at \(name)")
@@ -140,6 +142,7 @@ struct MapTimeChip: View {
             .background(Capsule().fill(TE.card.opacity(0.92)))
             .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
             .fixedSize()
+            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
             .allowsHitTesting(false)
             .accessibilityLabel(Text("Left at \(text)"))
     }

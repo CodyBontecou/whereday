@@ -34,6 +34,7 @@ extension View {
 
 /// "SUN · NOV 1 · DAY 305" over "Today", with search.
 struct MapHeaderCard: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let kicker: String
     let title: String
     let onSearch: () -> Void
@@ -45,8 +46,8 @@ struct MapHeaderCard: View {
                     .font(WheredayFont.mono(size: 9.5, weight: .medium, relativeTo: .caption2))
                     .tracking(1.4)
                     .foregroundStyle(TE.textMuted)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
+                    .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.7)
                 Text(title)
                     .font(WheredayFont.serif(size: 22, relativeTo: .title2))
                     .foregroundStyle(TE.textPrimary)
@@ -208,6 +209,7 @@ struct MapToolStack: View {
 /// "AUTO-OFF IN 1:40" with a stop button, or a standby capsule that starts recording.
 struct MapRecordingBar: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Bindable var viewModel: LocationViewModel
     @ObservedObject var locationManager: LocationManager
     let isTracking: Bool
@@ -226,16 +228,17 @@ struct MapRecordingBar: View {
 
             TimelineView(.periodic(from: .now, by: 1)) { _ in
                 VStack(alignment: .leading, spacing: 1) {
+                    // Large text wraps instead of clipping.
                     Text(headline)
                         .font(WheredayFont.mono(size: 10, weight: .semibold, relativeTo: .caption2))
                         .tracking(1.2)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
+                        .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.7)
                     Text(detail)
                         .font(WheredayFont.mono(size: 9, relativeTo: .caption2))
                         .tracking(1.2)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
+                        .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.7)
                         .opacity(isTracking ? 1 : 0.8)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -270,14 +273,15 @@ struct MapRecordingBar: View {
         .foregroundStyle(isTracking ? MapHomeStyle.invertedText : TE.textPrimary)
         .padding(.leading, 16)
         .padding(.trailing, 3)
+        .padding(.vertical, dynamicTypeSize.isAccessibilitySize ? 8 : 0)
         .frame(minHeight: 48)
         .background {
-            Capsule()
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .fill(isTracking ? MapHomeStyle.invertedFill : TE.card)
                 .mapCardShadow()
         }
         .overlay {
-            if !isTracking { Capsule().strokeBorder(TE.border, lineWidth: 1) }
+            if !isTracking { RoundedRectangle(cornerRadius: 24, style: .continuous).strokeBorder(TE.border, lineWidth: 1) }
         }
         .onAppear { pulses = !reduceMotion }
         .onChange(of: reduceMotion) { _, reduce in pulses = !reduce }
@@ -377,11 +381,48 @@ struct MapPeekContent {
 }
 
 struct MapPeekCard: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let content: MapPeekContent
     let now: Date
     let action: () -> Void
 
     var body: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            largeText
+        } else {
+            regular
+        }
+    }
+
+    /// At accessibility sizes the card stacks its lines and lets them wrap.
+    private var largeText: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(content.kicker)
+                    .font(WheredayFont.mono(size: 9, weight: .medium, relativeTo: .caption2))
+                    .foregroundStyle(TE.textMuted)
+                Text(content.title)
+                    .font(WheredayFont.serif(size: 18, relativeTo: .headline))
+                    .foregroundStyle(TE.textPrimary)
+                    .lineLimit(3)
+                Text(verbatim: "\(content.value) · \(content.caption)")
+                    .font(WheredayFont.mono(size: 9, weight: .medium, relativeTo: .caption2))
+                    .foregroundStyle(TE.textMuted)
+            }
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(14)
+            .mapCard(cornerRadius: 22)
+            .contentShape(RoundedRectangle(cornerRadius: 22))
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Open the day so far")
+        .accessibilityValue("\(content.kicker), \(content.title). \(content.value), \(content.caption)")
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private var regular: some View {
         Button(action: action) {
             HStack(spacing: 12) {
                 DayDial(segments: content.arcs, now: now, recordingSince: nil, captions: .none, showsNowMarker: content.showsNow)
