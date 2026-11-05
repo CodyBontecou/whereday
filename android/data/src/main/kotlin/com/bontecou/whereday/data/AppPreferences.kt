@@ -10,8 +10,22 @@ data class AppSettings(val onboarded: Boolean = false, val appearance: String = 
     val inferredEnabled: Boolean=true,val inferredGapMinutes: Int=30,val inferredMinimumMinutes: Int=0,val inferredMinimumPoints: Int=1,val exportConfiguration:String?=null,val showOutliers:Boolean=false,val photoEpoch:String="",val showPhotoMarkers:Boolean=false,val showPhotoImages:Boolean=true,val requestPhotoLocations:Boolean=false,val automaticPhotoSync:Boolean=false,
     val roadDisplayEnabled:Boolean=false,val roadAccessRevision:String="",val showPhotoDots:Boolean=false,
     /** Set once this install first has verified access; the post-onboarding paywall never returns after that, even if a plan lapses. */
-    val accessGateCleared:Boolean=false) {
+    val accessGateCleared:Boolean=false,
+    /** What the map shows (the Layers sheet). Road matching stays [roadDisplayEnabled]; outliers stay [showOutliers]. */
+    val map:MapLayerSettings=MapLayerSettings()) {
     val inferenceRules get()=com.bontecou.whereday.domain.InferenceRules(java.time.Duration.ofMinutes(inferredGapMinutes.toLong()),java.time.Duration.ofMinutes(inferredMinimumMinutes.toLong()),inferredMinimumPoints)
+}
+/** The map's persisted layer choices, mirroring iOS's @AppStorage keys where they exist. */
+data class MapLayerSettings(val path:Boolean=true,val points:Boolean=true,val visits:Boolean=true,val endpoints:Boolean=true,
+    /** iOS showStraightLinePathSegments: fallback straight gaps beside road-matched stretches. */
+    val straightGaps:Boolean=false,
+    /** The route of the recording that is running now. */
+    val liveSession:Boolean=true,
+    /** iOS showVisitSuggestions: the "Are you here?" card. */
+    val visitSuggestions:Boolean=false,
+    /** Street tiles from the online provider stay opt-in; this remembers the explicit choice. */
+    val online:Boolean=false) {
+    fun layers(outliers:Boolean)=com.bontecou.whereday.domain.MapLayers(path,points,visits,endpoints,outliers)
 }
 class AppPreferences(private val context: Context,private val beforeRoadPolicyChange:(String)->Unit={}) {
     private object Keys {
@@ -37,9 +51,18 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
         val roadDisplay=booleanPreferencesKey("road_display_enabled")
         val roadRevision=stringPreferencesKey("road_access_revision")
         val accessGate=booleanPreferencesKey("access_gate_cleared")
+        val mapPath=booleanPreferencesKey("map_show_path")
+        val mapPoints=booleanPreferencesKey("map_show_points")
+        val mapVisits=booleanPreferencesKey("map_show_visits")
+        val mapEndpoints=booleanPreferencesKey("map_show_endpoints")
+        val mapStraight=booleanPreferencesKey("showStraightLinePathSegments")
+        val mapLive=booleanPreferencesKey("map_show_live_session")
+        val mapSuggestions=booleanPreferencesKey("showVisitSuggestions")
+        val mapOnline=booleanPreferencesKey("map_online_tiles")
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
-        p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false)
+        p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
+        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: true,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: false))
     val settings = context.preferenceStore.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { context.preferenceStore.edit { p ->
         val previous=read(p)
@@ -66,5 +89,9 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
         }
         p[Keys.roadDisplay]=value.roadDisplayEnabled
         p[Keys.accessGate]=value.accessGateCleared
+        value.map.let {map->
+            p[Keys.mapPath]=map.path;p[Keys.mapPoints]=map.points;p[Keys.mapVisits]=map.visits;p[Keys.mapEndpoints]=map.endpoints
+            p[Keys.mapStraight]=map.straightGaps;p[Keys.mapLive]=map.liveSession;p[Keys.mapSuggestions]=map.visitSuggestions;p[Keys.mapOnline]=map.online
+        }
     } }
 }

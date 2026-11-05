@@ -495,6 +495,15 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         HistoryWindow(range,points,summary,dao.rangeVisits(range.from,range.until).map { it.value },sessions,inferred?.finish().orEmpty(),endpoints)
     }
 
+    /** Per-day path distance and fix counts for a multi-day map range, streamed without keeping the fixes. */
+    suspend fun readDayTotals(range:HistoryRange,zone:java.time.ZoneId):DayTotals = database.readSnapshot {
+        val accumulator=DayDistanceAccumulator(zone)
+        forEachPoint(range) {accumulator.add(it)}
+        DayTotals(accumulator.distances(),accumulator.counts())
+    }
+    fun observeDayTotals(range:()->HistoryRange,zone:java.time.ZoneId):Flow<DayTotals> = database.invalidationTracker.createFlow("points")
+        .conflate().map {readDayTotals(range(),zone)}
+
     /** UUID links may come from uppercase Swift or lowercase Android IDs. Never pick an ambiguous row. */
     suspend fun linkedVisit(id:String):Visit? = database.readSnapshot {
         require(java.util.UUID.fromString(id).toString().equals(id,ignoreCase=true))
@@ -605,3 +614,5 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
 }
 
 data class CountryDayReport(val days: List<CountryPresence>, val stays: List<CountryStay>, val unresolvedPoints: Long, val unresolvedVisits: Long)
+
+data class DayTotals(val distances:Map<java.time.LocalDate,Double>,val counts:Map<java.time.LocalDate,Long>)
