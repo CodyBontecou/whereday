@@ -30,7 +30,7 @@ class LauncherLifecycleTest {
             scenario.recreate();await("Start recording?")
             assertFalse(RecordingRuntime.active.value)
             compose.onNodeWithText("Cancel").performClick();compose.waitForIdle()
-            scenario.recreate();await("Your location journal")
+            scenario.recreate();compose.waitUntil(15_000) {compose.onAllNodesWithTag("map-header").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             compose.onNodeWithText("Start recording?").assertDoesNotExist()
             assertFalse(RecordingRuntime.active.value)
             assertEquals(PackageManager.PERMISSION_DENIED,context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION))

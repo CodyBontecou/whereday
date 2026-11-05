@@ -72,7 +72,7 @@ class WorkspaceActivityResizeTest {
     }
     private fun awaitNativeMaps() {
         for(role in listOf("workspace-primary","workspace-companion")) {
-            compose.onNode(hasTestTag("journal-native-map") and hasAnyAncestor(hasTestTag(role))).performScrollTo()
+            compose.onNode(hasTestTag("journal-native-map") and hasAnyAncestor(hasTestTag(role))).assertExists()
         }
         val views=AtomicReference<List<org.maplibre.android.maps.MapView>>()
         instrumentation.runOnMainSync {
@@ -188,7 +188,7 @@ class WorkspaceActivityResizeTest {
         }
     }
     private fun nativeMap():Pair<org.maplibre.android.maps.MapView,org.maplibre.android.maps.MapLibreMap> {
-        awaitTag("journal-native-map");compose.onNodeWithTag("journal-native-map").performScrollTo()
+        awaitTag("journal-native-map");compose.onNodeWithTag("journal-native-map").assertExists()
         val view=AtomicReference<org.maplibre.android.maps.MapView>()
         instrumentation.runOnMainSync {view.set(checkNotNull(findNativeMapView()))}
         val map=AtomicReference<org.maplibre.android.maps.MapLibreMap>()
@@ -582,7 +582,7 @@ class WorkspaceActivityResizeTest {
             resize(false);awaitReplayPoint(2,2)
             compose.onNodeWithTag("replay-toggle").assertContentDescriptionEquals(target.getString(R.string.replay_play));capture("replay-outing-compact")
             compose.onNodeWithTag("replay-start").performScrollTo().performClick();awaitReplayPoint(1,2)
-            compose.onNodeWithTag("replay-close").performScrollTo().performClick()
+            compose.onNodeWithTag("replay-close").performClick()
             compose.onNodeWithTag("route-replay-content").assertDoesNotExist()
             assertEquals(outing,graph.history.dao.session(outing.id)!!.value)
             assertEquals(original,graph.history.dao.visit(original.id)!!.value);assertEquals(2L,graph.history.dao.totalPointCount())
@@ -599,7 +599,7 @@ class WorkspaceActivityResizeTest {
             awaitReplayPoint(2,2)
             resize(true);awaitReplayPoint(2,2);capture("replay-map-wide")
             resize(false);awaitReplayPoint(2,2);capture("replay-map-compact")
-            compose.onNodeWithTag("replay-close").performScrollTo().performClick()
+            compose.onNodeWithTag("replay-close").performClick()
             assertEquals(original,graph.history.dao.visit(original.id)!!.value);assertEquals(2L,graph.history.dao.totalPointCount())
         }
     }

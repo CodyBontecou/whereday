@@ -49,9 +49,10 @@ class JournalVisitInspectionTest {
             compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
             compose.onNodeWithText(original.name!!).performScrollTo().performClick()
         } else {
-            compose.waitUntil(10000) {runCatching {compose.onNodeWithText("Visits on map").assertExists()}.isSuccess}
-            compose.onNodeWithText("Visits on map").performScrollTo().performClick()
-            compose.onNodeWithText(original.name!!).performClick()
+            compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("journal-native-map").assertExists()}.isSuccess}
+            compose.onNodeWithTag("journal-native-map").performMapAction("Visits on map")
+            compose.onNode(hasText(original.name!!) and hasAnyAncestor(isDialog())).performClick()
+            compose.openVisitDetails()
         }
         awaitName(original.name!!)
     }

@@ -55,11 +55,11 @@ class ReplayLocalizationTest {
         compose.onNodeWithText("Reproducir ruta").performClick()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("replay-progress").assertExists()}.isSuccess}
     }
-    private fun awaitPoint(index:Int,count:Int) {compose.waitUntil(5000) {runCatching {compose.onNodeWithTag("replay-counter").assertTextEquals("$index DE $count PTS")}.isSuccess}}
+    private fun awaitPoint(index:Int,count:Int) {compose.waitUntil(5000) {runCatching {compose.onNodeWithTag("replay-counter").assertTextEquals("${java.text.NumberFormat.getIntegerInstance(java.util.Locale.forLanguageTag("es")).format(index)} DE ${java.text.NumberFormat.getIntegerInstance(java.util.Locale.forLanguageTag("es")).format(count)} PTS")}.isSuccess}}
     private fun jump(end:Boolean) {compose.onNodeWithTag(if(end) "replay-end" else "replay-start").performScrollTo().performClick()}
     private fun awaitCacheEmpty() {compose.waitUntil(5000) {cache.listFiles().orEmpty().isEmpty()}}
     private fun close() {
-        compose.onNodeWithTag("replay-close").performScrollTo().performClick()
+        compose.onNodeWithTag("replay-close").performClick()
         compose.onNodeWithTag("route-replay-content").assertDoesNotExist()
     }
     @Test fun restoredReplayRebuildsItsArchiveAndRetainsPausedMiddlePosition()=runBlocking {

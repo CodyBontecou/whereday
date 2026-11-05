@@ -45,7 +45,13 @@ class VisitEditorRestorationTest {
     private fun awaitText(text:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithText(text).assertExists()}.isSuccess}}
     private fun manualDraft(label:String,timeline:Boolean=false)=runBlocking {
         val tester=screen(timeline)
-        compose.onNodeWithText(label).performScrollTo().performClick()
+        // On the map, manual stops start from the + menu; Timeline keeps its own Add past visit capsule.
+        if(timeline) compose.onNodeWithText(label).performScrollTo().performClick()
+        else {
+            compose.waitUntil(10000) {compose.onAllNodesWithTag("map-add").fetchSemanticsNodes().isNotEmpty()}
+            compose.onNodeWithTag("map-add").performClick()
+            compose.onNodeWithTag(if(label=="Save current place") "map-add-current" else "map-add-past").performClick()
+        }
         compose.onNodeWithText("Name").performTextInput("Restored QA visit")
         compose.onNodeWithText("Address").performTextInput("Synthetic address")
         compose.onNodeWithText("Latitude").performScrollTo().performTextInput("48.8584")
@@ -110,9 +116,12 @@ class VisitEditorRestorationTest {
         val visit=Visit("map-selected",Coordinate(48.8584,2.2945),now.minusSeconds(600),now.minusSeconds(300),name="Map QA visit")
         graph.history.dao.put(VisitRow(visit))
         val tester=screen()
-        awaitText("Visits on map")
-        compose.onNodeWithText("Visits on map").performScrollTo().performClick()
+        compose.waitUntil(10000) {compose.onAllNodesWithTag("journal-native-map").fetchSemanticsNodes().isNotEmpty()}
+        compose.onNodeWithTag("journal-native-map").performMapAction("Visits on map")
         compose.onNodeWithText("Open visit").performClick()
+        // The map opens the visit's quick view first; Details opens the full editor.
+        compose.waitUntil(10000) {compose.onAllNodesWithTag("map-visit-details").fetchSemanticsNodes().isNotEmpty()}
+        compose.onNodeWithTag("map-visit-details").performClick()
         compose.onNodeWithText("Name").performTextReplacement("Map unsaved edit")
         tester.emulateSavedInstanceStateRestore()
         compose.onNodeWithText("Name").assertTextContains("Map unsaved edit")

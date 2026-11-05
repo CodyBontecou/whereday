@@ -116,7 +116,7 @@ class WorkspaceCallerDialogTest {
         compose.waitUntil(10000) {compose.onAllNodesWithTag("replay-progress").fetchSemanticsNodes().isNotEmpty()}
         owns(screen(),pane("workspace-companion"))
         compose.onNodeWithTag("replay-end").performScrollTo().performClick();capture("replay")
-        compose.onNodeWithTag("replay-close").performScrollTo().performClick();compose.waitUntil(5000) {!open};compose.onNodeWithTag("route-replay-content").assertDoesNotExist()
+        compose.onNodeWithTag("replay-close").performClick();compose.waitUntil(5000) {!open};compose.onNodeWithTag("route-replay-content").assertDoesNotExist()
         assertEquals(points,graph.history.dao.exportFirstPoints(at,at.plusSeconds(121),null).map {it.value})
     }
     @Test fun photoPagerControlsAndUnavailableSyntheticImageRemainInBookRegion() {

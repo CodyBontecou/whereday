@@ -96,7 +96,7 @@ class InlineVisitInspectorTest {
     @Test fun independentEditCannotReplaceTheOriginalBaselineDuringHandoff()=runBlocking {
         val tester=show();open();compose.onNodeWithTag("visit-name").performTextReplacement("Stale draft");closeKeyboard()
         val updated=original.copy(notes="Independent edit",updatedAt=at.plusSeconds(600));graph.history.dao.put(VisitRow(updated))
-        compose.onNodeWithText(target.getString(R.string.map_visits)).performScrollTo().performClick()
+        compose.onNodeWithTag("journal-native-map").performMapAction(target.getString(R.string.map_visits))
         compose.onNode(hasText(original.name!!) and hasAnyAncestor(isDialog())).performClick();awaitName("Stale draft")
         compact();expanded();tester.emulateSavedInstanceStateRestore();awaitName("Stale draft")
         compose.onNodeWithTag("visit-save").performClick()
@@ -105,7 +105,7 @@ class InlineVisitInspectorTest {
     }
     @Test fun selectingAnotherMapVisitWaitsForExplicitCloseAndLoadsItsFreshSavedSnapshot()=runBlocking {
         show();open();compose.onNodeWithTag("visit-name").performTextReplacement("Keep first draft");closeKeyboard()
-        compose.onNodeWithText(target.getString(R.string.map_visits)).performScrollTo().performClick()
+        compose.onNodeWithTag("journal-native-map").performMapAction(target.getString(R.string.map_visits))
         compose.onNode(hasText(next.name!!) and hasAnyAncestor(isDialog())).performClick();awaitName("Keep first draft")
         val newer=next.copy(name="Fresh second visit",updatedAt=at.plusSeconds(600));graph.history.dao.put(VisitRow(newer))
         back();compose.onNodeWithText(target.getString(R.string.visit_discard)).performClick();awaitName(newer.name!!)
@@ -122,11 +122,11 @@ class InlineVisitInspectorTest {
     }
     @Test fun manualCreationCannotOpenASecondEditorUntilTheInspectorCloses() {
         show();open()
-        val current=compose.onNodeWithText(target.getString(R.string.map_save_current))
-        current.assertIsNotEnabled().performScrollTo().performTouchInput {click()}
-        compose.onNodeWithText(target.getString(R.string.map_add_past)).assertIsNotEnabled()
+        val current=compose.onNodeWithTag("map-add")
+        current.assertIsNotEnabled().performTouchInput {click()}
+        compose.onNodeWithTag("map-add-current").assertDoesNotExist()
         awaitName();assertEquals(1,compose.onAllNodesWithTag("visit-name").fetchSemanticsNodes().size)
-        back();current.performScrollTo().assertIsEnabled().performClick()
+        back();current.assertIsEnabled().performClick();compose.onNodeWithTag("map-add-current").performClick()
         compose.onNodeWithTag("visit-inline-inspector").assertDoesNotExist()
         compose.onNodeWithTag("visit-name").assertTextContains("")
         assertEquals(1,compose.onAllNodesWithTag("visit-name").fetchSemanticsNodes().size)
@@ -144,8 +144,7 @@ class InlineVisitInspectorTest {
 
     private fun capture(stage:String) {
         val instrumentation=InstrumentationRegistry.getInstrumentation()
-        val control=compose.onNodeWithText(target.getString(R.string.map_save_current));control.assertIsNotEnabled()
-        compose.onNodeWithText(target.getString(R.string.map_add_past)).assertIsNotEnabled()
+        val control=compose.onNodeWithTag("map-add");control.assertIsNotEnabled()
         compose.mainClock.advanceTimeBy(300);compose.waitForIdle();compose.mainClock.advanceTimeByFrame();compose.waitForIdle()
         instrumentation.waitForIdleSync();instrumentation.uiAutomation.waitForIdle(700,5000)
         val bounds=control.fetchSemanticsNode().boundsInWindow
@@ -169,8 +168,8 @@ class InlineVisitInspectorTest {
     @Test fun timelinePrimaryInspectorDisablesManualCreationInTheCompanionMap() {
         show();compose.waitUntil(10000) {compose.onAllNodesWithTag("map-day-peek").fetchSemanticsNodes().size==1}
         compose.openTimeline();open()
-        compose.onNodeWithText(target.getString(R.string.map_save_current)).assertIsNotEnabled().performTouchInput {click()}
-        compose.onNodeWithText(target.getString(R.string.map_add_past)).assertIsNotEnabled()
+        compose.onNodeWithTag("map-add").assertIsNotEnabled().performTouchInput {click()}
+        compose.onNodeWithTag("map-add-current").assertDoesNotExist()
         awaitName();assertEquals(1,compose.onAllNodesWithTag("visit-name").fetchSemanticsNodes().size)
     }
     @Test fun explicitInlineSaveUpdatesTheVisitAndReturnsToTheTimelineWithoutChangingItsIdentity():Unit=runBlocking {

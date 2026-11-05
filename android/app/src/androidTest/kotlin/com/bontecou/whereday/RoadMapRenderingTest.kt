@@ -41,7 +41,7 @@ class RoadMapRenderingTest {
         val view=compose.runOnIdle {checkNotNull(compose.activity.window.decorView.mapView())}
         compose.runOnIdle {view.getMapAsync {result.set(it)}}
         compose.waitUntil(10000) {compose.runOnIdle {result.get()?.style?.isFullyLoaded==true}}
-        compose.onNodeWithTag("journal-native-map").performScrollTo()
+        compose.onNodeWithTag("journal-native-map").assertExists()
         compose.awaitNativeMapFrame(view,result.get())
         return result.get() to view
     }

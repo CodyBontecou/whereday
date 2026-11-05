@@ -88,7 +88,7 @@ class PhotoDotRenderingTest {
         }
     }
     private fun nativeMap():Pair<MapLibreMap,MapView> {
-        compose.onNodeWithTag("journal-native-map").performScrollTo()
+        compose.onNodeWithTag("journal-native-map").assertExists()
         val result=AtomicReference<MapLibreMap>()
         val view=compose.runOnIdle {checkNotNull(compose.activity.window.decorView.mapView())}
         compose.runOnIdle {view.getMapAsync {result.set(it)}}

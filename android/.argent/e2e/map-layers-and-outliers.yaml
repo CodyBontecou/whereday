@@ -53,6 +53,12 @@ steps:
       id: map-layers-content
 - await:
     idle: true
+- await:
+    visible:
+      text: Route start · Oct 27, 10:00
+- await:
+    visible:
+      text: Route end · Oct 27, 10:11
 - tap:
     id: map-layer-path
 - tap:
@@ -85,6 +91,12 @@ steps:
     id: map-layer-endpoints
 - tap:
     id: map-layer-outliers
+- await:
+    visible:
+      text: Route start · Oct 27, 09:59
+- await:
+    visible:
+      text: Route end · Oct 27, 10:12
 - tap:
     id: map-layers-done
 - launch: com.bontecou.whereday

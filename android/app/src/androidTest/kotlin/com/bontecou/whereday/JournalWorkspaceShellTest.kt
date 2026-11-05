@@ -54,7 +54,6 @@ class JournalWorkspaceShellTest {
         compose.onNodeWithText(session.name!!).performScrollTo().performClick()
         compose.onNodeWithTag("outing-title").assertTextEquals(session.name!!)
         compose.onNodeWithText(compose.activity.getString(R.string.outing_show_map)).performScrollTo().performClick()
-        compose.onNodeWithTag("timeline-content").assertExists()
         compose.onNodeWithTag("outing-title").assertExists()
         compose.runOnIdle {assertNotNull(model.mapSelection.value.outingRange)}
     }
@@ -93,7 +92,7 @@ class JournalWorkspaceShellTest {
         if(expected) {
             compose.onNodeWithTag("workspace-companion").assertIsDisplayed();compose.onNodeWithTag("timeline-content").assertIsDisplayed()
         } else compose.onNodeWithTag("workspace-companion").assertDoesNotExist()
-        compose.onNodeWithTag("journal-native-map").performScrollTo()
+        compose.onNodeWithTag("journal-native-map").assertExists()
         val view=compose.runOnIdle {checkNotNull(findNativeMapView())}
         val map=java.util.concurrent.atomic.AtomicReference<org.maplibre.android.maps.MapLibreMap>()
         compose.runOnUiThread {view.getMapAsync {map.set(it)}}

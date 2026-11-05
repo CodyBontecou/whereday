@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.bontecou.whereday.domain.*
@@ -36,9 +37,14 @@ class MapPointCallerUnitsTest {
     }
     @After fun cleanup()=runBlocking {if(::graph.isInitialized) graph.journalClear.clear().join();Unit}
     private fun inspectAndChangeUnits() {
-        compose.waitUntil(10000) {compose.onAllNodesWithTag("map-point-browse").fetchSemanticsNodes().size==1}
-        compose.onNodeWithTag("map-point-browse").performScrollTo().performClick()
+        val label=compose.activity.getString(R.string.map_point_browse)
+        compose.waitUntil(10000) {compose.onAllNodesWithTag("map-point-browse").fetchSemanticsNodes().size==1 || compose.onAllNodes(hasTestTag("journal-native-map") and SemanticsMatcher.keyIsDefined(SemanticsActions.CustomActions)).fetchSemanticsNodes().isNotEmpty()}
+        // Framed maps show a Browse points capsule; the full-bleed replay map offers the same chooser as an accessibility action.
+        if(compose.onAllNodesWithTag("map-point-browse").fetchSemanticsNodes().isNotEmpty()) compose.onNodeWithTag("map-point-browse").performScrollTo().performClick()
+        else compose.onNodeWithTag("journal-native-map").performMapAction(label)
         compose.onNodeWithTag("map-point-choice-${first.id}").performScrollTo().performClick()
+        // The replay map's navy tooltip opens the full point inspector.
+        if(compose.onAllNodesWithTag("map-point-tooltip").fetchSemanticsNodes().isNotEmpty()) compose.onNodeWithTag("map-point-tooltip").performClick()
         val locale=compose.activity.resources.configuration.locales[0]
         compose.onNodeWithTag("map-point-speed").assertTextContains(String.format(locale,"%.1f km/h",9.0),substring=true)
         compose.runOnIdle {metric.value=false}

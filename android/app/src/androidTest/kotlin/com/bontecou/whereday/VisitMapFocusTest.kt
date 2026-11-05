@@ -72,7 +72,7 @@ class VisitMapFocusTest {
     private fun keyboard() {androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())}
     private fun viewMap() {keyboard();compose.onNodeWithTag("visit-view-map").performScrollTo().performClick()}
     private fun nativeMap():Pair<MapView,MapLibreMap> {
-        compose.onNodeWithTag("journal-native-map").performScrollTo()
+        compose.onNodeWithTag("journal-native-map").assertExists()
         val view=compose.runOnIdle {checkNotNull(findNativeMapView())};val map=AtomicReference<MapLibreMap>()
         compose.runOnUiThread {view.getMapAsync {map.set(it)}}
         compose.waitUntil(10000) {compose.runOnUiThread {map.get()?.style?.isFullyLoaded==true}}
@@ -136,15 +136,15 @@ class VisitMapFocusTest {
         }}}}
         val (_,map)=nativeMap()
         compose.waitUntil(10000) {compose.runOnUiThread {kotlin.math.abs(map.cameraPosition.target!!.latitude-1.8)<0.0001 && longitudeDistance(map.cameraPosition.target!!.longitude,179.999)<0.0001}}
-        compose.onNodeWithTag("map-follow-location").performScrollTo().performClick()
+        compose.onNodeWithTag("map-follow-location").performClick()
         compose.waitUntil(5000) {compose.runOnUiThread {kotlin.math.abs(map.cameraPosition.target!!.latitude-gps.latitude)<0.0001 && longitudeDistance(map.cameraPosition.target!!.longitude,gps.longitude)<0.0001}}
         assertNull(focus.value);compose.onNodeWithTag("map-focused-visit").assertDoesNotExist();assertUnchanged()
     }
     @Test fun repeatMapActionRefocusesTheSameVisitWithoutRecreatingItsWindow() {
         show();openTimeline();viewMap();val (view,map)=selectedMap();val first=model.mapSelection.value.visitFocus!!.requestId
         compose.runOnUiThread {map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(18.05,-66.05),15.0))}
-        compose.onNodeWithText(target.getString(R.string.map_visits)).performScrollTo().performClick()
-        compose.onNodeWithText(original.name!!).performClick();awaitName();viewMap()
+        compose.onNodeWithTag("journal-native-map").performMapAction(target.getString(R.string.map_visits))
+        compose.onNode(hasText(original.name!!) and hasAnyAncestor(isDialog())).performClick();compose.openVisitDetails();awaitName();viewMap()
         val (again,_)=selectedMap();assertSame(view,again);assertNotEquals(first,model.mapSelection.value.visitFocus!!.requestId);assertUnchanged()
     }
     @Test fun existingVisitLinkCanShowTheSavedVisitWithoutSavingIt() {
