@@ -98,6 +98,37 @@ final class RouteLegPlannerTests: XCTestCase {
         XCTAssertEqual(RouteLegPlanner.mainLegIndices(legs, distances: [1]), [])
     }
 
+    /// Regression: once the road-matched route arrived, its unmatched stretches were merged into one segment and
+    /// the whole day was inked like the first leg (terracotta) instead of leg by leg.
+    func testAMergedRouteSegmentSplitsIntoOneRunPerLeg() {
+        let times = [0, 5, 15, 25, 35, 55, 70, 85, 90].map(t)
+        let legs = RouteLegPlanner.legs(pointTimes: times, stays: stays, now: t(95))
+
+        let whole = RouteLegPlanner.legRuns(from: 0, to: times.count - 1, in: legs)
+        XCTAssertEqual(whole, legs.enumerated().map { index, leg in
+            RouteLegPlanner.LegRun(legIndex: index, startIndex: leg.startIndex, endIndex: leg.endIndex)
+        })
+        XCTAssertEqual(whole.map { $0.legIndex.flatMap { legs[$0].destinationKey } },
+                       ["Home", "Ferry Building", "Ferry Building", "Office", "Office"])
+        for (previous, next) in zip(whole, whole.dropFirst()) {
+            XCTAssertEqual(previous.endIndex, next.startIndex)
+        }
+    }
+
+    func testAClippedSegmentStartsAndEndsInsideItsLegs() {
+        let times = [0, 5, 15, 25, 35, 55, 70, 85, 90].map(t)
+        let legs = RouteLegPlanner.legs(pointTimes: times, stays: stays, now: t(95))
+        // Replay draws the route up to the playhead, which can fall in the middle of a leg.
+        XCTAssertEqual(RouteLegPlanner.legRuns(from: 2, to: 6, in: legs), [
+            RouteLegPlanner.LegRun(legIndex: 1, startIndex: 2, endIndex: 4),
+            RouteLegPlanner.LegRun(legIndex: 2, startIndex: 4, endIndex: 5),
+            RouteLegPlanner.LegRun(legIndex: 3, startIndex: 5, endIndex: 6)
+        ])
+        XCTAssertEqual(RouteLegPlanner.legRuns(from: 3, to: 3, in: legs), [])
+        XCTAssertEqual(RouteLegPlanner.legRuns(from: 0, to: 2, in: []),
+                       [RouteLegPlanner.LegRun(legIndex: nil, startIndex: 0, endIndex: 2)])
+    }
+
     func testInkOrderMatchesTheDial() {
         var order = PlaceInkOrder(leading: "Home")
         XCTAssertEqual(order.index(for: "Home"), 0)
@@ -347,3 +378,4 @@ final class MapDatePresetTests: XCTestCase {
         XCTAssertEqual(MapDatePreset.all.range(referenceDate: now).lowerBound, .distantPast)
     }
 }
+

@@ -65,6 +65,33 @@ enum RouteLegPlanner {
         legs.lastIndex { $0.startIndex <= pointIndex && pointIndex <= $0.endIndex }
     }
 
+    /// A stretch of the route that lies in a single leg.
+    struct LegRun: Equatable {
+        /// Index into the legs; nil where no leg covers the step.
+        let legIndex: Int?
+        let startIndex: Int
+        let endIndex: Int
+    }
+
+    /// Splits the stretch of points `startIndex...endIndex` where it crosses from one leg into the next, so each run
+    /// can take its own leg's ink. Neighbouring runs share their boundary point, so the line stays continuous.
+    /// A road-matched route merges every unmatched stretch into one long segment; without this split the whole
+    /// day took the ink of the first leg.
+    static func legRuns(from startIndex: Int, to endIndex: Int, in legs: [RouteLeg]) -> [LegRun] {
+        guard endIndex > startIndex else { return [] }
+        var runs: [LegRun] = []
+        for step in startIndex..<endIndex {
+            // The step step→step+1 belongs to the leg it starts in, the later one at a shared boundary.
+            let leg = legs.firstIndex { $0.startIndex <= step && step < $0.endIndex }
+            if let last = runs.last, last.legIndex == leg {
+                runs[runs.count - 1] = LegRun(legIndex: leg, startIndex: last.startIndex, endIndex: step + 1)
+            } else {
+                runs.append(LegRun(legIndex: leg, startIndex: step, endIndex: step + 1))
+            }
+        }
+        return runs
+    }
+
     /// Which move legs get a departure time chip: the longest ones at least `minimumMeters` long, in route order.
     static func mainLegIndices(_ legs: [RouteLeg], distances: [Double], minimumMeters: Double = 300, limit: Int = 4) -> [Int] {
         guard legs.count == distances.count else { return [] }

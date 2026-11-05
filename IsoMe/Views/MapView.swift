@@ -1427,8 +1427,8 @@ struct LocationMapView: View {
     /// The route split into inked pieces: road-matched segments when ready, otherwise the legs' own points.
     private func routePieces(legs: [RouteLeg], day: TraceDay, upTo sourceIndex: Int?) -> [RoutePiece] {
         if let route = preparedRoadSnappedRoute {
-            return displayedRoadSegments(from: route, upTo: sourceIndex).map { segment in
-                RoutePiece(id: segment.id, coordinates: segment.coordinates, ink: legInk(at: segment.startIndex, legs: legs, day: day))
+            return displayedRoadSegments(from: route, upTo: sourceIndex).flatMap { segment in
+                roadPieces(for: segment, legs: legs, day: day)
             }
         }
         guard shouldDrawStraightLinePath else { return [] }
@@ -1443,6 +1443,21 @@ struct LocationMapView: View {
                 coordinates: points[leg.startIndex...end].map(\.coordinate),
                 ink: day.ink(forPlace: leg.destinationKey)
             )
+        }
+    }
+
+    /// A road-matched segment inked leg by leg. Unmatched segments carry one coordinate per source point and can
+    /// span several legs, so they are split where the leg changes; a matched segment covers a single step.
+    private func roadPieces(for segment: RoadSnappedRouteSegment, legs: [RouteLeg], day: TraceDay) -> [RoutePiece] {
+        let isPerPoint = !segment.isSnapped && segment.coordinates.count == segment.endIndex - segment.startIndex + 1
+        guard isPerPoint else {
+            return [RoutePiece(id: segment.id, coordinates: segment.coordinates, ink: legInk(at: segment.startIndex, legs: legs, day: day))]
+        }
+        return RouteLegPlanner.legRuns(from: segment.startIndex, to: segment.endIndex, in: legs).map { run in
+            let lower = run.startIndex - segment.startIndex
+            let upper = run.endIndex - segment.startIndex
+            let ink = run.legIndex.map { day.ink(forPlace: legs[$0].destinationKey) } ?? TE.textPrimary
+            return RoutePiece(id: "\(segment.id)-\(run.startIndex)", coordinates: Array(segment.coordinates[lower...upper]), ink: ink)
         }
     }
 
