@@ -72,6 +72,9 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     var quickVisitId by rememberSaveable {mutableStateOf<String?>(null)}
     // Without a shared journal inspector (a standalone map), Details opens the editor here, as the old map did.
     var detailVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<Visit?>(null)}
+    // "Not here" opens the place picker (search or drop a pin) to correct the visit's place, as iOS's PlaceSelectionView does.
+    var correctingVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<Visit?>(null)}
+    var correctionFailed by remember {mutableStateOf(false)}
     var selectedDay by rememberSaveable(selected.copy(visitFocus=null).toString()) {mutableStateOf<String?>(null)}
     var hereDismissed by rememberSaveable(stateSaver=coordinateListSaver) {mutableStateOf<List<Coordinate>>(emptyList())}
     var now by remember {mutableStateOf(Instant.now())}
@@ -108,7 +111,8 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     val headerBottom=top+8.dp+headerHeight
     val screenHeight=LocalConfiguration.current.screenHeightDp.dp
     val sheetCover=when {quickVisit!=null->320.dp;detent==DaySheetDetent.half->screenHeight*0.6f;detent==DaySheetDetent.full->screenHeight*0.6f;else->bottom+bottomChrome}
-    val mapPadding=PaddingValues(start=12.dp,top=headerBottom+8.dp,end=76.dp,bottom=sheetCover+8.dp)
+    // The scale bar and tile credit sit just above the bottom chrome; fitting keeps the route above them too.
+    val mapPadding=PaddingValues(start=12.dp,top=headerBottom+8.dp,end=76.dp,bottom=sheetCover+34.dp)
     val photoBrowsing=rememberPhotoBrowserRange(selected,range)
     val photos=matchedPhotos(graph,photoBrowsing.range,settings?.showPhotoMarkers==true)
     val photoLayer=photoMapLayer(graph,photoBrowsing.range,photos.count!=null,onBrowserRange=photoBrowsing.hold,validationFailed=photos.error!=null)
@@ -191,7 +195,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
             val available=maxHeight
             if(quickVisit!=null) MapVisitSheet(graph,quickVisit,candidates,metric,
                 onClose={quickVisitId=null;model.mapSelection.value=model.mapSelection.value.copy(visitFocus=null)},
-                onNotHere={quickVisitId=null;if(onVisitOpened!=null) onVisitOpened(quickVisit) else detailVisit=quickVisit},onDetails={quickVisitId=null;if(onVisitOpened!=null) onVisitOpened(quickVisit) else detailVisit=quickVisit},
+                onNotHere={correctionFailed=false;correctingVisit=quickVisit},onDetails={quickVisitId=null;if(onVisitOpened!=null) onVisitOpened(quickVisit) else detailVisit=quickVisit},
                 modifier=Modifier.align(Alignment.BottomCenter).widthIn(max=640.dp))
             else if(detent!=DaySheetDetent.peek) MapDetentSheet(detent,{detent=it},available,headerBottom,Modifier.align(Alignment.BottomCenter).widthIn(max=640.dp)) {
                 val large=LocalDensity.current.fontScale>=1.3f
@@ -206,6 +210,20 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
         }
     }
 
+    correctingVisit?.let {visit->key(visit.id) {
+        BlockVisitLinks()
+        PlaceLocationPicker(visit.coordinate,{correctingVisit=null}) {selection->
+            correctingVisit=null
+            scope.launch {
+                try {
+                    graph.history.saveVisit(correctedVisit(visit,selection,Instant.now()),visit)
+                    quickVisitId=null;model.mapSelection.value=model.mapSelection.value.copy(visitFocus=null)
+                } catch(e:CancellationException) {throw e} catch(_:Exception) {correctionFailed=true}
+            }
+        }
+    }}
+    if(correctionFailed) WorkspaceAlertDialog(onDismissRequest={correctionFailed=false},text={Text(stringResource(R.string.visit_error_save))},
+        confirmButton={TextButton(onClick={correctionFailed=false}) {Text(stringResource(R.string.visit_link_ok))}})
     detailVisit?.let {visit->key(visit.id) {
         VisitEditor(graph,visit,{detailVisit=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,visit,reuse,remember,overlap)},{graph.history.deleteVisit(visit)})
     }}
@@ -348,3 +366,12 @@ internal val mapDateDraftSaver=listSaver<MapDateDraft,String>(
             values[7].toBooleanStrict(),values[8].toBooleanStrict())
     }
 )
+
+/** The visit moved to the place picked for it (iOS correctVisit(with:)), with the same name and address rules as the
+ *  visit editor's picker (VisitDraft.selectLocation): a picked place brings its own; a moved pin alone keeps them. */
+internal fun correctedVisit(visit:Visit,selection:PlaceLocationSelection,now:Instant):Visit {
+    val draft=VisitDraft(visit.id,visit.name.orEmpty(),visit.address.orEmpty(),visit.notes.orEmpty(),visit.coordinate,visit.arrivedAt,visit.departedAt,visit.placeSource ?: "userEntered",visit.placeDistanceMeters)
+        .selectLocation(selection)
+    return visit.correct(selection.coordinate,draft.name.trim().ifEmpty {null},draft.address.trim().ifEmpty {null},now)
+        .copy(placeSource=draft.placeSource,placeDistanceMeters=draft.placeDistanceMeters)
+}
