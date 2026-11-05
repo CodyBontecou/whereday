@@ -47,7 +47,7 @@ Everything lives in [`WheredayDesign.kt`](app/src/main/kotlin/com/bontecou/where
 | stat figures | `WdStat` |
 | text fields | `OutlinedTextField(colors = wdTextFieldColors())` |
 | `FieldNotesBackground` / `FieldNotesArtwork` | same names |
-| navigation bar / rail | `WdNavigationBar` / `WdNavigationRail` |
+| floating tab bar / rail | `WdFloatingTabBar` / `WdNavigationRail` |
 
 ## Layout rules
 

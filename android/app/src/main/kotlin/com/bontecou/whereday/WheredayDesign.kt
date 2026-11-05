@@ -500,6 +500,30 @@ internal fun Modifier.wdFloating(shape:Shape,colors:WdColors,elevation:Dp=12.dp,
 
 internal data class WdTab(val id:String,val title:String,val icon:ImageVector,val selectedIcon:ImageVector=icon)
 
+/** The floating capsule tab bar, as on iOS: paper, hairline, rust for the selected destination. It floats clear of the
+ *  screen edges so the map shows around and beneath it. */
+@Composable internal fun WdFloatingTabBar(tabs:List<WdTab>,selected:Int,onSelect:(Int)->Unit,modifier:Modifier=Modifier) {
+    val iconOnly=LocalDensity.current.fontScale>=1.5f
+    val shape=RoundedCornerShape(if(iconOnly) 28.dp else 32.dp)
+    val colors=wd
+    Row(modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal=if(iconOnly) 12.dp else 16.dp).padding(top=6.dp,bottom=8.dp)
+        .wdFloating(shape,colors).padding(horizontal=4.dp)) {
+        tabs.forEachIndexed {index,tab->
+            val isSelected=index==selected
+            val ink=if(isSelected) colors.inkRust else colors.textMuted
+            Column(Modifier.weight(1f).heightIn(min=if(iconOnly) 72.dp else 64.dp).testTag("navigation-${tab.id}")
+                .selectable(isSelected,role=Role.Tab) {onSelect(index)},
+                horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.Center) {
+                Icon(if(isSelected) tab.selectedIcon else tab.icon,if(iconOnly) tab.title else null,Modifier.size(if(iconOnly) 28.dp else 22.dp),tint=ink)
+                if(!iconOnly) {
+                    Spacer(Modifier.height(3.dp))
+                    Text(tab.title,fontSize=10.sp,fontWeight=if(isSelected) FontWeight.SemiBold else FontWeight.Medium,color=ink,maxLines=1)
+                }
+            }
+        }
+    }
+}
+
 /** The Material 3 navigation bar: an 80dp surface-container bar whose selected destination sits in a secondary-container pill. */
 @Composable internal fun WdNavigationBar(tabs:List<WdTab>,selected:Int,onSelect:(Int)->Unit,modifier:Modifier=Modifier) {
     val iconOnly=LocalDensity.current.fontScale>=1.5f

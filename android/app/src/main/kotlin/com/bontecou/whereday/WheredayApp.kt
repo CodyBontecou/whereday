@@ -214,7 +214,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                     // The floating bar sits below each page so lists end above it, as on iOS.
                     Scaffold(Modifier.weight(1f),containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars,
                         snackbarHost={SnackbarHost(workspaceMessages) {WdSnackbar(it)}},
-                        bottomBar={if(!railed && !(mapShown && tabBarHidden.value)) WdNavigationBar(wdTabs.take(MainTabs.bar.size),tab.coerceAtMost(MainTabs.bar.size-1),selectTab,Modifier.semantics {testTagsAsResourceId=true})}) {padding->
+                        bottomBar={if(!railed && !(mapShown && tabBarHidden.value)) WdFloatingTabBar(wdTabs.take(MainTabs.bar.size),tab.coerceAtMost(MainTabs.bar.size-1),selectTab,Modifier.semantics {testTagsAsResourceId=true})}) {padding->
                         // The map runs full-bleed under the status bar and the floating tab bar; its chrome keeps clear of both.
                         if(mapShown) CompositionLocalProvider(LocalMapChromePadding provides padding,LocalTabBarHidden provides tabBarHidden) {Box(Modifier.fillMaxSize()) {mapPage()}}
                         else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {CompositionLocalProvider(LocalJournalRail provides railed) {
