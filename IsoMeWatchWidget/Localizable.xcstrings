@@ -873,6 +873,12 @@
             "value": "%lld min"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -917,6 +923,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld godz."
           }
         },
         "pt-BR": {
@@ -965,6 +977,12 @@
             "value": "%@、今日%@"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@ dzisiaj"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1011,6 +1029,12 @@
             "value": "● ルート"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● TRASA"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1052,6 +1076,12 @@
           }
         },
         "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
+        "pl": {
           "stringUnit": {
             "state": "translated",
             "value": "WHEREDAY"
@@ -1103,6 +1133,12 @@
             "value": "訪問%lld件 · 残り%@"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WIZYTY: %lld · POZOSTAŁO %@"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1147,6 +1183,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "訪問%lld件 · %lld PTS"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WIZYTY: %lld · %lld PKT"
           }
         },
         "pt-BR": {
@@ -1195,6 +1237,12 @@
             "value": "徒歩"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spacer"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1239,6 +1287,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ラン"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bieg"
           }
         },
         "pt-BR": {
@@ -1287,6 +1341,12 @@
             "value": "自転車"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rower"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1331,6 +1391,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "車"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto"
           }
         },
         "pt-BR": {
@@ -1379,6 +1445,12 @@
             "value": "電車"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pociąg"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1423,6 +1495,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行機"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lot"
           }
         },
         "pt-BR": {
@@ -1471,6 +1549,12 @@
             "value": "徒歩"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pieszo"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1515,6 +1599,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ランニング"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biegiem"
           }
         },
         "pt-BR": {
@@ -1563,6 +1653,12 @@
             "value": "サイクリング"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rowerem"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1607,6 +1703,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "運転中"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autem"
           }
         },
         "pt-BR": {
@@ -1655,6 +1757,12 @@
             "value": "電車で移動中"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pociągiem"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -1699,6 +1807,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行中"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samolotem"
           }
         },
         "pt-BR": {

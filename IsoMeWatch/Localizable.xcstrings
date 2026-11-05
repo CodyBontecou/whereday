@@ -33,6 +33,12 @@
             "value": "今すぐ同期"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizuj"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -77,6 +83,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "同期するものはありません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nic do synchronizacji."
           }
         },
         "pt-BR": {
@@ -125,6 +137,12 @@
             "value": "iPhoneと同期できません。"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja z iPhone’em niedostępna."
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -169,6 +187,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iPhoneに接続中…"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Łączenie z iPhone’em…"
           }
         },
         "pt-BR": {
@@ -217,6 +241,12 @@
             "value": "同期を予約しました。iPhoneでWheredayを開いてください。"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja w kolejce. Otwórz Whereday na iPhonie."
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -261,6 +291,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "同期できませんでした。もう一度お試しください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja nieudana. Spróbuj ponownie."
           }
         },
         "pt-BR": {
@@ -309,6 +345,12 @@
             "value": "iPhoneと同期しました。"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zsynchronizowano z iPhone’em."
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -353,6 +395,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "接続できませんでした。もう一度お試しください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można połączyć. Spróbuj ponownie."
           }
         },
         "pt-BR": {
@@ -2641,6 +2689,12 @@
             "value": "%lld min"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -2685,6 +2739,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld godz."
           }
         },
         "pt-BR": {
@@ -2733,6 +2793,12 @@
             "value": "プランを選択または復元するには、iPhoneでWheredayを開いてください。"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz Whereday na iPhonie, aby wybrać lub przywrócić plan."
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -2777,6 +2843,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iPhoneへの記録を待機中。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oznaczenie czeka na iPhone’a."
           }
         },
         "pt-BR": {
@@ -2825,6 +2897,12 @@
             "value": "記録中…"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oznaczanie…"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -2869,6 +2947,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iPhoneに記録しました。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oznaczono na iPhonie."
           }
         },
         "pt-BR": {
@@ -2917,6 +3001,12 @@
             "value": "%@を記録しました。"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oznaczono: %@."
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -2961,6 +3051,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "この場所を記録できませんでした。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się oznaczyć tego miejsca."
           }
         },
         "pt-BR": {
@@ -3009,6 +3105,12 @@
             "value": "Whereday、ルートを記録中"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday, rejestrowanie trasy"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3053,6 +3155,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Whereday、今日"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday, dzisiaj"
           }
         },
         "pt-BR": {
@@ -3101,6 +3209,12 @@
             "value": "● ルート"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● Trasa"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3145,6 +3259,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dzisiaj"
           }
         },
         "pt-BR": {
@@ -3193,6 +3313,12 @@
             "value": "今日のダイヤル、滞在%lld件、%@移動"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dzisiejsza tarcza, postoje: %lld, przebyto %@"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3237,6 +3363,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日のダイヤル、%@移動"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dzisiejsza tarcza, przebyto %@"
           }
         },
         "pt-BR": {
@@ -3285,6 +3417,12 @@
             "value": "待機中"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gotowość"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3329,6 +3467,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "位置情報が必要です"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wymagana lokalizacja"
           }
         },
         "pt-BR": {
@@ -3377,6 +3521,12 @@
             "value": "許可を確認"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprawdź uprawnienia"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3423,6 +3573,12 @@
             "value": "%@から · %@"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "od %@ · %@"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3464,6 +3620,12 @@
           }
         },
         "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
+        "pl": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ · %@"
@@ -3515,6 +3677,12 @@
             "value": "最終測位 %@"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ostatni odczyt %@"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3559,6 +3727,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "記録の準備完了"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gotowe do rejestrowania"
           }
         },
         "pt-BR": {
@@ -3607,6 +3781,12 @@
             "value": "自動停止まで%@"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ do wyłączenia"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3651,6 +3831,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "このルート %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ NA TEJ TRASIE"
           }
         },
         "pt-BR": {
@@ -3699,6 +3885,12 @@
             "value": "iPhone待ち %lld pts"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld pkt czeka na iPhone’a"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3743,6 +3935,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "この場所を記録"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oznacz to miejsce"
           }
         },
         "pt-BR": {
@@ -3791,6 +3989,12 @@
             "value": "iPhoneでここにチェックインします"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozpoczyna tu wizytę na iPhonie"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3835,6 +4039,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "記録"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oznacz"
           }
         },
         "pt-BR": {
@@ -3883,6 +4093,12 @@
             "value": "停止"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zatrzymaj"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -3927,6 +4143,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ルートを開始"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozpocznij trasę"
           }
         },
         "pt-BR": {
@@ -3975,6 +4197,12 @@
             "value": "位置情報を有効に"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włącz lokalizację"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4019,6 +4247,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "徒歩"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spacer"
           }
         },
         "pt-BR": {
@@ -4067,6 +4301,12 @@
             "value": "ラン"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bieg"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4111,6 +4351,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "自転車"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rower"
           }
         },
         "pt-BR": {
@@ -4159,6 +4405,12 @@
             "value": "車"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4203,6 +4455,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "電車"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pociąg"
           }
         },
         "pt-BR": {
@@ -4251,6 +4509,12 @@
             "value": "飛行機"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lot"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4295,6 +4559,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "徒歩"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pieszo"
           }
         },
         "pt-BR": {
@@ -4343,6 +4613,12 @@
             "value": "ランニング"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biegiem"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4387,6 +4663,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "サイクリング"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rowerem"
           }
         },
         "pt-BR": {
@@ -4435,6 +4717,12 @@
             "value": "運転中"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autem"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4481,6 +4769,12 @@
             "value": "電車で移動中"
           }
         },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pociągiem"
+          }
+        },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
@@ -4525,6 +4819,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行中"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samolotem"
           }
         },
         "pt-BR": {
