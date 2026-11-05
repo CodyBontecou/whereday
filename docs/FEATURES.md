@@ -301,7 +301,7 @@ The feature-by-feature free/paid labels below are the August 2026 baseline. They
 
 ## 6. Hidden / Debug Surfaces
 
-- Launch args (DEBUG): `--seed-screenshot-data` (demo data + fake suggestions + skips release notes), `--demo-open-map-filters`, `--demo-road-layer-help`, `--demo-export-filters`, `--demo-webhook-settings`, `--default-tab=<0-3>`, `--onboarding-page=<0-4>`.
+- Launch args (DEBUG): `--seed-screenshot-data` (demo data + fake suggestions + skips release notes), `--demo-open-map-filters`, `--demo-road-layer-help` (opens with the Layers sheet's road-matching help), `--demo-export-filters`, `--demo-webhook-settings`, `--default-tab=<0-6>` (0 Map, 1 Archive, 2 Settings behind Archive, 3 timeline over the map, 4 map with the day sheet open, 5 Atlas, 6 Places; see `MainTabLaunch`), `--onboarding-page=<0-4>`.
 - Env: `ONBOARDING_ANALYTICS_ENABLED/ENDPOINT_URL/INGEST_TOKEN`, `UITEST_ANALYTICS_TRANSPORT=offline`; worker `APNS_HOST` sandbox.
 - Deep link: `isome://stop`. App Intents (see INT-1). Live Activity stop button.
 

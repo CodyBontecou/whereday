@@ -85,7 +85,7 @@ struct LocationMapView: View {
     @Environment(\.floatingTabBarInset) private var tabBarInset
     // Map home
     @State private var sheetDetent: MapSheetDetent
-    @State private var showsLayers = false
+    @State private var showsLayers = Self.initialLayersSheetVisibility
     @State private var showsSearch = false
     @State private var showsAddMenu = false
     /// The day highlighted in a multi-day range (M6).
@@ -122,6 +122,15 @@ struct LocationMapView: View {
         self.replayBridge = replayBridge
         self.locationManager = viewModel.locationManager
         _sheetDetent = State(initialValue: expandsDaySheet ? .medium : .peek)
+    }
+
+    /// `--demo-road-layer-help` opens the Layers sheet, which then shows the road-matching help.
+    private static var initialLayersSheetVisibility: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("--demo-road-layer-help")
+        #else
+        false
+        #endif
     }
 
     private static var initialFilterSheetVisibility: Bool {

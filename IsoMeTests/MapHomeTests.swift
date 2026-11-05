@@ -240,6 +240,7 @@ final class ReplayClockTests: XCTestCase {
     }
 }
 
+@MainActor
 final class MapLayerPreferencesTests: XCTestCase {
     private var defaults: UserDefaults!
     private let suiteName = "MapLayerPreferencesTests"
