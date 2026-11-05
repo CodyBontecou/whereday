@@ -3,10 +3,10 @@ import MapKit
 import SwiftData
 import Combine
 
-/// How the trace map sits on screen: the full-screen "scrub the day" map, or a
+/// How the map sits on screen: the map home (the Map tab, with its header, rail and day sheet), or a
 /// companion pane beside the timeline where the replay panel opens on request.
 enum TraceMapPresentation {
-    case full, companion
+    case home, companion
 }
 
 struct LocationMapView: View {
@@ -18,7 +18,7 @@ struct LocationMapView: View {
     @Bindable var viewModel: LocationViewModel
     var focusedVisit: Visit? = nil
     var onSelectVisit: ((Visit) -> Void)? = nil
-    var presentation: TraceMapPresentation = .full
+    var presentation: TraceMapPresentation = .home
     /// When set, the replay controls are published here for another pane instead of overlaid.
     var replayBridge: TraceReplayBridge? = nil
     /// Called when the inspector for `focusedVisit` is closed, so the owner can clear its focus
@@ -27,6 +27,12 @@ struct LocationMapView: View {
     /// When set, the companion's Replay button drives this instead of its own state, so the owner
     /// can rearrange its panes (for example the tabletop layout on a half-open Duo).
     var companionReplay: Binding<Bool>? = nil
+    /// The home's day sheet; off when a foldable's companion pane shows the day instead.
+    var showsDaySheet = true
+    /// Opens with the day sheet expanded (the old Today launch).
+    var expandsDaySheet = false
+    /// Opens the day-by-day timeline over the map.
+    var onOpenTimeline: (() -> Void)? = nil
     @ObservedObject private var locationManager: LocationManager
     /// Streets under the playhead, keyed by `StreetNameLookup.cellKey`.
     @State private var streetNames: [String: String] = [:]
@@ -80,11 +86,17 @@ struct LocationMapView: View {
         viewModel: LocationViewModel,
         focusedVisit: Visit? = nil,
         onSelectVisit: ((Visit) -> Void)? = nil,
-        presentation: TraceMapPresentation = .full,
+        presentation: TraceMapPresentation = .home,
         replayBridge: TraceReplayBridge? = nil,
         onCloseFocusedVisit: (() -> Void)? = nil,
-        companionReplay: Binding<Bool>? = nil
+        companionReplay: Binding<Bool>? = nil,
+        showsDaySheet: Bool = true,
+        expandsDaySheet: Bool = false,
+        onOpenTimeline: (() -> Void)? = nil
     ) {
+        self.showsDaySheet = showsDaySheet
+        self.expandsDaySheet = expandsDaySheet
+        self.onOpenTimeline = onOpenTimeline
         self.companionReplay = companionReplay
         self.viewModel = viewModel
         self.onCloseFocusedVisit = onCloseFocusedVisit
@@ -435,7 +447,7 @@ struct LocationMapView: View {
     /// The overlaid panel; with a replay bridge the controls sit in another pane instead.
     private var showsTracePanel: Bool {
         guard replayBridge == nil else { return false }
-        return presentation == .full || isCompanionReplayShown
+        return isCompanionReplayShown
     }
 
     private var isCompanionReplayShown: Bool {
@@ -949,7 +961,7 @@ struct LocationMapView: View {
             day: day,
             nowFraction: day.nowFraction(now),
             focusFraction: day.fraction(of: focus),
-            focusedPlaceID: visitAtFocus.map { $0.displayName },
+            focusedPlaceID: visitAtFocus.map { day.placeKey(for: $0) },
             distanceText: traceDistanceText,
             hint: String(localized: "Drag to replay · now \(Self.clockText(now))"),
             isReplaying: isRouteReplayEnabled,
@@ -3838,23 +3850,25 @@ struct DateRangeFilterSheet: View {
     }
 }
 
+/// A tapped visit (board M5): its status, name and times, the nearest places numbered to match their pins
+/// on the map ("Where were you?"), and Not here / Details / Confirm.
 struct VisitQuickView: View {
+    @Environment(\.dismiss) private var dismiss
     @Bindable var visit: Visit
     @Bindable var viewModel: LocationViewModel
+    /// Nearby places the map has already pinned (numbered 1, 2, 3); nil looks them up here instead.
+    var candidates: [NearbyPlaceSuggestion]? = nil
     @State private var checkoutError: String?
     @State private var nameText: String = ""
+    @State private var showingPlaceSearch = false
     @FocusState private var isNameFieldFocused: Bool
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 14) {
                     header
-                    timesCard
-
-                    NearbyVisitNameSuggestionSection(visit: visit) { suggestion in
-                        correctVisit(with: suggestion)
-                    }
+                    whereWereYou
 
                     if let notes = visit.notes, !notes.isEmpty {
                         VStack(alignment: .leading, spacing: 6) {
@@ -3875,12 +3889,12 @@ struct VisitQuickView: View {
                     actions
                 }
                 .padding(.horizontal, 20)
-                .padding(.vertical, 16)
+                .padding(.top, 18)
+                .padding(.bottom, 30)
             }
             .foregroundStyle(TE.textPrimary)
             .background(TE.surface.ignoresSafeArea())
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(TE.surface, for: .navigationBar)
+            .toolbar(.hidden, for: .navigationBar)
             .onAppear {
                 nameText = visit.displayName
             }
@@ -3891,6 +3905,13 @@ struct VisitQuickView: View {
                 Button("OK", role: .cancel) { checkoutError = nil }
             } message: {
                 Text(checkoutError ?? "")
+            }
+            .sheet(isPresented: $showingPlaceSearch) {
+                PlaceSelectionView(
+                    initialRegion: MKCoordinateRegion(center: visit.coordinate, latitudinalMeters: 1_000, longitudinalMeters: 1_000),
+                    onSelect: correctVisit(with:)
+                )
+                .presentationDetents([.large])
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -3906,16 +3927,8 @@ struct VisitQuickView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
-                if viewModel.isCurrentVisit(visit) {
-                    Circle().fill(TE.liveDot).frame(width: 8, height: 8)
-                        .accessibilityHidden(true)
-                }
-                Text(statusCaption)
-                    .font(TE.mono(.caption2, weight: .semibold))
-                    .tracking(1.2)
-                    .foregroundStyle(visit.confirmationStatus == .unconfirmed ? TE.inkRust : TE.textMuted)
-                    .fixedSize(horizontal: false, vertical: true)
+            HStack(alignment: .top, spacing: 8) {
+                statusBadge
                 Spacer(minLength: 0)
                 if visit.hasCustomName {
                     Button("Reset") {
@@ -3927,10 +3940,23 @@ struct VisitQuickView: View {
                     .buttonStyle(.plain)
                     .accessibilityHint("Restores the automatically detected visit name.")
                 }
+                Button {
+                    saveName()
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.footnote.weight(.semibold))
+                        .frame(width: 40, height: 40)
+                        .overlay(Circle().strokeBorder(TE.border, lineWidth: 1))
+                        .frame(width: 44, height: 44)
+                        .contentShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Close")
             }
 
             TextField("Visit name", text: $nameText, axis: .vertical)
-                .font(TE.editorial(.title))
+                .font(WheredayFont.serif(size: 26, relativeTo: .title))
                 .textFieldStyle(.plain)
                 .submitLabel(.done)
                 .focused($isNameFieldFocused)
@@ -3942,8 +3968,14 @@ struct VisitQuickView: View {
                 }
                 .accessibilityLabel("Name")
 
-            if !subtitle.isEmpty {
-                Text(subtitle)
+            Text(timeLine)
+                .font(TE.mono(.caption, weight: .medium))
+                .tracking(1)
+                .foregroundStyle(TE.textMuted)
+                .accessibilityLabel(Text("\(dayWord), \(timeRange). Duration \(visit.formattedDuration)"))
+
+            if let address = visit.address, !address.isEmpty, address != visit.displayName {
+                Text(address)
                     .font(.footnote)
                     .foregroundStyle(TE.textMuted)
             }
@@ -3956,96 +3988,148 @@ struct VisitQuickView: View {
         }
     }
 
-    private var timesCard: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .bottom, spacing: 10) {
-                timeColumns
-                Spacer(minLength: 0)
-                durationText
+    /// "DETECTED · NOT CONFIRMED" in ochre while it is still a guess.
+    private var statusBadge: some View {
+        let isUnconfirmed = visit.confirmationStatus == .unconfirmed
+        return HStack(spacing: 6) {
+            if viewModel.isCurrentVisit(visit) {
+                Circle().fill(TE.liveDot).frame(width: 7, height: 7)
+                    .accessibilityHidden(true)
             }
-            VStack(alignment: .leading, spacing: 10) {
-                timeColumns
-                durationText
-            }
+            Text(statusCaption)
+                .font(TE.mono(.caption2, weight: .semibold))
+                .tracking(1)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(TE.card))
-        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).strokeBorder(TE.border, lineWidth: 1))
+        .foregroundStyle(isUnconfirmed ? TE.adaptive(0x8A5A12, 0xE0B565) : TE.textMuted)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(RoundedRectangle(cornerRadius: 6).fill(isUnconfirmed ? TE.adaptive(0xF1E3C6, 0x2E2A22) : TE.dialTrack))
+        .padding(.top, 10)
     }
 
     @ViewBuilder
-    private var timeColumns: some View {
-        timeColumn("ARRIVED", date: visit.arrivedAt)
-        if let departed = visit.departedAt {
-            timeColumn("LEFT", date: departed)
-        }
-    }
-
-    private func timeColumn(_ label: LocalizedStringKey, date: Date) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(label)
+    private var whereWereYou: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("WHERE WERE YOU?")
                 .font(TE.mono(.caption2, weight: .semibold))
                 .tracking(1.2)
                 .foregroundStyle(TE.textMuted)
-            Text(LocationMapView.clockText(date))
-                .font(TE.mono(.title3, weight: .medium))
-            Text(date.formatted(.dateTime.month(.abbreviated).day()))
-                .font(.caption)
-                .foregroundStyle(TE.textMuted)
+                .accessibilityAddTraits(.isHeader)
+            if let candidates, !candidates.isEmpty {
+                ForEach(Array(candidates.enumerated()), id: \.element.id) { index, candidate in
+                    candidateRow(candidate, number: index + 1)
+                }
+            } else {
+                NearbyVisitNameSuggestionSection(visit: visit, selectedName: visit.displayName, showsControls: false) { suggestion in
+                    correctVisit(with: suggestion)
+                }
+            }
         }
-        .padding(.trailing, 14)
-        .accessibilityElement(children: .combine)
     }
 
-    private var durationText: some View {
-        Text(visit.formattedDuration)
-            .font(TE.mono(.subheadline, weight: .semibold))
-            .foregroundStyle(TE.inkRust)
-            .accessibilityLabel(Text("Duration \(visit.formattedDuration)"))
+    private func candidateRow(_ candidate: NearbyPlaceSuggestion, number: Int) -> some View {
+        let isSelected = candidate.name == visit.displayName
+        return Button {
+            correctVisit(with: candidate)
+        } label: {
+            HStack(spacing: 10) {
+                Text(number.formatted())
+                    .font(.system(size: 11, weight: .semibold))
+                    .frame(width: 20, height: 20)
+                    .overlay(Circle().strokeBorder(TE.textPrimary, lineWidth: 1.5))
+                    .accessibilityHidden(true)
+                Text(candidate.name)
+                    .font(.system(size: 14, weight: .medium))
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(candidate.distanceLabel)
+                    .font(TE.mono(.caption2))
+                    .foregroundStyle(TE.textMuted)
+            }
+            .foregroundStyle(TE.textPrimary)
+            .padding(.horizontal, 12)
+            .frame(minHeight: 44)
+            .background(RoundedRectangle(cornerRadius: 14).fill(TE.card))
+            .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(isSelected ? TE.textPrimary : TE.border, lineWidth: isSelected ? 2 : 1))
+            .contentShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Correct visit to \(candidate.name)")
+        .accessibilityValue(candidate.distanceLabel)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     @ViewBuilder
     private var actions: some View {
-        VStack(spacing: 10) {
-            if visit.confirmationStatus == .unconfirmed {
-                Button {
-                    saveName()
-                    viewModel.confirmVisit(visit)
-                } label: {
-                    actionLabel("Confirm Place", systemImage: "checkmark.seal", filled: true)
-                }
-                .buttonStyle(.plain)
+        let isUnconfirmed = visit.confirmationStatus == .unconfirmed
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 8) {
+                notHereButton.frame(maxWidth: .infinity)
+                detailsButton(filled: !isUnconfirmed).frame(maxWidth: .infinity)
+                if isUnconfirmed { confirmButton.frame(maxWidth: .infinity).layoutPriority(1.4) }
             }
-
-            if visit.source == .manual, visit.departedAt == nil {
-                Button {
-                    if !viewModel.checkoutVisit(visit) {
-                        checkoutError = viewModel.visitMutationError?.localizedDescription
-                    }
-                } label: {
-                    actionLabel("Check Out", systemImage: "rectangle.portrait.and.arrow.right", filled: visit.confirmationStatus != .unconfirmed)
-                }
-                .buttonStyle(.plain)
-                .disabled(visit.arrivedAt > Date())
-                .accessibilityHint("Ends this manual visit at the current time.")
+            VStack(spacing: 8) {
+                if isUnconfirmed { confirmButton }
+                detailsButton(filled: !isUnconfirmed)
+                notHereButton
             }
+        }
 
-            NavigationLink {
-                VisitDetailView(visit: visit, viewModel: viewModel)
+        if visit.source == .manual, visit.departedAt == nil {
+            Button {
+                if !viewModel.checkoutVisit(visit) {
+                    checkoutError = viewModel.visitMutationError?.localizedDescription
+                }
             } label: {
-                actionLabel("More Details", systemImage: "info.circle", filled: false)
+                actionLabel("Check Out", filled: false)
             }
             .buttonStyle(.plain)
+            .disabled(visit.arrivedAt > Date())
+            .accessibilityHint("Ends this manual visit at the current time.")
         }
     }
 
-    private func actionLabel(_ title: LocalizedStringKey, systemImage: String, filled: Bool) -> some View {
-        Label(title, systemImage: systemImage)
-            .font(.subheadline.weight(.semibold))
-            .foregroundStyle(filled ? TE.onInkCard : TE.textPrimary)
-            .frame(maxWidth: .infinity, minHeight: 48)
-            .background(Capsule().fill(filled ? TE.accent : TE.card))
+    private var notHereButton: some View {
+        Button {
+            saveName()
+            showingPlaceSearch = true
+        } label: {
+            actionLabel("Not here", filled: false)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Search Apple Maps or drop a pin to correct this visit.")
+    }
+
+    private func detailsButton(filled: Bool) -> some View {
+        NavigationLink {
+            VisitDetailView(visit: visit, viewModel: viewModel)
+        } label: {
+            actionLabel("Details", filled: filled)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("More Details")
+    }
+
+    private var confirmButton: some View {
+        Button {
+            saveName()
+            viewModel.confirmVisit(visit)
+        } label: {
+            actionLabel("Confirm", filled: true)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Confirm Place")
+    }
+
+    private func actionLabel(_ title: LocalizedStringKey, filled: Bool) -> some View {
+        Text(title)
+            .font(.subheadline.weight(filled ? .semibold : .medium))
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .foregroundStyle(filled ? MapHomeStyle.invertedText : TE.textPrimary)
+            .frame(maxWidth: .infinity, minHeight: 46)
+            .background(Capsule().fill(filled ? MapHomeStyle.invertedFill : TE.card))
             .overlay(Capsule().strokeBorder(filled ? Color.clear : TE.border, lineWidth: 1))
             .contentShape(Capsule())
     }
@@ -4059,20 +4143,22 @@ struct VisitQuickView: View {
         return parts.joined(separator: " · ").uppercased()
     }
 
-    private var subtitle: String {
-        var parts: [String] = []
-        if let address = visit.address, !address.isEmpty, address != visit.displayName {
-            parts.append(address)
-        }
+    private var dayWord: String {
         let calendar = Calendar.current
-        if calendar.isDateInToday(visit.arrivedAt) {
-            parts.append(String(localized: "Today"))
-        } else if calendar.isDateInYesterday(visit.arrivedAt) {
-            parts.append(String(localized: "Yesterday"))
-        } else {
-            parts.append(visit.arrivedAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))
-        }
-        return parts.joined(separator: " · ")
+        if calendar.isDateInToday(visit.arrivedAt) { return String(localized: "Today") }
+        if calendar.isDateInYesterday(visit.arrivedAt) { return String(localized: "Yesterday") }
+        return visit.arrivedAt.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())
+    }
+
+    private var timeRange: String {
+        let start = LocationMapView.clockText(visit.arrivedAt)
+        let end = visit.departedAt.map(LocationMapView.clockText) ?? String(localized: "now")
+        return "\(start) – \(end)"
+    }
+
+    /// "TODAY · 08:40 – 09:25 · 45 MIN".
+    private var timeLine: String {
+        "\(dayWord) · \(timeRange) · \(visit.formattedDuration)".uppercased()
     }
 
     private func saveName() {
@@ -4094,6 +4180,23 @@ struct VisitQuickView: View {
             coordinate: suggestion.coordinate,
             placeSource: .appleMaps,
             distanceMeters: suggestion.distanceMeters
+        )
+        nameText = visit.displayName
+    }
+
+    /// A searched place or dropped pin; an unnamed pin keeps the visit's current name.
+    private func correctVisit(with selection: ManualLocationSelection) {
+        isNameFieldFocused = false
+        let trimmedName = selection.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let original = CLLocation(latitude: visit.latitude, longitude: visit.longitude)
+        let chosen = CLLocation(latitude: selection.coordinate.latitude, longitude: selection.coordinate.longitude)
+        viewModel.correctVisit(
+            visit,
+            name: trimmedName.isEmpty ? visit.displayName : trimmedName,
+            address: selection.address,
+            coordinate: selection.coordinate,
+            placeSource: selection.visitPlaceSource,
+            distanceMeters: original.distance(from: chosen)
         )
         nameText = visit.displayName
     }
@@ -4336,19 +4439,24 @@ struct TraceDay {
     let places: [Place]
     let tickLabels: [String]
     private let inks: [String: Color]
+    private let home: SavedPlace?
 
-    init(range: ClosedRange<Date>, visits: [Visit], points: [LocationPoint], now: Date) {
+    init(range: ClosedRange<Date>, visits: [Visit], points: [LocationPoint], now: Date, home: SavedPlace? = nil) {
         let calendar = Calendar.current
         let sorted = visits.sorted { $0.arrivedAt < $1.arrivedAt }
         self.visits = sorted
+        self.home = home
 
-        // Places take inks in order of first arrival, as on the Today dial.
+        // Places take inks as on the Today dial: Home first when saved, then in order of first arrival.
+        var order = PlaceInkOrder(leading: home?.name)
         var inks: [String: Color] = [:]
         var places: [Place] = []
-        for visit in sorted where inks[visit.displayName] == nil {
-            let ink = TE.placeInks[inks.count % TE.placeInks.count]
-            inks[visit.displayName] = ink
-            places.append(Place(name: visit.displayName, ink: ink, visit: visit))
+        for visit in sorted {
+            let name = PlaceInkOrder.placeName(for: visit, home: home)
+            guard inks[name] == nil else { continue }
+            let ink = PlaceInkOrder.ink(at: order.index(for: name))
+            inks[name] = ink
+            places.append(Place(name: name, ink: ink, visit: visit))
         }
         self.inks = inks
         self.places = places
@@ -4383,7 +4491,7 @@ struct TraceDay {
                 id: visit.id,
                 start: start.timeIntervalSince(domain.lowerBound) / span,
                 end: end.timeIntervalSince(domain.lowerBound) / span,
-                ink: inks[visit.displayName] ?? TE.accent
+                ink: inks[PlaceInkOrder.placeName(for: visit, home: home)] ?? TE.accent
             )
         }
 
@@ -4401,7 +4509,16 @@ struct TraceDay {
     }
 
     func ink(for visit: Visit) -> Color {
-        inks[visit.displayName] ?? TE.accent
+        inks[placeKey(for: visit)] ?? TE.accent
+    }
+
+    /// The name a visit's place goes by on the dial and the map (Home inside a saved Home).
+    func placeKey(for visit: Visit) -> String {
+        PlaceInkOrder.placeName(for: visit, home: home)
+    }
+
+    func ink(forPlace key: String?) -> Color {
+        key.flatMap { inks[$0] } ?? TE.textPrimary
     }
 
     func fraction(of date: Date) -> Double {
