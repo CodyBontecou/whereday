@@ -26,7 +26,7 @@ Continuous GPS capture that never leaves your device. Export it anytime as GPX, 
 
 Whereday opens on a map of today, each leg of the route coloured by where it led. Swipe up for the day dial, your stats and the day so far.
 
-![The day sheet over the map: the day dial, 12.6 km moved, 6h 09m away, 4 places, and each stop from Home to the Ferry Building with the walks between them](https://whereday.com/screenshots/map-day-sheet-480.webp)
+![The day sheet over the map: the day dial, 12.6 km moved, 6h 10m away, 4 places, and each stop from Home to the Ferry Building with the walks between them](https://whereday.com/screenshots/map-day-sheet-480.webp)
 
 DAY SHEETThe day so far
 
