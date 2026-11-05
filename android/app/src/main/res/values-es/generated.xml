@@ -540,7 +540,7 @@
     <string name="map_home_days_title">Días de este rango</string>
     <string name="map_home_details">Detalles</string>
     <string name="map_home_done">Listo</string>
-    <string name="map_home_drop_pin">Colocar un pin</string>
+    <string name="map_home_drop_pin">Colocar un marcador</string>
     <string name="map_home_fit">Ajustar al rango</string>
     <string name="map_home_here_dismiss">Cerrar la sugerencia de visita</string>
     <string name="map_home_here_question">¿Estás aquí?</string>
@@ -579,7 +579,7 @@
     <string name="map_home_open_timeline">Cronología</string>
     <string name="map_home_photo_dots">Puntos</string>
     <string name="map_home_photo_images">Imágenes</string>
-    <string name="map_home_photo_pins">Pines</string>
+    <string name="map_home_photo_pins">Marcadores</string>
     <string name="map_home_places">Lugares</string>
     <plurals name="map_home_places_count">
         <item quantity="one">%d lugar</item>
@@ -601,7 +601,7 @@
     <string name="map_home_replay_staying">En · desde las %s</string>
     <string name="map_home_replay_title">Reproducción</string>
     <string name="map_home_replay_toward">Hacia %s</string>
-    <string name="map_home_save_here">Guardar dónde estoy</string>
+    <string name="map_home_save_here">Guardar donde estoy</string>
     <string name="map_home_save_this_place">Guardar este lugar</string>
     <string name="map_home_search">Buscar lugares y visitas</string>
     <string name="map_home_search_empty">Ningún lugar guardado ni visita coincide.</string>
@@ -753,7 +753,7 @@
     <string name="outing_load_error">No se pudo cargar esta salida. Es posible que se haya eliminado.</string>
     <string name="outing_point_summary">%1$s · %2$s</string>
     <plurals name="outing_sampled">
-        <item quantity="one">El mapa está muestreado; las estadísticas incluyen el punto completo (%d).</item>
+        <item quantity="one">El mapa está muestreado; las estadísticas incluyen el total de %d punto.</item>
         <item quantity="other">El mapa está muestreado; las estadísticas incluyen los %d puntos.</item>
     </plurals>
     <string name="outing_save">Guardar salida</string>
@@ -764,7 +764,7 @@
     <string name="paywall_benefit_automatic_body">Un archivo al día, guardado en la carpeta que elijas.</string>
     <string name="paywall_benefit_automatic_title">Exportaciones automáticas</string>
     <string name="paywall_benefit_daily_body">Las visitas y rutas se registran en segundo plano. Sin check-ins.</string>
-    <string name="paywall_benefit_daily_title">Cada día, registrado por ti</string>
+    <string name="paywall_benefit_daily_title">Cada día, registrado para ti</string>
     <string name="paywall_benefit_private_body">Sin cuenta. Exporta a GPX, CSV, Markdown y más.</string>
     <string name="paywall_benefit_private_title">Privado, en tu teléfono</string>
     <string name="paywall_benefit_revisit_body">Mapa, línea de tiempo y calendario de dónde has estado.</string>
@@ -1448,13 +1448,13 @@
     <string name="visit_saved_search">Buscar lugares guardados</string>
     <string name="visit_saved_use">Usar este lugar guardado</string>
     <string name="visit_still_here">Aún estoy aquí</string>
-    <string name="visit_timestamp_ambiguous">Esta hora local ocurre dos veces. Elige qué repetición quieres usar.</string>
+    <string name="visit_timestamp_ambiguous">Esta hora local ocurre dos veces. Elige cuál de las dos quieres usar.</string>
     <string name="visit_timestamp_date">Fecha</string>
     <string name="visit_timestamp_date_action">Fecha de %1$s: %2$s</string>
     <string name="visit_timestamp_edit_date">%1$s · fecha</string>
     <string name="visit_timestamp_edit_time">%1$s · hora</string>
     <string name="visit_timestamp_enter_time">Introducir hora</string>
-    <string name="visit_timestamp_first">Primera repetición · %1$s</string>
+    <string name="visit_timestamp_first">Primera vez · %1$s</string>
     <string name="visit_timestamp_gap">Esta fecha y hora locales no existieron en %1$s. Elige otra fecha u hora.</string>
     <string name="visit_timestamp_hour_12">Hora (1–12)</string>
     <string name="visit_timestamp_hour_24">Hora (0–23)</string>
@@ -1462,7 +1462,7 @@
     <string name="visit_timestamp_kept_date">Fecha conservada: %1$s</string>
     <string name="visit_timestamp_kept_time">Hora conservada: %1$s</string>
     <string name="visit_timestamp_minute">Minuto (0–59)</string>
-    <string name="visit_timestamp_second">Segunda repetición · %1$s</string>
+    <string name="visit_timestamp_second">Segunda vez · %1$s</string>
     <string name="visit_timestamp_time_action">Hora de %1$s: %2$s</string>
     <string name="visit_timestamp_use_clock">Usar reloj</string>
     <string name="visit_timestamp_zone">Zona horaria: %1$s</string>
@@ -1571,7 +1571,7 @@
     <string name="webhook_oldest">Solicitud más antigua: %1$s</string>
     <string name="webhook_parameter">Nombre del parámetro</string>
     <string name="webhook_password">Contraseña</string>
-    <string name="webhook_paused_manual">Este lote automático está en pausa en el modo manual. Envía o descártalo expresamente.</string>
+    <string name="webhook_paused_manual">Este lote automático está en pausa en el modo manual. Envíalo o descártalo expresamente.</string>
     <plurals name="webhook_pending_requests">
         <item quantity="one">%1$s solicitud pendiente</item>
         <item quantity="other">%1$s solicitudes pendientes</item>

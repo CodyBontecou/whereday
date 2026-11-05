@@ -211,7 +211,7 @@ class VisitTimestampControlTest {
             compose.setContent {MaterialTheme {VisitDateTimeControl(stringResource(R.string.visit_arrived),original) {result=it}}}
             compose.onNodeWithTag("visit-timestamp-time").performClick()
             compose.onNodeWithText("Llegada · hora").assertIsDisplayed()
-            compose.onNodeWithText("Segunda repetición · UTC-05:00").performScrollTo().assertIsSelected();capture("spanish-time")
+            compose.onNodeWithText("Segunda vez · UTC-05:00").performScrollTo().assertIsSelected();capture("spanish-time")
             compose.onNodeWithText("Aplicar hora").assertIsDisplayed().performClick();assertEquals(original,result)
         } finally {applyQaAppLocales(compose,previous)}
     }
