@@ -1,10 +1,10 @@
 {
   "scope": "Verbatim Swift focus method body with model/camera seams; real Foundation Gregorian calendar; no MapKit rendering, UI or persistence",
   "provenance": {
-    "focusMethodSha256": "25b78030867d2d04effec1a69c2498d7fec8aec5366ee726b9c118f6b9ec738e",
-    "generatorSha256": "ab550695b380ff53172b28ae0eac655f0ebc02fde4b1cef45023b7afa55dd1f1"
+    "focusMethodSha256": "f4668de30df51f32ae124fbeb892d846c0ac901b7a7084b5643af496f404946e",
+    "generatorSha256": "333ae9534be39d3e5cc67c3881ad05822bc987be3d6ecf2a73d33e4d33fc9c90"
   },
-  "sourceContextSha256": "962ffbce5e62432b771d5cb8ecfacce329c59e68c53a2a8740c509c17451dec9",
+  "sourceContextSha256": "2a904459a6a508de5f2d7137e2f1fcbd0f38450db56cc59df8570d5411a2d171",
   "cases": [
     {
       "input": {

@@ -27,6 +27,7 @@ def main():
     harness='''import Foundation
 import CoreLocation
 struct Visit {let arrivedAt:Date;let coordinate:CLLocationCoordinate2D}
+enum MapDatePreset {case today,yesterday}
 struct MKCoordinateSpan {let latitudeDelta:Double;let longitudeDelta:Double}
 struct MKCoordinateRegion {let center:CLLocationCoordinate2D;let span:MKCoordinateSpan}
 enum CameraPosition {case region(MKCoordinateRegion);var value:MKCoordinateRegion {switch self {case .region(let value):return value}}}
@@ -37,7 +38,7 @@ final class Model {
     func loadMapPhotoMoments(in range:ClosedRange<Date>) {photos.append(range)}
 }
 struct Host {
-    var focusedVisit:Visit?;var selectedPointID:UUID?=UUID();let viewModel=Model()
+    var focusedVisit:Visit?;var selectedPointID:UUID?=UUID();let viewModel=Model();var activePreset:MapDatePreset?=nil
     var cameraPosition=CameraPosition.region(MKCoordinateRegion(center:CLLocationCoordinate2D(latitude:0,longitude:0),span:MKCoordinateSpan(latitudeDelta:1,longitudeDelta:1)))
 '''+extracted().replace('private func focusCompanionVisit()', 'private mutating func focusCompanionVisit()')+'''
     mutating func run() {focusCompanionVisit()}
