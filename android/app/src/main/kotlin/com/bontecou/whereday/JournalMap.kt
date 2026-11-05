@@ -269,6 +269,8 @@ private class JournalMapRenderer {
         val roomLeft=x-label>=0
         return if(marker.prefersLeft) roomLeft || x+label>right else x+label>right && roomLeft
     }
+    /** Fit the next data that arrives (a new home range), as the first load does. */
+    fun refitOnNextData() {fitted=false;autoFitted=true}
     fun republishLabels() {if(!disposed) map?.style?.let {MapHomeLayers.publishLabels(it,home,::labelGoesLeft)}}
     private fun applyVisitFocus() {
         val focus=visitFocus ?: return
@@ -428,6 +430,13 @@ private class JournalMapRenderer {
             fitActive={latestFollow?.stop?.invoke();renderer.follow(latestFollow?.fix,false);renderer.fitActiveRecording()},
             focus={coordinates->latestFollow?.stop?.invoke();renderer.follow(latestFollow?.fix,false);renderer.fitCoordinates(coordinates);renderer.autoFitted=false},
             center={renderer.cameraSnapshot()?.target})}
+        // A new range on the home map is fitted afresh; the same range (or a recreated screen) keeps its camera.
+        var fittedScope by rememberSaveable {mutableStateOf<String?>(null)}
+        val scopeKey=inspectionScope?.toString()
+        LaunchedEffect(scopeKey) {
+            if(fittedScope!=null && fittedScope!=scopeKey && visitFocus==null) renderer.refitOnNextData()
+            fittedScope=scopeKey
+        }
         val pulsing=renderer.home?.now!=null && !rememberReduceMotion()
         LaunchedEffect(pulsing) {
             if(!pulsing) {renderer.pulse(1f);return@LaunchedEffect}
