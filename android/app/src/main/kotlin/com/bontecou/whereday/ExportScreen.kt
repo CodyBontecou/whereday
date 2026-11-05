@@ -15,6 +15,8 @@ import androidx.compose.material.icons.outlined.IosShare
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.rememberScrollState
@@ -163,10 +165,14 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
     val deliverable=!busy && ready && picker.loaded && !picker.busy && pending==null
     val stacked=LocalDensity.current.fontScale>=1.3f
     Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("export-screen")) {
-        Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom=20.dp)) {
+        // Settings lives behind Archive beside the phone tab bar (iOS ExportView's toolbar gear). The gear holds its place in the
+        // header and stays pinned at the top once the page scrolls, so it is reachable however far down Archive was left.
+        var gearSlotY by remember {mutableStateOf<Float?>(null)}
+        var pageTop by remember {mutableStateOf(0f)}
+        Box(Modifier.weight(1f).fillMaxWidth().onGloballyPositioned {pageTop=it.positionInRoot().y}) {
+        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(bottom=20.dp)) {
             WdPageHeader(stringResource(R.string.export_title),eyebrow=stringResource(R.string.export_redesign_eyebrow)) {
-                // Beside the phone tab bar Settings lives behind Archive; the wide rail carries Settings itself (iOS ExportView's gear).
-                if(onSettings!=null) WdCircleButton(androidx.compose.material.icons.Icons.Outlined.Settings,stringResource(R.string.shell_settings),onSettings,Modifier.testTag("archive-settings"))
+                if(onSettings!=null) Spacer(Modifier.size(44.dp).onGloballyPositioned {gearSlotY=it.positionInRoot().y})
             }
             Text(pluralStringResource(R.plurals.export_stored_points,count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(count)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)
             if(count==0L) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
@@ -256,6 +262,13 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
                     extras.forEach {extra -> ExportToggleRow(extra.name,extra in extraFormats,enabled=canEdit,modifier=Modifier.testTag("export-extra-${extra.name}"),divider=extra!=extras.last()) {enabled ->graph.exportSettings.update(selection.copy(additionalFormats=if(enabled) extraFormats+extra else extraFormats-extra))}}
                 }
             }
+        }
+        if(onSettings!=null) {
+            val minTop=with(LocalDensity.current) {12.dp.toPx()}
+            WdCircleButton(androidx.compose.material.icons.Icons.Outlined.Settings,stringResource(R.string.shell_settings),onSettings,
+                Modifier.align(Alignment.TopEnd).offset {androidx.compose.ui.unit.IntOffset(0,maxOf(minTop,(gearSlotY ?: pageTop+minTop)-pageTop).toInt())}
+                    .padding(end=24.dp).testTag("archive-settings"))
+        }
         }
         // Pinned above the floating tab bar like iOS's export footer. It scrolls itself when large text outgrows its cap.
         Column(Modifier.fillMaxWidth().background(wd.surface).heightIn(max=320.dp)) {
