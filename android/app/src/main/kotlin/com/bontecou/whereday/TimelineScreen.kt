@@ -96,7 +96,7 @@ import java.time.*
     LaunchedEffect(today?.logStopRequests) {val requests=today?.logStopRequests ?: 0;if(requests!=handledLogStop) {handledLogStop=requests;adding=true}}
     // The Large text board moves "Log a stop" into the top bar; on the rail it is the rail's FAB instead.
     val railLogStop=today?.showLogStopFab==false
-    val logStopInHeader=largeText && !railLogStop
+    val logStopInHeader=(largeText || today?.logStopInHeader==true) && !railLogStop
     val locationOff=today?.access?.location==LocationPrecision.none
     if(onClose!=null) androidx.activity.compose.BackHandler(onBack=onClose)
     Box(Modifier.fillMaxSize().background(wd.surface)) {
@@ -319,4 +319,6 @@ internal fun todayDistance(meters:Double,metric:Boolean,locale:Locale):String {
 
 /** What the Today tab adds around the shared day journal: recording, access, navigation and the log-a-stop entry. */
 internal data class TodayChrome(val active:Boolean,val recording:RecordingRow?,val onRecord:()->Unit,val access:RecordingAccessState?,val onAccessOptions:(PermissionAccessKind)->Unit,
-    val onOpenMap:()->Unit,val onSettings:()->Unit,val onImport:()->Unit,val onMoments:(()->Unit)?,val showLogStopFab:Boolean=true,val logStopRequests:Int=0,val onListening:(()->Unit)?=null)
+    val onOpenMap:()->Unit,val onSettings:()->Unit,val onImport:()->Unit,val onMoments:(()->Unit)?,val showLogStopFab:Boolean=true,val logStopRequests:Int=0,val onListening:(()->Unit)?=null,
+    /** Over the map, Log a stop sits in the header rather than as a floating button over the recording controls. */
+    val logStopInHeader:Boolean=false)

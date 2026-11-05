@@ -182,7 +182,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             tabState.SaveableStateProvider(1) {
                 TimelineScreen(graph,journal,current.metric,showOnMap={session->journal.showOutingOnMap(session);if(!paired) timelineOpen=false},onVisitOpened=::focusVisit,visitInspectionActive=inspectedVisit!=null,
                     today=TodayChrome(active,recording,onRecord,access,onAccessOptions,onOpenMap={timelineOpen=false},onSettings={go(MainTabs.Destination(MainTab.settings))},
-                        onImport={go(MainTabs.Destination(MainTab.archive))},onMoments=null),
+                        onImport={go(MainTabs.Destination(MainTab.archive))},onMoments=null,logStopInHeader=true),
                     onClose=if(timelineShown) ({timelineOpen=false}) else null)
             }
         }

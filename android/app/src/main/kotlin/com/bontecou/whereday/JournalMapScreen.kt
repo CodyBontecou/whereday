@@ -261,11 +261,14 @@ private fun Modifier.onHeight(block:(Int)->Unit)=this.onSizeChanged {block(it.he
     first==last && first==today->stringResource(R.string.map_date_today)
     first==last && first==today.minusDays(1)->stringResource(R.string.map_date_yesterday)
     first==last->DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,"EEEEMMMMd"),locale).format(first)
-    else->listOf(first,last).joinToString(" – ") {DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,"MMMd"),locale).format(it)}
+    else->listOf(first,last).joinToString(" – ") {DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,if(showsYear(first,last,today)) "MMMdyyyy" else "MMMd"),locale).format(it)}
 }
 
+/** Dates name their year when a range crosses years or lies outside this one, so "Oct 2 – Nov 5" never hides 400 days. */
+internal fun showsYear(first:LocalDate,last:LocalDate,today:LocalDate)=first.year!=last.year || last.year!=today.year
+
 @Composable private fun headerKicker(range:HistoryRange,multiDay:Boolean,first:LocalDate,last:LocalDate,locale:Locale,zone:ZoneId,now:Instant):String {
-    val short=DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,"MMMd"),locale)
+    val short=DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,if(showsYear(first,last,now.atZone(zone).toLocalDate())) "MMMdyyyy" else "MMMd"),locale)
     if(multiDay) {
         val days=(java.time.temporal.ChronoUnit.DAYS.between(first,last)+1).toInt()
         // All starts at the beginning of history; it reads from the first recorded day.
