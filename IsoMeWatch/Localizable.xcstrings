@@ -12,7 +12,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "এখনই সিঙ্ক"
+            "value": "এখনই সিঙ্ক করুন"
           }
         },
         "en": {
@@ -648,7 +648,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ বাম"
+            "value": "%@ বাকি"
           }
         },
         "es": {
@@ -1628,7 +1628,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "এই অ্যাপল ঘড়িতে অবস্থান সীমাবদ্ধ।"
+            "value": "এই Apple Watch-এ অবস্থান সীমাবদ্ধ।"
           }
         },
         "es": {
@@ -2328,7 +2328,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "থামো"
+            "value": "থামান"
           }
         },
         "es": {
@@ -4632,7 +4632,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "চিহ্নিত"
+            "value": "চিহ্নিত করুন"
           }
         },
         "en": {
@@ -4772,7 +4772,7 @@
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "রুট শুরু"
+            "value": "রুট শুরু করুন"
           }
         },
         "en": {
