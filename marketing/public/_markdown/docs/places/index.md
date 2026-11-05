@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 30, 2026
+November 5, 2026
 
 Reading
 
@@ -28,7 +28,7 @@ Choose the action for your task
 | Your goal | Use
 | Name a place you will revisit | Settings → Saved Locations → Manage Locations.
 | Fix a stop already in your journal | Open that visit and confirm or correct it.
-| Add a stop from an earlier day | Map → + → Add past visit.
+| Add a stop from an earlier day | Map → + → Log a past stop.
 
 From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. See [current pricing](https://whereday.com/#pricing).
 
@@ -73,23 +73,23 @@ Those are parser and in-memory storage checks. The file-picker handoff and a com
 
 ## Confirm or correct an existing visit
 
-Open the visit from Map or Timeline. Confirm place accepts the detected place; correcting a name, address, or position records your chosen values. Arrival, departure, and notes can also be edited. Nearby business suggestions use Apple Maps around the visit’s coordinate.
+Tap the visit on the map, or in the day sheet’s list. Its sheet shows whether the stop is confirmed and, under Where were you?, numbered nearby places that match numbered pins on the map. Confirm accepts the detected place, choosing a nearby place corrects it, Not here lets you search Apple Maps or drop a pin for the right spot, and Details opens the full visit; correcting a name, address, or position records your chosen values. Arrival, departure, and notes can also be edited. Nearby business suggestions use Apple Maps around the visit’s coordinate.
 
 Visits can be unconfirmed, confirmed, or corrected. Automatic geocoding does not overwrite a visit that is protected by its confirmation or correction state. Undo correction restores the original detected place information. Confirming or correcting a visit can also save reusable place knowledge; that is different from editing a saved location without changing a past visit.
 
 ## Add a missing past visit
 
-On the Map tab, open + and choose Add past visit. Select the location explicitly by search, pin, or saved place, then enter the arrival and departure times. Past visits do not silently use the phone’s current position when a location is missing.
+On the map, tap + and choose Log a past stop. Select the location explicitly by search, pin, or saved place, then enter the arrival and departure times. Past visits do not silently use the phone’s current position when a location is missing.
 
-The same menu offers Save current place and Add place manually for other entry tasks. Current-position workflows depend on location access; choosing a known past place is a different task. A manual entry records what you enter. It cannot recreate missing GPS points or prove an automatic visit occurred.
+The same menu offers Save where I am and Drop a pin for other entry tasks. Current-position workflows depend on location access; choosing a known past place is a different task. A manual entry records what you enter. It cannot recreate missing GPS points or prove an automatic visit occurred.
 
 For a gap in recorded history, use the [missing visits and routes checklist](https://whereday.com/blog/missing-location-history-iphone/). Keep a [separate backup](https://whereday.com/blog/back-up-iphone-location-history/) before making extensive journal edits.
 
 ## Optional current-place suggestions
 
-Settings → Map display → Visit suggestions is off by default. When enabled, a nearby saved place or business can be offered as a Save Place prompt. This does not replace tracking permission or guarantee that every stop becomes a detected visit.
+Settings → Map display → Visit suggestions, also the “Are you here?” switch in the map’s Layers sheet, is off by default. When enabled, a nearby saved place or business can be offered as an Are you here? card with Save this place and Somewhere else. This does not replace tracking permission or guarantee that every stop becomes a detected visit.
 
-Reviewed October 26, 2026 against released Whereday 1.7.16. The editor screenshot and native fixture tests have the limits described above; no new physical route or visit-detection test is claimed.
+Reviewed October 26, 2026 against released Whereday 1.7.16. The editor screenshot and native fixture tests have the limits described above; no new physical route or visit-detection test is claimed. Map menu and visit sheet names were updated on November 5, 2026 for the map-first home.
 
 [← PreviousTimeline & outings](https://whereday.com/docs/timeline-outings/) [Next →Photos on the map](https://whereday.com/docs/photos/)
 

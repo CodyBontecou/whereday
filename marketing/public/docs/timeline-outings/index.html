@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
   <title>Timeline &amp; outings — Whereday Docs</title>
-  <meta name="description" content="The daily timeline, inferred outings, route replay, and editing or deleting sessions.">
+  <meta name="description" content="The day sheet on the map, inferred outings, route replay, and editing or deleting sessions.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://whereday.com/docs/timeline-outings/">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -427,10 +427,10 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <header class="doc-head">
     <span class="eyebrow">§ Docs · Guide 3 of 11</span>
     <h1>Timeline &amp; outings</h1>
-    <p class="lede">The Timeline tab merges visits and movement into one day view. Learn the difference between recorded and inferred outings, how replay works, and what deletion actually removes.</p>
+    <p class="lede">The map’s day sheet merges visits and movement into one day view. Learn the difference between recorded and inferred outings, how replay works, and what deletion actually removes.</p>
     <div class="meta-strip">
       <div><div class="k">Platform</div><div class="v">iOS 17+</div></div>
-      <div><div class="k">Updated</div><div class="v">October 30, 2026</div></div>
+      <div><div class="k">Updated</div><div class="v">November 5, 2026</div></div>
       <div><div class="k">Reading</div><div class="v">4 min</div></div>
       <div><div class="k">Back to</div><div class="v"><a href="/docs/">All docs</a></div></div>
     </div>
@@ -439,7 +439,10 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <div class="content">
     <div class="doc-card">
 <h2>The day view</h2>
-<p>The <strong>Timeline</strong> tab shows one day at a time: visits and movement sessions interleaved in order, with a day summary of moves, visits, and total distance. Step through days with the arrows, jump straight to Today, or pick any date. If today is empty, Whereday automatically opens your most recent day with data.</p>
+<p>Whereday opens on a map of today. Each leg of the route takes the colour of the place it led to, and each visit shows its name and how long you stayed. Swipe up the day card at the bottom for the <strong>day sheet</strong>: the day dial, three stats (moved, away, and places), and <em>the day so far</em>, your stays and the moves between them in order. Tap a stay to focus it on the map and open it. <strong>Pick a day</strong> in the sheet opens an earlier date.</p>
+<p>The chips under the map’s header choose what the map shows: <strong>Today</strong>, <strong>Yesterday</strong>, <strong>7D</strong>, <strong>30D</strong>, <strong>All</strong>, or the calendar for a custom range. For more than one day, each place shows the number of days you visited it, and a row of days below the map lets you highlight one day’s route.</p>
+<h2>Map layers</h2>
+<p>The <strong>Layers</strong> button on the map’s right edge chooses what is drawn: visits, the travel path (with <em>Match roads</em> and <em>Show straight gaps</em>), GPS points, start and end markers, the live session, photos, and <em>Are you here?</em> suggestions. Tap a GPS point for its time and accuracy. In dark mode the whole map switches to its night colours.</p>
 
 <h2>Recorded vs inferred outings</h2>
 <p>A movement session (<em>outing</em>) is <strong>recorded</strong> when you pressed Start, and <strong>inferred</strong> when Whereday notices a stretch of GPS points that clearly forms a trip — including older data recorded before outings existed, or imported from your Watch. Inferred outings wear an <code>INFERRED</code> badge; the live one wears <code>LIVE</code>.</p>
@@ -455,13 +458,13 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <h2>Outing detail</h2>
 <p>Tap any outing for its full record: a road-matched mini map, start and end times, duration, distance, point count, GPS-glitch count, and average speed. Recorded outings can be renamed and given notes (inferred ones can't — edit the points' day instead). Linked visits and photos appear below.</p>
 <ul>
-<li><strong>Show on map</strong> focuses the Map tab on this outing's path.</li>
+<li><strong>Show on map</strong> focuses the map on this outing's path.</li>
 <li><strong>Export</strong> saves this single outing in your choice of format (subject to your export access; the picker remembers your format).</li>
 <li><strong>Delete outing</strong> removes the session and its GPS points — <strong>visits are kept</strong>. Deleting the active outing stops tracking first.</li>
 </ul>
 
 <h2>Route replay</h2>
-<p>Both the map (for a whole day) and the outing detail page (for one outing) offer <strong>replay</strong>: a playhead walks the path in order while a scrubber, elapsed time, and running distance update. It's a quick way to answer “where was I around 3 pm?”</p>
+<p>Tap the small day dial at the top right of the map to <strong>replay</strong> the day: a playhead walks the path in order while the clock, a scrubber, and the running distance update. Play at 1×, 10×, or 60×, or drag the scrubber; <strong>Done</strong> returns to the map. The outing detail page offers the same replay for one outing. It's a quick way to answer “where was I around 3 pm?”</p>
 
 <h2>Sorting</h2>
 <p>Outing lists can be sorted by newest, oldest, longest duration, distance, or point count.</p>

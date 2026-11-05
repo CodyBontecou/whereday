@@ -53,7 +53,7 @@ def build():
     revised = {page["path"]: page["modified"] for page in PAGES if "modified" in page}
     revised.update({path: "2026-10-30" for path in ("/", "/blog/", "/zh-hans/", "/docs/export-import/", "/about", "/blog/private-location-journal-iphone/", "/docs/places/", "/docs/automatic-exports/", "/docs/timeline-outings/", "/docs/apple-watch/", "/docs/getting-started/", "/docs/privacy-data/", "/docs/siri-shortcuts/", "/privacy")})
     # Map-first home: pages that now describe or show the map as the app's home screen.
-    revised.update({path: "2026-11-05" for path in ("/", "/zh-hans/")})
+    revised.update({path: "2026-11-05" for path in ("/", "/zh-hans/", "/docs/getting-started/", "/docs/tracking/", "/docs/timeline-outings/", "/docs/places/")})
     for draft in DRAFTS:
         if (PUBLIC / draft['path'].strip('/') / 'index.html').exists():
             raise ValueError(f"Release-gated draft leaked into public/: {draft['path']}")

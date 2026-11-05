@@ -36,7 +36,7 @@ How automatic visit detection and route recording work, and the settings that co
 
 ## Timeline & outings
 
-The daily timeline, inferred outings, route replay, and editing or deleting sessions.
+The day sheet on the map, inferred outings, route replay, and editing or deleting sessions.
 
 ](https://whereday.com/docs/timeline-outings/) [ Guide 04
 

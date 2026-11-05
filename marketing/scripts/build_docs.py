@@ -5,6 +5,8 @@ import pathlib, html
 OUT = pathlib.Path(__file__).resolve().parent.parent / "public" / "docs"
 BASE = "https://whereday.com/docs/"
 UPDATED = "October 26, 2026"
+# Rewritten for the map-first home (the map is the launch screen; Atlas, Places and Archive tabs).
+MAP_FIRST = {"getting-started", "tracking", "timeline-outings", "places"}
 REVIEWED = {"getting-started", "tracking", "export-import", "privacy-data", "apple-watch", "webhooks", "timeline-outings", "siri-shortcuts", "places", "automatic-exports"}
 
 GUIDES = [
@@ -18,8 +20,8 @@ GUIDES = [
      "Start records GPS routes and monitors visits together. Learn the shared controls, permissions, distance filter, and auto-stop timer.",
      "iOS 17+", 4, None),
     ("timeline-outings", "Timeline & outings",
-     "The daily timeline, inferred outings, route replay, and editing or deleting sessions.",
-     "The Timeline tab merges visits and movement into one day view. Learn the difference between recorded and inferred outings, how replay works, and what deletion actually removes.",
+     "The day sheet on the map, inferred outings, route replay, and editing or deleting sessions.",
+     "The map’s day sheet merges visits and movement into one day view. Learn the difference between recorded and inferred outings, how replay works, and what deletion actually removes.",
      "iOS 17+", 4, None),
     ("places", "Save and edit places in your iPhone location journal",
      "Manage saved locations, enter coordinates, import a places CSV, and distinguish reusable places from past visits in Whereday.",
@@ -71,13 +73,13 @@ BODIES["getting-started"] = """
 </ol>
 
 <h2>After onboarding</h2>
-<p>You land on the <strong>Map</strong> tab. The other tabs are <strong>Timeline</strong> (your day, visit by visit), <strong>Export</strong>, and <strong>Settings</strong>. The floating pill on the map starts and stops both GPS recording and visit monitoring. With <em>Always</em> permission, recording can continue in the background. Installing the app does not reconstruct earlier history.</p>
+<p>You land on the <strong>Map</strong>: a map of today with your route, your visits, and a day card at the bottom. The other tabs are <strong>Atlas</strong> (your days at a glance), <strong>Places</strong> (your saved places), and <strong>Archive</strong> (export and import); Settings is the gear in Archive. The recording bar above the day card starts and stops both GPS recording and visit monitoring. With <em>Always</em> permission, recording can continue in the background. Installing the app does not reconstruct earlier history.</p>
 
 <h2>Your first day</h2>
 <ul>
-<li>Start tracking from the map pill before a walk or drive — you'll see the path draw in, and a Live Activity appears on your lock screen.</li>
-<li>Stop tracking from the pill, the Live Activity's Stop button, Siri, or automatically with the auto-stop timer.</li>
-<li>Open the Timeline tab to review where you went, how long you stayed, and how far you moved.</li>
+<li>Start tracking from the recording bar on the map before a walk or drive — you'll see the path draw in, and a Live Activity appears on your lock screen.</li>
+<li>Stop tracking from the recording bar, the Live Activity's Stop button, Siri, or automatically with the auto-stop timer.</li>
+<li>Swipe up the day card to review where you went, how long you stayed, and how far you moved. Tap the small dial at the top right of the map to replay the day.</li>
 </ul>
 
 <div class="callout"><p><strong>Where is my data?</strong> On your iPhone only. See the <a href="/docs/privacy-data">Privacy &amp; your data</a> guide for the complete picture of storage, network requests, and deletion.</p></div>
@@ -92,7 +94,7 @@ BODIES["tracking"] = """
 
 <h2>Starting and stopping</h2>
 <ul>
-<li><strong>Map pill</strong> — the floating control on the Map tab shows live duration and distance while recording.</li>
+<li><strong>Recording bar</strong> — the bar above the day card on the map reads <em>Recording</em> with the number of saved points, and any auto-stop countdown, while tracking is on. In standby it offers a start button.</li>
 <li><strong>Live Activity</strong> — lock screen and Dynamic Island show progress and include a Stop button.</li>
 <li><strong>Siri / Shortcuts</strong> — “Start Whereday” and “Stop tracking with Whereday” phrases work hands-free.</li>
 <li><strong>Auto-stop timer</strong> — optional safety net that ends tracking automatically.</li>
@@ -107,7 +109,7 @@ BODIES["tracking"] = """
 <h2>Route recording quality</h2>
 <ul>
 <li>Only fixes with reported accuracy of 100 m or better are saved; wilder fixes are dropped.</li>
-<li>Obvious glitches — impossible jumps and out-and-back spikes — are flagged as <em>GPS glitches</em> and excluded from distances and maps by default. Enable <strong>Settings → Map display → Show GPS glitches</strong> to see them.</li>
+<li>Obvious glitches — impossible jumps and out-and-back spikes — are flagged as <em>GPS glitches</em> and excluded from distances and maps by default. Enable <strong>Settings → Map display → Show GPS glitches</strong>, or <strong>Show outliers</strong> in the map’s Layers sheet, to see them.</li>
 </ul>
 
 <h2>Tracking settings reference</h2>
@@ -130,7 +132,10 @@ BODIES["tracking"] = """
 
 BODIES["timeline-outings"] = """
 <h2>The day view</h2>
-<p>The <strong>Timeline</strong> tab shows one day at a time: visits and movement sessions interleaved in order, with a day summary of moves, visits, and total distance. Step through days with the arrows, jump straight to Today, or pick any date. If today is empty, Whereday automatically opens your most recent day with data.</p>
+<p>Whereday opens on a map of today. Each leg of the route takes the colour of the place it led to, and each visit shows its name and how long you stayed. Swipe up the day card at the bottom for the <strong>day sheet</strong>: the day dial, three stats (moved, away, and places), and <em>the day so far</em>, your stays and the moves between them in order. Tap a stay to focus it on the map and open it. <strong>Pick a day</strong> in the sheet opens an earlier date.</p>
+<p>The chips under the map’s header choose what the map shows: <strong>Today</strong>, <strong>Yesterday</strong>, <strong>7D</strong>, <strong>30D</strong>, <strong>All</strong>, or the calendar for a custom range. For more than one day, each place shows the number of days you visited it, and a row of days below the map lets you highlight one day’s route.</p>
+<h2>Map layers</h2>
+<p>The <strong>Layers</strong> button on the map’s right edge chooses what is drawn: visits, the travel path (with <em>Match roads</em> and <em>Show straight gaps</em>), GPS points, start and end markers, the live session, photos, and <em>Are you here?</em> suggestions. Tap a GPS point for its time and accuracy. In dark mode the whole map switches to its night colours.</p>
 
 <h2>Recorded vs inferred outings</h2>
 <p>A movement session (<em>outing</em>) is <strong>recorded</strong> when you pressed Start, and <strong>inferred</strong> when Whereday notices a stretch of GPS points that clearly forms a trip — including older data recorded before outings existed, or imported from your Watch. Inferred outings wear an <code>INFERRED</code> badge; the live one wears <code>LIVE</code>.</p>
@@ -146,13 +151,13 @@ BODIES["timeline-outings"] = """
 <h2>Outing detail</h2>
 <p>Tap any outing for its full record: a road-matched mini map, start and end times, duration, distance, point count, GPS-glitch count, and average speed. Recorded outings can be renamed and given notes (inferred ones can't — edit the points' day instead). Linked visits and photos appear below.</p>
 <ul>
-<li><strong>Show on map</strong> focuses the Map tab on this outing's path.</li>
+<li><strong>Show on map</strong> focuses the map on this outing's path.</li>
 <li><strong>Export</strong> saves this single outing in your choice of format (subject to your export access; the picker remembers your format).</li>
 <li><strong>Delete outing</strong> removes the session and its GPS points — <strong>visits are kept</strong>. Deleting the active outing stops tracking first.</li>
 </ul>
 
 <h2>Route replay</h2>
-<p>Both the map (for a whole day) and the outing detail page (for one outing) offer <strong>replay</strong>: a playhead walks the path in order while a scrubber, elapsed time, and running distance update. It's a quick way to answer “where was I around 3 pm?”</p>
+<p>Tap the small day dial at the top right of the map to <strong>replay</strong> the day: a playhead walks the path in order while the clock, a scrubber, and the running distance update. Play at 1×, 10×, or 60×, or drag the scrubber; <strong>Done</strong> returns to the map. The outing detail page offers the same replay for one outing. It's a quick way to answer “where was I around 3 pm?”</p>
 
 <h2>Sorting</h2>
 <p>Outing lists can be sorted by newest, oldest, longest duration, distance, or point count.</p>
@@ -168,7 +173,7 @@ BODIES["places"] = """
 <tr><th scope="col">Your goal</th><th scope="col">Use</th></tr>
 <tr><th scope="row">Name a place you will revisit</th><td>Settings → Saved Locations → Manage Locations.</td></tr>
 <tr><th scope="row">Fix a stop already in your journal</th><td>Open that visit and confirm or correct it.</td></tr>
-<tr><th scope="row">Add a stop from an earlier day</th><td>Map → + → Add past visit.</td></tr>
+<tr><th scope="row">Add a stop from an earlier day</th><td>Map → + → Log a past stop.</td></tr>
 </table>
 <p>From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. See <a href="/#pricing">current pricing</a>.</p>
 
@@ -205,17 +210,17 @@ BODIES["places"] = """
 <p>Those are parser and in-memory storage checks. The file-picker handoff and a complete on-device CSV import have not been newly verified here. Try a small test file and review the preview before importing your own locations.</p>
 
 <h2>Confirm or correct an existing visit</h2>
-<p>Open the visit from Map or Timeline. <strong>Confirm place</strong> accepts the detected place; correcting a name, address, or position records your chosen values. Arrival, departure, and notes can also be edited. Nearby business suggestions use Apple Maps around the visit’s coordinate.</p>
+<p>Tap the visit on the map, or in the day sheet’s list. Its sheet shows whether the stop is confirmed and, under <em>Where were you?</em>, numbered nearby places that match numbered pins on the map. <strong>Confirm</strong> accepts the detected place, choosing a nearby place corrects it, <strong>Not here</strong> lets you search Apple Maps or drop a pin for the right spot, and <strong>Details</strong> opens the full visit; correcting a name, address, or position records your chosen values. Arrival, departure, and notes can also be edited. Nearby business suggestions use Apple Maps around the visit’s coordinate.</p>
 <p>Visits can be unconfirmed, confirmed, or corrected. Automatic geocoding does not overwrite a visit that is protected by its confirmation or correction state. <strong>Undo correction</strong> restores the original detected place information. Confirming or correcting a visit can also save reusable place knowledge; that is different from editing a saved location without changing a past visit.</p>
 
 <h2>Add a missing past visit</h2>
-<p>On the Map tab, open <strong>+</strong> and choose <strong>Add past visit</strong>. Select the location explicitly by search, pin, or saved place, then enter the arrival and departure times. Past visits do not silently use the phone’s current position when a location is missing.</p>
-<p>The same menu offers <strong>Save current place</strong> and <strong>Add place manually</strong> for other entry tasks. Current-position workflows depend on location access; choosing a known past place is a different task. A manual entry records what you enter. It cannot recreate missing GPS points or prove an automatic visit occurred.</p>
+<p>On the map, tap <strong>+</strong> and choose <strong>Log a past stop</strong>. Select the location explicitly by search, pin, or saved place, then enter the arrival and departure times. Past visits do not silently use the phone’s current position when a location is missing.</p>
+<p>The same menu offers <strong>Save where I am</strong> and <strong>Drop a pin</strong> for other entry tasks. Current-position workflows depend on location access; choosing a known past place is a different task. A manual entry records what you enter. It cannot recreate missing GPS points or prove an automatic visit occurred.</p>
 <p>For a gap in recorded history, use the <a href="/blog/missing-location-history-iphone/">missing visits and routes checklist</a>. Keep a <a href="/blog/back-up-iphone-location-history/">separate backup</a> before making extensive journal edits.</p>
 
 <h2>Optional current-place suggestions</h2>
-<p><strong>Settings → Map display → Visit suggestions</strong> is off by default. When enabled, a nearby saved place or business can be offered as a Save Place prompt. This does not replace tracking permission or guarantee that every stop becomes a detected visit.</p>
-<p>Reviewed October 26, 2026 against released Whereday 1.7.16. The editor screenshot and native fixture tests have the limits described above; no new physical route or visit-detection test is claimed.</p>
+<p><strong>Settings → Map display → Visit suggestions</strong>, also the <em>“Are you here?”</em> switch in the map’s Layers sheet, is off by default. When enabled, a nearby saved place or business can be offered as an <em>Are you here?</em> card with <strong>Save this place</strong> and <strong>Somewhere else</strong>. This does not replace tracking permission or guarantee that every stop becomes a detected visit.</p>
+<p>Reviewed October 26, 2026 against released Whereday 1.7.16. The editor screenshot and native fixture tests have the limits described above; no new physical route or visit-detection test is claimed. Map menu and visit sheet names were updated on November 5, 2026 for the map-first home.</p>
 """
 
 BODIES["photos"] = """
@@ -319,7 +324,7 @@ BODIES["export-import"] = """
 """
 
 BODIES["automatic-exports"] = """
-<div class="callout pro"><p><strong>Optional scheduled exports.</strong> Auto Export appears in the Export tab after you choose a default export folder and have export access. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.</p></div>
+<div class="callout pro"><p><strong>Optional scheduled exports.</strong> Auto Export appears in the Archive tab after you choose a default export folder and have export access. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.</p></div>
 
 <h2 id="setup">Set up one file you can check</h2>
 <ol>
@@ -332,7 +337,7 @@ BODIES["automatic-exports"] = """
 <p>For a restorable archive, first make separate full-history Visits and Points JSON copies using the <a href="/blog/back-up-iphone-location-history/">backup guide</a>. Auto Export starts with the current day; it does not backfill all earlier history. For a readable note, follow the <a href="/blog/iphone-location-journal-obsidian/">manual Obsidian handoff</a>. A folder selection alone does not establish delivery into an Obsidian vault.</p>
 
 <h2 id="day-window">Which day is saved?</h2>
-<p>Every run selects <strong>the current local day up to the run time</strong>. Its date range is separate from the manual Export tab’s chosen dates and daily splitting preference. Repeated runs use a stable path for that date; the next local date gets its own path.</p>
+<p>Every run selects <strong>the current local day up to the run time</strong>. Its date range is separate from the manual export’s chosen dates in Archive and daily splitting preference. Repeated runs use a stable path for that date; the next local date gets its own path.</p>
 <p>If an overdue run happens after midnight, it selects the new day. It does not reopen yesterday’s file and fill its missing final hours. Use a separate manual export for an earlier date that you need to recover from retained journal records.</p>
 <p>A once-daily run at 21:00 saves the day so far at that time. Records captured after it need another run that day or a later manual export. Choose the schedule with that cutoff in mind rather than treating one dated file as proof of a complete calendar day.</p>
 
@@ -802,7 +807,7 @@ def build():
         body = body.replace("__TITLE__", html.escape(title))
         body = body.replace("__LEDE__", html.escape(lede))
         body = body.replace("__PLATFORM__", html.escape(platform))
-        body = body.replace("__UPDATED__", "October 30, 2026" if slug in {"places", "automatic-exports", "apple-watch", "export-import", "webhooks", "timeline-outings"} else UPDATED if slug in REVIEWED else "August 22, 2026")
+        body = body.replace("__UPDATED__", "November 5, 2026" if slug in MAP_FIRST else "October 30, 2026" if slug in {"places", "automatic-exports", "apple-watch", "export-import", "webhooks", "timeline-outings"} else UPDATED if slug in REVIEWED else "August 22, 2026")
         body = body.replace("__MINUTES__", str(minutes))
         body = body.replace("__CONTENT__", BODIES[slug].strip())
         body = body.replace("__PREV__", pager_link("prev", prev_g))
