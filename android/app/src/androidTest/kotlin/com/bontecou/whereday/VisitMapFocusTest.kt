@@ -64,8 +64,8 @@ class VisitMapFocusTest {
     }
     private fun awaitName(name:String=original.name!!) {compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("visit-name").assertTextContains(name)}.isSuccess}}
     private fun openTimeline() {
-        compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("navigation-timeline").assertExists()}.isSuccess}
-        compose.onNodeWithTag("navigation-timeline").performClick()
+        compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("map-day-peek").assertExists()}.isSuccess}
+        compose.openTimeline()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
         compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName()
     }
@@ -155,8 +155,8 @@ class VisitMapFocusTest {
         val session=RecordingSession("visit-map-outing",at.minusSeconds(3600),at.plusSeconds(7200),name="QA focus outing")
         graph.history.dao.put(SessionRow(session))
         graph.history.dao.put(PointRow(TrackPoint("visit-point",original.coordinate,at,5.0),session.id))
-        show();compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("navigation-timeline").assertExists()}.isSuccess}
-        compose.onNodeWithTag("navigation-timeline").performClick()
+        show();compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("map-day-peek").assertExists()}.isSuccess}
+        compose.openTimeline()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithText(session.name!!).assertExists()}.isSuccess}
         compose.onNodeWithText(session.name!!).performScrollTo().performClick()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}

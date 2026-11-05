@@ -43,9 +43,9 @@ class JournalVisitInspectionTest {
     }}
     private fun awaitName(name:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("visit-name").assertTextContains(name)}.isSuccess}}
     private fun open(timeline:Boolean) {
-        compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("navigation-timeline").assertExists()}.isSuccess}
+        compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("map-day-peek").assertExists()}.isSuccess}
         if(timeline) {
-            compose.onNodeWithTag("navigation-timeline").performClick()
+            compose.openTimeline()
             compose.waitUntil(10000) {runCatching {compose.onNodeWithText(original.name!!).assertExists()}.isSuccess}
             compose.onNodeWithText(original.name!!).performScrollTo().performClick()
         } else {

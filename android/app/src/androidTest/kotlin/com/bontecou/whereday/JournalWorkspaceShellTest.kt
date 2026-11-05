@@ -42,19 +42,19 @@ class JournalWorkspaceShellTest {
     }
     @Test fun realMapAndTimelineSwapRolesWithoutReplacingTheNativeMap() {
         show();val original=compose.runOnIdle {checkNotNull(findNativeMapView())}
-        compose.onNodeWithTag("navigation-timeline").performClick()
-        compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+        compose.openTimeline()
+        compose.onNodeWithTag("timeline-content").assertExists()
         compose.onNodeWithTag("timeline-content").assertIsDisplayed()
         compose.runOnIdle {assertSame(original,findNativeMapView())}
-        compose.onNodeWithTag("navigation-map").performClick()
+        compose.onNodeWithTag("timeline-close").performClick()
         compose.runOnIdle {assertSame(original,findNativeMapView())}
     }
     @Test fun showOnMapUpdatesTheCompanionAndRetainsTimelineOutingNavigation() {
-        show();compose.onNodeWithTag("navigation-timeline").performClick()
+        show();compose.openTimeline()
         compose.onNodeWithText(session.name!!).performScrollTo().performClick()
         compose.onNodeWithTag("outing-title").assertTextEquals(session.name!!)
         compose.onNodeWithText(compose.activity.getString(R.string.outing_show_map)).performScrollTo().performClick()
-        compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+        compose.onNodeWithTag("timeline-content").assertExists()
         compose.onNodeWithTag("outing-title").assertExists()
         compose.runOnIdle {assertNotNull(model.mapSelection.value.outingRange)}
     }
@@ -99,7 +99,7 @@ class JournalWorkspaceShellTest {
         compose.runOnUiThread {view.getMapAsync {map.set(it)}}
         compose.waitUntil(10000) {compose.runOnUiThread {map.get()?.style?.isFullyLoaded==true}}
         compose.awaitNativeMapFrame(view,map.get());capture("map-primary")
-        compose.onNodeWithTag("navigation-timeline").performClick();compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+        compose.openTimeline();compose.onNodeWithTag("timeline-content").assertExists()
         compose.onNodeWithTag("timeline-content").assertIsDisplayed()
         if(expected) compose.runOnIdle {assertSame(view,findNativeMapView())}
         else compose.onNodeWithTag("journal-native-map").assertDoesNotExist()

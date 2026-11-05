@@ -72,7 +72,7 @@ class VisitLinkActivityTest {
             compose.onNodeWithText(context.getString(R.string.map_add_past)).performClick()
             compose.onNodeWithTag("visit-name").performTextReplacement("Retained map draft")
             instrumentation.runOnMainSync {activity.startActivity(Intent(activity,MainActivity::class.java).setAction(LauncherAction.timeline.action))}
-            compose.waitUntil(15000) {compose.onAllNodes(hasTestTag("navigation-timeline") and isSelected()).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15000) {compose.onAllNodes(hasTestTag("timeline-content")).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             instrumentation.runOnMainSync {resumed().startActivity(intent("isome://check-in?name=After%20retained%20draft"))}
             awaitName("Retained map draft")
             assertEquals(0L,graph.history.dao.totalVisitCount())

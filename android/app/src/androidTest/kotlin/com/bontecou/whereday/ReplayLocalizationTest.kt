@@ -55,7 +55,7 @@ class ReplayLocalizationTest {
         compose.onNodeWithText("Reproducir ruta").performClick()
         compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("replay-progress").assertExists()}.isSuccess}
     }
-    private fun awaitPoint(index:Int,count:Int) {compose.waitUntil(5000) {runCatching {compose.onNodeWithTag("replay-counter").assertTextEquals("Punto $index de $count")}.isSuccess}}
+    private fun awaitPoint(index:Int,count:Int) {compose.waitUntil(5000) {runCatching {compose.onNodeWithTag("replay-counter").assertTextEquals("$index DE $count PTS")}.isSuccess}}
     private fun jump(end:Boolean) {compose.onNodeWithTag(if(end) "replay-end" else "replay-start").performScrollTo().performClick()}
     private fun awaitCacheEmpty() {compose.waitUntil(5000) {cache.listFiles().orEmpty().isEmpty()}}
     private fun close() {
@@ -70,7 +70,7 @@ class ReplayLocalizationTest {
         compose.onNodeWithTag("replay-progress").performSemanticsAction(SemanticsActions.SetProgress) {it(.5f)}
         awaitPoint(2,3)
         restoration.emulateSavedInstanceStateRestore();awaitPoint(2,3)
-        compose.onNodeWithTag("replay-toggle").assertTextContains("Reproducir ruta")
+        compose.onNodeWithTag("replay-toggle").assertContentDescriptionContains("Reproducir ruta")
         assertEquals(3L,graph.history.dao.totalPointCount());close();awaitCacheEmpty()
     }
     @Test fun restoredReplayRejectsChangedPointsEvenWhenTheOldObserverCannotSeeThem()=runBlocking {
@@ -161,7 +161,7 @@ class ReplayLocalizationTest {
             awaitCacheEmpty()
         } finally {compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)}
         awaitPoint(1,3)
-        compose.onNodeWithTag("replay-toggle").assertTextContains("Reproducir ruta")
+        compose.onNodeWithTag("replay-toggle").assertContentDescriptionContains("Reproducir ruta")
         assertEquals(3L,graph.history.dao.totalPointCount())
     }
     @Test fun closedCacheHasLocalizedFailureAndDoesNotChangeHistory()=runBlocking {

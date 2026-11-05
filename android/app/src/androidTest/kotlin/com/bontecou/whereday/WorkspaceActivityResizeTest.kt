@@ -107,7 +107,7 @@ class WorkspaceActivityResizeTest {
     }
     private fun launch()=ActivityScenario.launch<MainActivity>(Intent(target,MainActivity::class.java).setAction(Intent.ACTION_MAIN))
     private fun open() {
-        awaitTag("navigation-timeline");compose.onNodeWithTag("navigation-timeline").performClick()
+        awaitTag("map-day-peek");compose.openTimeline()
         compose.waitUntil(15000) {compose.onAllNodesWithText(original.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
         compose.onNodeWithText(original.name!!).performScrollTo().performClick();awaitName(original.name!!)
     }
@@ -152,7 +152,7 @@ class WorkspaceActivityResizeTest {
             assertEquals("Actual resized draft",saved.name);assertEquals("Uncommitted resized note",saved.notes)
             assertEquals(original.arrivedAt,saved.arrivedAt);assertEquals(original.departedAt,saved.departedAt)
             assertEquals(1L,graph.history.dao.totalVisitCount())
-            compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+            compose.onNodeWithTag("timeline-content").assertExists()
         }
     }
     @Test fun invalidNestedIsoDraftSurvivesActualCompactExpandedRecreationsWithoutMutation():Unit=runBlocking {
@@ -173,15 +173,15 @@ class WorkspaceActivityResizeTest {
     }
     @Test fun timelineOutingNavigationAndNativeMapRecoverAfterRealWindowRecreation():Unit=runBlocking {
         launch().use {
-            awaitTag("navigation-timeline");compose.onNodeWithTag("navigation-timeline").performClick()
+            awaitTag("map-day-peek");compose.openTimeline()
             compose.waitUntil(15000) {compose.onAllNodesWithText(outing.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
             resize(true);awaitTag("outing-title");awaitTag("workspace-companion")
-            compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+            compose.onNodeWithTag("timeline-content").assertExists()
             compose.onNodeWithTag("outing-title").assertTextEquals(outing.name!!)
             awaitNativeMaps()
             resize(false);awaitTag("outing-title")
-            compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+            compose.onNodeWithTag("timeline-content").assertExists()
             compose.onNodeWithTag("workspace-companion").assertDoesNotExist()
             assertEquals(original,graph.history.dao.visit(original.id)!!.value)
             assertEquals(2L,graph.history.dao.totalPointCount())
@@ -271,7 +271,7 @@ class WorkspaceActivityResizeTest {
         return before
     }
     private fun openExportClock():com.bontecou.whereday.export.ExportSelection {
-        awaitTag("navigation-export");compose.onNodeWithTag("navigation-export").performClick()
+        awaitTag("navigation-archive");compose.onNodeWithTag("navigation-archive").performClick()
         awaitTag("export-advanced");compose.onNodeWithTag("export-advanced").performScrollTo().performClick()
         awaitTag("export-time-enabled")
         if(graph.exportSettings.state.value.selection.options.startTime==null) compose.onNodeWithTag("export-time-enabled").performScrollTo().performClick()
@@ -387,7 +387,7 @@ class WorkspaceActivityResizeTest {
     }
 
     private fun openExportDates() {
-        awaitTag("navigation-export");compose.onNodeWithTag("navigation-export").performClick()
+        awaitTag("navigation-archive");compose.onNodeWithTag("navigation-archive").performClick()
         awaitTag("export-advanced");compose.onNodeWithTag("export-advanced").performScrollTo().performClick()
         awaitTag("export-date-range");compose.onNodeWithTag("export-date-range").performScrollTo().performClick()
         compose.onNodeWithText(target.getString(R.string.date_enter_iso)).assertIsDisplayed().performClick()
@@ -458,7 +458,7 @@ class WorkspaceActivityResizeTest {
         compose.onNodeWithText(savedPlace.name).performScrollTo().performClick();awaitTag("saved-name")
     }
     private fun openStoredOuting() {
-        awaitTag("navigation-timeline");compose.onNodeWithTag("navigation-timeline").performClick()
+        awaitTag("map-day-peek");compose.openTimeline()
         compose.waitUntil(10000) {compose.onAllNodesWithText(outing.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
         compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
         compose.onNodeWithText(target.getString(R.string.outing_edit)).performScrollTo().performClick();awaitTag("outing-name")
@@ -569,7 +569,7 @@ class WorkspaceActivityResizeTest {
         }
     }
     private fun awaitReplayPoint(index:Int,count:Int) = compose.waitUntil(15000) {
-        runCatching {compose.onNodeWithTag("replay-counter").assertTextEquals("Point $index of $count")}.isSuccess
+        runCatching {compose.onNodeWithTag("replay-counter").assertTextEquals("$index OF $count PTS")}.isSuccess
     }
     @Test fun outingReplayRestoresPausedPositionAcrossBothActualRecreations():Unit=runBlocking {
         launch().use {
@@ -578,9 +578,9 @@ class WorkspaceActivityResizeTest {
             compose.onNodeWithText("Replay route").performScrollTo().performClick();awaitTag("replay-progress")
             compose.onNodeWithTag("replay-end").performScrollTo().performClick();awaitReplayPoint(2,2)
             resize(true);awaitReplayPoint(2,2)
-            compose.onNodeWithTag("replay-toggle").assertTextEquals(target.getString(R.string.replay_play));capture("replay-outing-wide")
+            compose.onNodeWithTag("replay-toggle").assertContentDescriptionEquals(target.getString(R.string.replay_play));capture("replay-outing-wide")
             resize(false);awaitReplayPoint(2,2)
-            compose.onNodeWithTag("replay-toggle").assertTextEquals(target.getString(R.string.replay_play));capture("replay-outing-compact")
+            compose.onNodeWithTag("replay-toggle").assertContentDescriptionEquals(target.getString(R.string.replay_play));capture("replay-outing-compact")
             compose.onNodeWithTag("replay-start").performScrollTo().performClick();awaitReplayPoint(1,2)
             compose.onNodeWithTag("replay-close").performScrollTo().performClick()
             compose.onNodeWithTag("route-replay-content").assertDoesNotExist()

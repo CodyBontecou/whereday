@@ -133,13 +133,13 @@ class InlineVisitInspectorTest {
         runBlocking {assertEquals(2L,graph.history.dao.totalVisitCount())}
     }
     @Test fun timelinePrimaryInspectorOccupiesItsPaneAndReturnsToTheRetainedTimeline() {
-        show();compose.waitUntil(10000) {compose.onAllNodesWithTag("navigation-timeline").fetchSemanticsNodes().size==1}
-        compose.onNodeWithTag("navigation-timeline").performClick();open()
+        show();compose.waitUntil(10000) {compose.onAllNodesWithTag("map-day-peek").fetchSemanticsNodes().size==1}
+        compose.openTimeline();open()
         val owner=compose.onNodeWithTag("workspace-primary").fetchSemanticsNode().boundsInWindow
         assertEquals(owner,compose.onNodeWithTag("visit-inline-inspector").fetchSemanticsNode().boundsInWindow)
         compose.onNodeWithTag("timeline-content").assertDoesNotExist();compose.onNodeWithTag("journal-native-map").assertExists()
         capture("timeline-primary")
-        back();compose.onNodeWithTag("timeline-content").assertIsDisplayed();compose.onNodeWithTag("navigation-timeline").assertIsSelected()
+        back();compose.onNodeWithTag("timeline-content").assertIsDisplayed();compose.onNodeWithTag("timeline-content").assertExists()
     }
 
     private fun capture(stage:String) {
@@ -167,8 +167,8 @@ class InlineVisitInspectorTest {
         } finally {bitmap.recycle()}
     }
     @Test fun timelinePrimaryInspectorDisablesManualCreationInTheCompanionMap() {
-        show();compose.waitUntil(10000) {compose.onAllNodesWithTag("navigation-timeline").fetchSemanticsNodes().size==1}
-        compose.onNodeWithTag("navigation-timeline").performClick();open()
+        show();compose.waitUntil(10000) {compose.onAllNodesWithTag("map-day-peek").fetchSemanticsNodes().size==1}
+        compose.openTimeline();open()
         compose.onNodeWithText(target.getString(R.string.map_save_current)).assertIsNotEnabled().performTouchInput {click()}
         compose.onNodeWithText(target.getString(R.string.map_add_past)).assertIsNotEnabled()
         awaitName();assertEquals(1,compose.onAllNodesWithTag("visit-name").fetchSemanticsNodes().size)

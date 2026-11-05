@@ -79,8 +79,8 @@ class JournalMapCustomDateTest {
     }
 
     private fun openCustom(label:String) {
-        compose.onNodeWithText(label).performScrollTo().performClick()
-        compose.onNode(hasText("Custom") and hasAnyAncestor(isPopup())).performClick()
+        // The map's range chips end with a calendar button for a custom range.
+        compose.onNodeWithTag("map-range-custom").performClick()
         compose.onNodeWithText("Choose dates").assertIsDisplayed()
     }
     @After fun close() {compose.runOnUiThread {models.clear()}}
@@ -92,8 +92,7 @@ class JournalMapCustomDateTest {
         for(selection in selections) {
             compose.runOnIdle {model.mapSelection.value=selection}
             val expected=selection.range(now,zone)
-            compose.onNodeWithText(mapLabel(selection.preset)).performScrollTo().performClick()
-            compose.onNode(hasText("Custom") and hasAnyAncestor(isPopup())).performClick()
+            compose.onNodeWithTag("map-range-custom").performClick()
             compose.onNodeWithText("Choose dates").assertIsDisplayed()
             compose.onNodeWithText("Apply").assertIsEnabled().performClick()
             compose.runOnIdle {
