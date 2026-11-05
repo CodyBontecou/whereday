@@ -1075,6 +1075,8 @@ enum RecordingDetail: CaseIterable, Identifiable {
 
     @MainActor
     func apply(to locationManager: LocationManager) {
+        // Presets are distance-based; choosing one leaves any time-based sampling.
+        locationManager.setRouteSamplingMode(.distance)
         locationManager.setDistanceFilter(distanceFilter)
         locationManager.setStopAfterHours(stopAfterHours)
     }
