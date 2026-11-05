@@ -1862,7 +1862,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld मेल खाता है %2$@"
+            "value": "%1$lld मिलती %2$@"
           }
         },
         "ja": {
@@ -3046,7 +3046,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld में से %2$lld"
+            "value": "%1$lld / %2$lld"
           }
         },
         "ja": {
@@ -3740,7 +3740,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%lld अंक"
+            "value": "%lld पॉइंट"
           }
         },
         "ja": {
@@ -4268,7 +4268,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld H %2$lld एम"
+            "value": "%1$lldH %2$lldM"
           }
         },
         "ja": {
@@ -4408,7 +4408,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld h %2$lld मी"
+            "value": "%1$lldh %2$lldm"
           }
         },
         "ja": {
@@ -5272,7 +5272,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 अंक"
+            "value": "1 पॉइंट"
           }
         },
         "ja": {
@@ -6322,7 +6322,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "15 मीटर का अंतराल"
+            "value": "15 मिनट का अंतराल"
           }
         },
         "ja": {
@@ -7302,7 +7302,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "30 मीटर का अंतराल"
+            "value": "30 मिनट का अंतराल"
           }
         },
         "ja": {
@@ -13745,7 +13745,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आवेदन करना"
+            "value": "लागू करें"
           }
         },
         "ja": {
@@ -15005,7 +15005,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "समय तक"
+            "value": "समय के अनुसार"
           }
         },
         "ja": {
@@ -15565,7 +15565,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "भवन पूर्वावलोकन…"
+            "value": "पूर्वावलोकन बन रहा है…"
           }
         },
         "ja": {
@@ -16405,7 +16405,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "गिनती करना"
+            "value": "गिनती"
           }
         },
         "ja": {
@@ -17035,7 +17035,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रिवाज़"
+            "value": "कस्टम"
           }
         },
         "ja": {
@@ -17175,7 +17175,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रद्द करना"
+            "value": "रद्द करें"
           }
         },
         "ja": {
@@ -19209,7 +19209,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "स्वच्छ निर्यात संगठन"
+            "value": "निर्यात की बेहतर व्यवस्था"
           }
         },
         "ja": {
@@ -19279,7 +19279,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "स्पष्ट"
+            "value": "साफ़ करें"
           }
         },
         "ja": {
@@ -19839,7 +19839,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बंद विज़िट सुझाव"
+            "value": "विज़िट सुझाव बंद करें"
           }
         },
         "ja": {
@@ -20119,7 +20119,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "की पुष्टि"
+            "value": "पुष्टि हुई"
           }
         },
         "ja": {
@@ -20469,7 +20469,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "जारी रखना"
+            "value": "जारी रखें"
           }
         },
         "ja": {
@@ -22079,7 +22079,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रिवाज़"
+            "value": "कस्टम"
           }
         },
         "ja": {
@@ -24109,7 +24109,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "मिटाना"
+            "value": "हटाएँ"
           }
         },
         "ja": {
@@ -24669,7 +24669,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पुष्टि के बाद इस आउटिंग और इसके GPS पॉइंट को हटा देता है। दौरे होते रहते हैं."
+            "value": "पुष्टि के बाद इस आउटिंग और इसके GPS पॉइंट को हटा देता है। विज़िट बनी रहती हैं।"
           }
         },
         "ja": {
@@ -24949,7 +24949,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "स्वर्गवासी"
+            "value": "निकले"
           }
         },
         "ja": {
@@ -25650,7 +25650,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "नकार देना"
+            "value": "ख़ारिज करें"
           }
         },
         "ja": {
@@ -25720,7 +25720,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "कलह बैनर खारिज करें."
+            "value": "Discord बैनर ख़ारिज करें।"
           }
         },
         "ja": {
@@ -27915,7 +27915,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "फ़ोल्डर निर्यात करें"
+            "value": "निर्यात फ़ोल्डर"
           }
         },
         "ja": {
@@ -30577,7 +30577,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "निर्यात भ्रमण"
+            "value": "आउटिंग निर्यात करें"
           }
         },
         "ja": {
@@ -30717,7 +30717,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आज ही निर्यात करें"
+            "value": "आज का निर्यात करें"
           }
         },
         "ja": {
@@ -30927,7 +30927,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "कल निर्यात करें"
+            "value": "कल का निर्यात करें"
           }
         },
         "ja": {
@@ -31557,7 +31557,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "निर्यात सेटिंग्स चिपक जाती हैं"
+            "value": "निर्यात सेटिंग्स याद रहती हैं"
           }
         },
         "ja": {
@@ -32257,7 +32257,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ऑटो-सेव चालू होने पर सेव को सीधे इस फ़ोल्डर में निर्यात किया जाता है। अन्यथा शेयर शीट खुल जाती है."
+            "value": "ऑटो-सेव चालू होने पर निर्यात सीधे इस फ़ोल्डर में सहेजे जाते हैं। अन्यथा शेयर शीट खुल जाती है।"
           }
         },
         "ja": {
@@ -34917,7 +34917,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "खोजो"
+            "value": "खोजें"
           }
         },
         "ja": {
@@ -35689,7 +35689,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "फ़िट सक्रिय सत्र"
+            "value": "सक्रिय सत्र फ़िट करें"
           }
         },
         "ja": {
@@ -35829,7 +35829,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "फ़िट मानचित्र"
+            "value": "मानचित्र फ़िट करें"
           }
         },
         "ja": {
@@ -36459,7 +36459,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "GPS बाह्य"
+            "value": "GPS आउटलायर"
           }
         },
         "ja": {
@@ -36809,7 +36809,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "शुरू हो जाओ"
+            "value": "शुरू करें"
           }
         },
         "ja": {
@@ -38209,7 +38209,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अनुमान लगाया"
+            "value": "अनुमानित"
           }
         },
         "ja": {
@@ -38489,7 +38489,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अवैध्य मार्ग"
+            "value": "अमान्य पथ"
           }
         },
         "ja": {
@@ -39609,7 +39609,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आयातित %d अंक."
+            "value": "आयातित %d पॉइंट।"
           }
         },
         "ja": {
@@ -39703,7 +39703,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आयातित %d विज़िट और %d अंक।"
+            "value": "आयातित %d विज़िट और %d पॉइंट।"
           }
         },
         "ja": {
@@ -39773,7 +39773,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आयातित %d विज़िट और 1 अंक।"
+            "value": "आयातित %d विज़िट और 1 पॉइंट।"
           }
         },
         "ja": {
@@ -39961,7 +39961,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आयातित 1 अंक."
+            "value": "आयातित 1 पॉइंट।"
           }
         },
         "ja": {
@@ -40031,7 +40031,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आयातित 1 विज़िट और %d अंक।"
+            "value": "आयातित 1 विज़िट और %d पॉइंट।"
           }
         },
         "ja": {
@@ -40125,7 +40125,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आयातित 1 विज़िट और 1 अंक।"
+            "value": "आयातित 1 विज़िट और 1 पॉइंट।"
           }
         },
         "ja": {
@@ -40965,7 +40965,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "असामान्य URL"
+            "value": "अमान्य URL"
           }
         },
         "ja": {
@@ -41525,7 +41525,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "जोड़ना"
+            "value": "शामिल हों"
           }
         },
         "ja": {
@@ -41595,7 +41595,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "कलह में शामिल हों"
+            "value": "Discord में शामिल हों"
           }
         },
         "ja": {
@@ -42085,7 +42085,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आज ही जाएँ"
+            "value": "आज पर जाएँ"
           }
         },
         "ja": {
@@ -42155,7 +42155,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "कलह समुदाय में शामिल हों."
+            "value": "Discord समुदाय में शामिल हों।"
           }
         },
         "ja": {
@@ -43205,7 +43205,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रहना"
+            "value": "लाइव"
           }
         },
         "ja": {
@@ -43345,7 +43345,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "जगह"
+            "value": "स्थान"
           }
         },
         "ja": {
@@ -45375,7 +45375,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "जगह"
+            "value": "स्थान"
           }
         },
         "ja": {
@@ -46076,7 +46076,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सबसे लंबे समय तक"
+            "value": "सबसे लंबे"
           }
         },
         "ja": {
@@ -46566,7 +46566,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "नियमावली"
+            "value": "मैन्युअल"
           }
         },
         "ja": {
@@ -46916,7 +46916,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सड़कों से मेल खाता पथ..."
+            "value": "पथ को सड़कों से मिलाया जा रहा है…"
           }
         },
         "ja": {
@@ -47126,7 +47126,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "न्यूनतम जीपीएस अंक"
+            "value": "न्यूनतम GPS पॉइंट"
           }
         },
         "ja": {
@@ -47336,7 +47336,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "चालें"
+            "value": "मूवमेंट"
           }
         },
         "ja": {
@@ -47686,7 +47686,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "नियमावली"
+            "value": "मैन्युअल"
           }
         },
         "ja": {
@@ -48176,7 +48176,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Markdown आउटिंग निर्यात में YAML फ्रंट मैटर, नोट्स, विज़िट और रूट पॉइंट शामिल होते हैं ताकि वे जर्नल या पीकेएम सिस्टम में साफ़ रूप से गिर जाएं।"
+            "value": "Markdown आउटिंग निर्यात में YAML फ्रंट मैटर, नोट्स, विज़िट और रूट पॉइंट शामिल होते हैं ताकि वे जर्नल या पीकेएम सिस्टम में आसानी से जुड़ जाएँ।"
           }
         },
         "ja": {
@@ -48246,7 +48246,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आपके लॉग के लिए पेजों को Markdown"
+            "value": "आपके लॉग के लिए Markdown पेज"
           }
         },
         "ja": {
@@ -48386,7 +48386,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बाह्य के रूप में चिह्नित"
+            "value": "आउटलायर के रूप में चिह्नित"
           }
         },
         "ja": {
@@ -48596,7 +48596,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "त्रिज्या का मिलान करें"
+            "value": "मिलान दायरा"
           }
         },
         "ja": {
@@ -48876,7 +48876,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "गुम 'अंक' सरणी"
+            "value": "'points' सरणी गुम है"
           }
         },
         "ja": {
@@ -49296,7 +49296,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आंदोलन के इतिहास पर अधिक नियंत्रण"
+            "value": "मूवमेंट इतिहास पर अधिक नियंत्रण"
           }
         },
         "ja": {
@@ -49366,7 +49366,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बाहरी निर्यात पर अधिक नियंत्रण"
+            "value": "आउटिंग निर्यात पर अधिक नियंत्रण"
           }
         },
         "ja": {
@@ -49646,7 +49646,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सबसे पहले अंक"
+            "value": "सबसे ज़्यादा पॉइंट पहले"
           }
         },
         "ja": {
@@ -50766,7 +50766,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "नाम का दौरा तेजी से होता है"
+            "value": "विज़िट को जल्दी नाम दें"
           }
         },
         "ja": {
@@ -53846,7 +53846,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ के लिए कोई मुलाक़ात या आंदोलन सत्र नहीं मिला। कोई अन्य दिन चुनें या पुराने GPS इतिहास के लिए अनुमानित गतिविधि सक्षम करें।"
+            "value": "%@ के लिए कोई विज़िट या मूवमेंट सत्र नहीं मिला। कोई अन्य दिन चुनें या पुराने GPS इतिहास के लिए अनुमानित मूवमेंट सक्षम करें।"
           }
         },
         "ja": {
@@ -53986,7 +53986,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आज तक कोई मुलाक़ात नहीं."
+            "value": "आज अभी कोई विज़िट नहीं।"
           }
         },
         "ja": {
@@ -54826,7 +54826,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ज्ञानप्राप्ति"
+            "value": "ऑनबोर्डिंग"
           }
         },
         "ja": {
@@ -55176,7 +55176,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "खुली सेटिंग"
+            "value": "सेटिंग्स खोलें"
           }
         },
         "ja": {
@@ -55246,7 +55246,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "गोट"
+            "value": "आउटिंग"
           }
         },
         "ja": {
@@ -55456,7 +55456,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बाहरी झंडा"
+            "value": "आउटलायर फ़्लैग"
           }
         },
         "ja": {
@@ -55526,7 +55526,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "उत्पादन"
+            "value": "आउटपुट"
           }
         },
         "ja": {
@@ -56786,7 +56786,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ओपन रूट रिप्ले"
+            "value": "रूट रीप्ले खोलें"
           }
         },
         "ja": {
@@ -58536,7 +58536,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बाहरी पथ बिंदु"
+            "value": "आउटलायर पथ बिंदु"
           }
         },
         "ja": {
@@ -58956,7 +58956,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "परम नाम"
+            "value": "पैरामीटर नाम"
           }
         },
         "ja": {
@@ -59586,7 +59586,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सैर-सपाटा खेलें"
+            "value": "आउटिंग चलाएँ"
           }
         },
         "ja": {
@@ -59796,7 +59796,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अंक"
+            "value": "पॉइंट"
           }
         },
         "ja": {
@@ -62902,7 +62902,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "प्ले रूट रीप्ले"
+            "value": "रूट रीप्ले चलाएँ"
           }
         },
         "ja": {
@@ -62972,7 +62972,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld का बिंदु %2$lld . समय %3$@ . % %5$@ %4$@ @ बीत गया। दूरी %6$@ में से %7$@ ."
+            "value": "पॉइंट %1$lld / %2$lld। समय %3$@। बीता समय %4$@ / %5$@। दूरी %6$@ / %7$@।"
           }
         },
         "ja": {
@@ -63112,7 +63112,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सूचकांक %lld गुम टाइमस्टैम्प पर इंगित करें"
+            "value": "इंडेक्स %lld पर पॉइंट में टाइमस्टैम्प गायब है"
           }
         },
         "ja": {
@@ -63252,7 +63252,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अंक"
+            "value": "पॉइंट"
           }
         },
         "ja": {
@@ -63322,7 +63322,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बिंदुओं को कतारबद्ध किया जाता है और हर एन मिनट में फ्लश किया जाता है। यदि ऐप समाप्त हो जाता है तो न भेजे गए अंक खो जाते हैं।"
+            "value": "पॉइंट कतारबद्ध किए जाते हैं और हर N मिनट में भेज दिए जाते हैं। ऐप बंद होने पर न भेजे गए पॉइंट खो जाते हैं।"
           }
         },
         "ja": {
@@ -63392,7 +63392,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अंकों को मेमोरी में कतारबद्ध किया जाता है और गिनती पूरी होने पर भेजा जाता है। यदि ऐप समाप्त हो जाता है तो न भेजे गए अंक खो जाते हैं।"
+            "value": "पॉइंट मेमोरी में कतारबद्ध किए जाते हैं और गिनती पूरी होने पर भेजे जाते हैं। ऐप बंद होने पर न भेजे गए पॉइंट खो जाते हैं।"
           }
         },
         "ja": {
@@ -63952,7 +63952,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पिछली दुर्घटना का पता चला"
+            "value": "पिछला क्रैश पाया गया"
           }
         },
         "ja": {
@@ -65212,7 +65212,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ताज़ा करना"
+            "value": "ताज़ा करें"
           }
         },
         "ja": {
@@ -65562,7 +65562,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पुनःस्थापन क्रय"
+            "value": "खरीदारी बहाल करें"
           }
         },
         "ja": {
@@ -65772,7 +65772,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अब दौड़े"
+            "value": "अभी चलाएँ"
           }
         },
         "ja": {
@@ -66543,7 +66543,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "निकालना"
+            "value": "हटाएँ"
           }
         },
         "ja": {
@@ -67453,7 +67453,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पुनःस्थापन क्रय"
+            "value": "खरीदारी बहाल करें"
           }
         },
         "ja": {
@@ -68293,7 +68293,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आज, कल और आपके द्वारा चुनी गई किसी भी तारीख के लिए त्वरित नियंत्रण के साथ, दिन-प्रतिदिन यात्राओं और आंदोलन सत्रों की समीक्षा करें।"
+            "value": "आज, कल और आपके द्वारा चुनी गई किसी भी तारीख के लिए त्वरित नियंत्रण के साथ, दिन-प्रतिदिन विज़िट और मूवमेंट सत्रों की समीक्षा करें।"
           }
         },
         "ja": {
@@ -68993,7 +68993,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पंक्ति %lld : दिनांक पर अमान्य"
+            "value": "पंक्ति %lld: अमान्य arrived_at तारीख़"
           }
         },
         "ja": {
@@ -69693,7 +69693,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "शेयर करना %@"
+            "value": "%@ शेयर करें"
           }
         },
         "ja": {
@@ -70113,7 +70113,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "समर्थन करना"
+            "value": "स्टैंडबाय"
           }
         },
         "ja": {
@@ -70533,7 +70533,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बाद में रुकें"
+            "value": "इसके बाद रोकें"
           }
         },
         "ja": {
@@ -70743,7 +70743,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "फ़ोटो समन्वयित करना"
+            "value": "फ़ोटो सिंक हो रही हैं"
           }
         },
         "ja": {
@@ -70883,7 +70883,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "बचाना"
+            "value": "सहेजें"
           }
         },
         "ja": {
@@ -77872,7 +77872,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "मानचित्र टैब या अपने Shortcuts स्वचालन से ट्रैकिंग प्रारंभ करें। दौरे और आंदोलन सत्र यहां दिन-ब-दिन दिखाई देंगे।"
+            "value": "मानचित्र टैब या अपने Shortcuts स्वचालन से ट्रैकिंग प्रारंभ करें। विज़िट और मूवमेंट सत्र यहां दिन-ब-दिन दिखाई देंगे।"
           }
         },
         "ja": {
@@ -78292,7 +78292,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रुकना"
+            "value": "रोकें"
           }
         },
         "ja": {
@@ -78362,7 +78362,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ट्रैकिंग बंद करो"
+            "value": "ट्रैकिंग बंद करें"
           }
         },
         "ja": {
@@ -79762,7 +79762,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अपना समय"
+            "value": "दिन का समय"
           }
         },
         "ja": {
@@ -79832,7 +79832,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "समय"
+            "value": "टाइमलाइन"
           }
         },
         "ja": {
@@ -82914,7 +82914,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "यह आउटिंग और इसके GPS पॉइंट स्थायी रूप से हटा दिए जाएंगे। इस दौरान दौरे होते रहेंगे."
+            "value": "यह आउटिंग और इसके GPS पॉइंट स्थायी रूप से हटा दिए जाएंगे। इस दौरान की विज़िट बनी रहेंगी।"
           }
         },
         "ja": {
@@ -83754,7 +83754,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "समय"
+            "value": "टाइमलाइन"
           }
         },
         "ja": {
@@ -83824,7 +83824,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "टाइमलाइन चयनित दिन के लिए यात्राओं और आंदोलन सत्रों को जोड़ती है। गतिविधि सटीक रिकॉर्डिंग और वैकल्पिक अनुमानित GPS आउटिंग से आती है।"
+            "value": "टाइमलाइन चयनित दिन के लिए विज़िट और मूवमेंट सत्रों को जोड़ती है। मूवमेंट सटीक रिकॉर्डिंग और वैकल्पिक अनुमानित GPS आउटिंग से आता है।"
           }
         },
         "ja": {
@@ -83894,7 +83894,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "समयरेखा ठीक करता है"
+            "value": "टाइमलाइन सुधार"
           }
         },
         "ja": {
@@ -85084,7 +85084,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "ट्रैकिंग विज़िट, महत्वपूर्ण परिवर्तन और निरंतर उच्च-सटीकता पथ को रिकॉर्ड करती है। दूरी फ़िल्टर नियंत्रित करता है कि चलते समय कितनी बार अंक सहेजे जाते हैं। सुरक्षा जाल के रूप में ऑटो-स्टॉप के बाद रुकें।"
+            "value": "ट्रैकिंग विज़िट, महत्वपूर्ण परिवर्तन और निरंतर उच्च-सटीकता पथ को रिकॉर्ड करती है। दूरी फ़िल्टर तय करता है कि चलते समय कितनी बार पॉइंट सहेजे जाते हैं। \"इसके बाद रोकें\" सुरक्षा के लिए ट्रैकिंग अपने-आप रोक देता है।"
           }
         },
         "ja": {
@@ -85645,7 +85645,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "इकाइयों"
+            "value": "इकाइयाँ"
           }
         },
         "ja": {
@@ -85925,7 +85925,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "हमारे मानक"
+            "value": "US मानक"
           }
         },
         "ja": {
@@ -88237,7 +88237,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "GPS बिंदुओं से पुराने दिनों को भरने के लिए अनुमानित आंदोलन का उपयोग करें जो सटीक प्रारंभ/स्टॉप सत्र मौजूद होने से पहले सहेजे गए थे।"
+            "value": "GPS पॉइंट से पुराने दिनों को भरने के लिए अनुमानित मूवमेंट का उपयोग करें, जो सटीक प्रारंभ/स्टॉप सत्र मौजूद होने से पहले सहेजे गए थे।"
           }
         },
         "ja": {
@@ -88587,7 +88587,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "उपयोगकर्ता प्रविष्ट हुआ"
+            "value": "उपयोगकर्ता द्वारा दर्ज"
           }
         },
         "ja": {
@@ -88867,7 +88867,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सहेजे गए स्थान का उपयोग करना: %@"
+            "value": "सहेजे गए स्थान का उपयोग हो रहा है: %@"
           }
         },
         "ja": {
@@ -89147,7 +89147,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "फ़ील्ड्स पर जाएँ"
+            "value": "विज़िट फ़ील्ड"
           }
         },
         "ja": {
@@ -89217,7 +89217,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सुझाव पर जाएँ"
+            "value": "विज़िट सुझाव"
           }
         },
         "ja": {
@@ -89847,7 +89847,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ पर जाएँ"
+            "value": "%@ पर विज़िट"
           }
         },
         "ja": {
@@ -89917,7 +89917,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सूचकांक %lld पर जाएँ, आवश्यक फ़ील्ड गायब हैं (अक्षांश, देशांतर, ArrivedAt)"
+            "value": "इंडेक्स %lld पर विज़िट में आवश्यक फ़ील्ड गायब हैं (latitude, longitude, arrivedAt)"
           }
         },
         "ja": {
@@ -89987,7 +89987,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "मानचित्र पर जाएँ"
+            "value": "विज़िट मानचित्र"
           }
         },
         "ja": {
@@ -90057,7 +90057,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "मार्करों पर जाएँ"
+            "value": "विज़िट मार्कर"
           }
         },
         "ja": {
@@ -90127,7 +90127,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "नाम पर जाएँ"
+            "value": "विज़िट का नाम"
           }
         },
         "ja": {
@@ -90407,7 +90407,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "टाइमलाइन पर जाएँ"
+            "value": "विज़िट टाइमलाइन"
           }
         },
         "ja": {
@@ -91107,7 +91107,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "जटिलताओं का सामना करें देखें"
+            "value": "वॉच फ़ेस कॉम्प्लिकेशन"
           }
         },
         "ja": {
@@ -91877,7 +91877,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "एक्स- API -कुंजी"
+            "value": "X-API-Key"
           }
         },
         "ja": {
@@ -92017,7 +92017,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "तुम सब सेट हो"
+            "value": "आप पूरी तरह तैयार हैं"
           }
         },
         "ja": {
@@ -92367,7 +92367,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आप आज तक अभी तक स्थानांतरित नहीं हुए हैं।"
+            "value": "आज आप अभी तक नहीं चले।"
           }
         },
         "ja": {
@@ -92507,7 +92507,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "आप आज %@ गए हैं।"
+            "value": "आज आप %@ चले हैं।"
           }
         },
         "ja": {

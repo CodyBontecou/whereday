@@ -666,7 +666,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ बाएं"
+            "value": "%@ बाकी"
           }
         },
         "ja": {
@@ -806,7 +806,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld h %2$lld मी"
+            "value": "%1$lldh %2$lldm"
           }
         },
         "ja": {
@@ -946,7 +946,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "वॉच पाथ कैप्चर करना"
+            "value": "वॉच पाथ कैप्चर हो रहा है"
           }
         },
         "ja": {
@@ -1436,7 +1436,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रहना"
+            "value": "लाइव"
           }
         },
         "ja": {
@@ -1506,7 +1506,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "जगह"
+            "value": "स्थान"
           }
         },
         "ja": {
@@ -1926,7 +1926,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "अंक"
+            "value": "पॉइंट"
           }
         },
         "ja": {
@@ -2136,7 +2136,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "समर्थन करना"
+            "value": "स्टैंडबाय"
           }
         },
         "ja": {
@@ -2346,7 +2346,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रुकना"
+            "value": "रोकें"
           }
         },
         "ja": {
@@ -4726,7 +4726,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "रुकना"
+            "value": "रोकें"
           }
         },
         "ja": {

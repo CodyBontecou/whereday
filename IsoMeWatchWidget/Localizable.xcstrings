@@ -36,7 +36,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ बाएं"
+            "value": "%@ बाकी"
           }
         },
         "ja": {
@@ -316,7 +316,7 @@
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld h %2$lld मी"
+            "value": "%1$lldh %2$lldm"
           }
         },
         "ja": {
