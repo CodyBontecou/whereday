@@ -19,8 +19,11 @@ internal data class ActiveRecordingMapUi(val enabled:Boolean,val snapshot:Active
 private data class ActiveRecordingRead(val owner:Any?=null,val complete:Boolean=false,val failed:Boolean=false,val value:ActiveRecordingMap?=null)
 
 /** This observes committed history only. Recording intent and location subscriptions are unchanged. */
-@Composable internal fun rememberActiveRecordingMap(graph:AppGraph,active:Boolean,includeOutliers:Boolean,visible:Boolean=true,source:((Boolean)->Flow<ActiveRecordingMap?>)?=null):ActiveRecordingMapUi {
-    var enabled by rememberSaveable {mutableStateOf(false)}
+@Composable internal fun rememberActiveRecordingMap(graph:AppGraph,active:Boolean,includeOutliers:Boolean,visible:Boolean=true,source:((Boolean)->Flow<ActiveRecordingMap?>)?=null,
+    /** The home map's persisted Live session layer; framed maps keep a per-screen switch. */
+    persisted:Boolean?=null,onPersisted:((Boolean)->Unit)?=null):ActiveRecordingMapUi {
+    var local by rememberSaveable {mutableStateOf(false)}
+    val enabled=persisted ?: local
     var attempt by remember {mutableIntStateOf(0)}
     val ownerLifecycle=LocalLifecycleOwner.current.lifecycle
     val lifecycle by ownerLifecycle.currentStateAsState()
@@ -53,5 +56,5 @@ private data class ActiveRecordingRead(val owner:Any?=null,val complete:Boolean=
         snapshot.count==0L->ActiveRecordingMapStatus.empty
         else->ActiveRecordingMapStatus.ready
     }
-    return ActiveRecordingMapUi(enabled,snapshot,status,{enabled=it},{attempt++})
+    return ActiveRecordingMapUi(enabled,snapshot,status,onPersisted ?: {local=it},{attempt++})
 }

@@ -1,7 +1,9 @@
 package com.bontecou.whereday.domain
 
 /** Source-bound presentation only; point markers, statistics and replay progress retain raw fixes. */
-data class RoadMapGeometry(val raw:List<List<Coordinate>>,val roads:List<List<Coordinate>>,val fit:List<Coordinate>,val prepared:Boolean) {
+data class RoadMapGeometry(val raw:List<List<Coordinate>>,val roads:List<List<Coordinate>>,val fit:List<Coordinate>,val prepared:Boolean,
+    /** When each road-matched line starts, so the map can colour it by the visit it leads to. */
+    val roadStarts:List<java.time.Instant> = emptyList()) {
     companion object {
         const val maximumGeometryCoordinates=100_000
         fun build(source:List<TrackPoint>,raw:List<List<TrackPoint>>,layers:MapLayers,route:RoadRoute?,
@@ -27,9 +29,9 @@ data class RoadMapGeometry(val raw:List<List<Coordinate>>,val roads:List<List<Co
             val end=if(replay==null) selected.lastIndex else selected.indexOfLast {point->
                 point.time<replay.current.time || (point.time==replay.current.time && point.id<=replay.current.id)
             }
-            val shown=route.segmentsThrough(end).filter {it.snapped}.map {it.coordinates}
-            return RoadMapGeometry(if(straightSegments) base else emptyList(),shown,
-                route.segments.filter {it.snapped}.flatMap {it.coordinates},true)
+            val through=route.segmentsThrough(end).filter {it.snapped}
+            return RoadMapGeometry(if(straightSegments) base else emptyList(),through.map {it.coordinates},
+                route.segments.filter {it.snapped}.flatMap {it.coordinates},true,through.map {selected[it.startIndex].time})
         }
     }
 }
