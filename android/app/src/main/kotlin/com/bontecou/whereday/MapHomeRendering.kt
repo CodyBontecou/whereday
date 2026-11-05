@@ -35,7 +35,9 @@ internal object MapStyles {
 }
 
 /** A visit pin, count circle or numbered candidate drawn by the home map. [icon] names a label bitmap anchored at its left edge. */
-internal data class MapHomeMarker(val id:String,val coordinate:Coordinate,val color:Int,val radius:Float,val opacity:Float=1f,val icon:String?=null,val centeredIcon:String?=null,val priority:Boolean=false)
+internal data class MapHomeMarker(val id:String,val coordinate:Coordinate,val color:Int,val radius:Float,val opacity:Float=1f,val icon:String?=null,val centeredIcon:String?=null,val priority:Boolean=false,
+    /** The same label drawn to the pin's left, and its width in dp, so it can flip away from the route or the right rail. */
+    val iconLeft:String?=null,val labelWidthDp:Float=0f,val prefersLeft:Boolean=false)
 internal data class MapHomeLine(val coordinates:List<Coordinate>,val color:Int,val width:Float=4f,val opacity:Float=1f,val halo:Boolean=true)
 
 /** Everything the map-first presentation adds on top of the journal layers. Built in Compose; the renderer only publishes it. */
@@ -76,9 +78,9 @@ internal object MapHomeLayers {
         val top="journal-replay-position"
         style.addLayerBelow(SymbolLayer("home-start",MapHomeRender.startSource).withProperties(iconImage("home-diamond"),iconAllowOverlap(true),iconIgnorePlacement(true)),top)
         style.addLayerBelow(SymbolLayer("home-chips",MapHomeRender.chipSource).withProperties(iconImage(Expression.get("icon")),iconAllowOverlap(true),iconIgnorePlacement(true)),top)
-        style.addLayerBelow(SymbolLayer("home-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Property.ICON_ANCHOR_LEFT),
+        style.addLayerBelow(SymbolLayer("home-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Expression.get("anchor")),
             iconOpacity(Expression.get("opacity"))).withFilter(Expression.eq(Expression.get("kind"),Expression.literal("label"))),top)
-        style.addLayerBelow(SymbolLayer("home-priority-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Property.ICON_ANCHOR_LEFT),iconAllowOverlap(true),
+        style.addLayerBelow(SymbolLayer("home-priority-labels",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAnchor(Expression.get("anchor")),iconAllowOverlap(true),
             iconOpacity(Expression.get("opacity"))).withFilter(Expression.eq(Expression.get("kind"),Expression.literal("priority"))),top)
         style.addLayerBelow(SymbolLayer("home-numbers",MapHomeRender.labelSource).withProperties(iconImage(Expression.get("icon")),iconAllowOverlap(true),iconIgnorePlacement(true),
             iconOpacity(Expression.get("opacity"))).withFilter(Expression.eq(Expression.get("kind"),Expression.literal("number"))),top)
@@ -101,7 +103,20 @@ internal object MapHomeLayers {
         return JSONObject().put("type","Polygon").put("coordinates",JSONArray().put(ring))
     }
 
-    fun publish(style:Style,home:MapHomeRender?,inks:MapInks,loaded:MutableMap<String,Bitmap>) {
+    /** Labels sit right of their pin unless the route leaves that way or the label would run under the right rail. */
+    fun publishLabels(style:Style,home:MapHomeRender?,leftOf:(MapHomeMarker)->Boolean) {
+        val markers=home?.markers.orEmpty()
+        style.getSourceAs<GeoJsonSource>(MapHomeRender.labelSource)?.setGeoJson(collection(markers.flatMap {marker->
+            val left=marker.iconLeft!=null && leftOf(marker)
+            listOfNotNull(
+                marker.icon?.let {feature(point(marker.coordinate),JSONObject().put("icon",if(left) marker.iconLeft else it).put("anchor",if(left) Property.ICON_ANCHOR_RIGHT else Property.ICON_ANCHOR_LEFT)
+                    .put("kind",if(marker.priority) "priority" else "label").put("opacity",marker.opacity.toDouble()))},
+                marker.centeredIcon?.let {feature(point(marker.coordinate),JSONObject().put("icon",it).put("anchor",Property.ICON_ANCHOR_CENTER).put("kind","number").put("opacity",marker.opacity.toDouble()))},
+            )
+        }))
+    }
+
+    fun publish(style:Style,home:MapHomeRender?,inks:MapInks,loaded:MutableMap<String,Bitmap>,leftOf:(MapHomeMarker)->Boolean={it.prefersLeft}) {
         val value=home ?: MapHomeRender()
         // Install bitmaps before the symbols that name them (MapLibre leaves a symbol empty if its sprite arrives later).
         val wanted=value.images
@@ -115,12 +130,7 @@ internal object MapHomeLayers {
             }
         }))
         style.getSourceAs<GeoJsonSource>(MapHomeRender.chipSource)?.setGeoJson(collection(value.chips.map {(c,icon)->feature(point(c),JSONObject().put("icon",icon))}))
-        style.getSourceAs<GeoJsonSource>(MapHomeRender.labelSource)?.setGeoJson(collection(value.markers.flatMap {marker->
-            listOfNotNull(
-                marker.icon?.let {feature(point(marker.coordinate),JSONObject().put("icon",it).put("kind",if(marker.priority) "priority" else "label").put("opacity",marker.opacity.toDouble()))},
-                marker.centeredIcon?.let {feature(point(marker.coordinate),JSONObject().put("icon",it).put("kind","number").put("opacity",marker.opacity.toDouble()))},
-            )
-        }))
+        publishLabels(style,home,leftOf)
         style.getSourceAs<GeoJsonSource>(MapHomeRender.nowSource)?.setGeoJson(collection(listOfNotNull(value.now?.let {feature(point(it))})))
         style.getSourceAs<GeoJsonSource>(MapHomeRender.startSource)?.setGeoJson(collection(listOfNotNull(value.start?.let {feature(point(it))})))
         style.getSourceAs<GeoJsonSource>(MapHomeRender.focusSource)?.setGeoJson(collection(listOfNotNull(value.focus?.let {(c,r)->feature(circle(c,r))})))
@@ -165,18 +175,25 @@ internal class MapMarkerArt(private val context:Context,private val dark:Boolean
     }
 
     /** "Ferry Building" in serif italic over "45 min" in mono, offset right of a pin of [pinRadius]. Returns its sprite name. */
-    fun label(name:String,detail:String?,detailColor:Int?,pinRadius:Float,into:MutableMap<String,Bitmap>):String {
-        val id="label-"+key(name,detail,detailColor,pinRadius,dark)
+    fun label(name:String,detail:String?,detailColor:Int?,pinRadius:Float,into:MutableMap<String,Bitmap>,left:Boolean=false):String {
+        val id="label-"+key(name,detail,detailColor,pinRadius,dark,left)
         into[id]=cache.getOrPut(id) {
             val title=paint(serif,15f,ink);val small=paint(mono,9f,detailColor ?: meta).apply {letterSpacing=0.04f}
             val gap=pinRadius+6f
-            val width=gap+maxOf(title.measureText(name),detail?.let {small.measureText(it)} ?: 0f)+6f
+            val width=labelWidth(name,detail,pinRadius)
             bitmap(width,34f) {
-                haloText(name,gap,15f,title,4f)
-                detail?.let {haloText(it,gap,28f,small,3f)}
+                // Drawn to the pin's left, the text ends just before it (anchored at the bitmap's right edge).
+                fun x(text:String,paint:Paint)=if(left) width-gap-paint.measureText(text) else gap
+                haloText(name,x(name,title),15f,title,4f)
+                detail?.let {haloText(it,x(it,small),28f,small,3f)}
             }
         }
         return id
+    }
+    /** A label's width in dp, including the gap beside its pin. */
+    fun labelWidth(name:String,detail:String?,pinRadius:Float):Float {
+        val title=paint(serif,15f,ink);val small=paint(mono,9f,meta).apply {letterSpacing=0.04f}
+        return pinRadius+6f+maxOf(title.measureText(name),detail?.let {small.measureText(it)} ?: 0f)+6f
     }
     /** The small mono time pill at the start of a main leg ("08:12"). */
     fun chip(text:String,into:MutableMap<String,Bitmap>):String {

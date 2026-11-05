@@ -126,8 +126,12 @@ internal fun buildMapHomeRender(options:MapHomeOptions,contents:MapPresentation,
                 val name=visit.name?.trim()?.takeIf {it.isNotEmpty()}
                 val detail=if(isNow) strings.now.format(homeDuration(Duration.between(visit.arrivedAt,mode.now),strings)).uppercase()
                     else visit.departedAt?.let {homeDuration(Duration.between(visit.arrivedAt,it),strings)}
-                val icon=if(name!=null && visit.id in labelled && !replaying) art.label(name,detail,if(isNow) vermilion else null,if(isNow) 8f else 9f,images) else null
-                MapHomeMarker(visit.id,visit.coordinate,if(isNow) vermilion else inkFor(placeInks[placeKey(visit)]),if(isNow) 7f else 9f,if(visit.id==focused) 1f else opacity,icon,priority=isNow || visit.id==focused)
+                val labelled=name!=null && visit.id in labelled && !replaying
+                val pin=if(isNow) 8f else 9f
+                val icon=if(labelled) art.label(name!!,detail,if(isNow) vermilion else null,pin,images) else null
+                val iconLeft=if(labelled) art.label(name!!,detail,if(isNow) vermilion else null,pin,images,left=true) else null
+                MapHomeMarker(visit.id,visit.coordinate,if(isNow) vermilion else inkFor(placeInks[placeKey(visit)]),if(isNow) 7f else 9f,if(visit.id==focused) 1f else opacity,icon,priority=isNow || visit.id==focused,
+                    iconLeft=iconLeft,labelWidthDp=if(labelled) art.labelWidth(name!!,detail,pin) else 0f,prefersLeft=routeLeavesRight(visit,legs))
             }
             val candidates=options.focusCandidates.mapIndexed {index,coordinate->
                 MapHomeMarker("candidate-${index+1}",coordinate,if(colors.dark) colors.card.toArgb() else 0xFFFBF9F4.toInt(),9f,centeredIcon=art.number("${index+1}",colors.textPrimary.toArgb(),images))
@@ -136,6 +140,18 @@ internal fun buildMapHomeRender(options:MapHomeOptions,contents:MapPresentation,
             return MapHomeRender(ahead+straight+roadLines,chips,markers+candidates,current?.coordinate,contents.start?.coordinate,focusArea,images,replacesPath=true)
         }
     }
+}
+
+/** True when the day's path around a stay runs mostly east of it, so its label reads better on the west (left) side. */
+internal fun routeLeavesRight(visit:Visit,legs:List<RouteLeg>):Boolean {
+    val around=legs.flatMap {it.points}.filter {point->
+        val near=point.time<=visit.arrivedAt && Duration.between(point.time,visit.arrivedAt)<=Duration.ofMinutes(20) ||
+            visit.departedAt?.let {point.time>=it && Duration.between(it,point.time)<=Duration.ofMinutes(20)}==true
+        near && point.coordinate.distanceTo(visit.coordinate) in 30.0..1500.0
+    }
+    if(around.isEmpty()) return false
+    val east=around.count {it.coordinate.longitude>visit.coordinate.longitude}
+    return east*2>around.size
 }
 
 private fun splitAtGaps(points:List<TrackPoint>):List<List<TrackPoint>> {

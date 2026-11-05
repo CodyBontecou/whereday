@@ -207,7 +207,7 @@ private class JournalMapRenderer {
                 .put("stroke",3.0).put("opacity",marker.opacity.toDouble()))
                 .put("geometry",JSONObject().put("type","Point").put("coordinates",JSONArray(listOf(marker.coordinate.longitude,marker.coordinate.latitude))))
         })).toString())
-        MapHomeLayers.publish(style,home,inks,homeImages)
+        MapHomeLayers.publish(style,home,inks,homeImages,::labelGoesLeft)
         style.getLayerAs<CircleLayer>("journal-focused-visit")?.let {layer->
             visitFocus?.let {layer.setFilter(Expression.eq(Expression.get("id"),Expression.literal(it.id)))}
             // The home map marks a focused visit with its own pin and dashed radius instead.
@@ -257,6 +257,19 @@ private class JournalMapRenderer {
         if(!fitted && (points.isNotEmpty() || visits.isNotEmpty() || photos.isNotEmpty() || activeRecording?.points?.isNotEmpty()==true)) fit()
     }
     fun pulse(scale:Float) {map?.style?.let {MapHomeLayers.pulse(it,scale)}}
+    var viewWidthPx=0
+    var densityScale=1f
+    /** Flip a pin's label to its left when the route runs off to the right or the label would slide under the right rail. */
+    private fun labelGoesLeft(marker:MapHomeMarker):Boolean {
+        val target=map ?: return marker.prefersLeft
+        if(!queryReady || viewWidthPx<=0) return marker.prefersLeft
+        val x=target.projection.toScreenLocation(LatLng(marker.coordinate.latitude,marker.coordinate.longitude)).x
+        val label=marker.labelWidthDp*densityScale
+        val right=viewWidthPx-(chromePadding?.get(2) ?: 0)
+        val roomLeft=x-label>=0
+        return if(marker.prefersLeft) roomLeft || x+label>right else x+label>right && roomLeft
+    }
+    fun republishLabels() {if(!disposed) map?.style?.let {MapHomeLayers.publishLabels(it,home,::labelGoesLeft)}}
     private fun applyVisitFocus() {
         val focus=visitFocus ?: return
         if(focus==appliedVisitFocus || visits.none {it.id==focus.id}) return
@@ -533,6 +546,7 @@ private class JournalMapRenderer {
             renderer.restoreCamera(savedCamera)
             map.addOnCameraIdleListener {refreshViewport();renderer.cameraSnapshot()?.let {savedCamera=it}
                 // The home map's scale bar reads metres per dp at the camera's latitude.
+                renderer.republishLabels()
                 map.cameraPosition.target?.let {target->metersPerDp=map.projection.getMetersPerPixelAtLatitude(target.latitude)*context.resources.displayMetrics.density}}
             map.addOnCameraMoveStartedListener {reason->if(reason==MapLibreMap.OnCameraMoveStartedListener.REASON_API_GESTURE) {renderer.autoFitted=false;latestFollow?.stop?.invoke()}}
             renderer.follow(latestFollow?.fix,latestFollow?.enabled==true && latestVisitFocus==null)
@@ -578,7 +592,7 @@ private class JournalMapRenderer {
             }
             renderer.render(latestPoints,latestVisits,latestOnline,latestDark,latestLayers,latestReplay,latestEnds,latestFallback,latestPhotoLayer?.visibleClusters.orEmpty(),latestPhotoLayer?.icons.orEmpty(),latestActiveRecording,latestRoadGeometry,latestPhotoLayer?.dots==true,latestVisitFocus)
         }
-    } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null)
+    } },update={ view->view.contentDescription=mapDescription;renderer.follow(follow?.fix,follow?.enabled==true && visitFocus==null);renderer.viewWidthPx=view.width;renderer.densityScale=context.resources.displayMetrics.density
         // The home map credits tiles itself; MapLibre's own logo would sit under the tab bar.
         renderer.map?.uiSettings?.let {ui->val homeMap=home!=null;if(ui.isLogoEnabled==homeMap) ui.isLogoEnabled=!homeMap;if(ui.isAttributionEnabled==homeMap) ui.isAttributionEnabled=!homeMap
             // The compass appears when the map is rotated; on the home map it sits below the header, left of the rail.
