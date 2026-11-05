@@ -453,6 +453,12 @@
             "value": "今日はまだ場所がありません"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum lugar hoje ainda"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -491,6 +497,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@（%@から）"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ desde %@"
           }
         },
         "zh-Hans": {
@@ -533,6 +545,12 @@
             "value": "今日の場所"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lugares de hoje"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -571,6 +589,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日の滞在を24時間の帯で表示。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As paradas de hoje em uma faixa de 24 horas."
           }
         },
         "zh-Hans": {
@@ -613,6 +637,12 @@
             "value": "今日"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoje"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -651,6 +681,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@から"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DESDE %@"
           }
         },
         "zh-Hans": {
@@ -693,6 +729,12 @@
             "value": "滞在なし"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NENHUMA PARADA AINDA"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -731,6 +773,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "移動中"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EM MOVIMENTO"
           }
         },
         "zh-Hans": {
@@ -773,6 +821,12 @@
             "value": "%lld日目"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia %lld"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -811,6 +865,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "場所"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LUGARES"
           }
         },
         "zh-Hans": {
@@ -853,6 +913,12 @@
             "value": "移動"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERCORRIDO"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -891,6 +957,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "滞在"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PARADAS"
           }
         },
         "zh-Hans": {
@@ -933,6 +1005,12 @@
             "value": "記録"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRAVADO"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -971,6 +1049,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "1日のダイヤル"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrador do dia"
           }
         },
         "zh-Hans": {
@@ -1013,6 +1097,12 @@
             "value": "今日の場所を24時間のダイヤルで表示。"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os lugares de hoje em um mostrador de 24 horas."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1051,6 +1141,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "24時間ダイヤル：%@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrador de 24 horas: %@"
           }
         },
         "zh-Hans": {
@@ -1093,6 +1189,12 @@
             "value": "この場所を記録"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar este lugar"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1131,6 +1233,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wheredayのライブアクティビティから現在地にチェックインします。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faça check-in no lugar onde você está pela Atividade ao Vivo do Whereday."
           }
         },
         "zh-Hans": {
@@ -1173,6 +1281,12 @@
             "value": "場所の名前"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome do lugar"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1211,6 +1325,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "緯度"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latitude"
           }
         },
         "zh-Hans": {
@@ -1253,6 +1373,12 @@
             "value": "経度"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Longitude"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1291,6 +1417,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ルートを停止"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parar trajeto"
           }
         },
         "zh-Hans": {
@@ -1333,6 +1465,12 @@
             "value": "ライブアクティビティから現在のWheredayの記録を停止します。"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pare a gravação atual do Whereday pela Atividade ao Vivo."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1371,6 +1509,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "● 記録中 · %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● GRAVANDO · %@"
           }
         },
         "zh-Hans": {
@@ -1413,6 +1557,12 @@
             "value": "● 記録中"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● GRAVANDO"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1453,6 +1603,12 @@
             "value": "%@ PTS · 残り%@"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS · RESTAM %@"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1488,6 +1644,12 @@
           }
         },
         "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ PTS"
@@ -1533,6 +1695,12 @@
             "value": "記録中"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gravando"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1571,6 +1739,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日のダイヤル：%@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrador de hoje: %@"
           }
         },
         "zh-Hans": {
@@ -1613,6 +1787,12 @@
             "value": "今日"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOJE"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1651,6 +1831,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ポイント"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PONTOS"
           }
         },
         "zh-Hans": {
@@ -1693,6 +1879,12 @@
             "value": "記録時間"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRAVANDO HÁ"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1731,6 +1923,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "自動停止まで"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ATÉ DESLIGAR"
           }
         },
         "zh-Hans": {
@@ -1773,6 +1971,12 @@
             "value": "現在地にチェックインします"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faz check-in onde você está"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1811,6 +2015,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "記録を停止します"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para a gravação"
           }
         },
         "zh-Hans": {
@@ -1853,6 +2063,12 @@
             "value": "この場所を記録"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar este lugar"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1891,6 +2107,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ルートを停止"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parar trajeto"
           }
         },
         "zh-Hans": {
@@ -1933,6 +2155,12 @@
             "value": "徒歩"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caminhada"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1971,6 +2199,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ラン"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrida"
           }
         },
         "zh-Hans": {
@@ -2013,6 +2247,12 @@
             "value": "自転車"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bicicleta"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2051,6 +2291,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "車"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carro"
           }
         },
         "zh-Hans": {
@@ -2093,6 +2339,12 @@
             "value": "電車"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trem"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2131,6 +2383,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行機"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voo"
           }
         },
         "zh-Hans": {
@@ -2173,6 +2431,12 @@
             "value": "徒歩"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caminhando"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2211,6 +2475,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ランニング"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correndo"
           }
         },
         "zh-Hans": {
@@ -2253,6 +2523,12 @@
             "value": "サイクリング"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pedalando"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2291,6 +2567,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "運転中"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dirigindo"
           }
         },
         "zh-Hans": {
@@ -2333,6 +2615,12 @@
             "value": "電車で移動中"
           }
         },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No trem"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2371,6 +2659,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "飛行中"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voando"
           }
         },
         "zh-Hans": {
