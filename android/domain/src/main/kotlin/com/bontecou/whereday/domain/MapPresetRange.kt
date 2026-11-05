@@ -26,7 +26,8 @@ fun mapPresetRange(preset:String,reference:Instant,zone:ZoneId):HistoryRange {
         // 7D is today plus the six days before it: seven whole calendar days (the map-first home's "7 DAYS").
         "7 days"->HistoryRange(daysAgo(start,6),until)
         "This month"->HistoryRange(day.withDayOfMonth(1).atStartOfDay(zone).toInstant(),until)
-        "30 days"->HistoryRange(daysAgo(reference,30),until)
+        // 30D is today plus the 29 days before it: thirty whole calendar days ("30 DAYS"). Export date presets are separate.
+        "30 days"->HistoryRange(daysAgo(start,29),until)
         "All"->HistoryRange(Instant.ofEpochMilli(-62_135_769_600_000L),until)
         else->HistoryRange(start,until)
     }

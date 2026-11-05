@@ -60,6 +60,20 @@ class JournalMapRangeTest {
             assertEquals(setOf("now","new-live-fix","future","after-midnight"),rolled.points.map {it.id}.toSet())
         } finally {collector.cancelAndJoin()}
     }
+    @Test fun thirtyDaysStartsAtTheFirstOfThirtyCalendarDays()=runBlocking {
+        // 30D is today and the 29 calendar days before it, not the last 720 hours.
+        val now=clock.now
+        val firstDay=Instant.parse("2026-10-02T00:00:00Z")
+        put("old",firstDay.minusMillis(1));put("rolling-only",now.minus(Duration.ofDays(30)).plusSeconds(3600))
+        put("edge",firstDay);put("now",now);put("future",now.plusSeconds(600))
+        model.mapSelection.value=MapSelection("30 days")
+        val collector=launch {model.mapWindow.collect()}
+        try {
+            val window=awaitWindow {it.summary.count==2L}
+            assertEquals(setOf("edge","now"),window.points.map {it.id}.toSet())
+            assertEquals(firstDay,window.range.from);assertEquals(now.plusMillis(1),window.range.until)
+        } finally {collector.cancelAndJoin()}
+    }
     @Test fun allStopsAtNowWhileExplicitCustomAndOutingWindowsKeepTheirBounds()=runBlocking {
         val now=clock.now;put("past",now.minusSeconds(60));put("future",now.plusSeconds(60))
         model.mapSelection.value=MapSelection("All")
