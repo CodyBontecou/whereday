@@ -8,16 +8,8 @@ import UniformTypeIdentifiers
 
 @MainActor
 enum IntentSupport {
-    /// A dedicated container for intent-side reads. Uses the same on-disk store as the app.
-    static let modelContainer: ModelContainer = {
-        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, allowsSave: true)
-        do {
-            return try ModelContainer(for: schema, configurations: [config])
-        } catch {
-            fatalError("Could not open Whereday model container in intent: \(error)")
-        }
-    }()
+    /// The app's own container: intents run in the app's process and share its store.
+    static var modelContainer: ModelContainer { AppModelStore.shared }
 
     static func makeContext() -> ModelContext {
         ModelContext(modelContainer)

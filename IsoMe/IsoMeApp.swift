@@ -22,35 +22,8 @@ struct IsoMeApp: App {
         #endif
     }
 
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Visit.self,
-            LocationPoint.self,
-            RecordingSession.self,
-            PhotoMoment.self,
-            SavedPlace.self,
-            CountryStay.self
-        ])
-        let modelConfiguration: ModelConfiguration
-        #if DEBUG && targetEnvironment(simulator)
-        if ProcessInfo.processInfo.arguments.contains("--watch-sync-replay") {
-            let directory = URL.documentsDirectory.appendingPathComponent("WatchSyncReplay")
-            try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-            modelConfiguration = ModelConfiguration(schema: schema, url: directory.appendingPathComponent("phone.store"))
-        } else {
-            modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, allowsSave: true)
-        }
-        #else
-        modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, allowsSave: true)
-        #endif
-
-        do {
-            let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
-            return container
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    /// Shared with in-app intents; see `AppModelStore`.
+    let sharedModelContainer = AppModelStore.shared
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -77,6 +50,8 @@ struct IsoMeApp: App {
                     handleDeepLink(url)
                 }
                 .task {
+                    // Never sync into the empty stand-in: the watch would drop data it thinks was saved.
+                    guard AppModelStore.openFailure == nil else { return }
                     watchSyncReceiver.configure(modelContainer: sharedModelContainer)
                     DailyExportScheduler.shared.attach(modelContainer: sharedModelContainer)
                     DailyExportScheduler.shared.scheduleNextBackgroundRun()
@@ -93,6 +68,8 @@ struct IsoMeApp: App {
             case .inactive:
                 break
             case .background:
+                // Reaching the background on its own means this launch didn't die.
+                LaunchGuard.confirmLaunch()
                 NotificationCenter.default.post(name: .appDidEnterBackground, object: nil)
                 DailyExportScheduler.shared.scheduleNextBackgroundRun()
             @unknown default:
