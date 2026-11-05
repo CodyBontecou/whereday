@@ -885,6 +885,12 @@
             "value": "%lld min"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld мин"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -935,6 +941,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ч"
           }
         },
         "zh-Hans": {
@@ -989,6 +1001,12 @@
             "value": "%@, %@ hoje"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@ сегодня"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1041,6 +1059,12 @@
             "value": "● TRAJETO"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● МАРШРУТ"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1088,6 +1112,12 @@
           }
         },
         "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "WHEREDAY"
@@ -1145,6 +1175,12 @@
             "value": "%lld VISITAS · RESTAM %@"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ПОСЕЩЕНИЙ: %lld · ОСТАЛОСЬ %@"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1195,6 +1231,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld VISITAS · %lld PTS"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ПОСЕЩЕНИЙ: %lld · %lld ТЧК"
           }
         },
         "zh-Hans": {
@@ -1249,6 +1291,12 @@
             "value": "Caminhada"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ходьба"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1299,6 +1347,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corrida"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бег"
           }
         },
         "zh-Hans": {
@@ -1353,6 +1407,12 @@
             "value": "Bicicleta"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Велосипед"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1403,6 +1463,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Carro"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Авто"
           }
         },
         "zh-Hans": {
@@ -1457,6 +1523,12 @@
             "value": "Trem"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поезд"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1507,6 +1579,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перелёт"
           }
         },
         "zh-Hans": {
@@ -1561,6 +1639,12 @@
             "value": "Caminhando"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пешком"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1611,6 +1695,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Correndo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бегом"
           }
         },
         "zh-Hans": {
@@ -1665,6 +1755,12 @@
             "value": "Pedalando"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На велосипеде"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1715,6 +1811,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dirigindo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За рулём"
           }
         },
         "zh-Hans": {
@@ -1769,6 +1871,12 @@
             "value": "No trem"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В поезде"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1819,6 +1927,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voando"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В полёте"
           }
         },
         "zh-Hans": {
