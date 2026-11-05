@@ -178,6 +178,8 @@ struct MapRangeCard: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+                // A fixed height: a lazy strip re-measures as it scrolls, which would ripple into the map's layout.
+                .frame(height: 64)
                 .onAppear { proxy.scrollTo(selectedDay ?? summary.days.last?.day, anchor: .trailing) }
             }
         }

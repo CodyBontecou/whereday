@@ -95,6 +95,8 @@ struct LocationMapView: View {
     @State private var replaySpeed: ReplaySpeed = .ten
     @State private var peekHeight: CGFloat = 64
     @State private var hasFramedContent = false
+    /// Memo for the multi-day summary; a reference, so filling it during a view update changes no state.
+    @State private var rangeCache = RangeSummaryCache()
 
     init(
         viewModel: LocationViewModel,
@@ -788,7 +790,9 @@ struct LocationMapView: View {
             TimelineView(.everyMinute) { context in
                 peekView(day: day, now: context.date)
             }
-            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { peekHeight = $0 }
+            .onGeometryChange(for: CGFloat.self) { $0.size.height.rounded() } action: { height in
+                if abs(height - peekHeight) > 1 { peekHeight = height }
+            }
         } content: {
             sheetContent(day: day)
         }
@@ -1055,12 +1059,25 @@ struct LocationMapView: View {
 
     // MARK: Multi-day
 
+    /// Several parts of the screen read the range's summary in one pass; it is computed once per change of the data.
     private func rangeSummary(day: TraceDay) -> RangeSummary {
-        MultiDayAggregator.summarize(
-            visits: filteredVisits.map { DayVisitSample(placeKey: day.placeKey(for: $0), arrivedAt: $0.arrivedAt) },
-            points: filteredPoints.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
-            range: viewModel.mapDateRange.lowerBound...min(viewModel.mapDateRange.upperBound, Date())
+        let points = filteredPoints
+        let visits = filteredVisits
+        let range = viewModel.mapDateRange
+        let lastPoint: Double = points.last?.timestamp.timeIntervalSinceReferenceDate ?? 0
+        let departures: [Double] = visits.map { ($0.departedAt ?? Date.distantFuture).timeIntervalSinceReferenceDate }
+        let names: String = visits.map { day.placeKey(for: $0) }.joined(separator: ",")
+        var key = "\(range.lowerBound.timeIntervalSinceReferenceDate)|\(range.upperBound.timeIntervalSinceReferenceDate)"
+        key += "|\(points.count)|\(lastPoint)|\(visits.count)|\(departures.max() ?? 0)|\(names)"
+        if rangeCache.key == key, let summary = rangeCache.summary { return summary }
+        let summary = MultiDayAggregator.summarize(
+            visits: visits.map { DayVisitSample(placeKey: day.placeKey(for: $0), arrivedAt: $0.arrivedAt) },
+            points: points.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
+            range: range.lowerBound...min(range.upperBound, Date())
         )
+        rangeCache.key = key
+        rangeCache.summary = summary
+        return summary
     }
 
     private func traceMap(day: TraceDay, photoDetails: PhotoMomentDetailSelection) -> some View {
@@ -2490,6 +2507,12 @@ struct LocationMapView: View {
 
         return parts.joined(separator: ". ")
     }
+}
+
+/// Holds the last multi-day summary and the data it was computed from.
+final class RangeSummaryCache {
+    var key = ""
+    var summary: RangeSummary?
 }
 
 // MARK: - Tracking Control Pills
