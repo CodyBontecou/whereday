@@ -429,6 +429,12 @@
             "value": "لا أماكن اليوم بعد"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আজ এখনো কোনো জায়গা নেই"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -491,6 +497,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ من %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@ থেকে"
           }
         },
         "en": {
@@ -557,6 +569,12 @@
             "value": "أماكن اليوم"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আজকের জায়গা"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -619,6 +637,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "إقامات اليوم كشريط 24 ساعة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "২৪-ঘন্টার স্ট্রিপে আজকের অবস্থান।"
           }
         },
         "en": {
@@ -685,6 +709,12 @@
             "value": "اليوم"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আজ"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -747,6 +777,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "منذ %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ থেকে"
           }
         },
         "en": {
@@ -813,6 +849,12 @@
             "value": "لا إقامات بعد"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এখনো অবস্থান নেই"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -875,6 +917,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "في حركة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "চলমান"
           }
         },
         "en": {
@@ -941,6 +989,12 @@
             "value": "اليوم %lld"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দিন %lld"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1003,6 +1057,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "الأماكن"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "জায়গা"
           }
         },
         "en": {
@@ -1069,6 +1129,12 @@
             "value": "التنقّل"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "চলাচল"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1131,6 +1197,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "الإقامات"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অবস্থান"
           }
         },
         "en": {
@@ -1197,6 +1269,12 @@
             "value": "مسجّل"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রেকর্ড"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1259,6 +1337,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "قرص اليوم"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দিনের ডায়াল"
           }
         },
         "en": {
@@ -1325,6 +1409,12 @@
             "value": "أماكن اليوم حول قرص 24 ساعة."
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "২৪-ঘন্টার ডায়ালে আজকের জায়গা।"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1387,6 +1477,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "قرص 24 ساعة: %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "২৪-ঘন্টার ডায়াল: %@"
           }
         },
         "en": {
@@ -1453,6 +1549,12 @@
             "value": "علِّم هذا المكان"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই জায়গা চিহ্নিত করুন"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1515,6 +1617,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "سجّل الوصول إلى مكانك الحالي من النشاط المباشر لـ Whereday."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday লাইভ অ্যাক্টিভিটি থেকে আপনার বর্তমান জায়গায় চেক ইন করুন।"
           }
         },
         "en": {
@@ -1581,6 +1689,12 @@
             "value": "اسم المكان"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "জায়গার নাম"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1643,6 +1757,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "خط العرض"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অক্ষাংশ"
           }
         },
         "en": {
@@ -1709,6 +1829,12 @@
             "value": "خط الطول"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দ্রাঘিমাংশ"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1771,6 +1897,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "إيقاف المسار"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রুট থামান"
           }
         },
         "en": {
@@ -1837,6 +1969,12 @@
             "value": "أوقف تسجيل Whereday الحالي من النشاط المباشر."
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "লাইভ অ্যাক্টিভিটি থেকে বর্তমান Whereday রেকর্ডিং থামান।"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1899,6 +2037,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "● تسجيل · %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● রেকর্ডিং · %@"
           }
         },
         "en": {
@@ -1965,6 +2109,12 @@
             "value": "● تسجيل"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● রেকর্ডিং"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2027,6 +2177,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ نقطة · متبقٍ %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS · %@ বাকি"
           }
         },
         "en": {
@@ -2093,6 +2249,12 @@
             "value": "%@ نقطة"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2155,6 +2317,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "تسجيل"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রেকর্ডিং"
           }
         },
         "en": {
@@ -2221,6 +2389,12 @@
             "value": "قرص اليوم: %@"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আজকের ডায়াল: %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2283,6 +2457,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "اليوم"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আজ"
           }
         },
         "en": {
@@ -2349,6 +2529,12 @@
             "value": "النقاط"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "পয়েন্ট"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2411,6 +2597,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "مدة التسجيل"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রেকর্ডিং চলছে"
           }
         },
         "en": {
@@ -2477,6 +2669,12 @@
             "value": "حتى الإيقاف"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অটো-অফ পর্যন্ত"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2539,6 +2737,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "يسجّل الوصول إلى مكانك الحالي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনার বর্তমান জায়গায় চেক ইন করে"
           }
         },
         "en": {
@@ -2605,6 +2809,12 @@
             "value": "يوقف التسجيل"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রেকর্ডিং থামায়"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2667,6 +2877,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "علِّم هذا المكان"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই জায়গা চিহ্নিত করুন"
           }
         },
         "en": {
@@ -2733,6 +2949,12 @@
             "value": "إيقاف المسار"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রুট থামান"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2795,6 +3017,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "مشي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "হাঁটা"
           }
         },
         "en": {
@@ -2861,6 +3089,12 @@
             "value": "جري"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দৌড়"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -2923,6 +3157,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "دراجة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সাইকেল"
           }
         },
         "en": {
@@ -2989,6 +3229,12 @@
             "value": "قيادة"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ড্রাইভ"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3051,6 +3297,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "قطار"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্রেন"
           }
         },
         "en": {
@@ -3117,6 +3369,12 @@
             "value": "طيران"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ফ্লাইট"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3179,6 +3437,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "مشيًا"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "হাঁটছেন"
           }
         },
         "en": {
@@ -3245,6 +3509,12 @@
             "value": "جريًا"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দৌড়াচ্ছেন"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3307,6 +3577,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "بالدراجة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সাইকেলে"
           }
         },
         "en": {
@@ -3373,6 +3649,12 @@
             "value": "بالسيارة"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "গাড়িতে"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3437,6 +3719,12 @@
             "value": "في القطار"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্রেনে"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -3499,6 +3787,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "في الطائرة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "উড়ছেন"
           }
         },
         "en": {

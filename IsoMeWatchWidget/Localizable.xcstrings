@@ -849,6 +849,12 @@
             "value": "%lld د"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -911,6 +917,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld س"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
           }
         },
         "en": {
@@ -977,6 +989,12 @@
             "value": "%@، %@ اليوم"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, আজ %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1041,6 +1059,12 @@
             "value": "● مسار"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● রুট"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1100,6 +1124,12 @@
     "WHEREDAY": {
       "localizations": {
         "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
+        "bn": {
           "stringUnit": {
             "state": "translated",
             "value": "WHEREDAY"
@@ -1169,6 +1199,12 @@
             "value": "%lld زيارة · متبقٍ %@"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldটি ভিজিট · %@ বাকি"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1231,6 +1267,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld زيارة · %lld نقطة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldটি ভিজিট · %lld PTS"
           }
         },
         "en": {
@@ -1297,6 +1339,12 @@
             "value": "مشي"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "হাঁটা"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1359,6 +1407,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "جري"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দৌড়"
           }
         },
         "en": {
@@ -1425,6 +1479,12 @@
             "value": "دراجة"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সাইকেল"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1487,6 +1547,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "قيادة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ড্রাইভ"
           }
         },
         "en": {
@@ -1553,6 +1619,12 @@
             "value": "قطار"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্রেন"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1615,6 +1687,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "طيران"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ফ্লাইট"
           }
         },
         "en": {
@@ -1681,6 +1759,12 @@
             "value": "مشيًا"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "হাঁটছেন"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1743,6 +1827,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "جريًا"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দৌড়াচ্ছেন"
           }
         },
         "en": {
@@ -1809,6 +1899,12 @@
             "value": "بالدراجة"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সাইকেলে"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1871,6 +1967,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "بالسيارة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "গাড়িতে"
           }
         },
         "en": {
@@ -1937,6 +2039,12 @@
             "value": "في القطار"
           }
         },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্রেনে"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
@@ -1999,6 +2107,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "في الطائرة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "উড়ছেন"
           }
         },
         "en": {
