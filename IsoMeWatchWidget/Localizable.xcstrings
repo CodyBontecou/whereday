@@ -848,12 +848,24 @@
             "state": "translated",
             "value": "%lld min"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
         }
       }
     },
     "%lldh": {
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
@@ -868,6 +880,12 @@
             "state": "translated",
             "value": "%@, %@ today"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@ hoy"
+          }
         }
       }
     },
@@ -878,12 +896,24 @@
             "state": "translated",
             "value": "● ROUTE"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● RUTA"
+          }
         }
       }
     },
     "WHEREDAY": {
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHEREDAY"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "WHEREDAY"
@@ -898,6 +928,12 @@
             "state": "translated",
             "value": "%lld VISITS · %@ LEFT"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld VISITAS · QUEDAN %@"
+          }
         }
       }
     },
@@ -907,6 +943,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld VISITS · %lld PTS"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld VISITAS · %lld PTS"
           }
         }
       }
@@ -918,6 +960,12 @@
             "state": "translated",
             "value": "Walk"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pie"
+          }
         }
       }
     },
@@ -927,6 +975,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Run"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carrera"
           }
         }
       }
@@ -938,6 +992,12 @@
             "state": "translated",
             "value": "Bike"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bici"
+          }
         }
       }
     },
@@ -947,6 +1007,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Drive"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coche"
           }
         }
       }
@@ -958,6 +1024,12 @@
             "state": "translated",
             "value": "Train"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tren"
+          }
         }
       }
     },
@@ -967,6 +1039,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Flight"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vuelo"
           }
         }
       }
@@ -978,6 +1056,12 @@
             "state": "translated",
             "value": "Walking"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caminando"
+          }
         }
       }
     },
@@ -987,6 +1071,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Running"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corriendo"
           }
         }
       }
@@ -998,6 +1088,12 @@
             "state": "translated",
             "value": "Cycling"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En bici"
+          }
         }
       }
     },
@@ -1007,6 +1103,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Driving"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conduciendo"
           }
         }
       }
@@ -1018,6 +1120,12 @@
             "state": "translated",
             "value": "On a train"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En tren"
+          }
         }
       }
     },
@@ -1027,6 +1135,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Flying"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volando"
           }
         }
       }

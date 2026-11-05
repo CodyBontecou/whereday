@@ -8,6 +8,12 @@
             "state": "translated",
             "value": "Sync Now"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronizar"
+          }
         }
       }
     },
@@ -17,6 +23,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nothing to sync."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada que sincronizar."
           }
         }
       }
@@ -28,6 +40,12 @@
             "state": "translated",
             "value": "iPhone sync is unavailable."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronización con iPhone no disponible."
+          }
         }
       }
     },
@@ -37,6 +55,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connecting to iPhone…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectando con iPhone…"
           }
         }
       }
@@ -48,6 +72,12 @@
             "state": "translated",
             "value": "Sync queued. Open Whereday on your iPhone."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronización en cola. Abre Whereday en tu iPhone."
+          }
         }
       }
     },
@@ -57,6 +87,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sync failed. Please try again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error al sincronizar. Inténtalo de nuevo."
           }
         }
       }
@@ -68,6 +104,12 @@
             "state": "translated",
             "value": "Synced with iPhone."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronizado con iPhone."
+          }
         }
       }
     },
@@ -77,6 +119,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn’t connect. Please try again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo conectar. Inténtalo de nuevo."
           }
         }
       }
@@ -2328,12 +2376,24 @@
             "state": "translated",
             "value": "%lld min"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
         }
       }
     },
     "%lldh": {
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lldh"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%lldh"
@@ -2348,6 +2408,12 @@
             "state": "translated",
             "value": "Open Whereday on iPhone to choose or restore a plan."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre Whereday en el iPhone para elegir o restaurar un plan."
+          }
         }
       }
     },
@@ -2357,6 +2423,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mark queued for iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marca en cola para el iPhone."
           }
         }
       }
@@ -2368,6 +2440,12 @@
             "state": "translated",
             "value": "Marking…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcando…"
+          }
         }
       }
     },
@@ -2377,6 +2455,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Marked on iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcado en el iPhone."
           }
         }
       }
@@ -2388,6 +2472,12 @@
             "state": "translated",
             "value": "Marked %@."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ marcado."
+          }
         }
       }
     },
@@ -2397,6 +2487,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn’t mark this place."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo marcar este lugar."
           }
         }
       }
@@ -2408,6 +2504,12 @@
             "state": "translated",
             "value": "Whereday, recording a route"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday, grabando una ruta"
+          }
         }
       }
     },
@@ -2417,6 +2519,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Whereday, today"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday, hoy"
           }
         }
       }
@@ -2428,6 +2536,12 @@
             "state": "translated",
             "value": "● Route"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● Ruta"
+          }
         }
       }
     },
@@ -2437,6 +2551,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy"
           }
         }
       }
@@ -2448,6 +2568,12 @@
             "state": "translated",
             "value": "Today's dial, %lld stays, %@ moved"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esfera de hoy, %lld estancias, %@ recorridos"
+          }
         }
       }
     },
@@ -2457,6 +2583,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today's dial, %@ moved"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esfera de hoy, %@ recorridos"
           }
         }
       }
@@ -2468,6 +2600,12 @@
             "state": "translated",
             "value": "Standby"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En espera"
+          }
         }
       }
     },
@@ -2477,6 +2615,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Location needed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falta ubicación"
           }
         }
       }
@@ -2488,6 +2632,12 @@
             "state": "translated",
             "value": "Check permission"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver permiso"
+          }
         }
       }
     },
@@ -2498,12 +2648,24 @@
             "state": "translated",
             "value": "since %@ · %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "desde %@ · %@"
+          }
         }
       }
     },
     "%@ · %@": {
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ · %@"
@@ -2518,6 +2680,12 @@
             "state": "translated",
             "value": "last fix %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "última posición %@"
+          }
         }
       }
     },
@@ -2527,6 +2695,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ready to record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "listo para grabar"
           }
         }
       }
@@ -2538,6 +2712,12 @@
             "state": "translated",
             "value": "%@ until auto-off"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ hasta apagarse"
+          }
         }
       }
     },
@@ -2547,6 +2727,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ THIS ROUTE"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ESTA RUTA"
           }
         }
       }
@@ -2558,6 +2744,12 @@
             "state": "translated",
             "value": "%lld pts waiting for iPhone"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld pts esperan al iPhone"
+          }
         }
       }
     },
@@ -2567,6 +2759,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mark this place"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar este lugar"
           }
         }
       }
@@ -2578,6 +2776,12 @@
             "state": "translated",
             "value": "Checks in here on your iPhone"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra la llegada aquí en tu iPhone"
+          }
         }
       }
     },
@@ -2587,6 +2791,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mark"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar"
           }
         }
       }
@@ -2598,6 +2808,12 @@
             "state": "translated",
             "value": "Stop"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener"
+          }
         }
       }
     },
@@ -2607,6 +2823,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Start route"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar ruta"
           }
         }
       }
@@ -2618,6 +2840,12 @@
             "state": "translated",
             "value": "Enable location"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activar ubicación"
+          }
         }
       }
     },
@@ -2627,6 +2855,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Walk"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pie"
           }
         }
       }
@@ -2638,6 +2872,12 @@
             "state": "translated",
             "value": "Run"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carrera"
+          }
         }
       }
     },
@@ -2647,6 +2887,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bike"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bici"
           }
         }
       }
@@ -2658,6 +2904,12 @@
             "state": "translated",
             "value": "Drive"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coche"
+          }
         }
       }
     },
@@ -2667,6 +2919,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Train"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tren"
           }
         }
       }
@@ -2678,6 +2936,12 @@
             "state": "translated",
             "value": "Flight"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vuelo"
+          }
         }
       }
     },
@@ -2687,6 +2951,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Walking"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caminando"
           }
         }
       }
@@ -2698,6 +2968,12 @@
             "state": "translated",
             "value": "Running"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corriendo"
+          }
         }
       }
     },
@@ -2707,6 +2983,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cycling"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En bici"
           }
         }
       }
@@ -2718,6 +3000,12 @@
             "state": "translated",
             "value": "Driving"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conduciendo"
+          }
         }
       }
     },
@@ -2728,6 +3016,12 @@
             "state": "translated",
             "value": "On a train"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En tren"
+          }
         }
       }
     },
@@ -2737,6 +3031,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Flying"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volando"
           }
         }
       }

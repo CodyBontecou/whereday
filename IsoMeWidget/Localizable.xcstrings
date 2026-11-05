@@ -428,6 +428,12 @@
             "state": "translated",
             "value": "No places yet today"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay lugares hoy"
+          }
         }
       }
     },
@@ -437,6 +443,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ from %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ desde %@"
           }
         }
       }
@@ -448,6 +460,12 @@
             "state": "translated",
             "value": "Today's places"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lugares de hoy"
+          }
         }
       }
     },
@@ -457,6 +475,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today's stays as a 24-hour strip."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las estancias de hoy en una franja de 24 horas."
           }
         }
       }
@@ -468,6 +492,12 @@
             "state": "translated",
             "value": "Today"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy"
+          }
         }
       }
     },
@@ -477,6 +507,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "SINCE %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DESDE %@"
           }
         }
       }
@@ -488,6 +524,12 @@
             "state": "translated",
             "value": "NO STAYS YET"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SIN ESTANCIAS AÚN"
+          }
         }
       }
     },
@@ -497,6 +539,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "MOVING"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EN MOVIMIENTO"
           }
         }
       }
@@ -508,6 +556,12 @@
             "state": "translated",
             "value": "Day %lld"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Día %lld"
+          }
         }
       }
     },
@@ -517,6 +571,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "PLACES"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LUGARES"
           }
         }
       }
@@ -528,6 +588,12 @@
             "state": "translated",
             "value": "MOVED"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORRIDO"
+          }
         }
       }
     },
@@ -537,6 +603,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "STAYS"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ESTANCIAS"
           }
         }
       }
@@ -548,6 +620,12 @@
             "state": "translated",
             "value": "RECORDED"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRABADO"
+          }
         }
       }
     },
@@ -557,6 +635,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Day dial"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esfera del día"
           }
         }
       }
@@ -568,6 +652,12 @@
             "state": "translated",
             "value": "Today's places around a 24-hour dial."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los lugares de hoy en una esfera de 24 horas."
+          }
         }
       }
     },
@@ -577,6 +667,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "24-hour dial: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esfera de 24 horas: %@"
           }
         }
       }
@@ -588,6 +684,12 @@
             "state": "translated",
             "value": "Mark This Place"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar este lugar"
+          }
         }
       }
     },
@@ -597,6 +699,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Check in at your current place from the Whereday Live Activity."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra la llegada a tu lugar actual desde la Actividad en Vivo de Whereday."
           }
         }
       }
@@ -608,6 +716,12 @@
             "state": "translated",
             "value": "Place Name"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre del lugar"
+          }
         }
       }
     },
@@ -617,6 +731,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Latitude"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latitud"
           }
         }
       }
@@ -628,6 +748,12 @@
             "state": "translated",
             "value": "Longitude"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Longitud"
+          }
         }
       }
     },
@@ -637,6 +763,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stop Route"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener ruta"
           }
         }
       }
@@ -648,6 +780,12 @@
             "state": "translated",
             "value": "Stop the current Whereday recording from the Live Activity."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detén la grabación actual de Whereday desde la Actividad en Vivo."
+          }
         }
       }
     },
@@ -657,6 +795,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "● RECORDING · %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● GRABANDO · %@"
           }
         }
       }
@@ -668,6 +812,12 @@
             "state": "translated",
             "value": "● RECORDING"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "● GRABANDO"
+          }
         }
       }
     },
@@ -678,12 +828,24 @@
             "state": "translated",
             "value": "%@ PTS · %@ LEFT"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS · QUEDAN %@"
+          }
         }
       }
     },
     "%@ PTS": {
       "localizations": {
         "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ PTS"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ PTS"
@@ -698,6 +860,12 @@
             "state": "translated",
             "value": "Recording"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabando"
+          }
         }
       }
     },
@@ -707,6 +875,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today's dial: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esfera de hoy: %@"
           }
         }
       }
@@ -718,6 +892,12 @@
             "state": "translated",
             "value": "TODAY"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOY"
+          }
         }
       }
     },
@@ -727,6 +907,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "POINTS"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AGUJAS"
           }
         }
       }
@@ -738,6 +924,12 @@
             "state": "translated",
             "value": "RECORDING FOR"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRABANDO DESDE HACE"
+          }
         }
       }
     },
@@ -747,6 +939,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "UNTIL AUTO-OFF"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HASTA APAGARSE"
           }
         }
       }
@@ -758,6 +956,12 @@
             "state": "translated",
             "value": "Checks in at your current place"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra la llegada a tu lugar actual"
+          }
         }
       }
     },
@@ -767,6 +971,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stops recording"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detiene la grabación"
           }
         }
       }
@@ -778,6 +988,12 @@
             "state": "translated",
             "value": "Mark this place"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar este lugar"
+          }
         }
       }
     },
@@ -787,6 +1003,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stop route"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener ruta"
           }
         }
       }
@@ -798,6 +1020,12 @@
             "state": "translated",
             "value": "Walk"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pie"
+          }
         }
       }
     },
@@ -807,6 +1035,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Run"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carrera"
           }
         }
       }
@@ -818,6 +1052,12 @@
             "state": "translated",
             "value": "Bike"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bici"
+          }
         }
       }
     },
@@ -827,6 +1067,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Drive"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coche"
           }
         }
       }
@@ -838,6 +1084,12 @@
             "state": "translated",
             "value": "Train"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tren"
+          }
         }
       }
     },
@@ -847,6 +1099,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Flight"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vuelo"
           }
         }
       }
@@ -858,6 +1116,12 @@
             "state": "translated",
             "value": "Walking"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caminando"
+          }
         }
       }
     },
@@ -867,6 +1131,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Running"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corriendo"
           }
         }
       }
@@ -878,6 +1148,12 @@
             "state": "translated",
             "value": "Cycling"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En bici"
+          }
         }
       }
     },
@@ -887,6 +1163,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Driving"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conduciendo"
           }
         }
       }
@@ -898,6 +1180,12 @@
             "state": "translated",
             "value": "On a train"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En tren"
+          }
         }
       }
     },
@@ -907,6 +1195,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Flying"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volando"
           }
         }
       }
