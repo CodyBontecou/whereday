@@ -35,7 +35,14 @@ Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map s
 - **Verifier account:** the Worker's `GOOGLE_SERVICE_ACCOUNT` is now the dedicated `whereday-play-verifier@crested-drive-492000-u7.iam.gserviceaccount.com`. In Play Console it has Whereday-only access: read-only app info, View financial data, and Manage orders and subscriptions. Its key is at `~/.android-keys/whereday-play-verifier.json`. `play-publisher` is still used by `gplay`.
 - **Release mode:** managed publishing stays off, at the owner's choice, so an approved release goes live straight away.
 
-**Left for production:** choose countries and regions, confirm the 2.0.0 (3) release, then send it for review in Publishing overview. Separately, the developer account has to declare its trader status by February 2027.
+**Sent for review (November 6, 2026):**
+- **Production:** 2.0.0 (3), available in all 178 countries.
+- **Submission:** all 11 pending changes (release, countries, listing, App content) were sent to Google. Play's quick checks run first (up to 14 minutes), then review, which Google says typically takes up to 7 days. Managed publishing is off, so approval publishes immediately.
+- **Two more declarations the bundle triggered:**
+  - Foreground service: `FOREGROUND_SERVICE_LOCATION` under Background location updates → Other, with the demo video `https://www.youtube.com/watch?v=GC-jC1MZww8` (unlisted, uploaded as a Short; the source mp4 is in `.argent/recordings/`).
+  - Photo and video permissions: `READ_MEDIA_IMAGES` is justified by automatic photo-to-day matching, which uses EXIF location the photo picker strips.
+- **Warning only:** no deobfuscation file was uploaded, so crash reports are harder to read.
+- **Still due:** the developer account must declare its trader status by February 2027.
 
 ---
 
