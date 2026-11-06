@@ -105,8 +105,9 @@ class VisitReconciliationTest {
         val context=InstrumentationRegistry.getInstrumentation().targetContext
         val document=context.assets.open("ios-visit-reconciliation.json").reader().use {JsonParser.parseReader(it).asJsonObject}
         fun JsonObject.visit()=Visit(get("id").asString,Coordinate(get("latitude").asDouble,get("longitude").asDouble),
-            Instant.ofEpochSecond(get("arrival").asLong),get("departure").takeUnless {it.isJsonNull}?.asLong?.let(Instant::ofEpochSecond))
-        val cases=document.getAsJsonArray("cases");assertEquals(14,cases.size())
+            Instant.ofEpochSecond(get("arrival").asLong),get("departure").takeUnless {it.isJsonNull}?.asLong?.let(Instant::ofEpochSecond),
+            name=get("name").takeUnless {it.isJsonNull}?.asString,confirmation=Confirmation.valueOf(get("confirmation").asString))
+        val cases=document.getAsJsonArray("cases");assertEquals(17,cases.size())
         for(element in cases) {
             val case=element.asJsonObject
             assertEquals(case.get("name").asString,case.get("matches").asBoolean,
