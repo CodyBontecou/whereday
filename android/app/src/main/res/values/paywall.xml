@@ -1,0 +1,75 @@
+<resources>
+    <string name="paywall_eyebrow">Whereday</string>
+    <string name="paywall_close">Close</string>
+    <string name="paywall_page">Page %1$d of %2$d</string>
+    <string name="paywall_buy_pending">Waiting for Google Play…</string>
+    <string name="paywall_buy_unavailable">Google Play unavailable</string>
+    <string name="paywall_restore">Restore purchases</string>
+    <string name="paywall_privacy">Privacy</string>
+    <string name="paywall_terms">Terms</string>
+    <string name="paywall_preview">See plans</string>
+    <string name="paywall_loading">Loading plans…</string>
+
+    <string name="paywall_promise_title_lead">A life of places.</string>
+    <string name="paywall_promise_title_emphasis">Yours to keep.</string>
+    <string name="paywall_benefit_daily_title">Every day, recorded for you</string>
+    <string name="paywall_benefit_daily_body">Visits and routes log in the background. No check-ins.</string>
+    <string name="paywall_benefit_revisit_title">Revisit any place, any date</string>
+    <string name="paywall_benefit_revisit_body">Map, timeline and calendar of where you\'ve been.</string>
+    <string name="paywall_benefit_private_title">Private, on your phone</string>
+    <string name="paywall_benefit_private_body">No account. Export to GPX, CSV, Markdown and more.</string>
+    <plurals name="paywall_review_rating">
+        <item quantity="one">%1$d out of 5 stars</item>
+        <item quantity="other">%1$d out of 5 stars</item>
+    </plurals>
+    <string name="paywall_review_source">%1$s · Google Play</string>
+
+    <string name="paywall_export_title_lead">Take your history</string>
+    <string name="paywall_export_title_emphasis">anywhere.</string>
+    <string name="paywall_export_formats">Export formats: %1$s</string>
+    <string name="paywall_benefit_zip_title">Every format in one ZIP</string>
+    <string name="paywall_benefit_zip_body">Pick dates, fields and accuracy. Visits, routes or outings.</string>
+    <string name="paywall_benefit_automatic_title">Automatic exports</string>
+    <string name="paywall_benefit_automatic_body">A file a day, saved to the folder you choose.</string>
+    <string name="paywall_benefit_webhooks_title">Webhooks and automation</string>
+    <string name="paywall_benefit_webhooks_body">Send each day to your own server or automation apps.</string>
+
+    <string name="paywall_trial_title">How your *free week* works</string>
+    <string name="paywall_trial_today">Today</string>
+    <string name="paywall_trial_today_body">Everything unlocks. Recording starts with your first walk out the door.</string>
+    <string name="paywall_trial_reminder">Day %1$d · A reminder</string>
+    <string name="paywall_trial_reminder_body">We\'ll notify you two days before the trial ends.</string>
+    <string name="paywall_trial_begins">Day %1$d · Your plan begins</string>
+    <string name="paywall_trial_begins_weekly">%1$s a week. Cancel before then in Google Play and you won\'t be charged.</string>
+    <string name="paywall_trial_begins_yearly">%1$s for the year. Cancel before then in Google Play and you won\'t be charged.</string>
+
+    <string name="paywall_plans_title">Choose your *plan*</string>
+    <string name="paywall_plan_weekly">Weekly</string>
+    <string name="paywall_plan_yearly">Yearly</string>
+    <string name="paywall_plan_lifetime">Lifetime</string>
+    <string name="paywall_plan_weekly_detail">Renews every week.</string>
+    <string name="paywall_plan_yearly_detail">%1$s a month, billed yearly</string>
+    <string name="paywall_plan_yearly_renews">Renews every year.</string>
+    <string name="paywall_plan_lifetime_detail">One-time purchase. Yours for good.</string>
+    <string name="paywall_badge_trial">%1$d days free</string>
+    <string name="paywall_badge_once">One-time</string>
+    <string name="paywall_includes">Every plan includes</string>
+    <string name="paywall_included_recording">Automatic recording</string>
+    <string name="paywall_included_formats">All 8 export formats</string>
+    <string name="paywall_included_automatic">Automatic daily exports</string>
+    <string name="paywall_included_webhooks">Webhooks and automation</string>
+    <string name="paywall_records_note">If your subscription ends, your history stays on this phone and you can still view it.</string>
+    <string name="paywall_cancel_note">Deleting the app or buying Lifetime does not cancel a subscription. Manage it in Google Play.</string>
+    <string name="paywall_pending">Your payment is pending in Google Play. Whereday unlocks as soon as it clears.</string>
+    <string name="paywall_verified">You\'re all set. Whereday is unlocked.</string>
+
+    <string name="paywall_disclosure_weekly_trial">%1$d days free, then %2$s per week, automatically renewing until canceled.</string>
+    <string name="paywall_disclosure_weekly">%1$s per week, automatically renewing until canceled.</string>
+    <string name="paywall_disclosure_yearly_trial">%1$d days free, then %2$s per year, automatically renewing until canceled.</string>
+    <string name="paywall_disclosure_yearly">%1$s per year, automatically renewing until canceled.</string>
+    <string name="paywall_disclosure_lifetime">%1$s charged once to your Google account. No subscription.</string>
+    <string name="paywall_cta_trial">Start %1$d-day free trial</string>
+    <string name="paywall_cta_subscribe">Subscribe</string>
+    <string name="paywall_cta_lifetime">Buy Lifetime</string>
+    <string name="paywall_manage">Manage subscription</string>
+</resources>

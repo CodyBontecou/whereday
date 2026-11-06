@@ -1,0 +1,239 @@
+steps:
+- echo: Requires onboarded idle app and an empty Whereday photo-reference library. Stage only public-photo-qa-a.jpg
+    and public-photo-qa-b.jpg as Downloads/whereday-public-photo-qa-a.jpg and whereday-public-photo-qa-b.jpg.
+    Their public EXIF dates are Oct 27 2026 10:00/10:05 America/Puerto_Rico. Select only these named files,
+    verify chronological gallery/pager and restart persistence, then remove both references. Original
+    files remain for replay and are removed separately afterward. Never clear the journal or select personal
+    photos.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Photos
+    direction: down
+- await:
+    visible:
+      text: Photos
+- await:
+    idle: true
+- tap:
+    text: Photos
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- tap:
+    text: Add photos
+- await:
+    visible:
+      text: Media grid
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- tap:
+    text: Choose photo files
+- await:
+    visible:
+      text: whereday-public-photo-qa-b.jpg
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-public-photo-qa-b\.jpg
+- await:
+    visible:
+      text: 1 saved photo reference
+    timeout: 10000
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Choose photo files
+- await:
+    visible:
+      text: whereday-public-photo-qa-a.jpg
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-public-photo-qa-a\.jpg
+- await:
+    visible:
+      text: 2 saved photo references
+    timeout: 10000
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:00
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:00
+- await:
+    visible:
+      text: Close photo
+- await:
+    idle: true
+- await:
+    visible:
+      text: Photo 1 of 2 on this page
+- await:
+    idle: true
+- tap:
+    text: Next photo
+- await:
+    visible:
+      text: Photo 2 of 2 on this page
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Previous photo
+- await:
+    visible:
+      text: Photo 1 of 2 on this page
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:00
+- await:
+    idle: true
+- tap:
+    text: Close photo
+- await:
+    visible:
+      text: 2 saved photo references
+- await:
+    idle: true
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Photos
+    direction: down
+- await:
+    visible:
+      text: Photos
+- await:
+    idle: true
+- tap:
+    text: Photos
+- await:
+    visible:
+      text: 2 saved photo references
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:00
+- await:
+    idle: true
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:00
+- await:
+    visible:
+      text: Close photo
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: 1 saved photo reference
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Oct 27, 10:00
+- await:
+    visible:
+      text: Oct 27, 10:05
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:05
+- await:
+    visible:
+      text: Photo 1 of 1 on this page
+- await:
+    idle: true
+- tap:
+    text: Remove photo from Whereday
+- await:
+    visible:
+      text: Remove this photo reference?
+- await:
+    idle: true
+- tap:
+    text: Remove photo
+- await:
+    visible:
+      text: No photos selected yet.
+- await:
+    idle: true
+- await:
+    visible:
+      text: 0 saved photo references
+- await:
+    idle: true

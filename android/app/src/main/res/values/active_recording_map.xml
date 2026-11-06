@@ -1,0 +1,14 @@
+<resources>
+    <string name="active_recording_map_layer">Current recording path</string>
+    <string name="active_recording_map_fit">Fit current recording</string>
+    <string name="active_recording_map_inactive">Start recording to show its path. This layer does not start recording.</string>
+    <string name="active_recording_map_paused">Current recording path is paused while this map is hidden.</string>
+    <string name="active_recording_map_loading">Loading current recording path…</string>
+    <string name="active_recording_map_empty">Waiting for points in the current recording.</string>
+    <string name="active_recording_map_failed">Current recording path could not load.</string>
+    <string name="active_recording_map_retry">Retry current recording path</string>
+    <string name="active_recording_map_summary">Current recording path: %1$d of %2$d points shown.</string>
+    <string name="active_recording_map_description">The rust path shows only the current recording, independently of the selected dates. Its start flag and current marker are separate from the date-range markers.</string>
+    <string name="active_recording_map_start">Current recording start · %1$s · %2$s</string>
+    <string name="active_recording_map_latest">Latest recorded location · %1$s · %2$s</string>
+</resources>

@@ -179,45 +179,15 @@ extension EnvironmentValues {
     @Entry var isPresentedAsRailTab = false
 }
 
-/// The four destinations of the floating tab bar, plus Settings, which joins them on the open rail.
-private enum MainTab: Int, CaseIterable, Identifiable {
-    // Raw values are the TabView tags, kept stable for launch arguments.
-    case today = 4, atlas = 5, places = 6, archive = 1, settings = 2
-
-    var id: Int { rawValue }
-
-    static let primary: [MainTab] = [.today, .atlas, .places, .archive]
-
-    var title: LocalizedStringKey {
-        switch self {
-        case .today: "Today"
-        case .atlas: "Atlas"
-        case .places: "Places"
-        case .archive: "Archive"
-        case .settings: "Settings"
-        }
-    }
-
-    var systemImage: String {
-        switch self {
-        case .today: "clock"
-        case .atlas: "square.grid.2x2"
-        case .places: "mappin.and.ellipse"
-        case .archive: "archivebox"
-        case .settings: "gearshape"
-        }
-    }
-}
-
 private struct MainTabView: View {
     @Environment(ManualVisitRouter.self) private var manualVisitRouter
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let viewModel: LocationViewModel
     var startsOnArchive = false
-    // Map (0) and Timeline (3) open over Today; Settings (2) lives behind Archive, or on the open rail.
-    @State private var selectedTab: Int = MainTabView.tabTag(forLaunchTab: MainTabView.initialTabFromLaunchArguments())
-    @State private var showsTrace = MainTabView.initialTabFromLaunchArguments() == 0
-    @State private var showsTimeline = MainTabView.initialTabFromLaunchArguments() == 3
+    // The map is home (0). Timeline (3) opens over it; Settings (2) lives behind Archive, or on the open rail.
+    @State private var selectedTab: Int = MainTabLaunch.current.tab.rawValue
+    @State private var showsTimeline = MainTabLaunch.current.opensTimeline
+    @State private var hidesTabBar = false
     @ObservedObject private var exportToastCenter = ExportToastCenter.shared
 
     /// Open on a foldable (and on other regular-width displays) a navigation rail replaces the tab bar.
@@ -243,33 +213,15 @@ private struct MainTabView: View {
                 selectedTab = MainTab.archive.rawValue
             }
         }
-        .fullScreenCover(isPresented: $showsTrace) {
-            journalWorkspace(mapIsPrimary: true)
-                .overlay(alignment: .topLeading) {
-                    Button {
-                        showsTrace = false
-                    } label: {
-                        Label("Today", systemImage: "chevron.left")
-                            .font(TE.mono(.caption, weight: .semibold))
-                            .padding(.horizontal, 14)
-                            .frame(minHeight: 44)
-                            .background(Capsule().fill(TE.card))
-                            .overlay(Capsule().strokeBorder(TE.border, lineWidth: 1))
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(TE.textPrimary)
-                    .padding(.leading, 16)
-                    .padding(.top, 4)
-                }
-        }
         .sheet(isPresented: $showsTimeline) {
-            journalWorkspace(mapIsPrimary: false)
+            timelineWorkspace
                 .presentationDragIndicator(.visible)
         }
         .onChange(of: manualVisitRouter.request?.id, initial: true) { _, id in
+            // Links and Shortcuts open on the map, which presents the visit or the check-in form.
             if id != nil {
                 showsTimeline = false
-                showsTrace = true
+                selectedTab = MainTab.map.rawValue
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .manualVisitsChanged)) { _ in
@@ -291,32 +243,35 @@ private struct MainTabView: View {
         .isoMeReleaseNotesSheet()
     }
 
-    private var tabChrome: TabChrome {
-        TabChrome(showsBar: !usesRail, selection: $selectedTab)
+    private func tabChrome(overlaysBar: Bool = false) -> TabChrome {
+        TabChrome(showsBar: !usesRail && !(overlaysBar && hidesTabBar), overlaysBar: overlaysBar, selection: $selectedTab)
     }
 
     /// The system tab bar stays hidden; the floating bar or the rail drives the selection.
     private var tabs: some View {
         TabView(selection: $selectedTab) {
-            todayWorkspace
-                .modifier(tabChrome)
-                .tabItem { Label(MainTab.today.title, systemImage: MainTab.today.systemImage) }
-                .tag(MainTab.today.rawValue)
+            mapWorkspace
+                .onPreferenceChange(HidesFloatingTabBarKey.self) { hides in
+                    hidesTabBar = hides
+                }
+                .modifier(tabChrome(overlaysBar: true))
+                .tabItem { Label(MainTab.map.title, systemImage: MainTab.map.systemImage) }
+                .tag(MainTab.map.rawValue)
 
             AtlasView(viewModel: viewModel)
-                .modifier(tabChrome)
+                .modifier(tabChrome())
                 .tabItem { Label(MainTab.atlas.title, systemImage: MainTab.atlas.systemImage) }
                 .tag(MainTab.atlas.rawValue)
 
             NavigationStack {
                 SavedLocationsView(viewModel: viewModel)
             }
-            .modifier(tabChrome)
+            .modifier(tabChrome())
             .tabItem { Label(MainTab.places.title, systemImage: MainTab.places.systemImage) }
             .tag(MainTab.places.rawValue)
 
             archiveTab
-                .modifier(tabChrome)
+                .modifier(tabChrome())
                 .tabItem { Label(MainTab.archive.title, systemImage: MainTab.archive.systemImage) }
                 .tag(MainTab.archive.rawValue)
 
@@ -324,7 +279,7 @@ private struct MainTabView: View {
                 SettingsView(viewModel: viewModel)
                     // A rail destination of its own: there is no Archive page to go back to.
                     .environment(\.isPresentedAsRailTab, true)
-                    .modifier(tabChrome)
+                    .modifier(tabChrome())
                     .tabItem { Label(MainTab.settings.title, systemImage: MainTab.settings.systemImage) }
                     .tag(MainTab.settings.rawValue)
             }
@@ -340,98 +295,84 @@ private struct MainTabView: View {
     }
 
     @ViewBuilder
-    private var todayWorkspace: some View {
-        #if compiler(>=6.4)
-        if #available(iOS 27.1, *) {
-            DuoTodayWorkspace(
-                viewModel: viewModel,
-                onReplay: { showsTrace = true },
-                onPickDay: { showsTimeline = true },
-                onOpenPlaces: { selectedTab = MainTab.places.rawValue },
-                onOpenArchive: { selectedTab = MainTab.archive.rawValue }
-            )
-        } else {
-            singlePaneToday
-        }
-        #else
-        singlePaneToday
-        #endif
-    }
-
-    private var singlePaneToday: some View {
-        TodayView(
-            viewModel: viewModel,
-            onReplay: { showsTrace = true },
-            onPickDay: { showsTimeline = true },
-            onOpenPlaces: { selectedTab = MainTab.places.rawValue },
-            onOpenArchive: { selectedTab = MainTab.archive.rawValue }
-        )
-    }
-
-    @ViewBuilder
-    private func journalWorkspace(mapIsPrimary: Bool) -> some View {
+    private var mapWorkspace: some View {
         // The Duo SDK ships with Swift 6.4; older SDKs cannot resolve ArrangementView.
         #if compiler(>=6.4)
         if #available(iOS 27.1, *) {
-            DuoJournalWorkspace(viewModel: viewModel, mapIsPrimary: mapIsPrimary) {
-                showsTimeline = false
-                showsTrace = true
-            }
+            DuoMapWorkspace(
+                viewModel: viewModel,
+                expandsDaySheet: MainTabLaunch.current.expandsDaySheet,
+                onOpenTimeline: { showsTimeline = true }
+            )
         } else {
-            singlePaneJournalWorkspace(mapIsPrimary: mapIsPrimary)
+            singlePaneMap
         }
         #else
-        singlePaneJournalWorkspace(mapIsPrimary: mapIsPrimary)
+        singlePaneMap
         #endif
     }
 
+    private var singlePaneMap: some View {
+        LocationMapView(
+            viewModel: viewModel,
+            presentation: .home,
+            expandsDaySheet: MainTabLaunch.current.expandsDaySheet,
+            onOpenTimeline: { showsTimeline = true }
+        )
+    }
+
+    /// Picking a day: the timeline, with the map beside it when the display is open.
     @ViewBuilder
-    private func singlePaneJournalWorkspace(mapIsPrimary: Bool) -> some View {
-        if mapIsPrimary {
-            LocationMapView(viewModel: viewModel)
+    private var timelineWorkspace: some View {
+        #if compiler(>=6.4)
+        if #available(iOS 27.1, *) {
+            DuoJournalWorkspace(viewModel: viewModel, onShowOnMap: showMap)
         } else {
-            OutingsView(viewModel: viewModel) {
-                showsTimeline = false
-                showsTrace = true
-            }
+            OutingsView(viewModel: viewModel, onShowOnMap: showMap)
         }
-    }
-
-    private static func tabTag(forLaunchTab tab: Int) -> Int {
-        switch tab {
-        case 0, 3: 4
-        case 2: 1
-        default: tab
-        }
-    }
-
-    private static func initialTabFromLaunchArguments() -> Int {
-        #if DEBUG
-        let prefix = "--default-tab="
-        if let arg = ProcessInfo.processInfo.arguments.first(where: { $0.hasPrefix(prefix) }),
-           let index = Int(arg.dropFirst(prefix.count)),
-           (0...6).contains(index) {
-            return index
-        }
+        #else
+        OutingsView(viewModel: viewModel, onShowOnMap: showMap)
         #endif
-        return 4
+    }
+
+    private func showMap() {
+        showsTimeline = false
+        selectedTab = MainTab.map.rawValue
     }
 }
 
 /// Hides the system tab bar and, when closed, places the floating bar below each tab so content ends above it.
 /// Applied per tab (outside any NavigationStack) so pushed pages keep the bar and the inset too.
+/// The map runs full-bleed under the bar instead, and is told how much of its bottom edge the bar covers.
 private struct TabChrome: ViewModifier {
     let showsBar: Bool
+    var overlaysBar = false
     @Binding var selection: Int
+    @State private var barHeight: CGFloat = 0
 
     func body(content: Content) -> some View {
-        // Stacked rather than a safeAreaInset: an inset added outside a NavigationStack doesn't reach
-        // the stack's content, so scroll views and pinned footers ended up behind the bar.
-        VStack(spacing: 0) {
-            content
-                .frame(maxHeight: .infinity)
-            if showsBar {
-                WheredayTabBar(selection: $selection)
+        Group {
+            if overlaysBar {
+                ZStack(alignment: .bottom) {
+                    content
+                        .environment(\.floatingTabBarInset, showsBar ? barHeight : 0)
+                        .frame(maxHeight: .infinity)
+                    if showsBar {
+                        WheredayTabBar(selection: $selection)
+                            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { barHeight = $0 }
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+                }
+            } else {
+                // Stacked rather than a safeAreaInset: an inset added outside a NavigationStack doesn't reach
+                // the stack's content, so scroll views and pinned footers ended up behind the bar.
+                VStack(spacing: 0) {
+                    content
+                        .frame(maxHeight: .infinity)
+                    if showsBar {
+                        WheredayTabBar(selection: $selection)
+                    }
+                }
             }
         }
         .background(TE.surface.ignoresSafeArea())
@@ -439,7 +380,7 @@ private struct TabChrome: ViewModifier {
     }
 }
 
-/// The floating capsule tab bar: Today, Atlas, Places, Archive.
+/// The floating capsule tab bar: Map, Atlas, Places, Archive.
 /// At accessibility text sizes it drops the labels for larger icons; long-press shows the large content viewer.
 private struct WheredayTabBar: View {
     @Binding var selection: Int
@@ -549,97 +490,111 @@ private struct WheredayNavigationRail: View {
 }
 
 #if compiler(>=6.4)
-/// System arrangements retain the primary screen while the inner display gains a companion.
-/// They also keep each page clear of the active hinge without device-name or orientation checks.
+/// The timeline, picked from the map: open, the map stays beside it as a companion and focuses each stay.
+/// System arrangements retain the primary screen while the inner display gains a companion,
+/// and keep each page clear of the active hinge without device-name or orientation checks.
 @available(iOS 27.1, *)
 private struct DuoJournalWorkspace: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let viewModel: LocationViewModel
-    let mapIsPrimary: Bool
     let onShowOnMap: () -> Void
     @State private var focusedVisit: Visit?
-    @State private var inspectedVisit: Visit?
-    @State private var hasUsedCompanion = false
-    @State private var coverInspector: Visit?
-    /// Half-open (tabletop): the map stays above the fold and the replay controls move below it.
-    @State private var isHalfOpen = false
-    @State private var replayBridge = TraceReplayBridge()
 
     private var hasCompanion: Bool { horizontalSizeClass == .regular }
-    private var usesTabletopReplay: Bool { mapIsPrimary && hasCompanion && isHalfOpen }
 
     var body: some View {
         ArrangementView {
-            if mapIsPrimary {
-                LocationMapView(
-                    viewModel: viewModel,
-                    focusedVisit: focusedVisit,
-                    onSelectVisit: hasCompanion || hasUsedCompanion ? { visit in
-                        focusedVisit = visit
-                        inspectedVisit = visit
-                        if !hasCompanion { coverInspector = visit }
-                    } : nil,
-                    replayBridge: usesTabletopReplay ? replayBridge : nil
-                )
-            } else {
-                timeline
-            }
+            OutingsView(
+                viewModel: viewModel,
+                usesCompanionMap: hasCompanion,
+                onVisitOpened: { visit in focusedVisit = visit },
+                onShowOnMap: {
+                    if !hasCompanion { onShowOnMap() }
+                }
+            )
+        } secondary: {
+            LocationMapView(
+                viewModel: viewModel,
+                focusedVisit: focusedVisit,
+                presentation: .companion,
+                onCloseFocusedVisit: { focusedVisit = nil }
+            )
+        }
+        .arrangementViewStyle(.split.axes(hasCompanion ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
+    }
+}
+
+/// The map home on a foldable. Closed, the cover display shows the map with its day sheet, as on any phone.
+/// Open, the day (Today's dial and list) moves to the companion pane beside the map: a tapped stay is focused
+/// on the map and inspected there, and a tapped marker opens the stay's details in the companion.
+/// Half-open (tabletop), replay keeps the map above the fold and moves its controls below it.
+@available(iOS 27.1, *)
+private struct DuoMapWorkspace: View {
+    /// Remembered so a relaunch while closed gets the cover layout before any hinge update arrives.
+    static let isFoldableKey = "duo.isFoldableDevice"
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    let viewModel: LocationViewModel
+    var expandsDaySheet = false
+    let onOpenTimeline: () -> Void
+    @State private var focusedVisit: Visit?
+    @State private var inspectedVisit: Visit?
+    @State private var coverInspector: Visit?
+    @AppStorage(DuoMapWorkspace.isFoldableKey) private var hasHinge = false
+    @State private var isHalfOpen = false
+    @State private var showsReplay = false
+    @State private var replayBridge = TraceReplayBridge()
+
+    private var hasCompanion: Bool { horizontalSizeClass == .regular }
+    private var usesTabletopReplay: Bool { hasCompanion && isHalfOpen && showsReplay }
+
+    var body: some View {
+        ArrangementView {
+            LocationMapView(
+                viewModel: viewModel,
+                focusedVisit: hasCompanion ? focusedVisit : nil,
+                onSelectVisit: hasCompanion ? { visit in
+                    focusedVisit = visit
+                    inspectedVisit = visit
+                } : nil,
+                presentation: .home,
+                replayBridge: usesTabletopReplay ? replayBridge : nil,
+                onCloseFocusedVisit: { focusedVisit = nil },
+                companionReplay: $showsReplay,
+                showsDaySheet: !hasCompanion,
+                expandsDaySheet: expandsDaySheet,
+                onOpenTimeline: onOpenTimeline
+            )
         } secondary: {
             if usesTabletopReplay {
                 TraceTabletopReplayPane(bridge: replayBridge)
                     .overlay(alignment: .top) { Rectangle().fill(TE.border).frame(height: 1).allowsHitTesting(false) }
-            } else if mapIsPrimary {
-                ZStack {
-                    timeline
-                        .opacity(inspectedVisit == nil ? 1 : 0)
-                        .allowsHitTesting(inspectedVisit == nil)
-                        .accessibilityHidden(inspectedVisit != nil)
-                    if let inspectedVisit {
-                        NavigationStack {
-                            VisitDetailView(visit: inspectedVisit, viewModel: viewModel, showsMap: false)
-                                .toolbar {
-                                    ToolbarItem(placement: .topBarLeading) {
-                                        Button("Timeline", systemImage: "chevron.left") {
-                                            self.inspectedVisit = nil
-                                        }
-                                    }
-                                }
-                        }
-                    }
-                }
-                .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
             } else {
-                LocationMapView(
-                    viewModel: viewModel,
-                    focusedVisit: focusedVisit,
-                    presentation: .companion,
-                    onCloseFocusedVisit: { focusedVisit = nil }
-                )
+                companionDay
+                    .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
             }
         }
         .arrangementViewStyle(.split.axes(hasCompanion ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
-        .onHingeChange { _, context in
-            isHalfOpen = context.hinge?.status == .partiallyOpen
-        }
         .background {
             // onHingeChange only reports changes; the probe also reports the posture at launch.
             HingePresenceProbe { status in
+                if status != nil, !hasHinge { hasHinge = true }
                 isHalfOpen = status == .partiallyOpen
             }
             .frame(width: 0, height: 0)
             .accessibilityHidden(true)
         }
+        .onHingeChange { oldContext, newContext in
+            if (oldContext.hinge != nil || newContext.hinge != nil), !hasHinge { hasHinge = true }
+            isHalfOpen = newContext.hinge?.status == .partiallyOpen
+        }
         .onChange(of: hasCompanion, initial: true) { _, expanded in
             // Keep a single presentation owner while crossing to the cover display.
             if expanded {
-                hasUsedCompanion = true
                 coverInspector = nil
             } else {
                 coverInspector = inspectedVisit
             }
-        }
-        .onChange(of: inspectedVisit?.id) { _, _ in
-            if !hasCompanion { coverInspector = inspectedVisit }
         }
         .sheet(item: $coverInspector) { visit in
             NavigationStack {
@@ -656,117 +611,36 @@ private struct DuoJournalWorkspace: View {
         }
     }
 
-    private var timeline: some View {
-        OutingsView(
-            viewModel: viewModel,
-            usesCompanionMap: hasCompanion,
-            onVisitOpened: { visit in focusedVisit = visit },
-            onShowOnMap: {
-                if !hasCompanion { onShowOnMap() }
-            }
-        )
-    }
+    /// Today's dial and list beside the map; a stay opens its details here and focuses it on the map.
+    private var companionDay: some View {
+        ZStack {
+            TodayView(
+                viewModel: viewModel,
+                onReplay: { showsReplay = true },
+                onPickDay: onOpenTimeline,
+                onSelectVisit: { visit in
+                    focusedVisit = visit
+                    inspectedVisit = visit
+                },
+                selectedVisitID: focusedVisit?.id
+            )
+            .opacity(inspectedVisit == nil ? 1 : 0)
+            .allowsHitTesting(inspectedVisit == nil)
+            .accessibilityHidden(inspectedVisit != nil)
 
-}
-
-/// Open, Today sits beside the map; a tapped stay is focused there with a small inspector.
-/// Closed, the cover display keeps Today alone and hints that opening it shows the map.
-@available(iOS 27.1, *)
-private struct DuoTodayWorkspace: View {
-    /// Remembered so a relaunch while closed gets the cover layout before any hinge update arrives.
-    static let isFoldableKey = "duo.isFoldableDevice"
-    /// The "Open for the map" hint is first-use only: once the device has been opened, it stays hidden.
-    static let hasOpenedForMapKey = "duo.hasOpenedForMap"
-
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    let viewModel: LocationViewModel
-    let onReplay: () -> Void
-    let onPickDay: () -> Void
-    let onOpenPlaces: () -> Void
-    let onOpenArchive: () -> Void
-    @State private var focusedVisit: Visit?
-    @State private var hasUsedCompanion = false
-    @AppStorage(DuoTodayWorkspace.isFoldableKey) private var hasHinge = false
-    @AppStorage(DuoTodayWorkspace.hasOpenedForMapKey) private var hasOpenedForMap = false
-    /// Half-open (tabletop): replay keeps the map above the fold and moves its controls below.
-    @State private var isHalfOpen = false
-    @State private var showsCompanionReplay = false
-    @State private var replayBridge = TraceReplayBridge()
-
-    private var hasCompanion: Bool { horizontalSizeClass == .regular }
-    /// Only a foldable gets the condensed cover layout; a plain iPhone (even one that was briefly
-    /// regular-width in landscape) keeps the full Today.
-    private var isFoldable: Bool { hasHinge }
-    /// The hint also covers a device whose hinge was not reported yet but whose inner display was used,
-    /// and disappears for good after the first time the device is opened.
-    private var showsMapHint: Bool { !hasCompanion && (hasHinge || hasUsedCompanion) && !hasOpenedForMap }
-    private var usesTabletopReplay: Bool { hasCompanion && isHalfOpen && showsCompanionReplay }
-
-    var body: some View {
-        ArrangementView {
-            if usesTabletopReplay {
-                companionMap(replayBridge: replayBridge)
-            } else {
-                TodayView(
-                    viewModel: viewModel,
-                    onReplay: onReplay,
-                    onPickDay: onPickDay,
-                    onOpenPlaces: onOpenPlaces,
-                    onOpenArchive: onOpenArchive,
-                    onSelectVisit: hasCompanion ? { focusedVisit = $0 } : nil,
-                    showsCoverHint: showsMapHint,
-                    selectedVisitID: hasCompanion ? focusedVisit?.id : nil,
-                    isCoverDisplay: !hasCompanion && isFoldable
-                )
-            }
-        } secondary: {
-            if usesTabletopReplay {
-                TraceTabletopReplayPane(bridge: replayBridge)
-                    .overlay(alignment: .top) { Rectangle().fill(TE.border).frame(height: 1).allowsHitTesting(false) }
-            } else {
-                companionMap(replayBridge: nil)
-                    .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
+            if let inspectedVisit {
+                NavigationStack {
+                    VisitDetailView(visit: inspectedVisit, viewModel: viewModel, showsMap: false)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button("Today", systemImage: "chevron.left") {
+                                    self.inspectedVisit = nil
+                                }
+                            }
+                        }
+                }
             }
         }
-        .arrangementViewStyle(.split.axes(hasCompanion ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
-        .background {
-            HingePresenceProbe { status in
-                if status != nil { markFoldable() }
-                isHalfOpen = status == .partiallyOpen
-            }
-            .frame(width: 0, height: 0)
-            .accessibilityHidden(true)
-        }
-        .onChange(of: hasCompanion, initial: true) { _, expanded in
-            if expanded {
-                hasUsedCompanion = true
-                if hasHinge { hasOpenedForMap = true }
-            } else {
-                showsCompanionReplay = false
-            }
-        }
-        .onHingeChange { oldContext, newContext in
-            // A hinge in either context means this is a foldable, even before the inner display is first used.
-            if oldContext.hinge != nil || newContext.hinge != nil { markFoldable() }
-            isHalfOpen = newContext.hinge?.status == .partiallyOpen
-        }
-    }
-
-    private func companionMap(replayBridge: TraceReplayBridge?) -> some View {
-        LocationMapView(
-            viewModel: viewModel,
-            focusedVisit: focusedVisit,
-            presentation: .companion,
-            replayBridge: replayBridge,
-            // Closing the inspector clears Today's highlight, and the same stay can be tapped again.
-            onCloseFocusedVisit: { focusedVisit = nil },
-            companionReplay: $showsCompanionReplay
-        )
-    }
-
-    private func markFoldable() {
-        if !hasHinge { hasHinge = true }
-        if hasCompanion && !hasOpenedForMap { hasOpenedForMap = true }
     }
 }
 

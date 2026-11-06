@@ -1,0 +1,29 @@
+<resources>
+    <string name="stay_add">Add country stay</string>
+    <string name="stay_edit">Edit country stay</string>
+    <string name="stay_explanation">Both dates count, including a same-day stay. Dates are local civil dates. Recorded presence in other countries is kept.</string>
+    <string name="stay_country">Country: %1$s (%2$s)</string>
+    <string name="stay_first">First date: %1$s</string>
+    <string name="stay_last">Last date: %1$s</string>
+    <string name="stay_dates">Choose stay dates</string>
+    <string name="stay_order">Departure must be on or after arrival.</string>
+    <string name="stay_future">Country stay dates must be today or earlier.</string>
+    <string name="stay_changed">This country stay changed. Close the editor and review the latest stay.</string>
+    <string name="stay_save_error">Country stay could not be saved. Try again.</string>
+    <string name="stay_delete_error">Country stay could not be deleted. Try again.</string>
+    <string name="stay_delete">Delete country stay</string>
+    <string name="stay_save">Save stay</string>
+    <string name="stay_cancel">Cancel</string>
+    <string name="stay_delete_title">Delete this country stay?</string>
+    <string name="stay_delete_body">Recorded history remains. Only these manually added dates are removed.</string>
+    <string name="stay_delete_confirm">Delete stay</string>
+    <string name="stay_discard_title">Discard stay changes?</string>
+    <string name="stay_discard_body">Your unsaved country and date changes will be lost.</string>
+    <string name="stay_discard">Discard changes</string>
+    <string name="stay_keep">Keep editing</string>
+    <string name="stay_choose_country">Choose country</string>
+    <string name="stay_search">Search countries</string>
+    <string name="stay_no_countries">No matching countries.</string>
+    <string name="stay_country_option">%1$s (%2$s)</string>
+    <string name="stay_country_selected">%1$s (%2$s) ✓</string>
+</resources>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="nearby_title">Nearby businesses</string>
+    <string name="nearby_disclosure">Searching sends this visit’s coordinates, a 1 km radius, language and place categories to Geoapify. Your journal history is not sent. Choosing a result replaces the name, address and coordinates in this draft; save the visit to keep it.</string>
+    <string name="nearby_unavailable">Nearby business search is not configured in this build.</string>
+    <string name="nearby_disabled">Allow network geocoding in Settings to search nearby businesses.</string>
+    <string name="nearby_expired">This location has expired. Close this search and request a new location.</string>
+    <string name="nearby_search">Search nearby businesses</string>
+    <string name="nearby_loading">Searching nearby…</string>
+    <string name="nearby_empty">No nearby places were found. Try again or enter the place details yourself.</string>
+    <string name="nearby_error">Nearby places could not be loaded. Try again.</string>
+    <string name="nearby_use">Use this business</string>
+    <string name="nearby_close">Close nearby search</string>
+    <string name="nearby_attribution">Powered by Geoapify</string>
+    <string name="nearby_osm">© OpenStreetMap contributors</string>
+    <string name="network_geocoding_disclosure">Place search sends submitted text; country and address lookups can send coordinates to your device’s geocoding service. Nearby business searches send the selected visit coordinates, radius, language and place categories to Geoapify. Disabling network geocoding stops these lookups and country analysis; recording, offline pin selection and manual stays remain available.</string>
+    <string name="nearby_filter">Filter businesses</string>
+    <string name="nearby_filter_clear">Clear business filter</string>
+    <string name="nearby_filter_empty">No nearby businesses match “%1$s”.</string>
+    <string name="nearby_distance">%1$s away</string>
+    <string name="nearby_meters">%1$s m</string>
+    <string name="nearby_kilometers">%1$s km</string>
+    <string name="nearby_feet">%1$s ft</string>
+    <string name="nearby_miles">%1$s mi</string>
+</resources>

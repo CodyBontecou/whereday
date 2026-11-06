@@ -1,0 +1,270 @@
+name: Android tests
+
+on:
+  pull_request:
+    paths: ['android/**', 'worker/play-purchase-verifier/**', 'worker/onboarding-analytics/**', 'IsoMe/**', 'Shared/**', 'IsoMe.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', '.github/workflows/android-tests.yml', '.github/workflows/android-release.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0' "ndk;$(python3 scripts/verify_native_provenance.py --print-ndk-version)"
+      - name: Verify domains, formats and Android build
+        run: ./gradlew :domain:test :export:test :export:streamingImportBudgetTest :export:googleTimelineImportBudgetTest :export:streamingGpxBudgetTest :export:streamingKmlBudgetTest :export:streamingJsonLocationBudgetTest :export:streamingMarkdownBudgetTest :billing:test :platform:testDebugUnitTest :geography:test :geography-assets:test :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --no-daemon
+      - name: Verify localized Android resources
+        run: |
+          python3 scripts/generate_localized_resources.py --check
+          python3 scripts/test_localized_resources.py
+          python3 scripts/test_qa_instrumentation.py
+          python3 scripts/test_workspace_process_runner.py
+          python3 scripts/test_release_bundle.py
+          python3 -m unittest discover -s scripts -p 'test_*runtime_notice*.py'
+          python3 -m unittest discover -s scripts -p test_native_provenance.py
+          python3 scripts/generate_legacy_preferences_fixture.py --check
+      - name: Verify iOS visit-link parser reference provenance
+        run: python3 scripts/generate_visit_link_fixtures.py --check-source
+      - name: Check current Swift Google Timeline references
+        run: |
+          python3 scripts/generate_google_timeline_fixtures.py --check-source
+          python3 scripts/generate_timeline_duplicate_fixtures.py --check-source
+      - name: Verify iOS calendar draft reference provenance
+        run: python3 scripts/generate_calendar_fixtures.py --check-source
+      - name: Verify iOS schedule fixture provenance
+        run: python3 scripts/generate_schedule_fixtures.py --check-source
+      - name: Verify iOS merge fixture provenance
+        run: python3 scripts/generate_merge_fixtures.py --check-source
+      - name: Verify iOS country fixture provenance and generated region policy
+        run: |
+          python3 scripts/generate_country_csv_fixtures.py --check-source
+          python3 scripts/generate_country_regions.py --check-source
+          python3 -m unittest discover -s scripts -p test_country_regions.py
+      - name: Verify iOS outing fixture provenance
+        run: |
+          python3 scripts/generate_outing_fixtures.py --check-source
+          python3 scripts/generate_outing_markdown_fixtures.py --check-source
+          python3 scripts/generate_distance_fixtures.py --check-source
+      - name: Verify iOS history import fixture provenance
+        run: python3 scripts/generate_history_import_fixtures.py --check-source
+      - name: Verify iOS visit reconciliation fixture provenance
+        run: python3 scripts/generate_visit_reconciliation_fixtures.py --check-source
+      - name: Verify iOS nearby-place fixture provenance
+        run: python3 scripts/generate_nearby_place_fixtures.py --check-source
+      - name: Verify iOS history renderer fixture provenance
+        run: python3 scripts/generate_history_table_fixtures.py --check-source
+      - name: Verify iOS JSON location fixture provenance
+        run: python3 scripts/generate_json_location_fixtures.py --check-source
+      - name: Verify iOS KML fixture provenance
+        run: python3 scripts/generate_kml_fixtures.py --check-source
+      - name: Verify iOS GPX fixture provenance
+        run: python3 scripts/generate_gpx_fixtures.py --check-source
+      - name: Verify iOS filename fixture provenance
+        run: python3 scripts/generate_filename_fixtures.py --check-source
+      - name: Verify iOS saved-place fixture provenance
+        run: |
+          python3 scripts/generate_saved_place_csv_fixtures.py --check-source
+          python3 scripts/generate_saved_place_plan_fixtures.py --check-source
+          python3 scripts/generate_replay_fixtures.py --check-source
+          python3 scripts/generate_road_snapping_fixtures.py --check-source
+          python3 scripts/generate_photo_fixtures.py --check-source
+          python3 scripts/generate_photo_cluster_fixtures.py --check-source
+          python3 scripts/generate_photo_marker_fixtures.py --check-source
+          python3 scripts/generate_point_marker_fixtures.py --check-source
+          python3 scripts/generate_map_date_fixtures.py --check-source
+          python3 scripts/verify_custom_date_reference.py --check-source
+          python3 scripts/generate_manual_visit_overlap_fixtures.py --check-source
+      - name: Verify native 16 KB page alignment
+        run: python3 scripts/verify_native_page_sizes.py app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify packaged offline notices
+        run: python3 scripts/verify_runtime_notice_package.py app/build/outputs/apk/debug/app-debug.apk app/build/generated/runtime-notices/debug
+      - name: Verify native binary provenance
+        run: >-
+          python3 scripts/verify_native_provenance.py app/build/outputs/apk/debug/app-debug.apk
+          app/build/reports/runtime-notices/debug/resolved-inputs.json notices/runtime-lock.json
+          --ndk-root "$ANDROID_HOME/ndk/$(python3 scripts/verify_native_provenance.py --print-ndk-version)"
+          --output app/build/reports/native-provenance/debug.json
+      - name: Inventory selected runtime notices
+        run: |
+          ./gradlew :app:writeDebugRuntimeNoticeInventory :app:writeReleaseRuntimeNoticeInventory --no-daemon
+          python3 scripts/runtime_notices.py app/build/reports/runtime-notices/debug/resolved-inputs.json app/build/reports/runtime-notices/debug/collected
+          python3 scripts/runtime_notices.py app/build/reports/runtime-notices/release/resolved-inputs.json app/build/reports/runtime-notices/release/collected
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-build-reports
+          path: |
+            android/app/build/reports/lint-results-debug.*
+            android/app/build/reports/tests/
+            android/app/build/test-results/testDebugUnitTest/
+            android/app/build/reports/runtime-notices/*/collected/
+            android/app/build/reports/native-provenance/
+            android/domain/build/reports/tests/
+            android/export/build/reports/tests/
+            android/export/build/test-results/streamingImportBudgetTest/
+            android/export/build/test-results/googleTimelineImportBudgetTest/
+            android/export/build/test-results/streamingGpxBudgetTest/
+            android/export/build/test-results/streamingKmlBudgetTest/
+            android/export/build/test-results/streamingJsonLocationBudgetTest/
+            android/export/build/test-results/streamingMarkdownBudgetTest/
+            android/export/build/history-interop/
+            android/billing/build/reports/tests/
+            android/platform/build/reports/tests/
+            android/geography/build/reports/tests/
+            android/geography-assets/build/reports/tests/
+            android/platform/build/generated/geography-assets/timezones/provenance.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-place-provenance-inputs
+          path: android/export/build/place-provenance/android-exports.json
+          if-no-files-found: error
+
+  place-provenance:
+    name: Android backup to SwiftData commit
+    needs: build
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-place-provenance-inputs
+          path: android/export/build/place-provenance
+      - name: Verify actual Swift importer and model commits
+        run: python3 android/scripts/verify_place_provenance.py
+      - name: Verify current Swift visit map focus references
+        run: python3 android/scripts/generate_visit_map_focus_fixtures.py --check-source
+      - name: Verify current SwiftData joint import admission
+        run: python3 android/scripts/verify_timeline_admission.py --output android/build/reports/timeline-admission/swift.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-place-provenance-commit
+          path: |
+            android/export/build/place-provenance/swift-commit-acceptance.json
+            android/build/reports/timeline-admission/swift.json
+
+  purchase-verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: worker/play-purchase-verifier
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: worker/play-purchase-verifier/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  analytics-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: worker/onboarding-analytics
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: worker/onboarding-analytics/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  map-point-scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Sample viewport markers from one million synthetic disk records
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: ./gradlew :data:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.data.PointMarkerScalingTest --max-workers=1 --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-map-point-scale-reports
+          path: |
+            android/data/build/reports/androidTests/
+            android/data/build/outputs/androidTest-results/
+
+  location-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Verify real location-service process and reboot recovery
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: |
+            ./gradlew :app:assembleMapQa :app:assembleMapQaAndroidTest --no-daemon
+            ci_location_serial=$(adb get-serialno); ci_location_avd=$(adb -s "$ci_location_serial" emu avd name | sed -n '1p' | tr -d '\r'); for mode in route visits both; do for termination in kill force-stop reboot; do python3 scripts/verify_location_process_recovery.py --adb "$(command -v adb)" --aapt2 "$ANDROID_HOME/build-tools/35.0.0/aapt2" --serial "$ci_location_serial" --avd "$ci_location_avd" --apk app/build/outputs/apk/mapQa/app-mapQa.apk --test-apk app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk --mode "$mode" --termination "$termination" --output "build/reports/location-recovery/$mode-$termination" || exit; done; done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-location-process-recovery
+          path: android/build/reports/location-recovery/

@@ -1,0 +1,21 @@
+<resources>
+    <string name="usage_title">Usage analytics</string>
+    <string name="usage_back">Back</string>
+    <string name="usage_optional">Optional and off by default. You can use every feature without sharing usage analytics.</string>
+    <string name="usage_share">Share usage analytics</string>
+    <string name="usage_unavailable">Sharing is unavailable in this build. No usage analytics will be sent.</string>
+    <string name="usage_collected">What you would share</string>
+    <string name="usage_payload">Coarse onboarding steps, permission choices, and purchase or restore outcomes; app version, build number and Android platform; and a random identifier created when you agree.</string>
+    <string name="usage_excluded">Location history, coordinates, journal text, support logs, device model and advertising identifiers are excluded. Earlier actions are never replayed after you agree.</string>
+    <string name="usage_provider">Whereday receives these events through Cloudflare. As with other internet connections, the service handling a request can see connection metadata such as your IP address.</string>
+    <string name="usage_revoke">Turning sharing off cancels delivery and removes queued events and the local identifier. It cannot recall events already received. Agreeing again creates a new identifier.</string>
+    <string name="usage_storage_error">Your sharing preference could not be read or saved. Sharing is stopped for this session. Reset sharing before trying again; an earlier saved preference may remain until reset succeeds.</string>
+    <string name="usage_reset">Reset sharing to off</string>
+    <string name="usage_scheduling_error">Background delivery could not be updated. Open Whereday again to retry.</string>
+    <string name="usage_disabled">Sharing is off. Queued events and the local identifier have been removed.</string>
+    <string name="usage_consent_title">Share optional usage analytics?</string>
+    <string name="usage_consent_body">Allow Whereday to collect and send the usage events described on this screen from now on? You can turn this off at any time in Settings → Usage analytics.</string>
+    <string name="usage_allow">Agree and share</string>
+    <string name="usage_cancel">Keep sharing off</string>
+    <string name="usage_onboarding">Optional usage analytics</string>
+</resources>

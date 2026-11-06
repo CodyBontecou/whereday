@@ -1,0 +1,103 @@
+steps:
+  - echo: Requires onboarded idle app, empty saved-place library and the synthetic .argent/fixtures/saved-place-import.csv copied to Downloads as whereday-place-qa-8d5c31a7.csv and indexed for the native picker. Imports only the QA place, checks duplicate policies/search/radius persistence and removes it. Never clear the journal to satisfy this prerequisite.
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: Manage saved places }, direction: down }
+  - tap: { text: Manage saved places }
+  - await: { visible: { text: Search saved places } }
+  - await: { visible: { text: No saved places yet. Add a place or import a CSV file. } }
+  - await: { idle: true }
+  - tap: { text: Import CSV }
+  - await: { visible: { text: { matches: '^whereday-place-qa-8d5c31a7\.csv' } } }
+  - tap: { text: { matches: '^whereday-place-qa-8d5c31a7\.csv' } }
+  - await: { visible: { text: CSV import preview } }
+  - await: { visible: { text: 1 added · 0 updated · 1 skipped } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Keep existing places$' } }
+  - await: { visible: { text: { matches: '^Update matching places$' } } }
+  - tap: { text: { matches: '^Update matching places$' } }
+  - await: { visible: { text: 1 added · 1 updated · 0 skipped } }
+  - tap: { text: { matches: '^Update matching places$' } }
+  - await: { visible: { text: { matches: '^Keep existing places$' } } }
+  - tap: { text: { matches: '^Keep existing places$' } }
+  - await: { visible: { text: 1 added · 0 updated · 1 skipped } }
+  - scroll-to: { target: { text: Latitude must be a number from -90 to 90. }, direction: down }
+  - await: { visible: { text: Latitude must be a number from -90 to 90. } }
+  - scroll-to: { target: { text: Import valid places }, direction: up }
+  - tap: { text: Import valid places }
+  - await: { visible: { text: Import saved places? } }
+  - tap: { text: { matches: '^Cancel$' } }
+  - await: { hidden: { text: Import saved places? } }
+  - await: { visible: { text: Import valid places } }
+  - tap: { text: Import valid places }
+  - await: { visible: { text: Import saved places? } }
+  - tap: { text: { matches: '^Import places$' } }
+  - await: { visible: { text: 'Added: 1. Updated: 0. Skipped: 1.' } }
+  - await: { visible: { text: Codex QA Place 20261027 } }
+  - await: { idle: true }
+  - type: { into: { text: Search saved places }, text: no matching place, submit: false }
+  - await: { visible: { text: No saved places match your search. } }
+  - tap: { text: Clear search }
+  - await: { visible: { text: Codex QA Place 20261027 } }
+  - type: { into: { text: Search saved places }, text: synthetic, submit: false }
+  - await: { visible: { text: Codex QA Place 20261027 } }
+  - tool: button
+    args: { button: back }
+  - tap: { text: Codex QA Place 20261027 }
+  - await: { visible: { text: Edit saved place } }
+  - await: { idle: true }
+  - await: { visible: { text: '150.0', role: TextField } }
+  - tap: { text: Match radius (meters) }
+  - tool: keyboard
+    args: { key: arrow-right }
+  - tool: keyboard
+    args: { key: arrow-right }
+  - tool: keyboard
+    args: { key: arrow-right }
+  - tool: keyboard
+    args: { key: arrow-right }
+  - tool: keyboard
+    args: { key: arrow-right }
+  - tool: keyboard
+    args: { key: backspace }
+  - tool: keyboard
+    args: { key: backspace }
+  - tool: keyboard
+    args: { key: backspace }
+  - tool: keyboard
+    args: { key: backspace }
+  - tool: keyboard
+    args: { key: backspace }
+  - tool: keyboard
+    args: { text: '500' }
+  - await: { visible: { text: '500', role: TextField } }
+  - tool: button
+    args: { button: back }
+  - tap: { text: { matches: '^Save$' } }
+  - await: { hidden: { text: Edit saved place } }
+  - await: { visible: { text: 'Match radius: 500 m' } }
+  - await: { idle: true }
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: Manage saved places }, direction: down }
+  - tap: { text: Manage saved places }
+  - await: { visible: { text: Search saved places } }
+  - await: { visible: { text: 'Match radius: 500 m' } }
+  - tap: { text: Codex QA Place 20261027 }
+  - await: { visible: { text: Edit saved place } }
+  - await: { visible: { text: '500.0', role: TextField } }
+  - tap: { text: Delete saved place }
+  - await: { visible: { text: Delete this saved place? } }
+  - tap: { text: { matches: '^Delete place$' } }
+  - await: { visible: { text: No saved places yet. Add a place or import a CSV file. } }
+  - tap: { text: Back to settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

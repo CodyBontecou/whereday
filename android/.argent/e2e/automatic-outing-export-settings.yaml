@@ -1,0 +1,42 @@
+steps:
+  - echo: Requires completed onboarding, idle recording, disabled default 21:00 once-daily automatic exports and unconfigured purchase verification. Selects Outings, verifies persistence across restart, restores All and checks denied enable. No destination writes.
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
+  - tap: { text: { matches: '^Automatic exports$' } }
+  - await: { visible: { text: Enable automatic exports } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^All$' } }
+  - await: { visible: { text: { matches: '^Outings$' } } }
+  - tap: { text: { matches: '^Outings$' } }
+  - await: { visible: { text: { matches: '^Outings$' } } }
+  - await: { idle: true }
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
+  - tap: { text: { matches: '^Automatic exports$' } }
+  - await: { visible: { text: Enable automatic exports } }
+  - await: { idle: true }
+  - await: { visible: { text: { matches: '^Outings$' } } }
+  - tap: { text: { matches: '^Outings$' } }
+  - await: { visible: { text: { matches: '^All$' } } }
+  - tap: { text: { matches: '^All$' } }
+  - await: { visible: { text: { matches: '^All$' } } }
+  - await: { idle: true }
+  - tap: { text: Enable automatic exports }
+  - scroll-to: { target: { text: { matches: '^Verified lifetime export access is required\.$' } }, direction: down }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - await: { visible: { text: No successful automatic export yet. } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Back to settings }, direction: up }
+  - tap: { text: Back to settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

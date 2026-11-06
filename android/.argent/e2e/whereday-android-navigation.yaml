@@ -1,0 +1,89 @@
+steps:
+- echo: Map-first navigation (tabs Map · Atlas · Places · Archive; Settings behind Archive's gear on a phone). Requires an onboarded idle app on a compact window. Opens on the map, renders a free JSON preview from Archive, opens the day's timeline over the map, visits Atlas and Places, and ends on Settings. No recording, purchase or history change.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- await:
+    visible:
+      id: map-day-peek
+- echo: Open Archive and render a free JSON preview without changing recording or purchasing.
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      text: Your history, in your format
+- await:
+    idle: true
+- scroll-to: { target: { text: Preview export }, direction: down }
+- tap:
+    text: Preview export
+- scroll-to: { target: { text: '"exportDate"' }, direction: down }
+- await:
+    visible:
+      text: '"exportDate"'
+- await:
+    idle: true
+- echo: The day's timeline opens over the map from the day sheet.
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      id: map-day-peek
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- await:
+    visible:
+      id: map-open-timeline
+- await:
+    idle: true
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      id: timeline-content
+- await:
+    idle: true
+- await:
+    visible:
+      text: Add past visit
+- tap:
+    id: timeline-close
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- tap:
+    id: navigation-atlas
+- await:
+    visible:
+      id: country-days-content
+- await:
+    idle: true
+- tap:
+    id: navigation-places
+- await:
+    visible:
+      id: saved-places-content
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      id: archive-settings
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      id: settings-screen
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true

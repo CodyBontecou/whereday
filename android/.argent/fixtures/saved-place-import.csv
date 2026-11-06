@@ -1,0 +1,4 @@
+name,latitude,longitude,address,radius_meters
+Codex QA Place 20261027,0,0,Synthetic import fixture,150
+codex qa place 20261027,0,0,Duplicate row,200
+Invalid QA Row,91,0,Must not be imported,150

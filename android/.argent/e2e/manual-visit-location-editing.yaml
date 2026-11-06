@@ -1,0 +1,164 @@
+steps:
+- echo: Requires onboarded idle app, an empty saved-place library, and no visit named Codex QA visit 20261027. Creates only
+    that synthetic past visit at 0,0, verifies restart persistence and deletes it. Never clear journal data for setup. Run
+    after 01:00 local time so the default one-hour visit lies in today, and finish before local midnight.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      text: Add past visit
+- await:
+    idle: true
+- tap:
+    text: Add past visit
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- tap:
+    text: Choose saved place
+- await:
+    visible:
+      text: No saved places yet. Choose a location on the map or enter coordinates.
+- await:
+    idle: true
+- tap:
+    text: Cancel saved-place selection
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- type:
+    into:
+      text: Name
+    text: Codex QA visit 20261027
+    submit: false
+- await:
+    visible:
+      role: TextField
+      text: Codex QA visit 20261027
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- tap:
+    text: Choose visit location
+- await:
+    visible:
+      text: No location selected.
+- await:
+    idle: true
+- tap:
+    text: Drop pin at map center
+- await:
+    visible:
+      text: Selected location
+- await:
+    idle: true
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: Codex QA visit 20261027
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: '0.0'
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard visit changes?
+- await:
+    idle: true
+- tap:
+    text: Keep editing
+- await:
+    visible:
+      text: Choose visit location
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Discard visit changes?
+- tap:
+    text: Save
+- await:
+    visible:
+      text: Codex QA visit 20261027
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Choose visit location
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      text: Codex QA visit 20261027
+- await:
+    idle: true
+- tap:
+    text: Codex QA visit 20261027
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: '0.0'
+- scroll-to:
+    target:
+      text: Delete visit
+    direction: down
+    within:
+      id: visit-editor-fields
+- await:
+    visible:
+      text: Delete visit
+- tap:
+    text: Delete visit
+- await:
+    visible:
+      text: Delete this visit?
+- await:
+    idle: true
+- tap:
+    text: Delete
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Codex QA visit 20261027

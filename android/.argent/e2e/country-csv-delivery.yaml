@@ -1,0 +1,45 @@
+steps:
+  - echo: Requires completed onboarding, idle recording, no country days or manual stays, and unconfigured lifetime access. Adds and removes one default one-day manual stay; does not analyze or export personal history.
+  - launch: com.bontecou.whereday
+  - await: { visible: { id: map-header } }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - tap: { id: archive-settings }
+  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { text: { matches: '^Country Days$' } }, direction: down }
+  - tap: { text: { matches: '^Country Days$' } }
+  - await: { visible: { text: No country days yet } }
+  - await: { idle: true }
+  - tap: { text: Add country stay }
+  - await: { visible: { text: Save stay } }
+  - tap: { text: Save stay }
+  - await: { visible: { text: View dates } }
+  - scroll-to: { target: { text: { matches: '^Export country CSV$' } }, direction: down }
+  - tap: { text: { matches: '^Export country CSV$' } }
+  - await: { visible: { text: Share file } }
+  - await: { idle: true }
+  - tool: screenshot
+    args: { scale: 0.5 }
+  - tap: { text: Share file }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - await: { idle: true }
+  - tap: { text: Save file as… }
+  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - scroll-to: { target: { text: { matches: '^Done$' } }, direction: down }
+  - tap: { text: { matches: '^Done$' } }
+  - await: { visible: { text: Preview country CSV } }
+  - tap: { text: Preview country CSV }
+  - await: { visible: { text: Country CSV preview } }
+  - await: { visible: { text: { matches: '^country_code,local_date,source' } } }
+  - tap: { text: { matches: '^Done$' } }
+  - await: { visible: { text: Edit stay } }
+  - tap: { text: Edit stay }
+  - await: { visible: { text: Edit country stay } }
+  - tap: { text: Delete country stay }
+  - await: { visible: { text: Delete this country stay? } }
+  - tap: { text: Delete stay }
+  - await: { visible: { text: No country days yet } }
+  - scroll-to: { target: { text: Back to settings }, direction: up }
+  - tap: { text: Back to settings }
+  - await: { visible: { text: Distance filter } }
+  - await: { idle: true }

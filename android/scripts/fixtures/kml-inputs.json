@@ -1,0 +1,6974 @@
+[
+  {
+    "name": "all-all-fields",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-no-optional-fields",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": false,
+      "visitDuration": false,
+      "visitName": false,
+      "visitAddress": false,
+      "visitNotes": false,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-visitCoordinates",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": false,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-visitDuration",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": false,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-visitName",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": false,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-visitAddress",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": false,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-visitNotes",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": false,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-pointAltitude",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-pointSpeed",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-pointAccuracy",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-without-pointOutlier",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-00",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-01",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-02",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-03",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-04",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-05",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-06",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-07",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-08",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-09",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-10",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-11",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-12",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-13",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-14",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-point-fields-15",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "visits-all-fields",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-no-optional-fields",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": false,
+      "visitDuration": false,
+      "visitName": false,
+      "visitAddress": false,
+      "visitNotes": false,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-visitCoordinates",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": false,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-visitDuration",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": false,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-visitName",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": false,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-visitAddress",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": false,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-visitNotes",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": false,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-pointAltitude",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-pointSpeed",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-pointAccuracy",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-without-pointOutlier",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-00",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-01",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-02",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-03",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-04",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-05",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-06",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-07",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-08",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-09",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-10",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-11",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-12",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-13",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-14",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "visits-point-fields-15",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "points-all-fields",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-no-optional-fields",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": false,
+      "visitDuration": false,
+      "visitName": false,
+      "visitAddress": false,
+      "visitNotes": false,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-visitCoordinates",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": false,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-visitDuration",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": false,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-visitName",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": false,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-visitAddress",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": false,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-visitNotes",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": false,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-pointAltitude",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-pointSpeed",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-pointAccuracy",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-without-pointOutlier",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-00",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-01",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-02",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-03",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-04",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-05",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-06",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-07",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": false
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-08",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-09",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-10",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-11",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": false,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-12",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-13",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": false,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-14",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": false,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "points-point-fields-15",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 1.0,
+        "outlier": false
+      },
+      {
+        "latitude": 5e-08,
+        "longitude": -5e-08,
+        "time": "2026-10-28T10:20:01.000Z",
+        "accuracy": 2.675,
+        "altitude": 1.005,
+        "speed": 0.125,
+        "outlier": false
+      },
+      {
+        "latitude": -0.0,
+        "longitude": 0.0,
+        "time": "2026-10-28T10:20:02.000Z",
+        "accuracy": 0.125,
+        "altitude": -0.125,
+        "speed": 2.675,
+        "outlier": false
+      }
+    ]
+  },
+  {
+    "name": "all-empty",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": []
+  },
+  {
+    "name": "visits-empty",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": []
+  },
+  {
+    "name": "points-empty",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": []
+  },
+  {
+    "name": "duration-0-300",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.000Z",
+        "departedAt": "2026-10-28T10:00:00.300Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-0-900",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.000Z",
+        "departedAt": "2026-10-28T10:00:00.900Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-0-1500",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.000Z",
+        "departedAt": "2026-10-28T10:00:01.500Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-0-60300",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.000Z",
+        "departedAt": "2026-10-28T10:01:00.300Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-0-90300",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.000Z",
+        "departedAt": "2026-10-28T10:01:30.300Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-0-90900",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.000Z",
+        "departedAt": "2026-10-28T10:01:30.900Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-123-300",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:00:00.423Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-123-900",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:00:01.023Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-123-1500",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:00:01.623Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-123-60300",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:00.423Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-123-90300",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.423Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "duration-123-90900",
+    "kind": "visits",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.0,
+        "longitude": -66.0,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:31.023Z",
+        "name": "Duration edge",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      }
+    ],
+    "points": []
+  },
+  {
+    "name": "geometry-single",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      }
+    ]
+  },
+  {
+    "name": "geometry-same-time",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      }
+    ]
+  },
+  {
+    "name": "geometry-two-sessions-singletons",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      }
+    ]
+  },
+  {
+    "name": "geometry-last-singleton",
+    "kind": "all",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "arrivedAt": "2026-10-28T10:00:00.123Z",
+        "departedAt": "2026-10-28T10:01:30.987Z",
+        "name": "Café <北> & \"Sea\"",
+        "address": "Road 1 & 2",
+        "notes": "First\nSecond ' 🗺️",
+        "source": "manual",
+        "confirmation": "corrected",
+        "confirmedAt": "2026-10-28T12:00:01.001Z",
+        "updatedAt": "2026-10-28T12:00:02.002Z",
+        "originalLatitude": 18.1,
+        "originalLongitude": -66.1,
+        "originalName": "Original <&> Café",
+        "originalAddress": "Old \\ road",
+        "detectedLatitude": 1e-07,
+        "detectedLongitude": -1e-05,
+        "detectedName": "Detected 北",
+        "detectedAddress": "Found\nRoad",
+        "placeSource": "userEntered",
+        "placeDistanceMeters": 42.25
+      },
+      {
+        "latitude": -1e-08,
+        "longitude": 180.0,
+        "arrivedAt": "2026-10-28T11:00:00.000Z",
+        "name": "",
+        "address": " ",
+        "notes": " "
+      },
+      {
+        "latitude": -90.0,
+        "longitude": -180.0,
+        "arrivedAt": "2026-10-28T12:00:00.000Z"
+      }
+    ],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T10:00:00.000Z",
+        "accuracy": 5.6789,
+        "altitude": -2.3456,
+        "speed": 1.2345,
+        "outlier": true
+      },
+      {
+        "latitude": 18.2,
+        "longitude": -66.2,
+        "time": "2026-10-28T10:10:00.000Z",
+        "accuracy": 0.0,
+        "outlier": false
+      },
+      {
+        "latitude": 18.3,
+        "longitude": -66.3,
+        "time": "2026-10-28T10:20:00.001Z",
+        "accuracy": 9.8765,
+        "altitude": 3.14159,
+        "speed": 0.0,
+        "outlier": true
+      }
+    ]
+  },
+  {
+    "name": "budget-two-fixes",
+    "kind": "points",
+    "options": {
+      "visitCoordinates": true,
+      "visitDuration": true,
+      "visitName": true,
+      "visitAddress": true,
+      "visitNotes": true,
+      "pointAltitude": true,
+      "pointSpeed": true,
+      "pointAccuracy": true,
+      "pointOutlier": true
+    },
+    "visits": [],
+    "points": [
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T00:00:00.000Z",
+        "accuracy": 5.0,
+        "altitude": 2.675,
+        "outlier": false
+      },
+      {
+        "latitude": 18.123456789,
+        "longitude": -66.123456789,
+        "time": "2026-10-28T00:00:01.000Z",
+        "accuracy": 5.0,
+        "altitude": 2.675,
+        "outlier": false
+      }
+    ]
+  }
+]

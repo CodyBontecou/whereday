@@ -1,0 +1,15 @@
+steps:
+  - tool: button
+    args:
+      button: home
+  - tool: launch-app
+    args:
+      bundleId: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Start recording
+executionPrerequisite: The isolated mapQa app has just stopped the temporary QA
+  recording and shows Start recording. This fragment checks idle state after
+  background/resume; never run against the owner app.

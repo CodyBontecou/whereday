@@ -1,0 +1,14 @@
+steps:
+  - await: { visible: { text: "Analyze saved locations" } }
+  - await: { idle: true }
+  - tap:
+      text: { matches: '^Analyze saved locations$' }
+  - await: { visible: { text: "Analyze saved locations?" } }
+  - await: { idle: true }
+  - await: { visible: { text: "Start analysis" } }
+  - tap:
+      text: Cancel
+  - await: { hidden: { text: "Analyze saved locations?" } }
+executionPrerequisite: Onboarded Android app is idle on Country Days with
+  network geocoding enabled. No country analysis is running. This path cancels
+  the disclosure before any coordinate lookup.

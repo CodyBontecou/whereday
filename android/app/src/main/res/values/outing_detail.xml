@@ -1,0 +1,24 @@
+<resources>
+    <string name="outing_load_error">This outing could not be loaded. It may have been deleted.</string>
+    <string name="outing_details">Outing details</string>
+    <string name="outing_point_summary">%1$s · %2$s</string>
+    <string name="outing_duration_summary">%1$dh %2$dm · %3$s</string>
+    <string name="outing_average_speed">%1$s/h average</string>
+    <string name="outing_average_unavailable">Average speed unavailable</string>
+    <string name="outing_show_map">Show on map</string>
+    <string name="outing_edit">Edit outing</string>
+    <string name="outing_inferred_explanation">This outing is inferred from gaps in imported or older route points. Its boundaries follow your inferred-outing settings.</string>
+    <string name="outing_linked_visits">Linked visits</string>
+    <string name="outing_format">Outing file format</string>
+    <string name="outing_format_explanation">JSON and CSV contain the outing summary. Markdown also includes visits and every route point. Route formats contain points only.</string>
+    <string name="outing_export">Export outing</string>
+    <string name="outing_delete">Delete outing</string>
+    <string name="outing_save_error">Your outing changes could not be saved.</string>
+    <string name="outing_delete_error">The outing could not be deleted.</string>
+    <string name="outing_delete_question">Delete this outing?</string>
+    <string name="outing_delete_explanation">This removes the outing and its recorded points. Visits remain in your journal. An active recording will stop first.</string>
+    <string name="outing_default_name">Use default name</string>
+    <string name="outing_save">Save outing</string>
+    <plurals name="outing_glitch_count"><item quantity="one">%d GPS glitch</item><item quantity="other">%d GPS glitches</item></plurals>
+    <plurals name="outing_sampled"><item quantity="one">The map is sampled; statistics include the full %d point.</item><item quantity="other">The map is sampled; statistics include all %d points.</item></plurals>
+</resources>

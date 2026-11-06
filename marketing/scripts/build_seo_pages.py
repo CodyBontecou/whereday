@@ -67,7 +67,7 @@ PAGES = [
         "title": "How to See Your Location History on iPhone — Whereday",
         "headline": "How to see your location history on iPhone",
         "description": "Find iPhone location history in Apple Maps, Google Timeline or Whereday. Choose a download, check its dates and records, and keep the original before moving.",
-        "modified": "2026-10-31",
+        "modified": "2026-11-05",
         "lede": "Find the app and date that hold your saved visits, distinguish iPhone location settings from recorded history, and check existing copies before changing your setup.",
         "source": "view-location-history-iphone.html",
     },
@@ -270,8 +270,8 @@ def render(page):
     section = page.get("section", "Compare")
     section_path = page.get("section_path", "/compare/")
     is_article = page.get("type") == "BlogPosting"
-    image = BASE + page.get("image", "/screenshots/map.png")
-    image_alt = page.get("image_alt", "Whereday map interface showing visits and route points")
+    image = BASE + page.get("image", "/screenshots/map-home.png")
+    image_alt = page.get("image_alt", "Whereday’s map home, with today’s route coloured by place")
     crumbs = [("Whereday", "/"), (section, section_path)]
     if path != section_path:
         crumbs.append((page.get("breadcrumb", "Google Timeline"), path))

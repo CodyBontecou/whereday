@@ -1,0 +1,32 @@
+<resources>
+    <string name="shell_map">Map</string>
+    <string name="shell_timeline">Timeline</string>
+    <string name="shell_export">Export</string>
+    <string name="shell_settings">Settings</string>
+    <string name="shell_atlas">Atlas</string>
+    <string name="shell_places">Places</string>
+    <string name="shell_archive">Archive</string>
+    <string name="common_continue">Continue</string>
+    <string name="common_back">Back</string>
+    <string name="onboarding_title_welcome">Your days, remembered</string>
+    <string name="onboarding_title_journal">A journal of where you go</string>
+    <string name="onboarding_title_background">Record in the background</string>
+    <string name="onboarding_title_notification">Keep recording within reach</string>
+    <string name="onboarding_title_ready">Ready for your next outing</string>
+    <string name="onboarding_body_welcome">Whereday keeps your location history on this phone. No account is needed to record your day.</string>
+    <string name="onboarding_body_journal">Record routes, remember visits and make your history your own with saved places and notes.</string>
+    <string name="onboarding_body_background">Location access lets Whereday record a route while your screen is off. Choose precise location for useful routes. You can use the rest of the app without granting access.</string>
+    <string name="onboarding_body_notification">An ongoing notification shows your recording status and lets you stop without opening the app. Allow notifications to keep these controls visible.</string>
+    <string name="onboarding_body_ready">Start a recording whenever you are ready. You can change distance, auto-stop and appearance in Settings.</string>
+    <string name="onboarding_allow_location">Allow location</string>
+    <string name="onboarding_allow_notifications">Allow notifications</string>
+    <string name="recording_journal_title">Your location journal</string>
+    <string name="recording_active_summary">Recording continues with the screen off.</string>
+    <string name="recording_idle_summary">Start a recording to save your next outing.</string>
+    <string name="recording_point_label">Recorded points</string>
+    <string name="recording_visit_label">Visits</string>
+    <string name="recording_distance_label">Distance</string>
+    <string name="recording_sample_summary">Showing %1$d of %2$d points. Statistics use the full selected history.</string>
+    <string name="recording_latest_fix">Latest fix · %1$s</string>
+    <string name="recording_offline_hint">Your route will appear here after the first accurate location fix. Recording does not require a network connection.</string>
+</resources>

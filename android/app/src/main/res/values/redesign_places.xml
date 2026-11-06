@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="redesign_places_saved_eyebrow">
+        <item quantity="one">%d saved</item>
+        <item quantity="other">%d saved</item>
+    </plurals>
+    <string name="redesign_places_empty_title">No saved places</string>
+    <string name="redesign_places_no_match_title">No matches</string>
+    <string name="redesign_places_section_details">Details</string>
+    <string name="redesign_places_section_location">Location</string>
+    <string name="redesign_places_section_radius">Radius</string>
+    <string name="redesign_places_section_rows">Rows</string>
+    <string name="redesign_photos_empty_title">No photos yet</string>
+    <string name="redesign_photo_places_empty_title">No photo places</string>
+</resources>

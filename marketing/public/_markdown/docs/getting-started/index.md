@@ -10,7 +10,7 @@ iOS 17+
 
 Updated
 
-October 26, 2026
+November 5, 2026
 
 Reading
 
@@ -34,13 +34,13 @@ Whereday is a free download on the App Store. There is no account to create and 
 
 ## After onboarding
 
-You land on the Map tab. The other tabs are Timeline (your day, visit by visit), Export, and Settings. The floating pill on the map starts and stops both GPS recording and visit monitoring. With Always permission, recording can continue in the background. Installing the app does not reconstruct earlier history.
+You land on the Map: a map of today with your route, your visits, and a day card at the bottom. The other tabs are Atlas (your days at a glance), Places (your saved places), and Archive (export and import); Settings is the gear in Archive. The recording bar above the day card starts and stops both GPS recording and visit monitoring. With Always permission, recording can continue in the background. Installing the app does not reconstruct earlier history.
 
 ## Your first day
 
-- Start tracking from the map pill before a walk or drive — you'll see the path draw in, and a Live Activity appears on your lock screen.
-- Stop tracking from the pill, the Live Activity's Stop button, Siri, or automatically with the auto-stop timer.
-- Open the Timeline tab to review where you went, how long you stayed, and how far you moved.
+- Start tracking from the recording bar on the map before a walk or drive — you'll see the path draw in, and a Live Activity appears on your lock screen.
+- Stop tracking from the recording bar, the Live Activity's Stop button, Siri, or automatically with the auto-stop timer.
+- Swipe up the day card to review where you went, how long you stayed, and how far you moved. Tap the small dial at the top right of the map to replay the day.
 
 Where is my data? On your iPhone only. See the [Privacy & your data](https://whereday.com/docs/privacy-data) guide for the complete picture of storage, network requests, and deletion.
 

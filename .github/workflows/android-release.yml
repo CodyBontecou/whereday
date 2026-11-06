@@ -1,0 +1,131 @@
+name: Android signed bundle
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_code:
+        description: 'New Play version code (positive integer)'
+        required: true
+        type: string
+      version_name:
+        description: 'Version name, for example 0.1.0 or 0.1.0-beta.1'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-release
+  cancel-in-progress: false
+
+jobs:
+  signed-bundle:
+    # Never expose upload-key inputs to a PR or a manually selected feature branch.
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    environment: android-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      VERSION_CODE: ${{ inputs.version_code }}
+      VERSION_NAME: ${{ inputs.version_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Validate release identity
+        run: |
+          python3 - <<'PY'
+          import os, re
+          code, name = os.environ['VERSION_CODE'], os.environ['VERSION_NAME']
+          if not re.fullmatch(r'[1-9][0-9]{0,9}', code) or int(code) > 2_100_000_000:
+              raise SystemExit('Invalid Android version code')
+          if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?', name):
+              raise SystemExit('Invalid Android version name')
+          PY
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0' "ndk;$(python3 android/scripts/verify_native_provenance.py --print-ndk-version)"
+      - name: Verify artifact guards and resources
+        run: |
+          python3 android/scripts/test_release_bundle.py
+          python3 -m unittest discover -s android/scripts -p 'test_*runtime_notice*.py'
+          python3 -m unittest discover -s android/scripts -p test_native_provenance.py
+          python3 android/scripts/generate_localized_resources.py --check
+          python3 android/scripts/test_localized_resources.py
+      - name: Build and lint release variant
+        run: >-
+          ./android/gradlew -p android :domain:test :export:test :billing:test
+          :platform:testReleaseUnitTest :app:testReleaseUnitTest :app:lintRelease :app:bundleRelease
+          "-Pwhereday.versionCode=$VERSION_CODE" "-Pwhereday.versionName=$VERSION_NAME" --no-daemon
+      - name: Verify packaged release notices
+        run: |
+          python3 android/scripts/verify_runtime_notice_package.py android/app/build/outputs/bundle/release/app-release.aab android/app/build/generated/runtime-notices/release
+      - name: Verify native binary provenance
+        run: >-
+          python3 android/scripts/verify_native_provenance.py android/app/build/outputs/bundle/release/app-release.aab
+          android/app/build/reports/runtime-notices/release/resolved-inputs.json android/notices/runtime-lock.json
+          --ndk-root "$ANDROID_HOME/ndk/$(python3 android/scripts/verify_native_provenance.py --print-ndk-version)"
+          --output android/app/build/reports/native-provenance/release.json
+      - name: Verify pinned bundletool
+        run: python3 android/scripts/release_bundle.py --fetch-tool-only --bundletool "$RUNNER_TEMP/whereday-bundletool.jar"
+      - name: Sign and verify bundle
+        env:
+          WHEREDAY_KEYSTORE_BASE64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          WHEREDAY_STORE_PASSWORD: ${{ secrets.ANDROID_UPLOAD_STORE_PASSWORD }}
+          WHEREDAY_KEY_PASSWORD: ${{ secrets.ANDROID_UPLOAD_KEY_PASSWORD }}
+          WHEREDAY_KEY_ALIAS: ${{ secrets.ANDROID_UPLOAD_KEY_ALIAS }}
+          WHEREDAY_UPLOAD_CERT_SHA256: ${{ vars.ANDROID_UPLOAD_CERT_SHA256 }}
+        run: |
+          umask 077
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          for name in ['WHEREDAY_KEYSTORE_BASE64', 'WHEREDAY_STORE_PASSWORD', 'WHEREDAY_KEY_PASSWORD', 'WHEREDAY_KEY_ALIAS', 'WHEREDAY_UPLOAD_CERT_SHA256']:
+              if not os.environ.get(name):
+                  raise SystemExit('Release environment signing inputs are incomplete')
+          encoded = os.environ['WHEREDAY_KEYSTORE_BASE64']
+          if len(encoded) > 2_000_000:
+              raise SystemExit('Unexpected keystore size')
+          data = base64.b64decode(encoded, validate=True)
+          with (Path(os.environ['RUNNER_TEMP']) / 'whereday-upload.jks').open('xb') as stream:
+              stream.write(data)
+          PY
+          python3 android/scripts/release_bundle.py \
+            --bundletool "$RUNNER_TEMP/whereday-bundletool.jar" \
+            --bundle android/app/build/outputs/bundle/release/app-release.aab \
+            --keystore "$RUNNER_TEMP/whereday-upload.jks" \
+            --certificate-sha256 "$WHEREDAY_UPLOAD_CERT_SHA256" \
+            --version-code "$VERSION_CODE" --version-name "$VERSION_NAME" \
+            --source-revision "$GITHUB_SHA" --require-clean-tree \
+            --output android/build/signed-release
+      - name: Preserve verified bundle and checksums
+        uses: actions/upload-artifact@v4
+        with:
+          name: whereday-android-${{ inputs.version_code }}-${{ github.sha }}
+          path: android/build/signed-release/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Preserve release validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: whereday-android-release-reports-${{ github.run_id }}
+          path: |
+            android/app/build/reports/lint-results-release.*
+            android/app/build/test-results/testReleaseUnitTest/
+            android/app/build/reports/runtime-notices/release/collected/
+            android/app/build/reports/native-provenance/
+            android/domain/build/test-results/
+            android/export/build/test-results/
+            android/billing/build/test-results/
+            android/platform/build/test-results/testReleaseUnitTest/
+          retention-days: 14
+      - name: Remove temporary upload key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/whereday-upload.jks"

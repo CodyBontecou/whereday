@@ -1,0 +1,134 @@
+name: Android heavy emulator tests
+
+# The full instrumented UI selection (about 600 tests, with map pixel checks) and the million-record import
+# scale checks take hours on a hosted 2-core emulator, so they run nightly and on demand instead of on every
+# pull request. The PR workflow (android-tests.yml) keeps the build, unit, lint, provenance and the faster
+# emulator checks.
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-heavy-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Run synthetic persistence, migration and country-analysis regressions
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: |
+            ./gradlew :automation-client:assembleDebug --no-daemon
+            adb install -r automation-client/build/outputs/apk/debug/automation-client-debug.apk
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.RoadAttributionRenderingTest,com.bontecou.whereday.GeoapifyRoutingConfigurationTest,com.bontecou.whereday.PhotoDotRenderingTest,com.bontecou.whereday.SoftwareNoticesTest,com.bontecou.whereday.SoftwareNoticesNavigationTest,com.bontecou.whereday.RoadConsentScreenTest,com.bontecou.whereday.RoadDisplayProducerTest,com.bontecou.whereday.RoadMapRenderingTest,com.bontecou.whereday.NativeMapInputReadinessTest,com.bontecou.whereday.PhotoMapRenderingTest,com.bontecou.whereday.PhotoStripInteractionTest,com.bontecou.whereday.PhotoPagingInteractionTest,com.bontecou.whereday.PhotoViewerRestorationTest,com.bontecou.whereday.PhotoRemovalReviewTest,com.bontecou.whereday.PhotoDirectoryRestorationTest,com.bontecou.whereday.PhotoPlaceBrowserTest,com.bontecou.whereday.PhotoMapLayerBrowserTest,com.bontecou.whereday.PhotoPickerContractTest,com.bontecou.whereday.WebhookGraphIntegrationTest,com.bontecou.whereday.WebhookScreenTest,com.bontecou.whereday.WebhookNavigationIntegrationTest,com.bontecou.whereday.EditorBackGuardTest,com.bontecou.whereday.VisitEditorRestorationTest,com.bontecou.whereday.VisitLocalizationTest,com.bontecou.whereday.VisitTimestampControlTest,com.bontecou.whereday.VisitTimestampEditorIntegrationTest,com.bontecou.whereday.VisitTimestampDensityTest,com.bontecou.whereday.SavedPlacesLocalizationTest,com.bontecou.whereday.SavedPlaceActionLifecycleTest,com.bontecou.whereday.PlaceSearchDialogTest,com.bontecou.whereday.PlaceLocationPickerTest,com.bontecou.whereday.CountryStayEditorTest,com.bontecou.whereday.CountryDaysFlowTest,com.bontecou.whereday.ExportDeliveryFlowTest,com.bontecou.whereday.ExportOptionsFlowTest,com.bontecou.whereday.ExportDateOwnershipTest,com.bontecou.whereday.WebhookLocalizationTest,com.bontecou.whereday.AutomaticExportLocalizationTest,com.bontecou.whereday.SettingsLocalizationTest,com.bontecou.whereday.JournalClearBarrierTest,com.bontecou.whereday.GeographicLicensesTest,com.bontecou.whereday.AutomationLocalizationTest,com.bontecou.whereday.SettingsGraphIntegrationTest,com.bontecou.whereday.VisitReviewLifecycleTest,com.bontecou.whereday.VisitOverlapFlowTest,com.bontecou.whereday.CalendarEventFlowTest,com.bontecou.whereday.VisitLinkFlowTest,com.bontecou.whereday.TimelineLocalizationTest,com.bontecou.whereday.OutingLocalizationTest,com.bontecou.whereday.ReplayLocalizationTest,com.bontecou.whereday.PhotoLocalizationTest,com.bontecou.whereday.PhotoPlaceLocalizationTest,com.bontecou.whereday.CurrentSavedPlaceSuggestionTest,com.bontecou.whereday.CurrentBusinessSuggestionTest,com.bontecou.whereday.NearbyPlacesDialogTest,com.bontecou.whereday.NearbyVisitSelectionTest,com.bontecou.whereday.AutomationClearIntegrationTest,com.bontecou.whereday.AutomationScreenTest,com.bontecou.whereday.AutomationTransportTest,com.bontecou.whereday.LauncherShortcutsTest,com.bontecou.whereday.LauncherConfirmationTest,com.bontecou.whereday.LauncherLocalizationTest,com.bontecou.whereday.LauncherLifecycleTest,com.bontecou.whereday.OnboardingReadyTest,com.bontecou.whereday.LaunchLocalizationTest,com.bontecou.whereday.RecordingFeedbackTest,com.bontecou.whereday.RecordingAccessTest,com.bontecou.whereday.RecordingAccessIntegrationTest,com.bontecou.whereday.MapLocalizationTest,com.bontecou.whereday.CustomDateRangeTest,com.bontecou.whereday.MapDateRangeControlTest,com.bontecou.whereday.JournalMapCustomDateTest,com.bontecou.whereday.JournalMapRangeTest,com.bontecou.whereday.ExportFiltersTest,com.bontecou.whereday.HistoryImportScreenTest,com.bontecou.whereday.JournalVisitInspectionTest,com.bontecou.whereday.VisitMapFocusTest,com.bontecou.whereday.MapPointInspectionFlowTest,com.bontecou.whereday.MapPointMarkerLoadTest,com.bontecou.whereday.MapPointOutlierSourceTest,com.bontecou.whereday.MapPointSamplingFlowTest,com.bontecou.whereday.MapPointCallerUnitsTest,com.bontecou.whereday.JournalWorkspaceFrameTest,com.bontecou.whereday.JournalWorkspaceShellTest,com.bontecou.whereday.InlineVisitInspectorTest,com.bontecou.whereday.WorkspaceDialogTest,com.bontecou.whereday.WorkspaceCallerDialogTest,com.bontecou.whereday.MapFollowTest,com.bontecou.whereday.ActiveRecordingMapRenderingTest,com.bontecou.whereday.SupportScreenTest,com.bontecou.whereday.SupportNavigationTest,com.bontecou.whereday.UsageAnalyticsScreenTest,com.bontecou.whereday.UsageAnalyticsNavigationTest,com.bontecou.whereday.UsageAnalyticsConsentIntegrationTest --no-daemon
+            mkdir -p build/reports/app-qa-snapshots
+            cp -R app/build/outputs/androidTest-results/connected/mapQa build/reports/app-qa-snapshots/default
+            bash scripts/test_expanded_workspace_ci.sh
+            # Location fixtures grant OS permissions. Keep them outside the denied-permission suite;
+            # revoking permissions inside instrumentation would kill its target process.
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.VisitLinkActivityTest --no-daemon
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.CurrentLocationFlowTest --no-daemon
+            mkdir -p build/reports/app-qa-snapshots
+            cp -R app/build/outputs/androidTest-results/connected/mapQa build/reports/app-qa-snapshots/current-location
+            adb uninstall com.bontecou.whereday.automationclient
+            ./gradlew :data:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.notClass=com.bontecou.whereday.data.HistoryScalingTest,com.bontecou.whereday.data.PointMarkerScalingTest,com.bontecou.whereday.data.AppPreferencesUpgradeTest --no-daemon
+            ./gradlew :data:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.data.AppPreferencesUpgradeTest --no-daemon
+            # Run each system-permission class on its own fresh mapQa installation.
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.RoadActivityLifecycleTest --no-daemon
+            mkdir -p build/reports/app-qa-snapshots
+            cp -R app/build/outputs/androidTest-results/connected/mapQa build/reports/app-qa-snapshots/road-lifecycle
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.RecordingPermissionDenialSystemTest --no-daemon
+            mkdir -p build/reports/app-qa-snapshots
+            cp -R app/build/outputs/androidTest-results/connected/mapQa build/reports/app-qa-snapshots/recording-denied
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.RecordingApproximateSystemTest --no-daemon
+            mkdir -p build/reports/app-qa-snapshots
+            cp -R app/build/outputs/androidTest-results/connected/mapQa build/reports/app-qa-snapshots/recording-approximate
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.VisitMonitoringServiceTest,com.bontecou.whereday.VisitMonitoringScreenTest --no-daemon
+            cp -R app/build/outputs/androidTest-results/connected/mapQa build/reports/app-qa-snapshots/visits-only
+            ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.RecordingGenerationStartTest --no-daemon
+            ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.RoadConsentGraphTest --no-daemon
+            ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.RoadDisplayGraphTest --no-daemon
+            ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.JournalClearGraphRecoveryTest --no-daemon
+            ci_clear_serial=$(adb get-serialno); ci_clear_avd=$(adb -s "$ci_clear_serial" emu avd name | sed -n '1p' | tr -d '\r'); python3 scripts/verify_clear_recovery.py --adb "$(command -v adb)" --serial "$ci_clear_serial" --avd "$ci_clear_avd" --apk platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk --output build/reports/clear-recovery
+            ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.PhotoLibraryControllerTest,com.bontecou.whereday.platform.PhotoSyncSpoolTest,com.bontecou.whereday.platform.PhotoLibraryAccessTest,com.bontecou.whereday.platform.AutomaticPhotoSyncTest,com.bontecou.whereday.platform.PhotoSourceTest,com.bontecou.whereday.platform.PhotoIdentityTest,com.bontecou.whereday.platform.RecordingNotificationTest,com.bontecou.whereday.platform.JournalClearReceiptTest,com.bontecou.whereday.platform.JournalClearAdmissionTest,com.bontecou.whereday.platform.RecordingCommandsTest,com.bontecou.whereday.platform.VisitMonitoringCommandsTest,com.bontecou.whereday.platform.FusedLocationSourceTest,com.bontecou.whereday.platform.MapLocationSourceTest,com.bontecou.whereday.platform.CurrentVisitLocationSourceTest,com.bontecou.whereday.platform.SystemPlaceLookupTest,com.bontecou.whereday.platform.GeocoderRequestsTest,com.bontecou.whereday.platform.PurchaseIdentityTest,com.bontecou.whereday.platform.PurchaseUsageIntegrationTest,com.bontecou.whereday.platform.AutomationControllerTest,com.bontecou.whereday.platform.AutomationExecutorTest,com.bontecou.whereday.platform.AutomationVisitLocationTest,com.bontecou.whereday.platform.AutomationAccessTest,com.bontecou.whereday.platform.AutomationProtocolTest,com.bontecou.whereday.platform.UsageAnalyticsStoreTest,com.bontecou.whereday.platform.UsageAnalyticsWorkTest,com.bontecou.whereday.platform.AutomationResultsTest,com.bontecou.whereday.platform.AutomationResultProviderTest,com.bontecou.whereday.platform.WebhookSettingsStoreTest,com.bontecou.whereday.platform.WebhookDeliveryTest,com.bontecou.whereday.platform.WebhookCoordinatorTest,com.bontecou.whereday.platform.WebhookWorkTest,com.bontecou.whereday.platform.WebhookControllerTest,com.bontecou.whereday.platform.ReviewMilestoneStoreTest,com.bontecou.whereday.platform.PlayReviewHostTest,com.bontecou.whereday.platform.ExportFilesTest,com.bontecou.whereday.platform.LegacyMarkdownPersistenceTest,com.bontecou.whereday.platform.LocalizedMarkdownFilesTest,com.bontecou.whereday.platform.HistoryImportTargetTest,com.bontecou.whereday.platform.DiskHistoryImportTest,com.bontecou.whereday.platform.GoogleHistoryImportTest,com.bontecou.whereday.platform.WheredayHistoryImportTest,com.bontecou.whereday.platform.ImportResourceBoundsTest,com.bontecou.whereday.platform.CountryFileExportTest,com.bontecou.whereday.platform.OutingFileExportTest,com.bontecou.whereday.platform.OutingMarkdownFilesTest,com.bontecou.whereday.platform.BulkOutingFileExportTest,com.bontecou.whereday.platform.ExportRecoveryTest,com.bontecou.whereday.platform.ExportSettingsTest,com.bontecou.whereday.platform.ScheduledMergeTest,com.bontecou.whereday.platform.ScheduledDocumentWriterTest,com.bontecou.whereday.platform.ScheduledExportCoordinatorTest,com.bontecou.whereday.platform.ScheduledExportWorkTest --no-daemon
+            # Only the settings/graph fixture runs with the synthetic routing build enabled.
+            # It creates no map session and sends no request to Geoapify.
+            ./gradlew :app:connectedMapQaAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.GeoapifyRoutingConfigurationTest -Pwhereday.geoapifyNearbyEnabled=false -Pwhereday.geoapifyRoutingEnabled=true -Pwhereday.geoapifyApiKey=whereday-routing-qa-synthetic-not-production --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-database-reports
+          path: |
+            android/app/build/reports/androidTests/
+            android/app/build/outputs/androidTest-results/
+            android/data/build/reports/androidTests/
+            android/data/build/outputs/androidTest-results/
+            android/build/reports/clear-recovery/
+            android/build/reports/app-qa-snapshots/
+            android/platform/build/reports/androidTests/
+            android/platform/build/outputs/androidTest-results/
+
+  import-scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Review, import, deduplicate and clear one million records per format
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: ./gradlew :platform:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.bontecou.whereday.platform.DiskHistoryImportScaleTest --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-import-scale-reports
+          path: |
+            android/build/reports/clear-recovery/
+            android/build/reports/app-qa-snapshots/
+            android/platform/build/reports/androidTests/
+            android/platform/build/outputs/androidTest-results/

@@ -1,0 +1,263 @@
+{
+  "provenance": {
+    "IsoMe/Models/FilenameTemplate.swift": "4491102d94e6e9288cb6fd0c1df9538564ffac0591bb289c59c8cff8bfdd7bfe",
+    "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
+    "android/scripts/fixtures/FilenameFixtures.swift": "2f641a4b90e7257d4062e16bb5d5c19ff9531b5a0bdfa52c48607edf5b15a03e",
+    "android/scripts/fixtures/filename-inputs.json": "95fa3f37c6725f7dbf1c8e59f54ecdd67d1fb518779209699d1f6b1ebe97d568"
+  },
+  "cases": [
+    {
+      "dayStable": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{date}-{date}-{type}-{format}",
+      "expected": "2020/03/01-Sunday-March-Q1-2020-03-01-00-15-45-2020-03-01_00-15-45-outings-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "UTC-all",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+      "title": "  Café walk  ",
+      "zone": "UTC"
+    },
+    {
+      "dayStable": "isome_{type}_{date}",
+      "expected": "isome_outings_2020-03-01_00-15-45.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "UTC-compact",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "isome_{type}_{datetime}",
+      "title": "  Café walk  ",
+      "zone": "UTC"
+    },
+    {
+      "dayStable": "{name}-{format} - {date}",
+      "expected": "Café walk-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "UTC-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{name}-{format}",
+      "title": "  Café walk  ",
+      "zone": "UTC"
+    },
+    {
+      "dayStable": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{date}-{date}-{type}-{format}",
+      "expected": "2020/02/29-Saturday-February-Q1-2020-02-29-20-15-45-2020-02-29_20-15-45-outings-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "America/Puerto_Rico-all",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+      "title": "  Café walk  ",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": "isome_{type}_{date}",
+      "expected": "isome_outings_2020-02-29_20-15-45.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "America/Puerto_Rico-compact",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "isome_{type}_{datetime}",
+      "title": "  Café walk  ",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": "{name}-{format} - {date}",
+      "expected": "Café walk-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "America/Puerto_Rico-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{name}-{format}",
+      "title": "  Café walk  ",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{date}-{date}-{type}-{format}",
+      "expected": "2020/02/29-Saturday-February-Q1-2020-02-29-19-15-45-2020-02-29_19-15-45-outings-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "America/New_York-all",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+      "title": "  Café walk  ",
+      "zone": "America/New_York"
+    },
+    {
+      "dayStable": "isome_{type}_{date}",
+      "expected": "isome_outings_2020-02-29_19-15-45.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "America/New_York-compact",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "isome_{type}_{datetime}",
+      "title": "  Café walk  ",
+      "zone": "America/New_York"
+    },
+    {
+      "dayStable": "{name}-{format} - {date}",
+      "expected": "Café walk-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "America/New_York-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{name}-{format}",
+      "title": "  Café walk  ",
+      "zone": "America/New_York"
+    },
+    {
+      "dayStable": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{date}-{date}-{type}-{format}",
+      "expected": "2020/03/01-Sunday-March-Q1-2020-03-01-06-00-45-2020-03-01_06-00-45-outings-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "Asia/Kathmandu-all",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+      "title": "  Café walk  ",
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "dayStable": "isome_{type}_{date}",
+      "expected": "isome_outings_2020-03-01_06-00-45.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "Asia/Kathmandu-compact",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "isome_{type}_{datetime}",
+      "title": "  Café walk  ",
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "dayStable": "{name}-{format} - {date}",
+      "expected": "Café walk-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "Asia/Kathmandu-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{name}-{format}",
+      "title": "  Café walk  ",
+      "zone": "Asia/Kathmandu"
+    },
+    {
+      "dayStable": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{date}-{date}-{type}-{format}",
+      "expected": "2020/03/01-Sunday-March-Q1-2020-03-01-14-15-45-2020-03-01_14-15-45-outings-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "Pacific/Kiritimati-all",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{year}/{month}/{dayNumber}-{weekday}-{monthName}-{quarter}-{date}-{time}-{datetime}-{type}-{format}",
+      "title": "  Café walk  ",
+      "zone": "Pacific/Kiritimati"
+    },
+    {
+      "dayStable": "isome_{type}_{date}",
+      "expected": "isome_outings_2020-03-01_14-15-45.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "Pacific/Kiritimati-compact",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "isome_{type}_{datetime}",
+      "title": "  Café walk  ",
+      "zone": "Pacific/Kiritimati"
+    },
+    {
+      "dayStable": "{name}-{format} - {date}",
+      "expected": "Café walk-md.md",
+      "format": "md",
+      "kind": "outings",
+      "name": "Pacific/Kiritimati-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{name}-{format}",
+      "title": "  Café walk  ",
+      "zone": "Pacific/Kiritimati"
+    },
+    {
+      "dayStable": "Whereday - {day} {date} - {type}",
+      "expected": "Whereday - Sunday 2020-03-01 - points.json",
+      "format": "json",
+      "kind": "points",
+      "name": "empty-pattern",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "",
+      "title": "",
+      "zone": "UTC"
+    },
+    {
+      "dayStable": "{title}-{name} - {date}",
+      "expected": "visits-visits.gpx",
+      "format": "gpx",
+      "kind": "visits",
+      "name": "missing-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{title}-{name}",
+      "title": "  ",
+      "zone": "UTC"
+    },
+    {
+      "dayStable": "History - {date}.JSON",
+      "expected": "History.JSON",
+      "format": "json",
+      "kind": "all",
+      "name": "uppercase-extension",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "History.JSON",
+      "title": "",
+      "zone": "UTC"
+    },
+    {
+      "dayStable": "folder/Track - {date}.csv",
+      "expected": "folder/Track.csv",
+      "format": "csv",
+      "kind": "visits",
+      "name": "with-extension",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "folder/Track.csv",
+      "title": "",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": "folder/{date} - {type}",
+      "expected": "folder/visits.csv",
+      "format": "csv",
+      "kind": "visits",
+      "name": "folder-only",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "folder/",
+      "title": "",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": ".csv - {date}",
+      "expected": "visits.csv",
+      "format": "csv",
+      "kind": "visits",
+      "name": "extension-only",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": ".csv",
+      "title": "",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": "{title} - {date}",
+      "expected": "Walk- café/park-.csv",
+      "format": "csv",
+      "kind": "visits",
+      "name": "punctuation-title",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{title}",
+      "title": ".Walk: café/park?",
+      "zone": "America/Puerto_Rico"
+    },
+    {
+      "dayStable": "{date}/Track",
+      "expected": "2020-02-29/Track.csv",
+      "format": "csv",
+      "kind": "visits",
+      "name": "date-folder",
+      "now": "2020-03-01T00:15:45Z",
+      "pattern": "{date}/Track",
+      "title": "",
+      "zone": "America/Puerto_Rico"
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+steps:
+- echo: 'Disposable English API35 mapQa only: onboarded, empty history, recording idle, all runtime permissions denied. Task fixture whereday-import-review-20261028.json
+    is in Downloads. Review/discard, approve one visit+point, reimport keeping matches, then clear only this QA journal.'
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      id: export-screen
+- await:
+    idle: true
+- await:
+    visible:
+      id: export-history-count
+      text: 0 route points stored on this phone.
+- tap:
+    text: Import history file
+- await:
+    visible:
+      id: com.google.android.documentsui:id/drawer_layout
+- await:
+    idle: true
+- tap:
+    text: Show roots
+- await:
+    visible:
+      text: Open from
+- await:
+    idle: true
+- tap:
+    text: Downloads
+    after:
+      text: Documents
+- await:
+    hidden:
+      text: Open from
+- await:
+    visible:
+      id: com.google.android.documentsui:id/header_title
+      text: Files in Downloads
+- await:
+    idle: true
+- await:
+    visible:
+      id: android:id/title
+      text: whereday-import-review-20261028.json
+- tap:
+    id: android:id/title
+    text: whereday-import-review-20261028.json
+- await:
+    visible:
+      text: Review history import
+- await:
+    idle: true
+- await:
+    visible:
+      id: history-import-summary
+      text: JSON · 1 visit · 1 point
+- tap:
+    text: Discard review
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: export-screen
+- await:
+    idle: true
+- await:
+    visible:
+      id: export-history-count
+      text: 0 route points stored on this phone.
+- tap:
+    text: Import history file
+- await:
+    visible:
+      id: com.google.android.documentsui:id/drawer_layout
+- await:
+    idle: true
+- tap:
+    text: Show roots
+- await:
+    visible:
+      text: Open from
+- await:
+    idle: true
+- tap:
+    text: Downloads
+    after:
+      text: Documents
+- await:
+    hidden:
+      text: Open from
+- await:
+    visible:
+      id: com.google.android.documentsui:id/header_title
+      text: Files in Downloads
+- await:
+    idle: true
+- await:
+    visible:
+      id: android:id/title
+      text: whereday-import-review-20261028.json
+- tap:
+    id: android:id/title
+    text: whereday-import-review-20261028.json
+- await:
+    visible:
+      text: Review history import
+- await:
+    idle: true
+- await:
+    visible:
+      id: history-import-summary
+      text: JSON · 1 visit · 1 point
+- tap:
+    text: Import valid records
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: history-import-result
+      text: Imported 1 visit and 1 point. Kept 0 existing records.
+- await:
+    idle: true
+- tap:
+    text: Done
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: export-history-count
+      text: 1 route points stored on this phone.
+- await:
+    idle: true
+- tap:
+    text: Import history file
+- await:
+    visible:
+      id: com.google.android.documentsui:id/drawer_layout
+- await:
+    idle: true
+- await:
+    visible:
+      id: android:id/title
+      text: whereday-import-review-20261028.json
+- tap:
+    id: android:id/title
+    text: whereday-import-review-20261028.json
+- await:
+    visible:
+      id: history-import-existing
+      text: 2 matching records already exist.
+- await:
+    idle: true
+- await:
+    visible:
+      id: history-import-keep
+- tap:
+    text: Import valid records
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: history-import-result
+      text: Imported 0 visits and 0 points. Kept 2 existing records.
+- await:
+    idle: true
+- tap:
+    text: Done
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: export-history-count
+      text: 1 route points stored on this phone.
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: settings-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Clear all journal data
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Clear all journal data
+- tap:
+    text: Clear all journal data
+- await:
+    visible:
+      text: Clear all journal data?
+- await:
+    idle: true
+- tap:
+    text: Clear all data
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: settings-screen
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      id: export-screen
+- await:
+    idle: true
+- await:
+    visible:
+      id: export-history-count
+      text: 0 route points stored on this phone.

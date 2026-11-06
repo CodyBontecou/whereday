@@ -1,0 +1,23 @@
+<resources>
+    <string name="timeline_previous">Previous</string>
+    <string name="timeline_next">Next</string>
+    <string name="timeline_today_hint">Go to today. Selected date: %1$s.</string>
+    <string name="timeline_back">Back to timeline</string>
+    <string name="timeline_inferred_missing">This inferred outing is no longer in the current timeline.</string>
+    <string name="timeline_empty">No outings or visits for this day.</string>
+    <string name="timeline_visit">Visit</string>
+    <string name="timeline_outing">Outing</string>
+    <string name="timeline_inferred">Inferred outing</string>
+    <string name="timeline_recording">Recording</string>
+    <string name="timeline_open_visit">Open visit</string>
+    <string name="timeline_view_outing">View outing</string>
+    <string name="timeline_unconfirmed">Unconfirmed</string>
+    <string name="timeline_confirmed">Confirmed</string>
+    <string name="timeline_corrected">Corrected</string>
+    <string name="timeline_summary">%1$s · %2$s · %3$s</string>
+    <string name="timeline_point_summary">%1$s · %2$s</string>
+    <string name="timeline_time_range">%1$s → %2$s</string>
+    <plurals name="timeline_outing_count"><item quantity="one">%d outing</item><item quantity="other">%d outings</item></plurals>
+    <plurals name="timeline_visit_count"><item quantity="one">%d visit</item><item quantity="other">%d visits</item></plurals>
+    <plurals name="timeline_point_count"><item quantity="one">%d point</item><item quantity="other">%d points</item></plurals>
+</resources>

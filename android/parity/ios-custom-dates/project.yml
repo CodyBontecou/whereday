@@ -1,0 +1,31 @@
+name: DateParity
+options:
+  bundleIdPrefix: com.bontecou.whereday.qa
+  deploymentTarget:
+    iOS: '18.0'
+settings:
+  base:
+    SWIFT_VERSION: '6.0'
+    GENERATE_INFOPLIST_FILE: YES
+    CODE_SIGNING_ALLOWED: NO
+    TARGETED_DEVICE_FAMILY: '1'
+targets:
+  DateParity:
+    type: application
+    platform: iOS
+    sources: [App]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.bontecou.whereday.qa.dateparity
+  DateParityTests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: DateParity
+schemes:
+  DateParity:
+    build:
+      targets:
+        DateParity: all
+    test:
+      targets: [DateParityTests]

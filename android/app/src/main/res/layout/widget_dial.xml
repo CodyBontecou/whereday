@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="10dp" android:background="@drawable/widget_background">
+    <ImageView android:id="@+id/widget_dial" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:scaleType="fitCenter" android:importantForAccessibility="no" />
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
+        android:orientation="vertical" android:gravity="center_horizontal">
+        <TextClock android:id="@+id/widget_clock" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:format12Hour="HH:mm" android:format24Hour="HH:mm" android:fontFamily="@font/newsreader"
+            android:textSize="28sp" android:textColor="@color/widget_on_surface" />
+        <TextView android:id="@+id/widget_place" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:maxWidth="96dp" android:maxLines="1" android:ellipsize="end"
+            android:fontFamily="@font/plex_mono_regular" android:textSize="9sp" android:letterSpacing="0.1"
+            android:textColor="@color/widget_on_surface_variant" />
+    </LinearLayout>
+</FrameLayout>

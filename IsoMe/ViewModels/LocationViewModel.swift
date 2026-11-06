@@ -1496,7 +1496,7 @@ final class LocationViewModel {
             sessionDistanceTraveledCache = 0
             hasLoadedAllLocationPoints = false
             mapFocusRequest = nil
-            UserDefaults.standard.removeObject(forKey: "activeRecordingSessionID")
+            locationManager.forgetActiveRecordingSession()
             loadData()
         } catch {
             print("Failed to clear data: \(error)")

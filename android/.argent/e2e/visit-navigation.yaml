@@ -1,0 +1,198 @@
+steps:
+- echo: Requires onboarded idle app, no history on 2026-10-27, inferred outings enabled
+    with 30-minute gaps/no minimum, outliers off, and only visit-navigation.json staged
+    as Downloads/whereday-visit-navigation-qa-20261027.json. Run before local midnight
+    on that date. Imports 12 synthetic Eiffel route points and one named synthetic
+    visit. Checks map-list/linked outing navigation and saved confirmation, then deletes
+    only these fixtures. Never clear owner history.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      text: Import history file
+- await:
+    idle: true
+- tap:
+    text: Import history file
+- tap:
+    text:
+      matches: ^whereday-visit-navigation-qa-20261027\.json
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      text: Visits on map
+- await:
+    idle: true
+- tap:
+    text: Visits on map
+- await:
+    visible:
+      text: Close map visits
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:02 → Oct 27, 10:06
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA linked public visit
+      role: TextField
+- scroll-to:
+    target:
+      text: Confirm visit
+    within:
+      id: visit-editor-fields
+    direction: down
+- await:
+    visible:
+      text: Confirm visit
+- tap:
+    text: Confirm visit
+- await:
+    visible:
+      text: Visits on map
+- await:
+    idle: true
+- tap:
+    id: map-day-peek
+- tap:
+    id: map-open-timeline
+- await:
+    visible:
+      text: Confirmed
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:00 → Oct 27, 10:11
+- await:
+    visible:
+      text: Back to timeline
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Linked visits
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Linked visits
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:02 → Oct 27, 10:06
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA linked public visit
+      role: TextField
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      text: Linked visits
+- await:
+    idle: true
+- echo: The synthetic visit is at the fitted offline map center. Tapping the named
+    map center exercises native rendered-feature hit testing; expected editor contains
+    the same synthetic visit.
+- tap:
+    text: Journal map. Travel path shown. 12 GPS markers. 1 visit markers. Start and
+      end flags shown. Scroll by dragging two fingers. Zoom by pinching two fingers.
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA linked public visit
+      role: TextField
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Linked visits
+- await:
+    idle: true
+- tap:
+    text: Oct 27, 10:02 → Oct 27, 10:06
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Delete visit
+    within:
+      id: visit-editor-fields
+    direction: down
+- await:
+    hidden:
+      text: Confirm visit
+- await:
+    visible:
+      text: Delete visit
+- tap:
+    text: Delete visit
+- await:
+    visible:
+      text: Delete this visit?
+- await:
+    idle: true
+- tap:
+    text: Delete
+- await:
+    hidden:
+      text: Linked visits
+- await:
+    visible:
+      text: Journal map. Travel path shown. 12 GPS markers. 0 visit markers. Start
+        and end flags shown. Scroll by dragging two fingers. Zoom by pinching two
+        fingers.
+- await:
+    idle: true
+- await:
+    visible:
+      text: Show on map
+- scroll-to:
+    target:
+      text: Delete outing
+    within:
+      id: outing-detail-scroll-margin
+    direction: down
+- await:
+    visible:
+      text: Delete outing
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: Delete this outing?
+- await:
+    idle: true
+- tap:
+    text: Delete outing
+- await:
+    visible:
+      text: No outings or visits for this day.
+- await:
+    idle: true

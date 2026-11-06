@@ -1,0 +1,33 @@
+steps:
+- await:
+    visible:
+      text: Unsaved process QA 20261029
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard visit changes?
+- await:
+    idle: true
+- tap:
+    text: Keep editing
+- await:
+    visible:
+      text: Unsaved process QA 20261029
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true
+executionPrerequisite: Disposable mapQa app is foreground with the restored Save current
+  place draft named Unsaved process QA 20261029. Before this fragment, background
+  and kill only that QA process, then launch its retained task. No location permission,
+  recording or committed visit.

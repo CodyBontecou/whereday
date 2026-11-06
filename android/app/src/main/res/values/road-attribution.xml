@@ -1,0 +1,5 @@
+<resources>
+    <string name="map_road_provider_credit">Powered by %1$s</string>
+    <string name="map_road_data_credit">© %1$s contributors</string>
+    <string name="map_attribution_link_error">The attribution link could not be opened.</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="16dp" android:paddingEnd="16dp"
+    android:background="@drawable/widget_background">
+    <ImageView android:id="@+id/widget_squares" android:layout_width="0dp" android:layout_weight="1" android:layout_height="14dp"
+        android:scaleType="fitXY" android:importantForAccessibility="no" />
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="14dp">
+        <TextView android:id="@+id/widget_countries" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:fontFamily="@font/newsreader" android:textSize="18sp" android:maxLines="1" android:textColor="@color/widget_on_surface" />
+        <TextView android:id="@+id/widget_days" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="11sp" android:maxLines="1" android:textColor="@color/widget_on_surface_variant" />
+    </LinearLayout>
+</LinearLayout>

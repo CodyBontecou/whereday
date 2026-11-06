@@ -1,0 +1,36 @@
+steps:
+  - echo: Onboarded idle disposable mapQa only, zero history, default Json/All export settings and unavailable purchases. Render free Markdown preview with total counts and nested sections, restore Json and return to Map. No recording, permissions, purchase or external destination writes. Home/resume refreshes the known stale native inspection bridge.
+  - launch: com.bontecou.whereday.mapqa
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}
+  - tap: { id: navigation-archive }
+  - await: {visible: {text: 'Your history, in your format'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Json$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Markdown$'}}
+  - await: {visible: {text: Preview export}}
+  - await: {idle: true}
+  - tap: {text: Preview export}
+  - scroll-to: {target: {text: '**Total Location Points:** 0'}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector: {text: '**Total Location Points:** 0'}
+  - scroll-to: {target: {text: Format}, direction: up}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tap: {text: {matches: '^Markdown$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Json$'}}
+  - await: {visible: {text: Json}}
+  - await: {idle: true}
+  - tap: { id: navigation-map }
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}

@@ -1,0 +1,18 @@
+{
+  "name": "whereday-play-purchase-verifier",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.2",
+    "wrangler": "^4.60.0"
+  }
+}

@@ -21,7 +21,7 @@ def build_product_contract():
         'appStore': 'https://apps.apple.com/app/id6761960794',
         'sourceRepository': 'https://github.com/CodyBontecou/whereday',
         'platforms': ['iOS 17 or later', 'watchOS 10 or later'],
-        'capabilities': ['Visit detection during tracking', 'GPS route recording', 'Timeline and outings', 'Independent Apple Watch recording', 'Portable export', 'Supported Whereday file import', 'Google Timeline JSON import with preview and duplicate checks (1.8)', 'Country Days and manual stays', 'Siri and Shortcuts', 'Optional outbound webhooks'],
+        'capabilities': ['Visit detection during tracking', 'GPS route recording', 'Map home with the day timeline, outings and replay', 'Independent Apple Watch recording', 'Portable export', 'Supported Whereday file import', 'Google Timeline JSON import with preview and duplicate checks (1.8)', 'Country Days and manual stays', 'Siri and Shortcuts', 'Optional outbound webhooks'],
         'exportFormats': ['JSON', 'CSV', 'Markdown', 'GeoJSON', 'GPX', 'KML', 'OwnTracks', 'Overland'],
         'pricingURL': BASE + '/#pricing',
         'privacyURL': BASE + '/privacy',

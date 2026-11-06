@@ -1,0 +1,28 @@
+<resources>
+    <string name="place_pin_cancel">Cancel</string>
+    <string name="place_pin_use">Use this location</string>
+    <string name="place_pin_title">Choose location</string>
+    <string name="place_pin_search">Search places</string>
+    <string name="place_pin_instructions">Move the map, then tap to place a pin or drop one at the map center. You can also enter coordinates in the place editor.</string>
+    <string name="place_pin_online">Online street map</string>
+    <string name="place_pin_online_description">Load online street map</string>
+    <string name="place_pin_tiles_disclosure">Online tiles: OpenFreeMap / OpenMapTiles / OpenStreetMap. Enabling sends requests for the viewed area to the map provider.</string>
+    <string name="place_pin_map_description">Location selection map. Use Drop pin at map center for an accessible selection.</string>
+    <string name="place_pin_offline">Offline coordinate map. Street details require the online map.</string>
+    <string name="place_pin_drop">Drop pin at map center</string>
+    <string name="place_pin_empty">No location selected.</string>
+    <string name="place_pin_selected">Selected location</string>
+    <string name="place_pin_draft">This updates the draft only. Save the place in the editor to keep it.</string>
+    <string name="place_pin_lookup_disclosure">Finding an address sends the selected coordinates to your device’s geocoding service. No journal history is sent.</string>
+    <string name="place_pin_disabled">Network geocoding is disabled. Coordinates still work offline.</string>
+    <string name="place_pin_find">Find address for pin</string>
+    <string name="place_pin_stop">Cancel address lookup</string>
+    <string name="place_pin_no_address">No address was found. You can enter one in the editor.</string>
+    <string name="place_pin_found">Address found for selected pin. Review it before using.</string>
+    <string name="place_pin_timeout">Address lookup timed out. Try again or enter an address in the editor.</string>
+    <string name="place_pin_lookup_error">Address lookup is unavailable. You can enter one in the editor.</string>
+    <string name="place_pin_tile_error">Street tiles could not load. Turn off the online map or enter coordinates in the editor.</string>
+    <string name="place_pin_center">Map center: %1$s, %2$s</string>
+    <string name="place_pin_latitude">Latitude: %1$s</string>
+    <string name="place_pin_longitude">Longitude: %1$s</string>
+</resources>

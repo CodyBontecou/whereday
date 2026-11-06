@@ -1,0 +1,62 @@
+steps:
+  - echo: Requires an onboarded journal with no resolved country days or manual stays; creates and removes one temporary stay.
+  - launch: com.bontecou.whereday
+  - await: { visible: { text: Your location journal } }
+  - await: { idle: true }
+  - tap:
+      id: navigation-archive
+  - tap:
+      id: archive-settings
+  - await: { visible: { text: Location and notification permissions } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Country Days }, direction: down }
+  - await: { visible: { text: Country Days } }
+  - tap:
+      text: Country Days
+  - await: { visible: { text: Add country stay } }
+  - await: { idle: true }
+  - await: { visible: { text: No country days yet } }
+  - await: { idle: true }
+  - tap:
+      text: Add country stay
+  - await: { visible: { text: Save stay } }
+  - await: { idle: true }
+  - tap:
+      text: Save stay
+  - await: { hidden: { text: Save stay } }
+  - await: { visible: { text: View dates } }
+  - tap:
+      text: View dates
+  - await: { visible: { text: Back to Country Days } }
+  - await: { idle: true }
+  - await: { visible: { text: Manual, role: StaticText } }
+  - tap:
+      text: Back to Country Days
+  - await: { visible: { text: Preview country CSV } }
+  - await: { idle: true }
+  - tap:
+      text: Preview country CSV
+  - await: { visible: { text: Country CSV preview } }
+  - await: { idle: true }
+  - await: { visible: { text: "country_code,local_date,source" } }
+  - tap:
+      text: Done
+  - await: { hidden: { text: Country CSV preview } }
+  - scroll-to: { target: { text: Edit stay }, direction: down }
+  - await: { visible: { text: Edit stay } }
+  - tap:
+      text: Edit stay
+  - await: { visible: { text: Edit country stay } }
+  - await: { idle: true }
+  - await: { visible: { text: Save stay } }
+  - await: { idle: true }
+  - tap:
+      text: Delete country stay
+  - await: { visible: { text: Delete this country stay? } }
+  - await: { idle: true }
+  - tap:
+      text: Delete stay
+  - await: { hidden: { text: Delete this country stay? } }
+  - await: { hidden: { text: Save stay } }
+  - await: { visible: { text: No country days yet } }
+  - await: { idle: true }

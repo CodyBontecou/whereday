@@ -18,11 +18,47 @@ Continuous GPS capture that never leaves your device. Export it anytime as GPX, 
 - No server
 - 8 export formats
 
-§ 01 — Automatic timeline
+![Whereday opens on a map of today: the route is coloured by where each leg led, with visit names, range chips from Today to All, the mini day dial and the day card](https://whereday.com/screenshots/map-home-720.webp)
+
+§ 01 — The map is home
+
+## Open the app. See your day.
+
+Whereday opens on a map of today, each leg of the route coloured by where it led. Swipe up for the day dial, your stats and the day so far.
+
+![The day sheet over the map: the day dial, 12.6 km moved, 6h 10m away, 4 places, and each stop from Home to the Ferry Building with the walks between them](https://whereday.com/screenshots/map-day-sheet-480.webp)
+
+DAY SHEETThe day so far
+
+![Seven days on the map: each place shows the number of days you went there, today’s route is highlighted, and a row of day buttons sits below](https://whereday.com/screenshots/map-7-days-480.webp)
+
+7D · 30D · ALLPlaces you return to
+
+![An unconfirmed stop opened from the map, with three nearby places to choose from and Not here, Details and Confirm buttons](https://whereday.com/screenshots/map-visit-480.webp)
+
+TAP A VISITWhere were you?
+
+![The map home in dark mode: a dark navy map with cream labels and the route in warm accents](https://whereday.com/screenshots/map-night-480.webp)
+
+NIGHT INKDark mode, in ink
+
+![Whereday for Android opens on the same map of today, drawn in the paper style with the route, range chips and day card](https://whereday.com/screenshots/android-map-home-480.webp)
+
+ANDROIDThe same map
+
+![Whereday for Android in dark mode, with the night map style](https://whereday.com/screenshots/android-map-night-480.webp)
+
+ANDROID · NIGHTPaper by day, ink by night
+
+Tap the mini dial to replay the day. Layers turn visits, the travel path, GPS points, start and end, photos and “Are you here?” suggestions on or off. The + button saves where you are, logs a past stop or drops a pin.
+
+iPhone and Android screenshots with an invented San Francisco journal.
+
+§ 02 — Automatic timeline
 
 ## Every stop and route, logged for you.
 
-Arrivals, departures and the GPS path between them, in order. Fix a stop with one tap.
+Arrivals, departures and the GPS path between them, in order, in the day sheet under the map. Tap a stop to confirm or correct it.
 
 Sample day · Sun · Nov 1 6.4 km moved · 5 stops
 
@@ -34,7 +70,7 @@ Illustration with invented places and times.
 - 12:45 · 50m Tartine Manufactory
 - 13:50 · now Mission Office
 
-§ 02 — What it does
+§ 03 — What it does
 
 ## Capture everything. Keep it local.
 
@@ -74,13 +110,13 @@ Save a dated file to any folder daily, or as often as hourly.
 
 Record routes from your wrist, even with your phone at home.
 
-§ 03 — Inside the app
+§ 04 — Inside the app
 
 ## Scrub a day. See a year. Learn a place.
 
 Replay any route, browse a year of days, and see the places you return to.
 
-TRACEScrub the day back
+REPLAYScrub the day back
 
 ATLASA year, one square a day
 
@@ -88,7 +124,7 @@ PLACEThe rhythm of a spot
 
 Screens shown with an invented sample journal.
 
-§ 04 — On-device by design
+§ 05 — On-device by design
 
 ## There is no Whereday server to send it to.
 
@@ -103,7 +139,7 @@ THE LEDGER
 | Cloud sync | Not used
 | Who owns the exports | You
 
-§ 05 — Yours to take
+§ 06 — Yours to take
 
 ## Export your location data in eight formats.
 
@@ -122,7 +158,7 @@ Maps, spreadsheets, notes or your own server. Schedule daily exports, or import 
 - [Send points to Dawarich](https://whereday.com/integrations/dawarich/)
 - [Export and import reference](https://whereday.com/docs/export-import/)
 
-§ 06 — On your wrist
+§ 07 — On your wrist
 
 ## Record a route from Apple Watch.
 
@@ -131,7 +167,7 @@ Leave the phone at home. The Watch logs GPS offline and syncs when you're back.
 - [Apple Watch guide](https://whereday.com/docs/apple-watch/)
 - [Siri and Shortcuts actions](https://whereday.com/docs/siri-shortcuts/)
 
-§ 07 — Guides
+§ 08 — Guides
 
 ## Start with what you need.
 
@@ -173,7 +209,7 @@ Obsidian, Dawarich and more.
 
 [Browse every guide](https://whereday.com/blog/) · [Save places and correct visits](https://whereday.com/docs/places/) · [Keep a private location journal](https://whereday.com/blog/private-location-journal-iphone/)
 
-§ 08 — Pricing
+§ 09 — Pricing
 
 ## Free to download. Pay once, if you like.
 
@@ -201,7 +237,7 @@ Existing users keep their access. Used Whereday before 1.8? You keep free tracki
 
 Your exports stay yours. New users keep file export after a subscription ends. Existing free users keep their earlier export-unlock requirement. [Back up your history](https://whereday.com/blog/back-up-iphone-location-history/).
 
-§ 09 — Who makes it
+§ 10 — Who makes it
 
 Whereday is an independent, open-source app made by Cody Bontecou at isolated.tech.
 

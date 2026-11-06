@@ -1,0 +1,19 @@
+<resources>
+    <string name="recording_interruption_history">Recording stopped because history could not be saved.</string>
+    <string name="recording_interruption_location">Location unavailable. Check location permission and try again.</string>
+    <string name="recording_interruption_permission">Location permission was removed.</string>
+    <string name="recording_interruption_start">Recording start was interrupted.</string>
+    <string name="recording_interruption_start_failed">Recording could not start. Please try again.</string>
+    <string name="recording_interruption_process">Recording was interrupted. Start again when you are ready.</string>
+    <string name="recording_interruption_reboot">Your phone restarted. Open Whereday to resume recording.</string>
+    <string name="recording_interruption_unknown">Recording was interrupted. Check its status before starting again.</string>
+    <string name="recording_reconciliation_failed">Visit history could not be updated. Try reopening the app.</string>
+    <string name="recording_stop_failed">Recording could not be stopped. Check its status and try again.</string>
+    <string name="recording_permission_start_failed">Recording could not start. Check location access and try again.</string>
+    <string name="recording_route_title">Recorded route</string>
+    <string name="recording_route_empty">No route recorded yet</string>
+    <plurals name="recording_route_points">
+        <item quantity="one">Raw GPS trace · %s displayed point</item>
+        <item quantity="other">Raw GPS trace · %s displayed points</item>
+    </plurals>
+</resources>

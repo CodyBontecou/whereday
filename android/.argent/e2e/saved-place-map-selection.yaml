@@ -1,0 +1,142 @@
+steps:
+- echo: Requires onboarded idle app. Uses only an unsaved synthetic draft at 0,0; cancels and discards it without changing
+    the saved-place library or journal. Online tiles remain off.
+- launch: com.bontecou.whereday
+- await:
+    visible:
+      id: map-header
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- tap:
+    id: archive-settings
+- await:
+    visible:
+      text: Distance filter
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Add saved place
+    direction: down
+- await:
+    visible:
+      text: Add saved place
+- await:
+    idle: true
+- tap:
+    text: Add saved place
+- await:
+    visible:
+      text: Choose location on map
+- await:
+    idle: true
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: No location selected.
+- await:
+    idle: true
+- await:
+    visible:
+      text: Drop pin at map center
+- tap:
+    text: Cancel location selection
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    hidden:
+      text: No location selected.
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: No location selected.
+- await:
+    idle: true
+- tap:
+    text: Drop pin at map center
+- await:
+    visible:
+      text: Selected location
+- await:
+    hidden:
+      text: No location selected.
+- await:
+    visible:
+      text: 'Latitude: 0.0'
+- await:
+    idle: true
+- await:
+    visible:
+      text: 'Longitude: 0.0'
+- tap:
+    text: Use this location
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    visible:
+      role: TextField
+      text: '0.0'
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard saved place changes?
+- await:
+    idle: true
+- await:
+    visible:
+      text: Keep editing
+- tap:
+    text: Keep editing
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Discard saved place changes?
+- tap:
+    text: Choose location on map
+- await:
+    visible:
+      text: 'Latitude: 0.0'
+- await:
+    idle: true
+- await:
+    visible:
+      text: 'Longitude: 0.0'
+- tap:
+    text: Cancel location selection
+- await:
+    visible:
+      text: Save a place
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard saved place changes?
+- await:
+    idle: true
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      text: Add saved place
+- await:
+    idle: true
+- await:
+    hidden:
+      text: Save a place

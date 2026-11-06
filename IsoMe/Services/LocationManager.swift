@@ -72,39 +72,54 @@ final class LocationManager: NSObject, ObservableObject {
 
     private var activeRecordingSessionID: UUID? {
         get {
-            guard let rawValue = UserDefaults.standard.string(forKey: Self.activeRecordingSessionIDKey) else {
+            guard let rawValue = defaults.string(forKey: Self.activeRecordingSessionIDKey) else {
                 return nil
             }
             return UUID(uuidString: rawValue)
         }
         set {
             if let newValue {
-                UserDefaults.standard.set(newValue.uuidString, forKey: Self.activeRecordingSessionIDKey)
+                defaults.set(newValue.uuidString, forKey: Self.activeRecordingSessionIDKey)
             } else {
-                UserDefaults.standard.removeObject(forKey: Self.activeRecordingSessionIDKey)
+                defaults.removeObject(forKey: Self.activeRecordingSessionIDKey)
             }
         }
     }
 
+    /// Drops the persisted active-session pointer, e.g. after Erase All Data deleted the session it named.
+    func forgetActiveRecordingSession() {
+        activeRecordingSessionID = nil
+    }
+
     private var usesMetricDistanceUnits: Bool {
         let key = "usesMetricDistanceUnits"
-        if UserDefaults.standard.object(forKey: key) == nil {
+        if defaults.object(forKey: key) == nil {
             return true
         }
-        return UserDefaults.standard.bool(forKey: key)
+        return defaults.bool(forKey: key)
     }
 
     private var allowNetworkGeocoding: Bool {
         let key = "allowNetworkGeocoding"
-        if UserDefaults.standard.object(forKey: key) == nil {
+        if defaults.object(forKey: key) == nil {
             return true
         }
-        return UserDefaults.standard.bool(forKey: key)
+        return defaults.bool(forKey: key)
     }
 
-    override init() {
+    /// Where tracking state and preferences persist. The app uses `.standard`; tests pass a suite of their own
+    /// so they never touch the host app's `isTrackingEnabled` or `activeRecordingSessionID`.
+    private let defaults: UserDefaults
+
+    /// - Parameters:
+    ///   - defaults: Storage for `isTrackingEnabled`, `activeRecordingSessionID`, `stopAfterHours`,
+    ///     `distanceFilter`, `isLiveActivityEnabled`, and the preferences this manager reads.
+    ///   - registersAsShared: Whether this instance becomes `LocationManager.shared`. Tests pass `false`
+    ///     so a test manager never replaces the host app's.
+    init(defaults: UserDefaults = .standard, registersAsShared: Bool = true) {
+        self.defaults = defaults
         super.init()
-        Self.shared = self
+        if registersAsShared { Self.shared = self }
         locationManager.delegate = self
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
@@ -112,7 +127,7 @@ final class LocationManager: NSObject, ObservableObject {
 
         // Resolve the cohort before any new-install defaults are written.
         let store = StoreManager.shared
-        resumeAfterAccessResolution = UserDefaults.standard.bool(forKey: "isTrackingEnabled")
+        resumeAfterAccessResolution = defaults.bool(forKey: "isTrackingEnabled")
         isTrackingEnabled = resumeAfterAccessResolution && store.canTrack
         accessObserver = store.objectWillChange.sink { [weak self] in
             Task { @MainActor in
@@ -129,14 +144,14 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         // Restore saved state
-        if UserDefaults.standard.object(forKey: "stopAfterHours") != nil {
-            stopAfterHours = UserDefaults.standard.double(forKey: "stopAfterHours")
+        if defaults.object(forKey: "stopAfterHours") != nil {
+            stopAfterHours = defaults.double(forKey: "stopAfterHours")
         }
-        if UserDefaults.standard.object(forKey: "distanceFilter") != nil {
-            distanceFilter = UserDefaults.standard.double(forKey: "distanceFilter")
+        if defaults.object(forKey: "distanceFilter") != nil {
+            distanceFilter = defaults.double(forKey: "distanceFilter")
         }
-        if UserDefaults.standard.object(forKey: liveActivityEnabledKey) != nil {
-            isLiveActivityEnabled = UserDefaults.standard.bool(forKey: liveActivityEnabledKey)
+        if defaults.object(forKey: liveActivityEnabledKey) != nil {
+            isLiveActivityEnabled = defaults.bool(forKey: liveActivityEnabledKey)
         }
         locationManager.distanceFilter = distanceFilter
 
@@ -259,7 +274,7 @@ final class LocationManager: NSObject, ObservableObject {
 
         let wasTracking = isTrackingEnabled
         isTrackingEnabled = true
-        UserDefaults.standard.set(true, forKey: "isTrackingEnabled")
+        defaults.set(true, forKey: "isTrackingEnabled")
         logTrackingStart(reason: reason, wasTracking: wasTracking)
 
         if trackingStartTime == nil {
@@ -306,7 +321,7 @@ final class LocationManager: NSObject, ObservableObject {
         endActiveRecordingSession(at: endedAt)
 
         isTrackingEnabled = false
-        UserDefaults.standard.set(false, forKey: "isTrackingEnabled")
+        defaults.set(false, forKey: "isTrackingEnabled")
 
         stopTrackingTimer?.invalidate()
         stopTrackingTimer = nil
@@ -339,7 +354,7 @@ final class LocationManager: NSObject, ObservableObject {
 
     func setStopAfterHours(_ hours: Double) {
         stopAfterHours = hours
-        UserDefaults.standard.set(hours, forKey: "stopAfterHours")
+        defaults.set(hours, forKey: "stopAfterHours")
         scheduleStopTrackingTimer()
 
         if isTrackingEnabled, isLiveActivityEnabled {
@@ -353,7 +368,7 @@ final class LocationManager: NSObject, ObservableObject {
 
     func setLiveActivityEnabled(_ enabled: Bool) {
         isLiveActivityEnabled = enabled
-        UserDefaults.standard.set(enabled, forKey: liveActivityEnabledKey)
+        defaults.set(enabled, forKey: liveActivityEnabledKey)
 
         if enabled {
             if isTrackingEnabled {
@@ -368,7 +383,7 @@ final class LocationManager: NSObject, ObservableObject {
 
     func setDistanceFilter(_ meters: Double) {
         distanceFilter = meters
-        UserDefaults.standard.set(meters, forKey: "distanceFilter")
+        defaults.set(meters, forKey: "distanceFilter")
         if isTrackingEnabled {
             locationManager.distanceFilter = meters
         }
@@ -537,7 +552,8 @@ final class LocationManager: NSObject, ObservableObject {
         return try context.fetch(descriptor).first
     }
 
-    static func closePersistedRecordingSessions(in context: ModelContext, at endedAt: Date = Date()) {
+    static func closePersistedRecordingSessions(in context: ModelContext, at endedAt: Date = Date(),
+                                                defaults: UserDefaults = .standard) {
         do {
             let predicate = #Predicate<RecordingSession> { session in
                 session.endedAt == nil
@@ -549,7 +565,7 @@ final class LocationManager: NSObject, ObservableObject {
             if !sessions.isEmpty {
                 try context.save()
             }
-            UserDefaults.standard.removeObject(forKey: activeRecordingSessionIDKey)
+            defaults.removeObject(forKey: activeRecordingSessionIDKey)
         } catch {
             // Intents call this from a background launch path where surfacing UI is
             // impossible; leave the persisted off switch below as the source of truth.

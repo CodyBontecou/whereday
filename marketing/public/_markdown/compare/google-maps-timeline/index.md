@@ -82,9 +82,9 @@ Whereday does not operate a server archive of your location history. Apple servi
 
 Read the [privacy policy](https://whereday.com/privacy), [recording controls](https://whereday.com/docs/tracking/), and [current pricing](https://whereday.com/#pricing) before choosing a workflow.
 
-![Example Whereday map interface with visit markers and recorded route points](https://whereday.com/screenshots/map-480.webp)
+![Whereday’s map home: today’s route coloured by place, visit names, date range chips and the day card](https://whereday.com/screenshots/map-home-480.webp)
 
-Whereday’s map interface. The screenshot is illustrative and may show sample data or earlier labels.
+Whereday opens on a map of the day. The screenshot is illustrative and uses an invented journal.
 
 ## Record your next route.
 Keep a copy you can use.

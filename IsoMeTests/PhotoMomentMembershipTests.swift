@@ -92,7 +92,7 @@ final class PhotoMomentMembershipTests: XCTestCase {
         try context.save()
 
         var access = PhotoLibraryAccessState.authorized
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager()
         manager.isTrackingEnabled = false
         let viewModel = LocationViewModel(
             modelContext: context,
@@ -396,7 +396,7 @@ final class PhotoMomentMembershipTests: XCTestCase {
         access: @escaping @MainActor () -> PhotoLibraryAccessState,
         identifiers: @escaping @MainActor ([String]) -> Set<String>
     ) -> LocationViewModel {
-        let manager = LocationManager()
+        let manager = makeIsolatedLocationManager()
         manager.isTrackingEnabled = false
         return LocationViewModel(modelContext: context, locationManager: manager, photoAuthorizationProvider: access, accessiblePhotoIdentifiersProvider: identifiers)
     }

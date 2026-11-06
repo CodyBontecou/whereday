@@ -1,0 +1,4083 @@
+{
+  "all": [
+    "001",
+    "002",
+    "003",
+    "005",
+    "009",
+    "011",
+    "013",
+    "014",
+    "015",
+    "017",
+    "018",
+    "019",
+    "021",
+    "029",
+    "030",
+    "034",
+    "035",
+    "039",
+    "053",
+    "054",
+    "057",
+    "061",
+    "142",
+    "143",
+    "145",
+    "150",
+    "151",
+    "154",
+    "155",
+    "202",
+    "419",
+    "AC",
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AL",
+    "AM",
+    "AO",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AW",
+    "AX",
+    "AZ",
+    "BA",
+    "BB",
+    "BD",
+    "BE",
+    "BF",
+    "BG",
+    "BH",
+    "BI",
+    "BJ",
+    "BL",
+    "BM",
+    "BN",
+    "BO",
+    "BQ",
+    "BR",
+    "BS",
+    "BT",
+    "BV",
+    "BW",
+    "BY",
+    "BZ",
+    "CA",
+    "CC",
+    "CD",
+    "CF",
+    "CG",
+    "CH",
+    "CI",
+    "CK",
+    "CL",
+    "CM",
+    "CN",
+    "CO",
+    "CP",
+    "CQ",
+    "CR",
+    "CU",
+    "CV",
+    "CW",
+    "CX",
+    "CY",
+    "CZ",
+    "DE",
+    "DG",
+    "DJ",
+    "DK",
+    "DM",
+    "DO",
+    "DZ",
+    "EA",
+    "EC",
+    "EE",
+    "EG",
+    "EH",
+    "ER",
+    "ES",
+    "ET",
+    "EU",
+    "EZ",
+    "FI",
+    "FJ",
+    "FK",
+    "FM",
+    "FO",
+    "FR",
+    "GA",
+    "GB",
+    "GD",
+    "GE",
+    "GF",
+    "GG",
+    "GH",
+    "GI",
+    "GL",
+    "GM",
+    "GN",
+    "GP",
+    "GQ",
+    "GR",
+    "GS",
+    "GT",
+    "GU",
+    "GW",
+    "GY",
+    "HK",
+    "HM",
+    "HN",
+    "HR",
+    "HT",
+    "HU",
+    "IC",
+    "ID",
+    "IE",
+    "IL",
+    "IM",
+    "IN",
+    "IO",
+    "IQ",
+    "IR",
+    "IS",
+    "IT",
+    "JE",
+    "JM",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KI",
+    "KM",
+    "KN",
+    "KP",
+    "KR",
+    "KW",
+    "KY",
+    "KZ",
+    "LA",
+    "LB",
+    "LC",
+    "LI",
+    "LK",
+    "LR",
+    "LS",
+    "LT",
+    "LU",
+    "LV",
+    "LY",
+    "MA",
+    "MC",
+    "MD",
+    "ME",
+    "MF",
+    "MG",
+    "MH",
+    "MK",
+    "ML",
+    "MM",
+    "MN",
+    "MO",
+    "MP",
+    "MQ",
+    "MR",
+    "MS",
+    "MT",
+    "MU",
+    "MV",
+    "MW",
+    "MX",
+    "MY",
+    "MZ",
+    "NA",
+    "NC",
+    "NE",
+    "NF",
+    "NG",
+    "NI",
+    "NL",
+    "NO",
+    "NP",
+    "NR",
+    "NU",
+    "NZ",
+    "OM",
+    "PA",
+    "PE",
+    "PF",
+    "PG",
+    "PH",
+    "PK",
+    "PL",
+    "PM",
+    "PN",
+    "PR",
+    "PS",
+    "PT",
+    "PW",
+    "PY",
+    "QA",
+    "QO",
+    "RE",
+    "RO",
+    "RS",
+    "RU",
+    "RW",
+    "SA",
+    "SB",
+    "SC",
+    "SD",
+    "SE",
+    "SG",
+    "SH",
+    "SI",
+    "SJ",
+    "SK",
+    "SL",
+    "SM",
+    "SN",
+    "SO",
+    "SR",
+    "SS",
+    "ST",
+    "SV",
+    "SX",
+    "SY",
+    "SZ",
+    "TA",
+    "TC",
+    "TD",
+    "TF",
+    "TG",
+    "TH",
+    "TJ",
+    "TK",
+    "TL",
+    "TM",
+    "TN",
+    "TO",
+    "TR",
+    "TT",
+    "TV",
+    "TW",
+    "TZ",
+    "UA",
+    "UG",
+    "UM",
+    "UN",
+    "US",
+    "UY",
+    "UZ",
+    "VA",
+    "VC",
+    "VE",
+    "VG",
+    "VI",
+    "VN",
+    "VU",
+    "WF",
+    "WS",
+    "XK",
+    "YE",
+    "YT",
+    "ZA",
+    "ZM",
+    "ZW"
+  ],
+  "cases": [
+    {
+      "combinedCsv": "country_code,local_date,source\r\n001,2026-10-29,recorded+manual\r\n",
+      "raw": "001",
+      "recordedCsv": "country_code,local_date,source\r\n001,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n002,2026-10-29,recorded+manual\r\n",
+      "raw": "002",
+      "recordedCsv": "country_code,local_date,source\r\n002,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n003,2026-10-29,recorded+manual\r\n",
+      "raw": "003",
+      "recordedCsv": "country_code,local_date,source\r\n003,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n005,2026-10-29,recorded+manual\r\n",
+      "raw": "005",
+      "recordedCsv": "country_code,local_date,source\r\n005,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n009,2026-10-29,recorded+manual\r\n",
+      "raw": "009",
+      "recordedCsv": "country_code,local_date,source\r\n009,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n011,2026-10-29,recorded+manual\r\n",
+      "raw": "011",
+      "recordedCsv": "country_code,local_date,source\r\n011,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n013,2026-10-29,recorded+manual\r\n",
+      "raw": "013",
+      "recordedCsv": "country_code,local_date,source\r\n013,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n014,2026-10-29,recorded+manual\r\n",
+      "raw": "014",
+      "recordedCsv": "country_code,local_date,source\r\n014,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n015,2026-10-29,recorded+manual\r\n",
+      "raw": "015",
+      "recordedCsv": "country_code,local_date,source\r\n015,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n017,2026-10-29,recorded+manual\r\n",
+      "raw": "017",
+      "recordedCsv": "country_code,local_date,source\r\n017,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n018,2026-10-29,recorded+manual\r\n",
+      "raw": "018",
+      "recordedCsv": "country_code,local_date,source\r\n018,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n019,2026-10-29,recorded+manual\r\n",
+      "raw": "019",
+      "recordedCsv": "country_code,local_date,source\r\n019,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n021,2026-10-29,recorded+manual\r\n",
+      "raw": "021",
+      "recordedCsv": "country_code,local_date,source\r\n021,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n029,2026-10-29,recorded+manual\r\n",
+      "raw": "029",
+      "recordedCsv": "country_code,local_date,source\r\n029,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n030,2026-10-29,recorded+manual\r\n",
+      "raw": "030",
+      "recordedCsv": "country_code,local_date,source\r\n030,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n034,2026-10-29,recorded+manual\r\n",
+      "raw": "034",
+      "recordedCsv": "country_code,local_date,source\r\n034,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n035,2026-10-29,recorded+manual\r\n",
+      "raw": "035",
+      "recordedCsv": "country_code,local_date,source\r\n035,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n039,2026-10-29,recorded+manual\r\n",
+      "raw": "039",
+      "recordedCsv": "country_code,local_date,source\r\n039,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n053,2026-10-29,recorded+manual\r\n",
+      "raw": "053",
+      "recordedCsv": "country_code,local_date,source\r\n053,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n054,2026-10-29,recorded+manual\r\n",
+      "raw": "054",
+      "recordedCsv": "country_code,local_date,source\r\n054,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n057,2026-10-29,recorded+manual\r\n",
+      "raw": "057",
+      "recordedCsv": "country_code,local_date,source\r\n057,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n061,2026-10-29,recorded+manual\r\n",
+      "raw": "061",
+      "recordedCsv": "country_code,local_date,source\r\n061,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n142,2026-10-29,recorded+manual\r\n",
+      "raw": "142",
+      "recordedCsv": "country_code,local_date,source\r\n142,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n143,2026-10-29,recorded+manual\r\n",
+      "raw": "143",
+      "recordedCsv": "country_code,local_date,source\r\n143,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n145,2026-10-29,recorded+manual\r\n",
+      "raw": "145",
+      "recordedCsv": "country_code,local_date,source\r\n145,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n150,2026-10-29,recorded+manual\r\n",
+      "raw": "150",
+      "recordedCsv": "country_code,local_date,source\r\n150,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n151,2026-10-29,recorded+manual\r\n",
+      "raw": "151",
+      "recordedCsv": "country_code,local_date,source\r\n151,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n154,2026-10-29,recorded+manual\r\n",
+      "raw": "154",
+      "recordedCsv": "country_code,local_date,source\r\n154,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n155,2026-10-29,recorded+manual\r\n",
+      "raw": "155",
+      "recordedCsv": "country_code,local_date,source\r\n155,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n202,2026-10-29,recorded+manual\r\n",
+      "raw": "202",
+      "recordedCsv": "country_code,local_date,source\r\n202,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n419,2026-10-29,recorded+manual\r\n",
+      "raw": "419",
+      "recordedCsv": "country_code,local_date,source\r\n419,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAC,2026-10-29,recorded+manual\r\n",
+      "raw": "AC",
+      "recordedCsv": "country_code,local_date,source\r\nAC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAD,2026-10-29,recorded+manual\r\n",
+      "raw": "AD",
+      "recordedCsv": "country_code,local_date,source\r\nAD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAE,2026-10-29,recorded+manual\r\n",
+      "raw": "AE",
+      "recordedCsv": "country_code,local_date,source\r\nAE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAF,2026-10-29,recorded+manual\r\n",
+      "raw": "AF",
+      "recordedCsv": "country_code,local_date,source\r\nAF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAG,2026-10-29,recorded+manual\r\n",
+      "raw": "AG",
+      "recordedCsv": "country_code,local_date,source\r\nAG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAI,2026-10-29,recorded+manual\r\n",
+      "raw": "AI",
+      "recordedCsv": "country_code,local_date,source\r\nAI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAL,2026-10-29,recorded+manual\r\n",
+      "raw": "AL",
+      "recordedCsv": "country_code,local_date,source\r\nAL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAM,2026-10-29,recorded+manual\r\n",
+      "raw": "AM",
+      "recordedCsv": "country_code,local_date,source\r\nAM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAO,2026-10-29,recorded+manual\r\n",
+      "raw": "AO",
+      "recordedCsv": "country_code,local_date,source\r\nAO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAQ,2026-10-29,recorded+manual\r\n",
+      "raw": "AQ",
+      "recordedCsv": "country_code,local_date,source\r\nAQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAR,2026-10-29,recorded+manual\r\n",
+      "raw": "AR",
+      "recordedCsv": "country_code,local_date,source\r\nAR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAS,2026-10-29,recorded+manual\r\n",
+      "raw": "AS",
+      "recordedCsv": "country_code,local_date,source\r\nAS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAT,2026-10-29,recorded+manual\r\n",
+      "raw": "AT",
+      "recordedCsv": "country_code,local_date,source\r\nAT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAU,2026-10-29,recorded+manual\r\n",
+      "raw": "AU",
+      "recordedCsv": "country_code,local_date,source\r\nAU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAW,2026-10-29,recorded+manual\r\n",
+      "raw": "AW",
+      "recordedCsv": "country_code,local_date,source\r\nAW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAX,2026-10-29,recorded+manual\r\n",
+      "raw": "AX",
+      "recordedCsv": "country_code,local_date,source\r\nAX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAZ,2026-10-29,recorded+manual\r\n",
+      "raw": "AZ",
+      "recordedCsv": "country_code,local_date,source\r\nAZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBA,2026-10-29,recorded+manual\r\n",
+      "raw": "BA",
+      "recordedCsv": "country_code,local_date,source\r\nBA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBB,2026-10-29,recorded+manual\r\n",
+      "raw": "BB",
+      "recordedCsv": "country_code,local_date,source\r\nBB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBD,2026-10-29,recorded+manual\r\n",
+      "raw": "BD",
+      "recordedCsv": "country_code,local_date,source\r\nBD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBE,2026-10-29,recorded+manual\r\n",
+      "raw": "BE",
+      "recordedCsv": "country_code,local_date,source\r\nBE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBF,2026-10-29,recorded+manual\r\n",
+      "raw": "BF",
+      "recordedCsv": "country_code,local_date,source\r\nBF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBG,2026-10-29,recorded+manual\r\n",
+      "raw": "BG",
+      "recordedCsv": "country_code,local_date,source\r\nBG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBH,2026-10-29,recorded+manual\r\n",
+      "raw": "BH",
+      "recordedCsv": "country_code,local_date,source\r\nBH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBI,2026-10-29,recorded+manual\r\n",
+      "raw": "BI",
+      "recordedCsv": "country_code,local_date,source\r\nBI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBJ,2026-10-29,recorded+manual\r\n",
+      "raw": "BJ",
+      "recordedCsv": "country_code,local_date,source\r\nBJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBL,2026-10-29,recorded+manual\r\n",
+      "raw": "BL",
+      "recordedCsv": "country_code,local_date,source\r\nBL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBM,2026-10-29,recorded+manual\r\n",
+      "raw": "BM",
+      "recordedCsv": "country_code,local_date,source\r\nBM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBN,2026-10-29,recorded+manual\r\n",
+      "raw": "BN",
+      "recordedCsv": "country_code,local_date,source\r\nBN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBO,2026-10-29,recorded+manual\r\n",
+      "raw": "BO",
+      "recordedCsv": "country_code,local_date,source\r\nBO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBQ,2026-10-29,recorded+manual\r\n",
+      "raw": "BQ",
+      "recordedCsv": "country_code,local_date,source\r\nBQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBR,2026-10-29,recorded+manual\r\n",
+      "raw": "BR",
+      "recordedCsv": "country_code,local_date,source\r\nBR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBS,2026-10-29,recorded+manual\r\n",
+      "raw": "BS",
+      "recordedCsv": "country_code,local_date,source\r\nBS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBT,2026-10-29,recorded+manual\r\n",
+      "raw": "BT",
+      "recordedCsv": "country_code,local_date,source\r\nBT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBV,2026-10-29,recorded+manual\r\n",
+      "raw": "BV",
+      "recordedCsv": "country_code,local_date,source\r\nBV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBW,2026-10-29,recorded+manual\r\n",
+      "raw": "BW",
+      "recordedCsv": "country_code,local_date,source\r\nBW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBY,2026-10-29,recorded+manual\r\n",
+      "raw": "BY",
+      "recordedCsv": "country_code,local_date,source\r\nBY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBZ,2026-10-29,recorded+manual\r\n",
+      "raw": "BZ",
+      "recordedCsv": "country_code,local_date,source\r\nBZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCA,2026-10-29,recorded+manual\r\n",
+      "raw": "CA",
+      "recordedCsv": "country_code,local_date,source\r\nCA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCC,2026-10-29,recorded+manual\r\n",
+      "raw": "CC",
+      "recordedCsv": "country_code,local_date,source\r\nCC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCD,2026-10-29,recorded+manual\r\n",
+      "raw": "CD",
+      "recordedCsv": "country_code,local_date,source\r\nCD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCF,2026-10-29,recorded+manual\r\n",
+      "raw": "CF",
+      "recordedCsv": "country_code,local_date,source\r\nCF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCG,2026-10-29,recorded+manual\r\n",
+      "raw": "CG",
+      "recordedCsv": "country_code,local_date,source\r\nCG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCH,2026-10-29,recorded+manual\r\n",
+      "raw": "CH",
+      "recordedCsv": "country_code,local_date,source\r\nCH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCI,2026-10-29,recorded+manual\r\n",
+      "raw": "CI",
+      "recordedCsv": "country_code,local_date,source\r\nCI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCK,2026-10-29,recorded+manual\r\n",
+      "raw": "CK",
+      "recordedCsv": "country_code,local_date,source\r\nCK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCL,2026-10-29,recorded+manual\r\n",
+      "raw": "CL",
+      "recordedCsv": "country_code,local_date,source\r\nCL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCM,2026-10-29,recorded+manual\r\n",
+      "raw": "CM",
+      "recordedCsv": "country_code,local_date,source\r\nCM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCN,2026-10-29,recorded+manual\r\n",
+      "raw": "CN",
+      "recordedCsv": "country_code,local_date,source\r\nCN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCO,2026-10-29,recorded+manual\r\n",
+      "raw": "CO",
+      "recordedCsv": "country_code,local_date,source\r\nCO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCP,2026-10-29,recorded+manual\r\n",
+      "raw": "CP",
+      "recordedCsv": "country_code,local_date,source\r\nCP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCQ,2026-10-29,recorded+manual\r\n",
+      "raw": "CQ",
+      "recordedCsv": "country_code,local_date,source\r\nCQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCR,2026-10-29,recorded+manual\r\n",
+      "raw": "CR",
+      "recordedCsv": "country_code,local_date,source\r\nCR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCU,2026-10-29,recorded+manual\r\n",
+      "raw": "CU",
+      "recordedCsv": "country_code,local_date,source\r\nCU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCV,2026-10-29,recorded+manual\r\n",
+      "raw": "CV",
+      "recordedCsv": "country_code,local_date,source\r\nCV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCW,2026-10-29,recorded+manual\r\n",
+      "raw": "CW",
+      "recordedCsv": "country_code,local_date,source\r\nCW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCX,2026-10-29,recorded+manual\r\n",
+      "raw": "CX",
+      "recordedCsv": "country_code,local_date,source\r\nCX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCY,2026-10-29,recorded+manual\r\n",
+      "raw": "CY",
+      "recordedCsv": "country_code,local_date,source\r\nCY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCZ,2026-10-29,recorded+manual\r\n",
+      "raw": "CZ",
+      "recordedCsv": "country_code,local_date,source\r\nCZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDE,2026-10-29,recorded+manual\r\n",
+      "raw": "DE",
+      "recordedCsv": "country_code,local_date,source\r\nDE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDG,2026-10-29,recorded+manual\r\n",
+      "raw": "DG",
+      "recordedCsv": "country_code,local_date,source\r\nDG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDJ,2026-10-29,recorded+manual\r\n",
+      "raw": "DJ",
+      "recordedCsv": "country_code,local_date,source\r\nDJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDK,2026-10-29,recorded+manual\r\n",
+      "raw": "DK",
+      "recordedCsv": "country_code,local_date,source\r\nDK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDM,2026-10-29,recorded+manual\r\n",
+      "raw": "DM",
+      "recordedCsv": "country_code,local_date,source\r\nDM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDO,2026-10-29,recorded+manual\r\n",
+      "raw": "DO",
+      "recordedCsv": "country_code,local_date,source\r\nDO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDZ,2026-10-29,recorded+manual\r\n",
+      "raw": "DZ",
+      "recordedCsv": "country_code,local_date,source\r\nDZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEA,2026-10-29,recorded+manual\r\n",
+      "raw": "EA",
+      "recordedCsv": "country_code,local_date,source\r\nEA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEC,2026-10-29,recorded+manual\r\n",
+      "raw": "EC",
+      "recordedCsv": "country_code,local_date,source\r\nEC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEE,2026-10-29,recorded+manual\r\n",
+      "raw": "EE",
+      "recordedCsv": "country_code,local_date,source\r\nEE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEG,2026-10-29,recorded+manual\r\n",
+      "raw": "EG",
+      "recordedCsv": "country_code,local_date,source\r\nEG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEH,2026-10-29,recorded+manual\r\n",
+      "raw": "EH",
+      "recordedCsv": "country_code,local_date,source\r\nEH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nER,2026-10-29,recorded+manual\r\n",
+      "raw": "ER",
+      "recordedCsv": "country_code,local_date,source\r\nER,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nES,2026-10-29,recorded+manual\r\n",
+      "raw": "ES",
+      "recordedCsv": "country_code,local_date,source\r\nES,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nET,2026-10-29,recorded+manual\r\n",
+      "raw": "ET",
+      "recordedCsv": "country_code,local_date,source\r\nET,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEU,2026-10-29,recorded+manual\r\n",
+      "raw": "EU",
+      "recordedCsv": "country_code,local_date,source\r\nEU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEZ,2026-10-29,recorded+manual\r\n",
+      "raw": "EZ",
+      "recordedCsv": "country_code,local_date,source\r\nEZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFI,2026-10-29,recorded+manual\r\n",
+      "raw": "FI",
+      "recordedCsv": "country_code,local_date,source\r\nFI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFJ,2026-10-29,recorded+manual\r\n",
+      "raw": "FJ",
+      "recordedCsv": "country_code,local_date,source\r\nFJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFK,2026-10-29,recorded+manual\r\n",
+      "raw": "FK",
+      "recordedCsv": "country_code,local_date,source\r\nFK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFM,2026-10-29,recorded+manual\r\n",
+      "raw": "FM",
+      "recordedCsv": "country_code,local_date,source\r\nFM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFO,2026-10-29,recorded+manual\r\n",
+      "raw": "FO",
+      "recordedCsv": "country_code,local_date,source\r\nFO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFR,2026-10-29,recorded+manual\r\n",
+      "raw": "FR",
+      "recordedCsv": "country_code,local_date,source\r\nFR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGA,2026-10-29,recorded+manual\r\n",
+      "raw": "GA",
+      "recordedCsv": "country_code,local_date,source\r\nGA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGB,2026-10-29,recorded+manual\r\n",
+      "raw": "GB",
+      "recordedCsv": "country_code,local_date,source\r\nGB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGD,2026-10-29,recorded+manual\r\n",
+      "raw": "GD",
+      "recordedCsv": "country_code,local_date,source\r\nGD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGE,2026-10-29,recorded+manual\r\n",
+      "raw": "GE",
+      "recordedCsv": "country_code,local_date,source\r\nGE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGF,2026-10-29,recorded+manual\r\n",
+      "raw": "GF",
+      "recordedCsv": "country_code,local_date,source\r\nGF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGG,2026-10-29,recorded+manual\r\n",
+      "raw": "GG",
+      "recordedCsv": "country_code,local_date,source\r\nGG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGH,2026-10-29,recorded+manual\r\n",
+      "raw": "GH",
+      "recordedCsv": "country_code,local_date,source\r\nGH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGI,2026-10-29,recorded+manual\r\n",
+      "raw": "GI",
+      "recordedCsv": "country_code,local_date,source\r\nGI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGL,2026-10-29,recorded+manual\r\n",
+      "raw": "GL",
+      "recordedCsv": "country_code,local_date,source\r\nGL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGM,2026-10-29,recorded+manual\r\n",
+      "raw": "GM",
+      "recordedCsv": "country_code,local_date,source\r\nGM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGN,2026-10-29,recorded+manual\r\n",
+      "raw": "GN",
+      "recordedCsv": "country_code,local_date,source\r\nGN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGP,2026-10-29,recorded+manual\r\n",
+      "raw": "GP",
+      "recordedCsv": "country_code,local_date,source\r\nGP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGQ,2026-10-29,recorded+manual\r\n",
+      "raw": "GQ",
+      "recordedCsv": "country_code,local_date,source\r\nGQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGR,2026-10-29,recorded+manual\r\n",
+      "raw": "GR",
+      "recordedCsv": "country_code,local_date,source\r\nGR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGS,2026-10-29,recorded+manual\r\n",
+      "raw": "GS",
+      "recordedCsv": "country_code,local_date,source\r\nGS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGT,2026-10-29,recorded+manual\r\n",
+      "raw": "GT",
+      "recordedCsv": "country_code,local_date,source\r\nGT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGU,2026-10-29,recorded+manual\r\n",
+      "raw": "GU",
+      "recordedCsv": "country_code,local_date,source\r\nGU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGW,2026-10-29,recorded+manual\r\n",
+      "raw": "GW",
+      "recordedCsv": "country_code,local_date,source\r\nGW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGY,2026-10-29,recorded+manual\r\n",
+      "raw": "GY",
+      "recordedCsv": "country_code,local_date,source\r\nGY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHK,2026-10-29,recorded+manual\r\n",
+      "raw": "HK",
+      "recordedCsv": "country_code,local_date,source\r\nHK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHM,2026-10-29,recorded+manual\r\n",
+      "raw": "HM",
+      "recordedCsv": "country_code,local_date,source\r\nHM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHN,2026-10-29,recorded+manual\r\n",
+      "raw": "HN",
+      "recordedCsv": "country_code,local_date,source\r\nHN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHR,2026-10-29,recorded+manual\r\n",
+      "raw": "HR",
+      "recordedCsv": "country_code,local_date,source\r\nHR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHT,2026-10-29,recorded+manual\r\n",
+      "raw": "HT",
+      "recordedCsv": "country_code,local_date,source\r\nHT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHU,2026-10-29,recorded+manual\r\n",
+      "raw": "HU",
+      "recordedCsv": "country_code,local_date,source\r\nHU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIC,2026-10-29,recorded+manual\r\n",
+      "raw": "IC",
+      "recordedCsv": "country_code,local_date,source\r\nIC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nID,2026-10-29,recorded+manual\r\n",
+      "raw": "ID",
+      "recordedCsv": "country_code,local_date,source\r\nID,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIE,2026-10-29,recorded+manual\r\n",
+      "raw": "IE",
+      "recordedCsv": "country_code,local_date,source\r\nIE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIL,2026-10-29,recorded+manual\r\n",
+      "raw": "IL",
+      "recordedCsv": "country_code,local_date,source\r\nIL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIM,2026-10-29,recorded+manual\r\n",
+      "raw": "IM",
+      "recordedCsv": "country_code,local_date,source\r\nIM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIN,2026-10-29,recorded+manual\r\n",
+      "raw": "IN",
+      "recordedCsv": "country_code,local_date,source\r\nIN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIO,2026-10-29,recorded+manual\r\n",
+      "raw": "IO",
+      "recordedCsv": "country_code,local_date,source\r\nIO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIQ,2026-10-29,recorded+manual\r\n",
+      "raw": "IQ",
+      "recordedCsv": "country_code,local_date,source\r\nIQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIR,2026-10-29,recorded+manual\r\n",
+      "raw": "IR",
+      "recordedCsv": "country_code,local_date,source\r\nIR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIS,2026-10-29,recorded+manual\r\n",
+      "raw": "IS",
+      "recordedCsv": "country_code,local_date,source\r\nIS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIT,2026-10-29,recorded+manual\r\n",
+      "raw": "IT",
+      "recordedCsv": "country_code,local_date,source\r\nIT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJE,2026-10-29,recorded+manual\r\n",
+      "raw": "JE",
+      "recordedCsv": "country_code,local_date,source\r\nJE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJM,2026-10-29,recorded+manual\r\n",
+      "raw": "JM",
+      "recordedCsv": "country_code,local_date,source\r\nJM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJO,2026-10-29,recorded+manual\r\n",
+      "raw": "JO",
+      "recordedCsv": "country_code,local_date,source\r\nJO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJP,2026-10-29,recorded+manual\r\n",
+      "raw": "JP",
+      "recordedCsv": "country_code,local_date,source\r\nJP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKE,2026-10-29,recorded+manual\r\n",
+      "raw": "KE",
+      "recordedCsv": "country_code,local_date,source\r\nKE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKG,2026-10-29,recorded+manual\r\n",
+      "raw": "KG",
+      "recordedCsv": "country_code,local_date,source\r\nKG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKH,2026-10-29,recorded+manual\r\n",
+      "raw": "KH",
+      "recordedCsv": "country_code,local_date,source\r\nKH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKI,2026-10-29,recorded+manual\r\n",
+      "raw": "KI",
+      "recordedCsv": "country_code,local_date,source\r\nKI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKM,2026-10-29,recorded+manual\r\n",
+      "raw": "KM",
+      "recordedCsv": "country_code,local_date,source\r\nKM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKN,2026-10-29,recorded+manual\r\n",
+      "raw": "KN",
+      "recordedCsv": "country_code,local_date,source\r\nKN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKP,2026-10-29,recorded+manual\r\n",
+      "raw": "KP",
+      "recordedCsv": "country_code,local_date,source\r\nKP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKR,2026-10-29,recorded+manual\r\n",
+      "raw": "KR",
+      "recordedCsv": "country_code,local_date,source\r\nKR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKW,2026-10-29,recorded+manual\r\n",
+      "raw": "KW",
+      "recordedCsv": "country_code,local_date,source\r\nKW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKY,2026-10-29,recorded+manual\r\n",
+      "raw": "KY",
+      "recordedCsv": "country_code,local_date,source\r\nKY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKZ,2026-10-29,recorded+manual\r\n",
+      "raw": "KZ",
+      "recordedCsv": "country_code,local_date,source\r\nKZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLA,2026-10-29,recorded+manual\r\n",
+      "raw": "LA",
+      "recordedCsv": "country_code,local_date,source\r\nLA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLB,2026-10-29,recorded+manual\r\n",
+      "raw": "LB",
+      "recordedCsv": "country_code,local_date,source\r\nLB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLC,2026-10-29,recorded+manual\r\n",
+      "raw": "LC",
+      "recordedCsv": "country_code,local_date,source\r\nLC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLI,2026-10-29,recorded+manual\r\n",
+      "raw": "LI",
+      "recordedCsv": "country_code,local_date,source\r\nLI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLK,2026-10-29,recorded+manual\r\n",
+      "raw": "LK",
+      "recordedCsv": "country_code,local_date,source\r\nLK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLR,2026-10-29,recorded+manual\r\n",
+      "raw": "LR",
+      "recordedCsv": "country_code,local_date,source\r\nLR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLS,2026-10-29,recorded+manual\r\n",
+      "raw": "LS",
+      "recordedCsv": "country_code,local_date,source\r\nLS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLT,2026-10-29,recorded+manual\r\n",
+      "raw": "LT",
+      "recordedCsv": "country_code,local_date,source\r\nLT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLU,2026-10-29,recorded+manual\r\n",
+      "raw": "LU",
+      "recordedCsv": "country_code,local_date,source\r\nLU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLV,2026-10-29,recorded+manual\r\n",
+      "raw": "LV",
+      "recordedCsv": "country_code,local_date,source\r\nLV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLY,2026-10-29,recorded+manual\r\n",
+      "raw": "LY",
+      "recordedCsv": "country_code,local_date,source\r\nLY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMA,2026-10-29,recorded+manual\r\n",
+      "raw": "MA",
+      "recordedCsv": "country_code,local_date,source\r\nMA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMC,2026-10-29,recorded+manual\r\n",
+      "raw": "MC",
+      "recordedCsv": "country_code,local_date,source\r\nMC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMD,2026-10-29,recorded+manual\r\n",
+      "raw": "MD",
+      "recordedCsv": "country_code,local_date,source\r\nMD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nME,2026-10-29,recorded+manual\r\n",
+      "raw": "ME",
+      "recordedCsv": "country_code,local_date,source\r\nME,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMF,2026-10-29,recorded+manual\r\n",
+      "raw": "MF",
+      "recordedCsv": "country_code,local_date,source\r\nMF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMG,2026-10-29,recorded+manual\r\n",
+      "raw": "MG",
+      "recordedCsv": "country_code,local_date,source\r\nMG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMH,2026-10-29,recorded+manual\r\n",
+      "raw": "MH",
+      "recordedCsv": "country_code,local_date,source\r\nMH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMK,2026-10-29,recorded+manual\r\n",
+      "raw": "MK",
+      "recordedCsv": "country_code,local_date,source\r\nMK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nML,2026-10-29,recorded+manual\r\n",
+      "raw": "ML",
+      "recordedCsv": "country_code,local_date,source\r\nML,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMM,2026-10-29,recorded+manual\r\n",
+      "raw": "MM",
+      "recordedCsv": "country_code,local_date,source\r\nMM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMN,2026-10-29,recorded+manual\r\n",
+      "raw": "MN",
+      "recordedCsv": "country_code,local_date,source\r\nMN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMO,2026-10-29,recorded+manual\r\n",
+      "raw": "MO",
+      "recordedCsv": "country_code,local_date,source\r\nMO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMP,2026-10-29,recorded+manual\r\n",
+      "raw": "MP",
+      "recordedCsv": "country_code,local_date,source\r\nMP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMQ,2026-10-29,recorded+manual\r\n",
+      "raw": "MQ",
+      "recordedCsv": "country_code,local_date,source\r\nMQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMR,2026-10-29,recorded+manual\r\n",
+      "raw": "MR",
+      "recordedCsv": "country_code,local_date,source\r\nMR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMS,2026-10-29,recorded+manual\r\n",
+      "raw": "MS",
+      "recordedCsv": "country_code,local_date,source\r\nMS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMT,2026-10-29,recorded+manual\r\n",
+      "raw": "MT",
+      "recordedCsv": "country_code,local_date,source\r\nMT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMU,2026-10-29,recorded+manual\r\n",
+      "raw": "MU",
+      "recordedCsv": "country_code,local_date,source\r\nMU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMV,2026-10-29,recorded+manual\r\n",
+      "raw": "MV",
+      "recordedCsv": "country_code,local_date,source\r\nMV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMW,2026-10-29,recorded+manual\r\n",
+      "raw": "MW",
+      "recordedCsv": "country_code,local_date,source\r\nMW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMX,2026-10-29,recorded+manual\r\n",
+      "raw": "MX",
+      "recordedCsv": "country_code,local_date,source\r\nMX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMY,2026-10-29,recorded+manual\r\n",
+      "raw": "MY",
+      "recordedCsv": "country_code,local_date,source\r\nMY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMZ,2026-10-29,recorded+manual\r\n",
+      "raw": "MZ",
+      "recordedCsv": "country_code,local_date,source\r\nMZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNA,2026-10-29,recorded+manual\r\n",
+      "raw": "NA",
+      "recordedCsv": "country_code,local_date,source\r\nNA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNC,2026-10-29,recorded+manual\r\n",
+      "raw": "NC",
+      "recordedCsv": "country_code,local_date,source\r\nNC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNE,2026-10-29,recorded+manual\r\n",
+      "raw": "NE",
+      "recordedCsv": "country_code,local_date,source\r\nNE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNF,2026-10-29,recorded+manual\r\n",
+      "raw": "NF",
+      "recordedCsv": "country_code,local_date,source\r\nNF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNG,2026-10-29,recorded+manual\r\n",
+      "raw": "NG",
+      "recordedCsv": "country_code,local_date,source\r\nNG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNI,2026-10-29,recorded+manual\r\n",
+      "raw": "NI",
+      "recordedCsv": "country_code,local_date,source\r\nNI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNL,2026-10-29,recorded+manual\r\n",
+      "raw": "NL",
+      "recordedCsv": "country_code,local_date,source\r\nNL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNO,2026-10-29,recorded+manual\r\n",
+      "raw": "NO",
+      "recordedCsv": "country_code,local_date,source\r\nNO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNP,2026-10-29,recorded+manual\r\n",
+      "raw": "NP",
+      "recordedCsv": "country_code,local_date,source\r\nNP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNR,2026-10-29,recorded+manual\r\n",
+      "raw": "NR",
+      "recordedCsv": "country_code,local_date,source\r\nNR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNU,2026-10-29,recorded+manual\r\n",
+      "raw": "NU",
+      "recordedCsv": "country_code,local_date,source\r\nNU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNZ,2026-10-29,recorded+manual\r\n",
+      "raw": "NZ",
+      "recordedCsv": "country_code,local_date,source\r\nNZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nOM,2026-10-29,recorded+manual\r\n",
+      "raw": "OM",
+      "recordedCsv": "country_code,local_date,source\r\nOM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPA,2026-10-29,recorded+manual\r\n",
+      "raw": "PA",
+      "recordedCsv": "country_code,local_date,source\r\nPA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPE,2026-10-29,recorded+manual\r\n",
+      "raw": "PE",
+      "recordedCsv": "country_code,local_date,source\r\nPE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPF,2026-10-29,recorded+manual\r\n",
+      "raw": "PF",
+      "recordedCsv": "country_code,local_date,source\r\nPF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPG,2026-10-29,recorded+manual\r\n",
+      "raw": "PG",
+      "recordedCsv": "country_code,local_date,source\r\nPG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPH,2026-10-29,recorded+manual\r\n",
+      "raw": "PH",
+      "recordedCsv": "country_code,local_date,source\r\nPH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPK,2026-10-29,recorded+manual\r\n",
+      "raw": "PK",
+      "recordedCsv": "country_code,local_date,source\r\nPK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPL,2026-10-29,recorded+manual\r\n",
+      "raw": "PL",
+      "recordedCsv": "country_code,local_date,source\r\nPL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPM,2026-10-29,recorded+manual\r\n",
+      "raw": "PM",
+      "recordedCsv": "country_code,local_date,source\r\nPM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPN,2026-10-29,recorded+manual\r\n",
+      "raw": "PN",
+      "recordedCsv": "country_code,local_date,source\r\nPN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPR,2026-10-29,recorded+manual\r\n",
+      "raw": "PR",
+      "recordedCsv": "country_code,local_date,source\r\nPR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPS,2026-10-29,recorded+manual\r\n",
+      "raw": "PS",
+      "recordedCsv": "country_code,local_date,source\r\nPS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPT,2026-10-29,recorded+manual\r\n",
+      "raw": "PT",
+      "recordedCsv": "country_code,local_date,source\r\nPT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPW,2026-10-29,recorded+manual\r\n",
+      "raw": "PW",
+      "recordedCsv": "country_code,local_date,source\r\nPW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPY,2026-10-29,recorded+manual\r\n",
+      "raw": "PY",
+      "recordedCsv": "country_code,local_date,source\r\nPY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nQA,2026-10-29,recorded+manual\r\n",
+      "raw": "QA",
+      "recordedCsv": "country_code,local_date,source\r\nQA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nQO,2026-10-29,recorded+manual\r\n",
+      "raw": "QO",
+      "recordedCsv": "country_code,local_date,source\r\nQO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRE,2026-10-29,recorded+manual\r\n",
+      "raw": "RE",
+      "recordedCsv": "country_code,local_date,source\r\nRE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRO,2026-10-29,recorded+manual\r\n",
+      "raw": "RO",
+      "recordedCsv": "country_code,local_date,source\r\nRO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRS,2026-10-29,recorded+manual\r\n",
+      "raw": "RS",
+      "recordedCsv": "country_code,local_date,source\r\nRS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRU,2026-10-29,recorded+manual\r\n",
+      "raw": "RU",
+      "recordedCsv": "country_code,local_date,source\r\nRU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRW,2026-10-29,recorded+manual\r\n",
+      "raw": "RW",
+      "recordedCsv": "country_code,local_date,source\r\nRW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSA,2026-10-29,recorded+manual\r\n",
+      "raw": "SA",
+      "recordedCsv": "country_code,local_date,source\r\nSA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSB,2026-10-29,recorded+manual\r\n",
+      "raw": "SB",
+      "recordedCsv": "country_code,local_date,source\r\nSB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSC,2026-10-29,recorded+manual\r\n",
+      "raw": "SC",
+      "recordedCsv": "country_code,local_date,source\r\nSC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSD,2026-10-29,recorded+manual\r\n",
+      "raw": "SD",
+      "recordedCsv": "country_code,local_date,source\r\nSD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSE,2026-10-29,recorded+manual\r\n",
+      "raw": "SE",
+      "recordedCsv": "country_code,local_date,source\r\nSE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSG,2026-10-29,recorded+manual\r\n",
+      "raw": "SG",
+      "recordedCsv": "country_code,local_date,source\r\nSG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSH,2026-10-29,recorded+manual\r\n",
+      "raw": "SH",
+      "recordedCsv": "country_code,local_date,source\r\nSH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSI,2026-10-29,recorded+manual\r\n",
+      "raw": "SI",
+      "recordedCsv": "country_code,local_date,source\r\nSI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSJ,2026-10-29,recorded+manual\r\n",
+      "raw": "SJ",
+      "recordedCsv": "country_code,local_date,source\r\nSJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSK,2026-10-29,recorded+manual\r\n",
+      "raw": "SK",
+      "recordedCsv": "country_code,local_date,source\r\nSK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSL,2026-10-29,recorded+manual\r\n",
+      "raw": "SL",
+      "recordedCsv": "country_code,local_date,source\r\nSL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSM,2026-10-29,recorded+manual\r\n",
+      "raw": "SM",
+      "recordedCsv": "country_code,local_date,source\r\nSM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSN,2026-10-29,recorded+manual\r\n",
+      "raw": "SN",
+      "recordedCsv": "country_code,local_date,source\r\nSN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSO,2026-10-29,recorded+manual\r\n",
+      "raw": "SO",
+      "recordedCsv": "country_code,local_date,source\r\nSO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSR,2026-10-29,recorded+manual\r\n",
+      "raw": "SR",
+      "recordedCsv": "country_code,local_date,source\r\nSR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSS,2026-10-29,recorded+manual\r\n",
+      "raw": "SS",
+      "recordedCsv": "country_code,local_date,source\r\nSS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nST,2026-10-29,recorded+manual\r\n",
+      "raw": "ST",
+      "recordedCsv": "country_code,local_date,source\r\nST,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSV,2026-10-29,recorded+manual\r\n",
+      "raw": "SV",
+      "recordedCsv": "country_code,local_date,source\r\nSV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSX,2026-10-29,recorded+manual\r\n",
+      "raw": "SX",
+      "recordedCsv": "country_code,local_date,source\r\nSX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSY,2026-10-29,recorded+manual\r\n",
+      "raw": "SY",
+      "recordedCsv": "country_code,local_date,source\r\nSY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSZ,2026-10-29,recorded+manual\r\n",
+      "raw": "SZ",
+      "recordedCsv": "country_code,local_date,source\r\nSZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTA,2026-10-29,recorded+manual\r\n",
+      "raw": "TA",
+      "recordedCsv": "country_code,local_date,source\r\nTA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTC,2026-10-29,recorded+manual\r\n",
+      "raw": "TC",
+      "recordedCsv": "country_code,local_date,source\r\nTC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTD,2026-10-29,recorded+manual\r\n",
+      "raw": "TD",
+      "recordedCsv": "country_code,local_date,source\r\nTD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTF,2026-10-29,recorded+manual\r\n",
+      "raw": "TF",
+      "recordedCsv": "country_code,local_date,source\r\nTF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTG,2026-10-29,recorded+manual\r\n",
+      "raw": "TG",
+      "recordedCsv": "country_code,local_date,source\r\nTG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTH,2026-10-29,recorded+manual\r\n",
+      "raw": "TH",
+      "recordedCsv": "country_code,local_date,source\r\nTH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTJ,2026-10-29,recorded+manual\r\n",
+      "raw": "TJ",
+      "recordedCsv": "country_code,local_date,source\r\nTJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTK,2026-10-29,recorded+manual\r\n",
+      "raw": "TK",
+      "recordedCsv": "country_code,local_date,source\r\nTK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTL,2026-10-29,recorded+manual\r\n",
+      "raw": "TL",
+      "recordedCsv": "country_code,local_date,source\r\nTL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTM,2026-10-29,recorded+manual\r\n",
+      "raw": "TM",
+      "recordedCsv": "country_code,local_date,source\r\nTM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTN,2026-10-29,recorded+manual\r\n",
+      "raw": "TN",
+      "recordedCsv": "country_code,local_date,source\r\nTN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTO,2026-10-29,recorded+manual\r\n",
+      "raw": "TO",
+      "recordedCsv": "country_code,local_date,source\r\nTO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTR,2026-10-29,recorded+manual\r\n",
+      "raw": "TR",
+      "recordedCsv": "country_code,local_date,source\r\nTR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTT,2026-10-29,recorded+manual\r\n",
+      "raw": "TT",
+      "recordedCsv": "country_code,local_date,source\r\nTT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTV,2026-10-29,recorded+manual\r\n",
+      "raw": "TV",
+      "recordedCsv": "country_code,local_date,source\r\nTV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTW,2026-10-29,recorded+manual\r\n",
+      "raw": "TW",
+      "recordedCsv": "country_code,local_date,source\r\nTW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTZ,2026-10-29,recorded+manual\r\n",
+      "raw": "TZ",
+      "recordedCsv": "country_code,local_date,source\r\nTZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUA,2026-10-29,recorded+manual\r\n",
+      "raw": "UA",
+      "recordedCsv": "country_code,local_date,source\r\nUA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUG,2026-10-29,recorded+manual\r\n",
+      "raw": "UG",
+      "recordedCsv": "country_code,local_date,source\r\nUG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUM,2026-10-29,recorded+manual\r\n",
+      "raw": "UM",
+      "recordedCsv": "country_code,local_date,source\r\nUM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUN,2026-10-29,recorded+manual\r\n",
+      "raw": "UN",
+      "recordedCsv": "country_code,local_date,source\r\nUN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUS,2026-10-29,recorded+manual\r\n",
+      "raw": "US",
+      "recordedCsv": "country_code,local_date,source\r\nUS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUY,2026-10-29,recorded+manual\r\n",
+      "raw": "UY",
+      "recordedCsv": "country_code,local_date,source\r\nUY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUZ,2026-10-29,recorded+manual\r\n",
+      "raw": "UZ",
+      "recordedCsv": "country_code,local_date,source\r\nUZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVA,2026-10-29,recorded+manual\r\n",
+      "raw": "VA",
+      "recordedCsv": "country_code,local_date,source\r\nVA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVC,2026-10-29,recorded+manual\r\n",
+      "raw": "VC",
+      "recordedCsv": "country_code,local_date,source\r\nVC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVE,2026-10-29,recorded+manual\r\n",
+      "raw": "VE",
+      "recordedCsv": "country_code,local_date,source\r\nVE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVG,2026-10-29,recorded+manual\r\n",
+      "raw": "VG",
+      "recordedCsv": "country_code,local_date,source\r\nVG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVI,2026-10-29,recorded+manual\r\n",
+      "raw": "VI",
+      "recordedCsv": "country_code,local_date,source\r\nVI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVN,2026-10-29,recorded+manual\r\n",
+      "raw": "VN",
+      "recordedCsv": "country_code,local_date,source\r\nVN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVU,2026-10-29,recorded+manual\r\n",
+      "raw": "VU",
+      "recordedCsv": "country_code,local_date,source\r\nVU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nWF,2026-10-29,recorded+manual\r\n",
+      "raw": "WF",
+      "recordedCsv": "country_code,local_date,source\r\nWF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nWS,2026-10-29,recorded+manual\r\n",
+      "raw": "WS",
+      "recordedCsv": "country_code,local_date,source\r\nWS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nXK,2026-10-29,recorded+manual\r\n",
+      "raw": "XK",
+      "recordedCsv": "country_code,local_date,source\r\nXK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nYE,2026-10-29,recorded+manual\r\n",
+      "raw": "YE",
+      "recordedCsv": "country_code,local_date,source\r\nYE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nYT,2026-10-29,recorded+manual\r\n",
+      "raw": "YT",
+      "recordedCsv": "country_code,local_date,source\r\nYT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nZA,2026-10-29,recorded+manual\r\n",
+      "raw": "ZA",
+      "recordedCsv": "country_code,local_date,source\r\nZA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nZM,2026-10-29,recorded+manual\r\n",
+      "raw": "ZM",
+      "recordedCsv": "country_code,local_date,source\r\nZM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nZW,2026-10-29,recorded+manual\r\n",
+      "raw": "ZW",
+      "recordedCsv": "country_code,local_date,source\r\nZW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n001,2026-10-29,recorded+manual\r\n",
+      "raw": "001",
+      "recordedCsv": "country_code,local_date,source\r\n001,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n002,2026-10-29,recorded+manual\r\n",
+      "raw": "002",
+      "recordedCsv": "country_code,local_date,source\r\n002,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n003,2026-10-29,recorded+manual\r\n",
+      "raw": "003",
+      "recordedCsv": "country_code,local_date,source\r\n003,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n005,2026-10-29,recorded+manual\r\n",
+      "raw": "005",
+      "recordedCsv": "country_code,local_date,source\r\n005,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n009,2026-10-29,recorded+manual\r\n",
+      "raw": "009",
+      "recordedCsv": "country_code,local_date,source\r\n009,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n011,2026-10-29,recorded+manual\r\n",
+      "raw": "011",
+      "recordedCsv": "country_code,local_date,source\r\n011,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n013,2026-10-29,recorded+manual\r\n",
+      "raw": "013",
+      "recordedCsv": "country_code,local_date,source\r\n013,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n014,2026-10-29,recorded+manual\r\n",
+      "raw": "014",
+      "recordedCsv": "country_code,local_date,source\r\n014,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n015,2026-10-29,recorded+manual\r\n",
+      "raw": "015",
+      "recordedCsv": "country_code,local_date,source\r\n015,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n017,2026-10-29,recorded+manual\r\n",
+      "raw": "017",
+      "recordedCsv": "country_code,local_date,source\r\n017,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n018,2026-10-29,recorded+manual\r\n",
+      "raw": "018",
+      "recordedCsv": "country_code,local_date,source\r\n018,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n019,2026-10-29,recorded+manual\r\n",
+      "raw": "019",
+      "recordedCsv": "country_code,local_date,source\r\n019,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n021,2026-10-29,recorded+manual\r\n",
+      "raw": "021",
+      "recordedCsv": "country_code,local_date,source\r\n021,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n029,2026-10-29,recorded+manual\r\n",
+      "raw": "029",
+      "recordedCsv": "country_code,local_date,source\r\n029,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n030,2026-10-29,recorded+manual\r\n",
+      "raw": "030",
+      "recordedCsv": "country_code,local_date,source\r\n030,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n034,2026-10-29,recorded+manual\r\n",
+      "raw": "034",
+      "recordedCsv": "country_code,local_date,source\r\n034,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n035,2026-10-29,recorded+manual\r\n",
+      "raw": "035",
+      "recordedCsv": "country_code,local_date,source\r\n035,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n039,2026-10-29,recorded+manual\r\n",
+      "raw": "039",
+      "recordedCsv": "country_code,local_date,source\r\n039,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n053,2026-10-29,recorded+manual\r\n",
+      "raw": "053",
+      "recordedCsv": "country_code,local_date,source\r\n053,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n054,2026-10-29,recorded+manual\r\n",
+      "raw": "054",
+      "recordedCsv": "country_code,local_date,source\r\n054,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n057,2026-10-29,recorded+manual\r\n",
+      "raw": "057",
+      "recordedCsv": "country_code,local_date,source\r\n057,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n061,2026-10-29,recorded+manual\r\n",
+      "raw": "061",
+      "recordedCsv": "country_code,local_date,source\r\n061,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n142,2026-10-29,recorded+manual\r\n",
+      "raw": "142",
+      "recordedCsv": "country_code,local_date,source\r\n142,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n143,2026-10-29,recorded+manual\r\n",
+      "raw": "143",
+      "recordedCsv": "country_code,local_date,source\r\n143,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n145,2026-10-29,recorded+manual\r\n",
+      "raw": "145",
+      "recordedCsv": "country_code,local_date,source\r\n145,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n150,2026-10-29,recorded+manual\r\n",
+      "raw": "150",
+      "recordedCsv": "country_code,local_date,source\r\n150,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n151,2026-10-29,recorded+manual\r\n",
+      "raw": "151",
+      "recordedCsv": "country_code,local_date,source\r\n151,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n154,2026-10-29,recorded+manual\r\n",
+      "raw": "154",
+      "recordedCsv": "country_code,local_date,source\r\n154,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n155,2026-10-29,recorded+manual\r\n",
+      "raw": "155",
+      "recordedCsv": "country_code,local_date,source\r\n155,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n202,2026-10-29,recorded+manual\r\n",
+      "raw": "202",
+      "recordedCsv": "country_code,local_date,source\r\n202,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n419,2026-10-29,recorded+manual\r\n",
+      "raw": "419",
+      "recordedCsv": "country_code,local_date,source\r\n419,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAC,2026-10-29,recorded+manual\r\n",
+      "raw": "ac",
+      "recordedCsv": "country_code,local_date,source\r\nAC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAD,2026-10-29,recorded+manual\r\n",
+      "raw": "ad",
+      "recordedCsv": "country_code,local_date,source\r\nAD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAE,2026-10-29,recorded+manual\r\n",
+      "raw": "ae",
+      "recordedCsv": "country_code,local_date,source\r\nAE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAF,2026-10-29,recorded+manual\r\n",
+      "raw": "af",
+      "recordedCsv": "country_code,local_date,source\r\nAF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAG,2026-10-29,recorded+manual\r\n",
+      "raw": "ag",
+      "recordedCsv": "country_code,local_date,source\r\nAG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAI,2026-10-29,recorded+manual\r\n",
+      "raw": "ai",
+      "recordedCsv": "country_code,local_date,source\r\nAI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAL,2026-10-29,recorded+manual\r\n",
+      "raw": "al",
+      "recordedCsv": "country_code,local_date,source\r\nAL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAM,2026-10-29,recorded+manual\r\n",
+      "raw": "am",
+      "recordedCsv": "country_code,local_date,source\r\nAM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAO,2026-10-29,recorded+manual\r\n",
+      "raw": "ao",
+      "recordedCsv": "country_code,local_date,source\r\nAO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAQ,2026-10-29,recorded+manual\r\n",
+      "raw": "aq",
+      "recordedCsv": "country_code,local_date,source\r\nAQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAR,2026-10-29,recorded+manual\r\n",
+      "raw": "ar",
+      "recordedCsv": "country_code,local_date,source\r\nAR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAS,2026-10-29,recorded+manual\r\n",
+      "raw": "as",
+      "recordedCsv": "country_code,local_date,source\r\nAS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAT,2026-10-29,recorded+manual\r\n",
+      "raw": "at",
+      "recordedCsv": "country_code,local_date,source\r\nAT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAU,2026-10-29,recorded+manual\r\n",
+      "raw": "au",
+      "recordedCsv": "country_code,local_date,source\r\nAU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAW,2026-10-29,recorded+manual\r\n",
+      "raw": "aw",
+      "recordedCsv": "country_code,local_date,source\r\nAW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAX,2026-10-29,recorded+manual\r\n",
+      "raw": "ax",
+      "recordedCsv": "country_code,local_date,source\r\nAX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nAZ,2026-10-29,recorded+manual\r\n",
+      "raw": "az",
+      "recordedCsv": "country_code,local_date,source\r\nAZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBA,2026-10-29,recorded+manual\r\n",
+      "raw": "ba",
+      "recordedCsv": "country_code,local_date,source\r\nBA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBB,2026-10-29,recorded+manual\r\n",
+      "raw": "bb",
+      "recordedCsv": "country_code,local_date,source\r\nBB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBD,2026-10-29,recorded+manual\r\n",
+      "raw": "bd",
+      "recordedCsv": "country_code,local_date,source\r\nBD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBE,2026-10-29,recorded+manual\r\n",
+      "raw": "be",
+      "recordedCsv": "country_code,local_date,source\r\nBE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBF,2026-10-29,recorded+manual\r\n",
+      "raw": "bf",
+      "recordedCsv": "country_code,local_date,source\r\nBF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBG,2026-10-29,recorded+manual\r\n",
+      "raw": "bg",
+      "recordedCsv": "country_code,local_date,source\r\nBG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBH,2026-10-29,recorded+manual\r\n",
+      "raw": "bh",
+      "recordedCsv": "country_code,local_date,source\r\nBH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBI,2026-10-29,recorded+manual\r\n",
+      "raw": "bi",
+      "recordedCsv": "country_code,local_date,source\r\nBI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBJ,2026-10-29,recorded+manual\r\n",
+      "raw": "bj",
+      "recordedCsv": "country_code,local_date,source\r\nBJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBL,2026-10-29,recorded+manual\r\n",
+      "raw": "bl",
+      "recordedCsv": "country_code,local_date,source\r\nBL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBM,2026-10-29,recorded+manual\r\n",
+      "raw": "bm",
+      "recordedCsv": "country_code,local_date,source\r\nBM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBN,2026-10-29,recorded+manual\r\n",
+      "raw": "bn",
+      "recordedCsv": "country_code,local_date,source\r\nBN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBO,2026-10-29,recorded+manual\r\n",
+      "raw": "bo",
+      "recordedCsv": "country_code,local_date,source\r\nBO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBQ,2026-10-29,recorded+manual\r\n",
+      "raw": "bq",
+      "recordedCsv": "country_code,local_date,source\r\nBQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBR,2026-10-29,recorded+manual\r\n",
+      "raw": "br",
+      "recordedCsv": "country_code,local_date,source\r\nBR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBS,2026-10-29,recorded+manual\r\n",
+      "raw": "bs",
+      "recordedCsv": "country_code,local_date,source\r\nBS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBT,2026-10-29,recorded+manual\r\n",
+      "raw": "bt",
+      "recordedCsv": "country_code,local_date,source\r\nBT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBV,2026-10-29,recorded+manual\r\n",
+      "raw": "bv",
+      "recordedCsv": "country_code,local_date,source\r\nBV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBW,2026-10-29,recorded+manual\r\n",
+      "raw": "bw",
+      "recordedCsv": "country_code,local_date,source\r\nBW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBY,2026-10-29,recorded+manual\r\n",
+      "raw": "by",
+      "recordedCsv": "country_code,local_date,source\r\nBY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nBZ,2026-10-29,recorded+manual\r\n",
+      "raw": "bz",
+      "recordedCsv": "country_code,local_date,source\r\nBZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCA,2026-10-29,recorded+manual\r\n",
+      "raw": "ca",
+      "recordedCsv": "country_code,local_date,source\r\nCA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCC,2026-10-29,recorded+manual\r\n",
+      "raw": "cc",
+      "recordedCsv": "country_code,local_date,source\r\nCC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCD,2026-10-29,recorded+manual\r\n",
+      "raw": "cd",
+      "recordedCsv": "country_code,local_date,source\r\nCD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCF,2026-10-29,recorded+manual\r\n",
+      "raw": "cf",
+      "recordedCsv": "country_code,local_date,source\r\nCF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCG,2026-10-29,recorded+manual\r\n",
+      "raw": "cg",
+      "recordedCsv": "country_code,local_date,source\r\nCG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCH,2026-10-29,recorded+manual\r\n",
+      "raw": "ch",
+      "recordedCsv": "country_code,local_date,source\r\nCH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCI,2026-10-29,recorded+manual\r\n",
+      "raw": "ci",
+      "recordedCsv": "country_code,local_date,source\r\nCI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCK,2026-10-29,recorded+manual\r\n",
+      "raw": "ck",
+      "recordedCsv": "country_code,local_date,source\r\nCK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCL,2026-10-29,recorded+manual\r\n",
+      "raw": "cl",
+      "recordedCsv": "country_code,local_date,source\r\nCL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCM,2026-10-29,recorded+manual\r\n",
+      "raw": "cm",
+      "recordedCsv": "country_code,local_date,source\r\nCM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCN,2026-10-29,recorded+manual\r\n",
+      "raw": "cn",
+      "recordedCsv": "country_code,local_date,source\r\nCN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCO,2026-10-29,recorded+manual\r\n",
+      "raw": "co",
+      "recordedCsv": "country_code,local_date,source\r\nCO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCP,2026-10-29,recorded+manual\r\n",
+      "raw": "cp",
+      "recordedCsv": "country_code,local_date,source\r\nCP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCQ,2026-10-29,recorded+manual\r\n",
+      "raw": "cq",
+      "recordedCsv": "country_code,local_date,source\r\nCQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCR,2026-10-29,recorded+manual\r\n",
+      "raw": "cr",
+      "recordedCsv": "country_code,local_date,source\r\nCR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCU,2026-10-29,recorded+manual\r\n",
+      "raw": "cu",
+      "recordedCsv": "country_code,local_date,source\r\nCU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCV,2026-10-29,recorded+manual\r\n",
+      "raw": "cv",
+      "recordedCsv": "country_code,local_date,source\r\nCV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCW,2026-10-29,recorded+manual\r\n",
+      "raw": "cw",
+      "recordedCsv": "country_code,local_date,source\r\nCW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCX,2026-10-29,recorded+manual\r\n",
+      "raw": "cx",
+      "recordedCsv": "country_code,local_date,source\r\nCX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCY,2026-10-29,recorded+manual\r\n",
+      "raw": "cy",
+      "recordedCsv": "country_code,local_date,source\r\nCY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nCZ,2026-10-29,recorded+manual\r\n",
+      "raw": "cz",
+      "recordedCsv": "country_code,local_date,source\r\nCZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDE,2026-10-29,recorded+manual\r\n",
+      "raw": "de",
+      "recordedCsv": "country_code,local_date,source\r\nDE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDG,2026-10-29,recorded+manual\r\n",
+      "raw": "dg",
+      "recordedCsv": "country_code,local_date,source\r\nDG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDJ,2026-10-29,recorded+manual\r\n",
+      "raw": "dj",
+      "recordedCsv": "country_code,local_date,source\r\nDJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDK,2026-10-29,recorded+manual\r\n",
+      "raw": "dk",
+      "recordedCsv": "country_code,local_date,source\r\nDK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDM,2026-10-29,recorded+manual\r\n",
+      "raw": "dm",
+      "recordedCsv": "country_code,local_date,source\r\nDM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDO,2026-10-29,recorded+manual\r\n",
+      "raw": "do",
+      "recordedCsv": "country_code,local_date,source\r\nDO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nDZ,2026-10-29,recorded+manual\r\n",
+      "raw": "dz",
+      "recordedCsv": "country_code,local_date,source\r\nDZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEA,2026-10-29,recorded+manual\r\n",
+      "raw": "ea",
+      "recordedCsv": "country_code,local_date,source\r\nEA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEC,2026-10-29,recorded+manual\r\n",
+      "raw": "ec",
+      "recordedCsv": "country_code,local_date,source\r\nEC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEE,2026-10-29,recorded+manual\r\n",
+      "raw": "ee",
+      "recordedCsv": "country_code,local_date,source\r\nEE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEG,2026-10-29,recorded+manual\r\n",
+      "raw": "eg",
+      "recordedCsv": "country_code,local_date,source\r\nEG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEH,2026-10-29,recorded+manual\r\n",
+      "raw": "eh",
+      "recordedCsv": "country_code,local_date,source\r\nEH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nER,2026-10-29,recorded+manual\r\n",
+      "raw": "er",
+      "recordedCsv": "country_code,local_date,source\r\nER,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nES,2026-10-29,recorded+manual\r\n",
+      "raw": "es",
+      "recordedCsv": "country_code,local_date,source\r\nES,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nET,2026-10-29,recorded+manual\r\n",
+      "raw": "et",
+      "recordedCsv": "country_code,local_date,source\r\nET,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEU,2026-10-29,recorded+manual\r\n",
+      "raw": "eu",
+      "recordedCsv": "country_code,local_date,source\r\nEU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nEZ,2026-10-29,recorded+manual\r\n",
+      "raw": "ez",
+      "recordedCsv": "country_code,local_date,source\r\nEZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFI,2026-10-29,recorded+manual\r\n",
+      "raw": "fi",
+      "recordedCsv": "country_code,local_date,source\r\nFI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFJ,2026-10-29,recorded+manual\r\n",
+      "raw": "fj",
+      "recordedCsv": "country_code,local_date,source\r\nFJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFK,2026-10-29,recorded+manual\r\n",
+      "raw": "fk",
+      "recordedCsv": "country_code,local_date,source\r\nFK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFM,2026-10-29,recorded+manual\r\n",
+      "raw": "fm",
+      "recordedCsv": "country_code,local_date,source\r\nFM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFO,2026-10-29,recorded+manual\r\n",
+      "raw": "fo",
+      "recordedCsv": "country_code,local_date,source\r\nFO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nFR,2026-10-29,recorded+manual\r\n",
+      "raw": "fr",
+      "recordedCsv": "country_code,local_date,source\r\nFR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGA,2026-10-29,recorded+manual\r\n",
+      "raw": "ga",
+      "recordedCsv": "country_code,local_date,source\r\nGA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGB,2026-10-29,recorded+manual\r\n",
+      "raw": "gb",
+      "recordedCsv": "country_code,local_date,source\r\nGB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGD,2026-10-29,recorded+manual\r\n",
+      "raw": "gd",
+      "recordedCsv": "country_code,local_date,source\r\nGD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGE,2026-10-29,recorded+manual\r\n",
+      "raw": "ge",
+      "recordedCsv": "country_code,local_date,source\r\nGE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGF,2026-10-29,recorded+manual\r\n",
+      "raw": "gf",
+      "recordedCsv": "country_code,local_date,source\r\nGF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGG,2026-10-29,recorded+manual\r\n",
+      "raw": "gg",
+      "recordedCsv": "country_code,local_date,source\r\nGG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGH,2026-10-29,recorded+manual\r\n",
+      "raw": "gh",
+      "recordedCsv": "country_code,local_date,source\r\nGH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGI,2026-10-29,recorded+manual\r\n",
+      "raw": "gi",
+      "recordedCsv": "country_code,local_date,source\r\nGI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGL,2026-10-29,recorded+manual\r\n",
+      "raw": "gl",
+      "recordedCsv": "country_code,local_date,source\r\nGL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGM,2026-10-29,recorded+manual\r\n",
+      "raw": "gm",
+      "recordedCsv": "country_code,local_date,source\r\nGM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGN,2026-10-29,recorded+manual\r\n",
+      "raw": "gn",
+      "recordedCsv": "country_code,local_date,source\r\nGN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGP,2026-10-29,recorded+manual\r\n",
+      "raw": "gp",
+      "recordedCsv": "country_code,local_date,source\r\nGP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGQ,2026-10-29,recorded+manual\r\n",
+      "raw": "gq",
+      "recordedCsv": "country_code,local_date,source\r\nGQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGR,2026-10-29,recorded+manual\r\n",
+      "raw": "gr",
+      "recordedCsv": "country_code,local_date,source\r\nGR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGS,2026-10-29,recorded+manual\r\n",
+      "raw": "gs",
+      "recordedCsv": "country_code,local_date,source\r\nGS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGT,2026-10-29,recorded+manual\r\n",
+      "raw": "gt",
+      "recordedCsv": "country_code,local_date,source\r\nGT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGU,2026-10-29,recorded+manual\r\n",
+      "raw": "gu",
+      "recordedCsv": "country_code,local_date,source\r\nGU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGW,2026-10-29,recorded+manual\r\n",
+      "raw": "gw",
+      "recordedCsv": "country_code,local_date,source\r\nGW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nGY,2026-10-29,recorded+manual\r\n",
+      "raw": "gy",
+      "recordedCsv": "country_code,local_date,source\r\nGY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHK,2026-10-29,recorded+manual\r\n",
+      "raw": "hk",
+      "recordedCsv": "country_code,local_date,source\r\nHK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHM,2026-10-29,recorded+manual\r\n",
+      "raw": "hm",
+      "recordedCsv": "country_code,local_date,source\r\nHM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHN,2026-10-29,recorded+manual\r\n",
+      "raw": "hn",
+      "recordedCsv": "country_code,local_date,source\r\nHN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHR,2026-10-29,recorded+manual\r\n",
+      "raw": "hr",
+      "recordedCsv": "country_code,local_date,source\r\nHR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHT,2026-10-29,recorded+manual\r\n",
+      "raw": "ht",
+      "recordedCsv": "country_code,local_date,source\r\nHT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nHU,2026-10-29,recorded+manual\r\n",
+      "raw": "hu",
+      "recordedCsv": "country_code,local_date,source\r\nHU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIC,2026-10-29,recorded+manual\r\n",
+      "raw": "ic",
+      "recordedCsv": "country_code,local_date,source\r\nIC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nID,2026-10-29,recorded+manual\r\n",
+      "raw": "id",
+      "recordedCsv": "country_code,local_date,source\r\nID,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIE,2026-10-29,recorded+manual\r\n",
+      "raw": "ie",
+      "recordedCsv": "country_code,local_date,source\r\nIE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIL,2026-10-29,recorded+manual\r\n",
+      "raw": "il",
+      "recordedCsv": "country_code,local_date,source\r\nIL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIM,2026-10-29,recorded+manual\r\n",
+      "raw": "im",
+      "recordedCsv": "country_code,local_date,source\r\nIM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIN,2026-10-29,recorded+manual\r\n",
+      "raw": "in",
+      "recordedCsv": "country_code,local_date,source\r\nIN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIO,2026-10-29,recorded+manual\r\n",
+      "raw": "io",
+      "recordedCsv": "country_code,local_date,source\r\nIO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIQ,2026-10-29,recorded+manual\r\n",
+      "raw": "iq",
+      "recordedCsv": "country_code,local_date,source\r\nIQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIR,2026-10-29,recorded+manual\r\n",
+      "raw": "ir",
+      "recordedCsv": "country_code,local_date,source\r\nIR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIS,2026-10-29,recorded+manual\r\n",
+      "raw": "is",
+      "recordedCsv": "country_code,local_date,source\r\nIS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIT,2026-10-29,recorded+manual\r\n",
+      "raw": "it",
+      "recordedCsv": "country_code,local_date,source\r\nIT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJE,2026-10-29,recorded+manual\r\n",
+      "raw": "je",
+      "recordedCsv": "country_code,local_date,source\r\nJE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJM,2026-10-29,recorded+manual\r\n",
+      "raw": "jm",
+      "recordedCsv": "country_code,local_date,source\r\nJM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJO,2026-10-29,recorded+manual\r\n",
+      "raw": "jo",
+      "recordedCsv": "country_code,local_date,source\r\nJO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nJP,2026-10-29,recorded+manual\r\n",
+      "raw": "jp",
+      "recordedCsv": "country_code,local_date,source\r\nJP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKE,2026-10-29,recorded+manual\r\n",
+      "raw": "ke",
+      "recordedCsv": "country_code,local_date,source\r\nKE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKG,2026-10-29,recorded+manual\r\n",
+      "raw": "kg",
+      "recordedCsv": "country_code,local_date,source\r\nKG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKH,2026-10-29,recorded+manual\r\n",
+      "raw": "kh",
+      "recordedCsv": "country_code,local_date,source\r\nKH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKI,2026-10-29,recorded+manual\r\n",
+      "raw": "ki",
+      "recordedCsv": "country_code,local_date,source\r\nKI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKM,2026-10-29,recorded+manual\r\n",
+      "raw": "km",
+      "recordedCsv": "country_code,local_date,source\r\nKM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKN,2026-10-29,recorded+manual\r\n",
+      "raw": "kn",
+      "recordedCsv": "country_code,local_date,source\r\nKN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKP,2026-10-29,recorded+manual\r\n",
+      "raw": "kp",
+      "recordedCsv": "country_code,local_date,source\r\nKP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKR,2026-10-29,recorded+manual\r\n",
+      "raw": "kr",
+      "recordedCsv": "country_code,local_date,source\r\nKR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKW,2026-10-29,recorded+manual\r\n",
+      "raw": "kw",
+      "recordedCsv": "country_code,local_date,source\r\nKW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKY,2026-10-29,recorded+manual\r\n",
+      "raw": "ky",
+      "recordedCsv": "country_code,local_date,source\r\nKY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nKZ,2026-10-29,recorded+manual\r\n",
+      "raw": "kz",
+      "recordedCsv": "country_code,local_date,source\r\nKZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLA,2026-10-29,recorded+manual\r\n",
+      "raw": "la",
+      "recordedCsv": "country_code,local_date,source\r\nLA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLB,2026-10-29,recorded+manual\r\n",
+      "raw": "lb",
+      "recordedCsv": "country_code,local_date,source\r\nLB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLC,2026-10-29,recorded+manual\r\n",
+      "raw": "lc",
+      "recordedCsv": "country_code,local_date,source\r\nLC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLI,2026-10-29,recorded+manual\r\n",
+      "raw": "li",
+      "recordedCsv": "country_code,local_date,source\r\nLI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLK,2026-10-29,recorded+manual\r\n",
+      "raw": "lk",
+      "recordedCsv": "country_code,local_date,source\r\nLK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLR,2026-10-29,recorded+manual\r\n",
+      "raw": "lr",
+      "recordedCsv": "country_code,local_date,source\r\nLR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLS,2026-10-29,recorded+manual\r\n",
+      "raw": "ls",
+      "recordedCsv": "country_code,local_date,source\r\nLS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLT,2026-10-29,recorded+manual\r\n",
+      "raw": "lt",
+      "recordedCsv": "country_code,local_date,source\r\nLT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLU,2026-10-29,recorded+manual\r\n",
+      "raw": "lu",
+      "recordedCsv": "country_code,local_date,source\r\nLU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLV,2026-10-29,recorded+manual\r\n",
+      "raw": "lv",
+      "recordedCsv": "country_code,local_date,source\r\nLV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nLY,2026-10-29,recorded+manual\r\n",
+      "raw": "ly",
+      "recordedCsv": "country_code,local_date,source\r\nLY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMA,2026-10-29,recorded+manual\r\n",
+      "raw": "ma",
+      "recordedCsv": "country_code,local_date,source\r\nMA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMC,2026-10-29,recorded+manual\r\n",
+      "raw": "mc",
+      "recordedCsv": "country_code,local_date,source\r\nMC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMD,2026-10-29,recorded+manual\r\n",
+      "raw": "md",
+      "recordedCsv": "country_code,local_date,source\r\nMD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nME,2026-10-29,recorded+manual\r\n",
+      "raw": "me",
+      "recordedCsv": "country_code,local_date,source\r\nME,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMF,2026-10-29,recorded+manual\r\n",
+      "raw": "mf",
+      "recordedCsv": "country_code,local_date,source\r\nMF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMG,2026-10-29,recorded+manual\r\n",
+      "raw": "mg",
+      "recordedCsv": "country_code,local_date,source\r\nMG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMH,2026-10-29,recorded+manual\r\n",
+      "raw": "mh",
+      "recordedCsv": "country_code,local_date,source\r\nMH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMK,2026-10-29,recorded+manual\r\n",
+      "raw": "mk",
+      "recordedCsv": "country_code,local_date,source\r\nMK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nML,2026-10-29,recorded+manual\r\n",
+      "raw": "ml",
+      "recordedCsv": "country_code,local_date,source\r\nML,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMM,2026-10-29,recorded+manual\r\n",
+      "raw": "mm",
+      "recordedCsv": "country_code,local_date,source\r\nMM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMN,2026-10-29,recorded+manual\r\n",
+      "raw": "mn",
+      "recordedCsv": "country_code,local_date,source\r\nMN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMO,2026-10-29,recorded+manual\r\n",
+      "raw": "mo",
+      "recordedCsv": "country_code,local_date,source\r\nMO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMP,2026-10-29,recorded+manual\r\n",
+      "raw": "mp",
+      "recordedCsv": "country_code,local_date,source\r\nMP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMQ,2026-10-29,recorded+manual\r\n",
+      "raw": "mq",
+      "recordedCsv": "country_code,local_date,source\r\nMQ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMR,2026-10-29,recorded+manual\r\n",
+      "raw": "mr",
+      "recordedCsv": "country_code,local_date,source\r\nMR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMS,2026-10-29,recorded+manual\r\n",
+      "raw": "ms",
+      "recordedCsv": "country_code,local_date,source\r\nMS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMT,2026-10-29,recorded+manual\r\n",
+      "raw": "mt",
+      "recordedCsv": "country_code,local_date,source\r\nMT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMU,2026-10-29,recorded+manual\r\n",
+      "raw": "mu",
+      "recordedCsv": "country_code,local_date,source\r\nMU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMV,2026-10-29,recorded+manual\r\n",
+      "raw": "mv",
+      "recordedCsv": "country_code,local_date,source\r\nMV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMW,2026-10-29,recorded+manual\r\n",
+      "raw": "mw",
+      "recordedCsv": "country_code,local_date,source\r\nMW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMX,2026-10-29,recorded+manual\r\n",
+      "raw": "mx",
+      "recordedCsv": "country_code,local_date,source\r\nMX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMY,2026-10-29,recorded+manual\r\n",
+      "raw": "my",
+      "recordedCsv": "country_code,local_date,source\r\nMY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nMZ,2026-10-29,recorded+manual\r\n",
+      "raw": "mz",
+      "recordedCsv": "country_code,local_date,source\r\nMZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNA,2026-10-29,recorded+manual\r\n",
+      "raw": "na",
+      "recordedCsv": "country_code,local_date,source\r\nNA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNC,2026-10-29,recorded+manual\r\n",
+      "raw": "nc",
+      "recordedCsv": "country_code,local_date,source\r\nNC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNE,2026-10-29,recorded+manual\r\n",
+      "raw": "ne",
+      "recordedCsv": "country_code,local_date,source\r\nNE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNF,2026-10-29,recorded+manual\r\n",
+      "raw": "nf",
+      "recordedCsv": "country_code,local_date,source\r\nNF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNG,2026-10-29,recorded+manual\r\n",
+      "raw": "ng",
+      "recordedCsv": "country_code,local_date,source\r\nNG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNI,2026-10-29,recorded+manual\r\n",
+      "raw": "ni",
+      "recordedCsv": "country_code,local_date,source\r\nNI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNL,2026-10-29,recorded+manual\r\n",
+      "raw": "nl",
+      "recordedCsv": "country_code,local_date,source\r\nNL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNO,2026-10-29,recorded+manual\r\n",
+      "raw": "no",
+      "recordedCsv": "country_code,local_date,source\r\nNO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNP,2026-10-29,recorded+manual\r\n",
+      "raw": "np",
+      "recordedCsv": "country_code,local_date,source\r\nNP,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNR,2026-10-29,recorded+manual\r\n",
+      "raw": "nr",
+      "recordedCsv": "country_code,local_date,source\r\nNR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNU,2026-10-29,recorded+manual\r\n",
+      "raw": "nu",
+      "recordedCsv": "country_code,local_date,source\r\nNU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nNZ,2026-10-29,recorded+manual\r\n",
+      "raw": "nz",
+      "recordedCsv": "country_code,local_date,source\r\nNZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nOM,2026-10-29,recorded+manual\r\n",
+      "raw": "om",
+      "recordedCsv": "country_code,local_date,source\r\nOM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPA,2026-10-29,recorded+manual\r\n",
+      "raw": "pa",
+      "recordedCsv": "country_code,local_date,source\r\nPA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPE,2026-10-29,recorded+manual\r\n",
+      "raw": "pe",
+      "recordedCsv": "country_code,local_date,source\r\nPE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPF,2026-10-29,recorded+manual\r\n",
+      "raw": "pf",
+      "recordedCsv": "country_code,local_date,source\r\nPF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPG,2026-10-29,recorded+manual\r\n",
+      "raw": "pg",
+      "recordedCsv": "country_code,local_date,source\r\nPG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPH,2026-10-29,recorded+manual\r\n",
+      "raw": "ph",
+      "recordedCsv": "country_code,local_date,source\r\nPH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPK,2026-10-29,recorded+manual\r\n",
+      "raw": "pk",
+      "recordedCsv": "country_code,local_date,source\r\nPK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPL,2026-10-29,recorded+manual\r\n",
+      "raw": "pl",
+      "recordedCsv": "country_code,local_date,source\r\nPL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPM,2026-10-29,recorded+manual\r\n",
+      "raw": "pm",
+      "recordedCsv": "country_code,local_date,source\r\nPM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPN,2026-10-29,recorded+manual\r\n",
+      "raw": "pn",
+      "recordedCsv": "country_code,local_date,source\r\nPN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPR,2026-10-29,recorded+manual\r\n",
+      "raw": "pr",
+      "recordedCsv": "country_code,local_date,source\r\nPR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPS,2026-10-29,recorded+manual\r\n",
+      "raw": "ps",
+      "recordedCsv": "country_code,local_date,source\r\nPS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPT,2026-10-29,recorded+manual\r\n",
+      "raw": "pt",
+      "recordedCsv": "country_code,local_date,source\r\nPT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPW,2026-10-29,recorded+manual\r\n",
+      "raw": "pw",
+      "recordedCsv": "country_code,local_date,source\r\nPW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nPY,2026-10-29,recorded+manual\r\n",
+      "raw": "py",
+      "recordedCsv": "country_code,local_date,source\r\nPY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nQA,2026-10-29,recorded+manual\r\n",
+      "raw": "qa",
+      "recordedCsv": "country_code,local_date,source\r\nQA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nQO,2026-10-29,recorded+manual\r\n",
+      "raw": "qo",
+      "recordedCsv": "country_code,local_date,source\r\nQO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRE,2026-10-29,recorded+manual\r\n",
+      "raw": "re",
+      "recordedCsv": "country_code,local_date,source\r\nRE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRO,2026-10-29,recorded+manual\r\n",
+      "raw": "ro",
+      "recordedCsv": "country_code,local_date,source\r\nRO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRS,2026-10-29,recorded+manual\r\n",
+      "raw": "rs",
+      "recordedCsv": "country_code,local_date,source\r\nRS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRU,2026-10-29,recorded+manual\r\n",
+      "raw": "ru",
+      "recordedCsv": "country_code,local_date,source\r\nRU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nRW,2026-10-29,recorded+manual\r\n",
+      "raw": "rw",
+      "recordedCsv": "country_code,local_date,source\r\nRW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSA,2026-10-29,recorded+manual\r\n",
+      "raw": "sa",
+      "recordedCsv": "country_code,local_date,source\r\nSA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSB,2026-10-29,recorded+manual\r\n",
+      "raw": "sb",
+      "recordedCsv": "country_code,local_date,source\r\nSB,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSC,2026-10-29,recorded+manual\r\n",
+      "raw": "sc",
+      "recordedCsv": "country_code,local_date,source\r\nSC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSD,2026-10-29,recorded+manual\r\n",
+      "raw": "sd",
+      "recordedCsv": "country_code,local_date,source\r\nSD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSE,2026-10-29,recorded+manual\r\n",
+      "raw": "se",
+      "recordedCsv": "country_code,local_date,source\r\nSE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSG,2026-10-29,recorded+manual\r\n",
+      "raw": "sg",
+      "recordedCsv": "country_code,local_date,source\r\nSG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSH,2026-10-29,recorded+manual\r\n",
+      "raw": "sh",
+      "recordedCsv": "country_code,local_date,source\r\nSH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSI,2026-10-29,recorded+manual\r\n",
+      "raw": "si",
+      "recordedCsv": "country_code,local_date,source\r\nSI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSJ,2026-10-29,recorded+manual\r\n",
+      "raw": "sj",
+      "recordedCsv": "country_code,local_date,source\r\nSJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSK,2026-10-29,recorded+manual\r\n",
+      "raw": "sk",
+      "recordedCsv": "country_code,local_date,source\r\nSK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSL,2026-10-29,recorded+manual\r\n",
+      "raw": "sl",
+      "recordedCsv": "country_code,local_date,source\r\nSL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSM,2026-10-29,recorded+manual\r\n",
+      "raw": "sm",
+      "recordedCsv": "country_code,local_date,source\r\nSM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSN,2026-10-29,recorded+manual\r\n",
+      "raw": "sn",
+      "recordedCsv": "country_code,local_date,source\r\nSN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSO,2026-10-29,recorded+manual\r\n",
+      "raw": "so",
+      "recordedCsv": "country_code,local_date,source\r\nSO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSR,2026-10-29,recorded+manual\r\n",
+      "raw": "sr",
+      "recordedCsv": "country_code,local_date,source\r\nSR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSS,2026-10-29,recorded+manual\r\n",
+      "raw": "ss",
+      "recordedCsv": "country_code,local_date,source\r\nSS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nST,2026-10-29,recorded+manual\r\n",
+      "raw": "st",
+      "recordedCsv": "country_code,local_date,source\r\nST,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSV,2026-10-29,recorded+manual\r\n",
+      "raw": "sv",
+      "recordedCsv": "country_code,local_date,source\r\nSV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSX,2026-10-29,recorded+manual\r\n",
+      "raw": "sx",
+      "recordedCsv": "country_code,local_date,source\r\nSX,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSY,2026-10-29,recorded+manual\r\n",
+      "raw": "sy",
+      "recordedCsv": "country_code,local_date,source\r\nSY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSZ,2026-10-29,recorded+manual\r\n",
+      "raw": "sz",
+      "recordedCsv": "country_code,local_date,source\r\nSZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTA,2026-10-29,recorded+manual\r\n",
+      "raw": "ta",
+      "recordedCsv": "country_code,local_date,source\r\nTA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTC,2026-10-29,recorded+manual\r\n",
+      "raw": "tc",
+      "recordedCsv": "country_code,local_date,source\r\nTC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTD,2026-10-29,recorded+manual\r\n",
+      "raw": "td",
+      "recordedCsv": "country_code,local_date,source\r\nTD,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTF,2026-10-29,recorded+manual\r\n",
+      "raw": "tf",
+      "recordedCsv": "country_code,local_date,source\r\nTF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTG,2026-10-29,recorded+manual\r\n",
+      "raw": "tg",
+      "recordedCsv": "country_code,local_date,source\r\nTG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTH,2026-10-29,recorded+manual\r\n",
+      "raw": "th",
+      "recordedCsv": "country_code,local_date,source\r\nTH,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTJ,2026-10-29,recorded+manual\r\n",
+      "raw": "tj",
+      "recordedCsv": "country_code,local_date,source\r\nTJ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTK,2026-10-29,recorded+manual\r\n",
+      "raw": "tk",
+      "recordedCsv": "country_code,local_date,source\r\nTK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTL,2026-10-29,recorded+manual\r\n",
+      "raw": "tl",
+      "recordedCsv": "country_code,local_date,source\r\nTL,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTM,2026-10-29,recorded+manual\r\n",
+      "raw": "tm",
+      "recordedCsv": "country_code,local_date,source\r\nTM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTN,2026-10-29,recorded+manual\r\n",
+      "raw": "tn",
+      "recordedCsv": "country_code,local_date,source\r\nTN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTO,2026-10-29,recorded+manual\r\n",
+      "raw": "to",
+      "recordedCsv": "country_code,local_date,source\r\nTO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTR,2026-10-29,recorded+manual\r\n",
+      "raw": "tr",
+      "recordedCsv": "country_code,local_date,source\r\nTR,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTT,2026-10-29,recorded+manual\r\n",
+      "raw": "tt",
+      "recordedCsv": "country_code,local_date,source\r\nTT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTV,2026-10-29,recorded+manual\r\n",
+      "raw": "tv",
+      "recordedCsv": "country_code,local_date,source\r\nTV,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTW,2026-10-29,recorded+manual\r\n",
+      "raw": "tw",
+      "recordedCsv": "country_code,local_date,source\r\nTW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nTZ,2026-10-29,recorded+manual\r\n",
+      "raw": "tz",
+      "recordedCsv": "country_code,local_date,source\r\nTZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUA,2026-10-29,recorded+manual\r\n",
+      "raw": "ua",
+      "recordedCsv": "country_code,local_date,source\r\nUA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUG,2026-10-29,recorded+manual\r\n",
+      "raw": "ug",
+      "recordedCsv": "country_code,local_date,source\r\nUG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUM,2026-10-29,recorded+manual\r\n",
+      "raw": "um",
+      "recordedCsv": "country_code,local_date,source\r\nUM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUN,2026-10-29,recorded+manual\r\n",
+      "raw": "un",
+      "recordedCsv": "country_code,local_date,source\r\nUN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUS,2026-10-29,recorded+manual\r\n",
+      "raw": "us",
+      "recordedCsv": "country_code,local_date,source\r\nUS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUY,2026-10-29,recorded+manual\r\n",
+      "raw": "uy",
+      "recordedCsv": "country_code,local_date,source\r\nUY,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUZ,2026-10-29,recorded+manual\r\n",
+      "raw": "uz",
+      "recordedCsv": "country_code,local_date,source\r\nUZ,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVA,2026-10-29,recorded+manual\r\n",
+      "raw": "va",
+      "recordedCsv": "country_code,local_date,source\r\nVA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVC,2026-10-29,recorded+manual\r\n",
+      "raw": "vc",
+      "recordedCsv": "country_code,local_date,source\r\nVC,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVE,2026-10-29,recorded+manual\r\n",
+      "raw": "ve",
+      "recordedCsv": "country_code,local_date,source\r\nVE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVG,2026-10-29,recorded+manual\r\n",
+      "raw": "vg",
+      "recordedCsv": "country_code,local_date,source\r\nVG,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVI,2026-10-29,recorded+manual\r\n",
+      "raw": "vi",
+      "recordedCsv": "country_code,local_date,source\r\nVI,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVN,2026-10-29,recorded+manual\r\n",
+      "raw": "vn",
+      "recordedCsv": "country_code,local_date,source\r\nVN,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nVU,2026-10-29,recorded+manual\r\n",
+      "raw": "vu",
+      "recordedCsv": "country_code,local_date,source\r\nVU,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nWF,2026-10-29,recorded+manual\r\n",
+      "raw": "wf",
+      "recordedCsv": "country_code,local_date,source\r\nWF,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nWS,2026-10-29,recorded+manual\r\n",
+      "raw": "ws",
+      "recordedCsv": "country_code,local_date,source\r\nWS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nXK,2026-10-29,recorded+manual\r\n",
+      "raw": "xk",
+      "recordedCsv": "country_code,local_date,source\r\nXK,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nYE,2026-10-29,recorded+manual\r\n",
+      "raw": "ye",
+      "recordedCsv": "country_code,local_date,source\r\nYE,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nYT,2026-10-29,recorded+manual\r\n",
+      "raw": "yt",
+      "recordedCsv": "country_code,local_date,source\r\nYT,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nZA,2026-10-29,recorded+manual\r\n",
+      "raw": "za",
+      "recordedCsv": "country_code,local_date,source\r\nZA,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nZM,2026-10-29,recorded+manual\r\n",
+      "raw": "zm",
+      "recordedCsv": "country_code,local_date,source\r\nZM,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nZW,2026-10-29,recorded+manual\r\n",
+      "raw": "zw",
+      "recordedCsv": "country_code,local_date,source\r\nZW,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "ZZ",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "zz",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "UK",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "us ",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": " US",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "U",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "USA",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\n",
+      "raw": "ZZZ",
+      "recordedCsv": "country_code,local_date,source\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nUS,2026-10-29,recorded+manual\r\n",
+      "raw": "uſ",
+      "recordedCsv": "country_code,local_date,source\r\nUS,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nIO,2026-10-29,recorded+manual\r\n",
+      "raw": "ıo",
+      "recordedCsv": "country_code,local_date,source\r\nIO,2026-10-29,recorded\r\n"
+    },
+    {
+      "combinedCsv": "country_code,local_date,source\r\nSS,2026-10-29,recorded+manual\r\n",
+      "raw": "ß",
+      "recordedCsv": "country_code,local_date,source\r\nSS,2026-10-29,recorded\r\n"
+    }
+  ],
+  "names": {
+    "en": {
+      "AC": "Ascension Island",
+      "AD": "Andorra",
+      "AE": "United Arab Emirates",
+      "AF": "Afghanistan",
+      "AG": "Antigua & Barbuda",
+      "AI": "Anguilla",
+      "AL": "Albania",
+      "AM": "Armenia",
+      "AO": "Angola",
+      "AQ": "Antarctica",
+      "AR": "Argentina",
+      "AS": "American Samoa",
+      "AT": "Austria",
+      "AU": "Australia",
+      "AW": "Aruba",
+      "AX": "Åland Islands",
+      "AZ": "Azerbaijan",
+      "BA": "Bosnia & Herzegovina",
+      "BB": "Barbados",
+      "BD": "Bangladesh",
+      "BE": "Belgium",
+      "BF": "Burkina Faso",
+      "BG": "Bulgaria",
+      "BH": "Bahrain",
+      "BI": "Burundi",
+      "BJ": "Benin",
+      "BL": "St. Barthélemy",
+      "BM": "Bermuda",
+      "BN": "Brunei",
+      "BO": "Bolivia",
+      "BQ": "Caribbean Netherlands",
+      "BR": "Brazil",
+      "BS": "Bahamas",
+      "BT": "Bhutan",
+      "BV": "Bouvet Island",
+      "BW": "Botswana",
+      "BY": "Belarus",
+      "BZ": "Belize",
+      "CA": "Canada",
+      "CC": "Cocos (Keeling) Islands",
+      "CD": "Congo - Kinshasa",
+      "CF": "Central African Republic",
+      "CG": "Congo - Brazzaville",
+      "CH": "Switzerland",
+      "CI": "Côte d’Ivoire",
+      "CK": "Cook Islands",
+      "CL": "Chile",
+      "CM": "Cameroon",
+      "CN": "China mainland",
+      "CO": "Colombia",
+      "CP": "Clipperton Island",
+      "CQ": "Sark",
+      "CR": "Costa Rica",
+      "CU": "Cuba",
+      "CV": "Cape Verde",
+      "CW": "Curaçao",
+      "CX": "Christmas Island",
+      "CY": "Cyprus",
+      "CZ": "Czechia",
+      "DE": "Germany",
+      "DG": "Diego Garcia",
+      "DJ": "Djibouti",
+      "DK": "Denmark",
+      "DM": "Dominica",
+      "DO": "Dominican Republic",
+      "DZ": "Algeria",
+      "EA": "Ceuta & Melilla",
+      "EC": "Ecuador",
+      "EE": "Estonia",
+      "EG": "Egypt",
+      "EH": "Western Sahara",
+      "ER": "Eritrea",
+      "ES": "Spain",
+      "ET": "Ethiopia",
+      "EU": "European Union",
+      "EZ": "Eurozone",
+      "FI": "Finland",
+      "FJ": "Fiji",
+      "FK": "Falkland Islands",
+      "FM": "Micronesia",
+      "FO": "Faroe Islands",
+      "FR": "France",
+      "GA": "Gabon",
+      "GB": "United Kingdom",
+      "GD": "Grenada",
+      "GE": "Georgia",
+      "GF": "French Guiana",
+      "GG": "Guernsey",
+      "GH": "Ghana",
+      "GI": "Gibraltar",
+      "GL": "Greenland",
+      "GM": "Gambia",
+      "GN": "Guinea",
+      "GP": "Guadeloupe",
+      "GQ": "Equatorial Guinea",
+      "GR": "Greece",
+      "GS": "So. Georgia & So. Sandwich Isl.",
+      "GT": "Guatemala",
+      "GU": "Guam",
+      "GW": "Guinea-Bissau",
+      "GY": "Guyana",
+      "HK": "Hong Kong",
+      "HM": "Heard & McDonald Islands",
+      "HN": "Honduras",
+      "HR": "Croatia",
+      "HT": "Haiti",
+      "HU": "Hungary",
+      "IC": "Canary Islands",
+      "ID": "Indonesia",
+      "IE": "Ireland",
+      "IL": "Israel",
+      "IM": "Isle of Man",
+      "IN": "India",
+      "IO": "Chagos Archipelago",
+      "IQ": "Iraq",
+      "IR": "Iran",
+      "IS": "Iceland",
+      "IT": "Italy",
+      "JE": "Jersey",
+      "JM": "Jamaica",
+      "JO": "Jordan",
+      "JP": "Japan",
+      "KE": "Kenya",
+      "KG": "Kyrgyzstan",
+      "KH": "Cambodia",
+      "KI": "Kiribati",
+      "KM": "Comoros",
+      "KN": "St. Kitts & Nevis",
+      "KP": "North Korea",
+      "KR": "South Korea",
+      "KW": "Kuwait",
+      "KY": "Cayman Islands",
+      "KZ": "Kazakhstan",
+      "LA": "Laos",
+      "LB": "Lebanon",
+      "LC": "St. Lucia",
+      "LI": "Liechtenstein",
+      "LK": "Sri Lanka",
+      "LR": "Liberia",
+      "LS": "Lesotho",
+      "LT": "Lithuania",
+      "LU": "Luxembourg",
+      "LV": "Latvia",
+      "LY": "Libya",
+      "MA": "Morocco",
+      "MC": "Monaco",
+      "MD": "Moldova",
+      "ME": "Montenegro",
+      "MF": "St. Martin",
+      "MG": "Madagascar",
+      "MH": "Marshall Islands",
+      "MK": "North Macedonia",
+      "ML": "Mali",
+      "MM": "Myanmar (Burma)",
+      "MN": "Mongolia",
+      "MO": "Macao",
+      "MP": "Northern Mariana Islands",
+      "MQ": "Martinique",
+      "MR": "Mauritania",
+      "MS": "Montserrat",
+      "MT": "Malta",
+      "MU": "Mauritius",
+      "MV": "Maldives",
+      "MW": "Malawi",
+      "MX": "Mexico",
+      "MY": "Malaysia",
+      "MZ": "Mozambique",
+      "NA": "Namibia",
+      "NC": "New Caledonia",
+      "NE": "Niger",
+      "NF": "Norfolk Island",
+      "NG": "Nigeria",
+      "NI": "Nicaragua",
+      "NL": "Netherlands",
+      "NO": "Norway",
+      "NP": "Nepal",
+      "NR": "Nauru",
+      "NU": "Niue",
+      "NZ": "New Zealand",
+      "OM": "Oman",
+      "PA": "Panama",
+      "PE": "Peru",
+      "PF": "French Polynesia",
+      "PG": "Papua New Guinea",
+      "PH": "Philippines",
+      "PK": "Pakistan",
+      "PL": "Poland",
+      "PM": "St. Pierre & Miquelon",
+      "PN": "Pitcairn Islands",
+      "PR": "Puerto Rico",
+      "PS": "Palestinian Territories",
+      "PT": "Portugal",
+      "PW": "Palau",
+      "PY": "Paraguay",
+      "QA": "Qatar",
+      "QO": "Outlying Oceania",
+      "RE": "Réunion",
+      "RO": "Romania",
+      "RS": "Serbia",
+      "RU": "Russia",
+      "RW": "Rwanda",
+      "SA": "Saudi Arabia",
+      "SB": "Solomon Islands",
+      "SC": "Seychelles",
+      "SD": "Sudan",
+      "SE": "Sweden",
+      "SG": "Singapore",
+      "SH": "St. Helena",
+      "SI": "Slovenia",
+      "SJ": "Svalbard & Jan Mayen",
+      "SK": "Slovakia",
+      "SL": "Sierra Leone",
+      "SM": "San Marino",
+      "SN": "Senegal",
+      "SO": "Somalia",
+      "SR": "Suriname",
+      "SS": "South Sudan",
+      "ST": "São Tomé & Príncipe",
+      "SV": "El Salvador",
+      "SX": "Sint Maarten",
+      "SY": "Syria",
+      "SZ": "Eswatini",
+      "TA": "Tristan da Cunha",
+      "TC": "Turks & Caicos Islands",
+      "TD": "Chad",
+      "TF": "French Southern Territories",
+      "TG": "Togo",
+      "TH": "Thailand",
+      "TJ": "Tajikistan",
+      "TK": "Tokelau",
+      "TL": "Timor-Leste",
+      "TM": "Turkmenistan",
+      "TN": "Tunisia",
+      "TO": "Tonga",
+      "TR": "Türkiye",
+      "TT": "Trinidad & Tobago",
+      "TV": "Tuvalu",
+      "TW": "Taiwan",
+      "TZ": "Tanzania",
+      "UA": "Ukraine",
+      "UG": "Uganda",
+      "UM": "U.S. Outlying Islands",
+      "UN": "United Nations",
+      "US": "United States",
+      "UY": "Uruguay",
+      "UZ": "Uzbekistan",
+      "VA": "Vatican City",
+      "VC": "St. Vincent & Grenadines",
+      "VE": "Venezuela",
+      "VG": "British Virgin Islands",
+      "VI": "U.S. Virgin Islands",
+      "VN": "Vietnam",
+      "VU": "Vanuatu",
+      "WF": "Wallis & Futuna",
+      "WS": "Samoa",
+      "XK": "Kosovo",
+      "YE": "Yemen",
+      "YT": "Mayotte",
+      "ZA": "South Africa",
+      "ZM": "Zambia",
+      "ZW": "Zimbabwe"
+    },
+    "es": {
+      "AC": "Isla de la Ascensión",
+      "AD": "Andorra",
+      "AE": "Emiratos Árabes Unidos",
+      "AF": "Afganistán",
+      "AG": "Antigua y Barbuda",
+      "AI": "Anguila",
+      "AL": "Albania",
+      "AM": "Armenia",
+      "AO": "Angola",
+      "AQ": "Antártida",
+      "AR": "Argentina",
+      "AS": "Samoa Americana",
+      "AT": "Austria",
+      "AU": "Australia",
+      "AW": "Aruba",
+      "AX": "Islas Aland",
+      "AZ": "Azerbaiyán",
+      "BA": "Bosnia y Herzegovina",
+      "BB": "Barbados",
+      "BD": "Bangladés",
+      "BE": "Bélgica",
+      "BF": "Burkina Faso",
+      "BG": "Bulgaria",
+      "BH": "Baréin",
+      "BI": "Burundi",
+      "BJ": "Benín",
+      "BL": "San Bartolomé",
+      "BM": "Bermudas",
+      "BN": "Brunéi",
+      "BO": "Bolivia",
+      "BQ": "Caribe neerlandés",
+      "BR": "Brasil",
+      "BS": "Bahamas",
+      "BT": "Bután",
+      "BV": "Isla Bouvet",
+      "BW": "Botsuana",
+      "BY": "Bielorrusia",
+      "BZ": "Belice",
+      "CA": "Canadá",
+      "CC": "Islas Cocos",
+      "CD": "República Democrática del Congo",
+      "CF": "República Centroafricana",
+      "CG": "Congo",
+      "CH": "Suiza",
+      "CI": "Côte d’Ivoire",
+      "CK": "Islas Cook",
+      "CL": "Chile",
+      "CM": "Camerún",
+      "CN": "China continental",
+      "CO": "Colombia",
+      "CP": "Isla Clipperton",
+      "CQ": "Sark",
+      "CR": "Costa Rica",
+      "CU": "Cuba",
+      "CV": "Cabo Verde",
+      "CW": "Curazao",
+      "CX": "Isla de Navidad",
+      "CY": "Chipre",
+      "CZ": "Chequia",
+      "DE": "Alemania",
+      "DG": "Diego García",
+      "DJ": "Yibuti",
+      "DK": "Dinamarca",
+      "DM": "Dominica",
+      "DO": "República Dominicana",
+      "DZ": "Argelia",
+      "EA": "Ceuta y Melilla",
+      "EC": "Ecuador",
+      "EE": "Estonia",
+      "EG": "Egipto",
+      "EH": "Sáhara Occidental",
+      "ER": "Eritrea",
+      "ES": "España",
+      "ET": "Etiopía",
+      "EU": "Unión Europea",
+      "EZ": "zona del euro",
+      "FI": "Finlandia",
+      "FJ": "Fiyi",
+      "FK": "Islas Malvinas",
+      "FM": "Micronesia",
+      "FO": "Islas Feroe",
+      "FR": "Francia",
+      "GA": "Gabón",
+      "GB": "Reino Unido",
+      "GD": "Granada",
+      "GE": "Georgia",
+      "GF": "Guayana Francesa",
+      "GG": "Guernesey",
+      "GH": "Ghana",
+      "GI": "Gibraltar",
+      "GL": "Groenlandia",
+      "GM": "Gambia",
+      "GN": "Guinea",
+      "GP": "Guadalupe",
+      "GQ": "Guinea Ecuatorial",
+      "GR": "Grecia",
+      "GS": "Islas Georgia del Sur y Sandwich del Sur",
+      "GT": "Guatemala",
+      "GU": "Guam",
+      "GW": "Guinea-Bisáu",
+      "GY": "Guyana",
+      "HK": "Hong Kong",
+      "HM": "Islas Heard y McDonald",
+      "HN": "Honduras",
+      "HR": "Croacia",
+      "HT": "Haití",
+      "HU": "Hungría",
+      "IC": "Canarias",
+      "ID": "Indonesia",
+      "IE": "Irlanda",
+      "IL": "Israel",
+      "IM": "Isla de Man",
+      "IN": "India",
+      "IO": "Archipiélago de Chagos",
+      "IQ": "Irak",
+      "IR": "Irán",
+      "IS": "Islandia",
+      "IT": "Italia",
+      "JE": "Jersey",
+      "JM": "Jamaica",
+      "JO": "Jordania",
+      "JP": "Japón",
+      "KE": "Kenia",
+      "KG": "Kirguistán",
+      "KH": "Camboya",
+      "KI": "Kiribati",
+      "KM": "Comoras",
+      "KN": "San Cristóbal y Nieves",
+      "KP": "Corea del Norte",
+      "KR": "Corea del Sur",
+      "KW": "Kuwait",
+      "KY": "Islas Caimán",
+      "KZ": "Kazajistán",
+      "LA": "Laos",
+      "LB": "Líbano",
+      "LC": "Santa Lucía",
+      "LI": "Liechtenstein",
+      "LK": "Sri Lanka",
+      "LR": "Liberia",
+      "LS": "Lesoto",
+      "LT": "Lituania",
+      "LU": "Luxemburgo",
+      "LV": "Letonia",
+      "LY": "Libia",
+      "MA": "Marruecos",
+      "MC": "Mónaco",
+      "MD": "Moldavia",
+      "ME": "Montenegro",
+      "MF": "San Martín",
+      "MG": "Madagascar",
+      "MH": "Islas Marshall",
+      "MK": "Macedonia del Norte",
+      "ML": "Mali",
+      "MM": "Myanmar (Birmania)",
+      "MN": "Mongolia",
+      "MO": "Macao",
+      "MP": "Islas Marianas del Norte",
+      "MQ": "Martinica",
+      "MR": "Mauritania",
+      "MS": "Montserrat",
+      "MT": "Malta",
+      "MU": "Mauricio",
+      "MV": "Maldivas",
+      "MW": "Malaui",
+      "MX": "México",
+      "MY": "Malasia",
+      "MZ": "Mozambique",
+      "NA": "Namibia",
+      "NC": "Nueva Caledonia",
+      "NE": "Níger",
+      "NF": "Isla Norfolk",
+      "NG": "Nigeria",
+      "NI": "Nicaragua",
+      "NL": "Países Bajos",
+      "NO": "Noruega",
+      "NP": "Nepal",
+      "NR": "Nauru",
+      "NU": "Niue",
+      "NZ": "Nueva Zelanda",
+      "OM": "Omán",
+      "PA": "Panamá",
+      "PE": "Perú",
+      "PF": "Polinesia Francesa",
+      "PG": "Papúa Nueva Guinea",
+      "PH": "Filipinas",
+      "PK": "Pakistán",
+      "PL": "Polonia",
+      "PM": "San Pedro y Miquelón",
+      "PN": "Islas Pitcairn",
+      "PR": "Puerto Rico",
+      "PS": "Territorios Palestinos",
+      "PT": "Portugal",
+      "PW": "Palaos",
+      "PY": "Paraguay",
+      "QA": "Catar",
+      "QO": "Territorios alejados de Oceanía",
+      "RE": "Reunión",
+      "RO": "Rumanía",
+      "RS": "Serbia",
+      "RU": "Rusia",
+      "RW": "Ruanda",
+      "SA": "Arabia Saudí",
+      "SB": "Islas Salomón",
+      "SC": "Seychelles",
+      "SD": "Sudán",
+      "SE": "Suecia",
+      "SG": "Singapur",
+      "SH": "Santa Elena",
+      "SI": "Eslovenia",
+      "SJ": "Svalbard y Jan Mayen",
+      "SK": "Eslovaquia",
+      "SL": "Sierra Leona",
+      "SM": "San Marino",
+      "SN": "Senegal",
+      "SO": "Somalia",
+      "SR": "Surinam",
+      "SS": "Sudán del Sur",
+      "ST": "Santo Tomé y Príncipe",
+      "SV": "El Salvador",
+      "SX": "Sint Maarten",
+      "SY": "Siria",
+      "SZ": "Esuatini",
+      "TA": "Tristán de Acuña",
+      "TC": "Islas Turcas y Caicos",
+      "TD": "Chad",
+      "TF": "Territorios Australes Franceses",
+      "TG": "Togo",
+      "TH": "Tailandia",
+      "TJ": "Tayikistán",
+      "TK": "Tokelau",
+      "TL": "Timor Oriental",
+      "TM": "Turkmenistán",
+      "TN": "Túnez",
+      "TO": "Tonga",
+      "TR": "Turquía",
+      "TT": "Trinidad y Tobago",
+      "TV": "Tuvalu",
+      "TW": "Taiwán",
+      "TZ": "Tanzania",
+      "UA": "Ucrania",
+      "UG": "Uganda",
+      "UM": "Islas menores alejadas de EE. UU.",
+      "UN": "Naciones Unidas",
+      "US": "Estados Unidos",
+      "UY": "Uruguay",
+      "UZ": "Uzbekistán",
+      "VA": "Ciudad del Vaticano",
+      "VC": "San Vicente y las Granadinas",
+      "VE": "Venezuela",
+      "VG": "Islas Vírgenes Británicas",
+      "VI": "Islas Vírgenes de EE. UU.",
+      "VN": "Vietnam",
+      "VU": "Vanuatu",
+      "WF": "Wallis y Futuna",
+      "WS": "Samoa",
+      "XK": "Kosovo",
+      "YE": "Yemen",
+      "YT": "Mayotte",
+      "ZA": "Sudáfrica",
+      "ZM": "Zambia",
+      "ZW": "Zimbabue"
+    }
+  },
+  "picker": [
+    "AC",
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AL",
+    "AM",
+    "AO",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AW",
+    "AX",
+    "AZ",
+    "BA",
+    "BB",
+    "BD",
+    "BE",
+    "BF",
+    "BG",
+    "BH",
+    "BI",
+    "BJ",
+    "BL",
+    "BM",
+    "BN",
+    "BO",
+    "BQ",
+    "BR",
+    "BS",
+    "BT",
+    "BV",
+    "BW",
+    "BY",
+    "BZ",
+    "CA",
+    "CC",
+    "CD",
+    "CF",
+    "CG",
+    "CH",
+    "CI",
+    "CK",
+    "CL",
+    "CM",
+    "CN",
+    "CO",
+    "CP",
+    "CQ",
+    "CR",
+    "CU",
+    "CV",
+    "CW",
+    "CX",
+    "CY",
+    "CZ",
+    "DE",
+    "DG",
+    "DJ",
+    "DK",
+    "DM",
+    "DO",
+    "DZ",
+    "EA",
+    "EC",
+    "EE",
+    "EG",
+    "EH",
+    "ER",
+    "ES",
+    "ET",
+    "EU",
+    "EZ",
+    "FI",
+    "FJ",
+    "FK",
+    "FM",
+    "FO",
+    "FR",
+    "GA",
+    "GB",
+    "GD",
+    "GE",
+    "GF",
+    "GG",
+    "GH",
+    "GI",
+    "GL",
+    "GM",
+    "GN",
+    "GP",
+    "GQ",
+    "GR",
+    "GS",
+    "GT",
+    "GU",
+    "GW",
+    "GY",
+    "HK",
+    "HM",
+    "HN",
+    "HR",
+    "HT",
+    "HU",
+    "IC",
+    "ID",
+    "IE",
+    "IL",
+    "IM",
+    "IN",
+    "IO",
+    "IQ",
+    "IR",
+    "IS",
+    "IT",
+    "JE",
+    "JM",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KI",
+    "KM",
+    "KN",
+    "KP",
+    "KR",
+    "KW",
+    "KY",
+    "KZ",
+    "LA",
+    "LB",
+    "LC",
+    "LI",
+    "LK",
+    "LR",
+    "LS",
+    "LT",
+    "LU",
+    "LV",
+    "LY",
+    "MA",
+    "MC",
+    "MD",
+    "ME",
+    "MF",
+    "MG",
+    "MH",
+    "MK",
+    "ML",
+    "MM",
+    "MN",
+    "MO",
+    "MP",
+    "MQ",
+    "MR",
+    "MS",
+    "MT",
+    "MU",
+    "MV",
+    "MW",
+    "MX",
+    "MY",
+    "MZ",
+    "NA",
+    "NC",
+    "NE",
+    "NF",
+    "NG",
+    "NI",
+    "NL",
+    "NO",
+    "NP",
+    "NR",
+    "NU",
+    "NZ",
+    "OM",
+    "PA",
+    "PE",
+    "PF",
+    "PG",
+    "PH",
+    "PK",
+    "PL",
+    "PM",
+    "PN",
+    "PR",
+    "PS",
+    "PT",
+    "PW",
+    "PY",
+    "QA",
+    "QO",
+    "RE",
+    "RO",
+    "RS",
+    "RU",
+    "RW",
+    "SA",
+    "SB",
+    "SC",
+    "SD",
+    "SE",
+    "SG",
+    "SH",
+    "SI",
+    "SJ",
+    "SK",
+    "SL",
+    "SM",
+    "SN",
+    "SO",
+    "SR",
+    "SS",
+    "ST",
+    "SV",
+    "SX",
+    "SY",
+    "SZ",
+    "TA",
+    "TC",
+    "TD",
+    "TF",
+    "TG",
+    "TH",
+    "TJ",
+    "TK",
+    "TL",
+    "TM",
+    "TN",
+    "TO",
+    "TR",
+    "TT",
+    "TV",
+    "TW",
+    "TZ",
+    "UA",
+    "UG",
+    "UM",
+    "UN",
+    "US",
+    "UY",
+    "UZ",
+    "VA",
+    "VC",
+    "VE",
+    "VG",
+    "VI",
+    "VN",
+    "VU",
+    "WF",
+    "WS",
+    "XK",
+    "YE",
+    "YT",
+    "ZA",
+    "ZM",
+    "ZW"
+  ],
+  "runtime": {
+    "kind": "macOS Foundation reference",
+    "os": "Version 27.2 (Build 26B123)"
+  },
+  "provenance": {
+    "IsoMe/Models/CountryStay.swift": "23a0f5c42ce774dde5c0f2fdd95f76042b01343a62bae5e892102b70533fd318",
+    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
+    "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
+    "android/scripts/fixtures/CountryRegions.swift": "d9474c951745cd3901979ec3515b32312f8927dc896fb9303cee8af71ba9473d",
+    "android/scripts/generate_country_regions.py": "03ce9764dbde4bf72726ea01e388e84707173d9471d9b87d459e0987de157afc",
+    "IsoMe/Views/CountryDaysView.swift#CountryStayEditor.countries": "600bfa3d82cff5d6a732bb00b3509e9584cd9c73f94f4f6ddb16921458c32ed5",
+    "IsoMe/Views/CountryDaysView.swift#CountrySelectionView.countries": "5ff7e7cf71f331df5997309c9c08b7f392fc868014fbf223334b096c2ccd9080"
+  },
+  "pickerSourceContextSHA256": "883b1d181c1001e936c797cb0ec593863ca46ec883d57e5fb04c23679e244d88"
+}

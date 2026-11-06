@@ -1,0 +1,46 @@
+steps:
+  - echo: Onboarded idle English API35 disposable mapQa only, zero history, Json/All and unavailable purchases. Preview empty Outings Markdown, restore Json/All and Map. No recording, permission, purchase or external destination changes. Home/resume refreshes the known stale inspection bridge.
+  - launch: com.bontecou.whereday.mapqa
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}
+  - tap: { id: navigation-archive }
+  - await: {visible: {text: 'Your history, in your format'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Json$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Markdown$'}}
+  - await: {visible: {text: Preview export}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^All$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Outings$'}}
+  - await: {visible: {text: Outings}}
+  - await: {idle: true}
+  - tap: {text: Preview export}
+  - scroll-to: {target: {text: '**Total Outings:** 0'}}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector: {text: '**Total Outings:** 0'}
+  - scroll-to: {target: {text: Format}, direction: up}
+  - tool: button
+    args: {button: home}
+  - tool: launch-app
+    args: {bundleId: com.bontecou.whereday.mapqa}
+  - tap: {text: {matches: '^Outings$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^All$'}}
+  - await: {visible: {text: All}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Markdown$'}}
+  - await: {idle: true}
+  - tap: {text: {matches: '^Json$'}}
+  - await: {visible: {text: Json}}
+  - await: {idle: true}
+  - tap: { id: navigation-map }
+  - await: {visible: {text: Your location journal}}
+  - await: {idle: true}
