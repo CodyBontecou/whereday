@@ -103,7 +103,9 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             graph.journalClear.state.map {!it.blocked}.distinctUntilChanged().collectLatest {ready->
                 if(!ready) return@collectLatest
-                graph.reconcileLocationServices()
+                // Unguarded, a failure here crashed every launch until storage (and the journal) was cleared.
+                if(!graph.reconcileLocationServicesSafely())
+                    android.widget.Toast.makeText(this@MainActivity,getString(R.string.recording_reconciliation_failed),android.widget.Toast.LENGTH_LONG).show()
                 try { kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { graph.history.reconcileVisits() } }
                 catch(canceled:kotlinx.coroutines.CancellationException) {throw canceled}
                 catch(_:Exception) {

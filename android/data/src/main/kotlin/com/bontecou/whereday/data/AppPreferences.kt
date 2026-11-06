@@ -1,11 +1,19 @@
 package com.bontecou.whereday.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 
-private val Context.preferenceStore by preferencesDataStore("settings")
+/**
+ * A settings file that can't be parsed would otherwise fail every read, and nearly every
+ * screen reads settings, so the app would crash on each launch until its storage was
+ * cleared (which also deletes the journal). It is replaced with fresh settings instead.
+ */
+internal val settingsCorruptionHandler=ReplaceFileCorruptionHandler {AppPreferences.recoveredPreferences()}
+private val Context.preferenceStore by preferencesDataStore("settings",corruptionHandler=settingsCorruptionHandler)
 data class AppSettings(val onboarded: Boolean = false, val appearance: String = "system", val metric: Boolean = true, val distanceFilter: Int = 5, val stopAfterHours: Int = 0, val networkGeocoding: Boolean = true, val exportFolder: String? = null,
     val inferredEnabled: Boolean=true,val inferredGapMinutes: Int=30,val inferredMinimumMinutes: Int=0,val inferredMinimumPoints: Int=1,val exportConfiguration:String?=null,val showOutliers:Boolean=false,val photoEpoch:String="",val showPhotoMarkers:Boolean=false,val showPhotoImages:Boolean=true,val requestPhotoLocations:Boolean=false,val automaticPhotoSync:Boolean=false,
     val roadDisplayEnabled:Boolean=false,val roadAccessRevision:String="",val showPhotoDots:Boolean=false,
@@ -29,7 +37,12 @@ data class MapLayerSettings(val path:Boolean=true,
     val online:Boolean=true) {
     fun layers(outliers:Boolean)=com.bontecou.whereday.domain.MapLayers(path,points,visits,endpoints,outliers)
 }
-class AppPreferences(private val context: Context,private val beforeRoadPolicyChange:(String)->Unit={}) {
+class AppPreferences internal constructor(private val store:DataStore<Preferences>,private val beforeRoadPolicyChange:(String)->Unit={}) {
+    constructor(context:Context,beforeRoadPolicyChange:(String)->Unit={}):this(context.preferenceStore,beforeRoadPolicyChange)
+    companion object {
+        /** New-install defaults, except network lookups and online tiles stay off: the person's earlier choice is unknown. */
+        internal fun recoveredPreferences():Preferences=preferencesOf(Keys.geocoding to false,Keys.mapOnline to false)
+    }
     private object Keys {
         val onboarded = booleanPreferencesKey("onboarded")
         val appearance = stringPreferencesKey("appearance")
@@ -65,8 +78,8 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
         p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
         MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: true))
-    val settings = context.preferenceStore.data.map(::read)
-    suspend fun update(transform: (AppSettings) -> AppSettings) { context.preferenceStore.edit { p ->
+    val settings = store.data.map(::read)
+    suspend fun update(transform: (AppSettings) -> AppSettings) { store.edit { p ->
         val previous=read(p)
         val value=transform(previous)
         p[Keys.onboarded] = value.onboarded; p[Keys.appearance] = value.appearance; p[Keys.metric] = value.metric

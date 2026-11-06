@@ -103,6 +103,9 @@ class AppGraph internal constructor(private val context: Context, roadDirections
             visitMonitoringCommands.reconcile(if(reason==com.bontecou.whereday.domain.RecordingInterruption.phoneRestarted) "visits.restarted" else "visits.interrupted",visits)
         }
     }
+    /** For launch and boot: a failure is logged instead of crashing each start; the next start retries. */
+    suspend fun reconcileLocationServicesSafely():Boolean=
+        recoverOrReport({activityLog.record(AppEvent.locationReconciliationFailed)}) {reconcileLocationServices()}
     fun automation(activity:android.app.Activity)=automation(recordingCommands.bind(activity),AutomationVisitLocation(activity)::locate)
     fun automation(recording:AutomationRecording,currentLocation:suspend ()->com.bontecou.whereday.domain.Coordinate={throw AutomationLocationUnavailable()})=AutomationExecutor(journalCommands,automationResults,recording,exports,{
         val settings=preferences.settings.first();settings.inferenceRules.takeIf {settings.inferredEnabled}
@@ -121,3 +124,8 @@ object RecordingRuntime {
     val active = state.asStateFlow()
     internal fun update(active: Boolean) { state.value = active }
 }
+
+/** Runs [block]; any failure other than cancellation calls [onFailure] and returns false instead of propagating. */
+internal suspend fun recoverOrReport(onFailure:()->Unit,block:suspend ()->Unit):Boolean=try {block();true}
+    catch(error:kotlinx.coroutines.CancellationException) {throw error}
+    catch(_:Exception) {runCatching(onFailure);false}

@@ -236,10 +236,12 @@ class RecordingRecoveryReceiver:BroadcastReceiver() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val graph=AppGraph.from(context);graph.journalClear.awaitReady()
-                graph.reconcileLocationServices()
+                graph.reconcileLocationServicesSafely()
             }
             catch(error:CancellationException) {throw error}
             catch(_:JournalClearPending) { /* The journal remains fenced until its deletion recovers. */ }
+            // An uncaught failure here would crash the process on every boot.
+            catch(_:Exception) {}
             finally {pending.finish()}
         }
     }
