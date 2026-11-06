@@ -90,6 +90,7 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
     var busy by remember {mutableStateOf(false)}
     var deleting by remember {mutableStateOf(false)}
     var undoing by remember {mutableStateOf(false)}
+    var splitting by remember {mutableStateOf(false)}
     var discarding by remember {mutableStateOf(false)}
     var overlapReview by remember {mutableStateOf<VisitOverlapReview?>(null)}
     var mapReview by remember {mutableStateOf<VisitSaveKey?>(null)}
@@ -282,6 +283,10 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
                     }
                     if(visit.confirmation==Confirmation.unconfirmed) WdButton(stringResource(R.string.visit_confirm),{submit(true)},enabled=!busy,icon=Icons.Outlined.Check)
                     if(visit.confirmation==Confirmation.corrected && visit.originalCoordinate!=null) WdButton(stringResource(R.string.visit_undo),{undoing=true},enabled=!busy,icon=Icons.AutoMirrored.Outlined.Undo)
+                    if(VisitSplit.canSplit(visit)) {
+                        Text(stringResource(if(dirty) R.string.visit_split_save_first else R.string.visit_split_description),style=WdType.caption2,color=wd.textMuted)
+                        WdButton(stringResource(R.string.visit_split_action),{focus.clearFocus();keyboard?.hide();splitting=true},Modifier.testTag("visit-split"),enabled=!busy && !dirty,icon=Icons.Outlined.ContentCut)
+                    }
                 }
             }
             if(delete!=null) WdButton(stringResource(R.string.visit_delete_action),{deleting=true},enabled=!busy,emphasis=WdEmphasis.destructive,icon=Icons.Outlined.DeleteOutline)
@@ -343,6 +348,11 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
             dismissButton={TextButton(onClick={if(mapReview==ticket) mapReview=null}) {Text(stringResource(R.string.visit_keep_editing))}})
     }
     if(discarding) WorkspaceAlertDialog(onDismissRequest={discarding=false},title={Text(stringResource(R.string.visit_discard_title))},confirmButton={TextButton(onClick=dismiss) {Text(stringResource(R.string.visit_discard),color=wd.inkRust)}},dismissButton={TextButton(onClick={discarding=false}) {Text(stringResource(R.string.visit_keep_editing))}})
+    if(splitting && visit!=null) SplitVisitDialog(graph,visit,{splitting=false},split={at,place->
+        graph.history.splitVisit(visit,at,place)
+        // The stored visit changed under this editor; reopen it to see the first part.
+        dismiss()
+    },nearbyLookup=nearbyLookup,nearbyAvailable=nearbyAvailable)
     if(undoing) WorkspaceAlertDialog(onDismissRequest={undoing=false},title={Text(stringResource(R.string.visit_restore_title))},text={Text(stringResource(R.string.visit_restore_description))},confirmButton={TextButton(enabled=!busy,onClick={undoing=false;visit?.let {persist(it.undoCorrection(Instant.now()))}}) {Text(stringResource(R.string.visit_restore))}},dismissButton={TextButton(onClick={undoing=false}) {Text(stringResource(R.string.visit_cancel))}})
     if(deleting) WorkspaceAlertDialog(onDismissRequest={if(!busy) deleting=false},title={Text(stringResource(R.string.visit_delete_title))},text={Text(stringResource(R.string.visit_delete_description))},confirmButton={TextButton(enabled=!busy,onClick={scope.launch {
         busy=true;try {delete?.invoke();dismiss()} catch(e:Exception) {if(e is CancellationException) throw e;error=failure(e,R.string.visit_error_delete);deleting=false} finally {busy=false}

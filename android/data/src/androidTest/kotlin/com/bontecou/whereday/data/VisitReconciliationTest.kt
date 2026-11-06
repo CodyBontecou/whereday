@@ -101,6 +101,29 @@ class VisitReconciliationTest {
         assertEquals(original,repo.dao.exportFirstVisits(Instant.EPOCH,Instant.ofEpochMilli(Long.MAX_VALUE)).map {it.value})
         assertEquals(dwell,repo.dao.dwell()!!.state)
     }
+    @Test fun splitVisitStaysSplitThroughDuplicateRepairAndRemembersTheSecondPlace()=runBlocking {
+        val original=visit("stop",-4000,-1000).copy(name="Trader Joe's",notes="Groceries")
+        repo.dao.put(VisitRow(original))
+        val marshalls=SplitPlace("Marshalls","12 Main St",Coordinate(18.0003,-66.0002),"geoapify",40.0)
+        val (first,second)=repo.splitVisit(original,now.plusSeconds(-2500),marshalls,"second")
+        assertEquals(listOf(first,second),repo.dao.exportFirstVisits(Instant.EPOCH,Instant.ofEpochMilli(Long.MAX_VALUE)).map {it.value})
+        assertEquals(now.plusSeconds(-2500),first.departedAt);assertEquals(first.departedAt,second.arrivedAt)
+        assertEquals(Confirmation.confirmed,first.confirmation);assertEquals(Confirmation.corrected,second.confirmation)
+        assertEquals(0,repo.reconcileVisits());assertEquals(2L,repo.dao.totalVisitCount())
+        assertEquals(listOf("Marshalls"),repo.dao.places().map {it.value.name})
+        // A stale editor baseline cannot split the visit again.
+        assertThrows(VisitChanged::class.java) {runBlocking {repo.splitVisit(original,now.plusSeconds(-3000),marshalls,"third")}}
+        assertEquals(2L,repo.dao.totalVisitCount())
+    }
+    @Test fun invalidSplitLeavesTheJournalUnchanged()=runBlocking {
+        val original=visit("stop",-4000,-1000).copy(name="Trader Joe's")
+        repo.dao.put(VisitRow(original))
+        val same=SplitPlace(" trader joe's ","10 Main St",coordinate,"userEntered")
+        assertThrows(InvalidVisitSplit::class.java) {runBlocking {repo.splitVisit(original,now.plusSeconds(-2500),same,"second")}}
+        assertThrows(InvalidVisitSplit::class.java) {runBlocking {repo.splitVisit(original,now.plusSeconds(-1030),same.copy(name="Marshalls"),"second")}}
+        assertEquals(listOf(original),repo.dao.exportFirstVisits(Instant.EPOCH,Instant.ofEpochMilli(Long.MAX_VALUE)).map {it.value})
+        assertTrue(repo.dao.places().isEmpty())
+    }
     @Test fun androidEllipsoidalDistanceMatchesAllSwiftDuplicateDecisions()=runBlocking {
         val context=InstrumentationRegistry.getInstrumentation().targetContext
         val document=context.assets.open("ios-visit-reconciliation.json").reader().use {JsonParser.parseReader(it).asJsonObject}

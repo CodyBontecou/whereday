@@ -24,9 +24,10 @@ object VisitReconciliation {
     /** Both visits confirmed or corrected, with display names differing ignoring case and diacritics. */
     fun areDistinctReviewedPlaces(a:Visit,b:Visit):Boolean {
         if(a.confirmation==Confirmation.unconfirmed || b.confirmation==Confirmation.unconfirmed) return false
-        return placeKey(a)!=placeKey(b)
+        return nameKey(a.name ?: a.address)!=nameKey(b.name ?: b.address)
     }
-    private fun placeKey(visit:Visit)=Normalizer.normalize(visit.name ?: visit.address ?: "",Normalizer.Form.NFD)
+    /** A display name compared ignoring case and diacritics, as Swift's caseInsensitive/diacriticInsensitive compare. */
+    internal fun nameKey(name:String?)=Normalizer.normalize(name ?: "",Normalizer.Form.NFD)
         .replace(Regex("\\p{Mn}+"),"").lowercase(Locale.ROOT)
     fun merge(target:Visit,source:Visit):Visit {
         val sourceNotes=source.notes?.trim()?.takeIf {it.isNotEmpty()}
