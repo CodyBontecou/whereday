@@ -36,6 +36,10 @@ sample data, and the app's string catalog covers only about 30 of their ~225 lab
 
 ## Changes to the design
 
+- Map-first (November 6, 2026): `MapHome.dc.html` draws the map-first home (`range` = `day` | `week`,
+  `night`). Shot 01 and the header's two phones show it; shot 02 is now "A week, one map." (the 7-day
+  range) in place of the Trace replay. Its new copy is in `translations.py`.
+
 - `render.py` strips the artifact-only `/_blob/` font faces; Google Fonts supplies the same
   Newsreader, Inter, IBM Plex Mono and Caveat. Non-Latin scripts fall back to system fonts.
 - Japanese and Chinese headlines are set at 74% so they break cleanly. Arabic headlines run
