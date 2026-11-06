@@ -30,7 +30,12 @@ Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map s
 - **Store settings:** category Travel & Local; contact `cody@isolated.tech` and `https://whereday.com/`.
 - **Managed publishing is off**, so changes go live as soon as review approves them.
 
-Still open: `whereday.com/privacy` covers only iOS. It needs Android coverage (Google Play Billing and Integrity, the Play purchase verifier, Android geocoding, OpenFreeMap map tiles) before submission. Nothing has been sent for review yet.
+**Follow-ups done (November 6, 2026):**
+- **Privacy policy:** `whereday.com/privacy` now covers Android (#106, merged as `65504738` and live). It has step-by-step deletion instructions at `#delete-your-data`, which is now the deletion URL in Data safety.
+- **Verifier account:** the Worker's `GOOGLE_SERVICE_ACCOUNT` is now the dedicated `whereday-play-verifier@crested-drive-492000-u7.iam.gserviceaccount.com`. In Play Console it has Whereday-only access: read-only app info, View financial data, and Manage orders and subscriptions. Its key is at `~/.android-keys/whereday-play-verifier.json`. `play-publisher` is still used by `gplay`.
+- **Release mode:** managed publishing stays off, at the owner's choice, so an approved release goes live straight away.
+
+**Left for production:** choose countries and regions, confirm the 2.0.0 (3) release, then send it for review in Publishing overview. Separately, the developer account has to declare its trader status by February 2027.
 
 ---
 
