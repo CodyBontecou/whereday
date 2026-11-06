@@ -906,6 +906,9 @@ final class LocationManager: NSObject, ObservableObject {
         referenceDate: Date
     ) -> Bool {
         guard lhs.id != rhs.id, lhs.source == .automatic, rhs.source == .automatic else { return false }
+        // Reviewed stops named after different places (e.g. a split visit, or two
+        // neighbouring saved places) are separate visits, however close together.
+        if Self.areDistinctReviewedPlaces(lhs, rhs) { return false }
 
         let lhsLocation = CLLocation(latitude: lhs.latitude, longitude: lhs.longitude)
         let rhsLocation = CLLocation(latitude: rhs.latitude, longitude: rhs.longitude)
@@ -919,6 +922,11 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         return timeGapBetween(lhs, rhs, referenceDate: referenceDate) <= duplicateVisitMergeGap
+    }
+
+    static func areDistinctReviewedPlaces(_ lhs: Visit, _ rhs: Visit) -> Bool {
+        guard lhs.isConfirmed, rhs.isConfirmed else { return false }
+        return lhs.displayName.compare(rhs.displayName, options: [.caseInsensitive, .diacriticInsensitive]) != .orderedSame
     }
 
     private func timeGapBetween(_ lhs: Visit, _ rhs: Visit, referenceDate: Date) -> TimeInterval {

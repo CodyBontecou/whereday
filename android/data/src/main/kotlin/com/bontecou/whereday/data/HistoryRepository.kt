@@ -318,6 +318,30 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         }
     }
 
+    /**
+     * Splits a finished visit at [at] into two back-to-back visits, the second at [place]. The first keeps its
+     * identity, place and notes; both parts become reviewed so duplicate repair keeps them apart. Like a
+     * correction, the second place is remembered as a saved place.
+     */
+    suspend fun splitVisit(expected:Visit,at:Instant,place:SplitPlace,secondId:String=java.util.UUID.randomUUID().toString()):Pair<Visit,Visit> = lock.withLock {
+        val baseline=persistedVisit(expected)
+        database.writeTransaction {
+            val current=dao.visit(baseline.id)?.value
+            if(current!=baseline) throw VisitChanged()
+            require(dao.visit(secondId)==null) {"The new visit identity already exists."}
+            val (first,second)=VisitSplit.split(baseline,Instant.ofEpochMilli(at.toEpochMilli()),place,secondId,clock.instant())
+                .let {(a,b)->persistedVisit(a) to persistedVisit(b)}
+            dao.put(VisitRow(first));dao.put(VisitRow(second))
+            if(dao.dwell()?.state?.visitId==first.id) dao.put(DwellRow())
+            val places=SavedPlaceRepository(database)
+            val coroutine=currentCoroutineContext()
+            confirmedPlaceToRemember(second,dao.places().map {it.value},java.util.UUID.randomUUID().toString(),places::distance,places::nameKey) {coroutine.ensureActive()}
+                ?.let {dao.put(PlaceRow(it))}
+            currentCoroutineContext().ensureActive()
+            first to second
+        }
+    }
+
     /** Explicit automation check-in: independent of route recording and detector ownership. */
     suspend fun checkIn(name:String?,savedPlaceId:String?,coordinate:Coordinate?,arrivedAt:Instant,allowOverlap:Boolean=false):Visit = lock.withLock {
         database.writeTransaction {

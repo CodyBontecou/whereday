@@ -1,8 +1,8 @@
 {
   "provenance": {
-    "IsoMe/Services/LocationManager.swift": "d86c2a1e20141b53c468055e70c872f66e374c71df237e8a59b2c84454ef251e",
+    "IsoMe/Services/LocationManager.swift": "94ff0ac563318e60caef83c651f0567f354e9b7e6b701f15264ab62a81c0c1f8",
     "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
-    "android/scripts/fixtures/VisitReconciliationFixtures.swift": "1e07703765225a76401e1eaacca46bce4f88a3866b8216691e0bf5830921c6b9",
+    "android/scripts/fixtures/VisitReconciliationFixtures.swift": "1758fc5a146f364117b9710c7eb379c1408d18d2556d44b2983633a124e94bd7",
     "android/scripts/generate_visit_reconciliation_fixtures.py": "3ba1b3183250b2ee620008d22367c2f54cc22cb583ab1dda10b9d2b8ac931069"
   },
   "cases": [
@@ -13,6 +13,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000001",
         "inferred": false,
@@ -26,6 +27,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000002",
         "inferred": false,
@@ -37,6 +39,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000001",
         "inferred": false,
@@ -53,6 +56,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 4000,
         "id": "00000000-0000-0000-0000-000000000003",
         "inferred": false,
@@ -66,6 +70,7 @@
       "source": {
         "address": null,
         "arrival": 3800,
+        "confirmation": "unconfirmed",
         "departure": 4000,
         "id": "00000000-0000-0000-0000-000000000004",
         "inferred": false,
@@ -77,6 +82,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000003",
         "inferred": false,
@@ -93,6 +99,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 4000,
         "id": "00000000-0000-0000-0000-000000000005",
         "inferred": false,
@@ -106,6 +113,7 @@
       "source": {
         "address": null,
         "arrival": 3801,
+        "confirmation": "unconfirmed",
         "departure": 4000,
         "id": "00000000-0000-0000-0000-000000000006",
         "inferred": false,
@@ -117,6 +125,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000005",
         "inferred": false,
@@ -133,6 +142,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000007",
         "inferred": false,
@@ -146,6 +156,7 @@
       "source": {
         "address": null,
         "arrival": 1900,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000008",
         "inferred": false,
@@ -157,6 +168,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 1000,
         "id": "00000000-0000-0000-0000-000000000007",
         "inferred": false,
@@ -173,6 +185,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000009",
         "inferred": false,
@@ -186,6 +199,7 @@
       "source": {
         "address": null,
         "arrival": 1901,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000010",
         "inferred": false,
@@ -197,6 +211,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 1000,
         "id": "00000000-0000-0000-0000-000000000009",
         "inferred": false,
@@ -213,6 +228,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000011",
         "inferred": false,
@@ -226,6 +242,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000012",
         "inferred": false,
@@ -237,6 +254,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000011",
         "inferred": false,
@@ -253,6 +271,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000013",
         "inferred": false,
@@ -266,6 +285,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000014",
         "inferred": false,
@@ -277,6 +297,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000013",
         "inferred": false,
@@ -293,6 +314,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000015",
         "inferred": false,
@@ -306,6 +328,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000016",
         "inferred": false,
@@ -317,6 +340,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000015",
         "inferred": false,
@@ -333,6 +357,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000017",
         "inferred": false,
@@ -346,6 +371,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000017",
         "inferred": false,
@@ -357,6 +383,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000017",
         "inferred": false,
@@ -373,6 +400,7 @@
       "merged": {
         "address": "Street",
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000019",
         "inferred": true,
@@ -386,6 +414,7 @@
       "source": {
         "address": "Street",
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000020",
         "inferred": true,
@@ -397,6 +426,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000019",
         "inferred": false,
@@ -413,6 +443,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000021",
         "inferred": false,
@@ -426,6 +457,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000022",
         "inferred": false,
@@ -437,6 +469,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000021",
         "inferred": false,
@@ -453,6 +486,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000023",
         "inferred": false,
@@ -466,6 +500,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000024",
         "inferred": false,
@@ -477,6 +512,7 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000023",
         "inferred": false,
@@ -493,6 +529,7 @@
       "merged": {
         "address": null,
         "arrival": 25000,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000025",
         "inferred": false,
@@ -506,6 +543,7 @@
       "source": {
         "address": null,
         "arrival": 26000,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000026",
         "inferred": false,
@@ -517,6 +555,7 @@
       "target": {
         "address": null,
         "arrival": 25000,
+        "confirmation": "unconfirmed",
         "departure": null,
         "id": "00000000-0000-0000-0000-000000000025",
         "inferred": false,
@@ -533,6 +572,7 @@
       "merged": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000027",
         "inferred": false,
@@ -546,6 +586,7 @@
       "source": {
         "address": null,
         "arrival": 1500,
+        "confirmation": "unconfirmed",
         "departure": 3000,
         "id": "00000000-0000-0000-0000-000000000028",
         "inferred": false,
@@ -557,12 +598,142 @@
       "target": {
         "address": null,
         "arrival": 1000,
+        "confirmation": "unconfirmed",
         "departure": 2000,
         "id": "00000000-0000-0000-0000-000000000027",
         "inferred": false,
         "latitude": 18,
         "longitude": 179.9999,
         "name": null,
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": false,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "confirmation": "confirmed",
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000029",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Trader Joe's",
+        "notes": null
+      },
+      "name": "reviewed-different-places",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "confirmation": "corrected",
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000030",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Marshalls",
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "confirmation": "confirmed",
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000029",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Trader Joe's",
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "confirmation": "confirmed",
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000031",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Café Lumière",
+        "notes": null
+      },
+      "name": "reviewed-same-place-folded",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "confirmation": "corrected",
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000032",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "cafe lumiere",
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "confirmation": "confirmed",
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000031",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Café Lumière",
+        "notes": null
+      }
+    },
+    {
+      "distance": 0,
+      "inferredDeparture": 20000,
+      "matches": true,
+      "merged": {
+        "address": null,
+        "arrival": 1000,
+        "confirmation": "confirmed",
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000033",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Trader Joe's",
+        "notes": null
+      },
+      "name": "one-reviewed",
+      "now": 20000,
+      "source": {
+        "address": null,
+        "arrival": 1500,
+        "confirmation": "unconfirmed",
+        "departure": 3000,
+        "id": "00000000-0000-0000-0000-000000000034",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Marshalls",
+        "notes": null
+      },
+      "target": {
+        "address": null,
+        "arrival": 1000,
+        "confirmation": "confirmed",
+        "departure": 2000,
+        "id": "00000000-0000-0000-0000-000000000033",
+        "inferred": false,
+        "latitude": 18,
+        "longitude": -66,
+        "name": "Trader Joe's",
         "notes": null
       }
     }

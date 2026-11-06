@@ -1296,6 +1296,31 @@ final class LocationViewModel {
         return saved
     }
 
+    /// Splits a stop into two back-to-back visits; the second is at the chosen place.
+    @discardableResult
+    func splitVisit(
+        _ visit: Visit,
+        at splitAt: Date,
+        secondPlaceName name: String,
+        address: String?,
+        coordinate: CLLocationCoordinate2D,
+        placeSource: VisitPlaceSource,
+        distanceMeters: Double? = nil
+    ) -> Visit? {
+        let store = ManualVisitStore(context: modelContext)
+        let second = store.splitVisit(
+            visit, at: splitAt, secondPlaceName: name, address: address,
+            coordinate: coordinate, placeSource: placeSource, distanceMeters: distanceMeters
+        )
+        visitMutationError = store.visitMutationError
+        guard let second else { return nil }
+        // Same as a correction: the chosen place becomes reusable for future visits.
+        rememberConfirmedPlace(for: second)
+        try? modelContext.save()
+        refreshManualVisits()
+        return second
+    }
+
     func storedVisit(id: UUID) throws -> Visit? {
         try modelContext.fetch(FetchDescriptor<Visit>(predicate: #Predicate { $0.id == id })).first
     }

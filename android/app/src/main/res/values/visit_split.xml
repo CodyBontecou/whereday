@@ -1,0 +1,17 @@
+<resources>
+    <string name="visit_split_action">Split visit</string>
+    <string name="visit_split_title">Split visit</string>
+    <string name="visit_split_description">Splits this stop into two visits, for places next door to each other.</string>
+    <string name="visit_split_save_first">Save or discard your changes before splitting this visit.</string>
+    <string name="visit_split_explanation">Places next door can be detected as one stop. Choose when you moved on and where you went next.</string>
+    <string name="visit_split_moved_on">Moved on at</string>
+    <string name="visit_split_where_next">Where did you go next?</string>
+    <string name="visit_split_choose_below">Choose a place below</string>
+    <string name="visit_split_second_name">Second place name</string>
+    <string name="visit_split_saves_two">Saves two visits, one for each place.</string>
+    <string name="visit_split_range">%1$s – %2$s</string>
+    <string name="visit_split_part_description">Part %1$d: %2$s, %3$s, %4$s</string>
+    <string name="visit_split_error_time">Choose a split time at least a minute after arrival and before departure.</string>
+    <string name="visit_split_error_name">Name the place to split the visit.</string>
+    <string name="visit_split_error_same">Choose a different place for the second visit.</string>
+</resources>
