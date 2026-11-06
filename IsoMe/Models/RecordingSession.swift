@@ -42,17 +42,6 @@ final class RecordingSession {
         self.routeSampleIntervalSeconds = routeSampleIntervalSeconds
     }
 
-    /// The sampling settings this session was recorded with, when known.
-    var routeSamplingPolicy: RouteSamplingPolicy? {
-        guard let distanceFilterMeters else { return nil }
-        let mode = routeSamplingModeRawValue.flatMap(RouteSamplingMode.init(rawValue:)) ?? .distance
-        return RouteSamplingPolicy(
-            mode: mode,
-            distanceFilter: distanceFilterMeters,
-            interval: routeSampleIntervalSeconds ?? RouteSamplingPolicy.defaultInterval
-        )
-    }
-
     /// Adds fixes delivered by Core Location, counted before any are discarded.
     func recordReceivedLocations(_ count: Int) {
         guard count > 0 else { return }

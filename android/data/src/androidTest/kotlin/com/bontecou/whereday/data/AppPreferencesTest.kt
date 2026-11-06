@@ -25,4 +25,19 @@ class AppPreferencesTest {
             assertFalse(preferences.settings.first().networkGeocoding)
         } finally { preferences.update { original } }
     }
+
+    @Test fun routeSamplingDefaultsToDistanceAndPersists()=runBlocking {
+        val preferences=AppPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
+        val original=preferences.settings.first()
+        try {
+            assertEquals(com.bontecou.whereday.domain.RouteSamplingMode.distance.key,AppSettings().routeSamplingMode)
+            assertEquals(120,AppSettings().routeSampleIntervalSeconds)
+            preferences.update {it.copy(routeSamplingMode="distance_and_time",routeSampleIntervalSeconds=300,distanceFilter=25)}
+            val policy=preferences.settings.first().routeSampling
+            assertEquals(com.bontecou.whereday.domain.RouteSamplingPolicy(com.bontecou.whereday.domain.RouteSamplingMode.distanceAndTime,25,300),policy)
+            try {preferences.update {it.copy(routeSampleIntervalSeconds=45)};fail("Unsupported interval saved")} catch(_:IllegalArgumentException) { }
+            try {preferences.update {it.copy(routeSamplingMode="hourly")};fail("Unknown mode saved")} catch(_:IllegalArgumentException) { }
+            assertEquals(300,preferences.settings.first().routeSampleIntervalSeconds)
+        } finally { preferences.update { original } }
+    }
 }

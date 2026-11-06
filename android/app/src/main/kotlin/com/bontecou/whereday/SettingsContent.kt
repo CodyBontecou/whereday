@@ -59,6 +59,9 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
     val themes=mapOf("system" to stringResource(R.string.settings_system),"light" to stringResource(R.string.settings_light),"dark" to stringResource(R.string.settings_dark))
     val meters=listOf(5,10,25,50,100,200).associate {it.toString() to stringResource(R.string.settings_meters,number.format(it))}
     val hours=listOf(0,1,2,4,8,12).associate {it.toString() to if(it==0) never else stringResource(R.string.settings_hours,number.format(it))}
+    val routeModes=routeModeLabels()
+    val intervals=com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS.associate {it.toString() to routeIntervalLabel(it)}
+    val routeMode=com.bontecou.whereday.domain.RouteSamplingMode.fromKey(settings.routeSamplingMode)
     val minutes=listOf(0,5,15,30,60,120,240).associate {it.toString() to if(it==0) none else stringResource(R.string.settings_minutes,number.format(it))}
     val geocoding=stringResource(R.string.settings_allow_geocoding)
     val card=Modifier.padding(horizontal=16.dp)
@@ -71,11 +74,13 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
         item("recording") {WdSectionHeader(stringResource(R.string.settings_recording))}
         item("recording-card") {WdCard(card) {
             WdNavRow(stringResource(R.string.listening_title),Modifier.testTag("settings-listening"),icon=Icons.Outlined.Hearing,enabled=!busy,onClick={navigate(SettingsDestination.listening)})
-            SettingsChoiceRow("settings-distance") {Choice(stringResource(R.string.settings_distance),settings.distanceFilter.toString(),meters.keys.toList(),editable,labelFor={meters[it] ?: resources.getString(R.string.settings_meters,number.format(it.toInt()))}) {key->edit {it.copy(distanceFilter=key.toInt())}}}
+            SettingsChoiceRow("settings-route-mode") {Choice(stringResource(R.string.settings_route_mode),routeMode.key,routeModes.keys.toList(),editable,labelFor={routeModes[it] ?: it}) {key->edit {it.copy(routeSamplingMode=key)}}}
+            if(routeMode.usesInterval) SettingsChoiceRow("settings-route-interval") {Choice(stringResource(R.string.settings_route_interval),settings.routeSampling.intervalSeconds.toString(),intervals.keys.toList(),editable,labelFor={intervals[it] ?: it}) {key->edit {it.copy(routeSampleIntervalSeconds=key.toInt())}}}
+            if(routeMode.usesDistance) SettingsChoiceRow("settings-distance") {Choice(stringResource(if(routeMode==com.bontecou.whereday.domain.RouteSamplingMode.distanceAndTime) R.string.settings_route_moved else R.string.settings_distance),settings.distanceFilter.toString(),meters.keys.toList(),editable,labelFor={meters[it] ?: resources.getString(R.string.settings_meters,number.format(it.toInt()))}) {key->edit {it.copy(distanceFilter=key.toInt())}}}
             SettingsChoiceRow("settings-stop") {Choice(stringResource(R.string.settings_stop_after),settings.stopAfterHours.toString(),hours.keys.toList(),editable,labelFor={hours[it] ?: resources.getString(R.string.settings_hours,number.format(it.toInt()))}) {key->edit {it.copy(stopAfterHours=key.toInt())}}}
             WdNavRow(stringResource(R.string.settings_permissions),icon=Icons.Outlined.LocationOn,divider=false,enabled=!busy,onClick={if(foreground() && !currentClear.busy) actions.permissions()})
         }}
-        item("recording-help") {WdSectionFooter(stringResource(R.string.settings_recording_help))}
+        item("recording-help") {WdSectionFooter(if(routeMode.usesInterval) stringResource(R.string.settings_recording_help)+" "+stringResource(R.string.settings_route_sampling_help) else stringResource(R.string.settings_recording_help))}
         item("inference") {WdSectionHeader(stringResource(R.string.settings_inferred))}
         item("inference-card") {WdCard(card) {
             SettingsToggle(stringResource(R.string.settings_include_inferred),settings.inferredEnabled,editable,Modifier.testTag("settings-inferred-enabled"),divider=settings.inferredEnabled) {value->edit {it.copy(inferredEnabled=value)}}
@@ -168,5 +173,30 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
             if(detail!=null) Text(detail,style=WdType.caption2,color=wd.textMuted)
         }
         Switch(value,null,enabled=enabled,colors=wdSwitchColors())
+    }
+}
+
+/** Labels for the route sampling modes, keyed by their stored keys, in menu order. */
+@Composable internal fun routeModeLabels()=linkedMapOf(
+    com.bontecou.whereday.domain.RouteSamplingMode.distance.key to stringResource(R.string.settings_route_mode_distance),
+    com.bontecou.whereday.domain.RouteSamplingMode.time.key to stringResource(R.string.settings_route_mode_time),
+    com.bontecou.whereday.domain.RouteSamplingMode.distanceAndTime.key to stringResource(R.string.settings_route_mode_both))
+
+/** "10 s", "2 min". */
+@Composable internal fun routeIntervalLabel(seconds:Int):String {
+    val number=java.text.NumberFormat.getIntegerInstance(androidx.compose.ui.platform.LocalConfiguration.current.locales[0])
+    return if(seconds<60) stringResource(R.string.settings_seconds,number.format(seconds)) else stringResource(R.string.settings_minutes,number.format(seconds/60))
+}
+
+/** e.g. "Every 5 m", "Every 2 min", "Every 2 min once 25 m away". */
+@Composable internal fun routeSamplingSummary(settings:com.bontecou.whereday.data.AppSettings):String {
+    val policy=settings.routeSampling
+    val number=java.text.NumberFormat.getIntegerInstance(androidx.compose.ui.platform.LocalConfiguration.current.locales[0])
+    val distance=stringResource(R.string.settings_meters,number.format(policy.distanceMeters))
+    val interval=routeIntervalLabel(policy.intervalSeconds)
+    return when(policy.mode) {
+        com.bontecou.whereday.domain.RouteSamplingMode.distance->stringResource(R.string.settings_route_summary_distance,distance)
+        com.bontecou.whereday.domain.RouteSamplingMode.time->stringResource(R.string.settings_route_summary_time,interval)
+        com.bontecou.whereday.domain.RouteSamplingMode.distanceAndTime->stringResource(R.string.settings_route_summary_both,interval,distance)
     }
 }

@@ -12,7 +12,12 @@ data class AppSettings(val onboarded: Boolean = false, val appearance: String = 
     /** Set once this install first has verified access; the post-onboarding paywall never returns after that, even if a plan lapses. */
     val accessGateCleared:Boolean=false,
     /** What the map shows (the Layers sheet). Road matching stays [roadDisplayEnabled]; outliers stay [showOutliers]. */
-    val map:MapLayerSettings=MapLayerSettings()) {
+    val map:MapLayerSettings=MapLayerSettings(),
+    /** How route points are chosen: a [com.bontecou.whereday.domain.RouteSamplingMode] key. */
+    val routeSamplingMode:String=com.bontecou.whereday.domain.RouteSamplingMode.distance.key,
+    val routeSampleIntervalSeconds:Int=com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS) {
+    val routeSampling get()=com.bontecou.whereday.domain.RouteSamplingPolicy(com.bontecou.whereday.domain.RouteSamplingMode.fromKey(routeSamplingMode),distanceFilter,
+        routeSampleIntervalSeconds.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS)
     val inferenceRules get()=com.bontecou.whereday.domain.InferenceRules(java.time.Duration.ofMinutes(inferredGapMinutes.toLong()),java.time.Duration.ofMinutes(inferredMinimumMinutes.toLong()),inferredMinimumPoints)
 }
 /** The map's persisted layer choices, mirroring iOS's @AppStorage keys where they exist. */
@@ -61,10 +66,13 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
         val mapLive=booleanPreferencesKey("map_show_live_session")
         val mapSuggestions=booleanPreferencesKey("showVisitSuggestions")
         val mapOnline=booleanPreferencesKey("map_online_tiles")
+        val routeMode=stringPreferencesKey("route_sampling_mode")
+        val routeInterval=intPreferencesKey("route_sample_interval_seconds")
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
         p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
-        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: true))
+        MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: true),
+        com.bontecou.whereday.domain.RouteSamplingMode.fromKey(p[Keys.routeMode]).key,p[Keys.routeInterval]?.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS)
     val settings = context.preferenceStore.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { context.preferenceStore.edit { p ->
         val previous=read(p)
@@ -77,6 +85,9 @@ class AppPreferences(private val context: Context,private val beforeRoadPolicyCh
         p[Keys.photos]=value.showPhotoMarkers;p[Keys.photoImages]=value.showPhotoImages;p[Keys.photoLocations]=value.requestPhotoLocations;p[Keys.autoPhotos]=value.automaticPhotoSync
         p[Keys.photoDots]=value.showPhotoDots
         p[Keys.outliers]=value.showOutliers
+        require(com.bontecou.whereday.domain.RouteSamplingMode.entries.any {it.key==value.routeSamplingMode})
+        require(value.routeSampleIntervalSeconds in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS)
+        p[Keys.routeMode]=value.routeSamplingMode;p[Keys.routeInterval]=value.routeSampleIntervalSeconds
         p[Keys.distance] = value.distanceFilter; p[Keys.hours] = value.stopAfterHours; p[Keys.geocoding] = value.networkGeocoding
         require(value.inferredGapMinutes in listOf(15,30,60,120,240) && value.inferredMinimumMinutes in listOf(0,5,15,30,60) && value.inferredMinimumPoints in listOf(1,2,3,5,10))
         p[Keys.inferred]=value.inferredEnabled; p[Keys.inferredGap]=value.inferredGapMinutes; p[Keys.inferredDuration]=value.inferredMinimumMinutes; p[Keys.inferredPoints]=value.inferredMinimumPoints

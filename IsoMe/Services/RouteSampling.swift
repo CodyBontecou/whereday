@@ -227,3 +227,17 @@ struct RouteSampler {
         return true
     }
 }
+
+extension RecordingSession {
+    /// The sampling settings this session was recorded with, when known. Kept out of the model file so
+    /// RecordingSession.swift stays self-contained for the Android reference-fixture harnesses.
+    var routeSamplingPolicy: RouteSamplingPolicy? {
+        guard let distanceFilterMeters else { return nil }
+        let mode = routeSamplingModeRawValue.flatMap(RouteSamplingMode.init(rawValue:)) ?? .distance
+        return RouteSamplingPolicy(
+            mode: mode,
+            distanceFilter: distanceFilterMeters,
+            interval: routeSampleIntervalSeconds ?? RouteSamplingPolicy.defaultInterval
+        )
+    }
+}
