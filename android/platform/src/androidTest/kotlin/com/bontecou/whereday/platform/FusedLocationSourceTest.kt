@@ -38,6 +38,16 @@ class FusedLocationSourceTest {
         assertEquals(5_000L,requested!!.intervalMillis);assertEquals(1_000L,requested!!.minUpdateIntervalMillis)
         completion.setResult(null);withTimeout(5000) {start.await()};source.stop()
     }
+    @Test fun timeBasedRecordingAsksForOneHighAccuracyFixPerIntervalWithNoMinimumDistance()=runBlocking {
+        val completion=TaskCompletionSource<Void>();var requested:LocationRequest?=null;val entered=CompletableDeferred<Unit>()
+        val source=FusedLocationSource({true},{request,_ ->requested=request;entered.complete(Unit);completion.task},{})
+        val start=async {source.start(com.bontecou.whereday.domain.RouteSamplingPolicy(com.bontecou.whereday.domain.RouteSamplingMode.distanceAndTime,25,120),{}, {})}
+        entered.await()
+        assertEquals(Priority.PRIORITY_HIGH_ACCURACY,requested!!.priority)
+        assertEquals(120_000L,requested!!.intervalMillis);assertEquals(120_000L,requested!!.minUpdateIntervalMillis)
+        assertEquals(0f,requested!!.minUpdateDistanceMeters,0f)
+        completion.setResult(null);withTimeout(5000) {start.await()};source.stop()
+    }
     @Test fun deniedAndFailedRegistrationNeverReportSuccess()=runBlocking {supervisorScope {
         var registered=false
         val denied=FusedLocationSource({false},{_,_ ->registered=true;error("Forbidden")},{})

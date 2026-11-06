@@ -494,6 +494,9 @@ struct SettingsView: View {
         case .denied, .restricted: permission = Text("Not allowed")
         default: permission = Text("Not set")
         }
+        guard locationManager.routeSamplingMode == .distance else {
+            return permission + Text(verbatim: " · ") + Text(locationManager.routeSamplingPolicy.summary)
+        }
         return permission + Text(verbatim: " · ") + Text(RecordingDetail(distanceFilter: locationManager.distanceFilter).title)
     }
 

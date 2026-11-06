@@ -1278,7 +1278,9 @@ private struct RecordingSessionDetailView: View {
         let filter = session.storedSession?.distanceFilterMeters
             ?? (UserDefaults.standard.object(forKey: "distanceFilter") == nil ? 5 : UserDefaults.standard.double(forKey: "distanceFilter"))
         var parts: [String] = []
-        if filter > 0 {
+        if let policy = session.storedSession?.routeSamplingPolicy, policy.mode.usesTimeInterval {
+            parts.append(policy.summary)
+        } else if filter > 0 {
             parts.append(String(localized: "Every \(formattedShortDistance(filter))"))
         } else {
             parts.append(String(localized: "Every fix"))

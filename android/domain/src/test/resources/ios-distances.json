@@ -1,7 +1,7 @@
 {
   "provenance": {
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
-    "IsoMe/Models/RecordingSession.swift": "a831aa891b4e5ad18352bbe3bd2309cffc10147a9256b8a5719a41fff331ef11",
+    "IsoMe/Models/RecordingSession.swift": "72799d7db99a5608c3a00a8029ddca2e0eaa672c723f654ac82036bbc0d81fab",
     "android/scripts/fixtures/DistanceFixtures.swift": "f65e224034b2373da724d760d02b5c45e2cd7d01388bdc75fb9f2aecdd7e11a0",
     "android/scripts/fixtures/distance-inputs.json": "4145ddf1290e16ae09986189112d87cad98e4fff47de4782c8fbefad4873e33e",
     "android/scripts/generate_distance_fixtures.py": "4dc2f52338202748e798e396672b8f4043624e99ff9feb8bd149a2a1f3b10ce9"

@@ -76,6 +76,21 @@ class HistoryRepositoryTest {
         assertTrue(repo.dao.openVisits().isEmpty())
         assertEquals(1,repo.dao.totalVisitCount())
     }
+    @Test fun fixesSkippedByRouteSamplingStillOpenAVisitButAreNotStored() = runBlocking {
+        repo.start(0)
+        val start=clock.now
+        clock.now=start.plusSeconds(360)
+        val first=TrackPoint(id="route",coordinate=coordinate,time=start,accuracy=5.0)
+        val skipped=(1..5).map {TrackPoint(id="visit-only-$it",coordinate=coordinate,time=start.plusSeconds(it*60L),accuracy=5.0)}
+        repo.ingest(listOf(first)+skipped,routeIds=setOf("route"))
+        assertEquals(listOf("route"),repo.dao.latestPoints().map {it.value.id})
+        assertEquals("Five minutes of skipped fixes still confirm the stay",1,repo.dao.openVisits().size)
+        assertEquals(start,repo.dao.recording()!!.lastFix)
+        // A later sampled fix is still stored after visit-only fixes moved the observation cursor on.
+        clock.now=start.plusSeconds(500)
+        repo.ingest(listOf(TrackPoint(id="later",coordinate=coordinate,time=start.plusSeconds(420),accuracy=5.0)),routeIds=setOf("later"))
+        assertEquals(2,repo.dao.totalPointCount())
+    }
     @Test fun interruptedRecordingClosesAtLastDurableFix() = runBlocking {
         repo.start(0)
         val fix=clock.now.plusSeconds(30)
