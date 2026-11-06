@@ -39,6 +39,10 @@ sample data, and the app's string catalog covers only about 30 of their ~225 lab
 - Map-first (November 6, 2026): `MapHome.dc.html` draws the map-first home (`range` = `day` | `week`,
   `night`). Shot 01 and the header's two phones show it; shot 02 is now "A week, one map." (the 7-day
   range) in place of the Trace replay. Its new copy is in `translations.py`.
+- The old Today, night Today, Trace and Duo Today/half-open/cover screens are gone. Shot 07 uses the dark
+  map; iPad 01 and Duo 01 use `DuoMapHome`; Duo 02 is "A week, on the table." on `DuoTabletopMap`; both
+  Duo cover shots use `DuoCoverMap`; the app preview poster and storyboard follow the map. Tab bars and
+  rails across the remaining screens say Map, not Today.
 
 - `render.py` strips the artifact-only `/_blob/` font faces; Google Fonts supplies the same
   Newsreader, Inter, IBM Plex Mono and Caveat. Non-Latin scripts fall back to system fonts.
