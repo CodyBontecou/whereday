@@ -55,6 +55,9 @@ import java.util.UUID
     var error by remember {mutableStateOf<String?>(null)}
     val secondId=rememberSaveable {UUID.randomUUID().toString()}
     val scope=rememberCoroutineScope()
+    val scroll=rememberScrollState()
+    // The error sits under the place choices; bring it into view so a refused split never looks like a dead tap.
+    LaunchedEffect(error) {if(error!=null) scroll.animateScrollTo(scroll.maxValue)}
     val splitAt=Instant.ofEpochMilli(splitMillis)
     val coordinate=if(latitude!=null && longitude!=null) Coordinate(latitude!!,longitude!!) else null
     val firstName=visit.name?.trim()?.takeIf {it.isNotEmpty()} ?: visit.address?.trim()?.takeIf {it.isNotEmpty()}
@@ -103,9 +106,10 @@ import java.util.UUID
     WorkspaceAlertDialog(onDismissRequest={if(!busy) dismiss()},modifier=Modifier.testTag("visit-split-dialog"),
         title={Text(stringResource(R.string.visit_split_title))},
         text={
-            Column(Modifier.fillMaxWidth().semantics {testTagsAsResourceId=true}.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+            Column(Modifier.fillMaxWidth().semantics {testTagsAsResourceId=true}.verticalScroll(scroll),verticalArrangement=Arrangement.spacedBy(14.dp)) {
                 Text(stringResource(R.string.visit_split_explanation),style=WdType.serifBody,color=wd.textMuted)
-                SplitSection(stringResource(R.string.visit_split_moved_on)) {
+                // The time control carries its own "Moved on at" label, so this card needs no section heading.
+                WdCard {
                     Box(Modifier.padding(horizontal=16.dp,vertical=12.dp)) {
                         VisitDateTimeControl(stringResource(R.string.visit_split_moved_on),splitAt,enabled=!busy,modifier=Modifier.testTag("visit-split-time")) {
                             splitMillis=it.coerceIn(range.start,range.endInclusive).toEpochMilli()
