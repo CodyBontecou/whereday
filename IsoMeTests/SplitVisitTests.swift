@@ -18,6 +18,16 @@ struct SplitVisitTests {
         return ModelContext(container)
     }
 
+    /// A manager with its own defaults suite that never replaces `LocationManager.shared`, as in IsolatedDefaults.swift.
+    private func isolatedManager(context: ModelContext) -> LocationManager {
+        let suiteName = "IsoMeTests.SplitVisit.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+        let manager = LocationManager(defaults: defaults, registersAsShared: false)
+        manager.setModelContext(context)
+        return manager
+    }
+
     private func detectedVisit(in context: ModelContext, departedAt: Date? = nil) throws -> Visit {
         let visit = Visit(
             latitude: traderJoes.latitude,
@@ -94,8 +104,7 @@ struct SplitVisitTests {
         let visit = try detectedVisit(in: context)
         try #require(split(visit, store: ManualVisitStore(context: context)) != nil)
 
-        let manager = LocationManager()
-        manager.setModelContext(context)
+        let manager = isolatedManager(context: context)
         _ = manager.reconcileOpenVisits(referenceDate: departure.addingTimeInterval(3600))
 
         let stored = try context.fetch(FetchDescriptor<Visit>(sortBy: [SortDescriptor(\.arrivedAt)]))
@@ -112,8 +121,7 @@ struct SplitVisitTests {
                              arrivedAt: splitAt.addingTimeInterval(5 * 60), departedAt: departure))
         try context.save()
 
-        let manager = LocationManager()
-        manager.setModelContext(context)
+        let manager = isolatedManager(context: context)
         _ = manager.reconcileOpenVisits(referenceDate: departure.addingTimeInterval(3600))
 
         let stored = try context.fetch(FetchDescriptor<Visit>())
