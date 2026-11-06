@@ -11,7 +11,26 @@
 
 Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map screens rendered black (their colour script was missing), the Duo tabletop had no map, shot 07's "FERRY BUILDING" label crowded the headline, and the week shot's "Sunday's loop" note ran off the edge in several locales.
 
-Before Play production can roll out: configure Play billing verification (`whereday.purchaseVerifierUrl`, `whereday.purchaseVerifierPublicKey`, `whereday.playCloudProjectNumber`; without them recording is free and exports stay locked) and finish Play Console's App content forms. The Play listing is English only, although the app ships Spanish strings.
+**Play update (November 6, 2026, later):** the production draft is now **2.0.0 (version code 3)**, built from `main` at `f2959482` with purchase verification configured. The values are passed as `-P` flags and are not kept in any Gradle file: the verifier URL `https://whereday-play-purchase-verifier.costream.workers.dev`, the lease public key `~/.android-keys/whereday-lease.pub.b64`, and Cloud project `84338733279`. Code 2 was replaced; it had billing unconfigured.
+
+- **Verifier Worker** (`worker/play-purchase-verifier`): deployed with D1 `whereday-play-purchases` and the `LEASE_PRIVATE_KEY` (`~/.android-keys/whereday-lease.pem`) and `GOOGLE_SERVICE_ACCOUNT` secrets. It uses the `play-publisher` service account, which is a Play **Admin**; a narrower account is recommended.
+- **Google Cloud:** the Play Integrity and Android Publisher APIs are enabled on `crested-drive-492000-u7`, and the project is linked under Play Console → Play Integrity API.
+- **App content (all 10 done):**
+  - privacy policy `https://whereday.com/privacy`;
+  - no ads and no advertising ID;
+  - target audience 18+;
+  - not a government app; no financial or health features;
+  - IARC rating: ESRB Everyone, PEGI 3, ClassInd 14+;
+  - sign-in details give reviewers a Lifetime promo code. That campaign is "Play review access 2026", 5 codes valid Nov 7, 2026 to Feb 28, 2027, kept in `.asc/artifacts/play-2.0.0/reviewer-promo-codes.csv`.
+- **Data safety:**
+  - location (approximate and precise) is collected, ephemeral, optional, for app functionality;
+  - purchase history and device IDs are collected, stored, required, for app functionality and fraud prevention;
+  - nothing is shared, and data is encrypted in transit.
+  - The optional deletion-URL question is left blank.
+- **Store settings:** category Travel & Local; contact `cody@isolated.tech` and `https://whereday.com/`.
+- **Managed publishing is off**, so changes go live as soon as review approves them.
+
+Still open: `whereday.com/privacy` covers only iOS. It needs Android coverage (Google Play Billing and Integrity, the Play purchase verifier, Android geocoding, OpenFreeMap map tiles) before submission. Nothing has been sent for review yet.
 
 ---
 
