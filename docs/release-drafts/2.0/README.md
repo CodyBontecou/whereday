@@ -1,4 +1,20 @@
-# Whereday 2.0 / build 62
+# Whereday 2.0 / build 63 (map-first)
+
+**Status: staged in App Store Connect and as a Google Play production draft. Nothing submitted or rolled out.** On November 6, 2026, at the owner's request, both stores were moved to the map-first redesign (#105):
+
+- **iOS build:** the `v2.0` GitHub release was published, so `deploy-asc.yml` archived `main` at `f2959482` as **2.0 (63)**. It processed **VALID** (`b1c136de-db11-400c-aa46-437a01c62b20`) and replaces build 62 on App Store version 2.0. Build 62 predates map-first and should not be attached again.
+- **iOS listing:** What's New, promotional text and the first description bullet are rewritten for map-first in all nine locales (`metadata/whereday/version/2.0/`, `whats-new.json`). Uploaded and read back identical.
+- **iOS artwork:** rerendered from the "One Long Day" artifact: ten iPhone shots in the new order, five iPad, eight Duo and the header, in all nine locales.
+- **Android:** the release workflow failed because GitHub has no signing secrets. Instead, the bundle was built and tested from a clean `main` checkout (`f2959482`; same Gradle tests and lint as CI), then signed locally with the upload key and verified by `release_bundle.py`. **2.0.0 (version code 2)** is a **draft on the production track**, with release notes from `metadata/whereday/play/release-notes/`. The native-provenance check from CI was not run locally.
+- **Play listing (en-US):** short and full description (`metadata/whereday/play/en-US/`), icon (the launcher icon at 512 px), feature graphic, 8 phone screenshots and 3 each for 7-inch and 10-inch tablets, rendered from the "Whereday — Google Play" artifact.
+
+Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map screens rendered black (their colour script was missing), the Duo tabletop had no map, shot 07's "FERRY BUILDING" label crowded the headline, and the week shot's "Sunday's loop" note ran off the edge in several locales.
+
+Before Play production can roll out: configure Play billing verification (`whereday.purchaseVerifierUrl`, `whereday.purchaseVerifierPublicKey`, `whereday.playCloudProjectNumber`; without them recording is free and exports stay locked) and finish Play Console's App content forms. The Play listing is English only, although the app ships Spanish strings.
+
+---
+
+# Earlier record: build 62
 
 **Status: staged in App Store Connect, not submitted.** On November 4, 2026, at the owner's request:
 

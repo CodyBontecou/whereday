@@ -1,0 +1,27 @@
+Whereday keeps a private record of the places you visit and the routes you travel, and opens straight onto a map of your day.
+
+YOUR DAY ON A MAP
+• Open straight onto today on a full-screen map, with every stop and route
+• Switch between today, yesterday, the last 7 or 30 days, everything, or any range from the calendar
+• Pull up the day sheet for the day's story, with a 24-hour dial of your stops and moves
+• Replay any day on the map at 1×, 10× or 60×
+• See the photos you took along the way, right on the map
+
+YOUR LOCATION JOURNAL
+• Browse a year in days in Atlas, colored by country, with a monthly recap
+• Name your places and see how often you return
+• Add manual visits and correct saved visit times
+• Follow your day from home-screen widgets
+• Build an export as a sentence, save it as a recipe, and repeat it every night
+• Export as JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks or Overland
+
+PLANS
+Choose a plan to start recording: Weekly or Yearly, with a 7-day free trial for new subscribers, or Lifetime, a one-time purchase. Every plan includes exports. Imports and export previews are free. Subscriptions renew automatically until canceled; manage or cancel them in Google Play. Deleting the app or buying Lifetime does not cancel a subscription.
+
+Ending a subscription does not delete your records; they stay on your device.
+
+PRIVATE BY DESIGN
+Your location history stays on your device. No Whereday account is required. Google Play purchases, map tiles, optional exports and limited technical services have the network behavior described in our privacy policy.
+
+Privacy Policy: https://whereday.com/privacy
+Terms of Use: https://whereday.com/terms
