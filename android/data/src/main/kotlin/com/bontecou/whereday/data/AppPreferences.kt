@@ -45,8 +45,8 @@ data class MapLayerSettings(val path:Boolean=true,
 class AppPreferences internal constructor(private val store:DataStore<Preferences>,private val beforeRoadPolicyChange:(String)->Unit={}) {
     constructor(context:Context,beforeRoadPolicyChange:(String)->Unit={}):this(context.preferenceStore,beforeRoadPolicyChange)
     companion object {
-        /** New-install defaults, except network lookups and online tiles stay off: the person's earlier choice is unknown. */
-        internal fun recoveredPreferences():Preferences=preferencesOf(Keys.geocoding to false,Keys.mapOnline to false)
+        /** New-install defaults, except network place lookup stays off: the person's earlier choice is unknown. Online tiles stay on so the map still shows streets. */
+        internal fun recoveredPreferences():Preferences=preferencesOf(Keys.geocoding to false)
     }
     private object Keys {
         val onboarded = booleanPreferencesKey("onboarded")

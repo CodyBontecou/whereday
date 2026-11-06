@@ -23,7 +23,7 @@ class AppPreferencesCorruptionTest {
             val preferences=AppPreferences(PreferenceDataStoreFactory.create(corruptionHandler=settingsCorruptionHandler,scope=scope) {file})
 
             val recovered=preferences.settings.first()
-            assertEquals(AppSettings(networkGeocoding=false,map=MapLayerSettings(online=false)),recovered)
+            assertEquals(AppSettings(networkGeocoding=false),recovered)
 
             // The replacement is a working store: later changes persist.
             preferences.update {it.copy(appearance="dark")}
