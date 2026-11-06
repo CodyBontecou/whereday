@@ -62,7 +62,7 @@ struct ListeningView: View {
                 BackPageLabel("FINE-TUNE")
                 fineTuneCard
                     .padding(.horizontal, 16)
-                BackPageFootnote("Record points sets how your route is drawn: every few metres, every few minutes, or every few minutes once you've moved. Fewer points mean smaller GPX files. With intervals of 1 minute or more, GPS rests between points and Wi-Fi and cell positioning keep recording alive. Places you stop are detected separately by iOS and aren't affected. Stop After auto-stops as a safety net.")
+                BackPageFootnote("Record points sets how often your route gets a point. At 1 min or more, GPS rests between points. Stop After auto-stops as a safety net.")
 
                 BackPageLabel("OUTINGS FROM SAVED POINTS")
                 inferredOutingsCard
@@ -204,6 +204,8 @@ struct ListeningView: View {
                     }
                 }
                 .labelsHidden()
+                // Keep "Distance + time" on one line instead of letting the row squeeze it.
+                .fixedSize()
             }
             if locationManager.routeSamplingMode.usesTimeInterval {
                 BackPageDivider()
