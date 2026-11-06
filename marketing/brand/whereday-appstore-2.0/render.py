@@ -26,10 +26,11 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # (artboard, output folder, output name, width, height)
 SHOTS = [
-    *[(f"ShotB{n:02d}{name}", "iphone-69", f"{n:02d}-{slug}", 1320, 2868) for n, name, slug in [
-        (1, "Today", "today"), (2, "Trace", "trace"), (3, "Atlas", "atlas"), (4, "Place", "place"),
-        (5, "Recipe", "export"), (6, "Private", "private"), (7, "Night", "night"), (8, "Lock", "lock-screen"),
-        (9, "Glance", "glance"), (10, "Recap", "month-recap")]],
+    # Store order. Map-first: 01 map home, 02 map replay, 04 the week on one map; the Specimen jar shot is out.
+    *[(artboard, "iphone-69", f"{n:02d}-{slug}", 1320, 2868) for n, (artboard, slug) in enumerate([
+        ("ShotB01Today", "map-today"), ("ShotB02Trace", "replay"), ("ShotB03Atlas", "atlas"), ("ShotBWeek", "week"),
+        ("ShotB04Place", "place"), ("ShotB05Recipe", "export"), ("ShotB07Night", "night"), ("ShotB08Lock", "lock-screen"),
+        ("ShotB09Glance", "glance"), ("ShotB10Recap", "month-recap")], start=1)],
     *[(f"iPadShot{n:02d}{name}", "ipad-13", f"{n:02d}-{name.lower()}", 2752, 2064) for n, name in [
         (1, "Today"), (2, "Atlas"), (3, "Places"), (4, "Archive"), (5, "Private")]],
     *[(f"DuoShot{n:02d}{name}", "duo-inner", f"{n:02d}-{name.lower()}", 2853, 2007) for n, name in [

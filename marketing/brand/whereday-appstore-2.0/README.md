@@ -43,6 +43,9 @@ sample data, and the app's string catalog covers only about 30 of their ~225 lab
   map; iPad 01 and Duo 01 use `DuoMapHome`; Duo 02 is "A week, on the table." on `DuoTabletopMap`; both
   Duo cover shots use `DuoCoverMap`; the app preview poster and storyboard follow the map. Tab bars and
   rails across the remaining screens say Map, not Today.
+- iPhone order (and Play's phones): 01 map home, 02 "Rewind the day." on the map replay
+  (`MapHome range="replay"`), 03 Atlas, 04 "A week, one map." (`ShotBWeek`), then Place, Export, Night,
+  Lock screen, Glance and Month recap. The Specimen jar / No account shot is dropped to stay within ten.
 
 - `render.py` strips the artifact-only `/_blob/` font faces; Google Fonts supplies the same
   Newsreader, Inter, IBM Plex Mono and Caveat. Non-Latin scripts fall back to system fonts.
