@@ -65807,7 +65807,7 @@
         }
       }
     },
-    "Radius must be a number from 25 to 10,000 metres.": {
+    "Radius must be a number from 25 to 10,000 meters.": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -65824,7 +65824,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Radius must be a number from 25 to 10,000 metres."
+            "value": "Radius must be a number from 25 to 10,000 meters."
           }
         },
         "es": {
@@ -144221,7 +144221,7 @@
         }
       }
     },
-    "Kilometres or miles moved since midnight": {
+    "Kilometers or miles moved since midnight": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -144238,7 +144238,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kilometres or miles moved since midnight"
+            "value": "Kilometers or miles moved since midnight"
           }
         },
         "es": {

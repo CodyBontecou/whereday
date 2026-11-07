@@ -445,10 +445,14 @@ final class LocationViewModelPointScalingTests: XCTestCase {
         XCTAssertEqual(visit.latitude, correctedCoordinate.latitude, accuracy: 0.000001)
         XCTAssertEqual(visit.longitude, correctedCoordinate.longitude, accuracy: 0.000001)
 
+        let confirmedAt = visit.confirmedAt
         viewModel.undoVisitCorrection(visit)
 
-        XCTAssertEqual(visit.confirmationStatus, .unconfirmed)
-        XCTAssertNil(visit.confirmedAt)
+        // Undo returns the visit to how it stood before the correction: confirmed, as the user left it.
+        XCTAssertEqual(visit.confirmationStatus, .confirmed)
+        XCTAssertEqual(visit.confirmedAt, confirmedAt)
+        XCTAssertNil(visit.placeSource)
+        XCTAssertNil(visit.placeDistanceMeters)
         XCTAssertEqual(visit.locationName, "Detected Block")
         XCTAssertEqual(visit.address, "Market St")
         assertCoordinate(visit.coordinate, equals: originalCoordinate)
@@ -894,6 +898,155 @@ final class LocationViewModelPointScalingTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: RecordingSessionInferenceConfiguration.gapPresetKey)
         UserDefaults.standard.removeObject(forKey: RecordingSessionInferenceConfiguration.minimumDurationPresetKey)
         UserDefaults.standard.removeObject(forKey: RecordingSessionInferenceConfiguration.minimumPointCountKey)
+    }
+
+    // MARK: - Relaunch, overnight stays and undoing corrections
+
+    func testRelaunchWithTrackingOffKeepsTodaysDistance() throws {
+        let container = try makeInMemoryContainer()
+        let startOfToday = Calendar.current.startOfDay(for: Date())
+        for (index, latitude) in [37.7700, 37.7710, 37.7720].enumerated() {
+            container.mainContext.insert(LocationPoint(
+                latitude: latitude,
+                longitude: -122.4,
+                timestamp: startOfToday.addingTimeInterval(Double(index + 1) * 60),
+                altitude: nil,
+                speed: nil,
+                horizontalAccuracy: 5,
+                isOutlier: false
+            ))
+        }
+        try container.mainContext.save()
+
+        // makeViewModel turns tracking off, as after a relaunch with tracking stopped.
+        let viewModel = makeViewModel(container: container)
+
+        XCTAssertEqual(viewModel.todayLocationPoints.count, 3)
+        XCTAssertGreaterThan(viewModel.todayDistanceTraveled, 200)
+        XCTAssertLessThan(viewModel.todayDistanceTraveled, 250)
+    }
+
+    func testTodayMapIncludesAnOngoingStayThatBeganYesterday() throws {
+        let container = try makeInMemoryContainer()
+        let startOfToday = Calendar.current.startOfDay(for: Date())
+        let overnight = Visit(latitude: 37.79, longitude: -122.39,
+                              arrivedAt: startOfToday.addingTimeInterval(-2 * 3600),
+                              locationName: "Ferry Building Errand", geocodingCompleted: true)
+        let earlier = Visit(latitude: 37.78, longitude: -122.40,
+                            arrivedAt: startOfToday.addingTimeInterval(-6 * 3600),
+                            departedAt: startOfToday.addingTimeInterval(-5 * 3600),
+                            locationName: "Yesterday Only", geocodingCompleted: true)
+        container.mainContext.insert(overnight)
+        container.mainContext.insert(earlier)
+        try container.mainContext.save()
+        let viewModel = makeViewModel(container: container)
+        let today = startOfToday...startOfToday.addingTimeInterval(86_399)
+        viewModel.mapDateRange = today
+
+        let defaults = UserDefaults.standard
+        let storedMinimum = defaults.object(forKey: MapLayerSettings.minimumStayMinutesKey)
+        defaults.removeObject(forKey: MapLayerSettings.minimumStayMinutesKey)
+        defer { defaults.set(storedMinimum, forKey: MapLayerSettings.minimumStayMinutesKey) }
+
+        let mapVisits = LocationMapView(viewModel: viewModel).filteredVisits
+        XCTAssertEqual(mapVisits.map(\.id), [overnight.id])
+        XCTAssertEqual(viewModel.visitsInDateRange(today).count, 0, "arrival-only filtering is what dropped the stay")
+    }
+
+    func testUndoingACorrectionOnAManualVisitKeepsItConfirmed() throws {
+        let container = try makeInMemoryContainer()
+        let viewModel = makeViewModel(container: container)
+        let coordinate = CLLocationCoordinate2D(latitude: 37.7776, longitude: -122.4070)
+        let visit = try XCTUnwrap(viewModel.createManualVisit(
+            name: "Deli Board",
+            address: "1058 Folsom St",
+            coordinate: coordinate,
+            arrivedAt: fixtureDate(dayOffset: 21),
+            departedAt: fixtureDate(dayOffset: 21).addingTimeInterval(3600),
+            placeSource: .appleMaps
+        ))
+        let confirmedAt = try XCTUnwrap(visit.confirmedAt)
+
+        viewModel.correctVisit(visit, name: "Garage Door", address: "Folsom St",
+                               coordinate: CLLocationCoordinate2D(latitude: 37.7777, longitude: -122.4071),
+                               placeSource: .userEntered, distanceMeters: 11)
+        XCTAssertEqual(visit.confirmationStatus, .corrected)
+
+        viewModel.undoVisitCorrection(visit)
+
+        XCTAssertEqual(visit.confirmationStatus, .confirmed)
+        XCTAssertEqual(visit.confirmedAt, confirmedAt)
+        XCTAssertEqual(visit.placeSource, .appleMaps)
+        XCTAssertNil(visit.placeDistanceMeters)
+        XCTAssertEqual(visit.locationName, "Deli Board")
+        XCTAssertEqual(visit.address, "1058 Folsom St")
+        assertCoordinate(visit.coordinate, equals: coordinate)
+    }
+
+    func testUndoingACorrectionRestoresEachPriorStatus() throws {
+        let container = try makeInMemoryContainer()
+        let viewModel = makeViewModel(container: container)
+        let detected = Visit(latitude: 37.70, longitude: -122.40, arrivedAt: fixtureDate(dayOffset: 22),
+                             departedAt: fixtureDate(dayOffset: 22).addingTimeInterval(1800),
+                             locationName: "Detected", geocodingCompleted: true)
+        let confirmed = Visit(latitude: 37.71, longitude: -122.41, arrivedAt: fixtureDate(dayOffset: 23),
+                              departedAt: fixtureDate(dayOffset: 23).addingTimeInterval(1800),
+                              locationName: "Confirmed", geocodingCompleted: true)
+        container.mainContext.insert(detected)
+        container.mainContext.insert(confirmed)
+        try container.mainContext.save()
+        viewModel.loadAllVisits()
+        viewModel.confirmVisit(confirmed)
+        let corrected = CLLocationCoordinate2D(latitude: 37.72, longitude: -122.42)
+
+        for visit in [detected, confirmed] {
+            viewModel.correctVisit(visit, name: "Elsewhere", address: nil, coordinate: corrected, placeSource: .appleMaps)
+            viewModel.undoVisitCorrection(visit)
+        }
+
+        XCTAssertEqual(detected.confirmationStatus, .unconfirmed)
+        XCTAssertNil(detected.confirmedAt)
+        XCTAssertNil(detected.placeSource)
+        XCTAssertEqual(confirmed.confirmationStatus, .confirmed)
+        XCTAssertNotNil(confirmed.confirmedAt)
+
+        // A second correction after undoing records the then-current state afresh.
+        viewModel.confirmVisit(detected)
+        viewModel.correctVisit(detected, name: "Elsewhere", address: nil, coordinate: corrected, placeSource: .appleMaps)
+        viewModel.undoVisitCorrection(detected)
+        XCTAssertEqual(detected.confirmationStatus, .confirmed)
+    }
+
+    func testUndoingACorrectionMadeBeforeTheStatusWasRecordedInfersIt() throws {
+        let container = try makeInMemoryContainer()
+        let viewModel = makeViewModel(container: container)
+        // As stored by earlier versions: corrected, with only the original location kept.
+        let legacyManual = Visit(latitude: 37.73, longitude: -122.43, arrivedAt: fixtureDate(dayOffset: 24),
+                                 departedAt: fixtureDate(dayOffset: 24).addingTimeInterval(1800),
+                                 locationName: "Fixed", geocodingCompleted: true, source: .manual,
+                                 confirmationStatus: .corrected, confirmedAt: fixtureDate(dayOffset: 24),
+                                 originalLatitude: 37.70, originalLongitude: -122.40,
+                                 originalLocationName: "Typed", placeSource: .appleMaps)
+        let legacyAutomatic = Visit(latitude: 37.73, longitude: -122.43, arrivedAt: fixtureDate(dayOffset: 25),
+                                    departedAt: fixtureDate(dayOffset: 25).addingTimeInterval(1800),
+                                    locationName: "Fixed", geocodingCompleted: true,
+                                    confirmationStatus: .corrected, confirmedAt: fixtureDate(dayOffset: 25),
+                                    originalLatitude: 37.70, originalLongitude: -122.40,
+                                    originalLocationName: "Detected", placeSource: .appleMaps)
+        container.mainContext.insert(legacyManual)
+        container.mainContext.insert(legacyAutomatic)
+        try container.mainContext.save()
+
+        viewModel.undoVisitCorrection(legacyManual)
+        viewModel.undoVisitCorrection(legacyAutomatic)
+
+        XCTAssertEqual(legacyManual.confirmationStatus, .confirmed)
+        XCTAssertEqual(legacyManual.confirmedAt, fixtureDate(dayOffset: 24))
+        XCTAssertEqual(legacyManual.placeSource, .userEntered)
+        XCTAssertEqual(legacyManual.locationName, "Typed")
+        XCTAssertEqual(legacyAutomatic.confirmationStatus, .unconfirmed)
+        XCTAssertNil(legacyAutomatic.confirmedAt)
+        XCTAssertNil(legacyAutomatic.placeSource)
     }
 
     private func makeInMemoryContainer() throws -> ModelContainer {
