@@ -148,7 +148,9 @@ struct LocationMapView: View {
     private let routeReplayTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
 
     var filteredVisits: [Visit] {
-        let visits = viewModel.visitsInDateRange(viewModel.mapDateRange)
+        // A stay that began before the range and runs into it (overnight, or still ongoing) belongs on
+        // this map too, as it does on the day sheet's dial.
+        let visits = viewModel.visitsOverlappingDateRange(viewModel.mapDateRange)
         guard minimumStayMinutes > 0 else { return visits }
         // Ongoing stays are always drawn; only finished stops below the minimum are left off.
         let minimum = TimeInterval(minimumStayMinutes * 60)
@@ -1099,6 +1101,17 @@ struct LocationMapView: View {
         let replayIndex = isRouteReplayEnabled ? routeReplaySnapshot?.index : nil
         let focusedVisitID = presentation == .home && onSelectVisit == nil ? selectedVisit?.id : nil
         let replayFocus = isRouteReplayEnabled ? routeReplaySnapshot?.currentPoint.timestamp : nil
+        // Resolved once per render rather than once per pin: `currentVisit` scans every visit.
+        let currentVisitID = viewModel.currentVisit?.id
+        // Pin labels are placed from the settled camera state, never from the MapProxy. Reading the
+        // proxy inside Map content made each annotation depend on the map's own update, so every
+        // MKMapView update invalidated the annotations, which updated the map again: a main-thread
+        // loop (~100% CPU) that kept running while the map sat in a hidden tab.
+        let labelRoom = MapPinLabelRoom(
+            visibleRect: visibleMapRect,
+            viewportSize: mapViewportSize,
+            clearRightInset: isReplayChromeShown ? 12 : 80
+        )
         return MapReader { mapProxy in
             Map(position: $cameraPosition, selection: $selectedVisit, scope: mapScope) {
                 // Current user location
@@ -1231,7 +1244,8 @@ struct LocationMapView: View {
                                     selectedVisit = visit
                                 } label: {
                                     visitPin(visit, day: day, isDimmed: isPinDimmed(visit, focusedVisitID: focusedVisitID, replayFocus: replayFocus),
-                                             label: labelPlacement(visit, day: day, proxy: mapProxy))
+                                             label: labelPlacement(visit, day: day, labelRoom: labelRoom, currentVisitID: currentVisitID),
+                                             currentVisitID: currentVisitID)
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -1346,31 +1360,27 @@ struct LocationMapView: View {
 
     /// Keeps a pin's label clear of the right rail and the screen edges: it stays on the right when it fits,
     /// moves to the left when that side has more room, and truncates to whatever room the chosen side has.
-    private func labelPlacement(_ visit: Visit, day: TraceDay, proxy: MapProxy) -> (onLeading: Bool, maxWidth: CGFloat?) {
-        guard presentation == .home, mapViewportSize.width > 0,
-              let point = proxy.convert(visit.coordinate, to: .local) else { return (false, nil) }
+    private func labelPlacement(_ visit: Visit, day: TraceDay, labelRoom: MapPinLabelRoom,
+                                currentVisitID: UUID?) -> (onLeading: Bool, maxWidth: CGFloat?) {
+        guard presentation == .home else { return (false, nil) }
         let name = day.placeKey(for: visit)
-        let caption = pinCaption(visit, day: day)
+        let caption = pinCaption(visit, day: day, isCurrent: visit.departedAt == nil && visit.id == currentVisitID)
         // Serif italic 15 and mono 9, roughly; enough to tell which side has room.
         let labelWidth = max(CGFloat(name.count) * 7.6, CGFloat(caption.count) * 6)
-        let gap: CGFloat = 20
-        let clearRight = mapViewportSize.width - (isReplayChromeShown ? 12 : 80)
-        let roomRight = clearRight - point.x - gap
-        let roomLeft = point.x - gap - 8
-        if labelWidth <= roomRight { return (false, nil) }
-        if labelWidth <= roomLeft { return (true, nil) }
-        return roomLeft > roomRight ? (true, max(40, roomLeft)) : (false, max(40, roomRight))
+        return labelRoom.placement(for: visit.coordinate, labelWidth: labelWidth)
     }
 
     private func visitPin(_ visit: Visit, day: TraceDay, isDimmed: Bool,
-                          label: (onLeading: Bool, maxWidth: CGFloat?) = (false, nil)) -> some View {
+                          label: (onLeading: Bool, maxWidth: CGFloat?) = (false, nil),
+                          currentVisitID: UUID?) -> some View {
         let isSelected = selectedVisit?.id == visit.id || focusedVisit?.id == visit.id
+        let isCurrent = visit.departedAt == nil && visit.id == currentVisitID
         if presentation != .home {
             return AnyView(VisitMarker(
                 visit: visit,
                 ink: day.ink(for: visit),
                 isSelected: isSelected,
-                isCurrentVisit: viewModel.isCurrentVisit(visit),
+                isCurrentVisit: isCurrent,
                 showsLabel: day.places.count <= 6 || isSelected
             ))
         }
@@ -1378,9 +1388,9 @@ struct LocationMapView: View {
             visit: visit,
             name: day.placeKey(for: visit),
             ink: day.ink(for: visit),
-            durationText: pinCaption(visit, day: day),
+            durationText: pinCaption(visit, day: day, isCurrent: isCurrent),
             isSelected: isSelected,
-            isCurrent: viewModel.isCurrentVisit(visit),
+            isCurrent: isCurrent,
             isDimmed: isDimmed,
             showsLabel: day.places.count <= 6 || isSelected,
             labelOnLeading: label.onLeading,
@@ -1389,9 +1399,9 @@ struct LocationMapView: View {
     }
 
     /// "45 min", "00:00 – 08:12" for a stay that ran from the night before, "NOW · 30 MIN", or the times in replay.
-    private func pinCaption(_ visit: Visit, day: TraceDay) -> String {
+    private func pinCaption(_ visit: Visit, day: TraceDay, isCurrent: Bool? = nil) -> String {
         let end = visit.departedAt ?? Date()
-        if viewModel.isCurrentVisit(visit) {
+        if isCurrent ?? viewModel.isCurrentVisit(visit) {
             let duration = TodayDay.formatMoveDuration(Date().timeIntervalSince(visit.arrivedAt))
             return String(localized: "NOW · \(duration)").uppercased()
         }
@@ -1874,7 +1884,7 @@ struct LocationMapView: View {
     }
 
     static func clockText(_ date: Date) -> String {
-        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
+        ClockTimeFormatter.string(from: date)
     }
 
     /// Describes where the day stood at a moment, using only recorded stays and points.
@@ -5727,6 +5737,38 @@ extension MKCoordinateRegion {
         locationManager: LocationManager()
     ))
     .environment(ManualVisitRouter())
+}
+
+
+/// Where a visit pin's label has room, worked out from the camera's settled rectangle
+/// (`onMapCameraChange(.onEnd)`) and the map's size. Plain values, so annotation content that uses
+/// it does not depend on the MapProxy, whose every update would otherwise invalidate the pins.
+struct MapPinLabelRoom {
+    let visibleRect: MKMapRect?
+    let viewportSize: CGSize
+    /// Space kept clear on the right for the floating rail.
+    let clearRightInset: CGFloat
+
+    /// The pin's x position in the map's local space, or nil before the camera has settled.
+    func localX(for coordinate: CLLocationCoordinate2D) -> CGFloat? {
+        guard let visibleRect, visibleRect.size.width > 0, viewportSize.width > 0,
+              CLLocationCoordinate2DIsValid(coordinate) else { return nil }
+        var x = MKMapPoint(coordinate).x - visibleRect.origin.x
+        // A rectangle across the date line extends past the world's width.
+        let worldWidth = MKMapSize.world.width
+        if x < 0, visibleRect.maxX > worldWidth { x += worldWidth }
+        return CGFloat(x / visibleRect.size.width) * viewportSize.width
+    }
+
+    func placement(for coordinate: CLLocationCoordinate2D, labelWidth: CGFloat) -> (onLeading: Bool, maxWidth: CGFloat?) {
+        guard let x = localX(for: coordinate) else { return (false, nil) }
+        let gap: CGFloat = 20
+        let roomRight = viewportSize.width - clearRightInset - x - gap
+        let roomLeft = x - gap - 8
+        if labelWidth <= roomRight { return (false, nil) }
+        if labelWidth <= roomLeft { return (true, nil) }
+        return roomLeft > roomRight ? (true, max(40, roomLeft)) : (false, max(40, roomRight))
+    }
 }
 
 

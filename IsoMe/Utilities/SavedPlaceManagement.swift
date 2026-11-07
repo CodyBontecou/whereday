@@ -72,6 +72,21 @@ struct SavedPlaceDraft: Identifiable, Equatable {
         name.trimmingCharacters(in: .whitespacesAndNewlines).folding(options: .caseInsensitive, locale: .current)
     }
 
+    /// This new place's details as an edit of `existing`, the saved place it duplicates.
+    /// Fields left blank here keep the existing place's values.
+    func merged(into existing: SavedPlace) -> SavedPlaceDraft {
+        var merged = self
+        merged.existingPlaceID = existing.id
+        if address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            merged.address = existing.address ?? ""
+        }
+        if kind == nil { merged.kind = existing.kind }
+        if notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            merged.notes = existing.notes ?? ""
+        }
+        return merged
+    }
+
     func apply(to place: SavedPlace) {
         place.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedAddress = address.trimmingCharacters(in: .whitespacesAndNewlines)

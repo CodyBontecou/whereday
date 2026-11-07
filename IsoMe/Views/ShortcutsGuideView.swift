@@ -34,7 +34,7 @@ struct ShortcutsGuideView: View {
                 Action(title: "Check Out", detail: "Finish an open visit", phrase: nil)
             ]),
             ActionGroup(name: "ASK", actions: [
-                Action(title: "Today's Distance", detail: "Kilometres or miles moved since midnight", phrase: String(localized: "How far have I gone with \(app)")),
+                Action(title: "Today's Distance", detail: "Kilometers or miles moved since midnight", phrase: String(localized: "How far have I gone with \(app)")),
                 Action(title: "Today's Tracking Duration", detail: "How long recording has run", phrase: String(localized: "How long have I been tracking with \(app)")),
                 Action(title: "Today's Visits", detail: "Places stopped at today", phrase: String(localized: "How many visits today in \(app)")),
                 Action(title: "Get Visits", detail: "Visits in a date range, for other shortcuts", phrase: nil),

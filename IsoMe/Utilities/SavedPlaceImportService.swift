@@ -126,7 +126,7 @@ enum SavedPlaceImportService {
             let radiusField = field("radius_meters")
             let radiusMeters = radiusField.isEmpty ? defaultRadiusMeters : Double(radiusField)
             if radiusMeters.map({ $0.isFinite && (minimumRadiusMeters...maximumRadiusMeters).contains($0) }) != true {
-                errors.append(String(localized: "Radius must be a number from 25 to 10,000 metres."))
+                errors.append(String(localized: "Radius must be a number from 25 to 10,000 meters."))
             }
 
             guard errors.isEmpty, let latitude, let longitude, let radiusMeters else {

@@ -71,20 +71,20 @@ object HistoryImporter {
     private fun scanRecords(reader:java.io.Reader,format:ExportFormat,locale:Locale,zone:ZoneId,checkpoint:()->Unit,
         onVisit:(Visit)->Unit,onPoint:(TrackPoint)->Unit,onIdentity:(Boolean)->Unit):ImportScan {
         val output=ImportScanCollector(onVisit,onPoint)
-        fun visitRow(fields:Map<String,String>,label:String) {
-            val value=output.decode(label) {VisitAuditImport.apply(visit(fields,format==ExportFormat.json),fields["visit_metadata"])} ?: return
+        fun visitRow(fields:Map<String,String>,record:HistoryImportRecordKind,number:Int) {
+            val value=output.decode(record,number) {VisitAuditImport.apply(visit(fields,format==ExportFormat.json),fields["visit_metadata"])} ?: return
             onIdentity(!fields["id"].isNullOrEmpty());output.visit(value)
         }
-        fun pointRow(fields:Map<String,String>,label:String) {
-            val value=output.decode(label) {point(fields)} ?: return
+        fun pointRow(fields:Map<String,String>,record:HistoryImportRecordKind,number:Int) {
+            val value=output.decode(record,number) {point(fields)} ?: return
             onIdentity(!fields["id"].isNullOrEmpty());output.point(value)
         }
         val checked=ImportCheckpointReader(reader,checkpoint)
         when(format) {
             ExportFormat.json->StreamingHistoryReader.json(checked,jsonKeys,checkpoint) {kind,index,fields,issue->
-                val label=if(kind=="visits") "Visit $index" else "Point $index"
-                if(issue!=null) output.error("$label: $issue")
-                else if(kind=="visits") visitRow(fields,label) else pointRow(fields,label)
+                val record=if(kind=="visits") HistoryImportRecordKind.visit else HistoryImportRecordKind.point
+                if(issue!=null) output.error(record,index,issue)
+                else if(kind=="visits") visitRow(fields,record,index) else pointRow(fields,record,index)
             }
             ExportFormat.csv->{
                 var headers:List<String>?=null
@@ -92,16 +92,17 @@ object HistoryImporter {
                     if(row.all {it.isBlank()} || row.firstOrNull()?.startsWith('#')==true) return@row
                     if(row.firstOrNull() in listOf("arrived_at","timestamp")) {headers=row;return@row}
                     val columns=headers ?: return@row
-                    if(row.size!=columns.size) output.error("Row $index: Column count does not match header")
-                    else if(columns.distinct().size!=columns.size) output.error("Row $index: Duplicate CSV columns")
+                    if(row.size!=columns.size) output.error(HistoryImportRecordKind.row,index,HistoryImportProblem.columnCount,"Column count does not match header")
+                    else if(columns.distinct().size!=columns.size) output.error(HistoryImportRecordKind.row,index,HistoryImportProblem.duplicateColumns,"Duplicate CSV columns")
                     else {
                         val fields=columns.zip(row).toMap()
-                        if("arrived_at" in fields) visitRow(fields,"Row $index") else pointRow(fields,"Row $index")
+                        if("arrived_at" in fields) visitRow(fields,HistoryImportRecordKind.row,index) else pointRow(fields,HistoryImportRecordKind.row,index)
                     }
                 }
             }
             ExportFormat.markdown->MarkdownHistoryReader(locale,zone).scan(checked,
-                {fields,line->visitRow(fields,"Line $line")},{fields,line->pointRow(fields,"Line $line")},output::error,checkpoint)
+                {fields,line->visitRow(fields,HistoryImportRecordKind.line,line)},{fields,line->pointRow(fields,HistoryImportRecordKind.line,line)},
+                {line,failure->output.error(HistoryImportRecordKind.line,line,failure)},checkpoint)
             else->error("Only JSON, CSV and Markdown history files can be imported")
         }
         checkpoint()
@@ -115,19 +116,30 @@ object HistoryImporter {
         "detectedLatitude","detectedLongitude","detectedLocationName","detectedAddress","confirmedAt","updatedAt","placeSource","placeDistanceMeters",
         "timestamp","timestampUnix","timestamp_unix","horizontalAccuracy","horizontal_accuracy","altitude","speed","isOutlier","is_outlier")
     private fun Map<String,String>.field(vararg names:String): String? = names.firstNotNullOfOrNull { this[it]?.takeIf { it.isNotEmpty() } }
+    private fun invalid(problem:HistoryImportProblem,message:String):Nothing=throw InvalidHistoryRecord(problem,message)
     private fun Map<String,String>.instant(vararg names:String) = field(*names)?.let { Instant.parse(it) }
-    private fun Map<String,String>.number(vararg names:String) = field(*names)?.toDouble()?.also { require(it.isFinite()) { "Invalid number" } }
-    private fun coordinate(data:Map<String,String>,lat:String="latitude",lon:String="longitude") = Coordinate(data.number(lat) ?: error("Missing latitude"),data.number(lon) ?: error("Missing longitude"))
+    private fun Map<String,String>.number(vararg names:String) = field(*names)?.toDouble()?.also { if(!it.isFinite()) invalid(HistoryImportProblem.invalidNumber,"Invalid number") }
+    private fun coordinate(data:Map<String,String>,lat:String="latitude",lon:String="longitude"):Coordinate {
+        val latitude=data.number(lat) ?: invalid(HistoryImportProblem.missingCoordinate,"Missing latitude")
+        val longitude=data.number(lon) ?: invalid(HistoryImportProblem.missingCoordinate,"Missing longitude")
+        if(latitude !in -90.0..90.0) invalid(HistoryImportProblem.latitude,"Latitude must be from -90 to 90")
+        if(longitude !in -180.0..180.0) invalid(HistoryImportProblem.longitude,"Longitude must be from -180 to 180")
+        return Coordinate(latitude,longitude)
+    }
     private fun identity(d:Map<String,String>, type:String):String {
-        d.field("id")?.let { return UUID.fromString(it).toString() }
-        val instant=if(type=="point") pointTime(d) else d.instant("arrivedAt","arrived_at") ?: error("Missing timestamp")
+        d.field("id")?.let { return runCatching {UUID.fromString(it).toString()}.getOrElse {invalid(HistoryImportProblem.invalidIdentifier,"Invalid identifier")} }
+        val instant=if(type=="point") pointTime(d) else d.instant("arrivedAt","arrived_at") ?: invalid(HistoryImportProblem.missingTime,"Missing arrival")
         val departure=if(type=="visit") ":${d.instant("departedAt","departed_at") ?: "open"}" else ""
         return UUID.nameUUIDFromBytes("$type:$instant:${coordinate(d)}$departure".toByteArray(Charsets.UTF_8)).toString()
     }
     private fun visit(d:Map<String,String>,preserveEmptyText:Boolean=false):Visit {
         fun text(vararg names:String)=if(preserveEmptyText) names.firstNotNullOfOrNull {d[it]} else d.field(*names)
+        val id=identity(d,"visit");val coordinate=coordinate(d)
+        val arrivedAt=d.instant("arrivedAt","arrived_at") ?: invalid(HistoryImportProblem.missingTime,"Missing arrival")
+        val departedAt=d.instant("departedAt","departed_at")
+        if(departedAt!=null && departedAt<arrivedAt) invalid(HistoryImportProblem.departureBeforeArrival,"Departure is before arrival")
         return Visit(
-        id=identity(d,"visit"), coordinate=coordinate(d), arrivedAt=d.instant("arrivedAt","arrived_at") ?: error("Missing arrival"), departedAt=d.instant("departedAt","departed_at"),
+        id=id, coordinate=coordinate, arrivedAt=arrivedAt, departedAt=departedAt,
         name=text("locationName","location_name"), address=text("address"), notes=text("notes"),
         source=d.field("source")?.let { runCatching { VisitSource.valueOf(it) }.getOrDefault(VisitSource.imported) } ?: VisitSource.imported,
         confirmation=d.field("confirmationStatus","confirmation_status")?.let { runCatching { Confirmation.valueOf(it) }.getOrDefault(Confirmation.unconfirmed) } ?: Confirmation.unconfirmed,
@@ -140,9 +152,9 @@ object HistoryImporter {
     }
     private fun pointTime(d:Map<String,String>):Instant {
         d.field("timestamp")?.let {runCatching {Instant.parse(it)}.getOrNull()?.let {time->return time}}
-        val seconds=d.field("timestampUnix","timestamp_unix")?.toBigDecimal() ?: error("Missing or invalid timestamp")
-        require(seconds>=java.math.BigDecimal.valueOf(Instant.MIN.epochSecond) &&
-            seconds<java.math.BigDecimal.valueOf(Instant.MAX.epochSecond).add(java.math.BigDecimal.ONE)) {"Timestamp outside supported range"}
+        val seconds=d.field("timestampUnix","timestamp_unix")?.toBigDecimal() ?: invalid(HistoryImportProblem.missingTime,"Missing or invalid timestamp")
+        if(!(seconds>=java.math.BigDecimal.valueOf(Instant.MIN.epochSecond) &&
+            seconds<java.math.BigDecimal.valueOf(Instant.MAX.epochSecond).add(java.math.BigDecimal.ONE))) invalid(HistoryImportProblem.invalidTime,"Timestamp outside supported range")
         // Avoid expanding a tiny scientific-notation value into an enormous power of ten.
         if(seconds.abs()<java.math.BigDecimal("0.000000001")) return Instant.EPOCH
         val whole=seconds.toBigInteger().longValueExact()

@@ -55,7 +55,7 @@ private sealed interface OutingState {
     val editing=editingId==id
     LaunchedEffect(id) {if(editingId!=id) editingId=null}
     var selectedVisit by rememberSaveable(id,stateSaver=VisitEditorVisitSaver) { mutableStateOf<Visit?>(null) }
-    var deleting by remember { mutableStateOf(false) }
+    var deleting by rememberSaveable { mutableStateOf(false) }
     var busy by remember { mutableStateOf(false) }
     var replayShowing by remember {mutableStateOf(false)}
     var error by remember { mutableStateOf<Int?>(null) }
@@ -99,7 +99,7 @@ private sealed interface OutingState {
                         OutingFigure(todayDistance(detail.summary.distanceMeters,metric,locale),stringResource(R.string.timeline_redesign_distance),Modifier.weight(1f))
                         OutingFigure(if(duration<60) stringResource(R.string.timeline_redesign_minutes,duration.toInt()) else stringResource(R.string.timeline_redesign_hours,(duration/60).toInt(),"%02d".format(duration%60)),
                             stringResource(R.string.outing_figure_duration),Modifier.weight(1f))
-                        OutingFigure(java.text.NumberFormat.getIntegerInstance(locale).format(detail.summary.count),stringResource(R.string.today_stat_points),Modifier.weight(1f))
+                        OutingFigure(java.text.NumberFormat.getIntegerInstance(locale).format(detail.summary.keptCount),stringResource(R.string.today_stat_points),Modifier.weight(1f))
                         if(live) WdLiveDot()
                     }
                     WdDivider(Modifier.padding(start=20.dp))
@@ -126,7 +126,7 @@ private sealed interface OutingState {
                 }
                 MatchedPhotoStrip(graph,photos,photoRange)
                 OutingSectionLabel(stringResource(R.string.timeline_redesign_export))
-                Choice(stringResource(R.string.outing_format),exportSettings.selection.format.name,ExportFormat.entries.map {it.name},enabled=exportSettings.ready && !exportSettings.saving) {
+                Choice(stringResource(R.string.outing_format),exportSettings.selection.format.name,ExportFormat.entries.map {it.name},enabled=exportSettings.ready && !exportSettings.saving,labelFor={recipeFormatName(ExportFormat.valueOf(it))}) {
                     graph.exportSettings.update(exportSettings.selection.copy(format=ExportFormat.valueOf(it)))
                 }
                 Text(stringResource(R.string.outing_format_explanation),style=WdType.caption2,color=wd.textMuted)

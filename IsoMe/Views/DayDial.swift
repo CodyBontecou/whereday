@@ -106,9 +106,13 @@ struct DayDial: View {
                             .foregroundStyle(TE.textMuted)
                     }
                     // Sized to the ring, not to Dynamic Type; the dial is hidden from VoiceOver and gives way at large sizes.
-                    Text((recordingSince ?? now).formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current)))
+                    Text(ClockTimeFormatter.string(from: recordingSince ?? now))
                         .font(.custom(WheredayFont.serifFamily, fixedSize: size * (captions == .timeOnly ? 0.21 : 0.19)))
                         .monospacedDigit()
+                        // 12-hour times ("11:39 AM") are wider than the ring's centre allows.
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .frame(maxWidth: size * 0.62)
                     if recordingSince == nil && captions == .full {
                         Text("tap to replay")
                             .font(TE.mono(.caption2))
@@ -449,7 +453,7 @@ struct TodayDay {
         if minutes < 60 {
             return String(localized: "\(minutes)m")
         }
-        return String(format: "%dh %02dm", minutes / 60, minutes % 60)
+        return StayDurationFormatter.hoursAndMinutes(interval)
     }
 
     /// Moves read as "28 min", stays as "45m".
@@ -458,7 +462,7 @@ struct TodayDay {
         if minutes < 60 {
             return String(localized: "\(minutes) min")
         }
-        return String(format: "%dh %02dm", minutes / 60, minutes % 60)
+        return StayDurationFormatter.hoursAndMinutes(interval)
     }
 }
 

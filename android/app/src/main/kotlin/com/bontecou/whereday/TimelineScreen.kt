@@ -64,6 +64,8 @@ import java.time.*
     val state by model.timelineWindow.collectAsStateWithLifecycle()
     val resources=LocalContext.current.resources
     val largeText=LocalDensity.current.fontScale>=1.3f
+    // Measured so a 12-hour "11:47 AM" stays on one line at any text size.
+    val journalClockWidth=clockColumnWidth(rememberClockFormatter(),WdType.caption,JournalClockMinimum)
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val formattedDay=day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale))
     val todayHint=stringResource(R.string.timeline_today_hint,formattedDay)
@@ -143,12 +145,14 @@ import java.time.*
                     val story=remember(window,day,nowInstant.epochSecond/60) {DayStory.build(day,zone,window.visits,window.points,nowInstant,window.summary.distanceMeters)}
                     val segments=window.sessions.map {WdDialSegment(fraction(it.startedAt),fraction(it.endedAt ?: nowInstant),wd.textMuted.copy(alpha=0.45f))}+dayDialSegments(story)
                     val lastFix=window.summary.lastTime
+                    // The same 12/24-hour clock as the rows below and the visit editor.
+                    val clock=rememberClockFormatter()
                     val kicker:String?;val center:String?;val hint:String?
                     when {
                         !isToday->{kicker=day.format(DateTimeFormatter.ofPattern("EEE",locale));center=day.format(DateTimeFormatter.ofPattern("d",locale));hint=stringResource(R.string.today_replay_hint)}
-                        locationOff && lastFix!=null->{kicker=stringResource(R.string.today_dial_last_fix);center=lastFix.atZone(zone).format(DateTimeFormatter.ofPattern("HH:mm"));hint=stringResource(R.string.today_location_off_hint)}
-                        today?.active==true && window.visits.isEmpty() && window.sessions.any {it.endedAt==null}->{kicker=stringResource(R.string.today_dial_listening);center=window.sessions.first {it.endedAt==null}.startedAt.atZone(zone).format(DateTimeFormatter.ofPattern("HH:mm"));hint=stringResource(R.string.today_replay_hint)}
-                        else->{kicker=stringResource(R.string.timeline_redesign_now);center=nowInstant.atZone(zone).format(DateTimeFormatter.ofPattern("HH:mm"));hint=stringResource(R.string.today_replay_hint)}
+                        locationOff && lastFix!=null->{kicker=stringResource(R.string.today_dial_last_fix);center=clock.format(lastFix);hint=stringResource(R.string.today_location_off_hint)}
+                        today?.active==true && window.visits.isEmpty() && window.sessions.any {it.endedAt==null}->{kicker=stringResource(R.string.today_dial_listening);center=clock.format(window.sessions.first {it.endedAt==null}.startedAt);hint=stringResource(R.string.today_replay_hint)}
+                        else->{kicker=stringResource(R.string.timeline_redesign_now);center=clock.format(nowInstant);hint=stringResource(R.string.today_replay_hint)}
                     }
                     val visitMillis=window.visits.sumOf {visit->
                         val start=maxOf(visit.arrivedAt,dayStart);val end=minOf(visit.departedAt ?: nowInstant,dayEnd)
@@ -161,7 +165,7 @@ import java.time.*
                     val stats=listOf(
                         todayDistance(window.summary.distanceMeters,metric,locale) to stringResource(R.string.today_stat_moved),
                         (if(awayMinutes<60) stringResource(R.string.timeline_redesign_minutes,awayMinutes.toInt()) else stringResource(R.string.timeline_redesign_hours,(awayMinutes/60).toInt(),"%02d".format(awayMinutes%60))) to stringResource(R.string.today_stat_away),
-                        number.format((window.summary.count-window.summary.outlierCount).coerceAtLeast(0)) to stringResource(R.string.today_stat_points),
+                        number.format(window.summary.keptCount) to stringResource(R.string.today_stat_points),
                     )
                     val heroShape=RoundedCornerShape(28.dp)
                     val dialSize=if(largeText) 140.dp else 168.dp
@@ -238,7 +242,7 @@ import java.time.*
                         Row(rowModifier.background(if(inspected) wd.secondaryContainer else Color.Transparent)
                             .clickable { if(onVisitOpened!=null) { openedVisitId=visit.id; onVisitOpened(visit) } else editing=visit }
                             .heightIn(min=52.dp).padding(horizontal=20.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
-                            Text(journalClock(visit.arrivedAt),style=WdType.caption,color=wd.textMuted,modifier=Modifier.width(JournalClockWidth))
+                            Text(journalClock(visit.arrivedAt),style=WdType.caption,color=wd.textMuted,maxLines=1,softWrap=false,modifier=Modifier.width(journalClockWidth))
                             Box(Modifier.width(14.dp),contentAlignment=Alignment.Center) {Box(Modifier.size(12.dp).clip(CircleShape).background(wd.placeInks[inkIndex(visit)%wd.placeInks.size]))}
                             Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
                                 Text(visit.name?.takeIf {it.isNotBlank()} ?: stringResource(R.string.timeline_visit),style=WdType.title3.copy(fontWeight=FontWeight.Normal,lineHeight=24.sp),color=wd.textPrimary,maxLines=if(largeText) 3 else 1,overflow=androidx.compose.ui.text.style.TextOverflow.Ellipsis)
@@ -260,7 +264,7 @@ import java.time.*
                             if(live) stringResource(R.string.timeline_recording) else journalDuration(session.startedAt,session.endedAt!!))
                         Row(rowModifier.clickable { selectedSession=session.id }.heightIn(min=32.dp).padding(horizontal=20.dp,vertical=2.dp).testTag("today-move-${session.id}"),
                             horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
-                            Spacer(Modifier.width(JournalClockWidth))
+                            Spacer(Modifier.width(journalClockWidth))
                             Box(Modifier.width(14.dp).height(28.dp).drawBehind {
                                 drawLine(tick,Offset(size.width/2,0f),Offset(size.width/2,size.height),strokeWidth=2.dp.toPx(),cap=StrokeCap.Round,
                                     pathEffect=PathEffect.dashPathEffect(floatArrayOf(0.1f,4.dp.toPx())))
@@ -309,7 +313,7 @@ import java.time.*
 }
 private data class TimelineEntry(val id: String,val time: Instant,val visit: Visit?=null,val session: RecordingSession?=null,val inferred: InferredOutingHeader?=null)
 
-private val JournalClockWidth=48.dp
+private val JournalClockMinimum=48.dp
 
 /** Moved distance as the Today hero shows it: one decimal, km or mi. */
 internal fun todayDistance(meters:Double,metric:Boolean,locale:Locale):String {

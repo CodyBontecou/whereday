@@ -898,7 +898,7 @@ struct TodayView: View {
     private func compactStayRow(_ stay: TodayDay.Stay, minHeight: CGFloat = 46) -> some View {
         let isSelected = isCompanion && stay.visit != nil && stay.visit?.id == selectedVisitID
         return HStack(spacing: 10) {
-            Text(stay.start.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current)))
+            Text(ClockTimeFormatter.string(from: stay.start))
                 .font(TE.mono(.caption))
                 .foregroundStyle(TE.textMuted)
                 .frame(minWidth: 44, alignment: .leading)

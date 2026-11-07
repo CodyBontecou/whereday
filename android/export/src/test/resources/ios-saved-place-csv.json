@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "IsoMe/Utilities/SavedPlaceImportService.swift": "8277a3af27714d7fbb5af734a9bf182a588b15c77a892b3a890cadd82185095f",
+    "IsoMe/Utilities/SavedPlaceImportService.swift": "22a13c89305391b4b27ba9937c74cffc9bf011be55b60135bac9380999ae8da9",
     "android/scripts/fixtures/SavedPlaceCsvFixtures.swift": "286b16b2811ef28ce493f575e2b17f96da91acfbdb667971c83867feb797bfc2",
     "android/scripts/fixtures/saved-place-csv-inputs.json": "db4c076ee3aab089326ec7a3a5b673587a26ed6d862a2fbbb94aa427b895d759"
   },

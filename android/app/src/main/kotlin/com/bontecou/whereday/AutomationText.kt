@@ -24,7 +24,7 @@ import com.bontecou.whereday.platform.*
     AutomationScope.recording->R.string.automation_detail_recording
     AutomationScope.places->R.string.automation_detail_places
     AutomationScope.manualVisits->R.string.automation_detail_manual_visits
-    AutomationScope.exports->R.string.automation_detail_exports
+    AutomationScope.exports->R.string.automation_detail_exports_plan
 })
 @Composable internal fun automationFailureText(failure:AutomationFailure)=stringResource(when(failure) {
     AutomationFailure.save->R.string.automation_failure_save

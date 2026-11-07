@@ -112,7 +112,7 @@ import kotlinx.coroutines.*
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal=20.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             Text(stringResource(R.string.export_redesign_eyebrow).uppercase(),style=WdType.eyebrow,color=wd.textMuted)
             Text(label,style=WdType.title2,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
-            ExportBody(stringResource(R.string.export_delivery_access_help))
+            ExportBody(stringResource(R.string.export_delivery_plan_help))
             WdButton(stringResource(R.string.export_delivery_share),{deliver("share")},Modifier.testTag("history-export-share"),emphasis=WdEmphasis.primary,enabled=!busy,icon=Icons.Outlined.IosShare)
             WdButton(stringResource(R.string.export_delivery_save_as),{deliver("save")},Modifier.testTag("history-export-save"),enabled=!busy,icon=Icons.Outlined.SaveAlt)
             WdButton(stringResource(R.string.export_delivery_folder),{deliver("folder")},Modifier.testTag("history-export-folder"),enabled=!busy && settings?.exportFolder!=null,icon=Icons.Outlined.Folder)

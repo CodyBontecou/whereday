@@ -34,6 +34,12 @@ final class Visit {
     var detectedAddress: String?
     var placeSourceRaw: String?
     var placeDistanceMeters: Double?
+    // How the visit stood before its first correction, so Undo Correction restores it.
+    // Optional additions: lightweight migration leaves them nil on existing visits.
+    var originalConfirmationStatusRaw: String?
+    var originalConfirmedAt: Date?
+    var originalPlaceSourceRaw: String?
+    var originalPlaceDistanceMeters: Double?
 
     var countryCode: String?
     var countryTimeZoneIdentifier: String?
@@ -136,6 +142,59 @@ final class Visit {
         if originalLongitude == nil { originalLongitude = longitude }
         if originalLocationName == nil { originalLocationName = exportLocationName }
         if originalAddress == nil { originalAddress = address }
+        if originalConfirmationStatusRaw == nil {
+            // A visit imported as already corrected has no earlier state on record; infer it.
+            let status = confirmationStatus == .corrected ? inferredUncorrectedStatus : confirmationStatus
+            originalConfirmationStatusRaw = status.rawValue
+            originalConfirmedAt = status == .unconfirmed ? nil : confirmedAt
+            originalPlaceSourceRaw = placeSourceRaw
+            originalPlaceDistanceMeters = placeDistanceMeters
+        }
+    }
+
+    /// The status a corrected visit returns to when no pre-correction state was recorded
+    /// (corrections made before it was): visits the user added or imported start confirmed.
+    var inferredUncorrectedStatus: VisitConfirmationStatus {
+        source == .automatic ? .unconfirmed : .confirmed
+    }
+
+    /// Puts back the location and status the visit had before its first correction.
+    func restoreOriginalValues(at now: Date = Date()) {
+        guard let originalLatitude, let originalLongitude else { return }
+        countryCode = nil
+        countryTimeZoneIdentifier = nil
+        countryResolutionAttemptedAt = nil
+        latitude = originalLatitude
+        longitude = originalLongitude
+        locationName = originalLocationName
+        address = originalAddress
+        customName = nil
+
+        if let raw = originalConfirmationStatusRaw,
+           let status = VisitConfirmationStatus(rawValue: raw), status != .corrected {
+            confirmationStatus = status
+            confirmedAt = status == .unconfirmed ? nil : (originalConfirmedAt ?? confirmedAt)
+            placeSourceRaw = originalPlaceSourceRaw
+            placeDistanceMeters = originalPlaceDistanceMeters
+        } else {
+            let status = inferredUncorrectedStatus
+            confirmationStatus = status
+            if status == .unconfirmed {
+                confirmedAt = nil
+                placeSource = nil
+            } else {
+                // A manual or imported visit keeps its confirmation; its place now comes from the user's entry.
+                placeSource = source == .imported ? .import : .userEntered
+            }
+            placeDistanceMeters = nil
+        }
+        updatedAt = now
+
+        // The visit is uncorrected again; a later correction records its state afresh.
+        originalConfirmationStatusRaw = nil
+        originalConfirmedAt = nil
+        originalPlaceSourceRaw = nil
+        originalPlaceDistanceMeters = nil
     }
 
     var durationMinutes: Double? {

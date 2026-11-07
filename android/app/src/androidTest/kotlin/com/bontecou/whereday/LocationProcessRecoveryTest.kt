@@ -33,8 +33,10 @@ class LocationProcessRecoveryTest {
         val route=mode!="visits";val visits=mode!="route"
         val proof=File(context.noBackupFilesDir,"qa-location-process-proof.json")
         val graph=AppGraph.from(context);graph.journalClear.awaitReady()
+        // After a reboot, BOOT_COMPLETED delivery on a slow CI emulator can take well over 20 s; a restart that never happens still fails.
+        val recoveryTimeoutMs=if(termination=="reboot") 60_000L else 20_000L
         suspend fun waitFor(label:String="recovery condition",condition:suspend ()->Boolean) {
-            try {withTimeout(20_000) {while(!condition()) delay(30)}}
+            try {withTimeout(recoveryTimeoutMs) {while(!condition()) delay(30)}}
             catch(timeout:TimeoutCancellationException) {
                 throw AssertionError("$label; routeRequested=${graph.history.dao.recording()?.requested}; visitsRequested=${graph.history.dao.visitMonitoring()?.requested}; routeRuntime=${RecordingRuntime.active.value}; visitRuntime=${VisitMonitoringRuntime.state.value}",timeout)
             }

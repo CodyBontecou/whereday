@@ -30,8 +30,8 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     adb = [args.adb, "-s", args.serial]
 
-    def run(label, command, *, check=True):
-        result = subprocess.run(adb + command, capture_output=True, text=True, timeout=90)
+    def run(label, command, *, check=True, timeout=90):
+        result = subprocess.run(adb + command, capture_output=True, text=True, timeout=timeout)
         (args.output / f"{label}.log").write_text(result.stdout + result.stderr)
         if check and result.returncode:
             raise RuntimeError(f"{label} failed; inspect its preserved log")
@@ -116,7 +116,8 @@ def main():
                 raise RuntimeError("Observed boot identity does not match the requested termination")
             if args.termination!="reboot" and pid in run("after-termination-pid", ["shell", "pidof", PACKAGE], check=False).stdout.split():
                 raise RuntimeError("Original QA process survived termination")
-        recovered = run("recover", command("recover"))
+        # The recover phase may wait up to 60 s per condition after a reboot.
+        recovered = run("recover", command("recover"), timeout=180)
         output = recovered.stdout
         if "OK (1 test)" not in output or "INSTRUMENTATION_CODE: -1" not in output or "FAILURES!!!" in output:
             raise RuntimeError("Recovery assertions failed; inspect recover.log")

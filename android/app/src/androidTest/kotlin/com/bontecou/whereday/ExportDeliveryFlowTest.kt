@@ -82,7 +82,7 @@ class ExportDeliveryFlowTest {
         show {calls.incrementAndGet();files.prepareCountryDays(CountryDayBounds())};open()
         compose.onNodeWithText("Compartir archivo").assertExists()
         compose.onNodeWithTag("history-export-folder").assertIsNotEnabled()
-        compose.onNodeWithText("La exportación completa de archivos requiere acceso de por vida verificado. Elige dónde compartir o guardar este archivo.").assertExists()
+        compose.onNodeWithText("Las exportaciones completas de archivos están incluidas en todos los planes de Whereday. Elige dónde compartir o guardar este archivo.").assertExists()
         assertEquals(0,calls.get());assertEquals(1,runBlocking {graph.history.dao.stays().size})
         if(InstrumentationRegistry.getArguments().getString("captureExportDelivery")=="true") capture()
         compose.onNodeWithText("Listo").performScrollTo().performClick()
@@ -99,7 +99,7 @@ class ExportDeliveryFlowTest {
     }
     @Test fun actualPurchaseGateHasLocalizedFailureAndDoesNotStageAFile() {
         show {graph.exports.prepareCountryDays(CountryDayBounds())};open();action("history-export-save")
-        compose.onNodeWithTag("history-export-sheet-notice").assertTextEquals("Se requiere acceso de por vida verificado para exportar archivos. La grabación, las importaciones y las vistas previas siguen siendo gratuitas.")
+        compose.onNodeWithTag("history-export-sheet-notice").assertTextEquals("Para exportar se necesita un plan de Whereday activo: Semanal, Anual o De por vida. Las importaciones y las vistas previas de exportación son gratuitas.")
         assertNull(runBlocking {graph.exports.pickerState()})
         assertTrue(File(target.cacheDir,"exports").listFiles().orEmpty().isEmpty())
         assertEquals(1,runBlocking {graph.history.dao.stays().size})

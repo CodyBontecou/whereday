@@ -89,7 +89,7 @@ class HistoryImportWorkspace internal constructor(private val directory:File,val
         },scratch={File.createTempFile("google-row-",".json",directory)},onSource={stage.source=it},onIdentity={explicitIdentity=it})
         check();stage.finishRecords()
         check(source.delete() || !source.exists()) {"Import staging cleanup failed"}
-        return PreparedHistoryImport(format,visits,points,repeated,scanned.rejected,scanned.errors,from,until,scanned.source,scanned.unsupported,years.toMap())
+        return PreparedHistoryImport(format,visits,points,repeated,scanned.rejected,scanned.errors,from,until,scanned.source,scanned.unsupported,years.toMap(),scanned.issues)
     }
     override fun close() {
         synchronized(this) {
@@ -101,7 +101,7 @@ class HistoryImportWorkspace internal constructor(private val directory:File,val
         }
     }
 }
-data class PreparedHistoryImport(val format:ExportFormat,val visits:Int,val points:Int,val repeated:Int,val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val years:Map<Int,Int> = emptyMap())
+data class PreparedHistoryImport(val format:ExportFormat,val visits:Int,val points:Int,val repeated:Int,val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val years:Map<Int,Int> = emptyMap(),val issues:List<com.bontecou.whereday.export.HistoryImportIssue> = emptyList())
 
 internal inline fun HistoryImportStage.batches(check:()->Unit,consume:(List<ImportStageRow>)->Unit) {
     var after:Pair<ImportRecordKind,String>?=null
