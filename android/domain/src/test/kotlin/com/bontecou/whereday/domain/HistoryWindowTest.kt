@@ -35,6 +35,16 @@ class HistoryWindowTest {
         assertEquals(1L,summary.build().outlierCount)
         assertEquals(point(0).coordinate.distanceTo(point(2).coordinate),summary.build().distanceMeters,0.000001)
     }
+    @Test fun keptCountExcludesGlitchesAsTheTodayDialAndOutingFiguresShowIt() {
+        val summary=PointSummaryBuilder()
+        summary.add(point(0))
+        summary.add(point(1).copy(coordinate=Coordinate(80.0,80.0),outlier=true))
+        summary.add(point(2))
+        assertEquals(2L,summary.build().keptCount)
+        assertEquals(0L,PointSummary().keptCount)
+        // Inconsistent stored counts never produce a negative figure.
+        assertEquals(0L,PointSummary(count=1,outlierCount=3).keptCount)
+    }
     @Test fun localDaysUseHalfOpenBoundsAndDaylightSavingLength() {
         val zone=ZoneId.of("America/New_York")
         val spring=HistoryRange.day(LocalDate.parse("2026-03-08"),zone)

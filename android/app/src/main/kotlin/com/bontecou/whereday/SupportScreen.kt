@@ -127,7 +127,7 @@ internal object SupportIntents {
 
 @Composable internal fun ActivityLogsScreen(entries:List<ActivityLogEntry>,info:SupportInfo,dismiss:()->Unit,clear:()->Unit,copy:(String)->Unit) {
     BackHandler(onBack=dismiss)
-    var clearing by remember {mutableStateOf(false)}
+    var clearing by rememberSaveable {mutableStateOf(false)}
     var copied by remember {mutableStateOf(false)}
     var filter by rememberSaveable {mutableStateOf(LogFilter.all)}
     val logClock=remember {java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss").withZone(java.time.ZoneId.systemDefault())}
@@ -176,7 +176,7 @@ internal object SupportIntents {
         item {WdCard(Modifier.padding(horizontal=16.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             Text(stringResource(R.string.support_preview_title),style=WdType.title3,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
             Text(stringResource(R.string.support_preview_notice),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
-            listOf(R.string.support_preview_journal,R.string.support_preview_portability,R.string.support_preview_automation).forEach {
+            listOf(R.string.support_preview_journal,R.string.support_preview_plan_portability,R.string.support_preview_automation).forEach {
                 WdDivider()
                 Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
             }

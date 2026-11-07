@@ -16,7 +16,7 @@
     <string name="automation_detail_rename_visits">Change visit names and read the updated name, address and times.</string>
     <string name="automation_detail_rename_outings">Change outing names and read their name and times.</string>
     <string name="automation_detail_recording">Start or stop recording while Whereday is open. Starting requires existing location access.</string>
-    <string name="automation_detail_exports">Complete files using the requested filters. Verified lifetime export access is also required.</string>
+    <string name="automation_detail_exports_plan">Complete files using the requested filters. An active Whereday plan is also required.</string>
     <string name="automation_back">Back to settings</string>
     <string name="automation_title">Automation</string>
     <string name="automation_intro">Connect Automate to run only the Whereday actions you approve. Opening this screen does not grant access.</string>

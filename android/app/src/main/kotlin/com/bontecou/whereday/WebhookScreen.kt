@@ -210,12 +210,12 @@ internal data class WebhookActions(
         }
         WdSectionHeader(stringResource(R.string.export_redesign_section_more))
         ExportCard {
-            WdNavRow(stringResource(R.string.webhook_purchases),icon=Icons.Outlined.WorkspacePremium,enabled=!ui.busy) {focus.clearFocus();dialog="purchase"}
+            WdNavRow(stringResource(R.string.webhook_plan_purchases),icon=Icons.Outlined.WorkspacePremium,enabled=!ui.busy) {focus.clearFocus();dialog="purchase"}
             ExportActionRow(stringResource(R.string.webhook_reset_action),{focus.clearFocus();dialog="reset"},divider=false,destructive=true)
         }
     }
     when(dialog) {
-        "purchase"->WorkspaceAlertDialog(onDismissRequest={dialog=null},title={Text(stringResource(R.string.webhook_purchase_title))},text=purchasePanel,confirmButton={TextButton(onClick={dialog=null}) {Text(stringResource(R.string.webhook_close))}})
+        "purchase"->WorkspaceAlertDialog(onDismissRequest={dialog=null},title={Text(stringResource(R.string.webhook_plan_title))},text=purchasePanel,confirmButton={TextButton(onClick={dialog=null}) {Text(stringResource(R.string.webhook_close))}})
         "leave-busy"->ConfirmWebhook(stringResource(R.string.webhook_leave_busy_title),stringResource(R.string.webhook_leave_busy_body),stringResource(R.string.webhook_leave_action),{dialog=null;back()},{dialog=null})
         "leave"->ConfirmWebhook(stringResource(R.string.webhook_leave_title),stringResource(R.string.webhook_leave_body),stringResource(R.string.webhook_discard_edits),{editor.reload(config ?: WebhookConfiguration());dialog=null;back()},{dialog=null})
         "enable"->ConfirmWebhook(stringResource(R.string.webhook_enable_title),stringResource(R.string.webhook_enable_body),stringResource(R.string.webhook_enable_save),{dialog=null;submit(WebhookQueueTransition.requireEmpty)},{dialog=null})

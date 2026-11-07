@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -81,8 +82,11 @@ internal fun dayDistance(meters:Double,metric:Boolean,locale:Locale):String = if
     return listOfNotNull(move.mode?.let {travelModeLabel(it)},move.distanceMeters.takeIf {it>0}?.let {dayDistance(it,metric,locale)},time).joinToString(" · ")
 }
 
-private val DayClockColumn=44.dp
+private val DayClockMinimum=44.dp
 private val DayDotColumn=14.dp
+
+/** The day sheet's clock gutter, measured so "23:58" never clips to "23:" at large text sizes. */
+@Composable private fun dayClockColumn():Dp=clockColumnWidth(dayClock,WdType.caption,DayClockMinimum)
 
 /** One stay in "the day so far": mono clock, place-ink dot, serif name, duration (or NOW). */
 @Composable internal fun DayStayRow(stay:DayStay,onClick:(()->Unit)?,modifier:Modifier=Modifier) {
@@ -90,7 +94,7 @@ private val DayDotColumn=14.dp
     val name=stay.name ?: stringResource(R.string.timeline_visit)
     Row(modifier.fillMaxWidth().heightIn(min=44.dp).then(if(onClick!=null) Modifier.clip(androidx.compose.foundation.shape.RoundedCornerShape(10.dp)).clickable(role=Role.Button,onClick=onClick) else Modifier)
         .testTag("day-stay-${stay.id}"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
-        Text(dayClockText(stay.start),Modifier.width(DayClockColumn),style=WdType.caption,color=colors.textMuted,maxLines=1)
+        Text(dayClockText(stay.start),Modifier.width(dayClockColumn()),style=WdType.caption,color=colors.textMuted,maxLines=1,softWrap=false)
         Box(Modifier.width(DayDotColumn),contentAlignment=Alignment.Center) {
             if(stay.current) WdLiveDot(Modifier.requiredSize(18.dp)) else Box(Modifier.size(12.dp).clip(CircleShape).background(dayInk(stay.ink)))
         }
@@ -104,7 +108,7 @@ private val DayDotColumn=14.dp
 @Composable internal fun DayMoveRow(move:DayMove,metric:Boolean,modifier:Modifier=Modifier) {
     val colors=wd
     Row(modifier.fillMaxWidth().heightIn(min=24.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
-        Spacer(Modifier.width(DayClockColumn))
+        Spacer(Modifier.width(dayClockColumn()))
         Box(Modifier.width(DayDotColumn).height(22.dp).drawBehind {
             drawLine(colors.dialTick,Offset(size.width/2,0f),Offset(size.width/2,size.height),strokeWidth=2.dp.toPx(),cap=StrokeCap.Round,
                 pathEffect=PathEffect.dashPathEffect(floatArrayOf(0.1f,4.dp.toPx())))

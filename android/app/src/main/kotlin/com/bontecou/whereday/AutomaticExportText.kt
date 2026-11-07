@@ -8,7 +8,7 @@ import com.bontecou.whereday.platform.*
     AutomaticExportFailure.execution->R.string.automatic_export_failure_execution
     AutomaticExportFailure.interrupted->R.string.automatic_export_failure_interrupted
     AutomaticExportFailure.settingsUnavailable->R.string.automatic_export_failure_settings
-    AutomaticExportFailure.purchase->R.string.automatic_export_failure_purchase
+    AutomaticExportFailure.purchase->R.string.automatic_export_failure_plan
     AutomaticExportFailure.pendingChange->R.string.automatic_export_failure_pending
 })
 @Composable internal fun automaticExportNoticeText(value:AutomaticExportNotice):String=stringResource(when(value) {

@@ -15,9 +15,13 @@ interface HistoryImportInput {fun open():InputStream;fun cancel() {}}
 data class HistoryImportSelection(val visits:Boolean=true,val points:Boolean=true)
 enum class HistoryImportPhase {idle,reading,review,applying,canceling,complete,canceled,failed}
 data class HistoryImportReview(val id:String,val format:ExportFormat,val visits:Int,val points:Int,val existing:Int,val repeated:Int,
-    val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val locale:String,val zone:String,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val replaceable:Int=existing,val years:Map<Int,Int> = emptyMap())
+    val rejected:Int,val errors:List<String>,val from:Instant?,val until:Instant?,val locale:String,val zone:String,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,val replaceable:Int=existing,val years:Map<Int,Int> = emptyMap(),
+    /** Typed reasons for [errors], index-aligned, so the screen can show localized text. */
+    val issues:List<com.bontecou.whereday.export.HistoryImportIssue> = emptyList())
 data class HistoryImportState(val phase:HistoryImportPhase=HistoryImportPhase.idle,val review:HistoryImportReview?=null,
-    val counts:HistoryImportCounts?=null,val error:String?=null) {
+    val counts:HistoryImportCounts?=null,val error:String?=null,
+    /** Set when nothing in the file was importable: the first rejected record, or null with [empty] when the file had no records at all. */
+    val issue:com.bontecou.whereday.export.HistoryImportIssue?=null,val empty:Boolean=false) {
     val busy get()=phase in setOf(HistoryImportPhase.reading,HistoryImportPhase.applying,HistoryImportPhase.canceling)
 }
 
@@ -50,7 +54,7 @@ class HistoryImportController(private val target:StagedHistoryImportTarget,priva
                 val parsed=owned.prepare(locale,zone,check)
                 val inspected=target.inspectPlan(owned.stage,check);check();owned.stage.seal(check);check()
                 val review=HistoryImportReview(UUID.randomUUID().toString(),parsed.format,parsed.visits-inspected.repeated.visits,parsed.points-inspected.repeated.points,inspected.existing,parsed.repeated+inspected.repeated.visits+inspected.repeated.points,
-                    parsed.rejected,parsed.errors,parsed.from,parsed.until,locale.toLanguageTag(),zone.id,parsed.source,parsed.unsupported,inspected.replaceable,parsed.years)
+                    parsed.rejected,parsed.errors,parsed.from,parsed.until,locale.toLanguageTag(),zone.id,parsed.source,parsed.unsupported,inspected.replaceable,parsed.years,parsed.issues)
                 synchronized(monitor) {if(ticket==revision && !flag.get()) {retained=true;mutable.value=HistoryImportState(HistoryImportPhase.review,review)}}
             } catch(error:Exception) {failed(ticket,flag,error)}
             finally {
@@ -96,7 +100,9 @@ class HistoryImportController(private val target:StagedHistoryImportTarget,priva
         if(ticket!=revision) return@synchronized
         val canceled=flag.get() || error is CancellationException || error is HistoryImportCanceled
         retire(workspace);workspace=null
+        val nothing=(error as? com.bontecou.whereday.export.NoImportableHistory)?.takeUnless {canceled}
         mutable.value=mutable.value.copy(phase=if(canceled) HistoryImportPhase.canceled else HistoryImportPhase.failed,
+            issue=nothing?.issue,empty=nothing!=null && nothing.issue==null,
             error=if(canceled) null else when(error) {
                 is HistoryImportChanged->"History changed after this review. Choose the file again and review the latest matches."
                 is HistoryImportWriteFailed->error.message

@@ -23,6 +23,8 @@ data class PointSummary(
     val count: Long = 0, val outlierCount: Long = 0, val distanceMeters: Double = 0.0,
     val firstTime: Instant? = null, val lastTime: Instant? = null,
 ) {
+    /** Fixes kept on the route: every point except GPS glitches (outliers), as the Today dial and outing figures count them. */
+    val keptCount: Long get() = (count - outlierCount).coerceAtLeast(0)
     val duration: Duration get() = if(firstTime != null && lastTime != null) Duration.between(firstTime,lastTime) else Duration.ZERO
     val averageSpeed: Double? get() = duration.toMillis().takeIf { it > 0 }?.let { distanceMeters * 1000 / it }
 }
