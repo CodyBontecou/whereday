@@ -72,7 +72,7 @@
     <string name="automatic_export_failure_execution">L’export automatique n’a pas pu aboutir. Vérifiez l’accès acheté, les autorisations du dossier et l’espace disponible, puis réessayez.</string>
     <string name="automatic_export_failure_interrupted">L’export automatique a été interrompu. Reprenez ou annulez sa demande enregistrée.</string>
     <string name="automatic_export_failure_pending">Terminez ou annulez l’export en attente avant de modifier sa planification ou son format.</string>
-    <string name="automatic_export_failure_purchase">Un accès export à vie vérifié est requis.</string>
+    <string name="automatic_export_failure_purchase">Une formule Whereday active est requise.</string>
     <string name="automatic_export_failure_settings">Impossible de charger les réglages d’export automatique. Réessayez ou réinitialisez-les pour continuer.</string>
     <string name="automatic_export_file_mode">Mise à jour du fichier du jour</string>
     <string name="automatic_export_folder_missing">Choisissez un dossier d’export dans les Paramètres avant de lancer.</string>
@@ -99,7 +99,7 @@
     <string name="automatic_export_outings_help">Les sorties sont sélectionnées selon leur heure de début. Les trajets complets sont inclus. Les sorties déduites suivent les Paramètres ; une nouvelle tentative en attente conserve les choix de déduction capturés.</string>
     <string name="automatic_export_pending">Export en attente : %1$s. La nouvelle tentative conserve cette période capturée et cette destination.</string>
     <string name="automatic_export_points">Points</string>
-    <string name="automatic_export_policy">Un accès export à vie vérifié est requis. Les exécutions quotidiennes réécrivent l’intégralité de la journée jusqu’ici. Les jours passés manqués peuvent être exportés manuellement.</string>
+    <string name="automatic_export_policy">Nécessite une formule Whereday active. Les exécutions quotidiennes réécrivent l’intégralité de la journée en cours. Les jours passés manqués peuvent être exportés manuellement.</string>
     <string name="automatic_export_repeat">Répéter</string>
     <string name="automatic_export_reset">Réinitialiser les exports automatiques</string>
     <string name="automatic_export_reset_body">Cela désactive la planification et efface ses demandes enregistrées. Les documents exportés et les sauvegardes conservées restent dans leur dossier.</string>
@@ -121,7 +121,7 @@
     <string name="automation_command_cancel">Annuler</string>
     <string name="automation_command_help">Vous pouvez annuler et consulter le journal si le résultat est interrompu.</string>
     <string name="automation_command_title">Exécution de la commande Whereday</string>
-    <string name="automation_detail_exports">Fichiers complets selon les filtres demandés. Un accès export à vie vérifié est également requis.</string>
+    <string name="automation_detail_exports">Fichiers complets avec les filtres demandés. Une formule Whereday active est également requise.</string>
     <string name="automation_detail_manual_visits">Enregistrer une arrivée à un lieu enregistré, à des coordonnées ou à votre position actuelle, et un départ des visites manuelles. Renvoie le nom, l’adresse et les heures de la visite. La position actuelle nécessite que Whereday soit ouvert avec un accès à la localisation déjà accordé.</string>
     <string name="automation_detail_outings">Noms des sorties enregistrées et heures de début et de fin.</string>
     <string name="automation_detail_places">Noms et identifiants des lieux enregistrés pour choisir une destination d’arrivée.</string>
@@ -179,7 +179,7 @@
     <string name="billing_pending_payment">Votre achat est en attente dans Google Play. L’accès commence une fois le paiement effectué et vérifié.</string>
     <string name="billing_pending_verification">Votre achat est en attente de vérification.</string>
     <string name="billing_store_unavailable">Google Play n’a pas pu ouvrir l’achat. Réessayez.</string>
-    <string name="billing_unavailable">Les achats ne sont pas disponibles dans cette version. L’enregistrement, les imports et les aperçus restent gratuits.</string>
+    <string name="billing_unavailable">Les achats ne sont pas disponibles dans cette version. Les imports et les aperçus d’export restent gratuits.</string>
     <string name="billing_verification_failed">Impossible de vérifier le statut d’achat. Vérifiez votre connexion et essayez Restaurer les achats.</string>
     <string name="billing_verified">L’accès Whereday est vérifié.</string>
     <string name="calendar_add">Ajouter l’événement à l’agenda</string>
@@ -246,7 +246,7 @@
     <string name="country_period_rolling">365 derniers jours</string>
     <string name="country_period_year">Cette année</string>
     <string name="country_preview">Aperçu du CSV des pays</string>
-    <string name="country_preview_help">L’aperçu montre les 100 premières dates locales. Exporter le CSV des pays inclut toutes les dates de la période choisie et nécessite un accès à vie vérifié.</string>
+    <string name="country_preview_help">L’aperçu affiche les 100 premières dates locales. L’export CSV des pays inclut toutes les dates de la période choisie et nécessite une formule Whereday active.</string>
     <string name="country_preview_title">Aperçu du CSV des pays</string>
     <string name="country_retry">Réessayer</string>
     <string name="country_rules">Chaque date locale compte une fois par pays. Les jours de voyage peuvent compter dans plusieurs pays. Les visites en cours et les départs non vérifiés ne comptent que la date d’arrivée ; les points d’itinéraire peuvent ajouter d’autres dates. Les lacunes ne sont pas comblées.</string>
@@ -323,8 +323,8 @@
     <string name="export_data_points">Points</string>
     <string name="export_data_visits">Visites</string>
     <string name="export_date_range">Période</string>
-    <string name="export_delivery_access_help">L’export de fichiers complets nécessite un accès à vie vérifié. Choisissez où partager ou enregistrer ce fichier.</string>
-    <string name="export_delivery_access_required">Un accès export à vie vérifié est requis. L’enregistrement, les imports et les aperçus restent gratuits.</string>
+    <string name="export_delivery_access_help">L’export du fichier complet nécessite une formule Whereday active. Choisissez où partager ou enregistrer ce fichier.</string>
+    <string name="export_delivery_access_required">Une formule Whereday active est requise pour exporter des fichiers. Les imports et les aperçus restent gratuits.</string>
     <string name="export_delivery_cancel_pending">Annuler l’export en attente</string>
     <string name="export_delivery_cancel_preparation">Annuler la préparation</string>
     <string name="export_delivery_canceled">Export annulé. Les fichiers déjà écrits restent dans la destination.</string>
@@ -337,7 +337,7 @@
     <string name="export_delivery_failed">L’enregistrement n’a pas pu aboutir. Reprenez ou choisissez une autre destination ; vérifiez si la destination précédente contient un fichier incomplet.</string>
     <string name="export_delivery_folder">Enregistrer dans le dossier d’export</string>
     <string name="export_delivery_folder_help">Choisissez un dossier d’export dans les Paramètres pour utiliser l’envoi vers un dossier.</string>
-    <string name="export_delivery_folder_policy">Les exports de fichiers nécessitent un accès à vie vérifié. Les exports vers un dossier conservent les deux fichiers quand un nom existe déjà. Choisissez un dossier dans les Paramètres.</string>
+    <string name="export_delivery_folder_policy">Les exports de fichiers nécessitent une formule Whereday active. Les exports vers un dossier conservent les deux fichiers si le nom existe déjà. Choisissez un dossier dans Paramètres.</string>
     <string name="export_delivery_folder_required">Choisissez d’abord un dossier d’export dans les Paramètres.</string>
     <string name="export_delivery_interrupted">L’enregistrement a été interrompu. Reprenez ou annulez la demande enregistrée.</string>
     <string name="export_delivery_multiple">Utilisez Partager ou le dossier d’export pour plusieurs fichiers.</string>
@@ -1473,7 +1473,7 @@
     <string name="support_preview_automation">Utilisez les raccourcis du lanceur pour les commandes d’enregistrement, la Chronologie et Exporter. Les Paramètres incluent un accès d’automatisation par action pour Automate ; la prise en charge d’Automate est expérimentale.</string>
     <string name="support_preview_journal">Enregistrez vos sorties, consultez votre carte et votre chronologie, modifiez les visites et les lieux enregistrés, et explorez les Jours par pays et les moments photo.</string>
     <string name="support_preview_notice">Cette version est encore en cours de validation pour une publication Android.</string>
-    <string name="support_preview_portability">Prévisualisez huit formats d’export et importez les fichiers d’historique pris en charge. Les exports de fichiers, les exports planifiés et les webhooks nécessitent un accès à vie vérifié ; les achats ne sont pas disponibles dans cette préversion.</string>
+    <string name="support_preview_portability">Prévisualisez huit formats d’export et importez les fichiers d’historique pris en charge. Les exports de fichiers, les exports programmés et les webhooks nécessitent une formule Whereday active ; les achats ne sont pas disponibles dans cet aperçu.</string>
     <string name="support_preview_title">Préversion de développement Android</string>
     <string name="support_privacy">Politique de confidentialité</string>
     <string name="support_rate_app">Noter Whereday sur Google Play</string>
@@ -1753,12 +1753,12 @@
     <string name="webhook_enabled_label">Activer l’envoi par webhook</string>
     <string name="webhook_endpoint">URL du point de terminaison</string>
     <string name="webhook_endpoint_help">Utilisez HTTPS. Les URL peuvent contenir des identifiants ; les afficher ou les copier peut exposer des secrets.</string>
-    <string name="webhook_failure_background">L’envoi par webhook en arrière-plan est en pause. Vérifiez l’accès à vie et les réglages, puis réessayez.</string>
+    <string name="webhook_failure_background">L’envoi des webhooks en arrière-plan est en pause. Vérifiez votre formule et les réglages, puis réessayez.</string>
     <string name="webhook_failure_changed">Les réglages de webhook ont changé. Rechargez-les avant d’enregistrer.</string>
     <string name="webhook_failure_fields">Vérifiez l’URL du webhook et les champs d’authentification.</string>
     <string name="webhook_failure_preferences">Impossible de charger les préférences de webhook. Essayez de rouvrir l’application.</string>
     <string name="webhook_failure_unavailable">Impossible d’ouvrir les réglages de webhook. Réinitialisez-les avant de configurer à nouveau l’envoi.</string>
-    <string name="webhook_failure_work">Le traitement du webhook n’a pas pu aboutir. Vérifiez l’accès à vie et les réglages, puis réessayez.</string>
+    <string name="webhook_failure_work">Le traitement du webhook n’a pas pu aboutir. Vérifiez votre formule et les réglages, puis réessayez.</string>
     <string name="webhook_flush_action">Envoyer les points en file d’attente</string>
     <string name="webhook_flush_body">Envoyer les points en mémoire tampon même si le nombre ou l’intervalle choisi n’a pas été atteint.</string>
     <string name="webhook_flush_confirm">Envoyer les points</string>
@@ -1815,8 +1815,8 @@
         <item quantity="other">%1$s points</item>
     </plurals>
     <string name="webhook_purchase_body">Les webhooks sont inclus dans chaque formule Whereday : Hebdomadaire, Annuel ou À vie. Les imports et les aperçus restent gratuits.</string>
-    <string name="webhook_purchase_title">Accès export à vie</string>
-    <string name="webhook_purchases">Accès à vie et achats</string>
+    <string name="webhook_purchase_title">Inclus dans chaque formule</string>
+    <string name="webhook_purchases">Formule et achats</string>
     <string name="webhook_query_help">Les clés API dans les URL peuvent apparaître dans les journaux des serveurs et des proxys. Utilisez l’authentification par en-tête si votre serveur la prend en charge.</string>
     <string name="webhook_queue_body">Conserver les données en file d’attente les envoie avec le point de terminaison et l’authentification que vous enregistrez. Abandonner ne supprime que les données de webhook en attente.</string>
     <string name="webhook_queue_discard">Enregistrer et abandonner la file</string>

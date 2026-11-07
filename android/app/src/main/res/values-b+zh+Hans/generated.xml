@@ -64,7 +64,7 @@
     <string name="automatic_export_failure_execution">自动导出未能完成。请检查购买权限、文件夹权限和可用存储空间，然后重试。</string>
     <string name="automatic_export_failure_interrupted">自动导出已中断。请继续或取消其已保存的请求。</string>
     <string name="automatic_export_failure_pending">请先完成或取消待处理的导出，再更改其计划或格式。</string>
-    <string name="automatic_export_failure_purchase">需要经过验证的终身导出权限。</string>
+    <string name="automatic_export_failure_purchase">需要有效的 Whereday 方案。</string>
     <string name="automatic_export_failure_settings">无法加载自动导出设置。请重试或重置设置以继续。</string>
     <string name="automatic_export_file_mode">更新当天文件</string>
     <string name="automatic_export_folder_missing">运行前请先在“设置”中选择导出文件夹。</string>
@@ -89,7 +89,7 @@
     <string name="automatic_export_outings_help">出行按开始时间选取，并包含完整路线。推断出的出行遵循“设置”；待处理的重试会保留其捕获时的推断选项。</string>
     <string name="automatic_export_pending">待处理的导出：%1$s。重试会保留此捕获时间段和目标位置。</string>
     <string name="automatic_export_points">位置点</string>
-    <string name="automatic_export_policy">需要经过验证的终身导出权限。每天一次的运行会重写当天至今的完整内容。错过的历史日期可以手动导出。</string>
+    <string name="automatic_export_policy">需要有效的 Whereday 方案。每天一次的运行会重写当天至今的完整内容。错过的历史日期可以手动导出。</string>
     <string name="automatic_export_repeat">重复</string>
     <string name="automatic_export_reset">重置自动导出</string>
     <string name="automatic_export_reset_body">这会停用计划并清除其已保存的请求。已导出的文档和保留的备份仍会留在其文件夹中。</string>
@@ -111,7 +111,7 @@
     <string name="automation_command_cancel">取消</string>
     <string name="automation_command_help">如果结果中断，你可以取消并检查日志。</string>
     <string name="automation_command_title">正在完成 Whereday 命令</string>
-    <string name="automation_detail_exports">使用所请求的筛选条件生成完整文件。还需要经过验证的终身导出权限。</string>
+    <string name="automation_detail_exports">按所请求的筛选条件生成完整文件。同样需要有效的 Whereday 方案。</string>
     <string name="automation_detail_manual_visits">在已保存的地点、坐标或你的当前位置签到，并签退手动到访。返回到访名称、地址和时间。使用当前位置需要 Whereday 处于打开状态并已获得位置权限。</string>
     <string name="automation_detail_outings">已记录出行的名称及开始/结束时间。</string>
     <string name="automation_detail_places">已保存地点的名称和 ID，用于选择签到目的地。</string>
@@ -169,7 +169,7 @@
     <string name="billing_pending_payment">你的购买正在 Google Play 中等待处理。付款完成并验证后即可开始使用。</string>
     <string name="billing_pending_verification">你的购买正在等待验证。</string>
     <string name="billing_store_unavailable">Google Play 无法打开此购买。请重试。</string>
-    <string name="billing_unavailable">此版本不支持购买。记录、导入和预览仍然免费。</string>
+    <string name="billing_unavailable">此版本不支持购买。导入和导出预览仍然免费。</string>
     <string name="billing_verification_failed">无法验证购买状态。请检查网络连接，然后尝试“恢复购买”。</string>
     <string name="billing_verified">Whereday 权限已验证。</string>
     <string name="calendar_add">将活动添加到日历</string>
@@ -230,7 +230,7 @@
     <string name="country_period_rolling">过去 365 天</string>
     <string name="country_period_year">今年</string>
     <string name="country_preview">预览国家 CSV</string>
-    <string name="country_preview_help">预览显示前 100 个本地日期。“导出国家 CSV”包含所选时间段内的所有日期，并需要经过验证的终身权限。</string>
+    <string name="country_preview_help">预览显示前 100 个本地日期。导出国家 CSV 会包含所选时间段内的所有日期，并需要有效的 Whereday 方案。</string>
     <string name="country_preview_title">国家 CSV 预览</string>
     <string name="country_retry">重试</string>
     <string name="country_rules">每个本地日期在每个国家只计算一次。旅行日可计入多个国家。未结束的到访和未验证的离开仅计算到达日期；路线位置点可能会增加其他日期。空缺不会被填补。</string>
@@ -305,8 +305,8 @@
     <string name="export_data_points">位置点</string>
     <string name="export_data_visits">访问</string>
     <string name="export_date_range">日期范围</string>
-    <string name="export_delivery_access_help">完整文件导出需要经过验证的终身权限。请选择共享或保存此文件的位置。</string>
-    <string name="export_delivery_access_required">需要经过验证的终身导出权限。记录、导入和预览仍然免费。</string>
+    <string name="export_delivery_access_help">导出完整文件需要有效的 Whereday 方案。请选择分享或保存此文件的位置。</string>
+    <string name="export_delivery_access_required">导出文件需要有效的 Whereday 方案。导入和预览仍然免费。</string>
     <string name="export_delivery_cancel_pending">取消待处理的导出</string>
     <string name="export_delivery_cancel_preparation">取消准备</string>
     <string name="export_delivery_canceled">导出已取消。已写入的文件仍保留在目标位置。</string>
@@ -319,7 +319,7 @@
     <string name="export_delivery_failed">保存未能完成。请继续或选择其他目标位置；并检查之前的目标位置中是否有不完整的文件。</string>
     <string name="export_delivery_folder">将文件保存到导出文件夹</string>
     <string name="export_delivery_folder_help">请在“设置”中选择导出文件夹，以使用文件夹导出。</string>
-    <string name="export_delivery_folder_policy">文件导出需要经过验证的终身权限。如果文件名已存在，文件夹导出会保留两个文件。请在“设置”中选择文件夹。</string>
+    <string name="export_delivery_folder_policy">导出文件需要有效的 Whereday 方案。导出到文件夹时，如果名称已存在，会保留两个文件。请在设置中选择文件夹。</string>
     <string name="export_delivery_folder_required">请先在“设置”中选择导出文件夹。</string>
     <string name="export_delivery_interrupted">保存已中断。请继续或取消已保存的请求。</string>
     <string name="export_delivery_multiple">多个文件请使用“共享”或导出文件夹。</string>
@@ -1383,7 +1383,7 @@
     <string name="support_preview_automation">使用启动器快捷方式控制记录、打开“时间轴”和“导出”。“设置”中提供针对 Automate 的逐项操作自动化权限；Automate 支持为实验性功能。</string>
     <string name="support_preview_journal">记录出行，查看地图和时间轴，编辑到访和已保存的地点，探索“国家天数”和照片时刻。</string>
     <string name="support_preview_notice">此版本仍在为 Android 正式发布进行验证。</string>
-    <string name="support_preview_portability">预览八种导出格式，并导入受支持的历史文件。文件导出、计划导出和 Webhook 需要经过验证的终身权限；此预览版不提供购买。</string>
+    <string name="support_preview_portability">预览八种导出格式并导入支持的历史文件。文件导出、定时导出和 Webhook 需要有效的 Whereday 方案；此预览版不支持购买。</string>
     <string name="support_preview_title">Android 开发预览版</string>
     <string name="support_privacy">隐私政策</string>
     <string name="support_rate_app">在 Google Play 上为 Whereday 评分</string>
@@ -1657,12 +1657,12 @@
     <string name="webhook_enabled_label">启用 Webhook 发送</string>
     <string name="webhook_endpoint">端点 URL</string>
     <string name="webhook_endpoint_help">请使用 HTTPS。URL 可能包含凭据；显示或复制它们可能会泄露机密信息。</string>
-    <string name="webhook_failure_background">后台 Webhook 发送已暂停。请检查终身权限和设置，然后重试。</string>
+    <string name="webhook_failure_background">后台 Webhook 发送已暂停。请检查你的方案和设置，然后重试。</string>
     <string name="webhook_failure_changed">Webhook 设置已更改。保存前请重新加载。</string>
     <string name="webhook_failure_fields">请检查 Webhook URL 和身份验证字段。</string>
     <string name="webhook_failure_preferences">无法加载 Webhook 偏好设置。请尝试重新打开应用。</string>
     <string name="webhook_failure_unavailable">无法打开 Webhook 设置。请先重置设置，再重新配置发送。</string>
-    <string name="webhook_failure_work">Webhook 任务未能完成。请检查终身权限和设置，然后重试。</string>
+    <string name="webhook_failure_work">Webhook 任务未能完成。请检查你的方案和设置，然后重试。</string>
     <string name="webhook_flush_action">立即发送排队的位置点</string>
     <string name="webhook_flush_body">即使尚未达到所选数量或间隔，也发送缓冲的位置点。</string>
     <string name="webhook_flush_confirm">发送位置点</string>
@@ -1715,8 +1715,8 @@
         <item quantity="other">%1$s 个位置点</item>
     </plurals>
     <string name="webhook_purchase_body">每个 Whereday 方案都包含 Webhook：周订阅、年订阅或终身版。导入和预览仍然免费。</string>
-    <string name="webhook_purchase_title">终身导出权限</string>
-    <string name="webhook_purchases">终身权限和购买</string>
+    <string name="webhook_purchase_title">每个方案都包含</string>
+    <string name="webhook_purchases">方案和购买</string>
     <string name="webhook_query_help">URL 中的 API 密钥可能会出现在服务器和代理日志中。如果你的服务器支持，请使用标头身份验证。</string>
     <string name="webhook_queue_body">保留排队数据会使用你正在保存的端点和身份验证进行发送。放弃仅会移除待发送的 Webhook 数据。</string>
     <string name="webhook_queue_discard">保存并放弃排队数据</string>

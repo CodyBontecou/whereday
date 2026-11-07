@@ -72,7 +72,7 @@ class WebhookScreenTest {
     }
     @Test fun freeConnectionTestOpensPurchaseInformationWithoutCallingDelivery() {
         show(paid=false);click("Test connection")
-        compose.onNodeWithText("Lifetime export access").assertIsDisplayed()
+        compose.onNodeWithText("Included with every plan").assertIsDisplayed()
         compose.onNodeWithText("Synthetic purchase panel").assertIsDisplayed()
         compose.runOnIdle {assertTrue(calls.isEmpty());assertTrue(saves.isEmpty())}
         compose.onNodeWithText("Close").performClick();compose.onNodeWithTag("webhook-screen").assertExists()
@@ -113,7 +113,7 @@ class WebhookScreenTest {
     }
     @Test fun systemBackAfterPurchaseInformationStillGuardsUnsavedEdits() {
         show(paid=false);compose.onNodeWithTag("webhook-enabled").performClick();click("Save webhook settings")
-        compose.onNodeWithText("Lifetime export access").assertIsDisplayed();compose.onNodeWithText("Close").performClick()
+        compose.onNodeWithText("Included with every plan").assertIsDisplayed();compose.onNodeWithText("Close").performClick()
         compose.waitForIdle();androidx.test.espresso.Espresso.pressBack()
         compose.waitUntil(5000) {runCatching {compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()}.isSuccess}
         compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed();compose.onNodeWithTag("webhook-screen").assertExists()

@@ -7,7 +7,7 @@
     <string name="export_delivery_choose">Choose export destination</string>
     <string name="export_delivery_cancel_pending">Cancel pending export</string>
     <string name="export_delivery_discard">Discard interrupted export</string>
-    <string name="export_delivery_access_help">Complete file export requires verified lifetime access. Choose where to share or save this file.</string>
+    <string name="export_delivery_access_help">Complete file export requires an active Whereday plan. Choose where to share or save this file.</string>
     <string name="export_delivery_share">Share file</string>
     <string name="export_delivery_save_as">Save file as…</string>
     <string name="export_delivery_folder">Save file to export folder</string>
@@ -19,7 +19,7 @@
     <string name="export_delivery_interrupted">Saving was interrupted. Resume or cancel the saved request.</string>
     <string name="export_delivery_failed">Saving could not finish. Resume or choose another destination; check the prior destination for an incomplete file.</string>
     <string name="export_delivery_unavailable">Saved export could not be restored. Discard the interrupted request or try again.</string>
-    <string name="export_delivery_access_required">Verified lifetime export access is required. Recording, imports and previews remain free.</string>
+    <string name="export_delivery_access_required">An active Whereday plan is required to export files. Imports and previews remain free.</string>
     <string name="export_delivery_changed">The destination changed. Choose another destination to preserve it.</string>
     <string name="export_delivery_destination_unavailable">Destination access was lost. Choose another destination.</string>
     <string name="export_delivery_prepared_unavailable">Prepared export changed or expired. Prepare it again.</string>
@@ -36,7 +36,7 @@
     <string name="export_delivery_export_folder">Save to export folder</string>
     <string name="export_delivery_share_title">Share history export</string>
     <string name="export_delivery_progress">Visits prepared: %1$s. Points prepared: %2$s.</string>
-    <string name="export_delivery_folder_policy">File exports require verified lifetime access. Folder exports keep both files when a name already exists. Choose a folder in Settings.</string>
+    <string name="export_delivery_folder_policy">File exports require an active Whereday plan. Folder exports keep both files when a name already exists. Choose a folder in Settings.</string>
     <plurals name="export_delivery_saved_files">
         <item quantity="one">%1$s export file saved and verified.</item>
         <item quantity="other">%1$s export files saved and verified.</item>

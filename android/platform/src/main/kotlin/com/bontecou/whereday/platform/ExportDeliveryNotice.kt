@@ -10,7 +10,7 @@ enum class ExportDeliveryNotice(val diagnostic:String) {
     interrupted("Saving was interrupted. Resume or cancel the saved request."),
     failed("Saving could not finish. Resume or choose another destination; check the prior destination for an incomplete file."),
     unavailable("Saved export could not be restored. Discard the interrupted request or try again."),
-    accessRequired("Verified lifetime export access is required. Recording, imports and previews remain free."),
+    accessRequired("An active Whereday plan is required to export files. Imports and previews remain free."),
     destinationChanged("The destination changed. Choose another destination to preserve it."),
     destinationUnavailable("Destination access was lost. Choose another destination."),
     preparedUnavailable("Prepared export changed or expired. Prepare it again."),

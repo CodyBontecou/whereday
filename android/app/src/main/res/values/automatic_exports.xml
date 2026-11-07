@@ -21,7 +21,7 @@
     <string name="automatic_export_container_help">GPX and KML always rewrite the complete day so far.</string>
     <string name="automatic_export_folder_ready">Export folder selected. Uses the filename template from Export.</string>
     <string name="automatic_export_folder_missing">Choose an export folder in Settings before running.</string>
-    <string name="automatic_export_policy">Verified lifetime export access is required. Once-daily runs rewrite the complete day so far. Missed historical days can be exported manually.</string>
+    <string name="automatic_export_policy">Requires an active Whereday plan. Once-daily runs rewrite the complete day so far. Missed historical days can be exported manually.</string>
     <string name="automatic_export_last_success">Last successful export: %1$s</string>
     <string name="automatic_export_no_success">No successful automatic export yet.</string>
     <string name="automatic_export_next">Next planned run: %1$s. Android may delay it.</string>
@@ -40,7 +40,7 @@
     <string name="automatic_export_failure_execution">Automatic export could not finish. Check purchase access, folder permissions and available storage, then retry.</string>
     <string name="automatic_export_failure_interrupted">Automatic export was interrupted. Resume or cancel its saved request.</string>
     <string name="automatic_export_failure_settings">Automatic export settings could not be loaded. Retry or reset them to continue.</string>
-    <string name="automatic_export_failure_purchase">Verified lifetime export access is required.</string>
+    <string name="automatic_export_failure_purchase">An active Whereday plan is required.</string>
     <string name="automatic_export_failure_pending">Finish or cancel the pending export before changing its schedule or format.</string>
     <string name="automatic_export_notice_missing">The day\'s file was missing, so the complete captured day was rebuilt.</string>
     <string name="automatic_export_notice_json">The existing JSON could not be merged; the complete captured day was rewritten.</string>

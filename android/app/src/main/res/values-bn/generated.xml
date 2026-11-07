@@ -68,7 +68,7 @@
     <string name="automatic_export_failure_execution">স্বয়ংক্রিয় রপ্তানি শেষ করা যায়নি। কেনাকাটার অ্যাক্সেস, ফোল্ডারের অনুমতি ও উপলব্ধ স্টোরেজ দেখে আবার চেষ্টা করুন।</string>
     <string name="automatic_export_failure_interrupted">স্বয়ংক্রিয় রপ্তানি বাধাগ্রস্ত হয়েছে। এর সংরক্ষিত অনুরোধ আবার চালু বা বাতিল করুন।</string>
     <string name="automatic_export_failure_pending">সময়সূচি বা ফরম্যাট বদলানোর আগে অপেক্ষমাণ রপ্তানি শেষ বা বাতিল করুন।</string>
-    <string name="automatic_export_failure_purchase">যাচাই করা লাইফটাইম রপ্তানি অ্যাক্সেস প্রয়োজন।</string>
+    <string name="automatic_export_failure_purchase">একটি সক্রিয় Whereday প্ল্যান প্রয়োজন।</string>
     <string name="automatic_export_failure_settings">স্বয়ংক্রিয় রপ্তানির সেটিংস লোড করা যায়নি। চালিয়ে যেতে আবার চেষ্টা বা রিসেট করুন।</string>
     <string name="automatic_export_file_mode">দিনের ফাইল আপডেট</string>
     <string name="automatic_export_folder_missing">চালানোর আগে সেটিংসে একটি রপ্তানি ফোল্ডার বেছে নিন।</string>
@@ -94,7 +94,7 @@
     <string name="automatic_export_outings_help">আউটিং তাদের শুরুর সময় অনুযায়ী বাছাই হয়। সম্পূর্ণ রুট অন্তর্ভুক্ত থাকে। অনুমিত আউটিং সেটিংস অনুসরণ করে; অপেক্ষমাণ পুনঃচেষ্টা তার ধারণ করা অনুমানের পছন্দ বজায় রাখে।</string>
     <string name="automatic_export_pending">অপেক্ষমাণ রপ্তানি: %1$s। আবার চেষ্টা করলে এই ধারণ করা সময়সীমা ও গন্তব্য বজায় থাকে।</string>
     <string name="automatic_export_points">পয়েন্ট</string>
-    <string name="automatic_export_policy">যাচাই করা লাইফটাইম রপ্তানি অ্যাক্সেস প্রয়োজন। দিনে একবারের রান এখন পর্যন্ত পুরো দিনটি নতুন করে লেখে। বাদ পড়া আগের দিনগুলো ম্যানুয়ালি রপ্তানি করা যায়।</string>
+    <string name="automatic_export_policy">একটি সক্রিয় Whereday প্ল্যান প্রয়োজন। দিনে একবারের রান এখন পর্যন্ত পুরো দিনটি নতুন করে লেখে। বাদ পড়া আগের দিনগুলো হাতে রপ্তানি করা যায়।</string>
     <string name="automatic_export_repeat">পুনরাবৃত্তি</string>
     <string name="automatic_export_reset">স্বয়ংক্রিয় রপ্তানি রিসেট করুন</string>
     <string name="automatic_export_reset_body">এটি সময়সূচি বন্ধ করে এবং এর সংরক্ষিত অনুরোধ মুছে দেয়। রপ্তানি করা ডকুমেন্ট ও সংরক্ষিত ব্যাকআপ তাদের ফোল্ডারে থাকবে।</string>
@@ -116,7 +116,7 @@
     <string name="automation_command_cancel">বাতিল করুন</string>
     <string name="automation_command_help">ফলাফল বাধাগ্রস্ত হলে আপনি বাতিল করে জার্নাল দেখে নিতে পারেন।</string>
     <string name="automation_command_title">Whereday কমান্ড সম্পন্ন হচ্ছে</string>
-    <string name="automation_detail_exports">অনুরোধ করা ফিল্টার ব্যবহার করে সম্পূর্ণ ফাইল। যাচাই করা লাইফটাইম রপ্তানি অ্যাক্সেসও প্রয়োজন।</string>
+    <string name="automation_detail_exports">অনুরোধ করা ফিল্টারসহ সম্পূর্ণ ফাইল। একটি সক্রিয় Whereday প্ল্যানও প্রয়োজন।</string>
     <string name="automation_detail_manual_visits">কোনো সংরক্ষিত জায়গা, স্থানাঙ্ক বা আপনার বর্তমান অবস্থানে চেক-ইন করুন এবং ম্যানুয়াল ভিজিট থেকে চেক-আউট করুন। ভিজিটের নাম, ঠিকানা ও সময় ফেরত দেয়। বর্তমান অবস্থানের জন্য বিদ্যমান লোকেশন অ্যাক্সেসসহ Whereday খোলা থাকা প্রয়োজন।</string>
     <string name="automation_detail_outings">রেকর্ড করা আউটিংয়ের নাম ও শুরু/শেষের সময়।</string>
     <string name="automation_detail_places">চেক-ইন গন্তব্য বেছে নেওয়ার জন্য সংরক্ষিত জায়গার নাম ও ID।</string>
@@ -174,7 +174,7 @@
     <string name="billing_pending_payment">আপনার কেনাকাটা Google Play-এ অপেক্ষমাণ। পেমেন্ট সম্পন্ন ও যাচাই হওয়ার পর অ্যাক্সেস শুরু হবে।</string>
     <string name="billing_pending_verification">আপনার কেনাকাটা যাচাইয়ের অপেক্ষায় আছে।</string>
     <string name="billing_store_unavailable">Google Play কেনাকাটাটি খুলতে পারেনি। আবার চেষ্টা করুন।</string>
-    <string name="billing_unavailable">এই বিল্ডে কেনাকাটা উপলব্ধ নয়। রেকর্ডিং, আমদানি ও প্রিভিউ বিনামূল্যে থাকবে।</string>
+    <string name="billing_unavailable">এই বিল্ডে কেনাকাটা উপলব্ধ নয়। আমদানি ও রপ্তানির প্রিভিউ বিনামূল্যে থাকবে।</string>
     <string name="billing_verification_failed">কেনাকাটার অবস্থা যাচাই করা যায়নি। সংযোগ দেখে কেনাকাটা পুনরুদ্ধার করুন চেষ্টা করুন।</string>
     <string name="billing_verified">Whereday অ্যাক্সেস যাচাই করা হয়েছে।</string>
     <string name="calendar_add">ক্যালেন্ডারে ইভেন্ট যোগ করুন</string>
@@ -238,7 +238,7 @@
     <string name="country_period_rolling">গত 365 দিন</string>
     <string name="country_period_year">এই বছর</string>
     <string name="country_preview">দেশের CSV প্রিভিউ</string>
-    <string name="country_preview_help">প্রিভিউতে প্রথম 100টি স্থানীয় তারিখ দেখানো হয়। দেশের CSV রপ্তানিতে নির্বাচিত সময়কালের সব তারিখ থাকে এবং যাচাই করা লাইফটাইম অ্যাক্সেস প্রয়োজন।</string>
+    <string name="country_preview_help">প্রিভিউতে প্রথম 100টি স্থানীয় তারিখ দেখায়। দেশের CSV রপ্তানিতে বেছে নেওয়া সময়ের সব তারিখ থাকে এবং এর জন্য একটি সক্রিয় Whereday প্ল্যান প্রয়োজন।</string>
     <string name="country_preview_title">দেশের CSV প্রিভিউ</string>
     <string name="country_retry">আবার চেষ্টা করুন</string>
     <string name="country_rules">প্রতিটি স্থানীয় তারিখ প্রতি দেশে একবার গণনা হয়। ভ্রমণের দিন একাধিক দেশে গণনা হতে পারে। খোলা ভিজিট ও অযাচাইকৃত প্রস্থানে শুধু আগমনের তারিখ গণনা হয়; রুট পয়েন্ট অন্য তারিখ যোগ করতে পারে। ফাঁকগুলো পূরণ করা হয় না।</string>
@@ -314,8 +314,8 @@
     <string name="export_data_points">পয়েন্ট</string>
     <string name="export_data_visits">ভিজিট</string>
     <string name="export_date_range">তারিখের পরিসর</string>
-    <string name="export_delivery_access_help">সম্পূর্ণ ফাইল রপ্তানির জন্য যাচাই করা লাইফটাইম অ্যাক্সেস প্রয়োজন। এই ফাইল কোথায় শেয়ার বা সংরক্ষণ করবেন বেছে নিন।</string>
-    <string name="export_delivery_access_required">যাচাই করা লাইফটাইম রপ্তানি অ্যাক্সেস প্রয়োজন। রেকর্ডিং, আমদানি ও প্রিভিউ বিনামূল্যে থাকবে।</string>
+    <string name="export_delivery_access_help">সম্পূর্ণ ফাইল রপ্তানির জন্য একটি সক্রিয় Whereday প্ল্যান প্রয়োজন। ফাইলটি কোথায় শেয়ার বা সংরক্ষণ করবেন বেছে নিন।</string>
+    <string name="export_delivery_access_required">ফাইল রপ্তানির জন্য একটি সক্রিয় Whereday প্ল্যান প্রয়োজন। আমদানি ও প্রিভিউ বিনামূল্যে থাকবে।</string>
     <string name="export_delivery_cancel_pending">অপেক্ষমাণ রপ্তানি বাতিল করুন</string>
     <string name="export_delivery_cancel_preparation">প্রস্তুতি বাতিল করুন</string>
     <string name="export_delivery_canceled">রপ্তানি বাতিল হয়েছে। আগেই লেখা ফাইল গন্তব্যে থাকবে।</string>
@@ -328,7 +328,7 @@
     <string name="export_delivery_failed">সংরক্ষণ শেষ করা যায়নি। আবার চালু করুন বা অন্য গন্তব্য বেছে নিন; আগের গন্তব্যে অসম্পূর্ণ ফাইল আছে কিনা দেখুন।</string>
     <string name="export_delivery_folder">রপ্তানি ফোল্ডারে ফাইল সংরক্ষণ করুন</string>
     <string name="export_delivery_folder_help">ফোল্ডারে পাঠাতে সেটিংসে একটি রপ্তানি ফোল্ডার বেছে নিন।</string>
-    <string name="export_delivery_folder_policy">ফাইল রপ্তানির জন্য যাচাই করা লাইফটাইম অ্যাক্সেস প্রয়োজন। একই নাম আগে থেকে থাকলে ফোল্ডার রপ্তানি দুটি ফাইলই রাখে। সেটিংসে একটি ফোল্ডার বেছে নিন।</string>
+    <string name="export_delivery_folder_policy">ফাইল রপ্তানির জন্য একটি সক্রিয় Whereday প্ল্যান প্রয়োজন। নাম আগে থেকে থাকলে ফোল্ডার রপ্তানি দুটি ফাইলই রাখে। সেটিংসে একটি ফোল্ডার বেছে নিন।</string>
     <string name="export_delivery_folder_required">প্রথমে সেটিংসে একটি রপ্তানি ফোল্ডার বেছে নিন।</string>
     <string name="export_delivery_interrupted">সংরক্ষণ বাধাগ্রস্ত হয়েছে। সংরক্ষিত অনুরোধটি আবার চালু বা বাতিল করুন।</string>
     <string name="export_delivery_multiple">একাধিক ফাইলের জন্য শেয়ার বা রপ্তানি ফোল্ডার ব্যবহার করুন।</string>
@@ -1428,7 +1428,7 @@
     <string name="support_preview_automation">রেকর্ডিংয়ের নিয়ন্ত্রণ, টাইমলাইন ও রপ্তানির জন্য লঞ্চার শর্টকাট ব্যবহার করুন। সেটিংসে Automate-এর জন্য প্রতিটি কাজের অটোমেশন অ্যাক্সেস আছে; Automate সমর্থন পরীক্ষামূলক।</string>
     <string name="support_preview_journal">আউটিং রেকর্ড করুন, আপনার মানচিত্র ও টাইমলাইন দেখুন, ভিজিট ও সংরক্ষিত জায়গা সম্পাদনা করুন, এবং দেশভিত্তিক দিন ও ফটোর মুহূর্ত ঘুরে দেখুন।</string>
     <string name="support_preview_notice">Android রিলিজের জন্য এই বিল্ডটি এখনো যাচাই করা হচ্ছে।</string>
-    <string name="support_preview_portability">আটটি রপ্তানি ফরম্যাটের প্রিভিউ দেখুন এবং সমর্থিত ইতিহাসের ফাইল আমদানি করুন। ফাইল রপ্তানি, নির্ধারিত রপ্তানি ও ওয়েবহুকের জন্য যাচাই করা লাইফটাইম অ্যাক্সেস প্রয়োজন; এই প্রিভিউতে কেনাকাটা উপলব্ধ নয়।</string>
+    <string name="support_preview_portability">আটটি রপ্তানি ফরম্যাটের প্রিভিউ দেখুন এবং সমর্থিত ইতিহাস ফাইল আমদানি করুন। ফাইল রপ্তানি, নির্ধারিত রপ্তানি ও ওয়েবহুকের জন্য একটি সক্রিয় Whereday প্ল্যান প্রয়োজন; এই প্রিভিউতে কেনাকাটা উপলব্ধ নয়।</string>
     <string name="support_preview_title">Android ডেভেলপমেন্ট প্রিভিউ</string>
     <string name="support_privacy">গোপনীয়তা নীতি</string>
     <string name="support_rate_app">Google Play-এ Whereday রেট করুন</string>
@@ -1705,12 +1705,12 @@
     <string name="webhook_enabled_label">ওয়েবহুকে পাঠানো চালু করুন</string>
     <string name="webhook_endpoint">এন্ডপয়েন্ট URL</string>
     <string name="webhook_endpoint_help">HTTPS ব্যবহার করুন। URL-এ ক্রেডেনশিয়াল থাকতে পারে; সেগুলো দেখালে বা কপি করলে গোপন তথ্য প্রকাশ হতে পারে।</string>
-    <string name="webhook_failure_background">ব্যাকগ্রাউন্ডে ওয়েবহুক পাঠানো বিরতিতে আছে। লাইফটাইম অ্যাক্সেস ও সেটিংস দেখে আবার চেষ্টা করুন।</string>
+    <string name="webhook_failure_background">ব্যাকগ্রাউন্ডে ওয়েবহুক পাঠানো বিরতিতে আছে। আপনার প্ল্যান ও সেটিংস দেখে আবার চেষ্টা করুন।</string>
     <string name="webhook_failure_changed">ওয়েবহুক সেটিংস বদলে গেছে। সংরক্ষণের আগে আবার লোড করুন।</string>
     <string name="webhook_failure_fields">ওয়েবহুক URL ও প্রমাণীকরণের ফিল্ড দেখুন।</string>
     <string name="webhook_failure_preferences">ওয়েবহুকের পছন্দ লোড করা যায়নি। অ্যাপটি আবার খুলে দেখুন।</string>
     <string name="webhook_failure_unavailable">ওয়েবহুক সেটিংস খোলা যায়নি। আবার পাঠানো কনফিগার করার আগে সেগুলো রিসেট করুন।</string>
-    <string name="webhook_failure_work">ওয়েবহুকের কাজ শেষ করা যায়নি। লাইফটাইম অ্যাক্সেস ও সেটিংস দেখে আবার চেষ্টা করুন।</string>
+    <string name="webhook_failure_work">ওয়েবহুকের কাজ শেষ করা যায়নি। আপনার প্ল্যান ও সেটিংস দেখে আবার চেষ্টা করুন।</string>
     <string name="webhook_flush_action">সারির পয়েন্ট পাঠিয়ে দিন</string>
     <string name="webhook_flush_body">নির্বাচিত সংখ্যা বা বিরতিতে না পৌঁছালেও বাফার করা পয়েন্ট পাঠান।</string>
     <string name="webhook_flush_confirm">পয়েন্ট পাঠিয়ে দিন</string>
@@ -1765,8 +1765,8 @@
         <item quantity="other">%1$s টি পয়েন্ট</item>
     </plurals>
     <string name="webhook_purchase_body">প্রতিটি Whereday প্ল্যানে ওয়েবহুক অন্তর্ভুক্ত: সাপ্তাহিক, বার্ষিক বা লাইফটাইম। আমদানি ও প্রিভিউ বিনামূল্যে থাকবে।</string>
-    <string name="webhook_purchase_title">লাইফটাইম রপ্তানি অ্যাক্সেস</string>
-    <string name="webhook_purchases">লাইফটাইম অ্যাক্সেস ও কেনাকাটা</string>
+    <string name="webhook_purchase_title">প্রতিটি প্ল্যানে অন্তর্ভুক্ত</string>
+    <string name="webhook_purchases">প্ল্যান ও কেনাকাটা</string>
     <string name="webhook_query_help">URL-এর API কী সার্ভার ও প্রক্সি লগে দেখা যেতে পারে। আপনার সার্ভার সমর্থন করলে হেডার প্রমাণীকরণ ব্যবহার করুন।</string>
     <string name="webhook_queue_body">সারির ডেটা রাখলে সেটি আপনার সংরক্ষণ করা এন্ডপয়েন্ট ও প্রমাণীকরণ দিয়ে পাঠানো হয়। বাদ দিলে শুধু অপেক্ষমাণ ওয়েবহুক ডেটা সরানো হয়।</string>
     <string name="webhook_queue_discard">সংরক্ষণ করে সারির ডেটা বাদ দিন</string>

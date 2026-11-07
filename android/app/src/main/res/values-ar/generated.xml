@@ -84,7 +84,7 @@
     <string name="automatic_export_failure_execution">تعذّر إكمال التصدير التلقائي. تحقّق من صلاحية الشراء وأذونات المجلد والمساحة المتاحة، ثم أعد المحاولة.</string>
     <string name="automatic_export_failure_interrupted">انقطع التصدير التلقائي. استأنف طلبه المحفوظ أو ألغِه.</string>
     <string name="automatic_export_failure_pending">أكمل التصدير المعلّق أو ألغِه قبل تغيير جدوله أو تنسيقه.</string>
-    <string name="automatic_export_failure_purchase">يلزم وصول مُتحقَّق منه مدى الحياة إلى التصدير.</string>
+    <string name="automatic_export_failure_purchase">يلزم وجود خطة Whereday نشطة.</string>
     <string name="automatic_export_failure_settings">تعذّر تحميل إعدادات التصدير التلقائي. أعد المحاولة أو أعد ضبطها للمتابعة.</string>
     <string name="automatic_export_file_mode">تحديث ملف اليوم</string>
     <string name="automatic_export_folder_missing">اختر مجلد تصدير في الإعدادات قبل التشغيل.</string>
@@ -114,7 +114,7 @@
     <string name="automatic_export_outings_help">تُختار النزهات حسب وقت بدئها. وتُضمَّن المسارات الكاملة. تتبع النزهات المستنتجة الإعدادات؛ وتحتفظ إعادة المحاولة المعلّقة بخيارات الاستنتاج الملتقطة.</string>
     <string name="automatic_export_pending">تصدير معلّق: %1$s. تحتفظ إعادة المحاولة بهذه الفترة الملتقطة وبالوجهة.</string>
     <string name="automatic_export_points">نقاط</string>
-    <string name="automatic_export_policy">يلزم وصول مُتحقَّق منه مدى الحياة إلى التصدير. يعيد التشغيل اليومي كتابة اليوم كاملًا حتى الآن. يمكن تصدير الأيام السابقة الفائتة يدويًا.</string>
+    <string name="automatic_export_policy">يتطلب خطة Whereday نشطة. يعيد التشغيل اليومي كتابة اليوم كاملًا حتى الآن. يمكن تصدير الأيام السابقة الفائتة يدويًا.</string>
     <string name="automatic_export_repeat">تكرار</string>
     <string name="automatic_export_reset">إعادة ضبط التصدير التلقائي</string>
     <string name="automatic_export_reset_body">يؤدي هذا إلى تعطيل الجدول ومسح طلباته المحفوظة. تبقى المستندات المصدّرة والنسخ الاحتياطية المحفوظة في مجلدها.</string>
@@ -136,7 +136,7 @@
     <string name="automation_command_cancel">إلغاء</string>
     <string name="automation_command_help">يمكنك الإلغاء ومراجعة اليوميات إذا انقطعت النتيجة.</string>
     <string name="automation_command_title">جارٍ إكمال أمر Whereday</string>
-    <string name="automation_detail_exports">ملفات كاملة وفق عوامل التصفية المطلوبة. يلزم أيضًا وصول مُتحقَّق منه مدى الحياة إلى التصدير.</string>
+    <string name="automation_detail_exports">ملفات كاملة بالمرشحات المطلوبة. يلزم أيضًا وجود خطة Whereday نشطة.</string>
     <string name="automation_detail_manual_visits">سجّل الوصول إلى مكان محفوظ أو إحداثيات أو موقعك الحالي، وسجّل المغادرة من الزيارات اليدوية. يُرجع اسم الزيارة وعنوانها وأوقاتها. يتطلب الموقع الحالي أن يكون Whereday مفتوحًا مع إذن وصول إلى الموقع ممنوح مسبقًا.</string>
     <string name="automation_detail_outings">أسماء النزهات المسجّلة وأوقات بدئها وانتهائها.</string>
     <string name="automation_detail_places">أسماء الأماكن المحفوظة ومعرّفاتها لاختيار وجهة تسجيل الوصول.</string>
@@ -194,7 +194,7 @@
     <string name="billing_pending_payment">عملية الشراء معلّقة في Google Play. يبدأ الوصول بعد إتمام الدفع والتحقق منه.</string>
     <string name="billing_pending_verification">عملية الشراء بانتظار التحقق.</string>
     <string name="billing_store_unavailable">تعذّر على Google Play فتح عملية الشراء. حاول مجددًا.</string>
-    <string name="billing_unavailable">عمليات الشراء غير متاحة في هذا الإصدار. يظل التسجيل والاستيراد والمعاينات مجانية.</string>
+    <string name="billing_unavailable">عمليات الشراء غير متاحة في هذا الإصدار. يظل الاستيراد ومعاينات التصدير مجانية.</string>
     <string name="billing_verification_failed">تعذّر التحقق من حالة الشراء. تحقّق من اتصالك وجرّب استعادة المشتريات.</string>
     <string name="billing_verified">تم التحقق من الوصول إلى Whereday.</string>
     <string name="calendar_add">إضافة حدث إلى التقويم</string>
@@ -270,7 +270,7 @@
     <string name="country_period_rolling">آخر 365 يومًا</string>
     <string name="country_period_year">هذا العام</string>
     <string name="country_preview">معاينة CSV الدول</string>
-    <string name="country_preview_help">تعرض المعاينة أول 100 تاريخ محلي. يتضمن تصدير CSV الدول كل التواريخ في الفترة المحددة ويتطلب وصولًا مُتحقَّقًا منه مدى الحياة.</string>
+    <string name="country_preview_help">تعرض المعاينة أول 100 تاريخ محلي. يشمل تصدير CSV للدول كل التواريخ في الفترة المحددة ويتطلب خطة Whereday نشطة.</string>
     <string name="country_preview_title">معاينة CSV الدول</string>
     <string name="country_retry">حاول مجددًا</string>
     <string name="country_rules">يُحتسب كل تاريخ محلي مرة واحدة لكل دولة. يمكن أن تُحتسب أيام السفر في أكثر من دولة. الزيارات المفتوحة والمغادرات غير المتحقَّق منها لا يُحتسب منها إلا تاريخ الوصول؛ ويمكن أن تضيف نقاط المسار تواريخ أخرى. لا تُملأ الفجوات.</string>
@@ -350,8 +350,8 @@
     <string name="export_data_points">نقاط</string>
     <string name="export_data_visits">الزيارات</string>
     <string name="export_date_range">النطاق الزمني</string>
-    <string name="export_delivery_access_help">يتطلب تصدير الملف الكامل وصولًا مُتحقَّقًا منه مدى الحياة. اختر مكان مشاركة هذا الملف أو حفظه.</string>
-    <string name="export_delivery_access_required">يلزم وصول مُتحقَّق منه مدى الحياة إلى التصدير. يظل التسجيل والاستيراد والمعاينات مجانية.</string>
+    <string name="export_delivery_access_help">يتطلب تصدير الملف الكامل خطة Whereday نشطة. اختر مكان مشاركة هذا الملف أو حفظه.</string>
+    <string name="export_delivery_access_required">يلزم وجود خطة Whereday نشطة لتصدير الملفات. يظل الاستيراد والمعاينات مجانية.</string>
     <string name="export_delivery_cancel_pending">إلغاء التصدير المعلّق</string>
     <string name="export_delivery_cancel_preparation">إلغاء التجهيز</string>
     <string name="export_delivery_canceled">أُلغي التصدير. تبقى الملفات المكتوبة بالفعل في الوجهة.</string>
@@ -364,7 +364,7 @@
     <string name="export_delivery_failed">تعذّر إكمال الحفظ. استأنف أو اختر وجهة أخرى؛ وتحقّق من الوجهة السابقة بحثًا عن ملف غير مكتمل.</string>
     <string name="export_delivery_folder">حفظ الملف في مجلد التصدير</string>
     <string name="export_delivery_folder_help">اختر مجلد تصدير في الإعدادات لاستخدام التسليم إلى مجلد.</string>
-    <string name="export_delivery_folder_policy">يتطلب تصدير الملفات وصولًا مُتحقَّقًا منه مدى الحياة. يحتفظ التصدير إلى مجلد بالملفين كليهما عند وجود اسم مطابق. اختر مجلدًا في الإعدادات.</string>
+    <string name="export_delivery_folder_policy">يتطلب تصدير الملفات خطة Whereday نشطة. يحتفظ التصدير إلى مجلد بالملفين عند وجود الاسم مسبقًا. اختر مجلدًا من الإعدادات.</string>
     <string name="export_delivery_folder_required">اختر مجلد تصدير في الإعدادات أولًا.</string>
     <string name="export_delivery_interrupted">انقطع الحفظ. استأنف الطلب المحفوظ أو ألغِه.</string>
     <string name="export_delivery_multiple">استخدم المشاركة أو مجلد التصدير لعدة ملفات.</string>
@@ -1608,7 +1608,7 @@
     <string name="support_preview_automation">استخدم اختصارات المشغّل لعناصر التحكم في التسجيل والجدول الزمني والتصدير. تتضمن الإعدادات وصول أتمتة لكل إجراء على حدة لـ Automate؛ ودعم Automate تجريبي.</string>
     <string name="support_preview_journal">سجّل النزهات، وراجع خريطتك وجدولك الزمني، وعدّل الزيارات والأماكن المحفوظة، واستكشف أيام الدول ولحظات الصور.</string>
     <string name="support_preview_notice">لا يزال هذا الإصدار قيد التحقق لإصداره على Android.</string>
-    <string name="support_preview_portability">عاين ثمانية تنسيقات تصدير واستورد ملفات السجل المدعومة. يتطلب تصدير الملفات والتصدير المجدول وWebhooks وصولًا مُتحقَّقًا منه مدى الحياة؛ وعمليات الشراء غير متاحة في هذه المعاينة.</string>
+    <string name="support_preview_portability">عاين ثمانية تنسيقات للتصدير واستورد ملفات السجل المدعومة. يتطلب تصدير الملفات والتصدير المجدول وWebhooks خطة Whereday نشطة؛ عمليات الشراء غير متاحة في هذه المعاينة.</string>
     <string name="support_preview_title">معاينة تطوير Android</string>
     <string name="support_privacy">سياسة الخصوصية</string>
     <string name="support_rate_app">قيّم Whereday على Google Play</string>
@@ -1897,12 +1897,12 @@
     <string name="webhook_enabled_label">تفعيل تسليم Webhook</string>
     <string name="webhook_endpoint">عنوان URL لنقطة الاستقبال</string>
     <string name="webhook_endpoint_help">استخدم HTTPS. قد تحتوي عناوين URL على بيانات اعتماد؛ وكشفها أو نسخها قد يعرّض الأسرار للخطر.</string>
-    <string name="webhook_failure_background">تسليم Webhook في الخلفية متوقف مؤقتًا. تحقّق من الوصول مدى الحياة والإعدادات، ثم أعد المحاولة.</string>
+    <string name="webhook_failure_background">توقف إرسال Webhooks في الخلفية مؤقتًا. تحقّق من خطتك والإعدادات، ثم أعد المحاولة.</string>
     <string name="webhook_failure_changed">تغيّرت إعدادات Webhook. أعد تحميلها قبل الحفظ.</string>
     <string name="webhook_failure_fields">تحقّق من عنوان URL لـ Webhook وحقول المصادقة.</string>
     <string name="webhook_failure_preferences">تعذّر تحميل تفضيلات Webhook. جرّب إعادة فتح التطبيق.</string>
     <string name="webhook_failure_unavailable">تعذّر فتح إعدادات Webhook. أعد ضبطها قبل إعداد التسليم مجددًا.</string>
-    <string name="webhook_failure_work">تعذّر إكمال عمل Webhook. تحقّق من الوصول مدى الحياة والإعدادات، ثم أعد المحاولة.</string>
+    <string name="webhook_failure_work">تعذّر إنهاء مهمة Webhook. تحقّق من خطتك والإعدادات، ثم أعد المحاولة.</string>
     <string name="webhook_flush_action">إرسال النقاط في قائمة الانتظار</string>
     <string name="webhook_flush_body">أرسل النقاط المخزّنة مؤقتًا حتى لو لم يُبلغ العدد أو الفاصل الزمني المحدد.</string>
     <string name="webhook_flush_confirm">إرسال النقاط</string>
@@ -1965,8 +1965,8 @@
         <item quantity="other">%1$s نقطة</item>
     </plurals>
     <string name="webhook_purchase_body">Webhooks مضمّنة في كل خطط Whereday: الأسبوعية أو السنوية أو مدى الحياة. يظل الاستيراد والمعاينات مجانية.</string>
-    <string name="webhook_purchase_title">وصول مدى الحياة إلى التصدير</string>
-    <string name="webhook_purchases">الوصول مدى الحياة والمشتريات</string>
+    <string name="webhook_purchase_title">مضمّن في كل خطة</string>
+    <string name="webhook_purchases">الخطة وعمليات الشراء</string>
     <string name="webhook_query_help">قد تظهر مفاتيح API الموجودة في عناوين URL في سجلات الخادم والوكيل. استخدم المصادقة عبر الترويسة عندما يدعمها خادمك.</string>
     <string name="webhook_queue_body">الاحتفاظ بالبيانات في قائمة الانتظار يرسلها باستخدام نقطة الاستقبال والمصادقة التي تحفظها. أما التجاهل فيزيل بيانات Webhook المعلّقة فقط.</string>
     <string name="webhook_queue_discard">الحفظ وتجاهل البيانات في قائمة الانتظار</string>

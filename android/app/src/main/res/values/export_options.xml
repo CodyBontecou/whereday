@@ -60,7 +60,7 @@
     <string name="export_point_speed">Speed</string>
     <string name="export_point_accuracy">Accuracy</string>
     <string name="export_point_outlier">Outlier flag</string>
-    <string name="billing_unavailable">Purchases are not available in this build. Recording, imports and previews remain free.</string>
+    <string name="billing_unavailable">Purchases are not available in this build. Imports and export previews remain free.</string>
     <string name="billing_pending_payment">Your purchase is pending in Google Play. Access starts after payment is completed and verified.</string>
     <string name="billing_verified">Whereday access is verified.</string>
     <string name="billing_pending_verification">Your purchase is pending verification.</string>

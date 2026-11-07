@@ -76,7 +76,7 @@
     <string name="automatic_export_failure_execution">Nie udało się dokończyć automatycznego eksportu. Sprawdź dostęp z zakupu, uprawnienia folderu i wolne miejsce, a następnie ponów.</string>
     <string name="automatic_export_failure_interrupted">Automatyczny eksport został przerwany. Wznów lub anuluj zapisane żądanie.</string>
     <string name="automatic_export_failure_pending">Dokończ lub anuluj oczekujący eksport przed zmianą harmonogramu lub formatu.</string>
-    <string name="automatic_export_failure_purchase">Wymagany jest zweryfikowany dożywotni dostęp do eksportu.</string>
+    <string name="automatic_export_failure_purchase">Wymagany jest aktywny plan Whereday.</string>
     <string name="automatic_export_failure_settings">Nie udało się wczytać ustawień automatycznego eksportu. Ponów lub zresetuj je, aby kontynuować.</string>
     <string name="automatic_export_file_mode">Aktualizacja pliku dnia</string>
     <string name="automatic_export_folder_missing">Przed uruchomieniem wybierz folder eksportu w Ustawieniach.</string>
@@ -104,7 +104,7 @@
     <string name="automatic_export_outings_help">Podróże są wybierane według godziny rozpoczęcia. Uwzględniane są całe trasy. Wywnioskowane podróże są zgodne z Ustawieniami; oczekujące ponowienie zachowuje zapisane wybory wnioskowania.</string>
     <string name="automatic_export_pending">Oczekujący eksport: %1$s. Ponowienie zachowuje ten zapisany zakres i miejsce docelowe.</string>
     <string name="automatic_export_points">Punkty</string>
-    <string name="automatic_export_policy">Wymagany jest zweryfikowany dożywotni dostęp do eksportu. Uruchomienia raz dziennie zapisują od nowa cały dotychczasowy dzień. Pominięte wcześniejsze dni można wyeksportować ręcznie.</string>
+    <string name="automatic_export_policy">Wymaga aktywnego planu Whereday. Uruchomienia raz dziennie zapisują od nowa cały dotychczasowy dzień. Pominięte wcześniejsze dni można wyeksportować ręcznie.</string>
     <string name="automatic_export_repeat">Powtarzaj</string>
     <string name="automatic_export_reset">Resetuj automatyczne eksporty</string>
     <string name="automatic_export_reset_body">To wyłączy harmonogram i usunie zapisane żądania. Wyeksportowane dokumenty i zachowane kopie zapasowe pozostaną w folderze.</string>
@@ -126,7 +126,7 @@
     <string name="automation_command_cancel">Anuluj</string>
     <string name="automation_command_help">Jeśli wynik zostanie przerwany, możesz anulować i sprawdzić dziennik.</string>
     <string name="automation_command_title">Wykonywanie polecenia Whereday</string>
-    <string name="automation_detail_exports">Kompletne pliki z użyciem żądanych filtrów. Wymagany jest też zweryfikowany dożywotni dostęp do eksportu.</string>
+    <string name="automation_detail_exports">Pełne pliki z wybranymi filtrami. Wymagany jest też aktywny plan Whereday.</string>
     <string name="automation_detail_manual_visits">Meldowanie się w zapisanym miejscu, we współrzędnych lub w bieżącej lokalizacji oraz wymeldowanie z ręcznych wizyt. Zwraca nazwę wizyty, adres i godziny. Bieżąca lokalizacja wymaga otwartego Whereday z przyznanym już dostępem do lokalizacji.</string>
     <string name="automation_detail_outings">Nazwy zarejestrowanych podróży oraz godziny rozpoczęcia i zakończenia.</string>
     <string name="automation_detail_places">Nazwy i identyfikatory zapisanych miejsc do wyboru celu zameldowania.</string>
@@ -184,7 +184,7 @@
     <string name="billing_pending_payment">Twój zakup oczekuje w Google Play. Dostęp zacznie się po zrealizowaniu i zweryfikowaniu płatności.</string>
     <string name="billing_pending_verification">Twój zakup oczekuje na weryfikację.</string>
     <string name="billing_store_unavailable">Google Play nie mogło otworzyć zakupu. Spróbuj ponownie.</string>
-    <string name="billing_unavailable">Zakupy nie są dostępne w tej wersji. Rejestrowanie, importy i podglądy pozostają bezpłatne.</string>
+    <string name="billing_unavailable">Zakupy nie są dostępne w tej wersji. Importy i podglądy eksportu pozostają bezpłatne.</string>
     <string name="billing_verification_failed">Nie udało się zweryfikować stanu zakupu. Sprawdź połączenie i użyj opcji Przywróć zakupy.</string>
     <string name="billing_verified">Dostęp do Whereday jest zweryfikowany.</string>
     <string name="calendar_add">Dodaj wydarzenie do kalendarza</string>
@@ -254,7 +254,7 @@
     <string name="country_period_rolling">Ostatnie 365 dni</string>
     <string name="country_period_year">Ten rok</string>
     <string name="country_preview">Podgląd CSV krajów</string>
-    <string name="country_preview_help">Podgląd pokazuje pierwsze 100 dat lokalnych. Eksport CSV krajów obejmuje wszystkie daty z wybranego okresu i wymaga zweryfikowanego dostępu dożywotniego.</string>
+    <string name="country_preview_help">Podgląd pokazuje pierwsze 100 dat lokalnych. Eksport CSV krajów obejmuje wszystkie daty z wybranego okresu i wymaga aktywnego planu Whereday.</string>
     <string name="country_preview_title">Podgląd CSV krajów</string>
     <string name="country_retry">Spróbuj ponownie</string>
     <string name="country_rules">Każda data lokalna liczy się raz dla każdego kraju. Dni w drodze mogą liczyć się w więcej niż jednym kraju. Otwarte wizyty i niezweryfikowane wyjazdy liczą tylko datę przybycia; punkty trasy mogą dodać inne daty. Luki nie są uzupełniane.</string>
@@ -332,8 +332,8 @@
     <string name="export_data_points">Punkty</string>
     <string name="export_data_visits">Wizyty</string>
     <string name="export_date_range">Zakres dat</string>
-    <string name="export_delivery_access_help">Eksport kompletnego pliku wymaga zweryfikowanego dostępu dożywotniego. Wybierz, gdzie udostępnić lub zapisać ten plik.</string>
-    <string name="export_delivery_access_required">Wymagany jest zweryfikowany dożywotni dostęp do eksportu. Rejestrowanie, importy i podglądy pozostają bezpłatne.</string>
+    <string name="export_delivery_access_help">Eksport pełnego pliku wymaga aktywnego planu Whereday. Wybierz, gdzie udostępnić lub zapisać ten plik.</string>
+    <string name="export_delivery_access_required">Do eksportu plików wymagany jest aktywny plan Whereday. Importy i podglądy pozostają bezpłatne.</string>
     <string name="export_delivery_cancel_pending">Anuluj oczekujący eksport</string>
     <string name="export_delivery_cancel_preparation">Anuluj przygotowanie</string>
     <string name="export_delivery_canceled">Eksport anulowany. Zapisane już pliki pozostają w miejscu docelowym.</string>
@@ -346,7 +346,7 @@
     <string name="export_delivery_failed">Nie udało się dokończyć zapisu. Wznów lub wybierz inne miejsce docelowe; sprawdź, czy w poprzednim nie ma niekompletnego pliku.</string>
     <string name="export_delivery_folder">Zapisz plik w folderze eksportu</string>
     <string name="export_delivery_folder_help">Wybierz folder eksportu w Ustawieniach, aby zapisywać do folderu.</string>
-    <string name="export_delivery_folder_policy">Eksport plików wymaga zweryfikowanego dostępu dożywotniego. Eksport do folderu zachowuje oba pliki, gdy nazwa już istnieje. Wybierz folder w Ustawieniach.</string>
+    <string name="export_delivery_folder_policy">Eksport plików wymaga aktywnego planu Whereday. Eksport do folderu zachowuje oba pliki, gdy nazwa już istnieje. Wybierz folder w Ustawieniach.</string>
     <string name="export_delivery_folder_required">Najpierw wybierz folder eksportu w Ustawieniach.</string>
     <string name="export_delivery_interrupted">Zapis został przerwany. Wznów lub anuluj zapisane żądanie.</string>
     <string name="export_delivery_multiple">Dla wielu plików użyj Udostępnij lub folderu eksportu.</string>
@@ -1518,7 +1518,7 @@
     <string name="support_preview_automation">Używaj skrótów programu uruchamiającego do sterowania rejestrowaniem, Osi czasu i Eksportu. Ustawienia zawierają dostęp automatyzacji dla Automate z podziałem na akcje; obsługa Automate jest eksperymentalna.</string>
     <string name="support_preview_journal">Rejestruj podróże, przeglądaj mapę i oś czasu, edytuj wizyty i zapisane miejsca oraz odkrywaj Dni w krajach i chwile ze zdjęć.</string>
     <string name="support_preview_notice">Ta wersja jest wciąż weryfikowana pod kątem wydania na Androida.</string>
-    <string name="support_preview_portability">Wyświetlaj podgląd ośmiu formatów eksportu i importuj obsługiwane pliki historii. Eksport plików, eksporty zaplanowane i webhooki wymagają zweryfikowanego dostępu dożywotniego; zakupy nie są dostępne w tej wersji zapoznawczej.</string>
+    <string name="support_preview_portability">Podejrzyj osiem formatów eksportu i importuj obsługiwane pliki historii. Eksport plików, eksport zaplanowany i webhooki wymagają aktywnego planu Whereday; zakupy nie są dostępne w tej wersji podglądowej.</string>
     <string name="support_preview_title">Wersja deweloperska na Androida</string>
     <string name="support_privacy">Polityka prywatności</string>
     <string name="support_rate_app">Oceń Whereday w Google Play</string>
@@ -1801,12 +1801,12 @@
     <string name="webhook_enabled_label">Włącz wysyłanie webhooków</string>
     <string name="webhook_endpoint">URL punktu końcowego</string>
     <string name="webhook_endpoint_help">Używaj HTTPS. Adresy URL mogą zawierać dane logowania; ich pokazanie lub skopiowanie może ujawnić sekrety.</string>
-    <string name="webhook_failure_background">Wysyłanie webhooków w tle jest wstrzymane. Sprawdź dostęp dożywotni i ustawienia, a następnie ponów.</string>
+    <string name="webhook_failure_background">Dostarczanie webhooków w tle jest wstrzymane. Sprawdź plan i ustawienia, a potem spróbuj ponownie.</string>
     <string name="webhook_failure_changed">Ustawienia webhooków się zmieniły. Wczytaj je ponownie przed zapisem.</string>
     <string name="webhook_failure_fields">Sprawdź URL webhooka i pola uwierzytelniania.</string>
     <string name="webhook_failure_preferences">Nie udało się wczytać preferencji webhooków. Spróbuj ponownie otworzyć aplikację.</string>
     <string name="webhook_failure_unavailable">Nie udało się otworzyć ustawień webhooków. Zresetuj je przed ponownym skonfigurowaniem wysyłania.</string>
-    <string name="webhook_failure_work">Nie udało się dokończyć pracy webhooka. Sprawdź dostęp dożywotni i ustawienia, a następnie ponów.</string>
+    <string name="webhook_failure_work">Nie udało się dokończyć zadania webhooka. Sprawdź plan i ustawienia, a potem spróbuj ponownie.</string>
     <string name="webhook_flush_action">Wyślij punkty z kolejki</string>
     <string name="webhook_flush_body">Wyślij zbuforowane punkty, nawet jeśli nie osiągnięto wybranej liczby lub odstępu.</string>
     <string name="webhook_flush_confirm">Wyślij punkty</string>
@@ -1865,8 +1865,8 @@
         <item quantity="other">%1$s punktu</item>
     </plurals>
     <string name="webhook_purchase_body">Webhooki są dostępne w każdym planie Whereday: tygodniowym, rocznym lub dożywotnim. Importy i podglądy pozostają bezpłatne.</string>
-    <string name="webhook_purchase_title">Dożywotni dostęp do eksportu</string>
-    <string name="webhook_purchases">Dostęp dożywotni i zakupy</string>
+    <string name="webhook_purchase_title">W każdym planie</string>
+    <string name="webhook_purchases">Plan i zakupy</string>
     <string name="webhook_query_help">Klucze API w adresach URL mogą pojawiać się w logach serwerów i serwerów proxy. Używaj uwierzytelniania nagłówkiem, jeśli serwer je obsługuje.</string>
     <string name="webhook_queue_body">Zachowanie danych z kolejki wyśle je z użyciem zapisywanego punktu końcowego i uwierzytelniania. Odrzucenie usuwa tylko oczekujące dane webhooków.</string>
     <string name="webhook_queue_discard">Zapisz i odrzuć dane z kolejki</string>
