@@ -45,6 +45,24 @@ class LocalizedResourcesTest(unittest.TestCase):
         self.assertNotIn('name="screen"', outputs["platform"])
         self.assertIn('%s puntos', outputs["platform"])
 
+    def test_locale_plural_categories_are_exact_and_carry_the_count(self):
+        source = {"one": "%d day", "other": "%d days"}
+        validate(source, {"one": "%d день", "few": "%d дня", "many": "%d дней", "other": "%d дня"}, "ru")
+        validate(source, {"other": "%d日"}, "ja")
+        for locale, target in [
+            ("ru", {"one": "%d день", "other": "%d дня"}),
+            ("ja", {"one": "%d日", "other": "%d日"}),
+            ("ru", {"one": "день", "few": "%d дня", "many": "%d дней", "other": "%d дня"}),
+            ("ar", {"one": "%d يوم", "other": "%d يوم"}),
+        ]:
+            with self.assertRaises(ValueError):
+                validate(source, target, locale)
+
+    def test_catalog_locale_maps_android_qualifier_to_catalog_language(self):
+        pack = {"locale": "pt-rBR", "catalogLocale": "pt-BR", "catalog": {"map": "Map"}, "translations": {}}
+        catalog = {"strings": {"Map": {"localizations": {"pt-BR": {"stringUnit": {"state": "translated", "value": "Mapa"}}}}}}
+        self.assertIn(">Mapa<", generate({"map": "Map"}, pack, catalog))
+
     def test_duplicate_and_unowned_resources_fail(self):
         with self.assertRaises(ValueError):
             merge_defaults({"app": {"duplicate": "A"}, "platform": {"duplicate": "B"}})

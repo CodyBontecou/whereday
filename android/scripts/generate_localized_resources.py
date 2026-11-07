@@ -22,12 +22,36 @@ def signature(text):
     return sorted((int(index) if index else i + 1, kind) for i, (index, kind) in enumerate(tokens))
 
 
-def validate(source, translated):
+# CLDR plural categories Android selects for each locale. A plural must give exactly these, and each
+# form must carry the same placeholders as the English "other" form. Locales not listed here must
+# mirror the English categories (the original rule, which Spanish uses).
+PLURAL_CATEGORIES = {
+    "ar": {"zero", "one", "two", "few", "many", "other"},
+    "bn": {"one", "other"},
+    "fr": {"one", "many", "other"},
+    "hi": {"one", "other"},
+    "ja": {"other"},
+    "pl": {"one", "few", "many", "other"},
+    "pt-rBR": {"one", "many", "other"},
+    "ru": {"one", "few", "many", "other"},
+    "b+zh+Hans": {"other"},
+}
+
+
+def validate(source, translated, locale=None):
     if isinstance(source, dict):
-        if not isinstance(translated, dict) or set(source) != set(translated):
-            raise ValueError("Plural quantities must be mapped explicitly")
-        for quantity in source:
-            validate(source[quantity], translated[quantity])
+        categories = PLURAL_CATEGORIES.get(locale)
+        if categories is None:
+            if not isinstance(translated, dict) or set(source) != set(translated):
+                raise ValueError("Plural quantities must be mapped explicitly")
+            for quantity in source:
+                validate(source[quantity], translated[quantity])
+            return
+        if not isinstance(translated, dict) or set(translated) != categories or "other" not in source:
+            raise ValueError(f"Plural quantities for {locale} must be exactly {sorted(categories)}")
+        for quantity in categories:
+            validate(source["other"], translated[quantity])
+        return
     elif not isinstance(translated, str) or not translated.strip() or signature(source) != signature(translated):
         raise ValueError("Missing text or changed placeholder identity/type")
 
@@ -101,7 +125,7 @@ def generate(source, pack, catalog):
     for name, key in aliases.items():
         entry = catalog["strings"][key]
         english = entry.get("localizations", {}).get("en", {}).get("stringUnit", {}).get("value", key)
-        unit = entry["localizations"][pack["locale"]]["stringUnit"]
+        unit = entry["localizations"][pack.get("catalogLocale", pack["locale"])]["stringUnit"]
         if english != source[name] or unit.get("state") != "translated":
             raise ValueError(f"Unreviewed or changed source mapping: {name}")
         # Catalog aliases in this first batch are static labels only. Swift placeholders/plurals
@@ -111,7 +135,7 @@ def generate(source, pack, catalog):
         translated[name] = unit["value"]
     root = ET.Element("resources")
     for name in sorted(source):
-        validate(source[name], translated[name])
+        validate(source[name], translated[name], pack["locale"])
         value = translated[name]
         if isinstance(value, dict):
             node = ET.SubElement(root, "plurals", name=name)
@@ -142,7 +166,7 @@ def main():
         if pack.get("defaultSourceSha256") != source_hash:
             raise ValueError(f"Default wording changed; review translations before updating {path.name}'s source hash")
         locale = pack["locale"]
-        if not re.fullmatch(r"[a-z]{2}(?:-r[A-Z]{2})?", locale):
+        if not re.fullmatch(r"[a-z]{2}(?:-r[A-Z]{2})?|b\+[a-z]{2}\+[A-Z][a-z]{3}", locale):
             raise ValueError("Map locale qualifiers explicitly before adding this locale")
         text = generate(source, pack, catalog)
         module_outputs = split_generated(text, modules)
