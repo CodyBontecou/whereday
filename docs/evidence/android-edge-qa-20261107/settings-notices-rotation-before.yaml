@@ -1,0 +1,211 @@
+steps:
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-add
+  - tap:
+      id: navigation-archive
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: archive-settings
+  - tap:
+      text: Settings
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: settings-screen
+  - tap:
+      text: 5 m
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 200 m
+  - tap:
+      text: 200 m
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 200 m
+  - tool: button
+    args:
+      button: home
+  - tool: launch-app
+    args:
+      bundleId: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 200 m
+  - tap:
+      text: 200 m
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 5 m
+  - tap:
+      role: ScrollView
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 5 m
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.25
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.25
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.25
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: settings-software-notices
+  - tap:
+      text: Software notices
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: software-notices-search
+  - tap:
+      id: software-notices-search
+  - tool: keyboard
+    args:
+      text: "%_[]' OR 1=1 --"
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: No matching software.
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: mApLiBrE
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: mApLiBrE
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: org.maplibre.gl:android-sdk:13.4.1
+  - tap:
+      x: 0.5
+      y: 0.353
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: software-notices-documents
+  - tap:
+      text: ICU and bundled third-party notices
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: software-notice-chunk-0
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: settings-screen
+  - tool: rotate
+    args:
+      orientation: Portrait
+executionPrerequisite: Onboarded isolated mapQa app open on Map, English;
+  recording idle. Explore notices and preferences without clearing data or
+  enabling recording.

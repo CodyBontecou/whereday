@@ -1,0 +1,319 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-add
+  - tap:
+      id: navigation-settings
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: settings-screen
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.83
+      toX: 0.6
+      toY: 0.3
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Country Days
+  - tap:
+      text: Country Days
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: country-days-content
+  - tap:
+      text: Add country stay
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-editor-content
+  - tap:
+      text: "3"
+  - tap:
+      text: "6"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-first
+      expectedText: Nov 3, 2026
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-last
+      expectedText: Nov 6, 2026
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.3
+      toX: 0.5
+      toY: 0.8
+      momentum: false
+  - tap:
+      text: "3"
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-editor-content
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-country
+  - tap:
+      text: "6"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-first
+      expectedText: Nov 6, 2026
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-last
+      expectedText: Nov 6, 2026
+  - tap:
+      text: Choose stay dates
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Choose dates
+  - tap:
+      text: Enter ISO dates
+  - tap:
+      text: 2026-11-06
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: 02-29
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Enter two valid ISO dates.
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: 2024-02-29
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 2024-02-29
+  - tap:
+      text: 2026-11-06
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: "8"
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Choose dates on or before today.
+  - tap:
+      text: Cancel
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-first
+      expectedText: Nov 6, 2026
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.3
+      toX: 0.5
+      toY: 0.8
+      momentum: false
+  - tap:
+      text: "Country: United States (US)"
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-country-search
+  - tap:
+      id: stay-country-search
+  - tool: keyboard
+    args:
+      text: "  cOtE  "
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-country-CI
+  - fold: closed
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-country-search
+      expectedText: cOtE
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-country-CI
+  - tap:
+      text: Côte d’Ivoire (CI)
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-country
+      expectedText: Côte d’Ivoire
+  - tool: button
+    args:
+      button: home
+  - tool: launch-app
+    args:
+      bundleId: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-country
+      expectedText: Côte d’Ivoire
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-discard-confirm
+  - tap:
+      text: Keep editing
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-country
+      expectedText: Côte d’Ivoire
+  - tool: button
+    args:
+      button: back
+  - tap:
+      x: 0.352
+      y: 0.555
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-country
+      expectedText: Côte d’Ivoire
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-discard-confirm
+  - tap:
+      text: Discard changes
+  - fold: open
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: stay-country
+      expectedText: Côte d’Ivoire
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: stay-discard-confirm
+  - tap:
+      text: Discard changes
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: country-summary-days
+      expectedText: 0 days

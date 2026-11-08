@@ -16,7 +16,7 @@ YOUR LOCATION JOURNAL
 • Export as JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks or Overland
 
 PLANS
-Choose a plan to start recording: Weekly or Yearly, with a 7-day free trial for new subscribers, or Lifetime, a one-time purchase. Every plan includes exports. Imports and export previews are free. Subscriptions renew automatically until canceled; manage or cancel them in Google Play. Deleting the app or buying Lifetime does not cancel a subscription.
+Choose a plan to start recording: Weekly or Yearly, with a 7-day free trial for new subscribers, or Lifetime, a one-time purchase. Every plan includes exports. Subscriptions renew automatically until canceled; manage or cancel them in Google Play. Deleting the app or buying Lifetime does not cancel a subscription.
 
 Ending a subscription does not delete your records; they stay on your device.
 

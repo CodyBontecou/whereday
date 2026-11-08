@@ -1,0 +1,34 @@
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - -AppleLanguages
+          - (en)
+          - -webhook.enabled
+          - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Search places
+      timeoutMs: 5000
+  - tap:
+      text: Atlas
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.8
+      toX: 0.5
+      toY: 0.35
+      durationMs: 350
+      momentum: false
+  - tap:
+      text: November recap
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "7 days,\n8 places"
+      timeoutMs: 5000

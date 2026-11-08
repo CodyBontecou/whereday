@@ -87,7 +87,7 @@ import kotlinx.coroutines.*
                     }
                     WdSectionHeader(stringResource(R.string.redesign_places_section_radius))
                     // Edit place board: the match radius as a slider (25–300 m) above its exact value.
-                    val radiusValue=radius.trim().replace(',','.').toDoubleOrNull()
+                    val radiusValue=radius.trim().replace(',','.').toDoubleOrNull()?.takeIf {it.isFinite()}
                     androidx.compose.material3.Slider((radiusValue ?: 60.0).toFloat().coerceIn(25f,300f),{radius=(Math.round(it/5f)*5).toString()},Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-radius-slider"),
                         enabled=!busy,valueRange=25f..300f,colors=androidx.compose.material3.SliderDefaults.colors(thumbColor=wd.placeInks[3],activeTrackColor=wd.placeInks[3],inactiveTrackColor=wd.dialTrack))
                     OutlinedTextField(radius,{radius=it},label={Text(stringResource(R.string.saved_editor_radius))},enabled=!busy,shape=fieldShape,colors=wdTextFieldColors(),textStyle=WdType.monoBody,modifier=Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-radius"))

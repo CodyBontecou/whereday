@@ -1,0 +1,103 @@
+steps:
+- echo: 'Review-only import regression with synthetic fixture: two dateline points
+    and one invalid latitude. Requires English onboarded empty mapQa, open foldable,
+    fixture directory Download/whereday-edge-qa-20261107 preloaded. No import is committed.'
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      identifier: export-history-count
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Import history file
+    direction: down
+- await:
+    text:
+      in:
+        text: File exports require
+      contains: verified access to a Whereday plan
+- await:
+    idle: true
+- tap:
+    text: Import history file
+- await:
+    visible:
+      identifier: com.google.android.documentsui:id/dir_list
+- await:
+    idle: true
+- tap:
+    text: Show roots
+- await:
+    visible:
+      identifier: com.google.android.documentsui:id/roots_list
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^sdk_gphone64_arm64$
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^Download$
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-edge-qa-20261107$
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-mixed-20261107\.json$
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: history-import-summary
+      contains: 2 points
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        text: 'Rows skipped:'
+      contains: 'Rows skipped: 1.'
+- await:
+    idle: true
+- tap:
+    id: history-import-select-points
+- tool: rotate
+  args:
+    orientation: LandscapeLeft
+- await:
+    visible:
+      identifier: history-import-screen
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: Portrait
+- await:
+    visible:
+      identifier: history-import-screen
+- await:
+    idle: true
+- tap:
+    text: Discard review
+- await:
+    text:
+      in:
+        identifier: export-history-count
+      contains: 0 route points
+- await:
+    idle: true

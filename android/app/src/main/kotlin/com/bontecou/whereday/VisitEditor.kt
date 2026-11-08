@@ -82,7 +82,7 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
     var departureMillis by rememberSaveable {mutableLongStateOf(initialDeparture)}
     var stillHere by rememberSaveable {mutableStateOf((visit!=null && visit.departedAt==null) || (visit==null && mode==ManualVisitMode.current))}
     var choosing by rememberSaveable {mutableStateOf(false)}
-    var savedChooser by remember {mutableStateOf(false)}
+    var savedChooser by rememberSaveable {mutableStateOf(false)}
     var source by rememberSaveable {mutableStateOf(visit?.placeSource ?: "userEntered")}
     var sourceDistance by rememberSaveable {mutableStateOf(visit?.placeDistanceMeters?.takeIf {it.isFinite() && it>=0})}
     var placeSelectionChanged by rememberSaveable {mutableStateOf(false)}

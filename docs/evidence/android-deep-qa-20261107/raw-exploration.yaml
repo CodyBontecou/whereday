@@ -1,0 +1,240 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+  - tap:
+      id: navigation-settings
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: settings-screen
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.86
+      toX: 0.7
+      toY: 0.25
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.86
+      toX: 0.7
+      toY: 0.25
+      momentum: false
+  - tap:
+      text: Webhooks
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: webhook-screen
+      condition: visible
+  - tap:
+      id: webhook-url
+  - tool: keyboard
+    args:
+      text: http://127.0.0.1:9/qa?odd=%25
+  - tap:
+      text: Manual
+  - tool: button
+    args:
+      button: back
+  - tap:
+      text: Save webhook settings
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: webhook-validation
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.85
+      toX: 0.7
+      toY: 0.45
+      momentum: false
+  - tap:
+      text: Save webhook settings
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: webhook-validation
+      condition: visible
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Discard
+      condition: visible
+  - tap:
+      text: Discard edits
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: settings-screen
+      condition: visible
+  - tap:
+      id: navigation-archive
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-screen
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-history-count
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.85
+      toX: 0.7
+      toY: 0.25
+      momentum: false
+  - tap:
+      text: Preview export
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-preview-result
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-preview-result
+      condition: text
+      expectedText: '"totalPoints": 0'
+  - tool: gesture-swipe
+    args:
+      fromX: 0.85
+      fromY: 0.85
+      toX: 0.85
+      toY: 0.3
+      momentum: false
+  - tap:
+      text: Import history file
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: com.google.android.documentsui:id/dir_list
+      condition: visible
+  - tool: button
+    args:
+      button: back
+  - tap:
+      text: Import history file
+  - tap:
+      text: Show roots
+  - tap:
+      x: 0.208
+      y: 0.262
+  - tap:
+      x: 0.18
+      y: 0.305
+  - tool: button
+    args:
+      button: back
+  - tap:
+      text: Show roots
+  - tap:
+      x: 0.208
+      y: 0.358
+  - tap:
+      x: 0.81
+      y: 0.374
+  - tap:
+      x: 0.18
+      y: 0.305
+  - tap:
+      id: android:id/title
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Conflicting point identities in this file.
+      condition: visible
+  - tap:
+      text: Done
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-history-count
+      condition: text
+      expectedText: 0 route points
+  - tool: gesture-swipe
+    args:
+      fromX: 0.85
+      fromY: 0.85
+      toX: 0.85
+      toY: 0.25
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.85
+      fromY: 0.85
+      toX: 0.85
+      toY: 0.45
+      momentum: false
+  - tap:
+      text: Import history file
+  - tap:
+      x: 0.5
+      y: 0.538
+  - tool: await-ui-element
+    args:
+      selector:
+        text: could not be read or imported
+      condition: visible
+  - tap:
+      text: Done
+  - tool: gesture-swipe
+    args:
+      fromX: 0.85
+      fromY: 0.85
+      toX: 0.85
+      toY: 0.25
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.85
+      fromY: 0.85
+      toX: 0.85
+      toY: 0.45
+      momentum: false
+  - tap:
+      text: Import history file
+  - tap:
+      id: android:id/title
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: history-import-summary
+      condition: text
+      expectedText: 2 points
+  - tap:
+      text: Import location points
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      selector:
+        text: 1 rows could not be read
+      condition: visible
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tap:
+      text: Discard review
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-history-count
+      condition: text
+      expectedText: 0 route points

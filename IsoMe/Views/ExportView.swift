@@ -23,6 +23,7 @@ struct ExportView: View {
     @State private var dailyTimeBinding = Date()
     @State private var cachedOutingSummaries: [RecordingSessionSummary] = []
     @State private var showingSettings = false
+    @State private var showingListening = false
     @State private var editingToken: RecipeToken?
     @State private var showingSaveRecipe = false
     @State private var newRecipeName = ""
@@ -128,7 +129,7 @@ struct ExportView: View {
     var body: some View {
         stack
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                if pinsFooterOutsideStack {
+                if pinsFooterOutsideStack && !showingListening {
                     exportFooter
                 }
             }
@@ -155,6 +156,9 @@ struct ExportView: View {
                 PaywallView(storeManager: storeManager, context: .export)
             }
             .modifier(VaultPresentation(isPicking: presentation($showingVaultPicker, inOptionsSheet: false), vault: obsidianVault))
+            .navigationDestination(isPresented: $showingListening) {
+                ListeningView(viewModel: viewModel)
+            }
             .sheet(isPresented: $showingSettings) {
                 SettingsView(viewModel: viewModel)
             }
@@ -318,8 +322,8 @@ struct ExportView: View {
 
     /// "How Whereday listens": what gets recorded, so the archive's contents are never a surprise.
     private var listeningLink: some View {
-        NavigationLink {
-            ListeningView(viewModel: viewModel)
+        Button {
+            showingListening = true
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: "ear")
@@ -349,6 +353,7 @@ struct ExportView: View {
         }
         .buttonStyle(.plain)
         .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityIdentifier("archive-listening-link")
     }
 
     // MARK: - Header
@@ -700,8 +705,8 @@ struct ExportView: View {
                 .fixedSize(horizontal: false, vertical: true)
         case .tooLarge:
             previewNote("Too much data to sample here. Tap to open the full preview.")
-        case .failed:
-            previewNote("Couldn't sample these files. Tap to open the full preview.")
+        case .failed(let message):
+            previewNote(LocalizedStringKey(message))
         case .ready(let files, _):
             let shown = Array(files.prefix(4))
             ForEach(shown) { file in
@@ -859,7 +864,8 @@ struct ExportView: View {
             let content = String(first.plannedFile.displayContent().text.prefix(4_000))
             livePreview = .ready(files, firstContent: content)
         } catch {
-            livePreview = .failed
+            guard !Task.isCancelled else { return }
+            livePreview = .failed(error.localizedDescription)
         }
     }
 
@@ -1516,8 +1522,11 @@ struct ExportView: View {
                                         .font(.caption2.weight(.bold))
                                         .foregroundStyle(TE.danger.opacity(0.5))
                                 }
+                                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("archive-remove-export-folder")
                         }
                     } else {
                         TERow(showDivider: false) {
@@ -1537,8 +1546,11 @@ struct ExportView: View {
                                         .font(.caption2.weight(.bold))
                                         .foregroundStyle(TE.accent.opacity(0.5))
                                 }
+                                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("archive-select-export-folder")
                         }
                     }
                 }
@@ -2839,7 +2851,7 @@ private enum RecipeLivePreview {
     case loading
     case empty
     case tooLarge
-    case failed
+    case failed(String)
     case ready([IsoMePreviewFile], firstContent: String?)
 }
 

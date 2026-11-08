@@ -1,0 +1,16 @@
+Running e2e test "map-road-navigation-regression-20261108" on emulator-5562 (13 steps)
+[1] ✓ Road display opened from Map Layers must survive rotation. English onboarded mapQa on open foldable. No routing provider or consent required.
+[2] ✗ launch (45.2s) — restart-app failed: [Tool:restart-app] adb -s emulator-5562 shell am start -W -n 'com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity' failed: Starting: Intent { cmp=com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity }
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-oJMhcX/media/418362000-1794140786505.png
+[3] · await visible id=map-layers
+[4] · idle
+[5] · tap id=map-layers
+[6] · await visible id=map-layers-content
+[7] · idle
+[8] · tap "Match roads"
+[9] · await visible id=road-settings-screen
+[10] · idle
+[11] · tool
+[12] · await visible id=road-settings-screen
+[13] · idle
+FAIL — 0 passed, 0 failed, 1 errored, 11 skipped (1m 38s)

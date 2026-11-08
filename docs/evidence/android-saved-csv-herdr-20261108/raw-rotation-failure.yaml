@@ -1,0 +1,47 @@
+steps:
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-csv-counts
+      condition: text
+      expectedText: 2 valid rows · 2 invalid rows
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-csv-plan
+      condition: text
+      expectedText: 1 added · 0 updated · 1 skipped
+  - tap:
+      text: Update matching places
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-csv-plan
+      condition: text
+      expectedText: 1 added · 1 updated · 0 skipped
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-csv-counts
+      condition: visible
+      timeoutMs: 10000
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-csv-counts
+      condition: visible
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-places-search
+      condition: visible
+  - tool: rotate
+    args:
+      orientation: Portrait
+executionPrerequisite: Saved CSV review open for synthetic
+  whereday-saved-odd.csv, 2 valid/2invalid, keep existing policy; no import
+  committed.

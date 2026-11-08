@@ -35,6 +35,7 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val automationResults=AutomationResults(context.applicationContext,automationAccess) {purchases.requireAccess(com.bontecou.whereday.billing.Capability.fileExport)}
     val automationController=AutomationController(automationAccess,automationResults)
     val savedPlaces=SavedPlaceRepository(database)
+    val savedPlaceImportReview=SavedPlaceImportReview()
     val photos=PhotoRepository(database)
     val photoPlaces=PhotoPlaceRepository(java.io.File(context.cacheDir,"photo-place-directories"),photos)
     val photoSource=AndroidPhotoSource(context)
@@ -72,6 +73,7 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val automaticExportController=AutomaticExportController(automaticExports,automaticExportWork)
     val countryAnalysis = CountryAnalysisController(context.applicationContext,database,preferences)
     val journalClear:JournalClearController by lazy {JournalClearController(AndroidJournalClearReceiptStore(context.applicationContext),{
+        savedPlaceImportReview.discard()
         historyImports.clearAll {
             roadDisplay.clearAndJoin()
             reviewMilestones.clearJournalMilestones()

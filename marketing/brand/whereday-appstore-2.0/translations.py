@@ -162,3 +162,74 @@ EXPORT_SENTENCE = {
     "ru": ("Экспортировать мои {a} за {b} в {c}.", "визиты и маршруты", "последние 7 дней", "GPX"),
     "zh-Hans": ("将{b}的{a}导出为 {c}。", "到访和路线", "最近 7 天", "GPX"),
 }
+
+# Bangla (bn-BD) and Polish (pl), added November 7, 2026. The app already ships both;
+# these bring the store artwork up to the same eleven languages.
+LOCALES += ["bn-BD", "pl"]
+
+KICKER_TOKENS["bn-BD"] = {
+    "DAYS": "দিন", "VISITS": "ভিজিট", "ONE LONG DAY": "একটি লম্বা দিন", "KM": "কিমি", "DAY 305 OF 365": "365 দিনের 305তম দিন",
+    "DAY 305": "305তম দিন", "AGAIN": "আবার", "HOME": "বাড়ি", "FOLDED": "ভাঁজ করা",
+    "TAP ANY UNDERLINED WORD": "দাগ দেওয়া যেকোনো শব্দে ট্যাপ করুন"}
+KICKER_TOKENS["pl"] = {
+    "DAYS": "DNI", "VISITS": "WIZYT", "ONE LONG DAY": "JEDEN DŁUGI DZIEŃ", "KM": "KM", "DAY 305 OF 365": "DZIEŃ 305 Z 365",
+    "DAY 305": "DZIEŃ 305", "AGAIN": "ZNOWU", "HOME": "DOM", "FOLDED": "ZŁOŻONY",
+    "TAP ANY UNDERLINED WORD": "DOTKNIJ PODKREŚLONEGO SŁOWA"}
+
+# English text node -> (bn-BD, pl).
+_ADDED_TEXT = {
+    "A week,": ("এক সপ্তাহ,", "Tydzień,"),
+    "one map.": ("একটি মানচিত্র।", "jedna mapa."),
+    "home, seven times": ("বাড়ি, সাতবার", "dom, siedem razy"),
+    "Sunday’s loop": ("রবিবারের চক্কর", "niedzielna pętla"),
+    "Where did": ("দিনটা", "Dokąd"),
+    "today go?": ("কোথায় গেল?", "uciekł dzień?"),
+    "it kept notes for you": ("আপনার হয়ে নোট রেখেছে", "notował za Ciebie"),
+    "left home": ("বাড়ি থেকে বেরোনো", "wyjście z domu"),
+    "Rewind": ("দিনটা আবার", "Przewiń"),
+    "the day.": ("দেখুন।", "dzień."),
+    "Rewind it": ("আবার দেখুন", "Przewiń go"),
+    "on the table.": ("টেবিলের ওপর।", "na stole."),
+    "half-open, map up top": ("আধখোলা, মানচিত্র ওপরে", "półotwarty, mapa u góry"),
+    "One square": ("প্রতিদিন", "Jeden kwadrat"),
+    "per day.": ("একটি বর্গ।", "na dzień."),
+    "Oct 20 ↘": ("20 অক্টো ↘", "20 paź ↘"),
+    "23 visits.": ("23 বার ভিজিট।", "23 wizyty."),
+    "You’re a regular.": ("আপনি নিয়মিত।", "Stały bywalec."),
+    "Places": ("জায়গাগুলো", "Miejsca"),
+    "keep count.": ("হিসাব রাখে।", "same liczą."),
+    "mostly weekday lunch": ("মূলত কাজের দিনের লাঞ্চ", "głównie lunch w tygodniu"),
+    "or Markdown, CSV, JSON…": ("অথবা Markdown, CSV, JSON…", "albo Markdown, CSV, JSON…"),
+    "No account.": ("অ্যাকাউন্ট নেই।", "Bez konta."),
+    "No server copy.": ("সার্ভারে নেই।", "Bez kopii na serwerze."),
+    "SPECIMEN Nº 305": ("নমুনা নং 305", "OKAZ NR 305"),
+    "One ordinary day.": ("একটি সাধারণ দিন।", "Jeden zwykły dzień."),
+    "KEPT ON THIS PHONE": ("এই ফোনেই রাখা", "ZAPISANE NA TYM TELEFONIE"),
+    "KEPT ON THIS DEVICE": ("এই ডিভাইসেই রাখা", "ZAPISANE NA TYM URZĄDZENIU"),
+    "Same day,": ("একই দিন,", "Ten dzień,"),
+    "after dark.": ("সন্ধ্যার পরে।", "po zmroku."),
+    "today’s places, as stars": ("আজকের জায়গাগুলো, তারার মতো", "dzisiejsze miejsca jako gwiazdy"),
+    "Recording": ("রেকর্ড হচ্ছে", "Nagrywanie"),
+    "Always on.": ("সবসময় চালু।", "Zawsze włączone."),
+    "Never sneaky.": ("কখনো লুকিয়ে নয়।", "Nigdy po kryjomu."),
+    "A glance": ("এক নজরই", "Wystarczy"),
+    "is plenty.": ("যথেষ্ট।", "rzut oka."),
+    "home screen": ("হোম স্ক্রিন", "ekran początkowy"),
+    "wrist": ("কবজি", "nadgarstek"),
+    "Every month,": ("প্রতি মাসে,", "Co miesiąc"),
+    "a postcard.": ("একটি পোস্টকার্ড।", "pocztówka."),
+    "OCT 2026": ("অক্টো 2026", "PAŹ 2026"),
+    "47 PLACES": ("47টি জায়গা", "47 MIEJSC"),
+    "home. see you tomorrow.": ("বাড়ি। কাল দেখা হবে।", "w domu. do jutra."),
+    "Closed.": ("বন্ধ।", "Zamknięty."),
+    "Still counting.": ("তবুও গুনছে।", "Wciąż liczy."),
+    "the cover screen, folded shut": ("কভার স্ক্রিন, ভাঁজ করা", "ekran zewnętrzny, po złożeniu"),
+    "left home 08:12": ("বাড়ি থেকে বেরোনো 08:12", "wyjście z domu 08:12"),
+    "home 23:30": ("বাড়ি 23:30", "w domu 23:30"),
+}
+assert _ADDED_TEXT.keys() == TEXT.keys(), set(TEXT) ^ set(_ADDED_TEXT)
+for _key, (_bn, _pl) in _ADDED_TEXT.items():
+    TEXT[_key].update({"bn-BD": _bn, "pl": _pl})
+
+EXPORT_SENTENCE["bn-BD"] = ("{b} আমার {a} {c} হিসেবে রপ্তানি করুন।", "ভিজিট ও রুট", "গত 7 দিনের", "GPX")
+EXPORT_SENTENCE["pl"] = ("Eksportuj moje {a} z {b} jako {c}.", "wizyty i trasy", "ostatnich 7 dni", "GPX")

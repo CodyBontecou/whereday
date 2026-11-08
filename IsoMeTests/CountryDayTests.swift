@@ -321,3 +321,75 @@ final class CountryDayTests: XCTestCase {
         XCTAssertNotEqual(UIColor(TE.textPrimary).resolvedColor(with: light), UIColor(TE.textPrimary).resolvedColor(with: dark))
     }
 }
+
+@MainActor
+final class CountryStayEditorTests: XCTestCase {
+    private enum SaveFailure: Error { case injected }
+
+    private func container() throws -> ModelContainer {
+        try ModelContainer(for: CountryStay.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    }
+
+    private var draft: CountryStayDraft {
+        CountryStayDraft(countryCode: "JP", firstDay: "2026-11-01", lastDay: "2026-11-03", note: "  東京 trip\n ")
+    }
+
+    func testFailedInsertDoesNotLeakIntoLaterSaveOrDuplicateOnRetry() throws {
+        let container = try container()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        XCTAssertThrowsError(try draft.save(in: context, commit: { _ in throw SaveFailure.injected }))
+        try context.save() // An unrelated later save must not commit the failed stay.
+        XCTAssertTrue(try ModelContext(container).fetch(FetchDescriptor<CountryStay>()).isEmpty)
+        try draft.save(in: context)
+        let stored = try ModelContext(container).fetch(FetchDescriptor<CountryStay>())
+        XCTAssertEqual(stored.count, 1)
+        XCTAssertEqual(stored.first?.note, "東京 trip")
+    }
+
+    func testFailedUpdateRestoresEveryOriginalFieldBeforeAutosave() throws {
+        let container = try container()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        let stay = CountryStay(countryCode: "PT", firstDay: "2026-10-01", lastDay: "2026-10-02", note: " original \n")
+        let id = stay.id
+        context.insert(stay)
+        try context.save()
+        XCTAssertThrowsError(try draft.save(in: context, updating: stay, commit: { _ in throw SaveFailure.injected }))
+        XCTAssertEqual(stay.countryCode, "PT")
+        XCTAssertEqual(stay.firstDay, "2026-10-01")
+        XCTAssertEqual(stay.lastDay, "2026-10-02")
+        XCTAssertEqual(stay.note, " original \n")
+        try context.save()
+        let stored = try XCTUnwrap(ModelContext(container).fetch(FetchDescriptor<CountryStay>()).first)
+        XCTAssertEqual(stored.countryCode, "PT")
+        XCTAssertEqual(stored.note, " original \n")
+        try draft.save(in: context, updating: stay)
+        let retried = try ModelContext(container).fetch(FetchDescriptor<CountryStay>())
+        XCTAssertEqual(retried.count, 1)
+        XCTAssertEqual(retried.first?.id, id)
+        XCTAssertEqual(retried.first?.lastDay, "2026-11-03")
+    }
+
+    func testCountrySearchTrimsCodesNamesAndWhitespaceOnlyQueries() {
+        let english = Locale(identifier: "en_US")
+        XCTAssertEqual(CountrySelectionView.matchingCountries("  jp \n", locale: english).map(\.code), ["JP"])
+        XCTAssertEqual(CountrySelectionView.matchingCountries("  Japan  ", locale: english).map(\.code), ["JP"])
+        XCTAssertEqual(CountrySelectionView.matchingCountries(" \n\t", locale: english).count,
+                       CountrySelectionView.matchingCountries("", locale: english).count)
+        XCTAssertTrue(CountrySelectionView.matchingCountries("🍜zzzz", locale: english).isEmpty)
+    }
+    func testFailedSavePreservesUnrelatedPendingChanges() throws {
+        let container = try container()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        let unrelated = CountryStay(countryCode: "ES", firstDay: "2026-09-01", lastDay: "2026-09-02")
+        context.insert(unrelated)
+        XCTAssertThrowsError(try draft.save(in: context, commit: { _ in throw SaveFailure.injected }))
+        try context.save()
+        let stored = try ModelContext(container).fetch(FetchDescriptor<CountryStay>())
+        XCTAssertEqual(stored.map(\.id), [unrelated.id])
+        XCTAssertEqual(stored.first?.countryCode, "ES")
+    }
+
+}

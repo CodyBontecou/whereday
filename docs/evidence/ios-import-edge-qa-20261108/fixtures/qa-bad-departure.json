@@ -1,0 +1,1 @@
+{"visits": [{"latitude": 12.345, "longitude": 67.89, "arrivedAt": "2020-01-02T10:00:00Z", "departedAt": "2020-01-02T11:00:00Z", "locationName": "QA preview only"}, {"latitude": 12.345, "longitude": 67.89, "arrivedAt": "2020-01-03T10:00:00Z", "departedAt": "not-a-date", "locationName": "QA preview only"}], "points": []}

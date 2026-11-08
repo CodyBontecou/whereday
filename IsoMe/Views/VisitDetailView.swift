@@ -597,10 +597,13 @@ struct VisitDetailView: View {
             : AnyLayout(HStackLayout(spacing: 8))
         return layout {
             Button("Calendar") {
-                calendarDraft = CalendarEventDraft(visit: visit, notes: notesText)
+                calendarDraft = CalendarEventDraft(visit: visit, name: nameText, arrivedAt: arrivedAt,
+                                                   departedAt: editedDeparture, notes: notesText)
             }
             .buttonStyle(VisitPillButtonStyle())
             .accessibilityLabel("Add Event to Calendar")
+            .disabled(timeValidationMessage != nil)
+            .accessibilityHint(timeValidationMessage ?? String(localized: "Review this visit as a calendar event."))
 
             Button("Delete", role: .destructive) {
                 showingDeleteConfirmation = true

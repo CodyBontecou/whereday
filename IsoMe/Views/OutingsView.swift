@@ -669,6 +669,29 @@ private enum TimelineRowFormat {
     }
 }
 
+/// The selected day's slice of a visit, independent of its current status today.
+struct TimelineStaySummary {
+    let start: Date
+    let end: Date
+    let isCurrent: Bool
+
+    init(arrivedAt: Date, departedAt: Date?, dayRange: ClosedRange<Date>,
+         isCurrent: Bool, now: Date = Date()) {
+        start = max(arrivedAt, dayRange.lowerBound)
+        end = max(start, min(departedAt ?? now, dayRange.upperBound))
+        self.isCurrent = isCurrent && departedAt == nil && arrivedAt <= now
+            && now >= dayRange.lowerBound && now < dayRange.upperBound
+    }
+
+    var trailingText: String {
+        isCurrent ? String(localized: "now") : TimelineRowFormat.duration(end.timeIntervalSince(start))
+    }
+
+    var accessibilityValue: String {
+        "\(TimelineRowFormat.clock(start)) · \(trailingText)"
+    }
+}
+
 /// A place on the day: start time in mono, its place ink, the serif name and how long.
 private struct TimelineStayRow: View {
     let visit: Visit
@@ -679,11 +702,11 @@ private struct TimelineStayRow: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        let start = max(visit.arrivedAt, dayRange.lowerBound)
-        let end = min(visit.departedAt ?? Date(), dayRange.upperBound)
+        let summary = TimelineStaySummary(arrivedAt: visit.arrivedAt, departedAt: visit.departedAt,
+                                          dayRange: dayRange, isCurrent: isCurrent)
 
         HStack(alignment: .center, spacing: 10) {
-            Text(TimelineRowFormat.clock(start))
+            Text(TimelineRowFormat.clock(summary.start))
                 .font(TE.mono(.caption))
                 .foregroundStyle(TE.textMuted)
                 .frame(minWidth: 44, alignment: .leading)
@@ -703,16 +726,16 @@ private struct TimelineStayRow: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text(isCurrent ? String(localized: "now") : TimelineRowFormat.duration(end.timeIntervalSince(start)))
+            Text(summary.trailingText)
                 .font(TE.mono(.caption))
-                .foregroundStyle(isCurrent ? TE.inkRust : TE.textMuted)
+                .foregroundStyle(summary.isCurrent ? TE.inkRust : TE.textMuted)
         }
         .frame(minHeight: 46)
         .padding(.vertical, 2)
         .contentShape(Rectangle())
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(visit.accessibilityLabel)
-        .accessibilityValue("\(visit.accessibilityValue). Status \(visit.confirmationStatus.displayName). Source \(visit.source.displayName).")
+        .accessibilityLabel(summary.isCurrent ? visit.accessibilityLabel : String(localized: "Visit at \(visit.displayName)"))
+        .accessibilityValue("\(summary.accessibilityValue). Status \(visit.confirmationStatus.displayName). Source \(visit.source.displayName).")
         .accessibilityHint("Opens visit details.")
     }
 

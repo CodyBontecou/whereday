@@ -1,0 +1,27 @@
+Whereday conserve un historique privé des lieux que vous visitez et des trajets que vous parcourez, et s’ouvre directement sur la carte de votre journée.
+
+VOTRE JOURNÉE SUR UNE CARTE
+• Ouvrez l’app directement sur aujourd’hui, en carte plein écran, avec chaque arrêt et chaque trajet
+• Passez d’aujourd’hui à hier, aux 7 ou 30 derniers jours, à tout l’historique ou à n’importe quelle période du calendrier
+• Faites glisser la fiche du jour pour retrouver le récit de la journée, avec un cadran de 24 heures de vos arrêts et déplacements
+• Rejouez n’importe quelle journée sur la carte en 1×, 10× ou 60×
+• Retrouvez les photos prises en chemin, directement sur la carte
+
+VOTRE JOURNAL DE DÉPLACEMENTS
+• Parcourez une année en jours dans l’Atlas, colorée par pays, avec un bilan mensuel
+• Nommez vos lieux et voyez à quelle fréquence vous y revenez
+• Ajoutez des visites manuelles et corrigez les horaires des visites enregistrées
+• Suivez votre journée depuis les widgets de l’écran d’accueil
+• Composez un export comme une phrase, enregistrez-le comme recette et répétez-le chaque nuit
+• Exportez en JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks ou Overland
+
+FORMULES
+Choisissez une formule pour commencer à enregistrer : Hebdomadaire ou Annuelle, avec un essai gratuit de 7 jours pour les nouveaux abonnés, ou À vie, un achat unique. Chaque formule inclut les exports. Les abonnements se renouvellent automatiquement jusqu’à leur résiliation ; gérez-les ou résiliez-les dans Google Play. Supprimer l’application ou acheter la formule À vie ne résilie pas un abonnement.
+
+La fin d’un abonnement ne supprime pas vos données ; elles restent sur votre appareil.
+
+PRIVÉ PAR CONCEPTION
+Votre historique de localisation reste sur votre appareil. Aucun compte Whereday n’est requis. Les achats Google Play, les tuiles de carte, les exports facultatifs et des services techniques limités utilisent le réseau comme décrit dans notre politique de confidentialité.
+
+Politique de confidentialité : https://whereday.com/privacy
+Conditions d’utilisation : https://whereday.com/terms

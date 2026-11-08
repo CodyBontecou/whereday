@@ -1,0 +1,81 @@
+steps:
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- run: settings-notices-opening-20261107.yaml
+- await:
+    visible:
+      identifier: software-notice-chunk-0
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: LandscapeLeft
+- await:
+    visible:
+      identifier: software-notice-chunk-0
+- await:
+    idle: true
+- await:
+    visible:
+      text: ICU and bundled third-party notices
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: Portrait
+- await:
+    visible:
+      identifier: software-notice-chunk-0
+- await:
+    idle: true
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: software-notice-chunk-0
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: software-notices-documents
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    text:
+      in:
+        identifier: software-notices-search
+      contains: mApLiBrE
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    text:
+      in:
+        identifier: export-history-count
+      contains: 25 route points
+- await:
+    idle: true

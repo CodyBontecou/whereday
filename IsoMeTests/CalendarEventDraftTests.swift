@@ -140,6 +140,39 @@ final class CalendarEventDraftTests: XCTestCase {
         XCTAssertEqual(stored.notes, "Old outing notes")
     }
 
+    func testVisitEditorValuesOverrideStoredTitleTimesAndNotesWithoutMutatingVisit() {
+        let originalEnd = start.addingTimeInterval(3600)
+        let visit = Visit(latitude: 0, longitude: 0, arrivedAt: start, departedAt: originalEnd,
+                          customName: "Original", notes: "Stored notes")
+        let editedStart = start.addingTimeInterval(86400)
+        let editedEnd = editedStart.addingTimeInterval(26 * 3600)
+        let draft = CalendarEventDraft(visit: visit, name: "  Edited title  ", arrivedAt: editedStart,
+                                      departedAt: editedEnd, notes: "Draft notes")
+        let event = draft.makeEvent(in: EKEventStore())
+        XCTAssertEqual(event.title, "Edited title")
+        XCTAssertEqual(event.startDate, editedStart)
+        XCTAssertEqual(event.endDate, editedEnd)
+        XCTAssertEqual(event.notes, "Draft notes")
+        XCTAssertEqual(visit.customName, "Original")
+        XCTAssertEqual(visit.arrivedAt, start)
+        XCTAssertEqual(visit.departedAt, originalEnd)
+        XCTAssertEqual(visit.notes, "Stored notes")
+    }
+
+    func testVisitEditorStillHereClearsStoredDepartureAndBlankTitleFallsBack() {
+        let visit = Visit(latitude: 0, longitude: 0, arrivedAt: start,
+                          departedAt: start.addingTimeInterval(600), customName: "Original")
+        let now = start.addingTimeInterval(3 * 3600)
+        let editedStart = start.addingTimeInterval(3600)
+        let draft = CalendarEventDraft(visit: visit, name: " \n", arrivedAt: editedStart,
+                                      departedAt: nil, now: now, notes: "")
+        XCTAssertEqual(draft.title, "Original")
+        XCTAssertEqual(draft.startDate, editedStart)
+        XCTAssertEqual(draft.endDate, now)
+        XCTAssertNil(draft.notes)
+        XCTAssertEqual(visit.departedAt, start.addingTimeInterval(600))
+    }
+
     private func summary(stored: RecordingSession? = nil, end: Date? = nil,
                          points: [LocationPoint] = [], inferred: Bool = false,
                          active: Bool = false) -> RecordingSessionSummary {

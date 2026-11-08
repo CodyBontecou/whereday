@@ -1,0 +1,18 @@
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - -AppleLanguages
+          - (en)
+          - -webhook.enabled
+          - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Search places
+      timeoutMs: 5000
+  - tap:
+      text: Places

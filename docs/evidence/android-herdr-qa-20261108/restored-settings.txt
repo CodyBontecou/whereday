@@ -1,0 +1,29 @@
+Source: android-devtools
+Mode: nested
+Coordinates are normalized [0,1] fractions of the screen (x, y, width, height), not pixels.
+Pass them straight to gesture-tap / gesture-swipe / gesture-pinch, which expect this same space.
+To tap an element, use its centre: tap_x = frame.x + frame.width / 2, tap_y = frame.y + frame.height / 2.
+
+ROOT  Screen (0.000, 0.000, 1.000, 1.000)
+
+  ComposeView  (0.000, 0.000, 1.000, 1.000)
+    View id="settings-screen" [scrollable]  (0.000, 0.057, 1.000, 0.832)
+      View "Usage analytics" [clickable]  (0.039, 0.062, 0.922, 0.061)
+      View "Road display" [clickable]  (0.039, 0.124, 0.922, 0.061)
+      View "Visits only" [clickable]  (0.039, 0.187, 0.922, 0.061)
+      View "Allow network geocoding / Network geocoding" id="settings-geocoding" [clickable,checked]  (0.039, 0.249, 0.922, 0.062)
+        View "Allow network geocoding"  (0.039, 0.249, 0.922, 0.062)
+      StaticText "Place search sends submitted text; country and address lookups can send coordinates to your device’s geocoding service. Nearby business searches send the selected visit coordinates, radius, language and place categories to Geoapify. Disabling network geocoding stops these lookups and country analysis; recording, offline pin selection and manual stays remain available."  (0.049, 0.322, 0.902, 0.116)
+      StaticText "EXPORTS AND AUTOMATION"  (0.049, 0.460, 0.902, 0.016)
+      View "Choose export folder" [clickable]  (0.039, 0.487, 0.922, 0.061)
+      View "Automatic exports" [clickable]  (0.039, 0.550, 0.922, 0.061)
+      View "Webhooks" [clickable]  (0.039, 0.612, 0.922, 0.061)
+      View "Automation access" [clickable]  (0.039, 0.675, 0.922, 0.061)
+      StaticText "25 recorded points. Location history is stored on this phone. Automatic cloud backup and device transfer are disabled." id="settings-point-count"  (0.000, 0.740, 1.000, 0.056)
+      StaticText "ABOUT"  (0.049, 0.818, 0.902, 0.016)
+      View "Support and about" [clickable]  (0.039, 0.845, 0.922, 0.061)
+      View [clickable]  (0.039, 0.908, 0.922, 0.007)
+    View "Map" id="navigation-map" [clickable]  (0.049, 0.895, 0.225, 0.070)
+    View "Atlas" id="navigation-atlas" [clickable]  (0.274, 0.895, 0.225, 0.070)
+    View "Places" id="navigation-places" [clickable]  (0.499, 0.895, 0.226, 0.070)
+    StaticText "Archive"  (0.793, 0.931, 0.091, 0.026)

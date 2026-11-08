@@ -1,0 +1,25 @@
+steps:
+  - echo: Open listening settings; expected no Archive export footer. Diagnostic
+      records the currently visible leaked Preview Export control.
+  - echo: Coordinate exception on iPhone 18 Pro portrait. AX exposes How Whereday
+      listens, but native-find-views and the depth-100 native hierarchy expose no
+      label or id for it. Semantic replay failed on this visible control. Source
+      listeningLink has no explicit identifier. Re-record for other geometry.
+  - tap:
+      x: 0.5
+      y: 0.6315
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: RECORDING · WHAT STAYS ON THIS IPHONE
+  - await:
+      idle: true
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Preview Export
+executionPrerequisite: iOS Whereday is open in English on the Archive recipe
+  screen, with How Whereday listens visible. This diagnostic reproduces the
+  existing footer leak; a pass confirms the bug is present.

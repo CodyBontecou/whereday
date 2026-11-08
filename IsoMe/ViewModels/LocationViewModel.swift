@@ -1471,6 +1471,10 @@ final class LocationViewModel {
         return result
     }
 
+    func exportBackup() throws -> Data {
+        try WheredayBackupService.export(context: modelContext)
+    }
+
     // MARK: - Clear Data
 
     func clearAllData() {

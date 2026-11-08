@@ -1,0 +1,43 @@
+Running e2e test "manual-visit-saved-chooser-rotation-regression-20261107" on emulator-5562 (36 steps)
+[1] ✓ Regression: saved-place chooser and query survive landscape and portrait rotation; parent visit draft survives dismissal. English onboarded empty mapQa on open foldable. Draft discarded without saving.
+[2] ✓ launch (4.2s)
+[3] ✓ await visible id=map-add (4.0s)
+[4] ✓ idle (4.7s)
+[5] ✓ tap "Add a place" (2.8s)
+[6] ✓ await visible "Log a past stop" (5.7s)
+[7] ✓ idle (2.2s)
+[8] ✓ tap "Log a past stop" (0.6s)
+[9] ✓ await visible id=visit-name (32.1s)
+[10] ✓ idle (2.1s)
+[11] ✓ tap id=visit-name (2.2s)
+[12] ✓ keyboard (12.1s)
+{
+  "typed": "QA interruption draft",
+  "keys": 21
+}
+[13] ✗ await id=visit-name contains "QA interruption draft" (33.8s) — no element matched selector id="visit-name"
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-l80z4Y/media/269093000-1794099647327.png
+[14] · idle
+[15] · tap "Choose saved place"
+[16] · await visible id=saved-chooser-search
+[17] · idle
+[18] · tap id=saved-chooser-search
+[19] · tool
+[20] · await id=saved-chooser-search contains "missing place QA"
+[21] · idle
+[22] · tool
+[23] · await id=saved-chooser-search contains "missing place QA"
+[24] · idle
+[25] · tool
+[26] · await id=saved-chooser-search contains "missing place QA"
+[27] · idle
+[28] · tool
+[29] · await id=visit-name contains "QA interruption draft"
+[30] · idle
+[31] · tool
+[32] · await visible "Discard visit changes?"
+[33] · idle
+[34] · tap "Discard changes"
+[35] · await id=map-day-peek contains "No places yet"
+[36] · idle
+FAIL — 11 passed, 1 failed, 0 errored, 23 skipped (1m 47s)

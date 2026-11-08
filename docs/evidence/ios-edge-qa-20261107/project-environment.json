@@ -1,0 +1,15 @@
+{
+  "workspace": "/Users/codybontecou/dev/whereday",
+  "is_react_native": false,
+  "is_native_ios": true,
+  "is_native_android": true,
+  "ios_framework": "SwiftUI",
+  "project": "IsoMe.xcodeproj",
+  "scheme": "IsoMe",
+  "bundleId": "com.bontecou.isome",
+  "test_command": "scripts/test-ios.sh",
+  "targeted_test_command": "scripts/test-ios.sh -only-testing:IsoMeTests/CLASS",
+  "test_requirements": "Preserve simulator signing for Keychain tests; report entitlement setup failures as environment failures.",
+  "source": "argent-environment-inspector session result",
+  "inspected_on": "2026-11-07"
+}

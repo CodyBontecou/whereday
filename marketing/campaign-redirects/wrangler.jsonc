@@ -1,0 +1,17 @@
+{
+  "name": "whereday-campaign-redirects",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-04",
+  "workers_dev": true,
+  "routes": [
+    {"pattern": "whereday.com/v/*", "zone_name": "whereday.com"},
+    {"pattern": "www.whereday.com/v/*", "zone_name": "whereday.com"}
+  ],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "iso-me-onboarding-analytics",
+    "database_id": "20e95c7d-0939-4ead-8066-f2207505d273",
+    "migrations_dir": "migrations"
+  }],
+  "observability": {"enabled": false}
+}

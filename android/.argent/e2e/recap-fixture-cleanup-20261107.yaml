@@ -1,0 +1,53 @@
+executionPrerequisite: MapQa on November recap, exactly one synthetic visit named
+  QA overnight 20261107 created by recap-fixture-opening-20261107. Deletes only that
+  named visit.
+steps:
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      identifier: map-search
+- await:
+    idle: true
+- tap:
+    text: Search places and visits
+- await:
+    visible:
+      text: Place or visit name
+- await:
+    idle: true
+- tap:
+    text: QA overnight 20261107
+- await:
+    visible:
+      identifier: map-visit-details
+- await:
+    idle: true
+- tap:
+    text: Details
+- await:
+    visible:
+      text: Edit visit
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text:
+        matches: ^Delete visit$
+    within:
+      id: visit-editor-fields
+    direction: down
+- await:
+    visible:
+      text: Delete visit
+- await:
+    idle: true
+- tap:
+    text: Delete visit
+- await:
+    visible:
+      text: Delete this visit?
+- await:
+    idle: true
+- tap:
+    text: Delete

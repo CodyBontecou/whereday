@@ -68,7 +68,7 @@
     <string name="automatic_export_failure_execution">No se pudo terminar la exportación automática. Revisa el acceso de compra, los permisos de la carpeta y el espacio disponible e inténtalo de nuevo.</string>
     <string name="automatic_export_failure_interrupted">La exportación automática se interrumpió. Reanuda o cancela su solicitud guardada.</string>
     <string name="automatic_export_failure_pending">Termina o cancela la exportación pendiente antes de cambiar su programación o formato.</string>
-    <string name="automatic_export_failure_purchase">Se requiere un acceso de por vida a las exportaciones verificado.</string>
+    <string name="automatic_export_failure_purchase">Se requiere acceso verificado a un plan de Whereday.</string>
     <string name="automatic_export_failure_settings">No se pudieron cargar los ajustes de exportaciones automáticas. Reintenta la carga o restablécelos para continuar.</string>
     <string name="automatic_export_file_mode">Actualizar el archivo del día</string>
     <string name="automatic_export_folder_missing">Elige una carpeta de exportación en Ajustes antes de ejecutar.</string>
@@ -94,7 +94,7 @@
     <string name="automatic_export_outings_help">Las salidas se seleccionan por su hora de inicio y se incluyen sus rutas completas. Las salidas inferidas siguen los Ajustes; un reintento pendiente conserva las opciones de inferencia capturadas.</string>
     <string name="automatic_export_pending">Exportación pendiente: %1$s. El reintento conserva este intervalo y destino capturados.</string>
     <string name="automatic_export_points">Puntos</string>
-    <string name="automatic_export_policy">Se requiere un acceso de por vida a las exportaciones verificado. Las ejecuciones diarias sobrescriben el día completo hasta el momento. Los días anteriores omitidos pueden exportarse manualmente.</string>
+    <string name="automatic_export_policy">Se requiere acceso verificado a un plan de Whereday. Las ejecuciones diarias sobrescriben el día completo hasta el momento. Los días anteriores omitidos pueden exportarse manualmente.</string>
     <string name="automatic_export_repeat">Repetición</string>
     <string name="automatic_export_reset">Restablecer las exportaciones automáticas</string>
     <string name="automatic_export_reset_body">Se desactiva la programación y se borran sus solicitudes guardadas. Los documentos exportados y las copias de seguridad conservadas permanecen en su carpeta.</string>
@@ -116,7 +116,7 @@
     <string name="automation_command_cancel">Cancelar</string>
     <string name="automation_command_help">Puedes cancelar y consultar el diario si se interrumpe el resultado.</string>
     <string name="automation_command_title">Completando el comando de Whereday</string>
-    <string name="automation_detail_exports">Archivos completos con los filtros solicitados. También se requiere un acceso de por vida a las exportaciones verificado.</string>
+    <string name="automation_detail_exports">Archivos completos con los filtros solicitados. También se requiere acceso verificado a un plan de Whereday.</string>
     <string name="automation_detail_manual_visits">Registra la llegada a un lugar guardado, unas coordenadas o tu ubicación actual, y finaliza visitas manuales. Devuelve el nombre, la dirección y los horarios de la visita. Para usar la ubicación actual, Whereday debe estar abierta y tener acceso a la ubicación.</string>
     <string name="automation_detail_outings">Nombres de las salidas registradas y horas de inicio y fin.</string>
     <string name="automation_detail_places">Nombres e identificadores de lugares guardados para elegir dónde registrar la llegada.</string>
@@ -238,7 +238,7 @@
     <string name="country_period_rolling">Últimos 365 días</string>
     <string name="country_period_year">Este año</string>
     <string name="country_preview">Vista previa del CSV de países</string>
-    <string name="country_preview_help">La vista previa muestra las primeras 100 fechas locales. La exportación del CSV de países incluye todas las fechas del periodo seleccionado y requiere acceso de por vida verificado.</string>
+    <string name="country_preview_help">La vista previa muestra las primeras 100 fechas locales. La exportación del CSV de países incluye todas las fechas del periodo seleccionado y requiere acceso verificado a un plan de Whereday.</string>
     <string name="country_preview_title">Vista previa del CSV de países</string>
     <string name="country_retry">Reintentar</string>
     <string name="country_rules">Cada fecha local cuenta una vez por país. Un día de viaje puede contar en varios países. Las visitas abiertas y las salidas no verificadas solo cuentan la fecha de llegada; los puntos de ruta pueden añadir otras fechas. No se rellenan los intervalos sin datos.</string>
@@ -314,8 +314,8 @@
     <string name="export_data_points">Puntos</string>
     <string name="export_data_visits">Visitas</string>
     <string name="export_date_range">Intervalo de fechas</string>
-    <string name="export_delivery_access_help">La exportación completa de archivos requiere acceso de por vida verificado. Elige dónde compartir o guardar este archivo.</string>
-    <string name="export_delivery_access_required">Se requiere acceso de por vida verificado para exportar archivos. La grabación, las importaciones y las vistas previas siguen siendo gratuitas.</string>
+    <string name="export_delivery_access_help">La exportación completa de archivos requiere acceso verificado a un plan de Whereday. Elige dónde compartir o guardar este archivo.</string>
+    <string name="export_delivery_access_required">Se requiere acceso verificado a un plan de Whereday para exportar archivos. La grabación, las importaciones y las vistas previas siguen siendo gratuitas.</string>
     <string name="export_delivery_cancel_pending">Cancelar exportación pendiente</string>
     <string name="export_delivery_cancel_preparation">Cancelar preparación</string>
     <string name="export_delivery_canceled">Exportación cancelada. Los archivos ya escritos permanecen en el destino.</string>
@@ -328,7 +328,7 @@
     <string name="export_delivery_failed">No se ha podido terminar el guardado. Reanuda o elige otro destino; comprueba si hay un archivo incompleto en el destino anterior.</string>
     <string name="export_delivery_folder">Guardar archivo en la carpeta de exportación</string>
     <string name="export_delivery_folder_help">Elige una carpeta de exportación en Ajustes para guardar allí los archivos.</string>
-    <string name="export_delivery_folder_policy">La exportación de archivos requiere acceso de por vida verificado. Si un nombre ya existe, las exportaciones a una carpeta conservan ambos archivos. Elige una carpeta en Ajustes.</string>
+    <string name="export_delivery_folder_policy">La exportación de archivos requiere acceso verificado a un plan de Whereday. Si un nombre ya existe, las exportaciones a una carpeta conservan ambos archivos. Elige una carpeta en Ajustes.</string>
     <string name="export_delivery_folder_required">Primero elige una carpeta de exportación en Ajustes.</string>
     <string name="export_delivery_interrupted">El guardado se ha interrumpido. Reanuda o cancela la solicitud guardada.</string>
     <string name="export_delivery_multiple">Usa Compartir o la carpeta de exportación para varios archivos.</string>
@@ -471,7 +471,7 @@
         <item quantity="other">%d puntos</item>
     </plurals>
     <string name="history_import_reading">Leyendo y comprobando el archivo seleccionado…</string>
-    <string name="history_import_rejected">No se pudieron leer %1$d filas y se omitirán. Los primeros errores aparecen a continuación.</string>
+    <string name="history_import_rejected">Filas omitidas: %1$d. Los primeros errores aparecen a continuación.</string>
     <string name="history_import_replace">Reemplazar los registros coincidentes</string>
     <string name="history_import_replace_body">Solo se reemplazarán los registros con identificadores coincidentes. Se pueden sobrescribir sus correcciones o notas locales. Se conservan las coincidencias cercanas. Si el historial coincidente cambió después de la revisión, la importación se detendrá para que puedas elegir y revisar el archivo de nuevo.</string>
     <string name="history_import_replace_confirm">Reemplazar e importar</string>
@@ -1417,7 +1417,7 @@
     <string name="support_preview_automation">Usa los accesos directos para controlar la grabación, abrir la línea de tiempo y exportar. En Ajustes puedes autorizar acciones de automatización para Automate; la compatibilidad con Automate es experimental.</string>
     <string name="support_preview_journal">Graba salidas, consulta el mapa y la línea de tiempo, edita visitas y lugares guardados y explora los días por país y los momentos fotográficos.</string>
     <string name="support_preview_notice">Esta versión aún se está validando para su lanzamiento en Android.</string>
-    <string name="support_preview_portability">Previsualiza ocho formatos de exportación e importa archivos de historial compatibles. La exportación a archivos, las exportaciones programadas y los webhooks requieren acceso de por vida verificado; las compras no están disponibles en esta versión de prueba.</string>
+    <string name="support_preview_portability">Previsualiza ocho formatos de exportación e importa archivos de historial compatibles. La exportación a archivos, las exportaciones programadas y los webhooks requieren acceso verificado a un plan de Whereday; las compras no están disponibles en esta versión de prueba.</string>
     <string name="support_preview_title">Versión de desarrollo para Android</string>
     <string name="support_privacy">Política de privacidad</string>
     <string name="support_rate_app">Valorar Whereday en Google Play</string>
@@ -1679,12 +1679,12 @@
     <string name="webhook_enabled_label">Activar los envíos de webhooks</string>
     <string name="webhook_endpoint">URL de destino</string>
     <string name="webhook_endpoint_help">Usa HTTPS. Las URL pueden contener credenciales; mostrarlas o copiarlas puede revelar secretos.</string>
-    <string name="webhook_failure_background">Los envíos de webhooks en segundo plano están en pausa. Revisa el acceso de por vida y los ajustes e inténtalo de nuevo.</string>
+    <string name="webhook_failure_background">Los envíos de webhooks en segundo plano están en pausa. Revisa el acceso al plan y los ajustes e inténtalo de nuevo.</string>
     <string name="webhook_failure_changed">Los ajustes de webhooks han cambiado. Vuelve a cargarlos antes de guardar.</string>
     <string name="webhook_failure_fields">Revisa la URL del webhook y los campos de autenticación.</string>
     <string name="webhook_failure_preferences">No se pudieron cargar las preferencias de webhooks. Intenta abrir de nuevo la app.</string>
     <string name="webhook_failure_unavailable">No se pudieron abrir los ajustes de webhooks. Restablécelos antes de volver a configurar los envíos.</string>
-    <string name="webhook_failure_work">No se pudo terminar la tarea de webhooks. Revisa el acceso de por vida y los ajustes e inténtalo de nuevo.</string>
+    <string name="webhook_failure_work">No se pudo terminar la tarea de webhooks. Revisa el acceso al plan y los ajustes e inténtalo de nuevo.</string>
     <string name="webhook_flush_action">Enviar los puntos en cola</string>
     <string name="webhook_flush_body">Envía los puntos acumulados aunque no se haya alcanzado la cantidad o el intervalo elegido.</string>
     <string name="webhook_flush_confirm">Enviar los puntos</string>
@@ -1739,8 +1739,8 @@
         <item quantity="other">%1$s puntos</item>
     </plurals>
     <string name="webhook_purchase_body">Los webhooks están incluidos en todos los planes de Whereday: Semanal, Anual o De por vida. Las importaciones y las vistas previas siguen siendo gratuitas.</string>
-    <string name="webhook_purchase_title">Acceso de por vida a las exportaciones</string>
-    <string name="webhook_purchases">Acceso de por vida y compras</string>
+    <string name="webhook_purchase_title">Acceso al plan de exportación</string>
+    <string name="webhook_purchases">Acceso al plan y compras</string>
     <string name="webhook_query_help">Las claves de API en las URL pueden aparecer en los registros del servidor y del proxy. Usa autenticación por cabecera si tu servidor la admite.</string>
     <string name="webhook_queue_body">Los datos en cola que conserves se enviarán con el destino y la autenticación que guardes. Descartarlos solo elimina los datos de webhooks pendientes.</string>
     <string name="webhook_queue_discard">Guardar y descartar los datos en cola</string>

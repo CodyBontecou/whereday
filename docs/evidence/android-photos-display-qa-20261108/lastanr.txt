@@ -1,0 +1,74 @@
+ACTIVITY MANAGER LAST ANR (dumpsys activity lastanr)
+  ANR time: Nov 8, 2026 8:20:45 AM
+  Reason: Input dispatching timed out (a6f3bdd com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity (server) is not responding. Waited 5104ms for MotionEvent(deviceId=12, eventTime=2404054720000, source=TOUCHSCREEN | STYLUS, displayId=0, action=UP, actionButton=0x00000000, flags=0x00000080, metaState=0x00000000, buttonState=0x00000000, classification=NONE, edgeFlags=0x00000000, xPrecision=18.5, yPrecision=14.8, xCursorPosition=nan, yCursorPosition=nan, pointers=[0: (1661.4, 626.9)]), policyFlags=0x62000000).
+
+  * Task{7b151c0 #2187 type=standard A=10210:com.bontecou.whereday.mapqa U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+    mLastPausedActivity: ActivityRecord{f188d2d u0 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t-1 f}}
+    mLastNonFullscreenBounds=Rect(343, 209 - 1425, 1977)
+    isSleeping=false
+    topResumedActivity=ActivityRecord{f382743 u0 com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity t2187}
+
+  (nothing)
+  packageName=com.bontecou.whereday.mapqa processName=com.bontecou.whereday.mapqa
+  launchedFromUid=2000 launchedFromPackage=com.android.shell launchedFromFeature=null userId=0
+  app=ProcessRecord{ba911b5 6951:com.bontecou.whereday.mapqa/u0a210}
+  Intent { flg=0x10000000 cmp=com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity }
+  rootOfTask=true task=Task{7b151c0 #2187 type=standard A=10210:com.bontecou.whereday.mapqa}
+  taskAffinity=10210:com.bontecou.whereday.mapqa
+  mActivityComponent=com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity
+  baseDir=/data/app/~~8Kca4rPT669iiDH4l7ymVg==/com.bontecou.whereday.mapqa-yVsBPWoaDkQV8PhHHUJyeg==/base.apk
+  dataDir=/data/user/0/com.bontecou.whereday.mapqa
+  stateNotNeeded=false componentSpecified=true mActivityType=standard
+  compat={420dpi always-compat} theme=0x7f100000
+  mLastReportedConfigurations:
+    mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw674dp w674dp h841dp 420dpi lrg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1768, 2208) mAppBounds=Rect(0, 0 - 1768, 2208) mMaxBounds=Rect(0, 0 - 1768, 2208) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} s.428 fontWeightAdjustment=0}
+    mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw674dp w674dp h841dp 420dpi lrg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1768, 2208) mAppBounds=Rect(0, 0 - 1768, 2208) mMaxBounds=Rect(0, 0 - 1768, 2208) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} s.10 fontWeightAdjustment=0}
+  mLastReportedActivityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 1768, 2208), taskFragmentBounds=Rect(0, 0 - 1768, 2208)}
+  CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw674dp w674dp h841dp 420dpi lrg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1768, 2208) mAppBounds=Rect(0, 0 - 1768, 2208) mMaxBounds=Rect(0, 0 - 1768, 2208) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} s.16 fontWeightAdjustment=0}
+  RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=standard mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment}
+  taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=fff5f5f5
+    backgroundColor=fffafafa statusBarColor=ff757575 navigationBarColor=808080
+   backgroundColorFloating=ffffffff
+  readUriPermissions={UriPermission{1f2b118 content://com.android.externalstorage.documents/document/primary%3ADownload%2Fwhereday-photo-edge-20261108.png [user 0]}}
+  writeUriPermissions={UriPermission{1f2b118 content://com.android.externalstorage.documents/document/primary%3ADownload%2Fwhereday-photo-edge-20261108.png [user 0]}}
+  launchFailed=false launchCount=0 lastLaunchTime=-5m26s284ms
+  mHaveState=false mIcicle=null
+  state=RESUMED delayedResume=false finishing=false
+  keysPaused=false inHistory=true idle=true
+  occludesParent=true noDisplay=false immersive=false launchMode=1
+  mActivityType=standard
+  mImeInsetsFrozenUntilStartInput=false
+  windows=[Window{a6f3bdd u0 com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity}]
+  windowType=2
+  mOccludesParent=true
+  overrideOrientation=SCREEN_ORIENTATION_UNSPECIFIED
+  requestedOrientation=SCREEN_ORIENTATION_UNSPECIFIED
+  mVisibleRequested=true mVisible=true mClientVisible=true reportedDrawn=true reportedVisible=true
+  mNumInterestingWindows=3 mNumDrawnWindows=3 allDrawn=true lastAllDrawn=false)
+  startingData=null firstWindowDrawn=true mIsExiting=false
+  nowVisible=true lastVisibleTime=-1m27s986ms
+  resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+  mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+  supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
+  configChanges=0x3
+  neverSandboxDisplayApis=false
+  alwaysSandboxDisplayApis=false
+  areBoundsLetterboxed=false
+  mCameraCompatControlState=hidden
+  mCameraCompatControlEnabled=true
+
+  ResumedActivity: ActivityRecord{f382743 u0 com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity t2187}
+  LockTaskController:
+    mLockTaskModeState=NONE
+    mLockTaskModeTasks=
+    mLockTaskPackages (userId:packages)=
+
+  KeyguardController:
+    mKeyguardShowing=false
+    mAodShowing=false
+    mKeyguardGoingAway=false
+   KeyguardShowing=false AodShowing=false KeyguardGoingAway=false DismissalRequested=false  Occluded=false DismissingKeyguardActivity=null TurnScreenOnActivity=null at display=0
+    mDismissalRequested=false
+
+-------------------------------------------------------------------------------
+

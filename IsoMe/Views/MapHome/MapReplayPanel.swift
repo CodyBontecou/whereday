@@ -32,8 +32,8 @@ struct TraceDay {
     private let inks: [String: Color]
     private let home: SavedPlace?
 
-    init(range: ClosedRange<Date>, visits: [Visit], points: [LocationPoint], now: Date, home: SavedPlace? = nil) {
-        let calendar = Calendar.current
+    init(range: ClosedRange<Date>, visits: [Visit], points: [LocationPoint], now: Date,
+         home: SavedPlace? = nil, calendar: Calendar = .current) {
         let sorted = visits.sorted { $0.arrivedAt < $1.arrivedAt }
         self.visits = sorted
         self.home = home
@@ -117,8 +117,15 @@ struct TraceDay {
         return min(max(date.timeIntervalSince(domain.lowerBound) / span, 0), 1)
     }
 
+    /// The axis includes the next midnight to draw a full day, but the
+    /// playhead must stay on the selected date, including VoiceOver steps.
+    func clampedTime(_ time: Date) -> Date {
+        let upper = isSingleDay ? domain.upperBound.addingTimeInterval(-1) : domain.upperBound
+        return min(max(time, domain.lowerBound), upper)
+    }
+
     func date(at fraction: Double) -> Date {
-        domain.lowerBound.addingTimeInterval(span * min(max(fraction, 0), 1))
+        clampedTime(domain.lowerBound.addingTimeInterval(span * min(max(fraction, 0), 1)))
     }
 
     /// Where "now" falls on a single day's axis; the rest of the day is drawn as not yet lived.

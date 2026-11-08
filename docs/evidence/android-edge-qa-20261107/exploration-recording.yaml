@@ -1,0 +1,295 @@
+steps:
+  - tap:
+      id: navigation-atlas
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: atlas-month-recap
+  - tap:
+      text: Month recap
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: recap-close
+  - tap:
+      text: Previous month
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: recap-days
+      expectedText: 0 DAYS
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: recap-days
+      expectedText: 0 DAYS
+  - tap:
+      text: Done
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: atlas-month-recap
+  - tap:
+      id: navigation-places
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: saved-places-search
+  - tap:
+      text: Add place
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: saved-name
+  - tap:
+      text: Save
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: saved-editor-error
+  - tap:
+      text: Cancel
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: saved-places-search
+  - tap:
+      id: navigation-map
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-add
+  - tap:
+      text: Add a place
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Log a past stop
+  - tap:
+      text: Log a past stop
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: visit-name
+  - tap:
+      id: visit-name
+  - tool: keyboard
+    args:
+      text: QA overnight 20261107
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Discard visit changes?
+  - tap:
+      text: Keep editing
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: visit-name
+      expectedText: QA overnight 20261107
+  - tap:
+      id: visit-latitude
+  - tool: keyboard
+    args:
+      text: "0"
+  - tap:
+      id: visit-longitude
+  - tool: keyboard
+    args:
+      text: "0"
+  - tap:
+      text: Nov 7, 2026
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Arrived · date
+  - tap:
+      x: 0.5
+      y: 0.445
+  - tap:
+      text: Apply date
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "Arrived date: Nov 4, 2026"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.39
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "Departed date:"
+  - tap:
+      text: Nov 7, 2026
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Departed · date
+  - tap:
+      x: 0.733
+      y: 0.445
+  - tap:
+      text: Apply date
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "Departed date: Nov 6, 2026"
+  - tap:
+      text: Save
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-add
+  - tap:
+      id: navigation-atlas
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: atlas-month-recap
+  - tap:
+      text: Month recap
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: recap-days
+      expectedText: 2 DAYS
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: recap-share
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: recap-close
+  - tap:
+      id: navigation-map
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-search
+  - tap:
+      text: Search places and visits
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Place or visit name
+  - tap:
+      text: Place or visit name
+  - tool: keyboard
+    args:
+      text: "%"
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: No saved places or visits match.
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: QA overnight
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: QA overnight 20261107 /
+  - tap:
+      text: QA overnight 20261107
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-visit-details
+  - tap:
+      text: Details
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Edit visit
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.3
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.4
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Delete visit
+  - tap:
+      text: Delete visit
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Delete this visit?
+  - tap:
+      text: Delete
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-range-custom
+  - tap:
+      text: Custom range
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Show days
+  - tap:
+      text: Today
+  - tap:
+      text: Apply
+executionPrerequisite: Whereday open on Archive, onboarded Android API35 QA
+  emulator with existing synthetic journal; do not clear app data.

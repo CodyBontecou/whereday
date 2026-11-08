@@ -1,0 +1,1005 @@
+{
+  "appId": "6761960794",
+  "providerToken": "126424970",
+  "campaignId": "g5811pwmv7vj366xnwj7gk7p0h8hkcb7",
+  "campaignName": "Whereday — Remember the Route — November 2026",
+  "platforms": [
+    "web",
+    "tt",
+    "ig",
+    "yt",
+    "fb",
+    "x",
+    "th"
+  ],
+  "customProductPages": {},
+  "posts": [
+    {
+      "day": 1,
+      "sequence": "001",
+      "angle": "route",
+      "title": "A visit is not a route",
+      "type": "slideshow",
+      "caption": "A café stop and the walk there tell different stories. Whereday records detected visits and the GPS routes you choose to record.",
+      "overlay": [
+        "A stop is one part of the day.",
+        "A visit can mark the café or trailhead.",
+        "Visits can be detected automatically.",
+        "A GPS recording adds the path.",
+        "Start recording before your walk.",
+        "Record on iPhone or Apple Watch.",
+        "Review the route that was saved.",
+        "Whereday — your location journal."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-001",
+      "campaignToken": "web_route_001",
+      "review": {
+        "status": "visual-and-claims-passed",
+        "originalCaption": "a café stop tells one story, but the walk there tells the rest. Whereday keeps both without mixing them up.\n#locationhistory #walking #hiking #gps #routes",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p974rzwkvgs0ffmdqvs8mwg3g58hjp3d"
+    },
+    {
+      "day": 2,
+      "sequence": "002",
+      "angle": "watch",
+      "title": "The hike ends. The route stays.",
+      "type": "wall-of-text",
+      "caption": "Keep a record of the route you chose to record, alongside your detected visits. Whereday for iPhone and Apple Watch.",
+      "overlay": [
+        "The hike ends.",
+        "The recorded route stays.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-002",
+      "campaignToken": "web_watch_002",
+      "review": {
+        "status": "hold",
+        "originalCaption": "the hike route plus all the little stops from the day? somehow way more meaningful than another camera roll dump\n#hiking #trailmemories #outdoorlife #gpsroute #applewatch",
+        "captionStatus": "saved-and-read-back",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p973pvdhg6bbm4sv0cp570wj9h8hkhcb"
+    },
+    {
+      "day": 3,
+      "sequence": "003",
+      "angle": "route",
+      "title": "Which way did that walk go?",
+      "type": "green-screen",
+      "caption": "A memorable walk deserves a record you can revisit. Start a GPS route in Whereday before you head out.",
+      "overlay": [
+        "Remember the walk?",
+        "Keep a record of the route.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-route-003",
+      "campaignToken": "web_route_003",
+      "review": {
+        "status": "hold",
+        "originalCaption": "my brain can remember a random lyric from 2012 but not how i got somewhere this morning\n#maps #navigation #memory #travel #relatable",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Local speech detection found unrelated source dialogue; mute/replace and verify exported audio."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p979nz2qvbs57g34q3c26xhgt98hkhcg"
+    },
+    {
+      "day": 4,
+      "sequence": "004",
+      "angle": "route",
+      "title": "Keep the wandering part",
+      "type": "slideshow",
+      "caption": "Start recording on iPhone or Apple Watch, then review your saved GPS route in Whereday.",
+      "overlay": [
+        "Keep the wandering part.",
+        "Start a GPS route before you head out.",
+        "Record on iPhone or Apple Watch.",
+        "Stop recording when you finish.",
+        "Review the saved path later.",
+        "Whereday — a record to revisit."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-004",
+      "campaignToken": "web_route_004",
+      "review": {
+        "status": "visual-and-claims-passed",
+        "originalCaption": "not gonna lie, a saved route feels way more real than a vague “we went somewhere around here.” Whereday keeps the wandering part.\n#walking #gpsroute #hiking #cycling #outdoors",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p974kskjpd5vea23s0skv3gtb98hjsb5"
+    },
+    {
+      "day": 5,
+      "sequence": "005",
+      "angle": "route",
+      "title": "Everyday stops. Chosen routes.",
+      "type": "wall-of-text",
+      "caption": "Detected visits and deliberate GPS recordings serve different purposes. Keep both in your Whereday journal.",
+      "overlay": [
+        "Everyday stops.",
+        "Routes you choose to record.",
+        "One Whereday journal."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-005",
+      "campaignToken": "web_route_005",
+      "review": {
+        "status": "hold",
+        "originalCaption": "having everyday stops logged in the background while you record the routes that actually matter is such a clean setup\n#locationhistory #gpsroutes #applewatch #traveltracking #iphone",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97d7h7vpamgjkeg6638xsqasx8hjrcq"
+    },
+    {
+      "day": 6,
+      "sequence": "006",
+      "angle": "watch",
+      "title": "Record from your wrist",
+      "type": "green-screen",
+      "caption": "Whereday supports standalone Apple Watch GPS recording. Start a route on your watch, then sync the saved points to your iPhone.",
+      "overlay": [
+        "Start a route on Apple Watch.",
+        "Sync it to your iPhone later.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-006",
+      "campaignToken": "web_watch_006",
+      "review": {
+        "status": "hold",
+        "originalCaption": "phone charging, watch still keeping track of where the day went. kinda love that\n#applewatch #iphone #gps #locationtracking #tech",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p973xg776cfx31v2h623y4v43d8hjecb"
+    },
+    {
+      "day": 7,
+      "sequence": "007",
+      "angle": "route",
+      "title": "Stops and routes, explained",
+      "type": "slideshow",
+      "caption": "A visit marks a place. GPS recording saves a path. Start recording when you want to keep the route.",
+      "overlay": [
+        "A visit marks a place.",
+        "A recorded route adds a path.",
+        "Start recording before you move.",
+        "Review both in Whereday.",
+        "Your journal, on your device."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-007",
+      "campaignToken": "web_route_007",
+      "review": {
+        "status": "visual-and-claims-passed",
+        "originalCaption": "wait, your map can know every stop and still miss the actual walk between them.\n#gps #walking #hiking #applewatch #locationtracking",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording",
+          "Out-of-order slide numbering"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p974x8fe9g3svmy6ms9jjtnncx8hjy39"
+    },
+    {
+      "day": 8,
+      "sequence": "008",
+      "angle": "watch",
+      "title": "More context for your day",
+      "type": "wall-of-text",
+      "caption": "Review recorded routes and detected visits together in Whereday. Location recording can have gaps.",
+      "overlay": [
+        "The walk.",
+        "The stops along the way.",
+        "More context in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-008",
+      "campaignToken": "web_watch_008",
+      "review": {
+        "status": "hold",
+        "originalCaption": "not gonna lie, a full map of where my day actually went sounds weirdly satisfying.\n#routetracking #applewatch #iphone #movement #fitnessdata",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97cgtgvf95k6xvzj0p7bg7t6h8hkh2q"
+    },
+    {
+      "day": 9,
+      "sequence": "009",
+      "angle": "route",
+      "title": "A walk worth revisiting",
+      "type": "green-screen",
+      "caption": "Start a route before your next walk and keep the saved GPS points in Whereday.",
+      "overlay": [
+        "A walk worth revisiting.",
+        "A route worth recording.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-route-009",
+      "campaignToken": "web_route_009",
+      "review": {
+        "status": "hold",
+        "originalCaption": "some days are core memories until you look at the map and it's just... nothing\n#gpsroutes #travelmemories #locationhistory #maps #dayinthelife",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Political figure unrelated to Whereday"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Replace political reaction clip.",
+          "Local speech detection found unrelated source dialogue; mute/replace and verify exported audio."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p9765pdpheemqd8kdr23j7vsph8hk38p"
+    },
+    {
+      "day": 10,
+      "sequence": "010",
+      "angle": "route",
+      "title": "Before the first turn",
+      "type": "slideshow",
+      "caption": "Choose GPS recording before you set off. Whereday lets you review the route that was recorded afterward.",
+      "overlay": [
+        "Before the first turn:",
+        "Start GPS recording.",
+        "Head out on your walk.",
+        "Stop recording when you finish.",
+        "Review the route that was saved.",
+        "Whereday — keep a record of the walk."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-010",
+      "campaignToken": "web_route_010",
+      "review": {
+        "status": "visual-and-claims-passed",
+        "originalCaption": "not gonna lie, checking the map after a long walk hits different. Whereday keeps the turns and detours from becoming one big memory blur\n#gps #walking #hiking #running #outdoors",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Out-of-order slide numbering"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p973gpzpkbb1tbmsbf4p3se5qn8hjctx"
+    },
+    {
+      "day": 11,
+      "sequence": "011",
+      "angle": "route",
+      "title": "Keep this walk",
+      "type": "wall-of-text",
+      "caption": "Automatic visit detection records places. Start a GPS recording when you also want a record of the path.",
+      "overlay": [
+        "Some walks are worth keeping.",
+        "Start a GPS route in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-011",
+      "campaignToken": "web_route_011",
+      "review": {
+        "status": "hold",
+        "originalCaption": "a quick walk turning into the route you’ll want to remember is such a specific kind of good\n#walking #gpsroute #outdoors #applewatch #everydayadventures",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p973y4r8cg52t3r4yce4byap518hjfe6"
+    },
+    {
+      "day": 12,
+      "sequence": "012",
+      "angle": "watch",
+      "title": "Your watch can record a route",
+      "type": "green-screen",
+      "caption": "Start a GPS recording in Whereday on Apple Watch, even without your iPhone nearby. Sync the recorded points afterward.",
+      "overlay": [
+        "Your watch can record a route.",
+        "Your iPhone can stay behind.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-012",
+      "campaignToken": "web_watch_012",
+      "review": {
+        "status": "hold",
+        "originalCaption": "phone left at home, but Whereday still caught every turn from my watch. honestly that's kind of comforting\n#applewatch #gpsroutes #walking #routetracking #outdoors",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p971h8w7zpcg82108s25vvejm58hkdc3"
+    },
+    {
+      "day": 13,
+      "sequence": "013",
+      "angle": "route",
+      "title": "The trailhead and the trail",
+      "type": "slideshow",
+      "caption": "Whereday distinguishes detected visits from GPS routes you deliberately record. Both can help you review a day.",
+      "overlay": [
+        "The trailhead is a place.",
+        "The trail is a route.",
+        "Visits can be detected automatically.",
+        "Start GPS recording for the path.",
+        "Record on iPhone or Apple Watch.",
+        "Review your records in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-013",
+      "campaignToken": "web_route_013",
+      "review": {
+        "status": "hold",
+        "originalCaption": "a trailhead and the miles getting there tell two different stories. Whereday keeping both just makes sense.\n#gps #routetracking #hiking #running #locationhistory",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Remove duplicated Whereday text boxes from slides."
+        ],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97a95xbh39bb01hntdfs96g798hj0pg"
+    },
+    {
+      "day": 14,
+      "sequence": "014",
+      "angle": "watch",
+      "title": "A route from your wrist",
+      "type": "wall-of-text",
+      "caption": "Record a route directly on Apple Watch with Whereday, then sync it to your iPhone for review.",
+      "overlay": [
+        "A route from your wrist.",
+        "A record to revisit.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-014",
+      "campaignToken": "web_watch_014",
+      "review": {
+        "status": "hold",
+        "originalCaption": "the idea of coming home with the whole route mapped after leaving my phone behind is kinda perfect\n#applewatch #gpsroutes #walking #hiking #running",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Local speech detection found unrelated source dialogue; mute/replace and verify exported audio."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97cckrea8k2qrjymf5sggahns8hkdq7"
+    },
+    {
+      "day": 15,
+      "sequence": "015",
+      "angle": "route",
+      "title": "A stop is not a trail map",
+      "type": "green-screen",
+      "caption": "A detected café visit does not reconstruct the trail you took. Start GPS recording before your hike if you want to save the route.",
+      "overlay": [
+        "The café stop is a visit.",
+        "The hike needs a GPS recording.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-route-015",
+      "campaignToken": "web_route_015",
+      "review": {
+        "status": "hold",
+        "originalCaption": "the cafe gets a permanent record but the hike disappears into the void somehow\n#hiking #trailmemories #outdoors #cafevisit #relatable",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Meme has unrelated burned-in captions"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Replace clip with unrelated burned-in classroom/streamer subtitles.",
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p9707v8j9edphpw1pm2nj8b8ch8hj5kg"
+    },
+    {
+      "day": 16,
+      "sequence": "016",
+      "angle": "route",
+      "title": "Save a route you can use",
+      "type": "slideshow",
+      "caption": "Review a recorded route in Whereday or export supported GPS records as GPX or KML. Export access depends on your purchase history or plan.",
+      "overlay": [
+        "The walk ends.",
+        "Your recorded route remains.",
+        "Review the map in Whereday.",
+        "Export supported records as GPX or KML.",
+        "Export access depends on your purchase or plan.",
+        "Keep a copy in your own files."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-016",
+      "campaignToken": "web_route_016",
+      "review": {
+        "status": "visual-and-claims-passed",
+        "originalCaption": "the walk ends, but the route doesn't have to disappear with it.\n#gpsroutes #walking #hiking #running #cycling",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97ax5wq1d64qkkt84vhn8sr998hkss8"
+    },
+    {
+      "day": 17,
+      "sequence": "017",
+      "angle": "route",
+      "title": "A park walk, kept",
+      "type": "wall-of-text",
+      "caption": "Use Whereday’s visit detection for places and start a GPS route for a walk you want to revisit.",
+      "overlay": [
+        "A park walk, kept.",
+        "Start a GPS route in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-017",
+      "campaignToken": "web_route_017",
+      "review": {
+        "status": "hold",
+        "originalCaption": "some walks are just a visit, and some are a route you want to remember. Whereday gets the difference.\n#parkwalk #walking #outdoors #routetracking #applewatch",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97fdhyt4v44a4y4ewskvfgm8x8hj2xf"
+    },
+    {
+      "day": 18,
+      "sequence": "018",
+      "angle": "watch",
+      "title": "A watch. A walk. A record.",
+      "type": "green-screen",
+      "caption": "Whereday can record GPS points directly on Apple Watch without the iPhone nearby. Start the recording before heading out.",
+      "overlay": [
+        "A watch.",
+        "A walk.",
+        "A recorded route in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-018",
+      "campaignToken": "web_watch_018",
+      "review": {
+        "status": "hold",
+        "originalCaption": "your iPhone can stay lost in the backpack. the Apple Watch still caught the whole trail with Whereday.\n#AppleWatch #trailrunning #hiking #GPS #outdooradventures",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Local speech detection found unrelated source dialogue; mute/replace and verify exported audio."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97bn5vs219m7dxfjqnznh2hdd8hjeng"
+    },
+    {
+      "day": 19,
+      "sequence": "019",
+      "angle": "route",
+      "title": "Two pins are not a route",
+      "type": "slideshow",
+      "caption": "A start and end point do not reconstruct the journey. Record GPS points before setting off, then review what was saved in Whereday.",
+      "overlay": [
+        "Two pins are not a route.",
+        "A visit marks a place.",
+        "A start and finish cannot reconstruct the path.",
+        "GPS recording saves points along the way.",
+        "Start before you head out.",
+        "Stop when the route is finished.",
+        "Review the points that were recorded.",
+        "Whereday — keep a record to revisit."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-019",
+      "campaignToken": "web_route_019",
+      "review": {
+        "status": "hold",
+        "originalCaption": "two pins can't tell you whether you took the trail, the detour, or the long way home. Whereday makes the difference make sense\n#gps #routes #hiking #running #locationhistory",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-rewrite-incomplete",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Finish all eight planned slides; rendered output still contains old completeness claims."
+        ],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p979vf2zhm6ywp5dsf217aqnzx8hkvt0"
+    },
+    {
+      "day": 20,
+      "sequence": "020",
+      "angle": "watch",
+      "title": "Beyond the finish line",
+      "type": "wall-of-text",
+      "caption": "Save a GPS route you can review alongside detected visits in Whereday, rather than relying on a finish-line photo alone.",
+      "overlay": [
+        "Beyond the finish-line photo.",
+        "Keep a recorded route.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-020",
+      "campaignToken": "web_watch_020",
+      "review": {
+        "status": "hold",
+        "originalCaption": "the finish line isn't the whole story. it's the detours, views, and little stops along the way too, Whereday gets it.\n#walking #running #hiking #cycling #memories",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p9718gnwjstawdkgj1djm15bts8hjx52"
+    },
+    {
+      "day": 21,
+      "sequence": "021",
+      "angle": "route",
+      "title": "Find that walk again",
+      "type": "green-screen",
+      "caption": "Choose to record your next route in Whereday. Review the saved path when you want to remember where you went.",
+      "overlay": [
+        "Where did that walk go?",
+        "Record the next one in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-021",
+      "campaignToken": "web_route_021",
+      "review": {
+        "status": "hold",
+        "originalCaption": "when someone asks where you went and your route is just… blank\n#relatable #routes #locationtracking #funny #dailystruggles",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Local speech detection found unrelated source dialogue; mute/replace and verify exported audio."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p9715d85ekg8avab7p8ha70zj98hjxw9"
+    },
+    {
+      "day": 22,
+      "sequence": "022",
+      "angle": "route",
+      "title": "Keep more than the photo",
+      "type": "slideshow",
+      "caption": "Start GPS recording before a walk, hike, ride, or run. Review the saved route in Whereday afterward.",
+      "overlay": [
+        "Keep more than the photo.",
+        "Start a GPS recording.",
+        "Record on iPhone or Apple Watch.",
+        "Stop when your route is finished.",
+        "Review the route that was saved.",
+        "Whereday — remember the walk."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-022",
+      "campaignToken": "web_route_022",
+      "review": {
+        "status": "hold",
+        "originalCaption": "a finish-line photo is cute, but i want the whole route too. Whereday’s made me appreciate the random walks in between\n#walking #gpsroute #hiking #running #movement",
+        "captionStatus": "saved-and-read-back",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "mediaStatus": "render-reviewed-rewrite-incomplete",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Apply planned six-slide rewrite; original overstatements still render."
+        ],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97eawgye4gerypfk12qr0f44d8hj1g4"
+    },
+    {
+      "day": 23,
+      "sequence": "023",
+      "angle": "route",
+      "title": "Choose the routes you record",
+      "type": "wall-of-text",
+      "caption": "Use automatic visits for place history and start GPS recording for the routes you want to keep. Recording uses battery and can have gaps.",
+      "overlay": [
+        "Everyday places: detected visits.",
+        "Chosen paths: GPS recordings.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-route-023",
+      "campaignToken": "web_route_023",
+      "review": {
+        "status": "hold",
+        "originalCaption": "not every walk needs to become a GPS mission. let the everyday miles stay easy and map the ones worth replaying.\n#walking #hiking #running #cycling #outdoors",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97dxe08r4w6q01rkz1rcydh8x8hjzfa"
+    },
+    {
+      "day": 24,
+      "sequence": "024",
+      "angle": "watch",
+      "title": "Start on Apple Watch",
+      "type": "green-screen",
+      "caption": "Leaving your iPhone at home? Start a Whereday GPS recording on Apple Watch, then sync the recorded points later.",
+      "overlay": [
+        "Start on Apple Watch.",
+        "Review on iPhone later.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-024",
+      "campaignToken": "web_watch_024",
+      "review": {
+        "status": "hold",
+        "originalCaption": "left my phone charging and my watch still got the entire route. Whereday really said no excuses\n#applewatch #gpsroute #running #walks #locationtracking",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p9765fhppgs5kqadk5623h1pqh8hkseb"
+    },
+    {
+      "day": 25,
+      "sequence": "025",
+      "angle": "route",
+      "title": "Places and paths",
+      "type": "slideshow",
+      "caption": "Whereday keeps detected visits and recorded GPS routes in a location journal on your device.",
+      "overlay": [
+        "Places you stopped.",
+        "Paths you chose to record.",
+        "A visit is not a route.",
+        "Start GPS recording for the path.",
+        "Review both in Whereday.",
+        "Your journal stays on your device."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-025",
+      "campaignToken": "web_route_025",
+      "review": {
+        "status": "hold",
+        "originalCaption": "your map knowing where you stopped isn't the same as knowing how you got there\n#gps #locationhistory #routes #hiking #applewatch",
+        "captionStatus": "saved-and-read-back",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "mediaStatus": "render-reviewed-rewrite-incomplete",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Apply planned six-slide rewrite; original overstatements still render."
+        ],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p972rwqsvwrsfsxcnwdqsewqpn8hk276"
+    },
+    {
+      "day": 26,
+      "sequence": "026",
+      "angle": "watch",
+      "title": "Your route has context",
+      "type": "wall-of-text",
+      "caption": "A recorded route and detected visits can add different context to a day. Review both in Whereday on iPhone.",
+      "overlay": [
+        "Your route has context.",
+        "Recorded paths. Detected visits.",
+        "Whereday"
+      ],
+      "shortlink": "https://whereday.com/v/web-watch-026",
+      "campaignToken": "web_watch_026",
+      "review": {
+        "status": "hold",
+        "originalCaption": "your route is only part of the story. the random coffee stop and the walk home count too.\n#gps #running #walking #hiking #movementtracking",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "passed",
+        "remainingIssues": [
+          "Export contains audible audio despite Studio Sound off; mute or deliberately review final soundtrack before approval."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p9778mn6x8jcav2773jp085s7h8hkvpa"
+    },
+    {
+      "day": 27,
+      "sequence": "027",
+      "angle": "route",
+      "title": "Remember the detour",
+      "type": "green-screen",
+      "caption": "Want a record of the detour? Start GPS recording before you move and review the saved route in Whereday afterward.",
+      "overlay": [
+        "Remember the detour.",
+        "Record the next route in Whereday."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-027",
+      "campaignToken": "web_route_027",
+      "review": {
+        "status": "hold",
+        "originalCaption": "the map vanished and suddenly my walk is just a story nobody can verify. Whereday would've had the receipts\n#walking #maps #lost #relatable #gps",
+        "captionStatus": "saved-and-read-back",
+        "mediaStatus": "render-reviewed-text-corrected",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Political figure unrelated to Whereday"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Replace political reaction clip.",
+          "Local speech detection found unrelated source dialogue; mute/replace and verify exported audio."
+        ],
+        "audioStatus": "hold-exported-audio-needs-mute-and-render-check",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p979ypk2fwk5q9mkyz2r5k37as8hkhcb"
+    },
+    {
+      "day": 28,
+      "sequence": "028",
+      "angle": "route",
+      "title": "Keep the turns you recorded",
+      "type": "slideshow",
+      "caption": "Review the GPS route saved by Whereday and keep a portable GPX or KML copy with eligible export access.",
+      "overlay": [
+        "Keep the turns you recorded.",
+        "Start GPS recording before moving.",
+        "Record on iPhone or Apple Watch.",
+        "Review the saved route afterward.",
+        "Export supported records as GPX or KML.",
+        "Export access depends on your purchase or plan.",
+        "Whereday — a route you can revisit."
+      ],
+      "shortlink": "https://whereday.com/v/web-route-028",
+      "campaignToken": "web_route_028",
+      "review": {
+        "status": "hold",
+        "originalCaption": "not gonna lie, a distance total never tells the whole story. Whereday lets you keep the turns, loops, and little detours too\n#gpsroute #walking #running #hiking #movement",
+        "captionStatus": "saved-and-read-back",
+        "originalIssues": [
+          "Missing attribution URL and clear Whereday CTA",
+          "Overlong copy, unsupported precision/completeness or testimonial wording"
+        ],
+        "claimsBasis": "Released App Store version 1.8.3 and repository behavior reviewed 2026-11-04",
+        "mediaStatus": "render-reviewed-rewrite-incomplete",
+        "visualStatus": "correction-required",
+        "remainingIssues": [
+          "Apply planned seven-slide rewrite; original precision/completeness claims still render."
+        ],
+        "audioStatus": "not-applicable",
+        "schedulingStatus": "unscheduled",
+        "overlayStatus": "planned-target-copy; see mediaStatus for render verification"
+      },
+      "contentId": "p97ehyv9tamjrq2z9dd466thvd8hjhw5"
+    }
+  ],
+  "reviewSummary": {
+    "date": "2026-11-04",
+    "reviewedPosts": 28,
+    "captionCorrectionsVerified": 28,
+    "visualCorrectionsRemainingDays": [
+      9,
+      13,
+      15,
+      19,
+      22,
+      25,
+      27,
+      28
+    ],
+    "schedulingHold": true,
+    "blocker": "Fastlane browser repeatedly switches from Whereday to Health.md during editing; further saves paused to avoid wrong-workspace changes.",
+    "audioMethod": "Local Whisper tiny speech detection plus ffprobe/volume checks; not a substitute for final listening approval.",
+    "attributionStatus": "live; 196 production HEAD redirects verified; production counter write untested; social connections/destinations pending"
+  }
+}

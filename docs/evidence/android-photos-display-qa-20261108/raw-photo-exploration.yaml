@@ -1,0 +1,168 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+  - tap:
+      id: navigation-settings
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: settings-screen
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.86
+      toX: 0.7
+      toY: 0.25
+      momentum: false
+  - tap:
+      text: Photos
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-content
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-count
+      condition: text
+      expectedText: 0 saved photo references
+  - tap:
+      text: Add photos
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: com.google.android.providers.media.module:id/privacy_text
+      condition: visible
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-count
+      condition: text
+      expectedText: 0 saved photo references
+  - tap:
+      text: Library access and sync
+  - tool: button
+    args:
+      button: back
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tap:
+      text: Library access and sync
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-options-content
+      condition: visible
+  - tap:
+      text: Choose library access
+  - tap:
+      id: com.android.permissioncontroller:id/permission_deny_button
+  - tool: await-ui-element
+    args:
+      selector:
+        text: "Library access: not allowed."
+      condition: visible
+  - tap:
+      text: Close library options
+  - tap:
+      text: Choose photo files
+  - tap:
+      text: Show roots
+  - tap:
+      x: 0.208
+      y: 0.358
+  - tap:
+      x: 0.81
+      y: 0.374
+  - tap:
+      x: 0.34
+      y: 0.38
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-count
+      condition: text
+      expectedText: 1 saved photo reference
+  - tap:
+      text: Choose photo files
+  - tap:
+      x: 0.34
+      y: 0.38
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-count
+      condition: text
+      expectedText: 1 saved photo reference
+  - tap:
+      text: Refresh photos
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-card
+      condition: text
+      expectedText: Unavailable
+  - tap:
+      text: Photo taken at Capture time unavailable. Unavailable · reselect to restore
+        access
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-pager-content
+      condition: visible
+  - tap:
+      text: Remove photo from Whereday
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Remove this photo reference?
+      condition: visible
+  - tap:
+      text: Cancel
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-pager-content
+      condition: visible
+  - tap:
+      text: Remove photo from Whereday
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Remove this photo reference?
+      condition: visible
+  - tap:
+      text: Remove photo
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: photo-library-count
+      condition: text
+      expectedText: 0 saved photo references
+  - tap:
+      id: navigation-map
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-layers
+      condition: visible
+  - tap:
+      id: map-layers
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-layers-content
+      condition: visible

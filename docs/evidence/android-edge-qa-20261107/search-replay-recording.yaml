@@ -1,0 +1,97 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-search
+  - tap:
+      text: Search places and visits
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Place or visit name
+  - tap:
+      x: 0.5
+      y: 0.606
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-visit-title
+  - tap:
+      text: Close map visits
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-range-custom
+  - tap:
+      text: Custom range
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Show 1 day
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-replay-dial
+  - tap:
+      text: Replay the day
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: replay-counter
+  - tap:
+      text: Replay end
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: replay-counter
+      expectedText: 10 OF 10 PTS
+  - tap:
+      id: replay-toggle
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Play route replay
+  - tap:
+      text: Replay start
+  - tap:
+      id: replay-toggle
+  - tool: button
+    args:
+      button: home
+  - tool: launch-app
+    args:
+      bundleId: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Play route replay
+  - tap:
+      id: replay-toggle
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: replay-close
+  - tap:
+      text: Close route replay
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-add
+  - tap:
+      id: navigation-archive

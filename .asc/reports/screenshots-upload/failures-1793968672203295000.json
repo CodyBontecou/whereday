@@ -1,0 +1,35 @@
+{
+  "versionLocalizationId": "b3bdfdcc-3019-4a75-994d-e76bbb57c85b",
+  "path": ".asc/reports/screenshots-upload/failures-1793968672203295000.json",
+  "rootPath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch",
+  "deviceType": "WATCH_SERIES_10",
+  "displayType": "APP_WATCH_SERIES_10",
+  "replace": true,
+  "setId": "adc5abe4-3482-4d08-a558-7839f734cbb7",
+  "files": [
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch/watch-01-day-dial.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch/watch-02-route.png"
+  ],
+  "pendingFiles": [
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch/watch-01-day-dial.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch/watch-02-route.png"
+  ],
+  "pendingAssets": [
+    {
+      "fileName": "watch-01-day-dial.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch/watch-01-day-dial.png",
+      "assetId": "07c00019-30b5-855a-8024-165eb5685a5c",
+      "checksum": "db3b346903092237c1e587b36243eb2c",
+      "state": "UPLOAD_COMPLETE"
+    }
+  ],
+  "failures": [
+    {
+      "fileName": "watch-01-day-dial.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/watch/watch-01-day-dial.png",
+      "error": "timed out waiting for screenshot 07c00019-30b5-855a-8024-165eb5685a5c checksum settlement after delivery state UPLOAD_COMPLETE: context deadline exceeded"
+    }
+  ],
+  "error": "timed out waiting for screenshot 07c00019-30b5-855a-8024-165eb5685a5c checksum settlement after delivery state UPLOAD_COMPLETE: context deadline exceeded",
+  "generatedAt": "2026-11-06T12:37:52Z"
+}

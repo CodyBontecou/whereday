@@ -1,0 +1,207 @@
+steps:
+- echo: 'Known-bug diagnostic with control: applying a modal range must clear a pending
+    inline anchor. This reproduction asserts the observed wrong Nov3 start. English
+    mapQa, empty journal, open foldable, Nov7 2026. Drafts are discarded.'
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-settings
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text:
+        matches: ^Country Days$
+    direction: down
+- await:
+    visible:
+      text: Country Days
+- await:
+    idle: true
+- tap:
+    text: Country Days
+- await:
+    visible:
+      identifier: country-days-content
+- await:
+    idle: true
+- tap:
+    text: Add country stay
+- await:
+    visible:
+      identifier: stay-editor-content
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: stay-dates
+    direction: down
+- tap:
+    id: stay-dates
+- await:
+    visible:
+      text: Choose dates
+- await:
+    idle: true
+- tap:
+    text: Wednesday, November 4, 2026
+- tap:
+    text: Thursday, November 5, 2026
+- tap:
+    text: Apply
+- await:
+    visible:
+      identifier: stay-dates
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: stay-first
+      contains: Nov 4, 2026
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: stay-last
+      contains: Nov 5, 2026
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: stay-country
+    direction: up
+- tap:
+    text:
+      matches: ^6$
+- scroll-to:
+    target:
+      id: stay-last
+    direction: down
+- await:
+    text:
+      in:
+        identifier: stay-first
+      contains: Nov 6, 2026
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: stay-last
+      contains: Nov 6, 2026
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: stay-discard-confirm
+- await:
+    idle: true
+- tap:
+    id: stay-discard-confirm
+- await:
+    text:
+      in:
+        identifier: country-summary-days
+      contains: 0 days
+- await:
+    idle: true
+- tap:
+    id: country-add-stay
+- await:
+    visible:
+      identifier: stay-country
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^3$
+- scroll-to:
+    target:
+      id: stay-dates
+    direction: down
+- tap:
+    id: stay-dates
+- await:
+    visible:
+      text: Choose dates
+- await:
+    idle: true
+- tap:
+    text: Wednesday, November 4, 2026
+- tap:
+    text: Thursday, November 5, 2026
+- tap:
+    text: Apply
+- await:
+    visible:
+      identifier: stay-dates
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: stay-first
+      contains: Nov 4, 2026
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: stay-last
+      contains: Nov 5, 2026
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: stay-country
+    direction: up
+- tap:
+    text:
+      matches: ^6$
+- scroll-to:
+    target:
+      id: stay-last
+    direction: down
+- await:
+    text:
+      in:
+        identifier: stay-first
+      contains: Nov 3, 2026
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: stay-last
+      contains: Nov 6, 2026
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: stay-discard-confirm
+- await:
+    idle: true
+- tap:
+    id: stay-discard-confirm
+- await:
+    text:
+      in:
+        identifier: country-summary-days
+      contains: 0 days
+- await:
+    idle: true

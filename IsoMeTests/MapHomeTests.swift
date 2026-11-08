@@ -398,3 +398,110 @@ final class NearbyPlaceDistanceLabelTests: XCTestCase {
         XCTAssertTrue(suggestion.distanceLabel(usesMetric: false).contains("mi"), suggestion.distanceLabel(usesMetric: false))
     }
 }
+
+@MainActor
+final class TraceDayDomainTests: XCTestCase {
+    private func calendar(_ zone: String = "America/New_York") -> Calendar {
+        var value = Calendar(identifier: .gregorian)
+        value.timeZone = TimeZone(identifier: zone)!
+        return value
+    }
+
+    private func day(_ start: Date, calendar: Calendar) -> TraceDay {
+        let end = calendar.date(byAdding: .day, value: 1, to: start)!
+        return TraceDay(range: start...end.addingTimeInterval(-1), visits: [], points: [],
+                        now: end.addingTimeInterval(3600), calendar: calendar)
+    }
+
+    func testRightEdgeAndAccessibilityStepsStayOnSelectedDay() {
+        let calendar = calendar()
+        let start = calendar.date(from: DateComponents(year: 2026, month: 11, day: 6))!
+        let day = day(start, calendar: calendar)
+        let lastSecond = calendar.date(byAdding: .day, value: 1, to: start)!.addingTimeInterval(-1)
+        XCTAssertEqual(day.date(at: 1), lastSecond)
+        XCTAssertEqual(day.date(at: 2), lastSecond)
+        XCTAssertEqual(day.clampedTime(lastSecond.addingTimeInterval(15 * 60)), lastSecond)
+        XCTAssertEqual(day.date(at: -1), start)
+        XCTAssertEqual(day.date(at: 0.25), start.addingTimeInterval(6 * 3600),
+                       "Clamping the endpoint must not shift intermediate clock labels")
+    }
+
+    func testDaylightSavingDayEndsAtItsOwnLastSecond() {
+        let calendar = calendar()
+        for (month, date, hours) in [(3, 8, 23), (11, 1, 25)] {
+            let start = calendar.date(from: DateComponents(year: 2026, month: month, day: date))!
+            let day = day(start, calendar: calendar)
+            XCTAssertEqual(day.domain.upperBound.timeIntervalSince(start), Double(hours * 3600))
+            XCTAssertTrue(calendar.isDate(day.date(at: 1), inSameDayAs: start))
+            XCTAssertEqual(calendar.component(.hour, from: day.date(at: 1)), 23)
+            XCTAssertEqual(calendar.component(.minute, from: day.date(at: 1)), 59)
+        }
+    }
+
+    func testMultiDayRangeRetainsExactUpperBoundary() {
+        let calendar = calendar()
+        let start = calendar.date(from: DateComponents(year: 2026, month: 11, day: 4))!
+        let end = calendar.date(byAdding: .day, value: 3, to: start)!
+        let day = TraceDay(range: start...end, visits: [], points: [], now: end, calendar: calendar)
+        XCTAssertFalse(day.isSingleDay)
+        XCTAssertEqual(day.date(at: 1), end)
+        XCTAssertEqual(day.clampedTime(end.addingTimeInterval(3600)), end)
+    }
+}
+
+final class TimelineStaySummaryTests: XCTestCase {
+    private let day = Date(timeIntervalSinceReferenceDate: 800_000_000)
+
+    func testOngoingVisitOnHistoricalDayShowsOnlyThatDaysDuration() {
+        let summary = TimelineStaySummary(arrivedAt: day.addingTimeInterval(-3600), departedAt: nil,
+            dayRange: day...day.addingTimeInterval(86400), isCurrent: true,
+            now: day.addingTimeInterval(100000))
+        XCTAssertEqual(summary.start, day)
+        XCTAssertEqual(summary.end, day.addingTimeInterval(86400))
+        XCTAssertFalse(summary.isCurrent)
+        XCTAssertEqual(summary.trailingText, "24h 00m")
+        XCTAssertTrue(summary.accessibilityValue.hasSuffix(" · 24h 00m"))
+        XCTAssertFalse(summary.accessibilityValue.contains("now"))
+    }
+
+    func testCurrentVisitWithinSelectedDayStillShowsNow() {
+        let summary = TimelineStaySummary(arrivedAt: day.addingTimeInterval(3600), departedAt: nil,
+            dayRange: day...day.addingTimeInterval(86400), isCurrent: true,
+            now: day.addingTimeInterval(7200))
+        XCTAssertTrue(summary.isCurrent)
+        XCTAssertEqual(summary.trailingText, "now")
+    }
+
+    func testMidnightBelongsToFollowingDayForCurrentLabel() {
+        let midnight = day.addingTimeInterval(86400)
+        let summary = TimelineStaySummary(arrivedAt: day, departedAt: nil,
+            dayRange: day...midnight, isCurrent: true, now: midnight)
+        XCTAssertFalse(summary.isCurrent)
+        XCTAssertEqual(summary.trailingText, "24h 00m")
+    }
+
+    func testCompletedOrFutureVisitCannotShowNow() {
+        let range = day...day.addingTimeInterval(86400)
+        let completed = TimelineStaySummary(arrivedAt: day, departedAt: day.addingTimeInterval(1800),
+            dayRange: range, isCurrent: true, now: day.addingTimeInterval(7200))
+        XCTAssertFalse(completed.isCurrent)
+        XCTAssertEqual(completed.trailingText, "30m")
+        let future = TimelineStaySummary(arrivedAt: day.addingTimeInterval(10800), departedAt: nil,
+            dayRange: range, isCurrent: true, now: day.addingTimeInterval(7200))
+        XCTAssertFalse(future.isCurrent)
+        XCTAssertEqual(future.trailingText, "0m")
+    }
+
+    func testHistoricalDayDurationRespectsBothDaylightSavingTransitions() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/New_York"))
+        for (month, date, hours) in [(3, 8, 23), (11, 1, 25)] {
+            let start = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: month, day: date)))
+            let end = try XCTUnwrap(calendar.date(byAdding: .day, value: 1, to: start))
+            let summary = TimelineStaySummary(arrivedAt: start.addingTimeInterval(-3600), departedAt: nil,
+                dayRange: start...end, isCurrent: true, now: end.addingTimeInterval(3600))
+            XCTAssertFalse(summary.isCurrent)
+            XCTAssertEqual(summary.trailingText, "\(hours)h 00m")
+        }
+    }
+}

@@ -1,0 +1,10 @@
+--------- beginning of crash
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: FATAL EXCEPTION: RenderThread 88
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: Process: com.bontecou.whereday.mapqa, PID: 3770
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: java.lang.Error: No Vulkan compatible GPU found
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: 	at org.maplibre.android.maps.renderer.MapRenderer.nativeOnSurfaceCreated(Native Method)
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: 	at org.maplibre.android.maps.renderer.MapRenderer.onSurfaceCreated(MapRenderer.java:113)
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: 	at org.maplibre.android.maps.renderer.surfaceview.SurfaceViewMapRenderer.onSurfaceCreated(SurfaceViewMapRenderer.java:71)
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: 	at org.maplibre.android.maps.renderer.MapRendererFactory$2.onSurfaceCreated(MapRendererFactory.java:45)
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: 	at org.maplibre.android.maps.renderer.surfaceview.MapLibreVulkanSurfaceView$VulkanThread.guardedRun(MapLibreVulkanSurfaceView.java:134)
+11-07 19:11:08.111  3770  3878 E AndroidRuntime: 	at org.maplibre.android.maps.renderer.surfaceview.MapLibreSurfaceView$RenderThread.run(MapLibreSurfaceView.java:284)

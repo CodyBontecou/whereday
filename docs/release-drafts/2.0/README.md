@@ -44,6 +44,23 @@ Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map s
 - **Warning only:** no deobfuscation file was uploaded, so crash reports are harder to read.
 - **Still due:** the developer account must declare its trader status by February 2027.
 
+**Bangla and Polish listings (November 7, 2026):** the app ships eleven languages, but the store had nine. Version 2.0 now also has **bn-BD** and **pl**:
+
+- **Listing:** name, subtitle, description, keywords, promotional text and What's New, in `metadata/whereday/app-info/` and `metadata/whereday/version/2.0/` (`bn-BD.json`, `pl.json`), using the app's own terms (Mapa/Atlas/Miejsca/Archiwum; মানচিত্র/অ্যাটলাস/জায়গা/আর্কাইভ). The purchase and legal paragraphs are translated line for line from en-US. Applied with `asc metadata apply` and read back identical. The nine existing locales were not touched (the plan had no updates or deletes).
+- **Artwork:** rendered from the "One Long Day" design with Bangla and Polish overlay copy (`translations.py`): 10 iPhone, 5 iPad, 8 Duo, the header, and the same two Watch shots as every other locale. The design came from the November 6 download used for the other locales; its en-US renders are pixel-identical to the uploaded set.
+- Receipts: `.asc/artifacts/stage-2.0-bn-pl/`.
+- Like the rest, these translations were written by Claude and need a native read before submission.
+
+**App screens localized (November 7, 2026):** the app screens drawn inside the frames were English in every locale. They are now translated in all ten non-English locales (labels, dates, durations, weekday initials; place names stay), using the app's own catalog wording where it exists. See `marketing/brand/whereday-appstore-2.0/screen-translations/` and the brand README. The Watch slot is now the Watch board translated per locale instead of the same English crops everywhere. All ten locales' iPhone, iPad, Watch, Duo and header sets were replaced on version 2.0; en-US is unchanged. Receipts: `.asc/artifacts/stage-2.0-l10n/`.
+
+**Android 2.0.1 (4): eleven languages (November 7, 2026, published; Play submissions 2 and 3 approved the same day):**
+- **App:** the Android app now ships the same eleven languages as iOS (PR #107, branch `android/localize-eleven-languages`, commit `d8ec8794`, based on `main` at `65504738`, which already contains the live 2.0.0 (3) source `a36954a1`). It has nine new packs in `android/localization/`, per-language plural categories in the generator, and `generateLocaleConfig` for Android 13's per-app language setting. I checked Arabic (right-to-left) and Russian on an API 35 emulator.
+- **Build:** `bundleRelease` with `-Pwhereday.versionCode=4 -Pwhereday.versionName=2.0.1` and the same three purchase settings as 2.0.0 (3). CI's release tests and `lintRelease` passed. The bundle is signed with the upload certificate `E9:C6:2A:0E…93:C6`, and its verifier URL and lease key match the live bundle. SHA-256 `6b7a51fe…17918b`.
+- **One Play edit** (`01509094824674190881`, committed): the bundle went to production as a full rollout with notes in 12 languages (`metadata/whereday/play/release-notes/2.0.1.json`). It also added listings and artwork (8 phone, 3+3 tablet, the feature graphic, the icon) for es-ES, es-419, fr-FR, pt-BR, pl-PL, ru-RU, ar, hi-IN, bn-BD, ja-JP and zh-CN, from `metadata/whereday/play/<locale>/` and `marketing/brand/whereday-play-2.0/`. Managed publishing is off, so approval publishes everything together.
+- Receipts: `.asc/artifacts/play-2.0.1/`. All translations were written by Claude and need a native read.
+- **Listing correction (committed the same day, edit `15000477016717824756`):** the PLANS paragraph in all 12 listings no longer says "Imports and export previews are free", and phone shot 06 now reads "Every plan includes exports" instead of "Recording, imports and export previews are free". New installs hit a hard paywall after onboarding, so neither claim was true for someone reading the store page. This restarts review on the pending changes. The in-app wording (13 strings that said recording stays free or exports need lifetime access) is fixed on PR #107 (`028d38b8`) and ships with the next build. Receipts: `.asc/artifacts/play-next/`.
+- **Play Console links:** [Publishing overview](https://play.google.com/console/u/0/developers/8478281120215349264/app/4973006723943783760/publishing) and [Submission activity](https://play.google.com/console/u/0/developers/8478281120215349264/app/4973006723943783760/publishing/submission-activity) (developer `8478281120215349264`, app `4973006723943783760`).
+
 ---
 
 # Earlier record: build 62

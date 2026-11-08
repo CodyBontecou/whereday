@@ -673,6 +673,8 @@ struct CountryStayEditor: View {
     @State private var note = ""
     @State private var errorMessage: String?
     @State private var hasInitialized = false
+    @State private var initialDraft: CountryStayDraft?
+    @State private var showingDiscardConfirmation = false
 
     init(stay: CountryStay? = nil, countryCode: String? = nil, day: String? = nil, countedDays: [String: Set<String>] = [:]) {
         self.stay = stay
@@ -690,6 +692,10 @@ struct CountryStayEditor: View {
     private var lastDay: String { CountryDayCalculator.dayIdentifier(lastDate, timeZone: .current) }
     private var countryName: String { Locale.current.localizedString(forRegionCode: countryCode) ?? countryCode }
     private var canSave: Bool { firstDay <= lastDay && countries.contains(where: { $0.code == countryCode }) }
+    private var draft: CountryStayDraft {
+        CountryStayDraft(countryCode: countryCode, firstDay: firstDay, lastDay: lastDay, note: note)
+    }
+    private var isDirty: Bool { initialDraft.map { $0 != draft } ?? false }
 
     var body: some View {
         NavigationStack {
@@ -788,8 +794,10 @@ struct CountryStayEditor: View {
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                        .foregroundStyle(TE.textMuted)
+                    Button("Cancel") {
+                        if isDirty { showingDiscardConfirmation = true } else { dismiss() }
+                    }
+                    .foregroundStyle(TE.textMuted)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") { save() }
@@ -807,6 +815,7 @@ struct CountryStayEditor: View {
                     // Convert civil dates to noon in the device's current zone for the date picker.
                     firstDate = pickerDate(stay.firstDay) ?? Date()
                     lastDate = pickerDate(stay.lastDay) ?? Date()
+                    initialDraft = draft
                     return
                 }
                 if let initialCountryCode { countryCode = initialCountryCode }
@@ -814,8 +823,16 @@ struct CountryStayEditor: View {
                     firstDate = date
                     lastDate = date
                 }
+                initialDraft = draft
+            }
+            .confirmationDialog("Discard Changes?", isPresented: $showingDiscardConfirmation, titleVisibility: .visible) {
+                Button("Discard Changes", role: .destructive) { dismiss() }
+                Button("Keep Editing", role: .cancel) {}
+            } message: {
+                Text("Your changes to this stay have not been saved.")
             }
         }
+        .interactiveDismissDisabled(isDirty)
         .tint(TE.accent)
     }
 
@@ -876,35 +893,29 @@ struct CountryStayEditor: View {
         return local.date(from: components)
     }
 
-    private var trimmedNote: String? {
-        note.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
-    }
-
     private func save() {
         guard canSave else { return }
-        if let stay {
-            stay.countryCode = countryCode
-            stay.firstDay = firstDay
-            stay.lastDay = lastDay
-            stay.note = trimmedNote
-        } else {
-            modelContext.insert(CountryStay(countryCode: countryCode, firstDay: firstDay, lastDay: lastDay, note: trimmedNote))
-        }
-        do { try modelContext.save(); dismiss() } catch { errorMessage = error.localizedDescription }
+        do {
+            try draft.save(in: modelContext, updating: stay)
+            dismiss()
+        } catch { errorMessage = error.localizedDescription }
     }
 }
 
-private struct CountrySelectionView: View {
+struct CountrySelectionView: View {
     @Binding var countryCode: String
     @Environment(\.dismiss) private var dismiss
     @State private var search = ""
 
-    private var countries: [(code: String, name: String)] {
-        Locale.Region.isoRegions.filter { $0.identifier.count == 2 }.map {
-            (code: $0.identifier, name: Locale.current.localizedString(forRegionCode: $0.identifier) ?? $0.identifier)
-        }.filter { search.isEmpty || $0.name.localizedStandardContains(search) || $0.code.localizedStandardContains(search) }
+    static func matchingCountries(_ search: String, locale: Locale = .current) -> [(code: String, name: String)] {
+        let query = search.trimmingCharacters(in: .whitespacesAndNewlines)
+        return Locale.Region.isoRegions.filter { $0.identifier.count == 2 }.map {
+            (code: $0.identifier, name: locale.localizedString(forRegionCode: $0.identifier) ?? $0.identifier)
+        }.filter { query.isEmpty || $0.name.localizedStandardContains(query) || $0.code.localizedStandardContains(query) }
         .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
     }
+
+    private var countries: [(code: String, name: String)] { Self.matchingCountries(search) }
 
     var body: some View {
         List(countries, id: \.code) { item in
