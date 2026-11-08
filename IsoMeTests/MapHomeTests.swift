@@ -459,8 +459,8 @@ final class TimelineStaySummaryTests: XCTestCase {
         XCTAssertEqual(summary.start, day)
         XCTAssertEqual(summary.end, day.addingTimeInterval(86400))
         XCTAssertFalse(summary.isCurrent)
-        XCTAssertEqual(summary.trailingText, "24h 00m")
-        XCTAssertTrue(summary.accessibilityValue.hasSuffix(" · 24h 00m"))
+        XCTAssertEqual(summary.trailingText, "24h")
+        XCTAssertTrue(summary.accessibilityValue.hasSuffix(" · 24h"))
         XCTAssertFalse(summary.accessibilityValue.contains("now"))
     }
 
@@ -477,7 +477,7 @@ final class TimelineStaySummaryTests: XCTestCase {
         let summary = TimelineStaySummary(arrivedAt: day, departedAt: nil,
             dayRange: day...midnight, isCurrent: true, now: midnight)
         XCTAssertFalse(summary.isCurrent)
-        XCTAssertEqual(summary.trailingText, "24h 00m")
+        XCTAssertEqual(summary.trailingText, "24h")
     }
 
     func testCompletedOrFutureVisitCannotShowNow() {
@@ -501,7 +501,7 @@ final class TimelineStaySummaryTests: XCTestCase {
             let summary = TimelineStaySummary(arrivedAt: start.addingTimeInterval(-3600), departedAt: nil,
                 dayRange: start...end, isCurrent: true, now: end.addingTimeInterval(3600))
             XCTAssertFalse(summary.isCurrent)
-            XCTAssertEqual(summary.trailingText, "\(hours)h 00m")
+            XCTAssertEqual(summary.trailingText, "\(hours)h")
         }
     }
 }
