@@ -96,10 +96,13 @@
 		A4000004212F000100000004 /* IsoMeWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A4000000212F000000000000 /* IsoMeWatchWidgetExtension.appex */; platformFilter = watchos; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC063EB88C436E8BF576E318 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */; };
 		CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */; };
+		A7D1C0DE0000000000000006 /* LaunchRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */; };
 		D5E7A1580000000000000158 /* ExportRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E7A1580000000000000058 /* ExportRoundTripTests.swift */; };
 		DC2E3601C25B2712AD33AE98 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397DEAA02FEF6A5B6FA476 /* PaywallView.swift */; };
 		E1000001212F000100000001 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001212F000000000001 /* AppInfo.swift */; };
 		E1000002212F000100000002 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002212F000000000002 /* LogManager.swift */; };
+		A7D1C0DE0000000000000004 /* LaunchGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1C0DE0000000000000003 /* LaunchGuard.swift */; };
+		A7D1C0DE0000000000000002 /* AppModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1C0DE0000000000000001 /* AppModelStore.swift */; };
 		E1000003212F000100000003 /* LogViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003212F000000000003 /* LogViewerView.swift */; };
 		AB000001212F000100000001 /* IsoMeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F000000000001 /* IsoMeIntents.swift */; };
 		AB000001212F0EE1000000E1 /* IsoMeEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E1 /* IsoMeEntities.swift */; };
@@ -267,10 +270,13 @@
 		D6000001212F000000000001 /* PushRegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRegistrationManager.swift; sourceTree = "<group>"; };
 		D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportNotificationScheduler.swift; sourceTree = "<group>"; };
 		76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManagerTrackingTests.swift; sourceTree = "<group>"; };
+		A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LaunchRecoveryTests.swift; sourceTree = "<group>"; };
 		D5E7A1580000000000000058 /* ExportRoundTripTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportRoundTripTests.swift; sourceTree = "<group>"; };
 		7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		E1000001212F000000000001 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		E1000002212F000000000002 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		A7D1C0DE0000000000000003 /* LaunchGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchGuard.swift; sourceTree = "<group>"; };
+		A7D1C0DE0000000000000001 /* AppModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelStore.swift; sourceTree = "<group>"; };
 		E1000003212F000000000003 /* LogViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerView.swift; sourceTree = "<group>"; };
 		AB000001212F000000000001 /* IsoMeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeIntents.swift; sourceTree = "<group>"; };
 		AB000001212F0EE0000000E1 /* IsoMeEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeEntities.swift; sourceTree = "<group>"; };
@@ -554,6 +560,8 @@
 				CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */,
 				CA1029A00000000000000000 /* PaywallContext.swift */,
 				E1000002212F000000000002 /* LogManager.swift */,
+				A7D1C0DE0000000000000003 /* LaunchGuard.swift */,
+				A7D1C0DE0000000000000001 /* AppModelStore.swift */,
 				AB000001212F000000000001 /* IsoMeIntents.swift */,
 				76AB00000000000000000021 /* ManualVisitRoute.swift */,
 				76AB00000000000000000011 /* IsoMeManualVisitIntents.swift */,
@@ -695,6 +703,7 @@
 				D5E7A1580000000000000058 /* ExportRoundTripTests.swift */,
 				E9A100000000000000000003 /* ExportKitIntegrationTests.swift */,
 				76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */,
+				A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */,
 				E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */,
 				F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */,
 				8F7F078A773745EF8CE42F37 /* WebhookManagerTests.swift */,
@@ -1018,6 +1027,8 @@
 				DC2E3601C25B2712AD33AE98 /* PaywallView.swift in Sources */,
 				E1000001212F000100000001 /* AppInfo.swift in Sources */,
 				E1000002212F000100000002 /* LogManager.swift in Sources */,
+				A7D1C0DE0000000000000004 /* LaunchGuard.swift in Sources */,
+				A7D1C0DE0000000000000002 /* AppModelStore.swift in Sources */,
 				E1000003212F000100000003 /* LogViewerView.swift in Sources */,
 				D15C04D0BA000000000000A1 /* DiscordPromoBanner.swift in Sources */,
 				AB000001212F000100000001 /* IsoMeIntents.swift in Sources */,
@@ -1095,6 +1106,7 @@
 				5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */,
 				5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */,
 				CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */,
+				A7D1C0DE0000000000000006 /* LaunchRecoveryTests.swift in Sources */,
 				E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */,
 				F3601C83F23A13A26444AD47 /* SharedLocationDataTests.swift in Sources */,
 				A1178698C9FA49F18135BC6B /* WebhookManagerTests.swift in Sources */,
@@ -1308,7 +1320,7 @@
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMe/IsoMe.entitlements";
 		"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = "IsoMe/SimulatorDebug.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"DEVELOPMENT_ASSET_PATHS" = "\"IsoMe/Preview Content\"";
 		"ENABLE_PREVIEWS" = YES;
 		"GENERATE_INFOPLIST_FILE" = YES;
@@ -1327,7 +1339,7 @@
 			"$(inherited)",
 			"@executable_path/Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		"SWIFT_EMIT_LOC_STRINGS" = YES;
@@ -1344,7 +1356,7 @@
 		"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME" = AccentColor;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMe/IsoMe.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"DEVELOPMENT_ASSET_PATHS" = "\"IsoMe/Preview Content\"";
 		"ENABLE_PREVIEWS" = YES;
 		"GENERATE_INFOPLIST_FILE" = YES;
@@ -1360,7 +1372,7 @@
 			"$(inherited)",
 			"@executable_path/Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		"SWIFT_EMIT_LOC_STRINGS" = YES;
@@ -1376,7 +1388,7 @@
 		"ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME" = WidgetBackground;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMeWidget/IsoMeWidget.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"GENERATE_INFOPLIST_FILE" = YES;
 		"INFOPLIST_FILE" = "IsoMeWidget/Info.plist";
 		"INFOPLIST_KEY_CFBundleDisplayName" = "Whereday Widget";
@@ -1386,7 +1398,7 @@
 			"@executable_path/Frameworks",
 			"@executable_path/../../Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome.Widget";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		"SKIP_INSTALL" = YES;
@@ -1403,7 +1415,7 @@
 		"ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME" = WidgetBackground;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMeWidget/IsoMeWidget.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"GENERATE_INFOPLIST_FILE" = YES;
 		"INFOPLIST_FILE" = "IsoMeWidget/Info.plist";
 		"INFOPLIST_KEY_CFBundleDisplayName" = "Whereday Widget";
@@ -1413,7 +1425,7 @@
 			"@executable_path/Frameworks",
 			"@executable_path/../../Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome.Widget";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		"SKIP_INSTALL" = YES;
@@ -1430,7 +1442,7 @@
 		"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME" = AccentColor;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMeWatch/IsoMeWatch.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"GENERATE_INFOPLIST_FILE" = YES;
 		"INFOPLIST_FILE" = "IsoMeWatch/Info.plist";
 		"INFOPLIST_KEY_CFBundleDisplayName" = Whereday;
@@ -1440,7 +1452,7 @@
 			"$(inherited)",
 			"@executable_path/Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome.watchkitapp";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		SDKROOT = watchos;
@@ -1459,7 +1471,7 @@
 		"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME" = AccentColor;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMeWatch/IsoMeWatch.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"GENERATE_INFOPLIST_FILE" = YES;
 		"INFOPLIST_FILE" = "IsoMeWatch/Info.plist";
 		"INFOPLIST_KEY_CFBundleDisplayName" = Whereday;
@@ -1469,7 +1481,7 @@
 			"$(inherited)",
 			"@executable_path/Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome.watchkitapp";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		SDKROOT = watchos;
@@ -1488,7 +1500,7 @@
 		"ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME" = WidgetBackground;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMeWatchWidget/IsoMeWatchWidget.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"GENERATE_INFOPLIST_FILE" = YES;
 		"INFOPLIST_FILE" = "IsoMeWatchWidget/Info.plist";
 		"INFOPLIST_KEY_CFBundleDisplayName" = Whereday;
@@ -1498,7 +1510,7 @@
 			"@executable_path/Frameworks",
 			"@executable_path/../../Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome.watchkitapp.Widget";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		SDKROOT = watchos;
@@ -1517,7 +1529,7 @@
 		"ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME" = WidgetBackground;
 		"CODE_SIGN_ENTITLEMENTS" = "IsoMeWatchWidget/IsoMeWatchWidget.entitlements";
 		"CODE_SIGN_STYLE" = Automatic;
-		"CURRENT_PROJECT_VERSION" = 57;
+		"CURRENT_PROJECT_VERSION" = 64;
 		"GENERATE_INFOPLIST_FILE" = YES;
 		"INFOPLIST_FILE" = "IsoMeWatchWidget/Info.plist";
 		"INFOPLIST_KEY_CFBundleDisplayName" = Whereday;
@@ -1527,7 +1539,7 @@
 			"@executable_path/Frameworks",
 			"@executable_path/../../Frameworks",
 		);
-		"MARKETING_VERSION" = "1.8.1";
+		"MARKETING_VERSION" = "1.8.4";
 		"PRODUCT_BUNDLE_IDENTIFIER" = "com.bontecou.isome.watchkitapp.Widget";
 		"PRODUCT_NAME" = "$(TARGET_NAME)";
 		SDKROOT = watchos;

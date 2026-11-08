@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var pendingTrackingStart = false
     @ObservedObject private var storeManager = StoreManager.shared
     @State private var showingTrackingPaywall = false
+    @State private var showingTrackingPausedNotice = false
 
     private var showsInitialPaywall: Bool {
         guard storeManager.hasResolvedEntitlements else { return false }
@@ -31,9 +32,11 @@ struct ContentView: View {
         #endif
     }
 
-    var body: some View {
+    private var launchContent: some View {
         Group {
-            if let viewModel = viewModel {
+            if AppModelStore.openFailure != nil {
+                StoreUnavailableView()
+            } else if let viewModel = viewModel {
                 PurchaseLaunchGate(
                     hasResolvedEntitlements: storeManager.hasResolvedEntitlements,
                     requiresInitialPaywall: showsInitialPaywall
@@ -72,6 +75,10 @@ struct ContentView: View {
                 ProgressView("Loading...")
             }
         }
+    }
+
+    var body: some View {
+        launchContent
         .onChange(of: storeManager.canTrack) { _, canTrack in
             if canTrack, hasCompletedOnboarding, let viewModel {
                 startPendingTrackingIfAllowed(viewModel: viewModel)
@@ -86,13 +93,38 @@ struct ContentView: View {
         .tint(!hasCompletedOnboarding || showsInitialPaywall ? InkPaperPalette.ink : TE.accent)
         .task {
             if viewModel == nil {
+                if let failure = AppModelStore.openFailure {
+                    LogManager.shared.error("Saved data couldn't be opened · \(failure)")
+                    return
+                }
+
+                // Must run before LocationManager, which resumes tracking from saved state.
+                let launch = LaunchGuard.beginLaunch(
+                    isBackgroundLaunch: UIApplication.shared.applicationState == .background
+                )
+                if let stage = launch.previousStage {
+                    LogManager.shared.warning("Previous launch didn't finish · last step: \(stage)")
+                }
+                if launch.pausedTracking {
+                    LogManager.shared.warning(
+                        "Tracking paused after \(launch.previousUnconfirmedLaunches) launches that didn't finish"
+                    )
+                    Task { await LiveActivityManager.shared.endAllActivities() }
+                }
+
+                LaunchGuard.mark(.locationManager)
                 let manager = LocationManager()
                 ManualVisitAutomation.foregroundContext = modelContext
                 locationManager = manager
+                LaunchGuard.mark(.viewModel)
+                // With tracking paused above, this also closes the interrupted recording.
                 viewModel = LocationViewModel(
                     modelContext: modelContext,
                     locationManager: manager
                 )
+                LaunchGuard.mark(.interface)
+                LaunchGuard.scheduleConfirmation()
+                showingTrackingPausedNotice = LaunchGuard.consumePausedTrackingNotice()
 
                 // Wire up services that need the LocationManager
                 WebhookManager.shared.attach(
@@ -117,6 +149,11 @@ struct ContentView: View {
                     hasCompletedOnboarding = hasExistingSetup
                 }
             }
+        }
+        .alert("Recording Paused", isPresented: $showingTrackingPausedNotice) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Whereday didn't open properly the last few times, so it stopped recording to get you back in. Your history is safe. Start recording again whenever you're ready.")
         }
         .sheet(isPresented: $showingTrackingPaywall) {
             PaywallView(storeManager: storeManager, context: .onboarding)
@@ -1878,6 +1915,19 @@ struct PurchaseLaunchGate<Paywall: View, Content: View>: View {
             paywall()
         } else {
             content()
+        }
+    }
+}
+
+/// Shown instead of the app when the saved data can't be opened. The data stays on
+/// disk untouched, so reopening the app (or an update) can still recover it; nothing
+/// here offers to delete it.
+struct StoreUnavailableView: View {
+    var body: some View {
+        ContentUnavailableView {
+            Label("Whereday Couldn't Open Your Data", systemImage: "externaldrive.badge.exclamationmark")
+        } description: {
+            Text("Your history hasn't been deleted. Close Whereday and open it again. If this keeps happening, contact support and don't reinstall the app, because that would delete your history.")
         }
     }
 }
