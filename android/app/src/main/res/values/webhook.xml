@@ -59,9 +59,9 @@
     <string name="webhook_dirty_help">Save or discard edits before sending or testing.</string>
     <string name="webhook_updating">Updating webhook delivery…</string>
     <string name="webhook_retry_loading">Retry loading webhook settings</string>
-    <string name="webhook_purchases">Plan access and purchases</string>
+    <string name="webhook_plan_purchases">Plans and purchases</string>
     <string name="webhook_reset_action">Reset webhook settings</string>
-    <string name="webhook_purchase_title">Export plan access</string>
+    <string name="webhook_plan_title">Whereday plans</string>
     <string name="webhook_close">Close</string>
     <string name="webhook_cancel">Cancel</string>
     <string name="webhook_leave_busy_title">Leave while webhook work finishes?</string>
@@ -112,11 +112,11 @@
     <string name="webhook_validation_header_name">Choose a valid authentication header name.</string>
     <string name="webhook_validation_url_length">Webhook URL is too long.</string>
     <string name="webhook_failure_preferences">Webhook preferences could not be loaded. Try reopening the app.</string>
-    <string name="webhook_failure_background">Background webhook delivery is paused. Check plan access and settings, then retry.</string>
+    <string name="webhook_failure_background_plan">Background webhook delivery is paused. Check your Whereday plan and settings, then retry.</string>
     <string name="webhook_failure_changed">Webhook settings changed. Reload them before saving.</string>
     <string name="webhook_failure_unavailable">Webhook settings could not be opened. Reset them before configuring delivery again.</string>
     <string name="webhook_failure_fields">Check the webhook URL and authentication fields.</string>
-    <string name="webhook_failure_work">Webhook work could not finish. Check plan access and settings, then retry.</string>
+    <string name="webhook_failure_work_plan">Webhook work could not finish. Check your Whereday plan and settings, then retry.</string>
     <string name="webhook_notice_saved">Webhook settings saved.</string>
     <string name="webhook_notice_disabled">Webhooks disabled. Queued webhook data was removed.</string>
     <string name="webhook_notice_reset">Webhook settings and queued data reset.</string>

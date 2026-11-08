@@ -28,7 +28,7 @@ internal class MarkdownHistoryReader(private val locale:Locale,private val zone:
         return local.toInstant(offsets.first()).toString()
     }
     fun scan(reader:java.io.Reader,onVisit:(Map<String,String>,Int)->Unit,onPoint:(Map<String,String>,Int)->Unit,
-        onError:(String)->Unit,checkpoint:()->Unit={}) {
+        onError:(Int,Exception)->Unit,checkpoint:()->Unit={}) {
         var headers:List<String>?=null;var date:LocalDate?=null
         var fields:MutableMap<String,String>?=null;var sectionLine=0;var hasFields=false;var invalidSection=false
         var sectionCharacters=0;val notes=StringBuilder()
@@ -57,12 +57,13 @@ internal class MarkdownHistoryReader(private val locale:Locale,private val zone:
                         "Departed"->{hasFields=true;fields!!["departedAt"]=optional(raw).takeIf {it.isNotEmpty()}?.let {timestamp(it,date)}.orEmpty()}
                         "Address"->{hasFields=true;fields!!["address"]=raw}
                         "Coordinates"->{
-                            hasFields=true;val coordinates=raw.split(',');require(coordinates.size==2) {"Invalid legacy coordinates"}
+                            hasFields=true;val coordinates=raw.split(',');if(coordinates.size!=2) throw InvalidHistoryRecord(HistoryImportProblem.malformedCoordinates,"Invalid legacy coordinates")
                             fields!!["latitude"]=coordinates[0].trim();fields!!["longitude"]=coordinates[1].trim()
                         }
                     }
                 } catch(e:Exception) {
-                    onError("Line $lineNumber: ${e.message}")
+                    if(e is java.util.concurrent.CancellationException || e is ImportRecordTooLarge) throw e
+                    onError(lineNumber,if(key=="Arrived" || key=="Departed") InvalidHistoryRecord(HistoryImportProblem.invalidTime,e.message ?: "Invalid time") else e)
                     // Mark this section invalid; don't turn a malformed departure into an open stay.
                     invalidSection=true
                 }
@@ -74,13 +75,13 @@ internal class MarkdownHistoryReader(private val locale:Locale,private val zone:
                 if(row.all {it.isNotEmpty() && it.matches(Regex("[: -]+"))}) return@forEachIndexed
                 val columns=headers ?: if(date!=null && row.size in 3..7) listOf("Time","Lat","Lon","Speed","Altitude","Accuracy","Outlier").take(row.size) else return@forEachIndexed
                 val prepared=try {
-                    require(columns.distinct().size==columns.size) {"Duplicate Markdown columns"}
-                    require(row.size==columns.size) {"Column count does not match Markdown header"}
+                    if(columns.distinct().size!=columns.size) throw InvalidHistoryRecord(HistoryImportProblem.duplicateColumns,"Duplicate Markdown columns")
+                    if(row.size!=columns.size) throw InvalidHistoryRecord(HistoryImportProblem.columnCount,"Column count does not match Markdown header")
                     val names=mapOf("Arrived" to "arrivedAt","Departed" to "departedAt","Lat" to "latitude","Lon" to "longitude",
                         "Latitude" to "latitude","Longitude" to "longitude","Location" to "locationName","Address" to "address","Notes" to "notes",
                         "Source" to "source","Status" to "confirmationStatus","Visit Metadata" to "visit_metadata","Time" to "timestamp","Speed" to "speed","Altitude" to "altitude","Accuracy" to "horizontalAccuracy","Outlier" to "isOutlier")
                     val keys=columns.map {names[it] ?: it}
-                    require(keys.distinct().size==keys.size) {"Duplicate Markdown column aliases"}
+                    if(keys.distinct().size!=keys.size) throw InvalidHistoryRecord(HistoryImportProblem.duplicateColumns,"Duplicate Markdown column aliases")
                     val data=keys.zip(row).associate {(key,cell)->key to
                         if(key in setOf("arrivedAt","departedAt","timestamp")) optional(cell)
                         else cell.trim().takeUnless {it in setOf("-","—")}.orEmpty()
@@ -88,14 +89,16 @@ internal class MarkdownHistoryReader(private val locale:Locale,private val zone:
                     // iOS tables render display names (Automatic / Corrected), while JSON/CSV
                     // carry raw enum values. Normalize only the Markdown enum columns.
                     for(key in listOf("source","confirmationStatus")) data[key]?.let {data[key]=it.lowercase(Locale.ROOT)}
-                    for(key in listOf("arrivedAt","departedAt","timestamp")) data[key]?.takeIf {it.isNotEmpty()}?.let {data[key]=timestamp(it,date)}
+                    for(key in listOf("arrivedAt","departedAt","timestamp")) data[key]?.takeIf {it.isNotEmpty()}?.let {
+                        data[key]=try {timestamp(it,date)} catch(e:Exception) {if(e is InvalidHistoryRecord) throw e;throw InvalidHistoryRecord(HistoryImportProblem.invalidTime,e.message ?: "Invalid time")}
+                    }
                     if("arrivedAt" !in data) {
                         for(key in listOf("speed","altitude","horizontalAccuracy")) data[key]?.let {data[key]=it.substringBefore(' ')}
                     }
                     ("arrivedAt" in data) to data
                 } catch(e:Exception) {
                     if(e is java.util.concurrent.CancellationException || e is ImportRecordTooLarge) throw e
-                    onError("Line $lineNumber: ${e.message}");null
+                    onError(lineNumber,e);null
                 }
                 prepared?.let {(visit,data)->if(visit) onVisit(data,lineNumber) else onPoint(data,lineNumber)}
             }

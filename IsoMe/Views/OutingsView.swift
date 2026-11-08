@@ -657,7 +657,7 @@ private enum TimelineEvent: Identifiable {
 
 private enum TimelineRowFormat {
     static func clock(_ date: Date) -> String {
-        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
+        ClockTimeFormatter.string(from: date)
     }
 
     static func duration(_ interval: TimeInterval) -> String {
@@ -665,7 +665,7 @@ private enum TimelineRowFormat {
         if minutes < 60 {
             return String(localized: "\(minutes)m")
         }
-        return String(format: "%dh %02dm", minutes / 60, minutes % 60)
+        return StayDurationFormatter.hoursAndMinutes(interval)
     }
 }
 
@@ -1301,7 +1301,9 @@ private struct RecordingSessionDetailView: View {
         let filter = session.storedSession?.distanceFilterMeters
             ?? (UserDefaults.standard.object(forKey: "distanceFilter") == nil ? 5 : UserDefaults.standard.double(forKey: "distanceFilter"))
         var parts: [String] = []
-        if filter > 0 {
+        if let policy = session.storedSession?.routeSamplingPolicy, policy.mode.usesTimeInterval {
+            parts.append(policy.summary)
+        } else if filter > 0 {
             parts.append(String(localized: "Every \(formattedShortDistance(filter))"))
         } else {
             parts.append(String(localized: "Every fix"))

@@ -52,7 +52,12 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         }
     }
 
-    suspend fun ingest(points: List<TrackPoint>) = lock.withLock {
+    /**
+     * Stores recorded fixes as route points and feeds them to visit detection. With [routeIds], only those fixes
+     * become points; the rest (skipped by time-based route sampling) still reach visit detection, so how sparse
+     * the route is never changes how visits are found.
+     */
+    suspend fun ingest(points: List<TrackPoint>, routeIds: Set<String>? = null) = lock.withLock {
         database.writeTransaction {
             var recording = dao.recording() ?: return@writeTransaction
             if (!recording.requested) return@writeTransaction
@@ -67,6 +72,15 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
                 if (raw.time < session.startedAt) continue
                 if (recording.deadline?.let { raw.time > it } == true) continue
                 if (raw.time > clock.instant().plusSeconds(60)) continue
+                if (routeIds != null && raw.id !in routeIds) {
+                    // Visit evidence only: no stored point, outlier flags on earlier points, webhook or lastFix change.
+                    if(observations.lastFix?.let {raw.time<=it}!=true) {
+                        val observed = raw.copy(outlier = raw.id in TrackQuality.flaggedIds(recent, raw))
+                        state=consumeVisit(state,observed)
+                        observations=observations.observed(observed)
+                    }
+                    continue
+                }
                 val newWebhookPoint=webhook!=null && dao.point(raw.id)==null
                 val flagged = TrackQuality.flaggedIds(recent, raw)
                 val point = raw.copy(outlier = raw.id in flagged)
@@ -301,6 +315,30 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
             }
             currentCoroutineContext().ensureActive()
             visit
+        }
+    }
+
+    /**
+     * Splits a finished visit at [at] into two back-to-back visits, the second at [place]. The first keeps its
+     * identity, place and notes; both parts become reviewed so duplicate repair keeps them apart. Like a
+     * correction, the second place is remembered as a saved place.
+     */
+    suspend fun splitVisit(expected:Visit,at:Instant,place:SplitPlace,secondId:String=java.util.UUID.randomUUID().toString()):Pair<Visit,Visit> = lock.withLock {
+        val baseline=persistedVisit(expected)
+        database.writeTransaction {
+            val current=dao.visit(baseline.id)?.value
+            if(current!=baseline) throw VisitChanged()
+            require(dao.visit(secondId)==null) {"The new visit identity already exists."}
+            val (first,second)=VisitSplit.split(baseline,Instant.ofEpochMilli(at.toEpochMilli()),place,secondId,clock.instant())
+                .let {(a,b)->persistedVisit(a) to persistedVisit(b)}
+            dao.put(VisitRow(first));dao.put(VisitRow(second))
+            if(dao.dwell()?.state?.visitId==first.id) dao.put(DwellRow())
+            val places=SavedPlaceRepository(database)
+            val coroutine=currentCoroutineContext()
+            confirmedPlaceToRemember(second,dao.places().map {it.value},java.util.UUID.randomUUID().toString(),places::distance,places::nameKey) {coroutine.ensureActive()}
+                ?.let {dao.put(PlaceRow(it))}
+            currentCoroutineContext().ensureActive()
+            first to second
         }
     }
 

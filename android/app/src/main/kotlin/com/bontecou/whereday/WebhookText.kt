@@ -25,11 +25,11 @@ import java.text.NumberFormat
 })
 @Composable internal fun webhookFailureText(failure:WebhookFailure):String=stringResource(when(failure) {
     WebhookFailure.preferences->R.string.webhook_failure_preferences
-    WebhookFailure.backgroundPaused->R.string.webhook_failure_background
+    WebhookFailure.backgroundPaused->R.string.webhook_failure_background_plan
     WebhookFailure.changed->R.string.webhook_failure_changed
     WebhookFailure.unavailable->R.string.webhook_failure_unavailable
     WebhookFailure.fields->R.string.webhook_failure_fields
-    WebhookFailure.work->R.string.webhook_failure_work
+    WebhookFailure.work->R.string.webhook_failure_work_plan
 })
 @Composable internal fun webhookFeedbackText(feedback:WebhookFeedback):String {
     val resource=when(feedback.notice) {

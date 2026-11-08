@@ -25,8 +25,30 @@ final class LocationManager: NSObject, ObservableObject {
     @Published var trackingStartTime: Date?
     @Published var stopAfterHours: Double = 0.0
     @Published var distanceFilter: Double = 5.0
+    /// Distance, time, or both. Only affects route points; visits come from iOS visit monitoring.
+    @Published var routeSamplingMode: RouteSamplingMode = .distance
+    /// Seconds between route points in the time-based modes.
+    @Published var routeSampleInterval: TimeInterval = RouteSamplingPolicy.defaultInterval
     @Published var currentLocation: CLLocation?
     @Published var lastError: String?
+
+    static let routeSamplingModeKey = "routeSamplingMode"
+    static let routeSampleIntervalKey = "routeSampleInterval"
+
+    private var routeSampler = RouteSampler(policy: RouteSamplingPolicy(
+        mode: .distance,
+        distanceFilter: RouteSamplingPolicy.defaultDistanceFilter,
+        interval: RouteSamplingPolicy.defaultInterval
+    ))
+    /// Brings the GPS back up shortly before a time-based sample is due. Timers fire in the
+    /// background here because active location updates keep the app running.
+    private var routeSamplingWakeTimer: Timer?
+    /// A one-off "where am I" request (manual visit) keeps the GPS up until it is answered.
+    private var preciseFixRequestedAt: Date?
+
+    var routeSamplingPolicy: RouteSamplingPolicy {
+        RouteSamplingPolicy(mode: routeSamplingMode, distanceFilter: distanceFilter, interval: routeSampleInterval)
+    }
 
     // Safety-net auto-stop timer (only runs when stopAfterHours > 0)
     private var stopTrackingTimer: Timer?
@@ -150,10 +172,19 @@ final class LocationManager: NSObject, ObservableObject {
         if defaults.object(forKey: "distanceFilter") != nil {
             distanceFilter = defaults.double(forKey: "distanceFilter")
         }
+        if let rawMode = defaults.string(forKey: Self.routeSamplingModeKey),
+           let mode = RouteSamplingMode(rawValue: rawMode) {
+            routeSamplingMode = mode
+        }
+        if defaults.object(forKey: Self.routeSampleIntervalKey) != nil {
+            let interval = defaults.double(forKey: Self.routeSampleIntervalKey)
+            if interval > 0 { routeSampleInterval = interval }
+        }
         if defaults.object(forKey: liveActivityEnabledKey) != nil {
             isLiveActivityEnabled = defaults.bool(forKey: liveActivityEnabledKey)
         }
-        locationManager.distanceFilter = distanceFilter
+        routeSampler.policy = routeSamplingPolicy
+        locationManager.distanceFilter = routeSamplingPolicy.coreLocationDistanceFilter
 
         authorizationStatus = locationManager.authorizationStatus
         accuracyAuthorization = locationManager.accuracyAuthorization
@@ -248,6 +279,11 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         pendingManualLocationRequest = false
+        if isTrackingEnabled {
+            // Between time-based samples the GPS may be powered down; a manual visit wants a precise fix.
+            preciseFixRequestedAt = Date()
+            applyRoutePowerLevel()
+        }
         locationManager.requestLocation()
     }
 
@@ -285,8 +321,12 @@ final class LocationManager: NSObject, ObservableObject {
             ensureActiveRecordingSession(startedAt: trackingStartTime)
         }
 
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = distanceFilter
+        if !wasTracking {
+            routeSampler.reset()
+        }
+        routeSampler.policy = routeSamplingPolicy
+        locationManager.distanceFilter = routeSamplingPolicy.coreLocationDistanceFilter
+        applyRoutePowerLevel()
         locationManager.startMonitoringVisits()
         locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
@@ -326,6 +366,11 @@ final class LocationManager: NSObject, ObservableObject {
         stopTrackingTimer?.invalidate()
         stopTrackingTimer = nil
         trackingStartTime = nil
+        routeSamplingWakeTimer?.invalidate()
+        routeSamplingWakeTimer = nil
+        routeSampler.reset()
+        preciseFixRequestedAt = nil
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
 
         locationManager.stopMonitoringVisits()
         locationManager.stopMonitoringSignificantLocationChanges()
@@ -339,7 +384,12 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     private func logTrackingStart(reason: TrackingChangeReason, wasTracking: Bool) {
-        let mode = "every \(Int(distanceFilter)) m"
+        let mode: String
+        switch routeSamplingMode {
+        case .distance: mode = "every \(Int(distanceFilter)) m"
+        case .time: mode = "every \(Int(routeSampleInterval)) s"
+        case .distanceAndTime: mode = "every \(Int(routeSampleInterval)) s once \(Int(distanceFilter)) m away"
+        }
         switch reason {
         case .relaunch:
             LogManager.shared.warning("Background session resumed after relaunch · \(mode)", category: .location)
@@ -384,8 +434,54 @@ final class LocationManager: NSObject, ObservableObject {
     func setDistanceFilter(_ meters: Double) {
         distanceFilter = meters
         defaults.set(meters, forKey: "distanceFilter")
-        if isTrackingEnabled {
-            locationManager.distanceFilter = meters
+        routeSamplingSettingsChanged()
+    }
+
+    func setRouteSamplingMode(_ mode: RouteSamplingMode) {
+        routeSamplingMode = mode
+        defaults.set(mode.rawValue, forKey: Self.routeSamplingModeKey)
+        routeSamplingSettingsChanged()
+    }
+
+    func setRouteSampleInterval(_ seconds: TimeInterval) {
+        guard seconds > 0 else { return }
+        routeSampleInterval = seconds
+        defaults.set(seconds, forKey: Self.routeSampleIntervalKey)
+        routeSamplingSettingsChanged()
+    }
+
+    private func routeSamplingSettingsChanged() {
+        routeSampler.policy = routeSamplingPolicy
+        guard isTrackingEnabled else { return }
+        locationManager.distanceFilter = routeSamplingPolicy.coreLocationDistanceFilter
+        routeSampler.refreshPowerLevel(at: Date())
+        applyRoutePowerLevel()
+        LogManager.shared.info("Route points · \(routeSamplingPolicy.summary)", category: .location)
+    }
+
+    // MARK: - Route sampling power
+
+    /// Sets Core Location's accuracy from the sampler, and schedules the GPS to come back
+    /// up before the next time-based sample is due.
+    private func applyRoutePowerLevel() {
+        if let requestedAt = preciseFixRequestedAt, Date().timeIntervalSince(requestedAt) > 60 {
+            preciseFixRequestedAt = nil
+        }
+        let level: RoutePowerLevel = preciseFixRequestedAt != nil ? .precise : routeSampler.powerLevel
+        if locationManager.desiredAccuracy != level.desiredAccuracy {
+            locationManager.desiredAccuracy = level.desiredAccuracy
+        }
+
+        routeSamplingWakeTimer?.invalidate()
+        routeSamplingWakeTimer = nil
+        guard isTrackingEnabled, let wake = routeSampler.nextPowerUpDate else { return }
+        let delay = max(1, wake.timeIntervalSinceNow)
+        routeSamplingWakeTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                guard let self, self.isTrackingEnabled else { return }
+                self.routeSampler.refreshPowerLevel(at: Date())
+                self.applyRoutePowerLevel()
+            }
         }
     }
 
@@ -450,7 +546,7 @@ final class LocationManager: NSObject, ObservableObject {
                     }
                 } else {
                     let start = trackingStartTime ?? referenceDate
-                    let session = RecordingSession(startedAt: start, distanceFilterMeters: distanceFilter)
+                    let session = makeRecordingSession(startedAt: start)
                     context.insert(session)
                     activeRecordingSessionID = session.id
                     trackingStartTime = start
@@ -495,13 +591,22 @@ final class LocationManager: NSObject, ObservableObject {
                 return
             }
 
-            let session = RecordingSession(startedAt: startedAt, distanceFilterMeters: distanceFilter)
+            let session = makeRecordingSession(startedAt: startedAt)
             context.insert(session)
             activeRecordingSessionID = session.id
             try context.save()
         } catch {
             lastError = String(localized: "Failed to start recording session: \(error.localizedDescription)")
         }
+    }
+
+    private func makeRecordingSession(startedAt: Date) -> RecordingSession {
+        RecordingSession(
+            startedAt: startedAt,
+            distanceFilterMeters: distanceFilter,
+            routeSamplingModeRawValue: routeSamplingMode.rawValue,
+            routeSampleIntervalSeconds: routeSamplingMode.usesTimeInterval ? routeSampleInterval : nil
+        )
     }
 
     private func endActiveRecordingSession(at endedAt: Date) {
@@ -801,6 +906,9 @@ final class LocationManager: NSObject, ObservableObject {
         referenceDate: Date
     ) -> Bool {
         guard lhs.id != rhs.id, lhs.source == .automatic, rhs.source == .automatic else { return false }
+        // Reviewed stops named after different places (e.g. a split visit, or two
+        // neighbouring saved places) are separate visits, however close together.
+        if Self.areDistinctReviewedPlaces(lhs, rhs) { return false }
 
         let lhsLocation = CLLocation(latitude: lhs.latitude, longitude: lhs.longitude)
         let rhsLocation = CLLocation(latitude: rhs.latitude, longitude: rhs.longitude)
@@ -814,6 +922,11 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         return timeGapBetween(lhs, rhs, referenceDate: referenceDate) <= duplicateVisitMergeGap
+    }
+
+    static func areDistinctReviewedPlaces(_ lhs: Visit, _ rhs: Visit) -> Bool {
+        guard lhs.isConfirmed, rhs.isConfirmed else { return false }
+        return lhs.displayName.compare(rhs.displayName, options: [.caseInsensitive, .diacriticInsensitive]) != .orderedSame
     }
 
     private func timeGapBetween(_ lhs: Visit, _ rhs: Visit, referenceDate: Date) -> TimeInterval {
@@ -902,13 +1015,13 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     @discardableResult
-    private func saveLocationPoints(_ locations: [CLLocation]) -> [LocationPoint] {
+    private func saveLocationPoints(_ locations: [CLLocation], receivedCount: Int? = nil) -> [LocationPoint] {
         guard let context = modelContext else { return [] }
 
         // Count every fix the system delivered so the Route screen can show "kept of received".
         if let activeRecordingSessionID,
            let activeSession = try? recordingSession(withID: activeRecordingSessionID, in: context) {
-            activeSession.recordReceivedLocations(locations.count)
+            activeSession.recordReceivedLocations(receivedCount ?? locations.count)
         }
 
         let validLocations = locations.filter { location in
@@ -1209,7 +1322,14 @@ extension LocationManager: CLLocationManagerDelegate {
 
             guard isTrackingEnabled, StoreManager.shared.canTrack else { return }
 
-            saveLocationPoints(locations)
+            // Distance mode passes every fix through; time modes keep one per interval.
+            let samples = routeSampler.process(locations)
+            if preciseFixRequestedAt != nil,
+               locations.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
+                preciseFixRequestedAt = nil
+            }
+            applyRoutePowerLevel()
+            saveLocationPoints(samples, receivedCount: locations.count)
 
             // Geocode/update Live Activity only for the latest location to avoid doing
             // network/UI work for every point in a Core Location batch.

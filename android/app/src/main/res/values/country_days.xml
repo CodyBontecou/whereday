@@ -28,7 +28,7 @@
     <string name="country_stay_range">%1$s → %2$s</string>
     <string name="country_export">Export country CSV</string>
     <string name="country_preview_title">Country CSV preview</string>
-    <string name="country_preview_help">Preview shows the first 100 local dates. Export country CSV includes all dates in the selected period and requires verified access to a Whereday plan.</string>
+    <string name="country_preview_plan_help">Preview shows the first 100 local dates. Export country CSV includes all dates in the selected period and needs an active Whereday plan.</string>
     <string name="country_done">Done</string>
     <string name="country_analyze_title">Analyze saved locations?</string>
     <string name="country_analyze_disclosure">Coordinates are sent to your device’s geocoding service to identify countries. Geographic time zones are calculated on this phone from bundled boundaries. Results are estimates; unavailable locations stay unresolved. You can stop and continue later.</string>

@@ -26,7 +26,7 @@
     <string name="support_preview_title">Android development preview</string>
     <string name="support_preview_notice">This build is still being validated for an Android release.</string>
     <string name="support_preview_journal">Record outings, review your map and timeline, edit visits and saved places, and explore Country Days and photo moments.</string>
-    <string name="support_preview_portability">Preview eight export formats and import supported history files. File exports, scheduled exports and webhooks require verified access to a Whereday plan; purchases are not available in this preview.</string>
+    <string name="support_preview_plan_portability">Preview eight export formats and import supported history files. File exports, scheduled exports and webhooks are included with every Whereday plan: Weekly, Yearly or Lifetime.</string>
     <string name="support_preview_automation">Use launcher shortcuts for recording controls, Timeline and Export. Settings includes per-action automation access for Automate; Automate support is experimental.</string>
     <string name="support_rate_app">Rate Whereday on Google Play</string>
     <string name="support_review_unavailable">Google Play reviews are unavailable for this build.</string>

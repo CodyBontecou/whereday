@@ -14,6 +14,11 @@ final class RecordingSession {
     var receivedLocationCount: Int?
     /// The distance filter in metres that was active when this session was recorded.
     var distanceFilterMeters: Double?
+    /// `RouteSamplingMode` raw value active when recorded. nil for sessions recorded before
+    /// time-based sampling existed, which were always distance-based.
+    var routeSamplingModeRawValue: String?
+    /// Seconds between route points when recorded in a time-based mode.
+    var routeSampleIntervalSeconds: Double?
 
     init(
         id: UUID = UUID(),
@@ -22,7 +27,9 @@ final class RecordingSession {
         customName: String? = nil,
         notes: String? = nil,
         receivedLocationCount: Int? = nil,
-        distanceFilterMeters: Double? = nil
+        distanceFilterMeters: Double? = nil,
+        routeSamplingModeRawValue: String? = nil,
+        routeSampleIntervalSeconds: Double? = nil
     ) {
         self.id = id
         self.startedAt = startedAt
@@ -31,6 +38,8 @@ final class RecordingSession {
         self.notes = notes
         self.receivedLocationCount = receivedLocationCount
         self.distanceFilterMeters = distanceFilterMeters
+        self.routeSamplingModeRawValue = routeSamplingModeRawValue
+        self.routeSampleIntervalSeconds = routeSampleIntervalSeconds
     }
 
     /// Adds fixes delivered by Core Location, counted before any are discarded.

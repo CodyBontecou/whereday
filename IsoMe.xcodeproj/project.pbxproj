@@ -54,6 +54,8 @@
 		A1000003212F000100000003 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003212F000000000003 /* Visit.swift */; };
 		A1000004212F000100000004 /* LocationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004212F000000000004 /* LocationPoint.swift */; };
 		A1000005212F000100000005 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005212F000000000005 /* LocationManager.swift */; };
+		B7E10A0100000000000000A2 /* RouteSampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E10A0100000000000000A1 /* RouteSampling.swift */; };
+		B7E10A0100000000000000A4 /* RouteSamplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E10A0100000000000000A3 /* RouteSamplerTests.swift */; };
 		A1000006212F000100000006 /* GeocodingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006212F000000000006 /* GeocodingService.swift */; };
 		D2A10001212F000100000001 /* PlaceSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10001212F000000000001 /* PlaceSearchService.swift */; };
 		D2A10002212F000100000002 /* PlaceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10002212F000000000002 /* PlaceSelectionView.swift */; };
@@ -107,10 +109,13 @@
 		A4000004212F000100000004 /* IsoMeWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A4000000212F000000000000 /* IsoMeWatchWidgetExtension.appex */; platformFilter = watchos; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC063EB88C436E8BF576E318 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */; };
 		CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */; };
+		A7D1C0DE0000000000000006 /* LaunchRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */; };
 		D5E7A1580000000000000158 /* ExportRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E7A1580000000000000058 /* ExportRoundTripTests.swift */; };
 		DC2E3601C25B2712AD33AE98 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59397DEAA02FEF6A5B6FA476 /* PaywallView.swift */; };
 		E1000001212F000100000001 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001212F000000000001 /* AppInfo.swift */; };
 		E1000002212F000100000002 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002212F000000000002 /* LogManager.swift */; };
+		A7D1C0DE0000000000000004 /* LaunchGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1C0DE0000000000000003 /* LaunchGuard.swift */; };
+		A7D1C0DE0000000000000002 /* AppModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D1C0DE0000000000000001 /* AppModelStore.swift */; };
 		E1000003212F000100000003 /* LogViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003212F000000000003 /* LogViewerView.swift */; };
 		F7D0A11E5A00000000000011 /* AtlasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000010 /* AtlasView.swift */; };
 		F7D0A11E5A00000000000013 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000012 /* PlaceDetailView.swift */; };
@@ -136,6 +141,7 @@
 		AB000001212F0BB100000B2 /* RenameIntentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0BB000000B2 /* RenameIntentsTests.swift */; };
 		6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */; };
 		D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A10003212F000000000003 /* RemotePastVisitTests.swift */; };
+		5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11700000000000000000A1 /* SplitVisitTests.swift */; };
 		B2000005212F000100000005 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000001212F000000000001 /* Localizable.xcstrings */; };
 		B2000006212F000100000006 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000002212F000000000002 /* InfoPlist.xcstrings */; };
 		B2000007212F000100000007 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B1000003212F000000000003 /* Localizable.xcstrings */; };
@@ -310,10 +316,13 @@
 		D6000001212F000000000001 /* PushRegistrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRegistrationManager.swift; sourceTree = "<group>"; };
 		D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportNotificationScheduler.swift; sourceTree = "<group>"; };
 		76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManagerTrackingTests.swift; sourceTree = "<group>"; };
+		A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LaunchRecoveryTests.swift; sourceTree = "<group>"; };
 		D5E7A1580000000000000058 /* ExportRoundTripTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportRoundTripTests.swift; sourceTree = "<group>"; };
 		7A2C2BFF043232B2FF2E0BED /* StoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		E1000001212F000000000001 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		E1000002212F000000000002 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		A7D1C0DE0000000000000003 /* LaunchGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchGuard.swift; sourceTree = "<group>"; };
+		A7D1C0DE0000000000000001 /* AppModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelStore.swift; sourceTree = "<group>"; };
 		E1000003212F000000000003 /* LogViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewerView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000010 /* AtlasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtlasView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000012 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
@@ -337,6 +346,8 @@
 		A1000003212F000000000003 /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		A1000004212F000000000004 /* LocationPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPoint.swift; sourceTree = "<group>"; };
 		A1000005212F000000000005 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		B7E10A0100000000000000A1 /* RouteSampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSampling.swift; sourceTree = "<group>"; };
+		B7E10A0100000000000000A3 /* RouteSamplerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RouteSamplerTests.swift; sourceTree = "<group>"; };
 		A1000006212F000000000006 /* GeocodingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingService.swift; sourceTree = "<group>"; };
 		D2A10001212F000000000001 /* PlaceSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchService.swift; sourceTree = "<group>"; };
 		D2A10002212F000000000002 /* PlaceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionView.swift; sourceTree = "<group>"; };
@@ -411,6 +422,7 @@
 		AB000001212F0BB000000B2 /* RenameIntentsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RenameIntentsTests.swift; sourceTree = "<group>"; };
 		6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationViewModelPointScalingTests.swift; sourceTree = "<group>"; };
 		D2A10003212F000000000003 /* RemotePastVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemotePastVisitTests.swift; sourceTree = "<group>"; };
+		5B11700000000000000000A1 /* SplitVisitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplitVisitTests.swift; sourceTree = "<group>"; };
 		B1000001212F000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B1000002212F000000000002 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B1000003212F000000000003 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -616,6 +628,7 @@
 				C0DE0302212F000000000302 /* CountryDayResolver.swift */,
 				AF000001212F000000000001 /* DailyDistanceTracker.swift */,
 				A1000005212F000000000005 /* LocationManager.swift */,
+				B7E10A0100000000000000A1 /* RouteSampling.swift */,
 				A1000006212F000000000006 /* GeocodingService.swift */,
 				D2A10001212F000000000001 /* PlaceSearchService.swift */,
 				C0DE0102212F000000000102 /* PhotoLibraryManager.swift */,
@@ -624,6 +637,8 @@
 				CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */,
 				CA1029A00000000000000000 /* PaywallContext.swift */,
 				E1000002212F000000000002 /* LogManager.swift */,
+				A7D1C0DE0000000000000003 /* LaunchGuard.swift */,
+				A7D1C0DE0000000000000001 /* AppModelStore.swift */,
 				AB000001212F000000000001 /* IsoMeIntents.swift */,
 				76AB00000000000000000021 /* ManualVisitRoute.swift */,
 				76AB00000000000000000011 /* IsoMeManualVisitIntents.swift */,
@@ -785,6 +800,8 @@
 				D5E7A1580000000000000058 /* ExportRoundTripTests.swift */,
 				E9A100000000000000000003 /* ExportKitIntegrationTests.swift */,
 				76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */,
+				A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */,
+				B7E10A0100000000000000A3 /* RouteSamplerTests.swift */,
 				E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */,
 				F1FE2A7AF0F63FFD8AE276F3 /* SharedLocationDataTests.swift */,
 				8F7F078A773745EF8CE42F37 /* WebhookManagerTests.swift */,
@@ -798,6 +815,7 @@
 				6A1234567890ABCDEF000001 /* LocationViewModelPointScalingTests.swift */,
 				76AB00000000000000000031 /* ManualVisitAutomationTests.swift */,
 				D2A10003212F000000000003 /* RemotePastVisitTests.swift */,
+				5B11700000000000000000A1 /* SplitVisitTests.swift */,
 				8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */,
 				644670CB99144980BD7FC378 /* WheredayBackupTests.swift */,
 				F8AA00000000000000000002 /* MonthRecapTests.swift */,
@@ -1105,6 +1123,7 @@
 				C0DE0001212F000100000001 /* RecordingSession.swift in Sources */,
 				C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */,
 				A1000005212F000100000005 /* LocationManager.swift in Sources */,
+				B7E10A0100000000000000A2 /* RouteSampling.swift in Sources */,
 				A1000006212F000100000006 /* GeocodingService.swift in Sources */,
 				D2A10001212F000100000001 /* PlaceSearchService.swift in Sources */,
 				C0DE0102212F000100000102 /* PhotoLibraryManager.swift in Sources */,
@@ -1153,6 +1172,8 @@
 				DC2E3601C25B2712AD33AE98 /* PaywallView.swift in Sources */,
 				E1000001212F000100000001 /* AppInfo.swift in Sources */,
 				E1000002212F000100000002 /* LogManager.swift in Sources */,
+				A7D1C0DE0000000000000004 /* LaunchGuard.swift in Sources */,
+				A7D1C0DE0000000000000002 /* AppModelStore.swift in Sources */,
 				E1000003212F000100000003 /* LogViewerView.swift in Sources */,
 				F7D0A11E5A0000000000000B /* TodayView.swift in Sources */,
 				F7D0A11E5A00000000000011 /* AtlasView.swift in Sources */,
@@ -1239,6 +1260,8 @@
 				5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */,
 				5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */,
 				CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */,
+				A7D1C0DE0000000000000006 /* LaunchRecoveryTests.swift in Sources */,
+				B7E10A0100000000000000A4 /* RouteSamplerTests.swift in Sources */,
 				E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */,
 				F3601C83F23A13A26444AD47 /* SharedLocationDataTests.swift in Sources */,
 				A1178698C9FA49F18135BC6B /* WebhookManagerTests.swift in Sources */,
@@ -1252,6 +1275,7 @@
 				6A1234567890ABCDEF000002 /* LocationViewModelPointScalingTests.swift in Sources */,
 				76AB00000000000000000032 /* ManualVisitAutomationTests.swift in Sources */,
 				D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */,
+				5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */,
 				F2DCEC8ADF4641F4AFEBB1BA /* TimelineImportTests.swift in Sources */,
 				FDFB1C9B057842D2AEAF9F09 /* WheredayBackupTests.swift in Sources */,
 				F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */,

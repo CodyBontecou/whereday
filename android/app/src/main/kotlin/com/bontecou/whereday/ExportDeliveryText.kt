@@ -15,7 +15,7 @@ import java.text.NumberFormat
         ExportDeliveryNotice.interrupted->R.string.export_delivery_interrupted
         ExportDeliveryNotice.failed->R.string.export_delivery_failed
         ExportDeliveryNotice.unavailable->R.string.export_delivery_unavailable
-        ExportDeliveryNotice.accessRequired->R.string.export_delivery_access_required
+        ExportDeliveryNotice.accessRequired->R.string.export_delivery_plan_required
         ExportDeliveryNotice.destinationChanged->R.string.export_delivery_changed
         ExportDeliveryNotice.destinationUnavailable->R.string.export_delivery_destination_unavailable
         ExportDeliveryNotice.preparedUnavailable->R.string.export_delivery_prepared_unavailable

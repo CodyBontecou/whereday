@@ -18,7 +18,8 @@ enum class AppEvent(val level:String,val message:String) {
     automationCompleted("INFO","Automation command completed."),
     automationFailed("WARN","Automation command did not return a result. Check access and journal state."),
     journalClearFailed("ERROR","Journal data could not be completely cleared. Try again."),
-    visitReconciliationFailed("ERROR","Visit history could not be updated. Try reopening the app.")
+    visitReconciliationFailed("ERROR","Visit history could not be updated. Try reopening the app."),
+    locationReconciliationFailed("ERROR","Interrupted recordings could not be checked. Try reopening the app.")
 }
 
 data class ActivityLogEntry(val id:Long,val time:Instant,val event:AppEvent) {

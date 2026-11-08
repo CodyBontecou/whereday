@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.conflate
 import com.bontecou.whereday.domain.PointSummary
 import com.bontecou.whereday.domain.RecordingInterruption
+import com.bontecou.whereday.domain.RouteSampler
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.Instant
@@ -104,9 +105,15 @@ class RecordingService : Service() {
                 val recording=graph.history.start(settings.stopAfterHours,locationBootCount(this@RecordingService))
                 startedAt=recording.sessionId?.let {graph.history.dao.session(it)?.value?.startedAt}
                 metric=settings.metric
-                source.start(settings.distanceFilter,onPoints={points ->scope.launch {commands.withLock {
+                // Settings apply to the next start, so one sampler serves this whole recording.
+                val sampling=settings.routeSampling
+                val sampler=RouteSampler(sampling)
+                source.start(sampling,onPoints={points ->scope.launch {commands.withLock {
                     if(epoch!=generation) return@withLock
-                    try {graph.history.ingest(points)}
+                    try {
+                        if(sampling.mode.usesInterval) graph.history.ingest(points,sampler.process(points).mapTo(HashSet()) {it.id})
+                        else graph.history.ingest(points)
+                    }
                     catch(e:CancellationException) {throw e}
                     catch(_:Exception) {finish(RecordingInterruption.historyUnavailable,startId)}
                 }}},onError={scope.launch {commands.withLock {if(epoch==generation) finish(RecordingInterruption.locationUnavailable,startId)}}})
@@ -236,10 +243,12 @@ class RecordingRecoveryReceiver:BroadcastReceiver() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val graph=AppGraph.from(context);graph.journalClear.awaitReady()
-                graph.reconcileLocationServices()
+                graph.reconcileLocationServicesSafely()
             }
             catch(error:CancellationException) {throw error}
             catch(_:JournalClearPending) { /* The journal remains fenced until its deletion recovers. */ }
+            // An uncaught failure here would crash the process on every boot.
+            catch(_:Exception) {}
             finally {pending.finish()}
         }
     }

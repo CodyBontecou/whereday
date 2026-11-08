@@ -250,8 +250,14 @@ final class SavedPlaceManagementTests: XCTestCase {
 
     func testImportPlanChoosesNearestDeterministicallyAndTracksSequentialPinMoves() throws {
         let (container, viewModel) = try makeEnvironment()
-        let west = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Coffee", latitude: 0, longitude: 0, radiusMeters: 250))
-        let east = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Coffee", latitude: 0, longitude: 0.002, radiusMeters: 250))
+        // Two same-named places within each other's radius can no longer be added from Places
+        // (the second would update the first), but libraries saved earlier may hold them.
+        let west = SavedPlace(name: "Coffee", latitude: 0, longitude: 0, radiusMeters: 250)
+        let east = SavedPlace(name: "Coffee", latitude: 0, longitude: 0.002, radiusMeters: 250)
+        container.mainContext.insert(west)
+        container.mainContext.insert(east)
+        try container.mainContext.save()
+        viewModel.loadSavedPlaces()
         let imported = [
             importedPlace(name: "Coffee", latitude: 0, longitude: 0.0019, radius: 250),
             importedPlace(name: "Coffee", latitude: 0, longitude: 0.004, radius: 250),
@@ -346,6 +352,56 @@ final class SavedPlaceManagementTests: XCTestCase {
         XCTAssertEqual(stored.count, 2)
         XCTAssertEqual(try XCTUnwrap(stored.first { $0.id == original.id }).latitude, 0.102)
         XCTAssertEqual(try XCTUnwrap(stored.first { $0.id == imported[2].id }).latitude, 0.0989)
+    }
+
+    func testAddingAPlaceWithTheSameNameWithinRadiusUpdatesTheExistingPlace() throws {
+        let (container, viewModel) = try makeEnvironment()
+        let original = try viewModel.saveManagedPlace(SavedPlaceDraft(
+            name: "Deli Board", address: "1058 Folsom St", latitude: 37.7776, longitude: -122.4070,
+            radiusMeters: 150, kind: .work, notes: "Lunch spot"
+        ))
+
+        // About 30 m away, typed with different case and spacing; address, kind and notes left blank.
+        let again = try viewModel.saveManagedPlace(SavedPlaceDraft(
+            name: "  deli board ", latitude: 37.7778, longitude: -122.4072, radiusMeters: 200
+        ))
+
+        let stored = try persistedPlaces(in: container)
+        XCTAssertEqual(stored.count, 1)
+        XCTAssertEqual(again.id, original.id)
+        let place = try XCTUnwrap(stored.first)
+        XCTAssertEqual(place.latitude, 37.7778)
+        XCTAssertEqual(place.radiusMeters, 200)
+        XCTAssertEqual(place.address, "1058 Folsom St")
+        XCTAssertEqual(place.kind, .work)
+        XCTAssertEqual(place.notes, "Lunch spot")
+        XCTAssertEqual(viewModel.savedPlaces.count, 1)
+    }
+
+    func testAddingASameNamedPlaceOutsideTheRadiusOrADifferentNameCreatesANewPlace() throws {
+        let (container, viewModel) = try makeEnvironment()
+        _ = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Deli Board", latitude: 37.7776, longitude: -122.4070))
+
+        _ = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Deli Board", latitude: 37.7900, longitude: -122.4070))
+        _ = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Deli Annex", latitude: 37.7776, longitude: -122.4070))
+
+        XCTAssertEqual(try persistedPlaces(in: container).count, 3)
+    }
+
+    func testEditingAPlaceStillEditsThatPlaceWhenAnotherHasTheSameName() throws {
+        let (container, viewModel) = try makeEnvironment()
+        let first = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Cafe", latitude: 38, longitude: -9))
+        let second = try viewModel.saveManagedPlace(SavedPlaceDraft(name: "Annex", latitude: 38.0001, longitude: -9))
+        var draft = SavedPlaceDraft(second)
+        draft.name = "cafe"
+
+        let edited = try viewModel.saveManagedPlace(draft)
+
+        XCTAssertEqual(edited.id, second.id)
+        let stored = try persistedPlaces(in: container)
+        XCTAssertEqual(Set(stored.map(\.id)), [first.id, second.id])
+        XCTAssertEqual(stored.first { $0.id == first.id }?.name, "Cafe")
+        XCTAssertEqual(stored.first { $0.id == second.id }?.name, "cafe")
     }
 
     private func makeEnvironment() throws -> (ModelContainer, LocationViewModel) {

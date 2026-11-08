@@ -33,8 +33,10 @@ struct ListeningView: View {
         _locationManager = ObservedObject(initialValue: viewModel.locationManager)
     }
 
-    private var currentDetail: RecordingDetail {
-        RecordingDetail(distanceFilter: locationManager.distanceFilter)
+    /// nil while recording by time: none of the distance presets describes that.
+    private var currentDetail: RecordingDetail? {
+        guard locationManager.routeSamplingMode == .distance else { return nil }
+        return RecordingDetail(distanceFilter: locationManager.distanceFilter)
     }
 
     var body: some View {
@@ -60,7 +62,7 @@ struct ListeningView: View {
                 BackPageLabel("FINE-TUNE")
                 fineTuneCard
                     .padding(.horizontal, 16)
-                BackPageFootnote("Distance filter controls how often points are saved while moving. Stop After auto-stops as a safety net.")
+                BackPageFootnote("Record points sets how often your route gets a point. At 1 min or more, GPS rests between points. Stop After auto-stops as a safety net.")
 
                 BackPageLabel("OUTINGS FROM SAVED POINTS")
                 inferredOutingsCard
@@ -192,19 +194,49 @@ struct ListeningView: View {
 
     private var fineTuneCard: some View {
         BackPageCard {
-            BackPagePickerRow(title: "Distance filter") {
-                Picker("Distance filter", selection: Binding(
-                    get: { locationManager.distanceFilter },
-                    set: { locationManager.setDistanceFilter($0) }
+            BackPagePickerRow(title: "Record points") {
+                Picker("Record points", selection: Binding(
+                    get: { locationManager.routeSamplingMode },
+                    set: { locationManager.setRouteSamplingMode($0) }
                 )) {
-                    Text("5m").tag(5.0)
-                    Text("10m").tag(10.0)
-                    Text("25m").tag(25.0)
-                    Text("50m").tag(50.0)
-                    Text("100m").tag(100.0)
-                    Text("200m").tag(200.0)
+                    ForEach(RouteSamplingMode.allCases) { mode in
+                        Text(mode.title).tag(mode)
+                    }
                 }
                 .labelsHidden()
+                // Keep "Distance + time" on one line instead of letting the row squeeze it.
+                .fixedSize()
+            }
+            if locationManager.routeSamplingMode.usesTimeInterval {
+                BackPageDivider()
+                BackPagePickerRow(title: "Every") {
+                    Picker("Every", selection: Binding(
+                        get: { locationManager.routeSampleInterval },
+                        set: { locationManager.setRouteSampleInterval($0) }
+                    )) {
+                        ForEach(intervalOptions, id: \.self) { seconds in
+                            Text(RouteSamplingPolicy.intervalLabel(seconds)).tag(seconds)
+                        }
+                    }
+                    .labelsHidden()
+                }
+            }
+            if locationManager.routeSamplingMode.usesDistanceFilter {
+                BackPageDivider()
+                BackPagePickerRow(title: locationManager.routeSamplingMode == .distanceAndTime ? "Once moved" : "Distance filter") {
+                    Picker("Distance filter", selection: Binding(
+                        get: { locationManager.distanceFilter },
+                        set: { locationManager.setDistanceFilter($0) }
+                    )) {
+                        Text("5m").tag(5.0)
+                        Text("10m").tag(10.0)
+                        Text("25m").tag(25.0)
+                        Text("50m").tag(50.0)
+                        Text("100m").tag(100.0)
+                        Text("200m").tag(200.0)
+                    }
+                    .labelsHidden()
+                }
             }
             BackPageDivider()
             BackPagePickerRow(title: "Stop after") {
@@ -231,6 +263,13 @@ struct ListeningView: View {
                 )
             )
         }
+    }
+
+    /// The standard intervals, plus a stored one that isn't among them so the picker never goes blank.
+    private var intervalOptions: [TimeInterval] {
+        let options = RouteSamplingPolicy.intervalOptions
+        let current = locationManager.routeSampleInterval
+        return options.contains(current) ? options : (options + [current]).sorted()
     }
 
     // MARK: - Inferred outings

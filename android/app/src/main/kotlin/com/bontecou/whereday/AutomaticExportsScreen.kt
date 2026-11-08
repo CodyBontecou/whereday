@@ -153,7 +153,7 @@ internal data class AutomaticExportActions(
             }
             if(settings.outings) WdSectionFooter(stringResource(R.string.automatic_export_outings_help))
             if(settings.schedule.intervalHours>0 && settings.format in setOf(ExportFormat.gpx,ExportFormat.kml)) WdSectionFooter(stringResource(R.string.automatic_export_container_help))
-            WdSectionFooter(stringResource(R.string.automatic_export_policy))
+            WdSectionFooter(stringResource(R.string.automatic_export_plan_policy))
             // Status: the last successful export, any pending window, then Run now beside Cancel.
             Column(Modifier.exportInset().padding(top=16.dp).clip(RoundedCornerShape(16.dp)).background(if(state.lastSuccess!=null) wd.containerLow else wd.noticeContainer).padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
                 Text(state.lastSuccess?.let {stringResource(R.string.automatic_export_last_success,date(it))} ?: stringResource(R.string.automatic_export_no_success),style=MaterialTheme.typography.bodyMedium,

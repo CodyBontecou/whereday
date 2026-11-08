@@ -8,11 +8,11 @@ August 22, 2026
 
 Updated
 
-October 29, 2026
+November 6, 2026
 
 Scope
 
-Whereday — iOS & watchOS
+Whereday — iOS, watchOS & Android
 
 Whereday ("the App") is built with privacy as a core principle. This policy explains how the App handles your information.
 
@@ -28,9 +28,9 @@ The App uses your device's location services to:
 
 - Automatically detect places you visit
 - Record detailed routes when tracking is enabled
-- Feed optional surfaces such as the Apple Watch app, widgets, and Live Activities
+- Feed optional surfaces such as the Apple Watch app, widgets, and Live Activities on iPhone, and home-screen widgets on Android
 
-Your location history stays on your device unless you deliberately enable a feature that sends it elsewhere. The only such feature is optional webhook delivery (see Network Requests), which posts your data to a destination you configure yourself.
+Your location history stays on your device unless you deliberately enable a feature that sends it elsewhere. The only such feature is optional webhook delivery (see Network Requests), which posts your data to a destination you configure yourself. Showing the map and looking up place names send the coordinates involved to map and geocoding services, as described below; those services do not receive your saved history.
 
 ## Network Requests
 
@@ -43,6 +43,19 @@ The App may make network requests in the following circumstances:
 - Optional myself.md purchase claims in earlier versions: if you choose to verify an eligible lifetime purchase, Whereday sends signed App Store purchase proof to myself.md, which verifies eligibility with Apple and retains the purchase source and transaction reference. Redeeming while signed in associates the purchase with your myself.md account to grant access and prevent duplicate claims. The proof request sends neither location history nor payment-card details. This feature is disabled in version 1.8. The separate site describes account handling in its [Privacy Policy](https://myself.md/privacy).
 - App Store: purchases are handled entirely by Apple's App Store. Whereday does not process or store payment information.
 
+### On Android
+
+The Android app keeps your journal on your device in the same way. Android cloud backup and device-to-device transfer are turned off for its data. It makes these network requests:
+
+- Street map tiles (on by default): the home map loads street tiles from OpenFreeMap (tiles.openfreemap.org). Each request names the map area being shown, which can reveal the approximate or precise area you are looking at, along with your IP address. No journal records are sent. Turn this off in Map → Layers → Street map.
+- Place names and search (on by default): when you search for a place or look up the address of a pin, the text you typed or that one coordinate is sent to your device's geocoding service, which is Google's on most Android devices. If you run a country analysis, the coordinates in the selected history are sent the same way. Turn this off in Settings → Network geocoding.
+- Google Play purchases: subscriptions and Lifetime are bought through Google Play Billing. Whereday never receives your payment details.
+- Purchase verification: to unlock paid features, the app sends your Google Play purchase token, the product ID, a public key created on your device for this installation, a signature, and a Google Play Integrity token to our purchase verifier, a Cloudflare-hosted service. The verifier checks the purchase with Google Play and the integrity token with Google, then returns a short-lived signed pass the app keeps on the device. It stores one-time challenges for five minutes, and SHA-256 hashes of the purchase token and device key with the date first seen, to limit each purchase to five devices. Those hashes have no automatic expiry. It stores no location data, account, name, or email.
+- Device location: the app reads your position from Android's location services (Google Play services' fused location provider). Whereday itself does not send that position anywhere except as listed here.
+- Webhook delivery (off by default, paid): works as on iPhone. Location points and visits go only to the endpoint you configure.
+
+Photos you link to places are read on your device and never uploaded. The Android app contains no advertising or third-party analytics SDKs and does not use the advertising ID.
+
 ## Data Export
 
 You can export visits, route points, and outings at any time as JSON, CSV, Markdown, GeoJSON, GPX, KML, OwnTracks, or Overland. Exported files are generated locally on your device. What you do with exported data is your responsibility.
@@ -54,10 +67,18 @@ Whereday contains no third-party analytics SDKs, no advertising frameworks, and 
 ## Third-Party Services
 
 - Apple: geocoding, Maps search and directions, map snapshots, push notifications, and App Store purchases are Apple system services governed by Apple's privacy policy.
-- Cloudflare: hosts Whereday's own analytics ingest and export-scheduling endpoints (as described above), plus this website. Cloudflare processes data as our infrastructure provider.
+- Google (Android): Google Play Billing, Google Play Integrity, Google Play services location, and the device geocoding service are Google services governed by Google's privacy policy.
+- OpenFreeMap (Android): serves the street map tiles shown on the Android home map.
+- Cloudflare: hosts Whereday's own analytics ingest, export-scheduling, and Android purchase-verification endpoints (as described above), plus this website. Cloudflare processes data as our infrastructure provider.
 - Destinations you choose: webhook delivery and file exports go only to endpoints and folders you configure yourself.
 
 ## Data Deletion
+
+### Delete your Whereday data
+
+- Your journal (iPhone and Android): open Whereday, go to Settings, and use the option to delete or clear your journal data. On Android this is Settings → Clear all journal data, which also clears linked-photo references, the webhook queue, and app activity. Uninstalling the app also removes the journal from the device.
+- Records on our servers: email [cody.bontecou@gmail.com](mailto:cody.bontecou@gmail.com) with the subject "Whereday data deletion" to ask us to delete analytics, scheduling, or Android purchase-verification records. You can do this without the app installed. Say which platform you use. For Android purchase records, include your Google Play order number (it starts with GPA.) so we can find the matching hashes.
+- Purchases: subscriptions are managed and canceled in the App Store or Google Play. Deleting data does not cancel a subscription.
 
 You can delete locally stored journal data in Settings. Deleting local records or uninstalling the app does not itself delete server records, initiate myself.md account deletion, or remove copies you exported/backed up. Keychain-backed scheduling identity may remain after uninstalling.
 

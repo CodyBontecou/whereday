@@ -139,12 +139,9 @@ final class LocationViewModel {
         loadSavedPlaces()
         refreshLocationPointCount()
         refreshPhotoLibraryAuthorizationState()
-        if locationManager.isTrackingEnabled || Self.showsSeededScreenshotDay {
-            loadTodayLocationPoints()
-        } else {
-            todayLocationPoints = []
-            refreshDerivedPointCaches()
-        }
+        // Today's path is stored whether or not tracking is on now, so the day's distance
+        // survives a relaunch after tracking was stopped.
+        loadTodayLocationPoints()
         loadMapLocationPoints(in: mapDateRange)
         loadMapPhotoMoments(in: mapDateRange)
     }
@@ -439,15 +436,6 @@ final class LocationViewModel {
         }
 
         loadMapPhotoMoments(in: mapDateRange)
-    }
-
-    /// Screenshot mode seeds today's routes with tracking off, so Today would otherwise read as empty.
-    private static var showsSeededScreenshotDay: Bool {
-        #if DEBUG
-        ProcessInfo.processInfo.arguments.contains("--seed-screenshot-data")
-        #else
-        false
-        #endif
     }
 
     func loadTodayLocationPoints() {
@@ -982,13 +970,21 @@ final class LocationViewModel {
 
     /// Explicit library edits update by identity and never rewrite historical visits.
     @discardableResult
-    func saveManagedPlace(_ draft: SavedPlaceDraft) throws -> SavedPlace {
-        if let message = draft.validationMessage { throw SavedPlaceManagementError.invalid(message) }
+    func saveManagedPlace(_ requestedDraft: SavedPlaceDraft) throws -> SavedPlace {
+        if let message = requestedDraft.validationMessage { throw SavedPlaceManagementError.invalid(message) }
         let place: SavedPlace
         let snapshot: SavedPlaceDraft?
         let oldUpdatedAt: Date?
+        let workingPlaces = try modelContext.fetch(FetchDescriptor<SavedPlace>())
+        // A new place with the same name inside an existing place's radius is that place, as for
+        // `createSavedPlace` and CSV import: update it rather than save a duplicate.
+        var draft = requestedDraft
+        if draft.existingPlaceID == nil,
+           let duplicate = workingPlaces.first(where: { requestedDraft.matches(SavedPlaceDraft($0)) }) {
+            draft = requestedDraft.merged(into: duplicate)
+        }
         if let id = draft.existingPlaceID {
-            guard let existing = try modelContext.fetch(FetchDescriptor<SavedPlace>()).first(where: { $0.id == id }) else {
+            guard let existing = workingPlaces.first(where: { $0.id == id }) else {
                 throw SavedPlaceManagementError.missingPlace
             }
             place = existing
@@ -1240,23 +1236,9 @@ final class LocationViewModel {
     }
 
     func undoVisitCorrection(_ visit: Visit) {
-        guard let originalLatitude = visit.originalLatitude,
-              let originalLongitude = visit.originalLongitude else { return }
+        guard visit.originalLatitude != nil, visit.originalLongitude != nil else { return }
 
-        let now = Date()
-        visit.countryCode = nil
-        visit.countryTimeZoneIdentifier = nil
-        visit.countryResolutionAttemptedAt = nil
-        visit.latitude = originalLatitude
-        visit.longitude = originalLongitude
-        visit.locationName = visit.originalLocationName
-        visit.address = visit.originalAddress
-        visit.customName = nil
-        visit.confirmationStatus = .unconfirmed
-        visit.confirmedAt = nil
-        visit.updatedAt = now
-        visit.placeSource = nil
-        visit.placeDistanceMeters = nil
+        visit.restoreOriginalValues()
 
         try? modelContext.save()
         loadTodayVisits()
@@ -1294,6 +1276,31 @@ final class LocationViewModel {
         visitMutationError = store.visitMutationError
         if saved { refreshManualVisits() }
         return saved
+    }
+
+    /// Splits a stop into two back-to-back visits; the second is at the chosen place.
+    @discardableResult
+    func splitVisit(
+        _ visit: Visit,
+        at splitAt: Date,
+        secondPlaceName name: String,
+        address: String?,
+        coordinate: CLLocationCoordinate2D,
+        placeSource: VisitPlaceSource,
+        distanceMeters: Double? = nil
+    ) -> Visit? {
+        let store = ManualVisitStore(context: modelContext)
+        let second = store.splitVisit(
+            visit, at: splitAt, secondPlaceName: name, address: address,
+            coordinate: coordinate, placeSource: placeSource, distanceMeters: distanceMeters
+        )
+        visitMutationError = store.visitMutationError
+        guard let second else { return nil }
+        // Same as a correction: the chosen place becomes reusable for future visits.
+        rememberConfirmedPlace(for: second)
+        try? modelContext.save()
+        refreshManualVisits()
+        return second
     }
 
     func storedVisit(id: UUID) throws -> Visit? {

@@ -11,10 +11,10 @@ class VisitReconciliationTest {
     private fun JsonObject.text(key:String)=get(key).takeUnless {it.isJsonNull}?.asString
     private fun JsonObject.visit()=Visit(get("id").asString,Coordinate(get("latitude").asDouble,get("longitude").asDouble),
         Instant.ofEpochSecond(get("arrival").asLong),get("departure").takeUnless {it.isJsonNull}?.asLong?.let(Instant::ofEpochSecond),
-        name=text("name"),address=text("address"),notes=text("notes"),departureInferred=get("inferred").asBoolean)
-    @Test fun actualSwiftMethodsMatchAcrossFourteenSyntheticCases() {
+        name=text("name"),address=text("address"),notes=text("notes"),departureInferred=get("inferred").asBoolean,confirmation=Confirmation.valueOf(get("confirmation").asString))
+    @Test fun actualSwiftMethodsMatchAcrossSeventeenSyntheticCases() {
         val document=javaClass.getResourceAsStream("/ios-visit-reconciliation.json")!!.reader().use {JsonParser.parseReader(it).asJsonObject}
-        val cases=document.getAsJsonArray("cases");assertEquals(14,cases.size())
+        val cases=document.getAsJsonArray("cases");assertEquals(17,cases.size())
         for(element in cases) {
             val case=element.asJsonObject;val target=case.getAsJsonObject("target").visit();val source=case.getAsJsonObject("source").visit()
             val time=Instant.ofEpochSecond(case.get("now").asLong)
@@ -30,6 +30,14 @@ class VisitReconciliationTest {
             assertEquals("$first/$second",first==VisitSource.automatic && second==VisitSource.automatic,
                 VisitReconciliation.shouldMerge(visit().copy(source=first),visit("b").copy(source=second),now))
         }
+    }
+    @Test fun splitVisitPartsNamedAfterDifferentPlacesNeverMerge() {
+        val first=visit().copy(name="Trader Joe's",confirmation=Confirmation.confirmed)
+        val second=visit("b").copy(arrivedAt=first.departedAt!!,departedAt=first.departedAt!!.plusSeconds(1500),name="Marshalls",confirmation=Confirmation.corrected)
+        assertFalse(VisitReconciliation.shouldMerge(first,second,now) {_,_->40.0})
+        assertTrue(VisitReconciliation.shouldMerge(first,second.copy(confirmation=Confirmation.unconfirmed),now) {_,_->40.0})
+        assertTrue(VisitReconciliation.shouldMerge(first,second.copy(name="TRADER JOE'S"),now) {_,_->40.0})
+        assertTrue(VisitReconciliation.shouldMerge(first.copy(name="Café"),second.copy(name="cafe"),now) {_,_->40.0})
     }
     @Test fun targetCorrectionAndCountryProvenanceRemainIntact() {
         val corrected=visit().copy(confirmation=Confirmation.corrected,source=VisitSource.manual,

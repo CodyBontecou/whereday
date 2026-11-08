@@ -55,10 +55,10 @@ internal object GoogleTimelineReader {
                 r.beginArray()
                 while(r.hasNext()) {
                     check();rows++;require(rows<=maximumRecords) {"Google history contains too many records"}
-                    if(r.peek()!=JsonToken.BEGIN_OBJECT) {r.skipValue();output.error("Google record $rows is invalid");continue}
+                    if(r.peek()!=JsonToken.BEGIN_OBJECT) {r.skipValue();output.error(HistoryImportRecordKind.googleRecord,rows,HistoryImportProblem.notRecord,"Invalid record");continue}
                     file.outputStream().buffered().writer(Charsets.UTF_8).use {writer->JsonWriter(writer).use {copy(r,b,it,check,0)}}
                     val meta=file.reader(Charsets.UTF_8).buffered().use {input->val (reader,budget)=json(input);metadata(reader,budget,check,intArrayOf(0),0).asJsonObject}
-                    fun bad() {output.error("Google record $rows contains an invalid visit or point")}
+                    fun bad() {output.error(HistoryImportRecordKind.googleRecord,rows,HistoryImportProblem.invalidGoogleRecord,"Contains an invalid visit or point")}
                     fun coordinate(value:JsonElement?):Coordinate? {
                         val obj=if(value is JsonObject) value else JsonObject().apply {if(value!=null) add("latLng",value)}
                         val lat=number(obj["latitudeE7"] ?: obj["latE7"]);val lon=number(obj["longitudeE7"] ?: obj["lngE7"])

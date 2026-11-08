@@ -64,7 +64,10 @@ import java.text.NumberFormat
                 ListeningMode(stringResource(R.string.visits_title),stringResource(R.string.listening_mode_visits_body),selected=false,onClick=openVisitsOnly)
             }
             WdCard(Modifier.padding(horizontal=16.dp).padding(top=12.dp)) {
-                WdRow {Text(stringResource(R.string.settings_distance),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge);Text(stringResource(R.string.settings_meters,number.format(settings.distanceFilter)),style=WdType.caption,color=wd.textMuted)}
+                if(settings.routeSampling.mode==com.bontecou.whereday.domain.RouteSamplingMode.distance)
+                    WdRow {Text(stringResource(R.string.settings_distance),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge);Text(stringResource(R.string.settings_meters,number.format(settings.distanceFilter)),style=WdType.caption,color=wd.textMuted)}
+                else WdRow {Text(stringResource(R.string.settings_route_mode),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge)
+                    Text(routeSamplingSummary(settings),Modifier.testTag("listening-route-summary"),style=WdType.caption,color=wd.textMuted)}
                 WdRow(divider=false) {Text(stringResource(R.string.settings_stop_after),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge)
                     Text(if(settings.stopAfterHours==0) stringResource(R.string.settings_never) else stringResource(R.string.settings_hours,number.format(settings.stopAfterHours)),style=WdType.caption,color=wd.textMuted)}
                 Text(stringResource(R.string.settings_recording_help),Modifier.padding(start=20.dp,end=20.dp,bottom=12.dp),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)

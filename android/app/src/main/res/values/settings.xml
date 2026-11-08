@@ -6,6 +6,17 @@
     <string name="settings_never">Never</string>
     <string name="settings_hours">%1$s h</string>
     <string name="settings_recording_help">Recording settings apply to the next start.</string>
+    <string name="settings_route_mode">Record points</string>
+    <string name="settings_route_mode_distance">By distance</string>
+    <string name="settings_route_mode_time">By time</string>
+    <string name="settings_route_mode_both">Distance + time</string>
+    <string name="settings_route_interval">Every</string>
+    <string name="settings_route_moved">Once moved</string>
+    <string name="settings_seconds">%1$s s</string>
+    <string name="settings_route_summary_distance">Every %1$s</string>
+    <string name="settings_route_summary_time">Every %1$s</string>
+    <string name="settings_route_summary_both">Every %1$s once %2$s away</string>
+    <string name="settings_route_sampling_help">By time keeps a point every interval, moving or not. Distance + time also waits until you have moved that far. Android powers GPS down between points, so longer intervals save more battery. Visits are still found from every location fix, whichever you choose.</string>
     <string name="settings_permissions">Location and notification permissions</string>
     <string name="settings_inferred">Inferred outings</string>
     <string name="settings_include_inferred">Include inferred outings</string>
