@@ -1,6 +1,6 @@
 Whereday 2.0 — map-first reviewer notes (local draft)
 
-Staged build: 63. The later hardening in PR #109 requires a new candidate build; confirm its number and tested contents before applying these notes.
+Previous 2.0 candidate: build 63. Its App Store version slot was renamed to 1.8.4 for the startup patch, recorded as waiting for review on November 8. Preserve that patch. Restore a 2.0 slot and confirm a new candidate build with the later hardening before applying these local notes.
 
 This version is a full visual redesign of the iPhone app, widgets, Live Activity, and Apple Watch app. The tabs are Map, Atlas, Places, and Archive. The app opens on a full-screen map; pull up the day sheet for stops, moves, and the day dial. Switch between today, yesterday, the last 7 or 30 days, all history, or a calendar range. Replay a day on the map at 1×, 10×, or 60×. Settings opens from the gear on Archive. Onboarding is now three steps; the "How much should it remember?" step only chooses existing distance-filter and auto-stop settings.
 

@@ -1,10 +1,12 @@
 # Whereday 2.0 / build 63 (map-first)
 
-**Latest recorded status (reconciled November 8, 2026):** iOS **2.0 (63)** is staged in App Store Connect; this record contains no Apple submission or release receipt. Android **2.0.1 (4)** was recorded as published November 7; the saved production-track response marks it `completed`. The November 6 Play draft below is historical. These are saved receipts and dated records, not a fresh live-store check.
+**Latest saved Apple status (November 8, 2026, local-only continuation):** the 2.0 slot formerly attached to **build 63** was renamed to **1.8.4** for the isolated startup patch. Saved submission/final-state receipts record **1.8.4 (64), WAITING_FOR_REVIEW**, submitted at `2026-11-08T23:24:18.285Z`; this is not a live-store check. The old 2.0 metadata, reviewer notes, screenshots and Asset Library receipts were backed up to `.asc/artifacts/release-1.8.4-64/backup-2.0/`. Do not overwrite the in-review patch or describe the former slot as a currently editable 2.0 draft.
 
-The current draft [PR #109](https://github.com/CodyBontecou/whereday/pull/109) contains later hardening and the in-app 2.0 release notes. Those changes are **not in staged iOS build 63**, built from `f2959482`. A new Apple candidate and its qualification are needed to ship them. The Android sibling completed #107/main/#109 source integration in draft [PR #111](https://github.com/CodyBontecou/whereday/pull/111); local checks passed, while its own CI and the recorded both-mode reboot recovery failure remain gates. That source work does not establish a new Play rollout.
+Android **2.0.1 (4)** was recorded as published November 7; its saved production-track response marks it `completed`. The November 6 Play draft below is historical. Neither these dated records nor local integration establish current deployed state.
 
-Current Apple/store readiness and exact checks: [November 8 readiness review](readiness-20261108.md). The sections below preserve the staging history; the build 62 section is superseded.
+The local integration at `/private/tmp/whereday-ios-integration-20261108`, branch `local/ios-integration-20261108`, preserves #109, #110 and the stable #111 baseline. It includes later Apple backup fixes under local verification; **none are in previously uploaded build 63** (`f2959482`). No remote branch, PR, hosted CI, store metadata or production state is changed by this continuation. A new qualified Apple candidate and restored 2.0 version slot remain for a separately approved release task.
+
+See [local integration verification](local-integration-20261108.md) for current source/build evidence and gaps. The [earlier readiness review](readiness-20261108.md) records its historical inspection; its build-63 attachment description is superseded by the 1.8.4 receipts above.
 
 ## November 6 map-first staging history
 

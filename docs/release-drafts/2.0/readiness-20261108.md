@@ -1,5 +1,7 @@
 # Apple and store readiness — November 8, 2026
 
+**Historical inspection, superseded in part:** the later local-only [integration report](local-integration-20261108.md) incorporates backup fixes, combined source verification and saved 1.8.4 receipts. The former 2.0/build-63 slot was renamed to 1.8.4; the attachment description below is historical, not current store state.
+
 Apple CI passed on draft [PR #109](https://github.com/CodyBontecou/whereday/pull/109), head `9ff11d2cd60a7bb2746cf0fbca0e1bcef8189215`. No new Apple source gap was established by this review. Release readiness still has the gaps below. No simulator, emulator, Argent, physical-device QA, store writes or publishing occurred in this review.
 
 ## Source and review evidence
