@@ -78,7 +78,7 @@ struct SettingsView: View {
         .fileImporter(
             isPresented: $showingImportPicker,
             allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
-            allowsMultipleSelection: false
+            allowsMultipleSelection: true
         ) { result in
             handleImportResult(result)
         }
@@ -91,7 +91,7 @@ struct SettingsView: View {
                 showingImportPicker = true
             }
         }) { selection in
-            ImportPreviewView(url: selection.url, viewModel: viewModel) {
+            ImportPreviewView(urls: selection.urls, viewModel: viewModel) {
                 reopenImportPicker = true
             }
         }
@@ -120,37 +120,29 @@ struct SettingsView: View {
         }
     }
 
-    /// "Export everything first": every visit and point, all time, as one Whereday JSON file through the
-    /// share sheet. Once it's saved somewhere, the erase confirmation comes back so the person can finish.
+    /// The pre-erase backup includes every model Clear All Data removes. Archive
+    /// exports intentionally remain independent of this lossless restore format.
     private func exportEverything() {
         guard storeManager.canExport else {
             showingPaywall = true
             return
         }
-        viewModel.ensureAllLocationPointsLoaded()
-        var options = ExportOptions()
-        options.dataKind = .all
-        options.datePreset = .allTime
-        options.splitByDay = false
         do {
-            try ExportService.share(
-                visits: viewModel.allVisits,
-                points: viewModel.locationPoints,
-                recordingSessions: viewModel.allRecordingSessions,
-                activeTrackingStart: viewModel.locationManager.trackingStartTime,
-                options: options,
-                selectedFormats: [.json],
-                completion: { completed in
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+            let files = try viewModel.exportBackup(to: directory)
+            let activity = UIActivityViewController(activityItems: files, applicationActivities: nil)
+            activity.completionWithItemsHandler = { _, completed, _, _ in
+                Task { @MainActor in
+                    try? FileManager.default.removeItem(at: directory)
                     guard completed else { return }
-                    Task { @MainActor in
-                        AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
-                        LogManager.shared.info("Exported everything before clearing · all time", category: .export)
-                        showingClearConfirmation = true
-                    }
+                    AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                    LogManager.shared.info("Exported complete backup before clearing", category: .export)
+                    showingClearConfirmation = true
                 }
-            )
+            }
+            ExportService.presentShareSheet(activity, from: nil)
         } catch {
-            LogManager.shared.error("Export everything failed · \(error.localizedDescription)", category: .export)
+            LogManager.shared.error("Backup failed · \(error.localizedDescription)", category: .export)
             exportErrorMessage = error.localizedDescription
         }
     }
@@ -660,8 +652,8 @@ struct SettingsView: View {
     private func handleImportResult(_ result: Result<[URL], Error>) {
         switch result {
         case .success(let urls):
-            guard let url = urls.first else { return }
-            importFileSelection = ImportFileSelection(url: url)
+            guard !urls.isEmpty else { return }
+            importFileSelection = ImportFileSelection(urls: urls)
         case .failure(let error):
             importErrorMessage = error.localizedDescription
             showingImportError = true

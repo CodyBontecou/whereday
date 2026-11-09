@@ -1,0 +1,27 @@
+O Whereday mantém um registro privado dos lugares que você visita e dos trajetos que você faz, e abre direto no mapa do seu dia.
+
+SEU DIA EM UM MAPA
+• Abra o app direto no dia de hoje, em um mapa de tela cheia com cada parada e trajeto
+• Alterne entre hoje, ontem, os últimos 7 ou 30 dias, tudo ou qualquer período do calendário
+• Deslize o painel do dia para ver a história do dia, com um mostrador de 24 horas das suas paradas e deslocamentos
+• Reproduza qualquer dia no mapa em 1×, 10× ou 60×
+• Veja as fotos que você tirou pelo caminho, direto no mapa
+
+SEU DIÁRIO DE LOCALIZAÇÃO
+• Percorra um ano em dias no Atlas, colorido por país, com um resumo mensal
+• Dê nome aos seus lugares e veja com que frequência você volta
+• Adicione visitas manuais e corrija os horários das visitas salvas
+• Acompanhe o seu dia pelos widgets da tela inicial
+• Monte uma exportação como uma frase, salve como receita e repita toda noite
+• Exporte em JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks ou Overland
+
+PLANOS
+Escolha um plano para começar a gravar: Semanal ou Anual, com um teste grátis de 7 dias para novos assinantes, ou Vitalício, uma compra única. Todos os planos incluem exportações. As assinaturas são renovadas automaticamente até serem canceladas; gerencie ou cancele no Google Play. Excluir o app ou comprar o Vitalício não cancela uma assinatura.
+
+Encerrar uma assinatura não exclui seus registros; eles continuam no seu dispositivo.
+
+PRIVADO DESDE O INÍCIO
+Seu histórico de localização fica no seu dispositivo. Não é preciso ter uma conta do Whereday. As compras no Google Play, os blocos do mapa, as exportações opcionais e os serviços técnicos limitados usam a rede conforme descrito na nossa política de privacidade.
+
+Política de Privacidade: https://whereday.com/privacy
+Termos de Uso: https://whereday.com/terms

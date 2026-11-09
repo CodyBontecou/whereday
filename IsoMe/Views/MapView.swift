@@ -1880,7 +1880,7 @@ struct LocationMapView: View {
     private func focusTime(day: TraceDay, now: Date) -> Date {
         if let scrubbedTime { return scrubbedTime }
         if isRouteReplayEnabled, let routeReplaySnapshot { return routeReplaySnapshot.currentPoint.timestamp }
-        return min(max(now, day.domain.lowerBound), day.domain.upperBound)
+        return day.clampedTime(now)
     }
 
     static func clockText(_ date: Date) -> String {
@@ -2019,7 +2019,7 @@ struct LocationMapView: View {
 
     /// Moves the playhead to a moment; the path is inked up to the last point recorded by then.
     private func scrub(to time: Date, day: TraceDay) {
-        let clamped = min(max(time, day.domain.lowerBound), day.domain.upperBound)
+        let clamped = day.clampedTime(time)
         scrubbedTime = clamped
         isRouteReplayPlaying = false
         guard canReplayRoute else { return }

@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "2f64546fb53bee5de07941313f1068a3dc1be46a106e4633cdf1e99fbd66cf7e",
+  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
   "catalog": {
     "common_continue": "Continue",
     "shell_export": "Export",
@@ -503,7 +503,7 @@
     "history_import_record_point": "Punto %1$d",
     "history_import_record_row": "Fila %1$d",
     "history_import_record_visit": "Visita %1$d",
-    "history_import_rejected": "No se pudieron leer %1$d filas y se omitirán. Los primeros errores aparecen a continuación.",
+    "history_import_rejected": "Filas omitidas: %1$d. Los primeros errores aparecen abajo.",
     "history_import_replace": "Reemplazar los registros coincidentes",
     "history_import_replace_body": "Solo se reemplazarán los registros con identificadores coincidentes. Se pueden sobrescribir sus correcciones o notas locales. Se conservan las coincidencias cercanas. Si el historial coincidente cambió después de la revisión, la importación se detendrá para que puedas elegir y revisar el archivo de nuevo.",
     "history_import_replace_confirm": "Reemplazar e importar",

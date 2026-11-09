@@ -1,0 +1,299 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+      timeoutMs: 20000
+  - tap:
+      id: navigation-archive
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-screen
+      condition: visible
+      timeoutMs: 20000
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-history-count
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.75
+      toX: 0.6
+      toY: 0.3
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.75
+      toX: 0.6
+      toY: 0.3
+      momentum: false
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-advanced
+      condition: visible
+  - tap:
+      text: Filters and fields
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.75
+      toX: 0.6
+      toY: 0.3
+      momentum: false
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-date-range
+      condition: visible
+  - tap:
+      id: export-time-enabled
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-time-from
+      condition: text
+      expectedText: 8:00 AM
+  - tap:
+      text: "From time: 8:00 AM"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/toggle_mode
+      condition: visible
+  - tap:
+      id: android:id/toggle_mode
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_hour
+      condition: visible
+  - tap:
+      id: android:id/input_hour
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: "99"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_hour
+      condition: text
+      expectedText: "99"
+  - tap:
+      text: Apply time
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_hour
+      condition: text
+      expectedText: "99"
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_hour
+      condition: text
+      expectedText: "99"
+      timeoutMs: 20000
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_hour
+      condition: text
+      expectedText: "99"
+      timeoutMs: 20000
+  - tap:
+      id: android:id/input_hour
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: "11"
+  - tap:
+      id: android:id/input_minute
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: "59"
+  - tap:
+      id: android:id/am_pm_spinner
+  - tool: await-ui-element
+    args:
+      selector:
+        text: PM
+        identifier: android:id/text1
+      condition: visible
+  - tap:
+      x: 0.713
+      y: 0.596
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_hour
+      condition: text
+      expectedText: "11"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/input_minute
+      condition: text
+      expectedText: "59"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/am_pm_spinner
+      condition: text
+      expectedText: PM
+  - tap:
+      text: Apply time
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-time-from
+      condition: text
+      expectedText: 11:59 PM
+  - tap:
+      text: "Until time: 6:00 PM"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/am_label
+      condition: visible
+  - tap:
+      id: android:id/am_label
+  - tap:
+      text: "12"
+  - tap:
+      text: Apply time
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-time-until
+      condition: text
+      expectedText: 12:00 AM
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.3
+      toX: 0.6
+      toY: 0.75
+      momentum: false
+  - tap:
+      text: Preview export
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-preview-result
+      condition: text
+      expectedText: '"totalPoints": 0'
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.75
+      toX: 0.6
+      toY: 0.3
+      momentum: false
+  - tap:
+      text: "Until time: 12:00 AM"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/hours
+      condition: visible
+  - tap:
+      text: "9"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: android:id/hours
+      condition: text
+      expectedText: "9"
+  - tap:
+      text: Cancel
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-time-until
+      condition: text
+      expectedText: 12:00 AM
+  - tap:
+      id: export-time-enabled
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-time-until
+      condition: hidden
+  - tap:
+      id: export-time-enabled
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-advanced
+      condition: text
+      expectedText: Filters and fields
+  - tool: gesture-swipe
+    args:
+      fromX: 0.6
+      fromY: 0.3
+      toX: 0.6
+      toY: 0.75
+      momentum: false
+  - tap:
+      text: Hide filters and fields
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-advanced
+      condition: text
+      expectedText: Filters and fields
+      textMatch: equals
+  - tap:
+      text: Preview export
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-preview-result
+      condition: text
+      expectedText: '"totalPoints": 25'
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: export-preview-result
+      condition: text
+      expectedText: '"totalVisits": 1'
+  - tap:
+      id: navigation-map
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+      timeoutMs: 20000

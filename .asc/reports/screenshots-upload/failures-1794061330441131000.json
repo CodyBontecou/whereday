@@ -1,0 +1,69 @@
+{
+  "versionLocalizationId": "b3bdfdcc-3019-4a75-994d-e76bbb57c85b",
+  "path": ".asc/reports/screenshots-upload/failures-1794061330441131000.json",
+  "rootPath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13",
+  "deviceType": "IPAD_PRO_3GEN_129",
+  "displayType": "APP_IPAD_PRO_3GEN_129",
+  "replace": true,
+  "setId": "093eea52-1278-40e3-b9ee-2bc773f5c4d7",
+  "files": [
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/01-today.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/02-atlas.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/03-places.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/04-archive.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/05-private.png"
+  ],
+  "orderedIds": [
+    "a7400019-30b5-855a-8027-a4f8e3b4ec35",
+    "30800019-30b5-855a-8011-40f1036fa74d",
+    "98800019-30b5-855a-802d-c69391f38e4c",
+    "62c00019-30b5-855a-8016-46ab55545c27"
+  ],
+  "pendingFiles": [
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/05-private.png"
+  ],
+  "pendingAssets": [
+    {
+      "fileName": "05-private.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/05-private.png",
+      "assetId": "93c00019-30b5-855a-8006-b586e6f7f5f2",
+      "checksum": "a8af96d62517c3cd325ae6cbe6cf00b3",
+      "state": "UPLOAD_COMPLETE"
+    }
+  ],
+  "results": [
+    {
+      "fileName": "01-today.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/01-today.png",
+      "assetId": "a7400019-30b5-855a-8027-a4f8e3b4ec35",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "02-atlas.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/02-atlas.png",
+      "assetId": "30800019-30b5-855a-8011-40f1036fa74d",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "03-places.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/03-places.png",
+      "assetId": "98800019-30b5-855a-802d-c69391f38e4c",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "04-archive.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/04-archive.png",
+      "assetId": "62c00019-30b5-855a-8016-46ab55545c27",
+      "state": "COMPLETE"
+    }
+  ],
+  "failures": [
+    {
+      "fileName": "05-private.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-l10n/design-screenshots/ar-SA/ipad-13/05-private.png",
+      "error": "timed out waiting for screenshot 93c00019-30b5-855a-8006-b586e6f7f5f2 checksum settlement after delivery state UPLOAD_COMPLETE: context deadline exceeded"
+    }
+  ],
+  "error": "timed out waiting for screenshot 93c00019-30b5-855a-8006-b586e6f7f5f2 checksum settlement after delivery state UPLOAD_COMPLETE: context deadline exceeded",
+  "generatedAt": "2026-11-07T14:22:10Z"
+}

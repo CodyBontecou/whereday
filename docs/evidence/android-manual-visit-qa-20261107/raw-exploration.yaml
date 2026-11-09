@@ -1,0 +1,216 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+  - tap:
+      text: Add a place
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Log a past stop
+      condition: visible
+  - tap:
+      text: Log a past stop
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: visible
+  - tap:
+      id: visit-name
+  - tool: button
+    args:
+      button: back
+  - tap:
+      text: Add a place
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Log a past stop
+      condition: visible
+  - tap:
+      text: Log a past stop
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: visible
+  - tap:
+      id: visit-name
+  - tool: keyboard
+    args:
+      text: QA interruption draft
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: text
+      expectedText: QA interruption draft
+  - tap:
+      id: visit-latitude
+  - tool: keyboard
+    args:
+      text: NaN
+  - tap:
+      id: visit-longitude
+  - tool: keyboard
+    args:
+      text: Infinity
+  - tap:
+      text: Save
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.8
+      toX: 0.7
+      toY: 0.3
+      momentum: false
+  - tap:
+      text: Nov 7, 2026
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Arrived
+      condition: visible
+  - tap:
+      x: 0.429
+      y: 0.419
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Tuesday, November 3, 2026
+      condition: visible
+  - tap:
+      text: Apply date
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-editor-fields
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.3
+      toX: 0.7
+      toY: 0.8
+      momentum: false
+  - tap:
+      text: Choose saved place
+  - tool: await-ui-element
+    args:
+      selector:
+        text: saved
+      condition: visible
+  - tap:
+      id: saved-chooser-search
+  - tool: keyboard
+    args:
+      text: missing place QA
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-chooser-search
+      condition: text
+      expectedText: missing place QA
+  - tool: rotate
+    args:
+      orientation: LandscapeLeft
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: text
+      expectedText: QA interruption draft
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-chooser-search
+      condition: hidden
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: visible
+  - tap:
+      text: Choose saved place
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-chooser-search
+      condition: text
+      expectedText: Search saved places
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: visible
+  - tap:
+      text: Save
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.8
+      toX: 0.7
+      toY: 0.2
+      momentum: false
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-editor-error
+      condition: text
+      expectedText: valid coordinates
+  - tool: gesture-swipe
+    args:
+      fromX: 0.7
+      fromY: 0.3
+      toX: 0.7
+      toY: 0.85
+      momentum: false
+  - tap:
+      text: Choose saved place
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-chooser-search
+      condition: text
+      expectedText: Search saved places
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: visit-name
+      condition: text
+      expectedText: QA interruption draft
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Discard visit changes?
+      condition: visible
+  - tap:
+      text: Discard changes
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-day-peek
+      condition: text
+      expectedText: No places yet

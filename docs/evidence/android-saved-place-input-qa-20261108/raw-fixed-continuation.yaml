@@ -1,0 +1,129 @@
+steps:
+  - tap:
+      id: saved-name
+  - tool: keyboard
+    args:
+      text: QA radius draft
+  - tap:
+      id: saved-latitude
+  - tool: keyboard
+    args:
+      text: "0"
+  - tap:
+      id: saved-longitude
+  - tool: keyboard
+    args:
+      text: "0"
+  - tap:
+      text: Save
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-editor-error
+      condition: visible
+  - tap:
+      id: saved-radius
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: Infinity
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-radius
+      condition: text
+      expectedText: Infinity
+  - tap:
+      text: Save
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-editor-error
+      condition: visible
+  - tap:
+      id: saved-radius
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: "1e309"
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-radius
+      condition: text
+      expectedText: "1e309"
+  - tap:
+      text: Save
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-editor-error
+      condition: visible
+  - tap:
+      text: Cancel
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Discard saved place changes?
+      condition: visible
+  - tap:
+      text: Discard changes
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-places-search
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        text: 1 of 1 saved place
+      condition: visible
+  - tap:
+      text: Search saved places
+  - tool: keyboard
+    args:
+      text: "%_"
+  - tool: await-ui-element
+    args:
+      selector:
+        text: No saved places match your search.
+      condition: visible
+  - tap:
+      text: Clear search
+  - tool: await-ui-element
+    args:
+      selector:
+        text: 1 of 1 saved place
+      condition: visible
+executionPrerequisite: Fixed mapQa editor open with unsaved NaN radius, blank name/coordinates.

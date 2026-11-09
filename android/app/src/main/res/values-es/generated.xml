@@ -495,7 +495,7 @@
     <string name="history_import_record_point">Punto %1$d</string>
     <string name="history_import_record_row">Fila %1$d</string>
     <string name="history_import_record_visit">Visita %1$d</string>
-    <string name="history_import_rejected">No se pudieron leer %1$d filas y se omitirán. Los primeros errores aparecen a continuación.</string>
+    <string name="history_import_rejected">Filas omitidas: %1$d. Los primeros errores aparecen abajo.</string>
     <string name="history_import_replace">Reemplazar los registros coincidentes</string>
     <string name="history_import_replace_body">Solo se reemplazarán los registros con identificadores coincidentes. Se pueden sobrescribir sus correcciones o notas locales. Se conservan las coincidencias cercanas. Si el historial coincidente cambió después de la revisión, la importación se detendrá para que puedas elegir y revisar el archivo de nuevo.</string>
     <string name="history_import_replace_confirm">Reemplazar e importar</string>

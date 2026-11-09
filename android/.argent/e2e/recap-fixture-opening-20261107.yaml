@@ -1,0 +1,116 @@
+executionPrerequisite: MapQa onboarded, Map open, English, November 7 2026, no existing
+  QA overnight 20261107 visit. Creates that one synthetic visit at 0,0; remove it
+  after verification.
+steps:
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    text: Add a place
+- await:
+    visible:
+      text: Log a past stop
+- await:
+    idle: true
+- tap:
+    text: Log a past stop
+- await:
+    visible:
+      identifier: visit-name
+- await:
+    idle: true
+- type:
+    into:
+      id: visit-name
+    text: QA overnight 20261107
+    submit: false
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      text: Discard visit changes?
+- await:
+    idle: true
+- tap:
+    text: Keep editing
+- await:
+    text:
+      in:
+        identifier: visit-name
+      contains: QA overnight 20261107
+- await:
+    idle: true
+- type:
+    into:
+      id: visit-latitude
+    text: '0'
+    submit: false
+- type:
+    into:
+      id: visit-longitude
+    text: '0'
+    submit: false
+- tap:
+    text: Nov 7, 2026
+- await:
+    visible:
+      text: "Arrived \xB7 date"
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^Wednesday, November 4, 2026$
+- tap:
+    text: Apply date
+- await:
+    visible:
+      text: 'Arrived date: Nov 4, 2026'
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: 'Departed date:'
+    within:
+      id: visit-editor-fields
+    direction: down
+- await:
+    visible:
+      text: 'Departed date:'
+- await:
+    idle: true
+- tap:
+    text: Nov 7, 2026
+- await:
+    visible:
+      text: "Departed \xB7 date"
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^Friday, November 6, 2026$
+- tap:
+    text: Apply date
+- await:
+    visible:
+      text: 'Departed date: Nov 6, 2026'
+- await:
+    idle: true
+- tap:
+    text: Save
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-atlas
+- await:
+    visible:
+      identifier: atlas-month-recap
+- await:
+    idle: true
+- tap:
+    text: Month recap

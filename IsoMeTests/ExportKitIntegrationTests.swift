@@ -85,6 +85,74 @@ final class ExportKitIntegrationTests: XCTestCase {
         XCTAssertEqual(filename, "trip-2026-04-03/visits.json")
     }
 
+    func testPathPlannerRejectsOverlongFileAndFolderNames() throws {
+        for pattern in [String(repeating: "A", count: 252),
+                        String(repeating: "🍜", count: 126),
+                        String(repeating: "é", count: 126),
+                        String(repeating: "A", count: 256) + "/route"] {
+            XCTAssertThrowsError(try IsoMeExportPathPlanner.plannedRelativePath(
+                pattern: pattern, dataKind: .points, format: .gpx
+            ))
+        }
+    }
+
+    func testPathPlannerPreservesWritableUnicodeBoundaryNames() throws {
+        let root = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        for pattern in [String(repeating: "A", count: 251),
+                        String(repeating: "🍜", count: 125),
+                        String(repeating: "é", count: 125),
+                        String(repeating: "e\u{301}", count: 125)] {
+            let path = try IsoMeExportPathPlanner.plannedRelativePath(
+                pattern: pattern, dataKind: .points, format: .gpx
+            )
+            XCTAssertEqual(path, pattern + ".gpx")
+            try Data("fixture".utf8).write(to: root.appendingPathComponent(path))
+        }
+    }
+
+    func testFoundationRejectsOverlongDecomposedAccentNames() throws {
+        let root = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        for pattern in [String(repeating: "é", count: 126),
+                        String(repeating: "e\u{301}", count: 126)] {
+            XCTAssertThrowsError(try Data("fixture".utf8).write(
+                to: root.appendingPathComponent(pattern + ".gpx")
+            ))
+        }
+    }
+
+    func testPreviewAndExportRejectNamesThatOverflowAfterFormatCollision() async throws {
+        var options = ExportOptions()
+        options.dataKind = .points
+        let pattern = String(repeating: "A", count: 250)
+        XCTAssertThrowsError(try IsoMeExportKitAdapter.plannedFiles(
+            visits: [], points: makePoints(), options: options,
+            selectedFormats: [.json, .owntracks], filenamePattern: pattern
+        ))
+        do {
+            _ = try await IsoMeExportKitAdapter.preview(
+                visits: [], points: makePoints(), options: options,
+                selectedFormats: [.json, .owntracks], filenamePattern: pattern
+            )
+            XCTFail("Preview accepted an unwritable collision suffix")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "Use a shorter file or folder name.")
+        }
+    }
+
+    func testSplitDayCollisionCannotOverflowFilenameLimit() throws {
+        var options = ExportOptions()
+        options.dataKind = .points
+        options.splitByDay = true
+        let points = makePoints() + [LocationPoint(latitude: 1, longitude: 2,
+            timestamp: fixtureDate(hour: 9).addingTimeInterval(86400), horizontalAccuracy: 5)]
+        XCTAssertThrowsError(try IsoMeExportKitAdapter.plannedFiles(
+            visits: [], points: points, options: options,
+            filenamePattern: String(repeating: "A", count: 250)
+        ))
+    }
+
     func testPathPlannerSupportsDatedFoldersAndOptionalExtension() throws {
         let date = fixtureDate(hour: 12)
 

@@ -94,19 +94,30 @@ class LocationProcessRecoveryTest {
                 assertTrue(boot>=0)
                 val rebooted=saved.getInt("bootCount")!=boot
                 assertTrue(rebooted || saved.getInt("pid")!=Process.myPid())
-                if(rebooted) waitFor("boot receiver before Activity") {graph.history.dao.recording()?.requested!=true && graph.history.dao.visitMonitoring()?.requested!=true}
+                // AppGraph.from owns recovery for every new process, including same-boot
+                // kill/force-stop. Observe its persisted result without triggering recovery
+                // or opening an Activity; selected rows must exist, not merely be absent.
+                waitFor("automatic graph recovery before Activity") {
+                    val recording=graph.history.dao.recording()
+                    val monitoring=graph.history.dao.visitMonitoring()
+                    (if(route) recording?.requested==false else recording?.requested!=true) &&
+                        (if(visits) monitoring?.requested==false else monitoring?.requested!=true)
+                }
                 assertFalse(RecordingRuntime.active.value);assertEquals(VisitMonitoringMode.off,VisitMonitoringRuntime.state.value)
                 val beforeRoute=graph.history.dao.recording()
                 val beforeVisits=graph.history.dao.visitMonitoring()
-                if(termination=="kill") {
-                    assertEquals(route,beforeRoute?.requested==true);assertEquals(visits,beforeVisits?.requested==true)
-                }
                 assertEquals(termination=="reboot",rebooted)
                 val count=graph.history.dao.totalPointCount()
                 val point=checkNotNull(graph.history.dao.point("process-proof-point"))
                 val visit=checkNotNull(graph.history.dao.visit("process-proof-visit"))
                 val session=if(saved.isNull("session")) null else checkNotNull(graph.history.dao.session(saved.getString("session"))).value
                 val expectedEnd=beforeRoute?.lastFix ?: session?.startedAt
+                assertEquals(0L,graph.history.dao.openSessionCount())
+                if(route) {
+                    assertEquals((if(rebooted) RecordingInterruption.phoneRestarted else RecordingInterruption.processInterrupted).code,beforeRoute!!.interruption)
+                    assertEquals(expectedEnd,session!!.endedAt)
+                }
+                if(visits) assertEquals(if(rebooted) "visits.restarted" else "visits.interrupted",beforeVisits!!.interruption)
                 val main=ActivityScenario.launch(MainActivity::class.java)
                 try {
                     waitFor {graph.history.dao.recording()?.requested!=true && graph.history.dao.visitMonitoring()?.requested!=true}

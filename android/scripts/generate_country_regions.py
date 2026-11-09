@@ -14,6 +14,13 @@ SOURCES=[ROOT/p for p in ['IsoMe/Models/CountryStay.swift','IsoMe/Models/Visit.s
 OUTPUT=ROOT/'android/domain/src/test/resources/ios-country-regions.json'
 KOTLIN=ROOT/'android/domain/src/main/kotlin/com/bontecou/whereday/domain/CountryRegions.kt'
 
+def picker_helper(text):
+    start=text.index('static func matchingCountries(')
+    end=text.index('{',start)+1;depth=1
+    while depth:
+        depth+=(text[end]=='{')-(text[end]=='}');end+=1
+    return text[start:end]
+
 def picker_bodies(text):
     starts=list(re.finditer(r'private\s+var\s+countries:\s*\[\(code:\s*String,\s*name:\s*String\)\]\s*\{',text))
     if len(starts)!=2:raise ValueError('Review changed country eligibility/selection declarations')
@@ -29,6 +36,7 @@ def fingerprints(frozen):
     result={str(p.relative_to(ROOT)):hashlib.sha256(data).hexdigest() for p,data in frozen.items() if p!=SOURCES[3]}
     for name,body in zip(['CountryStayEditor.countries','CountrySelectionView.countries'],picker_bodies(frozen[SOURCES[3]].decode())):
         result[str(SOURCES[3].relative_to(ROOT))+'#'+name]=hashlib.sha256(body.encode()).hexdigest()
+    result[str(SOURCES[3].relative_to(ROOT))+'#CountrySelectionView.matchingCountries']=hashlib.sha256(picker_helper(frozen[SOURCES[3]].decode()).encode()).hexdigest()
     return result
 
 def provenance():
@@ -74,7 +82,7 @@ def main():
         model=frozen[SOURCES[0]].decode();view=frozen[SOURCES[3]].decode()
         expression=re.search(r'private static let countryCodes = (.+)',model).group(1)
         eligible,picker=picker_bodies(view)
-        harness=frozen[SOURCES[4]].decode().replace('__COUNTRY_CODES__',expression).replace('__PICKER_BODY__',picker).replace('__ELIGIBLE_BODY__',eligible)
+        harness=frozen[SOURCES[4]].decode().replace('__COUNTRY_CODES__',expression).replace('__PICKER_BODY__',picker).replace('__ELIGIBLE_BODY__',eligible).replace('__PICKER_HELPERS__',picker_helper(view))
         with tempfile.TemporaryDirectory(prefix='whereday-country-regions-') as directory:
             folder=Path(directory);fixture=folder/'Fixture.swift';fixture.write_text(harness);binary=folder/'fixture'
             models=[]

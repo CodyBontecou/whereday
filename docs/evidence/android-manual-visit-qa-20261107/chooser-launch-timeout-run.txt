@@ -1,0 +1,44 @@
+Running e2e test "manual-visit-saved-chooser-rotation-regression-20261107" on emulator-5562 (36 steps)
+[1] ✓ Regression: saved-place chooser and query survive landscape and portrait rotation; parent visit draft survives dismissal. English onboarded empty mapQa on open foldable. Draft discarded without saving.
+[2] ✗ launch (31.2s) — restart-app failed: [Tool:restart-app] relaunch failed: am start failed: Starting: Intent { cmp=com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity }
+Status: timeout
+LaunchState: UNKNOWN (-1)
+Activity: com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity
+WaitTime: 24924
+Complete
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-YGAPLp/media/559783000-1794099740570.png
+[3] · await visible id=map-add
+[4] · idle
+[5] · tap "Add a place"
+[6] · await visible "Log a past stop"
+[7] · idle
+[8] · tap "Log a past stop"
+[9] · await visible id=visit-name
+[10] · idle
+[11] · tap id=visit-name
+[12] · tool
+[13] · await id=visit-name contains "QA interruption draft"
+[14] · idle
+[15] · tap "Choose saved place"
+[16] · await visible id=saved-chooser-search
+[17] · idle
+[18] · tap id=saved-chooser-search
+[19] · tool
+[20] · await id=saved-chooser-search contains "missing place QA"
+[21] · idle
+[22] · tool
+[23] · await id=saved-chooser-search contains "missing place QA"
+[24] · idle
+[25] · tool
+[26] · await id=saved-chooser-search contains "missing place QA"
+[27] · idle
+[28] · tool
+[29] · await id=visit-name contains "QA interruption draft"
+[30] · idle
+[31] · tool
+[32] · await visible "Discard visit changes?"
+[33] · idle
+[34] · tap "Discard changes"
+[35] · await id=map-day-peek contains "No places yet"
+[36] · idle
+FAIL — 0 passed, 0 failed, 1 errored, 34 skipped (54.5s)

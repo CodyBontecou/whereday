@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -12,6 +13,41 @@ PACKAGE = "com.bontecou.whereday.mapqa"
 TEST_PACKAGE = PACKAGE + ".test"
 CLASS = "com.bontecou.whereday.LocationProcessRecoveryTest"
 PROOF = "no_backup/qa-location-process-proof.json"
+
+
+def capture_diagnostics(run, output, label, *, logcat=False):
+    """Observe the selected disposable emulator without changing its state."""
+    commands = {
+        "power": ["shell", "dumpsys", "power"],
+        "window": ["shell", "dumpsys", "window", "windows"],
+        "window-policy": ["shell", "dumpsys", "window", "policy"],
+        "activities": ["shell", "dumpsys", "activity", "activities"],
+    }
+    if logcat:
+        commands["logcat"] = ["shell", "logcat", "-d", "-t", "500", "-v", "threadtime"]
+    results = {}
+    for name, command in commands.items():
+        try:
+            result = run(f"{label}-{name}", command, check=False, timeout=10)
+            results[name] = {"exitCode": result.returncode}
+        except Exception as error:
+            # A failed diagnostic must not prevent the other observations or cleanup.
+            results[name] = {"error": type(error).__name__}
+    (output / f"{label}-diagnostics.json").write_text(json.dumps(results, indent=2) + "\n")
+
+
+def prepare_foreground(run, identity, output, phase):
+    # The emulator runner's initial unlock precedes a potentially long Gradle build;
+    # foreground-service tests need this precondition immediately before each phase.
+    identity()
+    capture_diagnostics(run, output, f"{phase}-before-foreground")
+    identity()
+    run(f"{phase}-wake", ["shell", "input", "keyevent", "KEYCODE_WAKEUP"])
+    identity()
+    run(f"{phase}-dismiss-keyguard", ["shell", "wm", "dismiss-keyguard"])
+    capture_diagnostics(run, output, f"{phase}-after-foreground")
+    # Neither a successful shell command nor these snapshots prove window focus.
+    # The instrumentation still requires hasWindowFocus within its original bound.
 
 
 def main():
@@ -68,6 +104,7 @@ def main():
                     "-e", "locationRecoveryTermination", args.termination,
                     f"{TEST_PACKAGE}/androidx.test.runner.AndroidJUnitRunner"]
 
+        prepare_foreground(run, identity, args.output, "seed")
         with (args.output / "seed.log").open("w") as log:
             seed = subprocess.Popen(adb + command("seed"), stdout=log, stderr=subprocess.STDOUT)
             deadline = time.monotonic() + 45
@@ -116,6 +153,7 @@ def main():
                 raise RuntimeError("Observed boot identity does not match the requested termination")
             if args.termination!="reboot" and pid in run("after-termination-pid", ["shell", "pidof", PACKAGE], check=False).stdout.split():
                 raise RuntimeError("Original QA process survived termination")
+        prepare_foreground(run, identity, args.output, "recover")
         # The recover phase may wait up to 60 s per condition after a reboot.
         recovered = run("recover", command("recover"), timeout=180)
         output = recovered.stdout
@@ -130,6 +168,14 @@ def main():
                         "testApkSha256": hashlib.sha256(args.test_apk.read_bytes()).hexdigest()}
         (args.output / "verification.json").write_text(json.dumps(verification, indent=2) + "\n")
         print(json.dumps(verification, indent=2))
+    except Exception:
+        # Collect focus/power/Activity evidence before force-stop/uninstall destroys it.
+        try:
+            identity()
+            capture_diagnostics(run, args.output, "failure", logcat=True)
+        except Exception as error:
+            print(f"Could not preserve failure diagnostics: {type(error).__name__}", file=sys.stderr)
+        raise
     finally:
         if installed:
             identity()

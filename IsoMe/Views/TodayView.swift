@@ -171,11 +171,11 @@ struct TodayView: View {
         .fileImporter(
             isPresented: $showingImportPicker,
             allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
-            allowsMultipleSelection: false
+            allowsMultipleSelection: true
         ) { result in
             switch result {
             case .success(let urls):
-                if let url = urls.first { importFileSelection = ImportFileSelection(url: url) }
+                if !urls.isEmpty { importFileSelection = ImportFileSelection(urls: urls) }
             case .failure(let error):
                 importErrorMessage = error.localizedDescription
             }
@@ -187,7 +187,7 @@ struct TodayView: View {
                 showingImportPicker = true
             }
         }) { selection in
-            ImportPreviewView(url: selection.url, viewModel: viewModel) {
+            ImportPreviewView(urls: selection.urls, viewModel: viewModel) {
                 reopensImportPicker = true
             }
         }

@@ -82,7 +82,10 @@ struct ContentView: View {
                 startPendingTrackingIfAllowed(viewModel: viewModel)
             }
         }
-        .preferredColorScheme((AppAppearance(rawValue: appAppearance) ?? .system).colorScheme)
+        .background {
+            AppAppearanceWindowOverride(appearance: AppAppearance(rawValue: appAppearance) ?? .system)
+                .accessibilityHidden(true)
+        }
         .background {
             if !hasCompletedOnboarding || showsInitialPaywall {
                 InkPaperPalette.paper.ignoresSafeArea()

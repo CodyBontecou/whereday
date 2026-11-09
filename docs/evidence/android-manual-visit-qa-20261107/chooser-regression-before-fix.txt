@@ -1,0 +1,53 @@
+Running e2e test "manual-visit-saved-chooser-rotation-regression-20261107" on emulator-5562 (36 steps)
+[1] ✓ Regression: saved-place chooser and query survive landscape and portrait rotation; parent visit draft survives dismissal. English onboarded empty mapQa on open foldable. Draft discarded without saving.
+[2] ✓ launch (4.1s)
+[3] ✓ await visible id=map-add (4.5s)
+[4] ✓ idle (1.5s)
+[5] ✓ tap "Add a place" (0.5s)
+[6] ✓ await visible "Log a past stop" (1.3s)
+[7] ✓ idle (1.0s)
+[8] ✓ tap "Log a past stop" (0.5s)
+[9] ✓ await visible id=visit-name (2.4s)
+[10] ✓ idle (1.0s)
+[11] ✓ tap id=visit-name (0.4s)
+[12] ✓ keyboard (1.7s)
+{
+  "typed": "QA interruption draft",
+  "keys": 21
+}
+[13] ✓ await id=visit-name contains "QA interruption draft" (0.2s)
+[14] ✓ idle (1.3s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle.
+[15] ✓ tap "Choose saved place" (0.6s)
+[16] ✓ await visible id=saved-chooser-search (1.3s)
+[17] ✓ idle (1.1s)
+[18] ✓ tap id=saved-chooser-search (0.5s)
+[19] ✓ keyboard (0.7s)
+{
+  "typed": "missing place QA",
+  "keys": 16
+}
+[20] ✓ await id=saved-chooser-search contains "missing place QA" (0.7s)
+[21] ✓ idle (1.2s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle.
+[22] ✓ rotate (0.0s)
+{
+  "orientation": "LandscapeLeft"
+}
+[23] ✓ await id=saved-chooser-search contains "missing place QA" (0.1s)
+[24] ✓ idle (3.4s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle.
+[25] ✓ rotate (0.0s)
+{
+  "orientation": "Portrait"
+}
+[26] ✗ await id=saved-chooser-search contains "missing place QA" (8.0s) — no element matched selector id="saved-chooser-search"
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-BTrTVj/media/701440000-1794099517709.png
+[27] · idle
+[28] · tool
+[29] · await id=visit-name contains "QA interruption draft"
+[30] · idle
+[31] · tool
+[32] · await visible "Discard visit changes?"
+[33] · idle
+[34] · tap "Discard changes"
+[35] · await id=map-day-peek contains "No places yet"
+[36] · idle
+FAIL — 24 passed, 1 failed, 0 errored, 10 skipped (38.6s)

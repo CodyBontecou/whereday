@@ -11,7 +11,7 @@
     <string name="history_import_dates">%1$s – %2$s (%3$s)</string>
     <string name="history_import_context">Older Markdown clock times use language %1$s and time zone %2$s. If these differ from the original export, discard this review and match your phone settings before choosing the file again.</string>
     <string name="history_import_existing">Journal matches to keep: %1$d. Repeated file records combined: %2$d. Nearby records with matching times are kept.</string>
-    <string name="history_import_rejected">%1$d rows could not be read and will be skipped. The first errors appear below.</string>
+    <string name="history_import_rejected">Rows skipped: %1$d. The first errors appear below.</string>
     <string name="history_import_duplicates">Matching records</string>
     <string name="history_import_keep">Keep existing records</string>
     <string name="history_import_replace">Replace matching records</string>

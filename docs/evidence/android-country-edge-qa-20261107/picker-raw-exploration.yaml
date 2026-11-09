@@ -1,0 +1,143 @@
+steps:
+  - tap:
+      text: Add country stay
+  - tap:
+      text: "3"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tap:
+      text: Choose stay dates
+  - tap:
+      x: 0.5
+      y: 0.417
+  - tap:
+      x: 0.571
+      y: 0.417
+  - tap:
+      text: Apply
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.29
+      toX: 0.5
+      toY: 0.78
+      momentum: false
+  - tap:
+      text: "6"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tap:
+      x: 0.258
+      y: 0.919
+  - tap:
+      text: Discard changes
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: country-add-stay
+      condition: visible
+  - tap:
+      text: Add country stay
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: stay-country
+      condition: visible
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: stay-dates
+      condition: visible
+  - tap:
+      text: Choose stay dates
+  - tap:
+      x: 0.5
+      y: 0.417
+  - tap:
+      x: 0.571
+      y: 0.417
+  - tap:
+      text: Apply
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.29
+      toX: 0.5
+      toY: 0.78
+      momentum: false
+  - tap:
+      text: "6"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tap:
+      text: Choose stay dates
+  - tap:
+      x: 0.5
+      y: 0.417
+  - tap:
+      x: 0.571
+      y: 0.417
+  - tap:
+      text: Cancel
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.29
+      toX: 0.5
+      toY: 0.78
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.29
+      toX: 0.5
+      toY: 0.78
+      momentum: false
+  - tap:
+      text: "3"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.29
+      momentum: false
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: stay-discard-confirm
+      condition: visible
+  - tap:
+      text: Discard changes
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: country-summary-days
+      condition: text
+      expectedText: 0 days
+executionPrerequisite: Isolated mapQa Country Days screen, empty journal, unfolded emulator.

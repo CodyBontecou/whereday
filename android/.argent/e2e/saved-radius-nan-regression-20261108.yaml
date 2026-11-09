@@ -1,0 +1,162 @@
+steps:
+- echo: 'Regression: invalid radius render, Save rejection, discard and literal wildcard
+    search. Requires English onboarded mapQa with the existing single Unicode saved
+    place. Preserves journal and places.'
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-places
+- await:
+    idle: true
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    idle: true
+- tap:
+    text: Add place
+- await:
+    visible:
+      identifier: saved-name
+- await:
+    idle: true
+- tap:
+    id: saved-radius
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: NaN
+- await:
+    text:
+      in:
+        identifier: saved-radius
+      contains: NaN
+- await:
+    idle: true
+- tap:
+    id: saved-name
+- tool: keyboard
+  args:
+    text: QA radius draft
+- tap:
+    id: saved-latitude
+- tool: keyboard
+  args:
+    text: '0'
+- tap:
+    id: saved-longitude
+- tool: keyboard
+  args:
+    text: '0'
+- tap:
+    text: Save
+- await:
+    visible:
+      identifier: saved-editor-error
+- tap:
+    id: saved-radius
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: Infinity
+- await:
+    text:
+      in:
+        identifier: saved-radius
+      contains: Infinity
+- tap:
+    text: Save
+- await:
+    visible:
+      identifier: saved-editor-error
+- tap:
+    id: saved-radius
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: "1e309"
+- await:
+    text:
+      in:
+        identifier: saved-radius
+      contains: "1e309"
+- tap:
+    text: Save
+- await:
+    visible:
+      identifier: saved-editor-error
+- tap:
+    text: Cancel
+- await:
+    visible:
+      text: Discard saved place changes?
+- tap:
+    text: Discard changes
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    visible:
+      text: 1 of 1 saved place
+- tap:
+    id: saved-places-search
+- tool: keyboard
+  args:
+    text: '%_'
+- await:
+    visible:
+      text: No saved places match your search.
+- tap:
+    text: Clear search
+- await:
+    visible:
+      text: 1 of 1 saved place

@@ -1,0 +1,8 @@
+name,latitude,longitude,address,radius_meters
+"QA, multiline
+place",12.345,67.89,"line one
+line two",150
+Bad coordinate,91,0,,150
+QA duplicate,0,0,,150
+QA duplicate,0,0,,150
+Bad radius,0,0,,NaN

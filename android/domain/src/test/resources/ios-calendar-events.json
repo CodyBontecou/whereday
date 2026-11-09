@@ -1,8 +1,8 @@
 {
   "scope": "Verbatim current Swift draft constructors with synthetic model seams; no EventKit UI or writes",
   "provenance": {
-    "calendarSourceSha256": "05e7e4ef8dcf9636cd5afbf4175405a608a5f54378e24d408ceabbc6dca4addd",
-    "extractedDraftSha256": "da08394c1653c5b1b9afaf4de05095cace600b837d663fe2b9e4df1358ed63e2",
+    "calendarSourceSha256": "d3809f84ece2a6fc5254d43fe482e9c5f266cb03235bae87c034d0cab3460f4e",
+    "extractedDraftSha256": "b84f3777571a05027c416671eab2a9e72d68fb5f7ee2b474cccfd79553f01cff",
     "generatorSha256": "fc4cf6547421f71c037221cc68688963385942f9c0de2d95c7e735da2ffb0fe1"
   },
   "cases": [

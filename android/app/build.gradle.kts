@@ -17,6 +17,8 @@ android {
         }
     }
     buildFeatures { compose = true }
+    // Lists the translated values-* folders as the app's languages, so Android 13+ offers them in per-app language settings.
+    androidResources { generateLocaleConfig = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     // The Play upload key lives outside the repo; its path and passwords come from ~/.gradle/gradle.properties.
     val uploadStoreFile = providers.gradleProperty("whereday.uploadStoreFile").orNull

@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "35ab45f360e533824edf768a1336b503b04e815f",
+  "originalServiceCommit": "9ff11d2cd60a7bb2746cf0fbca0e1bcef8189215",
+  "originalServiceSHA256MatchesBeforeReport": true,
+  "result": "BUILD SUCCEEDED",
+  "command": "xcodebuild -project IsoMe.xcodeproj -scheme IsoMe -configuration Release -destination 'generic/platform=iOS' -derivedDataPath /private/tmp/whereday-ios-compile-20261108/DerivedData -clonedSourcePackagesDirPath /private/tmp/whereday-ios-compile-20261108/SourcePackages -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile -skipPackageUpdates CODE_SIGNING_ALLOWED=NO build",
+  "xcode": "Xcode 27.2 (27B52)",
+  "logPath": "/private/tmp/whereday-ios-compile-20261108/release-build.log",
+  "logSHA256": "6e03ba049545910baaa69a09664ab38409fadb7a63535bb5c156e1a901c8584f",
+  "packageResolvedSHA256": "445496b7fb89f624f87a96811b13dce98aaa2880cba016c7c400557e701c361c",
+  "backupServiceSHA256": "1b1839f0c7a8d7d1b5f5df95f57114870e5d3d51c35ae13da5bb461ce5e587fb",
+  "bundles": [
+    {
+      "CFBundleIdentifier": "com.bontecou.isome",
+      "CFBundleShortVersionString": "2.0",
+      "CFBundleVersion": "60",
+      "MinimumOSVersion": "17.0"
+    },
+    {
+      "CFBundleIdentifier": "com.bontecou.isome.Widget",
+      "CFBundleShortVersionString": "2.0",
+      "CFBundleVersion": "60",
+      "MinimumOSVersion": "17.0"
+    },
+    {
+      "CFBundleIdentifier": "com.bontecou.isome.watchkitapp",
+      "CFBundleShortVersionString": "2.0",
+      "CFBundleVersion": "60",
+      "MinimumOSVersion": "10.0"
+    },
+    {
+      "CFBundleIdentifier": "com.bontecou.isome.watchkitapp.Widget",
+      "CFBundleShortVersionString": "2.0",
+      "CFBundleVersion": "60",
+      "MinimumOSVersion": "10.0"
+    }
+  ],
+  "scope": "Unsigned generic iOS Release build only; no runtime launch, archive, signing, export or upload. Version/build2.0/60 are repository defaults, not a releasable candidate number."
+}

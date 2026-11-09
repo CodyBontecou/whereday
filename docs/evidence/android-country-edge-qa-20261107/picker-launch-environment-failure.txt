@@ -1,0 +1,75 @@
+Running e2e test "country-picker-anchor-regression-20261107" on emulator-5562 (72 steps)
+[1] ✓ Regression: applying a modal range clears a pending inline anchor. Includes no-anchor control. English onboarded mapQa, empty journal, open foldable, Nov7 2026. Drafts discarded.
+[2] ✗ launch (31.6s) — restart-app failed: [Tool:restart-app] adb -s emulator-5562 shell am start -W -n 'com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity' failed: Starting: Intent { cmp=com.bontecou.whereday.mapqa/com.bontecou.whereday.MainActivity }
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-veAOcm/media/45848000-1794097579082.png
+[3] · await visible id=map-add
+[4] · idle
+[5] · tap id=navigation-settings
+[6] · await visible id=settings-screen
+[7] · idle
+[8] · scroll-to /^Country Days$/
+[9] · await visible "Country Days"
+[10] · idle
+[11] · tap "Country Days"
+[12] · await visible id=country-days-content
+[13] · idle
+[14] · tap "Add country stay"
+[15] · await visible id=stay-editor-content
+[16] · idle
+[17] · scroll-to id=stay-dates
+[18] · tap id=stay-dates
+[19] · await visible "Choose dates"
+[20] · idle
+[21] · tap "Wednesday, November 4, 2026"
+[22] · tap "Thursday, November 5, 2026"
+[23] · tap "Apply"
+[24] · await visible id=stay-dates
+[25] · idle
+[26] · await id=stay-first contains "Nov 4, 2026"
+[27] · idle
+[28] · await id=stay-last contains "Nov 5, 2026"
+[29] · idle
+[30] · scroll-to id=stay-country (up)
+[31] · tap /^6$/
+[32] · scroll-to id=stay-last
+[33] · await id=stay-first contains "Nov 6, 2026"
+[34] · idle
+[35] · await id=stay-last contains "Nov 6, 2026"
+[36] · idle
+[37] · tool
+[38] · await visible id=stay-discard-confirm
+[39] · idle
+[40] · tap id=stay-discard-confirm
+[41] · await id=country-summary-days contains "0 days"
+[42] · idle
+[43] · tap id=country-add-stay
+[44] · await visible id=stay-country
+[45] · idle
+[46] · tap /^3$/
+[47] · scroll-to id=stay-dates
+[48] · tap id=stay-dates
+[49] · await visible "Choose dates"
+[50] · idle
+[51] · tap "Wednesday, November 4, 2026"
+[52] · tap "Thursday, November 5, 2026"
+[53] · tap "Apply"
+[54] · await visible id=stay-dates
+[55] · idle
+[56] · await id=stay-first contains "Nov 4, 2026"
+[57] · idle
+[58] · await id=stay-last contains "Nov 5, 2026"
+[59] · idle
+[60] · scroll-to id=stay-country (up)
+[61] · tap /^6$/
+[62] · scroll-to id=stay-last
+[63] · await id=stay-first contains "Nov 6, 2026"
+[64] · idle
+[65] · await id=stay-last contains "Nov 6, 2026"
+[66] · idle
+[67] · tool
+[68] · await visible id=stay-discard-confirm
+[69] · idle
+[70] · tap id=stay-discard-confirm
+[71] · await id=country-summary-days contains "0 days"
+[72] · idle
+FAIL — 0 passed, 0 failed, 1 errored, 70 skipped (2m 17s)

@@ -1,0 +1,6 @@
+Whereday 2.0 is a complete redesign, and the map is now home.
+• Open straight onto your day on a full-screen map, from today to any range
+• Pull up the day sheet for a 24-hour dial of your stops and moves
+• Replay any day on the map at 1×, 10× or 60×
+• Atlas: a year in days, colored by country, with a monthly recap
+• Places, Archive export recipes, and refreshed widgets

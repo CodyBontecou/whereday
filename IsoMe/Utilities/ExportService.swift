@@ -452,7 +452,7 @@ struct ExportService {
     }
 
     @MainActor
-    private static func presentShareSheet(
+    static func presentShareSheet(
         _ activityVC: UIActivityViewController,
         from viewController: UIViewController?
     ) {

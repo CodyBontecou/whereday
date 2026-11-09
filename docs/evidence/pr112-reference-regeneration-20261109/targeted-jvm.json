@@ -1,0 +1,23 @@
+{
+  "command": "./gradlew :domain:test --tests '*TimelineImportMatchTest' :export:test --tests '*GoogleTimelineImportTest' --tests '*PlaceProvenanceInteropTest' --max-workers=1 --no-daemon",
+  "results": [
+    {
+      "name": "com.bontecou.whereday.domain.TimelineImportMatchTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "com.bontecou.whereday.export.PlaceProvenanceInteropTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "com.bontecou.whereday.export.GoogleTimelineImportTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0"
+    }
+  ]
+}

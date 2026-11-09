@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "IsoMe/Models/CountryStay.swift": "23a0f5c42ce774dde5c0f2fdd95f76042b01343a62bae5e892102b70533fd318",
+    "IsoMe/Models/CountryStay.swift": "37d3ac74ed574206c519813013eb12ea00f218d8e8da8fb5be8870cf2f4d927d",
     "android/scripts/fixtures/CountryCsvFixtures.swift": "d53584139d3bf9d1ec5f1bf89573ecc3f5f15549690e1a359739af98ec7ef3bb",
     "android/scripts/fixtures/country-csv-inputs.json": "8bb6d0e3d32a49b4b627638cc399e9d5fd597ad0d992bbd7d3982e3f26a87aa7"
   },

@@ -4,6 +4,10 @@ import java.time.Instant
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -155,11 +159,45 @@ class RoadDisplayServiceTest {
         val failed=service(RoadDirections {_,_,_->throw IllegalStateException("credential=sensitive example")}).prepare(source())
         assertFalse(failed.route.hasSnappedSegments);assertEquals(setOf(RoadDisplayWarning.providerUnavailable),failed.warnings)
     }
-    @Test(timeout=5000) fun requestsAreSerialAndSpacingAppliesAcrossDifferentSources()=runBlocking {
-        val timestamps=java.util.Collections.synchronizedList(mutableListOf<Long>())
-        val service=RoadDisplayService(RoadDirections {a,b,_->timestamps+=System.nanoTime();result(a,b)},minimumRequestIntervalMillis=40).also {it.updateAccess(allowed)}
-        val first=async {service.prepare(source())};val second=async {service.prepare(source(.1))}
-        first.await();second.await();assertEquals(2,timestamps.size);assertTrue(timestamps[1]-timestamps[0]>=39_000_000)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test(timeout=5000) fun requestsAreSerialAndSpacingAppliesAcrossDifferentSources()=runTest {
+        val timestamps=mutableListOf<Long>()
+        val releaseFirst=CompletableDeferred<Unit>()
+        var active=0;var maximumActive=0
+        // Observe dispatch and drive delay with the same clock, without wall-clock worker lag.
+        val service=RoadDisplayService(RoadDirections {a,b,_->
+            timestamps+=testScheduler.currentTime
+            active++;maximumActive=maxOf(maximumActive,active)
+            try {
+                if(timestamps.size==1) releaseFirst.await()
+                result(a,b)
+            } finally {active--}
+        },elapsedMillis={testScheduler.currentTime},dispatcher=StandardTestDispatcher(testScheduler),
+            minimumRequestIntervalMillis=40).also {it.updateAccess(allowed)}
+        try {
+            val first=async {service.prepare(source())}
+            val second=async {service.prepare(source(.1))}
+            runCurrent()
+            assertEquals(listOf(0L),timestamps)
+            // Hold the first provider beyond the spacing interval: a missing serial lock
+            // would let the queued request enter at 40 ms while the first is still active.
+            advanceTimeBy(40);runCurrent()
+            assertEquals(listOf(0L),timestamps);assertEquals(1,active)
+            assertFalse(first.isCompleted);assertFalse(second.isCompleted)
+            advanceTimeBy(10);releaseFirst.complete(Unit);runCurrent()
+            first.await();second.await()
+            assertEquals(listOf(0L,50L),timestamps)
+
+            // With serialization no longer the limiting factor, enforce the full 40 ms
+            // interval for another distinct source, including the exact dispatch boundary.
+            val third=async {service.prepare(source(.2))}
+            runCurrent();advanceTimeBy(39);runCurrent()
+            assertEquals(listOf(0L,50L),timestamps);assertFalse(third.isCompleted)
+            advanceTimeBy(1);runCurrent();third.await()
+            assertEquals(listOf(0L,50L,90L),timestamps)
+            assertTrue(timestamps.zipWithNext().all {(a,b)->b-a>=40L})
+            assertEquals(1,maximumActive);assertEquals(0,active)
+        } finally {releaseFirst.complete(Unit);service.clearAndJoin()}
     }
     @Test(timeout=5000) fun accessUpdatesDuringClearCannotReopenAdmission()=runBlocking {
         val entered=CompletableDeferred<Unit>();val release=CompletableDeferred<Unit>();val calls=AtomicInteger()

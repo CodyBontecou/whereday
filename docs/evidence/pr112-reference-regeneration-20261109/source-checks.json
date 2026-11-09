@@ -1,0 +1,156 @@
+{
+  "passed": true,
+  "count": 30,
+  "results": [
+    {
+      "command": "python3 scripts/generate_visit_link_fixtures.py --check-source",
+      "passed": true,
+      "output": "Swift visit-link reference provenance verified"
+    },
+    {
+      "command": "python3 scripts/generate_google_timeline_fixtures.py --check-source",
+      "passed": true,
+      "output": "Swift Google Timeline provenance verified"
+    },
+    {
+      "command": "python3 scripts/generate_timeline_duplicate_fixtures.py --check-source",
+      "passed": true,
+      "output": "Swift timeline duplicate provenance verified"
+    },
+    {
+      "command": "python3 scripts/generate_calendar_fixtures.py --check-source",
+      "passed": true,
+      "output": "Calendar Swift reference provenance verified"
+    },
+    {
+      "command": "python3 scripts/generate_schedule_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: schedule fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_merge_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: merge fixture source hashes and package revision match"
+    },
+    {
+      "command": "python3 scripts/generate_country_csv_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: country CSV fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_country_regions.py --check-source",
+      "passed": true,
+      "output": "PASS: country-region source hashes and generated Kotlin match"
+    },
+    {
+      "command": "python3 scripts/generate_outing_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: outing fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_outing_markdown_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: outing Markdown source/model/harness/input and native fixture provenance"
+    },
+    {
+      "command": "python3 scripts/generate_distance_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: Core Location distance and native route fixture provenance"
+    },
+    {
+      "command": "python3 scripts/generate_history_import_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: history import fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_visit_reconciliation_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: visit reconciliation fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_nearby_place_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: nearby-place fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_history_table_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: JSON/CSV/Markdown renderer and native locale fixture provenance"
+    },
+    {
+      "command": "python3 scripts/generate_json_location_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: JSON location fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_kml_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: KML fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_gpx_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: GPX fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_filename_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: filename fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_saved_place_csv_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: saved-place CSV fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_saved_place_plan_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: saved-place plan fixture source hashes match"
+    },
+    {
+      "command": "python3 scripts/generate_replay_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual iOS replay fixture provenance"
+    },
+    {
+      "command": "python3 scripts/generate_road_snapping_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual iOS road-snapping helper/adapter provenance"
+    },
+    {
+      "command": "python3 scripts/generate_photo_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual Swift photo fixture provenance"
+    },
+    {
+      "command": "python3 scripts/generate_photo_cluster_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual Swift photo-cluster fixture provenance"
+    },
+    {
+      "command": "python3 scripts/generate_photo_marker_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual Swift photo marker style/hit-test provenance"
+    },
+    {
+      "command": "python3 scripts/generate_point_marker_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual Swift viewport point marker provenance"
+    },
+    {
+      "command": "python3 scripts/generate_map_date_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: actual Swift map-date preset provenance"
+    },
+    {
+      "command": "python3 scripts/verify_custom_date_reference.py --check-source",
+      "passed": true,
+      "output": "PASS: selected native iOS custom-date sheet and reference harness provenance"
+    },
+    {
+      "command": "python3 scripts/generate_manual_visit_overlap_fixtures.py --check-source",
+      "passed": true,
+      "output": "PASS: selected actual Swift manual-overlap predicate provenance"
+    }
+  ]
+}

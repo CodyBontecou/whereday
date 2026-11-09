@@ -3,11 +3,12 @@ import SwiftData
 import CoreLocation
 
 enum ImportSourceFormat: String, Sendable {
-    case isoMeJSON, isoMeCSV, isoMeMarkdown, googleRaw, googleSemantic, googleDevice
+    case isoMeJSON, isoMeCSV, isoMeMarkdown, googleRaw, googleSemantic, googleDevice, wheredayBackup
 
     var displayName: String {
         switch self {
         case .isoMeJSON: return "Whereday JSON"
+        case .wheredayBackup: return String(localized: "Whereday backup")
         case .isoMeCSV: return "Whereday CSV"
         case .isoMeMarkdown: return "Whereday Markdown"
         case .googleRaw: return String(localized: "Google Location History")
@@ -35,6 +36,7 @@ struct ImportPayload: Sendable {
     static let maximumFileSize = 50 * 1_024 * 1_024
     static let maximumRecordCount = 250_000
     var format: ImportSourceFormat
+    var backup: WheredayBackup?
     var visits: [ImportedVisit] = []
     var points: [ImportedLocationPoint] = []
     var invalidRecordCount = 0
@@ -68,6 +70,8 @@ struct ImportPreview: Identifiable, Sendable {
     let newPointCount: Int
     let duplicateVisitCount: Int
     let duplicatePointCount: Int
+    var newAdditionalRecordCount = 0
+    var duplicateAdditionalRecordCount = 0
 }
 
 struct ImportCommitResult: Sendable {
@@ -76,8 +80,14 @@ struct ImportCommitResult: Sendable {
     let duplicateVisitCount: Int
     let duplicatePointCount: Int
 
+    var additionalRecordCount = 0
+    var duplicateAdditionalRecordCount = 0
+
     var summary: String {
-        ImportResult(visitCount: visitCount, pointCount: pointCount).summary + " " + String(
+        if additionalRecordCount > 0 {
+            return String(localized: "Restored \((visitCount + pointCount + additionalRecordCount).formatted()) records from backup.")
+        }
+        return ImportResult(visitCount: visitCount, pointCount: pointCount).summary + " " + String(
             format: String(localized: "Duplicates skipped: visits %d, points %d."),
             duplicateVisitCount, duplicatePointCount
         )
@@ -123,18 +133,49 @@ actor TimelineImportService {
     init(container: ModelContainer) { self.container = container }
 
     func preview(url: URL) throws -> ImportPreview {
-        let accessed = url.startAccessingSecurityScopedResource()
-        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
-        if let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize, size > ImportPayload.maximumFileSize {
-            throw TimelineImportError.fileTooLarge
+        try preview(urls: [url])
+    }
+
+    func preview(urls: [URL]) throws -> ImportPreview {
+        guard !urls.isEmpty else { throw TimelineImportError.noRecords }
+        var backups: [WheredayBackup] = []
+        for url in urls {
+            let accessed = url.startAccessingSecurityScopedResource()
+            defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+            if let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize, size > ImportPayload.maximumFileSize {
+                throw TimelineImportError.fileTooLarge
+            }
+            try Task.checkCancellation()
+            let data = try Data(contentsOf: url, options: .mappedIfSafe)
+            let payload = try Self.parse(data: data, fileName: url.lastPathComponent)
+            if let backup = payload.backup {
+                backups.append(backup)
+            } else {
+                guard urls.count == 1 else {
+                    throw ImportError.invalidData(String(localized: "Select one import file, or all files from the same backup."))
+                }
+                return try preview(data: data, fileName: url.lastPathComponent)
+            }
         }
-        try Task.checkCancellation()
-        let data = try Data(contentsOf: url, options: .mappedIfSafe)
-        return try preview(data: data, fileName: url.lastPathComponent)
+        let backup = try WheredayBackupService.combine(backups)
+        return try backupPreview(backup, fileName: urls[0].lastPathComponent)
+    }
+
+    private func backupPreview(_ backup: WheredayBackup, fileName: String) throws -> ImportPreview {
+        let plan = try WheredayBackupService.pending(backup, context: ModelContext(container))
+        return ImportPreview(fileName: fileName, payload: ImportPayload(format: .wheredayBackup, backup: backup),
+                             newVisitCount: plan.visits.count, newPointCount: plan.points.count,
+                             duplicateVisitCount: backup.visits.count - plan.visits.count,
+                             duplicatePointCount: backup.points.count - plan.points.count,
+                             newAdditionalRecordCount: plan.additionalRecordCount,
+                             duplicateAdditionalRecordCount: backup.additionalRecordCount - plan.additionalRecordCount)
     }
 
     func preview(data: Data, fileName: String) throws -> ImportPreview {
         let payload = try Self.parse(data: data, fileName: fileName)
+        if let backup = payload.backup {
+            return try backupPreview(WheredayBackupService.combine([backup]), fileName: fileName)
+        }
         let plan = try makePlan(payload: payload, options: ImportOptions(), context: ModelContext(container))
         return ImportPreview(fileName: fileName, payload: payload,
                              newVisitCount: plan.visits.count, newPointCount: plan.points.count,
@@ -150,6 +191,9 @@ actor TimelineImportService {
         case "json":
             let root = try JSONSerialization.jsonObject(with: data)
             let object = root as? [String: Any]
+            if object?["backupFormat"] != nil {
+                return ImportPayload(format: .wheredayBackup, backup: try WheredayBackupService.decode(data))
+            }
             let format: ImportSourceFormat
             if object?["locations"] != nil { format = .googleRaw }
             else if object?["timelineObjects"] != nil { format = .googleSemantic }
@@ -191,6 +235,9 @@ actor TimelineImportService {
     }
 
     func commit(_ preview: ImportPreview, options: ImportOptions) throws -> ImportCommitResult {
+        if let backup = preview.payload.backup {
+            return try WheredayBackupService.restore(backup, context: ModelContext(container))
+        }
         guard options.includeVisits || options.includePoints else { throw TimelineImportError.nothingSelected }
         let context = ModelContext(container)
         context.autosaveEnabled = false

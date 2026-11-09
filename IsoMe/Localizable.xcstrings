@@ -1,6 +1,148 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Select all files from the same backup. Nothing was restored.": {
+      "comment": "Multipart local backup admission error.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدّد جميع الملفات من النسخة الاحتياطية نفسها. لم تتم استعادة أي شيء."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "একই ব্যাকআপের সব ফাইল নির্বাচন করুন। কিছুই পুনরুদ্ধার করা হয়নি।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select all files from the same backup. Nothing was restored."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecciona todos los archivos de la misma copia de seguridad. No se ha restaurado nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez tous les fichiers de la même sauvegarde. Rien n’a été restauré."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक ही बैकअप की सभी फ़ाइलें चुनें। कुछ भी बहाल नहीं किया गया।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同じバックアップのすべてのファイルを選択してください。何も復元されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz wszystkie pliki z tej samej kopii zapasowej. Niczego nie przywrócono."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione todos os arquivos do mesmo backup. Nada foi restaurado."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите все файлы из одной резервной копии. Ничего не восстановлено."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请选择同一备份的所有文件。未恢复任何内容。"
+          }
+        }
+      }
+    },
+    "Select one import file, or all files from the same backup.": {
+      "comment": "Multipart local backup admission error.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدّد ملف استيراد واحدًا أو جميع الملفات من النسخة الاحتياطية نفسها."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "একটি আমদানি ফাইল অথবা একই ব্যাকআপের সব ফাইল নির্বাচন করুন।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select one import file, or all files from the same backup."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecciona un archivo para importar o todos los archivos de la misma copia de seguridad."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez un fichier à importer ou tous les fichiers de la même sauvegarde."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आयात करने के लिए एक फ़ाइल या एक ही बैकअप की सभी फ़ाइलें चुनें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "インポートするファイルを1つ、または同じバックアップのすべてのファイルを選択してください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz jeden plik do importu lub wszystkie pliki z tej samej kopii zapasowej."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione um arquivo para importar ou todos os arquivos do mesmo backup."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите один файл для импорта или все файлы из одной резервной копии."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请选择一个导入文件，或同一备份的所有文件。"
+          }
+        }
+      }
+    },
     "Day & recording options": {
       "comment": "Field notes journal interface heading or recording-options disclosure label.",
       "localizations": {

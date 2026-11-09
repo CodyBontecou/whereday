@@ -1,0 +1,68 @@
+steps:
+- echo: Nested Road display must survive landscape and portrait rotation, identify
+    Layers as its back destination, and return through Layers to Map. English onboarded
+    mapQa, open foldable initially in portrait. No routing consent or history changes.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-layers
+- await:
+    idle: true
+- tap:
+    id: map-layers
+- await:
+    visible:
+      identifier: map-layers-content
+- await:
+    idle: true
+- tap:
+    text: Match roads
+- await:
+    visible:
+      identifier: road-settings-screen
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: LandscapeLeft
+- await:
+    visible:
+      identifier: road-settings-screen
+- await:
+    idle: true
+- await:
+    visible:
+      identifier: road-settings-screen
+- await:
+    idle: true
+- await:
+    visible:
+      text: Layers
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: Portrait
+- await:
+    visible:
+      identifier: road-settings-screen
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: map-layers-content
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    text:
+      in:
+        identifier: map-day-peek
+      contains: No places yet
+- await:
+    idle: true

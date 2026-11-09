@@ -1,0 +1,6 @@
+steps:
+  - tap:
+      text: Settings
+executionPrerequisite: Isolated mapQa app on Archive, onboarded, English,
+  November 7 2026, 25 original route points. Recording and analysis idle. Do not
+  clear data or start recording.

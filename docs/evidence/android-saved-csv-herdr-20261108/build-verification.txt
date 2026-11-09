@@ -1,0 +1,252 @@
+> Task :domain:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :domain:compileKotlin UP-TO-DATE
+> Task :domain:compileJava NO-SOURCE
+> Task :domain:processResources NO-SOURCE
+> Task :domain:classes UP-TO-DATE
+> Task :domain:jar UP-TO-DATE
+> Task :geography:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :geography:compileKotlin UP-TO-DATE
+> Task :geography:compileJava NO-SOURCE
+> Task :geography:processResources NO-SOURCE
+> Task :geography:classes UP-TO-DATE
+> Task :geography:jar UP-TO-DATE
+> Task :billing:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :billing:compileKotlin UP-TO-DATE
+> Task :billing:compileJava NO-SOURCE
+> Task :billing:processResources NO-SOURCE
+> Task :billing:classes UP-TO-DATE
+> Task :billing:jar UP-TO-DATE
+> Task :export:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :export:compileKotlin UP-TO-DATE
+> Task :export:compileJava NO-SOURCE
+> Task :export:processResources NO-SOURCE
+> Task :export:classes UP-TO-DATE
+> Task :export:jar UP-TO-DATE
+> Task :data:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :data:preBuild UP-TO-DATE
+> Task :data:preDebugBuild UP-TO-DATE
+> Task :data:generateDebugResValues UP-TO-DATE
+> Task :data:generateDebugResources UP-TO-DATE
+> Task :data:packageDebugResources UP-TO-DATE
+> Task :data:parseDebugLocalResources UP-TO-DATE
+> Task :data:generateDebugRFile UP-TO-DATE
+> Task :data:kspDebugKotlin UP-TO-DATE
+> Task :data:compileDebugKotlin UP-TO-DATE
+> Task :data:javaPreCompileDebug UP-TO-DATE
+> Task :data:compileDebugJavaWithJavac NO-SOURCE
+> Task :data:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :data:processDebugJavaRes UP-TO-DATE
+> Task :data:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :platform:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :geography-assets:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :geography-assets:compileKotlin NO-SOURCE
+> Task :geography-assets:compileJava UP-TO-DATE
+> Task :geography-assets:processResources NO-SOURCE
+> Task :geography-assets:classes UP-TO-DATE
+> Task :geography-assets:generate UP-TO-DATE
+> Task :platform:preBuild UP-TO-DATE
+> Task :platform:preDebugBuild UP-TO-DATE
+> Task :platform:generateDebugBuildConfig UP-TO-DATE
+> Task :platform:generateDebugResValues UP-TO-DATE
+> Task :platform:generateDebugResources UP-TO-DATE
+> Task :platform:packageDebugResources UP-TO-DATE
+> Task :platform:parseDebugLocalResources UP-TO-DATE
+> Task :platform:generateDebugRFile UP-TO-DATE
+> Task :platform:javaPreCompileDebug UP-TO-DATE
+> Task :platform:preDebugUnitTestBuild UP-TO-DATE
+> Task :platform:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :platform:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :export:compileTestKotlin UP-TO-DATE
+> Task :export:compileTestJava NO-SOURCE
+> Task :export:processTestResources UP-TO-DATE
+> Task :export:testClasses UP-TO-DATE
+> Task :platform:compileDebugKotlin
+> Task :export:test
+> Task :platform:compileDebugJavaWithJavac UP-TO-DATE
+> Task :platform:processDebugJavaRes UP-TO-DATE
+> Task :domain:compileTestKotlin UP-TO-DATE
+> Task :domain:compileTestJava NO-SOURCE
+> Task :domain:processTestResources UP-TO-DATE
+> Task :domain:testClasses UP-TO-DATE
+> Task :domain:test UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+
+> Task :app:writeDebugRuntimeNoticeInventory
+Runtime notice inputs: 165 selected components → /Users/codybontecou/dev/whereday/android/app/build/reports/runtime-notices/debug/resolved-inputs.json
+
+> Task :platform:bundleLibRuntimeToJarDebug
+> Task :platform:bundleLibCompileToJarDebug
+
+> Task :app:generateDebugRuntimeNoticeAssets
+{"components": 165, "reviewComplete": false, "componentsWithFindings": 47}
+{"softwareEntries": 118, "legalReviewComplete": false}
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild
+> Task :data:writeDebugAarMetadata UP-TO-DATE
+> Task :platform:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :data:extractDeepLinksDebug UP-TO-DATE
+> Task :data:processDebugManifest UP-TO-DATE
+> Task :platform:extractDeepLinksDebug UP-TO-DATE
+> Task :platform:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :data:compileDebugLibraryResources UP-TO-DATE
+> Task :platform:compileDebugLibraryResources UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:extractProguardFiles UP-TO-DATE
+> Task :data:createFullJarDebug UP-TO-DATE
+> Task :data:extractProguardFiles UP-TO-DATE
+> Task :data:generateDebugLintModel UP-TO-DATE
+> Task :data:prepareLintJarForPublish UP-TO-DATE
+> Task :platform:createFullJarDebug
+> Task :platform:extractProguardFiles UP-TO-DATE
+> Task :platform:generateDebugLintModel
+> Task :platform:prepareLintJarForPublish UP-TO-DATE
+> Task :platform:mergeDebugJniLibFolders UP-TO-DATE
+> Task :platform:mergeDebugNativeLibs NO-SOURCE
+> Task :platform:stripDebugDebugSymbols NO-SOURCE
+> Task :platform:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :platform:extractDebugAnnotations
+> Task :platform:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :platform:mergeDebugShaders UP-TO-DATE
+> Task :platform:compileDebugShaders NO-SOURCE
+> Task :platform:generateDebugAssets UP-TO-DATE
+> Task :platform:mergeDebugAssets UP-TO-DATE
+> Task :platform:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :platform:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :platform:prepareDebugArtProfile UP-TO-DATE
+> Task :platform:mergeDebugJavaResource UP-TO-DATE
+> Task :platform:syncDebugLibJars
+> Task :platform:bundleDebugLocalLintAar
+> Task :data:mergeDebugJniLibFolders UP-TO-DATE
+> Task :platform:compileDebugUnitTestKotlin
+> Task :data:mergeDebugNativeLibs NO-SOURCE
+> Task :platform:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :platform:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :platform:testDebugUnitTest
+> Task :data:stripDebugDebugSymbols NO-SOURCE
+> Task :data:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :data:extractDebugAnnotations UP-TO-DATE
+> Task :data:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :data:mergeDebugShaders UP-TO-DATE
+> Task :data:compileDebugShaders NO-SOURCE
+> Task :data:generateDebugAssets UP-TO-DATE
+> Task :data:mergeDebugAssets UP-TO-DATE
+> Task :data:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :data:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :data:prepareDebugArtProfile UP-TO-DATE
+> Task :data:mergeDebugJavaResource UP-TO-DATE
+> Task :data:syncDebugLibJars UP-TO-DATE
+> Task :data:bundleDebugLocalLintAar UP-TO-DATE
+> Task :data:writeDebugLintModelMetadata UP-TO-DATE
+> Task :platform:writeDebugLintModelMetadata UP-TO-DATE
+> Task :data:lintAnalyzeDebug UP-TO-DATE
+> Task :data:preDebugAndroidTestBuild UP-TO-DATE
+> Task :data:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :data:generateDebugAndroidTestLintModel UP-TO-DATE
+> Task :data:preDebugUnitTestBuild UP-TO-DATE
+> Task :data:generateDebugUnitTestLintModel UP-TO-DATE
+> Task :data:lintAnalyzeDebugAndroidTest UP-TO-DATE
+> Task :data:lintAnalyzeDebugUnitTest UP-TO-DATE
+> Task :platform:preDebugAndroidTestBuild UP-TO-DATE
+> Task :platform:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :platform:generateDebugAndroidTestLintModel
+> Task :platform:generateDebugUnitTestLintModel
+> Task :app:preMapQaBuild
+> Task :app:mergeMapQaNativeDebugMetadata NO-SOURCE
+> Task :app:checkMapQaAarMetadata UP-TO-DATE
+> Task :app:generateMapQaResValues UP-TO-DATE
+> Task :app:mapMapQaSourceSetPaths UP-TO-DATE
+> Task :app:generateMapQaResources UP-TO-DATE
+> Task :app:mergeMapQaResources UP-TO-DATE
+> Task :app:packageMapQaResources UP-TO-DATE
+> Task :app:parseMapQaLocalResources UP-TO-DATE
+> Task :app:createMapQaCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksMapQa UP-TO-DATE
+> Task :app:processMapQaMainManifest UP-TO-DATE
+> Task :app:processMapQaManifest UP-TO-DATE
+> Task :app:processMapQaManifestForPackage UP-TO-DATE
+> Task :app:processMapQaResources UP-TO-DATE
+> Task :app:javaPreCompileMapQa UP-TO-DATE
+> Task :app:mergeMapQaShaders UP-TO-DATE
+> Task :app:compileMapQaShaders NO-SOURCE
+> Task :app:generateMapQaAssets UP-TO-DATE
+> Task :app:mergeMapQaAssets UP-TO-DATE
+> Task :app:compressMapQaAssets UP-TO-DATE
+> Task :app:checkMapQaDuplicateClasses UP-TO-DATE
+> Task :app:desugarMapQaFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexMapQa UP-TO-DATE
+> Task :data:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:mergeMapQaJniLibFolders UP-TO-DATE
+> Task :data:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :platform:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :platform:bundleLibRuntimeToDirDebug
+> Task :app:mergeMapQaNativeLibs UP-TO-DATE
+> Task :app:stripMapQaDebugSymbols UP-TO-DATE
+> Task :app:validateSigningMapQa UP-TO-DATE
+> Task :app:writeMapQaAppMetadata UP-TO-DATE
+> Task :app:writeMapQaSigningConfigVersions UP-TO-DATE
+> Task :app:compileDebugKotlin
+> Task :app:mergeLibDexMapQa
+> Task :platform:lintAnalyzeDebug
+> Task :platform:lintAnalyzeDebugAndroidTest
+> Task :platform:lintAnalyzeDebugUnitTest
+> Task :app:compileMapQaKotlin
+w: file:///Users/codybontecou/dev/whereday/android/app/src/main/kotlin/com/bontecou/whereday/MapLayersSheet.kt:94:45 'val Icons.Outlined.Help: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.Help.
+w: file:///Users/codybontecou/dev/whereday/android/app/src/main/kotlin/com/bontecou/whereday/WebhookScreen.kt:197:206 'val Icons.Outlined.Send: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.Send.
+w: file:///Users/codybontecou/dev/whereday/android/app/src/mapQa/kotlin/com/bontecou/whereday/DemoJournalActivity.kt:21:27 The corresponding parameter in the supertype 'ComponentActivity' is named 'savedInstanceState'. This may cause problems when calling this function with named arguments.
+
+> Task :app:compileDebugKotlin
+w: file:///Users/codybontecou/dev/whereday/android/app/src/main/kotlin/com/bontecou/whereday/MapLayersSheet.kt:94:45 'val Icons.Outlined.Help: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.Help.
+w: file:///Users/codybontecou/dev/whereday/android/app/src/main/kotlin/com/bontecou/whereday/WebhookScreen.kt:197:206 'val Icons.Outlined.Send: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.Send.
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:generateDebugLintReportModel
+> Task :app:compileMapQaJavaWithJavac NO-SOURCE
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:dexBuilderMapQa
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:generateDebugUnitTestLintModel
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:testDebugUnitTest
+> Task :app:mergeMapQaGlobalSynthetics UP-TO-DATE
+> Task :app:processMapQaJavaRes UP-TO-DATE
+> Task :app:mergeMapQaJavaResource UP-TO-DATE
+> Task :app:mergeProjectDexMapQa
+> Task :app:packageMapQa
+> Task :app:createMapQaApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleMapQa
+> Task :app:lintAnalyzeDebugUnitTest
+> Task :app:lintAnalyzeDebug
+
+> Task :app:lintReportDebug
+Wrote HTML report to file:///Users/codybontecou/dev/whereday/android/app/build/reports/lint-results-debug.html
+
+> Task :app:lintDebug
+[Incubating] Problems report is available at: file:///Users/codybontecou/dev/whereday/android/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 8m 48s
+168 actionable tasks: 35 executed, 133 up-to-date

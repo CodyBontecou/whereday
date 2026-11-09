@@ -1,0 +1,28 @@
+Running e2e test "map-road-navigation-regression-20261108" on emulator-5562 (26 steps)
+[1] ✓ Nested Road display must survive landscape and portrait rotation, identify Layers as its back destination, and return through Layers to Map. English onboarded mapQa, open foldable initially in portrait. No routing consent or history changes.
+[2] ✗ launch (15.0s) — restart-app failed: [Tool:restart-app] adb -s emulator-5562 shell am force-stop 'com.bontecou.whereday.mapqa' failed: Command failed: /Users/codybontecou/Library/Android/sdk/platform-tools/adb -s emulator-5562 shell am force-stop 'com.bontecou.whereday.mapqa' (killed=true signal=SIGKILL)
+[3] · await visible id=map-layers
+[4] · idle
+[5] · tap id=map-layers
+[6] · await visible id=map-layers-content
+[7] · idle
+[8] · tap "Match roads"
+[9] · await visible id=road-settings-screen
+[10] · idle
+[11] · tool
+[12] · await visible id=road-settings-screen
+[13] · idle
+[14] · await visible id=road-settings-screen
+[15] · idle
+[16] · await visible "Layers"
+[17] · idle
+[18] · tool
+[19] · await visible id=road-settings-screen
+[20] · idle
+[21] · tool
+[22] · await visible id=map-layers-content
+[23] · idle
+[24] · tool
+[25] · await id=map-day-peek contains "No places yet"
+[26] · idle
+FAIL — 0 passed, 0 failed, 1 errored, 24 skipped (2m 52s)

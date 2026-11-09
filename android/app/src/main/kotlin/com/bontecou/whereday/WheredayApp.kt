@@ -186,6 +186,13 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                     onClose=if(timelineShown) ({timelineOpen=false}) else null)
             }
         }
+        // Settings moves between Archive's gear and the rail without changing its saved-state owner.
+        val settingsPage=rememberWorkspaceContent {
+            tabState.SaveableStateProvider("settings-page") {
+                SettingsScreen(graph,current,places.map {it.value},count,
+                    onClose=if(LocalJournalRail.current) null else ({go(MainTabs.Destination(MainTab.archive))}))
+            }
+        }
         JournalWorkspaceFrame(allowCompanion=onMapTab,modifier=Modifier.background(MaterialTheme.colorScheme.background),inspectionActive=inspectedVisit!=null,inspectionInPrimary=timelineShown,
             modal={LauncherRecordingConfirmation(launcherAction,active,onLauncherActionHandled) {start ->
             onLauncherActionHandled()
@@ -199,10 +206,8 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                 val railed=maxWidth>=MainTabs.railMinWidthDp.dp
                 SideEffect {usesRail=railed}
                 LaunchedEffect(railed) {
-                    // Settings has no slot in the closed tab bar: shrinking from the rail falls back to Archive, as on iOS.
-                    if(!railed && MainTabs.at(tab)==MainTab.settings) tab=MainTabs.index(MainTabs.onBar(MainTab.settings))
-                    // The rail carries Settings itself.
-                    if(railed && archiveSettings) {tab=MainTabs.index(MainTab.settings);archiveSettings=false}
+                    val resolved=MainTabs.resolve(MainTabs.Destination(MainTabs.at(tab),settings=archiveSettings),railed)
+                    tab=MainTabs.index(resolved.tab);archiveSettings=resolved.settings
                 }
                 val selectTab:(Int)->Unit={index->tab=index;archiveSettings=false;recapOpen=false;if(MainTabs.at(index)==MainTab.map) timelineOpen=false}
                 BackHandler(enabled=recapOpen) {recapOpen=false}
@@ -219,16 +224,14 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                         if(mapShown) CompositionLocalProvider(LocalMapChromePadding provides padding,LocalTabBarHidden provides tabBarHidden) {Box(Modifier.fillMaxSize()) {mapPage()}}
                         else Box(Modifier.padding(padding).consumeWindowInsets(padding).fillMaxSize()) {CompositionLocalProvider(LocalJournalRail provides railed) {
                             if(recapOpen) MonthRecapScreen(graph,current.metric) {recapOpen=false}
+                            else if(MainTabs.at(tab)==MainTab.settings || MainTabs.at(tab)==MainTab.archive && archiveSettings) settingsPage()
                             else when(MainTabs.at(tab)) {
                                 MainTab.map->timelinePage()
                                 else->tabState.SaveableStateProvider(tab) {when(MainTabs.at(tab)) {
                                     MainTab.atlas->AtlasScreen(graph,onMonthRecap=if(railed) null else {{recapOpen=true}})
                                     MainTab.places->SavedPlacesScreen(graph,places.map {it.value},null)
-                                    MainTab.archive->if(archiveSettings && !railed) tabState.SaveableStateProvider("archive-settings") {
-                                        SettingsScreen(graph,current,places.map {it.value},count,onClose={archiveSettings=false})
-                                    } else ExportScreen(graph,onSettings=if(railed) null else ({archiveSettings=true}))
-                                    MainTab.settings->SettingsScreen(graph,current,places.map {it.value},count)
-                                    MainTab.map->Unit
+                                    MainTab.archive->ExportScreen(graph,onSettings=if(railed) null else ({archiveSettings=true}))
+                                    MainTab.settings,MainTab.map->Unit
                                 }}
                             }
                         }}

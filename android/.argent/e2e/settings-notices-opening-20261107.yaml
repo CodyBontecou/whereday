@@ -1,0 +1,179 @@
+executionPrerequisite: MapQa on Map, onboarded, English, distance filter 5 m. Changes
+  filter to 200 m and restores 5 m; opens MapLibre ICU notices. No journal changes.
+steps:
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      identifier: archive-settings
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- tap:
+    text: 5 m
+- await:
+    visible:
+      text: 200 m
+- await:
+    idle: true
+- tap:
+    text: 200 m
+- await:
+    visible:
+      text: 200 m
+- await:
+    idle: true
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: 200 m
+- await:
+    idle: true
+- tap:
+    text: 200 m
+- await:
+    visible:
+      text: 5 m
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^5 m$
+- await:
+    visible:
+      text: 5 m
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: settings-software-notices
+    within:
+      id: settings-screen
+    direction: down
+- await:
+    visible:
+      identifier: settings-software-notices
+- await:
+    idle: true
+- tap:
+    text: Software notices
+- await:
+    visible:
+      identifier: software-notices-search
+- await:
+    idle: true
+- type:
+    into:
+      id: software-notices-search
+    text: '%_[]'' OR 1=1 --'
+    submit: false
+- await:
+    visible:
+      text: No matching software.
+- await:
+    idle: true
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: mApLiBrE
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: mApLiBrE
+- await:
+    visible:
+      text: org.maplibre.gl:android-sdk:13.4.1
+- await:
+    idle: true
+- tap:
+    id: software-notice-component-03b093040ac655cc46250b5987d09ced26f6493bccf5651ef79381895643ac97
+- await:
+    visible:
+      identifier: software-notices-documents
+- await:
+    idle: true
+- tap:
+    text: ICU and bundled third-party notices

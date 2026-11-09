@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
     photoLayer:PhotoMapLayer?,liveAvailable:Boolean,endpoints:com.bontecou.whereday.domain.RouteEndpoints=com.bontecou.whereday.domain.RouteEndpoints(),dismiss:()->Unit) {
     val colors=wd
     val app by graph.preferences.settings.collectAsStateWithLifecycle(initialValue=null)
-    var roads by remember {mutableStateOf(false)}
+    var roads by rememberSaveable {mutableStateOf(false)}
     val scope=rememberCoroutineScope()
     BlockVisitLinks()
     WorkspaceDialog(onDismissRequest=dismiss,properties=DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false),fillRegion=true) {
@@ -98,7 +99,7 @@ import kotlinx.coroutines.launch
         }
     }
     if(roads) WorkspaceDialog(onDismissRequest={roads=false},properties=DialogProperties(usePlatformDefaultWidth=false),fillRegion=true) {
-        Surface(Modifier.fillMaxSize(),color=colors.surface) {RoadSettingsScreen(graph) {roads=false}}
+        Surface(Modifier.fillMaxSize(),color=colors.surface) {RoadSettingsScreen(graph,{roads=false},backLabel=R.string.map_home_layers_title)}
     }
 }
 

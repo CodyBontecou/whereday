@@ -1,0 +1,54 @@
+steps:
+  - launch: com.bontecou.whereday.mapqa
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-add
+      condition: visible
+      timeoutMs: 10000
+  - tap:
+      id: navigation-places
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Places
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-places-search
+      condition: visible
+  - tap:
+      text: Add place
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-name
+      condition: visible
+  - tap:
+      id: saved-radius
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      key: backspace
+  - tool: keyboard
+    args:
+      text: NaN
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: saved-radius
+      condition: text
+      expectedText: NaN
+      timeoutMs: 5000

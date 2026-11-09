@@ -1,0 +1,21 @@
+steps:
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- run: recap-fixture-opening-20261107.yaml
+- await:
+    text:
+      in:
+        identifier: recap-days
+      contains: 4 DAYS
+- await:
+    idle: true
+- run: recap-fixture-cleanup-20261107.yaml
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true

@@ -1,0 +1,21 @@
+steps:
+  - tap:
+      role: AXScrollArea
+  - tap:
+      text: Map
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.8
+      toX: 0.945
+      toY: 0.8
+      durationMs: 400
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: FRI · NOV 6 · 23:59
+      timeoutMs: 5000
+executionPrerequisite: Whereday open on Map, Today selected; English iPhone 18
+  Pro fixture with Nov 6 route.

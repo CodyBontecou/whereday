@@ -1,0 +1,90 @@
+{
+  "scope": "Complete current Swift models, parsing, preview, fresh commit and SwiftData; only UIKit-dependent ExportFormat declaration extracted",
+  "cases": [
+    {
+      "admittedLatitude": 18.00072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": false,
+      "previewDuplicates": 2,
+      "previewNew": 1,
+      "source": "googleDevice"
+    },
+    {
+      "admittedLatitude": 18.00072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": false,
+      "previewDuplicates": 2,
+      "previewNew": 1,
+      "source": "googleSemantic"
+    },
+    {
+      "admittedLatitude": 18.000072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": false,
+      "previewDuplicates": 2,
+      "previewNew": 1,
+      "source": "googleRaw"
+    },
+    {
+      "admittedLatitude": 18.00072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": false,
+      "previewDuplicates": 2,
+      "previewNew": 1,
+      "source": "wheredayVisit"
+    },
+    {
+      "admittedLatitude": 18.000072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": false,
+      "previewDuplicates": 2,
+      "previewNew": 1,
+      "source": "wheredayPoint"
+    },
+    {
+      "admittedLatitude": 18.00072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": true,
+      "previewDuplicates": 1,
+      "previewNew": 2,
+      "source": "googleDevice"
+    },
+    {
+      "admittedLatitude": 18.000072,
+      "committedDuplicates": 2,
+      "committedNew": 1,
+      "existingPreserved": true,
+      "lateJournalInsert": true,
+      "previewDuplicates": 1,
+      "previewNew": 2,
+      "source": "googleRaw"
+    }
+  ],
+  "sourceSha256": {
+    "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
+    "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
+    "IsoMe/Utilities/ImportService.swift": "ff38005ce763d12e0788b03df41e682c2e4ea323ee7fa89f5efae2f25bc3fcf8",
+    "IsoMe/Utilities/GoogleTimelineImportService.swift": "ef40fbd7724a839f62327c1afe11d094fb3a6604778705c651f923dae8576406",
+    "IsoMe/Utilities/TimelineImportService.swift": "68ee3923c6222d9dfa057105e32143dc1facdc915882f89fd8da313daeb4b8d9",
+    "IsoMe/Utilities/WheredayBackupService.swift": "8236a8dc343993f1efc0bca1b6a7751392f0f9dd85571a9b382862ab9b9d7319",
+    "IsoMe/Models/RecordingSession.swift": "72799d7db99a5608c3a00a8029ddca2e0eaa672c723f654ac82036bbc0d81fab",
+    "IsoMe/Models/PhotoMoment.swift": "24fde6e3a6cd564a0efdb7257232c388f4fdb6a5dc945aa106e0ff31aa6554f3",
+    "IsoMe/Models/CountryStay.swift": "37d3ac74ed574206c519813013eb12ea00f218d8e8da8fb5be8870cf2f4d927d",
+    "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
+    "IsoMe/Utilities/ExportService.swift": "1c206bd7b3bf8552c5268b6250bd8917ee8d65507d4f8eb3b26890cb2a48d21c",
+    "android/scripts/fixtures/TimelineAdmission.swift": "63e2d02d9f8ac8dc98d4c3abf3007167ffb24783db8a21db59781781411c9052",
+    "android/scripts/verify_timeline_admission.py": "32c7b9f438184db2e9ed29d5b06762521d57bf2ec355059dd19bdee94e1414cd"
+  }
+}

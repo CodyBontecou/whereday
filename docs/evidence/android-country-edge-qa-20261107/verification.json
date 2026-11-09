@@ -1,0 +1,15 @@
+{
+  "confirmed_app_bugs": 1,
+  "device": "emulator-5562",
+  "avd": "whereday-m3-fold-api35",
+  "guest_vulkan": true,
+  "package": "com.bontecou.whereday.mapqa",
+  "test": "country-calendar-rotation-repro-20261107",
+  "result": "reproduced_known_incorrect_behavior",
+  "passed": 42,
+  "failed": 0,
+  "errored": 0,
+  "duration_seconds": 31.6,
+  "saved_country_stays": 0,
+  "application_source_changed_this_pass": false
+}

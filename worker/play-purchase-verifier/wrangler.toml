@@ -11,7 +11,7 @@ SUBSCRIPTION_PRODUCT_ID = "whereday_individual"
 [[d1_databases]]
 binding = "DB"
 database_name = "whereday-play-purchases"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "7370c36d-ef9b-4c2e-bfa9-f0b00d2770d8"
 migrations_dir = "migrations"
 
 [observability]

@@ -16,6 +16,7 @@ struct SavedPlaceEditorView: View {
     @State private var showingDeleteConfirmation = false
     @State private var showsCoordinates = false
     @State private var saveError: String?
+    @State private var viewportSize = CGSize.zero
     @FocusState private var focusedField: Field?
 
     private enum Field: Hashable {
@@ -42,28 +43,38 @@ struct SavedPlaceEditorView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    locationSection
-                    nameField
-                    kindSection
-                    radiusSection
-                    addressField
-                    coordinatesSection
+            ScrollViewReader { reader in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        locationSection
+                        nameField
+                        kindSection
+                        radiusSection
+                        addressField
+                        coordinatesSection
 
-                    if isDirty, let message = formDraft.validationMessage {
-                        Text(message)
-                            .font(.footnote)
-                            .foregroundStyle(TE.inkRust)
-                            .fixedSize(horizontal: false, vertical: true)
+                        if isDirty, let message = formDraft.validationMessage {
+                            Text(message)
+                                .font(.footnote)
+                                .foregroundStyle(TE.inkRust)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+
+                        bottomActions
+                            .padding(.top, 8)
                     }
-
-                    bottomActions
-                        .padding(.top, 8)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 10)
+                    .padding(.bottom, 24)
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 10)
-                .padding(.bottom, 24)
+                .onGeometryChange(for: CGSize.self) { $0.size } action: { viewportSize = $0 }
+                .task(id: viewportSize) {
+                    guard let target = focusedField else { return }
+                    // Let rotation/keyboard layout settle before finding the field's new frame.
+                    await Task.yield()
+                    guard !Task.isCancelled, focusedField == target else { return }
+                    reader.scrollTo(target, anchor: .center)
+                }
             }
             .scrollDismissesKeyboard(.interactively)
             .background(TE.surface.ignoresSafeArea())
@@ -204,6 +215,7 @@ struct SavedPlaceEditorView: View {
                 .textInputAutocapitalization(.words)
                 .focused($focusedField, equals: .name)
                 .accessibilityLabel("Location name")
+                .id(Field.name)
                 .modifier(PlaceEditorFieldChrome())
         }
     }
@@ -215,6 +227,7 @@ struct SavedPlaceEditorView: View {
                 .textInputAutocapitalization(.words)
                 .focused($focusedField, equals: .address)
                 .accessibilityLabel("Address, optional")
+                .id(Field.address)
                 .modifier(PlaceEditorFieldChrome())
         }
     }
@@ -232,8 +245,9 @@ struct SavedPlaceEditorView: View {
                     .multilineTextAlignment(.trailing)
                     .font(TE.editorial(.title3))
                     .focused($focusedField, equals: .radius)
-                    .fixedSize()
+                    .frame(minWidth: 64, maxWidth: 120)
                     .accessibilityLabel("Match radius in meters")
+                    .id(Field.radius)
                 Text("m")
                     .font(TE.editorial(.title3))
                     .accessibilityHidden(true)
@@ -329,6 +343,7 @@ struct SavedPlaceEditorView: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .focused($focusedField, equals: field)
+                .id(field)
                 .accessibilityLabel(Text(title))
                 .modifier(PlaceEditorFieldChrome())
         }
@@ -460,6 +475,9 @@ private struct DraggablePinMap: View {
                 .stroke(ink, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
         }
         .onMapCameraChange(frequency: .continuous) { context in
+            // MapKit may clamp a typed/search coordinate to its drawable region.
+            // Only an actual pan/zoom should write that camera center into the draft.
+            guard position.positionedByUser else { return }
             let center = context.region.center
             guard Self.distance(center, trackedCenter) > 0.5 else { return }
             trackedCenter = center

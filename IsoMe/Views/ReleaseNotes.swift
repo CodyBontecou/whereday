@@ -25,6 +25,24 @@ enum IsoMeReleaseNotes {
     /// Newest first; the first entry is what Settings opens as "What's new".
     static let notes: [ReleaseNotesVersion] = [
         .init(
+            version: "2.0",
+            items: [
+                .list(
+                    title: "The map is now home",
+                    rows: [
+                        .init(symbolSystemName: "map", title: "Your day, on the map",
+                              description: "Open straight onto your day. Pull up the day sheet for your stops and moves, or replay a day on the map."),
+                        .init(symbolSystemName: "square.grid.2x2", title: "A year in days",
+                              description: "Explore your year in Atlas, colored by country. In Places, see how often you return to the places you've named."),
+                        .init(symbolSystemName: "archivebox", title: "Exports, in your words",
+                              description: "Build an export as a sentence, choose its format and destination, and save it as a recipe."),
+                        .init(symbolSystemName: "applewatch", title: "Your day at a glance",
+                              description: "New widgets, a Live Activity for the Lock Screen and Dynamic Island, and a refreshed Apple Watch app.")
+                    ]
+                )
+            ]
+        ),
+        .init(
             version: "1.7.17",
             items: [
                 .media(

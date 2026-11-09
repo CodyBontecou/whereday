@@ -88,6 +88,8 @@ def main():
     parser.add_argument("--images", type=Path, required=True, help="render output: LOCALE/{duo-inner,duo-outer,header}/*.png")
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--locales")
+    parser.add_argument("--reference-prefix", default="Whereday 2.0",
+                        help="Asset Library reference names must be unique; use a new prefix for each re-placement")
     args = parser.parse_args()
 
     receipt = json.loads(args.receipt.read_text()) if args.receipt.exists() else {"versionId": args.version_id,
@@ -105,10 +107,10 @@ def main():
         header = sorted((folder / "header").glob("*.png"))
         assert len(duo) == 8 and len(header) == 1, (locale, len(duo), len(header))
 
-        items = [upload(library, path, f"Whereday 2.0 / {locale} / {path.parent.name}/{path.name}", receipt, save)
+        items = [upload(library, path, f"{args.reference_prefix} / {locale} / {path.parent.name}/{path.name}", receipt, save)
                  for path in duo]
         # Header images are creative assets, not screenshots; the wrong category fails with SPEC_MISMATCH.
-        items += [upload(library, path, f"Whereday 2.0 / {locale} / header", receipt, save, "CREATIVE_ASSETS")
+        items += [upload(library, path, f"{args.reference_prefix} / {locale} / header", receipt, save, "CREATIVE_ASSETS")
                   for path in header]
         for item in items:
             wait_ready(item)

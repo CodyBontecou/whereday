@@ -1,0 +1,133 @@
+steps:
+- echo: English mapQa, synthetic whereday-saved-odd.csv visible in Android Recent
+    documents; existing library one saved place. Review only, no import commit. Requires
+    Vulkan-enabled assigned emulator.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-places
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    idle: true
+- await:
+    visible:
+      text: 1 of 1 saved place
+- await:
+    idle: true
+- tap:
+    text: Import CSV
+- await:
+    visible:
+      identifier: com.google.android.documentsui:id/dir_list
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-saved-odd\.csv$
+- await:
+    text:
+      in:
+        identifier: saved-csv-counts
+      contains: 2 valid rows · 2 invalid rows
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: saved-csv-plan
+      contains: 1 added · 0 updated · 1 skipped
+- await:
+    idle: true
+- tap:
+    text: Update matching places
+- await:
+    text:
+      in:
+        identifier: saved-csv-plan
+      contains: 1 added · 1 updated · 0 skipped
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: LandscapeLeft
+- await:
+    visible:
+      identifier: saved-csv-counts
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: Portrait
+- await:
+    text:
+      in:
+        identifier: saved-csv-counts
+      contains: 2 valid rows · 2 invalid rows
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: saved-csv-plan
+      contains: 1 added · 1 updated · 0 skipped
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    text:
+      in:
+        identifier: export-history-count
+      contains: 25 route points
+- await:
+    idle: true
+- tap:
+    id: navigation-places
+- await:
+    text:
+      in:
+        identifier: saved-csv-plan
+      contains: 1 added · 1 updated · 0 skipped
+- await:
+    idle: true
+- tap:
+    text: Keep existing places
+- await:
+    text:
+      in:
+        identifier: saved-csv-plan
+      contains: 1 added · 0 updated · 1 skipped
+- await:
+    idle: true
+- tap:
+    text: Import valid places
+- await:
+    visible:
+      text: Import saved places?
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    visible:
+      identifier: saved-csv-counts
+- await:
+    idle: true
+- tap:
+    text: Back to saved places
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    idle: true
+- await:
+    visible:
+      text: 1 of 1 saved place
+- await:
+    idle: true

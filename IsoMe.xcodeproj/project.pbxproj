@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AA00000000000000000002 /* MonthRecapTests.swift */; };
         CB1030000000000000000001 /* OnboardingLaunchConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */; };
 		CA1029B00000000000000001 /* RetiredAnalyticsCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */; };
 		CA1029B00000000000000000 /* PaywallContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1029A00000000000000000 /* PaywallContext.swift */; };
@@ -208,6 +209,8 @@
 		F0A72500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
 		F0A73500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
 		F0A74500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
+		D362A9E546FD488DA87D3E03 /* WheredayBackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393B7133DA6C49FA9333C111 /* WheredayBackupService.swift */; };
+		FDFB1C9B057842D2AEAF9F09 /* WheredayBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644670CB99144980BD7FC378 /* WheredayBackupTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,6 +281,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F8AA00000000000000000002 /* MonthRecapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapTests.swift; sourceTree = "<group>"; };
         CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLaunchConfigurationTests.swift; sourceTree = "<group>"; };
 		CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetiredAnalyticsCleanup.swift; sourceTree = "<group>"; };
 		CA1029A00000000000000000 /* PaywallContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallContext.swift; sourceTree = "<group>"; };
@@ -458,6 +462,8 @@
 		F0A70003212F00000000F0A7 /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
 		F0A70004212F00000000F0A7 /* IBMPlexMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Medium.ttf"; sourceTree = "<group>"; };
 		F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-SemiBold.ttf"; sourceTree = "<group>"; };
+		393B7133DA6C49FA9333C111 /* WheredayBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheredayBackupService.swift; sourceTree = "<group>"; };
+		644670CB99144980BD7FC378 /* WheredayBackupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheredayBackupTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -711,6 +717,7 @@
 				A1000007212F000000000007 /* ExportService.swift */,
 				E9A100000000000000000001 /* IsoMeExportKitAdapter.swift */,
 				A1000020212F000000000020 /* ImportService.swift */,
+				393B7133DA6C49FA9333C111 /* WheredayBackupService.swift */,
 				4EF988D99D664DF8A3F3B0B4 /* TimelineImportService.swift */,
 				16C93238ACDE4723BBB542B6 /* GoogleTimelineImportService.swift */,
 				5F000001212F000000000001 /* ExportFolderManager.swift */,
@@ -810,6 +817,8 @@
 				D2A10003212F000000000003 /* RemotePastVisitTests.swift */,
 				5B11700000000000000000A1 /* SplitVisitTests.swift */,
 				8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */,
+				644670CB99144980BD7FC378 /* WheredayBackupTests.swift */,
+				F8AA00000000000000000002 /* MonthRecapTests.swift */,
 				A0660001212F000000000001 /* PhotoMomentMembershipTests.swift */,
 				5F000007212F000000000001 /* IntervalScheduledExportTests.swift */,
 				5F000008212F000000000001 /* IntervalPickerCrashReproTests.swift */,
@@ -1123,6 +1132,7 @@
 				A1000030212F000100000030 /* ExportOptions.swift in Sources */,
 				A1000031212F000100000031 /* ExportView.swift in Sources */,
 				A1000020212F000100000020 /* ImportService.swift in Sources */,
+				D362A9E546FD488DA87D3E03 /* WheredayBackupService.swift in Sources */,
 				D4F646027F3544B28CA1C8ED /* TimelineImportService.swift in Sources */,
 				A30F32016A3C45B08E910CC2 /* GoogleTimelineImportService.swift in Sources */,
 				A1000008212F000100000008 /* LocationViewModel.swift in Sources */,
@@ -1267,6 +1277,8 @@
 				D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */,
 				5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */,
 				F2DCEC8ADF4641F4AFEBB1BA /* TimelineImportTests.swift in Sources */,
+				FDFB1C9B057842D2AEAF9F09 /* WheredayBackupTests.swift in Sources */,
+				F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */,
 				A0660001212F000100000001 /* PhotoMomentMembershipTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

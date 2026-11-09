@@ -1,0 +1,37 @@
+steps:
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: road-settings-screen
+      condition: visible
+  - tool: await-ui-element
+    args:
+      selector:
+        text: Layers
+      condition: visible
+  - tool: rotate
+    args:
+      orientation: Portrait
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: road-settings-screen
+      condition: visible
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-layers-content
+      condition: visible
+  - tool: button
+    args:
+      button: back
+  - tool: await-ui-element
+    args:
+      selector:
+        identifier: map-day-peek
+      condition: text
+      expectedText: No places yet
+executionPrerequisite: Road display open from Map Layers in landscape; fixed mapQa build.

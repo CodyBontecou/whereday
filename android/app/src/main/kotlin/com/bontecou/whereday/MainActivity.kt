@@ -262,6 +262,7 @@ class MainActivity : ComponentActivity() {
         if(graph.journalClear.state.value.blocked || pendingFocusStart?.isActive==true) return
         lifecycleScope.launch(start=CoroutineStart.LAZY) {
             try {
+                graph.awaitLocationRecovery()
                 if(!focusedFor(ticket.generation,ticket.foreground) || !permissionResultCurrent(ticket) || !hasWindowFocus()) return@launch
                 // The same check as RecordingCommands: this direct start must not bypass the plan requirement.
                 try {graph.purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)}

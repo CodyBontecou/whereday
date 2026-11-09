@@ -1,0 +1,114 @@
+steps:
+- echo: 'Known-bug reproduction: rotating a manual-visit saved-place chooser dismisses
+    it and discards the query. Checks observed broken behavior, then discards draft.
+    Requires English onboarded empty mapQa on open foldable.'
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    text: Add a place
+- await:
+    visible:
+      text: Log a past stop
+- await:
+    idle: true
+- tap:
+    text: Log a past stop
+- await:
+    visible:
+      identifier: visit-name
+- await:
+    idle: true
+- tap:
+    id: visit-name
+- tool: keyboard
+  args:
+    text: QA interruption draft
+- await:
+    text:
+      in:
+        identifier: visit-name
+      contains: QA interruption draft
+- await:
+    idle: true
+- tap:
+    text: Choose saved place
+- await:
+    visible:
+      identifier: saved-chooser-search
+- await:
+    idle: true
+- tap:
+    id: saved-chooser-search
+- tool: keyboard
+  args:
+    text: missing place QA
+- await:
+    text:
+      in:
+        identifier: saved-chooser-search
+      contains: missing place QA
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: LandscapeLeft
+- await:
+    text:
+      in:
+        identifier: visit-name
+      contains: QA interruption draft
+- await:
+    idle: true
+- await:
+    hidden:
+      identifier: saved-chooser-search
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: Portrait
+- await:
+    visible:
+      identifier: visit-name
+- await:
+    idle: true
+- tap:
+    text: Choose saved place
+- await:
+    text:
+      in:
+        identifier: saved-chooser-search
+      contains: Search saved places
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    text:
+      in:
+        identifier: visit-name
+      contains: QA interruption draft
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      text: Discard visit changes?
+- await:
+    idle: true
+- tap:
+    text: Discard changes
+- await:
+    text:
+      in:
+        identifier: map-day-peek
+      contains: No places yet
+- await:
+    idle: true
