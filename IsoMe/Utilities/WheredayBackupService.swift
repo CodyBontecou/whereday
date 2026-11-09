@@ -8,6 +8,14 @@ struct WheredayBackup: Codable, Sendable {
     var backupFormat = "whereday-backup"
     var formatVersion = 1
     var exportedAt = Date()
+    /// Present only on a file that belongs to a multipart backup. All parts must
+    /// be selected together; a partial set is never committed.
+    struct Part: Codable, Sendable, Equatable {
+        let backupID: UUID
+        let index: Int
+        let count: Int
+    }
+    var part: Part?
     var visits: [VisitRecord] = []
     var points: [LocationPointRecord] = []
     var recordingSessions: [RecordingSessionRecord] = []
@@ -309,10 +317,10 @@ struct WheredayBackup: Codable, Sendable {
     }
 
     func validate() throws {
-        guard backupFormat == "whereday-backup", formatVersion == 1 else {
+        guard backupFormat == "whereday-backup",
+              (formatVersion == 1 && part == nil) || (formatVersion == 2 && part != nil) else {
             throw ImportError.invalidData(String(localized: "This backup version is not supported. Update Whereday before restoring it."))
         }
-        guard recordCount <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
         func unique<R: Identifiable>(_ records: [R]) throws where R.ID == UUID {
             guard Set(records.map(\.id)).count == records.count else {
                 throw ImportError.invalidData(String(localized: "The backup contains duplicate record identifiers."))
@@ -344,7 +352,7 @@ struct WheredayBackup: Codable, Sendable {
 
 enum WheredayBackupService {
     /// Fetch from storage, never from a partially loaded view-model cache.
-    static func export(context: ModelContext) throws -> Data {
+    private static func snapshot(context: ModelContext) throws -> WheredayBackup {
         var backup = WheredayBackup()
         backup.visits = try context.fetch(FetchDescriptor<Visit>()).map(WheredayBackup.VisitRecord.init)
         backup.points = try context.fetch(FetchDescriptor<LocationPoint>()).map(WheredayBackup.LocationPointRecord.init)
@@ -353,6 +361,15 @@ enum WheredayBackupService {
         backup.photoMoments = try context.fetch(FetchDescriptor<PhotoMoment>()).map(WheredayBackup.PhotoMomentRecord.init)
         backup.countryStays = try context.fetch(FetchDescriptor<CountryStay>()).map(WheredayBackup.CountryStayRecord.init)
         try backup.validate()
+        return backup
+    }
+
+    static func export(context: ModelContext) throws -> Data {
+        try encodeFile(snapshot(context: context))
+    }
+
+    private static func encodeFile(_ backup: WheredayBackup) throws -> Data {
+        guard backup.recordCount <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .millisecondsSince1970
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -367,13 +384,137 @@ enum WheredayBackupService {
         decoder.dateDecodingStrategy = .millisecondsSince1970
         let backup = try decoder.decode(WheredayBackup.self, from: data)
         try backup.validate()
+        guard backup.recordCount <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
+        if let part = backup.part {
+            guard part.count > 1, part.index >= 0, part.index < part.count else { throw incompleteBackup }
+        }
         return backup
+    }
+
+    private static var incompleteBackup: ImportError {
+        .invalidData(String(localized: "Select all files from the same backup. Nothing was restored."))
+    }
+
+    /// Validate the whole set before preview or persistence. Duplicate IDs across
+    /// files are invalid, rather than silently losing one version of a record.
+    static func combine(_ files: [WheredayBackup]) throws -> WheredayBackup {
+        guard let first = files.first else { throw incompleteBackup }
+        guard let part = first.part else {
+            guard files.count == 1 else { throw incompleteBackup }
+            return first
+        }
+        guard files.count == part.count,
+              Set(files.compactMap { $0.part?.index }).count == part.count,
+              files.allSatisfy({ $0.part?.backupID == part.backupID && $0.part?.count == part.count
+                  && $0.exportedAt == first.exportedAt }) else { throw incompleteBackup }
+        var result = WheredayBackup()
+        result.exportedAt = first.exportedAt
+        for file in files.sorted(by: { ($0.part?.index ?? 0) < ($1.part?.index ?? 0) }) {
+            try Task.checkCancellation()
+            try file.validate()
+            guard let index = file.part?.index, (0..<part.count).contains(index) else { throw incompleteBackup }
+            result.visits += file.visits
+            result.points += file.points
+            result.recordingSessions += file.recordingSessions
+            result.savedPlaces += file.savedPlaces
+            result.photoMoments += file.photoMoments
+            result.countryStays += file.countryStays
+        }
+        try result.validate()
+        return result
+    }
+
+    /// Export bounded files while keeping one logical backup. The destination is
+    /// new and removed on failure, so an incomplete set cannot reach the share sheet.
+    static func exportFiles(context: ModelContext, directory: URL) throws -> [URL] {
+        try writeFiles(snapshot(context: context), directory: directory)
+    }
+
+    static func writeFiles(_ backup: WheredayBackup, directory: URL,
+                           maximumRecords: Int = ImportPayload.maximumRecordCount,
+                           maximumBytes: Int = ImportPayload.maximumFileSize) throws -> [URL] {
+        precondition(maximumRecords > 0 && maximumRecords <= ImportPayload.maximumRecordCount)
+        precondition(maximumBytes > 0 && maximumBytes <= ImportPayload.maximumFileSize)
+        try Task.checkCancellation()
+        try backup.validate()
+        guard backup.part == nil else { throw incompleteBackup }
+        // Refuse to overwrite another export or remove an existing directory on error.
+        guard !FileManager.default.fileExists(atPath: directory.path) else { throw CocoaError(.fileWriteFileExists) }
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false)
+        do {
+            let backupID = UUID()
+            var ranges: [Range<Int>] = []
+            func plan(_ range: Range<Int>) throws {
+                try Task.checkCancellation()
+                if range.count > maximumRecords {
+                    let middle = range.lowerBound + range.count / 2
+                    try plan(range.lowerBound..<middle)
+                    try plan(middle..<range.upperBound)
+                    return
+                }
+                var candidate = slice(backup, range: range)
+                // Reserve the largest metadata representation during planning.
+                candidate.formatVersion = 2 // Older apps must reject an incomplete multipart file.
+                candidate.part = .init(backupID: backupID, index: Int.max - 1, count: Int.max)
+                let data = try? encodeFile(candidate)
+                if let data, data.count <= maximumBytes { ranges.append(range); return }
+                guard range.count > 1 else { throw TimelineImportError.fileTooLarge }
+                let middle = range.lowerBound + range.count / 2
+                try plan(range.lowerBound..<middle)
+                try plan(middle..<range.upperBound)
+            }
+            // Preserve the single-file format, including empty backups.
+            if backup.recordCount <= maximumRecords, let data = try? encodeFile(backup), data.count <= maximumBytes {
+                let url = directory.appendingPathComponent("Whereday Backup.json")
+                try data.write(to: url, options: .atomic)
+                return [url]
+            }
+            try plan(0..<backup.recordCount)
+            var urls: [URL] = []
+            for (index, range) in ranges.enumerated() {
+                try Task.checkCancellation()
+                var file = slice(backup, range: range)
+                file.formatVersion = 2
+                file.part = .init(backupID: backupID, index: index, count: ranges.count)
+                let data = try encodeFile(file)
+                guard data.count <= maximumBytes else { throw TimelineImportError.fileTooLarge }
+                let url = directory.appendingPathComponent("Whereday Backup \(index + 1) of \(ranges.count).json")
+                try data.write(to: url, options: .atomic)
+                urls.append(url)
+            }
+            return urls
+        } catch {
+            try? FileManager.default.removeItem(at: directory)
+            throw error
+        }
+    }
+
+    /// Slice the six model collections as one contiguous sequence without
+    /// dropping metadata or assigning new record identities.
+    private static func slice(_ backup: WheredayBackup, range: Range<Int>) -> WheredayBackup {
+        var offset = 0
+        func take<T>(_ records: [T]) -> [T] {
+            defer { offset += records.count }
+            let start = max(0, range.lowerBound - offset)
+            let end = min(records.count, range.upperBound - offset)
+            return start < end ? Array(records[start..<end]) : []
+        }
+        var result = WheredayBackup()
+        result.exportedAt = backup.exportedAt
+        result.visits = take(backup.visits)
+        result.points = take(backup.points)
+        result.recordingSessions = take(backup.recordingSessions)
+        result.savedPlaces = take(backup.savedPlaces)
+        result.photoMoments = take(backup.photoMoments)
+        result.countryStays = take(backup.countryStays)
+        return result
     }
 
     /// A preview is advisory. Commit rechecks IDs in a fresh context, so another
     /// import between review and confirmation cannot duplicate or overwrite records.
     static func pending(_ backup: WheredayBackup, context: ModelContext) throws -> WheredayBackup {
         try backup.validate()
+        guard backup.part == nil else { throw incompleteBackup }
         func missing<R: Identifiable, M: PersistentModel>(_ records: [R], model: M.Type,
                                                          id: KeyPath<M, UUID>) throws -> [R] where R.ID == UUID {
             var seen = Set(try context.fetch(FetchDescriptor<M>()).map { $0[keyPath: id] })

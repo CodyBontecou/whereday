@@ -78,7 +78,7 @@ struct SettingsView: View {
         .fileImporter(
             isPresented: $showingImportPicker,
             allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
-            allowsMultipleSelection: false
+            allowsMultipleSelection: true
         ) { result in
             handleImportResult(result)
         }
@@ -91,7 +91,7 @@ struct SettingsView: View {
                 showingImportPicker = true
             }
         }) { selection in
-            ImportPreviewView(url: selection.url, viewModel: viewModel) {
+            ImportPreviewView(urls: selection.urls, viewModel: viewModel) {
                 reopenImportPicker = true
             }
         }
@@ -128,12 +128,9 @@ struct SettingsView: View {
             return
         }
         do {
-            let data = try viewModel.exportBackup()
             let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
-            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-            let fileURL = directory.appendingPathComponent("Whereday Backup.json")
-            try data.write(to: fileURL, options: .atomic)
-            let activity = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+            let files = try viewModel.exportBackup(to: directory)
+            let activity = UIActivityViewController(activityItems: files, applicationActivities: nil)
             activity.completionWithItemsHandler = { _, completed, _, _ in
                 Task { @MainActor in
                     try? FileManager.default.removeItem(at: directory)
@@ -655,8 +652,8 @@ struct SettingsView: View {
     private func handleImportResult(_ result: Result<[URL], Error>) {
         switch result {
         case .success(let urls):
-            guard let url = urls.first else { return }
-            importFileSelection = ImportFileSelection(url: url)
+            guard !urls.isEmpty else { return }
+            importFileSelection = ImportFileSelection(urls: urls)
         case .failure(let error):
             importErrorMessage = error.localizedDescription
             showingImportError = true

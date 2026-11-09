@@ -1462,8 +1462,8 @@ final class LocationViewModel {
 
     // MARK: - Import
 
-    func prepareImport(from url: URL) async throws -> ImportPreview {
-        try await timelineImportService.preview(url: url)
+    func prepareImport(from urls: [URL]) async throws -> ImportPreview {
+        try await timelineImportService.preview(urls: urls)
     }
 
     func commitImport(_ preview: ImportPreview, options: ImportOptions) async throws -> ImportCommitResult {
@@ -1478,8 +1478,8 @@ final class LocationViewModel {
         return result
     }
 
-    func exportBackup() throws -> Data {
-        try WheredayBackupService.export(context: modelContext)
+    func exportBackup(to directory: URL) throws -> [URL] {
+        try WheredayBackupService.exportFiles(context: modelContext, directory: directory)
     }
 
     // MARK: - Clear Data

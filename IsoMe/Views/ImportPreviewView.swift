@@ -2,12 +2,12 @@ import SwiftUI
 
 struct ImportFileSelection: Identifiable {
     let id = UUID()
-    let url: URL
+    let urls: [URL]
 }
 
 /// Review before saving: shows what a file would add, lets the person pick record types, then commits.
 struct ImportPreviewView: View {
-    let url: URL
+    let urls: [URL]
     let viewModel: LocationViewModel
     /// Called from the failed state's "Choose another file"; the sheet closes so the caller can reopen its picker.
     /// Without it, the failed state offers only Done.
@@ -54,7 +54,7 @@ struct ImportPreviewView: View {
         .interactiveDismissDisabled(isSaving)
         .task {
             do {
-                let preview = try await viewModel.prepareImport(from: url)
+                let preview = try await viewModel.prepareImport(from: urls)
                 try Task.checkCancellation()
                 options.includeVisits = !preview.payload.visits.isEmpty
                 options.includePoints = !preview.payload.points.isEmpty
@@ -67,6 +67,8 @@ struct ImportPreviewView: View {
             }
         }
     }
+
+    private var url: URL { urls[0] }
 
     // MARK: - Header
 

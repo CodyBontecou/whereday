@@ -226,4 +226,194 @@ final class WheredayBackupTests: XCTestCase {
             XCTAssertEqual(restored.recordCount, 0)
         }
     }
+    private func temporaryDirectory() -> URL {
+        FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+    }
+
+    func testMultipartBackupRestoresAllFieldsThroughPublicFileImporter() async throws {
+        let source = try container()
+        try seed(source.mainContext)
+        let original = try WheredayBackupService.export(context: source.mainContext)
+        let directory = temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let files = try WheredayBackupService.writeFiles(WheredayBackupService.decode(original),
+                                                        directory: directory, maximumRecords: 2)
+        XCTAssertEqual(files.count, 4) // Balanced partitions, never more than two records each.
+        for file in files {
+            let part = try WheredayBackupService.decode(Data(contentsOf: file))
+            XCTAssertLessThanOrEqual(part.recordCount, 2)
+            XCTAssertEqual(part.part?.count, files.count)
+        }
+        let target = try container()
+        let worker = TimelineImportService(container: target)
+        let preview = try await worker.preview(urls: files.reversed())
+        XCTAssertEqual(preview.newVisitCount + preview.newPointCount + preview.newAdditionalRecordCount, 6)
+        _ = try await worker.commit(preview, options: ImportOptions())
+        let restored = try WheredayBackupService.export(context: ModelContext(target))
+        func records(_ data: Data) throws -> NSDictionary {
+            var root = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+            root.removeValue(forKey: "exportedAt")
+            return root as NSDictionary
+        }
+        XCTAssertEqual(try records(original), try records(restored))
+        let repeated = try await worker.commit(preview, options: ImportOptions())
+        XCTAssertEqual(repeated.visitCount + repeated.pointCount + repeated.additionalRecordCount, 0)
+        XCTAssertEqual(repeated.duplicateVisitCount + repeated.duplicatePointCount + repeated.duplicateAdditionalRecordCount, 6)
+    }
+
+    func testIncompleteDuplicateAndMixedBackupSetsCannotModifyExistingStorage() async throws {
+        let source = try container()
+        try seed(source.mainContext)
+        let backup = try WheredayBackupService.decode(WheredayBackupService.export(context: source.mainContext))
+        let first = temporaryDirectory(), second = temporaryDirectory()
+        defer {
+            try? FileManager.default.removeItem(at: first)
+            try? FileManager.default.removeItem(at: second)
+        }
+        let files = try WheredayBackupService.writeFiles(backup, directory: first, maximumRecords: 2)
+        let otherFiles = try WheredayBackupService.writeFiles(backup, directory: second, maximumRecords: 2)
+        let target = try container()
+        try seed(target.mainContext)
+        let before = try WheredayBackupService.export(context: target.mainContext)
+        let worker = TimelineImportService(container: target)
+        for selected in [Array(files.dropLast()), [files[0]],
+                         [files[0]] + Array(files.dropLast()),
+                         [otherFiles[0]] + Array(files.dropFirst())] {
+            do {
+                let preview = try await worker.preview(urls: selected)
+                _ = try await worker.commit(preview, options: ImportOptions())
+                XCTFail("Accepted an incomplete, duplicate, or mixed backup set")
+            } catch {
+                let after = try WheredayBackupService.export(context: ModelContext(target))
+                var old = try XCTUnwrap(JSONSerialization.jsonObject(with: before) as? [String: Any])
+                var new = try XCTUnwrap(JSONSerialization.jsonObject(with: after) as? [String: Any])
+                old.removeValue(forKey: "exportedAt")
+                new.removeValue(forKey: "exportedAt")
+                XCTAssertEqual(old as NSDictionary, new as NSDictionary)
+            }
+        }
+    }
+
+    func testMalformedLastBackupPartRejectsWholeSet() async throws {
+        let source = try container()
+        try seed(source.mainContext)
+        let directory = temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let backup = try WheredayBackupService.decode(WheredayBackupService.export(context: source.mainContext))
+        let files = try WheredayBackupService.writeFiles(backup, directory: directory, maximumRecords: 2)
+        let last = try XCTUnwrap(files.last)
+        var object = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: last)) as? [String: Any])
+        var stays = try XCTUnwrap(object["countryStays"] as? [[String: Any]])
+        stays[0]["lastDay"] = "2020-01-01"
+        object["countryStays"] = stays
+        try JSONSerialization.data(withJSONObject: object).write(to: last)
+        let target = try container()
+        let worker = TimelineImportService(container: target)
+        do {
+            _ = try await worker.preview(urls: files)
+            XCTFail("Accepted malformed final part")
+        } catch {
+            XCTAssertEqual(try WheredayBackupService.decode(WheredayBackupService.export(context: target.mainContext)).recordCount, 0)
+        }
+    }
+
+    func testBackupLargerThanFiftyMiBSplitsIntoBoundedRestorableFiles() async throws {
+        let source = try container()
+        // Each record fits; their complete backup exceeds the ordinary file limit.
+        let notes = String(repeating: "x", count: 10 * 1_024 * 1_024)
+        for index in 0..<6 {
+            source.mainContext.insert(SavedPlace(name: "Large \(index)", latitude: 0, longitude: 0, notes: notes))
+        }
+        try source.mainContext.save()
+        let directory = temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        XCTAssertThrowsError(try WheredayBackupService.export(context: source.mainContext))
+        let files = try WheredayBackupService.exportFiles(context: source.mainContext, directory: directory)
+        XCTAssertGreaterThan(files.count, 1)
+        var size = 0
+        for file in files {
+            let count = try Data(contentsOf: file).count
+            XCTAssertLessThanOrEqual(count, ImportPayload.maximumFileSize)
+            size += count
+        }
+        XCTAssertGreaterThan(size, ImportPayload.maximumFileSize)
+        let target = try container()
+        let worker = TimelineImportService(container: target)
+        let preview = try await worker.preview(urls: files)
+        _ = try await worker.commit(preview, options: ImportOptions())
+        let restored = try ModelContext(target).fetch(FetchDescriptor<SavedPlace>())
+        XCTAssertEqual(Set(restored.map(\.name)), Set((0..<6).map { "Large \($0)" }))
+        XCTAssertTrue(restored.allSatisfy { $0.notes == notes })
+    }
+
+    func testAggregateRecordLimitDoesNotCapMultipartBackup() throws {
+        // Decode directly into the value snapshot to exercise the real threshold
+        // without constructing 250,001 SwiftData objects just for file planning.
+        let count = ImportPayload.maximumRecordCount + 1
+        var backup = WheredayBackup()
+        let rows: [[String: Any]] = (0..<count).map { _ in
+            ["id": UUID().uuidString, "latitude": 0, "longitude": 0, "timestamp": 1_780_000_000_125,
+             "horizontalAccuracy": 5, "isOutlier": false]
+        }
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .millisecondsSince1970
+        backup.points = try decoder.decode([WheredayBackup.LocationPointRecord].self,
+                                          from: JSONSerialization.data(withJSONObject: rows))
+        let directory = temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let files = try WheredayBackupService.writeFiles(backup, directory: directory)
+        XCTAssertGreaterThan(files.count, 1)
+        let decoded = try files.map { try WheredayBackupService.decode(Data(contentsOf: $0)) }
+        XCTAssertTrue(decoded.allSatisfy { $0.recordCount <= ImportPayload.maximumRecordCount })
+        let combined = try WheredayBackupService.combine(decoded)
+        XCTAssertEqual(combined.recordCount, count)
+        XCTAssertEqual(Set(combined.points.map(\.id)), Set(backup.points.map(\.id)))
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .millisecondsSince1970
+        let oversizedSingleFile = try encoder.encode(backup)
+        XCTAssertLessThan(oversizedSingleFile.count, ImportPayload.maximumFileSize)
+        XCTAssertThrowsError(try TimelineImportService.parse(data: oversizedSingleFile, fileName: "backup.json"))
+    }
+
+    func testMultipartVersionRejectsLegacyReadersAndDuplicateIDsAcrossParts() async throws {
+        let source = try container()
+        source.mainContext.insert(SavedPlace(name: "One", latitude: 0, longitude: 0))
+        source.mainContext.insert(SavedPlace(name: "Two", latitude: 0, longitude: 0))
+        try source.mainContext.save()
+        let backup = try WheredayBackupService.decode(WheredayBackupService.export(context: source.mainContext))
+        let directory = temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let files = try WheredayBackupService.writeFiles(backup, directory: directory, maximumRecords: 1)
+        let first = try WheredayBackupService.decode(Data(contentsOf: files[0]))
+        XCTAssertEqual(first.formatVersion, 2)
+        var root = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: files[1])) as? [String: Any])
+        var rows = try XCTUnwrap(root["savedPlaces"] as? [[String: Any]])
+        rows[0]["id"] = try XCTUnwrap(first.savedPlaces.first?.id.uuidString)
+        root["savedPlaces"] = rows
+        try JSONSerialization.data(withJSONObject: root).write(to: files[1])
+        let target = try container()
+        let worker = TimelineImportService(container: target)
+        do {
+            _ = try await worker.preview(urls: files)
+            XCTFail("Accepted duplicate IDs across backup parts")
+        } catch {
+            XCTAssertEqual(try ModelContext(target).fetchCount(FetchDescriptor<SavedPlace>()), 0)
+        }
+    }
+
+    func testFailedExportCleansNewDirectoryAndPreservesExistingDestination() throws {
+        let source = try container()
+        try seed(source.mainContext)
+        let backup = try WheredayBackupService.decode(WheredayBackupService.export(context: source.mainContext))
+        let directory = temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        XCTAssertThrowsError(try WheredayBackupService.writeFiles(backup, directory: directory, maximumBytes: 128))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: directory.path))
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false)
+        let sentinel = directory.appendingPathComponent("existing.json")
+        try Data("keep".utf8).write(to: sentinel)
+        XCTAssertThrowsError(try WheredayBackupService.writeFiles(backup, directory: directory))
+        XCTAssertEqual(try String(contentsOf: sentinel, encoding: .utf8), "keep")
+    }
+
 }

@@ -133,26 +133,48 @@ actor TimelineImportService {
     init(container: ModelContainer) { self.container = container }
 
     func preview(url: URL) throws -> ImportPreview {
-        let accessed = url.startAccessingSecurityScopedResource()
-        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
-        if let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize, size > ImportPayload.maximumFileSize {
-            throw TimelineImportError.fileTooLarge
+        try preview(urls: [url])
+    }
+
+    func preview(urls: [URL]) throws -> ImportPreview {
+        guard !urls.isEmpty else { throw TimelineImportError.noRecords }
+        var backups: [WheredayBackup] = []
+        for url in urls {
+            let accessed = url.startAccessingSecurityScopedResource()
+            defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+            if let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize, size > ImportPayload.maximumFileSize {
+                throw TimelineImportError.fileTooLarge
+            }
+            try Task.checkCancellation()
+            let data = try Data(contentsOf: url, options: .mappedIfSafe)
+            let payload = try Self.parse(data: data, fileName: url.lastPathComponent)
+            if let backup = payload.backup {
+                backups.append(backup)
+            } else {
+                guard urls.count == 1 else {
+                    throw ImportError.invalidData(String(localized: "Select one import file, or all files from the same backup."))
+                }
+                return try preview(data: data, fileName: url.lastPathComponent)
+            }
         }
-        try Task.checkCancellation()
-        let data = try Data(contentsOf: url, options: .mappedIfSafe)
-        return try preview(data: data, fileName: url.lastPathComponent)
+        let backup = try WheredayBackupService.combine(backups)
+        return try backupPreview(backup, fileName: urls[0].lastPathComponent)
+    }
+
+    private func backupPreview(_ backup: WheredayBackup, fileName: String) throws -> ImportPreview {
+        let plan = try WheredayBackupService.pending(backup, context: ModelContext(container))
+        return ImportPreview(fileName: fileName, payload: ImportPayload(format: .wheredayBackup, backup: backup),
+                             newVisitCount: plan.visits.count, newPointCount: plan.points.count,
+                             duplicateVisitCount: backup.visits.count - plan.visits.count,
+                             duplicatePointCount: backup.points.count - plan.points.count,
+                             newAdditionalRecordCount: plan.additionalRecordCount,
+                             duplicateAdditionalRecordCount: backup.additionalRecordCount - plan.additionalRecordCount)
     }
 
     func preview(data: Data, fileName: String) throws -> ImportPreview {
         let payload = try Self.parse(data: data, fileName: fileName)
         if let backup = payload.backup {
-            let plan = try WheredayBackupService.pending(backup, context: ModelContext(container))
-            return ImportPreview(fileName: fileName, payload: payload,
-                                 newVisitCount: plan.visits.count, newPointCount: plan.points.count,
-                                 duplicateVisitCount: backup.visits.count - plan.visits.count,
-                                 duplicatePointCount: backup.points.count - plan.points.count,
-                                 newAdditionalRecordCount: plan.additionalRecordCount,
-                                 duplicateAdditionalRecordCount: backup.additionalRecordCount - plan.additionalRecordCount)
+            return try backupPreview(WheredayBackupService.combine([backup]), fileName: fileName)
         }
         let plan = try makePlan(payload: payload, options: ImportOptions(), context: ModelContext(container))
         return ImportPreview(fileName: fileName, payload: payload,
