@@ -22,6 +22,7 @@ The independent standards/spec review identified the same two bugs. The follow-u
 - `python3 -m unittest discover -s scripts -p 'test_*localization*.py'`: 9 passed.
 - `python3 scripts/localization_catalog.py audit`: 2,553 active keys across 9 catalogs/11 locales; no missing translations or placeholder mismatches. Identical-English diagnostics remain, and machine-written translations are not human-reviewed.
 - `python3 scripts/check_map_first_store.py`: passed; all 11 Apple metadata locales, field lengths/legal links/What's New alignment, 10 screen-translation maps and artwork plan counts. Corrected reviewer notes remain within 4,000 characters.
+- All 30 unique `python3 scripts/*.py --check-source` commands from `android-tests.yml`, run from `android/`: **30/30 passed** on the combined local branch. Output remains at `/private/tmp/whereday-local-source-checks-20261108.json`.
 - `git diff --check`: passed.
 
 The generic products use repository defaults **2.0 (60)**. Those are already-consumed version/build numbers, not a new candidate allocation. The build proves compilation only. Added iOS XCTest cases were not executed; an authorized future runtime pass must use the signed `scripts/test-ios.sh` runner. Native compilation ownership was released via Herdr after these checks; other agents' work was not interrupted.
