@@ -45,6 +45,10 @@ struct WheredayBackup: Codable, Sendable {
         let detectedAddress: String?
         let placeSourceRaw: String?
         let placeDistanceMeters: Double?
+        let originalConfirmationStatusRaw: String?
+        let originalConfirmedAt: Date?
+        let originalPlaceSourceRaw: String?
+        let originalPlaceDistanceMeters: Double?
         let countryCode: String?
         let countryTimeZoneIdentifier: String?
         let countryResolutionAttemptedAt: Date?
@@ -75,6 +79,10 @@ struct WheredayBackup: Codable, Sendable {
             detectedAddress = model.detectedAddress
             placeSourceRaw = model.placeSourceRaw
             placeDistanceMeters = model.placeDistanceMeters
+            originalConfirmationStatusRaw = model.originalConfirmationStatusRaw
+            originalConfirmedAt = model.originalConfirmedAt
+            originalPlaceSourceRaw = model.originalPlaceSourceRaw
+            originalPlaceDistanceMeters = model.originalPlaceDistanceMeters
             countryCode = model.countryCode
             countryTimeZoneIdentifier = model.countryTimeZoneIdentifier
             countryResolutionAttemptedAt = model.countryResolutionAttemptedAt
@@ -107,6 +115,10 @@ struct WheredayBackup: Codable, Sendable {
             model.detectedAddress = detectedAddress
             model.placeSourceRaw = placeSourceRaw
             model.placeDistanceMeters = placeDistanceMeters
+            model.originalConfirmationStatusRaw = originalConfirmationStatusRaw
+            model.originalConfirmedAt = originalConfirmedAt
+            model.originalPlaceSourceRaw = originalPlaceSourceRaw
+            model.originalPlaceDistanceMeters = originalPlaceDistanceMeters
             model.countryCode = countryCode
             model.countryTimeZoneIdentifier = countryTimeZoneIdentifier
             model.countryResolutionAttemptedAt = countryResolutionAttemptedAt
@@ -167,6 +179,8 @@ struct WheredayBackup: Codable, Sendable {
         let notes: String?
         let receivedLocationCount: Int?
         let distanceFilterMeters: Double?
+        let routeSamplingModeRawValue: String?
+        let routeSampleIntervalSeconds: Double?
 
         init(_ model: RecordingSession) {
             id = model.id
@@ -176,6 +190,8 @@ struct WheredayBackup: Codable, Sendable {
             notes = model.notes
             receivedLocationCount = model.receivedLocationCount
             distanceFilterMeters = model.distanceFilterMeters
+            routeSamplingModeRawValue = model.routeSamplingModeRawValue
+            routeSampleIntervalSeconds = model.routeSampleIntervalSeconds
         }
 
         func makeModel() -> RecordingSession {
@@ -187,6 +203,8 @@ struct WheredayBackup: Codable, Sendable {
             model.notes = notes
             model.receivedLocationCount = receivedLocationCount
             model.distanceFilterMeters = distanceFilterMeters
+            model.routeSamplingModeRawValue = routeSamplingModeRawValue
+            model.routeSampleIntervalSeconds = routeSampleIntervalSeconds
             return model
         }
     }
@@ -309,14 +327,14 @@ struct WheredayBackup: Codable, Sendable {
         try unique(savedPlaces)
         try unique(photoMoments)
         try unique(countryStays)
-        guard visits.allSatisfy({ coordinate($0.latitude, $0.longitude) && $0.arrivedAt.timeIntervalSince1970.isFinite
-                    && ($0.departedAt.map { $0.timeIntervalSince1970.isFinite } ?? true) }),
-              points.allSatisfy({ coordinate($0.latitude, $0.longitude) && $0.timestamp.timeIntervalSince1970.isFinite
-                    && $0.horizontalAccuracy.isFinite && ($0.altitude?.isFinite ?? true) && ($0.speed?.isFinite ?? true) }),
+        guard visits.allSatisfy({ visit in coordinate(visit.latitude, visit.longitude) && GoogleTimelineImportService.validDate(visit.arrivedAt)
+                    && (visit.departedAt.map { GoogleTimelineImportService.validDate($0) && $0 >= visit.arrivedAt } ?? true) }),
+              points.allSatisfy({ coordinate($0.latitude, $0.longitude) && GoogleTimelineImportService.validDate($0.timestamp)
+                    && $0.horizontalAccuracy.isFinite && $0.horizontalAccuracy >= -1 && ($0.altitude?.isFinite ?? true) && ($0.speed?.isFinite ?? true) }),
               savedPlaces.allSatisfy({ coordinate($0.latitude, $0.longitude) && $0.radiusMeters.isFinite && $0.radiusMeters > 0 }),
               photoMoments.allSatisfy({ coordinate($0.latitude, $0.longitude) && !$0.assetLocalIdentifier.isEmpty }),
-              recordingSessions.allSatisfy({ $0.startedAt.timeIntervalSince1970.isFinite
-                    && ($0.endedAt.map { $0.timeIntervalSince1970.isFinite } ?? true) }),
+              recordingSessions.allSatisfy({ session in GoogleTimelineImportService.validDate(session.startedAt)
+                    && (session.endedAt.map { GoogleTimelineImportService.validDate($0) && $0 >= session.startedAt } ?? true) }),
               countryStays.allSatisfy({ CountryDayCalculator.date(for: $0.firstDay) != nil
                     && CountryDayCalculator.date(for: $0.lastDay) != nil && $0.firstDay <= $0.lastDay }) else {
             throw ImportError.invalidData(String(localized: "The backup contains invalid records. Nothing was restored."))
