@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "2fd44e17473457a56c271b75f388ad3760de839cf69cfe2f3c88ae41b5e7136d",
+  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
   "catalog": {
     "common_continue": "Continue",
     "shell_export": "Export",

@@ -21,7 +21,9 @@ if not args.input.is_file():
 paths = [ROOT / p for p in [
     'IsoMe/Models/Visit.swift', 'IsoMe/Models/LocationPoint.swift',
     'IsoMe/Utilities/ImportService.swift', 'IsoMe/Utilities/GoogleTimelineImportService.swift',
-    'IsoMe/Utilities/TimelineImportService.swift']]
+    'IsoMe/Utilities/TimelineImportService.swift',
+    'IsoMe/Utilities/WheredayBackupService.swift', 'IsoMe/Models/RecordingSession.swift',
+    'IsoMe/Models/PhotoMoment.swift', 'IsoMe/Models/CountryStay.swift', 'Shared/DistanceFormatter.swift']]
 formats = ROOT / 'IsoMe/Utilities/ExportService.swift'
 harness = ROOT / 'android/scripts/fixtures/PlaceProvenanceCommit.swift'
 text = formats.read_text()

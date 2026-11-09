@@ -1,11 +1,65 @@
 {
   "scope": "All currently externalized app/platform strings/plurals; hardcoded UI and other languages remain incomplete",
   "locales": {
+    "ar": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "2101a98f10f7714f30a07d4468577ff0b73f489fa5859e25d5628d00520e55f7",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "8d4b46b8bf222e3181fb5da209b8512a6ed8171b43a4d3bbf6063ddb310c0025",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "37b664cac31c17f43e2d4d9e17ccb3924ecbcb9f18a608b8bd12c1377bed588a"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "0c37f009ad95e5457cd9fafd872d692fc37b9a57d06572d71d0e296570ed02eb"
+        }
+      }
+    },
+    "b+zh+Hans": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "dd2da284e12c71fe9f8aff2241f1da8822b70e693b2e1a085fcd9b2309b3d8af",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "88d8736fb3ed88a84999eaa305f0081d6001ce5ab5d86a76dda1bcf5d8b6fca6",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "87a4d0974c54edaac14079135049c9b7004076a0720ae9b420c565d46e741a69"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "904af1c7d80d6bdfc5afab3ced96d5aa5fde61e294961f108ad19100541658c3"
+        }
+      }
+    },
+    "bn": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "3150cb989849a724bf0d7da79ea46ad3e83f7e7ba3721c7c3a10e071c09bf68c",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "87a963d9c2f046ba575193b95b1d9816f66bfe0bd7921a39bfe20107d8fe8140",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "764c56921c4cdb06f9b1c37bea18573449242214b350f64baa96e22f351604ec"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "4f6b0abae1c44cb7722846fd2edf5ff37cf565553b355f98f69985c9452ed1eb"
+        }
+      }
+    },
     "es": {
       "resourceCount": 1730,
       "catalogAliases": 5,
-      "defaultSha256": "2fd44e17473457a56c271b75f388ad3760de839cf69cfe2f3c88ae41b5e7136d",
-      "inputSha256": "9ef413ef6df5c09c51ace4b2149c558e4d6d373ca7c1109b9e598f19f2a816c3",
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "d1438dd4122925a5999ad6460c52665cc1218bb06503ed642976817f828a2b02",
       "selectedCatalogSha256": "9693494a30604e7e454b9e6d03f3cb183405dd7e12987d71a61faf2a880abf55",
       "outputSha256": "a5fa03adaeeeb344dd5825ef4279147b14f30c3babe507eaa7e4103934d4271b",
       "modules": {
@@ -16,6 +70,114 @@
         "platform": {
           "resourceCount": 24,
           "outputSha256": "b064da998445a6a97959d479ff993534df25a542de552a7fcceded3dfa48553a"
+        }
+      }
+    },
+    "fr": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "809fc57723a8f99091efe056cbf42e2d9eb61abea7a52c3e611eeb074bf1ecf2",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "104425cb0d02c872dbfbaf50d5397e8a95e7579557ac396092bf2efea4d57713",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "a7b0472eb4edc14f9a9d18029e6515284a2ce7b4bead2abf3b15b4f54efe9f68"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "38c6ff311c3b9f10ad761128d6362c269d2e38ba3fb7a88c626113c0b4f09de1"
+        }
+      }
+    },
+    "hi": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "caf7877bdc5c64e680aafa364359aca55d12b42e61c3af17b99032f5116bd025",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "6c09e69a8eea90d19f0d36a4909d38cf14b6354a35a726a6b236d1e0e52a74b4",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "4dee8ea8f040ce3cadb16ff0d3e3930cd44e225d1dc41c54013f2f5b23dce630"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "0860afb63eaf262fd58bb8ba494dc508f624df0bb981d042a771b1707d43e821"
+        }
+      }
+    },
+    "ja": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "87f427eca1745c3636f6ecb3c15f0e1d5eac36853cb7ed307c4ecc4cc5d29b78",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "a100a68c137423a2fee01de3f755f0ee169d530174ccbc6ff48a75aa93b34ccc",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "b2c7df71a95af741415c576fa744d5c21f9920e7fa205f49516ee502065df36f"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "bbb77990ca319e7cd3e291d470d37f346cbb48bd8b574921887deb04d608c9cd"
+        }
+      }
+    },
+    "pl": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "8e83e9bd81cdddf2ab97c7095a638695c36e0e5277c5291f695f34fc5b4fcc71",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "f4374743f649be6a14b94f610ef9752185d1e3f77853cd3fef98de8aac98a88f",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "e37e8b582a31b938708407facf22ed327ee47cd9f5c33bdeb585a27c82b3b69a"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "5e26b53f21ebea19fb837e9c39df2aec36632c00e339c182c6c3064654a84eab"
+        }
+      }
+    },
+    "pt-rBR": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "20cd3118c04684d710c7ae95d37e9fba7d14db20bc384442f1b7c5488bed7ee3",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "3b55fcb7783dedf03cb262948d2b9a56fd7f92e759b8234139a23a4415188f4d",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "3bffe9c13403ac6460878e6a3171a4e7db2b8d60c25f5e55b66e998f7fa1a764"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "2d0840e5f253721faf0ea6fab578d346d9061dba8f2b84f1c46c26e6dca053d5"
+        }
+      }
+    },
+    "ru": {
+      "resourceCount": 1730,
+      "catalogAliases": 0,
+      "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+      "inputSha256": "8459b42155cc158e73e99793768bdcf25cbdebc46cf973cfe9a2e775e64f918f",
+      "selectedCatalogSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "outputSha256": "1dab440ec9700113b6cba250ebcc9d90b7277291358354815aed8429f1954b11",
+      "modules": {
+        "app": {
+          "resourceCount": 1706,
+          "outputSha256": "47cb180ddb7dbac5b15fa5e54ccbaf480f068affe8cdfee14e0304f249130bce"
+        },
+        "platform": {
+          "resourceCount": 24,
+          "outputSha256": "d8c6268501035a8ebaf987d98c8fc9df7f137c241f86f3212bb49a4761be6ab1"
         }
       }
     }

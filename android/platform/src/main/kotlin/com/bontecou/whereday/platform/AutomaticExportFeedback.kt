@@ -5,7 +5,7 @@ enum class AutomaticExportFailure(val diagnostic:String) {
     execution("Automatic export could not finish. Check purchase access, folder permissions and available storage, then retry."),
     interrupted("Automatic export was interrupted. Resume or cancel its saved request."),
     settingsUnavailable("Automatic export settings could not be loaded. Retry or reset them to continue."),
-    purchase("Verified lifetime export access is required."),
+    purchase("An active Whereday plan is required."),
     pendingChange("Finish or cancel the pending export before changing its schedule or format.")
 }
 enum class AutomaticExportNotice(val diagnostic:String) {

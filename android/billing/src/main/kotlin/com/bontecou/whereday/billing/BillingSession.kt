@@ -27,7 +27,7 @@ class VerifiedAccessRequired:IllegalStateException("Verified Whereday access is 
 enum class BillingRefreshResult {verified,pending,notFound,unavailable,failed}
 enum class AccessState { checking, free, pending, active, verificationRequired, unavailable }
 enum class BillingNotice(val diagnostic:String) {
-    unavailable("Purchases are not available in this build. Recording, imports and previews remain free."),
+    unavailable("Purchases are not available in this build. Imports and export previews remain free."),
     pendingPayment("Your purchase is pending in Google Play. Access starts after payment is completed and verified."),
     verified("Whereday access is verified."),
     pendingVerification("Your purchase is pending verification."),

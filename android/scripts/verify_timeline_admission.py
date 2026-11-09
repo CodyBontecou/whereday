@@ -5,7 +5,9 @@ import argparse,hashlib,json,platform,subprocess,tempfile
 ROOT=Path(__file__).resolve().parents[2]
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 assert platform.system()=='Darwin','Requires actual macOS SwiftData'
-sources=[ROOT/x for x in ['IsoMe/Models/Visit.swift','IsoMe/Models/LocationPoint.swift','IsoMe/Utilities/ImportService.swift','IsoMe/Utilities/GoogleTimelineImportService.swift','IsoMe/Utilities/TimelineImportService.swift']]
+sources=[ROOT/x for x in ['IsoMe/Models/Visit.swift','IsoMe/Models/LocationPoint.swift','IsoMe/Utilities/ImportService.swift','IsoMe/Utilities/GoogleTimelineImportService.swift','IsoMe/Utilities/TimelineImportService.swift',
+    'IsoMe/Utilities/WheredayBackupService.swift', 'IsoMe/Models/RecordingSession.swift',
+    'IsoMe/Models/PhotoMoment.swift', 'IsoMe/Models/CountryStay.swift', 'Shared/DistanceFormatter.swift']]
 formats=ROOT/'IsoMe/Utilities/ExportService.swift';harness=ROOT/'android/scripts/fixtures/TimelineAdmission.swift'
 text=formats.read_text();enum=text[text.index('enum ExportFormat:'):text.index('\nstruct ExportService {')]
 with tempfile.TemporaryDirectory(prefix='whereday-admission-swift-') as tmp:
