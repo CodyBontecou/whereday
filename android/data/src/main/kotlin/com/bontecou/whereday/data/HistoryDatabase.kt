@@ -244,15 +244,15 @@ interface HistoryDao {
     CountryLookupRow::class, CountryAnalysisRow::class, WebhookPolicyRow::class, WebhookBatchRow::class, WebhookPointRow::class], views=[VisiblePhotoAsset::class], version = 12, exportSchema = true)
 @TypeConverters(HistoryConverters::class)
 abstract class HistoryDatabase : RoomDatabase() {
-    private var bundled=false
-    internal val supportsSnapshots get()=bundled
+    private var driverBacked=false
+    internal val supportsSnapshots get()=driverBacked
     abstract fun webhooks():WebhookQueueDao
     abstract fun history(): HistoryDao
     suspend fun <T> writeTransaction(block:suspend ()->T):T {
         val callerJob=currentCoroutineContext()[Job]
         // Room's pooled callback runs under the database job. Retain the caller's cancellation
         // together with the confined connection/transaction context, as the reader seam does.
-        return if(bundled) useWriterConnection {connection->
+        return if(driverBacked) useWriterConnection {connection->
             connection.withTransaction(Transactor.SQLiteTransactionType.IMMEDIATE) {
                 withContext(callerJob ?: EmptyCoroutineContext) {block()}
             }
@@ -326,10 +326,10 @@ abstract class HistoryDatabase : RoomDatabase() {
             override fun migrate(connection:SQLiteConnection) {statements.forEach {connection.execSQL(it)}}
         }
         @Volatile private var instance: HistoryDatabase? = null
-        fun create(context:Context,name:String?="whereday.db"):HistoryDatabase {
+        fun create(context:Context,name:String?="whereday.db",driver:androidx.sqlite.SQLiteDriver=BundledSQLiteDriver()):HistoryDatabase {
             val builder=if(name==null) Room.inMemoryDatabaseBuilder(context.applicationContext,HistoryDatabase::class.java) else Room.databaseBuilder(context.applicationContext,HistoryDatabase::class.java,name)
-            return builder.setDriver(BundledSQLiteDriver()).setJournalMode(JournalMode.WRITE_AHEAD_LOGGING)
-                .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8,MIGRATION_8_9,MIGRATION_9_10,MIGRATION_10_11,MIGRATION_11_12).build().also {it.bundled=true}
+            return builder.setDriver(driver).setJournalMode(JournalMode.WRITE_AHEAD_LOGGING)
+                .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8,MIGRATION_8_9,MIGRATION_9_10,MIGRATION_10_11,MIGRATION_11_12).build().also {it.driverBacked=true}
         }
         fun open(context: Context): HistoryDatabase = instance ?: synchronized(this) {
             instance ?: create(context).also { instance = it }

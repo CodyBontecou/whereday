@@ -10,7 +10,8 @@ import com.bontecou.whereday.domain.PlaceLookupService
 import com.bontecou.whereday.export.ExportSelectionCodec
 
 class AppGraph internal constructor(private val context: Context, roadDirections:com.bontecou.whereday.domain.RoadDirections?=null,
-    private val roadDisclosure:RoadProviderDisclosure?=null) {
+    private val roadDisclosure:RoadProviderDisclosure?=null,
+    val database:HistoryDatabase = HistoryDatabase.open(context)) {
     init {require(roadDisclosure==null || roadDirections!=null)}
     val activityLog=ActivityLog.process
     val reviewMilestones=ReviewMilestoneController(AndroidReviewMilestoneStore(context.applicationContext),unavailable={activityLog.record(AppEvent.reviewUnavailable)})
@@ -22,15 +23,14 @@ class AppGraph internal constructor(private val context: Context, roadDirections
         UsageAnalyticsController(core,UsageAnalyticsWorkScheduler(androidx.work.WorkManager.getInstance(context.applicationContext),core))
     }
     val usageFunnel by lazy {UsageFunnel(usageAnalytics)}
-    val database = HistoryDatabase.open(context)
     val history = HistoryRepository(database)
     val historyImports=HistoryImportController(DatabaseHistoryImportTarget(database),DiskHistoryImportWorkspaceFactory(java.io.File(context.cacheDir,"history-import-review")))
     val journalCommands=JournalCommands(history)
     // Starting either kind of tracking needs a subscription or Lifetime once Play billing is configured; stopping never does.
     val recordingCommands:RecordingCommands=RecordingCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked},
-        access={purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)})
+        access={awaitLocationRecovery();purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)})
     val visitMonitoringCommands=VisitMonitoringCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked},
-        access={purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)})
+        access={awaitLocationRecovery();purchases.requireAccess(com.bontecou.whereday.billing.Capability.recording)})
     val automationAccess=AutomationAccess(context.applicationContext)
     val automationResults=AutomationResults(context.applicationContext,automationAccess) {purchases.requireAccess(com.bontecou.whereday.billing.Capability.fileExport)}
     val automationController=AutomationController(automationAccess,automationResults)
@@ -92,9 +92,15 @@ class AppGraph internal constructor(private val context: Context, roadDirections
             activityLog.clear()
         }
     },{activityLog.record(AppEvent.journalClearFailed)})}
+    internal val locationRecovery by lazy {LocationRecoveryController({
+        journalClear.awaitReady()
+        reconcileAbandonedLocationServices()
+    },{activityLog.record(AppEvent.locationReconciliationFailed)})}
+    suspend fun awaitLocationRecovery() = locationRecovery.awaitReady()
+    suspend fun reconcileLocationServices() = locationRecovery.reconcile()
     /** A boot broadcast also follows force-stop on Android 15+. Persisted boot evidence
      * distinguishes that event; runtime/ticket and identity guards protect a fresh start. */
-    suspend fun reconcileLocationServices() {
+    private suspend fun reconcileAbandonedLocationServices() {
         val boot=locationBootCount(context)
         val recording=history.dao.recording()
         if(recording!=null && !RecordingRuntime.active.value && !recordingCommands.preparing)
@@ -106,17 +112,19 @@ class AppGraph internal constructor(private val context: Context, roadDirections
         }
     }
     /** For launch and boot: a failure is logged instead of crashing each start; the next start retries. */
-    suspend fun reconcileLocationServicesSafely():Boolean=
-        recoverOrReport({activityLog.record(AppEvent.locationReconciliationFailed)}) {reconcileLocationServices()}
+    suspend fun reconcileLocationServicesSafely():Boolean=try {reconcileLocationServices();true}
+        catch(error:kotlinx.coroutines.CancellationException) {throw error}
+        catch(_:Exception) {false} // The process owner records the failure once per attempt.
     fun automation(activity:android.app.Activity)=automation(recordingCommands.bind(activity),AutomationVisitLocation(activity)::locate)
     fun automation(recording:AutomationRecording,currentLocation:suspend ()->com.bontecou.whereday.domain.Coordinate={throw AutomationLocationUnavailable()})=AutomationExecutor(journalCommands,automationResults,recording,exports,{
         val settings=preferences.settings.first();settings.inferenceRules.takeIf {settings.inferredEnabled}
     },currentLocation=currentLocation)
     companion object {
         @Volatile private var instance: AppGraph? = null
-        fun from(context: Context): AppGraph = instance ?: synchronized(this) { instance ?: run {
+        fun from(context: Context): AppGraph = from(context) {HistoryDatabase.open(context)}
+        internal fun from(context:Context,openDatabase:()->HistoryDatabase):AppGraph = instance ?: synchronized(this) { instance ?: run {
             val routing=GeoapifyRoadDirections.configured()
-            AppGraph(context.applicationContext,routing?.directions,routing?.disclosure).also {instance=it}
+            AppGraph(context.applicationContext,routing?.directions,routing?.disclosure,openDatabase()).also {instance=it;it.locationRecovery.start()}
         } }
     }
 }

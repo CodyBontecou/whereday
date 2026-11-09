@@ -1,5 +1,9 @@
 # Android redesign integration — November 8, 2026
 
+The subsequent [local recovery implementation](RECOVERY_HOST_EVIDENCE_20261109.md)
+adds process-startup recovery with host persistence/lifecycle regression evidence.
+The device-only reboot proof gap remains open.
+
 This is source/build readiness evidence, not a deployed-version claim. No simulator,
 emulator, Argent, physical device, store operation or release was used for this pass.
 
