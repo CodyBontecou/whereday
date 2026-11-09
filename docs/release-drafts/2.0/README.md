@@ -2,7 +2,7 @@
 
 **Latest recorded status (reconciled November 8, 2026):** iOS **2.0 (63)** is staged in App Store Connect; this record contains no Apple submission or release receipt. Android **2.0.1 (4)** was recorded as published November 7; the saved production-track response marks it `completed`. The November 6 Play draft below is historical. These are saved receipts and dated records, not a fresh live-store check.
 
-The current draft [PR #109](https://github.com/CodyBontecou/whereday/pull/109) contains later hardening and the in-app 2.0 release notes. Those changes are **not in staged iOS build 63**, built from `f2959482`. A new Apple candidate and its qualification are needed to ship them. The Android sibling owns #107/main/#109 source integration; that work does not establish a new Play rollout.
+The current draft [PR #109](https://github.com/CodyBontecou/whereday/pull/109) contains later hardening and the in-app 2.0 release notes. Those changes are **not in staged iOS build 63**, built from `f2959482`. A new Apple candidate and its qualification are needed to ship them. The Android sibling completed #107/main/#109 source integration in draft [PR #111](https://github.com/CodyBontecou/whereday/pull/111); local checks passed, while its own CI and the recorded both-mode reboot recovery failure remain gates. That source work does not establish a new Play rollout.
 
 Current Apple/store readiness and exact checks: [November 8 readiness review](readiness-20261108.md). The sections below preserve the staging history; the build 62 section is superseded.
 
