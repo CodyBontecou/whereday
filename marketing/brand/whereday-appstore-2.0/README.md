@@ -62,3 +62,11 @@ they overflowed (Polish range chips, Russian Watch "Стоп", CJK and Bangla da
   right-to-left but stay left-aligned like the design, so they never collide with the artwork.
 - The header's "home 23:30" note started behind the second phone and was clipped even in English;
   it is now anchored to the right edge.
+
+## Readiness review
+
+Run `python3 scripts/check_map_first_store.py` from the repository to check the eleven-locale
+Apple draft coverage, field lengths, What's New alignment, screen-translation maps and artwork
+set counts without rendering or contacting App Store Connect. This does not approve translations
+or establish current store state. The [November 8 readiness review](../../../docs/release-drafts/2.0/readiness-20261108.md)
+records saved upload/placement receipts, PNG checks, Apple CI and remaining release gaps.

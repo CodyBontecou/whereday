@@ -1,6 +1,14 @@
 # Whereday 2.0 / build 63 (map-first)
 
-**Status: staged in App Store Connect and as a Google Play production draft. Nothing submitted or rolled out.** On November 6, 2026, at the owner's request, both stores were moved to the map-first redesign (#105):
+**Latest recorded status (reconciled November 8, 2026):** iOS **2.0 (63)** is staged in App Store Connect; this record contains no Apple submission or release receipt. Android **2.0.1 (4)** was recorded as published November 7; the saved production-track response marks it `completed`. The November 6 Play draft below is historical. These are saved receipts and dated records, not a fresh live-store check.
+
+The current draft [PR #109](https://github.com/CodyBontecou/whereday/pull/109) contains later hardening and the in-app 2.0 release notes. Those changes are **not in staged iOS build 63**, built from `f2959482`. A new Apple candidate and its qualification are needed to ship them. The Android sibling owns #107/main/#109 source integration; that work does not establish a new Play rollout.
+
+Current Apple/store readiness and exact checks: [November 8 readiness review](readiness-20261108.md). The sections below preserve the staging history; the build 62 section is superseded.
+
+## November 6 map-first staging history
+
+On November 6, 2026, at the owner's request, both stores were moved to the map-first redesign (#105):
 
 - **iOS build:** the `v2.0` GitHub release was published, so `deploy-asc.yml` archived `main` at `f2959482` as **2.0 (63)**. It processed **VALID** (`b1c136de-db11-400c-aa46-437a01c62b20`) and replaces build 62 on App Store version 2.0. Build 62 predates map-first and should not be attached again.
 - **iOS listing:** What's New, promotional text and the first description bullet are rewritten for map-first in all nine locales (`metadata/whereday/version/2.0/`, `whats-new.json`). Uploaded and read back identical.
@@ -63,7 +71,9 @@ Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map s
 
 ---
 
-# Earlier record: build 62
+# Earlier record: build 62 (superseded)
+
+Everything below describes the November 4 candidate, including its navigation, artwork and checklist. Use build 63 and the readiness review above for current decisions. Build 62 must not be reattached.
 
 **Status: staged in App Store Connect, not submitted.** On November 4, 2026, at the owner's request:
 
@@ -158,7 +168,7 @@ The simulator pipeline (`scripts/capture_localized_screenshots.py`) was also fix
 - Logs, archive and IPA: `.asc/artifacts/stage-2.0-62/`.
 - After the Debug-only screenshot-seeder change (`176221cd`), `scripts/test-ios.sh` passed again: 364 XCTest + 11 Swift Testing tests. That change compiles out of Release, so uploaded build 62 is unaffected.
 
-## Still to do (owner)
+## Historical build 62 checklist (superseded)
 
 1. **Native-language read** of the nine-locale metadata, What's New and screenshot copy (written by Claude), especially ar-SA, hi and ja.
 2. **Review the version in App Store Connect**: metadata, screenshots, header and Duo set. Decide whether to replace or remove the old en-US search-results video.
