@@ -52,12 +52,15 @@ def main():
     if args.check_source:
         assert json.loads(OUTPUT.read_text())['provenance']==provenance,'Google Timeline reference source changed; review and regenerate with Swift'
         print('Swift Google Timeline provenance verified');return
+    # Google cases never enter backup decoding; fail loudly if a fixture does.
     harness='''import Foundation
 import CoreFoundation
 enum ImportError: Error {case unsupportedFormat}
 enum ExportFormat {case json,csv,markdown}
 struct LegacyRecords {var visits=[ImportedVisit]();var points=[ImportedLocationPoint]()}
 enum ImportService {static func importFile(data:Data,format:ExportFormat) throws -> LegacyRecords {throw ImportError.unsupportedFormat}}
+struct WheredayBackup: Sendable {}
+enum WheredayBackupService {static func decode(_ data:Data) throws -> WheredayBackup {fatalError("Backup decoding is outside Google fixture scope")}}
 '''+body+'''
 let cases=try JSONSerialization.jsonObject(with:FileHandle.standardInput.readDataToEndOfFile()) as! [[String:Any]]
 var results=[[String:Any]]()

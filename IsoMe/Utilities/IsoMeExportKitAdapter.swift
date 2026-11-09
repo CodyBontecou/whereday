@@ -29,6 +29,7 @@ enum IsoMeExportKitError: LocalizedError, Equatable {
     case missingFormat(String)
     case nonUTF8Payload(formatID: String)
     case noDestination
+    case pathComponentTooLong
 
     var errorDescription: String? {
         switch self {
@@ -36,6 +37,8 @@ enum IsoMeExportKitError: LocalizedError, Equatable {
             return String(localized: "Unsupported export format: \(id)")
         case .nonUTF8Payload(let formatID):
             return String(localized: "Export payload for \(formatID) was not valid UTF-8 text.")
+        case .pathComponentTooLong:
+            return String(localized: "Use a shorter file or folder name.")
         case .noDestination:
             return String(localized: "No export destination was provided.")
         }
@@ -72,7 +75,20 @@ enum IsoMeExportPathPlanner {
         _ = try ExportPathSafetyPolicy.rejectTraversalAndAbsolutePaths.pathSegments(from: rawPath)
 
         let sanitizedPath = FilenameTemplate.sanitizePath(rawPath)
-        return try safetyPolicy.pathSegments(from: sanitizedPath).joined(separator: "/")
+        let path = try safetyPolicy.pathSegments(from: sanitizedPath).joined(separator: "/")
+        try validateComponentLengths(in: path)
+        return path
+    }
+
+    static func validateComponentLengths(in path: String) throws {
+        // Foundation writes use decomposed filesystem names. Check that form
+        // so a composed accent cannot pass planning then fail when written.
+        // UTF-8 byte counts would incorrectly reject writable emoji names.
+        for component in path.split(separator: "/") {
+            guard String(component).decomposedStringWithCanonicalMapping.utf16.count <= 255 else {
+                throw IsoMeExportKitError.pathComponentTooLong
+            }
+        }
     }
 }
 
@@ -200,7 +216,7 @@ enum IsoMeExportKitAdapter {
                     usedNames: &formatUsedNames,
                     aggregateDateOverride: aggregateFilenameDate
                 )
-                let fileName = uniqueFilenameAcrossFormats(plannedName, in: &globalUsedNames, format: format)
+                let fileName = try uniqueFilenameAcrossFormats(plannedName, in: &globalUsedNames, format: format)
                 return PlannedExportFile(
                     id: "\(snapshot.exportRecordID)-\(descriptor.id)",
                     role: .aggregate(formatID: descriptor.id),
@@ -258,7 +274,7 @@ enum IsoMeExportKitAdapter {
                     safetyPolicy: .preserveCurrentBehavior
                 )
                 formatUsedNames[entry.format] = usedNames
-                let fileName = uniqueFilenameAcrossFormats(plannedName, in: &globalUsedNames, format: entry.format)
+                let fileName = try uniqueFilenameAcrossFormats(plannedName, in: &globalUsedNames, format: entry.format)
                 let file = PlannedExportFile(
                     id: "\(entry.snapshot.exportRecordID)-\(descriptor.id)",
                     role: .aggregate(formatID: descriptor.id),
@@ -682,7 +698,8 @@ enum IsoMeExportKitAdapter {
         _ baseName: String,
         in used: inout Set<String>,
         format: ExportFormat
-    ) -> String {
+    ) throws -> String {
+        try IsoMeExportPathPlanner.validateComponentLengths(in: baseName)
         guard used.contains(baseName) else {
             used.insert(baseName)
             return baseName
@@ -713,6 +730,7 @@ enum IsoMeExportKitAdapter {
             candidate = "\(directoryPrefix)\(stem)-\(format.token)-\(counter)\(ext)"
             counter += 1
         }
+        try IsoMeExportPathPlanner.validateComponentLengths(in: candidate)
         used.insert(candidate)
         return candidate
     }
@@ -721,7 +739,7 @@ enum IsoMeExportKitAdapter {
         if error as? IsoMeExportKitError == .noDestination {
             return ExportRunFailure(reason: .noDestination, errorDescription: error.localizedDescription)
         }
-        if error is ExportPathTemplateError {
+        if error is ExportPathTemplateError || error as? IsoMeExportKitError == .pathComponentTooLong {
             return ExportRunFailure(reason: .writeError, errorDescription: error.localizedDescription)
         }
         if error is ExportFolderError {
@@ -765,6 +783,7 @@ enum IsoMeExportKitAdapter {
             fileName = uniqueFilename(fileName, in: &usedNames, day: snapshot.exportDate, format: format)
         }
 
+        try IsoMeExportPathPlanner.validateComponentLengths(in: fileName)
         return fileName
     }
 

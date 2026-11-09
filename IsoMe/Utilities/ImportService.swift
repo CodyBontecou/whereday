@@ -1,4 +1,5 @@
 import Foundation
+import CoreFoundation
 
 enum ImportError: LocalizedError {
     case unsupportedFormat
@@ -333,6 +334,9 @@ struct ImportService {
         }
 
         return try visitsArray.enumerated().map { index, dict in
+            try validateJSONNumbers(dict, keys: ["latitude", "longitude", "originalLatitude", "originalLongitude",
+                                                "detectedLatitude", "detectedLongitude", "placeDistanceMeters"],
+                                    context: "Visit at index \(index)")
             guard let latitude = dict["latitude"] as? Double,
                   let longitude = dict["longitude"] as? Double,
                   let arrivedAtStr = dict["arrivedAt"] as? String,
@@ -340,7 +344,22 @@ struct ImportService {
                 throw ImportError.invalidData(String(localized: "Visit at index \(index) missing required fields (latitude, longitude, arrivedAt)"))
             }
 
-            let departedAt: Date? = (dict["departedAt"] as? String).flatMap { parseISO8601Date($0) }
+            let departedAt: Date?
+            if let value = dict["departedAt"], !(value is NSNull) {
+                guard let text = value as? String else {
+                    throw ImportError.invalidData(String(localized: "Visit at index \(index): invalid departedAt date"))
+                }
+                if text.isEmpty {
+                    departedAt = nil
+                } else {
+                    guard let date = parseISO8601Date(text) else {
+                        throw ImportError.invalidData(String(localized: "Visit at index \(index): invalid departedAt date"))
+                    }
+                    departedAt = date
+                }
+            } else {
+                departedAt = nil
+            }
 
             return ImportedVisit(
                 latitude: latitude,
@@ -389,6 +408,8 @@ struct ImportService {
         }
 
         return try pointsArray.enumerated().map { index, dict in
+            try validateJSONNumbers(dict, keys: ["latitude", "longitude", "timestampUnix", "altitude", "speed", "horizontalAccuracy"],
+                                    context: "Point at index \(index)")
             guard let latitude = dict["latitude"] as? Double,
                   let longitude = dict["longitude"] as? Double else {
                 throw ImportError.invalidData(String(localized: "Point at index \(index) missing latitude/longitude"))
@@ -412,6 +433,17 @@ struct ImportService {
                 horizontalAccuracy: dict["horizontalAccuracy"] as? Double ?? 0,
                 isOutlier: dict["isOutlier"] as? Bool ?? false
             )
+        }
+    }
+
+    /// JSONSerialization bridges both numbers and Booleans to NSNumber. Reject
+    /// Boolean or mistyped numeric fields before a cast can turn true into 1.
+    private static func validateJSONNumbers(_ dictionary: [String: Any], keys: [String], context: String) throws {
+        for key in keys {
+            guard let value = dictionary[key], !(value is NSNull) else { continue }
+            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() else {
+                throw ImportError.invalidData(String(localized: "\(context): \(key) must be a number"))
+            }
         }
     }
 
@@ -456,9 +488,14 @@ struct ImportService {
                 throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid longitude"))
             }
 
-            let departedAt: Date? = colIndex["departed_at"].flatMap { col in
-                let val = fields[col]
-                return val.isEmpty ? nil : parseISO8601Date(val)
+            let departedAt: Date?
+            if let column = colIndex["departed_at"], !fields[column].isEmpty {
+                guard let date = parseISO8601Date(fields[column]) else {
+                    throw ImportError.invalidData(String(localized: "Row \(rowIndex + 2): invalid departed_at date"))
+                }
+                departedAt = date
+            } else {
+                departedAt = nil
             }
 
             let locationName: String? = colIndex["location_name"].flatMap { col in

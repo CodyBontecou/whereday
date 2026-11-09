@@ -231,7 +231,7 @@ private struct MonthRecapCard: View {
 }
 
 /// One month's totals, computed from recorded visits and route points.
-private struct MonthRecap {
+struct MonthRecap {
     struct TopPlace {
         let name: String
         let duration: TimeInterval
@@ -267,8 +267,11 @@ private struct MonthRecap {
         self.usesMetric = usesMetric
         let interval = calendar.dateInterval(of: .month, for: month) ?? DateInterval(start: month, duration: 0)
         dayCount = calendar.range(of: .day, in: .month, for: month)?.count ?? 30
-        let inMonth = visits.filter { visit in
-            let end = visit.departedAt ?? now
+        let validVisits = visits.filter { visit in
+            visit.arrivedAt <= now && (visit.departedAt ?? now) >= visit.arrivedAt
+        }
+        let inMonth = validVisits.filter { visit in
+            let end = min(visit.departedAt ?? now, now)
             return visit.arrivedAt < interval.end && end > interval.start
         }
         visitCount = inMonth.count
@@ -281,15 +284,26 @@ private struct MonthRecap {
             let start = max(visit.arrivedAt, interval.start)
             let end = min(visit.departedAt ?? now, interval.end, now)
             durations[visit.displayName, default: 0] += max(0, end.timeIntervalSince(start))
-            let day = calendar.component(.day, from: start) - 1
-            if perDay.indices.contains(day) { perDay[day].insert(visit.displayName) }
+            // Occupancy is [arrival, departure): a midnight departure belongs
+            // only to the preceding day. Calendar arithmetic also handles DST.
+            var dayStart = calendar.startOfDay(for: start)
+            repeat {
+                let day = calendar.component(.day, from: dayStart) - 1
+                if perDay.indices.contains(day) { perDay[day].insert(visit.displayName) }
+                guard let nextDay = calendar.date(byAdding: .day, value: 1, to: dayStart),
+                      nextDay > dayStart else { break }
+                dayStart = nextDay
+            } while dayStart < end
         }
         let counts = perDay.map(\.count)
         visitsPerDay = counts
 
         var distances = Array(repeating: 0.0, count: dayCount)
         var pointDays = Set<Int>()
-        let ordered = points.filter { interval.contains($0.timestamp) && !$0.isOutlier }
+        let ordered = points.filter {
+            $0.timestamp >= interval.start && $0.timestamp < interval.end
+                && $0.timestamp <= now && !$0.isOutlier
+        }.sorted { $0.timestamp < $1.timestamp }
         for (index, point) in ordered.enumerated() {
             let day = calendar.component(.day, from: point.timestamp) - 1
             guard distances.indices.contains(day) else { continue }
@@ -317,11 +331,11 @@ private struct MonthRecap {
 
         // A place is new when its first-ever visit falls in this month.
         var firstSeen: [String: Date] = [:]
-        for visit in visits {
+        for visit in validVisits {
             if let seen = firstSeen[visit.displayName], seen <= visit.arrivedAt { continue }
             firstSeen[visit.displayName] = visit.arrivedAt
         }
-        newPlaces = firstSeen.values.filter { interval.contains($0) }.count
+        newPlaces = firstSeen.values.filter { $0 >= interval.start && $0 < interval.end }.count
     }
 
     var hasDistance: Bool { totalDistance > 0 }

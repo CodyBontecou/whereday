@@ -221,3 +221,70 @@ final class TimelineImportTests: XCTestCase {
         XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
     }
 }
+
+@MainActor
+final class ImportReviewValidationTests: XCTestCase {
+    private var visit: [String: Any] {
+        ["latitude": 12.345, "longitude": 67.89, "arrivedAt": "2020-01-02T10:00:00Z",
+         "departedAt": "2020-01-02T11:00:00Z", "locationName": "QA"]
+    }
+    private var point: [String: Any] {
+        ["latitude": 12.345, "longitude": 67.89, "timestamp": "2020-01-02T10:00:00Z", "horizontalAccuracy": 5]
+    }
+    private func parse(visits: [[String: Any]] = [], points: [[String: Any]] = []) throws -> ImportPayload {
+        let data = try JSONSerialization.data(withJSONObject: ["visits": visits, "points": points])
+        return try TimelineImportService.parse(data: data, fileName: "review.json")
+    }
+
+    func testMalformedDepartureDoesNotBecomeAnOpenVisit() throws {
+        for value: Any in ["not-a-date", true, 123, ["unexpected"]] {
+            var bad = visit; bad["departedAt"] = value
+            XCTAssertThrowsError(try parse(visits: [visit, bad]), "Invalid departure: \(value)")
+        }
+        let csv = "arrived_at,departed_at,latitude,longitude\n2020-01-02T10:00:00Z,not-a-date,12.345,67.89\n"
+        XCTAssertThrowsError(try TimelineImportService.parse(data: Data(csv.utf8), fileName: "review.csv"))
+    }
+
+    func testBooleanValuesAreNotJSONNumbers() throws {
+        for key in ["latitude", "longitude", "originalLatitude", "originalLongitude", "detectedLatitude", "detectedLongitude", "placeDistanceMeters"] {
+            var bad = visit; bad[key] = true
+            XCTAssertThrowsError(try parse(visits: [bad]), "Visit field: \(key)")
+        }
+        for key in ["latitude", "longitude", "timestampUnix", "altitude", "speed", "horizontalAccuracy"] {
+            var bad = point; bad[key] = false
+            XCTAssertThrowsError(try parse(points: [bad]), "Point field: \(key)")
+        }
+    }
+
+    func testAbsentNullAndBlankDepartureAndRealNumericValuesRemainSupported() throws {
+        var open = visit; open.removeValue(forKey: "departedAt")
+        var null = visit; null["departedAt"] = NSNull()
+        var blank = visit; blank["departedAt"] = ""
+        let payload = try parse(visits: [open, null, blank])
+        XCTAssertEqual(payload.visits.count, 3)
+        XCTAssertTrue(payload.visits.allSatisfy { $0.departedAt == nil })
+        var valid = point
+        valid["isOutlier"] = true
+        valid["altitude"] = NSNull()
+        valid["timestampUnix"] = 1_577_959_200
+        XCTAssertEqual(try parse(points: [valid]).points.first?.isOutlier, true)
+    }
+
+    func testRejectedPreviewLeavesExistingHistoryUntouched() async throws {
+        let container = try ModelContainer(for: Visit.self, LocationPoint.self,
+                                          configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let existing = Visit(latitude: 1, longitude: 2, arrivedAt: Date(timeIntervalSince1970: 100), customName: "Keep me")
+        container.mainContext.insert(existing)
+        try container.mainContext.save()
+        var bad = visit; bad["departedAt"] = "broken"
+        let data = try JSONSerialization.data(withJSONObject: ["visits": [visit, bad], "points": []])
+        do {
+            _ = try await TimelineImportService(container: container).preview(data: data, fileName: "mixed.json")
+            XCTFail("Malformed input must not be offered for import")
+        } catch { }
+        let stored = try ModelContext(container).fetch(FetchDescriptor<Visit>())
+        XCTAssertEqual(stored.count, 1)
+        XCTAssertEqual(stored.first?.id, existing.id)
+        XCTAssertEqual(stored.first?.customName, "Keep me")
+    }
+}

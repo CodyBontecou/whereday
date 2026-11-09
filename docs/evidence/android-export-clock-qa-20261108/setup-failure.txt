@@ -1,0 +1,85 @@
+Running e2e test "export-clock-edge-20261108" on emulator-5554 (82 steps)
+[1] ✓ English API35 onboarded mapQa, America/Puerto_Rico, 12-hour clock. JSON/All, all dates, time filter off, collapsed advanced. Existing synthetic journal: 25 points and 1 visit. Uses previews only; restores filter off and collapsed advanced.
+[2] ✓ launch (3.7s)
+[3] ✓ await visible id=map-add (0.5s)
+[4] ✓ idle (0.7s)
+[5] ✓ tap id=navigation-archive (0.5s)
+[6] ✓ await visible id=export-history-count (0.8s)
+[7] ✓ idle (0.6s)
+[8] ✓ scroll-to id=export-advanced (2.6s)
+[9] ✓ await visible id=export-advanced (0.1s)
+[10] ✓ tap id=export-advanced (0.5s)
+[11] ✓ scroll-to id=export-time-enabled (2.0s)
+[12] ✓ await visible id=export-date-range (0.1s)
+[13] ✓ idle (0.7s)
+[14] ✓ tap id=export-time-enabled (0.5s)
+[15] ✗ await id=export-time-from contains "8:00 AM" (7.7s) — no element matched selector id="export-time-from"
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-9T0V1g/media/360240000-1794143774365.png
+[16] · tap id=export-time-from
+[17] · await visible id=android:id/toggle_mode
+[18] · idle
+[19] · tap id=android:id/toggle_mode
+[20] · await visible id=android:id/input_hour
+[21] · idle
+[22] · tap id=android:id/input_hour
+[23] · tool
+[24] · tool
+[25] · await id=android:id/input_hour contains "99"
+[26] · tap "Apply time"
+[27] · await id=android:id/input_hour contains "99"
+[28] · tool
+[29] · await id=android:id/input_hour contains "99"
+[30] · idle
+[31] · tool
+[32] · await id=android:id/input_hour contains "99"
+[33] · idle
+[34] · tap id=android:id/input_hour
+[35] · tool
+[36] · tool
+[37] · tool
+[38] · tap id=android:id/input_minute
+[39] · tool
+[40] · tool
+[41] · tool
+[42] · tap id=android:id/am_pm_spinner
+[43] · await visible "PM" id=android:id/text1
+[44] · idle
+[45] · tap /^PM$/ id=android:id/text1
+[46] · await id=android:id/input_hour contains "11"
+[47] · await id=android:id/input_minute contains "59"
+[48] · tool
+[49] · tap "Apply time"
+[50] · await id=export-time-from contains "11:59 PM"
+[51] · idle
+[52] · tap id=export-time-until
+[53] · await visible id=android:id/am_label
+[54] · idle
+[55] · tap id=android:id/am_label
+[56] · tap /^12$/ role=RadialTimePickerView$RadialPickerTouchHelper
+[57] · tap "Apply time"
+[58] · await id=export-time-until contains "12:00 AM"
+[59] · idle
+[60] · scroll-to id=export-preview-start (up)
+[61] · tap "Preview export"
+[62] · await id=export-preview-result contains "\"totalPoints\": 0"
+[63] · idle
+[64] · scroll-to id=export-time-until
+[65] · tap id=export-time-until
+[66] · await visible id=android:id/hours
+[67] · idle
+[68] · tap /^9$/ role=RadialTimePickerView$RadialPickerTouchHelper
+[69] · await id=android:id/hours contains "9"
+[70] · tap "Cancel"
+[71] · await id=export-time-until contains "12:00 AM"
+[72] · idle
+[73] · tap id=export-time-enabled
+[74] · await hidden id=export-time-until
+[75] · tap id=export-advanced
+[76] · scroll-to id=export-preview-start (up)
+[77] · tap "Preview export"
+[78] · await id=export-preview-result contains "\"totalPoints\": 25"
+[79] · await id=export-preview-result contains "\"totalVisits\": 1"
+[80] · tap id=navigation-map
+[81] · await visible id=map-add
+[82] · idle
+FAIL — 13 passed, 1 failed, 0 errored, 67 skipped (21.4s)

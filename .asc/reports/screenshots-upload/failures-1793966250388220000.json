@@ -1,0 +1,103 @@
+{
+  "versionLocalizationId": "23b0f839-1da2-47f5-b663-a1e7066becf1",
+  "path": ".asc/reports/screenshots-upload/failures-1793966250388220000.json",
+  "rootPath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69",
+  "deviceType": "IPHONE_67",
+  "displayType": "APP_IPHONE_67",
+  "replace": true,
+  "setId": "b3b0e99a-773c-4604-b861-a6fe3bd98358",
+  "files": [
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/01-map-today.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/02-replay.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/03-atlas.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/04-week.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/05-place.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/06-export.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/07-night.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/08-lock-screen.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/09-glance.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/10-month-recap.png"
+  ],
+  "orderedIds": [
+    "47000019-30b5-855a-8038-2a066eeb4d53",
+    "fc400019-30b5-855a-8019-2bdde0938773",
+    "77c00019-30b5-855a-8010-6bfc0371f17e",
+    "c4400019-30b5-855a-8039-732f76d90770",
+    "5c000019-30b5-855a-803a-b171b6b1b483",
+    "0e800019-30b5-855a-8035-3e8bf063b7c5",
+    "87800019-30b5-855a-800c-0da6f5706084",
+    "a7800019-30b5-855a-8031-c1ed2e0739aa"
+  ],
+  "pendingFiles": [
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/09-glance.png",
+    "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/10-month-recap.png"
+  ],
+  "pendingAssets": [
+    {
+      "fileName": "09-glance.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/09-glance.png",
+      "assetId": "9a800019-30b5-855a-8012-dbef6722b787",
+      "checksum": "87d7cdefdbd6b4fd9364b5adf19e1660",
+      "state": "UPLOAD_COMPLETE"
+    }
+  ],
+  "results": [
+    {
+      "fileName": "01-map-today.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/01-map-today.png",
+      "assetId": "47000019-30b5-855a-8038-2a066eeb4d53",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "02-replay.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/02-replay.png",
+      "assetId": "fc400019-30b5-855a-8019-2bdde0938773",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "03-atlas.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/03-atlas.png",
+      "assetId": "77c00019-30b5-855a-8010-6bfc0371f17e",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "04-week.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/04-week.png",
+      "assetId": "c4400019-30b5-855a-8039-732f76d90770",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "05-place.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/05-place.png",
+      "assetId": "5c000019-30b5-855a-803a-b171b6b1b483",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "06-export.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/06-export.png",
+      "assetId": "0e800019-30b5-855a-8035-3e8bf063b7c5",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "07-night.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/07-night.png",
+      "assetId": "87800019-30b5-855a-800c-0da6f5706084",
+      "state": "COMPLETE"
+    },
+    {
+      "fileName": "08-lock-screen.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/08-lock-screen.png",
+      "assetId": "a7800019-30b5-855a-8031-c1ed2e0739aa",
+      "state": "COMPLETE"
+    }
+  ],
+  "failures": [
+    {
+      "fileName": "09-glance.png",
+      "filePath": "/Users/codybontecou/dev/whereday/.asc/artifacts/stage-2.0-map/design-screenshots/zh-Hans/iphone-69/09-glance.png",
+      "error": "timed out waiting for screenshot 9a800019-30b5-855a-8012-dbef6722b787 checksum settlement after delivery state UPLOAD_COMPLETE: context deadline exceeded"
+    }
+  ],
+  "error": "timed out waiting for screenshot 9a800019-30b5-855a-8012-dbef6722b787 checksum settlement after delivery state UPLOAD_COMPLETE: context deadline exceeded",
+  "generatedAt": "2026-11-06T11:57:30Z"
+}

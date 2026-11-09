@@ -1,0 +1,171 @@
+Running e2e test "herdr-broad-sweep-two-20261108" on emulator-5554 (125 steps)
+[1] ✓ English mapQa only; original25points1visit1place, no grants and no recording. Distinct second sweep: large draft lifecycle; long local search; network-geocoding-off policy/offline map/cancel/restart/restore; absent Automate repeated actions. No commits or external actions.
+[2] ✓ launch (5.2s)
+[3] ✓ await visible id=map-add (1.4s)
+[4] ✓ idle (1.0s)
+[5] ✓ tap "Add a place" (0.5s)
+[6] ✓ await visible "Log a past stop" (0.9s)
+[7] ✓ idle (1.2s)
+[8] ✓ tap "Log a past stop" (0.5s)
+[9] ✓ await visible id=visit-name (2.2s)
+[10] ✓ idle (1.0s)
+[11] ✓ run-sequence (1.1s)
+{
+  "completed": 3,
+  "total": 3,
+  "steps": [
+    {
+      "tool": "gesture-tap",
+      "result": {
+        "tapped": true,
+        "timestampMs": 1794168058103
+      }
+    },
+    {
+      "tool": "paste",
+      "result": {
+        "pasted": true
+      }
+    },
+    {
+      "tool": "button",
+      "result": {
+        "pressed": "back"
+      }
+    }
+  ]
+}
+[12] ✓ await id=visit-name equals "QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é" (1.0s)
+[13] ✓ idle (1.0s)
+[14] ✓ rotate (0.0s)
+{
+  "orientation": "LandscapeLeft"
+}
+[15] ✓ await id=visit-name equals "QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é" (0.2s)
+[16] ✓ idle (2.1s)
+[17] ✓ rotate (0.0s)
+{
+  "orientation": "Portrait"
+}
+[18] ✓ await id=visit-name equals "QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é" (0.1s)
+[19] ✓ idle (2.4s)
+[20] ✓ button (0.0s)
+{
+  "pressed": "home"
+}
+[21] ✓ launch-app (0.2s)
+{
+  "launched": true,
+  "bundleId": "com.bontecou.whereday.mapqa"
+}
+[22] ✓ await id=visit-name equals "QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é" (0.5s)
+[23] ✓ idle (0.6s)
+[24] ✓ tap /^Cancel$/ (0.4s)
+[25] ✓ await visible "Discard visit changes?" (0.6s)
+[26] ✓ idle (1.1s)
+[27] ✓ tap "Keep editing" (0.4s)
+[28] ✓ await id=visit-name equals "QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é QA 🧭 مرحبا 東京 é" (0.6s)
+[29] ✓ idle (0.5s)
+[30] ✓ tap /^Cancel$/ (0.4s)
+[31] ✓ await visible "Discard visit changes?" (0.6s)
+[32] ✓ idle (1.1s)
+[33] ✓ tap "Discard changes" (0.4s)
+[34] ✓ await visible id=map-auto-off (0.6s)
+[35] ✓ idle (0.6s)
+[36] ✓ tap id=navigation-archive (0.4s)
+[37] ✓ await id=export-history-count contains "25 route points" (0.6s)
+[38] ✓ idle (0.5s)
+[39] ✓ tap "Settings" (0.4s)
+[40] ✓ await visible id=settings-screen (0.6s)
+[41] ✓ idle (0.6s)
+[42] ✓ scroll-to id=settings-point-count (3.3s)
+[43] ✓ tap id=settings-geocoding (0.4s)
+[44] ✓ tap id=navigation-map (0.4s)
+[45] ✓ await visible id=map-add (0.7s)
+[46] ✓ idle (0.6s)
+[47] ✓ tap "Search places and visits" (0.4s)
+[48] ✓ tap "Place or visit name" (1.4s)
+[49] ✓ paste (0.1s)
+{
+  "pasted": true
+}
+[50] ✓ await visible "No saved places or visits match." (0.6s)
+[51] ✓ idle (1.1s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle.
+[52] ✓ tap "Close map visits" (0.4s)
+[53] ✓ await visible id=map-add (0.6s)
+[54] ✓ idle (0.6s)
+[55] ✓ tap "Add a place" (0.4s)
+[56] ✓ tap "Drop a pin" (1.2s)
+[57] ✓ await visible id=visit-name (0.6s)
+[58] ✓ idle (1.1s)
+[59] ✓ tap "Nearby businesses" (0.4s)
+[60] ✓ await visible "Nearby business search is not configured in this build." (0.6s)
+[61] ✓ idle (1.1s)
+[62] ✓ tap "Close nearby search" (0.4s)
+[63] ✓ await visible id=visit-name (0.6s)
+[64] ✓ idle (0.5s)
+[65] ✓ tap "Choose visit location" (0.4s)
+[66] ✓ await visible "Offline coordinate map. Street details require the online map." (0.7s)
+[67] ✓ idle (0.5s)
+[68] ✓ tap "Search places" (0.4s)
+[69] ✓ await visible "Network geocoding is disabled. Enable it in Settings to search, or choose coordinates offline." (0.6s)
+[70] ✓ idle (1.1s)
+[71] ✓ tap "Cancel place search" (0.4s)
+[72] ✓ await visible id=place-pin-close (0.6s)
+[73] ✓ idle (0.5s)
+[74] ✓ tap "Cancel" (0.4s)
+[75] ✓ await visible id=visit-name (0.6s)
+[76] ✓ idle (1.1s)
+[77] ✓ tap "Cancel" (0.4s)
+[78] ✓ await visible "Discard visit changes?" (0.9s)
+[79] ✓ idle (1.2s)
+[80] ✓ tap "Discard changes" (0.6s)
+[81] ✓ await visible id=map-auto-off (0.9s)
+[82] ✓ idle (1.0s)
+[83] ✓ launch (4.6s)
+[84] ✓ await visible id=map-add (1.4s)
+[85] ✓ idle (0.8s)
+[86] ✓ tap id=navigation-archive (0.5s)
+[87] ✓ await id=export-history-count contains "25 route points" (0.9s)
+[88] ✓ idle (0.7s)
+[89] ✓ tap "Settings" (0.6s)
+[90] ✓ await visible id=settings-screen (0.9s)
+[91] ✓ idle (0.7s)
+[92] ✓ scroll-to id=settings-geocoding (2.9s)
+[93] ✓ await visible id=settings-geocoding (0.1s)
+[94] ✓ idle (0.6s)
+[95] ✓ tap id=settings-geocoding (0.6s)
+[96] ✓ scroll-to /^Automation access$/ (1.6s)
+[97] ✓ tap "Automation access" (0.5s)
+[98] ✓ await visible id=automation-screen (0.2s)
+[99] ✓ idle (1.1s)
+[100] ✓ await id=automation-status equals "Access disabled" (0.1s)
+[101] ✓ idle (0.7s)
+[102] ✓ tap "Check installed app" (0.5s)
+[103] ✓ tap "Check installed app" (0.6s)
+[104] ✓ tap id=automation-scope-summary (0.6s)
+[105] ✓ await id=automation-status equals "Access disabled" (0.1s)
+[106] ✓ idle (0.8s)
+[107] ✓ scroll-to id=automation-scope-exports (1.6s)
+[108] ✓ await id=automation-scope-exports contains "Verified access to a Whereday plan is also required." (0.2s)
+[109] ✓ idle (0.7s)
+[110] ✓ scroll-to id=automation-save (1.5s)
+[111] ✓ await visible id=automation-save (0.1s)
+[112] ✓ idle (1.4s)
+[113] ✓ tap "Save automation access" (0.5s)
+[114] ✓ await visible id=automation-screen (0.0s)
+[115] ✓ idle (0.7s)
+[116] ✓ button (0.1s)
+{
+  "pressed": "back"
+}
+[117] ✓ await visible id=settings-screen (0.2s)
+[118] ✓ idle (0.7s)
+[119] ✓ tap id=navigation-places (0.7s)
+[120] ✓ await visible id=saved-places-search (0.5s)
+[121] ✓ idle (0.6s)
+[122] ✓ await visible "1 of 1 saved place" (0.2s)
+[123] ✓ tap id=navigation-map (0.5s)
+[124] ✓ await visible id=map-auto-off (1.0s)
+[125] ✓ idle (1.2s)
+PASS — 124 passed, 0 failed, 0 errored, 0 skipped (1m 38s)

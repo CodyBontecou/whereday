@@ -1,0 +1,12 @@
+{
+  "backupFormat": "whereday-backup",
+  "formatVersion": 1,
+  "counts": {
+    "visits": 132,
+    "points": 111,
+    "recordingSessions": 3,
+    "savedPlaces": 6,
+    "photoMoments": 0,
+    "countryStays": 13
+  }
+}

@@ -48,3 +48,44 @@ final class TEActionContrastTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(ratio, 4.5, "Insufficient action contrast in \(appearance): \(ratio)", file: file, line: line)
     }
 }
+
+@MainActor
+final class AppAppearanceWindowOverrideTests: XCTestCase {
+    func testAppearanceResetUpdatesAnExistingChildController() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        let root = UIViewController()
+        let child = UIViewController()
+        window.rootViewController = root
+        root.addChild(child)
+        root.view.addSubview(child.view)
+        child.didMove(toParent: root)
+        window.makeKeyAndVisible()
+        let bridge = AppAppearanceWindowOverride.AppearanceView()
+        bridge.appearance = .dark
+        root.view.addSubview(bridge)
+        window.updateTraitsIfNeeded()
+        defer { window.isHidden = true }
+
+        XCTAssertEqual(window.overrideUserInterfaceStyle, .dark)
+        XCTAssertEqual(child.view.traitCollection.userInterfaceStyle, .dark)
+        bridge.appearance = .light
+        window.updateTraitsIfNeeded()
+        XCTAssertEqual(child.view.traitCollection.userInterfaceStyle, .light)
+        bridge.appearance = .system
+        window.updateTraitsIfNeeded()
+        XCTAssertEqual(window.overrideUserInterfaceStyle, .unspecified)
+        XCTAssertEqual(child.view.traitCollection.userInterfaceStyle, window.traitCollection.userInterfaceStyle)
+    }
+
+    func testPreferenceAppliesWhenBridgeAttachesToAWindowLater() {
+        let bridge = AppAppearanceWindowOverride.AppearanceView()
+        bridge.appearance = .dark
+        let window = UIWindow(frame: .zero)
+        window.addSubview(bridge)
+        XCTAssertEqual(window.overrideUserInterfaceStyle, .dark)
+        bridge.removeFromSuperview()
+        let replacement = UIWindow(frame: .zero)
+        replacement.addSubview(bridge)
+        XCTAssertEqual(replacement.overrideUserInterfaceStyle, .dark)
+    }
+}

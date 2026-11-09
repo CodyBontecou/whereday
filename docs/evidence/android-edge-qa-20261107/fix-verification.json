@@ -1,0 +1,25 @@
+{
+  "tests": 102,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "apk_sha256": "b0438ecce81a4ec63d881d35ed5e468c48449528a2e7b42b4d454f186b312718",
+  "gradle_tasks": [
+    ":app:testDebugUnitTest",
+    ":app:lintDebug",
+    ":app:assembleMapQa"
+  ],
+  "gradle_result": "BUILD SUCCESSFUL",
+  "recap_e2e": {
+    "passed": 69,
+    "failed": 0,
+    "errored": 0
+  },
+  "settings_e2e": {
+    "passed": 94,
+    "failed": 0,
+    "errored": 0
+  },
+  "final_route_points": 25,
+  "final_distance_filter_meters": 5
+}

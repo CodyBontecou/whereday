@@ -355,11 +355,52 @@ enum AppAppearance: String, CaseIterable, Identifiable {
         case .dark: .dark
         }
     }
+    var interfaceStyle: UIUserInterfaceStyle {
+        switch self {
+        case .system: .unspecified
+        case .light: .light
+        case .dark: .dark
+        }
+    }
     var title: LocalizedStringKey {
         switch self {
         case .system: "System"
         case .light: "Light"
         case .dark: "Dark"
+        }
+    }
+}
+
+/// Apply the preference at the window so existing sheets also return to the
+/// system appearance. Clearing SwiftUI's preferredColorScheme alone leaves a
+/// presented sheet using its previous override until it is dismissed.
+struct AppAppearanceWindowOverride: UIViewRepresentable {
+    let appearance: AppAppearance
+
+    func makeUIView(context: Context) -> AppearanceView {
+        let view = AppearanceView()
+        view.isUserInteractionEnabled = false
+        view.appearance = appearance
+        return view
+    }
+
+    func updateUIView(_ uiView: AppearanceView, context: Context) {
+        uiView.appearance = appearance
+    }
+
+    final class AppearanceView: UIView {
+        var appearance: AppAppearance = .system {
+            didSet { applyAppearance() }
+        }
+
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            applyAppearance()
+        }
+
+        private func applyAppearance() {
+            guard let window, window.overrideUserInterfaceStyle != appearance.interfaceStyle else { return }
+            window.overrideUserInterfaceStyle = appearance.interfaceStyle
         }
     }
 }

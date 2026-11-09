@@ -24,6 +24,16 @@ struct CalendarEventDraft: Identifiable {
         location = Self.locationName(address: visit.address, name: visit.locationName, coordinate: visit.coordinate)
     }
 
+    /// Uses the visit editor's current values without saving them to the source visit.
+    init(visit: Visit, name: String, arrivedAt: Date, departedAt: Date?,
+         now: Date = Date(), notes: String? = nil) {
+        self.init(visit: visit, now: now, notes: notes)
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        title = trimmedName.isEmpty ? visit.displayName : trimmedName
+        startDate = arrivedAt
+        endDate = max(arrivedAt, departedAt ?? now)
+    }
+
     init(session: RecordingSessionSummary, now: Date = Date(), notes: String? = nil) {
         title = session.title
         self.notes = Self.nonblankNotes(notes ?? session.storedSession?.notes)

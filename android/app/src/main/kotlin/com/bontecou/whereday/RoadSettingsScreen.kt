@@ -23,16 +23,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bontecou.whereday.data.AppSettings
 import com.bontecou.whereday.platform.*
 
-@Composable internal fun RoadSettingsScreen(graph:AppGraph,back:()->Unit) {
+@Composable internal fun RoadSettingsScreen(graph:AppGraph,back:()->Unit,backLabel:Int=R.string.road_settings_back) {
     val session=remember(graph) {graph.roadConsentSession()}
     val settings by graph.preferences.settings.collectAsStateWithLifecycle(initialValue=null)
     val policy by graph.roadDisplay.state.collectAsStateWithLifecycle()
     val journal by graph.journalClear.state.collectAsStateWithLifecycle()
-    RoadSettingsContent(session,settings,policy,journal,back)
+    RoadSettingsContent(session,settings,policy,journal,back,backLabel)
 }
 
 @Composable internal fun RoadSettingsContent(session:RoadConsentSession,settings:AppSettings?,policy:RoadDisplayControllerState,
-    journal:JournalClearState,back:()->Unit) {
+    journal:JournalClearState,back:()->Unit,backLabel:Int=R.string.road_settings_back) {
     BackHandler(onBack=back)
     val state by session.state.collectAsStateWithLifecycle()
     val lifecycle=LocalLifecycleOwner.current.lifecycle
@@ -60,7 +60,7 @@ import com.bontecou.whereday.platform.*
     val card=Modifier.padding(horizontal=16.dp)
     Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("road-settings-screen")
         .verticalScroll(rememberScrollState()).padding(bottom=32.dp)) {
-        SettingsBackHeader(stringResource(R.string.road_settings_title),stringResource(R.string.road_settings_back),back)
+        SettingsBackHeader(stringResource(R.string.road_settings_title),stringResource(backLabel),back)
         Text(stringResource(R.string.road_settings_explanation),Modifier.padding(horizontal=20.dp),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
         WdCard(card.padding(top=16.dp)) {
             SettingsToggle(label,enabled,editable && (enabled || available && current?.networkGeocoding==true),

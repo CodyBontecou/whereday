@@ -9,26 +9,37 @@ LOCALES = ["ar-SA", "es-ES", "fr-FR", "hi", "ja", "pt-BR", "ru", "zh-Hans"]
 
 # Kicker tokens are translated inside the mono line; numbers and times are kept.
 KICKER_TOKENS = {
-    "ar-SA": {"ONE LONG DAY": "يوم طويل واحد", "KM": "كم", "DAY 305 OF 365": "اليوم 305 من 365", "DAY 305": "اليوم 305", "AGAIN": "مجددًا",
+    "ar-SA": {"DAYS": "أيام", "VISITS": "زيارة", "ONE LONG DAY": "يوم طويل واحد", "KM": "كم", "DAY 305 OF 365": "اليوم 305 من 365", "DAY 305": "اليوم 305", "AGAIN": "مجددًا",
               "HOME": "المنزل", "FOLDED": "مطويّ", "TAP ANY UNDERLINED WORD": "اضغط أي كلمة تحتها خط"},
-    "es-ES": {"ONE LONG DAY": "UN DÍA LARGO", "KM": "KM", "DAY 305 OF 365": "DÍA 305 DE 365", "DAY 305": "DÍA 305", "AGAIN": "OTRA VEZ",
+    "es-ES": {"DAYS": "DÍAS", "VISITS": "VISITAS", "ONE LONG DAY": "UN DÍA LARGO", "KM": "KM", "DAY 305 OF 365": "DÍA 305 DE 365", "DAY 305": "DÍA 305", "AGAIN": "OTRA VEZ",
               "HOME": "CASA", "FOLDED": "PLEGADO", "TAP ANY UNDERLINED WORD": "TOCA CUALQUIER PALABRA SUBRAYADA"},
-    "fr-FR": {"ONE LONG DAY": "UNE LONGUE JOURNÉE", "KM": "KM", "DAY 305 OF 365": "JOUR 305 SUR 365", "DAY 305": "JOUR 305", "AGAIN": "ENCORE",
+    "fr-FR": {"DAYS": "JOURS", "VISITS": "VISITES", "ONE LONG DAY": "UNE LONGUE JOURNÉE", "KM": "KM", "DAY 305 OF 365": "JOUR 305 SUR 365", "DAY 305": "JOUR 305", "AGAIN": "ENCORE",
               "HOME": "MAISON", "FOLDED": "PLIÉ", "TAP ANY UNDERLINED WORD": "TOUCHEZ UN MOT SOULIGNÉ"},
-    "hi": {"ONE LONG DAY": "एक लंबा दिन", "KM": "कि॰मी॰", "DAY 305 OF 365": "365 में से दिन 305", "DAY 305": "दिन 305", "AGAIN": "फिर से",
+    "hi": {"DAYS": "दिन", "VISITS": "विज़िट", "ONE LONG DAY": "एक लंबा दिन", "KM": "कि॰मी॰", "DAY 305 OF 365": "365 में से दिन 305", "DAY 305": "दिन 305", "AGAIN": "फिर से",
            "HOME": "घर", "FOLDED": "बंद", "TAP ANY UNDERLINED WORD": "रेखांकित शब्द पर टैप करें"},
-    "ja": {"ONE LONG DAY": "長い一日", "KM": "KM", "DAY 305 OF 365": "365日中305日目", "DAY 305": "305日目", "AGAIN": "また",
+    "ja": {"DAYS": "日間", "VISITS": "件の訪問", "ONE LONG DAY": "長い一日", "KM": "KM", "DAY 305 OF 365": "365日中305日目", "DAY 305": "305日目", "AGAIN": "また",
            "HOME": "自宅", "FOLDED": "閉じた状態", "TAP ANY UNDERLINED WORD": "下線の語をタップして変更"},
-    "pt-BR": {"ONE LONG DAY": "UM LONGO DIA", "KM": "KM", "DAY 305 OF 365": "DIA 305 DE 365", "DAY 305": "DIA 305", "AGAIN": "DE NOVO",
+    "pt-BR": {"DAYS": "DIAS", "VISITS": "VISITAS", "ONE LONG DAY": "UM LONGO DIA", "KM": "KM", "DAY 305 OF 365": "DIA 305 DE 365", "DAY 305": "DIA 305", "AGAIN": "DE NOVO",
               "HOME": "CASA", "FOLDED": "FECHADO", "TAP ANY UNDERLINED WORD": "TOQUE EM QUALQUER PALAVRA SUBLINHADA"},
-    "ru": {"ONE LONG DAY": "ОДИН ДОЛГИЙ ДЕНЬ", "KM": "КМ", "DAY 305 OF 365": "ДЕНЬ 305 ИЗ 365", "DAY 305": "ДЕНЬ 305", "AGAIN": "СНОВА",
+    "ru": {"DAYS": "ДНЕЙ", "VISITS": "ВИЗИТ", "ONE LONG DAY": "ОДИН ДОЛГИЙ ДЕНЬ", "KM": "КМ", "DAY 305 OF 365": "ДЕНЬ 305 ИЗ 365", "DAY 305": "ДЕНЬ 305", "AGAIN": "СНОВА",
            "HOME": "ДОМ", "FOLDED": "СЛОЖЕН", "TAP ANY UNDERLINED WORD": "НАЖМИТЕ НА ПОДЧЁРКНУТОЕ СЛОВО"},
-    "zh-Hans": {"ONE LONG DAY": "漫长的一天", "KM": "公里", "DAY 305 OF 365": "365 天中的第 305 天", "DAY 305": "第 305 天", "AGAIN": "又来了",
+    "zh-Hans": {"DAYS": "天", "VISITS": "次到访", "ONE LONG DAY": "漫长的一天", "KM": "公里", "DAY 305 OF 365": "365 天中的第 305 天", "DAY 305": "第 305 天", "AGAIN": "又来了",
                 "HOME": "家", "FOLDED": "已合上", "TAP ANY UNDERLINED WORD": "轻点带下划线的词语"},
 }
 
 # Headline halves, handwritten notes and labels: exact text node -> translation.
 TEXT = {
+    # Map-first home (2.0 build after the map-first merge): shot 02 shows a week on the map.
+    "A week,": {"ar-SA": "أسبوع،", "es-ES": "Una semana,", "fr-FR": "Une semaine,", "hi": "एक हफ़्ता,",
+                "ja": "一週間を", "pt-BR": "Uma semana,", "ru": "Неделя —", "zh-Hans": "一周，"},
+    "one map.": {"ar-SA": "على خريطة واحدة.", "es-ES": "un mapa.", "fr-FR": "une carte.", "hi": "एक नक्शा।",
+                 "ja": "一枚の地図に。", "pt-BR": "um mapa.", "ru": "одна карта.", "zh-Hans": "一张地图。"},
+    "home, seven times": {"ar-SA": "المنزل، سبع مرات", "es-ES": "casa, siete veces", "fr-FR": "maison, sept fois",
+                          "hi": "घर, सात बार", "ja": "家、7回", "pt-BR": "casa, sete vezes", "ru": "дом, семь раз",
+                          "zh-Hans": "家，七次"},
+    "Sunday’s loop": {"ar-SA": "جولة الأحد", "es-ES": "la vuelta del domingo", "fr-FR": "la boucle du dimanche",
+                      "hi": "रविवार का चक्कर", "ja": "日曜の一周", "pt-BR": "a volta de domingo", "ru": "воскресный круг",
+                      "zh-Hans": "周日那一圈"},
     "Where did": {"ar-SA": "أين ذهب", "es-ES": "¿Adónde fue", "fr-FR": "Où est passée", "hi": "आज का दिन",
                   "ja": "今日は", "pt-BR": "Para onde foi", "ru": "Куда делся", "zh-Hans": "今天"},
     "today go?": {"ar-SA": "اليوم؟", "es-ES": "el día?", "fr-FR": "la journée ?", "hi": "कहाँ गया?",
@@ -151,3 +162,74 @@ EXPORT_SENTENCE = {
     "ru": ("Экспортировать мои {a} за {b} в {c}.", "визиты и маршруты", "последние 7 дней", "GPX"),
     "zh-Hans": ("将{b}的{a}导出为 {c}。", "到访和路线", "最近 7 天", "GPX"),
 }
+
+# Bangla (bn-BD) and Polish (pl), added November 7, 2026. The app already ships both;
+# these bring the store artwork up to the same eleven languages.
+LOCALES += ["bn-BD", "pl"]
+
+KICKER_TOKENS["bn-BD"] = {
+    "DAYS": "দিন", "VISITS": "ভিজিট", "ONE LONG DAY": "একটি লম্বা দিন", "KM": "কিমি", "DAY 305 OF 365": "365 দিনের 305তম দিন",
+    "DAY 305": "305তম দিন", "AGAIN": "আবার", "HOME": "বাড়ি", "FOLDED": "ভাঁজ করা",
+    "TAP ANY UNDERLINED WORD": "দাগ দেওয়া যেকোনো শব্দে ট্যাপ করুন"}
+KICKER_TOKENS["pl"] = {
+    "DAYS": "DNI", "VISITS": "WIZYT", "ONE LONG DAY": "JEDEN DŁUGI DZIEŃ", "KM": "KM", "DAY 305 OF 365": "DZIEŃ 305 Z 365",
+    "DAY 305": "DZIEŃ 305", "AGAIN": "ZNOWU", "HOME": "DOM", "FOLDED": "ZŁOŻONY",
+    "TAP ANY UNDERLINED WORD": "DOTKNIJ PODKREŚLONEGO SŁOWA"}
+
+# English text node -> (bn-BD, pl).
+_ADDED_TEXT = {
+    "A week,": ("এক সপ্তাহ,", "Tydzień,"),
+    "one map.": ("একটি মানচিত্র।", "jedna mapa."),
+    "home, seven times": ("বাড়ি, সাতবার", "dom, siedem razy"),
+    "Sunday’s loop": ("রবিবারের চক্কর", "niedzielna pętla"),
+    "Where did": ("দিনটা", "Dokąd"),
+    "today go?": ("কোথায় গেল?", "uciekł dzień?"),
+    "it kept notes for you": ("আপনার হয়ে নোট রেখেছে", "notował za Ciebie"),
+    "left home": ("বাড়ি থেকে বেরোনো", "wyjście z domu"),
+    "Rewind": ("দিনটা আবার", "Przewiń"),
+    "the day.": ("দেখুন।", "dzień."),
+    "Rewind it": ("আবার দেখুন", "Przewiń go"),
+    "on the table.": ("টেবিলের ওপর।", "na stole."),
+    "half-open, map up top": ("আধখোলা, মানচিত্র ওপরে", "półotwarty, mapa u góry"),
+    "One square": ("প্রতিদিন", "Jeden kwadrat"),
+    "per day.": ("একটি বর্গ।", "na dzień."),
+    "Oct 20 ↘": ("20 অক্টো ↘", "20 paź ↘"),
+    "23 visits.": ("23 বার ভিজিট।", "23 wizyty."),
+    "You’re a regular.": ("আপনি নিয়মিত।", "Stały bywalec."),
+    "Places": ("জায়গাগুলো", "Miejsca"),
+    "keep count.": ("হিসাব রাখে।", "same liczą."),
+    "mostly weekday lunch": ("মূলত কাজের দিনের লাঞ্চ", "głównie lunch w tygodniu"),
+    "or Markdown, CSV, JSON…": ("অথবা Markdown, CSV, JSON…", "albo Markdown, CSV, JSON…"),
+    "No account.": ("অ্যাকাউন্ট নেই।", "Bez konta."),
+    "No server copy.": ("সার্ভারে নেই।", "Bez kopii na serwerze."),
+    "SPECIMEN Nº 305": ("নমুনা নং 305", "OKAZ NR 305"),
+    "One ordinary day.": ("একটি সাধারণ দিন।", "Jeden zwykły dzień."),
+    "KEPT ON THIS PHONE": ("এই ফোনেই রাখা", "ZAPISANE NA TYM TELEFONIE"),
+    "KEPT ON THIS DEVICE": ("এই ডিভাইসেই রাখা", "ZAPISANE NA TYM URZĄDZENIU"),
+    "Same day,": ("একই দিন,", "Ten dzień,"),
+    "after dark.": ("সন্ধ্যার পরে।", "po zmroku."),
+    "today’s places, as stars": ("আজকের জায়গাগুলো, তারার মতো", "dzisiejsze miejsca jako gwiazdy"),
+    "Recording": ("রেকর্ড হচ্ছে", "Nagrywanie"),
+    "Always on.": ("সবসময় চালু।", "Zawsze włączone."),
+    "Never sneaky.": ("কখনো লুকিয়ে নয়।", "Nigdy po kryjomu."),
+    "A glance": ("এক নজরই", "Wystarczy"),
+    "is plenty.": ("যথেষ্ট।", "rzut oka."),
+    "home screen": ("হোম স্ক্রিন", "ekran początkowy"),
+    "wrist": ("কবজি", "nadgarstek"),
+    "Every month,": ("প্রতি মাসে,", "Co miesiąc"),
+    "a postcard.": ("একটি পোস্টকার্ড।", "pocztówka."),
+    "OCT 2026": ("অক্টো 2026", "PAŹ 2026"),
+    "47 PLACES": ("47টি জায়গা", "47 MIEJSC"),
+    "home. see you tomorrow.": ("বাড়ি। কাল দেখা হবে।", "w domu. do jutra."),
+    "Closed.": ("বন্ধ।", "Zamknięty."),
+    "Still counting.": ("তবুও গুনছে।", "Wciąż liczy."),
+    "the cover screen, folded shut": ("কভার স্ক্রিন, ভাঁজ করা", "ekran zewnętrzny, po złożeniu"),
+    "left home 08:12": ("বাড়ি থেকে বেরোনো 08:12", "wyjście z domu 08:12"),
+    "home 23:30": ("বাড়ি 23:30", "w domu 23:30"),
+}
+assert _ADDED_TEXT.keys() == TEXT.keys(), set(TEXT) ^ set(_ADDED_TEXT)
+for _key, (_bn, _pl) in _ADDED_TEXT.items():
+    TEXT[_key].update({"bn-BD": _bn, "pl": _pl})
+
+EXPORT_SENTENCE["bn-BD"] = ("{b} আমার {a} {c} হিসেবে রপ্তানি করুন।", "ভিজিট ও রুট", "গত 7 দিনের", "GPX")
+EXPORT_SENTENCE["pl"] = ("Eksportuj moje {a} z {b} jako {c}.", "wizyty i trasy", "ostatnich 7 dni", "GPX")

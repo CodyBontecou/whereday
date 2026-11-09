@@ -183,6 +183,9 @@ struct ImportPreviewView: View {
     }
 
     private func progressCaption(_ preview: ImportPreview, completed: Int, total: Int) -> String {
+        if preview.payload.backup != nil {
+            return String(localized: "\(completed.formatted()) OF \(total.formatted()) RECORDS")
+        }
         let savesPoints = options.includePoints && preview.newPointCount > 0
         let savesVisits = options.includeVisits && preview.newVisitCount > 0
         let unit: String
@@ -195,6 +198,9 @@ struct ImportPreviewView: View {
     }
 
     private func completionHeadline(_ result: ImportCommitResult) -> String {
+        if result.additionalRecordCount > 0 {
+            return String(localized: "\((result.visitCount + result.pointCount + result.additionalRecordCount).formatted()) records restored")
+        }
         let points = result.pointCount == 1
             ? String(localized: "1 point")
             : String(localized: "\(result.pointCount.formatted()) points")
@@ -210,6 +216,9 @@ struct ImportPreviewView: View {
 
     /// "Five years of days now show in Atlas." from the imported file's real date range.
     private func completionDetail(_ preview: ImportPreview) -> String {
+        if preview.payload.backup != nil {
+            return String(localized: "Your restored records are available in Whereday. Photo matches need access to the original Photos library.")
+        }
         guard let range = preview.payload.dateRange else {
             return String(localized: "They now show in Atlas.")
         }
@@ -231,7 +240,7 @@ struct ImportPreviewView: View {
     }
 
     private func duplicatesSummary(_ result: ImportCommitResult) -> String {
-        String(localized: "\((result.duplicatePointCount + result.duplicateVisitCount).formatted()) DUPLICATES SKIPPED")
+        String(localized: "\((result.duplicatePointCount + result.duplicateVisitCount + result.duplicateAdditionalRecordCount).formatted()) DUPLICATES SKIPPED")
     }
 
     private func statusBlock(title: LocalizedStringKey) -> some View {
@@ -280,6 +289,33 @@ struct ImportPreviewView: View {
 
     @ViewBuilder
     private func review(_ preview: ImportPreview) -> some View {
+        if let backup = preview.payload.backup {
+            fileCard(name: preview.fileName, detail: String(localized: "Whereday backup"))
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Restore your records")
+                    .font(TE.editorial(.title2))
+                Text("\(backup.visits.count.formatted()) visits · \(backup.points.count.formatted()) points")
+                Text("\(backup.recordingSessions.count.formatted()) outings · \(backup.savedPlaces.count.formatted()) saved places")
+                Text("\(backup.countryStays.count.formatted()) country stays · \(backup.photoMoments.count.formatted()) photo matches")
+                Text("\(selectedCount(preview).formatted()) new records")
+                    .fontWeight(.semibold)
+                Text("Existing record IDs are skipped. Nothing on this device is replaced. Photo matches need the original Photos library; image files are not part of the backup.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(16)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .accessibilityIdentifier("backup-review-summary")
+        } else {
+            standardReview(preview)
+        }
+    }
+
+    @ViewBuilder
+    private func standardReview(_ preview: ImportPreview) -> some View {
         fileCard(name: preview.fileName, detail: fileDetail(preview))
 
         VStack(alignment: .leading, spacing: 12) {
@@ -427,7 +463,11 @@ struct ImportPreviewView: View {
                         }
                     }
                 } label: {
-                    Text("Import selected records")
+                    if preview.payload.backup != nil {
+                        Text("Restore backup")
+                    } else {
+                        Text("Import selected records")
+                    }
                 }
                 .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
                 .disabled(selectedCount(preview) == 0)
@@ -472,6 +512,9 @@ struct ImportPreviewView: View {
     }
 
     private func selectedCount(_ preview: ImportPreview) -> Int {
-        (options.includeVisits ? preview.newVisitCount : 0) + (options.includePoints ? preview.newPointCount : 0)
+        if preview.payload.backup != nil {
+            return preview.newVisitCount + preview.newPointCount + preview.newAdditionalRecordCount
+        }
+        return (options.includeVisits ? preview.newVisitCount : 0) + (options.includePoints ? preview.newPointCount : 0)
     }
 }

@@ -65,6 +65,7 @@ private fun stayCountryName(code:String,locale:Locale)=CountryRegions.displayNam
     var code by rememberSaveable(stay?.id) {mutableStateOf(initialCode)}
     var firstText by rememberSaveable(stay?.id) {mutableStateOf(initialFirst.toString())}
     var lastText by rememberSaveable(stay?.id) {mutableStateOf(initialLast.toString())}
+    var calendarAnchorText by rememberSaveable(stay?.id) {mutableStateOf<String?>(null)}
     val first=LocalDate.parse(firstText);val last=LocalDate.parse(lastText)
     var chooseCountry by rememberSaveable {mutableStateOf(false)}
     var chooseDates by rememberSaveable {mutableStateOf(false)}
@@ -99,7 +100,9 @@ private fun stayCountryName(code:String,locale:Locale)=CountryRegions.displayNam
                 Column(Modifier.weight(1f).semantics {testTagsAsResourceId=true}.testTag("stay-editor-content").verticalScroll(rememberScrollState()).padding(horizontal=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
                     Text(stringResource(R.string.stay_explanation),Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(wd.noticeContainer).padding(16.dp),style=MaterialTheme.typography.bodyMedium,color=wd.onNoticeContainer)
                     WdButton(stringResource(R.string.stay_country,stayCountryName(code,locale),code),{chooseCountry=true},Modifier.testTag("stay-country"),enabled=!busy,icon=Icons.Outlined.Public,trailingIcon=Icons.Filled.UnfoldMore)
-                    StayCalendar(first,last,today,recorded,enabled=!busy) {a,b2->firstText=a.toString();lastText=b2.toString()}
+                    StayCalendar(first,last,today,recorded,enabled=!busy,
+                        anchor=calendarAnchorText?.let(LocalDate::parse),anchorChanged={calendarAnchorText=it?.toString()}
+                    ) {a,b2->firstText=a.toString();lastText=b2.toString()}
                     WdCard {
                         WdRow {Text(stringResource(R.string.stay_first,date.format(first)),Modifier.weight(1f).testTag("stay-first"),style=WdType.caption,color=if(first>last) wd.inkRust else wd.textPrimary)}
                         WdRow(divider=false) {Text(stringResource(R.string.stay_last,date.format(last)),Modifier.weight(1f).testTag("stay-last"),style=WdType.caption,color=if(last>today || first>last) wd.inkRust else wd.textPrimary)}
@@ -121,7 +124,7 @@ private fun stayCountryName(code:String,locale:Locale)=CountryRegions.displayNam
     }
     if(chooseCountry) StayCountrySelector(code,{chooseCountry=false}) {code=it;chooseCountry=false}
     // Country stays store country-local civil dates, independent of this phone's time zone.
-    if(chooseDates) CustomDateRange(first,last,{chooseDates=false},latestDate=today,zone=null) {a,b->firstText=a.toString();lastText=b.toString();chooseDates=false}
+    if(chooseDates) CustomDateRange(first,last,{chooseDates=false},latestDate=today,zone=null) {a,b->firstText=a.toString();lastText=b.toString();calendarAnchorText=null;chooseDates=false}
     if(confirmDelete) WorkspaceAlertDialog(onDismissRequest={if(!busy) confirmDelete=false},title={Text(stringResource(R.string.stay_delete_title))},text={Text(stringResource(R.string.stay_delete_body))},confirmButton={TextButton(enabled=!busy,onClick={confirmDelete=false;perform(true)},modifier=Modifier.semantics {testTagsAsResourceId=true}.testTag("stay-delete-confirm"),colors=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)) {Text(stringResource(R.string.stay_delete_confirm))}},dismissButton={TextButton(enabled=!busy,onClick={confirmDelete=false},modifier=Modifier.semantics {testTagsAsResourceId=true}.testTag("stay-delete-cancel")) {Text(stringResource(R.string.stay_cancel))}})
     if(discard) WorkspaceAlertDialog(onDismissRequest={discard=false},title={Text(stringResource(R.string.stay_discard_title))},text={Text(stringResource(R.string.stay_discard_body))},confirmButton={TextButton(onClick=dismiss,modifier=Modifier.semantics {testTagsAsResourceId=true}.testTag("stay-discard-confirm"),colors=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)) {Text(stringResource(R.string.stay_discard))}},dismissButton={TextButton(onClick={discard=false}) {Text(stringResource(R.string.stay_keep))}})
 }
@@ -148,11 +151,13 @@ private fun stayCountryName(code:String,locale:Locale)=CountryRegions.displayNam
 }
 
 /** The board's inline range calendar: one month at a time, tap the first then the last day; recorded days are marked and future days disabled. */
-@Composable private fun StayCalendar(first:LocalDate,last:LocalDate,today:LocalDate,recorded:Set<LocalDate>,enabled:Boolean,change:(LocalDate,LocalDate)->Unit) {
+@Composable private fun StayCalendar(
+    first:LocalDate,last:LocalDate,today:LocalDate,recorded:Set<LocalDate>,enabled:Boolean,
+    anchor:LocalDate?,anchorChanged:(LocalDate?)->Unit,change:(LocalDate,LocalDate)->Unit
+) {
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     var month by rememberSaveable {mutableStateOf(java.time.YearMonth.from(first).toString())}
     val shown=java.time.YearMonth.parse(month)
-    var anchor by remember {mutableStateOf<LocalDate?>(null)}
     val title=shown.atDay(1).format(DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,"MMMMyyyy"),locale))
     Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(wd.containerLow).padding(16.dp).testTag("stay-calendar"),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Text(stringResource(R.string.stay_calendar_title),style=WdType.caption2.copy(letterSpacing=0.1.em),color=wd.textMuted)
@@ -180,7 +185,7 @@ private fun stayCountryName(code:String,locale:Locale)=CountryRegions.displayNam
                                 .then(if(!inRange && day in recorded) Modifier.border(1.5.dp,wd.placeInks[3],shape) else Modifier)
                                 .clickable(enabled=enabled && !future,role=Role.Button,onClickLabel=day.toString()) {
                                     val start=anchor
-                                    if(start==null) {anchor=day;change(day,day)} else {anchor=null;if(day<start) change(day,start) else change(start,day)}
+                                    if(start==null) {anchorChanged(day);change(day,day)} else {anchorChanged(null);if(day<start) change(day,start) else change(start,day)}
                                 },contentAlignment=Alignment.Center) {
                                 Text(day.dayOfMonth.toString(),style=MaterialTheme.typography.bodyMedium,color=when {inRange->wd.surface;future->wd.textMuted.copy(alpha=0.4f);else->wd.textPrimary})
                             }

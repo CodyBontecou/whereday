@@ -19,6 +19,46 @@ final class CountryStay {
     }
 }
 
+/// The editor's value snapshot; changing a draft never mutates a stored stay.
+struct CountryStayDraft: Equatable {
+    var countryCode: String
+    var firstDay: String
+    var lastDay: String
+    var note: String
+
+    @MainActor
+    @discardableResult
+    func save(in context: ModelContext, updating existing: CountryStay? = nil,
+              commit: (ModelContext) throws -> Void = { try $0.save() }) throws -> CountryStay {
+        let previous = existing.map {
+            (countryCode: $0.countryCode, firstDay: $0.firstDay, lastDay: $0.lastDay, note: $0.note)
+        }
+        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
+        let stay = existing ?? CountryStay(countryCode: countryCode, firstDay: firstDay, lastDay: lastDay)
+        if existing == nil { context.insert(stay) }
+        stay.countryCode = countryCode
+        stay.firstDay = firstDay
+        stay.lastDay = lastDay
+        stay.note = trimmed.isEmpty ? nil : trimmed
+        do {
+            try commit(context)
+        } catch {
+            // Restore only this operation: rolling back the shared context
+            // would also discard unrelated pending edits.
+            if let previous {
+                stay.countryCode = previous.countryCode
+                stay.firstDay = previous.firstDay
+                stay.lastDay = previous.lastDay
+                stay.note = previous.note
+            } else {
+                context.delete(stay)
+            }
+            throw error
+        }
+        return stay
+    }
+}
+
 struct CountryPresence: Equatable {
     let countryCode: String
     let day: String

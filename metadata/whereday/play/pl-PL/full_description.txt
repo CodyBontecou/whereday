@@ -1,0 +1,27 @@
+Whereday prowadzi prywatny zapis odwiedzanych miejsc i przebytych tras, a po uruchomieniu od razu pokazuje mapę Twojego dnia.
+
+TWÓJ DZIEŃ NA MAPIE
+• Aplikacja otwiera się od razu na dzisiejszym dniu na pełnoekranowej mapie, ze wszystkimi postojami i trasami
+• Przełączaj się między dziś, wczoraj, ostatnimi 7 lub 30 dniami, całą historią lub dowolnym zakresem z kalendarza
+• Wysuń panel dnia, aby zobaczyć historię dnia z 24-godzinną tarczą postojów i przejazdów
+• Odtwarzaj dowolny dzień na mapie w tempie 1×, 10× lub 60×
+• Oglądaj zdjęcia zrobione po drodze, bezpośrednio na mapie
+
+TWÓJ DZIENNIK LOKALIZACJI
+• Przeglądaj rok dzień po dniu w Atlasie, w kolorach krajów, z miesięcznym podsumowaniem
+• Nazywaj swoje miejsca i sprawdzaj, jak często do nich wracasz
+• Dodawaj wizyty ręcznie i poprawiaj zapisane godziny wizyt
+• Śledź swój dzień w widżetach na ekranie głównym
+• Ułóż eksport jak zdanie, zapisz go jako szablon i powtarzaj co noc
+• Eksportuj do JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks lub Overland
+
+PLANY
+Aby rozpocząć zapis, wybierz plan: Tygodniowy lub Roczny, z 7-dniowym bezpłatnym okresem próbnym dla nowych subskrybentów, albo Dożywotni, czyli jednorazowy zakup. Każdy plan obejmuje eksporty. Subskrypcje odnawiają się automatycznie do czasu anulowania; zarządzaj nimi lub anuluj je w Google Play. Usunięcie aplikacji ani zakup planu Dożywotniego nie anuluje subskrypcji.
+
+Zakończenie subskrypcji nie usuwa Twoich zapisów; pozostają one na Twoim urządzeniu.
+
+PRYWATNOŚĆ OD PODSTAW
+Historia lokalizacji pozostaje na Twoim urządzeniu. Konto Whereday nie jest wymagane. Zakupy w Google Play, kafelki map, opcjonalne eksporty i ograniczone usługi techniczne korzystają z sieci w sposób opisany w naszej polityce prywatności.
+
+Polityka prywatności: https://whereday.com/privacy
+Warunki korzystania: https://whereday.com/terms

@@ -1,0 +1,6 @@
+﻿name,latitude,longitude,address,radius_meters
+"QA café 🏝️",0,180,"line one
+line two, quoted ""address""",25
+"QA café 🏝️",0,180,duplicate,10000
+Bad radius,0,0,never import,NaN
+Bad lat,91,0,,150

@@ -1,4 +1,69 @@
-# Whereday 2.0 / build 62
+# Whereday 2.0 / build 63 (map-first)
+
+**Status: staged in App Store Connect and as a Google Play production draft. Nothing submitted or rolled out.** On November 6, 2026, at the owner's request, both stores were moved to the map-first redesign (#105):
+
+- **iOS build:** the `v2.0` GitHub release was published, so `deploy-asc.yml` archived `main` at `f2959482` as **2.0 (63)**. It processed **VALID** (`b1c136de-db11-400c-aa46-437a01c62b20`) and replaces build 62 on App Store version 2.0. Build 62 predates map-first and should not be attached again.
+- **iOS listing:** What's New, promotional text and the first description bullet are rewritten for map-first in all nine locales (`metadata/whereday/version/2.0/`, `whats-new.json`). Uploaded and read back identical.
+- **iOS artwork:** rerendered from the "One Long Day" artifact: ten iPhone shots in the new order, five iPad, eight Duo and the header, in all nine locales.
+- **Apple Watch:** the empty "Standby / 0 m" simulator capture is replaced by two 416×496 shots cropped from the artifact's `Watch` board (day dial at 6.4 km; route recording at 2.81 km), with the bezel and corner rounding removed. Same images in every locale.
+- **Android:** the release workflow failed because GitHub has no signing secrets. Instead, the bundle was built and tested from a clean `main` checkout (`f2959482`; same Gradle tests and lint as CI), then signed locally with the upload key and verified by `release_bundle.py`. **2.0.0 (version code 2)** is a **draft on the production track**, with release notes from `metadata/whereday/play/release-notes/`. The native-provenance check from CI was not run locally.
+- **Play listing (en-US):** short and full description (`metadata/whereday/play/en-US/`), icon (the launcher icon at 512 px), feature graphic, 8 phone screenshots and 3 each for 7-inch and 10-inch tablets, rendered from the "Whereday — Google Play" artifact.
+
+Fixed in the design artifacts on the way: the new iPad/Duo and Play tablet map screens rendered black (their colour script was missing), the Duo tabletop had no map, shot 07's "FERRY BUILDING" label crowded the headline, and the week shot's "Sunday's loop" note ran off the edge in several locales.
+
+**Play update (November 6, 2026, later):** the production draft is now **2.0.0 (version code 3)**, built from `main` at `f2959482` with purchase verification configured. The values are passed as `-P` flags and are not kept in any Gradle file: the verifier URL `https://whereday-play-purchase-verifier.costream.workers.dev`, the lease public key `~/.android-keys/whereday-lease.pub.b64`, and Cloud project `84338733279`. Code 2 was replaced; it had billing unconfigured.
+
+- **Verifier Worker** (`worker/play-purchase-verifier`): deployed with D1 `whereday-play-purchases` and the `LEASE_PRIVATE_KEY` (`~/.android-keys/whereday-lease.pem`) and `GOOGLE_SERVICE_ACCOUNT` secrets. It uses the `play-publisher` service account, which is a Play **Admin**; a narrower account is recommended.
+- **Google Cloud:** the Play Integrity and Android Publisher APIs are enabled on `crested-drive-492000-u7`, and the project is linked under Play Console → Play Integrity API.
+- **App content (all 10 done):**
+  - privacy policy `https://whereday.com/privacy`;
+  - no ads and no advertising ID;
+  - target audience 18+;
+  - not a government app; no financial or health features;
+  - IARC rating: ESRB Everyone, PEGI 3, ClassInd 14+;
+  - sign-in details give reviewers a Lifetime promo code. That campaign is "Play review access 2026", 5 codes valid Nov 7, 2026 to Feb 28, 2027, kept in `.asc/artifacts/play-2.0.0/reviewer-promo-codes.csv`.
+- **Data safety:**
+  - location (approximate and precise) is collected, ephemeral, optional, for app functionality;
+  - purchase history and device IDs are collected, stored, required, for app functionality and fraud prevention;
+  - nothing is shared, and data is encrypted in transit.
+  - The optional deletion-URL question is left blank.
+- **Store settings:** category Travel & Local; contact `cody@isolated.tech` and `https://whereday.com/`.
+- **Managed publishing is off**, so changes go live as soon as review approves them.
+
+**Follow-ups done (November 6, 2026):**
+- **Privacy policy:** `whereday.com/privacy` now covers Android (#106, merged as `65504738` and live). It has step-by-step deletion instructions at `#delete-your-data`, which is now the deletion URL in Data safety.
+- **Verifier account:** the Worker's `GOOGLE_SERVICE_ACCOUNT` is now the dedicated `whereday-play-verifier@crested-drive-492000-u7.iam.gserviceaccount.com`. In Play Console it has Whereday-only access: read-only app info, View financial data, and Manage orders and subscriptions. Its key is at `~/.android-keys/whereday-play-verifier.json`. `play-publisher` is still used by `gplay`.
+- **Release mode:** managed publishing stays off, at the owner's choice, so an approved release goes live straight away.
+
+**Sent for review (November 6, 2026):**
+- **Production:** 2.0.0 (3), available in all 178 countries.
+- **Submission:** all 11 pending changes (release, countries, listing, App content) were sent to Google. Play's quick checks run first (up to 14 minutes), then review, which Google says typically takes up to 7 days. Managed publishing is off, so approval publishes immediately.
+- **Two more declarations the bundle triggered:**
+  - Foreground service: `FOREGROUND_SERVICE_LOCATION` under Background location updates → Other, with the demo video `https://www.youtube.com/watch?v=GC-jC1MZww8` (unlisted, uploaded as a Short; the source mp4 is in `.argent/recordings/`).
+  - Photo and video permissions: `READ_MEDIA_IMAGES` is justified by automatic photo-to-day matching, which uses EXIF location the photo picker strips.
+- **Warning only:** no deobfuscation file was uploaded, so crash reports are harder to read.
+- **Still due:** the developer account must declare its trader status by February 2027.
+
+**Bangla and Polish listings (November 7, 2026):** the app ships eleven languages, but the store had nine. Version 2.0 now also has **bn-BD** and **pl**:
+
+- **Listing:** name, subtitle, description, keywords, promotional text and What's New, in `metadata/whereday/app-info/` and `metadata/whereday/version/2.0/` (`bn-BD.json`, `pl.json`), using the app's own terms (Mapa/Atlas/Miejsca/Archiwum; মানচিত্র/অ্যাটলাস/জায়গা/আর্কাইভ). The purchase and legal paragraphs are translated line for line from en-US. Applied with `asc metadata apply` and read back identical. The nine existing locales were not touched (the plan had no updates or deletes).
+- **Artwork:** rendered from the "One Long Day" design with Bangla and Polish overlay copy (`translations.py`): 10 iPhone, 5 iPad, 8 Duo, the header, and the same two Watch shots as every other locale. The design came from the November 6 download used for the other locales; its en-US renders are pixel-identical to the uploaded set.
+- Receipts: `.asc/artifacts/stage-2.0-bn-pl/`.
+- Like the rest, these translations were written by Claude and need a native read before submission.
+
+**App screens localized (November 7, 2026):** the app screens drawn inside the frames were English in every locale. They are now translated in all ten non-English locales (labels, dates, durations, weekday initials; place names stay), using the app's own catalog wording where it exists. See `marketing/brand/whereday-appstore-2.0/screen-translations/` and the brand README. The Watch slot is now the Watch board translated per locale instead of the same English crops everywhere. All ten locales' iPhone, iPad, Watch, Duo and header sets were replaced on version 2.0; en-US is unchanged. Receipts: `.asc/artifacts/stage-2.0-l10n/`.
+
+**Android 2.0.1 (4): eleven languages (November 7, 2026, published; Play submissions 2 and 3 approved the same day):**
+- **App:** the Android app now ships the same eleven languages as iOS (PR #107, branch `android/localize-eleven-languages`, commit `d8ec8794`, based on `main` at `65504738`, which already contains the live 2.0.0 (3) source `a36954a1`). It has nine new packs in `android/localization/`, per-language plural categories in the generator, and `generateLocaleConfig` for Android 13's per-app language setting. I checked Arabic (right-to-left) and Russian on an API 35 emulator.
+- **Build:** `bundleRelease` with `-Pwhereday.versionCode=4 -Pwhereday.versionName=2.0.1` and the same three purchase settings as 2.0.0 (3). CI's release tests and `lintRelease` passed. The bundle is signed with the upload certificate `E9:C6:2A:0E…93:C6`, and its verifier URL and lease key match the live bundle. SHA-256 `6b7a51fe…17918b`.
+- **One Play edit** (`01509094824674190881`, committed): the bundle went to production as a full rollout with notes in 12 languages (`metadata/whereday/play/release-notes/2.0.1.json`). It also added listings and artwork (8 phone, 3+3 tablet, the feature graphic, the icon) for es-ES, es-419, fr-FR, pt-BR, pl-PL, ru-RU, ar, hi-IN, bn-BD, ja-JP and zh-CN, from `metadata/whereday/play/<locale>/` and `marketing/brand/whereday-play-2.0/`. Managed publishing is off, so approval publishes everything together.
+- Receipts: `.asc/artifacts/play-2.0.1/`. All translations were written by Claude and need a native read.
+- **Listing correction (committed the same day, edit `15000477016717824756`):** the PLANS paragraph in all 12 listings no longer says "Imports and export previews are free", and phone shot 06 now reads "Every plan includes exports" instead of "Recording, imports and export previews are free". New installs hit a hard paywall after onboarding, so neither claim was true for someone reading the store page. This restarts review on the pending changes. The in-app wording (13 strings that said recording stays free or exports need lifetime access) is fixed on PR #107 (`028d38b8`) and ships with the next build. Receipts: `.asc/artifacts/play-next/`.
+- **Play Console links:** [Publishing overview](https://play.google.com/console/u/0/developers/8478281120215349264/app/4973006723943783760/publishing) and [Submission activity](https://play.google.com/console/u/0/developers/8478281120215349264/app/4973006723943783760/publishing/submission-activity) (developer `8478281120215349264`, app `4973006723943783760`).
+
+---
+
+# Earlier record: build 62
 
 **Status: staged in App Store Connect, not submitted.** On November 4, 2026, at the owner's request:
 

@@ -1,0 +1,51 @@
+Running e2e test "saved-csv-rotation-herdr-20261108" on emulator-5554 (48 steps)
+[1] ✓ English mapQa, synthetic whereday-saved-odd.csv visible in Android Recent documents; existing library one saved place. Review only, no import commit. Requires Vulkan-enabled assigned emulator.
+[2] ✓ launch (10.3s)
+[3] ✓ await visible id=map-add (2.4s)
+[4] ✓ idle (2.7s)
+[5] ✓ tap id=navigation-places (0.8s)
+[6] ✓ await visible id=saved-places-search (0.9s)
+[7] ✓ idle (1.3s)
+[8] ✓ await visible "1 of 1 saved place" (0.2s)
+[9] ✓ idle (1.3s)
+[10] ✓ tap "Import CSV" (1.5s)
+[11] ✓ await visible id=com.google.android.documentsui:id/dir_list (3.9s)
+[12] ✓ idle (1.9s)
+[13] ✓ tap /^whereday-saved-odd\.csv$/ (0.9s)
+[14] ✗ await id=saved-csv-counts contains "2 valid rows · 2 invalid rows" (40.8s) — could not evaluate the condition — the UI tree was unreadable for the final 33683ms of the window: com.argent.androiddevtools.SnapshotInstrumentation$HelperTimeoutException: Helper worker timed out after 12000 ms for method: getHierarchy
+  screen: /var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/simserver-Z1VCkR/media/51486000-1794164983067.png
+[15] · idle
+[16] · await id=saved-csv-plan contains "1 added · 0 updated · 1 skipped"
+[17] · idle
+[18] · tap "Update matching places"
+[19] · await id=saved-csv-plan contains "1 added · 1 updated · 0 skipped"
+[20] · idle
+[21] · tool
+[22] · await visible id=saved-csv-counts
+[23] · idle
+[24] · tool
+[25] · await id=saved-csv-counts contains "2 valid rows · 2 invalid rows"
+[26] · idle
+[27] · await id=saved-csv-plan contains "1 added · 1 updated · 0 skipped"
+[28] · idle
+[29] · tap id=navigation-archive
+[30] · await id=export-history-count contains "25 route points"
+[31] · idle
+[32] · tap id=navigation-places
+[33] · await id=saved-csv-plan contains "1 added · 1 updated · 0 skipped"
+[34] · idle
+[35] · tap "Keep existing places"
+[36] · await id=saved-csv-plan contains "1 added · 0 updated · 1 skipped"
+[37] · idle
+[38] · tap "Import valid places"
+[39] · await visible "Import saved places?"
+[40] · idle
+[41] · tap "Cancel"
+[42] · await visible id=saved-csv-counts
+[43] · idle
+[44] · tap "Back to saved places"
+[45] · await visible id=saved-places-search
+[46] · idle
+[47] · await visible "1 of 1 saved place"
+[48] · idle
+FAIL — 12 passed, 1 failed, 0 errored, 34 skipped (2m 19s)

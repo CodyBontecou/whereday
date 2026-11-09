@@ -20,7 +20,7 @@ class CountryRegionReferenceTests(unittest.TestCase):
         changed=self.changed('$0.identifier.count == 2','$0.identifier.count == 3')
         self.assertNotEqual(regions.fingerprints(self.frozen),regions.fingerprints(changed))
     def test_search_predicate_change_is_detected_even_with_same_empty_query_membership(self):
-        changed=self.changed('localizedStandardContains(search)','hasPrefix(search)')
+        changed=self.changed('localizedStandardContains(query)','hasPrefix(query)')
         self.assertNotEqual(regions.fingerprints(self.frozen),regions.fingerprints(changed))
     def test_model_changes_remain_fully_fingerprinted(self):
         changed=dict(self.frozen);changed[regions.SOURCES[0]]+=b'\n// changed model source\n'

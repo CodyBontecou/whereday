@@ -1,0 +1,61 @@
+executionPrerequisite: Onboarded mapQa app on Archive, English, November 7 2026; October
+  has no history; no editor is open. Does not write journal data. Ends on Places.
+steps:
+- tap:
+    id: navigation-atlas
+- await:
+    visible:
+      identifier: atlas-month-recap
+- await:
+    idle: true
+- tap:
+    text: Month recap
+- await:
+    visible:
+      identifier: recap-close
+- await:
+    idle: true
+- tap:
+    text: Previous month
+- await:
+    text:
+      in:
+        identifier: recap-days
+      contains: 0 DAYS
+- await:
+    idle: true
+- tap:
+    id: recap-close
+- await:
+    visible:
+      identifier: atlas-month-recap
+- await:
+    idle: true
+- tap:
+    id: navigation-places
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    idle: true
+- tap:
+    text: Add place
+- await:
+    visible:
+      identifier: saved-name
+- await:
+    idle: true
+- tap:
+    text: Save
+- await:
+    visible:
+      identifier: saved-editor-error
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    idle: true

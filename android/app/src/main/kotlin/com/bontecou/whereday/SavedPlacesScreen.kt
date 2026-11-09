@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.UploadFile
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,22 +66,26 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
     // Tapping a place opens its detail (the Place board); the editor is one tap further.
     var detailId by rememberSaveable {mutableStateOf<String?>(null)}
     var openedVisit by rememberSaveable(stateSaver=VisitEditorVisitSaver) {mutableStateOf<com.bontecou.whereday.domain.Visit?>(null)}
-    var preview by remember {mutableStateOf<SavedPlaceImportPreview?>(null)}
+    val importReview=graph.savedPlaceImportReview
+    val preview by importReview.preview.collectAsStateWithLifecycle()
+    var pickerTicket by rememberSaveable {mutableStateOf<String?>(null)}
     var policyName by rememberSaveable {mutableStateOf(SavedPlaceDuplicatePolicy.keepExisting.name)}
     val policy=SavedPlaceDuplicatePolicy.valueOf(policyName)
     var busy by remember {mutableStateOf(false)}
     var job by remember {mutableStateOf<Job?>(null)}
     var message by remember {mutableStateOf<PlaceUiText?>(null)}
     var confirmation by remember {mutableStateOf<PlaceReview?>(null)}
-    fun leave() {if(busy) job?.cancel() else if(preview!=null) {preview=null;message=null} else back?.invoke()}
+    fun leave() {if(busy) {importReview.discard();job?.cancel()} else if(preview!=null) {importReview.discard();message=null} else back?.invoke()}
     // As the Places tab the library is a root page: Back leaves the app as from any other tab.
     BackHandler(enabled=back!=null || busy || preview!=null,onBack=::leave)
     val picker=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {uri ->
-        if(uri!=null) job=scope.launch {
+        val request=pickerTicket;pickerTicket=null
+        if(uri==null) {request?.let(importReview::discard)}
+        else if(request!=null && importReview.isCurrent(request)) job=scope.launch {
             busy=true;message=null
             try {
                 if(uri.scheme!="content") throw PlaceReadError(R.string.saved_csv_choose)
-                preview=withContext(Dispatchers.IO) {
+                val parsed=withContext(Dispatchers.IO) {
                     val bytes=context.contentResolver.openInputStream(uri)?.use {input ->
                         val out=ByteArrayOutputStream();val buffer=ByteArray(64*1024)
                         while(true) {ensureActive();val count=input.read(buffer);if(count<0) break
@@ -89,6 +94,7 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
                     } ?: throw PlaceReadError(R.string.saved_csv_open)
                     val coroutine=currentCoroutineContext();SavedPlaceCsvImporter.parse(bytes) {coroutine.ensureActive()}
                 }
+                importReview.publish(request,parsed)
             } catch(e:Exception) {if(e is CancellationException) {message=PlaceUiText(R.string.saved_csv_canceled);throw e};message=when(e) {is InvalidSavedPlaceCsv->savedPlaceCsvText(e.issue);is PlaceReadError->PlaceUiText(e.resource);else->PlaceUiText(R.string.saved_csv_read_error)}}
             finally {busy=false}
         }
@@ -144,7 +150,7 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
             busy=true;message=null
             try {
                 val summary=graph.savedPlaces.import(confirmed.preview.places,confirmed.existing,confirmed.policy)
-                preview=null;confirmation=null;message=PlaceUiText(R.string.saved_csv_result,listOf(summary.added,summary.updated,summary.skipped))
+                importReview.discard();confirmation=null;message=PlaceUiText(R.string.saved_csv_result,listOf(summary.added,summary.updated,summary.skipped))
             } catch(e:Exception) {confirmation=null;if(e is CancellationException) {message=PlaceUiText(R.string.saved_csv_canceled);throw e};message=PlaceUiText(if(e is SavedPlacesChanged) R.string.saved_changed else R.string.saved_csv_import_error)}
             finally {busy=false}
         }}) {Text(stringResource(R.string.saved_csv_commit),fontWeight=FontWeight.SemiBold)}},dismissButton={TextButton(onClick={if(busy) job?.cancel() else confirmation=null}) {Text(stringResource(if(busy) R.string.saved_csv_cancel else R.string.visit_cancel),color=wd.textMuted)}})}
@@ -162,7 +168,7 @@ private data class PlaceReview(val preview:SavedPlaceImportPreview,val existing:
     Box(Modifier.fillMaxSize().background(wd.surface)) {
     Column(Modifier.fillMaxSize()) {
     if(back!=null || busy) PlacesBackBar(stringResource(if(busy) R.string.saved_csv_cancel else R.string.saved_back_settings),::leave) else Spacer(Modifier.statusBarsPadding())
-    val importCsv={picker.launch(arrayOf("text/*","application/csv","application/octet-stream"))}
+    val importCsv={pickerTicket=importReview.begin();picker.launch(arrayOf("text/*","application/csv","application/octet-stream"))}
     LazyColumn(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("saved-places-content"),contentPadding=PaddingValues(bottom=if(showAddFab) 104.dp else 32.dp)) {
         // The Places board: tracked count over the serif title, with CSV import behind the header's overflow action.
         item {WdPageHeader(stringResource(R.string.saved_title),eyebrow=pluralStringResource(R.plurals.redesign_places_saved_eyebrow,places.size,places.size)) {

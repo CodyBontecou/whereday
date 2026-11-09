@@ -2,6 +2,8 @@ import Foundation
 
 @main
 struct CountryRegionFixtures {
+    __PICKER_HELPERS__
+
     @MainActor static func main() throws {
         let all = __COUNTRY_CODES__.sorted()
         let search = ""

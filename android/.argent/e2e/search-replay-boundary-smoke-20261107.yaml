@@ -1,0 +1,100 @@
+steps:
+- echo: Requires existing synthetic Test stop visit and ten in-range replay points
+    on November 7 2026 in mapQa. No journal writes. Ends on Archive.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-search
+- await:
+    idle: true
+- tap:
+    text: Search places and visits
+- await:
+    visible:
+      text: Place or visit name
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^Test stop$
+- await:
+    visible:
+      identifier: map-visit-title
+- await:
+    idle: true
+- tap:
+    text: Close map visits
+- await:
+    visible:
+      identifier: map-range-custom
+- await:
+    idle: true
+- tap:
+    text: Custom range
+- await:
+    visible:
+      text: Show 1 day
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: map-replay-dial
+- await:
+    idle: true
+- tap:
+    text: Replay the day
+- await:
+    visible:
+      identifier: replay-counter
+- await:
+    idle: true
+- tap:
+    text: Replay end
+- await:
+    text:
+      in:
+        identifier: replay-counter
+      contains: 10 OF 10 PTS
+- await:
+    idle: true
+- tap:
+    id: replay-toggle
+- await:
+    visible:
+      text: Play route replay
+- await:
+    idle: true
+- tap:
+    text: Replay start
+- tap:
+    id: replay-toggle
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Play route replay
+- await:
+    idle: true
+- tap:
+    id: replay-toggle
+- await:
+    visible:
+      identifier: replay-close
+- await:
+    idle: true
+- tap:
+    text: Close route replay
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-archive

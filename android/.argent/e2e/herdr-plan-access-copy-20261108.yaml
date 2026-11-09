@@ -1,0 +1,71 @@
+steps:
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    text:
+      in:
+        identifier: export-history-count
+      contains: 25 route points
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: settings-point-count
+    direction: down
+- tap:
+    text: Automatic exports
+- await:
+    visible:
+      identifier: automatic-exports-screen
+- await:
+    idle: true
+- await:
+    visible:
+      text: Verified access to a Whereday plan is required.
+- await:
+    idle: true
+- tap:
+    text: Back to settings
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- tap:
+    text: Automation access
+- await:
+    visible:
+      identifier: automation-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: automation-scope-exports
+    direction: down
+- await:
+    text:
+      in:
+        identifier: automation-scope-exports
+      contains: Verified access to a Whereday plan is also required.
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      identifier: map-auto-off
+- await:
+    idle: true

@@ -84,15 +84,18 @@ internal data class MonthRecap(val month:YearMonth,val visitCount:Int,val placeC
             inMonth.forEach {visit->
                 val s=maxOf(visit.arrivedAt,start);val e=minOf(visit.departedAt ?: now,end,now)
                 durations[name(visit)]=(durations[name(visit)] ?: 0)+maxOf(0,e.toEpochMilli()-s.toEpochMilli())
-                val day=s.atZone(zone).dayOfMonth-1
-                if(day in perDay.indices) perDay[day]+=name(visit)
             }
             val inkOrder=durations.entries.sortedByDescending {it.value}.mapIndexed {index,entry->entry.key to index}.toMap()
             val arcs=List(days) {index->
                 val dayStart=month.atDay(index+1).atStartOfDay(zone).toInstant();val dayEnd=month.atDay(index+1).plusDays(1).atStartOfDay(zone).toInstant()
-                fun fraction(at:Instant)=((at.toEpochMilli()-dayStart.toEpochMilli())/86_400_000f).coerceIn(0f,1f)
-                inMonth.filter {it.arrivedAt<dayEnd && (it.departedAt ?: now)>dayStart}.map {visit->
-                    RecapArc(fraction(maxOf(visit.arrivedAt,dayStart)),fraction(minOf(visit.departedAt ?: now,dayEnd,now)),inkOrder[name(visit)] ?: 0)
+                val dayMillis=(dayEnd.toEpochMilli()-dayStart.toEpochMilli()).toFloat()
+                fun fraction(at:Instant)=((at.toEpochMilli()-dayStart.toEpochMilli())/dayMillis).coerceIn(0f,1f)
+                inMonth.mapNotNull {visit->
+                    val s=maxOf(visit.arrivedAt,dayStart);val e=minOf(visit.departedAt ?: now,dayEnd,now)
+                    if(e<=s) return@mapNotNull null
+                    // Count the same positive civil-day overlap that the dial displays.
+                    perDay[index]+=name(visit)
+                    RecapArc(fraction(s),fraction(e),inkOrder[name(visit)] ?: 0)
                 }
             }
             val counts=perDay.map {it.size}

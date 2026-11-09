@@ -1,0 +1,253 @@
+steps:
+- echo: 'English API35 onboarded mapQa, America/Puerto_Rico, 12-hour clock. JSON/All,
+    all dates, time filter off, collapsed advanced. Existing synthetic journal: 25
+    points and 1 visit. Uses previews only; restores filter off and collapsed advanced.'
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+    timeout: 20000
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    visible:
+      identifier: export-history-count
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: export-advanced
+    direction: down
+- await:
+    visible:
+      identifier: export-advanced
+- tap:
+    id: export-advanced
+- scroll-to:
+    target:
+      id: export-time-enabled
+    direction: down
+- await:
+    visible:
+      identifier: export-date-range
+- await:
+    idle: true
+- tap:
+    id: export-time-enabled
+- await:
+    text:
+      in:
+        identifier: export-time-from
+      contains: 8:00 AM
+- tap:
+    id: export-time-from
+- await:
+    visible:
+      identifier: android:id/toggle_mode
+- await:
+    idle: true
+- tap:
+    id: android:id/toggle_mode
+- await:
+    visible:
+      identifier: android:id/input_hour
+- await:
+    idle: true
+- tap:
+    id: android:id/input_hour
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: '99'
+- await:
+    text:
+      in:
+        identifier: android:id/input_hour
+      contains: '99'
+- tap:
+    text: Apply time
+- await:
+    text:
+      in:
+        identifier: android:id/input_hour
+      contains: '99'
+- tool: rotate
+  args:
+    orientation: LandscapeLeft
+- await:
+    text:
+      in:
+        identifier: android:id/input_hour
+      contains: '99'
+    timeout: 20000
+- await:
+    idle: true
+- tool: rotate
+  args:
+    orientation: Portrait
+- await:
+    text:
+      in:
+        identifier: android:id/input_hour
+      contains: '99'
+    timeout: 20000
+- await:
+    idle: true
+- tap:
+    id: android:id/input_hour
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: '11'
+- tap:
+    id: android:id/input_minute
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    key: backspace
+- tool: keyboard
+  args:
+    text: '59'
+- tap:
+    id: android:id/am_pm_spinner
+- await:
+    visible:
+      text: PM
+      identifier: android:id/text1
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^PM$
+    id: android:id/text1
+- await:
+    text:
+      in:
+        identifier: android:id/input_hour
+      contains: '11'
+- await:
+    text:
+      in:
+        identifier: android:id/input_minute
+      contains: '59'
+- tool: await-ui-element
+  args:
+    selector:
+      identifier: android:id/am_pm_spinner
+    condition: text
+    expectedText: PM
+- tap:
+    text: Apply time
+- await:
+    text:
+      in:
+        identifier: export-time-from
+      contains: 11:59 PM
+- await:
+    idle: true
+- tap:
+    id: export-time-until
+- await:
+    visible:
+      identifier: android:id/am_label
+- await:
+    idle: true
+- tap:
+    id: android:id/am_label
+- tap:
+    text:
+      matches: ^12$
+    role: RadialTimePickerView$RadialPickerTouchHelper
+- tap:
+    text: Apply time
+- await:
+    text:
+      in:
+        identifier: export-time-until
+      contains: 12:00 AM
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: export-preview-start
+    direction: up
+- tap:
+    text: Preview export
+- await:
+    text:
+      in:
+        identifier: export-preview-result
+      contains: '"totalPoints": 0'
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: export-time-until
+    direction: down
+- tap:
+    id: export-time-until
+- await:
+    visible:
+      identifier: android:id/hours
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^9$
+    role: RadialTimePickerView$RadialPickerTouchHelper
+- await:
+    text:
+      in:
+        identifier: android:id/hours
+      contains: '9'
+- tap:
+    text: Cancel
+- await:
+    text:
+      in:
+        identifier: export-time-until
+      contains: 12:00 AM
+- await:
+    idle: true
+- tap:
+    id: export-time-enabled
+- await:
+    hidden:
+      identifier: export-time-until
+- tap:
+    id: export-advanced
+- scroll-to:
+    target:
+      id: export-preview-start
+    direction: up
+- tap:
+    text: Preview export
+- await:
+    text:
+      in:
+        identifier: export-preview-result
+      contains: '"totalPoints": 25'
+- await:
+    text:
+      in:
+        identifier: export-preview-result
+      contains: '"totalVisits": 1'
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      identifier: map-add
+    timeout: 20000
+- await:
+    idle: true

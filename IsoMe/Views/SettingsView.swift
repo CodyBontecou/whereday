@@ -120,37 +120,32 @@ struct SettingsView: View {
         }
     }
 
-    /// "Export everything first": every visit and point, all time, as one Whereday JSON file through the
-    /// share sheet. Once it's saved somewhere, the erase confirmation comes back so the person can finish.
+    /// The pre-erase backup includes every model Clear All Data removes. Archive
+    /// exports intentionally remain independent of this lossless restore format.
     private func exportEverything() {
         guard storeManager.canExport else {
             showingPaywall = true
             return
         }
-        viewModel.ensureAllLocationPointsLoaded()
-        var options = ExportOptions()
-        options.dataKind = .all
-        options.datePreset = .allTime
-        options.splitByDay = false
         do {
-            try ExportService.share(
-                visits: viewModel.allVisits,
-                points: viewModel.locationPoints,
-                recordingSessions: viewModel.allRecordingSessions,
-                activeTrackingStart: viewModel.locationManager.trackingStartTime,
-                options: options,
-                selectedFormats: [.json],
-                completion: { completed in
+            let data = try viewModel.exportBackup()
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let fileURL = directory.appendingPathComponent("Whereday Backup.json")
+            try data.write(to: fileURL, options: .atomic)
+            let activity = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+            activity.completionWithItemsHandler = { _, completed, _, _ in
+                Task { @MainActor in
+                    try? FileManager.default.removeItem(at: directory)
                     guard completed else { return }
-                    Task { @MainActor in
-                        AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
-                        LogManager.shared.info("Exported everything before clearing · all time", category: .export)
-                        showingClearConfirmation = true
-                    }
+                    AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                    LogManager.shared.info("Exported complete backup before clearing", category: .export)
+                    showingClearConfirmation = true
                 }
-            )
+            }
+            ExportService.presentShareSheet(activity, from: nil)
         } catch {
-            LogManager.shared.error("Export everything failed · \(error.localizedDescription)", category: .export)
+            LogManager.shared.error("Backup failed · \(error.localizedDescription)", category: .export)
             exportErrorMessage = error.localizedDescription
         }
     }

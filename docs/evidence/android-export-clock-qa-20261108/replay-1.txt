@@ -1,0 +1,126 @@
+Running e2e test "export-clock-edge-20261108" on emulator-5554 (82 steps)
+[1] ✓ English API35 onboarded mapQa, America/Puerto_Rico, 12-hour clock. JSON/All, all dates, time filter off, collapsed advanced. Existing synthetic journal: 25 points and 1 visit. Uses previews only; restores filter off and collapsed advanced.
+[2] ✓ launch (3.9s)
+[3] ✓ await visible id=map-add (0.9s)
+[4] ✓ idle (0.8s)
+[5] ✓ tap id=navigation-archive (0.5s)
+[6] ✓ await visible id=export-history-count (0.9s)
+[7] ✓ idle (0.6s)
+[8] ✓ scroll-to id=export-advanced (2.5s)
+[9] ✓ await visible id=export-advanced (0.1s)
+[10] ✓ tap id=export-advanced (0.5s)
+[11] ✓ scroll-to id=export-time-enabled (1.8s)
+[12] ✓ await visible id=export-date-range (0.1s)
+[13] ✓ idle (0.6s)
+[14] ✓ tap id=export-time-enabled (0.5s)
+[15] ✓ await id=export-time-from contains "8:00 AM" (0.2s)
+[16] ✓ tap id=export-time-from (0.9s)
+[17] ✓ await visible id=android:id/toggle_mode (0.7s)
+[18] ✓ idle (0.5s)
+[19] ✓ tap id=android:id/toggle_mode (0.4s)
+[20] ✓ await visible id=android:id/input_hour (0.1s)
+[21] ✓ idle (1.0s)
+[22] ✓ tap id=android:id/input_hour (0.4s)
+[23] ✓ keyboard (0.1s)
+{
+  "typed": "backspace",
+  "keys": 1
+}
+[24] ✓ keyboard (0.1s)
+{
+  "typed": "99",
+  "keys": 2
+}
+[25] ✓ await id=android:id/input_hour contains "99" (0.6s)
+[26] ✓ tap "Apply time" (0.4s)
+[27] ✓ await id=android:id/input_hour contains "99" (0.6s)
+[28] ✓ rotate (0.0s)
+{
+  "orientation": "LandscapeLeft"
+}
+[29] ✓ await id=android:id/input_hour contains "99" (0.1s)
+[30] ✓ idle (2.2s)
+[31] ✓ rotate (0.0s)
+{
+  "orientation": "Portrait"
+}
+[32] ✓ await id=android:id/input_hour contains "99" (0.0s)
+[33] ✓ idle (2.4s)
+[34] ✓ tap id=android:id/input_hour (0.4s)
+[35] ✓ keyboard (0.1s)
+{
+  "typed": "backspace",
+  "keys": 1
+}
+[36] ✓ keyboard (0.1s)
+{
+  "typed": "backspace",
+  "keys": 1
+}
+[37] ✓ keyboard (0.1s)
+{
+  "typed": "11",
+  "keys": 2
+}
+[38] ✓ tap id=android:id/input_minute (0.9s)
+[39] ✓ keyboard (0.1s)
+{
+  "typed": "backspace",
+  "keys": 1
+}
+[40] ✓ keyboard (0.1s)
+{
+  "typed": "backspace",
+  "keys": 1
+}
+[41] ✓ keyboard (0.1s)
+{
+  "typed": "59",
+  "keys": 2
+}
+[42] ✓ tap id=android:id/am_pm_spinner (0.8s)
+[43] ✓ await visible "PM" id=android:id/text1 (0.7s)
+[44] ✓ idle (0.5s)
+[45] ✓ tap /^PM$/ id=android:id/text1 (0.4s)
+[46] ✓ await id=android:id/input_hour contains "11" (0.7s)
+[47] ✓ await id=android:id/input_minute contains "59" (0.1s)
+[48] ✓ await-ui-element (0.1s)
+{
+  "success": true,
+  "elapsed": 46
+}
+[49] ✓ tap "Apply time" (0.4s)
+[50] ✓ await id=export-time-from contains "11:59 PM" (0.6s)
+[51] ✓ idle (1.1s)
+[52] ✓ tap id=export-time-until (0.4s)
+[53] ✓ await visible id=android:id/am_label (0.6s)
+[54] ✓ idle (0.5s)
+[55] ✓ tap id=android:id/am_label (0.4s)
+[56] ✓ tap /^12$/ role=RadialTimePickerView$RadialPickerTouchHelper (0.7s)
+[57] ✓ tap "Apply time" (0.8s)
+[58] ✓ await id=export-time-until contains "12:00 AM" (0.6s)
+[59] ✓ idle (0.6s)
+[60] ✓ scroll-to id=export-preview-start (up) (1.4s)
+[61] ✓ tap "Preview export" (0.4s)
+[62] ✓ await id=export-preview-result contains "\"totalPoints\": 0" (0.1s)
+[63] ✓ idle (0.6s)
+[64] ✓ scroll-to id=export-time-until (1.4s)
+[65] ✓ tap id=export-time-until (0.5s)
+[66] ✓ await visible id=android:id/hours (0.7s)
+[67] ✓ idle (0.5s)
+[68] ✓ tap /^9$/ role=RadialTimePickerView$RadialPickerTouchHelper (0.4s)
+[69] ✓ await id=android:id/hours contains "9" (0.5s)
+[70] ✓ tap "Cancel" (0.4s)
+[71] ✓ await id=export-time-until contains "12:00 AM" (0.6s)
+[72] ✓ idle (0.6s)
+[73] ✓ tap id=export-time-enabled (0.4s)
+[74] ✓ await hidden id=export-time-until (0.1s)
+[75] ✓ tap id=export-advanced (1.0s)
+[76] ✓ scroll-to id=export-preview-start (up) (0.3s)
+[77] ✓ tap "Preview export" (0.4s)
+[78] ✓ await id=export-preview-result contains "\"totalPoints\": 25" (0.4s)
+[79] ✓ await id=export-preview-result contains "\"totalVisits\": 1" (0.1s)
+[80] ✓ tap id=navigation-map (0.4s)
+[81] ✓ await visible id=map-add (0.4s)
+[82] ✓ idle (1.2s)
+PASS — 81 passed, 0 failed, 0 errored, 0 skipped (50.1s)

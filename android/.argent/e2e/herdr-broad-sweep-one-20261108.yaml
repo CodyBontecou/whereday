@@ -1,0 +1,336 @@
+steps:
+- echo: English mapQa only, synthetic bad-header and empty CSV in Android Recent;
+    original25points1visit1savedplace, photo refs0. No import commit or delivery.
+    Raw failed/mistargeted waits retained under ignored session state. A2 corrected label verified live before replay.
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    id: navigation-places
+- await:
+    visible:
+      identifier: saved-places-search
+- await:
+    idle: true
+- tap:
+    text: Import CSV
+- await:
+    visible:
+      identifier: com.google.android.documentsui:id/dir_list
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-saved-bad-header\.csv$
+- await:
+    visible:
+      text: The CSV header contains duplicate column names.
+- await:
+    idle: true
+- await:
+    visible:
+      text: 1 of 1 saved place
+- await:
+    idle: true
+- tap:
+    text: Import CSV
+- await:
+    visible:
+      identifier: com.google.android.documentsui:id/dir_list
+- await:
+    idle: true
+- tap:
+    text:
+      matches: ^whereday-saved-empty\.csv$
+- await:
+    visible:
+      text: The CSV file is empty.
+- await:
+    idle: true
+- await:
+    visible:
+      text: 1 of 1 saved place
+- await:
+    idle: true
+- tap:
+    id: navigation-map
+- await:
+    visible:
+      identifier: map-add
+- await:
+    idle: true
+- tap:
+    text: Add a place
+- await:
+    visible:
+      text: Save where I am
+- await:
+    idle: true
+- tap:
+    text: Save where I am
+- await:
+    visible:
+      identifier: visit-name
+- await:
+    idle: true
+- tap:
+    text: Find current location
+- await:
+    visible:
+      identifier: current-location-request
+- await:
+    idle: true
+- tap:
+    text: Request location
+- await:
+    visible:
+      identifier: current-location-content
+- await:
+    idle: true
+- await:
+    visible:
+      identifier: current-location-coordinate
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    visible:
+      identifier: visit-name
+- await:
+    idle: true
+- await:
+    hidden:
+      identifier: current-location-coordinate
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: visit-latitude
+      equals: Latitude
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: visit-longitude
+      equals: Longitude
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    visible:
+      identifier: map-auto-off
+- await:
+    idle: true
+- tap:
+    id: navigation-atlas
+- await:
+    visible:
+      identifier: atlas-previous-year
+- await:
+    idle: true
+- tap:
+    id: atlas-previous-year
+- await:
+    visible:
+      text: Calendar of 2025 colored by country
+- await:
+    idle: true
+- tap:
+    id: atlas-next-year
+- await:
+    visible:
+      text: Calendar of 2026 colored by country
+- await:
+    idle: true
+- tap:
+    id: atlas-next-year
+- await:
+    visible:
+      text: Calendar of 2026 colored by country
+- await:
+    idle: true
+- tap:
+    id: navigation-archive
+- await:
+    text:
+      in:
+        identifier: export-history-count
+      contains: 25 route points
+- await:
+    idle: true
+- tap:
+    text: Settings
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- tap:
+    text: Location and notification permissions
+- await:
+    visible:
+      text: App info
+- await:
+    idle: true
+- await:
+    visible:
+      text: Whereday Map QA
+- await:
+    idle: true
+- tool: await-ui-element
+  args:
+    selector:
+      text: Permissions / Location and Notifications
+    condition: visible
+- tool: button
+  args:
+    button: back
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text:
+        matches: ^Photos$
+    direction: down
+- await:
+    visible:
+      text: Photos
+- await:
+    idle: true
+- tap:
+    text: Photos
+- await:
+    visible:
+      identifier: photo-library-content
+- await:
+    idle: true
+- await:
+    text:
+      in:
+        identifier: photo-library-count
+      contains: 0 saved photo references
+- await:
+    idle: true
+- tap:
+    text: Add photos
+- await:
+    visible:
+      identifier: com.google.android.providers.media.module:id/privacy_text
+- await:
+    idle: true
+- tap:
+    text: Cancel
+- await:
+    text:
+      in:
+        identifier: photo-library-count
+      contains: 0 saved photo references
+- await:
+    idle: true
+- await:
+    hidden:
+      identifier: com.google.android.providers.media.module:id/privacy_text
+- await:
+    idle: true
+- tap:
+    text: Library access and sync
+- await:
+    visible:
+      text: 'Library access: not allowed.'
+- await:
+    idle: true
+- await:
+    visible:
+      identifier: photo-auto-sync
+- await:
+    idle: true
+- tap:
+    id: photo-auto-sync
+- await:
+    visible:
+      text: 'Library access: not allowed.'
+- await:
+    idle: true
+- tap:
+    text: Close library options
+- await:
+    text:
+      in:
+        identifier: photo-library-count
+      contains: 0 saved photo references
+- await:
+    idle: true
+- tap:
+    text: Choose photo files
+- await:
+    visible:
+      identifier: com.google.android.documentsui:id/dir_list
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    text:
+      in:
+        identifier: photo-library-count
+      contains: 0 saved photo references
+- await:
+    idle: true
+- tap:
+    text: Back to Settings
+- await:
+    visible:
+      identifier: settings-screen
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: settings-point-count
+    direction: down
+- await:
+    text:
+      in:
+        identifier: settings-point-count
+      contains: 25 recorded points
+- await:
+    idle: true
+- tap:
+    text: Automatic exports
+- await:
+    visible:
+      text: Verified access to a Whereday plan is required.
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: automatic-export-run
+    direction: down
+- await:
+    visible:
+      identifier: automatic-exports-screen
+- await:
+    idle: true
+- await:
+    visible:
+      text: Choose an export folder in Settings before running.
+- await:
+    idle: true
+- await:
+    visible:
+      text: No successful automatic export yet.
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
