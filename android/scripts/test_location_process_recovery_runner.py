@@ -10,6 +10,23 @@ import verify_location_process_recovery as recovery
 
 
 class LocationProcessRecoveryRunnerTest(unittest.TestCase):
+    def test_automatic_recovery_is_proved_before_activity_without_a_manual_trigger(self):
+        android = Path(__file__).resolve().parents[1]
+        source = (android / "app/src/androidTest/kotlin/com/bontecou/whereday/LocationProcessRecoveryTest.kt").read_text()
+        recover = source.split('"recover"->{', 1)[1]
+        before_activity = recover.split("ActivityScenario.launch(MainActivity::class.java)", 1)[0]
+        self.assertIn('waitFor("automatic graph recovery before Activity")', before_activity)
+        self.assertIn("if(route) recording?.requested==false else recording?.requested!=true", before_activity)
+        self.assertIn("if(visits) monitoring?.requested==false else monitoring?.requested!=true", before_activity)
+        self.assertIn("beforeRoute!!.interruption", before_activity)
+        self.assertIn("beforeVisits!!.interruption", before_activity)
+        self.assertIn("assertEquals(0L,graph.history.dao.openSessionCount())", before_activity)
+        self.assertIn("assertEquals(expectedEnd,session!!.endedAt)", before_activity)
+        for obsolete_or_trigger in ('if(rebooted) waitFor', 'if(termination=="kill")',
+                                    "ActivityScenario.launch(", "reconcileLocationServices",
+                                    "awaitLocationRecovery", "locationRecovery", ".awaitReady("):
+            self.assertNotIn(obsolete_or_trigger, before_activity)
+
     def test_prepares_foreground_only_after_identity_and_preserves_before_after_evidence(self):
         events = []
 
