@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "2da835c7f6776b1859307f691aca7eda084ab567",
+  "scope": "Actual Swift producers executed; all cases compared structurally before accepting provenance updates. No hash fields edited by hand.",
+  "results": [
+    {
+      "generator": "generate_google_timeline_fixtures.py",
+      "fixture": "android/export/src/test/resources/ios-google-timeline.json",
+      "cases": 50,
+      "casesUnchanged": true,
+      "extractedSwiftUnchanged": true,
+      "changedProvenance": {
+        "IsoMe/Utilities/TimelineImportService.swift": {
+          "before": "0152c26c7f22214941677c1c48eda283d4f660e813d03e76f6b2398c67d98b7a",
+          "after": "68ee3923c6222d9dfa057105e32143dc1facdc915882f89fd8da313daeb4b8d9"
+        }
+      },
+      "beforeFileSHA256": "7e6f80721087551aa666779d9df5813970a5c39a5710c665856ff0921953dd31",
+      "afterFileSHA256": "c9fec2a92f9eb38215a2090496fe0a22620fa2e7cdbd56b7f7b4a5c4859fa6f6"
+    },
+    {
+      "generator": "generate_timeline_duplicate_fixtures.py",
+      "fixture": "android/domain/src/test/resources/ios-timeline-duplicates.json",
+      "cases": 50,
+      "casesUnchanged": true,
+      "extractedSwiftUnchanged": true,
+      "changedProvenance": {
+        "sourceSha256": {
+          "before": "0152c26c7f22214941677c1c48eda283d4f660e813d03e76f6b2398c67d98b7a",
+          "after": "68ee3923c6222d9dfa057105e32143dc1facdc915882f89fd8da313daeb4b8d9"
+        }
+      },
+      "beforeFileSHA256": "098c9870e245626c321b79e99fbaf9b0661c06a7fe32e38d65963aa3427d2425",
+      "afterFileSHA256": "93bd94a28b241a8be340cd575df106e2e8d6dff7f662860e321dd75487ad648b"
+    }
+  ]
+}

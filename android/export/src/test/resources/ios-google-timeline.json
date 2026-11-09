@@ -2,7 +2,7 @@
   "scope": "Verbatim Swift Google parser and timeline parse validation; legacy Whereday parser stubbed and unused; no storage/UI/network acceptance",
   "provenance": {
     "IsoMe/Utilities/GoogleTimelineImportService.swift": "ef40fbd7724a839f62327c1afe11d094fb3a6604778705c651f923dae8576406",
-    "IsoMe/Utilities/TimelineImportService.swift": "0152c26c7f22214941677c1c48eda283d4f660e813d03e76f6b2398c67d98b7a",
+    "IsoMe/Utilities/TimelineImportService.swift": "68ee3923c6222d9dfa057105e32143dc1facdc915882f89fd8da313daeb4b8d9",
     "IsoMe/Utilities/ImportService.swift": "ff38005ce763d12e0788b03df41e682c2e4ea323ee7fa89f5efae2f25bc3fcf8",
     "extractedSha256": "42d8419d15d915407f14114bcba01babdc89bf85b15c792dd768ab0760f82e3e",
     "generatorSha256": "8d7b2719d1375060d0ff5e1da9ff9c50d7557e5fc2f4a60bccb1a9c30274fa0d"
