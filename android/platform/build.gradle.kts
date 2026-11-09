@@ -12,6 +12,7 @@ android {
     // Run the same provider-free transport regressions on the JVM and Android runtime.
     sourceSets.getByName("test").java.srcDir("src/sharedTest/kotlin")
     sourceSets.getByName("androidTest").java.srcDir("src/sharedTest/kotlin")
+    testOptions { unitTests.isIncludeAndroidResources = true }
     buildFeatures { buildConfig=true }
     defaultConfig {
         val reviewEnabled=providers.gradleProperty("whereday.playReviewEnabled").getOrElse("false")
@@ -58,6 +59,8 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.6.2")
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
     testImplementation(libs.junit)
+    testImplementation("org.robolectric:robolectric:4.16.1")
+    testImplementation("androidx.sqlite:sqlite-framework:2.6.2")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.kotlinx.coroutines.test)
