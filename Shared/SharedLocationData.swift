@@ -193,7 +193,27 @@ struct WatchTodayContext: Codable, Equatable {
 }
 
 /// "30 min", "1h 20m": how long a stay has lasted, for compact watch labels.
+/// A clock time that follows the phone's 12/24-hour setting ("3:04 PM" or "15:04"),
+/// written in the user's digits (Arabic-Indic, Persian…).
+enum ClockTimeFormatter {
+    static func string(from date: Date, locale: Locale = .autoupdatingCurrent, timeZone: TimeZone = .current) -> String {
+        var calendar = Calendar.current
+        calendar.locale = locale
+        calendar.timeZone = timeZone
+        return date.formatted(
+            Date.FormatStyle(date: .omitted, time: .shortened, locale: locale, calendar: calendar, timeZone: timeZone)
+        )
+    }
+}
+
 enum StayDurationFormatter {
+    /// "1h 20m", "12h 59m", "2h" in the user's language and digits; nil under an hour.
+    static func hoursAndMinutes(_ seconds: TimeInterval, locale: Locale = .current) -> String {
+        let minutes = max(0, Int(seconds) / 60)
+        return Duration.seconds(minutes * 60)
+            .formatted(.units(allowed: [.hours, .minutes], width: .narrow).locale(locale))
+    }
+
     static func compact(_ seconds: TimeInterval) -> String {
         let minutes = max(0, Int(seconds) / 60)
         if minutes < 60 {

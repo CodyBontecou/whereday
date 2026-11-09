@@ -657,7 +657,7 @@ private enum TimelineEvent: Identifiable {
 
 private enum TimelineRowFormat {
     static func clock(_ date: Date) -> String {
-        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
+        ClockTimeFormatter.string(from: date)
     }
 
     static func duration(_ interval: TimeInterval) -> String {
@@ -665,7 +665,7 @@ private enum TimelineRowFormat {
         if minutes < 60 {
             return String(localized: "\(minutes)m")
         }
-        return String(format: "%dh %02dm", minutes / 60, minutes % 60)
+        return StayDurationFormatter.hoursAndMinutes(interval)
     }
 }
 

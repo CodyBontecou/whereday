@@ -1,7 +1,5 @@
 package com.bontecou.whereday
 
-import androidx.compose.material.icons.outlined.Settings
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -12,11 +10,13 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.outlined.FileUpload
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.IosShare
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
@@ -48,6 +48,7 @@ import java.text.NumberFormat
 import com.bontecou.whereday.data.*
 import com.bontecou.whereday.export.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.map
 import java.time.Instant
 import com.bontecou.whereday.domain.InferenceRules
 import androidx.compose.ui.res.pluralStringResource
@@ -64,7 +65,9 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
 @Composable fun ExportScreen(graph: AppGraph,renderPreview:suspend (ExportFormat,ExportOptions,Boolean,InferenceRules?)->String={f,o,outings,inference->graph.exports.preview(f,o,outings,inference)},onSettings:(()->Unit)?=null) {
     val importing by graph.historyImports.state.collectAsStateWithLifecycle()
     if(importing.phase!=com.bontecou.whereday.platform.HistoryImportPhase.idle) {HistoryImportScreen(graph.historyImports);return}
-    val count by graph.history.dao.pointCount().collectAsStateWithLifecycle(0L)
+    // Null until the first read so re-entering Archive does not flash "0 route points" / "Nothing recorded yet".
+    val count by remember(graph) {graph.history.dao.pointCount().map<Long,Long?> {it}}.collectAsStateWithLifecycle(null)
+    val history=archiveHistory(count)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val purchase by graph.purchases.state.collectAsStateWithLifecycle()
@@ -164,6 +167,16 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
     }
     LaunchedEffect(Unit) {graph.usageFunnel.paywall(com.bontecou.whereday.platform.UsagePaywall.export)}
     val deliverable=!busy && ready && picker.loaded && !picker.busy && pending==null
+    // Without a plan the pinned buttons show a lock and open the plans, rather than failing with a notice far down the page.
+    val locked=exportDeliveryLocked(purchase.access)
+    var plans by rememberSaveable {mutableStateOf(false)}
+    val buy:(com.bontecou.whereday.billing.StorePlan)->Unit={plan->
+        val activity=generateSequence(context) {(it as? android.content.ContextWrapper)?.baseContext}.filterIsInstance<android.app.Activity>().firstOrNull()
+        if(activity!=null) graph.purchases.purchase(activity,plan,com.bontecou.whereday.platform.UsagePaywall.export)
+    }
+    val restore:()->Unit={graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.export)}
+    if(plans) PaywallDialog(purchase,checkout,buy,restore,dismiss={plans=false},entry=PaywallEntry.export)
+    fun deliverOrUnlock(destination:String) {if(locked) {notice=null;plans=true} else deliver(destination)}
     val stacked=LocalDensity.current.fontScale>=1.3f
     Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("export-screen")) {
         // Settings lives behind Archive beside the phone tab bar (iOS ExportView's toolbar gear). The gear holds its place in the
@@ -190,14 +203,11 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
                     RecipeToken(stringResource(if(splitDays) R.string.archive_recipe_split else R.string.archive_recipe_single),"recipe-split") {graph.exportSettings.update(selection.copy(splitDays=!splitDays))},
                 ),enabled=canEdit,Modifier.exportInset().padding(top=8.dp))
             }
-            Text(pluralStringResource(R.plurals.export_stored_points,count.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(count)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)
-            if(count==0L) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
+            count?.let {stored->Text(pluralStringResource(R.plurals.export_stored_points,stored.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(stored)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)}
+            if(history==ArchiveHistory.empty) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
             Box(Modifier.exportInset().padding(top=16.dp)) {
                 val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
-                ExportAccessCard(purchase,checkout,buy={plan->
-                    val activity=generateSequence(context) {(it as? android.content.ContextWrapper)?.baseContext}.filterIsInstance<android.app.Activity>().firstOrNull()
-                    if(activity!=null) graph.purchases.purchase(activity,plan,com.bontecou.whereday.platform.UsagePaywall.export)
-                },restore={graph.purchases.restore(com.bontecou.whereday.platform.UsagePaywall.export)},
+                ExportAccessCard(purchase,checkout,buy=buy,restore=restore,
                     manage=if(purchase.access==com.bontecou.whereday.billing.AccessState.active && purchase.activeProductId==graph.purchases.subscriptionId)
                         {{runCatching {uriHandler.openUri(graph.purchases.manageUri())}}} else null)
             }
@@ -208,7 +218,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             WdSectionHeader(stringResource(R.string.export_redesign_section_recipe))
             val kinds=mapOf("visits" to stringResource(R.string.export_data_visits),"points" to stringResource(R.string.export_data_points),"all" to stringResource(R.string.export_data_all),"outings" to stringResource(R.string.export_data_outings))
             ExportCard {
-                ExportChoiceRow(stringResource(R.string.export_format),format.name,ExportFormat.entries.map { it.name },enabled=canEdit) { graph.exportSettings.update(selection.copy(format=ExportFormat.valueOf(it))) }
+                ExportChoiceRow(stringResource(R.string.export_format),format.name,ExportFormat.entries.map { it.name },enabled=canEdit,labelFor={recipeFormatName(ExportFormat.valueOf(it))}) { graph.exportSettings.update(selection.copy(format=ExportFormat.valueOf(it))) }
                 ExportChoiceRow(stringResource(R.string.export_data),if(selection.outings) "outings" else kind.name,DataKind.entries.map {it.name}+"outings",enabled=canEdit,divider=false,labelFor={kinds.getValue(it)}) {
                     graph.exportSettings.update(if(it=="outings") selection.copy(outings=true) else selection.copy(outings=false,options=options.copy(kind=DataKind.valueOf(it))))
                 }
@@ -231,10 +241,9 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             WdSectionFooter(stringResource(if(selection.outings) R.string.export_preview_outings_help else R.string.export_preview_history_help))
             WdSectionHeader(stringResource(R.string.export_redesign_section_send))
             ExportCard {
-                WdNavRow(stringResource(R.string.export_delivery_export_folder),icon=Icons.Outlined.Folder,divider=false,enabled=deliverable && settings.exportFolder!=null) {deliver("folder")}
+                WdNavRow(stringResource(R.string.export_delivery_export_folder),icon=Icons.Outlined.Folder,divider=false,enabled=deliverable && settings.exportFolder!=null) {deliverOrUnlock("folder")}
             }
-            WdSectionFooter(stringResource(R.string.export_delivery_folder_policy))
-            notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),Modifier.exportInset().padding(top=12.dp),warning=it.isFailure)}
+            WdSectionFooter(stringResource(R.string.export_delivery_folder_plan_policy))
             picker.notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),Modifier.exportInset().padding(top=12.dp),warning=it.isFailure)}
             if(pending!=null) {
                 ExportCallout(stringResource(R.string.export_delivery_pending_help),Modifier.exportInset().padding(top=12.dp),title=stringResource(R.string.export_delivery_pending,pending.displayName)) {
@@ -275,12 +284,18 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
                 WdSectionHeader(stringResource(R.string.export_additional_formats))
                 ExportCard {
                     val extras=ExportFormat.entries.filter {it!=format}
-                    extras.forEach {extra -> ExportToggleRow(extra.name,extra in extraFormats,enabled=canEdit,modifier=Modifier.testTag("export-extra-${extra.name}"),divider=extra!=extras.last()) {enabled ->graph.exportSettings.update(selection.copy(additionalFormats=if(enabled) extraFormats+extra else extraFormats-extra))}}
+                    extras.forEach {extra -> ExportToggleRow(recipeFormatName(extra),extra in extraFormats,enabled=canEdit,modifier=Modifier.testTag("export-extra-${extra.name}"),divider=extra!=extras.last()) {enabled ->graph.exportSettings.update(selection.copy(additionalFormats=if(enabled) extraFormats+extra else extraFormats-extra))}}
                 }
             }
         }
         if(onSettings!=null) {
             val minTop=with(LocalDensity.current) {12.dp.toPx()}
+            // Once the header scrolls away the pinned gear sits on a toolbar band, so it never floats over a chip or row beneath it.
+            val pinned=gearSlotY.let {it!=null && it-pageTop<=minTop}
+            if(pinned) Column(Modifier.fillMaxWidth().background(wd.surface).pointerInput(Unit) {awaitPointerEventScope {while(true) awaitPointerEvent().changes.forEach {it.consume()}}}.testTag("archive-toolbar")) {
+                Spacer(Modifier.height(12.dp+48.dp+8.dp))
+                WdDivider()
+            }
             WdCircleButton(androidx.compose.material.icons.Icons.Outlined.Settings,stringResource(R.string.shell_settings),onSettings,
                 Modifier.align(Alignment.TopEnd).offset {androidx.compose.ui.unit.IntOffset(0,maxOf(minTop,(gearSlotY ?: pageTop+minTop)-pageTop).toInt())}
                     .padding(end=24.dp).testTag("archive-settings"))
@@ -290,11 +305,16 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
         Column(Modifier.fillMaxWidth().background(wd.surface).heightIn(max=320.dp)) {
             WdDivider()
             Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal=16.dp).padding(top=12.dp,bottom=10.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),textModifier=Modifier.testTag("export-delivery-notice"),warning=it.isFailure)}
+                if(locked) Row(Modifier.fillMaxWidth().testTag("export-locked"),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
+                    Icon(Icons.Outlined.Lock,null,Modifier.size(16.dp),tint=wd.textMuted)
+                    Text(stringResource(R.string.export_delivery_locked),Modifier.weight(1f),style=WdType.caption,color=wd.textMuted)
+                }
                 if(operation==ExportUiOperation.delivery || picker.busy) ExportProgress()
                 progress?.let {Text(stringResource(R.string.export_delivery_progress,number.format(it.visits),number.format(it.points)),style=WdType.caption,color=wd.textMuted)}
                 if(operation==ExportUiOperation.delivery && exportJob?.isActive==true) ExportLink(stringResource(R.string.export_delivery_cancel_preparation),{exportJob?.cancel()},Modifier.testTag("export-cancel-operation"))
-                val save:@Composable (Modifier)->Unit={WdButton(stringResource(R.string.export_delivery_save_export_as),{deliver("save")},it,enabled=deliverable && !splitDays && (extraFormats+format).size==1)}
-                val share:@Composable (Modifier)->Unit={WdButton(stringResource(R.string.export_delivery_share_export),{deliver("share")},it,emphasis=WdEmphasis.primary,enabled=deliverable,busy=operation==ExportUiOperation.delivery,icon=Icons.Outlined.IosShare)}
+                val save:@Composable (Modifier)->Unit={WdButton(stringResource(R.string.export_delivery_save_export_as),{deliverOrUnlock("save")},it.testTag("export-save-as"),enabled=deliverable && !splitDays && (extraFormats+format).size==1,icon=if(locked) Icons.Outlined.Lock else null)}
+                val share:@Composable (Modifier)->Unit={WdButton(stringResource(R.string.export_delivery_share_export),{deliverOrUnlock("share")},it.testTag("export-share"),emphasis=WdEmphasis.primary,enabled=deliverable,busy=operation==ExportUiOperation.delivery,icon=if(locked) Icons.Outlined.Lock else Icons.Outlined.IosShare)}
                 if(stacked) {share(Modifier);save(Modifier)}
                 else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {save(Modifier.weight(1f));share(Modifier.weight(1f))}
             }

@@ -4072,7 +4072,7 @@
   },
   "provenance": {
     "IsoMe/Models/CountryStay.swift": "23a0f5c42ce774dde5c0f2fdd95f76042b01343a62bae5e892102b70533fd318",
-    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
+    "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
     "android/scripts/fixtures/CountryRegions.swift": "d9474c951745cd3901979ec3515b32312f8927dc896fb9303cee8af71ba9473d",
     "android/scripts/generate_country_regions.py": "03ce9764dbde4bf72726ea01e388e84707173d9471d9b87d459e0987de157afc",

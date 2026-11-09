@@ -177,7 +177,7 @@ import java.util.concurrent.atomic.AtomicBoolean
     }
     if(adding || editing!=null) CountryStayEditor(editing,{adding=false;editing=null},{value,expected->graph.history.saveCountryStay(value,expected)},{expected->graph.history.deleteCountryStay(expected)},recorded=remember(report) {report?.days?.filter {it.recorded}?.map {it.day}?.toSet().orEmpty()})
     if(preview && current!=null) WorkspaceAlertDialog(onDismissRequest={preview=false},title={Text(stringResource(R.string.country_preview_title))},text={Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(R.string.country_preview_help));Text(countryDaysCsv(current.days.take(100)),style=MaterialTheme.typography.bodySmall)
+        Text(stringResource(R.string.country_preview_plan_help));Text(countryDaysCsv(current.days.take(100)),style=MaterialTheme.typography.bodySmall)
     }},confirmButton={TextButton(onClick={preview=false}) {Text(stringResource(R.string.country_done))}})
     if(analyzeConfirmation) WorkspaceAlertDialog(onDismissRequest={analyzeConfirmation=false},title={Text(stringResource(R.string.country_analyze_title))},text={Text(stringResource(R.string.country_analyze_disclosure),Modifier.verticalScroll(rememberScrollState()))},confirmButton={TextButton(onClick={
         if(analyzeConfirmation && active.get() && selected==null && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {analyzeConfirmation=false;analysisController.start()}

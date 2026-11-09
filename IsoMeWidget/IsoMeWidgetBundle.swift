@@ -135,7 +135,8 @@ struct WidgetDay {
     }
 
     static func clock(_ date: Date) -> String {
-        date.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
+        // Follows the phone's 12/24-hour setting, in the user's digits.
+        date.formatted(date: .omitted, time: .shortened)
     }
 }
 

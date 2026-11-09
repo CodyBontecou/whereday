@@ -130,7 +130,7 @@ struct ContentView: View {
 
     /// "since 13:50 · 30 min"
     private static func sinceLabel(since: Date, now: Date) -> String {
-        let clock = since.formatted(.verbatim("\(hour: .twoDigits(clock: .twentyFourHour, hourCycle: .zeroBased)):\(minute: .twoDigits)", timeZone: .current, calendar: .current))
+        let clock = ClockTimeFormatter.string(from: since)
         let duration = StayDurationFormatter.compact(now.timeIntervalSince(since))
         return String(localized: "since \(clock) · \(duration)")
     }

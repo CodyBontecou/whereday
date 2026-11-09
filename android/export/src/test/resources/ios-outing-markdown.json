@@ -3,7 +3,7 @@
     "IsoMe/Utilities/ExportService.swift": "d49a9440fda38574dd9b6caf43e054545176c83b5b9e7de12cf3c4204e5c05fc",
     "IsoMe/Models/RecordingSession.swift": "72799d7db99a5608c3a00a8029ddca2e0eaa672c723f654ac82036bbc0d81fab",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
-    "IsoMe/Models/Visit.swift": "13262ea639a62f793b29c3ebee5876a0d95e3392d2969650f2290a49e982f0d8",
+    "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
     "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
     "android/scripts/fixtures/OutingMarkdownFixtures.swift": "6ecfc7978f8ee9630d24e6a4d30df5df7a9a6d8a53821fe3f605b0b2275de71a",
     "android/scripts/fixtures/outing-markdown-inputs.json": "7325fc9051c6c35bd0804849dd8bec1b6e2b6a70906bbdcf77462b3863198833",

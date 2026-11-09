@@ -56,14 +56,14 @@ import java.util.Locale
                 HistoryImportPhase.canceling->ExportBusyLine(stringResource(R.string.history_import_canceling))
                 HistoryImportPhase.canceled->ExportCallout(stringResource(R.string.history_import_canceled))
                 HistoryImportPhase.complete->state.counts?.let {ExportCallout(stringResource(R.string.history_import_complete,pluralStringResource(R.plurals.history_import_visit_count,it.visits,it.visits),pluralStringResource(R.plurals.history_import_point_count,it.points,it.points),pluralStringResource(R.plurals.history_import_kept_count,it.kept,it.kept)),textModifier=Modifier.testTag("history-import-result"))}
-                HistoryImportPhase.failed->ExportCallout(state.error ?: stringResource(R.string.history_import_failed),warning=true)
+                HistoryImportPhase.failed->ExportCallout(state.issue?.let {historyImportIssueText(it)} ?: if(state.empty) stringResource(R.string.history_import_nothing) else state.error ?: stringResource(R.string.history_import_failed),warning=true,textModifier=Modifier.testTag("history-import-error"))
                 else->Unit
             }
         }
         if(state.phase==HistoryImportPhase.review) state.review?.let {review->
             ExportBody(stringResource(R.string.history_import_unchanged),Modifier.padding(horizontal=24.dp))
             val sourceLabel=when(review.source) {
-                HistoryImportSource.whereday->review.format.name.uppercase(Locale.ROOT)
+                HistoryImportSource.whereday->recipeFormatName(review.format)
                 HistoryImportSource.googleRaw->stringResource(R.string.history_import_google_raw)
                 HistoryImportSource.googleSemantic->stringResource(R.string.history_import_google_semantic)
                 HistoryImportSource.googleDevice->stringResource(R.string.history_import_google_device)
@@ -98,7 +98,9 @@ import java.util.Locale
             if(review.rejected>0) {
                 WdSectionHeader(stringResource(R.string.export_redesign_section_problems))
                 ExportCallout(stringResource(R.string.history_import_rejected,review.rejected),Modifier.exportInset(),warning=true) {
-                    review.errors.forEach {Text(it,style=WdType.caption2,color=wd.textMuted)}
+                    // Typed issues read in the UI language; reviews built without them keep the diagnostic lines.
+                    if(review.issues.size==review.errors.size) review.issues.forEach {Text(historyImportIssueText(it),style=WdType.caption2,color=wd.textMuted)}
+                    else review.errors.forEach {Text(it,style=WdType.caption2,color=wd.textMuted)}
                 }
             }
             if(review.replaceable>0 && review.source==HistoryImportSource.whereday) {

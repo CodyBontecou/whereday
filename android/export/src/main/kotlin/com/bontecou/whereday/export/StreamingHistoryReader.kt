@@ -7,22 +7,32 @@ import com.google.gson.stream.JsonToken
 import java.io.Reader
 import java.util.concurrent.CancellationException
 
-data class ImportScan(val visits:Int,val points:Int,val rejected:Int,val errors:List<String>,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0)
+data class ImportScan(val visits:Int,val points:Int,val rejected:Int,val errors:List<String>,val source:HistoryImportSource=HistoryImportSource.whereday,val unsupported:Int=0,
+    /** Typed reasons for the first rejected records, index-aligned with [errors]. */
+    val issues:List<HistoryImportIssue> = emptyList())
 
 internal class ImportScanCollector(private val onVisit:(Visit)->Unit,private val onPoint:(TrackPoint)->Unit) {
     private var visits=0;private var points=0;private var rejected=0;private var unsupported=0
     private val errors=mutableListOf<String>()
+    private val issues=mutableListOf<HistoryImportIssue>()
     fun unsupported() {unsupported=Math.addExact(unsupported,1)}
-    fun error(message:String) {rejected=Math.addExact(rejected,1);if(errors.size<10) errors+=message.take(200)}
-    fun <T> decode(label:String,block:()->T):T?=try {block()} catch(failure:Exception) {
+    fun error(record:HistoryImportRecordKind,number:Int,problem:HistoryImportProblem,detail:String?) {
+        rejected=Math.addExact(rejected,1)
+        if(errors.size<10) {
+            val message=("${historyImportLabel(record,number)}: ${detail ?: problem.name}").take(200)
+            errors+=message;issues+=HistoryImportIssue(record,number,problem,message)
+        }
+    }
+    fun error(record:HistoryImportRecordKind,number:Int,failure:Throwable)=error(record,number,historyImportProblem(failure),failure.message)
+    fun <T> decode(record:HistoryImportRecordKind,number:Int,block:()->T):T?=try {block()} catch(failure:Exception) {
         if(failure is CancellationException || failure is ImportRecordTooLarge) throw failure
-        error("$label: ${failure.message}");null
+        error(record,number,failure);null
     }
     fun visit(value:Visit) {onVisit(value);visits=Math.addExact(visits,1)}
     fun point(value:TrackPoint) {onPoint(value);points=Math.addExact(points,1)}
     fun finish():ImportScan {
-        require(visits>0 || points>0) {errors.firstOrNull() ?: "No importable history found"}
-        return ImportScan(visits,points,rejected,errors.toList(),unsupported=unsupported)
+        if(visits==0 && points==0) throw NoImportableHistory(issues.firstOrNull())
+        return ImportScan(visits,points,rejected,errors.toList(),unsupported=unsupported,issues=issues.toList())
     }
 }
 
@@ -33,7 +43,7 @@ internal class ImportCheckpointReader(private val source:Reader,private val chec
 }
 
 internal object StreamingHistoryReader {
-    fun json(source:Reader,known:Set<String>,checkpoint:()->Unit,consume:(String,Int,Map<String,String>,String?)->Unit) {
+    fun json(source:Reader,known:Set<String>,checkpoint:()->Unit,consume:(String,Int,Map<String,String>,InvalidHistoryRecord?)->Unit) {
         val budget=ImportScalarReader(source)
         val prefix=java.io.PushbackReader(budget.buffered(),1)
         var bom=false
@@ -57,9 +67,9 @@ internal object StreamingHistoryReader {
             reader.beginArray();var index=0
             while(reader.hasNext()) {
                 checkpoint();index=Math.addExact(index,1)
-                val fields=linkedMapOf<String,String>();var issue:String?=null;var characters=0
+                val fields=linkedMapOf<String,String>();var issue:InvalidHistoryRecord?=null;var characters=0
                 if(reader.peek()!=JsonToken.BEGIN_OBJECT) {
-                    reader.skipValue();issue="Expected history record object"
+                    reader.skipValue();issue=InvalidHistoryRecord(HistoryImportProblem.notRecord,"Expected history record object")
                 } else {
                     reader.beginObject();val seen=mutableSetOf<String>()
                     while(reader.hasNext()) {
@@ -67,7 +77,7 @@ internal object StreamingHistoryReader {
                         if(field.length>1024) throw ImportRecordTooLarge()
                         characters+=field.length;ImportRecordLimits.text(characters)
                         if(field !in known) {reader.skipValue();continue}
-                        if(!seen.add(field)) issue="Duplicate value for $field"
+                        if(!seen.add(field)) issue=InvalidHistoryRecord(HistoryImportProblem.duplicateField,"Duplicate value for $field")
                         when(reader.peek()) {
                             JsonToken.NULL->reader.nextNull()
                             JsonToken.STRING,JsonToken.NUMBER->{
@@ -77,7 +87,7 @@ internal object StreamingHistoryReader {
                             JsonToken.BOOLEAN->{
                                 val value=reader.nextBoolean().toString();characters+=value.length;ImportRecordLimits.text(characters);fields[field]=value
                             }
-                            else->{reader.skipValue();issue="Invalid value for $field"}
+                            else->{reader.skipValue();issue=InvalidHistoryRecord(HistoryImportProblem.invalidField,"Invalid value for $field")}
                         }
                     }
                     reader.endObject()

@@ -11,6 +11,8 @@ import androidx.compose.material.icons.automirrored.outlined.Undo
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -82,16 +84,21 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
     var departureMillis by rememberSaveable {mutableLongStateOf(initialDeparture)}
     var stillHere by rememberSaveable {mutableStateOf((visit!=null && visit.departedAt==null) || (visit==null && mode==ManualVisitMode.current))}
     var choosing by rememberSaveable {mutableStateOf(false)}
-    var savedChooser by remember {mutableStateOf(false)}
+    var savedChooser by rememberSaveable {mutableStateOf(false)}
     var source by rememberSaveable {mutableStateOf(visit?.placeSource ?: "userEntered")}
     var sourceDistance by rememberSaveable {mutableStateOf(visit?.placeDistanceMeters?.takeIf {it.isFinite() && it>=0})}
     var placeSelectionChanged by rememberSaveable {mutableStateOf(false)}
     var error by remember {mutableStateOf<String?>(null)}
+    // Save sits outside the scrolling fields, so a validation error is scrolled into view; each failed Save pulses again.
+    val errorView=remember {BringIntoViewRequester()}
+    var errorPulse by remember {mutableIntStateOf(0)}
+    LaunchedEffect(error,errorPulse) {if(error!=null) {withFrameNanos {};errorView.bringIntoView()}}
     var busy by remember {mutableStateOf(false)}
-    var deleting by remember {mutableStateOf(false)}
-    var undoing by remember {mutableStateOf(false)}
-    var splitting by remember {mutableStateOf(false)}
-    var discarding by remember {mutableStateOf(false)}
+    // Confirmation dialogs survive rotation and other configuration changes, as the draft fields do.
+    var deleting by rememberSaveable {mutableStateOf(false)}
+    var undoing by rememberSaveable {mutableStateOf(false)}
+    var splitting by rememberSaveable {mutableStateOf(false)}
+    var discarding by rememberSaveable {mutableStateOf(false)}
     var overlapReview by remember {mutableStateOf<VisitOverlapReview?>(null)}
     var mapReview by remember {mutableStateOf<VisitSaveKey?>(null)}
     val active=remember {AtomicBoolean(true)}
@@ -159,7 +166,7 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
                 if(e is CancellationException) throw e
                 if(e is VisitOverlap) {
                     if(interactive() && currentKey()==key) overlapReview=VisitOverlapReview(reviewSequence.incrementAndGet(),key,value,remember,e.conflicting)
-                } else error=failure(e,R.string.visit_error_save)
+                } else {error=failure(e,R.string.visit_error_save);errorPulse++}
             } finally {busy=false}
         }
     }
@@ -180,7 +187,7 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
             }
             is VisitEditorInputError->e.resource
             else->R.string.visit_error_save
-        })}
+        });errorPulse++}
     }
     BackHandler(onBack=::cancel)
     if(choosing) {
@@ -259,7 +266,7 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
             }
             error?.let {
                 val shape=RoundedCornerShape(14.dp)
-                Row(Modifier.fillMaxWidth().clip(shape).background(wd.inkRust.copy(alpha=if(wd.dark) 0.12f else 0.06f)).border(1.dp,wd.inkRust.copy(alpha=0.35f),shape).padding(14.dp),
+                Row(Modifier.fillMaxWidth().bringIntoViewRequester(errorView).clip(shape).background(wd.inkRust.copy(alpha=if(wd.dark) 0.12f else 0.06f)).border(1.dp,wd.inkRust.copy(alpha=0.35f),shape).padding(14.dp),
                     horizontalArrangement=Arrangement.spacedBy(10.dp)) {
                     Icon(Icons.Outlined.ErrorOutline,null,Modifier.size(20.dp),tint=wd.inkRust)
                     Text(it,style=MaterialTheme.typography.bodyMedium,color=wd.inkRust,modifier=Modifier.weight(1f).testTag("visit-editor-error"))

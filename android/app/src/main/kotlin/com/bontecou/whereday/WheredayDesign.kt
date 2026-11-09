@@ -617,10 +617,32 @@ internal data class WdDialSegment(val start:Float,val end:Float,val ink:Color)
                 drawCircle(nowInk,stroke*0.25f,point)
             }
         }
-        Column(horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(2.dp)) {
-            if(nowCaption!=null) Text(nowCaption.uppercase(),style=WdType.caption2.copy(letterSpacing=0.1.em),color=wd.textMuted)
-            if(centerText!=null) Text(centerText,style=WdType.title.copy(fontWeight=FontWeight.Normal,fontSize=(size.value*0.2f).sp,lineHeight=(size.value*0.21f).sp,fontFeatureSettings="tnum"),color=wd.textPrimary)
-            if(hint!=null) Text(hint,style=WdType.caption2.copy(fontSize=10.sp),color=wd.inkRust)
+        // The caption, clock and hint shrink together to stay inside the ring, e.g. "11:47 AM" or 200% system text.
+        val inner=size*(1f-0.12f-2*ring)*0.94f
+        FitInCircle(inner) {
+            Column(horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(2.dp)) {
+                if(nowCaption!=null) Text(nowCaption.uppercase(),style=WdType.caption2.copy(letterSpacing=0.1.em),color=wd.textMuted,maxLines=1,softWrap=false)
+                if(centerText!=null) Text(centerText,style=WdType.title.copy(fontWeight=FontWeight.Normal,fontSize=(size.value*0.2f).sp,lineHeight=(size.value*0.21f).sp,fontFeatureSettings="tnum"),color=wd.textPrimary,maxLines=1,softWrap=false)
+                if(hint!=null) Text(hint,style=WdType.caption2.copy(fontSize=10.sp),color=wd.inkRust,maxLines=1,softWrap=false)
+            }
+        }
+    }
+}
+
+/** Scale that fits a [width]×[height] box inside a circle of [diameter]: its diagonal may not exceed the diameter. Never enlarges. */
+internal fun circleFitScale(width:Int,height:Int,diameter:Float):Float {
+    val diagonal=kotlin.math.hypot(width.toFloat(),height.toFloat())
+    return if(diagonal<=diameter || diagonal<=0f) 1f else diameter/diagonal
+}
+
+/** Lays [content] out at its natural size, then scales it down (never up) so it fits inside a circle of [diameter]. */
+@Composable private fun FitInCircle(diameter:Dp,content:@Composable ()->Unit) {
+    androidx.compose.ui.layout.Layout(content) {measurables,_->
+        val placeable=measurables.single().measure(androidx.compose.ui.unit.Constraints())
+        val scale=circleFitScale(placeable.width,placeable.height,diameter.toPx())
+        val width=(placeable.width*scale).toInt();val height=(placeable.height*scale).toInt()
+        layout(width,height) {
+            placeable.placeWithLayer((width-placeable.width)/2,(height-placeable.height)/2) {scaleX=scale;scaleY=scale}
         }
     }
 }

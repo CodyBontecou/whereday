@@ -8,6 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Map
@@ -47,9 +49,14 @@ import kotlinx.coroutines.*
     var radius by rememberSaveable {mutableStateOf((place?.radius ?: 150.0).toString())}
     var choosingLocation by rememberSaveable {mutableStateOf(false)}
     var error by remember {mutableStateOf<Int?>(null)}
+    // Save is pinned below the scrolling fields, so an error is scrolled into view; each failed Save pulses again.
+    val errorView=remember {BringIntoViewRequester()}
+    var errorPulse by remember {mutableIntStateOf(0)}
+    LaunchedEffect(error,errorPulse) {if(error!=null) {withFrameNanos {};errorView.bringIntoView()}}
     var busy by remember {mutableStateOf(false)}
-    var deleting by remember {mutableStateOf(false)}
-    var discarding by remember {mutableStateOf(false)}
+    // Confirmation dialogs survive rotation and other configuration changes, as the draft fields do.
+    var deleting by rememberSaveable {mutableStateOf(false)}
+    var discarding by rememberSaveable {mutableStateOf(false)}
     val scope=rememberCoroutineScope()
     val dirty=name!=place?.name.orEmpty() || address!=place?.address.orEmpty() || lat!=place?.coordinate?.latitude?.toString().orEmpty() ||
         lon!=place?.coordinate?.longitude?.toString().orEmpty() || radius!=(place?.radius ?: 150.0).toString()
@@ -92,7 +99,7 @@ import kotlinx.coroutines.*
                         enabled=!busy,valueRange=25f..300f,colors=androidx.compose.material3.SliderDefaults.colors(thumbColor=wd.placeInks[3],activeTrackColor=wd.placeInks[3],inactiveTrackColor=wd.dialTrack))
                     OutlinedTextField(radius,{radius=it},label={Text(stringResource(R.string.saved_editor_radius))},enabled=!busy,shape=fieldShape,colors=wdTextFieldColors(),textStyle=WdType.monoBody,modifier=Modifier.padding(horizontal=16.dp).fillMaxWidth().testTag("saved-radius"))
                     error?.let {val notice=RoundedCornerShape(14.dp)
-                        Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.inkRust,modifier=Modifier.padding(start=16.dp,end=16.dp,top=16.dp).fillMaxWidth().clip(notice)
+                        Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.inkRust,modifier=Modifier.padding(start=16.dp,end=16.dp,top=16.dp).fillMaxWidth().bringIntoViewRequester(errorView).clip(notice)
                             .background(wd.inkRust.copy(alpha=0.08f)).border(1.dp,wd.inkRust.copy(alpha=0.35f),notice).padding(14.dp).testTag("saved-editor-error"))}
                     if(busy) PlacesProgress(Modifier.padding(start=16.dp,end=16.dp,top=12.dp),inset=false)
                     if(delete!=null) WdButton(stringResource(R.string.saved_editor_delete),{deleting=true},Modifier.padding(start=16.dp,end=16.dp,top=28.dp),emphasis=WdEmphasis.destructive,enabled=!busy,icon=Icons.Outlined.Delete)
@@ -102,9 +109,9 @@ import kotlinx.coroutines.*
                     key(ticket) {WdButton(stringResource(R.string.visit_save),onClick={
                         if(!actions.allows(ticket) || busy) return@WdButton
                         val candidate=try {SavedPlace(id=draftId,name=name.trim(),coordinate=Coordinate(lat.trim().replace(',','.').toDouble(),lon.trim().replace(',','.').toDouble()),address=address.ifBlank {null},radius=radius.trim().replace(',','.').toDouble())}
-                            catch(_:IllegalArgumentException) {error=R.string.saved_editor_invalid;return@WdButton}
+                            catch(_:IllegalArgumentException) {error=R.string.saved_editor_invalid;errorPulse++;return@WdButton}
                         busy=true;error=null
-                        scope.launch {try {save(candidate);dismiss()} catch(e:Exception) {if(e is CancellationException) throw e;error=if(e is SavedPlacesChanged) R.string.saved_changed else R.string.saved_editor_save_error} finally {busy=false}}
+                        scope.launch {try {save(candidate);dismiss()} catch(e:Exception) {if(e is CancellationException) throw e;error=if(e is SavedPlacesChanged) R.string.saved_changed else R.string.saved_editor_save_error;errorPulse++} finally {busy=false}}
                     },modifier=Modifier.testTag("saved-editor-save"),emphasis=WdEmphasis.primary,enabled=!busy,busy=busy)}
                 }
             }

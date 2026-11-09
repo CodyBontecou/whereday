@@ -37,4 +37,27 @@
         <item quantity="other">%d existing records</item>
     </plurals>
     <string name="history_import_replaceable">Records with matching IDs: %d. Replacement affects these records only. The counts above describe Keep existing; replacement rechecks all selected records.</string>
+    <string name="history_import_issue">%1$s: %2$s</string>
+    <string name="history_import_record_visit">Visit %1$d</string>
+    <string name="history_import_record_point">Point %1$d</string>
+    <string name="history_import_record_row">Row %1$d</string>
+    <string name="history_import_record_line">Line %1$d</string>
+    <string name="history_import_record_google">Google record %1$d</string>
+    <string name="history_import_problem_departure">departure is before arrival</string>
+    <string name="history_import_problem_latitude">latitude must be from -90 to 90</string>
+    <string name="history_import_problem_longitude">longitude must be from -180 to 180</string>
+    <string name="history_import_problem_missing_coordinate">latitude or longitude is missing</string>
+    <string name="history_import_problem_coordinates">coordinates must be a latitude and longitude separated by a comma</string>
+    <string name="history_import_problem_missing_time">time is missing</string>
+    <string name="history_import_problem_time">time could not be read</string>
+    <string name="history_import_problem_number">a number could not be read</string>
+    <string name="history_import_problem_identifier">identifier is not valid</string>
+    <string name="history_import_problem_duplicate_field">a field appears more than once</string>
+    <string name="history_import_problem_field">a field has an unsupported value</string>
+    <string name="history_import_problem_not_record">not a history record</string>
+    <string name="history_import_problem_column_count">column count does not match the header</string>
+    <string name="history_import_problem_duplicate_columns">header has duplicate columns</string>
+    <string name="history_import_problem_google">contains an invalid visit or point</string>
+    <string name="history_import_problem_other">this record could not be read</string>
+    <string name="history_import_nothing">No visits or points were found in this file.</string>
 </resources>
