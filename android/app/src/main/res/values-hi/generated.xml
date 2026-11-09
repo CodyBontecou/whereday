@@ -68,7 +68,7 @@
     <string name="automatic_export_failure_execution">स्वचालित निर्यात पूरा नहीं हो सका। खरीद एक्सेस, फ़ोल्डर अनुमतियाँ और उपलब्ध स्टोरेज जाँचें, फिर दोबारा कोशिश करें।</string>
     <string name="automatic_export_failure_interrupted">स्वचालित निर्यात बाधित हो गया। इसका सहेजा गया अनुरोध फिर शुरू करें या रद्द करें।</string>
     <string name="automatic_export_failure_pending">शेड्यूल या फ़ॉर्मेट बदलने से पहले लंबित निर्यात पूरा करें या रद्द करें।</string>
-    <string name="automatic_export_failure_purchase">सक्रिय Whereday प्लान ज़रूरी है।</string>
+    <string name="automatic_export_failure_plan">सक्रिय Whereday प्लान ज़रूरी है।</string>
     <string name="automatic_export_failure_settings">स्वचालित निर्यात सेटिंग्स लोड नहीं हो सकीं। जारी रखने के लिए दोबारा कोशिश करें या उन्हें रीसेट करें।</string>
     <string name="automatic_export_file_mode">दिन की फ़ाइल अपडेट करें</string>
     <string name="automatic_export_folder_missing">चलाने से पहले सेटिंग्स में निर्यात फ़ोल्डर चुनें।</string>
@@ -93,8 +93,8 @@
     <string name="automatic_export_outings">आउटिंग</string>
     <string name="automatic_export_outings_help">आउटिंग उनके शुरू होने के समय से चुनी जाती हैं। पूरे रूट शामिल होते हैं। अनुमानित आउटिंग सेटिंग्स के अनुसार होती हैं; लंबित दोबारा कोशिश अपने कैप्चर किए गए अनुमान विकल्प बनाए रखती है।</string>
     <string name="automatic_export_pending">लंबित निर्यात: %1$s। दोबारा कोशिश करने पर यही कैप्चर की गई अवधि और गंतव्य रहता है।</string>
+    <string name="automatic_export_plan_policy">सक्रिय Whereday प्लान ज़रूरी है। दिन में एक बार के रन अब तक का पूरा दिन फिर से लिखते हैं। छूटे हुए पिछले दिन हाथ से निर्यात किए जा सकते हैं।</string>
     <string name="automatic_export_points">पॉइंट</string>
-    <string name="automatic_export_policy">सक्रिय Whereday प्लान ज़रूरी है। दिन में एक बार के रन अब तक का पूरा दिन फिर से लिखते हैं। छूटे हुए पिछले दिन हाथ से निर्यात किए जा सकते हैं।</string>
     <string name="automatic_export_repeat">दोहराएँ</string>
     <string name="automatic_export_reset">स्वचालित निर्यात रीसेट करें</string>
     <string name="automatic_export_reset_body">इससे शेड्यूल बंद हो जाता है और इसके सहेजे गए अनुरोध साफ़ हो जाते हैं। निर्यात किए गए दस्तावेज़ और सुरक्षित बैकअप अपने फ़ोल्डर में बने रहते हैं।</string>
@@ -116,7 +116,7 @@
     <string name="automation_command_cancel">रद्द करें</string>
     <string name="automation_command_help">परिणाम बाधित होने पर आप रद्द करके जर्नल जाँच सकते हैं।</string>
     <string name="automation_command_title">Whereday कमांड पूरा हो रहा है</string>
-    <string name="automation_detail_exports">अनुरोधित फ़िल्टर के साथ पूरी फ़ाइलें। सक्रिय Whereday प्लान भी ज़रूरी है।</string>
+    <string name="automation_detail_exports_plan">अनुरोधित फ़िल्टर के साथ पूरी फ़ाइलें। सक्रिय Whereday प्लान भी ज़रूरी है।</string>
     <string name="automation_detail_manual_visits">किसी सहेजी गई जगह, निर्देशांक या अपने वर्तमान स्थान पर चेक-इन करें, और मैन्युअल विज़िट से चेक-आउट करें। विज़िट का नाम, पता और समय लौटाता है। वर्तमान स्थान के लिए Whereday खुला होना और स्थान एक्सेस पहले से होना आवश्यक है।</string>
     <string name="automation_detail_outings">रिकॉर्ड की गई आउटिंग के नाम और शुरू/समाप्ति समय।</string>
     <string name="automation_detail_places">चेक-इन गंतव्य चुनने के लिए सहेजी गई जगहों के नाम और ID।</string>
@@ -238,7 +238,7 @@
     <string name="country_period_rolling">पिछले 365 दिन</string>
     <string name="country_period_year">इस साल</string>
     <string name="country_preview">देश CSV का प्रीव्यू</string>
-    <string name="country_preview_help">प्रीव्यू पहली 100 स्थानीय तारीखें दिखाता है। देशों का CSV निर्यात चुनी गई अवधि की सभी तारीखें शामिल करता है और इसके लिए सक्रिय Whereday प्लान ज़रूरी है।</string>
+    <string name="country_preview_plan_help">प्रीव्यू पहली 100 स्थानीय तारीखें दिखाता है। देशों का CSV निर्यात चुनी गई अवधि की सभी तारीखें शामिल करता है और इसके लिए सक्रिय Whereday प्लान ज़रूरी है।</string>
     <string name="country_preview_title">देश CSV प्रीव्यू</string>
     <string name="country_retry">फिर कोशिश करें</string>
     <string name="country_rules">हर स्थानीय तारीख़ हर देश में एक बार गिनी जाती है। यात्रा के दिन एक से अधिक देशों में गिने जा सकते हैं। खुली विज़िट और असत्यापित प्रस्थान में केवल आगमन की तारीख़ गिनी जाती है; रूट पॉइंट अन्य तारीख़ें जोड़ सकते हैं। अंतराल भरे नहीं जाते।</string>
@@ -314,8 +314,6 @@
     <string name="export_data_points">पॉइंट</string>
     <string name="export_data_visits">विज़िट</string>
     <string name="export_date_range">तारीख़ की अवधि</string>
-    <string name="export_delivery_access_help">पूरी फ़ाइल निर्यात करने के लिए सक्रिय Whereday प्लान ज़रूरी है। चुनें कि यह फ़ाइल कहाँ साझा या सहेजनी है।</string>
-    <string name="export_delivery_access_required">फ़ाइलें निर्यात करने के लिए सक्रिय Whereday प्लान ज़रूरी है। आयात और प्रीव्यू मुफ़्त रहते हैं।</string>
     <string name="export_delivery_cancel_pending">लंबित निर्यात रद्द करें</string>
     <string name="export_delivery_cancel_preparation">तैयारी रद्द करें</string>
     <string name="export_delivery_canceled">निर्यात रद्द किया गया। पहले से लिखी गई फ़ाइलें गंतव्य में बनी रहती हैं।</string>
@@ -328,13 +326,16 @@
     <string name="export_delivery_failed">सहेजना पूरा नहीं हो सका। फिर शुरू करें या कोई दूसरा गंतव्य चुनें; अधूरी फ़ाइल के लिए पिछला गंतव्य जाँचें।</string>
     <string name="export_delivery_folder">फ़ाइल निर्यात फ़ोल्डर में सहेजें</string>
     <string name="export_delivery_folder_help">फ़ोल्डर डिलीवरी उपयोग करने के लिए सेटिंग्स में निर्यात फ़ोल्डर चुनें।</string>
-    <string name="export_delivery_folder_policy">फ़ाइल निर्यात के लिए सक्रिय Whereday प्लान ज़रूरी है। नाम पहले से मौजूद होने पर फ़ोल्डर निर्यात दोनों फ़ाइलें रखता है। सेटिंग्स में फ़ोल्डर चुनें।</string>
+    <string name="export_delivery_folder_plan_policy">फ़ाइल निर्यात के लिए सक्रिय Whereday प्लान ज़रूरी है। नाम पहले से मौजूद होने पर फ़ोल्डर निर्यात दोनों फ़ाइलें रखता है। सेटिंग्स में फ़ोल्डर चुनें।</string>
     <string name="export_delivery_folder_required">पहले सेटिंग्स में निर्यात फ़ोल्डर चुनें।</string>
     <string name="export_delivery_interrupted">सहेजना बाधित हो गया। सहेजा गया अनुरोध फिर शुरू करें या रद्द करें।</string>
+    <string name="export_delivery_locked">सभी प्लान में एक्सपोर्ट शामिल है: साप्ताहिक, वार्षिक या आजीवन।</string>
     <string name="export_delivery_multiple">कई फ़ाइलों के लिए शेयर या निर्यात फ़ोल्डर उपयोग करें।</string>
     <string name="export_delivery_name_status">%1$s · %2$s</string>
     <string name="export_delivery_pending">लंबित सहेजना: %1$s</string>
     <string name="export_delivery_pending_help">यह फ़ाइल पहले ही तैयार हो चुकी है। इसे फिर शुरू करें या गंतव्य चुनें; यहाँ फ़िल्टर बदलने से लंबित फ़ाइल नहीं बदलती।</string>
+    <string name="export_delivery_plan_help">पूरी फ़ाइल निर्यात करने के लिए सक्रिय Whereday प्लान ज़रूरी है। चुनें कि यह फ़ाइल कहाँ साझा या सहेजनी है।</string>
+    <string name="export_delivery_plan_required">एक्सपोर्ट के लिए सक्रिय Whereday प्लान चाहिए: साप्ताहिक, वार्षिक या आजीवन। इम्पोर्ट और एक्सपोर्ट प्रीव्यू मुफ़्त हैं।</string>
     <string name="export_delivery_preparation_failed">निर्यात तैयार नहीं हो सका। स्टोरेज और निर्यात सेटिंग्स जाँचें, फिर कोशिश करें।</string>
     <string name="export_delivery_prepared_unavailable">तैयार निर्यात बदल गया या उसकी अवधि समाप्त हो गई। इसे फिर से तैयार करें।</string>
     <string name="export_delivery_preparing">पूरा निर्यात तैयार हो रहा है…</string>
@@ -460,18 +461,41 @@
     <string name="history_import_google_existing">रखे जाने वाले जर्नल मेल: %1$d। मिलाए गए दोहराए फ़ाइल रिकॉर्ड: %2$d। Google आयात स्थानों और समय की तुलना करते हैं।</string>
     <string name="history_import_google_raw">Google Location History</string>
     <string name="history_import_google_semantic">Google Semantic Timeline</string>
+    <string name="history_import_issue">%1$s: %2$s</string>
     <string name="history_import_keep">मौजूदा रिकॉर्ड रखें</string>
     <plurals name="history_import_kept_count">
         <item quantity="one">%d मौजूदा रिकॉर्ड</item>
         <item quantity="other">%d मौजूदा रिकॉर्ड</item>
     </plurals>
     <string name="history_import_lifetime">Whereday खुला रहने तक आप इस समीक्षा पर लौट सकते हैं। ऐप फिर से शुरू होने के बाद फ़ाइल फिर से चुनें। आयात कभी अपने-आप फिर शुरू नहीं होते।</string>
+    <string name="history_import_nothing">इस फ़ाइल में कोई विज़िट या पॉइंट नहीं मिला।</string>
     <plurals name="history_import_point_count">
         <item quantity="one">%d पॉइंट</item>
         <item quantity="other">%d पॉइंट</item>
     </plurals>
+    <string name="history_import_problem_column_count">कॉलम की संख्या हेडर से मेल नहीं खाती</string>
+    <string name="history_import_problem_coordinates">निर्देशांक में अल्पविराम से अलग किए गए अक्षांश और देशांतर होने चाहिए</string>
+    <string name="history_import_problem_departure">प्रस्थान का समय आगमन से पहले है</string>
+    <string name="history_import_problem_duplicate_columns">हेडर में एक ही कॉलम कई बार है</string>
+    <string name="history_import_problem_duplicate_field">एक फ़ील्ड एक से अधिक बार मौजूद है</string>
+    <string name="history_import_problem_field">एक फ़ील्ड में असमर्थित मान है</string>
+    <string name="history_import_problem_google">इसमें अमान्य विज़िट या पॉइंट है</string>
+    <string name="history_import_problem_identifier">पहचानकर्ता मान्य नहीं है</string>
+    <string name="history_import_problem_latitude">अक्षांश -90 से 90 के बीच होना चाहिए</string>
+    <string name="history_import_problem_longitude">देशांतर -180 से 180 के बीच होना चाहिए</string>
+    <string name="history_import_problem_missing_coordinate">अक्षांश या देशांतर मौजूद नहीं है</string>
+    <string name="history_import_problem_missing_time">समय मौजूद नहीं है</string>
+    <string name="history_import_problem_not_record">यह इतिहास का रिकॉर्ड नहीं है</string>
+    <string name="history_import_problem_number">एक संख्या पढ़ी नहीं जा सकी</string>
+    <string name="history_import_problem_other">यह रिकॉर्ड पढ़ा नहीं जा सका</string>
+    <string name="history_import_problem_time">समय पढ़ा नहीं जा सका</string>
     <string name="history_import_reading">चुनी गई फ़ाइल पढ़ी और जाँची जा रही है…</string>
-    <string name="history_import_rejected">%1$d पंक्तियाँ पढ़ी नहीं जा सकीं और छोड़ दी जाएँगी। पहली त्रुटियाँ नीचे दिखती हैं।</string>
+    <string name="history_import_record_google">Google रिकॉर्ड %1$d</string>
+    <string name="history_import_record_line">लाइन %1$d</string>
+    <string name="history_import_record_point">पॉइंट %1$d</string>
+    <string name="history_import_record_row">पंक्ति %1$d</string>
+    <string name="history_import_record_visit">विज़िट %1$d</string>
+    <string name="history_import_rejected">छोड़ी गई पंक्तियाँ: %1$d। पहली त्रुटियाँ नीचे दिखाई गई हैं।</string>
     <string name="history_import_replace">मेल खाते रिकॉर्ड बदलें</string>
     <string name="history_import_replace_body">केवल मेल खाते ID वाले रिकॉर्ड बदले जाएँगे। उन रिकॉर्ड पर स्थानीय सुधार या टिप्पणियाँ ओवरराइट हो सकती हैं। आस-पास के मेल रखे जाते हैं। अगर समीक्षा के बाद मेल खाता इतिहास बदल गया, तो आयात रुक जाएगा ताकि आप फ़ाइल फिर से चुनकर समीक्षा कर सकें।</string>
     <string name="history_import_replace_confirm">बदलें और आयात करें</string>
@@ -1428,7 +1452,7 @@
     <string name="support_preview_automation">रिकॉर्डिंग नियंत्रण, टाइमलाइन और निर्यात के लिए लॉन्चर शॉर्टकट उपयोग करें। सेटिंग्स में Automate के लिए हर क्रिया का ऑटोमेशन एक्सेस है; Automate समर्थन प्रायोगिक है।</string>
     <string name="support_preview_journal">आउटिंग रिकॉर्ड करें, अपना मानचित्र और टाइमलाइन देखें, विज़िट और सहेजी गई जगहें बदलें, और देशों में दिन व फ़ोटो पल देखें।</string>
     <string name="support_preview_notice">यह बिल्ड अभी Android रिलीज़ के लिए जाँचा जा रहा है।</string>
-    <string name="support_preview_portability">आठ निर्यात फ़ॉर्मेट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें आयात करें। फ़ाइल निर्यात, शेड्यूल किए गए निर्यात और वेबहुक के लिए सक्रिय Whereday प्लान ज़रूरी है; इस प्रीव्यू में खरीदारी उपलब्ध नहीं है।</string>
+    <string name="support_preview_plan_portability">आठ एक्सपोर्ट फ़ॉर्मैट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें इम्पोर्ट करें। फ़ाइल एक्सपोर्ट, निर्धारित एक्सपोर्ट और वेबहुक सभी Whereday प्लान में शामिल हैं: साप्ताहिक, वार्षिक या आजीवन।</string>
     <string name="support_preview_title">Android डेवलपमेंट प्रीव्यू</string>
     <string name="support_privacy">गोपनीयता नीति</string>
     <string name="support_rate_app">Google Play पर Whereday को रेट करें</string>
@@ -1705,12 +1729,12 @@
     <string name="webhook_enabled_label">वेबहुक डिलीवरी चालू करें</string>
     <string name="webhook_endpoint">एंडपॉइंट URL</string>
     <string name="webhook_endpoint_help">HTTPS उपयोग करें। URL में क्रेडेंशियल हो सकते हैं; उन्हें दिखाने या कॉपी करने से गोपनीय जानकारी उजागर हो सकती है।</string>
-    <string name="webhook_failure_background">बैकग्राउंड वेबहुक डिलीवरी रुकी हुई है। अपना प्लान और सेटिंग्स जाँचें, फिर दोबारा कोशिश करें।</string>
+    <string name="webhook_failure_background_plan">बैकग्राउंड वेबहुक डिलीवरी रुकी हुई है। अपना प्लान और सेटिंग्स जाँचें, फिर दोबारा कोशिश करें।</string>
     <string name="webhook_failure_changed">वेबहुक सेटिंग्स बदल गईं। सहेजने से पहले उन्हें फिर लोड करें।</string>
     <string name="webhook_failure_fields">वेबहुक URL और प्रमाणीकरण फ़ील्ड जाँचें।</string>
     <string name="webhook_failure_preferences">वेबहुक पसंद लोड नहीं हो सकीं। ऐप फिर से खोलकर देखें।</string>
     <string name="webhook_failure_unavailable">वेबहुक सेटिंग्स नहीं खुल सकीं। डिलीवरी फिर से कॉन्फ़िगर करने से पहले उन्हें रीसेट करें।</string>
-    <string name="webhook_failure_work">वेबहुक का काम पूरा नहीं हो सका। अपना प्लान और सेटिंग्स जाँचें, फिर दोबारा कोशिश करें।</string>
+    <string name="webhook_failure_work_plan">वेबहुक का काम पूरा नहीं हो सका। अपना प्लान और सेटिंग्स जाँचें, फिर दोबारा कोशिश करें।</string>
     <string name="webhook_flush_action">कतार के पॉइंट अभी भेजें</string>
     <string name="webhook_flush_body">चुनी गई संख्या या अंतराल पूरा न होने पर भी बफ़र किए गए पॉइंट भेजें।</string>
     <string name="webhook_flush_confirm">पॉइंट भेजें</string>
@@ -1760,13 +1784,13 @@
         <item quantity="one">%1$s लंबित अनुरोध</item>
         <item quantity="other">%1$s लंबित अनुरोध</item>
     </plurals>
+    <string name="webhook_plan_purchases">प्लान और खरीदारी</string>
+    <string name="webhook_plan_title">Whereday प्लान</string>
     <plurals name="webhook_points">
         <item quantity="one">%1$s पॉइंट</item>
         <item quantity="other">%1$s पॉइंट</item>
     </plurals>
     <string name="webhook_purchase_body">वेबहुक हर Whereday प्लान में शामिल हैं: साप्ताहिक, वार्षिक या लाइफ़टाइम। आयात और प्रीव्यू मुफ़्त रहते हैं।</string>
-    <string name="webhook_purchase_title">हर प्लान में शामिल</string>
-    <string name="webhook_purchases">प्लान और खरीदारी</string>
     <string name="webhook_query_help">URL में API कुंजियाँ सर्वर और प्रॉक्सी लॉग में दिख सकती हैं। आपका सर्वर समर्थन करे तो हेडर प्रमाणीकरण उपयोग करें।</string>
     <string name="webhook_queue_body">कतार का डेटा रखने पर वह आपके सहेजे जा रहे एंडपॉइंट और प्रमाणीकरण से भेजा जाता है। छोड़ने पर केवल लंबित वेबहुक डेटा हटता है।</string>
     <string name="webhook_queue_discard">सहेजें और कतार का डेटा छोड़ें</string>

@@ -64,7 +64,7 @@
     <string name="automatic_export_failure_execution">自動エクスポートを完了できませんでした。購入状況、フォルダの権限、空き容量を確認してから再試行してください。</string>
     <string name="automatic_export_failure_interrupted">自動エクスポートが中断されました。保存されたリクエストを再開するかキャンセルしてください。</string>
     <string name="automatic_export_failure_pending">スケジュールや形式を変更する前に、保留中のエクスポートを完了するかキャンセルしてください。</string>
-    <string name="automatic_export_failure_purchase">有効な Whereday プランが必要です。</string>
+    <string name="automatic_export_failure_plan">有効な Whereday プランが必要です。</string>
     <string name="automatic_export_failure_settings">自動エクスポートの設定を読み込めませんでした。続行するには再試行するかリセットしてください。</string>
     <string name="automatic_export_file_mode">日ごとのファイルを更新</string>
     <string name="automatic_export_folder_missing">実行する前に、設定でエクスポート先フォルダを選択してください。</string>
@@ -88,8 +88,8 @@
     <string name="automatic_export_outings">外出</string>
     <string name="automatic_export_outings_help">外出は開始時刻で選択されます。ルート全体が含まれます。推定された外出は設定に従います。保留中の再試行では、取得時の推定設定が維持されます。</string>
     <string name="automatic_export_pending">保留中のエクスポート: %1$s。再試行しても、取得した期間と保存先は変わりません。</string>
+    <string name="automatic_export_plan_policy">有効な Whereday プランが必要です。1日1回の実行では、その日のここまでの内容をすべて書き直します。実行されなかった過去の日は手動でエクスポートできます。</string>
     <string name="automatic_export_points">ポイント</string>
-    <string name="automatic_export_policy">有効な Whereday プランが必要です。1日1回の実行では、その日のここまでの内容をすべて書き直します。実行されなかった過去の日は手動でエクスポートできます。</string>
     <string name="automatic_export_repeat">繰り返し</string>
     <string name="automatic_export_reset">自動エクスポートをリセット</string>
     <string name="automatic_export_reset_body">スケジュールを無効にし、保存されたリクエストを消去します。エクスポート済みのドキュメントと保持されたバックアップはフォルダに残ります。</string>
@@ -111,7 +111,7 @@
     <string name="automation_command_cancel">キャンセル</string>
     <string name="automation_command_help">結果が中断された場合は、キャンセルしてジャーナルを確認できます。</string>
     <string name="automation_command_title">Whereday のコマンドを実行中</string>
-    <string name="automation_detail_exports">指定したフィルタで完全なファイルを作成します。有効な Whereday プランも必要です。</string>
+    <string name="automation_detail_exports_plan">指定したフィルタで完全なファイルを作成します。有効な Whereday プランも必要です。</string>
     <string name="automation_detail_manual_visits">保存した場所、座標、または現在地でチェックインし、手動の訪問からチェックアウトします。訪問の名前、住所、時刻を返します。現在地を使うには、Whereday が開いていて、位置情報へのアクセスがすでに許可されている必要があります。</string>
     <string name="automation_detail_outings">記録された外出の名前と開始・終了時刻。</string>
     <string name="automation_detail_places">チェックイン先を選ぶための、保存した場所の名前と ID。</string>
@@ -230,7 +230,7 @@
     <string name="country_period_rolling">過去365日間</string>
     <string name="country_period_year">今年</string>
     <string name="country_preview">国別 CSV をプレビュー</string>
-    <string name="country_preview_help">プレビューには最初の100件のローカル日付が表示されます。国別CSVのエクスポートには選択した期間のすべての日付が含まれ、有効な Whereday プランが必要です。</string>
+    <string name="country_preview_plan_help">プレビューには最初の100件のローカル日付が表示されます。国別CSVのエクスポートには選択した期間のすべての日付が含まれ、有効な Whereday プランが必要です。</string>
     <string name="country_preview_title">国別 CSV のプレビュー</string>
     <string name="country_retry">もう一度試す</string>
     <string name="country_rules">各現地日付は国ごとに1回数えられます。移動日は複数の国に数えられることがあります。継続中の訪問と未確認の出発は到着日のみが数えられ、ルートのポイントによって他の日付が加わることがあります。空白期間は補完されません。</string>
@@ -305,8 +305,6 @@
     <string name="export_data_points">ポイント</string>
     <string name="export_data_visits">訪問</string>
     <string name="export_date_range">期間</string>
-    <string name="export_delivery_access_help">完全なファイルのエクスポートには有効な Whereday プランが必要です。このファイルの共有先または保存先を選んでください。</string>
-    <string name="export_delivery_access_required">ファイルのエクスポートには有効な Whereday プランが必要です。インポートとプレビューは引き続き無料です。</string>
     <string name="export_delivery_cancel_pending">保留中のエクスポートをキャンセル</string>
     <string name="export_delivery_cancel_preparation">準備をキャンセル</string>
     <string name="export_delivery_canceled">エクスポートをキャンセルしました。すでに書き出されたファイルは保存先に残ります。</string>
@@ -319,13 +317,16 @@
     <string name="export_delivery_failed">保存を完了できませんでした。再開するか別の保存先を選択してください。以前の保存先に不完全なファイルがないか確認してください。</string>
     <string name="export_delivery_folder">ファイルをエクスポート先フォルダに保存</string>
     <string name="export_delivery_folder_help">フォルダに保存するには、設定でエクスポート先フォルダを選択してください。</string>
-    <string name="export_delivery_folder_policy">ファイルのエクスポートには有効な Whereday プランが必要です。フォルダへのエクスポートでは、同じ名前がある場合も両方のファイルを残します。フォルダは設定で選べます。</string>
+    <string name="export_delivery_folder_plan_policy">ファイルのエクスポートには有効な Whereday プランが必要です。フォルダへのエクスポートでは、同じ名前がある場合も両方のファイルを残します。フォルダは設定で選べます。</string>
     <string name="export_delivery_folder_required">先に設定でエクスポート先フォルダを選択してください。</string>
     <string name="export_delivery_interrupted">保存が中断されました。保存されたリクエストを再開するかキャンセルしてください。</string>
+    <string name="export_delivery_locked">エクスポートはすべてのプランに含まれます：週間、年間、買い切り。</string>
     <string name="export_delivery_multiple">複数のファイルには、共有またはエクスポート先フォルダを使用してください。</string>
     <string name="export_delivery_name_status">%1$s · %2$s</string>
     <string name="export_delivery_pending">保留中の保存: %1$s</string>
     <string name="export_delivery_pending_help">このファイルはすでに準備されています。再開するか保存先を選択してください。ここでフィルタを変更しても、保留中のファイルは変わりません。</string>
+    <string name="export_delivery_plan_help">完全なファイルのエクスポートには有効な Whereday プランが必要です。このファイルの共有先または保存先を選んでください。</string>
+    <string name="export_delivery_plan_required">エクスポートには有効なWheredayプラン（週間・年間・買い切り）が必要です。インポートとエクスポートのプレビューは無料です。</string>
     <string name="export_delivery_preparation_failed">エクスポートを準備できませんでした。ストレージとエクスポート設定を確認して、もう一度お試しください。</string>
     <string name="export_delivery_prepared_unavailable">準備したエクスポートが変更されたか期限切れです。もう一度準備してください。</string>
     <string name="export_delivery_preparing">エクスポート全体を準備中…</string>
@@ -449,16 +450,39 @@
     <string name="history_import_google_existing">保持するジャーナルの一致: %1$d 件。統合したファイル内の重複レコード: %2$d 件。Google からのインポートでは位置と時刻を比較します。</string>
     <string name="history_import_google_raw">Google ロケーション履歴</string>
     <string name="history_import_google_semantic">Google セマンティック タイムライン</string>
+    <string name="history_import_issue">%1$s：%2$s</string>
     <string name="history_import_keep">既存のレコードを保持</string>
     <plurals name="history_import_kept_count">
         <item quantity="other">既存のレコード %d 件</item>
     </plurals>
     <string name="history_import_lifetime">Whereday を開いている間は、この確認に戻ることができます。アプリを再起動した後は、もう一度ファイルを選択してください。インポートが自動的に再開されることはありません。</string>
+    <string name="history_import_nothing">このファイルに訪問やポイントが見つかりませんでした。</string>
     <plurals name="history_import_point_count">
         <item quantity="other">%d ポイント</item>
     </plurals>
+    <string name="history_import_problem_column_count">列数がヘッダーと一致しません</string>
+    <string name="history_import_problem_coordinates">座標は緯度と経度をカンマで区切って指定してください</string>
+    <string name="history_import_problem_departure">出発が到着より前です</string>
+    <string name="history_import_problem_duplicate_columns">ヘッダーに重複した列があります</string>
+    <string name="history_import_problem_duplicate_field">同じフィールドが複数回出現しています</string>
+    <string name="history_import_problem_field">フィールドに未対応の値があります</string>
+    <string name="history_import_problem_google">無効な訪問またはポイントが含まれています</string>
+    <string name="history_import_problem_identifier">識別子が無効です</string>
+    <string name="history_import_problem_latitude">緯度は-90から90の範囲で指定してください</string>
+    <string name="history_import_problem_longitude">経度は-180から180の範囲で指定してください</string>
+    <string name="history_import_problem_missing_coordinate">緯度または経度がありません</string>
+    <string name="history_import_problem_missing_time">時刻がありません</string>
+    <string name="history_import_problem_not_record">履歴レコードではありません</string>
+    <string name="history_import_problem_number">数値を読み取れませんでした</string>
+    <string name="history_import_problem_other">このレコードを読み取れませんでした</string>
+    <string name="history_import_problem_time">時刻を読み取れませんでした</string>
     <string name="history_import_reading">選択したファイルを読み込んで確認中…</string>
-    <string name="history_import_rejected">%1$d 行を読み取れなかったため、スキップします。最初のエラーを以下に表示します。</string>
+    <string name="history_import_record_google">Googleレコード %1$d</string>
+    <string name="history_import_record_line">行 %1$d</string>
+    <string name="history_import_record_point">ポイント %1$d</string>
+    <string name="history_import_record_row">行 %1$d</string>
+    <string name="history_import_record_visit">訪問 %1$d</string>
+    <string name="history_import_rejected">スキップした行：%1$d。最初のエラーを以下に表示します。</string>
     <string name="history_import_replace">一致するレコードを置き換える</string>
     <string name="history_import_replace_body">ID が一致するレコードのみが置き換えられます。それらのレコードのローカルの修正やメモは上書きされる場合があります。近くの一致は保持されます。確認後に一致する履歴が変更された場合、インポートは停止するので、もう一度ファイルを選択して確認できます。</string>
     <string name="history_import_replace_confirm">置き換えてインポート</string>
@@ -1383,7 +1407,7 @@
     <string name="support_preview_automation">ランチャーのショートカットで、記録の操作、タイムライン、エクスポートを使えます。設定には Automate 向けの操作ごとの自動化アクセスがあります。Automate への対応は試験的なものです。</string>
     <string name="support_preview_journal">外出を記録し、地図とタイムラインを確認し、訪問と保存した場所を編集し、国別の滞在日数や写真の思い出を見てみましょう。</string>
     <string name="support_preview_notice">このビルドは Android でのリリースに向けて検証中です。</string>
-    <string name="support_preview_portability">8種類のエクスポート形式をプレビューし、対応する履歴ファイルをインポートできます。ファイルのエクスポート、スケジュールエクスポート、Webhook には有効な Whereday プランが必要です。このプレビュー版では購入できません。</string>
+    <string name="support_preview_plan_portability">8種類のエクスポート形式をプレビューし、対応する履歴ファイルをインポートできます。ファイルのエクスポート、自動エクスポート、Webhookは、週間・年間・買い切りのすべてのWheredayプランに含まれます。</string>
     <string name="support_preview_title">Android 開発プレビュー</string>
     <string name="support_privacy">プライバシーポリシー</string>
     <string name="support_rate_app">Google Play で Whereday を評価</string>
@@ -1657,12 +1681,12 @@
     <string name="webhook_enabled_label">Webhook の送信を有効にする</string>
     <string name="webhook_endpoint">エンドポイント URL</string>
     <string name="webhook_endpoint_help">HTTPS を使用してください。URL には認証情報が含まれる場合があり、表示やコピーによって秘密情報が漏れるおそれがあります。</string>
-    <string name="webhook_failure_background">バックグラウンドでの Webhook 送信は一時停止しています。プランと設定を確認して、もう一度お試しください。</string>
+    <string name="webhook_failure_background_plan">バックグラウンドでの Webhook 送信は一時停止しています。プランと設定を確認して、もう一度お試しください。</string>
     <string name="webhook_failure_changed">Webhook の設定が変更されました。保存する前に再読み込みしてください。</string>
     <string name="webhook_failure_fields">Webhook の URL と認証の項目を確認してください。</string>
     <string name="webhook_failure_preferences">Webhook の設定を読み込めませんでした。アプリを開き直してみてください。</string>
     <string name="webhook_failure_unavailable">Webhook の設定を開けませんでした。送信を再設定する前にリセットしてください。</string>
-    <string name="webhook_failure_work">Webhook の処理を完了できませんでした。プランと設定を確認して、もう一度お試しください。</string>
+    <string name="webhook_failure_work_plan">Webhook の処理を完了できませんでした。プランと設定を確認して、もう一度お試しください。</string>
     <string name="webhook_flush_action">送信待ちのポイントを送信</string>
     <string name="webhook_flush_body">選択した件数や間隔に達していなくても、バッファ内のポイントを送信します。</string>
     <string name="webhook_flush_confirm">ポイントを送信</string>
@@ -1711,12 +1735,12 @@
     <plurals name="webhook_pending_requests">
         <item quantity="other">保留中のリクエスト %1$s 件</item>
     </plurals>
+    <string name="webhook_plan_purchases">プランと購入</string>
+    <string name="webhook_plan_title">Wheredayのプラン</string>
     <plurals name="webhook_points">
         <item quantity="other">%1$s ポイント</item>
     </plurals>
     <string name="webhook_purchase_body">Webhook は Whereday のすべてのプラン（週額、年額、買い切り）に含まれています。インポートとプレビューは引き続き無料です。</string>
-    <string name="webhook_purchase_title">すべてのプランに含まれます</string>
-    <string name="webhook_purchases">プランと購入</string>
     <string name="webhook_query_help">URL 内の API キーは、サーバーやプロキシのログに記録されることがあります。サーバーが対応している場合はヘッダー認証を使用してください。</string>
     <string name="webhook_queue_body">送信待ちのデータを保持すると、保存するエンドポイントと認証を使って送信されます。破棄すると、保留中の Webhook データだけが削除されます。</string>
     <string name="webhook_queue_discard">保存して送信待ちのデータを破棄</string>
