@@ -4,7 +4,7 @@
 
 Android **2.0.1 (4)** was recorded as published November 7; its saved production-track response marks it `completed`. The November 6 Play draft below is historical. Neither these dated records nor local integration establish current deployed state.
 
-The local integration at `/private/tmp/whereday-ios-integration-20261108`, branch `local/ios-integration-20261108`, preserves #109, #110 and the stable #111 baseline. It includes later Apple backup fixes under local verification; **none are in previously uploaded build 63** (`f2959482`). No remote branch, PR, hosted CI, store metadata or production state is changed by this continuation. A new qualified Apple candidate and restored 2.0 version slot remain for a separately approved release task.
+The local integration at `/private/tmp/whereday-ios-integration-20261108`, branch `local/ios-integration-20261108`, preserves #109, #110, the stable #111 baseline and local Android recovery commit `4b4c440f`. The Apple backup fixes passed generic Release compilation and nine host SwiftData scenarios; Android recovery passed sibling host verification, while device reboot proof remains open; **none are in previously uploaded build 63** (`f2959482`). No remote branch, PR, hosted CI, store metadata or production state is changed by this continuation. A new qualified Apple candidate and restored 2.0 version slot remain for a separately approved release task.
 
 See [local integration verification](local-integration-20261108.md) for current source/build evidence and gaps. The [earlier readiness review](readiness-20261108.md) records its historical inspection; its build-63 attachment description is superseded by the 1.8.4 receipts above.
 

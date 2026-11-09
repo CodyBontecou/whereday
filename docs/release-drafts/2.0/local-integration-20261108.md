@@ -4,7 +4,7 @@ This continuation implements and verifies source changes locally. No push, PR mu
 
 ## Integrated source
 
-Worktree `/private/tmp/whereday-ios-integration-20261108`, branch `local/ios-integration-20261108`, preserves the history of #109 (`9ff11d2c`), #110 (`47712191`) and the stable #111 Android baseline (`2740bb55`). The Android baseline was merged locally without source conflicts. Android recovery work is sibling-owned and will be integrated only from a stable local commit; the earlier failing CI recovery gate is not cleared by this merge.
+Worktree `/private/tmp/whereday-ios-integration-20261108`, branch `local/ios-integration-20261108`, preserves the history of #109 (`9ff11d2c`), #110 (`47712191`) and the stable #111 Android baseline (`2740bb55`). The Android baseline was merged locally without source conflicts. Stable local Android recovery commit `4b4c440f` is now integrated by local merge `869bedd4`, also without conflicts. The earlier failing runtime CI recovery gate is not cleared by this merge.
 
 Apple review found and fixed actual backup data loss and malformed-record admission gaps in local commit `35ab45f3`:
 
@@ -26,6 +26,24 @@ The independent standards/spec review identified the same two bugs. The follow-u
 - `git diff --check`: passed.
 
 The generic products use repository defaults **2.0 (60)**. Those are already-consumed version/build numbers, not a new candidate allocation. The build proves compilation only. Added iOS XCTest cases were not executed; an authorized future runtime pass must use the signed `scripts/test-ios.sh` runner. Native compilation ownership was released via Herdr after these checks; other agents' work was not interrupted.
+
+## Final Android recovery integration
+
+The sibling's stable local commit `4b4c440f` adds process-owned shared recovery when the production graph starts and awaits it before creating new start tickets. Cancellation isolation, retry/coalescing, live-owner and pending-ticket guards remain. The host test uses actual production graph/Room DAO/repository/transactions, including disk close/reopen and changed boot evidence; production still defaults to the pinned bundled SQLite driver. See [Android recovery host evidence](../../../android/RECOVERY_HOST_EVIDENCE_20261109.md) for the reproduction, driver seam and limits.
+
+Sibling-executed final verification at that commit: **669 JVM tests** (414 domain, 148 platform, 107 app), including all four recovery tests; data instrumentation source compilation, app lint/APK, 70 Python tests, APK alignment/notices/native correspondence passed. The log `/private/tmp/whereday-recovery-final.log` contains `BUILD SUCCESSFUL`; its SHA-256 is `9340317b7ab881301165119f808c908df7eafa7e21a4f5faf486913340eb9c62`. These are host/compilation checks, not Android runtime QA. The correspondence check retains `legalReviewComplete=false`.
+
+Post-merge checks executed in the combined worktree:
+
+- `git diff --exit-code 4b4c440f HEAD -- android`: passed. Android source/tests exactly match the sibling's tested commit.
+- `git diff --exit-code 35ab45f3 HEAD -- IsoMe IsoMeTests Shared IsoMe.xcodeproj`: passed. The compiled Apple source is unchanged.
+- All compiler-input SHA-256 values in the Apple host `after.json` still match current files; Apple native compilation and nine host scenarios therefore retain their exact source provenance.
+- `python3 -m unittest discover -s android/scripts -p 'test_*.py'`: **70 passed**.
+- `python3 android/scripts/generate_localized_resources.py --check`: **1,730 resources / ten translated locales passed**.
+- All 30 unique CI `--check-source` commands and `python3 scripts/check_map_first_store.py`: **passed**.
+- `git diff --check`: passed. No new native build was launched after merging Android-only changes; source equivalence was checked explicitly.
+
+**Runtime gate remains open:** the saved #109 `both/reboot` failure still lacks proof of receiver delivery/reconciliation. The new host regression reproduces the persistent-state symptom through graph startup and verifies that implementation, not the device's broadcast delivery. The original 60-second device assertion is unchanged. Neither that gate nor full device acceptance is claimed passed. No hosted CI was triggered.
 
 ## Corrected candidate and store provenance
 
