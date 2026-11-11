@@ -440,6 +440,16 @@ extension WatchLocationSyncReceiver: WCSessionDelegate {
         }
     }
 
+    nonisolated func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        // WCSession owns this URL only for the duration of this callback.
+        // Capture the bytes before hopping to the model context's actor.
+        guard let data = try? WatchLocationSyncTransport.readPayloadFile(file.fileURL, metadata: file.metadata) else { return }
+        Task { @MainActor [weak self] in
+            guard let self, let ack = importPayloadData(data) else { return }
+            sendAck(ack)
+        }
+    }
+
     nonisolated func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
         Task { @MainActor [weak self] in
             guard let self else { return }

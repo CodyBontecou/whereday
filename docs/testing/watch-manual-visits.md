@@ -63,6 +63,39 @@ The read-only-store regression is intentional: SwiftData can retain registered o
 
 Run the app's IsoMe scheme tests on an iPhone simulator. The scheme also builds the Watch app and both widget targets.
 
+## Physical acceptance progress — November 11, 2026
+
+The reviewed `1228bafb` phone and Watch builds were installed as updates through
+Xcode on an iPhone 17 Pro and its paired Apple Watch Series 7 (watchOS 26.6.1).
+The owner operated the Watch. Its reachable test check-in appeared as a confirmed
+manual visit on the phone; checkout saved a departure at 13:30 for its 12:54
+arrival, and the owner confirmed the Watch command showed Completed. Place names
+and coordinates are intentionally omitted from this receipt.
+
+With the iPhone powered off, the owner queued a saved-place check-in and dependent
+checkout, then force quit and reopened the Watch app. Both remained Pending.
+Reconnection, final acknowledgments and duplicate-free phone persistence are
+still awaiting verification. A previous attempt that reached Completed while
+the Watch was disconnected from the Mac is not counted as offline evidence.
+
+Physical route sync exposed `WCErrorCodePayloadTooLarge`. The existing 500-point
+fixture encodes to 103,564 bytes; a point-count bound does not bound message bytes.
+The follow-up sends route payloads above a conservative 48 KiB inline budget
+through durable file transport, retaining the same payload, importer and explicit
+import acknowledgments. Transfer completion removes only its cache file; route
+records remain queued until the phone acknowledges persistence. The receiver
+reads temporary-file bytes before returning from its delegate callback.
+
+The actual fixture first failed the inline-budget regression. The file path then
+passed 16 targeted route tests, including exact 500-point import, byte preservation
+after temporary-file deletion, duplicate replay and legacy batching. The complete
+signed runner passes **484 XCTest + 42 Swift Testing cases**, with no failures.
+Both review axes found no concrete defect. Signed device builds also pass.
+Physical file delivery, error recovery and final route sync acceptance remain
+pending; simulator success does not establish WatchConnectivity delivery.
+
+Full result: `artifacts/test-results/IsoMe-20261111-133018-84223.xcresult`.
+
 ## Paired hardware acceptance still required
 
 The Watch dashboard entry point was rendered on an isolated Series 11 (46 mm), watchOS 26.5 simulator. Automated tests exercise command replay against real SwiftData storage. Simulator checks do not establish physical WatchConnectivity background delivery: Apple documents `transferUserInfo` as unsupported in Simulator.
