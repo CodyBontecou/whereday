@@ -154,3 +154,10 @@ The URI handler is a test double, so these tests never cancel a real subscriptio
 The mapQa-only preview activity supplies presentation fixtures without modifying
 purchases or entitlement access. Manual multilingual and accessibility acceptance
 and fresh-head CI remain separate gates.
+
+The final follow-up adds a passing real Settings navigation regression and six
+shared-dialog checks (13 native cases together), plus focused English, Arabic
+RTL/dark and Spanish lapse visual checks at large text. The compact sheet's
+system icons now follow the app theme independently of the OS theme. Evidence
+and the still-pending language/TalkBack gate are recorded in
+`docs/evidence/retention-localization-20261111/README.md` and issue #115.

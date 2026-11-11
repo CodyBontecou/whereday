@@ -1,0 +1,77 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 13,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.SubscriptionScreenTest",
+      "test": "lifetimeWithARenewingSubscriptionWarnsAndKeepsPlayReachable"
+    },
+    {
+      "class": "com.bontecou.whereday.SubscriptionScreenTest",
+      "test": "offlineLifetimeCannotClaimThatNoOtherSubscriptionRenews"
+    },
+    {
+      "class": "com.bontecou.whereday.SubscriptionScreenTest",
+      "test": "backDismissesTheSummaryBeforeLeavingThePage"
+    },
+    {
+      "class": "com.bontecou.whereday.SubscriptionScreenTest",
+      "test": "renewingPlanRequiresTheSummaryThenOpensExactlyTheProvidedPlayPage"
+    },
+    {
+      "class": "com.bontecou.whereday.SubscriptionScreenTest",
+      "test": "aLapseOffersPlansWithoutOpeningPlayOrPromisingATrial"
+    },
+    {
+      "class": "com.bontecou.whereday.SubscriptionScreenTest",
+      "test": "offlineSubscriptionKeepsNeutralCopyAndPlayManagement"
+    },
+    {
+      "class": "com.bontecou.whereday.SubscriptionSettingsIntegrationTest",
+      "test": "settingsOpensTheCurrentPlanAndBackReturnsThroughTheSummary"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceDialogTest",
+      "test": "rtlPrimaryAndSingleRegionFallbackKeepModalOutOfBookHinge"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceDialogTest",
+      "test": "outsideTapAndBackDismissWithoutActivatingUnderlyingPane"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceDialogTest",
+      "test": "confirmationStaysInBookAndTabletopCompanionWithInsetOrigin"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceDialogTest",
+      "test": "unknownPostureKeepsRootModalHiddenUntilItsPrimarySafeRegionIsKnown"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceDialogTest",
+      "test": "dateCalendarAndInvalidIsoReviewStayInsideOwnersPane"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceDialogTest",
+      "test": "nestedPlaceSearchAndMapPickerRemainInTheInspectorRegionWithoutProviderRequests"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-retention-fix-20261111/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "path": "/private/tmp/whereday-retention-fix-20261111/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "261cacfb47eb30a8215c944b5dfe70afa28e18e479c5eeaa0801b4edfcf1c5a7"
+    }
+  ]
+}
