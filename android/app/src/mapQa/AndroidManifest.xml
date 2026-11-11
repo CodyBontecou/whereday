@@ -4,5 +4,13 @@
         <activity android:name=".ForwardAutomationProbeActivity" android:exported="true" />
         <!-- QA-only demo journal for screenshots; never part of debug or release builds. -->
         <activity android:name=".DemoJournalActivity" android:exported="true" />
+        <activity android:name=".SubscriptionPreviewActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="whereday-qa" android:host="subscription" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

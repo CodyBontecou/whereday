@@ -136,3 +136,21 @@ The Before you go sheet and the "Your subscription ended" page state only what t
 - **Stops** (access checked when each one starts or runs): starting a recording or visits-only monitoring (`Capability.recording`); exporting files (`fileExport`); automatic exports, webhooks and automation exports (`scheduledExport`, `webhook`, automation results under `fileExport`).
 - **Kept:** everything already recorded stays on the phone; Map, Atlas, Places, Archive and Country Days stay open (a lapse never brings back the onboarding gate); imports and export previews stay free (`FREE_CAPABILITIES`).
 - No free week is promised after a lapse. The ended page mentions a free week only while Play lists a trial offer for the account.
+
+### Offline subscription status verification — November 11, 2026
+
+A signed local entitlement proves cached access, not current auto-renewal.
+When Play cannot provide a purchase snapshot, the subscription page uses neutral
+cached-access copy and retains Google Play management. Cached Lifetime access
+also keeps management available because a separate subscription may still renew.
+A fresh Play snapshot can establish renewal even if server verification fails;
+the existing verified cache still controls access.
+
+Verification: 28 billing tests and 8 subscription-text unit tests pass. All six
+native `SubscriptionScreenTest` cases pass on the disposable mapQa emulator:
+keep/continue cancellation navigation, Back dismissal, offline subscription,
+offline Lifetime, Lifetime with a renewing subscription, and lapsed access.
+The URI handler is a test double, so these tests never cancel a real subscription.
+The mapQa-only preview activity supplies presentation fixtures without modifying
+purchases or entitlement access. Manual multilingual and accessibility acceptance
+and fresh-head CI remain separate gates.
