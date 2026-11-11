@@ -36,6 +36,39 @@ class DiskHistoryImportTest {
         try {text.byteInputStream().use {workspace.capture(it) {}};workspace.prepare(Locale.US,ZoneOffset.UTC) {};return workspace}
         catch(error:Throwable) {workspace.close();throw error}
     }
+    @Test fun sealedChronologicalDigestRejectsMissingOrOrphanedRowsAndValidPayloadChanges():Unit=runBlocking {fixture {db,factory,directory->
+        val changed=point.copy(accuracy=9.0)
+        val mutations=listOf(
+            "DELETE FROM google_order" to emptyArray<Any>(),
+            "UPDATE google_order SET id='orphan'" to emptyArray<Any>(),
+            "UPDATE google_order SET seconds=seconds+1" to emptyArray<Any>(),
+            "UPDATE records SET payload=?" to arrayOf<Any>(ImportStageCodec.gson.toJson(changed.copy(accuracy=8.0))),
+            "UPDATE records SET baseline='changed'" to emptyArray<Any>(),
+            "UPDATE records SET provided_id=1-provided_id" to emptyArray<Any>())
+        for((sql,args) in mutations) prepare(factory,json(emptyList(),listOf(changed))).use {workspace->
+            workspace.stage.seal {}
+            val file=directory.walkTopDown().single {it.name=="records.db"}
+            SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READWRITE).use {it.execSQL(sql,args)}
+            assertThrows(sql,IllegalStateException::class.java) {workspace.stage.verify {}}
+            assertEquals(point,db.history().point(point.id)!!.value)
+            assertEquals(1L,db.history().totalPointCount())
+        }
+    }}
+    @Test fun pointAdmissionHandlesDescendingBucketsLaterDuplicatesAndReset():Unit=runBlocking {fixture {_,factory,_->
+        fun candidate(seconds:Long,coordinate:Coordinate=point.coordinate)=point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(seconds),coordinate=coordinate)
+        val high=candidate(10);val low=candidate(5);val repeatedLow=candidate(5)
+        val distinct=candidate(5,Coordinate(19.0,-66.0));val repeatedHigh=candidate(10);val newest=candidate(11)
+        val values=listOf(high,low,repeatedLow,distinct,repeatedHigh,newest)
+        fun row(value:TrackPoint)=ImportStageRow(ImportRecordKind.point,value.id,ImportStageCodec.gson.toJson(value))
+        prepare(factory,json(emptyList(),values)).use {workspace->
+            val stage=workspace.stage
+            stage.resetAdmission()
+            assertEquals(ImportStageDuplicates(points=1),stage.admitPreview(values.take(4).map(::row)) {})
+            assertEquals(ImportStageDuplicates(points=1),stage.admitPreview(values.drop(4).map(::row)) {})
+            stage.resetAdmission()
+            assertEquals(ImportStageDuplicates(),stage.admitPreview(listOf(row(high))) {})
+        }
+    }}
     @Test fun batchedFreshPointsMatchPendingAndPreviousPageRowsWithoutLosingDistinctLocations():Unit=runBlocking {fixture {db,factory,_->
         withContext(Dispatchers.IO) {db.clearAllTables()}
         val values=(0..200).map {point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(it.toLong()))}
