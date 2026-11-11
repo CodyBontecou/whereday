@@ -49,7 +49,7 @@ import com.bontecou.whereday.data.*
 import com.bontecou.whereday.domain.*
 import com.bontecou.whereday.platform.*
 
-internal enum class SettingsDestination {listening,usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly}
+internal enum class SettingsDestination {listening,usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly,subscription}
 
 @Composable fun SettingsScreen(graph:AppGraph,settings:AppSettings,places:List<SavedPlace>,count:Long,onClose:(()->Unit)?=null) {
     val context=LocalContext.current
@@ -61,6 +61,13 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
     val commands by graph.settingsActions.state.collectAsStateWithLifecycle()
     val folder=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {uri->if(uri!=null) graph.settingsActions.folder(uri.toString())}
     val back={destination=null}
+    val livePurchase by graph.purchases.state.collectAsStateWithLifecycle()
+    val liveHistory by graph.purchases.planHistory.collectAsStateWithLifecycle()
+    val preview by SubscriptionPreview.override.collectAsStateWithLifecycle()
+    // Debug builds can stand in a billing state from the ADB shell; release builds have no writer for it.
+    val purchase=preview?.billing ?: livePurchase
+    val summary=com.bontecou.whereday.billing.PlanRetention.summary(purchase,preview?.history ?: liveHistory,graph.purchases.subscriptionId)
+    var plans by rememberSaveable {mutableStateOf(false)}
     androidx.activity.compose.BackHandler(enabled=destination!=null) {destination=null}
     when(destination) {
         SettingsDestination.listening->{
@@ -82,6 +89,15 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
         SettingsDestination.webhooks->{WebhookScreen(graph,back);return}
         SettingsDestination.photos->{PhotosScreen(graph,back=back);return}
         SettingsDestination.places->{SavedPlacesScreen(graph,places,back);return}
+        SettingsDestination.subscription->{
+            val checkout by graph.purchases.checkoutInFlight.collectAsStateWithLifecycle()
+            val activity=androidx.activity.compose.LocalActivity.current
+            // A plan that renews again, or a lapse that ends in a purchase, leaves nothing for this page to show.
+            if(!SubscriptionText.cardOpensSubscription(summary) && !plans) {LaunchedEffect(Unit) {destination=null};return}
+            SubscriptionScreen(summary,purchase.trialProduct!=null,graph.purchases.manageUri(),back) {plans=true}
+            if(plans) PaywallDialog(purchase,checkout,{plan->if(activity!=null) graph.purchases.purchase(activity,plan,UsagePaywall.settings)},{graph.purchases.restore(UsagePaywall.settings)},{plans=false})
+            return
+        }
         else->Unit
     }
     val actions=SettingsActions(
@@ -93,15 +109,12 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
     )
     // Opened from Archive on the phone tab bar, Back returns there.
     if(onClose!=null) androidx.activity.compose.BackHandler(onBack=onClose)
-    val purchase by graph.purchases.state.collectAsStateWithLifecycle()
     val checkout by graph.purchases.checkoutInFlight.collectAsStateWithLifecycle()
-    var plans by rememberSaveable {mutableStateOf(false)}
-    val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
     val activity=androidx.activity.compose.LocalActivity.current
     SettingsContent(settings,places.size,count,commands,clear,actions,scroll,onBack=onClose,planCard=if(!purchase.enforced) null else {{
-        SettingsPlanCard(purchase,graph.purchases.subscriptionId) {
-            if(purchase.access==com.bontecou.whereday.billing.AccessState.active && purchase.activeProductId==graph.purchases.subscriptionId) runCatching {uriHandler.openUri(graph.purchases.manageUri())}
-            else plans=true
+        // A known plan or a lapse opens Settings › Subscription, where cancel goes through Before you go; otherwise the plans.
+        SettingsPlanCard(SubscriptionText.card(summary,purchase.trialProduct!=null)) {
+            if(SubscriptionText.cardOpensSubscription(summary)) destination=SettingsDestination.subscription else plans=true
         }
     }})
     if(plans) PaywallDialog(purchase,checkout,{plan->if(activity!=null) graph.purchases.purchase(activity,plan,UsagePaywall.settings)},{graph.purchases.restore(UsagePaywall.settings)},{plans=false})
@@ -192,21 +205,11 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
     }
 }
 
-/** The Settings board's plan card: the current plan in ink, opening Google Play management or the plans carousel. */
-@Composable internal fun SettingsPlanCard(purchase:com.bontecou.whereday.billing.BillingState,subscriptionId:String,onClick:()->Unit) {
-    val active=purchase.access==com.bontecou.whereday.billing.AccessState.active
-    val subscription=active && purchase.activeProductId==subscriptionId
-    val kicker=stringResource(when {
-        !active->R.string.settings_plan_kicker_none
-        subscription && !purchase.autoRenewing->R.string.settings_plan_kicker_ending
-        else->R.string.settings_plan_kicker
-    })
-    val title=stringResource(when {!active->R.string.settings_plan_title_none;subscription->R.string.settings_plan_title_subscription;else->R.string.paywall_plan_lifetime})
-    val body=when {
-        !active->stringResource(R.string.settings_plan_body_none)
-        subscription->stringResource(if(purchase.autoRenewing) R.string.settings_plan_body_subscription else R.string.settings_plan_body_ending)
-        else->stringResource(R.string.paywall_plan_lifetime_detail)
-    }
+/** The Settings board's plan card: the current plan in ink, opening Settings › Subscription or the plans carousel. */
+@Composable internal fun SettingsPlanCard(text:PlanCardText,onClick:()->Unit) {
+    val kicker=stringResource(text.kicker)
+    val title=stringResource(text.title)
+    val body=stringResource(text.body)
     val shape=RoundedCornerShape(28.dp)
     Row(Modifier.fillMaxWidth().clip(shape).background(wd.inkCard).clickable(role=Role.Button,onClick=onClick).padding(start=20.dp,end=16.dp,top=18.dp,bottom=18.dp)
         .testTag("settings-plan"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(16.dp)) {

@@ -39,7 +39,11 @@ enum class BillingNotice(val diagnostic:String) {
     notFound("No eligible Whereday subscription or Lifetime purchase was found for this Google Play account.")
 }
 data class BillingState(val access: AccessState=AccessState.checking,val products: List<StoreProduct> = emptyList(),val busy: Boolean=false,val notice:BillingNotice?=null,
-    val activeProductId:String?=null,val autoRenewing:Boolean=false,val enforced:Boolean=true) {
+    val activeProductId:String?=null,val autoRenewing:Boolean=false,val enforced:Boolean=true,
+    /** SHA-256 of the verified purchase token, so a remembered checkout plan applies only to that purchase. */
+    val activePurchaseHash:String?=null,
+    /** Play still reports an auto-renewing subscription, even while Lifetime is the verified product. */
+    val subscriptionRenewing:Boolean=false) {
     val message:String? get()=notice?.diagnostic
     fun product(plan:StorePlan)=products.firstOrNull { it.plan==plan }
     /** Builds without Play billing keep recording free; only configured builds put tracking behind access. */
@@ -62,8 +66,8 @@ class BillingSession(private val productIds: List<String>,private val configured
             loadCache()
             if(!configured) { mutable.value=BillingState(AccessState.unavailable,notice=BillingNotice.unavailable,enforced=false); return@withLock BillingRefreshResult.unavailable }
             val snapshot=store.snapshot()
-            mutable.value=mutable.value.copy(products=snapshot.products)
             val owned=snapshot.purchases.filter { it.productId in productIds }.sortedBy { productIds.indexOf(it.productId) }
+            mutable.value=mutable.value.copy(products=snapshot.products,subscriptionRenewing=owned.any { it.state==StorePurchaseState.purchased && it.autoRenewing })
             val purchased=owned.firstOrNull { it.state==StorePurchaseState.purchased }
             if(purchased==null) {
                 clearGrant()
@@ -81,7 +85,7 @@ class BillingSession(private val productIds: List<String>,private val configured
                     require(checked.allows(now,now))
                     cache.save(CachedGrant(result.signedLease,now))
                     grant=checked;signed=result.signedLease;lastSeen=now
-                    mutable.value=mutable.value.copy(access=AccessState.active,notice=BillingNotice.verified,activeProductId=checked.product,autoRenewing=purchased.autoRenewing)
+                    mutable.value=mutable.value.copy(access=AccessState.active,notice=BillingNotice.verified,activeProductId=checked.product,autoRenewing=purchased.autoRenewing,activePurchaseHash=checked.purchaseTokenHash)
                     BillingRefreshResult.verified
                 }
                 PurchaseVerification.Pending -> { clearGrant(); mutable.value=mutable.value.copy(access=AccessState.pending,notice=BillingNotice.pendingVerification);BillingRefreshResult.pending }
@@ -91,7 +95,8 @@ class BillingSession(private val productIds: List<String>,private val configured
             if(e is CancellationException) throw e
             val active=grant?.allows(clock.instant(),lastSeen)==true
             mutable.value=mutable.value.copy(access=if(active) AccessState.active else AccessState.verificationRequired,
-                notice=if(active) BillingNotice.cached else BillingNotice.verificationFailed,activeProductId=if(active) grant?.product else null)
+                notice=if(active) BillingNotice.cached else BillingNotice.verificationFailed,activeProductId=if(active) grant?.product else null,
+                activePurchaseHash=if(active) grant?.purchaseTokenHash else null)
             BillingRefreshResult.failed
         } finally { mutable.value=mutable.value.copy(busy=false) }
     }
@@ -101,7 +106,7 @@ class BillingSession(private val productIds: List<String>,private val configured
         try { grant=leaseVerifier().verify(cached.signedLease);signed=cached.signedLease;lastSeen=cached.lastSeen }
         catch(e:Exception) { if(e is CancellationException) throw e; clearGrant() }
     }
-    private suspend fun clearGrant() { grant=null;signed=null;lastSeen=Instant.EPOCH;cache.clear();mutable.value=mutable.value.copy(activeProductId=null,autoRenewing=false) }
+    private suspend fun clearGrant() { grant=null;signed=null;lastSeen=Instant.EPOCH;cache.clear();mutable.value=mutable.value.copy(activeProductId=null,autoRenewing=false,activePurchaseHash=null) }
     private fun free(capability:Capability)=capability in FREE_CAPABILITIES || (!configured && capability==Capability.recording)
     suspend fun requireAccess(capability: Capability) {
         if(free(capability)) return

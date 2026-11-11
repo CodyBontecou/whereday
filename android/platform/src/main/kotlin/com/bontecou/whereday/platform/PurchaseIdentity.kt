@@ -38,3 +38,15 @@ class PurchaseGrantCache(context:Context):GrantCache {
     }
     override suspend fun clear()=withContext(Dispatchers.IO) { check(preferences.edit().clear().commit()) { "Purchase cache could not be cleared" } }
 }
+
+/** Plan history survives a lapse and a lease clear; it holds no purchase token, only its hash, and never grants access. */
+internal class PlanHistoryStore(context:Context) {
+    private val preferences=context.applicationContext.getSharedPreferences("plan_history",Context.MODE_PRIVATE)
+    fun load()=PlanHistory(preferences.getBoolean("had_subscription",false),
+        preferences.getString("checkout_plan",null)?.let { name -> StorePlan.entries.firstOrNull { it.name==name } },
+        preferences.getString("checkout_purchase_hash",null))
+    fun save(value:PlanHistory) {
+        preferences.edit().putBoolean("had_subscription",value.hadSubscription).putString("checkout_plan",value.checkoutPlan?.name)
+            .putString("checkout_purchase_hash",value.checkoutPurchaseHash).apply()
+    }
+}
