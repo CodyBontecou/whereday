@@ -16,15 +16,23 @@ extension CLLocationManager: WatchManualLocationManaging {}
 /// Fresh one-shot Watch location, independent of route recording.
 @MainActor
 final class WatchManualLocation: NSObject, @preconcurrency CLLocationManagerDelegate {
+    struct Fix {
+        let location: CLLocation
+        /// Captured after permission is granted, immediately before requesting the fix.
+        let requestedAt: Date
+    }
     private let manager: any WatchManualLocationManaging
-    init(manager: any WatchManualLocationManaging = CLLocationManager()) {
+    private let now: @MainActor () -> Date
+    init(manager: any WatchManualLocationManaging = CLLocationManager(), now: @escaping @MainActor () -> Date = { Date() }) {
         self.manager = manager
+        self.now = now
         super.init()
     }
-    private var continuation: CheckedContinuation<CLLocation, Error>?
+    private var continuation: CheckedContinuation<Fix, Error>?
     private var timeout: Task<Void, Never>?
     private var requestingLocation = false
-    func location() async throws -> CLLocation {
+    private var requestedAt: Date?
+    func location() async throws -> Fix {
         try Task.checkCancellation()
         guard continuation == nil else { throw LocationError.unavailable }
         return try await withTaskCancellationHandler {
@@ -51,6 +59,7 @@ final class WatchManualLocation: NSObject, @preconcurrency CLLocationManagerDele
         case .authorizedWhenInUse, .authorizedAlways:
             guard !requestingLocation else { return }
             requestingLocation = true
+            requestedAt = now()
             // The fix timeout begins after the person answers the permission prompt.
             timeout = Task { [weak self] in
                 do { try await Task.sleep(for: .seconds(12)) } catch { return }
@@ -62,17 +71,19 @@ final class WatchManualLocation: NSObject, @preconcurrency CLLocationManagerDele
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last, abs(location.timestamp.timeIntervalSinceNow) <= 30,
+        guard requestingLocation, continuation != nil else { return }
+        guard let requestedAt, let location = locations.last, abs(location.timestamp.timeIntervalSince(now())) <= 30,
               location.horizontalAccuracy >= 0, location.horizontalAccuracy <= 100 else {
             finish(.failure(LocationError.unavailable)); return
         }
-        finish(.success(location))
+        finish(.success(Fix(location: location, requestedAt: requestedAt)))
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { finish(.failure(LocationError.unavailable)) }
-    private func finish(_ result: Result<CLLocation, Error>) {
+    private func finish(_ result: Result<Fix, Error>) {
         let pending = continuation; continuation = nil
         timeout?.cancel(); timeout = nil
         requestingLocation = false
+        requestedAt = nil
         manager.delegate = nil
         manager.stopUpdatingLocation()
         pending?.resume(with: result)

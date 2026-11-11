@@ -1,5 +1,7 @@
 import CoreLocation
+import SwiftData
 import Testing
+@testable import IsoMe
 
 @Suite @MainActor
 struct WatchManualLocationTests {
@@ -51,7 +53,7 @@ struct WatchManualLocationTests {
                              altitude: 0, horizontalAccuracy: 10, verticalAccuracy: 10, timestamp: Date())
         manager.deliver(fix)
         let actual = try await task.value
-        #expect(actual.coordinate.latitude == fix.coordinate.latitude)
+        #expect(actual.location.coordinate.latitude == fix.coordinate.latitude)
         #expect(manager.delegate == nil)
     }
 
@@ -81,5 +83,35 @@ struct WatchManualLocationTests {
         }
         #expect(manager.authorizationRequests == 0)
         #expect(manager.locationRequests == 0)
+    }
+
+    @Test func delayedPermissionUsesTheAuthorizedRequestTimeThroughPhonePersistence() async throws {
+        let manager = Manager(.notDetermined)
+        var now = Date().addingTimeInterval(-120)
+        let originalTap = now
+        let request = WatchManualLocation(manager: manager, now: { now })
+        let task = Task { try await request.location() }
+        var authorization = manager.authorization.stream.makeAsyncIterator()
+        await authorization.next()
+        now = Date()
+        manager.authorize(.authorizedWhenInUse)
+        manager.deliver(CLLocation(coordinate: CLLocationCoordinate2D(latitude: 18, longitude: -66),
+                                  altitude: 0, horizontalAccuracy: 10, verticalAccuracy: 10, timestamp: now))
+        let fix = try await task.value
+        #expect(fix.requestedAt.timeIntervalSince(originalTap) > 30)
+        let command = WatchVisitCommand(deviceID: UUID(), kind: .checkIn, occurredAt: fix.requestedAt,
+            name: "Delayed permission fixture", latitude: fix.location.coordinate.latitude,
+            longitude: fix.location.coordinate.longitude, locationMeasuredAt: fix.location.timestamp,
+            horizontalAccuracy: fix.location.horizontalAccuracy)
+        let schema = Schema([Visit.self, SavedPlace.self, WatchVisitCommandReceipt.self])
+        let db = try ModelContainer(for: schema, configurations: ModelConfiguration(schema: schema, isStoredInMemoryOnly: true))
+        let processor = WatchVisitCommandProcessor(context: ModelContext(db))
+        #expect(processor.process(command).outcome == .succeeded)
+        #expect(processor.process(command).outcome == .succeeded)
+        let reader = ModelContext(db)
+        let visits = try reader.fetch(FetchDescriptor<Visit>())
+        #expect(visits.count == 1)
+        #expect(visits.first?.arrivedAt == fix.requestedAt)
+        #expect(try reader.fetchCount(FetchDescriptor<WatchVisitCommandReceipt>()) == 1)
     }
 }

@@ -20,6 +20,22 @@ struct WatchManualVisitTests {
             outcome: outcome, visitID: command.id, message: "Result"))
     }
 
+    @Test func unresolvedColdLaunchAccessRetriesWithoutSavingATerminalReceipt() throws {
+        let db = try container()
+        var pending = true
+        let processor = WatchVisitCommandProcessor(context: ModelContext(db), trackingAccessPending: { pending })
+        let command = checkIn()
+        #expect(processor.process(command).outcome == .retryable)
+        let reader = ModelContext(db)
+        #expect(try reader.fetchCount(FetchDescriptor<Visit>()) == 0)
+        #expect(try reader.fetchCount(FetchDescriptor<WatchVisitCommandReceipt>()) == 0)
+        pending = false
+        #expect(processor.process(command).outcome == .succeeded)
+        #expect(processor.process(command).outcome == .succeeded)
+        #expect(try reader.fetchCount(FetchDescriptor<Visit>()) == 1)
+        #expect(try reader.fetchCount(FetchDescriptor<WatchVisitCommandReceipt>()) == 1)
+    }
+
     @Test func replayAfterContextRestartCreatesOneVisitAndOneReceipt() throws {
         let db = try container(), command = checkIn()
         let first = WatchVisitCommandProcessor(context: ModelContext(db)).process(command)

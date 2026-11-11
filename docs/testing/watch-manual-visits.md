@@ -14,20 +14,22 @@ keys and are both consumed on activation and subsequent delivery.
 
 `WatchManualLocationTests` first reproduced the original first-grant failure.
 The one-shot request now waits for authorization, requests a fix once, and
-releases its delegate and request on completion or cancellation. Its three tests
-use injected permission callbacks; they do not establish physical Watch behavior.
+releases its delegate and request on completion or cancellation. Its four tests
+use injected permission callbacks, including a 120-second authorization delay
+followed by real phone persistence and replay. They do not establish physical
+Watch behavior. Unresolved cold-launch entitlements produce a retryable response
+without a terminal receipt, allowing the same command to succeed once access resolves.
 
 Verification via `scripts/test-ios.sh` on the Whereday Reimagined Tests iOS 27.0
 simulator:
 
-- Targeted run: **6 XCTest route-import tests + 20 Swift Testing cases passed**.
-- Complete run: **482 XCTest + 40 Swift Testing cases passed**. This builds the
+- Targeted run: **6 XCTest route-import tests + 22 Swift Testing cases passed**.
+- Complete run: **482 XCTest + 42 Swift Testing cases passed**. This builds the
   phone, Watch and both widget targets.
-- The complete run required canceling a simulator Apple Account sign-in dialog
-  during the StoreKit fault test and denying a subsequent notification prompt.
-  No account credentials were entered. This is a passing run with recorded UI
-  intervention, not an unattended CI proof.
-- Full result bundle: `/private/tmp/whereday-watch-fix-20261111/artifacts/test-results/IsoMe-20261111-105252-64682.xcresult`.
+- The latest complete run finished without UI intervention. An earlier full run
+  required canceling an Apple Account sign-in dialog and denying notifications;
+  no account credentials were entered in either run.
+- Full result bundle: `/private/tmp/whereday-watch-fix-20261111/artifacts/test-results/IsoMe-20261111-111737-16675.xcresult`.
 
 Reproduce the complete suite with:
 
@@ -45,7 +47,7 @@ Check In rejects overlaps unless the user enables Allow Overlap. A failed comman
 ## Delivery and persistence
 
 - `WatchVisitCommandQueue` is saved atomically in the Watch app group before any transmission. An unreadable queue is preserved and blocks new commands; a write failure sends nothing new.
-- Commands retain UUID, device ID, original action time, destination and overlap choice. Location must be within 30 seconds of the action with accuracy at most 100 metres. Validation compares the sample to the action time, so an offline replay does not turn a previously fresh sample into a stale one.
+- Commands retain UUID, device ID, original action time, destination and overlap choice. For current-location check-in, the action time is captured after authorization, immediately before requesting the fix, and remains unchanged on retries. Location must be within 30 seconds of the action with accuracy at most 100 metres. Validation compares the sample to the action time, so an offline replay does not turn a previously fresh sample into a stale one.
 - Only the first pending command is transmitted. A queued Check Out targets the Check In command's deterministic visit UUID and depends on that Check In. A failed Check In fails its dependent Check Out. The queue permits at most 100 pending commands and keeps recent terminal results for display.
 - `transferUserInfo` provides background delivery and reachable peers additionally use `sendMessageData`. Reconnection, activation, foreground entry and Refresh / Retry Pending retry the queue. A transport callback never removes a command.
 - The phone reads durable receipts in a fresh SwiftData context for **each delivery**. The shared `ManualVisitStore` inserts a receipt in the same save as the visit mutation. Save failures roll back and return retryable; no terminal success is recorded. A receipt stores a SHA-256 command fingerprint, not another copy of the command's name/location. Reusing an ID with altered content fails.

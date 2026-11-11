@@ -19,7 +19,14 @@ final class WatchVisitCommandReceipt {
 @MainActor
 final class WatchVisitCommandProcessor {
     private let container: ModelContainer
-    init(context: ModelContext) { container = context.container }
+    private let trackingAccessPending: @MainActor () -> Bool
+    init(context: ModelContext, trackingAccessPending: @escaping @MainActor () -> Bool = {
+        let store = StoreManager.shared
+        return !store.hasResolvedEntitlements && !store.canTrack
+    }) {
+        container = context.container
+        self.trackingAccessPending = trackingAccessPending
+    }
 
     func snapshot() throws -> WatchVisitSnapshot {
         let context = ModelContext(container)
@@ -78,6 +85,11 @@ final class WatchVisitCommandProcessor {
             let saved: Bool
             switch command.kind {
             case .checkIn:
+                guard !trackingAccessPending() else {
+                    // A cold phone has not established denial yet. Keep the original
+                    // command pending rather than persisting a terminal failure.
+                    return result(.retryable, String(localized: "Purchase status is still being checked. Open Whereday on iPhone, then retry on Watch."))
+                }
                 let coordinate: CLLocationCoordinate2D
                 let name: String
                 let address: String?

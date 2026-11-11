@@ -58,14 +58,14 @@ struct WatchManualVisitView: View {
                             client.checkIn(name: name, savedPlaceID: selectedPlaceID, location: nil, allowOverlap: allowOverlap)
                         } else {
                             locating = true
-                            let tappedAt = Date(), requestedName = name, requestedOverlap = allowOverlap
+                            let requestedName = name, requestedOverlap = allowOverlap
                             locationTask = Task {
                                 defer { locating = false }
                                 do {
-                                    let location = try await WatchManualLocation().location()
+                                    let fix = try await WatchManualLocation().location()
                                     try Task.checkCancellation()
-                                    client.checkIn(name: requestedName, savedPlaceID: nil, location: location,
-                                        allowOverlap: requestedOverlap, at: tappedAt)
+                                    client.checkIn(name: requestedName, savedPlaceID: nil, location: fix.location,
+                                        allowOverlap: requestedOverlap, at: fix.requestedAt)
                                 } catch is CancellationError { /* Dismissing cancels an unfinished location request. */ }
                                 catch { locationError = error.localizedDescription }
                             }
