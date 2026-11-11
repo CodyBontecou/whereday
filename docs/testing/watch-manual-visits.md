@@ -1,6 +1,6 @@
 # Watch manual visits (#75)
 
-Status: implementation prepared for review. Keep #75 open until the physical paired Watch/iPhone acceptance checklist below is completed.
+Status: owner accepted the paired Watch app on November 11, 2026 and ended further manual edge-case testing. Preserve the distinction between completed checks and owner acceptance of deferred checks. PR #84 / #75 still await remaining CI and merge.
 
 ## Current-main integration — November 11, 2026
 
@@ -37,8 +37,9 @@ Reproduce the complete suite with:
 scripts/test-ios.sh --destination 'platform=iOS Simulator,id=YOUR_SIMULATOR_UDID'
 ```
 
-PR #84 remains draft and issue #75 remains open pending the paired hardware
-checklist below. No physical WatchConnectivity acceptance is claimed.
+The initial integration evidence above predates the paired tests. Current paired
+evidence and the owner acceptance decision are recorded below; CI must still
+be green before merge.
 
 The Watch dashboard's **Check In / Out** button opens Manual Visits. The phone supplies saved places and open visits with their source and confirmation status. Saved places work without Watch location permission; Current location requests a fresh one-shot location without starting route recording. Check Out always targets the selected manual visit. Automatic and imported visits cannot be checked out through these controls.
 
@@ -74,9 +75,12 @@ and coordinates are intentionally omitted from this receipt.
 
 With the iPhone powered off, the owner queued a saved-place check-in and dependent
 checkout, then force quit and reopened the Watch app. Both remained Pending.
-Reconnection, final acknowledgments and duplicate-free phone persistence are
-still awaiting verification. A previous attempt that reached Completed while
-the Watch was disconnected from the Mac is not counted as offline evidence.
+After reconnection the owner confirmed both commands reached Completed. The
+phone showed exactly one closed saved-place test visit at 13:39, before the
+approximately 13:42 reconnection, retaining its offline action times. A previous
+attempt that reached Completed while the Watch was disconnected from the Mac
+is not counted as offline evidence. The owner also confirmed an overlap-rejected
+command showed Failed with an actionable explanation.
 
 Physical route sync exposed `WCErrorCodePayloadTooLarge`. The existing 500-point
 fixture encodes to 103,564 bytes; a point-count bound does not bound message bytes.
@@ -91,16 +95,21 @@ passed 16 targeted route tests, including exact 500-point import, byte preservat
 after temporary-file deletion, duplicate replay and legacy batching. The complete
 signed runner passes **484 XCTest + 42 Swift Testing cases**, with no failures.
 Both review axes found no concrete defect. Signed device builds also pass.
-Physical file delivery, error recovery and final route sync acceptance remain
-pending; simulator success does not establish WatchConnectivity delivery.
+The follow-up `dcd25b4c` was then installed on both physical devices. The owner
+confirmed route status was Synced / zero waiting. No exact physical file-byte
+count was captured; the 103,564-byte measurement is from the actual synthetic
+fixture. Simulator tests establish byte/import/replay semantics; the paired check
+establishes the observed final sync state.
 
 Full result: `artifacts/test-results/IsoMe-20261111-133018-84223.xcresult`.
 
-## Paired hardware acceptance still required
+## Owner acceptance and original paired test plan
 
 The Watch dashboard entry point was rendered on an isolated Series 11 (46 mm), watchOS 26.5 simulator. Automated tests exercise command replay against real SwiftData storage. Simulator checks do not establish physical WatchConnectivity background delivery: Apple documents `transferUserInfo` as unsupported in Simulator.
 
-On a physical paired Watch and iPhone, verify:
+The owner then stated: “okay im tired of testing these edge cases, the watch app is looking good to me”. Further manual Watch testing stops at that request. Permission-denied testing was not completed, and debugger probes for invalid-time/missing-location commands produced no verifiable result; neither is counted as passed. The existing automated validation coverage remains passing. This is an owner acceptance decision, not a claim that every original manual check ran. No further manual Watch QA is required from the owner for this change.
+
+The original paired test plan is retained for traceability:
 
 1. Reachable Check In at a saved place and Check Out become Completed only after phone persistence; inspect the phone journal.
 2. Disconnect, queue Check In and dependent Check Out, relaunch Watch, reconnect, and confirm exactly one closed visit with the original action times.
@@ -108,7 +117,7 @@ On a physical paired Watch and iPhone, verify:
 4. Exercise location denied, unavailable/inaccurate location, overlap rejection and explicit override, multiple manual visits, and deleted/closed checkout targets.
 5. Verify existing Watch route recording and subsequent sync still work, and automatic/imported visits retain their metadata.
 
-Do not mark paired hardware acceptance complete solely from simulator replay.
+The current acceptance uses the real paired checks plus the explicit owner decision, not simulator replay alone. Remaining CI failures still block merge.
 
 ## Integration verification — October 26, 2026
 
