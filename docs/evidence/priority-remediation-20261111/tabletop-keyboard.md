@@ -1,0 +1,7 @@
+# Tabletop keyboard fixture — issue 116
+
+The original containment assertion failed reproducibly with a floating Gboard handwriting palette. It reported an IME visible but did not obscure the bottom pane. The dialog stayed fully inside its preferred lower pane, which is valid for that viewport. The test incorrectly assumed any visible IME was a docked keyboard.
+
+With handwriting temporarily disabled, the actual docked QWERTY keyboard appeared. Both existing WorkspaceKeyboardTest cases passed unchanged: the date dialog moved wholly into the upper safe pane with the invalid draft and actions reachable, then returned to the lower pane after real keyboard dismissal; the native clock draft/mode handoff also passed. Screenshots retain those three states.
+
+The fixture now saves the original secure keyboard settings, enables the software IME and disables handwriting for this exact disposable mapQa test only. JUnit teardown attempts restoration of every saved value even if one restoration fails, reports combined failures, and drops the adopted permission in finally. Final verification passed all three keyboard cases, including QaKeyboardTest. Afterward, show_ime_with_hard_keyboard was 1 and stylus_handwriting_enabled was unset, matching the originals. No production layout code or containment/draft/action assertion changed. This is docked-keyboard coverage, not exhaustive floating-handwriting acceptance.
