@@ -62,6 +62,10 @@ class OutingLocalizationTest {
     }
     private fun awaitText(text:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithText(text).assertExists()}.isSuccess}}
     private fun action(text:String)=compose.onNodeWithText(text).performScrollTo().performClick()
+    private fun edit() {
+        action("Editar salida")
+        compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("outing-name").assertIsDisplayed()}.isSuccess}
+    }
     @Test fun detailsLocalizeCountsDurationAndDistanceWithoutChangingHistory()=runBlocking {
         seed();show();awaitText(session.name!!)
         compose.onNodeWithTag("outing-point-summary").assertTextEquals("2 puntos · 1 anomalía del GPS")
@@ -72,7 +76,7 @@ class OutingLocalizationTest {
         capture("overview")
     }
     @Test fun spanishRenameAndFormatSelectionKeepRecordIdentity()=runBlocking {
-        seed();show();awaitText(session.name!!);action("Editar salida")
+        seed();show();awaitText(session.name!!);edit()
         compose.onNodeWithTag("outing-name").performTextReplacement("  Paseo QA 日本語  ")
         compose.onNodeWithTag("outing-notes").performScrollTo().performTextReplacement("Nota QA\nSegunda línea")
         compose.onNodeWithText("Guardar salida").performClick();awaitText("Paseo QA 日本語")
@@ -86,7 +90,7 @@ class OutingLocalizationTest {
         assertEquals(targetFormat,ExportSelectionCodec.decode(graph.preferences.settings.first().exportConfiguration).format)
     }
     @Test fun defaultNameRemainsNullAndLinkedVisitNavigationPreservesVisit()=runBlocking {
-        seed();show();awaitText(session.name!!);action("Editar salida")
+        seed();show();awaitText(session.name!!);edit()
         compose.onNodeWithText("Usar nombre predeterminado").performClick()
         compose.onNodeWithText("Guardar salida").performClick();awaitText("Detalles de la salida")
         assertEquals(session.copy(name=null),graph.history.dao.session(session.id)!!.value)
@@ -135,7 +139,7 @@ class OutingLocalizationTest {
     }
     @Test fun editorActionsStayReachableWithLongSpanishText()=runBlocking {
         if(InstrumentationRegistry.getArguments().getString("requireLargeFont")=="true") assertTrue(compose.activity.resources.configuration.fontScale>=1.8f)
-        seed();show();awaitText(session.name!!);action("Editar salida")
+        seed();show();awaitText(session.name!!);edit()
         compose.onNodeWithTag("outing-name").performTextReplacement("Salida QA con un nombre largo para comprobar el texto grande")
         compose.onNodeWithTag("outing-notes").performScrollTo().performTextReplacement("Nota QA larga que debe poder leerse sin perder los botones del diálogo.")
         compose.onNodeWithText("Guardar salida").assertIsDisplayed().assertIsEnabled()

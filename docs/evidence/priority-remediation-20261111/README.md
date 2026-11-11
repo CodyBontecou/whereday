@@ -125,3 +125,43 @@ review axes found no concrete defect, and both QA APKs build successfully. Nativ
 runtime checks and the full hosted baseline remain pending; no passing fix is
 claimed from compilation alone. The calendar intent timeout is still under
 investigation.
+
+## Final local keyboard verification and latest hosted result
+
+All 86 active cases across the eight affected fixture classes pass without skips
+on the revised helper/selector build. A separate real software-keyboard case also
+passes: the IME must first be visible, then hide, while the invalid date draft,
+disabled Apply and visible Cancel remain intact. Exact case/APK receipts are
+adjacent. The old tabletop case instead fails its pane-containment assertion
+before calling dismissal; that assertion is retained and tracked as [#116](https://github.com/CodyBontecou/whereday/issues/116).
+
+Hosted database run `43064053407` on `39b9e667` has no keyboard callback failures.
+It stops after an outing-editor input failure (missing `outing-name`) and an
+incomplete replay-localization case. Only 335 of the expected 594 cases were
+received; this is not a baseline pass. Exact downloaded reports remain in
+`/private/tmp/whereday-hosted-baseline-43064053407`. The editor transition and
+instrumentation termination still need diagnosis.
+
+The local million JSON run on the identity/null path also times out during
+reimport at the original 1,200,000 ms deadline. It reviewed in 525,739 ms and
+committed all one million points in 280,493 ms (136,234 ms verification). This is
+a failed complete gate despite the successful first commit. Hosted all-format
+run `43061793626` is still live. No duration, count, cleanup or memory requirement
+was relaxed.
+
+Hosted scale run `43061793626` is now terminal: all three original million-record
+formats timed out at 20 minutes. The adjacent per-format phase receipt retains
+the measured first imports and incomplete reimports. Further profiling/bisection
+is required; the smaller control and successful first commits are not substitutes.
+
+A 22-case outing/replay/keyboard follow-up could not start instrumentation: Android
+killed the QA process for a startup ANR before any test status arrived. Its captured
+main stack is in WorkManagerInitializer → WorkDatabase.create → RoomDatabase.Builder,
+with high device CPU pressure. This is not a replay-test reproduction or passing
+verification. The new explicit editor wait is compiled and statically reviewed but
+still awaits native/hosted runtime verification.
+
+The hosted UI wrapper now preserves the exact 94-class selection and original
+Gradle arguments, collecting logcat, exit information and memory before emulator
+teardown. Each diagnostic has its own 15-second bound and cannot replace the
+original test exit code. Bash syntax, actionlint and diff checks pass.

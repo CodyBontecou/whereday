@@ -1,0 +1,29 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.QaKeyboardTest",
+      "test": "invalidDateDraftSurvivesActualSoftwareKeyboardDismissal"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "beaa3595958d7a92df4b3d94342412e5654f03c20a3349d5fde29f638b5fcc7f"
+    },
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "db71c55dcb27959d31d826ed0c8307b2835b800a5f86fd7f9a19a1aaa82e51db"
+    }
+  ]
+}

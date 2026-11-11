@@ -1,0 +1,28 @@
+{
+  "run": "https://github.com/CodyBontecou/whereday/actions/runs/43061793626",
+  "head": "f922eeda",
+  "result": "all_three_original_million_cases_timeout",
+  "phaseOutput": {
+    "logcat-com.bontecou.whereday.platform.DiskHistoryImportScaleTest-millionJsonPointsReviewCommitDeduplicateAndClear.txt": [
+      "json inspect: 126683 ms",
+      "json review: 67000012 bytes, 1000000 points, 477830 ms",
+      "json apply: 239047 ms; verification: 111022 ms",
+      "json commit: 1000000 points, 239063 ms",
+      "json inspect: 135763 ms",
+      "json apply: 57920 ms; verification: 57845 ms"
+    ],
+    "logcat-com.bontecou.whereday.platform.DiskHistoryImportScaleTest-millionCsvPointsReviewCommitDeduplicateAndClear.txt": [
+      "csv inspect: 125294 ms",
+      "csv review: 28000029 bytes, 1000000 points, 486635 ms",
+      "csv apply: 247211 ms; verification: 116171 ms",
+      "csv commit: 1000000 points, 247224 ms",
+      "csv inspect: 136605 ms"
+    ],
+    "logcat-com.bontecou.whereday.platform.DiskHistoryImportScaleTest-millionMarkdownPointsReviewCommitDeduplicateAndClear.txt": [
+      "markdown inspect: 128441 ms",
+      "markdown review: 36000041 bytes, 1000000 points, 592369 ms",
+      "markdown apply: 244325 ms; verification: 112305 ms",
+      "markdown commit: 1000000 points, 244338 ms"
+    ]
+  }
+}
