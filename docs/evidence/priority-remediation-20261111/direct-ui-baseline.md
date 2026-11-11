@@ -1,0 +1,9 @@
+# Direct full UI baseline transport experiment
+
+Hosted UTP runs stopped before the complete baseline (335 and then 139 received completions). In the latest run the raw result stream ends at a picker start, while device TestRunner logs show that picker finishing and the next test starting before Gradle uninstalls the target. Binder reports a failure at the missing completion. The platform message alone does not prove a frozen recipient or identify the cause. A separate road producer timeout is a real reported failure and is not waived. Both implicated classes pass all 19 native cases locally.
+
+The next CI experiment keeps the exact original 94-class CSV and one AndroidJUnitRunner process. It builds the same disposable mapQa APKs and uses the existing direct adb runner instead of Gradle UTP result transport. No per-class isolation, retries, deadline increases, new skips or production-code changes are introduced. Complete acceptance requires 594 unique results: 592 passing cases and exactly the two pre-existing CalendarEventFlowTest ignores, named explicitly. Missing results, extra/duplicate/assumption skips, assertions and failed termination fail the gate. Default native-runner callers still reject every skip.
+
+The parser rejects the actual incomplete hosted stream. Seven parser/diagnostic unit tests pass. Actual Calendar instrumentation validated 14 total cases: 12 passed, exactly 2 pre-existing ignores. Independent Standards/Spec review found no remaining concrete defect; a diagnostics concern was fixed by capturing bounded logcat/exit-info/memory before target cleanup, retaining the original failure and strict cleanup. Bash syntax, actionlint and diff checks pass.
+
+This is an evidence-preserving transport experiment, not a claim of a repaired full baseline. The full 594-case run and downstream data/platform commands must still pass. Original million-record gates are unchanged and running separately.
