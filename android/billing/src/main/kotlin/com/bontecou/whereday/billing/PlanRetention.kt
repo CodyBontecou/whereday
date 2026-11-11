@@ -17,6 +17,8 @@ enum class SubscriptionStatus {
     pending,
     /** Verification failed (for example offline) without a usable cached grant. Not a lapse. */
     unverified,
+    /** A valid cached subscription grants access, but renewal has not been refreshed in Play. */
+    active,
     renewing,
     /** Canceled in Play; access continues until the period Play already charged for ends. */
     ending,
@@ -29,11 +31,13 @@ data class SubscriptionSummary(val status:SubscriptionStatus,
     /** weekly or yearly when known, lifetime for Lifetime, null when the base plan can't be known. */
     val plan:StorePlan?=null,
     /** Lifetime is active but a subscription still renews in Play, which Lifetime doesn't cancel. */
-    val subscriptionAlsoRenewing:Boolean=false) {
+    val subscriptionAlsoRenewing:Boolean=false,
+    val renewalKnown:Boolean=true) {
     /** "Manage or cancel" goes through the Before you go summary only while a subscription renews. */
     val offersCancel get()=status==SubscriptionStatus.renewing
     /** Any Play subscription page link at all. Lifetime alone has nothing to manage or cancel. */
-    val managesInPlay get()=status==SubscriptionStatus.renewing || status==SubscriptionStatus.ending || subscriptionAlsoRenewing
+    val managesInPlay get()=status==SubscriptionStatus.renewing || status==SubscriptionStatus.ending || status==SubscriptionStatus.active ||
+        subscriptionAlsoRenewing || (status==SubscriptionStatus.lifetime && !renewalKnown)
 }
 
 object PlanRetention {
@@ -51,8 +55,9 @@ object PlanRetention {
         return when(state.access) {
             AccessState.active -> if(state.activeProductId==subscriptionId) {
                 val plan=history.checkoutPlan?.takeIf {history.checkoutPurchaseHash!=null && history.checkoutPurchaseHash==state.activePurchaseHash}
-                SubscriptionSummary(if(state.autoRenewing) SubscriptionStatus.renewing else SubscriptionStatus.ending,plan)
-            } else SubscriptionSummary(SubscriptionStatus.lifetime,StorePlan.lifetime,subscriptionAlsoRenewing=state.subscriptionRenewing)
+                val status=when { !state.renewalKnown->SubscriptionStatus.active;state.autoRenewing->SubscriptionStatus.renewing;else->SubscriptionStatus.ending }
+                SubscriptionSummary(status,plan,renewalKnown=state.renewalKnown)
+            } else SubscriptionSummary(SubscriptionStatus.lifetime,StorePlan.lifetime,subscriptionAlsoRenewing=state.subscriptionRenewing,renewalKnown=state.renewalKnown)
             AccessState.checking,AccessState.unavailable -> SubscriptionSummary(SubscriptionStatus.unknown)
             AccessState.pending -> SubscriptionSummary(SubscriptionStatus.pending)
             AccessState.verificationRequired -> SubscriptionSummary(SubscriptionStatus.unverified)

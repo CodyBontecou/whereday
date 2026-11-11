@@ -43,7 +43,9 @@ data class BillingState(val access: AccessState=AccessState.checking,val product
     /** SHA-256 of the verified purchase token, so a remembered checkout plan applies only to that purchase. */
     val activePurchaseHash:String?=null,
     /** Play still reports an auto-renewing subscription, even while Lifetime is the verified product. */
-    val subscriptionRenewing:Boolean=false) {
+    val subscriptionRenewing:Boolean=false,
+    /** Renewal belongs to a fresh Play snapshot, not to the cached signed access lease. */
+    val renewalKnown:Boolean=false) {
     val message:String? get()=notice?.diagnostic
     fun product(plan:StorePlan)=products.firstOrNull { it.plan==plan }
     /** Builds without Play billing keep recording free; only configured builds put tracking behind access. */
@@ -62,13 +64,16 @@ class BillingSession(private val productIds: List<String>,private val configured
 
     suspend fun refresh(userRestore:Boolean=false):BillingRefreshResult=mutex.withLock {
         mutable.value=mutable.value.copy(busy=true,notice=null)
+        var renewalKnown=false
         try {
             loadCache()
             if(!configured) { mutable.value=BillingState(AccessState.unavailable,notice=BillingNotice.unavailable,enforced=false); return@withLock BillingRefreshResult.unavailable }
             val snapshot=store.snapshot()
             val owned=snapshot.purchases.filter { it.productId in productIds }.sortedBy { productIds.indexOf(it.productId) }
-            mutable.value=mutable.value.copy(products=snapshot.products,subscriptionRenewing=owned.any { it.state==StorePurchaseState.purchased && it.autoRenewing })
             val purchased=owned.firstOrNull { it.state==StorePurchaseState.purchased }
+            renewalKnown=true
+            mutable.value=mutable.value.copy(products=snapshot.products,renewalKnown=true,autoRenewing=purchased?.autoRenewing ?: false,
+                subscriptionRenewing=owned.any { it.state==StorePurchaseState.purchased && it.autoRenewing })
             if(purchased==null) {
                 clearGrant()
                 mutable.value=mutable.value.copy(access=if(owned.any { it.state==StorePurchaseState.pending }) AccessState.pending else AccessState.free,
@@ -96,7 +101,8 @@ class BillingSession(private val productIds: List<String>,private val configured
             val active=grant?.allows(clock.instant(),lastSeen)==true
             mutable.value=mutable.value.copy(access=if(active) AccessState.active else AccessState.verificationRequired,
                 notice=if(active) BillingNotice.cached else BillingNotice.verificationFailed,activeProductId=if(active) grant?.product else null,
-                activePurchaseHash=if(active) grant?.purchaseTokenHash else null)
+                activePurchaseHash=if(active) grant?.purchaseTokenHash else null,renewalKnown=renewalKnown,
+                autoRenewing=renewalKnown && mutable.value.autoRenewing,subscriptionRenewing=renewalKnown && mutable.value.subscriptionRenewing)
             BillingRefreshResult.failed
         } finally { mutable.value=mutable.value.copy(busy=false) }
     }

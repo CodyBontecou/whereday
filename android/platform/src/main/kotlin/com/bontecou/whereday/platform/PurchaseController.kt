@@ -61,7 +61,8 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
     /** A canceled or replaced trial keeps no reminder; Play itself reports cancellation as auto-renew off. */
     private fun reconcileReminder() {
         val current=state.value
-        if(current.access==AccessState.active && (current.activeProductId!=configuration.subscriptionId || !current.autoRenewing)) TrialReminder.cancel(context)
+        if(current.access==AccessState.active && current.renewalKnown &&
+            (current.activeProductId!=configuration.subscriptionId || !current.autoRenewing)) TrialReminder.cancel(context)
         else if(current.access==AccessState.free) TrialReminder.cancel(context)
     }
     val subscriptionId get()=configuration.subscriptionId

@@ -29,6 +29,7 @@ internal object SubscriptionText {
     fun card(summary:SubscriptionSummary,trialAvailable:Boolean)=when(summary.status) {
         SubscriptionStatus.renewing->PlanCardText(R.string.settings_plan_kicker,planTitle(summary.plan),R.string.settings_plan_body_subscription)
         SubscriptionStatus.ending->PlanCardText(R.string.settings_plan_kicker_ending,planTitle(summary.plan),R.string.settings_plan_body_ending)
+        SubscriptionStatus.active->PlanCardText(R.string.settings_plan_kicker,planTitle(summary.plan),R.string.billing_cached)
         SubscriptionStatus.lifetime->PlanCardText(R.string.settings_plan_kicker,R.string.paywall_plan_lifetime,R.string.paywall_plan_lifetime_detail)
         SubscriptionStatus.lapsed->PlanCardText(R.string.settings_plan_kicker_none,R.string.subscription_ended_title,R.string.subscription_ended_body)
         else->PlanCardText(R.string.settings_plan_kicker_none,R.string.settings_plan_title_none,
@@ -37,16 +38,19 @@ internal object SubscriptionText {
 
     /** The card opens the Subscription page for a known plan or a lapse; otherwise the plans carousel, as before. */
     fun cardOpensSubscription(summary:SubscriptionSummary)=summary.status in setOf(SubscriptionStatus.renewing,SubscriptionStatus.ending,
-        SubscriptionStatus.lifetime,SubscriptionStatus.lapsed)
+        SubscriptionStatus.lifetime,SubscriptionStatus.lapsed,SubscriptionStatus.active)
 
     fun page(summary:SubscriptionSummary):SubscriptionPageText?=when(summary.status) {
         SubscriptionStatus.renewing->SubscriptionPageText(R.string.settings_plan_kicker,planTitle(summary.plan),R.string.subscription_body_renewing,
             planValue(summary.plan),R.string.subscription_status_renewing,true,R.string.subscription_footnote_renewing)
         SubscriptionStatus.ending->SubscriptionPageText(R.string.settings_plan_kicker_ending,planTitle(summary.plan),R.string.subscription_body_ending,
             planValue(summary.plan),R.string.subscription_status_ending,false,R.string.subscription_footnote_ending)
+        SubscriptionStatus.active->SubscriptionPageText(R.string.settings_plan_kicker,planTitle(summary.plan),R.string.billing_cached,
+            planValue(summary.plan),R.string.export_access_verified,false,null)
         /** "Nothing renews" would be false beside the still-renewing warning, so the body names that subscription instead. */
         SubscriptionStatus.lifetime->SubscriptionPageText(R.string.settings_plan_kicker,R.string.paywall_plan_lifetime,
-            if(summary.subscriptionAlsoRenewing) R.string.subscription_body_lifetime_also_renewing else R.string.subscription_body_lifetime,
+            when { summary.subscriptionAlsoRenewing->R.string.subscription_body_lifetime_also_renewing
+                !summary.renewalKnown->R.string.billing_cached;else->R.string.subscription_body_lifetime },
             R.string.paywall_plan_lifetime,R.string.subscription_status_lifetime,false,null)
         else->null
     }

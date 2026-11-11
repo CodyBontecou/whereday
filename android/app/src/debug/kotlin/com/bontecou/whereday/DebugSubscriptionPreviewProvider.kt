@@ -20,7 +20,7 @@ class DebugSubscriptionPreviewProvider : ContentProvider() {
         val subscription = "whereday_individual"
         val trial = listOf(StoreProduct(subscription, StorePlan.yearly, "$29.99", 29_990_000, "USD", freeTrialDays = 7))
         fun active(product: String, renewing: Boolean, alsoRenewing: Boolean = false) =
-            BillingState(AccessState.active, activeProductId = product, autoRenewing = renewing, activePurchaseHash = "preview", subscriptionRenewing = alsoRenewing)
+            BillingState(AccessState.active, activeProductId = product, autoRenewing = renewing, activePurchaseHash = "preview", subscriptionRenewing = alsoRenewing, renewalKnown = true)
         val bought = PlanHistory(true, StorePlan.yearly, "preview")
         SubscriptionPreview.override.value = when (arg) {
             "renewing-yearly" -> SubscriptionPreview.Value(active(subscription, true), bought)
@@ -29,6 +29,8 @@ class DebugSubscriptionPreviewProvider : ContentProvider() {
             "ending-yearly" -> SubscriptionPreview.Value(active(subscription, false), bought)
             "lifetime" -> SubscriptionPreview.Value(active("whereday_export_lifetime", false), PlanHistory())
             "lifetime-renewing" -> SubscriptionPreview.Value(active("whereday_export_lifetime", false, alsoRenewing = true), bought)
+            "offline-subscription" -> SubscriptionPreview.Value(active(subscription, false).copy(renewalKnown = false), bought)
+            "offline-lifetime" -> SubscriptionPreview.Value(active("whereday_export_lifetime", false).copy(renewalKnown = false), bought)
             "lapsed" -> SubscriptionPreview.Value(BillingState(AccessState.free), bought)
             "lapsed-trial" -> SubscriptionPreview.Value(BillingState(AccessState.free, products = trial), bought)
             "none" -> SubscriptionPreview.Value(BillingState(AccessState.free), PlanHistory())

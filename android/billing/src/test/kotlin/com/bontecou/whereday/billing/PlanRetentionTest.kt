@@ -7,7 +7,7 @@ class PlanRetentionTest {
     private val sub="whereday_individual"
     private val lifetime="whereday_export_lifetime"
     private fun active(product:String=sub,renewing:Boolean=true,hash:String?="hash-a",alsoRenewing:Boolean=false)=
-        BillingState(AccessState.active,activeProductId=product,autoRenewing=renewing,activePurchaseHash=hash,subscriptionRenewing=alsoRenewing)
+        BillingState(AccessState.active,activeProductId=product,autoRenewing=renewing,activePurchaseHash=hash,subscriptionRenewing=alsoRenewing,renewalKnown=true)
     private fun summary(state:BillingState,history:PlanHistory=PlanHistory())=PlanRetention.summary(state,history,sub)
 
     @Test fun aVerifiedSubscriptionIsRememberedOnceAndSurvivesItsLapse() {

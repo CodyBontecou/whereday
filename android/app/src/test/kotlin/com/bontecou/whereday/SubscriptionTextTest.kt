@@ -34,7 +34,7 @@ class SubscriptionTextTest {
 
     @Test fun cardOpensTheSubscriptionPageOnlyForAKnownPlanOrALapse() {
         val opens=SubscriptionStatus.entries.filter {SubscriptionText.cardOpensSubscription(summary(it))}.toSet()
-        assertEquals(setOf(SubscriptionStatus.renewing,SubscriptionStatus.ending,SubscriptionStatus.lifetime,SubscriptionStatus.lapsed),opens)
+        assertEquals(setOf(SubscriptionStatus.renewing,SubscriptionStatus.ending,SubscriptionStatus.lifetime,SubscriptionStatus.lapsed,SubscriptionStatus.active),opens)
     }
 
     @Test fun pageNeverStatesARenewalDateAndShowsRenewalOnlyWhileRenewing() {
@@ -57,6 +57,17 @@ class SubscriptionTextTest {
         assertEquals(R.string.subscription_body_lifetime_also_renewing,alsoRenewing.body)
         assertEquals(R.string.paywall_plan_lifetime,alsoRenewing.title)
         assertEquals(R.string.subscription_status_lifetime,alsoRenewing.statusValue)
+    }
+
+    @Test fun cachedAccessNeverStatesThatRenewalStoppedOrThatNothingRenews() {
+        val cached=SubscriptionSummary(SubscriptionStatus.active,StorePlan.yearly,renewalKnown=false)
+        assertEquals(R.string.billing_cached,SubscriptionText.card(cached,false).body)
+        val page=requireNotNull(SubscriptionText.page(cached))
+        assertEquals(R.string.billing_cached,page.body);assertFalse(page.showsRenewal)
+        assertTrue(cached.managesInPlay)
+        val lifetime=SubscriptionSummary(SubscriptionStatus.lifetime,StorePlan.lifetime,renewalKnown=false)
+        assertEquals(R.string.billing_cached,requireNotNull(SubscriptionText.page(lifetime)).body)
+        assertTrue(lifetime.managesInPlay)
     }
 
     @Test fun beforeYouGoHeadingsUseCaseAndTrackingOnlyForCasedLeftToRightScripts() {
