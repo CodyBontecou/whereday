@@ -95,16 +95,26 @@ class DatabaseHistoryImportTarget(private val database:HistoryDatabase):StagedHi
             val dao=database.history();var visits=0;var points=0;var kept=0
             val emptyVisits=dao.totalVisitCount()==0L;val emptyPoints=dao.totalPointCount()==0L
             var lastVisitTime:Instant?=null;var lastPointBucket:Long?=null
-            stage.chronologicalBatches(check) {rows->for(item in rows) {
-                val row=item.row;check()
-                // Fresh matching inside the write transaction includes records added since review.
-                val match=if(row.kind==ImportRecordKind.visit) TimelineImportMatch.from(row.visit()) else TimelineImportMatch.from(row.point())
-                val newTimeBucket=if(match.visit) emptyVisits && (lastVisitTime==null || java.time.Duration.between(lastVisitTime,match.time)>java.time.Duration.ofSeconds(60))
-                    else emptyPoints && (lastPointBucket==null || match.bucket>lastPointBucket!!)
-                if(!newTimeBucket && historyMatch(dao,row,check)) kept++
-                else if(row.kind==ImportRecordKind.visit) {dao.put(VisitRow(row.visit()));visits++;lastVisitTime=match.time}
-                else {dao.put(PointRow(row.point(),null));points++;lastPointBucket=match.bucket}
-            }}
+            stage.chronologicalBatches(check) {rows->
+                // Bound pending writes to the existing stage page. Matching must see
+                // earlier accepted points, including another point in the same bucket.
+                val pendingPoints=ArrayList<PointRow>(rows.size)
+                suspend fun flushPoints() {
+                    if(pendingPoints.isNotEmpty()) {check();dao.putPoints(pendingPoints);pendingPoints.clear()}
+                }
+                for(item in rows) {
+                    val row=item.row;check()
+                    // Fresh matching inside the write transaction includes records added since review.
+                    val match=if(row.kind==ImportRecordKind.visit) TimelineImportMatch.from(row.visit()) else TimelineImportMatch.from(row.point())
+                    val newTimeBucket=if(match.visit) emptyVisits && (lastVisitTime==null || java.time.Duration.between(lastVisitTime,match.time)>java.time.Duration.ofSeconds(60))
+                        else emptyPoints && (lastPointBucket==null || match.bucket>lastPointBucket!!)
+                    if(!newTimeBucket) flushPoints()
+                    if(!newTimeBucket && historyMatch(dao,row,check)) kept++
+                    else if(row.kind==ImportRecordKind.visit) {flushPoints();dao.put(VisitRow(row.visit()));visits++;lastVisitTime=match.time}
+                    else {pendingPoints+=PointRow(row.point(),null);points++;lastPointBucket=match.bucket}
+                }
+                flushPoints()
+            }
             stage.verify(check);check();HistoryImportCounts(visits,points,kept)
         }
     } catch(error:Exception) {

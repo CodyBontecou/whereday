@@ -36,6 +36,23 @@ class DiskHistoryImportTest {
         try {text.byteInputStream().use {workspace.capture(it) {}};workspace.prepare(Locale.US,ZoneOffset.UTC) {};return workspace}
         catch(error:Throwable) {workspace.close();throw error}
     }
+    @Test fun batchedFreshPointsMatchPendingAndPreviousPageRowsWithoutLosingDistinctLocations():Unit=runBlocking {fixture {db,factory,_->
+        withContext(Dispatchers.IO) {db.clearAllTables()}
+        val values=(0..200).map {point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(it.toLong()))}
+        val duplicateInPage=values[100].copy(id=UUID.randomUUID().toString(),time=values[100].time.plusMillis(100))
+        val duplicateAcrossPage=values[198].copy(id=UUID.randomUUID().toString(),time=values[198].time.plusMillis(100))
+        val distinct=values.last().copy(id=UUID.randomUUID().toString(),time=values.last().time.plusMillis(100),coordinate=Coordinate(19.0,-66.0))
+        prepare(factory,json(emptyList(),values+duplicateInPage+duplicateAcrossPage+distinct)).use {workspace->
+            val target=DatabaseHistoryImportTarget(db)
+            assertEquals(2,target.inspectPlan(workspace.stage) {}.repeated.points)
+            workspace.stage.seal {}
+            assertEquals(HistoryImportCounts(points=202,kept=2),target.apply(workspace.stage,HistoryImportPolicy.keepExisting) {})
+            assertEquals(202L,db.history().totalPointCount())
+            assertNotNull(db.history().importPoints(listOf(distinct.id)).singleOrNull())
+            assertEquals(HistoryImportCounts(kept=204),target.apply(workspace.stage,HistoryImportPolicy.keepExisting) {})
+            assertEquals(202L,db.history().totalPointCount())
+        }
+    }}
     @Test fun malformedAuditCannotProduceAnApprovedReviewOrChangeRoom():Unit=runBlocking {fixture {db,factory,directory->
         val text="""arrived_at,latitude,longitude,visit_metadata
 2026-10-28T12:00:00.000Z,18,-66,"{""originalLocationName"":""\ud800""}"
