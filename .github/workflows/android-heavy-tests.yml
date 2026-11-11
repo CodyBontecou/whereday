@@ -8,16 +8,23 @@ on:
   schedule:
     - cron: '0 7 * * *'
   workflow_dispatch:
+    inputs:
+      suite:
+        description: Heavy suite to run
+        type: choice
+        options: [all, database, import-scale]
+        default: all
 
 permissions:
   contents: read
 
 concurrency:
-  group: android-heavy-tests-${{ github.ref }}
+  group: android-heavy-tests-${{ github.ref }}-${{ inputs.suite || 'all' }}
   cancel-in-progress: true
 
 jobs:
   database:
+    if: github.event_name != 'workflow_dispatch' || inputs.suite != 'import-scale'
     runs-on: ubuntu-latest
     timeout-minutes: 240
     steps:
@@ -96,6 +103,7 @@ jobs:
             android/platform/build/outputs/androidTest-results/
 
   import-scale:
+    if: github.event_name != 'workflow_dispatch' || inputs.suite != 'database'
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
