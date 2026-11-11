@@ -5,6 +5,7 @@ import StoreKit
 
 /// A small, watch-native location tracker so the watch app can run without the
 /// iPhone companion app being installed or launched.
+@MainActor
 final class WatchLocationTracker: NSObject, ObservableObject {
     @Published private(set) var locationData: SharedLocationData
     @Published private(set) var authorizationStatus: CLAuthorizationStatus
@@ -299,6 +300,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     }
 
     private func saveLocationData() {
+        locationData.manualVisitStatus = SharedLocationData.load()?.manualVisitStatus
         locationData.save()
         WidgetCenter.shared.reloadAllTimelines()
     }
@@ -333,19 +335,20 @@ final class WatchLocationTracker: NSObject, ObservableObject {
 }
 
 extension WatchLocationTracker: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let authorizationStatus = manager.authorizationStatus
         DispatchQueue.main.async { [weak self] in
-            self?.handleAuthorizationChange(manager.authorizationStatus)
+            self?.handleAuthorizationChange(authorizationStatus)
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         DispatchQueue.main.async { [weak self] in
             locations.forEach { self?.handleLocation($0) }
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         DispatchQueue.main.async { [weak self] in
             if let clError = error as? CLError, clError.code == .locationUnknown {
                 return

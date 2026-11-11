@@ -8,7 +8,7 @@ import StoreKit
 @main
 struct IsoMeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var watchSyncReceiver = WatchLocationSyncReceiver()
+    @StateObject private var watchSyncReceiver: WatchLocationSyncReceiver
     @State private var showingMyselfClaim = false
     @State private var manualVisitRouter = ManualVisitRouter()
 
@@ -20,6 +20,11 @@ struct IsoMeApp: App {
         #if DEBUG && os(iOS)
         DebugSelfie.install()
         #endif
+        let receiver = WatchLocationSyncReceiver()
+        if AppModelStore.openFailure == nil {
+            receiver.configure(modelContainer: sharedModelContainer)
+        }
+        _watchSyncReceiver = StateObject(wrappedValue: receiver)
     }
 
     /// Shared with in-app intents; see `AppModelStore`.
@@ -52,7 +57,6 @@ struct IsoMeApp: App {
                 .task {
                     // Never sync into the empty stand-in: the watch would drop data it thinks was saved.
                     guard AppModelStore.openFailure == nil else { return }
-                    watchSyncReceiver.configure(modelContainer: sharedModelContainer)
                     DailyExportScheduler.shared.attach(modelContainer: sharedModelContainer)
                     DailyExportScheduler.shared.scheduleNextBackgroundRun()
                     await DailyExportScheduler.shared.runIfDue()

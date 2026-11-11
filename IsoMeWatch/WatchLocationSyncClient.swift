@@ -8,10 +8,12 @@ import WidgetKit
 /// every accepted point locally first, then opportunistically transfers batches
 /// to the iPhone. Batches stay queued until the phone acknowledges a successful
 /// import, so recording can happen while the phone is unavailable.
+@MainActor
 final class WatchLocationSyncClient: NSObject, ObservableObject {
     static let shared = WatchLocationSyncClient()
 
     @Published private(set) var syncStatus: String?
+    let manualVisits = WatchManualVisitClient()
     /// Points recorded on the watch that the iPhone hasn't acknowledged yet.
     @Published private(set) var pendingPointCount = 0
     /// Today's stays from the iPhone, for the glance dial. Persisted in the App Group.
@@ -51,6 +53,9 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     // MARK: - Today context from iPhone
 
     private func applyApplicationContext(_ context: [String: Any]) {
+        if let data = context[WatchVisitTransport.snapshotKey] as? Data {
+            manualVisits.handleSnapshot(data)
+        }
         guard let data = context[WatchTodayContext.applicationContextKey] as? Data,
               let decoded = try? decoder.decode(WatchTodayContext.self, from: data) else { return }
         // Application contexts can arrive out of order across relaunches; keep the newest.
@@ -213,6 +218,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     }
 
     func syncPending(force: Bool = false) {
+        manualVisits.sync()
         guard !state.sessions.isEmpty || !state.points.isEmpty || !state.visits.isEmpty else {
             syncStatus = String(localized: "Nothing to sync.")
             return
@@ -258,6 +264,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     }
 
     private func handleAckData(_ data: Data) {
+        if manualVisits.handleReply(data) { return }
         guard let ack = try? decoder.decode(WatchLocationSyncAck.self, from: data) else { return }
         handleAck(ack)
     }
@@ -318,7 +325,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
 }
 
 extension WatchLocationSyncClient: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated, error == nil else {
             DispatchQueue.main.async { [weak self] in
                 self?.syncStatus = String(localized: "Couldn’t connect. Please try again.")
@@ -333,26 +340,26 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         }
     }
 
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
+    nonisolated func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             self?.applyApplicationContext(applicationContext)
         }
     }
 
-    func sessionReachabilityDidChange(_ session: WCSession) {
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
         guard session.isReachable else { return }
         DispatchQueue.main.async { [weak self] in
             self?.syncPending(force: true)
         }
     }
 
-    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+    nonisolated func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
         DispatchQueue.main.async { [weak self] in
             self?.handleAckData(messageData)
         }
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         guard message[WatchLocationSyncTransport.syncRequestMessageKey] != nil else {
             replyHandler([:])
             return
@@ -365,7 +372,11 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         }
     }
 
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        if let data = userInfo[WatchVisitTransport.replyKey] as? Data {
+            Task { @MainActor [weak self] in _ = self?.manualVisits.handleReply(data) }
+            return
+        }
         if let markAck = userInfo[WatchLocationSyncTransport.markAckUserInfoKey] as? Data {
             DispatchQueue.main.async { [weak self] in
                 self?.handleMarkAckData(markAck)

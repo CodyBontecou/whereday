@@ -4,6 +4,7 @@ struct ContentView: View {
     @StateObject private var tracker = WatchLocationTracker()
     @ObservedObject private var syncClient = WatchLocationSyncClient.shared
     @Environment(\.scenePhase) private var scenePhase
+    @State private var showingManualVisits = false
 
     private var locationData: SharedLocationData {
         tracker.locationData
@@ -24,6 +25,14 @@ struct ContentView: View {
                         permissionView
                         startButton
                     }
+                    Button {
+                        showingManualVisits = true
+                    } label: {
+                        Label("Check In / Out", systemImage: "mappin.and.ellipse")
+                            .frame(maxWidth: .infinity, minHeight: 40)
+                    }
+                    .buttonStyle(WatchCapsuleButtonStyle(filled: false))
+                    .accessibilityIdentifier("watchManualVisits")
                     errorView
                     todaySection
                     if !locationData.isTrackingEnabled {
@@ -39,6 +48,7 @@ struct ContentView: View {
             }
             .scrollIndicators(.hidden)
         }
+        .sheet(isPresented: $showingManualVisits) { WatchManualVisitView(client: syncClient.manualVisits) }
         .onAppear {
             tracker.refresh()
         }
