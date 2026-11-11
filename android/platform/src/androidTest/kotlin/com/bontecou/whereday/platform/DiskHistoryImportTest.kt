@@ -36,6 +36,22 @@ class DiskHistoryImportTest {
         try {text.byteInputStream().use {workspace.capture(it) {}};workspace.prepare(Locale.US,ZoneOffset.UTC) {};return workspace}
         catch(error:Throwable) {workspace.close();throw error}
     }
+    @Test fun keepRechecksIdentitiesAddedSinceReviewAndPreservesTheirCurrentMetadata():Unit=runBlocking {fixture {db,factory,_->
+        val incomingPoints=(1..201).map {point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(it.toLong()))}
+        val incomingVisit=visit.copy(id=UUID.randomUUID().toString(),arrivedAt=now.plusSeconds(10000),departedAt=now.plusSeconds(10060))
+        prepare(factory,json(listOf(incomingVisit),incomingPoints)).use {workspace->
+            val target=DatabaseHistoryImportTarget(db)
+            assertEquals(0,target.inspectPlan(workspace.stage) {}.existing)
+            workspace.stage.seal {}
+            val localPoint=PointRow(incomingPoints.first().copy(time=now.plusSeconds(30000),accuracy=99.0),"new-local-session")
+            val localVisit=incomingVisit.copy(arrivedAt=now.plusSeconds(20000),departedAt=now.plusSeconds(20060),notes="Keep the new local edit",confirmation=Confirmation.corrected)
+            db.history().put(localPoint);db.history().put(VisitRow(localVisit))
+            assertEquals(HistoryImportCounts(points=200,kept=2),target.apply(workspace.stage,HistoryImportPolicy.keepExisting) {})
+            assertEquals(localPoint,db.history().point(localPoint.value.id))
+            assertEquals(localVisit,db.history().visit(localVisit.id)!!.value)
+            assertEquals(202L,db.history().totalPointCount())
+        }
+    }}
     @Test fun sealedChronologicalDigestRejectsMissingOrOrphanedRowsAndValidPayloadChanges():Unit=runBlocking {fixture {db,factory,directory->
         val changed=point.copy(accuracy=9.0)
         val mutations=listOf(

@@ -8,10 +8,10 @@ The owner's active working checkout remains untouched; work uses isolated worktr
 | Priority | Current evidence | Remaining gate |
 | --- | --- | --- |
 | PR cleanup | Integrated #104/#110/#111 and superseded #62/#79 closed, original descriptions preserved. Useful Android export instructions are in draft #114, including generator source and HTML/Markdown. | Merge/publish the guide with its verified PR. |
-| Android baseline | #114 head `561febce`: all 61 affected UI tests and 13 unchanged road/overlap tests pass locally. Both review axes pass. Full hosted heavy run [43049439309](https://github.com/CodyBontecou/whereday/actions/runs/43049439309) is active on this exact head. | Complete full hosted baseline and all million-record format gates. |
-| Subscription #113 | Published `980cabb2`: 28 billing + 8 subscription-text tests, six native presentation tests, and all fresh-head CI checks pass. An added real Settings navigation test also passes locally (seven native tests together). | Finish visual/RTL/large-text checks, review/publish final QA additions and merge after baseline gates. |
+| Android baseline | #114 head `561febce`: all 61 affected UI tests and 13 unchanged road/overlap tests pass locally. Both review axes pass. Full hosted heavy run [43049439309](https://github.com/CodyBontecou/whereday/actions/runs/43049439309) completed with failures on this exact head. | Complete full hosted baseline and all million-record format gates. |
+| Subscription #113 | Published `980cabb2`: 28 billing + 8 subscription-text tests, six native presentation tests, and all fresh-head CI checks pass. Final follow-up `8765f32a` passes 13 native subscription/navigation/dialog tests, build/lint and focused visual checks; it fixes sheet system-icon contrast. | Final QA additions and owner acceptance are published through `e242284c`; wait for fresh-head CI and baseline gates before merge. |
 | Watch #84 / #75 | Published `1228bafb`: targeted 6 XCTest + 22 Swift tests and full signed 482 XCTest + 42 Swift tests pass. iOS CI passes. Both review axes pass. | #84 remains draft; paired hardware acceptance in #75 remains pending. No connected usable iPhone/Watch; requested hardware access has no response yet. |
-| Localization | Open [#115](https://github.com/CodyBontecou/whereday/issues/115) records native-language, RTL, large-text and TalkBack acceptance. Retention review pack prepared with 51 English strings and ten translation inputs/hashes. | All native-language approvals and broader actual-device accessibility acceptance remain pending. |
+| Localization | The owner explicitly accepted all current localizations. PR #113 head `e242284c` records 1,779 English inputs and ten pack hashes. Eight durable screenshots verify focused English, Arabic RTL/dark and Spanish large-text flows. | Actual spoken TalkBack verification remains in open [#115](https://github.com/CodyBontecou/whereday/issues/115). |
 
 ## Android scale diagnosis
 
@@ -25,7 +25,8 @@ gate during reimport**. It completed first review in 675,473 ms and committed al
 one million points in another 268,156 ms. Apply included 139,506 ms of stage
 verification. A successful first import is not a complete scale pass.
 
-Further stage changes remain uncommitted pending full-size acceptance:
+Further stage changes are committed in `eea46060`, published via #114 head
+`464598d9`, and remain pending full-size acceptance:
 
 - Skip point-duplicate SQL only for buckets above the maximum read inside the
   same transaction; retain matching for equal/older buckets and reset correctly.
@@ -42,7 +43,7 @@ earlier controls ranged 14.896–20.560 s, so no full-size performance conclusio
 is established. Original million counts, local-edit preservation, deduplication,
 cleanup, memory and duration assertions remain unchanged.
 
-A manual heavy-suite selector (`all`, `database`, `import-scale`) is prepared and
+A manual heavy-suite selector (`all`, `database`, `import-scale`) is published and
 passes actionlint. Scheduled/default dispatches run both suites; scoped concurrency
 allows a new scale run while the current full baseline continues.
 
@@ -77,3 +78,29 @@ Google imports still use one file. Multiple selection supports matching multipar
 Whereday backups; `TimelineImportService.preview(urls:)` rejects multiple
 non-backup files. #79 was superseded because newer guides exist, not because
 its single-file import instruction was wrong. Keep the broader import epic #59 open.
+
+Import-only hosted run `43054310121` now targets revised head `464598d9`;
+the earlier full baseline completed on `561febce`: all 594 app cases ran, with 21 failures and two skips. Nineteen failures are Espresso close-keyboard callback timeouts; one calendar intent wait and one stale `Json` format label also fail. Later database/platform selections did not execute after the app failure.
+
+Revised `464598d9` also failed the original local million-JSON gate during
+reimport. First review took 755,652 ms (inspection124,802 ms), first apply
+267,754 ms (verification125,597 ms). Overall timing varied with the shared host;
+these results do not prove a full-size improvement. The exact failure logs are
+retained. The identity-query change passes native verification: reuse same-snapshot review membership and fetch commit membership
+in page-sized SQL queries inside the write transaction. It never trusts stale
+review membership for commit.
+
+## Identity queries and private null omission
+
+The write transaction now loads existing IDs in bounded pages; review can reuse
+membership loaded in the same snapshot. The private scratch codec omits absent
+optional fields, reducing the sample point payload from 234 to 134 bytes. Public
+backup serializers are unchanged. Null, zero, empty strings, metadata and session
+hash distinctions remain covered. Both review axes found no defect.
+
+All 34 native cases pass (13 disk history, 13 Google, seven resource bounds and
+the 10,000-record control). The control completed in 10.124 seconds, with a
+13,607,472-byte sampled Java peak under the 201,326,592-byte heap limit. This
+compares with 15.700 seconds for identity batching alone on this shared host;
+it does not establish full-size acceptance. The exact receipt and phase output
+are adjacent. Original million-record requirements remain unchanged.

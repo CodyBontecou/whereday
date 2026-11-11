@@ -15,7 +15,8 @@ data class ImportStageRow(val kind:ImportRecordKind,val id:String,val payload:St
     fun point():TrackPoint=ImportStageCodec.gson.fromJson(payload,TrackPoint::class.java).also {require(kind==ImportRecordKind.point && it.id==id)}
 }
 internal object ImportStageCodec {
-    val gson:Gson=GsonBuilder().serializeNulls().disableHtmlEscaping()
+    // Scratch payloads omit absent optional fields; decoded values still retain nulls.
+    val gson:Gson=GsonBuilder().disableHtmlEscaping()
         .registerTypeAdapter(Instant::class.java,JsonSerializer<Instant> {value,_,_->JsonPrimitive(value.toString())})
         .registerTypeAdapter(Instant::class.java,JsonDeserializer<Instant> {value,_,_->Instant.parse(value.asString)}).create()
     fun hash(value:Any):String {

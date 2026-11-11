@@ -7,6 +7,15 @@ import org.junit.Test
 import java.time.Instant
 
 class ImportStageCodecTest {
+    @Test fun absentOptionalValuesStayDistinctFromKnownZeroAndEmptyValues() {
+        val unknown=TrackPoint(id="optional-values",coordinate=Coordinate(18.0,-66.0),time=Instant.EPOCH,accuracy=5.0)
+        val knownZero=unknown.copy(altitude=0.0,speed=0.0,countryCode="",timeZone="")
+        for(value in listOf(unknown,knownZero)) {
+            val payload=ImportStageCodec.gson.toJson(value)
+            assertEquals(value,ImportStageRow(ImportRecordKind.point,value.id,payload).point())
+        }
+        assertNotEquals(ImportStageCodec.hash(PointRow(unknown,null)),ImportStageCodec.hash(PointRow(knownZero,null)))
+    }
     @Test fun completeMetadataAndNanosecondsSurvivePrivateStaging() {
         val at=Instant.parse("2026-10-26T13:00:00.123456789Z")
         val visit=Visit(id="visit",coordinate=Coordinate(18.0,-66.0),arrivedAt=at,departedAt=at.plusSeconds(10),
