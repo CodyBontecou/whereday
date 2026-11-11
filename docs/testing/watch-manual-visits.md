@@ -134,4 +134,4 @@ xcodebuild test -project IsoMe.xcodeproj -scheme IsoMe \
   -parallel-testing-enabled NO
 ```
 
-No new paired hardware test was performed in this integration run. The hardware checklist remains open; simulator success does not complete issue #75.
+No new paired hardware test was performed in the October 26 integration run. The November 11 paired checks and owner acceptance above supersede that historical hardware status; CI still gates merge.
