@@ -106,7 +106,10 @@ class ExportOptionsFlowTest {
         var current=ExportFormat.json
         val markers=mapOf(ExportFormat.json to "\"visits\"",ExportFormat.csv to "arrived_at,departed_at",ExportFormat.markdown to "#",ExportFormat.geojson to "FeatureCollection",ExportFormat.gpx to "<gpx",ExportFormat.kml to "<kml",ExportFormat.owntracks to "_type",ExportFormat.overland to "locations")
         for(format in ExportFormat.entries) {
-            if(format!=current) choose(current.name.replaceFirstChar {it.uppercase()},format.name.replaceFirstChar {it.uppercase()})
+            if(format!=current) {
+                compose.onNode(hasText(recipeFormatName(current)) and hasClickAction()).performScrollTo().performClick()
+                compose.onNode(hasText(recipeFormatName(format)) and hasAnyAncestor(isPopup())).performClick()
+            }
             awaitSelection {it.format==format};current=format
             val value=preview();assertTrue("Missing ${format.name} syntax",value.contains(markers.getValue(format)))
             assertEquals(format,ExportSelectionCodec.decode(runBlocking {graph.preferences.settings.first().exportConfiguration}).format)
