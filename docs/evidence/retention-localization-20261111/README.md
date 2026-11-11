@@ -1,14 +1,17 @@
 # Retention localization acceptance
 
-Status: focused subscription visual checks completed; native-language and
-TalkBack approval, plus broader app RTL/large-text acceptance, remain pending.
+Status: the repository owner accepted all current localizations with the
+instruction “Accept all localizations.” Focused subscription visual checks are
+complete. Spoken TalkBack verification remains open.
 Broader Android acceptance is tracked in [issue #115](https://github.com/CodyBontecou/whereday/issues/115).
-The automated checks are supporting evidence, not native-language approval.
+The automated checks supplement that acceptance.
 
 `review-pack.json` contains the exact 51 English resource strings used by this
 flow and their ten translation inputs at PR #113 head `980cabb2`. Input file
-hashes identify the copy being reviewed. All reviewer fields are deliberately
-empty. This focused pack does not close the broader app localization gate.
+hashes identify the accepted copy. `owner-localization-acceptance.json` pins all
+1,779 English inputs and ten translation packs to that owner acceptance. This
+records the user’s decision and does not claim native-fluency review or TalkBack
+verification. The screenshots document the focused runtime checks performed.
 
 ## Review context
 
@@ -24,9 +27,8 @@ empty. This focused pack does not close the broader app localization gate.
 
 ## Required evidence
 
-- A reviewer fluent in each language records its locale, reviewed input hash,
-  name/date, corrections and approval. Do not infer approval from structural
-  resource coverage or machine translation.
+- Copy acceptance is complete by the owner’s explicit instruction. Preserve the
+  accepted input hashes; any later copy changes should identify their new scope.
 - On the disposable mapQa build, inspect the real subscription page and summary
   in light/dark mode, Arabic RTL, and 1.8× text. Check wrapping, clipping,
   mirrored navigation, order of plan/status/date values and reachable actions.
@@ -79,4 +81,5 @@ native instrumentation resumed. All data in the captures is synthetic.
 
 No real subscription was canceled. Native tests intercept the supplied Play URI;
 manual checks do not establish actual Play cancellation or spoken TalkBack
-behavior. Native-language review remains pending for every draft translation.
+behavior. All current localizations are accepted by the owner; spoken TalkBack
+verification and the remaining runtime checks in #115 stay open.

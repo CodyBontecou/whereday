@@ -59,9 +59,9 @@
       "locale": "ar",
       "source": "android/localization/ar.json",
       "sourceSha256": "e307d2da6f8a4d5bcec1129324147784479c540d93e448d156f716f1f55ddf9f",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "الاشتراك",
         "subscription_back": "العودة إلى الإعدادات",
@@ -120,9 +120,9 @@
       "locale": "b+zh+Hans",
       "source": "android/localization/b+zh+Hans.json",
       "sourceSha256": "967d3316cd3ab66815a044e3675cff338d6ee0fd11cdab312a6e48a90eb3205e",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "订阅",
         "subscription_back": "返回设置",
@@ -181,9 +181,9 @@
       "locale": "bn",
       "source": "android/localization/bn.json",
       "sourceSha256": "bcf0f66a68f9e5c20120bcedc3bc2d96bd144b877783947f619faa71f24fb6e4",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "সাবস্ক্রিপশন",
         "subscription_back": "সেটিংসে ফিরুন",
@@ -242,9 +242,9 @@
       "locale": "es",
       "source": "android/localization/es.json",
       "sourceSha256": "b35bdb186c2e042778f5d7c8709aeb62748743e847742f7507c4a996c9e1fea1",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "Suscripción",
         "subscription_back": "Volver a ajustes",
@@ -303,9 +303,9 @@
       "locale": "fr",
       "source": "android/localization/fr.json",
       "sourceSha256": "af250c00b36c2cb73c3b21a8b438aaf11c451d2cdb9275f47683573990db6a8b",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "Abonnement",
         "subscription_back": "Retour aux réglages",
@@ -364,9 +364,9 @@
       "locale": "hi",
       "source": "android/localization/hi.json",
       "sourceSha256": "c0e865cc2fd6e491ce05698c28f2872e08b7a4f8461e4959a57cc05d9b24bcd7",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "सदस्यता",
         "subscription_back": "सेटिंग पर वापस जाएँ",
@@ -425,9 +425,9 @@
       "locale": "ja",
       "source": "android/localization/ja.json",
       "sourceSha256": "6cb45fbc626daeeb8ad935c1e27fc5e952f252b6032e8d622d01eff61cc66f7c",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "サブスクリプション",
         "subscription_back": "設定に戻る",
@@ -486,9 +486,9 @@
       "locale": "pl",
       "source": "android/localization/pl.json",
       "sourceSha256": "4802b65866924a52dd7280669ee311e3386f7c4cdd39fc786786b292d3da3b75",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "Subskrypcja",
         "subscription_back": "Wróć do ustawień",
@@ -547,9 +547,9 @@
       "locale": "pt-rBR",
       "source": "android/localization/pt-rBR.json",
       "sourceSha256": "50a7798745a6a42886f0535cc9c44f961fae7c7b3ab8f0891314473f1b008a20",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "Assinatura",
         "subscription_back": "Voltar para ajustes",
@@ -608,9 +608,9 @@
       "locale": "ru",
       "source": "android/localization/ru.json",
       "sourceSha256": "2df713d611792ce3e03e26b0e49afe8e809e155292cf2ce1a978033b4deb2fc4",
-      "reviewStatus": "pending",
-      "reviewer": null,
-      "reviewedAt": null,
+      "reviewStatus": "accepted-by-owner",
+      "reviewer": "Repository owner via chat",
+      "reviewedAt": "2026-11-11T16:14:38.569582+00:00",
       "translations": {
         "subscription_title": "Подписка",
         "subscription_back": "Назад к настройкам",
@@ -665,5 +665,10 @@
         "billing_cached": "Используется ранее подтверждённый доступ. Подключитесь к сети, чтобы обновить статус покупки."
       }
     }
-  ]
+  ],
+  "ownerAcceptance": {
+    "instruction": "Accept all localizations.",
+    "recordedAt": "2026-11-11T16:14:38.569582+00:00",
+    "basis": "Owner acceptance; no native-fluency review is claimed."
+  }
 }
