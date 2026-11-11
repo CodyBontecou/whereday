@@ -31,11 +31,17 @@ class DatabaseHistoryImportTarget(private val database:HistoryDatabase):StagedHi
     override suspend fun inspectPlan(stage:HistoryImportStage,check:()->Unit):HistoryImportInspection=database.readSnapshot {dao->
         var replaceable=0
         if(stage.source==HistoryImportSource.whereday) stage.batches(check) {rows->
-            matched(dao,rows,check) {batch,visits,points->stage.baselines(batch.map {row->
-                check();val current=if(row.kind==ImportRecordKind.visit) visits[row.id] else points[row.id]
-                if(current!=null) replaceable=Math.addExact(replaceable,1)
-                row.copy(baseline=current?.let(ImportStageCodec::hash))
-            })}
+            matched(dao,rows,check) {batch,visits,points->
+                val changed=batch.mapNotNull {row->
+                    check();val current=if(row.kind==ImportRecordKind.visit) visits[row.id] else points[row.id]
+                    if(current!=null) replaceable=Math.addExact(replaceable,1)
+                    val baseline=current?.let(ImportStageCodec::hash)
+                    // Most first-import rows already have a null baseline. Preserve
+                    // stale-match clearing without rewriting unchanged scratch rows.
+                    if(row.baseline==baseline) null else row.copy(baseline=baseline)
+                }
+                if(changed.isNotEmpty()) stage.baselines(changed)
+            }
         }
         val hasVisits=dao.totalVisitCount()>0;val hasPoints=dao.totalPointCount()>0
         stage.inspectTimeline(check) {row->

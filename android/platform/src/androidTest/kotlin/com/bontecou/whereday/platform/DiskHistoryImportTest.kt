@@ -36,6 +36,30 @@ class DiskHistoryImportTest {
         try {text.byteInputStream().use {workspace.capture(it) {}};workspace.prepare(Locale.US,ZoneOffset.UTC) {};return workspace}
         catch(error:Throwable) {workspace.close();throw error}
     }
+    @Test fun reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches():Unit=runBlocking {fixture {db,factory,_->
+        val incoming=point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(1000))
+        prepare(factory,json(listOf(visit),listOf(incoming))).use {workspace->
+            val updates=mutableListOf<ImportStageRow>()
+            val observed=object:HistoryImportStage by workspace.stage {
+                override fun baselines(rows:List<ImportStageRow>) {updates+=rows;workspace.stage.baselines(rows)}
+            }
+            val target=DatabaseHistoryImportTarget(db)
+            assertEquals(1,target.inspect(observed) {})
+            assertEquals(listOf(visit.id),updates.map {it.id})
+            assertNotNull(updates.single().baseline)
+            updates.clear()
+            assertEquals(1,target.inspect(observed) {})
+            assertTrue("Unchanged baseline hashes must not be rewritten",updates.isEmpty())
+            db.clearAllTables()
+            assertEquals(0,target.inspect(observed) {})
+            assertEquals(listOf(visit.id),updates.map {it.id})
+            assertNull("A removed local match must clear its previous baseline",updates.single().baseline)
+            workspace.stage.seal {};workspace.stage.verify {}
+            assertEquals(HistoryImportCounts(visits=1,points=1),target.apply(observed,HistoryImportPolicy.replaceExisting) {})
+            assertEquals(visit,db.history().visit(visit.id)!!.value)
+            assertEquals(incoming,db.history().point(incoming.id)!!.value)
+        }
+    }}
     @Test fun keepRechecksIdentitiesAddedSinceReviewAndPreservesTheirCurrentMetadata():Unit=runBlocking {fixture {db,factory,_->
         val incomingPoints=(1..201).map {point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(it.toLong()))}
         val incomingVisit=visit.copy(id=UUID.randomUUID().toString(),arrivedAt=now.plusSeconds(10000),departedAt=now.plusSeconds(10060))
