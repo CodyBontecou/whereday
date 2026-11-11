@@ -142,7 +142,7 @@ class ExportOptionsFlowTest {
         if(InstrumentationRegistry.getArguments().getString("captureExportOptions")=="true") capture("-filename")
         val custom="Mis rutas 日本語/{year}/{date} - {type}"
         compose.onNodeWithTag("export-filename").performScrollTo().performTextReplacement(custom)
-        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).perform(closeQaKeyboard())
         awaitSelection {it.filename==custom}
         compose.onNodeWithText("Personalizado").assertExists()
         action("export-split");awaitSelection {it.splitDays}

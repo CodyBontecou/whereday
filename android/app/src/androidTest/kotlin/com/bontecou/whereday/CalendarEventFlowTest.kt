@@ -149,7 +149,7 @@ class CalendarEventFlowTest {
         graph.history.dao.put(VisitRow(visit));intercept()
         content {VisitEditor(graph,visit,{}, {_,_,_,_->error("Calendar must not save the visit")},null)}
         compose.onNodeWithTag("visit-name").performTextReplacement("Unsaved name")
-        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
+        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(closeQaKeyboard())
         click(true);awaitIntent()
         assertEquals("Saved Cafe",intents.single().getStringExtra(CalendarContract.Events.TITLE))
         assertEquals(visit,graph.history.dao.visit(visit.id)!!.value)

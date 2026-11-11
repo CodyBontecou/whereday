@@ -94,7 +94,8 @@ class WorkspaceKeyboardTest {
         compose.onNodeWithText(target.getString(R.string.visit_apply_date)).assertIsDisplayed().assertIsNotEnabled()
         compose.onNodeWithText(target.getString(R.string.visit_cancel)).assertIsDisplayed()
         assertEquals(0,changes)
-        Espresso.closeSoftKeyboard();compose.waitUntil(10000) {imeBottom()==0}
+        Espresso.onView(ViewMatchers.isRoot()).inRoot(isDialog()).perform(closeQaKeyboard())
+        compose.waitUntil(10000) {imeBottom()==0}
         compose.onNodeWithTag("visit-timestamp-date-input").assertTextContains("2026-02-30");assertDialogInside("workspace-companion");capture("tabletop-restored")
         assertEquals(0,changes)
     }

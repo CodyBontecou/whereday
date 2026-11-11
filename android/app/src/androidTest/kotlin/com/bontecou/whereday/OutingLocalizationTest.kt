@@ -80,8 +80,8 @@ class OutingLocalizationTest {
         assertEquals(visit,graph.history.dao.visit(visit.id)!!.value)
         compose.onNodeWithText("Formato del archivo de la salida").performScrollTo()
         val targetFormat=if(originalExport.format==ExportFormat.csv) ExportFormat.json else ExportFormat.csv
-        compose.onNodeWithText(originalExport.format.name.replaceFirstChar {it.uppercase()}).performScrollTo().performClick()
-        compose.onNode(hasText(targetFormat.name.replaceFirstChar {it.uppercase()}) and hasAnyAncestor(isPopup())).performScrollTo().performClick()
+        compose.onNode(hasText(recipeFormatName(originalExport.format)) and hasClickAction()).performScrollTo().performClick()
+        compose.onNode(hasText(recipeFormatName(targetFormat)) and hasAnyAncestor(isPopup())).performScrollTo().performClick()
         withTimeout(5000) {graph.exportSettings.state.first {!it.saving && it.selection.format==targetFormat}}
         assertEquals(targetFormat,ExportSelectionCodec.decode(graph.preferences.settings.first().exportConfiguration).format)
     }

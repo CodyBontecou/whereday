@@ -63,7 +63,7 @@ class VisitReviewLifecycleTest {
         // Compose idleness does not settle the restored Android dialog/IME transition.
         androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot())
             .inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog())
-            .perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
+            .perform(closeQaKeyboard())
         compose.onNodeWithTag("visit-save").assertIsEnabled().performClick();awaitClosed()
     }
     private suspend fun stored()=graph.history.dao.visit(original.id)!!.value

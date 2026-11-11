@@ -188,7 +188,7 @@ class CountryDaysFlowTest {
         compose.onNodeWithTag("stay-country-search").performTextInput("AC")
         compose.onNodeWithTag("stay-country-list").performScrollToNode(hasTestTag("stay-country-AC"))
         compose.onNodeWithTag("stay-country-AC").performClick()
-        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
+        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(closeQaKeyboard())
         compose.onNodeWithTag("stay-save").performClick()
         compose.waitUntil(5000) {runBlocking {graph.history.dao.stay("pr-main")?.value?.countryCode=="AC"}}
         find("country-summary-countries").assertTextEquals("3 países")

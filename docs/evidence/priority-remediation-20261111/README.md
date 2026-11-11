@@ -104,3 +104,24 @@ the 10,000-record control). The control completed in 10.124 seconds, with a
 compares with 15.700 seconds for identity batching alone on this shared host;
 it does not establish full-size acceptance. The exact receipt and phase output
 are adjacent. Original million-record requirements remain unchanged.
+
+Hosted run `43049439309` completed all four scale cases: the small control,
+million JSON (1,145.738 s) and million CSV (1,161.806 s) passed; million Markdown
+timed out. The two ignored calendar cases in its UI selection were already
+obsolete on main: calendar actions moved from Today rows to the editor/detail.
+They were not newly skipped by this remediation. New optimized head `f922eeda`
+passes 149 platform unit tests and all 34 native import cases; all three original
+million formats are running in hosted run `43061793626`.
+
+## Hosted UI follow-up awaiting runtime verification
+
+Nineteen hosted failures originate in Espresso's missing IMM result callback.
+The affected fixtures now request dismissal through the window controller and
+wait for actual IME insets to become hidden, failing if they stay visible. Dialog
+root selection and all product assertions remain intact. The existing real-IME
+layout case also uses this helper to verify a visible-to-hidden transition. The
+outing test uses the displayed protocol format name instead of `Json`. Both
+review axes found no concrete defect, and both QA APKs build successfully. Native
+runtime checks and the full hosted baseline remain pending; no passing fix is
+claimed from compilation alone. The calendar intent timeout is still under
+investigation.

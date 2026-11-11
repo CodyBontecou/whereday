@@ -58,7 +58,7 @@ class VisitLinkFlowTest {
         }}
     }
     private fun awaitName(name:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("visit-name").assertTextContains(name)}.isSuccess}}
-    private fun keyboard() {androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())}
+    private fun keyboard() {androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(closeQaKeyboard())}
     private fun save() {keyboard();compose.onNodeWithTag("visit-save").performClick();compose.waitUntil(5000) {compose.onAllNodesWithTag("visit-save").fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty()}}
     private fun discard() {
         keyboard();compose.onNodeWithText("Cancelar").performClick()
