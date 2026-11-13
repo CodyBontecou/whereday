@@ -72,7 +72,16 @@ class CalendarEventFlowTest {
         }.also(instrumentation::addMonitor)
     }
     private fun click(scroll:Boolean=false) {val node=compose.onNodeWithTag("calendar-add");if(scroll) node.performScrollTo();node.performClick()}
-    private fun awaitIntent() {compose.waitUntil(10000) {intents.size==1}}
+    private fun awaitIntent() {
+        try {compose.waitUntil(10000) {intents.size==1}}
+        catch(error:ComposeTimeoutException) {
+            throw AssertionError("Calendar handoff timed out: intents=${intents.size}, "+
+                "lifecycle=${compose.activity.lifecycle.currentState}, windowFocus=${compose.activity.hasWindowFocus()}. "+
+                "Current source and action semantics:\n"+
+                runCatching {compose.onAllNodes(isRoot(),useUnmergedTree=true).printToString()}
+                    .getOrElse {"Semantics unavailable: ${it.javaClass.simpleName}"},error)
+        }
+    }
     private fun draft()=CalendarEventDraft.visit(visit,"Unknown",now)
     private fun heldClick()=compose.onNodeWithTag("calendar-add").fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
     @Test fun androidIntentHasExactDraftFieldsWithoutNotesAttendeesOrCalendarPermissions() {
