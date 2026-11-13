@@ -19,7 +19,9 @@ enum AppModelStore {
         RecordingSession.self,
         PhotoMoment.self,
         SavedPlace.self,
-        CountryStay.self
+        CountryStay.self,
+        Trip.self,
+        Vehicle.self
     ])
 
     struct OpenResult {

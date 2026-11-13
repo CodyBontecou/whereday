@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D06110000000000000000001 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000001 /* Trip.swift */; };
+		D06110000000000000000002 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000002 /* Vehicle.swift */; };
+		D06110000000000000000003 /* MileageReportOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000003 /* MileageReportOptions.swift */; };
+		D06110000000000000000004 /* MileageDistanceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000004 /* MileageDistanceCalculator.swift */; };
+		D06110000000000000000005 /* MileageRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000005 /* MileageRateProvider.swift */; };
+		D06110000000000000000006 /* MileageReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000006 /* MileageReportService.swift */; };
+		D06110000000000000000007 /* MileageModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000007 /* MileageModelTests.swift */; };
+		D06110000000000000000008 /* MileageDistanceCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000008 /* MileageDistanceCalculatorTests.swift */; };
+		D06110000000000000000009 /* MileageReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06100000000000000000009 /* MileageReportTests.swift */; };
+		D0611000000000000000000A /* MileageMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0610000000000000000000A /* MileageMigrationTests.swift */; };
 		F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AA00000000000000000002 /* MonthRecapTests.swift */; };
         CB1030000000000000000001 /* OnboardingLaunchConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */; };
 		CA1029B00000000000000001 /* RetiredAnalyticsCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */; };
@@ -281,6 +291,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D06100000000000000000001 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		D06100000000000000000002 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
+		D06100000000000000000003 /* MileageReportOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageReportOptions.swift; sourceTree = "<group>"; };
+		D06100000000000000000004 /* MileageDistanceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageDistanceCalculator.swift; sourceTree = "<group>"; };
+		D06100000000000000000005 /* MileageRateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageRateProvider.swift; sourceTree = "<group>"; };
+		D06100000000000000000006 /* MileageReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageReportService.swift; sourceTree = "<group>"; };
+		D06100000000000000000007 /* MileageModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageModelTests.swift; sourceTree = "<group>"; };
+		D06100000000000000000008 /* MileageDistanceCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageDistanceCalculatorTests.swift; sourceTree = "<group>"; };
+		D06100000000000000000009 /* MileageReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageReportTests.swift; sourceTree = "<group>"; };
+		D0610000000000000000000A /* MileageMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageMigrationTests.swift; sourceTree = "<group>"; };
 		F8AA00000000000000000002 /* MonthRecapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapTests.swift; sourceTree = "<group>"; };
         CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLaunchConfigurationTests.swift; sourceTree = "<group>"; };
 		CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetiredAnalyticsCleanup.swift; sourceTree = "<group>"; };
@@ -610,6 +630,9 @@
 		A1FFFFFB212EFFFFFFFF0003 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D06100000000000000000001 /* Trip.swift */,
+				D06100000000000000000002 /* Vehicle.swift */,
+				D06100000000000000000003 /* MileageReportOptions.swift */,
 				C0DE0301212F000000000301 /* CountryStay.swift */,
 				A1000003212F000000000003 /* Visit.swift */,
 				A1000004212F000000000004 /* LocationPoint.swift */,
@@ -711,6 +734,9 @@
 		A1FFFFFF212EFFFFFFFF0007 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D06100000000000000000004 /* MileageDistanceCalculator.swift */,
+				D06100000000000000000005 /* MileageRateProvider.swift */,
+				D06100000000000000000006 /* MileageReportService.swift */,
 				0ECB4302689C4EB1831CBE59 /* VisitMapOpener.swift */,
 				85C2471135BE43B5B4736D41 /* SavedPlaceImportService.swift */,
 				1C057B2D2A02472C821730A8 /* SavedPlaceManagement.swift */,
@@ -785,6 +811,10 @@
 		AD8A47404A1FA6D94EF61780 /* IsoMeTests */ = {
 			isa = PBXGroup;
 			children = (
+				D06100000000000000000007 /* MileageModelTests.swift */,
+				D06100000000000000000008 /* MileageDistanceCalculatorTests.swift */,
+				D06100000000000000000009 /* MileageReportTests.swift */,
+				D0610000000000000000000A /* MileageMigrationTests.swift */,
 				C0DE05010000000000000001 /* Fixtures */,
 				A06500000000000000000001 /* PhotoMapMarkerTests.swift */,
 				C0DE0304212F000000000304 /* CountryDayTests.swift */,
@@ -1105,6 +1135,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D06110000000000000000001 /* Trip.swift in Sources */,
+				D06110000000000000000002 /* Vehicle.swift in Sources */,
+				D06110000000000000000003 /* MileageReportOptions.swift in Sources */,
+				D06110000000000000000004 /* MileageDistanceCalculator.swift in Sources */,
+				D06110000000000000000005 /* MileageRateProvider.swift in Sources */,
+				D06110000000000000000006 /* MileageReportService.swift in Sources */,
 				C0DE0303212F000100000303 /* CountryDaysView.swift in Sources */,
 				C0DE0302212F000100000302 /* CountryDayResolver.swift in Sources */,
 				C0DE0301212F000100000301 /* CountryStay.swift in Sources */,
@@ -1244,6 +1280,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D06110000000000000000007 /* MileageModelTests.swift in Sources */,
+				D06110000000000000000008 /* MileageDistanceCalculatorTests.swift in Sources */,
+				D06110000000000000000009 /* MileageReportTests.swift in Sources */,
+				D0611000000000000000000A /* MileageMigrationTests.swift in Sources */,
 				A06500000000000000000002 /* PhotoMapMarkerTests.swift in Sources */,
 				C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */,
 				C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */,
