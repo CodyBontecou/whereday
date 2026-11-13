@@ -42,6 +42,8 @@ struct ImportPayload: Sendable {
     var points: [ImportedLocationPoint] = []
     var invalidRecordCount = 0
     var unsupportedRecordCount = 0
+    // Only original raw Google points may seed inference, never semantic activity endpoints.
+    var rawInferencePoints: [ImportedLocationPoint] = []
 
     var dateRange: ClosedRange<Date>? {
         var first: Date?, last: Date?
@@ -58,9 +60,22 @@ struct ImportPayload: Sendable {
     }
 }
 
-struct ImportOptions: Sendable {
+struct ImportOptions: Sendable, Equatable {
     var includeVisits = true
     var includePoints = true
+    /// nil means on for raw-only Google selections, off for every other format.
+    var inferVisits: Bool? = nil
+    var inference = VisitInferenceOptions()
+    var includePoorAccuracyPoints = false
+
+    func inferenceEnabled(for payload: ImportPayload) -> Bool {
+        inferVisits ?? (payload.format == .googleRaw && payload.visits.isEmpty)
+    }
+
+    func sameReviewPolicy(as other: Self) -> Bool {
+        inferVisits == other.inferVisits && inference == other.inference
+            && includePoorAccuracyPoints == other.includePoorAccuracyPoints
+    }
 }
 
 struct ImportPreview: Identifiable, Sendable {
@@ -73,6 +88,12 @@ struct ImportPreview: Identifiable, Sendable {
     let duplicatePointCount: Int
     var newAdditionalRecordCount = 0
     var duplicateAdditionalRecordCount = 0
+    var options = ImportOptions()
+    var inferredVisitCount = 0
+    var suppressedInferredVisitCount = 0
+    var filteredPointCount = 0
+    var unknownAccuracyPointCount = 0
+    var sourceByteCount: Int64 = 0
 }
 
 struct ImportCommitResult: Sendable {
@@ -142,6 +163,7 @@ actor TimelineImportService {
         var backups: [WheredayBackup] = []
         var combined: ImportPayload?
         var totalBytes = 0
+        var sourceBytes: Int64 = 0
         for url in urls {
             let accessed = url.startAccessingSecurityScopedResource()
             defer { if accessed { url.stopAccessingSecurityScopedResource() } }
@@ -151,6 +173,7 @@ actor TimelineImportService {
             try Task.checkCancellation()
             let data = try Data(contentsOf: url, options: .mappedIfSafe)
             let payload = try Self.parse(data: data, fileName: url.lastPathComponent)
+            sourceBytes += Int64(data.count)
             if let backup = payload.backup {
                 guard combined == nil else { throw Self.mixedSelectionError }
                 backups.append(backup)
@@ -172,6 +195,7 @@ actor TimelineImportService {
                     combined!.points.append(contentsOf: payload.points)
                     combined!.invalidRecordCount += payload.invalidRecordCount
                     combined!.unsupportedRecordCount += payload.unsupportedRecordCount
+                    combined!.rawInferencePoints.append(contentsOf: payload.rawInferencePoints)
                 } else { combined = payload }
             }
         }
@@ -179,10 +203,12 @@ actor TimelineImportService {
             // Duplicate date-range fetches rely on chronological endpoints across all files.
             combined.visits.sort { $0.arrivedAt < $1.arrivedAt }
             combined.points.sort { $0.timestamp < $1.timestamp }
-            return try standardPreview(combined, fileName: urls.map(\.lastPathComponent).joined(separator: ", "))
+            return try standardPreview(combined, fileName: urls.map(\.lastPathComponent).joined(separator: ", "), sourceBytes: sourceBytes)
         }
         let backup = try WheredayBackupService.combine(backups)
-        return try backupPreview(backup, fileName: urls[0].lastPathComponent)
+        var preview = try backupPreview(backup, fileName: urls[0].lastPathComponent)
+        preview.sourceByteCount = sourceBytes
+        return preview
     }
 
     private static var mixedSelectionError: ImportError {
@@ -199,19 +225,31 @@ actor TimelineImportService {
                              duplicateAdditionalRecordCount: backup.additionalRecordCount - plan.additionalRecordCount)
     }
 
-    func preview(data: Data, fileName: String) throws -> ImportPreview {
+    func preview(data: Data, fileName: String, options: ImportOptions = .init()) throws -> ImportPreview {
         let payload = try Self.parse(data: data, fileName: fileName)
         if let backup = payload.backup {
             return try backupPreview(WheredayBackupService.combine([backup]), fileName: fileName)
         }
-        return try standardPreview(payload, fileName: fileName)
+        return try standardPreview(payload, fileName: fileName, options: options, sourceBytes: Int64(data.count))
     }
 
-    private func standardPreview(_ payload: ImportPayload, fileName: String) throws -> ImportPreview {
-        let plan = try makePlan(payload: payload, options: ImportOptions(), context: ModelContext(container))
+    func review(_ preview: ImportPreview, options: ImportOptions) throws -> ImportPreview {
+        guard preview.payload.backup == nil else { return preview }
+        return try standardPreview(preview.payload, fileName: preview.fileName, options: options, sourceBytes: preview.sourceByteCount)
+    }
+
+    private func standardPreview(_ payload: ImportPayload, fileName: String, options: ImportOptions = .init(), sourceBytes: Int64 = 0) throws -> ImportPreview {
+        var countsOptions = options
+        countsOptions.includeVisits = true
+        countsOptions.includePoints = true
+        let plan = try makePlan(payload: payload, options: countsOptions, context: ModelContext(container))
         return ImportPreview(fileName: fileName, payload: payload,
                              newVisitCount: plan.visits.count, newPointCount: plan.points.count,
-                             duplicateVisitCount: plan.duplicateVisitCount, duplicatePointCount: plan.duplicatePointCount)
+                             duplicateVisitCount: plan.duplicateVisitCount, duplicatePointCount: plan.duplicatePointCount,
+                             options: options, inferredVisitCount: plan.inferredVisitCount,
+                             suppressedInferredVisitCount: plan.suppressedInferredVisitCount,
+                             filteredPointCount: plan.filteredPointCount,
+                             unknownAccuracyPointCount: plan.unknownAccuracyPointCount, sourceByteCount: sourceBytes)
     }
 
     static func parse(data: Data, fileName: String) throws -> ImportPayload {
@@ -262,6 +300,7 @@ actor TimelineImportService {
         }
         payload.invalidRecordCount += payload.points.count - points.count
         payload.points = points.sorted { $0.timestamp < $1.timestamp }
+        if payload.format == .googleRaw { payload.rawInferencePoints = payload.points }
         guard !payload.visits.isEmpty || !payload.points.isEmpty else { throw TimelineImportError.noRecords }
         return payload
     }
@@ -270,6 +309,7 @@ actor TimelineImportService {
         if let backup = preview.payload.backup {
             return try WheredayBackupService.restore(backup, context: ModelContext(container))
         }
+        guard options.sameReviewPolicy(as: preview.options) else { throw VisitInferenceError.reviewRequired }
         guard options.includeVisits || options.includePoints else { throw TimelineImportError.nothingSelected }
         let context = ModelContext(container)
         context.autosaveEnabled = false
@@ -325,14 +365,69 @@ actor TimelineImportService {
         var points: [ImportedLocationPoint] = []
         var duplicateVisitCount = 0
         var duplicatePointCount = 0
+        var inferredVisitCount = 0
+        var suppressedInferredVisitCount = 0
+        var filteredPointCount = 0
+        var unknownAccuracyPointCount = 0
     }
 
     private func makePlan(payload: ImportPayload, options: ImportOptions, context: ModelContext) throws -> Plan {
         var plan = Plan()
         var visitsByMinute: [Int64: [VisitMatch]] = [:]
         var pointsBySecond: [Int64: [PointMatch]] = [:]
-        let incomingVisits = options.includeVisits ? payload.visits : []
-        let incomingPoints = options.includePoints ? payload.points : []
+        let isGoogle = [.googleRaw, .googleSemantic, .googleDevice, .googleMixed].contains(payload.format)
+        if isGoogle { try options.inference.validate() }
+        var inferred: [ImportedVisit] = []
+        if isGoogle, options.includeVisits, options.inferenceEnabled(for: payload) {
+            let windows = payload.visits.map { $0.arrivedAt...($0.departedAt ?? $0.arrivedAt) }
+            inferred = try VisitInferenceService.infer(points: payload.rawInferencePoints, options: options.inference, excluding: windows)
+            // An existing semantic/manual visit may begin before the imported range.
+            // Suppress all overlapping nonmatches, not merely near-arrival duplicates.
+            if let start = inferred.first?.arrivedAt, let end = inferred.last?.departedAt {
+                let descriptor = FetchDescriptor<Visit>(predicate: #Predicate {
+                    $0.arrivedAt <= end && ($0.departedAt == nil || $0.departedAt! >= start)
+                })
+                let existing = try context.fetch(descriptor).sorted { $0.arrivedAt < $1.arrivedAt }
+                var coverage: [ClosedRange<Date>] = []
+                var matches: [Int64: [VisitMatch]] = [:]
+                for (index, visit) in existing.enumerated() {
+                    if index.isMultiple(of: 500) { try Task.checkCancellation() }
+                    let match = VisitMatch(latitude: visit.latitude, longitude: visit.longitude, arrival: visit.arrivedAt, departure: visit.departedAt)
+                    matches[match.bucket, default: []].append(match)
+                    let range = visit.arrivedAt...max(visit.arrivedAt, visit.departedAt ?? .distantFuture)
+                    if let last = coverage.last, range.lowerBound <= last.upperBound {
+                        coverage[coverage.count - 1] = last.lowerBound...max(last.upperBound, range.upperBound)
+                    } else { coverage.append(range) }
+                }
+                inferred = try inferred.enumerated().compactMap { index, candidate in
+                    if index.isMultiple(of: 500) { try Task.checkCancellation() }
+                    let match = VisitMatch(latitude: candidate.latitude, longitude: candidate.longitude, arrival: candidate.arrivedAt, departure: candidate.departedAt)
+                    // Preserve exact heuristic repeats so the normal planner reports skipped duplicates.
+                    let duplicate = ((match.bucket - 1)...(match.bucket + 1)).contains { bucket in
+                        (matches[bucket] ?? []).contains { $0.matches(match) }
+                    }
+                    var low = 0, high = coverage.count
+                    while low < high {
+                        let middle = (low + high) / 2
+                        if coverage[middle].upperBound < candidate.arrivedAt { low = middle + 1 } else { high = middle }
+                    }
+                    let blocked = !duplicate && low < coverage.count && coverage[low].lowerBound <= candidate.departedAt!
+                    if blocked { plan.suppressedInferredVisitCount += 1; return nil }
+                    return candidate
+                }
+            }
+        }
+        let incomingVisits = options.includeVisits ? (payload.visits + inferred).sorted { $0.arrivedAt < $1.arrivedAt } : []
+        let incomingPoints = options.includePoints ? payload.points.filter { point in
+            // -1 is unmeasured, not a measured poor fix. Keep it for route compatibility,
+            // but never feed it into inference. The opt-in only changes measured poor fixes.
+            let accepted = !isGoogle || (point.horizontalAccuracy.isFinite && point.horizontalAccuracy >= -1
+                && (options.includePoorAccuracyPoints || point.horizontalAccuracy <= options.inference.maximumAccuracyMeters))
+            if isGoogle, accepted, point.horizontalAccuracy < 0 { plan.unknownAccuracyPointCount += 1 }
+            if !accepted { plan.filteredPointCount += 1 }
+            return accepted
+        } : []
+        plan.inferredVisitCount = inferred.count
         if let first = incomingVisits.first, let last = incomingVisits.last {
             let start = first.arrivedAt.addingTimeInterval(-60), end = last.arrivedAt.addingTimeInterval(60)
             let descriptor = FetchDescriptor<Visit>(predicate: #Predicate { $0.arrivedAt >= start && $0.arrivedAt <= end })

@@ -1536,6 +1536,10 @@ final class LocationViewModel {
         try await timelineImportService.preview(urls: urls)
     }
 
+    func reviewImport(_ preview: ImportPreview, options: ImportOptions) async throws -> ImportPreview {
+        try await timelineImportService.review(preview, options: options)
+    }
+
     func commitImport(_ preview: ImportPreview, options: ImportOptions) async throws -> ImportCommitResult {
         let result = try await timelineImportService.commit(preview, options: options)
         if result.pointCount > 0 {

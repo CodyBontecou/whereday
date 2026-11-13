@@ -17,6 +17,9 @@ struct ImportPreviewView: View {
     @ObservedObject private var progress = ImportProgress.shared
     @State private var phase: Phase = .reading
     @State private var options = ImportOptions()
+    @State private var isReviewing = false
+    @State private var reviewError: String?
+    @State private var reviewTask: Task<Void, Never>?
 
     private enum Phase {
         case reading
@@ -56,8 +59,7 @@ struct ImportPreviewView: View {
             do {
                 let preview = try await viewModel.prepareImport(from: urls)
                 try Task.checkCancellation()
-                options.includeVisits = !preview.payload.visits.isEmpty
-                options.includePoints = !preview.payload.points.isEmpty
+                options = preview.options
                 phase = .ready(preview)
             } catch is CancellationError {
                 // Closing the sheet cancels preparation without writing anything.
@@ -66,6 +68,28 @@ struct ImportPreviewView: View {
                 phase = .failed(detail: error.localizedDescription, whileSaving: false)
             }
         }
+        .onChange(of: options) { old, updated in
+            guard !old.sameReviewPolicy(as: updated), case .ready(let preview) = phase else { return }
+            reviewTask?.cancel()
+            isReviewing = true
+            reviewError = nil
+            reviewTask = Task {
+                do {
+                    let reviewed = try await viewModel.reviewImport(preview, options: updated)
+                    try Task.checkCancellation()
+                    guard options == updated else { return }
+                    phase = .ready(reviewed)
+                    isReviewing = false
+                } catch is CancellationError {
+                    // A newer review superseded this one, or the sheet was closed.
+                } catch {
+                    guard options == updated else { return }
+                    reviewError = error.localizedDescription
+                    isReviewing = false
+                }
+            }
+        }
+        .onDisappear { reviewTask?.cancel() }
     }
 
     private var url: URL { urls[0] }
@@ -339,15 +363,13 @@ struct ImportPreviewView: View {
                 plural: "visits",
                 caption: String(localized: "NEW · \(preview.duplicateVisitCount.formatted()) DUPLICATES SKIPPED"),
                 isOn: $options.includeVisits,
-                isAvailable: !preview.payload.visits.isEmpty
+                isAvailable: preview.newVisitCount + preview.duplicateVisitCount > 0
             )
             .accessibilityIdentifier("import-include-visits")
 
-            if preview.payload.format == .googleRaw {
-                Text("Raw location history contains points only. Visits are not inferred in this version.")
-                    .font(.caption)
-                    .foregroundStyle(TE.textMuted)
-                    .fixedSize(horizontal: false, vertical: true)
+            if [.googleRaw, .googleSemantic, .googleDevice, .googleMixed].contains(preview.payload.format) {
+                hairline
+                inferenceControls(preview)
             }
 
             if let skipped = skippedSummary(preview) {
@@ -374,6 +396,53 @@ struct ImportPreviewView: View {
         .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, 24)
         .padding(.top, 12)
+    }
+
+    @ViewBuilder
+    private func inferenceControls(_ preview: ImportPreview) -> some View {
+        if !preview.payload.rawInferencePoints.isEmpty {
+            Toggle("Infer visits from raw points", isOn: Binding(
+                get: { options.inferenceEnabled(for: preview.payload) },
+                set: { options.inferVisits = $0 }
+            ))
+            .accessibilityIdentifier("import-infer-visits")
+            Text("\(preview.inferredVisitCount.formatted()) inferred candidates before duplicate matching")
+                .font(.caption)
+                .accessibilityIdentifier("import-inferred-count")
+            if options.inferenceEnabled(for: preview.payload) {
+                Stepper("Dwell: \(Int(options.inference.minimumDwellSeconds / 60)) min", value: Binding(
+                    get: { options.inference.minimumDwellSeconds / 60 },
+                    set: { options.inference.minimumDwellSeconds = $0 * 60 }
+                ), in: 5...120, step: 5)
+                Stepper("Radius: \(Int(options.inference.radiusMeters)) m", value: $options.inference.radiusMeters, in: 25...500, step: 25)
+            }
+            Text("Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected.")
+                .font(.caption)
+                .foregroundStyle(TE.textMuted)
+        }
+        Stepper("Accepted accuracy: \(Int(options.inference.maximumAccuracyMeters)) m", value: $options.inference.maximumAccuracyMeters, in: 1...500, step: 25)
+        Toggle("Include poor-accuracy route points", isOn: $options.includePoorAccuracyPoints)
+            .accessibilityIdentifier("import-include-poor-accuracy")
+        Text("\(preview.filteredPointCount.formatted()) route points excluded by accuracy")
+            .font(.caption)
+        if preview.unknownAccuracyPointCount > 0 {
+            Text("\(preview.unknownAccuracyPointCount.formatted()) route samples have unknown accuracy; excluded from visit inference")
+                .font(.caption)
+                .accessibilityIdentifier("import-unknown-accuracy-count")
+        }
+        Text("Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit.")
+            .font(.caption)
+            .foregroundStyle(TE.textMuted)
+        if preview.suppressedInferredVisitCount > 0 {
+            Text("\(preview.suppressedInferredVisitCount.formatted()) inferred candidates suppressed by existing visits")
+                .font(.caption)
+        }
+        if isReviewing {
+            ProgressView("Updating review…")
+        }
+        if let reviewError {
+            Text(verbatim: reviewError).font(.caption).foregroundStyle(TE.inkRust)
+        }
     }
 
     private var hairline: some View {
@@ -411,8 +480,8 @@ struct ImportPreviewView: View {
 
     private func fileDetail(_ preview: ImportPreview) -> String {
         var parts = [preview.payload.format.displayName.uppercased()]
-        if let size = fileSizeLabel {
-            parts.append(size)
+        if preview.sourceByteCount > 0 {
+            parts.append(ByteCountFormatter.string(fromByteCount: preview.sourceByteCount, countStyle: .file))
         }
         if let range = preview.payload.dateRange {
             let lower = range.lowerBound.formatted(date: .abbreviated, time: .omitted)
@@ -420,11 +489,6 @@ struct ImportPreviewView: View {
             parts.append(lower == upper ? lower : "\(lower) – \(upper)")
         }
         return parts.joined(separator: " · ")
-    }
-
-    private var fileSizeLabel: String? {
-        guard let bytes = try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize else { return nil }
-        return ByteCountFormatter.string(fromByteCount: Int64(bytes), countStyle: .file)
     }
 
     private func skippedSummary(_ preview: ImportPreview) -> String? {
@@ -472,7 +536,7 @@ struct ImportPreviewView: View {
                     }
                 }
                 .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
-                .disabled(selectedCount(preview) == 0)
+                .disabled(selectedCount(preview) == 0 || isReviewing || reviewError != nil || !options.sameReviewPolicy(as: preview.options))
                 .accessibilityIdentifier("confirm-import")
                 Button("Cancel", role: .cancel) { dismiss() }
                     .font(.subheadline)

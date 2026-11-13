@@ -1,5 +1,7 @@
 # Issue 59 checklist audit — November 13, 2026
 
+This is the **first-wave snapshot**. The subsequent [inference slice](google-timeline-inference-20261113.md) supersedes its inference/accuracy/size-label gaps; folder discovery remains unimplemented. Historical results below retain their original source boundary.
+
 Baseline: `f003fe3e50e8066c0ca263b69d2f29ab6392d1a2` (merged PR 112). Read the complete issue 59 and PR 112 bodies using read-only `gh` commands. This is an iOS slice, not epic completion or Android parity. Source/test presence is distinguished from runtime verification; October QA and PR 112 CI results are historical, not reruns at this head. The fleet report records exact fresh commands and results.
 
 ## Requirement-to-artifact audit

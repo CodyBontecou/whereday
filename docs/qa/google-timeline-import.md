@@ -21,7 +21,7 @@ Observed all expected results. The system file picker did not expose a reliable 
 
 ## MVP boundaries
 
-At the October 25 validation, Google imports accepted single JSON files only. The November 13 follow-up adds combined Google multi-file preview/commit; see [the checklist audit](google-timeline-import-audit-20261113.md) for current coverage and remaining gaps. Unzip Takeout manually. No folder recursion, direct ZIP import or inferred visits from raw points. Ordinary selections accept up to 50 MiB and 250,000 visits plus points total. Duplicate thresholds and privacy behavior are documented in the README. New interface copy currently uses English fallback in other locales.
+At the October 25 validation, Google imports accepted single JSON files only. The November 13 follow-up adds combined Google multi-file preview/commit; see [the checklist audit](google-timeline-import-audit-20261113.md) for current coverage and remaining gaps. Unzip Takeout manually. Folder recursion and direct ZIP import remain unsupported. The subsequent [inference slice](google-timeline-inference-20261113.md) adds opt-out, conservative raw-point inference; the October observations below do not verify it. Ordinary selections accept up to 50 MiB and 250,000 source visits plus points total. Duplicate thresholds and privacy behavior are documented in the README. New interface copy currently uses English fallback in other locales.
 
 
 ## Expanded QA run
