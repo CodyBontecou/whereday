@@ -59,7 +59,15 @@ class VisitLinkFlowTest {
     }
     private fun awaitName(name:String) {compose.waitUntil(10000) {runCatching {compose.onNodeWithTag("visit-name").assertTextContains(name)}.isSuccess}}
     private fun keyboard() {androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(closeQaKeyboard())}
-    private fun save() {keyboard();compose.onNodeWithTag("visit-save").performClick();compose.waitUntil(5000) {compose.onAllNodesWithTag("visit-save").fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty()}}
+    private fun save() {
+        keyboard();compose.onNodeWithTag("visit-save").performClick()
+        try {compose.waitUntil(5000) {compose.onAllNodesWithTag("visit-save").fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty()}}
+        catch(error:ComposeTimeoutException) {
+            // Capture before @After clears the journal and destroys the dialog evidence.
+            throw AssertionError("Visit editor did not close after Save. Current semantics:\n"+
+                compose.onAllNodes(isRoot(),useUnmergedTree=true).printToString(),error)
+        }
+    }
     private fun discard() {
         keyboard();compose.onNodeWithText("Cancelar").performClick()
         compose.onNodeWithText(target.getString(R.string.visit_discard)).performClick()
