@@ -142,7 +142,7 @@ final class SmartStartStateTests: XCTestCase {
 
     func testSettingsRoundTripAndCorruptFallback() {
         var settings = SmartStartSettings(); settings.isEnabled = true; settings.cyclingEnabled = true
-        store.settings = settings
+        XCTAssertNoThrow(try store.saveSettings(settings))
         XCTAssertEqual(SmartStartStateStore(defaults: defaults).settings, settings)
         defaults.set(Data("invalid".utf8), forKey: "smartStartSettings")
         XCTAssertEqual(store.settings, SmartStartSettings())

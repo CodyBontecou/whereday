@@ -588,6 +588,8 @@ final class LocationViewModelPointScalingTests: XCTestCase {
         let manager = makeIsolatedLocationManager(defaults: defaults)
         manager.setModelContext(container.mainContext)
         let arrival = Date().addingTimeInterval(-1800)
+        manager.isTrackingEnabled = true
+        manager.trackingStartTime = arrival
         let visit = Visit(latitude: 18.4, longitude: -66.1, arrivedAt: arrival)
         container.mainContext.insert(visit)
         visit.preserveOriginalValuesIfNeeded()

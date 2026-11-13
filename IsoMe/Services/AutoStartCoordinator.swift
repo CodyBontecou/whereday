@@ -47,9 +47,9 @@ final class AutoStartCoordinator {
         }
     }
 
-    func updateSettings(_ settings: SmartStartSettings) {
+    func updateSettings(_ settings: SmartStartSettings) throws {
         guard !isShutdown else { return }
-        state.settings = settings
+        try state.saveSettings(settings)
         // A changed mode/threshold must not apply an older in-flight query.
         cancelMotion()
         refresh()

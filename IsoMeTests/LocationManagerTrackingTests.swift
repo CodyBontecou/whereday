@@ -160,6 +160,7 @@ final class LocationManagerTrackingTests: XCTestCase {
         manager.isLiveActivityEnabled = false
 
         let start = Date()
+        manager.trackingStartTime = start
         let locations = [
             makeLocation(latitude: 18.3270, longitude: -67.2200, timestamp: start),
             makeLocation(latitude: 18.3271, longitude: -67.2201, timestamp: start.addingTimeInterval(1)),

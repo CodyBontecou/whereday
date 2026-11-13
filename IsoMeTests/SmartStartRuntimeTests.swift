@@ -4,6 +4,247 @@ import SwiftData
 @testable import IsoMe
 
 @MainActor
+private final class QueuedStopAfterScheduler: StopAfterScheduling {
+    var expiries: [@MainActor () -> Void] = []
+    func schedule(after seconds: TimeInterval, expiry: @escaping @MainActor () -> Void) -> () -> Void {
+        expiries.append(expiry)
+        // These closures represent Timer work already enqueued on MainActor.
+        // Invalidating the underlying Timer cannot retract them.
+        return {}
+    }
+}
+
+private final class SessionVisitFixture: CLVisit {
+    private let arrival: Date
+    private let departure: Date
+    init(arrival: Date, departure: Date = .distantFuture) {
+        self.arrival = arrival; self.departure = departure
+        super.init()
+    }
+    required init?(coder: NSCoder) { fatalError("Synthetic fixture is not decoded") }
+    override var coordinate: CLLocationCoordinate2D { .init(latitude: 10, longitude: 20) }
+    override var arrivalDate: Date { arrival }
+    override var departureDate: Date { departure }
+    override var horizontalAccuracy: CLLocationAccuracy { 5 }
+}
+
+@MainActor
+final class SmartStartCorrectionTests: XCTestCase {
+    private var defaults: UserDefaults!
+    private var manager: LocationManager!
+    private var scheduler: QueuedStopAfterScheduler!
+    private var container: ModelContainer!
+    private var distanceFixes: [CLLocation] = []
+    private var state: SmartStartStateStore { .init(defaults: defaults) }
+
+    override func setUpWithError() throws {
+        defaults = makeIsolatedDefaults()
+        defaults.set(false, forKey: "allowNetworkGeocoding")
+        scheduler = QueuedStopAfterScheduler()
+        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self])
+        container = try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)])
+        manager = LocationManager(defaults: defaults, registersAsShared: false, monitoring: TestLocationMonitor(),
+            trackingAccess: { true }, startsSmartStartRuntime: false, stopAfterScheduler: scheduler,
+            recordDistanceLocation: { [weak self] in self?.distanceFixes.append($0) })
+        manager.authorizationStatus = .authorizedAlways
+        manager.setLiveActivityEnabled(false)
+        manager.setModelContext(container.mainContext)
+    }
+    override func tearDown() {
+        manager.stopTracking(); manager = nil
+        container = nil; scheduler = nil; defaults = nil
+        super.tearDown()
+    }
+    private func fix(at date: Date) -> CLLocation {
+        CLLocation(coordinate: .init(latitude: 10, longitude: 20), altitude: 0,
+                   horizontalAccuracy: 5, verticalAccuracy: 5, timestamp: date)
+    }
+    private func sessions() throws -> [RecordingSession] {
+        try container.mainContext.fetch(FetchDescriptor<RecordingSession>())
+    }
+
+    func testCachedPreSessionFixDeliveredAfterStartCannotReachAnyRecordingConsumer() async throws {
+        manager.setRouteSamplingMode(.time)
+        manager.setRouteSampleInterval(60)
+        manager.startTracking()
+        let start = try XCTUnwrap(manager.trackingStartTime)
+        // Start has already happened before this old/cached callback is processed.
+        await manager.handleLocationUpdates([fix(at: start.addingTimeInterval(-1))])
+        XCTAssertTrue(distanceFixes.isEmpty)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        XCTAssertEqual(try sessions().first?.receivedLocationCount ?? 0, 0)
+        await manager.handleLocationUpdates([fix(at: start.addingTimeInterval(1))])
+        XCTAssertEqual(distanceFixes.count, 1)
+        XCTAssertEqual(try container.mainContext.fetch(FetchDescriptor<LocationPoint>()).map(\.timestamp),
+                       [start.addingTimeInterval(1)])
+        XCTAssertEqual(try sessions().first?.receivedLocationCount, 1)
+    }
+
+    func testQueuedExpiryFromAIsHarmlessAfterExplicitSuccessorBStarts() throws {
+        manager.setStopAfterHours(1)
+        manager.startTracking()
+        let queuedA = try XCTUnwrap(scheduler.expiries.first)
+        manager.stopTracking()
+        manager.startTracking(source: .shortcut)
+        let startB = try XCTUnwrap(manager.trackingStartTime)
+        queuedA()
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(manager.trackingStartSource, .shortcut)
+        XCTAssertEqual(state.trackingStartSource, .shortcut)
+        XCTAssertEqual(state.trackingStartTime, startB)
+        XCTAssertEqual(try sessions().filter { $0.endedAt == nil }.count, 1)
+    }
+
+    func testUnsupportedMovementThresholdIsExplicitlyRejectedWithoutPersistence() throws {
+        var settings = SmartStartSettings(); settings.isEnabled = true
+        settings.minimumMovementDuration = 1200
+        let end = Date(timeIntervalSince1970: 1_800_000_000)
+        XCTAssertEqual(end.timeIntervalSince(ActivityDetectionManager.historyStart(endingAt: end)), 900)
+        XCTAssertThrowsError(try state.saveSettings(settings))
+        XCTAssertFalse(state.settings.isEnabled)
+    }
+
+    func testUnsupportedStationaryThresholdIsExplicitlyRejectedWithoutPersistence() throws {
+        var settings = SmartStartSettings(); settings.isEnabled = true
+        settings.stationaryAutoStopEnabled = true; settings.stationaryDuration = 1200
+        XCTAssertThrowsError(try state.saveSettings(settings))
+        XCTAssertFalse(state.settings.isEnabled)
+    }
+
+    func testCurrentExpiryStillStopsItsOwnExplicitSession() throws {
+        manager.setStopAfterHours(1); manager.startTracking(source: .shortcut)
+        try XCTUnwrap(scheduler.expiries.last)()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertNil(state.trackingStartTime); XCTAssertNil(state.trackingStartSource)
+        XCTAssertNil(state.lastManualStopAt)
+        XCTAssertEqual(try sessions().filter { $0.endedAt == nil }.count, 0)
+    }
+
+    func testReschedulingSameSessionInvalidatesAlreadyQueuedExpiry() throws {
+        manager.setStopAfterHours(1); manager.startTracking()
+        let oldExpiry = try XCTUnwrap(scheduler.expiries.last)
+        let start = try XCTUnwrap(state.trackingStartTime)
+        manager.setStopAfterHours(2)
+        oldExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled); XCTAssertEqual(state.trackingStartTime, start)
+        try XCTUnwrap(scheduler.expiries.last)()
+        XCTAssertFalse(manager.isTrackingEnabled)
+    }
+
+    func testRestoredRealStartAdmitsHistoricalInSessionFixButRejectsEarlierFix() async throws {
+        let start = Date().addingTimeInterval(-120)
+        state.beginSession(source: .manual, at: start)
+        defaults.set(true, forKey: "isTrackingEnabled")
+        let restored = LocationManager(defaults: defaults, registersAsShared: false, monitoring: TestLocationMonitor(),
+            trackingAccess: { true }, startsSmartStartRuntime: false, stopAfterScheduler: scheduler,
+            recordDistanceLocation: { [weak self] in self?.distanceFixes.append($0) })
+        restored.setModelContext(container.mainContext)
+        XCTAssertEqual(restored.trackingStartTime, start)
+        await restored.handleLocationUpdates([fix(at: start.addingTimeInterval(-1)),
+                                              fix(at: start.addingTimeInterval(1))])
+        XCTAssertEqual(distanceFixes.map(\.timestamp), [start.addingTimeInterval(1)])
+        XCTAssertEqual(try container.mainContext.fetch(FetchDescriptor<LocationPoint>()).map(\.timestamp),
+                       [start.addingTimeInterval(1)])
+        XCTAssertEqual(try sessions().first?.receivedLocationCount, 1)
+        XCTAssertEqual(state.trackingStartTime, start)
+        restored.stopTracking()
+    }
+
+    func testActiveFlagWithoutSessionMetadataCannotAdmitFixes() async throws {
+        manager.isTrackingEnabled = true
+        await manager.handleLocationUpdates([fix(at: Date())])
+        XCTAssertTrue(distanceFixes.isEmpty)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+    }
+
+    func testVisitDepartureCanClosePreviouslyRecordedVisitOnlyInsideCurrentSession() throws {
+        manager.startTracking()
+        let start = try XCTUnwrap(manager.trackingStartTime)
+        let arrival = start.addingTimeInterval(-120)
+        let visit = Visit(latitude: 10, longitude: 20, arrivedAt: arrival)
+        container.mainContext.insert(visit); try container.mainContext.save()
+        manager.handleVisit(SessionVisitFixture(arrival: arrival, departure: start.addingTimeInterval(-1)))
+        XCTAssertNil(visit.departedAt)
+        manager.handleVisit(SessionVisitFixture(arrival: arrival, departure: start.addingTimeInterval(1)))
+        XCTAssertEqual(visit.departedAt, start.addingTimeInterval(1))
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 1)
+    }
+
+    func testFreshVisitArrivalStillPersistsNormally() throws {
+        let saved = SavedPlace(name: "Synthetic stop", latitude: 10, longitude: 20)
+        container.mainContext.insert(saved); try container.mainContext.save()
+        manager.startTracking()
+        let start = try XCTUnwrap(manager.trackingStartTime)
+        manager.handleVisit(SessionVisitFixture(arrival: start.addingTimeInterval(1)))
+        let visits = try container.mainContext.fetch(FetchDescriptor<Visit>())
+        XCTAssertEqual(visits.count, 1)
+        XCTAssertEqual(visits.first?.arrivedAt, start.addingTimeInterval(1))
+        XCTAssertTrue(visits.first?.geocodingCompleted == true)
+    }
+
+    func testEverySupportedThresholdFitsTheActualHistoryWindowForStartAndStop() throws {
+        let end = Date(timeIntervalSince1970: 1_800_000_000)
+        let start = ActivityDetectionManager.historyStart(endingAt: end)
+        let evidence = ActivityEvidence(intervals: [.init(start: start, end: end,
+            activity: .driving, confidence: .high)], queriedAt: end)
+        let movement = try XCTUnwrap(evidence.signal(at: end))
+        XCTAssertEqual(movement.duration, 900)
+        for threshold in [0.001, 1, 120, 600, 899.999, 900] {
+            var settings = SmartStartSettings(); settings.isEnabled = true
+            settings.minimumMovementDuration = threshold; settings.stationaryDuration = threshold
+            settings.stationaryAutoStopEnabled = true
+            try state.saveSettings(settings)
+            XCTAssertEqual(state.settings, settings)
+            var context = AutoStartPolicy.Context(settings: settings, hasAlwaysLocation: true,
+                hasMotionPermission: true, canTrack: true, isTracking: false, source: nil,
+                lastManualStopAt: nil, lastAutoStartAt: nil, now: end)
+            XCTAssertEqual(AutoStartPolicy().evaluate(movement, context: context), .start(.smartMotion))
+            context.isTracking = true; context.source = .smartMotion
+            XCTAssertEqual(AutoStartPolicy().evaluate(.init(activity: .stationary, confidence: .high,
+                duration: movement.duration), context: context), .stop)
+        }
+    }
+
+    func testInvalidThresholdBoundariesAndLegacyPayloadFailClosed() throws {
+        for duration in [0.0, -1, .nan, .infinity, 900.001] {
+            var settings = SmartStartSettings(); settings.isEnabled = true
+            settings.minimumMovementDuration = duration
+            XCTAssertThrowsError(try state.saveSettings(settings)) { error in
+                XCTAssertEqual(error as? SmartStartSettings.ValidationError, .unsupportedMovementDuration)
+            }
+            settings = SmartStartSettings(); settings.stationaryDuration = duration
+            XCTAssertThrowsError(try state.saveSettings(settings)) { error in
+                XCTAssertEqual(error as? SmartStartSettings.ValidationError, .unsupportedStationaryDuration)
+            }
+        }
+        var legacy = SmartStartSettings(); legacy.isEnabled = true; legacy.minimumMovementDuration = 1200
+        defaults.set(try JSONEncoder().encode(legacy), forKey: "smartStartSettings")
+        XCTAssertFalse(state.settings.isEnabled)
+        let context = AutoStartPolicy.Context(settings: legacy, hasAlwaysLocation: true,
+            hasMotionPermission: true, canTrack: true, isTracking: false, source: nil,
+            lastManualStopAt: nil, lastAutoStartAt: nil, now: Date())
+        XCTAssertEqual(AutoStartPolicy().evaluate(.init(activity: .driving, confidence: .high,
+            duration: 1200), context: context), .suppress(.invalidSignal))
+    }
+
+    func testManagerRejectsUnsupportedSettingsWithoutChangingPersistedOptIn() {
+        var settings = manager.smartStartSettings; settings.isEnabled = true
+        settings.minimumMovementDuration = 1200
+        XCTAssertThrowsError(try manager.updateSmartStartSettings(settings))
+        XCTAssertFalse(manager.smartStartSettings.isEnabled)
+        XCTAssertFalse(manager.ambientMonitoringActive)
+    }
+
+    func testNewVisitWhoseArrivalPredatesSessionIsNotSynthesizedFromLateDelivery() throws {
+        manager.startTracking()
+        let start = try XCTUnwrap(manager.trackingStartTime)
+        manager.handleVisit(SessionVisitFixture(arrival: start.addingTimeInterval(-60),
+                                               departure: start.addingTimeInterval(1)))
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+    }
+}
+
+@MainActor
 private final class TestMotionDetector: ActivityDetecting {
     var status: MotionDetectionStatus = .authorized
     var callbacks: [(ActivityEvidence?) -> Void] = []
@@ -64,7 +305,7 @@ final class AutoStartCoordinatorTests: XCTestCase {
     }
     private func enable() {
         var settings = state.settings; settings.isEnabled = true
-        coordinator.updateSettings(settings)
+        XCTAssertNoThrow(try coordinator.updateSettings(settings))
     }
     private func evidence(_ kind: AutoStartPolicy.Activity = .driving,
                           duration: TimeInterval = 120,
@@ -109,6 +350,17 @@ final class AutoStartCoordinatorTests: XCTestCase {
         XCTAssertEqual(target.trackingStartSource, .smartMotion)
         XCTAssertEqual(decisions.last, .noop(.alreadyTracking))
     }
+    func testUnsupportedSettingsReportErrorBeforeSensorOrPersistenceChanges() {
+        var settings = state.settings; settings.isEnabled = true; settings.minimumMovementDuration = 1200
+        XCTAssertThrowsError(try coordinator.updateSettings(settings))
+        XCTAssertFalse(state.settings.isEnabled); XCTAssertFalse(target.ambient)
+        XCTAssertEqual(motion.starts, 0)
+        enable()
+        let previous = state.settings
+        XCTAssertThrowsError(try coordinator.updateSettings(settings))
+        XCTAssertEqual(state.settings, previous)
+        XCTAssertEqual(motion.starts, 1); XCTAssertEqual(motion.stops, 0)
+    }
     func testWakeWithoutMotionEvidenceCannotStart() {
         enable(); coordinator.locationWake(); motion.emit(nil)
         XCTAssertEqual(target.starts, 0); XCTAssertEqual(decisions.last, .suppress(.invalidSignal))
@@ -116,7 +368,7 @@ final class AutoStartCoordinatorTests: XCTestCase {
     func testDisableInvalidatesCallbacksEvenAfterReenable() {
         enable(); let oldCallback = motion.callbacks[0]
         var settings = state.settings; settings.isEnabled = false
-        coordinator.updateSettings(settings)
+        XCTAssertNoThrow(try coordinator.updateSettings(settings))
         XCTAssertFalse(target.ambient); XCTAssertEqual(motion.stops, 1)
         oldCallback(evidence()); XCTAssertEqual(target.starts, 0)
         enable(); oldCallback(evidence()); XCTAssertEqual(target.starts, 0)
@@ -157,14 +409,14 @@ final class AutoStartCoordinatorTests: XCTestCase {
     }
     func testStationaryAutomaticStopDoesNotCreateManualCooldown() {
         var settings = state.settings; settings.isEnabled = true; settings.stationaryAutoStopEnabled = true
-        coordinator.updateSettings(settings); motion.emit(evidence())
+        XCTAssertNoThrow(try coordinator.updateSettings(settings)); motion.emit(evidence())
         date.addTimeInterval(600); motion.emit(evidence(.stationary, duration: 600))
         XCTAssertEqual(target.stops, 1); XCTAssertNil(state.lastManualStopAt)
         XCTAssertTrue(target.ambient)
     }
     func testExplicitSessionsProtectedFromStationaryStop() {
         var settings = state.settings; settings.isEnabled = true; settings.stationaryAutoStopEnabled = true
-        coordinator.updateSettings(settings)
+        XCTAssertNoThrow(try coordinator.updateSettings(settings))
         for source in [TrackingStartSource.manual, .shortcut, .carPlayShortcut, .workoutShortcut] {
             date.addTimeInterval(30); target.isTrackingEnabled = true; target.trackingStartSource = source
             motion.emit(evidence(.stationary, duration: 600))
@@ -280,7 +532,7 @@ final class SmartStartMonitoringTests: XCTestCase {
     }
     private func enable() {
         var settings = manager.smartStartSettings; settings.isEnabled = true
-        manager.updateSmartStartSettings(settings)
+        XCTAssertNoThrow(try manager.updateSmartStartSettings(settings))
     }
     func testDefaultOffArmsNothing() {
         manager.startAmbientMonitoring()
@@ -302,7 +554,7 @@ final class SmartStartMonitoringTests: XCTestCase {
         XCTAssertTrue(manager.ambientMonitoringActive); XCTAssertEqual(monitor.ambientStops, 0)
         XCTAssertEqual(monitor.activeStops, 1)
         var settings = manager.smartStartSettings; settings.isEnabled = false
-        manager.updateSmartStartSettings(settings)
+        XCTAssertNoThrow(try manager.updateSmartStartSettings(settings))
         XCTAssertFalse(manager.ambientMonitoringActive); XCTAssertEqual(monitor.ambientStops, 1)
     }
     func testDefaultManualStartStopKeepsLegacyMonitorLifecycle() {
@@ -313,7 +565,7 @@ final class SmartStartMonitoringTests: XCTestCase {
     func testOptOutDoesNotEndManualSession() {
         enable(); manager.startTracking()
         var settings = manager.smartStartSettings; settings.isEnabled = false
-        manager.updateSmartStartSettings(settings)
+        XCTAssertNoThrow(try manager.updateSmartStartSettings(settings))
         XCTAssertTrue(manager.isTrackingEnabled); XCTAssertFalse(manager.ambientMonitoringActive)
         XCTAssertEqual(monitor.ambientStops, 0, "active route keeps legacy visit monitoring")
     }
@@ -348,7 +600,7 @@ final class SmartStartMonitoringTests: XCTestCase {
         runtimeManager.authorizationStatus = .authorizedAlways
         runtimeManager.isLiveActivityEnabled = false
         var settings = runtimeManager.smartStartSettings; settings.isEnabled = true
-        runtimeManager.updateSmartStartSettings(settings)
+        XCTAssertNoThrow(try runtimeManager.updateSmartStartSettings(settings))
         let container = try makeContainer()
         runtimeManager.setModelContext(container.mainContext)
         detector.onQuery = { [weak detector] in

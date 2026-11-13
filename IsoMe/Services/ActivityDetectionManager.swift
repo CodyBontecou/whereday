@@ -127,7 +127,7 @@ final class ActivityDetectionManager: ActivityDetecting {
         queryPending = true
         queryID = UUID()
         let id = queryID, token = generation
-        let start = end.addingTimeInterval(-15 * 60)
+        let start = Self.historyStart(endingAt: end)
         manager.queryActivityStarting(from: start, to: end, to: .main) { [weak self] activities, error in
             // Normalize Apple objects on their delivery queue, crossing actors with values only.
             let evidence = error == nil ? Self.evidence(activities ?? [], from: start, to: end) : nil
@@ -137,6 +137,10 @@ final class ActivityDetectionManager: ActivityDetecting {
                 self.receive?(evidence)
             }
         }
+    }
+
+    nonisolated static func historyStart(endingAt end: Date) -> Date {
+        end.addingTimeInterval(-SmartStartSettings.maximumActivityDuration)
     }
 
     nonisolated private static func evidence(_ activities: [CMMotionActivity], from start: Date,

@@ -23,6 +23,17 @@ parameters remain future work. Existing Start/Stop shortcuts are retained.
 - `isTrackingEnabled`: full route recording. Manual tracking still owns its legacy
   visit/significant-change monitoring even with Smart Start off. Thus opting out
   during an active manual route does not turn off that route's monitors.
+- Cached/asynchronously delivered location samples must have timestamps at or
+  after the actual session start before distance ingestion, route sampling, received
+  counts or persistence. Relaunch uses the restored real start, not launch time.
+  Unknown session metadata admits no route points. A late visit cannot create a
+  pre-session arrival; an in-session departure may close an already persisted open
+  visit. Pre-session departures are ignored, and ordinary fresh arrivals remain valid.
+- Stop After expiry work is owned by a scheduling generation and session start.
+  Cancel/reschedule/stop invalidates the generation, including already-enqueued
+  timer tasks. A current explicit session may expire; an old expiry cannot end a
+  newer manual/shortcut session. Recovering an earlier session start reschedules
+  its timer against that real start.
 - Stopping an active route leaves opted-in ambient monitoring armed only with
   Always and current access. Opting out while idle disarms it. Permission/access
   downgrade cancels motion observation; late completions cannot start a route.
@@ -46,6 +57,15 @@ history. Neither starts tracking by itself. The adapter serializes queries and
 rejects completions from canceled generations. A 30-second best-effort timer asks
 for recent evidence while execution is available; it is not a background execution
 guarantee or evidence of movement. Queries cover at most the latest 15 minutes.
+Both movement and stationary thresholds must be finite, greater than zero, and
+at most **900 seconds**, even if stationary stopping is currently off. The same
+constant defines the real adapter query window and settings validation, so every
+accepted threshold fits available evidence. `SmartStartStateStore.saveSettings`,
+`AutoStartCoordinator.updateSettings`, and `LocationManager.updateSmartStartSettings`
+throw on invalid input before persistence or observer changes; there is no silently
+ignored/clamped update. Future UI must handle/report that error. Corrupt or legacy
+unsupported persisted payloads load safe disabled defaults, not a shortened enabled
+threshold. Cooldowns must be finite and nonnegative.
 
 Normalized intervals use CoreMotion start times and the history query's covered
 end time, not app uptime or time since the last callback. Only contiguous matching
@@ -83,7 +103,9 @@ has deliberately **not** changed. Next slice must:
    recovery guards, WebhookManager/export attachment and existing watch sync.
 2. Wire real background launch/lifecycle behavior in AppDelegate/IsoMeApp and prove
    initialization diagnostics without claiming guaranteed iOS wake delivery.
-3. Add a narrow Settings section calling `updateSmartStartSettings` only after
+3. Add a narrow Settings section calling `try updateSmartStartSettings` and handling
+   validation errors (activity duration supported range: greater than 0 through 900
+   seconds), only after
    explicit opt-in and reliability explanation. Display Always/Motion statuses,
    unavailable/denied paths and activity/cooldown/stationary-stop choices. Do not
    silently enable for existing users or prompt Motion during ordinary onboarding.

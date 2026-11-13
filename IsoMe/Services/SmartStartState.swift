@@ -14,6 +14,29 @@ enum TrackingStartSource: String, Codable, Equatable {
 }
 
 struct SmartStartSettings: Codable, Equatable {
+    /// Shared with the actual CoreMotion query window; no accepted threshold
+    /// can require more continuous evidence than the adapter can produce.
+    static let maximumActivityDuration: TimeInterval = 900
+
+    enum ValidationError: Error, Equatable {
+        case unsupportedMovementDuration, unsupportedStationaryDuration, invalidCooldown
+    }
+
+    func validate() throws {
+        guard minimumMovementDuration.isFinite, minimumMovementDuration > 0,
+              minimumMovementDuration <= Self.maximumActivityDuration else {
+            throw ValidationError.unsupportedMovementDuration
+        }
+        guard stationaryDuration.isFinite, stationaryDuration > 0,
+              stationaryDuration <= Self.maximumActivityDuration else {
+            throw ValidationError.unsupportedStationaryDuration
+        }
+        guard manualStopCooldown.isFinite, manualStopCooldown >= 0,
+              restartCooldown.isFinite, restartCooldown >= 0 else {
+            throw ValidationError.invalidCooldown
+        }
+    }
+
     var isEnabled = false
     var drivingEnabled = true
     var walkingRunningEnabled = false
@@ -35,13 +58,17 @@ struct SmartStartStateStore {
                   let value = try? JSONDecoder().decode(SmartStartSettings.self, from: data) else {
                 return SmartStartSettings()
             }
+            // Legacy/corrupt unsupported payloads fail closed, never silently
+            // clamp a requested duration into a different enabled behavior.
+            guard (try? value.validate()) != nil else { return SmartStartSettings() }
             return value
         }
-        nonmutating set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                defaults.set(data, forKey: "smartStartSettings")
-            }
-        }
+    }
+
+    /// Throws before writing. Callers must surface rejection to the opt-in UI.
+    func saveSettings(_ settings: SmartStartSettings) throws {
+        try settings.validate()
+        defaults.set(try JSONEncoder().encode(settings), forKey: "smartStartSettings")
     }
 
     var trackingStartTime: Date? { defaults.object(forKey: "trackingStartTime") as? Date }

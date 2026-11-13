@@ -58,7 +58,10 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     }
 
     // Safety-net auto-stop timer (only runs when stopAfterHours > 0)
-    private var stopTrackingTimer: Timer?
+    private let stopAfterScheduler: any StopAfterScheduling
+    private var cancelStopAfterTimer: (() -> Void)?
+    private var stopAfterGeneration = UUID()
+    private let recordDistanceLocation: @MainActor (CLLocation) -> Void
     private var accessObserver: AnyCancellable?
     private var resumeAfterAccessResolution = false
 
@@ -149,7 +152,11 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
          monitoring: (any TrackingLocationMonitoring)? = nil,
          trackingAccess: (@MainActor () -> Bool)? = nil,
          motionDetector: (any ActivityDetecting)? = nil,
-         startsSmartStartRuntime: Bool = true) {
+         startsSmartStartRuntime: Bool = true,
+         stopAfterScheduler: (any StopAfterScheduling)? = nil,
+         recordDistanceLocation: (@MainActor (CLLocation) -> Void)? = nil) {
+        self.stopAfterScheduler = stopAfterScheduler ?? StopAfterTimerScheduler()
+        self.recordDistanceLocation = recordDistanceLocation ?? { DailyDistanceTracker.shared.recordLocation($0) }
         let trackingAccess: @MainActor () -> Bool = trackingAccess ?? { StoreManager.shared.canTrack }
         let nativeManager = CLLocationManager()
         self.locationManager = nativeManager
@@ -366,11 +373,11 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
 
     /// Future Settings UI calls this only after explicit opt-in. It does not ask
     /// for Location permission; Always must be obtained via the existing UI.
-    func updateSmartStartSettings(_ settings: SmartStartSettings) {
+    func updateSmartStartSettings(_ settings: SmartStartSettings) throws {
         if let autoStartCoordinator {
-            autoStartCoordinator.updateSettings(settings)
+            try autoStartCoordinator.updateSettings(settings)
         } else {
-            smartStartState.settings = settings
+            try smartStartState.saveSettings(settings)
             if settings.isEnabled { startAmbientMonitoring() } else { stopAmbientMonitoring() }
         }
     }
@@ -517,8 +524,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         isTrackingEnabled = false
         defaults.set(false, forKey: "isTrackingEnabled")
 
-        stopTrackingTimer?.invalidate()
-        stopTrackingTimer = nil
+        invalidateStopAfterTimer()
         trackingStartTime = nil
         routeSamplingWakeTimer?.invalidate()
         routeSamplingWakeTimer = nil
@@ -653,9 +659,14 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         }
     }
 
+    private func invalidateStopAfterTimer() {
+        stopAfterGeneration = UUID()
+        cancelStopAfterTimer?()
+        cancelStopAfterTimer = nil
+    }
+
     private func scheduleStopTrackingTimer() {
-        stopTrackingTimer?.invalidate()
-        stopTrackingTimer = nil
+        invalidateStopAfterTimer()
 
         guard isTrackingEnabled, stopAfterHours > 0, let start = trackingStartTime else { return }
 
@@ -667,10 +678,11 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             return
         }
 
-        stopTrackingTimer = Timer.scheduledTimer(withTimeInterval: remaining, repeats: false) { [weak self] _ in
-            Task { @MainActor in
-                self?.stopTracking(reason: .autoStop)
-            }
+        let token = stopAfterGeneration
+        cancelStopAfterTimer = stopAfterScheduler.schedule(after: remaining) { [weak self] in
+            guard let self, self.isTrackingEnabled, self.stopAfterGeneration == token,
+                  self.trackingStartTime == start else { return }
+            self.stopTracking(reason: .autoStop)
         }
     }
 
@@ -690,6 +702,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     @discardableResult
     func reconcileRecordingSessions(referenceDate: Date = Date()) -> Int {
         guard let context = modelContext else { return 0 }
+        let previousStart = trackingStartTime
 
         do {
             var descriptor = FetchDescriptor<RecordingSession>(
@@ -737,6 +750,9 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
                 try context.save()
             }
 
+            if isTrackingEnabled, trackingStartTime != previousStart {
+                scheduleStopTrackingTimer()
+            }
             return changedCount
         } catch {
             lastError = String(localized: "Failed to reconcile recording sessions: \(error.localizedDescription)")
@@ -1490,8 +1506,18 @@ extension LocationManager: CLLocationManagerDelegate {
     func handleVisit(_ visit: CLVisit) {
         let wasRecording = isTrackingEnabled
         if ambientMonitoringActive { autoStartCoordinator?.locationWake() }
-        guard wasRecording, isTrackingEnabled, trackingAccess() else { return }
+        guard wasRecording, isTrackingEnabled, trackingAccess(), admitsVisitToSession(visit) else { return }
         saveVisit(visit)
+    }
+
+    /// Never synthesize a pre-session visit from a late callback. A departure
+    /// inside this session may still close a previously persisted open visit.
+    private func admitsVisitToSession(_ visit: CLVisit) -> Bool {
+        guard let start = trackingStartTime else { return false }
+        if visit.arrivalDate != .distantPast, visit.arrivalDate >= start { return true }
+        guard visit.departureDate != .distantFuture, visit.departureDate >= start,
+              let context = modelContext else { return false }
+        return (try? matchingOpenVisit(for: visit, in: context)) != nil
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -1500,26 +1526,30 @@ extension LocationManager: CLLocationManagerDelegate {
 
     /// The delegate and injection tests use the same actor-isolated processing path.
     func handleLocationUpdates(_ locations: [CLLocation]) async {
-        guard let location = locations.last else { return }
-        currentLocation = location
+        guard let deliveredLocation = locations.last else { return }
+        currentLocation = deliveredLocation
         let wasRecording = isTrackingEnabled
         if ambientMonitoringActive && !wasRecording { autoStartCoordinator?.locationWake() }
 
-        guard wasRecording, isTrackingEnabled, trackingAccess() else { return }
+        guard wasRecording, isTrackingEnabled, trackingAccess(), let start = trackingStartTime else { return }
+        // Handler time/generation alone cannot identify a cached CoreLocation fix.
+        // Admit by the actual (possibly restored) session start before ANY consumer.
+        let admittedLocations = locations.filter { $0.timestamp >= start }
+        guard let location = admittedLocations.last else { return }
 
-        // Record every delivered active-session location for daily distance history (stats only).
-        for deliveredLocation in locations {
-            dailyDistanceTracker.recordLocation(deliveredLocation)
+        // Record only admitted active-session locations for daily distance history (stats only).
+        for deliveredLocation in admittedLocations {
+            recordDistanceLocation(deliveredLocation)
         }
 
         // Distance mode passes every fix through; time modes keep one per interval.
-        let samples = routeSampler.process(locations)
+        let samples = routeSampler.process(admittedLocations)
         if preciseFixRequestedAt != nil,
-           locations.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
+           admittedLocations.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
             preciseFixRequestedAt = nil
         }
         applyRoutePowerLevel()
-        saveLocationPoints(samples, receivedCount: locations.count)
+        saveLocationPoints(samples, receivedCount: admittedLocations.count)
 
         // Geocode/update Live Activity only for the latest location to avoid doing
         // network/UI work for every point in a Core Location batch.

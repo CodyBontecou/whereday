@@ -38,6 +38,7 @@ struct AutoStartPolicy {
     func evaluate(_ signal: Signal, context: Context) -> Decision {
         let settings = context.settings
         guard settings.isEnabled else { return .suppress(.disabled) }
+        guard (try? settings.validate()) != nil else { return .suppress(.invalidSignal) }
         guard context.canTrack else { return .suppress(.accessRequired) }
         guard context.hasAlwaysLocation else { return .suppress(.missingLocationPermission) }
         guard context.hasMotionPermission else { return .suppress(.missingMotionPermission) }
