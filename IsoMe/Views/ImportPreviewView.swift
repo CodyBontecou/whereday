@@ -5,6 +5,56 @@ struct ImportFileSelection: Identifiable {
     let urls: [URL]
 }
 
+/// One owner per asynchronous policy review. Kept separate from SwiftUI rendering for deterministic completion tests.
+struct ImportReviewState {
+    struct Request: Sendable {
+        let generation: Int
+        let options: ImportOptions
+    }
+    private var generation = 0
+    private(set) var isReviewing = false
+    private(set) var errorMessage: String?
+
+    mutating func begin(options: ImportOptions) -> Request {
+        generation += 1
+        isReviewing = true
+        errorMessage = nil
+        return Request(generation: generation, options: options)
+    }
+
+    mutating func finish(_ request: Request, current: ImportOptions, result: Result<ImportPreview, Error>) -> ImportPreview? {
+        guard request.generation == generation else { return nil }
+        // Only this generation owns busy/error state. Record selection is not review policy.
+        defer { isReviewing = false }
+        guard current.sameReviewPolicy(as: request.options) else {
+            errorMessage = VisitInferenceError.reviewRequired.localizedDescription
+            return nil
+        }
+        switch result {
+        case .success(var preview):
+            guard preview.options.sameReviewPolicy(as: request.options) else {
+                errorMessage = VisitInferenceError.reviewRequired.localizedDescription
+                return nil
+            }
+            preview.options.includeVisits = current.includeVisits
+            preview.options.includePoints = current.includePoints
+            return preview
+        case .failure(let error): errorMessage = error.localizedDescription; return nil
+        }
+    }
+
+    mutating func cancel(_ request: Request? = nil) {
+        guard request == nil || request?.generation == generation else { return }
+        generation += 1
+        isReviewing = false
+        errorMessage = nil
+    }
+
+    func canConfirm(_ preview: ImportPreview, current: ImportOptions) -> Bool {
+        !isReviewing && errorMessage == nil && current.sameReviewPolicy(as: preview.options)
+    }
+}
+
 /// Review before saving: shows what a file would add, lets the person pick record types, then commits.
 struct ImportPreviewView: View {
     let urls: [URL]
@@ -17,8 +67,9 @@ struct ImportPreviewView: View {
     @ObservedObject private var progress = ImportProgress.shared
     @State private var phase: Phase = .reading
     @State private var options = ImportOptions()
-    @State private var isReviewing = false
-    @State private var reviewError: String?
+    @State private var reviewState = ImportReviewState()
+    private var isReviewing: Bool { reviewState.isReviewing }
+    private var reviewError: String? { reviewState.errorMessage }
     @State private var reviewTask: Task<Void, Never>?
 
     private enum Phase {
@@ -71,25 +122,22 @@ struct ImportPreviewView: View {
         .onChange(of: options) { old, updated in
             guard !old.sameReviewPolicy(as: updated), case .ready(let preview) = phase else { return }
             reviewTask?.cancel()
-            isReviewing = true
-            reviewError = nil
+            let request = reviewState.begin(options: updated)
             reviewTask = Task {
                 do {
                     let reviewed = try await viewModel.reviewImport(preview, options: updated)
                     try Task.checkCancellation()
-                    guard options == updated else { return }
-                    phase = .ready(reviewed)
-                    isReviewing = false
+                    if let accepted = reviewState.finish(request, current: options, result: .success(reviewed)) {
+                        phase = .ready(accepted)
+                    }
                 } catch is CancellationError {
-                    // A newer review superseded this one, or the sheet was closed.
+                    reviewState.cancel(request)
                 } catch {
-                    guard options == updated else { return }
-                    reviewError = error.localizedDescription
-                    isReviewing = false
+                    _ = reviewState.finish(request, current: options, result: .failure(error))
                 }
             }
         }
-        .onDisappear { reviewTask?.cancel() }
+        .onDisappear { reviewTask?.cancel(); reviewState.cancel() }
     }
 
     private var url: URL { urls[0] }
@@ -416,6 +464,16 @@ struct ImportPreviewView: View {
                 ), in: 5...120, step: 5)
                 Stepper("Radius: \(Int(options.inference.radiusMeters)) m", value: $options.inference.radiusMeters, in: 25...500, step: 25)
             }
+            if preview.payload.unorderableRawObservationCount > 0 {
+                Text("Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported.")
+                    .font(.caption)
+                    .foregroundStyle(TE.inkRust)
+                    .accessibilityIdentifier("import-unorderable-inference-warning")
+            } else if !preview.payload.rawInferenceBarrierDates.isEmpty {
+                Text("\(preview.payload.rawInferenceBarrierDates.count.formatted()) rejected raw samples break inference continuity")
+                    .font(.caption)
+                    .foregroundStyle(TE.textMuted)
+            }
             Text("Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected.")
                 .font(.caption)
                 .foregroundStyle(TE.textMuted)
@@ -536,7 +594,7 @@ struct ImportPreviewView: View {
                     }
                 }
                 .buttonStyle(ArchiveCapsuleButtonStyle(filled: true))
-                .disabled(selectedCount(preview) == 0 || isReviewing || reviewError != nil || !options.sameReviewPolicy(as: preview.options))
+                .disabled(selectedCount(preview) == 0 || !reviewState.canConfirm(preview, current: options))
                 .accessibilityIdentifier("confirm-import")
                 Button("Cancel", role: .cancel) { dismiss() }
                     .font(.subheadline)

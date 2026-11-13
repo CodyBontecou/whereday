@@ -20,17 +20,26 @@ enum GoogleTimelineImportService {
         var payload = ImportPayload(format: format)
         for (index, value) in rows.enumerated() {
             if index.isMultiple(of: 500) { try Task.checkCancellation() }
-            guard let row = value as? [String: Any] else { payload.invalidRecordCount += 1; continue }
+            guard let row = value as? [String: Any] else {
+                payload.invalidRecordCount += 1
+                if format == .googleRaw { payload.unorderableRawObservationCount += 1 }
+                continue
+            }
             switch format {
             case .googleRaw:
-                if let c = coordinate(row), let time = milliseconds(row["timestampMs"]) ?? date(row["timestamp"]),
+                let observedTime = milliseconds(row["timestampMs"]) ?? date(row["timestamp"])
+                if let c = coordinate(row), let time = observedTime,
                    row["accuracy"] == nil || number(row["accuracy"]).map({ $0 >= 0 }) == true {
                     payload.points.append(ImportedLocationPoint(
                         latitude: c.latitude, longitude: c.longitude, timestamp: time,
                         altitude: number(row["altitude"]), speed: number(row["velocity"]).flatMap { $0 >= 0 ? $0 : nil },
                         horizontalAccuracy: number(row["accuracy"]) ?? -1, isOutlier: false
                     ))
-                } else { payload.invalidRecordCount += 1 }
+                } else {
+                    payload.invalidRecordCount += 1
+                    if let observedTime { payload.rawInferenceBarrierDates.append(observedTime) }
+                    else { payload.unorderableRawObservationCount += 1 }
+                }
             case .googleSemantic:
                 if let visit = row["placeVisit"] as? [String: Any] {
                     let location = visit["location"] as? [String: Any] ?? [:]
@@ -99,10 +108,16 @@ enum GoogleTimelineImportService {
         guard let location else { return }
         let dictionary = (location as? [String: Any]) ?? ["latLng": location]
         guard let c = coordinate(dictionary), let timestamp else { payload.invalidRecordCount += 1; return }
+        // Absent accuracy is unmeasured; an explicitly invalid value is not an unknown fix.
+        let accuracy: Double
+        if let supplied = dictionary["accuracy"] {
+            guard let measured = number(supplied), measured >= 0 else { payload.invalidRecordCount += 1; return }
+            accuracy = measured
+        } else { accuracy = -1 }
         payload.points.append(ImportedLocationPoint(
             latitude: c.latitude, longitude: c.longitude, timestamp: timestamp,
             altitude: number(dictionary["altitude"]), speed: nil,
-            horizontalAccuracy: number(dictionary["accuracy"]) ?? -1, isOutlier: false
+            horizontalAccuracy: accuracy, isOutlier: false
         ))
     }
 

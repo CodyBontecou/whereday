@@ -139,6 +139,248 @@ final class VisitInferenceTests: XCTestCase {
 }
 
 @MainActor
+final class GoogleImportCorrectionTests: XCTestCase {
+    private let start = Date(timeIntervalSince1970: 1_577_836_800)
+    private func container() throws -> ModelContainer {
+        try ModelContainer(for: Visit.self, LocationPoint.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    }
+    private func preview(options: ImportOptions) -> ImportPreview {
+        ImportPreview(fileName: "synthetic.json", payload: ImportPayload(format: .googleRaw),
+                      newVisitCount: 1, newPointCount: 2, duplicateVisitCount: 0, duplicatePointCount: 0, options: options)
+    }
+
+    func testDelayedPolicySuccessPreservesLatestSelectionAndReenablesConfirmation() async throws {
+        var state = ImportReviewState()
+        var options = ImportOptions(); options.inference.radiusMeters = 175
+        let request = state.begin(options: options)
+        let delayed = AsyncStream<ImportPreview>.makeStream()
+        let completion = Task { @MainActor in
+            for await result in delayed.stream { return state.finish(request, current: options, result: .success(result)) }
+            return nil as ImportPreview?
+        }
+        let reviewed = preview(options: options)
+        options.includePoints = false
+        XCTAssertTrue(state.isReviewing)
+        delayed.continuation.yield(reviewed); delayed.continuation.finish()
+        let accepted = await completion.value
+        XCTAssertFalse(state.isReviewing)
+        let final = try XCTUnwrap(accepted)
+        XCTAssertFalse(final.options.includePoints)
+        XCTAssertTrue(final.options.includeVisits)
+        XCTAssertTrue(state.canConfirm(final, current: options))
+    }
+
+    func testDelayedPolicyFailureAfterSelectionChangeClearsOwnerAndCanRetry() async throws {
+        var state = ImportReviewState()
+        var options = ImportOptions(); options.inference.radiusMeters = 175
+        let request = state.begin(options: options)
+        let delayed = AsyncStream<Result<ImportPreview, Error>>.makeStream()
+        let completion = Task { @MainActor in
+            for await result in delayed.stream { return state.finish(request, current: options, result: result) }
+            return nil as ImportPreview?
+        }
+        options.includeVisits = false
+        delayed.continuation.yield(.failure(VisitInferenceError.invalidOptions)); delayed.continuation.finish()
+        _ = await completion.value
+        XCTAssertFalse(state.isReviewing)
+        XCTAssertNotNil(state.errorMessage)
+        let retry = state.begin(options: options)
+        let final = try XCTUnwrap(state.finish(retry, current: options, result: .success(preview(options: options))))
+        XCTAssertFalse(final.options.includeVisits)
+        XCTAssertTrue(state.canConfirm(final, current: options))
+    }
+
+    func testSupersededCompletionOrCancellationCannotClearNewReviewOwner() throws {
+        var state = ImportReviewState()
+        var options = ImportOptions()
+        let old = state.begin(options: options)
+        options.inference.radiusMeters = 200
+        let current = state.begin(options: options)
+        XCTAssertNil(state.finish(old, current: options, result: .success(preview(options: old.options))))
+        state.cancel(old)
+        XCTAssertTrue(state.isReviewing)
+        let accepted = try XCTUnwrap(state.finish(current, current: options, result: .success(preview(options: options))))
+        XCTAssertTrue(state.canConfirm(accepted, current: options))
+        let cancelled = state.begin(options: options)
+        state.cancel(cancelled)
+        XCTAssertFalse(state.isReviewing)
+        XCTAssertNil(state.finish(cancelled, current: options, result: .success(accepted)))
+    }
+
+    func testCurrentOwnerRejectsMismatchedPolicyResultAndClearsBusy() {
+        var state = ImportReviewState()
+        var options = ImportOptions(); options.inference.radiusMeters = 200
+        let request = state.begin(options: options)
+        XCTAssertNil(state.finish(request, current: options, result: .success(preview(options: .init()))))
+        XCTAssertFalse(state.isReviewing)
+        XCTAssertNotNil(state.errorMessage)
+    }
+
+    private func stationaryRows(offset: Int = 0) -> [[String: Any]] {
+        (0...5).map { ["latitudeE7": 180_000_000, "longitudeE7": -660_000_000,
+                       "timestampMs": 1_577_836_800_000 + offset * 1_000 + $0 * 180_000, "accuracy": 8] }
+    }
+
+    func testTimestampedRejectedRawSampleBreaksInferenceBeforeSaving() async throws {
+        for badCoordinate in [false, true] {
+            let store = try container()
+            let actual = TimelineImportService(container: store)
+            var rejected = stationaryRows()[0]
+            rejected["timestampMs"] = 1_577_837_250_000 // 450 seconds, between two three-fix runs.
+            if badCoordinate { rejected["latitudeE7"] = 990_000_000 }
+            else { rejected["accuracy"] = "NaN" }
+            let data = try JSONSerialization.data(withJSONObject: ["locations": stationaryRows() + [rejected]])
+            let result = try await actual.preview(data: data, fileName: "barrier.json")
+            XCTAssertEqual(result.payload.invalidRecordCount, 1)
+            XCTAssertEqual(result.payload.rawInferenceBarrierDates, [start.addingTimeInterval(450)])
+            XCTAssertEqual(result.newPointCount, 6)
+            XCTAssertEqual(result.inferredVisitCount, 0)
+            XCTAssertEqual(result.newVisitCount, 0)
+            XCTAssertEqual(try store.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+            let committed = try await actual.commit(result, options: .init())
+            XCTAssertEqual(committed.visitCount, 0)
+            XCTAssertEqual(committed.pointCount, 6)
+            XCTAssertEqual(try store.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+            XCTAssertTrue(try store.mainContext.fetch(FetchDescriptor<LocationPoint>()).allSatisfy { $0.latitude == 18 && $0.horizontalAccuracy == 8 })
+        }
+    }
+
+    func testUnorderableRejectedRawEvidenceDisablesInferenceButKeepsValidRoutes() async throws {
+        var badTime = stationaryRows()[0]; badTime["timestampMs"] = "NaN"
+        var missingTime = stationaryRows()[0]; missingTime.removeValue(forKey: "timestampMs")
+        for rejected: Any in [badTime, missingTime, NSNull()] {
+            let store = try container()
+            let service = TimelineImportService(container: store)
+            let rows: [Any] = stationaryRows().map { $0 } + [rejected]
+            let data = try JSONSerialization.data(withJSONObject: ["locations": rows])
+            let result = try await service.preview(data: data, fileName: "unorderable.json")
+            XCTAssertEqual(result.payload.unorderableRawObservationCount, 1)
+            XCTAssertTrue(result.payload.rawInferenceBarrierDates.isEmpty)
+            XCTAssertEqual(result.payload.invalidRecordCount, 1)
+            XCTAssertEqual(result.inferredVisitCount, 0)
+            XCTAssertEqual(result.newPointCount, 6)
+            let committed = try await service.commit(result, options: .init())
+            XCTAssertEqual(committed.visitCount, 0)
+            XCTAssertEqual(committed.pointCount, 6)
+            XCTAssertEqual(try store.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+        }
+    }
+
+    func testRejectedInstantDoesNotEraseQualifyingDwellsOnEitherSide() async throws {
+        let store = try container()
+        let service = TimelineImportService(container: store)
+        var rejected = stationaryRows()[0]
+        rejected["timestampMs"] = 1_577_837_790_000 // 990 seconds, inside the otherwise short 180-second gap.
+        rejected["accuracy"] = "NaN"
+        let data = try JSONSerialization.data(withJSONObject: ["locations": stationaryRows() + [rejected] + stationaryRows(offset: 1080)])
+        let result = try await service.preview(data: data, fileName: "separate-dwells.json")
+        XCTAssertEqual(result.inferredVisitCount, 2)
+        let committed = try await service.commit(result, options: .init())
+        XCTAssertEqual(committed.visitCount, 2)
+        let visits = try store.mainContext.fetch(FetchDescriptor<Visit>(sortBy: [SortDescriptor(\.arrivedAt)]))
+        XCTAssertEqual(visits[0].departedAt, start.addingTimeInterval(900))
+        XCTAssertEqual(visits[1].arrivedAt, start.addingTimeInterval(1080))
+    }
+
+    func testRawBarrierMetadataSurvivesExplicitMultiFileAggregation() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let first = directory.appendingPathComponent("first.json"), second = directory.appendingPathComponent("second.json")
+        let rows = stationaryRows()
+        var rejected = rows[0]; rejected["timestampMs"] = 1_577_837_250_000; rejected["accuracy"] = "NaN"
+        try JSONSerialization.data(withJSONObject: ["locations": Array(rows.prefix(3))]).write(to: first)
+        try JSONSerialization.data(withJSONObject: ["locations": Array(rows.suffix(3)) + [rejected]]).write(to: second)
+        for urls in [[first, second], [second, first]] {
+            let service = TimelineImportService(container: try container())
+            let result = try await service.preview(urls: urls)
+            XCTAssertEqual(result.payload.rawInferenceBarrierDates, [start.addingTimeInterval(450)])
+            XCTAssertEqual(result.inferredVisitCount, 0)
+            XCTAssertEqual(result.newPointCount, 6)
+        }
+        rejected.removeValue(forKey: "timestampMs")
+        try JSONSerialization.data(withJSONObject: ["locations": Array(rows.suffix(3)) + [rejected]]).write(to: second)
+        let service = TimelineImportService(container: try container())
+        let unorderable = try await service.preview(urls: [first, second])
+        XCTAssertEqual(unorderable.payload.unorderableRawObservationCount, 1)
+        XCTAssertEqual(unorderable.inferredVisitCount, 0)
+    }
+
+    func testTimestampedInvalidAndValidDuplicatesAtSameInstantCannotBridgeDwell() async throws {
+        let store = try container()
+        let service = TimelineImportService(container: store)
+        var duplicate = stationaryRows()[0]; duplicate["timestampMs"] = 1_577_837_250_000
+        var rejected = duplicate; rejected["accuracy"] = "NaN"
+        let data = try JSONSerialization.data(withJSONObject: ["locations": stationaryRows() + [duplicate, rejected]])
+        let result = try await service.preview(data: data, fileName: "conflicting-instant.json")
+        XCTAssertEqual(result.inferredVisitCount, 0)
+        let committed = try await service.commit(result, options: .init())
+        XCTAssertEqual(committed.pointCount, 7, "The valid route measurement remains importable, not inference evidence")
+        XCTAssertEqual(committed.visitCount, 0)
+    }
+
+    func testBarrierMetadataCountsTowardAggregateAdmissionBudget() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let invalid: [String: Any] = ["timestampMs": "1577837250000", "accuracy": "NaN"]
+        let rows = [stationaryRows()[0]] + Array(repeating: invalid, count: ImportPayload.maximumRecordCount / 2)
+        let data = try JSONSerialization.data(withJSONObject: ["locations": rows])
+        let urls = [directory.appendingPathComponent("first.json"), directory.appendingPathComponent("second.json")]
+        for url in urls { try data.write(to: url) }
+        let service = TimelineImportService(container: try container())
+        do { _ = try await service.preview(urls: urls); XCTFail("Rejected evidence must not bypass aggregate admission") }
+        catch TimelineImportError.tooManyRecords { }
+    }
+
+    private func accuracyData(device: Bool, accuracy: Any) throws -> Data {
+        if device {
+            return try JSONSerialization.data(withJSONObject: ["semanticSegments": [[
+                "startTime": "2020-01-01T00:00:00Z", "endTime": "2020-01-01T00:15:00Z",
+                "activity": ["start": ["latLng": "geo:18,-66", "accuracy": accuracy],
+                             "end": ["latLng": "geo:18,-66", "accuracy": accuracy]],
+                "timelinePath": [["point": "geo:18,-66", "time": "2020-01-01T00:07:30Z", "accuracy": accuracy],
+                                 ["point": "geo:18,-66", "time": "2020-01-01T00:10:00Z"]]
+            ]]])
+        }
+        return try JSONSerialization.data(withJSONObject: ["timelineObjects": [["activitySegment": [
+            "duration": ["startTimestamp": "2020-01-01T00:00:00Z", "endTimestamp": "2020-01-01T00:15:00Z"],
+            "startLocation": ["latitudeE7": 180_000_000, "longitudeE7": -660_000_000, "accuracy": accuracy],
+            "endLocation": ["latitudeE7": 180_000_000, "longitudeE7": -660_000_000, "accuracy": accuracy],
+            "simplifiedRawPath": ["points": [["latE7": 180_000_000, "lngE7": -660_000_000, "timestampMs": "1577837250000", "accuracy": accuracy],
+                                             ["latE7": 180_000_000, "lngE7": -660_000_000, "timestampMs": "1577837400000"]]]
+        ]]]])
+    }
+
+    private func checkInvalidAccuracy(device: Bool) async throws {
+        for accuracy in ["NaN", "Infinity"] {
+            for includePoor in [false, true] {
+                let store = try container()
+                let service = TimelineImportService(container: store)
+                var options = ImportOptions(); options.includePoorAccuracyPoints = includePoor
+                let result = try await service.preview(data: accuracyData(device: device, accuracy: accuracy), fileName: "family.json", options: options)
+                XCTAssertEqual(result.payload.invalidRecordCount, 3)
+                XCTAssertEqual(result.newPointCount, 1)
+                XCTAssertEqual(result.unknownAccuracyPointCount, 1, "Only genuinely absent accuracy is unknown")
+                let committed = try await service.commit(result, options: options)
+                XCTAssertEqual(committed.pointCount, 1)
+                let saved = try store.mainContext.fetch(FetchDescriptor<LocationPoint>())
+                XCTAssertEqual(saved.count, 1)
+                XCTAssertTrue(saved.allSatisfy { $0.horizontalAccuracy == -1 && $0.timestamp == start.addingTimeInterval(600) })
+            }
+        }
+    }
+
+    func testSemanticNonfiniteAccuracyNeverBecomesUnknownInEitherRoutePolicy() async throws {
+        try await checkInvalidAccuracy(device: false)
+    }
+
+    func testDeviceNonfiniteAccuracyNeverBecomesUnknownInEitherRoutePolicy() async throws {
+        try await checkInvalidAccuracy(device: true)
+    }
+}
+
+@MainActor
 final class VisitInferenceImportTests: XCTestCase {
     private let start = Date(timeIntervalSince1970: 1_577_836_800)
     private func container() throws -> ModelContainer {

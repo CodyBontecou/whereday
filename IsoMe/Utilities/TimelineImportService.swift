@@ -44,6 +44,10 @@ struct ImportPayload: Sendable {
     var unsupportedRecordCount = 0
     // Only original raw Google points may seed inference, never semantic activity endpoints.
     var rawInferencePoints: [ImportedLocationPoint] = []
+    // Rejected raw observations still break inference evidence; they are never route rows.
+    var rawInferenceBarrierDates: [Date] = []
+    // A rejected sample without an orderable time disables inference for the entire selection.
+    var unorderableRawObservationCount = 0
 
     var dateRange: ClosedRange<Date>? {
         var first: Date?, last: Date?
@@ -189,6 +193,8 @@ actor TimelineImportService {
                 guard totalBytes <= ImportPayload.maximumFileSize else { throw TimelineImportError.fileTooLarge }
                 if combined != nil {
                     guard combined!.visits.count + combined!.points.count + payload.visits.count + payload.points.count
+                            + combined!.rawInferenceBarrierDates.count + payload.rawInferenceBarrierDates.count
+                            + combined!.unorderableRawObservationCount + payload.unorderableRawObservationCount
                             <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
                     if combined!.format != payload.format { combined!.format = .googleMixed }
                     combined!.visits.append(contentsOf: payload.visits)
@@ -196,6 +202,8 @@ actor TimelineImportService {
                     combined!.invalidRecordCount += payload.invalidRecordCount
                     combined!.unsupportedRecordCount += payload.unsupportedRecordCount
                     combined!.rawInferencePoints.append(contentsOf: payload.rawInferencePoints)
+                    combined!.rawInferenceBarrierDates.append(contentsOf: payload.rawInferenceBarrierDates)
+                    combined!.unorderableRawObservationCount += payload.unorderableRawObservationCount
                 } else { combined = payload }
             }
         }
@@ -293,10 +301,15 @@ actor TimelineImportService {
         }
         payload.invalidRecordCount += payload.visits.count - visits.count
         payload.visits = visits.sorted { $0.arrivedAt < $1.arrivedAt }
-        let points = payload.points.filter {
-            validCoordinate($0.latitude, $0.longitude) && GoogleTimelineImportService.validDate($0.timestamp)
-                && $0.horizontalAccuracy.isFinite && $0.horizontalAccuracy >= -1
-                && ($0.altitude?.isFinite ?? true) && ($0.speed?.isFinite ?? true)
+        let points = payload.points.filter { point in
+            let valid = validCoordinate(point.latitude, point.longitude) && GoogleTimelineImportService.validDate(point.timestamp)
+                && point.horizontalAccuracy.isFinite && point.horizontalAccuracy >= -1
+                && (point.altitude?.isFinite ?? true) && (point.speed?.isFinite ?? true)
+            if !valid, payload.format == .googleRaw {
+                if GoogleTimelineImportService.validDate(point.timestamp) { payload.rawInferenceBarrierDates.append(point.timestamp) }
+                else { payload.unorderableRawObservationCount += 1 }
+            }
+            return valid
         }
         payload.invalidRecordCount += payload.points.count - points.count
         payload.points = points.sorted { $0.timestamp < $1.timestamp }
@@ -378,9 +391,22 @@ actor TimelineImportService {
         let isGoogle = [.googleRaw, .googleSemantic, .googleDevice, .googleMixed].contains(payload.format)
         if isGoogle { try options.inference.validate() }
         var inferred: [ImportedVisit] = []
-        if isGoogle, options.includeVisits, options.inferenceEnabled(for: payload) {
+        if isGoogle, options.includeVisits, options.inferenceEnabled(for: payload), payload.unorderableRawObservationCount == 0 {
             let windows = payload.visits.map { $0.arrivedAt...($0.departedAt ?? $0.arrivedAt) }
-            inferred = try VisitInferenceService.infer(points: payload.rawInferencePoints, options: options.inference, excluding: windows)
+            let barrierDates = Set(payload.rawInferenceBarrierDates)
+            // Internal rejection markers carry only recorded times, not admitted measurements.
+            // They reach the pure service's outlier/unknown-accuracy continuity break, never route persistence.
+            // A rejected instant also excludes any apparently valid duplicate at that exact instant.
+            let observations: [ImportedLocationPoint]
+            if barrierDates.isEmpty { observations = payload.rawInferencePoints }
+            else {
+                observations = payload.rawInferencePoints.filter { !barrierDates.contains($0.timestamp) }
+                    + barrierDates.sorted().map {
+                        ImportedLocationPoint(latitude: 0, longitude: 0, timestamp: $0, altitude: nil,
+                                              speed: nil, horizontalAccuracy: -1, isOutlier: true)
+                    }
+            }
+            inferred = try VisitInferenceService.infer(points: observations, options: options.inference, excluding: windows)
             // An existing semantic/manual visit may begin before the imported range.
             // Suppress all overlapping nonmatches, not merely near-arrival duplicates.
             if let start = inferred.first?.arrivedAt, let end = inferred.last?.departedAt {

@@ -1,6 +1,12 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported.": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported." } } }
+    },
+    "%@ rejected raw samples break inference continuity": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ rejected raw samples break inference continuity" } } }
+    },
     "%@ route samples have unknown accuracy; excluded from visit inference": {
       "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ route samples have unknown accuracy; excluded from visit inference" } } }
     },
