@@ -102,6 +102,18 @@ final class AutoStartPolicyTests: XCTestCase {
         XCTAssertEqual(policy.evaluate(signal, context: c), .stop)
     }
 
+    func testAutomaticStopAlsoRequiresCurrentPermissionsAndAccess() {
+        var c = context
+        c.isTracking = true; c.source = .smartMotion; c.settings.stationaryAutoStopEnabled = true
+        let signal = AutoStartPolicy.Signal(activity: .stationary, confidence: .high, duration: 600)
+        c.canTrack = false
+        XCTAssertEqual(policy.evaluate(signal, context: c), .suppress(.accessRequired))
+        c.canTrack = true; c.hasAlwaysLocation = false
+        XCTAssertEqual(policy.evaluate(signal, context: c), .suppress(.missingLocationPermission))
+        c.hasAlwaysLocation = true; c.hasMotionPermission = false
+        XCTAssertEqual(policy.evaluate(signal, context: c), .suppress(.missingMotionPermission))
+    }
+
     func testInvalidDurationsFailClosed() {
         for duration in [-1.0, .nan, .infinity] {
             var signal = moving; signal.duration = duration

@@ -38,6 +38,9 @@ struct AutoStartPolicy {
     func evaluate(_ signal: Signal, context: Context) -> Decision {
         let settings = context.settings
         guard settings.isEnabled else { return .suppress(.disabled) }
+        guard context.canTrack else { return .suppress(.accessRequired) }
+        guard context.hasAlwaysLocation else { return .suppress(.missingLocationPermission) }
+        guard context.hasMotionPermission else { return .suppress(.missingMotionPermission) }
         // Never end a manually/shortcut-started session based on inferred activity.
         if context.isTracking {
             guard context.source?.isAutomatic == true else { return .noop(.manualSessionProtected) }
@@ -50,9 +53,6 @@ struct AutoStartPolicy {
             }
             return signal.duration >= settings.stationaryDuration ? .stop : .noop(.insufficientStationaryTime)
         }
-        guard context.canTrack else { return .suppress(.accessRequired) }
-        guard context.hasAlwaysLocation else { return .suppress(.missingLocationPermission) }
-        guard context.hasMotionPermission else { return .suppress(.missingMotionPermission) }
         guard signal.confidence == .high else { return .suppress(.lowConfidence) }
         guard signal.duration.isFinite, signal.duration >= 0,
               settings.minimumMovementDuration.isFinite, settings.minimumMovementDuration > 0,
