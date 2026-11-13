@@ -150,6 +150,61 @@ final class MileageReportTests: XCTestCase {
         XCTAssertEqual(result.knownEstimatedDeductionUSD, Decimal(string: "0.02"))
     }
 
+    func testAcceptedHighRateFailsClosedWhenDeductionAggregateOverflows() throws {
+        // Synthetic representable Decimal rate: not an IRS rate or a proposed product cap.
+        let highRate = NSDecimalNumber.maximum.decimalValue
+        let provider = try MileageRateProvider(customRate: highRate, customSource: "Synthetic numeric boundary")
+        let start = date("2025-02-01T00:00:00Z")
+        let trips = (0..<100).map { trip(start.addingTimeInterval(Double($0)), miles: 1) }
+        let single = try report([trips[0]], rates: provider)
+        XCTAssertEqual(single.rows[0].estimatedDeductionUSD, highRate)
+        XCTAssertEqual(single.knownEstimatedDeductionUSD, highRate)
+        XCTAssertTrue(single.isEstimateComplete)
+        do {
+            let result = try report(trips, rates: provider)
+            XCTFail("Expected aggregate overflow to throw; returned \(result.knownEstimatedDeductionUSD), complete=\(result.isEstimateComplete)")
+        } catch {
+            XCTAssertEqual(error as? MileageReportService.CalculationError, .unrepresentableAggregate)
+        }
+    }
+
+    func testExactDeductionAggregateCannotSilentlyDiscardOneCent() throws {
+        let start = date("2025-02-01T00:00:00Z")
+        let boundary = start.addingTimeInterval(100)
+        let highRate = NSDecimalNumber.maximum.decimalValue
+        let provider = try MileageRateProvider(rates: [
+            MileageRate(startsAt: start, endsAt: boundary, usdPerMile: highRate, source: "Synthetic maximum rate"),
+            MileageRate(startsAt: boundary, endsAt: boundary.addingTimeInterval(100),
+                        usdPerMile: Decimal(string: "0.01")!, source: "Synthetic cent rate")
+        ])
+        let a = trip(start, miles: 1)
+        let b = trip(boundary, miles: 1)
+        XCTAssertEqual(try report([a], rates: provider).knownEstimatedDeductionUSD, highRate)
+        XCTAssertEqual(try report([b], rates: provider).knownEstimatedDeductionUSD, Decimal(string: "0.01"))
+        XCTAssertThrowsError(try report([a, b], rates: provider), "An exact money total must not discard the cent") { error in
+            XCTAssertEqual(error as? MileageReportService.CalculationError, .unrepresentableAggregate)
+        }
+    }
+
+    func testFractionalMileageAggregatesRemainUsableAtDecimalPrecision() throws {
+        let vehicle = Vehicle(name: "Synthetic fractional-distance vehicle")
+        let start = date("2025-02-01T00:00:00Z")
+        let trips = (0..<100).map { index in
+            let item = trip(start.addingTimeInterval(Double(index)), miles: 0, classification: .personal)
+            item.distanceMeters = 100
+            item.assignVehicle(vehicle)
+            return item
+        }
+        let result = try report(trips, rates: MileageRateProvider())
+        // 10 km in international miles. Repeating quotients may round at Decimal precision.
+        let expectedMiles = 6.21371192237334
+        let classificationMiles = try XCTUnwrap(result.milesByClassification[.personal])
+        XCTAssertEqual(NSDecimalNumber(decimal: classificationMiles).doubleValue, expectedMiles, accuracy: 1e-12)
+        let vehicleMiles = try XCTUnwrap(result.totalsByVehicle.first { $0.vehicleID == vehicle.id }?.miles)
+        XCTAssertEqual(NSDecimalNumber(decimal: vehicleMiles).doubleValue, expectedMiles, accuracy: 1e-12)
+        XCTAssertEqual(result.knownEstimatedDeductionUSD, 0)
+    }
+
     func testTaxYearUsesExplicitTimezoneAndHalfOpenStartDates() throws {
         let filter = try MileageReportOptions.taxYear(2025, timeZone: TimeZone(identifier: "America/Los_Angeles")!)
         XCTAssertEqual(filter.startsAt, date("2025-01-01T08:00:00Z"))

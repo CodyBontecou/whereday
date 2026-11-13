@@ -26,7 +26,8 @@ enum MileageDistanceCalculator {
     /// Sorts fixes stably by time. Raw distance includes valid-coordinate GPS spikes and gaps;
     /// filtered distance never fills a gap. Poor/invalid fixes break continuity. Speed spikes
     /// and explicitly marked outliers do not replace the last good anchor, allowing recovery.
-    /// Duplicate timestamps contribute no distance. No odometer or road-routing claims.
+    /// First input fix wins at each timestamp (even if rejected); later duplicates cannot
+    /// change either anchor or continuity. No odometer or road-routing claims.
     static func calculate(_ samples: [MileageDistanceSample],
                           configuration: Configuration = Configuration()) throws -> Result {
         guard configuration.maximumAccuracyMeters.isFinite, configuration.maximumAccuracyMeters > 0,
@@ -48,7 +49,11 @@ enum MileageDistanceCalculator {
         var gaps = 0
         var previousRaw: MileageDistanceSample?
         var anchor: MileageDistanceSample?
+        var previousTimestamp: Date?
         for sample in ordered {
+            // Deduplicate before any validation/filtering can mutate raw or filtered anchors.
+            if previousTimestamp == sample.timestamp { rejected += 1; continue }
+            previousTimestamp = sample.timestamp
             guard validCoordinate(sample), sample.timestamp.timeIntervalSince1970.isFinite else {
                 rejected += 1
                 previousRaw = nil

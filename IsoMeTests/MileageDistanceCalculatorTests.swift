@@ -75,6 +75,19 @@ final class MileageDistanceCalculatorTests: XCTestCase {
         XCTAssertEqual(result.rejectedSampleCount, 1)
     }
 
+    func testConflictingDuplicateTimestampCannotChangeRawOrFilteredDistance() throws {
+        // The first fix at t=0 wins, whether its duplicate is nearby or a distant spike.
+        for duplicateLongitude in [0.001, 1.0] {
+            let result = try MileageDistanceCalculator.calculate([
+                sample(0, 0), sample(0, duplicateLongitude), sample(10, 0.002)
+            ])
+            XCTAssertEqual(result.rawDistanceMeters, 222.39, accuracy: 0.1,
+                           "Duplicate longitude: \(duplicateLongitude)")
+            XCTAssertEqual(result.filteredDistanceMeters, 222.39, accuracy: 0.1)
+            XCTAssertEqual(result.rejectedSampleCount, 1)
+        }
+    }
+
     func testInvalidCoordinatesBreakBothRawAndFilteredContinuity() throws {
         for point in [sample(10, 181), sample(10, 0, latitude: 91), sample(10, .nan)] {
             let result = try MileageDistanceCalculator.calculate([sample(0, 0), point, sample(20, 0.002)])
