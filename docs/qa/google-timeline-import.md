@@ -6,7 +6,7 @@ Validated on 2026-10-25 with the iOS 26.5 simulator (`iso-me-crash-repro-2026102
 
 `TimelineImportTests` covers classic raw Location History, legacy Semantic Timeline, device Timeline (object and iOS array), E7/geo/degree coordinates, ISO/millisecond/offset timestamps, invalid records, unsupported files, file size limits, combined iso.me backups, cancellation, selection, read-only preview, duplicate tolerances, stale previews, and repeated imports. Existing visits retain their names and confirmation state. Imports do not request geocoding.
 
-Run the full suite with `xcodebuild test -project IsoMe.xcodeproj -scheme IsoMe -destination 'platform=iOS Simulator,id=<simulator-id>' -parallel-testing-enabled NO`. Use a signed simulator build and deny location permission to keep live tracking out of persistence tests.
+For current verification use `scripts/test-ios.sh -only-testing:IsoMeTests/TimelineImportTests -only-testing:IsoMeTests/ImportReviewValidationTests`; use `scripts/test-ios.sh` for the full suite. See CONTRIBUTING.md for signed simulator requirements and destination overrides. The observations below are historical, not fresh-head verification.
 
 ## Manual UI acceptance
 
@@ -21,7 +21,7 @@ Observed all expected results. The system file picker did not expose a reliable 
 
 ## MVP boundaries
 
-Single JSON files only for Google exports; unzip Takeout manually. No folder/ZIP import or inferred visits from raw points. The parser accepts up to 50 MiB and 250,000 visits plus points. Duplicate thresholds and privacy behavior are documented in the README. New interface copy currently uses English fallback in other locales.
+At the October 25 validation, Google imports accepted single JSON files only. The November 13 follow-up adds combined Google multi-file preview/commit; see [the checklist audit](google-timeline-import-audit-20261113.md) for current coverage and remaining gaps. Unzip Takeout manually. No folder recursion, direct ZIP import or inferred visits from raw points. Ordinary selections accept up to 50 MiB and 250,000 visits plus points total. Duplicate thresholds and privacy behavior are documented in the README. New interface copy currently uses English fallback in other locales.
 
 
 ## Expanded QA run

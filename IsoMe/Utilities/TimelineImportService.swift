@@ -3,7 +3,7 @@ import SwiftData
 import CoreLocation
 
 enum ImportSourceFormat: String, Sendable {
-    case isoMeJSON, isoMeCSV, isoMeMarkdown, googleRaw, googleSemantic, googleDevice, wheredayBackup
+    case isoMeJSON, isoMeCSV, isoMeMarkdown, googleRaw, googleSemantic, googleDevice, googleMixed, wheredayBackup
 
     var displayName: String {
         switch self {
@@ -14,6 +14,7 @@ enum ImportSourceFormat: String, Sendable {
         case .googleRaw: return String(localized: "Google Location History")
         case .googleSemantic: return String(localized: "Google Semantic Timeline")
         case .googleDevice: return String(localized: "Google Device Timeline")
+        case .googleMixed: return String(localized: "Google Timeline files")
         }
     }
 }
@@ -139,6 +140,8 @@ actor TimelineImportService {
     func preview(urls: [URL]) throws -> ImportPreview {
         guard !urls.isEmpty else { throw TimelineImportError.noRecords }
         var backups: [WheredayBackup] = []
+        var combined: ImportPayload?
+        var totalBytes = 0
         for url in urls {
             let accessed = url.startAccessingSecurityScopedResource()
             defer { if accessed { url.stopAccessingSecurityScopedResource() } }
@@ -149,16 +152,41 @@ actor TimelineImportService {
             let data = try Data(contentsOf: url, options: .mappedIfSafe)
             let payload = try Self.parse(data: data, fileName: url.lastPathComponent)
             if let backup = payload.backup {
+                guard combined == nil else { throw Self.mixedSelectionError }
                 backups.append(backup)
             } else {
-                guard urls.count == 1 else {
-                    throw ImportError.invalidData(String(localized: "Select one import file, or all files from the same backup."))
+                guard backups.isEmpty else { throw Self.mixedSelectionError }
+                if urls.count > 1 {
+                    guard [.googleRaw, .googleSemantic, .googleDevice].contains(payload.format) else {
+                        throw Self.mixedSelectionError
+                    }
                 }
-                return try preview(data: data, fileName: url.lastPathComponent)
+                // Bound the entire Google selection, not just each monthly file.
+                totalBytes += data.count
+                guard totalBytes <= ImportPayload.maximumFileSize else { throw TimelineImportError.fileTooLarge }
+                if combined != nil {
+                    guard combined!.visits.count + combined!.points.count + payload.visits.count + payload.points.count
+                            <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
+                    if combined!.format != payload.format { combined!.format = .googleMixed }
+                    combined!.visits.append(contentsOf: payload.visits)
+                    combined!.points.append(contentsOf: payload.points)
+                    combined!.invalidRecordCount += payload.invalidRecordCount
+                    combined!.unsupportedRecordCount += payload.unsupportedRecordCount
+                } else { combined = payload }
             }
+        }
+        if var combined {
+            // Duplicate date-range fetches rely on chronological endpoints across all files.
+            combined.visits.sort { $0.arrivedAt < $1.arrivedAt }
+            combined.points.sort { $0.timestamp < $1.timestamp }
+            return try standardPreview(combined, fileName: urls.map(\.lastPathComponent).joined(separator: ", "))
         }
         let backup = try WheredayBackupService.combine(backups)
         return try backupPreview(backup, fileName: urls[0].lastPathComponent)
+    }
+
+    private static var mixedSelectionError: ImportError {
+        .invalidData(String(localized: "Select Google Timeline JSON files together, one Whereday import file, or all files from the same backup."))
     }
 
     private func backupPreview(_ backup: WheredayBackup, fileName: String) throws -> ImportPreview {
@@ -176,6 +204,10 @@ actor TimelineImportService {
         if let backup = payload.backup {
             return try backupPreview(WheredayBackupService.combine([backup]), fileName: fileName)
         }
+        return try standardPreview(payload, fileName: fileName)
+    }
+
+    private func standardPreview(_ payload: ImportPayload, fileName: String) throws -> ImportPreview {
         let plan = try makePlan(payload: payload, options: ImportOptions(), context: ModelContext(container))
         return ImportPreview(fileName: fileName, payload: payload,
                              newVisitCount: plan.visits.count, newPointCount: plan.points.count,
