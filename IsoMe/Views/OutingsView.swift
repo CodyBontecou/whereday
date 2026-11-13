@@ -96,7 +96,7 @@ struct OutingsView: View {
     // Requery one day when recording or inference changes, without sorting the full journal
     // on every SwiftUI body evaluation.
     private var timelineQueryKey: String {
-        "\(selectedDayRange.lowerBound)-\(includesInferredSessions)-\(inferenceGapPresetRawValue)-\(inferenceMinimumDurationPresetRawValue)-\(inferenceMinimumPointCount)-\(viewModel.totalLocationPointCount)-\(viewModel.allVisits.count)-\(viewModel.allRecordingSessions.count)-\(viewModel.locationManager.isTrackingEnabled)"
+        "\(selectedDayRange.lowerBound)-\(includesInferredSessions)-\(inferenceGapPresetRawValue)-\(inferenceMinimumDurationPresetRawValue)-\(inferenceMinimumPointCount)-\(viewModel.totalLocationPointCount)-\(viewModel.allVisits.count)-\(viewModel.allRecordingSessions.count)-\(viewModel.locationManager.isTrackingEnabled)-\(viewModel.timelineDataRevision)"
     }
 
     private var timelineEvents: [TimelineEvent] {
