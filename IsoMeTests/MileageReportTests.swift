@@ -244,6 +244,164 @@ final class MileageReportTests: XCTestCase {
         XCTAssertTrue(try report([a]).rows.isEmpty)
     }
 
+    // BEGIN frozen catalog tests: independent published decimals and ISO instants.
+    private func exactUSD(_ text: String) -> Decimal {
+        Decimal(string: text, locale: Locale(identifier: "en_US_POSIX"))!
+    }
+
+    func testFrozenUSBusinessCatalogEveryPublishedUTCPeriodAndPrimaryProvenance() throws {
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt)
+        let periods = [
+            ("2022-01-01T00:00:00Z", "2022-07-01T00:00:00Z", "0.585", "https://www.irs.gov/newsroom/irs-issues-standard-mileage-rates-for-2022"),
+            ("2022-07-01T00:00:00Z", "2023-01-01T00:00:00Z", "0.625", "https://www.irs.gov/irb/2022-26_IRB#ANN-2022-13"),
+            ("2023-01-01T00:00:00Z", "2024-01-01T00:00:00Z", "0.655", "https://www.irs.gov/irb/2023-03_IRB#NOT-2023-3"),
+            ("2024-01-01T00:00:00Z", "2025-01-01T00:00:00Z", "0.67", "https://www.irs.gov/newsroom/irs-issues-standard-mileage-rates-for-2024-mileage-rate-increases-to-67-cents-a-mile-up-1-point-5-cents-from-2023"),
+            ("2025-01-01T00:00:00Z", "2026-01-01T00:00:00Z", "0.70", "https://www.irs.gov/newsroom/irs-increases-the-standard-mileage-rate-for-business-use-in-2025-key-rate-increases-3-cents-to-70-cents-per-mile"),
+            ("2026-01-01T00:00:00Z", "2026-07-01T00:00:00Z", "0.725", "https://www.irs.gov/newsroom/irs-sets-2026-business-standard-mileage-rate-at-725-cents-per-mile-up-25-cents"),
+            ("2026-07-01T00:00:00Z", "2027-01-01T00:00:00Z", "0.76", "https://www.irs.gov/irb/2026-29_irb")
+        ]
+        for (index, period) in periods.enumerated() {
+            let start = date(period.0), end = date(period.1)
+            let expected = exactUSD(period.2)
+            XCTAssertEqual(provider.rate(on: start)?.usdPerMile, expected)
+            XCTAssertEqual(provider.rate(on: end.addingTimeInterval(-1))?.usdPerMile, expected)
+            let previous: Decimal? = index == 0 ? nil : exactUSD(periods[index - 1].2)
+            let next: Decimal? = index == periods.count - 1 ? nil : exactUSD(periods[index + 1].2)
+            XCTAssertEqual(provider.rate(on: start.addingTimeInterval(-1))?.usdPerMile, previous)
+            XCTAssertEqual(provider.rate(on: end)?.usdPerMile, next)
+            let selection = try XCTUnwrap(provider.rate(on: start))
+            XCTAssertFalse(selection.isCustomOverride)
+            XCTAssertTrue(selection.source.contains(period.3))
+            XCTAssertTrue(selection.source.contains("https://www.irs.gov/tax-professionals/standard-mileage-rates"))
+            XCTAssertTrue(selection.source.contains(String(period.0.prefix(10))))
+        }
+        XCTAssertTrue(try XCTUnwrap(provider.rate(on: date("2026-07-01T00:00:00Z"))).source.contains("Announcement 2026-11"))
+    }
+
+    private func assertFrozenBoundaries(timeZone: TimeZone, utcInstants: [String],
+                                        file: StaticString = #filePath, line: UInt = #line) throws {
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: timeZone)
+        let rates: [String?] = ["0.585", "0.625", "0.655", "0.67", "0.70", "0.725", "0.76", nil]
+        XCTAssertEqual(utcInstants.count, 8, file: file, line: line)
+        for (index, instant) in utcInstants.enumerated() {
+            let before = index == 0 ? nil : rates[index - 1].map(exactUSD)
+            XCTAssertEqual(provider.rate(on: date(instant).addingTimeInterval(-1))?.usdPerMile,
+                           before, "second before \(instant)", file: file, line: line)
+            XCTAssertEqual(provider.rate(on: date(instant))?.usdPerMile,
+                           rates[index].map(exactUSD), "exact midnight \(instant)", file: file, line: line)
+        }
+    }
+
+    func testFrozenCatalogLosAngelesAllCivilMidnightsIncludingBothMidyearSplits() throws {
+        try assertFrozenBoundaries(timeZone: TimeZone(identifier: "America/Los_Angeles")!, utcInstants: [
+            "2022-01-01T08:00:00Z", "2022-07-01T07:00:00Z", "2023-01-01T08:00:00Z",
+            "2024-01-01T08:00:00Z", "2025-01-01T08:00:00Z", "2026-01-01T08:00:00Z",
+            "2026-07-01T07:00:00Z", "2027-01-01T08:00:00Z"
+        ])
+    }
+
+    func testFrozenCatalogExtremeAndNonHourZonesUseExplicitCivilDates() throws {
+        try assertFrozenBoundaries(timeZone: TimeZone(identifier: "Pacific/Kiritimati")!, utcInstants: [
+            "2021-12-31T10:00:00Z", "2022-06-30T10:00:00Z", "2022-12-31T10:00:00Z",
+            "2023-12-31T10:00:00Z", "2024-12-31T10:00:00Z", "2025-12-31T10:00:00Z",
+            "2026-06-30T10:00:00Z", "2026-12-31T10:00:00Z"
+        ])
+        try assertFrozenBoundaries(timeZone: TimeZone(identifier: "Asia/Kathmandu")!, utcInstants: [
+            "2021-12-31T18:15:00Z", "2022-06-30T18:15:00Z", "2022-12-31T18:15:00Z",
+            "2023-12-31T18:15:00Z", "2024-12-31T18:15:00Z", "2025-12-31T18:15:00Z",
+            "2026-06-30T18:15:00Z", "2026-12-31T18:15:00Z"
+        ])
+    }
+
+    func testFrozenCatalogLeapDayMissingYearsAndEmptyDefaultRemainExplicit() throws {
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt)
+        XCTAssertEqual(provider.rate(on: date("2024-02-29T12:00:00Z"))?.usdPerMile, exactUSD("0.67"))
+        XCTAssertNil(provider.rate(on: date("2021-06-01T00:00:00Z")))
+        XCTAssertNil(provider.rate(on: date("2027-06-01T00:00:00Z")))
+        let emptyDefault = try MileageRateProvider()
+        for year in 2021...2027 {
+            XCTAssertNil(emptyDefault.rate(on: date("\(year)-06-01T00:00:00Z")))
+        }
+    }
+
+    func testFrozenCatalogCustomOverrideZeroAndValidationMatchExistingInitializer() throws {
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(
+            timeZone: .gmt, customRate: exactUSD("0.1234"), customSource: "Explicit synthetic override")
+        for instant in ["2021-01-01T00:00:00Z", "2022-07-01T00:00:00Z", "2026-07-01T00:00:00Z", "2027-01-01T00:00:00Z"] {
+            let selection = try XCTUnwrap(provider.rate(on: date(instant)))
+            XCTAssertEqual(selection.usdPerMile, exactUSD("0.1234"))
+            XCTAssertTrue(selection.isCustomOverride)
+            XCTAssertEqual(selection.source, "Explicit synthetic override")
+        }
+        let zero = try MileageRateProvider.frozenUSBusiness2022Through2026(
+            timeZone: .gmt, customRate: 0, customSource: "Explicit synthetic zero")
+        XCTAssertEqual(zero.rate(on: date("2026-07-01T00:00:00Z"))?.usdPerMile, 0)
+        XCTAssertTrue(zero.rate(on: date("2026-07-01T00:00:00Z"))?.isCustomOverride == true)
+        XCTAssertThrowsError(try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt, customRate: 1))
+        XCTAssertThrowsError(try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt, customRate: 1, customSource: " \n"))
+        XCTAssertThrowsError(try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt, customRate: .nan, customSource: "Synthetic"))
+        XCTAssertThrowsError(try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt, customRate: -1, customSource: "Synthetic"))
+        // A source without an override remains unused, exactly as with init.
+        let unusedSource = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt, customSource: " ")
+        XCTAssertEqual(unusedSource.rate(on: date("2025-01-01T00:00:00Z"))?.usdPerMile, exactUSD("0.70"))
+    }
+
+    func testFrozenCatalogReportUsesWholeTripStartRateWithoutProrationAtBothSplits() throws {
+        for example in [(2022, "1.17", "1.88", "3.05"), (2026, "1.45", "2.28", "3.73")] {
+            let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt)
+            let filter = try MileageReportOptions.taxYear(example.0, timeZone: .gmt)
+            let before = trip(date("\(example.0)-06-30T23:59:59Z"), miles: 2)
+            let after = trip(date("\(example.0)-07-01T00:00:00Z"), miles: 3)
+            let result = try report([before, after], options: filter, rates: provider)
+            XCTAssertEqual(result.rows.map(\.estimatedDeductionUSD), [exactUSD(example.1), exactUSD(example.2)])
+            XCTAssertEqual(result.knownEstimatedDeductionUSD, exactUSD(example.3))
+            XCTAssertTrue(result.isEstimateComplete)
+        }
+    }
+
+    func testFrozenCatalogReportZoneIsExplicitNotTripStoredZone() throws {
+        let zone = TimeZone(identifier: "America/Los_Angeles")!
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: zone)
+        let item = trip(date("2026-07-01T06:59:59Z"))
+        item.timezoneIdentifier = "Pacific/Kiritimati"
+        let result = try report([item], options: MileageReportOptions.taxYear(2026, timeZone: zone), rates: provider)
+        XCTAssertEqual(result.rows.first?.rate?.usdPerMile, exactUSD("0.725"))
+        let utcProvider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt)
+        XCTAssertEqual(utcProvider.rate(on: item.startedAt)?.usdPerMile, exactUSD("0.76"))
+    }
+
+    func testFrozenAndCustomSchedulesRejectMalformedDatesAndNonFiniteLookups() throws {
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt)
+        let custom = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt, customRate: 1, customSource: "Synthetic")
+        for interval in [Double.nan, .infinity, -.infinity] {
+            let invalid = Date(timeIntervalSince1970: interval)
+            XCTAssertNil(provider.rate(on: invalid))
+            XCTAssertNil(custom.rate(on: invalid))
+            XCTAssertThrowsError(try MileageRateProvider(rates: [MileageRate(
+                startsAt: invalid, endsAt: date("2025-01-01T00:00:00Z"), usdPerMile: 1, source: "Synthetic")]))
+            XCTAssertThrowsError(try MileageRateProvider(rates: [MileageRate(
+                startsAt: date("2025-01-01T00:00:00Z"), endsAt: invalid, usdPerMile: 1, source: "Synthetic")]))
+        }
+        XCTAssertThrowsError(try MileageRateProvider(rates: [MileageRate(
+            startsAt: date("2025-01-01T00:00:00Z"), endsAt: date("2026-01-01T00:00:00Z"),
+            usdPerMile: .nan, source: "Synthetic")]))
+    }
+    func testFrozenCatalogMixedKnown2026AndMissing2027KeepsSubtotalIncomplete() throws {
+        let provider = try MileageRateProvider.frozenUSBusiness2022Through2026(timeZone: .gmt)
+        let range = try MileageReportOptions(startsAt: date("2026-01-01T00:00:00Z"),
+                                            endsAt: date("2028-01-01T00:00:00Z"))
+        let known = trip(date("2026-08-01T00:00:00Z"), miles: 10)
+        let missing = trip(date("2027-08-01T00:00:00Z"), miles: 4)
+        let result = try report([known, missing], options: range, rates: provider)
+        XCTAssertEqual(result.rows.count, 2)
+        XCTAssertEqual(result.rows.first?.rate?.usdPerMile, exactUSD("0.76"))
+        XCTAssertEqual(result.rows.map(\.estimatedDeductionUSD), [exactUSD("7.60"), nil])
+        XCTAssertEqual(result.knownEstimatedDeductionUSD, exactUSD("7.60"))
+        XCTAssertEqual(result.businessTripsMissingRate, 1)
+        XCTAssertFalse(result.isEstimateComplete)
+    }
+    // END frozen catalog tests.
+
     func testEmptyReportAndVerbatimDisclaimerMetadata() throws {
         let result = try report([])
         XCTAssertTrue(result.rows.isEmpty)
