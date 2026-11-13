@@ -13,6 +13,16 @@ struct MileageReportTrip {
     let vehicleID: UUID?
     let vehicleNameSnapshot: String?
     let excludeFromReports: Bool
+    // One immutable capture from the actual model; writers never re-read a mutable Trip.
+    let timezoneIdentifier: String
+    let startName: String?
+    let startAddress: String?
+    let endName: String?
+    let endAddress: String?
+    let sourceRaw: String
+    let notes: String
+    let startOdometerMiles: Double?
+    let endOdometerMiles: Double?
 
     init(trip: Trip) {
         id = trip.id
@@ -25,6 +35,15 @@ struct MileageReportTrip {
         vehicleID = trip.vehicleID
         vehicleNameSnapshot = trip.vehicleNameSnapshot
         excludeFromReports = trip.excludeFromReports
+        timezoneIdentifier = trip.timezoneIdentifier
+        startName = trip.startName
+        startAddress = trip.startAddress
+        endName = trip.endName
+        endAddress = trip.endAddress
+        sourceRaw = trip.sourceRaw
+        notes = trip.notes
+        startOdometerMiles = trip.startOdometerMiles
+        endOdometerMiles = trip.endOdometerMiles
     }
 }
 
