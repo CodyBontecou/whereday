@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A06020261113000000000001 /* SmartStartState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261113000000000011 /* SmartStartState.swift */; };
+		A06020261113000000000002 /* AutoStartPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261113000000000012 /* AutoStartPolicy.swift */; };
+		A06020261113000000000003 /* SmartStartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261113000000000013 /* SmartStartTests.swift */; };
 		F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AA00000000000000000002 /* MonthRecapTests.swift */; };
         CB1030000000000000000001 /* OnboardingLaunchConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */; };
 		CA1029B00000000000000001 /* RetiredAnalyticsCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */; };
@@ -281,6 +284,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A06020261113000000000011 /* SmartStartState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartState.swift; sourceTree = "<group>"; };
+		A06020261113000000000012 /* AutoStartPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoStartPolicy.swift; sourceTree = "<group>"; };
+		A06020261113000000000013 /* SmartStartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartTests.swift; sourceTree = "<group>"; };
 		F8AA00000000000000000002 /* MonthRecapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapTests.swift; sourceTree = "<group>"; };
         CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLaunchConfigurationTests.swift; sourceTree = "<group>"; };
 		CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetiredAnalyticsCleanup.swift; sourceTree = "<group>"; };
@@ -629,6 +635,8 @@
 				AF000001212F000000000001 /* DailyDistanceTracker.swift */,
 				A1000005212F000000000005 /* LocationManager.swift */,
 				B7E10A0100000000000000A1 /* RouteSampling.swift */,
+				A06020261113000000000011 /* SmartStartState.swift */,
+				A06020261113000000000012 /* AutoStartPolicy.swift */,
 				A1000006212F000000000006 /* GeocodingService.swift */,
 				D2A10001212F000000000001 /* PlaceSearchService.swift */,
 				C0DE0102212F000000000102 /* PhotoLibraryManager.swift */,
@@ -800,6 +808,7 @@
 				D5E7A1580000000000000058 /* ExportRoundTripTests.swift */,
 				E9A100000000000000000003 /* ExportKitIntegrationTests.swift */,
 				76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */,
+				A06020261113000000000013 /* SmartStartTests.swift */,
 				A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */,
 				B7E10A0100000000000000A3 /* RouteSamplerTests.swift */,
 				E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */,
@@ -1124,6 +1133,8 @@
 				C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */,
 				A1000005212F000100000005 /* LocationManager.swift in Sources */,
 				B7E10A0100000000000000A2 /* RouteSampling.swift in Sources */,
+				A06020261113000000000001 /* SmartStartState.swift in Sources */,
+				A06020261113000000000002 /* AutoStartPolicy.swift in Sources */,
 				A1000006212F000100000006 /* GeocodingService.swift in Sources */,
 				D2A10001212F000100000001 /* PlaceSearchService.swift in Sources */,
 				C0DE0102212F000100000102 /* PhotoLibraryManager.swift in Sources */,
@@ -1260,6 +1271,7 @@
 				5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */,
 				5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */,
 				CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */,
+				A06020261113000000000003 /* SmartStartTests.swift in Sources */,
 				A7D1C0DE0000000000000006 /* LaunchRecoveryTests.swift in Sources */,
 				B7E10A0100000000000000A4 /* RouteSamplerTests.swift in Sources */,
 				E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */,

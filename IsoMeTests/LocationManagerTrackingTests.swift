@@ -25,6 +25,68 @@ final class LocationManagerTrackingTests: XCTestCase {
         super.tearDown()
     }
 
+    func testRelaunchRestoresPersistedSessionMetadataWithoutResettingCooldown() {
+        let date = Date(timeIntervalSince1970: 1_800_000_000)
+        let state = SmartStartStateStore(defaults: defaults)
+        state.beginSession(source: .smartMotion, at: date)
+        defaults.set(true, forKey: "isTrackingEnabled")
+        let restored = makeIsolatedLocationManager(defaults: defaults)
+        XCTAssertEqual(restored.trackingStartTime, date)
+        XCTAssertEqual(restored.trackingStartSource, .smartMotion)
+        XCTAssertEqual(state.lastAutoStartAt, date)
+    }
+
+    func testManualStopPersistsCooldownAndClearsSessionMetadata() {
+        let state = SmartStartStateStore(defaults: defaults)
+        state.beginSession(source: .manual, at: Date())
+        let before = Date()
+        manager.stopTracking()
+        XCTAssertNil(state.trackingStartTime)
+        XCTAssertNil(state.trackingStartSource)
+        XCTAssertNotNil(state.lastManualStopAt)
+        XCTAssertGreaterThanOrEqual(state.lastManualStopAt!, before)
+    }
+
+    func testRepeatedStartPreservesSessionIdentity() {
+        manager.isTrackingEnabled = true
+        let date = Date(timeIntervalSince1970: 1_800_000_000)
+        manager.trackingStartTime = date
+        manager.startTracking(source: .shortcut)
+        XCTAssertEqual(manager.trackingStartTime, date)
+        XCTAssertTrue(manager.isTrackingEnabled)
+    }
+
+    func testAutomaticStartCannotBypassOptIn() {
+        manager.authorizationStatus = .authorizedAlways
+        manager.startTracking(source: .smartMotion, allowsPermissionPrompt: true)
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertNil(SmartStartStateStore(defaults: defaults).lastAutoStartAt)
+    }
+
+    func testReconciliationPersistsRecoveredOlderSessionTime() throws {
+        let container = try makeInMemoryContainer()
+        let date = Date(timeIntervalSince1970: 1_800_000_000)
+        let session = RecordingSession(startedAt: date)
+        container.mainContext.insert(session)
+        try container.mainContext.save()
+        manager.isTrackingEnabled = true
+        manager.trackingStartTime = date.addingTimeInterval(600)
+        manager.setModelContext(container.mainContext)
+        XCTAssertEqual(manager.trackingStartTime, date)
+        XCTAssertEqual(SmartStartStateStore(defaults: defaults).trackingStartTime, date)
+        XCTAssertEqual(manager.trackingStartSource, .manual)
+    }
+
+    func testInactiveLaunchClearsStaleSessionButNotCooldown() {
+        let state = SmartStartStateStore(defaults: defaults)
+        let date = Date(timeIntervalSince1970: 1_800_000_000)
+        state.beginSession(source: .smartMotion, at: date)
+        let restored = makeIsolatedLocationManager(defaults: defaults)
+        XCTAssertNil(restored.trackingStartTime)
+        XCTAssertNil(state.trackingStartTime)
+        XCTAssertEqual(state.lastAutoStartAt, date)
+    }
+
     // MARK: - stopTracking must fully clean up
 
     /// stopTracking() must reset isTrackingEnabled and clear the start time

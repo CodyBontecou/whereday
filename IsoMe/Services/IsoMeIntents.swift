@@ -85,7 +85,7 @@ struct StartTrackingIntent: AppIntent {
         guard manager.hasLocationPermission else {
             throw IsoMeIntentError.noLocationPermission
         }
-        manager.startTracking()
+        manager.startTracking(source: .shortcut)
         return .result(dialog: "Tracking started.")
     }
 }
@@ -114,6 +114,7 @@ enum TrackingIntentSupport {
             let context = IntentSupport.makeContext()
             LocationManager.closePersistedRecordingSessions(in: context)
             UserDefaults.standard.set(false, forKey: "isTrackingEnabled")
+            SmartStartStateStore(defaults: .standard).endSession(manually: true, at: Date())
             await LiveActivityManager.shared.endAllActivities()
         }
     }

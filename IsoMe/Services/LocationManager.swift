@@ -23,6 +23,8 @@ final class LocationManager: NSObject, ObservableObject {
     @Published var accuracyAuthorization: CLAccuracyAuthorization = .fullAccuracy
     @Published var isTrackingEnabled: Bool = false
     @Published var trackingStartTime: Date?
+    @Published private(set) var trackingStartSource: TrackingStartSource?
+    private var smartStartState: SmartStartStateStore { SmartStartStateStore(defaults: defaults) }
     @Published var stopAfterHours: Double = 0.0
     @Published var distanceFilter: Double = 5.0
     /// Distance, time, or both. Only affects route points; visits come from iOS visit monitoring.
@@ -170,6 +172,15 @@ final class LocationManager: NSObject, ObservableObject {
                 }
                 if Self.shared === self { SharedRecordingControl.shared.flush() }
             }
+        }
+
+        // Restore session metadata only for a persisted active session. Legacy sessions
+        // receive a start timestamp on reattachment, without inventing past history.
+        if resumeAfterAccessResolution {
+            trackingStartTime = smartStartState.trackingStartTime
+            trackingStartSource = smartStartState.trackingStartSource
+        } else {
+            smartStartState.endSession(manually: false, at: Date())
         }
 
         // Restore saved state
@@ -333,16 +344,27 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     func startTracking() {
-        startTracking(reason: .user)
+        startTracking(source: .manual, allowsPermissionPrompt: true)
     }
 
-    private func startTracking(reason: TrackingChangeReason) {
+    func startTracking(source: TrackingStartSource, allowsPermissionPrompt: Bool = false) {
+        guard !isTrackingEnabled else { return }
+        // Automatic callers may never trigger a permission prompt or bypass opt-in.
+        if source.isAutomatic {
+            guard smartStartState.settings.isEnabled, hasAlwaysPermission else { return }
+        }
+        startTracking(reason: .user, source: source,
+                      allowsPermissionPrompt: allowsPermissionPrompt && !source.isAutomatic)
+    }
+
+    private func startTracking(reason: TrackingChangeReason, source: TrackingStartSource = .manual,
+                               allowsPermissionPrompt: Bool = true) {
         guard StoreManager.shared.canTrack else {
             NotificationCenter.default.post(name: .trackingAccessRequired, object: nil)
             return
         }
         guard hasLocationPermission else {
-            requestAlwaysAuthorization()
+            if allowsPermissionPrompt { requestAlwaysAuthorization() }
             return
         }
 
@@ -354,8 +376,15 @@ final class LocationManager: NSObject, ObservableObject {
         if trackingStartTime == nil {
             trackingStartTime = Date()
         }
+        if trackingStartSource == nil { trackingStartSource = source }
 
-        if let trackingStartTime {
+        if let trackingStartTime, let trackingStartSource {
+            // Reattachment preserves both timestamps and source; it is not a new auto-start.
+            if smartStartState.trackingStartTime == nil {
+                smartStartState.beginSession(source: trackingStartSource, at: trackingStartTime)
+            } else {
+                smartStartState.saveSessionMetadata(source: trackingStartSource, at: trackingStartTime)
+            }
             ensureActiveRecordingSession(startedAt: trackingStartTime)
         }
 
@@ -406,6 +435,8 @@ final class LocationManager: NSObject, ObservableObject {
             }
         }
         endActiveRecordingSession(at: endedAt)
+        smartStartState.endSession(manually: reason == .user, at: endedAt)
+        trackingStartSource = nil
 
         isTrackingEnabled = false
         defaults.set(false, forKey: "isTrackingEnabled")
@@ -610,6 +641,11 @@ final class LocationManager: NSObject, ObservableObject {
                     activeRecordingSessionID = session.id
                     trackingStartTime = start
                     changedCount += 1
+                }
+                if let trackingStartTime {
+                    let source = trackingStartSource ?? .manual
+                    trackingStartSource = source
+                    smartStartState.saveSessionMetadata(source: source, at: trackingStartTime)
                 }
             } else {
                 for session in openSessions {
