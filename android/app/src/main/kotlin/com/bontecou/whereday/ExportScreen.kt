@@ -71,6 +71,8 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val purchase by graph.purchases.state.collectAsStateWithLifecycle()
+    val planHistory by graph.purchases.planHistory.collectAsStateWithLifecycle()
+    val subscription=com.bontecou.whereday.billing.PlanRetention.summary(purchase,planHistory,graph.purchases.subscriptionId)
     val checkout by graph.purchases.checkoutInFlight.collectAsStateWithLifecycle()
     val loadedSettings by graph.preferences.settings.collectAsStateWithLifecycle(initialValue=null)
     val settings=loadedSettings ?: AppSettings()
@@ -208,7 +210,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             Box(Modifier.exportInset().padding(top=16.dp)) {
                 val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
                 ExportAccessCard(purchase,checkout,buy=buy,restore=restore,
-                    manage=if(purchase.access==com.bontecou.whereday.billing.AccessState.active && purchase.activeProductId==graph.purchases.subscriptionId)
+                    manage=if(subscription.managesInPlay)
                         {{runCatching {uriHandler.openUri(graph.purchases.manageUri())}}} else null)
             }
             saved.failure?.let {ExportCallout(exportSettingsText(it),Modifier.exportInset().padding(top=12.dp),warning=true) {

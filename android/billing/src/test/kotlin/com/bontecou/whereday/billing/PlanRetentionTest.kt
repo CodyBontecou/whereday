@@ -60,6 +60,19 @@ class PlanRetentionTest {
         assertTrue(both.subscriptionAlsoRenewing);assertFalse(both.offersCancel);assertTrue(both.managesInPlay)
     }
 
+    @Test fun cachedSubscriptionKeepsManagementWithoutClaimingCancellationOrRenewal() {
+        // Even a stale true renewal flag must not turn signed offline access into renewal certainty.
+        val cached=summary(active().copy(renewalKnown=false))
+        assertEquals(SubscriptionStatus.active,cached.status)
+        assertFalse(cached.renewalKnown);assertFalse(cached.offersCancel);assertTrue(cached.managesInPlay)
+    }
+
+    @Test fun cachedLifetimeKeepsManagementUntilSeparateRenewalCanBeChecked() {
+        val cached=summary(active(lifetime,renewing=false).copy(renewalKnown=false))
+        assertEquals(SubscriptionStatus.lifetime,cached.status)
+        assertFalse(cached.renewalKnown);assertFalse(cached.offersCancel);assertTrue(cached.managesInPlay)
+    }
+
     @Test fun aCheckoutPlanIsShownOnlyForTheSamePurchase() {
         val bought=PlanRetention.checkoutCompleted(PlanHistory(),StorePlan.weekly,"hash-a")
         assertEquals(StorePlan.weekly,summary(active(hash="hash-a"),bought).plan)
