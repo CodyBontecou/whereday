@@ -1,0 +1,92 @@
+{
+  "baseHead": "d144b207f9595d40f85a54fc6360261d22a8bd30",
+  "addedKeyCount": 35,
+  "addedKeys": [
+    "ACTIVITIES",
+    "AUTOMATIC RECORDING",
+    "Always Location and Motion access are needed for automatic starts, along with tracking access in your plan. Opening this page does not request Motion access. Low-power monitoring alone does not save route points.",
+    "Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start.",
+    "CONSERVATIVE TIMING",
+    "CarPlay automation",
+    "In Shortcuts, create a personal automation and choose iso.me’s Start Tracking or Stop Tracking action. Use CarPlay connect/disconnect, workout start/end, Driving Focus, Bluetooth, or NFC as the trigger. Review the automation’s confirmation and run settings in Shortcuts.",
+    "Motion activity",
+    "Motion activity is unavailable on this device. Smart Start cannot start a recording here; manual tracking and Shortcuts remain separate.",
+    "Movement must be sustained, high-confidence activity, not just elapsed time. Stationary auto-stop applies only to a session owned by Smart Start; it does not stop a manual, Watch, or Shortcut session. Automatic starts can increase battery use and may mistake a passenger journey for driving.",
+    "Movement threshold",
+    "No activities selected. Smart Start will not begin new recordings.",
+    "Off unless you choose to enable it",
+    "On · requires permissions and tracking access",
+    "PERMISSIONS",
+    "Pause after manual Stop",
+    "RECORDING · OPTIONAL AUTOMATION",
+    "SHORTCUTS · THE RELIABLE ROUTE",
+    "Shortcut",
+    "Smart Start",
+    "Smart Start settings weren’t saved. Your previous settings are still active.",
+    "Source",
+    "Stationary threshold",
+    "Stop when stationary",
+    "This enables low-power monitoring when permissions and tracking access allow it. Motion permission may be requested after you opt in. iOS can delay or suppress automatic starts; force-quitting prevents automatic relaunch until you open iso.me again.",
+    "This is not a native CarPlay app or a workout background service. iOS controls background delivery. Test your automation before relying on it, especially while locked, in Low Power Mode, or with Background App Refresh off.",
+    "Tracking Source",
+    "Tracking could not start. Open Whereday to check your access and recording status.",
+    "Turn on",
+    "Turn on Smart Start?",
+    "Wait before restarting",
+    "Walking or running",
+    "While using · Always needed",
+    "Workout automation",
+    "iso.me can try to start tracking when iOS reports meaningful movement, but iOS may delay or suppress background triggers. Force-quitting the app prevents automatic relaunch until you open it again. Shortcuts automations are the most reliable way to start from CarPlay, workouts, Focus modes, Bluetooth, or NFC."
+  ],
+  "existingKeyCount": 2380,
+  "existingParsedEntriesAndOriginalBytesUnchanged": true,
+  "oldCatalogSha256": "a5a1eb839b6756e0b7d2c5d48479a23a374f5c1b925dac6ddd56409feeb69a7e",
+  "newCatalogSha256": "85c255420bbed4c484aabf4079cf7abb4114ffd1548923029b5c32519f149611",
+  "viewAndIntentKeyCount": 47,
+  "locales": [
+    "ar",
+    "bn",
+    "en",
+    "es",
+    "fr",
+    "hi",
+    "ja",
+    "pl",
+    "pt-BR",
+    "ru",
+    "zh-Hans"
+  ],
+  "compiledBundleLookups": 517,
+  "localizationPythonTests": 14,
+  "xctest": 585,
+  "swiftTesting": 20,
+  "resultBundle": "artifacts/test-results/IsoMe-20261114-073246-94095.xcresult",
+  "uiOnlyUDID": "EEBF0516-FB5A-42E8-9759-CCDA6D2139F5",
+  "uiCheckpoints": [
+    {
+      "name": "es-off",
+      "actualLabel": "Smart Start, Apagado a menos que elijas habilitarlo",
+      "actualValue": "0",
+      "rawSha256": "bd3f199e978b17f957993268ecba96de96c1b7a59ebe1b050728e513b9213108"
+    },
+    {
+      "name": "es-cancelled",
+      "actualLabel": "Smart Start, Apagado a menos que elijas habilitarlo",
+      "actualValue": "0",
+      "rawSha256": "d2459de176af9de7b2771d7723ae2b7926206aedf2b605b0f3463674bead80f1"
+    },
+    {
+      "name": "ar-system-caption-off",
+      "actualLabel": "Smart Start‏، متوقف إلا إذا اخترت تمكينه",
+      "actualValue": "0",
+      "rawSha256": "9f1a59ac1bbea11f0576e8c6e6dac445dfd40a136be9c28ee703252289b67821"
+    },
+    {
+      "name": "ar-cancelled",
+      "actualLabel": "Smart Start‏، متوقف إلا إذا اخترت تمكينه",
+      "actualValue": "0",
+      "rawSha256": "7a87b38ba565bcb36be79a44bc58c1bff0bf34cb7a46a6105567ef2448000c44"
+    }
+  ],
+  "scope": "Catalog/compiled-resource verification and sampled Spanish/Arabic simulator UI only; no native-speaker, spoken accessibility, full-motion, Shortcuts editor or physical acceptance claim."
+}

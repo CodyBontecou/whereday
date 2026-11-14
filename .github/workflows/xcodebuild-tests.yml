@@ -27,8 +27,19 @@ jobs:
       - name: Test iOS runner guardrails
         run: python3 -m unittest discover -s scripts -p test_test_ios.py
 
+      - name: Check localization coverage and placeholders
+        run: |
+          python3 -m unittest discover -s scripts -p 'test*localization*.py'
+          python3 scripts/localization_catalog.py audit
+
       - name: Run IsoMe tests
         run: scripts/test-ios.sh --result-bundle-path artifacts/test-results/IsoMe.xcresult
+
+      - name: Check compiled Smart Start translations
+        run: |
+          set -euo pipefail
+          app_path=$(xcodebuild -project IsoMe.xcodeproj -scheme IsoMe -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -showBuildSettings -json | python3 -c 'import json,sys; targets=json.load(sys.stdin); matches=[t["buildSettings"] for t in targets if t["target"]=="IsoMe"]; assert len(matches)==1; s=matches[0]; print(s["TARGET_BUILD_DIR"]+"/"+s["FULL_PRODUCT_NAME"])')
+          swift scripts/check_smart_start_localization.swift "$app_path"
 
       - name: Upload xcresult on failure
         if: failure()

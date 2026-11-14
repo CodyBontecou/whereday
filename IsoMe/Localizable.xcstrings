@@ -1,6 +1,2456 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "ACTIVITIES": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ACTIVITIES"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشطة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "কার্যকলাপ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ACTIVIDADES"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ACTIVITÉS"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गतिविधियाँ"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活動"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AKTYWNOŚCI"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ATIVIDADES"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ВИДЫ АКТИВНОСТИ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动"
+          }
+        }
+      }
+    },
+    "AUTOMATIC RECORDING": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUTOMATIC RECORDING"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التسجيل التلقائي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্বয়ংক্রিয় রেকর্ডিং"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRABACIÓN AUTOMÁTICA"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENREGISTREMENT AUTOMATIQUE"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्वचालित रिकॉर्डिंग"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自動記録"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUTOMATYCZNE REJESTROWANIE"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRAVAÇÃO AUTOMÁTICA"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "АВТОМАТИЧЕСКАЯ ЗАПИСЬ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动记录"
+          }
+        }
+      }
+    },
+    "Always Location and Motion access are needed for automatic starts, along with tracking access in your plan. Opening this page does not request Motion access. Low-power monitoring alone does not save route points.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always Location and Motion access are needed for automatic starts, along with tracking access in your plan. Opening this page does not request Motion access. Low-power monitoring alone does not save route points."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يلزم إذن الموقع «دائمًا» وإذن الحركة لبدء التسجيل تلقائيًا، مع إتاحة التتبع في خطتك. فتح هذه الصفحة لا يطلب إذن الحركة. المراقبة منخفضة استهلاك الطاقة وحدها لا تحفظ نقاط المسار."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্বয়ংক্রিয়ভাবে শুরু করার জন্য অবস্থানের «সর্বদা» অনুমতি ও গতিবিধির অনুমতি এবং আপনার প্ল্যানে ট্র্যাকিংয়ের সুবিধা প্রয়োজন। এই পৃষ্ঠা খুললে গতিবিধির অনুমতি চাওয়া হয় না। শুধু কম শক্তি খরচের পর্যবেক্ষণে রুটের পয়েন্ট সংরক্ষিত হয় না।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para los inicios automáticos se necesita acceso a la ubicación «Siempre» y al movimiento, además de acceso al seguimiento en tu plan. Abrir esta página no solicita permiso de movimiento. La supervisión de bajo consumo por sí sola no guarda puntos de ruta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les démarrages automatiques nécessitent l’accès à la position « Toujours » et aux mouvements, ainsi que l’accès au suivi dans votre forfait. Ouvrir cette page ne demande pas l’autorisation d’accéder aux mouvements. La surveillance à faible consommation seule n’enregistre pas de points d’itinéraire."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने-आप शुरू करने के लिए स्थान की «हमेशा» अनुमति, गतिविधि की अनुमति और आपके प्लान में ट्रैकिंग की सुविधा ज़रूरी है। यह पेज खोलने से गतिविधि की अनुमति नहीं माँगी जाती। केवल कम ऊर्जा वाली निगरानी से मार्ग के बिंदु सहेजे नहीं जाते।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自動開始には、位置情報の「常に」許可とモーションへのアクセス許可に加え、プランでの追跡利用権が必要です。このページを開くだけではモーションの許可は求められません。低消費電力の監視だけではルートの地点は保存されません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatyczne uruchamianie wymaga dostępu do lokalizacji „Zawsze”, dostępu do aktywności ruchowej oraz możliwości śledzenia w Twoim planie. Otwarcie tej strony nie wyświetla prośby o dostęp do aktywności ruchowej. Samo monitorowanie przy niskim zużyciu energii nie zapisuje punktów trasy."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os inícios automáticos exigem acesso à localização “Sempre” e ao movimento, além de acesso ao rastreamento no seu plano. Abrir esta página não solicita permissão de movimento. O monitoramento de baixo consumo, por si só, não salva pontos de rota."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для автоматического запуска нужны доступ к геопозиции «Всегда», доступ к данным движения и возможность отслеживания в вашем плане. Открытие этой страницы не запрашивает разрешение на доступ к движению. Само по себе энергосберегающее наблюдение не сохраняет точки маршрута."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动开始需要“始终”允许访问位置、允许访问运动数据，以及方案中的跟踪使用权限。打开此页面不会请求运动权限。仅进行低功耗监测不会保存路线点。"
+          }
+        }
+      }
+    },
+    "Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ تسجيل مسارك في Whereday. يمكنك اختياريًا تحديد أن المصدر هو أتمتة CarPlay أو التمرين؛ هذا لا يفعّل Smart Start."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday-তে আপনার রুট রেকর্ড করা শুরু করুন। চাইলে উৎস হিসেবে CarPlay বা ওয়ার্কআউট অটোমেশন বেছে নিন; এতে Smart Start চালু হয় না।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza a registrar tu ruta en Whereday. Opcionalmente, indica si se trata de una automatización de CarPlay o de entrenamiento; esto no activa Smart Start."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commencez à enregistrer votre itinéraire dans Whereday. Vous pouvez préciser qu’il s’agit d’une automatisation CarPlay ou d’entraînement; cela n’active pas Smart Start."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday में अपना मार्ग रिकॉर्ड करना शुरू करें। चाहें तो स्रोत के रूप में CarPlay या वर्कआउट ऑटोमेशन चुनें; इससे Smart Start चालू नहीं होता।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wheredayでルートの記録を開始します。必要に応じてCarPlayまたはワークアウトのオートメーションを指定できます。これによってSmart Startが有効になることはありません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozpocznij rejestrowanie trasy w Whereday. Opcjonalnie wskaż automatyzację CarPlay lub treningu jako źródło; nie włącza to Smart Start."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comece a registrar sua rota no Whereday. Se quiser, indique que se trata de uma automação de CarPlay ou de treino; isso não ativa o Smart Start."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начните запись маршрута в Whereday. При желании укажите, что это автоматизация CarPlay или тренировки; это не включает Smart Start."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始在Whereday中记录路线。可选择注明来源为CarPlay或体能训练自动化；这不会启用Smart Start。"
+          }
+        }
+      }
+    },
+    "CONSERVATIVE TIMING": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CONSERVATIVE TIMING"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعدادات توقيت حذرة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সতর্ক সময়সীমা"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TIEMPOS PRUDENTES"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DÉLAIS PRUDENTS"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सावधानीपूर्ण समय-सीमाएँ"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "慎重な時間設定"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OSTROŻNE USTAWIENIA CZASU"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "INTERVALOS PRUDENTES"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ОСТОРОЖНЫЕ НАСТРОЙКИ ВРЕМЕНИ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保守的时间设置"
+          }
+        }
+      }
+    },
+    "CarPlay automation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CarPlay automation"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أتمتة CarPlay"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CarPlay অটোমেশন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatización CarPlay"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisation CarPlay"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CarPlay स्वचालन"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CarPlayオートメーション"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatyzacja CarPlay"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automação CarPlay"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматизация CarPlay"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CarPlay自动化"
+          }
+        }
+      }
+    },
+    "In Shortcuts, create a personal automation and choose iso.me’s Start Tracking or Stop Tracking action. Use CarPlay connect/disconnect, workout start/end, Driving Focus, Bluetooth, or NFC as the trigger. Review the automation’s confirmation and run settings in Shortcuts.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Shortcuts, create a personal automation and choose iso.me’s Start Tracking or Stop Tracking action. Use CarPlay connect/disconnect, workout start/end, Driving Focus, Bluetooth, or NFC as the trigger. Review the automation’s confirmation and run settings in Shortcuts."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في تطبيق «الاختصارات»، أنشئ أتمتة شخصية واختر إجراء «ابدأ التتبع» أو «أوقف التتبع» من iso.me. استخدم اتصال CarPlay أو قطع اتصاله، أو بدء التمرين أو إنهاءه، أو تركيز القيادة، أو Bluetooth، أو NFC كمشغّل. راجع إعدادات التأكيد والتشغيل للأتمتة في «الاختصارات»."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "শর্টকাট অ্যাপে একটি ব্যক্তিগত অটোমেশন তৈরি করে iso.me-এর «ট্র্যাকিং শুরু করুন» / «ট্র্যাকিং বন্ধ করুন» অ্যাকশন বেছে নিন। ট্রিগার হিসেবে CarPlay সংযোগ বা বিচ্ছিন্ন হওয়া, ওয়ার্কআউট শুরু বা শেষ, ড্রাইভিং ফোকাস, Bluetooth বা NFC ব্যবহার করুন। শর্টকাটে অটোমেশনের নিশ্চিতকরণ ও চালানোর সেটিংস পর্যালোচনা করুন।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En Atajos, crea una automatización personal y elige la acción Iniciar seguimiento o Dejar de rastrear de iso.me. Usa como activador la conexión o desconexión de CarPlay, el inicio o fin de un entrenamiento, el modo de concentración Conducción, Bluetooth o NFC. Revisa los ajustes de confirmación y ejecución de la automatización en Atajos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dans Raccourcis, créez une automatisation personnelle et choisissez l’action Commencer le suivi ou Arrêter le suivi d’iso.me. Utilisez comme déclencheur la connexion ou déconnexion de CarPlay, le début ou la fin d’un entraînement, le mode de concentration Conduite, Bluetooth ou NFC. Vérifiez les réglages de confirmation et d’exécution de l’automatisation dans Raccourcis."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शॉर्टकट ऐप में व्यक्तिगत ऑटोमेशन बनाएँ और iso.me का «ट्रैकिंग प्रारंभ करें» / «ट्रैकिंग बंद करें» ऐक्शन चुनें। ट्रिगर के लिए CarPlay कनेक्ट या डिस्कनेक्ट होना, वर्कआउट शुरू या समाप्त होना, ड्राइविंग फ़ोकस, Bluetooth या NFC चुनें। शॉर्टकट में ऑटोमेशन की पुष्टि और चलाने की सेटिंग्स जाँचें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ショートカットで個人用オートメーションを作成し、iso.meの「追跡を開始する」または「追跡を停止する」アクションを選びます。CarPlayの接続・接続解除、ワークアウトの開始・終了、運転の集中モード、Bluetooth、NFCをトリガーにできます。ショートカットでオートメーションの確認と実行の設定を確認してください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W aplikacji Skróty utwórz automatyzację osobistą i wybierz czynność Rozpocznij śledzenie lub Zatrzymaj śledzenie aplikacji iso.me. Użyj jako wyzwalacza połączenia lub rozłączenia CarPlay, początku lub końca treningu, trybu skupienia Jazda, Bluetooth albo NFC. Sprawdź ustawienia potwierdzania i uruchamiania automatyzacji w Skrótach."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No app Atalhos, crie uma automação pessoal e escolha a ação Comece a rastrear ou Parar de rastrear do iso.me. Use como gatilho a conexão ou desconexão do CarPlay, o início ou fim de um treino, o Foco Dirigindo, Bluetooth ou NFC. Revise os ajustes de confirmação e execução da automação no Atalhos."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В приложении «Команды» создайте личную автоматизацию и выберите действие iso.me «Начать отслеживание» или «Прекратить отслеживание». Используйте как условие подключение или отключение CarPlay, начало или конец тренировки, фокусирование «За рулём», Bluetooth или NFC. Проверьте настройки подтверждения и запуска автоматизации в «Командах»."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在“快捷指令”中创建个人自动化，并选择iso.me的“开始追踪”或“停止追踪”操作。可使用CarPlay连接或断开、体能训练开始或结束、驾驶专注模式、Bluetooth或NFC作为触发条件。在“快捷指令”中检查自动化的确认与运行设置。"
+          }
+        }
+      }
+    },
+    "Motion activity": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motion activity"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النشاط الحركي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "গতি কার্যকলাপ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actividad de movimiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activité de mouvement"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गति गतिविधि"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モーションアクティビティ"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktywność ruchowa"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atividade de movimento"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Двигательная активность"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "运动活动"
+          }
+        }
+      }
+    },
+    "Motion activity is unavailable on this device. Smart Start cannot start a recording here; manual tracking and Shortcuts remain separate.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motion activity is unavailable on this device. Smart Start cannot start a recording here; manual tracking and Shortcuts remain separate."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بيانات النشاط الحركي غير متاحة على هذا الجهاز. لا يستطيع Smart Start بدء تسجيل هنا؛ يظل التتبع اليدوي و«الاختصارات» مستقلين عنه."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই ডিভাইসে গতিবিধির তথ্য পাওয়া যাচ্ছে না। Smart Start এখানে রেকর্ডিং শুরু করতে পারে না; ম্যানুয়াল ট্র্যাকিং ও শর্টকাট এর থেকে স্বতন্ত্র।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La actividad de movimiento no está disponible en este dispositivo. Smart Start no puede iniciar aquí una grabación; el seguimiento manual y Atajos son independientes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’activité de mouvement n’est pas disponible sur cet appareil. Smart Start ne peut pas y démarrer un enregistrement; le suivi manuel et Raccourcis restent indépendants."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस डिवाइस पर गतिविधि की जानकारी उपलब्ध नहीं है। Smart Start यहाँ रिकॉर्डिंग शुरू नहीं कर सकता; मैन्युअल ट्रैकिंग और शॉर्टकट इससे अलग हैं।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このデバイスではモーションアクティビティを利用できません。Smart Startで記録を開始することはできません。手動追跡とショートカットは別の機能です。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktywność ruchowa jest niedostępna na tym urządzeniu. Smart Start nie może tutaj rozpocząć rejestrowania; śledzenie ręczne i Skróty działają niezależnie."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A atividade de movimento não está disponível neste dispositivo. O Smart Start não pode iniciar uma gravação aqui; o rastreamento manual e o Atalhos são independentes."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные движения недоступны на этом устройстве. Smart Start не может начать здесь запись; ручное отслеживание и «Команды» работают независимо."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此设备不支持运动活动数据。Smart Start无法在此设备上开始记录；手动跟踪和“快捷指令”是独立功能。"
+          }
+        }
+      }
+    },
+    "Movement must be sustained, high-confidence activity, not just elapsed time. Stationary auto-stop applies only to a session owned by Smart Start; it does not stop a manual, Watch, or Shortcut session. Automatic starts can increase battery use and may mistake a passenger journey for driving.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movement must be sustained, high-confidence activity, not just elapsed time. Stationary auto-stop applies only to a session owned by Smart Start; it does not stop a manual, Watch, or Shortcut session. Automatic starts can increase battery use and may mistake a passenger journey for driving."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يجب أن يستمر النشاط الحركي وأن يُكتشف بدرجة ثقة عالية، وليس أن يمر الوقت فقط. ينطبق الإيقاف التلقائي عند السكون على الجلسات التي بدأها Smart Start فقط؛ ولا يوقف جلسة يدوية أو جلسة بدأت من Watch أو اختصار. قد يزيد البدء التلقائي استهلاك البطارية، وقد يظن أن رحلة الراكب هي قيادة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "শুধু সময় কাটলেই হবে না; নিরবচ্ছিন্ন গতিবিধি উচ্চ নিশ্চয়তায় শনাক্ত হতে হবে। স্থির থাকলে স্বয়ংক্রিয়ভাবে থামানো শুধু Smart Start-এর নিজস্ব সেশনে প্রযোজ্য; এটি ম্যানুয়াল, Watch বা শর্টকাট থেকে শুরু করা সেশন থামায় না। স্বয়ংক্রিয় শুরুতে ব্যাটারি খরচ বাড়তে পারে এবং যাত্রী হিসেবে ভ্রমণকে গাড়ি চালানো বলে ভুল শনাক্ত করতে পারে।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El movimiento debe ser sostenido y detectarse con un nivel alto de confianza; no basta con que transcurra el tiempo. La parada automática por inactividad solo se aplica a sesiones de Smart Start; no detiene sesiones manuales, del Watch ni de Atajos. Los inicios automáticos pueden aumentar el consumo de batería y confundir un viaje como pasajero con la conducción."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le mouvement doit être continu et détecté avec un niveau de confiance élevé; le temps écoulé ne suffit pas. L’arrêt automatique à l’immobilité ne s’applique qu’aux sessions de Smart Start; il n’arrête pas les sessions manuelles, de la Watch ou de Raccourcis. Les démarrages automatiques peuvent augmenter la consommation de batterie et confondre un trajet comme passager avec la conduite."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गतिविधि लगातार होनी चाहिए और उच्च विश्वसनीयता के साथ पहचानी जानी चाहिए; केवल समय बीतना काफ़ी नहीं है। स्थिर होने पर अपने-आप रुकना केवल Smart Start के अपने सत्र पर लागू होता है; इससे मैन्युअल, Watch या शॉर्टकट से शुरू किया गया सत्र नहीं रुकता। अपने-आप शुरू होने से बैटरी ज़्यादा खर्च हो सकती है और यात्री के रूप में यात्रा को गाड़ी चलाना समझा जा सकता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "単に時間が経過するだけでなく、継続した活動が高い信頼度で検出される必要があります。静止時の自動停止はSmart Startが管理するセッションにのみ適用され、手動、Watch、ショートカットのセッションは停止しません。自動開始によりバッテリー消費が増えたり、同乗中の移動を運転と誤認したりする場合があります。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruch musi być ciągły i wykrywany z wysokim poziomem pewności; sam upływ czasu nie wystarczy. Automatyczne zatrzymywanie przy bezruchu dotyczy tylko sesji Smart Start; nie zatrzymuje sesji ręcznej, z Watch ani ze Skrótów. Automatyczne uruchamianie może zwiększyć zużycie baterii i pomylić podróż pasażera z prowadzeniem pojazdu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O movimento precisa ser contínuo e detectado com alto grau de confiança; não basta o tempo passar. A parada automática por imobilidade só se aplica a sessões do Smart Start; não encerra sessões manuais, do Watch ou de Atalhos. Os inícios automáticos podem aumentar o consumo de bateria e confundir uma viagem como passageiro com a condução de um veículo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Движение должно быть непрерывным и определяться с высокой уверенностью; одного прошедшего времени недостаточно. Автоостановка при неподвижности применяется только к сеансам Smart Start; она не останавливает ручной сеанс, сеанс Watch или «Команд». Автоматический запуск может увеличить расход батареи и ошибочно принять поездку пассажиром за вождение."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "必须持续检测到运动，并且活动识别的置信度较高，而不仅仅是经过了一段时间。静止时自动停止仅适用于Smart Start管理的会话；不会停止手动、Watch或“快捷指令”会话。自动开始可能增加电池消耗，并可能将乘客出行误判为驾驶。"
+          }
+        }
+      }
+    },
+    "Movement threshold": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movement threshold"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عتبة الحركة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "গতিবিধির সময়সীমা"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umbral de movimiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seuil de mouvement"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गतिविधि की समय-सीमा"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移動時間のしきい値"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próg ruchu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limiar de movimento"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порог движения"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "运动阈值"
+          }
+        }
+      }
+    },
+    "No activities selected. Smart Start will not begin new recordings.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No activities selected. Smart Start will not begin new recordings."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم تُحدَّد أي أنشطة. لن يبدأ Smart Start تسجيلات جديدة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "কোন কার্যক্রম নির্বাচন করা হয়নি. Smart Start নতুন রেকর্ডিং শুরু করবে না।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay actividades seleccionadas. Smart Start no comenzará nuevas grabaciones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune activité sélectionnée. Smart Start ne démarrera pas de nouveaux enregistrements."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कोई गतिविधि चयनित नहीं. Smart Start नई रिकॉर्डिंग शुरू नहीं करेगा।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アクティビティが選択されていません。Smart Startは新しい記録を開始しません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie wybrano aktywności. Smart Start nie rozpocznie nowych rejestracji."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma atividade selecionada. Smart Start não iniciará novas gravações."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виды активности не выбраны. Smart Start не начнёт новые записи."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未选择任何活动。Smart Start不会开始新的记录。"
+          }
+        }
+      }
+    },
+    "Off unless you choose to enable it": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off unless you choose to enable it"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متوقف إلا إذا اخترت تمكينه"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "বন্ধ যদি না আপনি এটি সক্ষম করতে চান"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagado a menos que elijas habilitarlo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivé sauf si vous choisissez de l'activer"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब तक आप इसे सक्षम करना नहीं चुनते तब तक बंद रहेगा"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効にすることを選択しない限りオフ"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyłączone, chyba że zdecydujesz się je włączyć"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desativado, a menos que você decida ativá-lo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выключено, если вы не решите включить его"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭，除非您选择启用它"
+          }
+        }
+      }
+    },
+    "On · requires permissions and tracking access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On · requires permissions and tracking access"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفعّل · يتطلب أذونات وإتاحة التتبع"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "চালু · অনুমতি এবং ট্র্যাকিং অ্যাক্সেস প্রয়োজন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activado · requiere permisos y acceso de seguimiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activé · nécessite des autorisations et un accès au suivi"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "चालू · अनुमतियों और ट्रैकिंग पहुंच की आवश्यकता है"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オン · 権限と追跡アクセスが必要です"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włączone · wymaga uprawnień i dostępu do śledzenia"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativado · requer permissões e acesso de rastreamento"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включено · требуются разрешения и доступ для отслеживания"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开 · 需要权限和跟踪访问"
+          }
+        }
+      }
+    },
+    "PERMISSIONS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERMISSIONS"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأذونات"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অনুমতি"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERMISOS"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AUTORISATIONS"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अनुमति"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UPRAWNIENIA"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PERMISSÕES"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "РАЗРЕШЕНИЯ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "权限"
+          }
+        }
+      }
+    },
+    "Pause after manual Stop": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause after manual Stop"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توقف مؤقتًا بعد التوقف اليدوي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ম্যানুয়াল স্টপ পরে বিরতি"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausa después de la parada manual"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause après un arrêt manuel"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मैनुअल स्टॉप के बाद रुकें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手動停止後の一時停止"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wstrzymaj po ręcznym zatrzymaniu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausa após parada manual"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пауза после ручной остановки"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手动停止后暂停"
+          }
+        }
+      }
+    },
+    "RECORDING · OPTIONAL AUTOMATION": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDING · OPTIONAL AUTOMATION"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التسجيل · الأتمتة الاختيارية"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রেকর্ডিং · ঐচ্ছিক অটোমেশন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRABACIÓN · AUTOMATIZACIÓN OPCIONAL"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENREGISTREMENT · AUTOMATISATION EN OPTION"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रिकॉर्डिंग · वैकल्पिक स्वचालन"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録 · 任意のオートメーション"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REJESTROWANIE · OPCJONALNA AUTOMATYZACJA"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRAVAÇÃO · AUTOMAÇÃO OPCIONAL"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ЗАПИСЬ · ДОПОЛНИТЕЛЬНАЯ АВТОМАТИЗАЦИЯ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记录 · 可选自动化"
+          }
+        }
+      }
+    },
+    "SHORTCUTS · THE RELIABLE ROUTE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SHORTCUTS · THE RELIABLE ROUTE"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاختصارات · الطريقة الموثوقة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "শর্টকাট · নির্ভরযোগ্য রুট"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ATAJOS · LA RUTA CONFIABLE"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RACCOURCIS · L'ITINÉRAIRE FIABLE"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शॉर्टकट · विश्वसनीय मार्ग"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ショートカット · 確実な方法"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SKRÓTY · NIEZAWODNA TRASA"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ATALHOS · A ROTA CONFIÁVEL"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "КОМАНДЫ · НАДЁЖНЫЙ СПОСОБ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快捷指令 · 可靠的方式"
+          }
+        }
+      }
+    },
+    "Shortcut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الاختصار"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "শর্টকাট"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atajo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raccourci"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शॉर्टकट"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ショートカット"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skrót"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atalho"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Команда"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快捷指令"
+          }
+        }
+      }
+    },
+    "Smart Start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start"
+          }
+        }
+      }
+    },
+    "Smart Start settings weren’t saved. Your previous settings are still active.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start settings weren’t saved. Your previous settings are still active."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم حفظ إعدادات Smart Start. إعداداتك السابقة لا تزال نشطة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start সেটিংস সেভ করা হয়নি। আপনার আগের সেটিংস এখনও সক্রিয় আছে."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La configuración Smart Start no se guardó. Tus configuraciones anteriores todavía están activas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les paramètres Smart Start n'ont pas été enregistrés. Vos paramètres précédents sont toujours actifs."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start सेटिंग्स सहेजी नहीं गईं। आपकी पिछली सेटिंग अभी भी सक्रिय हैं."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start設定が保存されませんでした。以前の設定はまだ有効です。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia Smart Start nie zostały zapisane. Twoje poprzednie ustawienia są nadal aktywne."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As configurações Smart Start não foram salvas. Suas configurações anteriores ainda estão ativas."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки Smart Start не сохранились. Ваши предыдущие настройки все еще активны."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start设置未保存。您之前的设置仍然有效。"
+          }
+        }
+      }
+    },
+    "Source": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مصدر"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "উৎস"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fuente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्रोत"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ソース"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Źródło"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fonte"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источник"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来源"
+          }
+        }
+      }
+    },
+    "Stationary threshold": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stationary threshold"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المدة المطلوبة للسكون"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্থির থাকার সময়সীমা"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umbral estacionario"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seuil stationnaire"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थिर रहने की समय-सीमा"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "静止時間のしきい値"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Czas bezruchu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limiar estacionário"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Время без движения"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "静止时长阈值"
+          }
+        }
+      }
+    },
+    "Stop when stationary": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop when stationary"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إيقاف التسجيل عند السكون"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্থির থাকলে থামুন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detenerse cuando esté parado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêter l’enregistrement à l’immobilité"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थिर होने पर रुकें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "静止したら停止する"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zatrzymaj rejestrowanie przy bezruchu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pare quando estiver parado"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Останавливать запись при неподвижности"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "静止时停止"
+          }
+        }
+      }
+    },
+    "This enables low-power monitoring when permissions and tracking access allow it. Motion permission may be requested after you opt in. iOS can delay or suppress automatic starts; force-quitting prevents automatic relaunch until you open iso.me again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This enables low-power monitoring when permissions and tracking access allow it. Motion permission may be requested after you opt in. iOS can delay or suppress automatic starts; force-quitting prevents automatic relaunch until you open iso.me again."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يؤدي هذا إلى تفعيل المراقبة منخفضة استهلاك الطاقة عندما تسمح الأذونات وإتاحة التتبع بذلك. قد يُطلب إذن الحركة بعد اختيارك التفعيل. يمكن أن يؤخر iOS البدء التلقائي أو يمنعه؛ يؤدي إنهاء التطبيق إجباريًا إلى منع إعادة فتحه تلقائيًا حتى تفتح iso.me مرة أخرى."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অনুমতি ও ট্র্যাকিংয়ের সুবিধা থাকলে এটি কম শক্তি খরচের পর্যবেক্ষণ চালু করে। আপনি চালু করার সম্মতি দেওয়ার পর গতিবিধির অনুমতি চাওয়া হতে পারে। iOS স্বয়ংক্রিয় শুরুতে দেরি করতে বা তা আটকে দিতে পারে; অ্যাপ জোর করে বন্ধ করলে আবার iso.me না খোলা পর্যন্ত এটি স্বয়ংক্রিয়ভাবে চালু হতে পারে না।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto activa la supervisión de bajo consumo cuando los permisos y el acceso al seguimiento lo permiten. Es posible que se solicite permiso de movimiento después de que decidas activarlo. iOS puede retrasar o impedir los inicios automáticos; forzar el cierre evita que iso.me vuelva a abrirse automáticamente hasta que lo abras de nuevo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cela active la surveillance à faible consommation lorsque les autorisations et l’accès au suivi le permettent. L’autorisation d’accéder aux mouvements peut être demandée après votre choix d’activer la fonction. iOS peut retarder ou empêcher les démarrages automatiques; forcer la fermeture empêche la relance automatique jusqu’à ce que vous ouvriez de nouveau iso.me."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अनुमतियाँ और ट्रैकिंग की सुविधा होने पर यह कम ऊर्जा वाली निगरानी चालू करता है। आपके चालू करने की सहमति देने के बाद गतिविधि की अनुमति माँगी जा सकती है। iOS अपने-आप शुरू होने में देरी कर सकता है या उसे रोक सकता है; ऐप को ज़बरदस्ती बंद करने पर वह तब तक अपने-आप दोबारा नहीं खुलता जब तक आप iso.me फिर से न खोलें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "権限と追跡利用権がある場合に、低消費電力の監視を有効にします。有効化に同意した後で、モーションの許可を求められる場合があります。iOSは自動開始を遅らせたり抑制したりすることがあります。アプリを強制終了すると、iso.meを再び開くまで自動で再起動できなくなります。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włącza to monitorowanie przy niskim zużyciu energii, jeśli pozwalają na to uprawnienia i dostęp do śledzenia. Po wyrażeniu zgody na włączenie funkcji może pojawić się prośba o dostęp do aktywności ruchowej. iOS może opóźniać lub blokować automatyczne uruchamianie; wymuszone zamknięcie aplikacji uniemożliwia jej automatyczny powrót do czasu ponownego otwarcia iso.me."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isso ativa o monitoramento de baixo consumo quando as permissões e o acesso ao rastreamento permitem. A permissão de movimento pode ser solicitada depois que você optar por ativar a função. O iOS pode atrasar ou impedir os inícios automáticos; forçar o encerramento impede a reabertura automática até você abrir o iso.me novamente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это включает энергосберегающее наблюдение, если позволяют разрешения и доступ к отслеживанию. После вашего согласия на включение функции может появиться запрос доступа к движению. iOS может задерживать или блокировать автоматический запуск; принудительное закрытие приложения не позволяет ему автоматически открыться снова, пока вы не откроете iso.me."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在权限和跟踪使用权允许的情况下，这会启用低功耗监测。您选择启用后，系统可能会请求运动权限。iOS可能会延迟或阻止自动开始；强制退出应用后，只有再次打开iso.me，系统才能重新自动启动它。"
+          }
+        }
+      }
+    },
+    "This is not a native CarPlay app or a workout background service. iOS controls background delivery. Test your automation before relying on it, especially while locked, in Low Power Mode, or with Background App Refresh off.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is not a native CarPlay app or a workout background service. iOS controls background delivery. Test your automation before relying on it, especially while locked, in Low Power Mode, or with Background App Refresh off."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا ليس تطبيق CarPlay أصليًا أو خدمة تمرين تعمل في الخلفية. يتحكم iOS في وصول الأحداث في الخلفية. اختبر الأتمتة قبل الاعتماد عليها، خاصةً أثناء قفل الجهاز أو تشغيل نمط الطاقة المنخفضة أو إيقاف تحديث التطبيقات في الخلفية."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এটি নেটিভ CarPlay অ্যাপ বা ব্যাকগ্রাউন্ডে চলা ওয়ার্কআউট পরিষেবা নয়। ব্যাকগ্রাউন্ডে ইভেন্ট পৌঁছানো iOS নিয়ন্ত্রণ করে। অটোমেশনের ওপর নির্ভর করার আগে পরীক্ষা করুন, বিশেষ করে ডিভাইস লক থাকা অবস্থায়, লো পাওয়ার মোডে বা ব্যাকগ্রাউন্ড অ্যাপ রিফ্রেশ বন্ধ থাকলে।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No es una app nativa de CarPlay ni un servicio de entrenamiento en segundo plano. iOS controla la entrega de eventos en segundo plano. Prueba tu automatización antes de depender de ella, especialmente con el dispositivo bloqueado, en modo de bajo consumo o con la actualización en segundo plano desactivada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce n’est ni une app CarPlay native ni un service d’entraînement en arrière-plan. iOS contrôle la réception des événements en arrière-plan. Testez votre automatisation avant de vous y fier, notamment lorsque l’appareil est verrouillé, en mode économie d’énergie ou avec l’actualisation en arrière-plan désactivée."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह न तो नेटिव CarPlay ऐप है, न बैकग्राउंड में चलने वाली वर्कआउट सेवा। बैकग्राउंड में इवेंट मिलना iOS के नियंत्रण में है। भरोसा करने से पहले अपना ऑटोमेशन जाँचें, खासकर डिवाइस लॉक होने पर, लो पावर मोड में या बैकग्राउंड ऐप रिफ्रेश बंद होने पर।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これはネイティブのCarPlayアプリでも、バックグラウンドのワークアウトサービスでもありません。バックグラウンドでのイベント配信はiOSが制御します。特にデバイスのロック中、低電力モード、Appのバックグラウンド更新がオフの場合は、頼る前にオートメーションをテストしてください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To nie jest natywna aplikacja CarPlay ani usługa treningowa w tle. iOS kontroluje dostarczanie zdarzeń w tle. Przetestuj automatyzację, zanim na niej polegniesz, zwłaszcza przy zablokowanym urządzeniu, w trybie niskiego zużycia energii lub przy wyłączonym odświeżaniu aplikacji w tle."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este não é um app nativo de CarPlay nem um serviço de treino em segundo plano. O iOS controla a entrega de eventos em segundo plano. Teste sua automação antes de depender dela, especialmente com o dispositivo bloqueado, no Modo Pouca Energia ou com a Atualização em 2º Plano desativada."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это не отдельное приложение CarPlay и не фоновая служба тренировок. iOS управляет доставкой событий в фоне. Проверьте автоматизацию, прежде чем полагаться на неё, особенно при заблокированном устройстве, в режиме энергосбережения или с отключённым обновлением контента."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这不是原生CarPlay应用，也不是后台体能训练服务。后台事件传递由iOS控制。在依赖自动化之前，请先测试，尤其是在设备锁定、低电量模式或关闭后台App刷新的情况下。"
+          }
+        }
+      }
+    },
+    "Tracking Source": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking Source"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مصدر التتبع"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্র্যাকিং সোর্স"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fuente de seguimiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source de suivi"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्रैकिंग स्रोत"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追跡元"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Źródło śledzenia"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fonte de rastreamento"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источник отслеживания"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追踪来源"
+          }
+        }
+      }
+    },
+    "Tracking could not start. Open Whereday to check your access and recording status.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking could not start. Open Whereday to check your access and recording status."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذر بدء التتبع. افتح Whereday للتحقق من وصولك وحالة التسجيل."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ট্র্যাকিং শুরু করা যায়নি। আপনার অ্যাক্সেস এবং রেকর্ডিং স্ট্যাটাস চেক করতে Whereday খুলুন।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El seguimiento no pudo iniciarse. Abra Whereday para verificar su acceso y estado de grabación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le suivi n'a pas pu démarrer. Ouvrez Whereday pour vérifier votre statut d’accès et d’enregistrement."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्रैकिंग प्रारंभ नहीं हो सकी. अपनी पहुंच और रिकॉर्डिंग स्थिति की जांच करने के लिए Whereday खोलें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追跡を開始できませんでした。Wheredayを開いて、利用権と記録の状態を確認してください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można rozpocząć śledzenia. Otwórz Whereday, aby sprawdzić swój dostęp i status nagrywania."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O rastreamento não pôde ser iniciado. Abra Whereday para verificar seu status de acesso e gravação."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось запустить отслеживание. Откройте Whereday, чтобы проверить свой доступ и статус записи."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跟踪无法启动。打开Whereday查看您的访问和录制状态。"
+          }
+        }
+      }
+    },
+    "Turn on": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تشغيل"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "চালু করুন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "चालू करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンにする"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włącz"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включить"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用"
+          }
+        }
+      }
+    },
+    "Turn on Smart Start?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on Smart Start?"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تشغيل Smart Start؟"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start চালু করবেন?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Activar Smart Start?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer Smart Start?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Start चालू करें?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Startをオンにしますか?"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włączyć Smart Start?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar o Smart Start?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включить Smart Start?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用Smart Start？"
+          }
+        }
+      }
+    },
+    "Wait before restarting": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait before restarting"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انتظر قبل إعادة التشغيل"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রিস্টার্ট করার আগে অপেক্ষা করুন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espere antes de reiniciar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attendez avant de redémarrer"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पुनः प्रारंभ करने से पहले प्रतीक्षा करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再起動する前にお待ちください"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poczekaj przed ponownym uruchomieniem"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espere antes de reiniciar"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подождите, прежде чем перезапустить"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重启前等待"
+          }
+        }
+      }
+    },
+    "Walking or running": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walking or running"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المشي أو الجري"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "হাঁটা বা দৌড়ানো"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caminar o correr"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcher ou courir"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "चलना या दौड़ना"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "歩いたり走ったり"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chodzenie lub bieganie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Andar ou correr"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ходьба или бег"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "步行或跑步"
+          }
+        }
+      }
+    },
+    "While using · Always needed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "While using · Always needed"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أثناء الاستخدام · يلزم إذن «دائمًا»"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ব্যবহারকালে · «সর্বদা» অনুমতি প্রয়োজন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Al usar la app · se necesita «Siempre»"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pendant l’utilisation · « Toujours » requis"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उपयोग के दौरान · «हमेशा» अनुमति चाहिए"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用中のみ · 「常に」の許可が必要"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podczas używania · wymagane „Zawsze”"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durante o uso · exige “Sempre”"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "При использовании · требуется «Всегда»"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用期间 · 需要“始终”权限"
+          }
+        }
+      }
+    },
+    "Workout automation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Workout automation"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أتمتة التمرين"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ওয়ার্কআউট অটোমেশন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatización del entrenamiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisation de l'entraînement"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कसरत स्वचालन"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ワークアウトの自動化"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatyzacja treningu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automação de treino"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматизация тренировок"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "锻炼自动化"
+          }
+        }
+      }
+    },
+    "iso.me can try to start tracking when iOS reports meaningful movement, but iOS may delay or suppress background triggers. Force-quitting the app prevents automatic relaunch until you open it again. Shortcuts automations are the most reliable way to start from CarPlay, workouts, Focus modes, Bluetooth, or NFC.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iso.me can try to start tracking when iOS reports meaningful movement, but iOS may delay or suppress background triggers. Force-quitting the app prevents automatic relaunch until you open it again. Shortcuts automations are the most reliable way to start from CarPlay, workouts, Focus modes, Bluetooth, or NFC."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكن أن يحاول iso.me بدء التتبع عندما يرصد iOS حركة ملحوظة، لكن iOS قد يؤخر مشغّلات الخلفية أو يمنعها. يؤدي إنهاء التطبيق إجباريًا إلى منع إعادة فتحه تلقائيًا حتى تفتحه مرة أخرى. أتمتة «الاختصارات» هي الطريقة الأكثر موثوقية للبدء من CarPlay أو التمارين أو أنماط التركيز أو Bluetooth أو NFC."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS উল্লেখযোগ্য গতিবিধি শনাক্ত করলে iso.me ট্র্যাকিং শুরু করার চেষ্টা করতে পারে, তবে iOS ব্যাকগ্রাউন্ড ট্রিগারে দেরি করতে বা তা আটকে দিতে পারে। অ্যাপ জোর করে বন্ধ করলে আবার না খোলা পর্যন্ত এটি স্বয়ংক্রিয়ভাবে চালু হতে পারে না। CarPlay, ওয়ার্কআউট, ফোকাস মোড, Bluetooth বা NFC থেকে শুরু করার সবচেয়ে নির্ভরযোগ্য উপায় হলো শর্টকাট অটোমেশন।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iso.me puede intentar iniciar el seguimiento cuando iOS detecta un movimiento significativo, pero iOS puede retrasar o impedir los activadores en segundo plano. Forzar el cierre de la app evita que vuelva a abrirse automáticamente hasta que la abras de nuevo. Las automatizaciones de Atajos son la forma más fiable de iniciar desde CarPlay, entrenamientos, modos de concentración, Bluetooth o NFC."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iso.me peut tenter de démarrer le suivi lorsque iOS signale un mouvement significatif, mais iOS peut retarder ou empêcher les déclenchements en arrière-plan. Forcer la fermeture de l’app empêche sa relance automatique jusqu’à ce que vous la rouvriez. Les automatisations de Raccourcis sont le moyen le plus fiable de démarrer depuis CarPlay, un entraînement, un mode de concentration, Bluetooth ou NFC."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS के उल्लेखनीय गतिविधि पहचानने पर iso.me ट्रैकिंग शुरू करने की कोशिश कर सकता है, लेकिन iOS बैकग्राउंड ट्रिगर में देरी कर सकता है या उन्हें रोक सकता है। ऐप को ज़बरदस्ती बंद करने पर वह तब तक अपने-आप दोबारा नहीं खुलता जब तक आप उसे फिर से न खोलें। CarPlay, वर्कआउट, फ़ोकस मोड, Bluetooth या NFC से शुरू करने का सबसे भरोसेमंद तरीका शॉर्टकट ऑटोमेशन है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOSが大きな移動を検出すると、iso.meは追跡の開始を試みますが、iOSがバックグラウンドのトリガーを遅らせたり抑制したりする場合があります。アプリを強制終了すると、再び開くまで自動で再起動できなくなります。CarPlay、ワークアウト、集中モード、Bluetooth、NFCから開始するには、ショートカットのオートメーションが最も確実な方法です。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iso.me może spróbować rozpocząć śledzenie, gdy iOS wykryje istotny ruch, ale iOS może opóźniać lub blokować wyzwalacze w tle. Wymuszone zamknięcie aplikacji uniemożliwia jej automatyczny powrót do czasu ponownego otwarcia. Automatyzacje Skrótów to najbardziej niezawodny sposób uruchamiania przez CarPlay, treningi, tryby skupienia, Bluetooth lub NFC."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O iso.me pode tentar iniciar o rastreamento quando o iOS detectar movimento significativo, mas o iOS pode atrasar ou impedir os gatilhos em segundo plano. Forçar o encerramento do app impede a reabertura automática até você abri-lo novamente. As automações de Atalhos são a forma mais confiável de iniciar pelo CarPlay, por treinos, modos Foco, Bluetooth ou NFC."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iso.me может попытаться начать отслеживание, когда iOS обнаружит существенное движение, но iOS может задерживать или блокировать фоновые события. Принудительное закрытие приложения не позволяет ему автоматически открыться снова, пока вы не откроете его. Автоматизации «Команд» — самый надёжный способ запуска через CarPlay, тренировки, режимы фокусирования, Bluetooth или NFC."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当iOS检测到明显移动时，iso.me可以尝试开始跟踪，但iOS可能会延迟或阻止后台触发。强制退出应用后，只有再次打开它，系统才能重新自动启动它。通过CarPlay、体能训练、专注模式、Bluetooth或NFC开始时，“快捷指令”自动化是最可靠的方式。"
+          }
+        }
+      }
+    },
     "Select all files from the same backup. Nothing was restored.": {
       "comment": "Multipart local backup admission error.",
       "localizations": {

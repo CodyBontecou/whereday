@@ -4,8 +4,11 @@ Smart Start is **off by default**. This implementation adds local persisted sett
 a motion-evidence module, a policy coordinator, and separate ambient monitoring.
 It is not a completed or device-validated Smart Start feature. Settings now includes
 an explicit-confirmation Smart Start page with permission statuses, activity/timing
-choices and limitation/Shortcuts help. Optional onboarding, localized new copy and
-physical acceptance remain incomplete. Do not advertise background reliability from
+choices and limitation/Shortcuts help. Its new copy and Shortcut source/error text
+are cataloged in all 11 supported locales; compiled resources and scoped Spanish/Arabic
+simulator observations are recorded in the [localization receipt](evidence/smart-start-localization-20261114.md).
+Optional onboarding, full localized UI/accessibility and physical acceptance remain
+incomplete. Do not advertise background reliability from
 these injected tests or the simulator UI walkthrough.
 
 ## Required user-facing reliability copy
@@ -113,7 +116,7 @@ Next slice must:
 1. Verify actual background launch/lifecycle diagnostics on a device, including
    callbacks before a scene exists, permission/access resolution and webhook/export
    recovery. Preserve existing Watch sync and its acceptance boundaries.
-2. Finish acceptance of the new Settings page: localized copy, real denied/authorized
+2. Finish acceptance of the new Settings page: full localized UI/accessibility, real denied/authorized
    permission states, complete motion/interaction audit, and optional onboarding.
    The page already calls `try updateSmartStartSettings`, reports validation/save
    errors, requires explicit enable confirmation, and exposes status/activity/timing

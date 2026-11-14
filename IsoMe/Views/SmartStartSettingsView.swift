@@ -72,6 +72,7 @@ final class SmartStartSettingsModel: ObservableObject {
 }
 
 struct SmartStartSettingsView: View {
+    @Environment(\.layoutDirection) private var layoutDirection
     @ObservedObject private var locationManager: LocationManager
     @StateObject private var model: SmartStartSettingsModel
     @State private var motionStatus = MotionDetectionStatus.unavailable
@@ -86,10 +87,10 @@ struct SmartStartSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                BackPageHeader(caption: "RECORDING · OPTIONAL AUTOMATION", title: "Smart Start")
+                BackPageHeader(caption: "RECORDING · OPTIONAL AUTOMATION", title: "Smart Start", preservesCursiveShaping: preservesCursiveShaping)
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
-                BackPageLabel("AUTOMATIC RECORDING")
+                sectionLabel("AUTOMATIC RECORDING")
                 BackPageCard {
                     BackPageToggleRow(title: "Smart Start", subtitle: model.settings.isEnabled ? "On · requires permissions and tracking access" : "Off unless you choose to enable it",
                         isOn: Binding(get: { model.settings.isEnabled }, set: { model.requestEnabled($0) }))
@@ -103,7 +104,7 @@ struct SmartStartSettingsView: View {
                         .accessibilityIdentifier("smart-start-save-error")
                 }
 
-                BackPageLabel("PERMISSIONS")
+                sectionLabel("PERMISSIONS")
                 BackPageCard {
                     BackPageRowLabel(title: Text("Location access"), value: locationStatus, accessory: .none)
                     BackPageDivider()
@@ -122,7 +123,7 @@ struct SmartStartSettingsView: View {
                     BackPageFootnote("Motion activity is unavailable on this device. Smart Start cannot start a recording here; manual tracking and Shortcuts remain separate.")
                 }
 
-                BackPageLabel("ACTIVITIES")
+                sectionLabel("ACTIVITIES")
                 BackPageCard {
                     BackPageToggleRow(title: "Driving", isOn: binding(\.drivingEnabled))
                     BackPageDivider()
@@ -134,7 +135,7 @@ struct SmartStartSettingsView: View {
                     BackPageFootnote("No activities selected. Smart Start will not begin new recordings.")
                 }
 
-                BackPageLabel("CONSERVATIVE TIMING")
+                sectionLabel("CONSERVATIVE TIMING")
                 BackPageCard {
                     durationPicker("Movement threshold", key: \.minimumMovementDuration, options: [60, 120, 300, 600, 900])
                     BackPageDivider()
@@ -150,7 +151,7 @@ struct SmartStartSettingsView: View {
                 }.padding(.horizontal, 16)
                 BackPageFootnote("Movement must be sustained, high-confidence activity, not just elapsed time. Stationary auto-stop applies only to a session owned by Smart Start; it does not stop a manual, Watch, or Shortcut session. Automatic starts can increase battery use and may mistake a passenger journey for driving.")
 
-                BackPageLabel("SHORTCUTS · THE RELIABLE ROUTE")
+                sectionLabel("SHORTCUTS · THE RELIABLE ROUTE")
                 BackPageCard {
                     Text("In Shortcuts, create a personal automation and choose iso.me’s Start Tracking or Stop Tracking action. Use CarPlay connect/disconnect, workout start/end, Driving Focus, Bluetooth, or NFC as the trigger. Review the automation’s confirmation and run settings in Shortcuts.")
                         .font(.body).padding(16)
@@ -174,6 +175,14 @@ struct SmartStartSettingsView: View {
         .onAppear { refreshStatus() }
         .onDisappear { model.cancelEnable() }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in refreshStatus() }
+    }
+
+    // The custom monospace font and tracking separate Arabic letters. Other
+    // pages keep their defaults; this page uses an untracked system RTL caption.
+    private var preservesCursiveShaping: Bool { layoutDirection == .rightToLeft }
+
+    private func sectionLabel(_ title: LocalizedStringKey) -> some View {
+        BackPageLabel(title, preservesCursiveShaping: preservesCursiveShaping)
     }
 
     private func refreshStatus() {
