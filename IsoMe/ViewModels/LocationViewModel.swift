@@ -1532,16 +1532,16 @@ final class LocationViewModel {
 
     // MARK: - Import
 
-    func prepareImport(from urls: [URL]) async throws -> ImportPreview {
-        try await timelineImportService.preview(urls: urls)
+    func prepareImport(from urls: [URL], progress: ImportProgress.Operation? = nil) async throws -> ImportPreview {
+        try await timelineImportService.preview(urls: urls, progress: progress)
     }
 
-    func reviewImport(_ preview: ImportPreview, options: ImportOptions) async throws -> ImportPreview {
-        try await timelineImportService.review(preview, options: options)
+    func reviewImport(_ preview: ImportPreview, options: ImportOptions, progress: ImportProgress.Operation? = nil) async throws -> ImportPreview {
+        try await timelineImportService.review(preview, options: options, progress: progress)
     }
 
-    func commitImport(_ preview: ImportPreview, options: ImportOptions) async throws -> ImportCommitResult {
-        let result = try await timelineImportService.commit(preview, options: options)
+    func commitImport(_ preview: ImportPreview, options: ImportOptions, progress: ImportProgress.Operation? = nil) async throws -> ImportCommitResult {
+        let result = try await timelineImportService.commit(preview, options: options, progress: progress)
         if result.pointCount > 0 {
             locationPoints = []
             hasLoadedAllLocationPoints = false

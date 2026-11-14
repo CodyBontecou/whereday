@@ -530,15 +530,16 @@ enum WheredayBackupService {
         return pending
     }
 
-    static func restore(_ backup: WheredayBackup, context: ModelContext) throws -> ImportCommitResult {
+    static func restore(_ backup: WheredayBackup, context: ModelContext, progress: ImportProgress.Operation? = nil) throws -> ImportCommitResult {
+        progress?.post(.checkingDuplicates)
         let plan = try pending(backup, context: context)
         context.autosaveEnabled = false
         var completed = 0
-        ImportProgress.post(completed: completed, total: plan.recordCount)
+        progress?.post(.saving, completed: completed, total: plan.recordCount)
         func insert<M: PersistentModel>(_ model: M) throws {
             if completed.isMultiple(of: 500) {
                 try Task.checkCancellation()
-                ImportProgress.post(completed: completed, total: plan.recordCount)
+                progress?.post(.saving, completed: completed, total: plan.recordCount)
             }
             context.insert(model)
             completed += 1
@@ -550,9 +551,10 @@ enum WheredayBackupService {
             for record in plan.savedPlaces { try insert(record.makeModel()) }
             for record in plan.photoMoments { try insert(record.makeModel()) }
             for record in plan.countryStays { try insert(record.makeModel()) }
+            progress?.post(.finalizing, completed: completed, total: plan.recordCount)
             try Task.checkCancellation()
             try context.save()
-            ImportProgress.post(completed: completed, total: plan.recordCount)
+            progress?.post(.complete, completed: completed, total: plan.recordCount)
         } catch {
             context.rollback()
             throw error

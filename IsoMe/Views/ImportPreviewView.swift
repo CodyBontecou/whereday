@@ -64,7 +64,7 @@ struct ImportPreviewView: View {
     var onChooseAnotherFile: (() -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @ObservedObject private var progress = ImportProgress.shared
+    @StateObject private var progress = ImportProgress()
     @State private var phase: Phase = .reading
     @State private var options = ImportOptions()
     @State private var reviewState = ImportReviewState()
@@ -107,8 +107,10 @@ struct ImportPreviewView: View {
         }
         .interactiveDismissDisabled(isSaving)
         .task {
+            let operation = progress.reset()
+            defer { progress.end(operation) }
             do {
-                let preview = try await viewModel.prepareImport(from: urls)
+                let preview = try await viewModel.prepareImport(from: urls, progress: operation)
                 try Task.checkCancellation()
                 options = preview.options
                 phase = .ready(preview)
@@ -123,9 +125,11 @@ struct ImportPreviewView: View {
             guard !old.sameReviewPolicy(as: updated), case .ready(let preview) = phase else { return }
             reviewTask?.cancel()
             let request = reviewState.begin(options: updated)
+            let operation = progress.reset(stage: .checkingDuplicates)
             reviewTask = Task {
+                defer { progress.end(operation) }
                 do {
-                    let reviewed = try await viewModel.reviewImport(preview, options: updated)
+                    let reviewed = try await viewModel.reviewImport(preview, options: updated, progress: operation)
                     try Task.checkCancellation()
                     if let accepted = reviewState.finish(request, current: options, result: .success(reviewed)) {
                         phase = .ready(accepted)
@@ -137,7 +141,7 @@ struct ImportPreviewView: View {
                 }
             }
         }
-        .onDisappear { reviewTask?.cancel(); reviewState.cancel() }
+        .onDisappear { reviewTask?.cancel(); reviewState.cancel(); progress.cancel() }
     }
 
     private var url: URL { urls[0] }
@@ -166,7 +170,7 @@ struct ImportPreviewView: View {
         switch phase {
         case .reading:
             fileCard(name: url.lastPathComponent, detail: nil)
-            statusBlock(title: "Reading and checking duplicates...")
+            statusBlock(title: progressTitle)
         case .saving(let preview):
             fileCard(name: preview.fileName, detail: fileDetail(preview))
             savingBlock(preview)
@@ -232,15 +236,29 @@ struct ImportPreviewView: View {
         }
     }
 
-    /// "Saving import…" with the live count of records written so far.
+    private var progressTitle: LocalizedStringKey {
+        switch progress.snapshot.stage {
+        case .scanning: return "Scanning files…"
+        case .parsing: return "Parsing files…"
+        case .checkingDuplicates: return "Checking duplicates…"
+        case .saving, .finalizing, .complete: return "Saving import…"
+        }
+    }
+
+    /// Counts are staged records until the single transaction save succeeds.
+    /// Finalizing remains indeterminate; only the completion screen acknowledges durability.
     private func savingBlock(_ preview: ImportPreview) -> some View {
-        let total = progress.total > 0 ? progress.total : selectedCount(preview)
+        let total = progress.hasTotal ? progress.total : selectedCount(preview)
         let completed = min(progress.completed, total)
         return VStack(alignment: .leading, spacing: 10) {
-            Text("Saving import…")
+            Text(progressTitle)
                 .font(TE.editorial(.title3))
-            ProgressView(value: Double(completed), total: Double(max(total, 1)))
-                .tint(TE.inkRust)
+            if !progress.hasTotal || progress.snapshot.stage == .finalizing {
+                ProgressView().tint(TE.inkRust)
+            } else {
+                ProgressView(value: Double(completed), total: Double(max(total, 1)))
+                    .tint(TE.inkRust)
+            }
             Text(verbatim: progressCaption(preview, completed: completed, total: total))
                 .font(TE.mono(.caption2))
                 .tracking(1)
@@ -590,11 +608,12 @@ struct ImportPreviewView: View {
                         .foregroundStyle(TE.textMuted)
                 }
                 Button {
-                    progress.reset()
+                    let operation = progress.reset(stage: .checkingDuplicates)
                     phase = .saving(preview)
                     Task {
+                        defer { progress.end(operation) }
                         do {
-                            let result = try await viewModel.commitImport(preview, options: options)
+                            let result = try await viewModel.commitImport(preview, options: options, progress: operation)
                             phase = .complete(result, preview)
                             LogManager.shared.info("Imported \(result.pointCount) points and \(result.visitCount) visits · \(preview.payload.format.displayName)", category: .general)
                         } catch {

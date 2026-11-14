@@ -1,0 +1,88 @@
+{
+  "base": "a64231c0c1b3412d176737f498e9bf56b6c86466",
+  "scope": "Isolated component; no PR head update/main merge or whole-feature readiness",
+  "native": {
+    "XCTest": 589,
+    "SwiftTesting": 20,
+    "newProgressTests": 6,
+    "focused": 46,
+    "result": "artifacts/test-results/IsoMe-20261114-132328-73453.xcresult",
+    "oldQueuedPostRED": "one method/two assertions;400/500 appeared after reset"
+  },
+  "resources": {
+    "newKeys": 3,
+    "newValues": 33,
+    "oldEntriesUnchanged": 2396,
+    "compiledLookups": 44,
+    "PythonTests": 2,
+    "fullCatalogErrorsRemaining": 160,
+    "fullCatalogErrorScope": "16 original Google English-only entries"
+  },
+  "references": {
+    "actualSourceChecks": 31,
+    "actualGoogleCasesUnchanged": 50,
+    "actualDuplicateCasesUnchanged": 50
+  },
+  "UI": {
+    "ownedDevice": {
+      "udid": "1778B03A-D2F5-4656-B92A-8CDEAF3C2755",
+      "name": "whereday-import-progress-ui-20261114",
+      "owned": true,
+      "uiOnly": true
+    },
+    "realFiles": 2,
+    "excluded": 1,
+    "newPoints": 150000,
+    "newVisits": 1,
+    "explicitConfirmCount": 1,
+    "secondDarkXLReviewConfirmDisabled": true,
+    "cancelPreservedPoints": 150000,
+    "observedStableStages": [
+      "Saving/finalizing light",
+      "Checking duplicates dark/XL"
+    ],
+    "unobservedStableStages": [
+      "Scanning",
+      "Parsing"
+    ],
+    "observerSelectorFailure": {
+      "result": "Wrong observer selector, not native timeout",
+      "requestedId": "confirm-import",
+      "actualButtonLabel": "Import selected records",
+      "actualId": "import-review-screen",
+      "actualReviewPoints": 150000,
+      "actualReviewVisits": 1,
+      "folderFiles": 2,
+      "excluded": 1
+    },
+    "existingCopyDefect": "Two days of days now show in Atlas.",
+    "cleanup": {
+      "appearance": "light",
+      "contentSize": "large",
+      "helperUninstalled": true,
+      "appTerminated": true,
+      "state": "Shutdown"
+    },
+    "media": {
+      "walkthrough.mov": {
+        "sha256": "78268da7f5a46ee7329fa1fb20bbef7309a37b38c764df34b420f2c047d2d4b9",
+        "bytes": 20110963,
+        "scope": "Recorded; sampled frames inspected, not full-motion acceptance"
+      },
+      "dark-xl-walkthrough.mov": {
+        "sha256": "b89e4ee6ee716b037780d2779b9a8066d9e860865e44d969302545a1d4e56004",
+        "bytes": 11661347,
+        "scope": "Recorded; sampled frames inspected, not full-motion acceptance"
+      }
+    }
+  },
+  "sha256": {
+    "IsoMe/Utilities/TimelineImportService.swift": "e24dabc211e8b56967eb50c603a38e1c3610ee0ee40317ea253891939eb277d1",
+    "IsoMe/Utilities/WheredayBackupService.swift": "46ff642a3a2d1bd05c3687d738085e7f05805aa81c5f83a0b2307d364b9b3da4",
+    "IsoMe/ViewModels/LocationViewModel.swift": "4d2a1c5e6497ad295e49c4cd51c9af99f7b16c586c695a02b056cdccbcfe4f25",
+    "IsoMe/Views/ImportPreviewView.swift": "82e93c3e3de6edc0311a1d12413953c103d3acfcbe7321e856fd0da8c304f5e0",
+    "IsoMeTests/TimelineImportTests.swift": "4845dd439c287d50fb618041fa7bf8e57dd7fd359fb903f1c08fd9ea6c356e20",
+    "IsoMeTests/WheredayBackupTests.swift": "aeedda4f96d5fc195cd4f01f63eaea4d4d3bc99d4c3d3fe95be8eaebbdef4c5b",
+    "IsoMe/Localizable.xcstrings": "8a44b92368d607890306c123d31ddba9485af1fda486173db389edff316ae85d"
+  }
+}

@@ -1,0 +1,74 @@
+	 Executed 589 tests, with 0 failures (0 unexpected) in 19.311 (19.443) seconds
+	 Executed 589 tests, with 0 failures (0 unexpected) in 19.311 (19.444) seconds
+✔ Test run with 20 tests in 2 suites passed after 0.089 seconds.
+** TEST SUCCEEDED **
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.019s
+
+OK
+FAIL: Compiled mismatch ar:Scanning files…: __MISSING_IMPORT_PROGRESS__
+PASS: 44 actual compiled import-progress resource lookups
+RUN android ['python3', 'scripts/generate_visit_link_fixtures.py', '--check-source']
+Swift visit-link reference provenance verified
+RUN android ['python3', 'scripts/generate_google_timeline_fixtures.py', '--check-source']
+Swift Google Timeline provenance verified
+RUN android ['python3', 'scripts/generate_timeline_duplicate_fixtures.py', '--check-source']
+Swift timeline duplicate provenance verified
+RUN android ['python3', 'scripts/generate_calendar_fixtures.py', '--check-source']
+Calendar Swift reference provenance verified
+RUN android ['python3', 'scripts/generate_schedule_fixtures.py', '--check-source']
+PASS: schedule fixture source hashes match
+RUN android ['python3', 'scripts/generate_merge_fixtures.py', '--check-source']
+PASS: merge fixture source hashes and package revision match
+RUN android ['python3', 'scripts/generate_country_csv_fixtures.py', '--check-source']
+PASS: country CSV fixture source hashes match
+RUN android ['python3', 'scripts/generate_country_regions.py', '--check-source']
+PASS: country-region source hashes and generated Kotlin match
+RUN android ['python3', 'scripts/generate_outing_fixtures.py', '--check-source']
+PASS: outing fixture source hashes match
+RUN android ['python3', 'scripts/generate_outing_markdown_fixtures.py', '--check-source']
+PASS: outing Markdown source/model/harness/input and native fixture provenance
+RUN android ['python3', 'scripts/generate_distance_fixtures.py', '--check-source']
+PASS: Core Location distance and native route fixture provenance
+RUN android ['python3', 'scripts/generate_history_import_fixtures.py', '--check-source']
+PASS: history import fixture source hashes match
+RUN android ['python3', 'scripts/generate_visit_reconciliation_fixtures.py', '--check-source']
+PASS: visit reconciliation fixture source hashes match
+RUN android ['python3', 'scripts/generate_nearby_place_fixtures.py', '--check-source']
+PASS: nearby-place fixture source hashes match
+RUN android ['python3', 'scripts/generate_history_table_fixtures.py', '--check-source']
+PASS: JSON/CSV/Markdown renderer and native locale fixture provenance
+RUN android ['python3', 'scripts/generate_json_location_fixtures.py', '--check-source']
+PASS: JSON location fixture source hashes match
+RUN android ['python3', 'scripts/generate_kml_fixtures.py', '--check-source']
+PASS: KML fixture source hashes match
+RUN android ['python3', 'scripts/generate_gpx_fixtures.py', '--check-source']
+PASS: GPX fixture source hashes match
+RUN android ['python3', 'scripts/generate_filename_fixtures.py', '--check-source']
+PASS: filename fixture source hashes match
+RUN android ['python3', 'scripts/generate_saved_place_csv_fixtures.py', '--check-source']
+PASS: saved-place CSV fixture source hashes match
+RUN android ['python3', 'scripts/generate_saved_place_plan_fixtures.py', '--check-source']
+PASS: saved-place plan fixture source hashes match
+RUN android ['python3', 'scripts/generate_replay_fixtures.py', '--check-source']
+PASS: actual iOS replay fixture provenance
+RUN android ['python3', 'scripts/generate_road_snapping_fixtures.py', '--check-source']
+PASS: actual iOS road-snapping helper/adapter provenance
+RUN android ['python3', 'scripts/generate_photo_fixtures.py', '--check-source']
+PASS: actual Swift photo fixture provenance
+RUN android ['python3', 'scripts/generate_photo_cluster_fixtures.py', '--check-source']
+PASS: actual Swift photo-cluster fixture provenance
+RUN android ['python3', 'scripts/generate_photo_marker_fixtures.py', '--check-source']
+PASS: actual Swift photo marker style/hit-test provenance
+RUN android ['python3', 'scripts/generate_point_marker_fixtures.py', '--check-source']
+PASS: actual Swift viewport point marker provenance
+RUN android ['python3', 'scripts/generate_map_date_fixtures.py', '--check-source']
+PASS: actual Swift map-date preset provenance
+RUN android ['python3', 'scripts/verify_custom_date_reference.py', '--check-source']
+PASS: selected native iOS custom-date sheet and reference harness provenance
+RUN android ['python3', 'scripts/generate_manual_visit_overlap_fixtures.py', '--check-source']
+PASS: selected actual Swift manual-overlap predicate provenance
+RUN . ['python3', 'android/scripts/generate_visit_map_focus_fixtures.py', '--check-source']
+Swift visit-map-focus provenance verified
+PASS all31 actual CI source-provenance checks

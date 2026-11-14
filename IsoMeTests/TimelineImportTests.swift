@@ -1,5 +1,6 @@
 import XCTest
 import SwiftData
+import Combine
 @testable import IsoMe
 
 @MainActor
@@ -557,5 +558,113 @@ final class ImportReviewValidationTests: XCTestCase {
         XCTAssertEqual(stored.count, 1)
         XCTAssertEqual(stored.first?.id, existing.id)
         XCTAssertEqual(stored.first?.customName, "Keep me")
+    }
+}
+
+@MainActor
+final class ImportProgressTests: XCTestCase {
+    func testQueuedPreviousImportCannotPopulateTheNextImport() async {
+        let progress = ImportProgress()
+        let old = progress.reset()
+        let queued = old.post(.saving, completed: 400, total: 500)
+        _ = progress.reset()
+        await queued.value
+        XCTAssertEqual(progress.completed, 0)
+        XCTAssertEqual(progress.total, 0)
+        XCTAssertFalse(progress.hasTotal)
+    }
+
+    func testIndependentSheetsCannotOverwriteEachOther() async {
+        let first = ImportProgress(), second = ImportProgress()
+        let a = first.reset(), b = second.reset()
+        await a.post(.saving, completed: 2, total: 10).value
+        await b.post(.saving, completed: 8, total: 20).value
+        XCTAssertEqual(first.completed, 2)
+        XCTAssertEqual(first.total, 10)
+        XCTAssertEqual(second.completed, 8)
+        XCTAssertEqual(second.total, 20)
+    }
+
+    func testLateStagesCountsAndContradictoryTotalsCannotRegressProgress() async {
+        let progress = ImportProgress(), operation = progress.reset()
+        await operation.post(.parsing, completed: 1, total: 2).value
+        await operation.post(.checkingDuplicates, completed: 4, total: 100).value
+        await operation.post(.parsing, completed: 2, total: 2).value
+        XCTAssertEqual(progress.snapshot.stage, .checkingDuplicates)
+        XCTAssertEqual(progress.completed, 4)
+        await operation.post(.checkingDuplicates, completed: 1, total: 100).value
+        await operation.post(.checkingDuplicates, completed: 90, total: 99).value
+        XCTAssertEqual(progress.completed, 4)
+        XCTAssertEqual(progress.total, 100)
+        await operation.post(.saving, completed: 0, total: 10).value
+        XCTAssertEqual(progress.completed, 0)
+        XCTAssertEqual(progress.total, 10)
+        await operation.post(.finalizing, completed: 10, total: 10).value
+        await operation.post(.complete, completed: 10, total: 10).value
+        await operation.post(.saving, completed: 0, total: 10).value
+        XCTAssertEqual(progress.snapshot.stage, .complete)
+        XCTAssertEqual(progress.completed, 10)
+    }
+
+    func testKnownZeroAndInvalidCountsRemainDistinctFromIndeterminate() async {
+        let progress = ImportProgress(), operation = progress.reset()
+        XCTAssertFalse(progress.hasTotal)
+        await operation.post(.saving, total: 0).value
+        XCTAssertTrue(progress.hasTotal)
+        XCTAssertEqual(progress.total, 0)
+        await operation.post(.complete, completed: -1, total: 0).value
+        await operation.post(.complete, completed: 0, total: -1).value
+        XCTAssertEqual(progress.snapshot.stage, .saving)
+    }
+
+    func testClosingOrEndingAnOldOperationCannotAffectTheCurrentOne() async {
+        let progress = ImportProgress()
+        let old = progress.reset(), current = progress.reset()
+        progress.end(old)
+        await current.post(.saving, completed: 1, total: 3).value
+        XCTAssertEqual(progress.completed, 1)
+        let queued = current.post(.complete, completed: 3, total: 3)
+        progress.cancel()
+        await queued.value
+        XCTAssertEqual(progress.completed, 1)
+        XCTAssertEqual(progress.snapshot.stage, .saving)
+    }
+
+    func testActualGooglePreviewChecksAndAtomicCommitReportScopedStages() async throws {
+        let container = try ModelContainer(for: Visit.self, LocationPoint.self,
+                                          configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let service = TimelineImportService(container: container)
+        let progress = ImportProgress()
+        let checked = expectation(description: "Real planner checked all incoming records")
+        let committed = expectation(description: "Completion only after durable rows are visible")
+        var receivedCheck = false, receivedCompletion = false
+        var countsAtCompletion: [Int] = []
+        let subscription = progress.$snapshot.sink { snapshot in
+            if snapshot.stage == .checkingDuplicates, snapshot.completed == 1001, !receivedCheck {
+                receivedCheck = true; checked.fulfill()
+            }
+            if snapshot.stage == .complete, !receivedCompletion {
+                receivedCompletion = true
+                countsAtCompletion.append((try? ModelContext(container).fetchCount(FetchDescriptor<LocationPoint>())) ?? -1)
+                committed.fulfill()
+            }
+        }
+        defer { subscription.cancel() }
+        let rows = (0..<1001).map { ["latitudeE7": 120_000_000, "longitudeE7": 340_000_000,
+                                   "timestampMs": 1_577_836_800_000 + $0 * 1000, "accuracy": 5] }
+        let data = try JSONSerialization.data(withJSONObject: ["locations": rows])
+        let review = progress.reset()
+        let preview = try await service.preview(data: data, fileName: "synthetic.json",
+                                                options: ImportOptions(inferVisits: false), progress: review)
+        await fulfillment(of: [checked], timeout: 5)
+        XCTAssertEqual(try ModelContext(container).fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        progress.end(review)
+        let save = progress.reset(stage: .checkingDuplicates)
+        let result = try await service.commit(preview, options: preview.options, progress: save)
+        await fulfillment(of: [committed], timeout: 5)
+        XCTAssertEqual(result.pointCount, 1001)
+        XCTAssertEqual(countsAtCompletion, [1001])
+        XCTAssertEqual(progress.snapshot.stage, .complete)
+        XCTAssertEqual(progress.completed, 1001)
     }
 }

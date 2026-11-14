@@ -126,34 +126,61 @@ struct ImportCommitResult: Sendable {
     }
 }
 
-/// Live progress of the import being saved, for the review sheet's "29,880 OF 48,210 POINTS" line.
-/// The import worker posts counts from its own actor; the sheet observes them on the main actor.
+/// Per-sheet, operation-scoped observations. Worker posts cannot mutate a later
+/// import/review, another window, or a closed operation. They never affect admission.
 @MainActor
 final class ImportProgress: ObservableObject {
-    static let shared = ImportProgress()
-
-    @Published private(set) var completed = 0
-    @Published private(set) var total = 0
-    private var generation = 0
-
-    func reset() {
-        generation += 1
-        completed = 0
-        total = 0
+    enum Stage: Int, Sendable {
+        case scanning, parsing, checkingDuplicates, saving, finalizing, complete
     }
 
-    nonisolated static func post(completed: Int, total: Int) {
-        Task { @MainActor in shared.update(completed: completed, total: total) }
+    struct Snapshot: Equatable, Sendable {
+        let stage: Stage
+        let completed: Int
+        /// nil is indeterminate; zero is a known empty plan, not a missing update.
+        let total: Int?
     }
 
-    private func update(completed: Int, total: Int) {
-        // Posts can land out of order; counts only move forward within one import.
-        if total != self.total {
-            self.total = total
-            self.completed = completed
-        } else {
-            self.completed = max(self.completed, completed)
+    struct Operation: Sendable {
+        fileprivate let id: UUID
+        fileprivate let owner: ImportProgress
+
+        @discardableResult
+        nonisolated func post(_ stage: Stage, completed: Int = 0, total: Int? = nil) -> Task<Void, Never> {
+            Task { @MainActor in
+                owner.update(Snapshot(stage: stage, completed: completed, total: total), operation: id)
+            }
         }
+    }
+
+    @Published private(set) var snapshot = Snapshot(stage: .scanning, completed: 0, total: nil)
+    private var activeOperation: UUID?
+    var completed: Int { snapshot.completed }
+    var total: Int { snapshot.total ?? 0 }
+    var hasTotal: Bool { snapshot.total != nil }
+
+    func reset(stage: Stage = .scanning) -> Operation {
+        let id = UUID()
+        activeOperation = id
+        snapshot = Snapshot(stage: stage, completed: 0, total: nil)
+        return Operation(id: id, owner: self)
+    }
+
+    func end(_ operation: Operation) {
+        if activeOperation == operation.id { activeOperation = nil }
+    }
+
+    func cancel() { activeOperation = nil }
+
+    private func update(_ incoming: Snapshot, operation: UUID) {
+        guard activeOperation == operation, incoming.stage.rawValue >= snapshot.stage.rawValue,
+              incoming.completed >= 0, incoming.total.map({ $0 >= 0 }) ?? true else { return }
+        let previous = incoming.stage == snapshot.stage ? snapshot : Snapshot(stage: incoming.stage, completed: 0, total: nil)
+        // A stage's known total is stable; late contradictory posts cannot reset it.
+        if let total = previous.total, let next = incoming.total, total != next { return }
+        let total = previous.total ?? incoming.total
+        let completed = max(previous.completed, incoming.completed)
+        snapshot = Snapshot(stage: incoming.stage, completed: total.map { min(completed, $0) } ?? completed, total: total)
     }
 }
 
@@ -187,12 +214,14 @@ actor TimelineImportService {
     /// Bounded local-folder adapter. Keep the authorization and borrowed reader alive until
     /// every discovered candidate is codec-validated. A failure never returns a partial preview.
     /// FileProvider materialization and folder-picker presentation remain caller responsibilities.
-    func preview(folder: URL) throws -> ImportPreview {
+    func preview(folder: URL, progress: ImportProgress.Operation? = nil) throws -> ImportPreview {
+        progress?.post(.scanning)
         let accessed = folder.startAccessingSecurityScopedResource()
         defer { if accessed { folder.stopAccessingSecurityScopedResource() } }
         return try GoogleFolderDiscovery.withDiscoveredFiles(in: folder) { manifest, reader in
             var combined: ImportPayload?
-            for candidate in manifest.candidates {
+            progress?.post(.parsing, total: manifest.candidates.count)
+            for (index, candidate) in manifest.candidates.enumerated() {
                 try Task.checkCancellation()
                 let data = try reader.read(candidate)
                 let payload = try Self.parse(data: data, fileName: candidate.relativePath)
@@ -200,19 +229,21 @@ actor TimelineImportService {
                     throw TimelineImportError.invalidGoogleArray
                 }
                 try Self.appendGooglePayload(payload, to: &combined)
+                progress?.post(.parsing, completed: index + 1, total: manifest.candidates.count)
             }
             guard var combined else { throw TimelineImportError.noRecords }
             combined.visits.sort { $0.arrivedAt < $1.arrivedAt }
             combined.points.sort { $0.timestamp < $1.timestamp }
             var preview = try standardPreview(combined, fileName: folder.lastPathComponent,
-                                              sourceBytes: Int64(manifest.statistics.candidatePayloadBytes))
+                                              sourceBytes: Int64(manifest.statistics.candidatePayloadBytes), progress: progress)
             preview.folderSummary = ImportFolderSummary(googleFileCount: manifest.candidates.count,
                                                         excludedEntryCount: manifest.exclusionCounts.values.reduce(0, +))
             return preview
         }
     }
 
-    func preview(urls: [URL]) throws -> ImportPreview {
+    func preview(urls: [URL], progress: ImportProgress.Operation? = nil) throws -> ImportPreview {
+        progress?.post(.scanning)
         guard !urls.isEmpty else { throw TimelineImportError.noRecords }
         // The system picker may return files OR a single unzipped folder. Resolve
         // metadata on this worker, with authorization, before decoding any file.
@@ -227,13 +258,14 @@ actor TimelineImportService {
             guard urls.count == 1 else {
                 throw ImportError.invalidData(String(localized: "Choose one Google folder on its own, or select import files without folders."))
             }
-            return try preview(folder: folder)
+            return try preview(folder: folder, progress: progress)
         }
         var backups: [WheredayBackup] = []
         var combined: ImportPayload?
         var totalBytes = 0
         var sourceBytes: Int64 = 0
-        for url in urls {
+        progress?.post(.parsing, total: urls.count)
+        for (index, url) in urls.enumerated() {
             let accessed = url.startAccessingSecurityScopedResource()
             defer { if accessed { url.stopAccessingSecurityScopedResource() } }
             if let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize, size > ImportPayload.maximumFileSize {
@@ -258,15 +290,16 @@ actor TimelineImportService {
                 guard totalBytes <= ImportPayload.maximumFileSize else { throw TimelineImportError.fileTooLarge }
                 try Self.appendGooglePayload(payload, to: &combined)
             }
+            progress?.post(.parsing, completed: index + 1, total: urls.count)
         }
         if var combined {
             // Duplicate date-range fetches rely on chronological endpoints across all files.
             combined.visits.sort { $0.arrivedAt < $1.arrivedAt }
             combined.points.sort { $0.timestamp < $1.timestamp }
-            return try standardPreview(combined, fileName: urls.map(\.lastPathComponent).joined(separator: ", "), sourceBytes: sourceBytes)
+            return try standardPreview(combined, fileName: urls.map(\.lastPathComponent).joined(separator: ", "), sourceBytes: sourceBytes, progress: progress)
         }
         let backup = try WheredayBackupService.combine(backups)
-        var preview = try backupPreview(backup, fileName: urls[0].lastPathComponent)
+        var preview = try backupPreview(backup, fileName: urls[0].lastPathComponent, progress: progress)
         preview.sourceByteCount = sourceBytes
         return preview
     }
@@ -275,7 +308,8 @@ actor TimelineImportService {
         .invalidData(String(localized: "Select Google Timeline JSON files together, one Whereday import file, or all files from the same backup."))
     }
 
-    private func backupPreview(_ backup: WheredayBackup, fileName: String) throws -> ImportPreview {
+    private func backupPreview(_ backup: WheredayBackup, fileName: String, progress: ImportProgress.Operation? = nil) throws -> ImportPreview {
+        progress?.post(.checkingDuplicates)
         let plan = try WheredayBackupService.pending(backup, context: ModelContext(container))
         return ImportPreview(fileName: fileName, payload: ImportPayload(format: .wheredayBackup, backup: backup),
                              newVisitCount: plan.visits.count, newPointCount: plan.points.count,
@@ -285,26 +319,28 @@ actor TimelineImportService {
                              duplicateAdditionalRecordCount: backup.additionalRecordCount - plan.additionalRecordCount)
     }
 
-    func preview(data: Data, fileName: String, options: ImportOptions = .init()) throws -> ImportPreview {
+    func preview(data: Data, fileName: String, options: ImportOptions = .init(), progress: ImportProgress.Operation? = nil) throws -> ImportPreview {
+        progress?.post(.parsing, total: 1)
         let payload = try Self.parse(data: data, fileName: fileName)
+        progress?.post(.parsing, completed: 1, total: 1)
         if let backup = payload.backup {
-            return try backupPreview(WheredayBackupService.combine([backup]), fileName: fileName)
+            return try backupPreview(WheredayBackupService.combine([backup]), fileName: fileName, progress: progress)
         }
-        return try standardPreview(payload, fileName: fileName, options: options, sourceBytes: Int64(data.count))
+        return try standardPreview(payload, fileName: fileName, options: options, sourceBytes: Int64(data.count), progress: progress)
     }
 
-    func review(_ preview: ImportPreview, options: ImportOptions) throws -> ImportPreview {
+    func review(_ preview: ImportPreview, options: ImportOptions, progress: ImportProgress.Operation? = nil) throws -> ImportPreview {
         guard preview.payload.backup == nil else { return preview }
-        var reviewed = try standardPreview(preview.payload, fileName: preview.fileName, options: options, sourceBytes: preview.sourceByteCount)
+        var reviewed = try standardPreview(preview.payload, fileName: preview.fileName, options: options, sourceBytes: preview.sourceByteCount, progress: progress)
         reviewed.folderSummary = preview.folderSummary
         return reviewed
     }
 
-    private func standardPreview(_ payload: ImportPayload, fileName: String, options: ImportOptions = .init(), sourceBytes: Int64 = 0) throws -> ImportPreview {
+    private func standardPreview(_ payload: ImportPayload, fileName: String, options: ImportOptions = .init(), sourceBytes: Int64 = 0, progress: ImportProgress.Operation? = nil) throws -> ImportPreview {
         var countsOptions = options
         countsOptions.includeVisits = true
         countsOptions.includePoints = true
-        let plan = try makePlan(payload: payload, options: countsOptions, context: ModelContext(container))
+        let plan = try makePlan(payload: payload, options: countsOptions, context: ModelContext(container), progress: progress)
         return ImportPreview(fileName: fileName, payload: payload,
                              newVisitCount: plan.visits.count, newPointCount: plan.points.count,
                              duplicateVisitCount: plan.duplicateVisitCount, duplicatePointCount: plan.duplicatePointCount,
@@ -372,23 +408,23 @@ actor TimelineImportService {
         return payload
     }
 
-    func commit(_ preview: ImportPreview, options: ImportOptions) throws -> ImportCommitResult {
+    func commit(_ preview: ImportPreview, options: ImportOptions, progress: ImportProgress.Operation? = nil) throws -> ImportCommitResult {
         if let backup = preview.payload.backup {
-            return try WheredayBackupService.restore(backup, context: ModelContext(container))
+            return try WheredayBackupService.restore(backup, context: ModelContext(container), progress: progress)
         }
         guard options.sameReviewPolicy(as: preview.options) else { throw VisitInferenceError.reviewRequired }
         guard options.includeVisits || options.includePoints else { throw TimelineImportError.nothingSelected }
         let context = ModelContext(container)
         context.autosaveEnabled = false
         // Recheck against fresh storage: the preview is advisory, not a reservation.
-        let plan = try makePlan(payload: preview.payload, options: options, context: context)
+        let plan = try makePlan(payload: preview.payload, options: options, context: context, progress: progress)
         let total = plan.visits.count + plan.points.count
-        ImportProgress.post(completed: 0, total: total)
+        progress?.post(.saving, total: total)
         do {
             for (index, imported) in plan.visits.enumerated() {
                 if index.isMultiple(of: 500) {
                     try Task.checkCancellation()
-                    ImportProgress.post(completed: index, total: total)
+                    progress?.post(.saving, completed: index, total: total)
                 }
                 context.insert(Visit(
                     latitude: imported.latitude, longitude: imported.longitude,
@@ -409,16 +445,17 @@ actor TimelineImportService {
             for (index, imported) in plan.points.enumerated() {
                 if index.isMultiple(of: 500) {
                     try Task.checkCancellation()
-                    ImportProgress.post(completed: plan.visits.count + index, total: total)
+                    progress?.post(.saving, completed: plan.visits.count + index, total: total)
                 }
                 context.insert(LocationPoint(latitude: imported.latitude, longitude: imported.longitude,
                                              timestamp: imported.timestamp, altitude: imported.altitude, speed: imported.speed,
                                              horizontalAccuracy: imported.horizontalAccuracy, isOutlier: imported.isOutlier))
             }
-            ImportProgress.post(completed: total, total: total)
+            progress?.post(.finalizing, completed: total, total: total)
             try Task.checkCancellation()
             // One save is intentional: an error/cancellation cannot leave half an import.
             try context.save()
+            progress?.post(.complete, completed: total, total: total)
         } catch {
             context.rollback()
             throw error
@@ -438,7 +475,8 @@ actor TimelineImportService {
         var unknownAccuracyPointCount = 0
     }
 
-    private func makePlan(payload: ImportPayload, options: ImportOptions, context: ModelContext) throws -> Plan {
+    private func makePlan(payload: ImportPayload, options: ImportOptions, context: ModelContext, progress: ImportProgress.Operation? = nil) throws -> Plan {
+        progress?.post(.checkingDuplicates)
         var plan = Plan()
         var visitsByMinute: [Int64: [VisitMatch]] = [:]
         var pointsBySecond: [Int64: [PointMatch]] = [:]
@@ -509,6 +547,8 @@ actor TimelineImportService {
             return accepted
         } : []
         plan.inferredVisitCount = inferred.count
+        let total = incomingVisits.count + incomingPoints.count
+        progress?.post(.checkingDuplicates, total: total)
         if let first = incomingVisits.first, let last = incomingVisits.last {
             let start = first.arrivedAt.addingTimeInterval(-60), end = last.arrivedAt.addingTimeInterval(60)
             let descriptor = FetchDescriptor<Visit>(predicate: #Predicate { $0.arrivedAt >= start && $0.arrivedAt <= end })
@@ -526,7 +566,10 @@ actor TimelineImportService {
             }
         }
         for (index, visit) in incomingVisits.enumerated() {
-            if index.isMultiple(of: 500) { try Task.checkCancellation() }
+            if index.isMultiple(of: 500) {
+                try Task.checkCancellation()
+                progress?.post(.checkingDuplicates, completed: index, total: total)
+            }
             let match = VisitMatch(latitude: visit.latitude, longitude: visit.longitude, arrival: visit.arrivedAt, departure: visit.departedAt)
             let duplicate = ((match.bucket - 1)...(match.bucket + 1)).contains { bucket in
                 (visitsByMinute[bucket] ?? []).contains { $0.matches(match) }
@@ -535,11 +578,15 @@ actor TimelineImportService {
             else { plan.visits.append(visit); visitsByMinute[match.bucket, default: []].append(match) }
         }
         for (index, point) in incomingPoints.enumerated() {
-            if index.isMultiple(of: 500) { try Task.checkCancellation() }
+            if index.isMultiple(of: 500) {
+                try Task.checkCancellation()
+                progress?.post(.checkingDuplicates, completed: incomingVisits.count + index, total: total)
+            }
             let match = PointMatch(latitude: point.latitude, longitude: point.longitude, time: point.timestamp)
             if (pointsBySecond[match.bucket] ?? []).contains(where: { $0.matches(match) }) { plan.duplicatePointCount += 1 }
             else { plan.points.append(point); pointsBySecond[match.bucket, default: []].append(match) }
         }
+        progress?.post(.checkingDuplicates, completed: total, total: total)
         return plan
     }
 }

@@ -1,5 +1,6 @@
 import XCTest
 import SwiftData
+import Combine
 @testable import IsoMe
 
 @MainActor
@@ -75,7 +76,20 @@ final class WheredayBackupTests: XCTestCase {
         let preview = try await worker.preview(data: data, fileName: "Whereday Backup.json")
         XCTAssertEqual(preview.payload.format, .wheredayBackup)
         XCTAssertEqual(preview.newAdditionalRecordCount, 4)
-        let result = try await worker.commit(preview, options: ImportOptions())
+        let progress = ImportProgress()
+        let operation = progress.reset(stage: .checkingDuplicates)
+        let completed = expectation(description: "Backup committed before terminal progress")
+        let observation = progress.$snapshot.sink { state in
+            if state.stage == .complete {
+                XCTAssertEqual(state.completed, 6)
+                XCTAssertEqual(state.total, 6)
+                XCTAssertEqual(try? ModelContext(target).fetchCount(FetchDescriptor<CountryStay>()), 1)
+                completed.fulfill()
+            }
+        }
+        defer { observation.cancel() }
+        let result = try await worker.commit(preview, options: ImportOptions(), progress: operation)
+        await fulfillment(of: [completed], timeout: 5)
         XCTAssertEqual(result.visitCount, 1)
         XCTAssertEqual(result.pointCount, 1)
         XCTAssertEqual(result.additionalRecordCount, 4)
