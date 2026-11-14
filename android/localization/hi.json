@@ -1,6 +1,6 @@
 {
   "locale": "hi",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+  "defaultSourceSha256": "ef946df4103ccccf2ab01564c8ab5bc47e852d7a4a91fd32d695527d4b32a00e",
   "catalog": {},
   "translations": {
     "active_recording_map_description": "जंग-रंग का पथ केवल वर्तमान रिकॉर्डिंग दिखाता है, चुनी गई तारीख़ों से अलग। इसका शुरुआती झंडा और वर्तमान मार्कर तारीख़-अवधि के मार्करों से अलग हैं।",
@@ -1643,9 +1643,14 @@
     "visit_longitude": "देशांतर",
     "visit_name": "नाम",
     "visit_notes": "टिप्पणियाँ",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) इस पड़ाव के अंदर आता है, इसलिए इसे छोटा नहीं किया जा सकता। समय जाँचें, या दोनों विज़िट रखने के लिए सहेजें।",
     "visit_overlap_message": "ये समय %1$s की आपकी विज़िट से टकराते हैं। समय की समीक्षा करें या दोनों विज़िट सहेजें।",
+    "visit_overlap_now": "अभी",
     "visit_overlap_save": "फिर भी सहेजें",
     "visit_overlap_title": "टकराती विज़िट",
+    "visit_overlap_trim_end": "%1$s से %2$d मिनट ओवरलैप (%3$s तक)। सहेजने पर वह विज़िट %4$s पर समाप्त होगी।",
+    "visit_overlap_trim_end_open": "%1$s से ओवरलैप होता है, जो अभी जारी है। सहेजने पर वह विज़िट %2$s पर समाप्त हो जाएगी।",
+    "visit_overlap_trim_start": "%1$s से %2$d मिनट ओवरलैप (%3$s से)। सहेजने पर वह विज़िट %4$s से शुरू होगी।",
     "visit_overlap_unnamed": "विज़िट",
     "visit_past_times": "पिछली विज़िट के लिए आगमन और प्रस्थान समय चाहिए।",
     "visit_radius": "मिलान दायरा",

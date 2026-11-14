@@ -1663,9 +1663,14 @@
     <string name="visit_longitude">Longitude</string>
     <string name="visit_name">Nom</string>
     <string name="visit_notes">Notes</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) se situe dans cet arrêt et ne peut donc pas être raccourci. Vérifiez les heures, ou enregistrez pour conserver les deux visites.</string>
     <string name="visit_overlap_message">Ces heures chevauchent votre visite à %1$s. Vérifiez les heures ou enregistrez les deux visites.</string>
+    <string name="visit_overlap_now">maintenant</string>
     <string name="visit_overlap_save">Enregistrer quand même</string>
     <string name="visit_overlap_title">Visite qui se chevauche</string>
+    <string name="visit_overlap_trim_end">Chevauche %1$s de %2$d min (jusqu’à %3$s). L’enregistrement terminera cette visite à %4$s.</string>
+    <string name="visit_overlap_trim_end_open">Chevauche %1$s, toujours en cours. L’enregistrement terminera cette visite à %2$s.</string>
+    <string name="visit_overlap_trim_start">Chevauche %1$s de %2$d min (à partir de %3$s). L’enregistrement fera commencer cette visite à %4$s.</string>
     <string name="visit_overlap_unnamed">Visite</string>
     <string name="visit_past_times">Les visites passées nécessitent des heures d’arrivée et de départ.</string>
     <string name="visit_radius">Rayon de correspondance</string>

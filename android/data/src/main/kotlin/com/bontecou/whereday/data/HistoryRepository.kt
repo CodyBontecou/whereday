@@ -268,7 +268,20 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         countryResolutionAttemptedAt=value.countryResolutionAttemptedAt?.let {Instant.ofEpochMilli(it.toEpochMilli())}
     )
 
-    suspend fun saveVisit(value:Visit,expected:Visit?,reuse:SavedPlaceReuseSave?=null,rememberConfirmedPlace:Boolean=false,allowOverlap:Boolean=false):Visit = lock.withLock {
+    /**
+     * Saves a new manual stop like [saveVisit], first trimming every stored stay it overlaps in the same transaction,
+     * as iOS ManualVisitStore.createManualVisitTrimmingOverlaps does. A stay that cannot be trimmed throws [VisitOverlap].
+     */
+    suspend fun saveVisitTrimmingOverlaps(value:Visit,reuse:SavedPlaceReuseSave?=null):Visit=saveVisit(value,null,reuse,trimOverlaps=true)
+
+    /** Stored stays (any source) whose times overlap [from]–[through]; open stays run indefinitely. */
+    suspend fun overlapCheck(from:Instant,through:Instant?,excludingId:String?=null):VisitOverlapCheck {
+        val future=Instant.parse("4001-01-01T00:00:00Z")
+        val stored=dao.visitsOverlapping(from,through ?: future,future,excludingId).map {it.value}
+        return VisitOverlaps.check(stored,from,through,excludingId,clock.instant())
+    }
+
+    suspend fun saveVisit(value:Visit,expected:Visit?,reuse:SavedPlaceReuseSave?=null,rememberConfirmedPlace:Boolean=false,allowOverlap:Boolean=false,trimOverlaps:Boolean=false):Visit = lock.withLock {
         val visit=persistedVisit(value)
         val baseline=expected?.let(::persistedVisit)
         database.writeTransaction {
@@ -295,9 +308,23 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
             require(value.arrivedAt<=now && (value.departedAt==null || value.departedAt in value.arrivedAt..now)) {"Enter valid past visit times."}
             require(baseline==null || visit.source==baseline.source) {"The visit source cannot change."}
             if(expected==null) require(visit.source==VisitSource.manual && !visit.name.isNullOrBlank() && visit.confirmation==Confirmation.confirmed) {"New visits must be named manual visits."}
+            var trimmed=false
+            if(trimOverlaps && !allowOverlap) {
+                require(expected==null) {"Only a new stop trims overlapping stays."}
+                when(val check=overlapCheck(visit.arrivedAt,visit.departedAt,visit.id)) {
+                    VisitOverlapCheck.None->Unit
+                    is VisitOverlapCheck.Conflict->throw VisitOverlap(check.visit)
+                    is VisitOverlapCheck.Trims->for(resolution in check.resolutions) {
+                        val stay=persistedVisit(resolution.trimmed(now))
+                        dao.put(VisitRow(stay))
+                        if(stay.departedAt!=null && dao.dwell()?.state?.visitId==stay.id) dao.put(DwellRow())
+                        trimmed=true
+                    }
+                }
+            }
             // iOS only asks again for creation or an actual manual time edit. Notes/place
             // changes can retain an intentionally overlapping interval without another prompt.
-            if(!allowOverlap && visit.source==VisitSource.manual &&
+            if(!allowOverlap && !trimmed && visit.source==VisitSource.manual &&
                 (baseline==null || visit.arrivedAt!=baseline.arrivedAt || visit.departedAt!=baseline.departedAt)) {
                 val future=Instant.parse("4001-01-01T00:00:00Z")
                 dao.manualVisitOverlap(visit.arrivedAt,visit.departedAt ?: future,future,visit.id)

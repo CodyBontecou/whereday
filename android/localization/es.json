@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+  "defaultSourceSha256": "ef946df4103ccccf2ab01564c8ab5bc47e852d7a4a91fd32d695527d4b32a00e",
   "catalog": {
     "common_continue": "Continue",
     "shell_export": "Export",
@@ -1644,9 +1644,14 @@
     "visit_longitude": "Longitud",
     "visit_name": "Nombre",
     "visit_notes": "Notas",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) está dentro de esta parada, así que no se puede recortar. Revisa las horas o guarda para conservar ambas visitas.",
     "visit_overlap_message": "Estas horas se superponen con tu visita a %1$s. Revisa las horas o guarda ambas visitas.",
+    "visit_overlap_now": "ahora",
     "visit_overlap_save": "Guardar de todos modos",
     "visit_overlap_title": "Visita superpuesta",
+    "visit_overlap_trim_end": "Se solapa con %1$s durante %2$d min (hasta las %3$s). Al guardar, esa visita terminará a las %4$s.",
+    "visit_overlap_trim_end_open": "Se solapa con %1$s, que sigue en curso. Al guardar, esa visita terminará a las %2$s.",
+    "visit_overlap_trim_start": "Se solapa con %1$s durante %2$d min (desde las %3$s). Al guardar, esa visita empezará a las %4$s.",
     "visit_overlap_unnamed": "Visita",
     "visit_past_times": "Las visitas pasadas necesitan horas de llegada y salida.",
     "visit_radius": "Radio de coincidencia",

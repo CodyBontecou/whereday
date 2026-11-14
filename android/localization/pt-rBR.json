@@ -1,7 +1,7 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+  "defaultSourceSha256": "ef946df4103ccccf2ab01564c8ab5bc47e852d7a4a91fd32d695527d4b32a00e",
   "catalog": {},
   "translations": {
     "active_recording_map_description": "O trajeto cor de ferrugem mostra apenas a gravação atual, independentemente das datas selecionadas. A bandeira de início e o marcador atual são separados dos marcadores do período.",
@@ -1694,9 +1694,14 @@
     "visit_longitude": "Longitude",
     "visit_name": "Nome",
     "visit_notes": "Notas",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) fica dentro desta parada, então não é possível ajustar o horário. Revise os horários ou salve para manter as duas visitas.",
     "visit_overlap_message": "Estes horários se sobrepõem à sua visita a %1$s. Revise os horários ou salve as duas visitas.",
+    "visit_overlap_now": "agora",
     "visit_overlap_save": "Salvar mesmo assim",
     "visit_overlap_title": "Visita sobreposta",
+    "visit_overlap_trim_end": "Sobrepõe %1$s em %2$d min (até %3$s). Ao salvar, essa visita terminará às %4$s.",
+    "visit_overlap_trim_end_open": "Sobrepõe %1$s, que ainda está em andamento. Ao salvar, essa visita terminará às %2$s.",
+    "visit_overlap_trim_start": "Sobrepõe %1$s em %2$d min (a partir de %3$s). Ao salvar, essa visita começará às %4$s.",
     "visit_overlap_unnamed": "Visita",
     "visit_past_times": "Visitas anteriores precisam de horários de chegada e partida.",
     "visit_radius": "Raio de correspondência",

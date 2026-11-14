@@ -97,7 +97,7 @@ internal val LocalVisitLinkPresentations=staticCompositionLocalOf<VisitLinkPrese
             {value,reuse,remember,overlap->graph.history.saveVisit(value,snapshot,reuse,remember,overlap)},
             snapshot?.let {stored->{graph.history.deleteVisit(stored)}},mode=seed?.mode ?: ManualVisitMode.past,seed=seed,onShowOnMap=showVisitOnMap?.let {show->{stored->
                 if(active?.id==request.id) {show(stored);active=null;original=null}
-            }})
+            }},trimOverlaps=if(snapshot==null) ({value,reuse->graph.history.saveVisitTrimmingOverlaps(value,reuse)}) else null)
         }
     }}
     error?.let {message->

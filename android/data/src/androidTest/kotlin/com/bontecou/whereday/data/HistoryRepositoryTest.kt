@@ -234,6 +234,31 @@ class HistoryRepositoryTest {
             finally { migrated.close() }
         } finally { context.deleteDatabase(name) }
     }
+    @Test fun newStopTrimsOverlappedStaysInOneTransaction() = runBlocking {
+        val now=clock.now
+        fun at(minutesAgo:Long)=now.minusSeconds(minutesAgo*60)
+        val earlier=Visit("earlier",coordinate,at(240),at(165),name="Office",departureInferred=true)
+        val later=Visit("later",coordinate,at(140),null,name="Cafe",source=VisitSource.manual,confirmation=Confirmation.confirmed)
+        repo.dao.put(VisitRow(earlier));repo.dao.put(VisitRow(later))
+        val stop=Visit("stop",coordinate,at(180),at(120),name="Stop",source=VisitSource.manual,confirmation=Confirmation.confirmed,confirmedAt=now,updatedAt=now)
+        assertTrue(repo.overlapCheck(stop.arrivedAt,stop.departedAt,stop.id) is VisitOverlapCheck.Trims)
+        repo.saveVisitTrimmingOverlaps(stop)
+        assertEquals(earlier.copy(departedAt=at(180),departureInferred=false,updatedAt=now),repo.dao.visit("earlier")!!.value)
+        assertEquals(later.copy(arrivedAt=at(120),updatedAt=now),repo.dao.visit("later")!!.value)
+        assertEquals(stop,repo.dao.visit("stop")!!.value)
+
+        // A stay inside the new stop cannot be trimmed: nothing changes, and Save Anyway keeps both.
+        val inside=Visit("inside",coordinate,at(100),at(90),name="Inside")
+        repo.dao.put(VisitRow(inside))
+        val covering=stop.copy(id="covering",arrivedAt=at(110),departedAt=at(80))
+        val conflict=runCatching {repo.saveVisitTrimmingOverlaps(covering)}.exceptionOrNull()
+        assertEquals(inside,(conflict as VisitOverlap).conflicting)
+        assertNull(repo.dao.visit("covering"))
+        assertEquals(at(120),repo.dao.visit("later")!!.value.arrivedAt)
+        repo.saveVisit(covering,null,allowOverlap=true)
+        assertEquals(inside,repo.dao.visit("inside")!!.value)
+        assertEquals(covering,repo.dao.visit("covering")!!.value)
+    }
     @Test fun inferredDetailAndDeletionKeepExactSessionPointsAndVisits() = runBlocking {
         val start=clock.now
         val exact=RecordingSession(startedAt=start.plusSeconds(20),endedAt=start.plusSeconds(40))

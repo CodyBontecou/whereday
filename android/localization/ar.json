@@ -1,6 +1,6 @@
 {
   "locale": "ar",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+  "defaultSourceSha256": "ef946df4103ccccf2ab01564c8ab5bc47e852d7a4a91fd32d695527d4b32a00e",
   "catalog": {},
   "translations": {
     "active_recording_map_description": "يعرض المسار الصدئ التسجيل الحالي فقط، بصرف النظر عن التواريخ المحددة. علامة البداية والعلامة الحالية الخاصتان به منفصلتان عن علامات النطاق الزمني.",
@@ -1843,9 +1843,14 @@
     "visit_longitude": "خط الطول",
     "visit_name": "اسم",
     "visit_notes": "ملحوظات",
+    "visit_overlap_conflict": "يقع %1$s (%2$s–%3$s) داخل هذا التوقف، لذا لا يمكن قصّه. راجع الأوقات، أو احفظ للإبقاء على الزيارتين.",
     "visit_overlap_message": "تتداخل هذه الأوقات مع زيارتك إلى %1$s. راجع الأوقات أو احفظ الزيارتين كلتيهما.",
+    "visit_overlap_now": "الآن",
     "visit_overlap_save": "الحفظ على أي حال",
     "visit_overlap_title": "زيارة متداخلة",
+    "visit_overlap_trim_end": "يتداخل مع %1$s بمقدار %2$d د (حتى %3$s). سيؤدي الحفظ إلى إنهاء تلك الزيارة في %4$s.",
+    "visit_overlap_trim_end_open": "يتداخل مع %1$s، الذي لا يزال جاريًا. سيؤدي الحفظ إلى إنهاء تلك الزيارة في %2$s.",
+    "visit_overlap_trim_start": "يتداخل مع %1$s بمقدار %2$d د (من %3$s). سيؤدي الحفظ إلى بدء تلك الزيارة في %4$s.",
     "visit_overlap_unnamed": "زيارة",
     "visit_past_times": "الزيارات السابقة تحتاج إلى وقتَي الوصول والمغادرة.",
     "visit_radius": "نطاق المطابقة",

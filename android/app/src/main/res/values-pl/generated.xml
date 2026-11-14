@@ -1711,9 +1711,14 @@
     <string name="visit_longitude">Długość geograficzna</string>
     <string name="visit_name">Nazwa</string>
     <string name="visit_notes">Notatki</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) mieści się w całości w tym postoju, więc nie można jej przyciąć. Sprawdź godziny lub zapisz, aby zachować obie wizyty.</string>
     <string name="visit_overlap_message">Te godziny nakładają się na Twoją wizytę w: %1$s. Sprawdź godziny lub zapisz obie wizyty.</string>
+    <string name="visit_overlap_now">teraz</string>
     <string name="visit_overlap_save">Zapisz mimo to</string>
     <string name="visit_overlap_title">Nakładająca się wizyta</string>
+    <string name="visit_overlap_trim_end">Nakłada się na %1$s o %2$d min (do %3$s). Zapisanie zakończy tamtą wizytę o %4$s.</string>
+    <string name="visit_overlap_trim_end_open">Nakłada się na %1$s (wizyta wciąż trwa). Zapisanie zakończy tamtą wizytę o %2$s.</string>
+    <string name="visit_overlap_trim_start">Nakłada się na %1$s o %2$d min (od %3$s). Zapisanie rozpocznie tamtą wizytę o %4$s.</string>
     <string name="visit_overlap_unnamed">Wizyta</string>
     <string name="visit_past_times">Wcześniejsze wizyty wymagają godzin przybycia i wyjścia.</string>
     <string name="visit_radius">Promień dopasowania</string>

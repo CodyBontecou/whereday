@@ -1,7 +1,7 @@
 {
   "locale": "b+zh+Hans",
   "catalogLocale": "zh-Hans",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+  "defaultSourceSha256": "ef946df4103ccccf2ab01564c8ab5bc47e852d7a4a91fd32d695527d4b32a00e",
   "catalog": {},
   "translations": {
     "active_recording_map_description": "锈红色路线仅显示当前记录，与所选日期无关。其起点旗标和当前位置标记独立于日期范围标记。",
@@ -1594,9 +1594,14 @@
     "visit_longitude": "经度",
     "visit_name": "名称",
     "visit_notes": "笔记",
+    "visit_overlap_conflict": "%1$s（%2$s–%3$s）位于此次停留时间之内，因此无法裁剪。请检查时间，或保存以保留两次到访。",
     "visit_overlap_message": "这些时间与你在%1$s的到访重叠。请检查时间，或同时保存这两次到访。",
+    "visit_overlap_now": "现在",
     "visit_overlap_save": "仍然保存",
     "visit_overlap_title": "到访重叠",
+    "visit_overlap_trim_end": "与 %1$s 重叠 %2$d 分钟（直到 %3$s）。保存后，该到访将在 %4$s 结束。",
+    "visit_overlap_trim_end_open": "与仍在进行中的 %1$s 重叠。保存后，该到访将在 %2$s 结束。",
+    "visit_overlap_trim_start": "与 %1$s 重叠 %2$d 分钟（从 %3$s 起）。保存后，该到访将从 %4$s 开始。",
     "visit_overlap_unnamed": "访问",
     "visit_past_times": "过去的到访需要到达和离开时间。",
     "visit_radius": "匹配半径",

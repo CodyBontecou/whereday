@@ -1,6 +1,6 @@
 {
   "locale": "pl",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
+  "defaultSourceSha256": "ef946df4103ccccf2ab01564c8ab5bc47e852d7a4a91fd32d695527d4b32a00e",
   "catalog": {},
   "translations": {
     "active_recording_map_description": "Rdzawa ścieżka pokazuje tylko bieżące rejestrowanie, niezależnie od wybranych dat. Jej flaga startowa i znacznik bieżącej pozycji są niezależne od znaczników zakresu dat.",
@@ -1743,9 +1743,14 @@
     "visit_longitude": "Długość geograficzna",
     "visit_name": "Nazwa",
     "visit_notes": "Notatki",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) mieści się w całości w tym postoju, więc nie można jej przyciąć. Sprawdź godziny lub zapisz, aby zachować obie wizyty.",
     "visit_overlap_message": "Te godziny nakładają się na Twoją wizytę w: %1$s. Sprawdź godziny lub zapisz obie wizyty.",
+    "visit_overlap_now": "teraz",
     "visit_overlap_save": "Zapisz mimo to",
     "visit_overlap_title": "Nakładająca się wizyta",
+    "visit_overlap_trim_end": "Nakłada się na %1$s o %2$d min (do %3$s). Zapisanie zakończy tamtą wizytę o %4$s.",
+    "visit_overlap_trim_end_open": "Nakłada się na %1$s (wizyta wciąż trwa). Zapisanie zakończy tamtą wizytę o %2$s.",
+    "visit_overlap_trim_start": "Nakłada się na %1$s o %2$d min (od %3$s). Zapisanie rozpocznie tamtą wizytę o %4$s.",
     "visit_overlap_unnamed": "Wizyta",
     "visit_past_times": "Wcześniejsze wizyty wymagają godzin przybycia i wyjścia.",
     "visit_radius": "Promień dopasowania",

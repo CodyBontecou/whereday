@@ -1711,9 +1711,14 @@
     <string name="visit_longitude">Долгота</string>
     <string name="visit_name">Имя</string>
     <string name="visit_notes">Примечания</string>
+    <string name="visit_overlap_conflict">Посещение %1$s (%2$s–%3$s) целиком попадает в эту остановку, поэтому его нельзя обрезать. Проверьте время или сохраните, чтобы оставить оба посещения.</string>
     <string name="visit_overlap_message">Это время пересекается с вашим посещением места %1$s. Проверьте время или сохраните оба посещения.</string>
+    <string name="visit_overlap_now">сейчас</string>
     <string name="visit_overlap_save">Всё равно сохранить</string>
     <string name="visit_overlap_title">Пересекающееся посещение</string>
+    <string name="visit_overlap_trim_end">Пересекается с посещением %1$s на %2$d мин (до %3$s). При сохранении оно завершится в %4$s.</string>
+    <string name="visit_overlap_trim_end_open">Пересекается с посещением %1$s, которое ещё продолжается. При сохранении оно завершится в %2$s.</string>
+    <string name="visit_overlap_trim_start">Пересекается с посещением %1$s на %2$d мин (с %3$s). При сохранении оно начнётся в %4$s.</string>
     <string name="visit_overlap_unnamed">Посещение</string>
     <string name="visit_past_times">Для прошлых посещений нужно время прибытия и отъезда.</string>
     <string name="visit_radius">Радиус совпадения</string>

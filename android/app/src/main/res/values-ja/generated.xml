@@ -1567,9 +1567,14 @@
     <string name="visit_longitude">経度</string>
     <string name="visit_name">名前</string>
     <string name="visit_notes">メモ</string>
+    <string name="visit_overlap_conflict">%1$s（%2$s–%3$s）はこの立ち寄りの時間内にあるため、短縮できません。時刻を確認するか、保存して両方の訪問を残してください。</string>
     <string name="visit_overlap_message">この時間は %1$s への訪問と重なっています。時刻を確認するか、両方の訪問を保存してください。</string>
+    <string name="visit_overlap_now">今</string>
     <string name="visit_overlap_save">このまま保存</string>
     <string name="visit_overlap_title">重複する訪問</string>
+    <string name="visit_overlap_trim_end">%1$sと%2$d分重なっています（%3$sまで）。保存すると、その訪問は%4$sに終了します。</string>
+    <string name="visit_overlap_trim_end_open">進行中の%1$sと重なっています。保存すると、その訪問は%2$sに終了します。</string>
+    <string name="visit_overlap_trim_start">%1$sと%2$d分重なっています（%3$sから）。保存すると、その訪問は%4$sに開始します。</string>
     <string name="visit_overlap_unnamed">訪問</string>
     <string name="visit_past_times">過去の訪問には到着時刻と出発時刻が必要です。</string>
     <string name="visit_radius">照合半径</string>

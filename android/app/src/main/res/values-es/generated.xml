@@ -1615,9 +1615,14 @@
     <string name="visit_longitude">Longitud</string>
     <string name="visit_name">Nombre</string>
     <string name="visit_notes">Notas</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) está dentro de esta parada, así que no se puede recortar. Revisa las horas o guarda para conservar ambas visitas.</string>
     <string name="visit_overlap_message">Estas horas se superponen con tu visita a %1$s. Revisa las horas o guarda ambas visitas.</string>
+    <string name="visit_overlap_now">ahora</string>
     <string name="visit_overlap_save">Guardar de todos modos</string>
     <string name="visit_overlap_title">Visita superpuesta</string>
+    <string name="visit_overlap_trim_end">Se solapa con %1$s durante %2$d min (hasta las %3$s). Al guardar, esa visita terminará a las %4$s.</string>
+    <string name="visit_overlap_trim_end_open">Se solapa con %1$s, que sigue en curso. Al guardar, esa visita terminará a las %2$s.</string>
+    <string name="visit_overlap_trim_start">Se solapa con %1$s durante %2$d min (desde las %3$s). Al guardar, esa visita empezará a las %4$s.</string>
     <string name="visit_overlap_unnamed">Visita</string>
     <string name="visit_past_times">Las visitas pasadas necesitan horas de llegada y salida.</string>
     <string name="visit_radius">Radio de coincidencia</string>
