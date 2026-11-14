@@ -263,13 +263,13 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     }
 
     /// No permission prompts or access bypasses from background peer commands.
-    private func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
+    func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
         guard let context = modelContext else { return false }
         if !intent.isRecording {
             stopTracking()
             return true
         }
-        guard StoreManager.shared.canTrack, hasLocationPermission else { return false }
+        guard trackingAccess(), hasLocationPermission else { return false }
         do {
             if activeRecordingSessionID != intent.sessionID {
                 endActiveRecordingSession(at: intent.changedAt)
@@ -284,7 +284,11 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             activeRecordingSessionID = intent.sessionID
             trackingStartTime = intent.startedAt
             try context.save()
-            startTracking()
+            // An accepted peer command owns this session even when a local one was
+            // already running. Reattach without the public idempotent-start guard so
+            // persisted metadata and the expiry lease move to the peer's session.
+            trackingStartSource = .manual
+            startTracking(reason: .user, source: .manual, allowsPermissionPrompt: false)
             return isTrackingEnabled
         } catch {
             lastError = error.localizedDescription

@@ -63,6 +63,59 @@ final class SmartStartCorrectionTests: XCTestCase {
         try container.mainContext.fetch(FetchDescriptor<RecordingSession>())
     }
 
+    func testPeerSuccessorRefreshesPersistedSessionAndInvalidatesPriorExpiry() throws {
+        manager.setStopAfterHours(1)
+        manager.startTracking(source: .shortcut)
+        let oldExpiry = try XCTUnwrap(scheduler.expiries.last)
+        let expiryCount = scheduler.expiries.count
+        let start = Date().addingTimeInterval(-30)
+        let intent = SharedRecordingIntent(revision: 1, origin: UUID(), sessionID: UUID(),
+                                           startedAt: start, changedAt: Date(), isRecording: true)
+
+        XCTAssertTrue(manager.applySharedRecordingIntent(intent))
+        XCTAssertEqual(manager.trackingStartTime, start)
+        XCTAssertEqual(state.trackingStartTime, start)
+        XCTAssertEqual(manager.trackingStartSource, .manual)
+        XCTAssertEqual(state.trackingStartSource, .manual)
+        XCTAssertEqual(scheduler.expiries.count, expiryCount + 1)
+        oldExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled, "Predecessor's queued expiry must not stop its peer successor")
+        let open = try sessions().filter { $0.endedAt == nil }
+        XCTAssertEqual(open.map(\.id), [intent.sessionID])
+        XCTAssertEqual(open.first?.startedAt, start)
+    }
+
+    func testPeerStartCannotBypassPermissionOrRecordingAccess() throws {
+        for (canTrack, status) in [(false, CLAuthorizationStatus.authorizedAlways), (true, .denied)] {
+            let isolated = LocationManager(defaults: makeIsolatedDefaults(), registersAsShared: false,
+                                           monitoring: TestLocationMonitor(), trackingAccess: { canTrack },
+                                           startsSmartStartRuntime: false)
+            isolated.authorizationStatus = status
+            isolated.setLiveActivityEnabled(false)
+            isolated.setModelContext(container.mainContext)
+            let intent = SharedRecordingIntent(revision: 1, origin: UUID(), sessionID: UUID(),
+                                               startedAt: Date(), changedAt: Date(), isRecording: true)
+            XCTAssertFalse(isolated.applySharedRecordingIntent(intent))
+            XCTAssertFalse(isolated.isTrackingEnabled)
+            XCTAssertTrue(try sessions().isEmpty)
+        }
+    }
+
+    func testExplicitPeerStartCannotRetainAutomaticStopOwnership() throws {
+        var settings = SmartStartSettings()
+        settings.isEnabled = true
+        try manager.updateSmartStartSettings(settings)
+        manager.startTracking(source: .smartMotion)
+        XCTAssertEqual(manager.trackingStartSource, .smartMotion)
+        let intent = SharedRecordingIntent(revision: 2, origin: UUID(), sessionID: UUID(),
+                                           startedAt: Date(), changedAt: Date(), isRecording: true)
+        XCTAssertTrue(manager.applySharedRecordingIntent(intent))
+        XCTAssertEqual(manager.trackingStartSource, .manual)
+        XCTAssertEqual(state.trackingStartSource, .manual)
+        manager.stopTrackingAutomatically()
+        XCTAssertTrue(manager.isTrackingEnabled, "Stationary policy must not stop an explicit peer recording")
+    }
+
     func testCachedPreSessionFixDeliveredAfterStartCannotReachAnyRecordingConsumer() async throws {
         manager.setRouteSamplingMode(.time)
         manager.setRouteSampleInterval(60)
