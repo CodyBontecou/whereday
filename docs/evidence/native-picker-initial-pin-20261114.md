@@ -25,6 +25,14 @@ Raw local `artifacts/merge-readiness/input-readiness-{before-1,prefix-1}/` conta
 
 These controls do not reproduce the hosted boundary and do not establish a correction. No source patch, tolerance change, extra wait, new ignore or acceptance-selection shrink was made. In particular, a passing short prefix is not the original full baseline.
 
-## Next diagnostic surface
+## Observer-only hosted prefix: passes, cause still unresolved
 
-A new observer-only hosted probe can inspect the original first rendered-feature result, native frame/full-render callbacks, style/source/layer readiness and projection without adding synchronizing reads before the assertion or feeding observations into UI state. Preserve the actual original prefix and first-pin assertion. If additional frame/placement work heals the failure, record that observer effect rather than declaring the product fixed. Any eventual correction still needs the full original hosted/default/expanded/downstream gates.
+Diagnostic branch `diagnose/input-pin-603e`, exact base603efd83, head **36b7234e205796e6be10a2d7ebe4458a7b638f26**. Run **43597995738**, artifact **14115965430**, digest `sha256:8422296f7b3ad442e6f66edbb73f53d15ad11de2c0daf26ad9379e80139f28b7`: actual native stream **38/38 pass**, 138.468seconds, zero failures/errors/skips. Compared all38 method identities/order to the original-prefix control; equal. Production sources, first query/assertion and original per-case deadlines unchanged. Database/import-scale jobs intentionally skipped; this is not baseline acceptance.
+
+The bounded test-only observer records **57 events, zero drops**. Original first query returns **one** pin. The frame wait returns after a partial-frame callback; the first fully-rendered callback is delivered **108.652 microseconds after the original result was recorded**. The query itself takes114.613929ms. Callback delivery is not render-worker completion, and the query may synchronize native work. Thus neither this successful trace nor the similar local two-case control proves that partial-frame admission caused the original zero result. No post-zero geometry queries execute in this passing run. Initial style/source callbacks may predate listener attachment; absence in the trace is not evidence that style was absent.
+
+Observer effects and differences between a short prefix and the full run remain possible. There is no red-capable reproduction of the original boundary yet, and no production correction is justified. Do not patch the full-render predicate solely from this passing trace. Any eventual correction still needs the full original hosted/default/expanded/downstream gates.
+
+A first diagnostic run43596989019 failed **before instrumentation**, because emulator-action script lines run in separate shells and lost identity variables. The safety guard rejected missing identity. The corrected single-shell wrapper was mock-tested for identity forwarding, original failure status and missing-observation rejection before the second run. That authoring failure is not a product regression or native test result.
+
+Raw successful artifact: `/tmp/whereday-merge-readiness/input-pin-hosted-2/`; adjacent `hosted-observations.log` and `hosted-verification.json` preserve the native evidence. Neither diagnostic source nor workflow was pushed to the PR source branch.

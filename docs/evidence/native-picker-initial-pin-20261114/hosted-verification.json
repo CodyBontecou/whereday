@@ -1,0 +1,179 @@
+{
+  "serial": "emulator-5554",
+  "avd": "whereday-heavy-database-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 38,
+  "passed": 38,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "ignoredCases": [],
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.RoadAttributionRenderingTest",
+      "test": "creditsAreLinkedAndDisappearWhenThePathIsHiddenOrSourceBecomesStale"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadAttributionRenderingTest",
+      "test": "spanishDarkCreditsWrapAndLinkFailureUsesASanitizedMessage"
+    },
+    {
+      "class": "com.bontecou.whereday.GeoapifyRoutingConfigurationTest",
+      "test": "productionBuildBindingRequiresFreshConsentWithoutCreatingARoutingSession"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "dotAndPinModesDoNotRequestThumbnailsAndKeepTheirStoredPreference"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "dotsPaintWithoutSpritesAndNearest48dpTargetWinsAfterCameraRotation"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "lateThumbnailFailureCannotPruneTheCurrentPhotoAfterADotRoundTrip"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "lateThumbnailCannotReplaceTheNewImageAfterADotRoundTrip"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "spanishControlsPreserveImagesAndRejectAHeldImageActionWhileDotsAreOn"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "dotsReplaceSpritesSurviveDarkStyleReloadAndDisappearWhenHidden"
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "test": "nativeDotOpensItsCompleteProductionCollectionAndEligibilityLossDismissesIt"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "actualAssetCatalogAndEveryReadableDocumentHaveVerifiedOriginalBytes"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "backgroundCancelsTheReadAndResumeRequiresAFreshResult"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "catalogFailureHasAnExplicitRetryAndNoRawException"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "documentAndQueryRestoreAfterActivitySavedStateRecreation"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "actualMapLibreNoticeReachesItsFinalTextAndReturnsToTheSameSearch"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "spanishDarkTextAndLongContentKeepNavigationReachable"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "everySupplementalNativeNoticeOpensVerbatimAndReachesItsEnd"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "searchEmptyStateAndAllThreeBackLevelsKeepTheirMeaning"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "documentFailureIsSanitizedAndOnlyExplicitRetryLoadsIt"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "leavingDuringANonCooperativeReadCannotPublishTheLateDocument"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "test": "aHeldDocumentActionCannotRetargetAnAlreadyOpenReader"
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesNavigationTest",
+      "test": "actualSettingsOpensOfflineNoticesAndReturnsToItsOwnRow"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadConsentScreenTest",
+      "test": "actualSettingsNavigationReportsTheUnconfiguredProductionBuild"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadConsentScreenTest",
+      "test": "explicitConfirmationCancelAndDisableUseTheRealSession"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadConsentScreenTest",
+      "test": "networkGateAndBackgroundingCannotApproveSharing"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadConsentScreenTest",
+      "test": "storageFailureKeepsOffAndRetryNeedsNewConfirmation"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadConsentScreenTest",
+      "test": "spanishDarkDisclosureAndConfirmationRemainReachable"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadConsentScreenTest",
+      "test": "unavailableBuildCanOnlyTurnOffAnExistingPreference"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "changedSourceAndOptOutCannotLeavePreparedRoadsOnTheMap"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "outlierFallbackWindowFocusAndPathChoiceControlActualPreparation"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "coveredSourceReleasesAdmissionAndLateWorkerCannotReplaceItsSuccessor"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "replayFramesReusePreparedSourceAndRevealRoadOnlyAtItsRecordedEndpoint"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadMapRenderingTest",
+      "test": "aRoadDetoursFitAndRemovalRestoresRawPath"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadMapRenderingTest",
+      "test": "bReplayWaitsForSampledEndpointRatherThanUsingFullHistoryIndex"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadMapRenderingTest",
+      "test": "cStaleRouteAndPathControlsCannotLeaveRoadPixelsBehind"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadMapRenderingTest",
+      "test": "dSpanishDarkMapDescribesEstimatedDisplay"
+    },
+    {
+      "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+      "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+    },
+    {
+      "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+      "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/home/runner/work/whereday/whereday/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "91529308d782eec2c05fd08e37de05a54cefff707f608ec3da756438baa45195"
+    },
+    {
+      "path": "/home/runner/work/whereday/whereday/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "9bf118d3d543366a120e4cd447c78697853174bf3fa93072b67f40c7c71b9828"
+    }
+  ]
+}
