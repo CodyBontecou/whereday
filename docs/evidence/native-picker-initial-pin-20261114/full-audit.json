@@ -1,0 +1,160 @@
+{
+  "run": 43599667798,
+  "head": "d56b0562df2384f0185f155ae85266214c9ea170",
+  "artifact": 14117663795,
+  "digest": "sha256:26db5fbfbb89f8efbab52bda35709f33f8cf62247d8429caa4799dbc4a31647f",
+  "terminalCases": 594,
+  "passed": 469,
+  "failed": 123,
+  "ignored": [
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "current": "294",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stream": "",
+      "test": "timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor",
+      "code": -3
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "current": "302",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stream": "",
+      "test": "timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence",
+      "code": -3
+    }
+  ],
+  "nativeSeconds": 3530.218,
+  "initialPinCount": 1,
+  "observations": {
+    "retained": 14,
+    "dropped": 0
+  },
+  "firstFailures": [
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "current": "5",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "java.lang.AssertionError: Displayed dots required: 0",
+      "stream": "",
+      "test": "dotsPaintWithoutSpritesAndNearest48dpTargetWinsAfterCameraRotation",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "current": "9",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "java.lang.AssertionError: Displayed dots required: 0",
+      "stream": "",
+      "test": "dotsReplaceSpritesSurviveDarkStyleReloadAndDisappearWhenHidden",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+      "current": "10",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 5000 ms",
+      "stream": "",
+      "test": "nativeDotOpensItsCompleteProductionCollectionAndEligibilityLossDismissesIt",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "current": "14",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:",
+      "stream": "",
+      "test": "documentAndQueryRestoreAfterActivitySavedStateRecreation",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "current": "15",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:",
+      "stream": "",
+      "test": "actualMapLibreNoticeReachesItsFinalTextAndReturnsToTheSameSearch",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "current": "17",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:",
+      "stream": "",
+      "test": "everySupplementalNativeNoticeOpensVerbatimAndReachesItsEnd",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesTest",
+      "current": "18",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:",
+      "stream": "",
+      "test": "searchEmptyStateAndAllThreeBackLevelsKeepTheirMeaning",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.SoftwareNoticesNavigationTest",
+      "current": "22",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.test.espresso.base.RootViewPicker$RootViewWithoutFocusException: Waited for the root of the view hierarchy to have window focus and not request layout for 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Root:",
+      "stream": "",
+      "test": "actualSettingsOpensOfflineNoticesAndReturnsToItsOwnRow",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "current": "29",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 10000 ms",
+      "stream": "",
+      "test": "changedSourceAndOptOutCannotLeavePreparedRoadsOnTheMap",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "current": "30",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 10000 ms",
+      "stream": "",
+      "test": "outlierFallbackWindowFocusAndPathChoiceControlActualPreparation",
+      "code": -2
+    }
+  ],
+  "inputReadiness": [
+    {
+      "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+      "current": "37",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 5000 ms",
+      "stream": "",
+      "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume",
+      "code": -2
+    },
+    {
+      "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+      "current": "38",
+      "id": "AndroidJUnitRunner",
+      "numtests": "594",
+      "stack": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 5000 ms",
+      "stream": "",
+      "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths",
+      "code": -2
+    }
+  ],
+  "scope": "Full original diagnostic fails differently; original initial-zero not reproduced; no fix claimed"
+}

@@ -1,0 +1,16 @@
+--------- beginning of main
+I/System.out( 4333): [DEBUG-input-pin] retained=14 dropped=0
+I/System.out( 4333): [DEBUG-input-pin] slot=0 at=472431094573 event=listeners-attached value=0
+I/System.out( 4333): [DEBUG-input-pin] slot=1 at=472431187482 event=before-frame-wait value=0
+I/System.out( 4333): [DEBUG-input-pin] slot=2 at=472464949939 event=frame value=0
+I/System.out( 4333): [DEBUG-input-pin] slot=3 at=472485160059 event=after-frame-wait value=0
+I/System.out( 4333): [DEBUG-input-pin] slot=4 at=472485276072 event=before-initial-query value=0
+I/System.out( 4333): [DEBUG-input-pin] slot=5 at=472581957611 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=6 at=472582284318 event=original-initial-pin-count value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=7 at=472592756358 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=8 at=472594849149 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=9 at=472627118500 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=10 at=472638598423 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=11 at=472697650982 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=12 at=472754219686 event=frame value=1
+I/System.out( 4333): [DEBUG-input-pin] slot=13 at=472755912752 event=frame value=1
