@@ -2,7 +2,7 @@
   "provenance": {
     "IsoMe/Utilities/ExportService.swift": "1c206bd7b3bf8552c5268b6250bd8917ee8d65507d4f8eb3b26890cb2a48d21c",
     "IsoMe/Models/RecordingSession.swift": "d369419e74d9caffa24a40e24ec28f3e7b06714c36bcaf8e7c6f01ff787b9aff",
-    "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
+    "IsoMe/Models/LocationPoint.swift": "ba34682c435cc3bab9e443bfe698d274324ca2cc770812fec4d368daa007a451",
     "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
     "android/scripts/fixtures/OutingFixtures.swift": "90cd471b722dda95bc8557d49008870cae8e19f9331ce098bd7661013427a284",
     "android/scripts/fixtures/outing-inputs.json": "af1e4a6f001d67131fb6f13377a3d4a8fe9ca16937306ed844f6d55c64d864b9"
