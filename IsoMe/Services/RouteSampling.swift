@@ -25,6 +25,20 @@ enum RouteSamplingMode: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// Core Location can hand a new recording the last fix it cached, even one days old. A fix taken
+/// before the recording started is not part of it: saved, it would start the route, the journal
+/// ("Day N") and the day list on the wrong day.
+enum RecordingFixWindow {
+    /// Fixes taken just before the tap that started recording still describe where it began.
+    static let leadIn: TimeInterval = 10
+
+    static func fixes(_ locations: [CLLocation], recordingSince start: Date?) -> [CLLocation] {
+        guard let start else { return locations }
+        let earliest = start.addingTimeInterval(-leadIn)
+        return locations.filter { $0.timestamp >= earliest }
+    }
+}
+
 /// How hard Core Location should work between route samples.
 enum RoutePowerLevel: Equatable, Sendable {
     /// GPS on: the next sample is due, or the interval is too short to be worth powering down.
