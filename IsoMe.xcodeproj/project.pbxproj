@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A06020261114000000000031 /* ActivityDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261114000000000021 /* ActivityDetectionManager.swift */; };
+		A06020261114000000000032 /* AutoStartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261114000000000022 /* AutoStartCoordinator.swift */; };
+		A06020261114000000000033 /* TrackingLocationMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261114000000000023 /* TrackingLocationMonitoring.swift */; };
+		A06020261114000000000034 /* SmartStartRuntimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261114000000000024 /* SmartStartRuntimeTests.swift */; };
+		A06020261113000000000001 /* SmartStartState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261113000000000011 /* SmartStartState.swift */; };
+		A06020261113000000000002 /* AutoStartPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261113000000000012 /* AutoStartPolicy.swift */; };
+		A06020261113000000000003 /* SmartStartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261113000000000013 /* SmartStartTests.swift */; };
 		F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AA00000000000000000002 /* MonthRecapTests.swift */; };
         CB1030000000000000000001 /* OnboardingLaunchConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */; };
 		CA1029B00000000000000001 /* RetiredAnalyticsCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */; };
@@ -121,6 +128,7 @@
 		F7D0A11E5A00000000000013 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000012 /* PlaceDetailView.swift */; };
 		F7D0A11E5A00000000000015 /* MonthRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000014 /* MonthRecapView.swift */; };
 		F7D0A11E5A00000000000017 /* ShortcutsGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */; };
+		A06020261114000000000051 /* SmartStartSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261114000000000052 /* SmartStartSettingsView.swift */; };
 		F7D0A11E5A00000000000019 /* ListeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000018 /* ListeningView.swift */; };
 		F7D0A11E5A0000000000000B /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A0000000000000A /* TodayView.swift */; };
 		AB000001212F000100000001 /* IsoMeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F000000000001 /* IsoMeIntents.swift */; };
@@ -281,6 +289,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A06020261114000000000021 /* ActivityDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetectionManager.swift; sourceTree = "<group>"; };
+		A06020261114000000000022 /* AutoStartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoStartCoordinator.swift; sourceTree = "<group>"; };
+		A06020261114000000000023 /* TrackingLocationMonitoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingLocationMonitoring.swift; sourceTree = "<group>"; };
+		A06020261114000000000024 /* SmartStartRuntimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartRuntimeTests.swift; sourceTree = "<group>"; };
+		A06020261113000000000011 /* SmartStartState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartState.swift; sourceTree = "<group>"; };
+		A06020261113000000000012 /* AutoStartPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoStartPolicy.swift; sourceTree = "<group>"; };
+		A06020261113000000000013 /* SmartStartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartTests.swift; sourceTree = "<group>"; };
 		F8AA00000000000000000002 /* MonthRecapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapTests.swift; sourceTree = "<group>"; };
         CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLaunchConfigurationTests.swift; sourceTree = "<group>"; };
 		CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetiredAnalyticsCleanup.swift; sourceTree = "<group>"; };
@@ -328,6 +343,7 @@
 		F7D0A11E5A00000000000012 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000014 /* MonthRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsGuideView.swift; sourceTree = "<group>"; };
+		A06020261114000000000052 /* SmartStartSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartSettingsView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000018 /* ListeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A0000000000000A /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		AB000001212F000000000001 /* IsoMeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeIntents.swift; sourceTree = "<group>"; };
@@ -629,6 +645,11 @@
 				AF000001212F000000000001 /* DailyDistanceTracker.swift */,
 				A1000005212F000000000005 /* LocationManager.swift */,
 				B7E10A0100000000000000A1 /* RouteSampling.swift */,
+				A06020261113000000000011 /* SmartStartState.swift */,
+				A06020261113000000000012 /* AutoStartPolicy.swift */,
+				A06020261114000000000021 /* ActivityDetectionManager.swift */,
+				A06020261114000000000022 /* AutoStartCoordinator.swift */,
+				A06020261114000000000023 /* TrackingLocationMonitoring.swift */,
 				A1000006212F000000000006 /* GeocodingService.swift */,
 				D2A10001212F000000000001 /* PlaceSearchService.swift */,
 				C0DE0102212F000000000102 /* PhotoLibraryManager.swift */,
@@ -692,6 +713,7 @@
 				F7D0A11E5A00000000000012 /* PlaceDetailView.swift */,
 				F7D0A11E5A00000000000014 /* MonthRecapView.swift */,
 				F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */,
+				A06020261114000000000052 /* SmartStartSettingsView.swift */,
 				F7D0A11E5A00000000000018 /* ListeningView.swift */,
 				D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */,
 				A1000031212F000000000031 /* ExportView.swift */,
@@ -800,6 +822,8 @@
 				D5E7A1580000000000000058 /* ExportRoundTripTests.swift */,
 				E9A100000000000000000003 /* ExportKitIntegrationTests.swift */,
 				76A0A8C8D0C96D0243E02089 /* LocationManagerTrackingTests.swift */,
+				A06020261113000000000013 /* SmartStartTests.swift */,
+				A06020261114000000000024 /* SmartStartRuntimeTests.swift */,
 				A7D1C0DE0000000000000005 /* LaunchRecoveryTests.swift */,
 				B7E10A0100000000000000A3 /* RouteSamplerTests.swift */,
 				E6120001212F000000000012 /* ExportServiceRoundTripTests.swift */,
@@ -1124,6 +1148,11 @@
 				C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */,
 				A1000005212F000100000005 /* LocationManager.swift in Sources */,
 				B7E10A0100000000000000A2 /* RouteSampling.swift in Sources */,
+				A06020261113000000000001 /* SmartStartState.swift in Sources */,
+				A06020261113000000000002 /* AutoStartPolicy.swift in Sources */,
+				A06020261114000000000031 /* ActivityDetectionManager.swift in Sources */,
+				A06020261114000000000032 /* AutoStartCoordinator.swift in Sources */,
+				A06020261114000000000033 /* TrackingLocationMonitoring.swift in Sources */,
 				A1000006212F000100000006 /* GeocodingService.swift in Sources */,
 				D2A10001212F000100000001 /* PlaceSearchService.swift in Sources */,
 				C0DE0102212F000100000102 /* PhotoLibraryManager.swift in Sources */,
@@ -1180,6 +1209,7 @@
 				F7D0A11E5A00000000000013 /* PlaceDetailView.swift in Sources */,
 				F7D0A11E5A00000000000015 /* MonthRecapView.swift in Sources */,
 				F7D0A11E5A00000000000017 /* ShortcutsGuideView.swift in Sources */,
+				A06020261114000000000051 /* SmartStartSettingsView.swift in Sources */,
 				F7D0A11E5A00000000000019 /* ListeningView.swift in Sources */,
 				D15C04D0BA000000000000A1 /* DiscordPromoBanner.swift in Sources */,
 				AB000001212F000100000001 /* IsoMeIntents.swift in Sources */,
@@ -1260,6 +1290,8 @@
 				5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */,
 				5F000008212F000100000001 /* IntervalPickerCrashReproTests.swift in Sources */,
 				CB0AF0C284FF821E6D718E7E /* LocationManagerTrackingTests.swift in Sources */,
+				A06020261113000000000003 /* SmartStartTests.swift in Sources */,
+				A06020261114000000000034 /* SmartStartRuntimeTests.swift in Sources */,
 				A7D1C0DE0000000000000006 /* LaunchRecoveryTests.swift in Sources */,
 				B7E10A0100000000000000A4 /* RouteSamplerTests.swift in Sources */,
 				E6120001212F000100000012 /* ExportServiceRoundTripTests.swift in Sources */,

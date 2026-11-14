@@ -18,10 +18,10 @@ enum IntentSupport {
     /// Returns the live LocationManager if one exists, otherwise creates a background-launch
     /// instance wired to the shared store. Lets Start/Stop intents work even when the app's
     /// UI hasn't booted yet.
-    static func ensureLocationManager() -> LocationManager {
-        if let existing = LocationManager.shared { return existing }
-        let manager = LocationManager()
-        manager.setModelContext(makeContext())
+    static func ensureLocationManager(using services: AppTrackingServices = .shared) throws -> LocationManager {
+        guard let manager = services.boot(isBackgroundLaunch: true) else {
+            throw IsoMeIntentError.storeUnavailable
+        }
         return manager
     }
 
@@ -49,6 +49,8 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case invalidDateRange
     case emptyName
     case itemNotFound
+    case storeUnavailable
+    case trackingUnavailable
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -64,28 +66,52 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
             return "Enter a name."
         case .itemNotFound:
             return "That Whereday item couldn't be found."
+        case .storeUnavailable:
+            return "Whereday couldn't open your saved data. Open the app to try again."
+        case .trackingUnavailable:
+            return "Tracking could not start. Open Whereday to check your access and recording status."
         }
     }
 }
 
 // MARK: - Tracking Control
 
+/// Explicit automation labels remain non-inferred starts; they never opt into Smart Start.
+enum ShortcutTrackingSource: String, AppEnum {
+    case shortcut, carPlay, workout
+
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Tracking Source"
+    static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+        .shortcut: "Shortcut",
+        .carPlay: "CarPlay automation",
+        .workout: "Workout automation"
+    ]
+
+    var trackingStartSource: TrackingStartSource {
+        switch self {
+        case .shortcut: .shortcut
+        case .carPlay: .carPlayShortcut
+        case .workout: .workoutShortcut
+        }
+    }
+}
+
 struct StartTrackingIntent: AppIntent {
     static var title: LocalizedStringResource = "Start Tracking"
-    static var description = IntentDescription("Begin recording your route in Whereday.")
+    static var description = IntentDescription("Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start.")
     static var openAppWhenRun: Bool = false
+
+    @Parameter(title: "Source")
+    var source: ShortcutTrackingSource?
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let manager = IntentSupport.ensureLocationManager()
+        let manager = try IntentSupport.ensureLocationManager()
         await StoreManager.shared.checkEntitlement()
         guard StoreManager.shared.canTrack else {
             return .result(dialog: "Open Whereday to choose a plan before tracking.")
         }
-        guard manager.hasLocationPermission else {
-            throw IsoMeIntentError.noLocationPermission
-        }
-        manager.startTracking()
+        try TrackingIntentSupport.startTracking(using: manager, source: source)
         return .result(dialog: "Tracking started.")
     }
 }
@@ -104,6 +130,14 @@ struct StopTrackingIntent: AppIntent {
 
 @MainActor
 enum TrackingIntentSupport {
+    /// Called after the intent's entitlement check. Omitted Source preserves existing automations.
+    /// No permission prompt, opt-in write, timer preference or sampling-profile edit occurs here.
+    static func startTracking(using manager: LocationManager, source: ShortcutTrackingSource?) throws {
+        guard manager.hasLocationPermission else { throw IsoMeIntentError.noLocationPermission }
+        manager.startTracking(source: source?.trackingStartSource ?? .shortcut, allowsPermissionPrompt: false)
+        guard manager.isTrackingEnabled else { throw IsoMeIntentError.trackingUnavailable }
+    }
+
     /// Shared by the Stop Tracking shortcut and the Live Activity's "Stop route" button.
     static func stopTracking() async {
         if let manager = LocationManager.shared {
@@ -114,6 +148,7 @@ enum TrackingIntentSupport {
             let context = IntentSupport.makeContext()
             LocationManager.closePersistedRecordingSessions(in: context)
             UserDefaults.standard.set(false, forKey: "isTrackingEnabled")
+            SmartStartStateStore(defaults: .standard).endSession(manually: true, at: Date())
             await LiveActivityManager.shared.endAllActivities()
         }
     }

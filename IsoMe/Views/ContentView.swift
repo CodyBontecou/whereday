@@ -99,23 +99,10 @@ struct ContentView: View {
                     return
                 }
 
-                // Must run before LocationManager, which resumes tracking from saved state.
-                let launch = LaunchGuard.beginLaunch(
+                // Reuse the same graph as background launches and App Intents.
+                guard let manager = AppTrackingServices.shared.boot(
                     isBackgroundLaunch: UIApplication.shared.applicationState == .background
-                )
-                if let stage = launch.previousStage {
-                    LogManager.shared.warning("Previous launch didn't finish · last step: \(stage)", category: .general)
-                }
-                if launch.pausedTracking {
-                    LogManager.shared.warning(
-                        "Tracking paused after \(launch.previousUnconfirmedLaunches) launches that didn't finish",
-                        category: .location
-                    )
-                    Task { await LiveActivityManager.shared.endAllActivities() }
-                }
-
-                LaunchGuard.mark(.locationManager)
-                let manager = LocationManager()
+                ) else { return }
                 ManualVisitAutomation.foregroundContext = modelContext
                 locationManager = manager
                 LaunchGuard.mark(.viewModel)
@@ -127,12 +114,6 @@ struct ContentView: View {
                 LaunchGuard.mark(.interface)
                 LaunchGuard.scheduleConfirmation()
                 showingTrackingPausedNotice = LaunchGuard.consumePausedTrackingNotice()
-
-                // Wire up services that need the LocationManager
-                WebhookManager.shared.attach(
-                    modelContainer: modelContext.container,
-                    locationManager: manager
-                )
 
                 #if DEBUG
                 if ScreenshotFeatureDemoSeeder.isEnabled {

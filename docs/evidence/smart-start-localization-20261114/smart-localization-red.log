@@ -1,0 +1,33 @@
+FF.
+======================================================================
+FAIL: test_every_supported_locale_has_complete_values_and_matching_placeholders (test_smart_start_localization.SmartStartLocalizationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/codybontecou/dev/whereday-smart-ready/scripts/test_smart_start_localization.py", line 54, in test_every_supported_locale_has_complete_values_and_matching_placeholders
+    self.assertEqual([], failures)
+AssertionError: Lists differ: [] != [('ACTIVITIES', 'ar', 'missing translation[41263 chars]on')]
+
+Second list contains 385 additional elements.
+First extra element 0:
+('ACTIVITIES', 'ar', 'missing translation')
+
+Diff is 45148 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_every_user_facing_key_is_cataloged (test_smart_start_localization.SmartStartLocalizationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/codybontecou/dev/whereday-smart-ready/scripts/test_smart_start_localization.py", line 40, in test_every_user_facing_key_is_cataloged
+    self.assertEqual([], sorted(self.keys - self.strings.keys()))
+AssertionError: Lists differ: [] != ['ACTIVITIES', 'AUTOMATIC RECORDING', 'Alw[2598 chars]FC.']
+
+Second list contains 35 additional elements.
+First extra element 0:
+'ACTIVITIES'
+
+Diff is 2881 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.023s
+
+FAILED (failures=2)

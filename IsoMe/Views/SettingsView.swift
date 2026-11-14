@@ -448,6 +448,15 @@ struct SettingsView: View {
 
             BackPageDivider()
             NavigationLink {
+                SmartStartSettingsView(locationManager: locationManager)
+            } label: {
+                BackPageRowLabel(title: Text("Smart Start"), subtitle: Text("Optional activity-based recording"))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("settings-smart-start")
+
+            BackPageDivider()
+            NavigationLink {
                 SavedLocationsView(viewModel: viewModel)
             } label: {
                 BackPageRowLabel(title: Text("Manage saved places"))
@@ -1103,15 +1112,17 @@ struct BackPageDivider: View {
 /// Mono section label above a card.
 struct BackPageLabel: View {
     let text: LocalizedStringKey
+    var preservesCursiveShaping: Bool
 
-    init(_ text: LocalizedStringKey) {
+    init(_ text: LocalizedStringKey, preservesCursiveShaping: Bool = false) {
         self.text = text
+        self.preservesCursiveShaping = preservesCursiveShaping
     }
 
     var body: some View {
         Text(text)
-            .font(TE.mono(.caption2))
-            .tracking(1.5)
+            .font(preservesCursiveShaping ? .caption2 : TE.mono(.caption2))
+            .tracking(preservesCursiveShaping ? 0 : 1.5)
             .foregroundStyle(TE.textMuted)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 24)
@@ -1142,13 +1153,14 @@ struct BackPageFootnote: View {
 struct BackPageHeader: View {
     var caption: LocalizedStringKey?
     let title: LocalizedStringKey
+    var preservesCursiveShaping: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             if let caption {
                 Text(caption)
-                    .font(TE.mono(.caption2))
-                    .tracking(1.5)
+                    .font(preservesCursiveShaping ? .caption2 : TE.mono(.caption2))
+                    .tracking(preservesCursiveShaping ? 0 : 1.5)
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }

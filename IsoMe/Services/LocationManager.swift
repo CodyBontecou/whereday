@@ -10,11 +10,16 @@ extension Notification.Name {
 }
 
 @MainActor
-final class LocationManager: NSObject, ObservableObject {
+final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     /// Latest live instance, used by App Intents so Siri/Shortcuts can drive tracking.
     static weak var shared: LocationManager?
 
-    private let locationManager = CLLocationManager()
+    private let locationManager: CLLocationManager
+    private let monitoring: any TrackingLocationMonitoring
+    private let trackingAccess: @MainActor () -> Bool
+    private var autoStartCoordinator: AutoStartCoordinator?
+    private var lowPowerMonitorsRunning = false
+    @Published private(set) var ambientMonitoringActive = false
     private var modelContext: ModelContext?
 
     // Published state
@@ -23,6 +28,8 @@ final class LocationManager: NSObject, ObservableObject {
     @Published var accuracyAuthorization: CLAccuracyAuthorization = .fullAccuracy
     @Published var isTrackingEnabled: Bool = false
     @Published var trackingStartTime: Date?
+    @Published private(set) var trackingStartSource: TrackingStartSource?
+    private var smartStartState: SmartStartStateStore { SmartStartStateStore(defaults: defaults) }
     @Published var stopAfterHours: Double = 0.0
     @Published var distanceFilter: Double = 5.0
     /// Distance, time, or both. Only affects route points; visits come from iOS visit monitoring.
@@ -51,7 +58,10 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     // Safety-net auto-stop timer (only runs when stopAfterHours > 0)
-    private var stopTrackingTimer: Timer?
+    private let stopAfterScheduler: any StopAfterScheduling
+    private var cancelStopAfterTimer: (() -> Void)?
+    private var stopAfterGeneration = UUID()
+    private let recordDistanceLocation: @MainActor (CLLocation) -> Void
     private var accessObserver: AnyCancellable?
     private var resumeAfterAccessResolution = false
 
@@ -138,10 +148,26 @@ final class LocationManager: NSObject, ObservableObject {
     ///     `distanceFilter`, `isLiveActivityEnabled`, and the preferences this manager reads.
     ///   - registersAsShared: Whether this instance becomes `LocationManager.shared`. Tests pass `false`
     ///     so a test manager never replaces the host app's.
-    init(defaults: UserDefaults = .standard, registersAsShared: Bool = true) {
+    init(defaults: UserDefaults = .standard, registersAsShared: Bool = true,
+         monitoring: (any TrackingLocationMonitoring)? = nil,
+         trackingAccess: (@MainActor () -> Bool)? = nil,
+         motionDetector: (any ActivityDetecting)? = nil,
+         startsSmartStartRuntime: Bool = true,
+         stopAfterScheduler: (any StopAfterScheduling)? = nil,
+         recordDistanceLocation: (@MainActor (CLLocation) -> Void)? = nil) {
+        self.stopAfterScheduler = stopAfterScheduler ?? StopAfterTimerScheduler()
+        self.recordDistanceLocation = recordDistanceLocation ?? { DailyDistanceTracker.shared.recordLocation($0) }
+        let trackingAccess: @MainActor () -> Bool = trackingAccess ?? { StoreManager.shared.canTrack }
+        let nativeManager = CLLocationManager()
+        self.locationManager = nativeManager
+        self.monitoring = monitoring ?? CoreLocationTrackingMonitor(manager: nativeManager)
+        self.trackingAccess = trackingAccess
         self.defaults = defaults
         super.init()
         if registersAsShared {
+            // Until central boot is unified, superseding a shared manager must
+            // not leave its motion stream running or able to restart on foreground.
+            Self.shared?.autoStartCoordinator?.shutdown()
             Self.shared = self
             SharedRecordingControl.shared.apply = { [weak self] intent in
                 self?.applySharedRecordingIntent(intent) ?? false
@@ -155,12 +181,12 @@ final class LocationManager: NSObject, ObservableObject {
         // Resolve the cohort before any new-install defaults are written.
         let store = StoreManager.shared
         resumeAfterAccessResolution = defaults.bool(forKey: "isTrackingEnabled")
-        isTrackingEnabled = resumeAfterAccessResolution && store.canTrack
+        isTrackingEnabled = resumeAfterAccessResolution && trackingAccess()
         accessObserver = store.objectWillChange.sink { [weak self] in
             Task { @MainActor in
                 guard let self else { return }
                 if Self.shared === self { SharedRecordingControl.shared.retryApplication() }
-                if store.canTrack {
+                if self.trackingAccess() {
                     if self.resumeAfterAccessResolution && store.hasResolvedEntitlements {
                         self.resumeAfterAccessResolution = false
                         self.startTracking(reason: .relaunch)
@@ -169,7 +195,17 @@ final class LocationManager: NSObject, ObservableObject {
                     self.stopTracking(reason: .accessEnded)
                 }
                 if Self.shared === self { SharedRecordingControl.shared.flush() }
+                self.autoStartCoordinator?.refresh()
             }
+        }
+
+        // Restore session metadata only for a persisted active session. Legacy sessions
+        // receive a start timestamp on reattachment, without inventing past history.
+        if resumeAfterAccessResolution {
+            trackingStartTime = smartStartState.trackingStartTime
+            trackingStartSource = smartStartState.trackingStartSource
+        } else {
+            smartStartState.endSession(manually: false, at: Date())
         }
 
         // Restore saved state
@@ -211,6 +247,12 @@ final class LocationManager: NSObject, ObservableObject {
         if isTrackingEnabled && hasLocationPermission {
             startTracking(reason: .relaunch)
         }
+        if startsSmartStartRuntime {
+            autoStartCoordinator = AutoStartCoordinator(
+                tracking: self, motion: motionDetector ?? ActivityDetectionManager(),
+                state: smartStartState, canTrack: trackingAccess)
+            autoStartCoordinator?.refresh()
+        }
     }
 
     func setModelContext(_ context: ModelContext) {
@@ -221,13 +263,13 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     /// No permission prompts or access bypasses from background peer commands.
-    private func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
+    func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
         guard let context = modelContext else { return false }
         if !intent.isRecording {
             stopTracking()
             return true
         }
-        guard StoreManager.shared.canTrack, hasLocationPermission else { return false }
+        guard trackingAccess(), hasLocationPermission else { return false }
         do {
             if activeRecordingSessionID != intent.sessionID {
                 endActiveRecordingSession(at: intent.changedAt)
@@ -242,7 +284,11 @@ final class LocationManager: NSObject, ObservableObject {
             activeRecordingSessionID = intent.sessionID
             trackingStartTime = intent.startedAt
             try context.save()
-            startTracking()
+            // An accepted peer command owns this session even when a local one was
+            // already running. Reattach without the public idempotent-start guard so
+            // persisted metadata and the expiry lease move to the peer's session.
+            trackingStartSource = .manual
+            startTracking(reason: .user, source: .manual, allowsPermissionPrompt: false)
             return isTrackingEnabled
         } catch {
             lastError = error.localizedDescription
@@ -325,6 +371,60 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.requestLocation()
     }
 
+    // MARK: - Ambient and active monitoring
+
+    var smartStartSettings: SmartStartSettings { smartStartState.settings }
+
+    /// Settings requires explicit confirmation before enabling. This does not ask
+    /// for Location permission; Always must be obtained via the existing UI.
+    func updateSmartStartSettings(_ settings: SmartStartSettings) throws {
+        if let autoStartCoordinator {
+            try autoStartCoordinator.updateSettings(settings)
+        } else {
+            try smartStartState.saveSettings(settings)
+            if settings.isEnabled { startAmbientMonitoring() } else { stopAmbientMonitoring() }
+        }
+    }
+
+    func startAmbientMonitoring() {
+        guard smartStartState.settings.isEnabled, hasAlwaysPermission, trackingAccess() else {
+            stopAmbientMonitoring()
+            return
+        }
+        ambientMonitoringActive = true
+        reconcileLowPowerMonitoring()
+    }
+
+    func stopAmbientMonitoring() {
+        ambientMonitoringActive = false
+        reconcileLowPowerMonitoring()
+    }
+
+    private func reconcileLowPowerMonitoring() {
+        // Full manual tracking retains its pre-Smart-Start visit monitoring.
+        let needed = ambientMonitoringActive || (isTrackingEnabled && hasLocationPermission && trackingAccess())
+        guard needed != lowPowerMonitorsRunning else { return }
+        lowPowerMonitorsRunning = needed
+        if needed { monitoring.startLowPowerMonitoring() }
+        else { monitoring.stopLowPowerMonitoring() }
+    }
+
+    private func startActiveLocationUpdates() {
+        reconcileLowPowerMonitoring()
+        monitoring.startActiveUpdates()
+    }
+
+    private func stopActiveLocationUpdates() {
+        monitoring.stopActiveUpdates()
+        reconcileLowPowerMonitoring()
+    }
+
+    /// A policy stop must not masquerade as explicit manual intent/cooldown.
+    func stopTrackingAutomatically() {
+        guard isTrackingEnabled, trackingStartSource?.isAutomatic == true else { return }
+        stopTracking(reason: .autoStop)
+    }
+
     // MARK: - Tracking Control
 
     /// Why tracking started or stopped, for Diagnostics.
@@ -333,16 +433,27 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     func startTracking() {
-        startTracking(reason: .user)
+        startTracking(source: .manual, allowsPermissionPrompt: true)
     }
 
-    private func startTracking(reason: TrackingChangeReason) {
-        guard StoreManager.shared.canTrack else {
+    func startTracking(source: TrackingStartSource, allowsPermissionPrompt: Bool = false) {
+        guard !isTrackingEnabled else { return }
+        // Automatic callers may never trigger a permission prompt or bypass opt-in.
+        if source.isAutomatic {
+            guard smartStartState.settings.isEnabled, hasAlwaysPermission else { return }
+        }
+        startTracking(reason: .user, source: source,
+                      allowsPermissionPrompt: allowsPermissionPrompt && !source.isAutomatic)
+    }
+
+    private func startTracking(reason: TrackingChangeReason, source: TrackingStartSource = .manual,
+                               allowsPermissionPrompt: Bool = true) {
+        guard trackingAccess() else {
             NotificationCenter.default.post(name: .trackingAccessRequired, object: nil)
             return
         }
         guard hasLocationPermission else {
-            requestAlwaysAuthorization()
+            if allowsPermissionPrompt { requestAlwaysAuthorization() }
             return
         }
 
@@ -354,8 +465,15 @@ final class LocationManager: NSObject, ObservableObject {
         if trackingStartTime == nil {
             trackingStartTime = Date()
         }
+        if trackingStartSource == nil { trackingStartSource = source }
 
-        if let trackingStartTime {
+        if let trackingStartTime, let trackingStartSource {
+            // Reattachment preserves both timestamps and source; it is not a new auto-start.
+            if smartStartState.trackingStartTime == nil {
+                smartStartState.beginSession(source: trackingStartSource, at: trackingStartTime)
+            } else {
+                smartStartState.saveSessionMetadata(source: trackingStartSource, at: trackingStartTime)
+            }
             ensureActiveRecordingSession(startedAt: trackingStartTime)
         }
 
@@ -365,9 +483,7 @@ final class LocationManager: NSObject, ObservableObject {
         routeSampler.policy = routeSamplingPolicy
         locationManager.distanceFilter = routeSamplingPolicy.coreLocationDistanceFilter
         applyRoutePowerLevel()
-        locationManager.startMonitoringVisits()
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.startUpdatingLocation()
+        startActiveLocationUpdates()
 
         if isLiveActivityEnabled {
             liveActivityManager.startActivity(autoStopSeconds: liveActivityRemainingSeconds)
@@ -406,12 +522,13 @@ final class LocationManager: NSObject, ObservableObject {
             }
         }
         endActiveRecordingSession(at: endedAt)
+        smartStartState.endSession(manually: reason == .user, at: endedAt)
+        trackingStartSource = nil
 
         isTrackingEnabled = false
         defaults.set(false, forKey: "isTrackingEnabled")
 
-        stopTrackingTimer?.invalidate()
-        stopTrackingTimer = nil
+        invalidateStopAfterTimer()
         trackingStartTime = nil
         routeSamplingWakeTimer?.invalidate()
         routeSamplingWakeTimer = nil
@@ -419,9 +536,11 @@ final class LocationManager: NSObject, ObservableObject {
         preciseFixRequestedAt = nil
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
 
-        locationManager.stopMonitoringVisits()
-        locationManager.stopMonitoringSignificantLocationChanges()
-        locationManager.stopUpdatingLocation()
+        // Revalidate opt-in and Always before deciding whether ambient stays armed.
+        if !smartStartState.settings.isEnabled || !hasAlwaysPermission || !trackingAccess() {
+            ambientMonitoringActive = false
+        }
+        stopActiveLocationUpdates()
 
         Task {
             await liveActivityManager.endAllActivities()
@@ -544,9 +663,14 @@ final class LocationManager: NSObject, ObservableObject {
         }
     }
 
+    private func invalidateStopAfterTimer() {
+        stopAfterGeneration = UUID()
+        cancelStopAfterTimer?()
+        cancelStopAfterTimer = nil
+    }
+
     private func scheduleStopTrackingTimer() {
-        stopTrackingTimer?.invalidate()
-        stopTrackingTimer = nil
+        invalidateStopAfterTimer()
 
         guard isTrackingEnabled, stopAfterHours > 0, let start = trackingStartTime else { return }
 
@@ -558,10 +682,11 @@ final class LocationManager: NSObject, ObservableObject {
             return
         }
 
-        stopTrackingTimer = Timer.scheduledTimer(withTimeInterval: remaining, repeats: false) { [weak self] _ in
-            Task { @MainActor in
-                self?.stopTracking(reason: .autoStop)
-            }
+        let token = stopAfterGeneration
+        cancelStopAfterTimer = stopAfterScheduler.schedule(after: remaining) { [weak self] in
+            guard let self, self.isTrackingEnabled, self.stopAfterGeneration == token,
+                  self.trackingStartTime == start else { return }
+            self.stopTracking(reason: .autoStop)
         }
     }
 
@@ -581,6 +706,7 @@ final class LocationManager: NSObject, ObservableObject {
     @discardableResult
     func reconcileRecordingSessions(referenceDate: Date = Date()) -> Int {
         guard let context = modelContext else { return 0 }
+        let previousStart = trackingStartTime
 
         do {
             var descriptor = FetchDescriptor<RecordingSession>(
@@ -611,6 +737,11 @@ final class LocationManager: NSObject, ObservableObject {
                     trackingStartTime = start
                     changedCount += 1
                 }
+                if let trackingStartTime {
+                    let source = trackingStartSource ?? .manual
+                    trackingStartSource = source
+                    smartStartState.saveSessionMetadata(source: source, at: trackingStartTime)
+                }
             } else {
                 for session in openSessions {
                     session.endedAt = max(session.startedAt, referenceDate)
@@ -623,6 +754,9 @@ final class LocationManager: NSObject, ObservableObject {
                 try context.save()
             }
 
+            if isTrackingEnabled, trackingStartTime != previousStart {
+                scheduleStopTrackingTimer()
+            }
             return changedCount
         } catch {
             lastError = String(localized: "Failed to reconcile recording sessions: \(error.localizedDescription)")
@@ -1322,23 +1456,31 @@ final class LocationManager: NSObject, ObservableObject {
 extension LocationManager: CLLocationManagerDelegate {
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in
-            let previousStatus = authorizationStatus
-            let previousAccuracy = accuracyAuthorization
-            authorizationStatus = manager.authorizationStatus
-            accuracyAuthorization = manager.accuracyAuthorization
-            if hasLocationPermission && pendingManualLocationRequest {
-                requestCurrentLocationForManualVisit()
-            }
+            handleAuthorizationChange(status: manager.authorizationStatus, accuracy: manager.accuracyAuthorization)
+        }
+    }
 
-            if previousStatus != authorizationStatus || previousAccuracy != accuracyAuthorization {
-                Self.logAuthorizationChange(status: authorizationStatus, accuracy: accuracyAuthorization)
-            }
+    func handleAuthorizationChange(status: CLAuthorizationStatus, accuracy: CLAccuracyAuthorization) {
+        let previousStatus = authorizationStatus
+        let previousAccuracy = accuracyAuthorization
+        authorizationStatus = status
+        accuracyAuthorization = accuracy
+        if hasLocationPermission && pendingManualLocationRequest {
+            requestCurrentLocationForManualVisit()
+        }
 
-            if Self.shared === self { SharedRecordingControl.shared.flush() }
-            if hasLocationPermission && isTrackingEnabled {
-                // Reattach the CL APIs once permission lands
-                startTracking(reason: .permissionGranted)
-            }
+        if previousStatus != authorizationStatus || previousAccuracy != accuracyAuthorization {
+            Self.logAuthorizationChange(status: authorizationStatus, accuracy: accuracyAuthorization)
+        }
+
+        autoStartCoordinator?.refresh()
+        if !hasAlwaysPermission { stopAmbientMonitoring() }
+        reconcileLowPowerMonitoring()
+        if Self.shared === self { SharedRecordingControl.shared.flush() }
+
+        if hasLocationPermission && isTrackingEnabled {
+            // Reattach the CL APIs once permission lands
+            startTracking(reason: .permissionGranted)
         }
     }
 
@@ -1362,46 +1504,67 @@ extension LocationManager: CLLocationManagerDelegate {
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        Task { @MainActor in
-            guard StoreManager.shared.canTrack else { return }
-            saveVisit(visit)
-        }
+        Task { @MainActor in handleVisit(visit) }
+    }
+
+    func handleVisit(_ visit: CLVisit) {
+        let wasRecording = isTrackingEnabled
+        if ambientMonitoringActive { autoStartCoordinator?.locationWake() }
+        guard wasRecording, isTrackingEnabled, trackingAccess(), admitsVisitToSession(visit) else { return }
+        saveVisit(visit)
+    }
+
+    /// Never synthesize a pre-session visit from a late callback. A departure
+    /// inside this session may still close a previously persisted open visit.
+    private func admitsVisitToSession(_ visit: CLVisit) -> Bool {
+        guard let start = trackingStartTime else { return false }
+        if visit.arrivalDate != .distantPast, visit.arrivalDate >= start { return true }
+        guard visit.departureDate != .distantFuture, visit.departureDate >= start,
+              let context = modelContext else { return false }
+        return (try? matchingOpenVisit(for: visit, in: context)) != nil
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        Task { @MainActor in
-            guard let location = locations.last else { return }
-            currentLocation = location
+        Task { @MainActor in await handleLocationUpdates(locations) }
+    }
 
-            guard StoreManager.shared.canTrack else { return }
+    /// The delegate and injection tests use the same actor-isolated processing path.
+    func handleLocationUpdates(_ locations: [CLLocation]) async {
+        guard let deliveredLocation = locations.last else { return }
+        currentLocation = deliveredLocation
+        let wasRecording = isTrackingEnabled
+        if ambientMonitoringActive && !wasRecording { autoStartCoordinator?.locationWake() }
 
-            // Record every delivered location for daily distance history (stats only).
-            for deliveredLocation in locations {
-                dailyDistanceTracker.recordLocation(deliveredLocation)
-            }
+        guard wasRecording, isTrackingEnabled, trackingAccess(), let start = trackingStartTime else { return }
+        // Handler time/generation alone cannot identify a cached CoreLocation fix.
+        // Admit by the actual (possibly restored) session start before ANY consumer.
+        let admittedLocations = locations.filter { $0.timestamp >= start }
+        guard let location = admittedLocations.last else { return }
 
-            guard isTrackingEnabled, StoreManager.shared.canTrack else { return }
+        // Record only admitted active-session locations for daily distance history (stats only).
+        for deliveredLocation in admittedLocations {
+            recordDistanceLocation(deliveredLocation)
+        }
 
-            // Distance mode passes every fix through; time modes keep one per interval.
-            let samples = routeSampler.process(locations)
-            if preciseFixRequestedAt != nil,
-               locations.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
-                preciseFixRequestedAt = nil
-            }
-            applyRoutePowerLevel()
-            saveLocationPoints(samples, receivedCount: locations.count)
+        // Distance mode passes every fix through; time modes keep one per interval.
+        let samples = routeSampler.process(admittedLocations)
+        if preciseFixRequestedAt != nil,
+           admittedLocations.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
+            preciseFixRequestedAt = nil
+        }
+        applyRoutePowerLevel()
+        saveLocationPoints(samples, receivedCount: admittedLocations.count)
 
-            // Geocode/update Live Activity only for the latest location to avoid doing
-            // network/UI work for every point in a Core Location batch.
-            await geocodeForLiveActivity(location: location)
+        // Geocode/update Live Activity only for the latest location to avoid doing
+        // network/UI work for every point in a Core Location batch.
+        await geocodeForLiveActivity(location: location)
 
-            if isLiveActivityEnabled {
-                liveActivityManager.updateActivity(
-                    location: location,
-                    locationName: currentLocationName,
-                    remainingSeconds: liveActivityRemainingSeconds
-                )
-            }
+        if isLiveActivityEnabled {
+            liveActivityManager.updateActivity(
+                location: location,
+                locationName: currentLocationName,
+                remainingSeconds: liveActivityRemainingSeconds
+            )
         }
     }
 

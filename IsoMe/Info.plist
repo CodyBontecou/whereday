@@ -27,6 +27,9 @@
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Whereday needs location access to show your current location and record visits when the app is open.</string>
 
+    <key>NSMotionUsageDescription</key>
+    <string>If you opt in to Smart Start, Whereday uses motion activity to try to start tracking sustained movement and optionally stop automatic sessions when stationary. Motion activity stays on your device.</string>
+
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Whereday can connect geotagged photos to your private map and outings. Photo files stay in your Photos library; Whereday stores only local metadata on-device.</string>
 
