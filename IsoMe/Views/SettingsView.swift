@@ -448,6 +448,15 @@ struct SettingsView: View {
 
             BackPageDivider()
             NavigationLink {
+                SmartStartSettingsView(locationManager: locationManager)
+            } label: {
+                BackPageRowLabel(title: Text("Smart Start"), subtitle: Text("Optional activity-based recording"))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("settings-smart-start")
+
+            BackPageDivider()
+            NavigationLink {
                 SavedLocationsView(viewModel: viewModel)
             } label: {
                 BackPageRowLabel(title: Text("Manage saved places"))

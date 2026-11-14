@@ -128,6 +128,7 @@
 		F7D0A11E5A00000000000013 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000012 /* PlaceDetailView.swift */; };
 		F7D0A11E5A00000000000015 /* MonthRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000014 /* MonthRecapView.swift */; };
 		F7D0A11E5A00000000000017 /* ShortcutsGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */; };
+		A06020261114000000000051 /* SmartStartSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06020261114000000000052 /* SmartStartSettingsView.swift */; };
 		F7D0A11E5A00000000000019 /* ListeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000018 /* ListeningView.swift */; };
 		F7D0A11E5A0000000000000B /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A0000000000000A /* TodayView.swift */; };
 		AB000001212F000100000001 /* IsoMeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F000000000001 /* IsoMeIntents.swift */; };
@@ -342,6 +343,7 @@
 		F7D0A11E5A00000000000012 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000014 /* MonthRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsGuideView.swift; sourceTree = "<group>"; };
+		A06020261114000000000052 /* SmartStartSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartStartSettingsView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000018 /* ListeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A0000000000000A /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		AB000001212F000000000001 /* IsoMeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeIntents.swift; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				F7D0A11E5A00000000000012 /* PlaceDetailView.swift */,
 				F7D0A11E5A00000000000014 /* MonthRecapView.swift */,
 				F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */,
+				A06020261114000000000052 /* SmartStartSettingsView.swift */,
 				F7D0A11E5A00000000000018 /* ListeningView.swift */,
 				D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */,
 				A1000031212F000000000031 /* ExportView.swift */,
@@ -1206,6 +1209,7 @@
 				F7D0A11E5A00000000000013 /* PlaceDetailView.swift in Sources */,
 				F7D0A11E5A00000000000015 /* MonthRecapView.swift in Sources */,
 				F7D0A11E5A00000000000017 /* ShortcutsGuideView.swift in Sources */,
+				A06020261114000000000051 /* SmartStartSettingsView.swift in Sources */,
 				F7D0A11E5A00000000000019 /* ListeningView.swift in Sources */,
 				D15C04D0BA000000000000A1 /* DiscordPromoBanner.swift in Sources */,
 				AB000001212F000100000001 /* IsoMeIntents.swift in Sources */,

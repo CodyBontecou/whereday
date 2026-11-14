@@ -2,17 +2,20 @@
 
 Smart Start is **off by default**. This implementation adds local persisted settings,
 a motion-evidence module, a policy coordinator, and separate ambient monitoring.
-It is not a completed or device-validated Smart Start feature. There is no Settings
-section or new onboarding flow yet. Do not advertise background reliability from
-these injected tests.
+It is not a completed or device-validated Smart Start feature. Settings now includes
+an explicit-confirmation Smart Start page with permission statuses, activity/timing
+choices and limitation/Shortcuts help. Optional onboarding, localized new copy and
+physical acceptance remain incomplete. Do not advertise background reliability from
+these injected tests or the simulator UI walkthrough.
 
 ## Required user-facing reliability copy
 
 > iso.me can try to start tracking when iOS reports meaningful movement, but iOS may delay or suppress background triggers. Force-quitting the app prevents automatic relaunch until you open it again. Shortcuts automations are the most reliable way to start from CarPlay, workouts, Focus modes, Bluetooth, or NFC.
 
 Native CarPlay entitlement/UI and HealthKit/workout background execution are not
-MVP capabilities. Shortcuts automation recipes and optional intent duration/profile
-parameters remain future work. Existing Start/Stop shortcuts are retained.
+MVP capabilities. Settings includes recipes using the retained Start/Stop shortcuts;
+optional intent duration/profile parameters and actual automation/device acceptance
+remain future work.
 
 ## State and effects
 
@@ -63,7 +66,8 @@ constant defines the real adapter query window and settings validation, so every
 accepted threshold fits available evidence. `SmartStartStateStore.saveSettings`,
 `AutoStartCoordinator.updateSettings`, and `LocationManager.updateSmartStartSettings`
 throw on invalid input before persistence or observer changes; there is no silently
-ignored/clamped update. Future UI must handle/report that error. Corrupt or legacy
+ignored/clamped update. The Settings intent model reloads actual state and reports
+rejected/unapplied changes inline. Corrupt or legacy
 unsupported persisted payloads load safe disabled defaults, not a shortened enabled
 threshold. Cooldowns must be finite and nonnegative.
 
@@ -106,12 +110,12 @@ Next slice must:
 1. Verify actual background launch/lifecycle diagnostics on a device, including
    callbacks before a scene exists, permission/access resolution and webhook/export
    recovery. Preserve existing Watch sync and its acceptance boundaries.
-2. Add a narrow Settings section calling `try updateSmartStartSettings` and handling
-   validation errors (activity duration supported range: greater than 0 through 900
-   seconds), only after
-   explicit opt-in and reliability explanation. Display Always/Motion statuses,
-   unavailable/denied paths and activity/cooldown/stationary-stop choices. Do not
-   silently enable for existing users or prompt Motion during ordinary onboarding.
+2. Finish acceptance of the new Settings page: localized copy, real denied/authorized
+   permission states, complete motion/interaction audit, and optional onboarding.
+   The page already calls `try updateSmartStartSettings`, reports validation/save
+   errors, requires explicit enable confirmation, and exposes status/activity/timing
+   choices. See [actual simulator scope and open requirements](evidence/smart-start-settings-20261114.md).
+   Do not silently enable existing users or prompt Motion during ordinary onboarding.
 3. Keep `LocationManager.startTracking` as explicit/manual intent and feed inferred
    activity/location wakes only through the coordinator. Do not bypass policy
    based on significant-change distance, visit departure, steps, or a timer.

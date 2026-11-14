@@ -186,3 +186,100 @@ final class SmartStartStateTests: XCTestCase {
         XCTAssertNil(store.trackingStartSource)
     }
 }
+
+@MainActor
+final class SmartStartSettingsModelTests: XCTestCase {
+    func testOpeningAndCancellingOptInNeverWrites() {
+        var writes = 0
+        let model = SmartStartSettingsModel(read: { SmartStartSettings() }, save: { _ in writes += 1 })
+        XCTAssertFalse(model.settings.isEnabled)
+        model.requestEnabled(true)
+        XCTAssertTrue(model.requiresConfirmation)
+        XCTAssertFalse(model.settings.isEnabled)
+        XCTAssertEqual(writes, 0)
+        model.cancelEnable()
+        model.confirmEnable()
+        XCTAssertFalse(model.requiresConfirmation)
+        XCTAssertEqual(writes, 0)
+    }
+
+    func testConfirmationIsRequiredAndCommitsExactlyOnce() {
+        var stored = SmartStartSettings()
+        var writes = 0
+        let model = SmartStartSettingsModel(read: { stored }, save: { stored = $0; writes += 1 })
+        model.confirmEnable()
+        XCTAssertEqual(writes, 0)
+        model.requestEnabled(true)
+        // SwiftUI dismisses an alert's presentation binding before its button action.
+        model.requiresConfirmation = false
+        model.confirmEnable()
+        model.confirmEnable()
+        XCTAssertTrue(stored.isEnabled)
+        XCTAssertTrue(model.settings.isEnabled)
+        XCTAssertEqual(writes, 1)
+    }
+
+    func testDisableIsImmediateAndPreservesSelectedActivities() {
+        var stored = SmartStartSettings()
+        stored.isEnabled = true
+        stored.cyclingEnabled = true
+        let model = SmartStartSettingsModel(read: { stored }, save: { stored = $0 })
+        model.requestEnabled(false)
+        XCTAssertFalse(stored.isEnabled)
+        XCTAssertTrue(stored.cyclingEnabled)
+        XCTAssertFalse(model.requiresConfirmation)
+    }
+
+    func testEditsUseLatestPersistedSettingsNotStaleViewSnapshot() {
+        var stored = SmartStartSettings()
+        let model = SmartStartSettingsModel(read: { stored }, save: { stored = $0 })
+        stored.cyclingEnabled = true
+        stored.drivingEnabled = false
+        model.update { $0.minimumMovementDuration = 300 }
+        XCTAssertTrue(stored.cyclingEnabled)
+        XCTAssertFalse(stored.drivingEnabled)
+        XCTAssertEqual(stored.minimumMovementDuration, 300)
+        XCTAssertEqual(model.settings, stored)
+    }
+
+    func testOrdinaryEditCannotBypassOptIn() {
+        var stored = SmartStartSettings()
+        var writes = 0
+        let model = SmartStartSettingsModel(read: { stored }, save: { stored = $0; writes += 1 })
+        model.update { $0.isEnabled = true }
+        XCTAssertFalse(stored.isEnabled)
+        XCTAssertEqual(writes, 0)
+    }
+
+    func testRejectedSaveKeepsActualSettingsAndSurfacesError() {
+        enum Failure: Error { case storage }
+        let stored = SmartStartSettings()
+        let model = SmartStartSettingsModel(read: { stored }, save: { _ in throw Failure.storage })
+        model.requestEnabled(true)
+        model.confirmEnable()
+        XCTAssertFalse(model.settings.isEnabled)
+        XCTAssertFalse(model.requiresConfirmation)
+        XCTAssertNotNil(model.errorMessage)
+    }
+
+    func testInvalidThresholdIsRejectedBeforeWriterAndCanBeCorrected() {
+        var stored = SmartStartSettings()
+        var writes = 0
+        let model = SmartStartSettingsModel(read: { stored }, save: { stored = $0; writes += 1 })
+        model.update { $0.minimumMovementDuration = SmartStartSettings.maximumActivityDuration + 1 }
+        XCTAssertEqual(writes, 0)
+        XCTAssertEqual(model.settings, stored)
+        XCTAssertNotNil(model.errorMessage)
+        model.update { $0.minimumMovementDuration = 300 }
+        XCTAssertEqual(writes, 1)
+        XCTAssertNil(model.errorMessage)
+    }
+
+    func testWriterThatDidNotApplyChangeIsNotShownAsSuccess() {
+        let stored = SmartStartSettings()
+        let model = SmartStartSettingsModel(read: { stored }, save: { _ in })
+        model.update { $0.walkingRunningEnabled = true }
+        XCTAssertFalse(model.settings.walkingRunningEnabled)
+        XCTAssertNotNil(model.errorMessage)
+    }
+}

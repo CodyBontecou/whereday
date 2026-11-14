@@ -375,7 +375,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
 
     var smartStartSettings: SmartStartSettings { smartStartState.settings }
 
-    /// Future Settings UI calls this only after explicit opt-in. It does not ask
+    /// Settings requires explicit confirmation before enabling. This does not ask
     /// for Location permission; Always must be obtained via the existing UI.
     func updateSmartStartSettings(_ settings: SmartStartSettings) throws {
         if let autoStartCoordinator {

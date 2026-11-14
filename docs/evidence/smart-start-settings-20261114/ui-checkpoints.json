@@ -1,0 +1,68 @@
+{
+  "scope": "UI-only simulator, no test-host fixtures; functional checkpoints and sampled screenshots, not physical or full-motion performance acceptance",
+  "udid": "EEBF0516-FB5A-42E8-9759-CCDA6D2139F5",
+  "runtime": "iOS26.5",
+  "recording": {
+    "path": "/tmp/whereday-merge-readiness/smart-settings-ui-4/walkthrough.mov",
+    "bytes": 113174999,
+    "sha256": "407d6672d802bb2118252edaa03bb39cd42800143b071c8b87a591a77234b8e1",
+    "durationSeconds": 426.818333
+  },
+  "checks": {
+    "cancel-settled": {
+      "label": "Smart Start, Off unless you choose to enable it",
+      "value": "0",
+      "type": "CheckBox",
+      "sourceSha256": "282ab5d257debce503a2eadfde9012a712745af4e5be751985be4141abffcf21"
+    },
+    "enabled-settled": {
+      "label": "Smart Start, On \u00b7 requires permissions and tracking access",
+      "value": "1",
+      "type": "CheckBox",
+      "sourceSha256": "2465cd2283b0981e58a980becdf987be9572bf671061ced22b1c5948fd809c0e"
+    },
+    "disabled-settled": {
+      "label": "Smart Start, Off unless you choose to enable it",
+      "value": "0",
+      "type": "CheckBox",
+      "sourceSha256": "c4f663c656978282b7988ebdafc7b8075639d405effcc78fc90209601aee69fe"
+    },
+    "relaunched-off": {
+      "label": "Smart Start, Off unless you choose to enable it",
+      "value": "0",
+      "type": "CheckBox",
+      "sourceSha256": "1eafeb837d838ca8f4f0c3a8af3646cfe95180b33da203ca53e56a2c1753a386"
+    },
+    "movement-five": {
+      "label": "Movement threshold, 5 minutes",
+      "value": null,
+      "type": "GenericElement",
+      "sourceSha256": "132719d9c177c33a8a39ebbc8d6f51f484b3e58e0697d765746f5bb53d6cd6ba"
+    },
+    "relaunched-five": {
+      "label": "Movement threshold, 5 minutes",
+      "value": null,
+      "type": "PopUpButton",
+      "sourceSha256": "f3a689fee71c99d6b198d29f2a08a486efb21071833d4de80b7fcc804507b45d"
+    },
+    "stationary-on": {
+      "label": "Stop when stationary",
+      "value": "1",
+      "type": "CheckBox",
+      "sourceSha256": "ff2bdb5b6280726b5e1cad6ac71b660462f30cd5d1564891cf4ce926267ba4ae"
+    },
+    "back-to-settings": {
+      "label": "Smart Start, Optional activity-based recording",
+      "value": null,
+      "type": "Button",
+      "sourceSha256": "4f23aa6f9171162be954f242cb1c5d0770ab67b53600dc5196374433b688ac2c"
+    }
+  },
+  "cleanup": {
+    "recorderStopped": true,
+    "appTerminated": true,
+    "simulatorShutdown": true,
+    "appearanceRestored": "light",
+    "contentSizeRestored": "large"
+  }
+}
