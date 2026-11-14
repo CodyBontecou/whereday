@@ -197,7 +197,6 @@ struct CheckInIntent: AppIntent {
         let visit = try await ManualVisitAutomation.checkIn(context: ManualVisitAutomation.makeContext(), name: resolvedName,
             savedPlaceID: savedPlace?.id, latitude: latitude, longitude: longitude,
             at: arrivedAt ?? Date(), allowOverlap: allowOverlap, currentLocation: { try await locator.coordinate() })
-        NotificationCenter.default.post(name: .manualVisitsChanged, object: nil)
         return .result(value: VisitEntity(visit: visit), dialog: "Checked in at \(visit.displayName).")
     }
 }
@@ -220,7 +219,6 @@ struct CheckOutIntent: AppIntent {
             }
         }
         let finished = try ManualVisitAutomation.checkOut(context: context, visitID: selected?.id, at: departedAt ?? Date())
-        NotificationCenter.default.post(name: .manualVisitsChanged, object: nil)
         return .result(value: VisitEntity(visit: finished), dialog: "Checked out of \(finished.displayName).")
     }
 }

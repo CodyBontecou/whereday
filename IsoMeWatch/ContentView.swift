@@ -5,6 +5,7 @@ struct ContentView: View {
     @ObservedObject private var syncClient = WatchLocationSyncClient.shared
     @ObservedObject private var recordingControl = SharedRecordingControl.shared
     @Environment(\.scenePhase) private var scenePhase
+    @State private var showingManualVisits = false
 
     private var locationData: SharedLocationData {
         tracker.locationData
@@ -25,6 +26,14 @@ struct ContentView: View {
                         permissionView
                         startButton
                     }
+                    Button {
+                        showingManualVisits = true
+                    } label: {
+                        Label("Check In / Out", systemImage: "mappin.and.ellipse")
+                            .frame(maxWidth: .infinity, minHeight: 40)
+                    }
+                    .buttonStyle(WatchCapsuleButtonStyle(filled: false))
+                    .accessibilityIdentifier("watchManualVisits")
                     errorView
                     if recordingControl.intent != nil {
                         Text(recordingControl.statusDescription)
@@ -46,6 +55,7 @@ struct ContentView: View {
             }
             .scrollIndicators(.hidden)
         }
+        .sheet(isPresented: $showingManualVisits) { WatchManualVisitView(client: syncClient.manualVisits) }
         .onAppear {
             tracker.refresh()
         }

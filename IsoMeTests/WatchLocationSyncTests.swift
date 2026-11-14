@@ -309,6 +309,41 @@ final class WatchLocationSyncImportTests: XCTestCase {
         try checkGPXExport(count: 503, name: "synthetic-watch-complete.gpx")
     }
 
+    func testOversizedOfflineWatchPayloadUsesFileTransportAndPreservesReplay() throws {
+        let queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: snapshotData())
+        let payload = try XCTUnwrap(queue.makePayload())
+        let data = try JSONEncoder().encode(payload)
+        XCTAssertGreaterThan(data.count, WatchLocationSyncTransport.inlinePayloadByteLimit)
+        XCTAssertNil(WatchLocationSyncTransport.inlinePayload(data))
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let file = try WatchLocationSyncTransport.writePayloadFile(data, directory: directory)
+        let metadata = [WatchLocationSyncTransport.payloadFileMetadataKey: true]
+        let received = try XCTUnwrap(WatchLocationSyncTransport.readPayloadFile(file, metadata: metadata))
+        XCTAssertEqual(received, data)
+        // The callback may return and its file disappear before actor-bound import.
+        try FileManager.default.removeItem(at: file)
+        let container = try snapshotContainer()
+        let receiver = WatchLocationSyncReceiver()
+        receiver.configure(modelContainer: container, activatesConnectivity: false)
+        let ack = try XCTUnwrap(receiver.importPayloadData(received))
+        XCTAssertTrue(ack.succeeded)
+        XCTAssertEqual(ack.importedPointCount, 500)
+        XCTAssertEqual(ack.importedVisitCount, 2)
+        let retry = try XCTUnwrap(receiver.importPayloadData(received))
+        XCTAssertTrue(retry.succeeded)
+        XCTAssertEqual(retry.importedPointCount, 0)
+        XCTAssertEqual(retry.importedVisitCount, 0)
+    }
+
+    func testWatchRouteInlineBoundaryAndUnrelatedFiles() throws {
+        XCTAssertNotNil(WatchLocationSyncTransport.inlinePayload(Data(count: 48 * 1024)))
+        XCTAssertNil(WatchLocationSyncTransport.inlinePayload(Data(count: 48 * 1024 + 1)))
+        let missing = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        XCTAssertNil(try WatchLocationSyncTransport.readPayloadFile(missing, metadata: nil))
+        XCTAssertThrowsError(try WatchLocationSyncTransport.readPayloadFile(missing, metadata: [WatchLocationSyncTransport.payloadFileMetadataKey: true]))
+    }
+
     func testSnapshotRejectedBeforePhoneReadyCanRetryWithoutDataLoss() throws {
         var queue = try JSONDecoder().decode(WatchLocationSyncState.self, from: snapshotData())
         let payload = try XCTUnwrap(queue.makePayload())
