@@ -32,6 +32,19 @@ Hosted iOS run `43548700543` at `c6ff203a` failed before tests: Swift could not 
 
 Split only that fixture expression into an explicitly typed point array, timestamp, latitude and accuracy values. The six point arguments and all assertions are unchanged; no production inference code, test selection, timeout or skip changed. Fresh full local verification after this test-only correction again passes **580 XCTest +20 Swift Testing tests** (`artifacts/merge-readiness/google-compiler-fix.log`). The next hosted run must verify its compiler accepts the change; no hosted GREEN is claimed yet.
 
+## Hosted interoperability dependency follow-up
+
+At `b09a6e78`, the hosted Android backup→SwiftData job failed before execution because its standalone `swiftc` source list omitted `VisitInferenceService.swift` and `GoogleFolderDiscovery.swift`, newly referenced by the complete import worker. Added those two real sources to both `verify_place_provenance.py` and `verify_timeline_admission.py`; no importer stubs, source extraction shortcuts or assertions were substituted.
+
+Downloaded the actual synthetic `android-place-provenance-inputs` artifact from run `43549650710`. The first local attempt compiled but failed the pre-existing timezone-less Markdown expectation on this UTC−4 host (`17:00Z` vs UTC fixture `13:00Z`). Preserved that failure log; it is not a Google inference/folder assertion. With `TZ=UTC` matching the Android fixture's generation zone, the real harness passes **12 Android files previewed/committed/deduplicated**, and the complete SwiftData admission harness passes **7 scenarios**. Commands:
+
+```sh
+TZ=UTC python3 android/scripts/verify_place_provenance.py --input /tmp/whereday-merge-readiness/google-interop-inputs/android-exports.json --output artifacts/merge-readiness/google-swift-commit-acceptance.json
+TZ=UTC python3 android/scripts/verify_timeline_admission.py --output artifacts/merge-readiness/google-swift-admission.json
+```
+
+These local results establish the corrected source lists and existing UTC fixture scenarios, not timezone-independent Markdown round trips or fresh hosted acceptance. The next hosted checks still must pass.
+
 ## Requirement boundary / open gates
 
 This is progress toward #59, not epic completion. Remaining: actual Files folder picker and authorized local/FileProvider policy with useful errors/progress, folder review presentation including exclusions, current visible inference/review UI verification, on-device memory/latency evidence, Watch/widget refresh acceptance, and explicit ZIP decision documentation/issue. Hosted Android/iOS checks must also pass on the pushed head. There is no fresh device UI/screenshot, physical import, network capture, or million-record claim in this receipt. Keep original exports; approximate deduplication and conservative inference are not universal lossless Google migration.
