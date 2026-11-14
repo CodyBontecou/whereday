@@ -19,9 +19,13 @@ Native CarPlay entitlement/UI and HealthKit/workout background execution are not
 MVP capabilities. Settings includes recipes using the retained Start/Stop shortcuts;
 the Start intent now accepts an optional generic/CarPlay/workout Source label without
 opting into Smart Start. Omission preserves the original simple action and active
-sessions stay idempotent. Optional duration/profile parameters and actual
-Shortcuts editor/automation/device acceptance remain future work. See the
-[actual helper/manager verification](evidence/smart-start-shortcut-source-20261114.md).
+sessions stay idempotent. Optional duration (1–1,440 minutes) and walking/running,
+cycling or driving hints now apply only to a new, UUID-owned session. They never
+change Smart Start opt-in or global sampling/Stop After preferences. Reattachment
+retains the absolute deadline; explicit Stop After edits supersede the session
+duration. Native hints are not activity-specific sampler tuning. Actual editor,
+localized/spoken and automation/device acceptance remain unverified. See the
+[session contract and executed verification](evidence/smart-start-shortcut-session-20261114.md).
 
 ## State and effects
 

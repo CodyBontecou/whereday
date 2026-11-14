@@ -1,0 +1,61 @@
+{
+  "base": "d3faede5309648c6a600ae8c3031d01201f62292",
+  "scope": "Local signed tests/resources/actual compiled metadata; no native editor, locked execution, physical or whole-PR readiness claim",
+  "tests": {
+    "XCTest": 611,
+    "SwiftTesting": 20,
+    "newSessionTests": [
+      "testAccessResolutionBeforeStoreAttachmentPreservesTheOwnedIntent",
+      "testActivityHintsDoNotChangeSamplingAndOmittedDurationUsesDefault",
+      "testASecondOpenRowCannotTakeOwnershipOfTheLeasedRecording",
+      "testCorruptLeaseFailsClosedWithoutStartingNativeMonitoring",
+      "testDeletedPersistedOwnerCannotBeRecreatedAsAnUnboundedDefaultSession",
+      "testDurationValidationRejectsUnsafeNumbersAndAcceptsDocumentedBounds",
+      "testExpiredLeaseCannotBeLostWhileEntitlementsArePending",
+      "testExpiredLeaseStopsBeforeNativeMonitoringOnReattachment",
+      "testExplicitSettingsEditSupersedesDurationButKeepsTheSessionActivityHint",
+      "testForgettingALeasedOwnerStopsRatherThanMakingAnotherSessionUnbounded",
+      "testIntentDurationUsesOneSessionWithoutChangingAnyGlobalPreferences",
+      "testInvalidIntentDurationExplainsFailureBeforeCreatingARecording",
+      "testKnownAccessDenialClosesTheLeasedSessionDuringRestore",
+      "testMissingOwnerPointerCannotTurnAFiniteRequestIntoAnUnboundedRecording",
+      "testPeerStartTakesManualOwnershipAndCannotInheritTheAutomationOptions",
+      "testPendingEntitlementResolutionKeepsTheOwnedLeaseAndDoesNotReplaceItsOptions",
+      "testPendingLeaseStillExpiresWithoutAnyNativeMonitoring",
+      "testPermissionAndAccessFailuresDoNotPersistAnyOptionsOrDefaultsChanges",
+      "testQueuedPendingExpiryCannotStopTheReattachedOwnedSession",
+      "testRepeatedIntentReportsNoChangeAndCannotExtendOrRelabelTheLease",
+      "testResolvedAccessWaitsForPermissionWithoutLosingTheLease",
+      "testResolvingPendingAccessToDeniedStopsTheLeaseAndDoesNotResumeAfterward",
+      "testSettingsNeverRemovesDurationOnlyLeaseWithoutLeakingItToManualTracking",
+      "testSQLiteReopenKeepsTheOriginalDeadlineInsteadOfStartingAnotherDuration",
+      "testStopClearsOptionsAndQueuedExpiryCannotStopTheNextManualSession",
+      "testUnrelatedLeaseCannotConfigureTheCurrentRecording"
+    ],
+    "result": "artifacts/test-results/IsoMe-20261114-124008-20349.xcresult"
+  },
+  "resources": {
+    "newKeys": 5,
+    "addedValues": 55,
+    "unchangedEntries": 2415,
+    "catalogActiveKeys": 2611,
+    "smartStartLocalizationTests": 15,
+    "compiledLookups": 561,
+    "originalCatalogCounterfactual": "FAIL ar:Activity Profile __MISSING_SMART_START__"
+  },
+  "references": {
+    "actualCIChecks": 31,
+    "actualSwiftCaseOutputsUnchanged": 17,
+    "changedFields": "source provenance only"
+  },
+  "sha256": {
+    "IsoMe/Services/IsoMeIntents.swift": "6685abd0c79eae2f1490f5ec528949a7242fe0b9d22f8d85602c23cc802373c1",
+    "IsoMe/Services/LocationManager.swift": "39acd33ac44b0531ced45d5bcc60adeca7ef1fddb6039ecc3ef676ca9cbbe094",
+    "IsoMe/Services/SmartStartState.swift": "5318d330d206e9203fd9e29089151217e408b2822667bb0fa84b346bfcb73288",
+    "IsoMeTests/SmartStartRuntimeTests.swift": "5485fb71af1886ac2068b10f50f263c2264d3c4030de2013600a2b16014a555b",
+    "IsoMe/Localizable.xcstrings": "aab637167b640fe3c6592ed8e955ba4f81877626d128f28c4c8419e2466ce904",
+    "android/domain/src/test/resources/ios-visit-reconciliation.json": "642a02248fec1c21d9dd60941a2d3d426a5c7ed0eef18ead78344e366e3289eb",
+    "android/data/src/androidTest/assets/ios-visit-reconciliation.json": "642a02248fec1c21d9dd60941a2d3d426a5c7ed0eef18ead78344e366e3289eb"
+  },
+  "compiledMetadataSha256": "7cbc310a1bef37a8125c53c0c35852f8a4d162914c7481fd1d248ff4af56c4ec"
+}

@@ -6,8 +6,10 @@ import SwiftData
 @MainActor
 private final class QueuedStopAfterScheduler: StopAfterScheduling {
     var expiries: [@MainActor () -> Void] = []
+    var delays: [TimeInterval] = []
     func schedule(after seconds: TimeInterval, expiry: @escaping @MainActor () -> Void) -> () -> Void {
         expiries.append(expiry)
+        delays.append(seconds)
         // These closures represent Timer work already enqueued on MainActor.
         // Invalidating the underlying Timer cannot retract them.
         return {}
@@ -862,5 +864,461 @@ final class TrackingShortcutSourceTests: XCTestCase {
         XCTAssertFalse(manager.isTrackingEnabled)
         XCTAssertNil(SmartStartStateStore(defaults: defaults).trackingStartSource)
         XCTAssertEqual(monitor.activeStarts, 0)
+    }
+}
+
+@MainActor
+final class ShortcutSessionOptionsTests: XCTestCase {
+    private var defaults: UserDefaults!
+    private var suite: String!
+    private var manager: LocationManager!
+    private var monitor: TestLocationMonitor!
+    private var scheduler: QueuedStopAfterScheduler!
+    private var container: ModelContainer!
+    private var allowed = true
+    private var resolved = true
+    private var schema: Schema { Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self]) }
+
+    override func setUpWithError() throws {
+        suite = "ShortcutSessionOptionsTests.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suite)!
+        defaults.set(false, forKey: "isLiveActivityEnabled")
+        defaults.set(false, forKey: "allowNetworkGeocoding")
+        defaults.set(2.0, forKey: "stopAfterHours")
+        container = try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)])
+        createManager()
+    }
+
+    override func tearDown() {
+        manager?.stopTracking()
+        manager = nil
+        container = nil
+        defaults.removePersistentDomain(forName: suite)
+        defaults = nil
+    }
+
+    private func createManager(attachStore: Bool = true) {
+        monitor = TestLocationMonitor()
+        scheduler = QueuedStopAfterScheduler()
+        manager = LocationManager(defaults: defaults, registersAsShared: false, monitoring: monitor,
+            trackingAccess: { [weak self] in self?.allowed == true },
+            trackingAccessResolved: { [weak self] in self?.resolved == true }, startsSmartStartRuntime: false,
+            stopAfterScheduler: scheduler)
+        manager.authorizationStatus = .authorizedAlways
+        if attachStore { manager.setModelContext(container.mainContext) }
+    }
+
+    private func currentLease() throws -> TrackingSessionLease {
+        try XCTUnwrap(TrackingSessionLease.read(from: defaults))
+    }
+
+    private func shiftPersistedSessionBack(_ seconds: TimeInterval) throws {
+        let lease = try currentLease()
+        let date = Date().addingTimeInterval(-seconds)
+        let row = try XCTUnwrap(container.mainContext.fetch(FetchDescriptor<RecordingSession>()).first { $0.id == lease.sessionID })
+        row.startedAt = date
+        try container.mainContext.save()
+        defaults.set(date, forKey: "trackingStartTime")
+        try TrackingSessionLease(sessionID: lease.sessionID, issuedAt: date, options: lease.options).save(in: defaults)
+    }
+
+    func testDurationValidationRejectsUnsafeNumbersAndAcceptsDocumentedBounds() throws {
+        for minutes in [Double.nan, .infinity, -.infinity, -1, 0, 0.99, 1440.01, .greatestFiniteMagnitude] {
+            XCTAssertThrowsError(try TrackingSessionOptions(durationMinutes: minutes))
+        }
+        XCTAssertEqual(try TrackingSessionOptions(durationMinutes: 1).durationSeconds, 60)
+        XCTAssertEqual(try TrackingSessionOptions(durationMinutes: 1.5).durationSeconds, 90)
+        XCTAssertEqual(try TrackingSessionOptions(durationMinutes: 1440).durationSeconds, 86_400)
+        XCTAssertTrue(try TrackingSessionOptions().isEmpty)
+    }
+
+    func testIntentDurationUsesOneSessionWithoutChangingAnyGlobalPreferences() throws {
+        manager.setDistanceFilter(17)
+        manager.setRouteSamplingMode(.distanceAndTime)
+        manager.setRouteSampleInterval(91)
+        let outcome = try TrackingIntentSupport.startTracking(using: manager, source: .carPlay,
+            durationMinutes: 30, activityProfile: .driving)
+        XCTAssertEqual(outcome, .started)
+        XCTAssertEqual(manager.remainingTime ?? -1, 1800, accuracy: 2)
+        XCTAssertEqual(try XCTUnwrap(scheduler.delays.last), 1800, accuracy: 2)
+        XCTAssertEqual(manager.stopAfterHours, 2)
+        XCTAssertEqual(defaults.double(forKey: "stopAfterHours"), 2)
+        XCTAssertEqual(manager.distanceFilter, 17)
+        XCTAssertEqual(manager.routeSamplingMode, .distanceAndTime)
+        XCTAssertEqual(manager.routeSampleInterval, 91)
+        XCTAssertEqual(manager.currentLocationActivityType, .automotiveNavigation)
+        XCTAssertEqual(try currentLease().sessionID.uuidString, defaults.string(forKey: "activeRecordingSessionID"))
+        XCTAssertFalse(manager.smartStartSettings.isEnabled)
+        XCTAssertNil(SmartStartStateStore(defaults: defaults).lastAutoStartAt)
+    }
+
+    func testActivityHintsDoNotChangeSamplingAndOmittedDurationUsesDefault() throws {
+        manager.setDistanceFilter(23)
+        for profile in TrackingActivityProfile.allCases {
+            try TrackingIntentSupport.startTracking(using: manager, source: .workout, activityProfile: profile)
+            XCTAssertEqual(manager.activeActivityProfile, profile)
+            XCTAssertEqual(manager.currentLocationActivityType, profile == .driving ? .automotiveNavigation : .fitness)
+            XCTAssertEqual(manager.remainingTime ?? -1, 7200, accuracy: 2)
+            XCTAssertEqual(manager.distanceFilter, 23)
+            XCTAssertEqual(defaults.double(forKey: "distanceFilter"), 23)
+            manager.stopTracking()
+            XCTAssertNil(manager.activeActivityProfile)
+            XCTAssertEqual(manager.currentLocationActivityType, .other)
+        }
+    }
+
+    func testRepeatedIntentReportsNoChangeAndCannotExtendOrRelabelTheLease() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: .carPlay, durationMinutes: 30, activityProfile: .driving)
+        let data = defaults.data(forKey: TrackingSessionLease.defaultsKey)
+        let count = scheduler.expiries.count
+        let started = manager.trackingStartTime
+        let result = try TrackingIntentSupport.startTracking(using: manager, source: .workout, durationMinutes: 90, activityProfile: .cycling)
+        XCTAssertEqual(result, .alreadyTracking)
+        XCTAssertEqual(defaults.data(forKey: TrackingSessionLease.defaultsKey), data)
+        XCTAssertEqual(manager.trackingStartSource, .carPlayShortcut)
+        XCTAssertEqual(manager.trackingStartTime, started)
+        XCTAssertEqual(manager.activeActivityProfile, .driving)
+        XCTAssertEqual(scheduler.expiries.count, count)
+    }
+
+    func testStopClearsOptionsAndQueuedExpiryCannotStopTheNextManualSession() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .cycling)
+        let oldExpiry = try XCTUnwrap(scheduler.expiries.last)
+        let oldID = try currentLease().sessionID
+        manager.stopTracking()
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertNil(manager.activeActivityProfile)
+        manager.startTracking()
+        XCTAssertEqual(manager.trackingStartSource, .manual)
+        XCTAssertEqual(manager.currentLocationActivityType, .other)
+        XCTAssertEqual(manager.remainingTime ?? -1, 7200, accuracy: 2)
+        XCTAssertNotEqual(defaults.string(forKey: "activeRecordingSessionID"), oldID.uuidString)
+        oldExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled)
+    }
+
+    func testExplicitSettingsEditSupersedesDurationButKeepsTheSessionActivityHint() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+        let oldExpiry = try XCTUnwrap(scheduler.expiries.last)
+        manager.setStopAfterHours(3)
+        XCTAssertEqual(manager.remainingTime ?? -1, 10_800, accuracy: 2)
+        XCTAssertNil(try currentLease().options.durationSeconds)
+        XCTAssertEqual(manager.activeActivityProfile, .driving)
+        XCTAssertEqual(defaults.double(forKey: "stopAfterHours"), 3)
+        oldExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled)
+    }
+
+    func testSettingsNeverRemovesDurationOnlyLeaseWithoutLeakingItToManualTracking() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        let oldExpiry = try XCTUnwrap(scheduler.expiries.last)
+        manager.setStopAfterHours(0)
+        XCTAssertNil(manager.remainingTime)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        oldExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled)
+    }
+
+    func testPermissionAndAccessFailuresDoNotPersistAnyOptionsOrDefaultsChanges() {
+        manager.authorizationStatus = .denied
+        XCTAssertThrowsError(try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving))
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        manager.authorizationStatus = .authorizedAlways
+        allowed = false
+        XCTAssertThrowsError(try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving))
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertEqual(defaults.double(forKey: "stopAfterHours"), 2)
+        XCTAssertEqual(monitor.activeStarts, 0)
+    }
+
+    func testInvalidIntentDurationExplainsFailureBeforeCreatingARecording() throws {
+        XCTAssertThrowsError(try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: .nan)) { error in
+            guard case IsoMeIntentError.invalidTrackingDuration = error else { return XCTFail("Expected actionable duration error") }
+        }
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 0)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+    }
+
+    func testPeerStartTakesManualOwnershipAndCannotInheritTheAutomationOptions() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: .carPlay, durationMinutes: 30, activityProfile: .driving)
+        let oldExpiry = try XCTUnwrap(scheduler.expiries.last)
+        let peer = SharedRecordingIntent(revision: 1, origin: UUID(), sessionID: UUID(), startedAt: Date(), changedAt: Date(), isRecording: true)
+        XCTAssertTrue(manager.applySharedRecordingIntent(peer))
+        XCTAssertEqual(manager.trackingStartSource, .manual)
+        XCTAssertNil(manager.activeActivityProfile)
+        XCTAssertEqual(manager.currentLocationActivityType, .other)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertEqual(manager.remainingTime ?? -1, 7200, accuracy: 2)
+        oldExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled)
+    }
+
+    func testExpiredLeaseStopsBeforeNativeMonitoringOnReattachment() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+        try shiftPersistedSessionBack(1900)
+        manager = nil
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertTrue(try container.mainContext.fetch(FetchDescriptor<RecordingSession>()).allSatisfy { $0.endedAt != nil })
+        XCTAssertNil(SmartStartStateStore(defaults: defaults).lastManualStopAt)
+    }
+
+    func testSQLiteReopenKeepsTheOriginalDeadlineInsteadOfStartingAnotherDuration() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("ShortcutSessionOptions-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer {
+            manager.stopTracking()
+            manager = nil
+            container = nil
+            try? FileManager.default.removeItem(at: directory)
+        }
+        let url = directory.appendingPathComponent("journal.sqlite")
+        manager = nil
+        container = try ModelContainer(for: schema, configurations: ModelConfiguration(schema: schema, url: url))
+        createManager()
+        try TrackingIntentSupport.startTracking(using: manager, source: .workout, durationMinutes: 30, activityProfile: .cycling)
+        try shiftPersistedSessionBack(600)
+        let original = try currentLease()
+        manager = nil
+        container = nil
+        container = try ModelContainer(for: schema, configurations: ModelConfiguration(schema: schema, url: url))
+        createManager()
+        manager.handleAuthorizationChange(status: .authorizedAlways, accuracy: .fullAccuracy)
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertEqual(manager.remainingTime ?? -1, 1200, accuracy: 2)
+        XCTAssertEqual(try XCTUnwrap(scheduler.delays.last), 1200, accuracy: 2)
+        XCTAssertEqual(manager.currentLocationActivityType, .fitness)
+        XCTAssertEqual(defaults.double(forKey: "stopAfterHours"), 2)
+    }
+
+    func testCorruptLeaseFailsClosedWithoutStartingNativeMonitoring() throws {
+        for kind in ["malformed", "wrong-type", "oversized", "future-version"] {
+            try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+            let valid = try XCTUnwrap(defaults.data(forKey: TrackingSessionLease.defaultsKey))
+            manager = nil
+            switch kind {
+            case "wrong-type": defaults.set("not-data", forKey: TrackingSessionLease.defaultsKey)
+            case "oversized": defaults.set(Data(repeating: 0, count: 2049), forKey: TrackingSessionLease.defaultsKey)
+            case "future-version":
+                var object = try XCTUnwrap(JSONSerialization.jsonObject(with: valid) as? [String: Any])
+                object["version"] = 2
+                defaults.set(try JSONSerialization.data(withJSONObject: object), forKey: TrackingSessionLease.defaultsKey)
+            default: defaults.set(Data("not-json".utf8), forKey: TrackingSessionLease.defaultsKey)
+            }
+            createManager()
+            XCTAssertFalse(manager.isTrackingEnabled, kind)
+            XCTAssertFalse(defaults.bool(forKey: "isTrackingEnabled"), kind)
+            XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey), kind)
+            XCTAssertEqual(monitor.activeStarts, 0, kind)
+            XCTAssertTrue(try container.mainContext.fetch(FetchDescriptor<RecordingSession>()).allSatisfy { $0.endedAt != nil }, kind)
+        }
+    }
+
+    func testMissingOwnerPointerCannotTurnAFiniteRequestIntoAnUnboundedRecording() throws {
+        manager.setStopAfterHours(0)
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+        defaults.removeObject(forKey: "activeRecordingSessionID")
+        manager = nil
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertEqual(defaults.double(forKey: "stopAfterHours"), 0)
+    }
+
+    func testUnrelatedLeaseCannotConfigureTheCurrentRecording() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+        let previous = try currentLease()
+        try TrackingSessionLease(sessionID: UUID(), issuedAt: previous.issuedAt, options: previous.options).save(in: defaults)
+        manager = nil
+        createManager()
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertNil(manager.activeActivityProfile)
+        XCTAssertEqual(manager.currentLocationActivityType, .other)
+        XCTAssertEqual(manager.remainingTime ?? -1, 7200, accuracy: 2)
+    }
+
+    func testPendingLeaseStillExpiresWithoutAnyNativeMonitoring() throws {
+        manager.setStopAfterHours(0)
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        let expiry = try XCTUnwrap(scheduler.expiries.last)
+        XCTAssertEqual(try XCTUnwrap(scheduler.delays.last), 1800, accuracy: 2)
+        expiry()
+        XCTAssertFalse(defaults.bool(forKey: "isTrackingEnabled"))
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertTrue(try container.mainContext.fetch(FetchDescriptor<RecordingSession>()).allSatisfy { $0.endedAt != nil })
+    }
+
+    func testQueuedPendingExpiryCannotStopTheReattachedOwnedSession() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager()
+        let pendingExpiry = try XCTUnwrap(scheduler.expiries.last)
+        allowed = true
+        resolved = true
+        XCTAssertEqual(try TrackingIntentSupport.startTracking(using: manager, source: .workout, durationMinutes: 90), .alreadyTracking)
+        pendingExpiry()
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(manager.remainingTime ?? -1, 1800, accuracy: 2)
+    }
+
+    func testResolvedAccessWaitsForPermissionWithoutLosingTheLease() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: .carPlay, durationMinutes: 30, activityProfile: .driving)
+        let original = try currentLease()
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager()
+        manager.authorizationStatus = .denied
+        allowed = true
+        resolved = true
+        manager.refreshRecordingAccess()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertTrue(manager.hasPendingSessionLease)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        manager.handleAuthorizationChange(status: .authorizedWhenInUse, accuracy: .fullAccuracy)
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertEqual(manager.trackingStartSource, .carPlayShortcut)
+        XCTAssertEqual(monitor.activeStarts, 1)
+    }
+
+    func testAccessResolutionBeforeStoreAttachmentPreservesTheOwnedIntent() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: .carPlay, durationMinutes: 30)
+        let original = try currentLease()
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager(attachStore: false)
+        allowed = true
+        resolved = true
+        manager.refreshRecordingAccess()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertTrue(manager.hasPendingSessionLease)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        manager.setModelContext(container.mainContext)
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertEqual(monitor.activeStarts, 1)
+    }
+
+    func testKnownAccessDenialClosesTheLeasedSessionDuringRestore() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        manager = nil
+        allowed = false
+        resolved = true
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertFalse(defaults.bool(forKey: "isTrackingEnabled"))
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertEqual(monitor.activeStarts, 0)
+        XCTAssertTrue(try container.mainContext.fetch(FetchDescriptor<RecordingSession>()).allSatisfy { $0.endedAt != nil })
+    }
+
+    func testResolvingPendingAccessToDeniedStopsTheLeaseAndDoesNotResumeAfterward() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager()
+        XCTAssertNotNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        resolved = true
+        manager.refreshRecordingAccess()
+        XCTAssertFalse(defaults.bool(forKey: "isTrackingEnabled"))
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertTrue(try container.mainContext.fetch(FetchDescriptor<RecordingSession>()).allSatisfy { $0.endedAt != nil })
+        allowed = true
+        manager.refreshRecordingAccess()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+    }
+
+    func testPendingEntitlementResolutionKeepsTheOwnedLeaseAndDoesNotReplaceItsOptions() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: .carPlay, durationMinutes: 30, activityProfile: .driving)
+        let original = try currentLease()
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertNil(try XCTUnwrap(container.mainContext.fetch(FetchDescriptor<RecordingSession>()).first).endedAt)
+        allowed = true
+        resolved = true
+        let outcome = try TrackingIntentSupport.startTracking(using: manager, source: .workout, durationMinutes: 90, activityProfile: .cycling)
+        XCTAssertEqual(outcome, .alreadyTracking)
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertEqual(manager.trackingStartSource, .carPlayShortcut)
+        XCTAssertEqual(manager.activeActivityProfile, .driving)
+        XCTAssertEqual(manager.remainingTime ?? -1, 1800, accuracy: 2)
+    }
+
+    func testExpiredLeaseCannotBeLostWhileEntitlementsArePending() throws {
+        manager.setStopAfterHours(0)
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        try shiftPersistedSessionBack(1900)
+        manager = nil
+        allowed = false
+        resolved = false
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertFalse(defaults.bool(forKey: "isTrackingEnabled"))
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        XCTAssertEqual(monitor.activeStarts, 0)
+        XCTAssertTrue(try container.mainContext.fetch(FetchDescriptor<RecordingSession>()).allSatisfy { $0.endedAt != nil })
+    }
+
+    func testDeletedPersistedOwnerCannotBeRecreatedAsAnUnboundedDefaultSession() throws {
+        manager.setStopAfterHours(0)
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30)
+        manager = nil
+        try container.mainContext.delete(model: RecordingSession.self)
+        try container.mainContext.save()
+        createManager()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 0)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+    }
+
+    func testASecondOpenRowCannotTakeOwnershipOfTheLeasedRecording() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+        let original = try currentLease()
+        let other = RecordingSession(startedAt: Date().addingTimeInterval(30))
+        container.mainContext.insert(other)
+        try container.mainContext.save()
+        _ = manager.reconcileRecordingSessions()
+        XCTAssertEqual(defaults.string(forKey: "activeRecordingSessionID"), original.sessionID.uuidString)
+        XCTAssertEqual(try currentLease(), original)
+        XCTAssertEqual(manager.activeActivityProfile, .driving)
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertNotNil(other.endedAt)
+    }
+
+    func testForgettingALeasedOwnerStopsRatherThanMakingAnotherSessionUnbounded() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil, durationMinutes: 30, activityProfile: .driving)
+        manager.forgetActiveRecordingSession()
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertNil(defaults.object(forKey: TrackingSessionLease.defaultsKey))
+        manager.startTracking()
+        manager.forgetActiveRecordingSession()
+        XCTAssertTrue(manager.isTrackingEnabled, "Legacy/default continuation behavior must remain unchanged")
     }
 }

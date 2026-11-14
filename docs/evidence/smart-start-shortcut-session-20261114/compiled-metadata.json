@@ -1,0 +1,28 @@
+{
+  "scope": "Actual compiled metadata; not native editor/voice/locked execution",
+  "parameters": {
+    "source": {
+      "optional": true,
+      "title": "Source"
+    },
+    "durationMinutes": {
+      "optional": true,
+      "title": "Duration (minutes)"
+    },
+    "activityProfile": {
+      "optional": true,
+      "title": "Activity Profile"
+    }
+  },
+  "activityCases": [
+    "walkingRunning",
+    "cycling",
+    "driving"
+  ],
+  "legacyPhrases": [
+    "Start ${applicationName}",
+    "Begin recording in ${applicationName}",
+    "Record route with ${applicationName}"
+  ],
+  "openAppWhenRun": false
+}

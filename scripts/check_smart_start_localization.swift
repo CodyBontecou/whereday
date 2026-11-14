@@ -18,8 +18,11 @@ var keys = Set(regex.matches(in: source, range: NSRange(location: 0, length: nsS
 }.filter { !$0.hasPrefix("smart-start-") })
 keys.formUnion([
     "Tracking Source", "Shortcut", "CarPlay automation", "Workout automation", "Source",
-    "Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start.",
-    "Tracking could not start. Open Whereday to check your access and recording status."
+    "Begin recording your route in Whereday. Optional duration and activity hints apply only to a new session; your defaults and Smart Start opt-in stay unchanged.",
+    "Tracking could not start. Open Whereday to check your access and recording status.",
+    "Activity Profile", "Walking or running", "Duration (minutes)",
+    "Enter a duration from 1 to 1,440 minutes, or leave it empty to use your Stop After setting.",
+    "Tracking is already active. Its session settings were not changed."
 ])
 let document = try JSONSerialization.jsonObject(with: Data(contentsOf: root.appendingPathComponent("IsoMe/Localizable.xcstrings"))) as! [String: Any]
 let strings = document["strings"] as! [String: [String: Any]]

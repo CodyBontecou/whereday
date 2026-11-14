@@ -17,6 +17,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     private let locationManager: CLLocationManager
     private let monitoring: any TrackingLocationMonitoring
     private let trackingAccess: @MainActor () -> Bool
+    private let trackingAccessResolved: @MainActor () -> Bool
     private var autoStartCoordinator: AutoStartCoordinator?
     private var lowPowerMonitorsRunning = false
     @Published private(set) var ambientMonitoringActive = false
@@ -30,6 +31,10 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     @Published var trackingStartTime: Date?
     @Published private(set) var trackingStartSource: TrackingStartSource?
     private var smartStartState: SmartStartStateStore { SmartStartStateStore(defaults: defaults) }
+    private var sessionLease: TrackingSessionLease?
+    var activeActivityProfile: TrackingActivityProfile? { sessionLease?.options.activityProfile }
+    var hasPendingSessionLease: Bool { !isTrackingEnabled && resumeAfterAccessResolution && sessionLease != nil }
+    var currentLocationActivityType: CLActivityType { locationManager.activityType }
     @Published var stopAfterHours: Double = 0.0
     @Published var distanceFilter: Double = 5.0
     /// Distance, time, or both. Only affects route points; visits come from iOS visit monitoring.
@@ -57,7 +62,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         RouteSamplingPolicy(mode: routeSamplingMode, distanceFilter: distanceFilter, interval: routeSampleInterval)
     }
 
-    // Safety-net auto-stop timer (only runs when stopAfterHours > 0)
+    // Safety-net timer: one owned session deadline, otherwise the configured Stop After.
     private let stopAfterScheduler: any StopAfterScheduling
     private var cancelStopAfterTimer: (() -> Void)?
     private var stopAfterGeneration = UUID()
@@ -120,6 +125,9 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
 
     /// Drops the persisted active-session pointer, e.g. after Erase All Data deleted the session it named.
     func forgetActiveRecordingSession() {
+        // A lease cannot silently migrate to a recording created after Erase All Data.
+        // Legacy/default recordings retain their existing continuation behavior.
+        if sessionLease != nil { stopTracking(reason: .autoStop) }
         activeRecordingSessionID = nil
     }
 
@@ -151,6 +159,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     init(defaults: UserDefaults = .standard, registersAsShared: Bool = true,
          monitoring: (any TrackingLocationMonitoring)? = nil,
          trackingAccess: (@MainActor () -> Bool)? = nil,
+         trackingAccessResolved: (@MainActor () -> Bool)? = nil,
          motionDetector: (any ActivityDetecting)? = nil,
          startsSmartStartRuntime: Bool = true,
          stopAfterScheduler: (any StopAfterScheduling)? = nil,
@@ -162,6 +171,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         self.locationManager = nativeManager
         self.monitoring = monitoring ?? CoreLocationTrackingMonitor(manager: nativeManager)
         self.trackingAccess = trackingAccess
+        self.trackingAccessResolved = trackingAccessResolved ?? { StoreManager.shared.hasResolvedEntitlements }
         self.defaults = defaults
         super.init()
         if registersAsShared {
@@ -184,26 +194,27 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         isTrackingEnabled = resumeAfterAccessResolution && trackingAccess()
         accessObserver = store.objectWillChange.sink { [weak self] in
             Task { @MainActor in
-                guard let self else { return }
-                if Self.shared === self { SharedRecordingControl.shared.retryApplication() }
-                if self.trackingAccess() {
-                    if self.resumeAfterAccessResolution && store.hasResolvedEntitlements {
-                        self.resumeAfterAccessResolution = false
-                        self.startTracking(reason: .relaunch)
-                    }
-                } else if self.isTrackingEnabled {
-                    self.stopTracking(reason: .accessEnded)
-                }
-                if Self.shared === self { SharedRecordingControl.shared.flush() }
-                self.autoStartCoordinator?.refresh()
+                self?.refreshRecordingAccess()
             }
         }
 
         // Restore session metadata only for a persisted active session. Legacy sessions
         // receive a start timestamp on reattachment, without inventing past history.
+        var invalidSessionLease = false
         if resumeAfterAccessResolution {
             trackingStartTime = smartStartState.trackingStartTime
             trackingStartSource = smartStartState.trackingStartSource
+            do {
+                if let lease = try TrackingSessionLease.read(from: defaults) {
+                    guard let owner = activeRecordingSessionID else {
+                        throw TrackingSessionLease.ValidationError.invalidRecord
+                    }
+                    if lease.sessionID == owner { sessionLease = lease }
+                    else { TrackingSessionLease.clear(in: defaults) }
+                }
+            } catch {
+                invalidSessionLease = true
+            }
         } else {
             smartStartState.endSession(manually: false, at: Date())
         }
@@ -231,6 +242,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
 
         authorizationStatus = locationManager.authorizationStatus
         accuracyAuthorization = locationManager.accuracyAuthorization
+        applySessionActivityProfile()
 
         // Listen for stop notification from Live Activity deep link
         NotificationCenter.default.addObserver(
@@ -243,6 +255,14 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             }
         }
 
+        if invalidSessionLease {
+            // Never turn a damaged finite-duration request into an unbounded recording.
+            LogManager.shared.warning("Session tracking options were invalid; recording was stopped.", category: .location)
+            stopTracking(reason: .autoStop)
+        } else if hasPendingSessionLease, self.trackingAccessResolved(), !trackingAccess() {
+            LogManager.shared.info("Pending tracking session ended · recording access unavailable", category: .location)
+            stopTracking(reason: .accessEnded)
+        }
         // If tracking was on at last launch, resume it (re-attaches CL APIs + Live Activity).
         if isTrackingEnabled && hasLocationPermission {
             startTracking(reason: .relaunch)
@@ -255,8 +275,37 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         }
     }
 
+    /// The Store observer and tests cross the same access-resolution seam. A
+    /// resolution flag never grants access; the actual can-track check still gates start.
+    func refreshRecordingAccess() {
+        if Self.shared === self { SharedRecordingControl.shared.retryApplication() }
+        if trackingAccess() {
+            if resumeAfterAccessResolution && trackingAccessResolved() {
+                // Legacy reattachment keeps its existing behavior. A leased
+                // request is consumed only after its store/permission checks succeed.
+                if sessionLease == nil { resumeAfterAccessResolution = false }
+                startTracking(reason: .relaunch, allowsPermissionPrompt: sessionLease == nil)
+                if isTrackingEnabled { resumeAfterAccessResolution = false }
+            }
+        } else if isTrackingEnabled || (hasPendingSessionLease && trackingAccessResolved()) {
+            if hasPendingSessionLease {
+                LogManager.shared.info("Pending tracking session ended · recording access unavailable", category: .location)
+            }
+            stopTracking(reason: .accessEnded)
+        }
+        if Self.shared === self { SharedRecordingControl.shared.flush() }
+        autoStartCoordinator?.refresh()
+    }
+
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
+        // Leased reattachment waits for the actual stored owner; never attach
+        // sensors against an unverified/deleted UUID during container boot.
+        if hasPendingSessionLease, hasLocationPermission, trackingAccess(), trackingAccessResolved() {
+            refreshRecordingAccess()
+        } else if sessionLease != nil, isTrackingEnabled, hasLocationPermission {
+            startTracking(reason: .relaunch, allowsPermissionPrompt: false)
+        }
         reconcileOpenVisits()
         reconcileRecordingSessions()
         if Self.shared === self { SharedRecordingControl.shared.flush() }
@@ -437,17 +486,34 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     }
 
     func startTracking(source: TrackingStartSource, allowsPermissionPrompt: Bool = false) {
+        startTracking(source: source, allowsPermissionPrompt: allowsPermissionPrompt, sessionOptions: nil)
+    }
+
+    func startTracking(source: TrackingStartSource, allowsPermissionPrompt: Bool,
+                       sessionOptions: TrackingSessionOptions?) {
         guard !isTrackingEnabled else { return }
+        if let sessionOptions {
+            guard (try? sessionOptions.validate()) != nil,
+                  sessionOptions.isEmpty || modelContext != nil else { return }
+        }
         // Automatic callers may never trigger a permission prompt or bypass opt-in.
         if source.isAutomatic {
             guard smartStartState.settings.isEnabled, hasAlwaysPermission else { return }
         }
+        if hasPendingSessionLease {
+            startTracking(reason: .relaunch,
+                          allowsPermissionPrompt: allowsPermissionPrompt && !source.isAutomatic)
+            if isTrackingEnabled { resumeAfterAccessResolution = false }
+            return
+        }
         startTracking(reason: .user, source: source,
-                      allowsPermissionPrompt: allowsPermissionPrompt && !source.isAutomatic)
+                      allowsPermissionPrompt: allowsPermissionPrompt && !source.isAutomatic,
+                      sessionOptions: sessionOptions)
     }
 
     private func startTracking(reason: TrackingChangeReason, source: TrackingStartSource = .manual,
-                               allowsPermissionPrompt: Bool = true) {
+                               allowsPermissionPrompt: Bool = true,
+                               sessionOptions: TrackingSessionOptions? = nil) {
         guard trackingAccess() else {
             NotificationCenter.default.post(name: .trackingAccessRequired, object: nil)
             return
@@ -457,10 +523,24 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             return
         }
 
+        if reason != .user, let lease = sessionLease {
+            guard let context = modelContext else { return }
+            do {
+                guard activeRecordingSessionID == lease.sessionID,
+                      let owner = try recordingSession(withID: lease.sessionID, in: context),
+                      owner.endedAt == nil else {
+                    stopTracking(reason: .autoStop)
+                    return
+                }
+            } catch {
+                stopTracking(reason: .autoStop)
+                return
+            }
+        }
+
         let wasTracking = isTrackingEnabled
         isTrackingEnabled = true
         defaults.set(true, forKey: "isTrackingEnabled")
-        logTrackingStart(reason: reason, wasTracking: wasTracking)
 
         if trackingStartTime == nil {
             trackingStartTime = Date()
@@ -477,6 +557,34 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             ensureActiveRecordingSession(startedAt: trackingStartTime)
         }
 
+        if reason == .user {
+            // Every accepted explicit/peer start owns its options. Public repeated
+            // starts return before here, so they cannot relabel or extend a session.
+            sessionLease = nil
+            TrackingSessionLease.clear(in: defaults)
+            if let sessionOptions, !sessionOptions.isEmpty {
+                guard let id = activeRecordingSessionID else {
+                    stopTracking(reason: .autoStop)
+                    return
+                }
+                let lease = TrackingSessionLease(sessionID: id, issuedAt: Date(), options: sessionOptions)
+                do {
+                    try lease.save(in: defaults)
+                    sessionLease = lease
+                } catch {
+                    stopTracking(reason: .autoStop)
+                    return
+                }
+            }
+        } else if stopIfLeaseOwnerChanged() {
+            return
+        }
+        applySessionActivityProfile()
+        logTrackingStart(reason: reason, wasTracking: wasTracking)
+        if let deadline = sessionLease?.deadline, deadline <= Date() {
+            stopTracking(reason: .autoStop)
+            return
+        }
         if !wasTracking {
             routeSampler.reset()
         }
@@ -523,6 +631,8 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
         }
         endActiveRecordingSession(at: endedAt)
         smartStartState.endSession(manually: reason == .user, at: endedAt)
+        sessionLease = nil
+        applySessionActivityProfile()
         trackingStartSource = nil
 
         isTrackingEnabled = false
@@ -575,14 +685,32 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             LogManager.shared.info("Location updates reattached after permission change", category: .location)
         default:
             guard !wasTracking else { return }
-            let autoStop = stopAfterHours > 0 ? " · stops after \(stopAfterHours.formatted()) h" : ""
-            LogManager.shared.info("Tracking started · \(mode)\(autoStop)", category: .location)
+            let hours = sessionLease?.options.durationSeconds.map { $0 / 3600 } ?? stopAfterHours
+            let autoStop = hours > 0 ? " · stops after \(hours.formatted()) h" : ""
+            let activity = activeActivityProfile.map { " · activity hint \($0.rawValue)" } ?? ""
+            LogManager.shared.info("Tracking started · \(mode)\(autoStop)\(activity)", category: .location)
         }
     }
 
     func setStopAfterHours(_ hours: Double) {
         stopAfterHours = hours
         defaults.set(hours, forKey: "stopAfterHours")
+        // An explicit Settings edit supersedes this session's duration, not its
+        // activity hint. It retains the legacy start-relative Stop After meaning.
+        if var lease = sessionLease, lease.options.durationSeconds != nil {
+            lease.options = lease.options.withoutDuration()
+            if lease.options.isEmpty {
+                sessionLease = nil
+                TrackingSessionLease.clear(in: defaults)
+            } else {
+                do {
+                    try lease.save(in: defaults)
+                    sessionLease = lease
+                } catch {
+                    stopTracking(reason: .autoStop)
+                }
+            }
+        }
         scheduleStopTrackingTimer()
 
         if isTrackingEnabled, isLiveActivityEnabled {
@@ -672,11 +800,10 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
     private func scheduleStopTrackingTimer() {
         invalidateStopAfterTimer()
 
-        guard isTrackingEnabled, stopAfterHours > 0, let start = trackingStartTime else { return }
-
-        let elapsed = Date().timeIntervalSince(start)
-        let total = stopAfterHours * 3600
-        let remaining = total - elapsed
+        guard isTrackingEnabled || hasPendingSessionLease,
+              let start = trackingStartTime, let deadline = stopDeadline else { return }
+        let leaseOwner = sessionLease?.sessionID
+        let remaining = deadline.timeIntervalSinceNow
         guard remaining > 0 else {
             stopTracking(reason: .autoStop)
             return
@@ -684,17 +811,43 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
 
         let token = stopAfterGeneration
         cancelStopAfterTimer = stopAfterScheduler.schedule(after: remaining) { [weak self] in
-            guard let self, self.isTrackingEnabled, self.stopAfterGeneration == token,
-                  self.trackingStartTime == start else { return }
+            guard let self, self.isTrackingEnabled || self.hasPendingSessionLease, self.stopAfterGeneration == token,
+                  self.trackingStartTime == start,
+                  leaseOwner == nil || self.activeRecordingSessionID == leaseOwner else { return }
             self.stopTracking(reason: .autoStop)
         }
     }
 
-    var remainingTime: TimeInterval? {
+    private var stopDeadline: Date? {
+        if let deadline = sessionLease?.deadline { return deadline }
         guard stopAfterHours > 0, let start = trackingStartTime else { return nil }
-        let elapsed = Date().timeIntervalSince(start)
-        let total = stopAfterHours * 3600
-        return max(0, total - elapsed)
+        return start.addingTimeInterval(stopAfterHours * 3600)
+    }
+
+    var remainingTime: TimeInterval? { stopDeadline.map { max(0, $0.timeIntervalSinceNow) } }
+
+    /// Keep the existing Watch payload truthful without changing its public shape.
+    /// A reconciled earlier outing date must not move the absolute Shortcut deadline.
+    private var currentSessionStopAfterHours: Double {
+        if let deadline = sessionLease?.deadline, let start = trackingStartTime {
+            return max(0, deadline.timeIntervalSince(start) / 3600)
+        }
+        return stopAfterHours
+    }
+
+    @discardableResult
+    private func stopIfLeaseOwnerChanged() -> Bool {
+        guard let lease = sessionLease, lease.sessionID != activeRecordingSessionID else { return false }
+        stopTracking(reason: .autoStop)
+        return true
+    }
+
+    private func applySessionActivityProfile() {
+        switch activeActivityProfile {
+        case .driving: locationManager.activityType = .automotiveNavigation
+        case .walkingRunning, .cycling: locationManager.activityType = .fitness
+        case nil: locationManager.activityType = .other
+        }
     }
 
     private var liveActivityRemainingSeconds: Int? {
@@ -717,10 +870,25 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             descriptor.sortBy = [SortDescriptor(\.startedAt, order: .forward)]
             let openSessions = try context.fetch(descriptor)
             var changedCount = 0
+            if let lease = sessionLease {
+                let ownerExists = activeRecordingSessionID == lease.sessionID && openSessions.contains { $0.id == lease.sessionID }
+                let expired = lease.deadline.map { $0 <= referenceDate } ?? false
+                if !ownerExists || expired {
+                    let before = openSessions.filter { $0.endedAt == nil }.count
+                    stopTracking(reason: .autoStop)
+                    changedCount += before - openSessions.filter { $0.endedAt == nil }.count
+                } else if hasPendingSessionLease {
+                    // An unresolved entitlement is not a user stop. Preserve this
+                    // exact row/deadline until access is resolved or the lease expires.
+                    scheduleStopTrackingTimer()
+                    return 0
+                }
+            }
 
             if isTrackingEnabled {
-                if let latestOpenSession = openSessions.last {
-                    for staleSession in openSessions.dropLast() {
+                let leasedOwner = sessionLease.flatMap { lease in openSessions.first { $0.id == lease.sessionID } }
+                if let latestOpenSession = leasedOwner ?? openSessions.last {
+                    for staleSession in openSessions where staleSession.id != latestOpenSession.id {
                         staleSession.endedAt = max(staleSession.startedAt, latestOpenSession.startedAt)
                         changedCount += 1
                     }
@@ -743,7 +911,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
                     smartStartState.saveSessionMetadata(source: source, at: trackingStartTime)
                 }
             } else {
-                for session in openSessions {
+                for session in openSessions where session.endedAt == nil {
                     session.endedAt = max(session.startedAt, referenceDate)
                     changedCount += 1
                 }
@@ -754,7 +922,10 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
                 try context.save()
             }
 
-            if isTrackingEnabled, trackingStartTime != previousStart {
+            let leaseOwnerChanged = stopIfLeaseOwnerChanged()
+            if isTrackingEnabled, let deadline = sessionLease?.deadline, deadline <= referenceDate {
+                stopTracking(reason: .autoStop)
+            } else if isTrackingEnabled, trackingStartTime != previousStart || leaseOwnerChanged || (sessionLease != nil && cancelStopAfterTimer == nil) {
                 scheduleStopTrackingTimer()
             }
             return changedCount
@@ -1422,7 +1593,7 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
             todayDistanceMeters: totalDistance,
             todayPointsCount: todayPointsCount,
             trackingStartTime: trackingStartTime,
-            stopAfterHours: stopAfterHours > 0 ? stopAfterHours : nil,
+            stopAfterHours: currentSessionStopAfterHours > 0 ? currentSessionStopAfterHours : nil,
             usesMetricDistanceUnits: usesMetricDistanceUnits
         )
 
@@ -1478,7 +1649,9 @@ extension LocationManager: CLLocationManagerDelegate {
         reconcileLowPowerMonitoring()
         if Self.shared === self { SharedRecordingControl.shared.flush() }
 
-        if hasLocationPermission && isTrackingEnabled {
+        if hasLocationPermission && hasPendingSessionLease {
+            refreshRecordingAccess()
+        } else if hasLocationPermission && isTrackingEnabled {
             // Reattach the CL APIs once permission lands
             startTracking(reason: .permissionGranted)
         }

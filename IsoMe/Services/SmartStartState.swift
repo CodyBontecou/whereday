@@ -93,6 +93,85 @@ struct SmartStartStateStore {
     func endSession(manually: Bool, at date: Date) {
         defaults.removeObject(forKey: "trackingStartTime")
         defaults.removeObject(forKey: "trackingStartSource")
+        TrackingSessionLease.clear(in: defaults)
         if manually { defaults.set(date, forKey: "lastManualStopAt") }
+    }
+}
+
+/// A Core Location activity hint, not an inferred activity or a sampling-preference edit.
+enum TrackingActivityProfile: String, Codable, Equatable, CaseIterable {
+    case walkingRunning, cycling, driving
+}
+
+/// Explicit options for one newly accepted recording. Omission preserves the user's defaults.
+struct TrackingSessionOptions: Codable, Equatable {
+    enum ValidationError: Error { case invalidDuration }
+    let durationSeconds: TimeInterval?
+    let activityProfile: TrackingActivityProfile?
+
+    init(durationMinutes: Double? = nil, activityProfile: TrackingActivityProfile? = nil) throws {
+        durationSeconds = durationMinutes.map { $0 * 60 }
+        self.activityProfile = activityProfile
+        try validate()
+    }
+
+    private init(activityProfile: TrackingActivityProfile?) {
+        durationSeconds = nil
+        self.activityProfile = activityProfile
+    }
+
+    func validate() throws {
+        if let durationSeconds {
+            guard durationSeconds.isFinite, (60...86_400).contains(durationSeconds) else {
+                throw ValidationError.invalidDuration
+            }
+        }
+    }
+
+    var isEmpty: Bool { durationSeconds == nil && activityProfile == nil }
+    func withoutDuration() -> Self { Self(activityProfile: activityProfile) }
+}
+
+/// A local lease bound to the actual recording UUID. Its absolute deadline never restarts on relaunch.
+/// Nothing here changes global Stop After, route sampling, Smart Start opt-in or public backup data.
+struct TrackingSessionLease: Codable, Equatable {
+    static let defaultsKey = "activeTrackingSessionOptions"
+    enum ValidationError: Error { case invalidRecord }
+    let version: Int
+    let sessionID: UUID
+    let issuedAt: Date
+    var options: TrackingSessionOptions
+
+    init(sessionID: UUID, issuedAt: Date, options: TrackingSessionOptions) {
+        version = 1
+        self.sessionID = sessionID
+        self.issuedAt = issuedAt
+        self.options = options
+    }
+
+    var deadline: Date? { options.durationSeconds.map { issuedAt.addingTimeInterval($0) } }
+
+    static func read(from defaults: UserDefaults) throws -> Self? {
+        guard let object = defaults.object(forKey: defaultsKey) else { return nil }
+        guard let data = object as? Data, data.count <= 2048 else { throw ValidationError.invalidRecord }
+        let lease = try JSONDecoder().decode(Self.self, from: data)
+        try lease.validate()
+        return lease
+    }
+
+    func save(in defaults: UserDefaults) throws {
+        try validate()
+        defaults.set(try JSONEncoder().encode(self), forKey: Self.defaultsKey)
+    }
+
+    static func clear(in defaults: UserDefaults) { defaults.removeObject(forKey: defaultsKey) }
+
+    private func validate() throws {
+        try options.validate()
+        guard version == 1, !options.isEmpty,
+              issuedAt.timeIntervalSinceReferenceDate.isFinite,
+              issuedAt >= .distantPast, issuedAt <= .distantFuture else {
+            throw ValidationError.invalidRecord
+        }
     }
 }

@@ -55,4 +55,4 @@ Appearance/content size restored and read back **light/large**, app terminated, 
 
 ## Still open
 
-Full localized UI/VoiceOver/motion inspection (including the remaining languages and states), actual Shortcuts editor/locked/background automation, duration/profile design, optional onboarding, real permission/wake/reboot/battery/false-positive matrix and physical runtime acceptance remain. Existing Watch/localization owner acceptance is preserved; no repeat owner QA was requested. This slice is not whole-PR merge readiness or goal completion.
+Full localized UI/VoiceOver/motion inspection (including the remaining languages and states), actual Shortcuts editor/locked/background automation, [session-option editor acceptance and activity-specific sampler tuning](smart-start-shortcut-session-20261114.md), optional onboarding, real permission/wake/reboot/battery/false-positive matrix and physical runtime acceptance remain. Existing Watch/localization owner acceptance is preserved; no repeat owner QA was requested. This slice is not whole-PR merge readiness or goal completion.

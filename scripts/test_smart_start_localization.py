@@ -1,4 +1,4 @@
-"""Catalog coverage for the real Smart Start Settings and new Shortcut source UI."""
+"""Catalog coverage for Smart Start Settings and the actual Shortcut source/session options."""
 import json
 import re
 import unittest
@@ -10,8 +10,11 @@ SETTINGS = catalog.ROOT / "IsoMe/Views/SmartStartSettingsView.swift"
 INTENTS = catalog.ROOT / "IsoMe/Services/IsoMeIntents.swift"
 INTENT_COPY = (
     "Tracking Source", "Shortcut", "CarPlay automation", "Workout automation", "Source",
-    "Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start.",
+    "Begin recording your route in Whereday. Optional duration and activity hints apply only to a new session; your defaults and Smart Start opt-in stay unchanged.",
     "Tracking could not start. Open Whereday to check your access and recording status.",
+    "Activity Profile", "Walking or running", "Duration (minutes)",
+    "Enter a duration from 1 to 1,440 minutes, or leave it empty to use your Stop After setting.",
+    "Tracking is already active. Its session settings were not changed.",
 )
 
 
@@ -63,6 +66,19 @@ class SmartStartLocalizationTests(unittest.TestCase):
                 for action in ("Start Tracking", "Stop Tracking"):
                     title = self.strings[action]["localizations"][locale]["stringUnit"]["value"]
                     self.assertIn(title, value)
+
+    def test_duration_error_names_the_actual_localized_stop_after_setting(self):
+        key = "Enter a duration from 1 to 1,440 minutes, or leave it empty to use your Stop After setting."
+        for locale in catalog.LOCALES:
+            with self.subTest(locale=locale):
+                value = self.strings[key]["localizations"][locale]["stringUnit"]["value"]
+                title = self.strings["Stop after"]["localizations"][locale]["stringUnit"]["value"]
+                self.assertIn(title.casefold(), value.casefold())
+        description = next(key for key in INTENT_COPY if key.startswith("Begin recording your route"))
+        for locale in catalog.LOCALES:
+            value = self.strings[description]["localizations"][locale]["stringUnit"]["value"]
+            self.assertIn("Whereday", value)
+            self.assertIn("Smart Start", value)
 
     def test_new_copy_does_not_confuse_route_recording_with_audio_or_force_quit_with_smoking(self):
         for key in self.keys:

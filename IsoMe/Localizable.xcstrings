@@ -1,6 +1,356 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Activity Profile": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع النشاط"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অ্যাক্টিভিটি প্রোফাইল"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activity Profile"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil de actividad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil d’activité"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गतिविधि प्रोफ़ाइल"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アクティビティの種類"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil aktywności"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil de atividade"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Профиль активности"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活动类型"
+          }
+        }
+      }
+    },
+    "Begin recording your route in Whereday. Optional duration and activity hints apply only to a new session; your defaults and Smart Start opt-in stay unchanged.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابدأ تسجيل مسارك في Whereday. تنطبق المدة الاختيارية وتلميحات النشاط على جلسة جديدة فقط؛ وتبقى إعداداتك الافتراضية واختيارك لتفعيل Smart Start دون تغيير."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday-এ আপনার রুট রেকর্ড করা শুরু করুন। ঐচ্ছিক সময়সীমা ও অ্যাক্টিভিটির ইঙ্গিত শুধু নতুন সেশনে প্রযোজ্য; আপনার ডিফল্ট সেটিং ও Smart Start চালু করার পছন্দ অপরিবর্তিত থাকে।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin recording your route in Whereday. Optional duration and activity hints apply only to a new session; your defaults and Smart Start opt-in stay unchanged."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza a registrar tu ruta en Whereday. La duración y las indicaciones de actividad opcionales solo se aplican a una sesión nueva; tus ajustes predeterminados y tu elección de activar Smart Start no cambian."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commencez à enregistrer votre trajet dans Whereday. La durée et les indications d’activité facultatives s’appliquent uniquement à une nouvelle session ; vos réglages par défaut et votre choix d’activer Smart Start restent inchangés."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whereday में अपना रूट रिकॉर्ड करना शुरू करें। वैकल्पिक समयसीमा और गतिविधि के संकेत केवल नए सेशन पर लागू होते हैं; आपकी डिफ़ॉल्ट सेटिंग और Smart Start चालू करने का विकल्प नहीं बदलता।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wheredayで経路の記録を開始します。任意の継続時間やアクティビティのヒントは新しいセッションにのみ適用され、既定の設定やSmart Startの有効・無効は変更されません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozpocznij rejestrowanie trasy w Whereday. Opcjonalny czas trwania i wskazówki dotyczące aktywności dotyczą tylko nowej sesji; ustawienia domyślne i wybór włączenia Smart Start pozostają bez zmian."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comece a registrar seu trajeto no Whereday. A duração e as indicações de atividade opcionais se aplicam apenas a uma nova sessão; seus ajustes padrão e sua escolha de ativar o Smart Start permanecem inalterados."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начните запись маршрута в Whereday. Необязательные длительность и подсказки о типе активности применяются только к новой сессии; настройки по умолчанию и выбор включения Smart Start не меняются."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在 Whereday 中开始记录轨迹。可选的时长和活动类型提示仅用于新会话，不会更改默认设置或 Smart Start 的启用状态。"
+          }
+        }
+      }
+    },
+    "Duration (minutes)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المدة (بالدقائق)"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সময়সীমা (মিনিট)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration (minutes)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duración (minutos)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durée (minutes)"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अवधि (मिनट)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "継続時間（分）"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Czas trwania (minuty)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duração (minutos)"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Длительность (минуты)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "时长（分钟）"
+          }
+        }
+      }
+    },
+    "Enter a duration from 1 to 1,440 minutes, or leave it empty to use your Stop After setting.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل مدة من 1 إلى 1,440 دقيقة، أو اتركها فارغة لاستخدام إعداد «الإيقاف بعد»."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 থেকে 1,440 মিনিটের সময়সীমা দিন, অথবা ‘যতক্ষণ পরে থামবে’ সেটিং ব্যবহার করতে ফাঁকা রাখুন।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter a duration from 1 to 1,440 minutes, or leave it empty to use your Stop After setting."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Introduce una duración de 1 a 1440 minutos o déjala vacía para usar el ajuste «Detener después de»."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saisissez une durée de 1 à 1 440 minutes, ou laissez ce champ vide pour utiliser votre réglage « Arrêter après »."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 से 1,440 मिनट तक की अवधि दर्ज करें, या ‘इसके बाद रोकें’ सेटिंग का उपयोग करने के लिए इसे खाली छोड़ें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1～1,440分の継続時間を入力してください。空欄にすると「次の時間後に停止」の設定を使用します。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz czas od 1 do 1440 minut lub pozostaw pole puste, aby użyć ustawienia „Zatrzymaj po”."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insira uma duração de 1 a 1.440 minutos ou deixe em branco para usar o ajuste “Parar depois de”."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введите длительность от 1 до 1440 минут или оставьте поле пустым, чтобы использовать настройку «Остановить после»."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请输入 1 至 1,440 分钟的时长，或留空以使用“停止时间”设置。"
+          }
+        }
+      }
+    },
+    "Tracking is already active. Its session settings were not changed.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل المسار جارٍ بالفعل. لم تتغير إعدادات الجلسة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রুট রেকর্ডিং ইতিমধ্যেই চলছে। সেশনের সেটিং পরিবর্তন করা হয়নি।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking is already active. Its session settings were not changed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El seguimiento ya está activo. No se han cambiado los ajustes de la sesión."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le suivi est déjà actif. Les réglages de la session n’ont pas été modifiés."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ट्रैकिंग पहले से चालू है। सेशन की सेटिंग नहीं बदली गई हैं।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録はすでに有効です。セッションの設定は変更していません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Śledzenie jest już aktywne. Ustawienia sesji nie zostały zmienione."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O rastreamento já está ativo. Os ajustes da sessão não foram alterados."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись маршрута уже идёт. Настройки сессии не изменены."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轨迹记录已在进行中，未更改当前会话的设置。"
+          }
+        }
+      }
+    },
     "ACTIVITIES": {
       "localizations": {
         "en": {

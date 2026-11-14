@@ -51,6 +51,7 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case itemNotFound
     case storeUnavailable
     case trackingUnavailable
+    case invalidTrackingDuration
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -70,6 +71,8 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
             return "Whereday couldn't open your saved data. Open the app to try again."
         case .trackingUnavailable:
             return "Tracking could not start. Open Whereday to check your access and recording status."
+        case .invalidTrackingDuration:
+            return "Enter a duration from 1 to 1,440 minutes, or leave it empty to use your Stop After setting."
         }
     }
 }
@@ -96,13 +99,28 @@ enum ShortcutTrackingSource: String, AppEnum {
     }
 }
 
+extension TrackingActivityProfile: AppEnum {
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Activity Profile"
+    static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
+        .walkingRunning: "Walking or running",
+        .cycling: "Cycling",
+        .driving: "Driving"
+    ]
+}
+
 struct StartTrackingIntent: AppIntent {
     static var title: LocalizedStringResource = "Start Tracking"
-    static var description = IntentDescription("Begin recording your route in Whereday. Optionally identify a CarPlay or workout automation; this does not enable Smart Start.")
+    static var description = IntentDescription("Begin recording your route in Whereday. Optional duration and activity hints apply only to a new session; your defaults and Smart Start opt-in stay unchanged.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Source")
     var source: ShortcutTrackingSource?
+
+    @Parameter(title: "Duration (minutes)")
+    var durationMinutes: Double?
+
+    @Parameter(title: "Activity Profile")
+    var activityProfile: TrackingActivityProfile?
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -111,7 +129,11 @@ struct StartTrackingIntent: AppIntent {
         guard StoreManager.shared.canTrack else {
             return .result(dialog: "Open Whereday to choose a plan before tracking.")
         }
-        try TrackingIntentSupport.startTracking(using: manager, source: source)
+        let outcome = try TrackingIntentSupport.startTracking(using: manager, source: source,
+            durationMinutes: durationMinutes, activityProfile: activityProfile)
+        if outcome == .alreadyTracking {
+            return .result(dialog: "Tracking is already active. Its session settings were not changed.")
+        }
         return .result(dialog: "Tracking started.")
     }
 }
@@ -130,12 +152,27 @@ struct StopTrackingIntent: AppIntent {
 
 @MainActor
 enum TrackingIntentSupport {
-    /// Called after the intent's entitlement check. Omitted Source preserves existing automations.
-    /// No permission prompt, opt-in write, timer preference or sampling-profile edit occurs here.
-    static func startTracking(using manager: LocationManager, source: ShortcutTrackingSource?) throws {
+    enum StartOutcome: Equatable { case started, alreadyTracking }
+
+    /// Called after the intent's entitlement check. No global timer/sampling/opt-in edits.
+    /// Omitted options preserve old automations; repeated starts cannot change a live session.
+    @discardableResult
+    static func startTracking(using manager: LocationManager, source: ShortcutTrackingSource?,
+                              durationMinutes: Double? = nil,
+                              activityProfile: TrackingActivityProfile? = nil) throws -> StartOutcome {
         guard manager.hasLocationPermission else { throw IsoMeIntentError.noLocationPermission }
-        manager.startTracking(source: source?.trackingStartSource ?? .shortcut, allowsPermissionPrompt: false)
+        let options: TrackingSessionOptions
+        do {
+            options = try TrackingSessionOptions(durationMinutes: durationMinutes, activityProfile: activityProfile)
+        } catch {
+            throw IsoMeIntentError.invalidTrackingDuration
+        }
+        guard !manager.isTrackingEnabled else { return .alreadyTracking }
+        let resumingOwnedSession = manager.hasPendingSessionLease
+        manager.startTracking(source: source?.trackingStartSource ?? .shortcut, allowsPermissionPrompt: false,
+                              sessionOptions: options.isEmpty ? nil : options)
         guard manager.isTrackingEnabled else { throw IsoMeIntentError.trackingUnavailable }
+        return resumingOwnedSession ? .alreadyTracking : .started
     }
 
     /// Shared by the Stop Tracking shortcut and the Live Activity's "Stop route" button.
