@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings › Subscription. The device can't know renewal or end dates, so Google Play is named as their source. -->
+    <string name="subscription_title">Subscription</string>
+    <string name="subscription_back">Back to settings</string>
+    <string name="subscription_title_weekly">Weekly subscription</string>
+    <string name="subscription_title_yearly">Yearly subscription</string>
+    <string name="subscription_body_renewing">Renews automatically. Google Play shows your next renewal date.</string>
+    <string name="subscription_body_ending">Canceled. Your plan stays active until the end of this period, and Google Play shows the date.</string>
+    <string name="subscription_body_lifetime">Paid once. Nothing renews, so there is nothing to cancel.</string>
+    <string name="subscription_body_lifetime_also_renewing">Paid once. You also have a subscription that still renews; cancel it in Google Play so you aren’t charged again.</string>
+    <string name="subscription_details">Details</string>
+    <string name="subscription_detail_plan">Plan</string>
+    <string name="subscription_detail_status">Status</string>
+    <string name="subscription_detail_renewal">Next renewal</string>
+    <string name="subscription_detail_billed">Billed by</string>
+    <string name="subscription_value_in_play">Shown in Google Play</string>
+    <string name="subscription_value_google_play" translatable="false">Google Play</string>
+    <string name="subscription_status_renewing">Renews automatically</string>
+    <string name="subscription_status_ending">Ends with this period</string>
+    <string name="subscription_status_lifetime">Paid once</string>
+    <string name="subscription_included">Included</string>
+    <string name="subscription_included_body">Recording, every export format and automation.</string>
+    <string name="subscription_manage_or_cancel">Manage or cancel</string>
+    <string name="subscription_change_plan">Change plan in Google Play</string>
+    <string name="subscription_manage_play">Manage in Google Play</string>
+    <string name="subscription_footnote_renewing">Manage or cancel shows one summary screen, then opens your subscription in Google Play. Deleting the app or buying Lifetime does not cancel a subscription.</string>
+    <string name="subscription_footnote_ending">You can resubscribe or change your plan in Google Play.</string>
+    <string name="subscription_lifetime_also_renewing">A Whereday subscription is still renewing in Google Play. Lifetime does not cancel it.</string>
+
+    <!-- After a lapse. No free week is promised: Play decides trial eligibility, and it is mentioned only when Play offers one. -->
+    <string name="subscription_ended_title">Your subscription ended</string>
+    <string name="subscription_ended_body">Your journal is still here, on this phone.</string>
+    <string name="subscription_ended_works">Still works</string>
+    <string name="subscription_ended_work_browse">Browse every recorded day in Map, Atlas, Places, Archive and Country Days</string>
+    <string name="subscription_ended_work_import">Import history files</string>
+    <string name="subscription_ended_work_preview">Preview exports</string>
+    <string name="subscription_ended_needs">Needs a plan</string>
+    <string name="subscription_ended_see_plans">See plans</string>
+    <string name="subscription_ended_plans">Weekly, Yearly or Lifetime.</string>
+    <string name="subscription_ended_plans_trial">Weekly, Yearly or Lifetime. Google Play offers this account a free week on subscriptions.</string>
+    <string name="settings_plan_body_none_no_trial">Recording, every export format and automation.</string>
+
+    <!-- Before you go. Each line matches the access checks: Capability.recording at start, fileExport, scheduledExport, webhook. -->
+    <string name="retention_title">Before you go</string>
+    <string name="retention_lead">Canceling happens in Google Play. Your plan stays active until the current period ends, and Google Play shows the date. After that:</string>
+    <string name="retention_stops">What stops</string>
+    <string name="retention_stop_recording">Starting a recording or visits-only monitoring</string>
+    <string name="retention_stop_export">Exporting files</string>
+    <string name="retention_stop_automatic">Automatic exports, webhooks and automation exports</string>
+    <string name="retention_keeps">What you keep</string>
+    <string name="retention_keep_journal">Every day, visit, route and place already recorded stays on this phone</string>
+    <string name="retention_keep_browse">Map, Atlas, Places, Archive and Country Days stay open</string>
+    <string name="retention_keep_free">Imports and export previews stay free</string>
+    <string name="retention_keep_plan">Keep my plan</string>
+    <string name="retention_continue">Continue to cancel</string>
+    <string name="retention_footnote">Continue to cancel opens your Whereday subscription in Google Play.</string>
+</resources>
