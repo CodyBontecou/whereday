@@ -5,6 +5,8 @@ android {
     compileSdk = 36
     ndkVersion = libs.versions.ndk.get()
     defaultConfig {
+        // Setup links for ScrawlKit (the scrawl build type): `scrawl link --scheme wheredayscrawl`.
+        manifestPlaceholders["scrawlScheme"] = "wheredayscrawl"
         resValue("string", "app_name", "Whereday")
         applicationId = "com.bontecou.whereday"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -41,6 +43,15 @@ android {
             versionNameSuffix = "-mapqa"
             matchingFallbacks += listOf("debug")
         }
+        // The debug app plus ScrawlKit (`./gradlew :app:installScrawl`): hold three fingers to send
+        // a recording to your coding agent through Scrawl on the Mac. A build type of its own so the
+        // debug and release graphs, and their notice lock, stay exactly the product's (like mapQa's
+        // test-only manifest, ScrawlKit is a development tool outside that catalog).
+        create("scrawl") {
+            initWith(getByName("debug"))
+            versionNameSuffix = "-scrawl"
+            matchingFallbacks += listOf("debug")
+        }
     }
     // Connected application tests uninstall their target on cleanup. Never target the owner package.
     testBuildType = "mapQa"
@@ -48,12 +59,24 @@ android {
     sourceSets.getByName("release").assets.srcDir(layout.buildDirectory.dir("generated/runtime-notices/release"))
     // QA shows the production debug graph; its instrumentation-only manifest is not a product dependency.
     sourceSets.getByName("mapQa").assets.srcDir(layout.buildDirectory.dir("generated/runtime-notices/debug"))
+    sourceSets.getByName("scrawl") {
+        assets.srcDir(layout.buildDirectory.dir("generated/runtime-notices/debug"))
+        java.srcDir("src/debug/kotlin")
+        manifest.srcFile("src/scrawl/AndroidManifest.xml")
+    }
 }
-tasks.matching {it.name in setOf("preDebugBuild","preMapQaBuild","preReleaseBuild")}.configureEach {
+tasks.matching {it.name in setOf("preDebugBuild","preMapQaBuild","preScrawlBuild","preReleaseBuild")}.configureEach {
     dependsOn(if(name=="preReleaseBuild") "generateReleaseRuntimeNoticeAssets" else "generateDebugRuntimeNoticeAssets")
 }
 kotlin { jvmToolchain(17) }
+// ScrawlKit in the scrawl build type: hold three fingers to record the screen, your voice and touches and
+// send them to your coding agent through Scrawl on the Mac. It comes from ~/.m2
+// (`./gradlew publishToMavenLocal` in ~/dev/scrawl/android) and is left out where that isn't
+// there (CI); release builds never include it.
+val scrawlKitAvailable = File(System.getProperty("user.home"), ".m2/repository/dev/kitlangton/scrawl/scrawlkit-autoinstall/0.1.0").isDirectory
+
 dependencies {
+    if (scrawlKitAvailable) add("scrawlImplementation", "dev.kitlangton.scrawl:scrawlkit-autoinstall:0.1.0")
     implementation(project(":platform")); implementation(project(":export"))
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui); implementation(libs.compose.material3)
@@ -73,3 +96,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     add("mapQaImplementation", "androidx.compose.ui:ui-test-manifest")
 }
+
+// The scrawl build type is the debug app: its debug-only dependencies too.
+listOf("Implementation", "RuntimeOnly", "CompileOnly").forEach { kind ->
+    configurations.named("scrawl$kind") { extendsFrom(configurations.getByName("debug$kind")) }
+}
+

@@ -18,7 +18,10 @@ struct IsoMeApp: App {
         #endif
         RetiredAnalyticsCleanup.run()
         #if DEBUG && os(iOS)
-        DebugSelfie.install()
+        if !ProcessInfo.processInfo.arguments.contains("--disable-debug-gestures") {
+            DebugSelfie.install()
+        }
+        DebugScrollDiagnostics.installIfRequested()
         #endif
     }
 
@@ -38,7 +41,7 @@ struct IsoMeApp: App {
                     Text(manualVisitRouter.errorMessage ?? "")
                 }
                 #if DEBUG
-                .scrawl()
+                .scrawl(isEnabled: !ProcessInfo.processInfo.arguments.contains("--disable-debug-gestures"))
                 #endif
                 .sheet(isPresented: $showingMyselfClaim) {
                     MyselfClaimView(app: "iso.me")

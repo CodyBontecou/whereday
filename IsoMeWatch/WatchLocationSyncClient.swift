@@ -8,6 +8,7 @@ import WidgetKit
 /// every accepted point locally first, then opportunistically transfers batches
 /// to the iPhone. Batches stay queued until the phone acknowledges a successful
 /// import, so recording can happen while the phone is unavailable.
+@MainActor
 final class WatchLocationSyncClient: NSObject, ObservableObject {
     static let shared = WatchLocationSyncClient()
 
@@ -150,6 +151,20 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         if session.activationState != .activated {
             session.activate()
         }
+    }
+
+    var activeSessionID: UUID? { state.activeSessionID }
+
+    func adoptSession(id: UUID, startedAt: Date, changedAt: Date) {
+        guard state.activeSessionID != id else { return }
+        endActiveSession(endedAt: changedAt)
+        if let index = state.sessions.firstIndex(where: { $0.id == id }) {
+            state.sessions[index].endedAt = nil
+        } else {
+            state.sessions.append(WatchLocationSyncSession(id: id, startedAt: startedAt, endedAt: nil))
+        }
+        state.activeSessionID = id
+        saveState()
     }
 
     @discardableResult
@@ -318,7 +333,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
 }
 
 extension WatchLocationSyncClient: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated, error == nil else {
             DispatchQueue.main.async { [weak self] in
                 self?.syncStatus = String(localized: "Couldn’t connect. Please try again.")
@@ -327,32 +342,38 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         }
         let receivedContext = session.receivedApplicationContext
         DispatchQueue.main.async { [weak self] in
+            SharedRecordingControl.shared.flush()
             self?.applyApplicationContext(receivedContext)
             self?.flushPendingMarkRequests()
             self?.syncPending(force: true)
         }
     }
 
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
+    nonisolated func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             self?.applyApplicationContext(applicationContext)
         }
     }
 
-    func sessionReachabilityDidChange(_ session: WCSession) {
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
         guard session.isReachable else { return }
         DispatchQueue.main.async { [weak self] in
+            SharedRecordingControl.shared.flush()
             self?.syncPending(force: true)
         }
     }
 
-    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+    nonisolated func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
         DispatchQueue.main.async { [weak self] in
             self?.handleAckData(messageData)
         }
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+    nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        if message[SharedRecordingControl.messageKey] != nil || message[SharedRecordingControl.ackKey] != nil {
+            DispatchQueue.main.async { replyHandler(SharedRecordingControl.shared.receive(message)) }
+            return
+        }
         guard message[WatchLocationSyncTransport.syncRequestMessageKey] != nil else {
             replyHandler([:])
             return
@@ -365,7 +386,11 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         }
     }
 
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        if userInfo[SharedRecordingControl.messageKey] != nil || userInfo[SharedRecordingControl.ackKey] != nil {
+            DispatchQueue.main.async { SharedRecordingControl.shared.receive(userInfo) }
+            return
+        }
         if let markAck = userInfo[WatchLocationSyncTransport.markAckUserInfoKey] as? Data {
             DispatchQueue.main.async { [weak self] in
                 self?.handleMarkAckData(markAck)

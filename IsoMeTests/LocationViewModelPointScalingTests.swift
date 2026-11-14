@@ -8,6 +8,129 @@ import SwiftData
 final class LocationViewModelPointScalingTests: XCTestCase {
     private let mapPointDisplayCap = 2_500
 
+    func testTimelineDayClipsThousandHourRecordingWithoutHydratingHistory() throws {
+        let container = try makeInMemoryContainer()
+        let start = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        let end = start.addingTimeInterval(1_000 * 3_600)
+        let stored = RecordingSession(startedAt: start, endedAt: end, customName: "Continuous journal")
+        container.mainContext.insert(stored)
+        _ = try insertPointHistory(count: 60_001, startingAt: start, interval: 60, into: container.mainContext)
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.date(byAdding: .day, value: 20, to: start)!
+        let nextDay = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        let range = day..<nextDay
+        let queryStarted = Date()
+        let snapshot = try model.timelineDay(in: range, now: end)
+        print("Timeline day query with 60,001 stored points: \(Date().timeIntervalSince(queryStarted) * 1000) ms")
+        let daily = try XCTUnwrap(snapshot.sessions.first)
+        XCTAssertEqual(snapshot.sessions.count, 1)
+        XCTAssertEqual(daily.startedAt, day)
+        XCTAssertEqual(daily.endedAt, nextDay)
+        XCTAssertEqual(daily.duration, nextDay.timeIntervalSince(day))
+        XCTAssertEqual(daily.points.count, 1_440)
+        XCTAssertTrue(daily.points.allSatisfy { range.contains($0.timestamp) })
+        XCTAssertEqual(daily.dayRange, range)
+        model.focusMap(on: daily)
+        XCTAssertEqual(model.mapLocationPointCount, 1_440, "Show on map must not include the following midnight's point")
+        XCTAssertLessThan(daily.dateRange.upperBound, nextDay)
+        let gpx = try ExportService.outingsData(outings: [daily], visits: [], format: .gpx)
+        let gpxText = try XCTUnwrap(String(data: gpx, encoding: .utf8))
+        XCTAssertEqual(gpxText.components(separatedBy: "<trkpt ").count - 1, daily.points.count)
+        XCTAssertFalse(daily.isActive)
+        XCTAssertTrue(model.locationPoints.isEmpty, "A day query must leave the full-history export cache lazy")
+        XCTAssertEqual(stored.startedAt, start)
+        XCTAssertEqual(stored.endedAt, end)
+
+        // Full history is available only through the explicit complete-outing path.
+        let complete = try XCTUnwrap(model.completeRecordingSession(stored, now: end))
+        XCTAssertEqual(complete.points.count, 60_001)
+        XCTAssertNil(complete.dayRange)
+        XCTAssertGreaterThan(complete.distanceMeters, daily.distanceMeters)
+        XCTAssertTrue(model.locationPoints.isEmpty)
+    }
+
+    func testTimelineUsesHalfOpenDaysForPointsSessionsAndVisits() throws {
+        let container = try makeInMemoryContainer()
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        let previous = RecordingSession(startedAt: day.addingTimeInterval(-3600), endedAt: day)
+        let current = RecordingSession(startedAt: day, endedAt: end)
+        let next = RecordingSession(startedAt: end, endedAt: end.addingTimeInterval(3600))
+        for session in [previous, current, next] { container.mainContext.insert(session) }
+        for time in [day.addingTimeInterval(-1), day, day.addingTimeInterval(60), end] {
+            container.mainContext.insert(LocationPoint(latitude: 18, longitude: -67, timestamp: time, horizontalAccuracy: 5))
+        }
+        container.mainContext.insert(Visit(latitude: 18, longitude: -67, arrivedAt: day.addingTimeInterval(-3600), departedAt: day))
+        container.mainContext.insert(Visit(latitude: 18, longitude: -67, arrivedAt: day, departedAt: day.addingTimeInterval(3600)))
+        container.mainContext.insert(Visit(latitude: 18, longitude: -67, arrivedAt: end, departedAt: nil))
+        try container.mainContext.save()
+        let snapshot = try model.timelineDay(in: day..<end, now: end.addingTimeInterval(7200))
+        XCTAssertEqual(snapshot.sessions.count, 1)
+        XCTAssertEqual(snapshot.sessions.first?.storedSession?.id, current.id)
+        XCTAssertEqual(snapshot.sessions.first?.points.map(\.timestamp), [day, day.addingTimeInterval(60)])
+        XCTAssertEqual(snapshot.visits.count, 1)
+        XCTAssertEqual(snapshot.visits.first?.arrivedAt, day)
+    }
+
+    func testHistoricalSliceOfOpenRecordingIsNotLiveAndCannotDeleteTheRecording() throws {
+        let container = try makeInMemoryContainer()
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        let stored = RecordingSession(startedAt: day.addingTimeInterval(-3600))
+        container.mainContext.insert(stored)
+        container.mainContext.insert(LocationPoint(latitude: 18, longitude: -67, timestamp: day.addingTimeInterval(60), horizontalAccuracy: 5))
+        try container.mainContext.save()
+        let now = end.addingTimeInterval(7200)
+        let daily = try XCTUnwrap(model.timelineDay(in: day..<end, now: now).sessions.first)
+        XCTAssertFalse(daily.isActive)
+        XCTAssertEqual(daily.endedAt, end)
+        XCTAssertEqual(daily.duration, end.timeIntervalSince(day))
+        model.deleteRecordingSession(daily)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 1)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 1)
+        XCTAssertNil(stored.endedAt)
+        let live = try XCTUnwrap(model.timelineDay(in: end..<end.addingTimeInterval(86400), now: now).sessions.first)
+        XCTAssertTrue(live.isActive)
+        XCTAssertEqual(live.duration, 7200, "A live day with no new fixes still has a bounded recording duration")
+    }
+
+    func testTimelineDayClippingRespectsDaylightSavingBoundaries() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/Los_Angeles"))
+        for (month, dayNumber, hours) in [(3, 8, 23), (11, 1, 25)] {
+            let day = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: month, day: dayNumber)))
+            let end = try XCTUnwrap(calendar.date(byAdding: .day, value: 1, to: day))
+            let container = try makeInMemoryContainer()
+            let model = makeViewModel(container: container)
+            container.mainContext.insert(RecordingSession(startedAt: day.addingTimeInterval(-3600), endedAt: end.addingTimeInterval(3600)))
+            try container.mainContext.save()
+            let daily = try XCTUnwrap(model.timelineDay(in: day..<end, now: end.addingTimeInterval(3600)).sessions.first)
+            XCTAssertEqual(daily.duration, Double(hours * 3600))
+            XCTAssertEqual(daily.startedAt, day)
+            XCTAssertEqual(daily.endedAt, end)
+        }
+    }
+
+    func testTimelineDayRespectsInferencePreferencesWithoutLoadingHistory() throws {
+        let container = try makeInMemoryContainer()
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        for seconds in [-60.0, 0, 60, 3600, 3660, 86400] {
+            container.mainContext.insert(LocationPoint(latitude: 18, longitude: -67, timestamp: day.addingTimeInterval(seconds), horizontalAccuracy: 5))
+        }
+        try container.mainContext.save()
+        let range = day..<day.addingTimeInterval(86400)
+        let enabled = try model.timelineDay(in: range, now: range.upperBound)
+        XCTAssertEqual(enabled.sessions.count, 2)
+        XCTAssertEqual(enabled.sessions.flatMap(\.points).count, 4)
+        let disabled = try model.timelineDay(in: range, inferenceConfiguration: RecordingSessionInferenceConfiguration(includesInferredSessions: false), now: range.upperBound)
+        XCTAssertTrue(disabled.sessions.isEmpty)
+        XCTAssertTrue(model.locationPoints.isEmpty)
+        XCTAssertEqual(try model.latestTimelineDate(), range.upperBound)
+    }
+
     func testLargePhotoSyncLetsMainThreadHandleInputBeforeCompletion() async throws {
         let container = try makeInMemoryContainer()
         let model = makeViewModel(container: container)

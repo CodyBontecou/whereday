@@ -74,6 +74,8 @@ struct RecordingSessionSummary: Identifiable {
     let isInferred: Bool
     let isActive: Bool
     let now: Date
+    /// A daily presentation of a recording; never a separately deletable outing.
+    var dayRange: Range<Date>? = nil
 
     var title: String {
         storedSession?.displayName(defaultName: defaultTitle) ?? defaultTitle
@@ -131,13 +133,35 @@ struct RecordingSessionSummary: Identifiable {
         }
     }
 
+    /// Keep daily points, duration and title context inside a half-open local day.
+    /// The stored session stays intact and can be opened explicitly as a complete outing.
+    func clipped(to range: Range<Date>) -> RecordingSessionSummary? {
+        let start = max(startedAt, range.lowerBound)
+        let end = min(endedAt ?? (isActive ? now : effectiveEndDate), range.upperBound, now)
+        let dailyPoints = points.filter { range.contains($0.timestamp) && $0.timestamp <= now }
+        guard start < end || (start == end && range.contains(startedAt) && !dailyPoints.isEmpty) else { return nil }
+        let live = isActive && range.contains(now)
+        return RecordingSessionSummary(
+            id: "day-\(range.lowerBound.timeIntervalSince1970)-\(id)",
+            storedSession: storedSession, sequenceNumber: sequenceNumber,
+            startedAt: start, endedAt: live ? nil : end, points: dailyPoints,
+            isInferred: isInferred, isActive: live, now: now, dayRange: range
+        )
+    }
+
     var effectiveEndDate: Date {
+        if let dayRange, isActive { return min(now, dayRange.upperBound) }
         let fallback = points.last?.timestamp ?? now
         return max(startedAt, endedAt ?? fallback)
     }
 
     var dateRange: ClosedRange<Date> {
-        startedAt...effectiveEndDate
+        // Existing map/export APIs accept closed ranges. For a daily slice, use the
+        // preceding representable instant so next midnight belongs only to the next day.
+        let end = dayRange.map {
+            min(effectiveEndDate, Date(timeIntervalSinceReferenceDate: $0.upperBound.timeIntervalSinceReferenceDate.nextDown))
+        } ?? effectiveEndDate
+        return startedAt...max(startedAt, end)
     }
 
     var duration: TimeInterval {

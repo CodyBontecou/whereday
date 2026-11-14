@@ -162149,6 +162149,1142 @@
           }
         }
       }
+    },
+    "Could not load this day": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن تحميل هذا اليوم"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই দিন লোড করা যায়নি"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not load this day"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cargar este día"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger ce jour"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस दिन लोड नहीं किया जा सका"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この日は読み込めませんでした"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się wczytać tego dnia"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar este dia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить в этот день"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这一天无法加载"
+          }
+        }
+      }
+    },
+    "Leave Record my days on to keep a continuous journal. Timeline shows each day separately; the complete outing runs from Start to Stop. Every preset records route points as well as stops, and keeps high-accuracy location requested while recording.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اترك سجل أيامي للاحتفاظ بمجلة مستمرة. يظهر الجدول الزمني كل يوم على حدة؛ تمتد النزهة الكاملة من البداية إلى التوقف. يسجل كل إعداد مسبق نقاط الطريق وكذلك نقاط التوقف، ويحافظ على الموقع عالي الدقة المطلوب أثناء التسجيل."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "একটানা জার্নাল রাখতে আমার দিনগুলো রেকর্ড করে রাখুন। টাইমলাইন প্রতিটি দিন আলাদাভাবে দেখায়; সম্পূর্ণ আউটিং স্টার্ট থেকে স্টপ পর্যন্ত চলে। প্রতিটি প্রিসেট রুট পয়েন্টের পাশাপাশি স্টপ রেকর্ড করে এবং রেকর্ড করার সময় উচ্চ-নির্ভুলতার অবস্থানের অনুরোধ রাখে।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leave Record my days on to keep a continuous journal. Timeline shows each day separately; the complete outing runs from Start to Stop. Every preset records route points as well as stops, and keeps high-accuracy location requested while recording."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deje Registrar mis días para llevar un diario continuo. La línea de tiempo muestra cada día por separado; la excursión completa transcurre de inicio a fin. Cada ajuste preestablecido registra puntos de ruta y paradas, y mantiene la ubicación de alta precisión solicitada durante la grabación."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laissez Enregistrer mes journées activée pour tenir un journal continu. La chronologie affiche chaque jour séparément ; la sortie complète se déroule du début à la fin. Chaque préréglage enregistre les points d'itinéraire ainsi que les arrêts et conserve l'emplacement de haute précision demandé lors de l'enregistrement."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "निरंतर पत्रिका रखने के लिए मेरे दिनों को रिकॉर्ड करने के लिए छोड़ दें। टाइमलाइन प्रत्येक दिन को अलग से दिखाती है; संपूर्ण आउटिंग प्रारंभ से अंत तक चलती है। प्रत्येक प्रीसेट मार्ग बिंदुओं के साथ-साथ स्टॉप को भी रिकॉर्ड करता है, और रिकॉर्डिंग करते समय उच्च सटीकता वाले स्थान का अनुरोध करता रहता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "継続的に日記を付けるには、「日々の記録」をオンにしておきます。タイムラインは毎日を個別に表示します。完全な外出はスタートからストップまで続きます。すべてのプリセットはルート ポイントと停車地を記録し、記録中に要求された高精度の位置を維持します。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zostaw opcję Zapisuj moje dni, aby prowadzić ciągły dziennik. Oś czasu pokazuje każdy dzień osobno; cała wycieczka trwa od Startu do Stopu. Każde ustawienie wstępne rejestruje punkty trasy oraz przystanki i utrzymuje żądaną lokalizację z dużą dokładnością podczas nagrywania."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deixe Registrar meus dias ativado para manter um diário contínuo. A linha do tempo mostra cada dia separadamente; o passeio completo vai do início ao fim. Cada predefinição registra pontos de rota, bem como paradas, e mantém a localização solicitada de alta precisão durante a gravação."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оставьте запись моих дней включенной, чтобы вести непрерывный журнал. Временная шкала показывает каждый день отдельно; вся прогулка проходит от начала до остановки. Каждая предустановка записывает точки маршрута, а также остановки и сохраняет высокоточное местоположение, запрошенное во время записи."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续记录我的日子，以保持连续的日记。时间线分别显示每一天；完整的郊游从开始到结束。每个预设都会记录路线点和停靠点，并在记录时保持所需的高精度位置。"
+          }
+        }
+      }
+    },
+    "Loading complete outing…": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ تحميل الرحلة الكاملة…"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সম্পূর্ণ আউটিং লোড হচ্ছে..."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading complete outing…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cargando excursión completa…"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chargement de la sortie complète…"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपूर्ण आउटिंग लोड हो रही है..."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外出を完了しました…を読み込んでいます"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ładowanie całej wycieczki…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carregando passeio completo…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка полной экскурсии…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在加载完整的郊游…"
+          }
+        }
+      }
+    },
+    "Movement on %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الحركة على %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ এ চলাচল"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movement on %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movimiento en %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouvement sur %@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ पर आंदोलन"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@での移動"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruch na %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movimento em %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Движение по %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@上的动态"
+          }
+        }
+      }
+    },
+    "Names you enter stay in your journal unless you export them or send them through a webhook. Place lookups send coordinates or search queries to Apple. Custom app analytics are removed for all users; updating clears the old local identifier and unsent queue, but does not delete previously received server records.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تظل الأسماء التي تدخلها في دفتر يومياتك ما لم تقم بتصديرها أو إرسالها عبر خطاف على الويب. ترسل عمليات البحث عن الأماكن إحداثيات أو استعلامات بحث إلى Apple. تتم إزالة تحليلات التطبيق المخصصة لجميع المستخدمين؛ يؤدي التحديث إلى مسح المعرف المحلي القديم وقائمة الانتظار غير المرسلة، ولكنه لا يحذف سجلات الخادم المستلمة مسبقًا."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনি যে নামগুলি লিখেছেন সেগুলি আপনার জার্নালেই থাকবে যদি না আপনি সেগুলিকে এক্সপোর্ট করেন বা ওয়েবহুকের মাধ্যমে পাঠান৷ প্লেস লুকআপগুলি অ্যাপলকে স্থানাঙ্ক বা অনুসন্ধান প্রশ্ন পাঠায়। সমস্ত ব্যবহারকারীদের জন্য কাস্টম অ্যাপ বিশ্লেষণ সরানো হয়; আপডেট করা পুরানো স্থানীয় শনাক্তকারী এবং অপ্রেরিত সারি সাফ করে, কিন্তু পূর্বে প্রাপ্ত সার্ভার রেকর্ড মুছে দেয় না।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Names you enter stay in your journal unless you export them or send them through a webhook. Place lookups send coordinates or search queries to Apple. Custom app analytics are removed for all users; updating clears the old local identifier and unsent queue, but does not delete previously received server records."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los nombres que ingresa permanecen en su diario a menos que los exporte o los envíe a través de un webhook. Las búsquedas de lugares envían coordenadas o consultas de búsqueda a Apple. Los análisis de aplicaciones personalizados se eliminan para todos los usuarios; La actualización borra el antiguo identificador local y la cola no enviada, pero no elimina los registros del servidor recibidos anteriormente."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les noms que vous saisissez restent dans votre journal, sauf si vous les exportez ou les envoyez via un webhook. Les recherches de lieux envoient des coordonnées ou des requêtes de recherche à Apple. Les analyses d'application personnalisées sont supprimées pour tous les utilisateurs ; la mise à jour efface l'ancien identifiant local et la file d'attente non envoyée, mais ne supprime pas les enregistrements du serveur précédemment reçus."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके द्वारा दर्ज किए गए नाम आपके जर्नल में तब तक बने रहते हैं जब तक आप उन्हें निर्यात नहीं करते या वेबहुक के माध्यम से नहीं भेजते। स्थान लुकअप Apple को निर्देशांक या खोज क्वेरी भेजते हैं। सभी उपयोगकर्ताओं के लिए कस्टम ऐप एनालिटिक्स हटा दिए गए हैं; अद्यतन करने से पुराना स्थानीय पहचानकर्ता और न भेजी गई कतार साफ़ हो जाती है, लेकिन पहले प्राप्त सर्वर रिकॉर्ड नहीं हटते।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "入力した名前は、エクスポートするか Webhook 経由で送信しない限り、ジャーナルに残ります。場所の検索では、座標または検索クエリが Apple に送信されます。カスタム アプリ分析はすべてのユーザーに対して削除されます。更新すると、古いローカル識別子と未送信のキューがクリアされますが、以前に受信したサーバー レコードは削除されません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisane nazwy pozostaną w Twoim dzienniku, chyba że je wyeksportujesz lub wyślesz za pośrednictwem webhooka. Wyszukiwanie miejsc wysyła współrzędne lub zapytania do firmy Apple. Niestandardowe analizy aplikacji są usuwane dla wszystkich użytkowników; aktualizacja usuwa stary identyfikator lokalny i niewysłaną kolejkę, ale nie usuwa wcześniej otrzymanych rekordów serwera."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os nomes inseridos permanecem em seu diário, a menos que você os exporte ou envie por meio de um webhook. As pesquisas de locais enviam coordenadas ou consultas de pesquisa para a Apple. As análises personalizadas de aplicativos são removidas para todos os usuários; a atualização limpa o antigo identificador local e a fila não enviada, mas não exclui os registros do servidor recebidos anteriormente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имена, которые вы вводите, остаются в вашем журнале, пока вы их не экспортируете или не отправите через веб-перехватчик. Поиски мест отправляют координаты или поисковые запросы в Apple. Пользовательская аналитика приложений удаляется для всех пользователей; обновление очищает старый локальный идентификатор и неотправленную очередь, но не удаляет ранее полученные записи сервера."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "您输入的姓名会保留在日记中，除非您将其导出或通过 Webhook 发送。地点查找将坐标或搜索查询发送给 Apple。为所有用户删除自定义应用程序分析；更新会清除旧的本地标识符和未发送的队列，但不会删除以前收到的服务器记录。"
+          }
+        }
+      }
+    },
+    "Notes stops and records route points about every 100 m. Continues until you pause.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يلاحظ التوقفات ويسجل نقاط الطريق كل 100 متر تقريبًا. يستمر حتى تتوقف."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "নোট স্টপ এবং প্রতি 100 মিটার রুট পয়েন্ট রেকর্ড. আপনি বিরতি না হওয়া পর্যন্ত চালিয়ে যান।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes stops and records route points about every 100 m. Continues until you pause."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anota paradas y registra puntos de ruta aproximadamente cada 100 m. Continúa hasta hacer una pausa."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note les arrêts et enregistre les points d'itinéraire tous les 100 m environ. Continue jusqu'à ce que vous fassiez une pause."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक 100 मीटर पर स्टॉप को नोट करता है और मार्ग बिंदुओं को रिकॉर्ड करता है। जब तक आप रुकते नहीं तब तक जारी रहता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes は約 100 メートルごとに停止し、ルート ポイントを記録します。一時停止するまで継続します。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisuje przystanki i punkty trasy mniej więcej co 100 m. Kontynuuje, dopóki nie zrobisz pauzy."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anota paradas e registra pontos de rota a cada 100 m. Continua até você fazer uma pausa."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмечает остановки и записывает точки маршрута примерно через каждые 100 м. Продолжается до тех пор, пока вы не сделаете паузу."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大约每 100 m 记录一次停靠点并记录路线点。继续直到您暂停。"
+          }
+        }
+      }
+    },
+    "Notes stops and records route points about every 25 m. Continues until you pause.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يلاحظ التوقفات ويسجل نقاط الطريق كل 25 مترًا تقريبًا. يستمر حتى تتوقف."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "নোট স্টপ এবং প্রতি 25 মিটার রুট পয়েন্ট রেকর্ড. আপনি বিরতি না হওয়া পর্যন্ত চালিয়ে যান।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes stops and records route points about every 25 m. Continues until you pause."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toma nota de las paradas y registra los puntos de la ruta aproximadamente cada 25 m. Continúa hasta hacer una pausa."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note les arrêts et enregistre les points d'itinéraire tous les 25 m environ. Continue jusqu'à ce que vous fassiez une pause."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक 25 मीटर पर स्टॉप को नोट करता है और मार्ग बिंदुओं को रिकॉर्ड करता है। जब तक आप रुकते नहीं तब तक जारी रहता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes は約 25 メートルごとに停止し、ルート ポイントを記録します。一時停止するまで継続します。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisuje przystanki i punkty trasy mniej więcej co 25 m. Kontynuuje, dopóki nie zrobisz pauzy."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anota paradas e registra pontos de rota a cada 25 m. Continua até você fazer uma pausa."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмечает остановки и записывает точки маршрута примерно через каждые 25 метров. Продолжается до тех пор, пока вы не сделаете паузу."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大约每 25 m 记录一次停靠点并记录路线点。继续直到您暂停。"
+          }
+        }
+      }
+    },
+    "Open the complete outing to rename it, edit notes or delete it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح الرحلة الكاملة لإعادة تسميتها أو تعديل الملاحظات أو حذفها."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এটির নাম পরিবর্তন করতে, নোট সম্পাদনা করতে বা মুছতে সম্পূর্ণ আউটিংটি খুলুন৷"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the complete outing to rename it, edit notes or delete it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abra la salida completa para cambiarle el nombre, editar notas o eliminarla."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrez la sortie complète pour la renommer, modifier des notes ou la supprimer."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इसका नाम बदलने, नोट्स संपादित करने या हटाने के लिए संपूर्ण आउटिंग खोलें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完全な外出を開いて名前を変更したり、メモを編集したり、削除したりできます。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz całą wycieczkę, aby zmienić jej nazwę, edytować notatki lub ją usunąć."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abra o passeio completo para renomeá-lo, editar notas ou excluí-lo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откройте всю публикацию, чтобы переименовать ее, отредактировать заметки или удалить."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开完整的郊游以对其进行重命名、编辑注释或删除。"
+          }
+        }
+      }
+    },
+    "Places + sparse routes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأماكن + الطرق المتفرقة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্থান + বিক্ষিপ্ত রুট"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Places + sparse routes"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lugares + rutas dispersas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lieux + itinéraires clairsemés"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थान + विरल मार्ग"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "場所 + まばらなルート"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miejsca + rzadkie trasy"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lugares + rotas esparsas"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Места + редкие маршруты"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "地点+稀疏路线"
+          }
+        }
+      }
+    },
+    "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقاط الطريق حوالي كل 5 م. للمشي لمسافات طويلة وركوب الخيل. يتوقف من تلقاء نفسه بعد ساعتين."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রুট পয়েন্ট প্রায় প্রতি 5 মি. হাইক এবং রাইডের জন্য। 2 ঘন্টা পরে নিজেই থেমে যায়।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntos de ruta aproximadamente cada 5 m. Para caminatas y paseos. Se detiene por sí solo después de 2 h."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points d'itinéraire tous les 5 m environ. Pour randonnées et balades. S'arrête tout seul au bout de 2 h."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक 5 मीटर पर मार्ग बिंदु। लंबी पैदल यात्रा और सवारी के लिए. 2 घंटे के बाद अपने आप रुक जाता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルートポイントは約5mごと。ハイキングや乗り物に。 2 時間後に自動的に停止します。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Punkty trasy mniej więcej co 5 m. Na wędrówki i przejażdżki. Zatrzymuje się samoczynnie po 2 godz."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pontos de rota aproximadamente a cada 5 m. Para caminhadas e passeios. Pára sozinho após 2 horas."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точки маршрута примерно через каждые 5 м. Для походов и поездок. Прекращается самостоятельно через 2 часа."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大约每 5 m 有一个路线点。适合远足和骑行。 2小时后自行停止。"
+          }
+        }
+      }
+    },
+    "Stops and route points about every 100 m.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محطات التوقف ونقاط الطريق كل 100 متر تقريبًا."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্টপ এবং রুট পয়েন্ট প্রায় প্রতি 100 মি."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stops and route points about every 100 m."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paradas y puntos de ruta aproximadamente cada 100 m."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêts et points d'itinéraire tous les 100 m environ."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक 100 मीटर पर स्टॉप और मार्ग बिंदु।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "約 100 メートルごとに停留所とルートポイントがあります。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przystanki i punkty trasy mniej więcej co 100 m."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paradas e pontos de rota aproximadamente a cada 100 m."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановки и точки маршрута примерно через каждые 100 м."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大约每 100 m 就有一个停靠站和路线点。"
+          }
+        }
+      }
+    },
+    "Stops and route points about every 25 m.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محطات التوقف ونقاط الطريق كل 25 مترًا تقريبًا."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "স্টপ এবং রুট পয়েন্ট প্রায় প্রতি 25 মি."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stops and route points about every 25 m."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paradas y puntos de ruta aproximadamente cada 25 m."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêts et points d'itinéraire tous les 25 m environ."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रत्येक 25 मीटर पर स्टॉप और मार्ग बिंदु।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "約 25 メートルごとに停留所とルートポイントがあります。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przystanki i punkty trasy co około 25 m."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paradas e pontos de rota aproximadamente a cada 25 m."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановки и точки маршрута примерно через каждые 25 метров."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "大约每 25 m 就有一个停靠站和路线点。"
+          }
+        }
+      }
+    },
+    "Stored on this iPhone": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مخزنة على هذا iPhone"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই iPhone সংরক্ষিত"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stored on this iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almacenado en este iPhone"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stocké sur cet iPhone"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस iPhone पर संग्रहीत"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このiPhoneに保存されています"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przechowywane na tym iPhone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Armazenado neste iPhone"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хранится на этом iPhone"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "存储在此iPhone"
+          }
+        }
+      }
+    },
+    "The route, statistics, visits and exports here cover this day only.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يغطي المسار والإحصائيات والزيارات والصادرات هنا هذا اليوم فقط."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "রুট, পরিসংখ্যান, পরিদর্শন এবং রপ্তানি এখানে শুধুমাত্র এই দিন কভার."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The route, statistics, visits and exports here cover this day only."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La ruta, estadísticas, visitas y exportaciones aquí cubren únicamente este día."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le parcours, les statistiques, les visites et les exportations couvrent ici cette journée uniquement."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यहां का मार्ग, आंकड़े, दौरे और निर्यात केवल इसी दिन को कवर करते हैं।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ここでのルート、統計、訪問、輸出はこの日のみをカバーしています。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trasa, statystyki, wizyty i eksporty obejmują tylko ten dzień."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O percurso, as estatísticas, as visitas e as exportações aqui abrangem apenas este dia."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маршрут, статистика, посещения и вывозы здесь охватывают только этот день."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这里的路线、统计、人次和出口仅涵盖这一天。"
+          }
+        }
+      }
+    },
+    "View complete outing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عرض النزهة كاملة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "সম্পূর্ণ আউটিং দেখুন"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View complete outing"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver salida completa"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voir la sortie complète"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पूरी सैर देखें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完全な外出を表示"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobacz całą wycieczkę"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veja o passeio completo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Посмотреть полную экскурсию"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看完整的郊游"
+          }
+        }
+      }
+    },
+    "Watch recording runs independently of your iPhone and does not pause when they are nearby. Both devices can record at once. Stop it on the Watch when you do not need it. GPS recording uses extra battery; battery duration has not been measured.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتم تشغيل تسجيل المشاهدة بشكل مستقل عن iPhone الخاص بك ولا يتوقف مؤقتًا عندما يكون قريبًا. يمكن لكلا الجهازين التسجيل في وقت واحد. أوقفه على الساعة عندما لا تحتاج إليه. يستخدم تسجيل GPS بطارية إضافية؛ لم يتم قياس مدة البطارية."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ঘড়ির রেকর্ডিং আপনার iPhone থেকে স্বাধীনভাবে চলে এবং যখন তারা কাছাকাছি থাকে তখন বিরতি দেয় না। উভয় ডিভাইস একবারে রেকর্ড করতে পারে। আপনার যখন এটির প্রয়োজন হবে না তখন এটি ঘড়িতে বন্ধ করুন। GPS রেকর্ডিং অতিরিক্ত ব্যাটারি ব্যবহার করে; ব্যাটারির সময়কাল পরিমাপ করা হয়নি।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch recording runs independently of your iPhone and does not pause when they are nearby. Both devices can record at once. Stop it on the Watch when you do not need it. GPS recording uses extra battery; battery duration has not been measured."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La grabación del reloj se ejecuta independientemente de tu iPhone y no se detiene cuando están cerca. Ambos dispositivos pueden grabar a la vez. Detenlo en el Watch cuando no lo necesites. La grabación GPS utiliza batería adicional; No se ha medido la duración de la batería."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'enregistrement de la montre s'exécute indépendamment de votre iPhone et ne s'arrête pas lorsqu'il est à proximité. Les deux appareils peuvent enregistrer en même temps. Arrêtez-le sur la montre lorsque vous n'en avez pas besoin. L'enregistrement GPS utilise une batterie supplémentaire ; la durée de la batterie n’a pas été mesurée."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "घड़ी की रिकॉर्डिंग आपके iPhone से स्वतंत्र रूप से चलती है और जब वे पास में होते हैं तो रुकती नहीं है। दोनों डिवाइस एक साथ रिकॉर्ड कर सकते हैं. जब आपको इसकी आवश्यकता न हो तो इसे वॉच पर रोक दें। GPS रिकॉर्डिंग में अतिरिक्त बैटरी का उपयोग होता है; बैटरी अवधि मापी नहीं गई है."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時計の録画はiPhoneとは独立して実行され、iPhone が近くにある場合でも一時停止しません。両方のデバイスで同時に録音できます。不要なときはWatch上で停止させてください。 GPS記録は余分なバッテリーを使用します。バッテリー持続時間は測定されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oglądaj nagrywanie, które działa niezależnie od Twojego iPhone i nie zatrzymuje się, gdy znajduje się on w pobliżu. Obydwa urządzenia mogą nagrywać jednocześnie. Zatrzymaj go na zegarku, gdy go nie potrzebujesz. Nagrywanie GPS zużywa dodatkową baterię; czas pracy baterii nie został zmierzony."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A gravação do relógio é executada independentemente do seu iPhone e não é pausada quando eles estão por perto. Ambos os dispositivos podem gravar ao mesmo tempo. Pare no Watch quando não precisar dele. A gravação GPS usa bateria extra; a duração da bateria não foi medida."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись часов происходит независимо от вашего iPhone и не приостанавливается, когда они находятся рядом. Оба устройства могут записывать одновременно. Остановите его на Дозоре, когда он вам не нужен. Запись GPS использует дополнительную батарею; Срок службы батареи не измерялся."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "观看录音独立于您的iPhone运行，并且当它们在附近时不会暂停。两个设备都可以同时录制。当您不需要时，将其停止在手表上。 GPS记录需要额外的电池；电池持续时间尚未测量。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
