@@ -49,6 +49,16 @@ class ImportStageCodecTest {
             assertEquals(extremes,ImportStageCodec.gson.fromJson(ImportStageCodec.gson.toJson(extremes),TrackPoint::class.java))
         }
     }
+    @Test fun privatePointWriterRejectsNonfiniteNumbers() {
+        val value=TrackPoint(id="nonfinite",coordinate=Coordinate(18.0,-66.0),time=Instant.EPOCH,accuracy=0.0)
+        for(number in listOf(Double.NaN,Double.POSITIVE_INFINITY,Double.NEGATIVE_INFINITY)) {
+            val badLatitude=com.google.gson.Gson().fromJson("{\"latitude\":\"$number\",\"longitude\":0}",Coordinate::class.java)
+            val badLongitude=com.google.gson.Gson().fromJson("{\"latitude\":0,\"longitude\":\"$number\"}",Coordinate::class.java)
+            for(bad in listOf(value.copy(accuracy=number),value.copy(altitude=number),value.copy(speed=number),
+                value.copy(coordinate=badLatitude),value.copy(coordinate=badLongitude)))
+                assertTrue("Nonfinite staged value serialized",runCatching {ImportStageCodec.gson.toJson(bad)}.isFailure)
+        }
+    }
     @Test fun malformedPrivatePointTuplesFailClosed() {
         val base=com.google.gson.JsonParser.parseString("[\"point-tuple\",18,-66,[0,0],0,null,null,false,null,null,null]").asJsonArray
         val invalid=mutableListOf(base.deepCopy().also {it.remove(10)},base.deepCopy().also {it.add(0)})

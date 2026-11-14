@@ -37,6 +37,9 @@ internal object ImportStageCodec {
     // Null slots are retained, so unknown values remain distinct from known zero/empty values.
     private val point=object:TypeAdapter<TrackPoint>() {
         override fun write(out:com.google.gson.stream.JsonWriter,value:TrackPoint) {
+            // Gson invokes custom adapters with a lenient writer; retain its default finite-double rejection.
+            require(value.coordinate.latitude.isFinite() && value.coordinate.longitude.isFinite() && value.accuracy.isFinite() &&
+                (value.altitude?.isFinite() != false) && (value.speed?.isFinite() != false)) {"Nonfinite staged point number"}
             out.beginArray();out.value(value.id);out.value(value.coordinate.latitude);out.value(value.coordinate.longitude)
             instant.write(out,value.time);out.value(value.accuracy);out.value(value.altitude);out.value(value.speed)
             out.value(value.outlier);out.value(value.countryCode);out.value(value.timeZone)

@@ -1,0 +1,35 @@
+{
+  "guarded100k": [
+    {
+      "phase": "heap",
+      "peakBytes": 50424384,
+      "heapLimitBytes": 201326592
+    },
+    {
+      "controlPoints": 100000,
+      "completeMs": 37398,
+      "processCpuMs": 34366,
+      "pointEncoding": "["
+    }
+  ],
+  "native35": {
+    "tests": 35,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "jvm": {
+    "platform": {
+      "tests": 154,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "export": {
+      "tests": 948,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    }
+  }
+}
