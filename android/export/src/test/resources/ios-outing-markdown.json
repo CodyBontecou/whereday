@@ -1,7 +1,7 @@
 {
   "provenance": {
     "IsoMe/Utilities/ExportService.swift": "1c206bd7b3bf8552c5268b6250bd8917ee8d65507d4f8eb3b26890cb2a48d21c",
-    "IsoMe/Models/RecordingSession.swift": "72799d7db99a5608c3a00a8029ddca2e0eaa672c723f654ac82036bbc0d81fab",
+    "IsoMe/Models/RecordingSession.swift": "d369419e74d9caffa24a40e24ec28f3e7b06714c36bcaf8e7c6f01ff787b9aff",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
     "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
     "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",

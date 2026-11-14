@@ -254,6 +254,21 @@ final class LocationManagerRouteSamplingTests: XCTestCase {
         XCTAssertEqual(restored.routeSampleInterval, 300)
     }
 
+    func testPresetSelectionRequiresItsActualDistanceAndAutoStopSettings() {
+        let manager = makeIsolatedLocationManager()
+        manager.setDistanceFilter(5)
+        manager.setStopAfterHours(0)
+        XCTAssertFalse(RecordingDetail.everyStep.matches(manager), "Five metres with no timer must not promise a two-hour auto-stop")
+        RecordingDetail.everyStep.apply(to: manager)
+        XCTAssertTrue(RecordingDetail.everyStep.matches(manager))
+        manager.setRouteSamplingMode(.time)
+        XCTAssertFalse(RecordingDetail.everyStep.matches(manager))
+        RecordingDetail.places.apply(to: manager)
+        XCTAssertTrue(RecordingDetail.places.matches(manager))
+        manager.setDistanceFilter(200)
+        XCTAssertFalse(RecordingDetail.places.matches(manager), "A custom filter must not select the 100 m preset")
+    }
+
     func testChoosingAPresetReturnsToDistanceMode() {
         let manager = makeIsolatedLocationManager()
         manager.setRouteSamplingMode(.time)

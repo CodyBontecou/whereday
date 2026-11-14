@@ -1038,6 +1038,10 @@ private enum ScreenshotFeatureDemoSeeder {
 
         do {
             try clearExistingData(in: context)
+            if ProcessInfo.processInfo.arguments.contains("--seed-continuous-recording-data") {
+                try seedContinuousRecording(in: context)
+                return
+            }
 
             let today = Calendar.current.startOfDay(for: Date())
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today) ?? today.addingTimeInterval(-86_400)
@@ -1211,6 +1215,35 @@ private enum ScreenshotFeatureDemoSeeder {
         } catch {
             assertionFailure("Failed to seed screenshot demo data: \(error)")
         }
+    }
+
+    /// Reproduces a 1,000-hour journal without a private customer export.
+    /// Use only with --seed-screenshot-data on a disposable QA simulator.
+    private static func seedContinuousRecording(in context: ModelContext) throws {
+        let end = Date()
+        let start = end.addingTimeInterval(-1_000 * 3600)
+        context.insert(RecordingSession(startedAt: start, endedAt: end, customName: "Continuous journal"))
+        for minute in 0...60_000 {
+            let phase = Double(minute % 120) / 120 * 2 * Double.pi
+            context.insert(LocationPoint(
+                latitude: 37.79 + sin(phase) * 0.003,
+                longitude: -122.40 + cos(phase) * 0.003,
+                timestamp: start.addingTimeInterval(Double(minute) * 60),
+                horizontalAccuracy: 5
+            ))
+        }
+        let today = Calendar.current.startOfDay(for: end)
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        for (name, arrival) in [("Yesterday stop", yesterday.addingTimeInterval(12 * 3600)),
+                                ("Earlier-day stop", yesterday.addingTimeInterval(-12 * 3600))] {
+            context.insert(Visit(latitude: 37.79, longitude: -122.40,
+                                 arrivedAt: arrival, departedAt: arrival.addingTimeInterval(3600),
+                                 locationName: name, geocodingCompleted: true))
+        }
+        // This fixture records nothing live and never sends synthetic routes anywhere.
+        UserDefaults.standard.set(false, forKey: "webhook.enabled")
+        WebhookManager.shared.isEnabled = false
+        try context.save()
     }
 
     /// Saved places plus eight weeks of earlier visits, so Places shows real visit counts.
