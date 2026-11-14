@@ -25,6 +25,8 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val usageFunnel by lazy {UsageFunnel(usageAnalytics)}
     val history = HistoryRepository(database)
     val historyImports=HistoryImportController(DatabaseHistoryImportTarget(database),DiskHistoryImportWorkspaceFactory(java.io.File(context.cacheDir,"history-import-review")))
+    // A Whereday backup chosen in the import flow is restored here; any other file goes to historyImports.
+    val backupRestore:BackupRestoreController by lazy {BackupRestoreController(DatabaseBackupRestoreTarget(JournalBackupStore(database)),java.io.File(context.cacheDir,"backup-restore")) {!journalClear.state.value.blocked}}
     val journalCommands=JournalCommands(history)
     // Starting either kind of tracking needs a subscription or Lifetime once Play billing is configured; stopping never does.
     val recordingCommands:RecordingCommands=RecordingCommands(context.applicationContext,history,canStart={!journalClear.state.value.blocked},
@@ -74,7 +76,7 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val countryAnalysis = CountryAnalysisController(context.applicationContext,database,preferences)
     val journalClear:JournalClearController by lazy {JournalClearController(AndroidJournalClearReceiptStore(context.applicationContext),{
         savedPlaceImportReview.discard()
-        historyImports.clearAll {
+        backupRestore.clearAll {historyImports.clearAll {
             roadDisplay.clearAndJoin()
             reviewMilestones.clearJournalMilestones()
             usageAnalytics.clearAll()
@@ -90,7 +92,7 @@ class AppGraph internal constructor(private val context: Context, roadDirections
                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {database.clearAllTables()}
             }}}}
             activityLog.clear()
-        }
+        }}
     },{activityLog.record(AppEvent.journalClearFailed)})}
     internal val locationRecovery by lazy {LocationRecoveryController({
         journalClear.awaitReady()

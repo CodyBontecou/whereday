@@ -31,11 +31,15 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 
 internal data class SettingsActions(val update:((AppSettings)->AppSettings)->Unit,val folder:()->Unit,val permissions:()->Unit,
-    val navigate:(SettingsDestination)->Unit,val clear:()->Unit,val dismissClear:(Long)->Unit,val dismissFeedback:()->Unit)
+    val navigate:(SettingsDestination)->Unit,val clear:()->Unit,val dismissClear:(Long)->Unit,val dismissFeedback:()->Unit,
+    /** Opens the lossless backup; true when reached from the Clear All Data confirmation ("Export everything first"). */
+    val backup:(Boolean)->Unit={})
 private data class ClearConfirmation(val id:Long,val attempt:Long)
 
 @Composable internal fun SettingsContent(settings:AppSettings,placeCount:Int,count:Long,commands:SettingsActionState,clear:JournalClearState,
-    actions:SettingsActions,scroll:LazyListState=rememberLazyListState(),onBack:(()->Unit)?=null,planCard:(@Composable ()->Unit)?=null) {
+    actions:SettingsActions,scroll:LazyListState=rememberLazyListState(),onBack:(()->Unit)?=null,planCard:(@Composable ()->Unit)?=null,
+    /** Reopens the Clear All Data confirmation once, as iOS re-presents ClearDataSheet after a backup. */
+    reopenClear:Boolean=false,reopenedClear:()->Unit={}) {
     val resources=LocalContext.current.resources
     val number=NumberFormat.getIntegerInstance(LocalConfiguration.current.locales[0])
     val busy=clear.busy
@@ -55,6 +59,7 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
     fun foreground()=active.get() && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     fun edit(change:(AppSettings)->AppSettings) {if(foreground() && !currentClear.busy && !currentCommands.busy) actions.update(change)}
     fun navigate(value:SettingsDestination) {if(foreground() && !currentClear.busy) actions.navigate(value)}
+    LaunchedEffect(reopenClear) {if(reopenClear) {if(foreground() && !currentClear.busy) confirmation=ClearConfirmation(sequence.incrementAndGet(),currentClear.attempt);reopenedClear()}}
     val never=stringResource(R.string.settings_never);val none=stringResource(R.string.settings_none)
     val themes=mapOf("system" to stringResource(R.string.settings_system),"light" to stringResource(R.string.settings_light),"dark" to stringResource(R.string.settings_dark))
     val meters=listOf(5,10,25,50,100,200).associate {it.toString() to stringResource(R.string.settings_meters,number.format(it))}
@@ -117,6 +122,7 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
         item("geocoding-help") {WdSectionFooter(stringResource(R.string.network_geocoding_disclosure))}
         item("data") {WdSectionHeader(stringResource(R.string.redesign_settings_data))}
         item("data-card") {WdCard(card) {
+            WdNavRow(stringResource(R.string.backup_settings_row),Modifier.testTag("settings-backup"),icon=Icons.Outlined.Backup,enabled=!busy,onClick={if(foreground() && !currentClear.busy) actions.backup(false)})
             WdNavRow(stringResource(if(settings.exportFolder==null) R.string.settings_choose_folder else R.string.settings_change_folder),icon=Icons.Outlined.Folder,enabled=editable,onClick={if(foreground() && !currentClear.busy && !currentCommands.busy) actions.folder()})
             WdNavRow(stringResource(R.string.settings_automatic_exports),icon=Icons.Outlined.Schedule,enabled=!busy,onClick={navigate(SettingsDestination.exports)})
             WdNavRow(stringResource(R.string.settings_webhooks),icon=Icons.Outlined.Webhook,enabled=!busy,onClick={navigate(SettingsDestination.webhooks)})
@@ -154,7 +160,11 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
         confirmButton={TextButton(enabled=!busy,onClick={
             if(confirmation==ticket && foreground() && !currentClear.busy && currentClear.attempt==ticket.attempt) {confirmation=null;actions.clear()}
         },modifier=Modifier.testTag("settings-clear-confirm"),colors=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)) {Text(stringResource(R.string.settings_clear_confirm))}},
-        dismissButton={TextButton(onClick={if(confirmation==ticket) confirmation=null},modifier=Modifier.testTag("settings-clear-cancel")) {Text(stringResource(R.string.settings_cancel))}})}
+        dismissButton={
+            // iOS ClearDataSheet: make the lossless backup before erasing, then return here to confirm.
+            TextButton(enabled=!busy,onClick={if(confirmation==ticket && foreground() && !currentClear.busy) {confirmation=null;actions.backup(true)}},modifier=Modifier.testTag("settings-clear-export-first")) {Text(stringResource(R.string.settings_clear_export_first))}
+            TextButton(onClick={if(confirmation==ticket) confirmation=null},modifier=Modifier.testTag("settings-clear-cancel")) {Text(stringResource(R.string.settings_cancel))}
+        })}
 }
 
 /** A Choice inside a settings card: tagged for tests, padded like a TERow, with a hairline beneath. */
