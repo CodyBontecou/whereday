@@ -49,6 +49,95 @@ final class LocationViewModelPointScalingTests: XCTestCase {
         XCTAssertTrue(model.locationPoints.isEmpty)
     }
 
+    func testTimelineInvalidatesDayMembershipAfterSameCountVisitAndRecordingEdits() throws {
+        let container = try makeInMemoryContainer()
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        let now = end.addingTimeInterval(7200)
+        let visit = Visit(latitude: 18, longitude: -67, arrivedAt: day.addingTimeInterval(-3600), departedAt: nil)
+        let recording = RecordingSession(startedAt: day.addingTimeInterval(-3600))
+        container.mainContext.insert(visit)
+        container.mainContext.insert(recording)
+        try container.mainContext.save()
+        model.loadData()
+        let initial = try model.timelineDay(in: day..<end, now: now)
+        XCTAssertEqual(initial.visits.count, 1)
+        XCTAssertEqual(initial.sessions.count, 1)
+        let visitCount = model.allVisits.count
+        let sessionCount = model.allRecordingSessions.count
+        let beforeCheckout = model.timelineDataRevision
+
+        // A Watch checkout may arrive after midnight but retain the offline action
+        // time from yesterday. The parent reloads data on manualVisitsChanged;
+        // Timeline's task key must invalidate even though neither count changed.
+        visit.departedAt = day.addingTimeInterval(-60)
+        try container.mainContext.save()
+        model.loadData()
+        XCTAssertGreaterThan(model.timelineDataRevision, beforeCheckout)
+        XCTAssertEqual(model.allVisits.count, visitCount)
+        XCTAssertEqual(model.allRecordingSessions.count, sessionCount)
+        XCTAssertTrue(try model.timelineDay(in: day..<end, now: now).visits.isEmpty)
+
+        let beforeRecordingEdit = model.timelineDataRevision
+        recording.endedAt = day.addingTimeInterval(-60)
+        try container.mainContext.save()
+        model.loadRecordingSessions()
+        XCTAssertGreaterThan(model.timelineDataRevision, beforeRecordingEdit)
+        XCTAssertEqual(model.allRecordingSessions.count, sessionCount)
+        XCTAssertTrue(try model.timelineDay(in: day..<end, now: now).sessions.isEmpty)
+        XCTAssertTrue(model.locationPoints.isEmpty)
+    }
+
+    func testDailySummaryExportsKeepBoundedStatisticsAcrossFormats() throws {
+        let container = try makeInMemoryContainer()
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        let stored = RecordingSession(startedAt: day.addingTimeInterval(-3600), endedAt: end.addingTimeInterval(3600))
+        container.mainContext.insert(stored)
+        for time in [day.addingTimeInterval(-60), day, end.addingTimeInterval(-60), end] {
+            container.mainContext.insert(LocationPoint(latitude: 18, longitude: -67, timestamp: time, horizontalAccuracy: 5))
+        }
+        try container.mainContext.save()
+        let daily = try XCTUnwrap(model.timelineDay(in: day..<end, now: end.addingTimeInterval(7200)).sessions.first)
+        let json = try ExportService.outingsData(outings: [daily], visits: [], format: .json)
+        let exported = try JSONDecoder().decode(ExportService.OutingsExportData.self, from: json)
+        let outing = try XCTUnwrap(exported.outings.first)
+        XCTAssertEqual(outing.durationSeconds, end.timeIntervalSince(day))
+        XCTAssertEqual(outing.pointCount, 2)
+        XCTAssertFalse(outing.isActive)
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        XCTAssertEqual(formatter.date(from: outing.startedAt), day)
+        XCTAssertEqual(outing.endedAt.flatMap { formatter.date(from: $0) }, end)
+        let csv = try XCTUnwrap(String(data: ExportService.outingsData(outings: [daily], visits: [], format: .csv), encoding: .utf8))
+        XCTAssertTrue(csv.contains(formatter.string(from: day)))
+        XCTAssertFalse(csv.contains(formatter.string(from: stored.startedAt)))
+        let markdown = try XCTUnwrap(String(data: ExportService.outingsData(outings: [daily], visits: [], format: .markdown), encoding: .utf8))
+        XCTAssertTrue(markdown.contains("point_count: 2"))
+        XCTAssertFalse(markdown.contains(formatter.string(from: stored.startedAt)))
+        let complete = try XCTUnwrap(model.completeRecordingSession(stored, now: end.addingTimeInterval(7200)))
+        XCTAssertEqual(complete.points.count, 4)
+        XCTAssertEqual(complete.duration, daily.duration + 7200)
+        XCTAssertTrue(model.locationPoints.isEmpty)
+    }
+
+    func testSparseStoredRecordingStillHasADailySliceWithoutRouteFixes() throws {
+        let container = try makeInMemoryContainer()
+        let model = makeViewModel(container: container)
+        let day = Calendar.current.startOfDay(for: fixtureDate(dayOffset: 0))
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        container.mainContext.insert(RecordingSession(startedAt: day.addingTimeInterval(-3600), endedAt: end.addingTimeInterval(3600)))
+        try container.mainContext.save()
+        let daily = try XCTUnwrap(model.timelineDay(in: day..<end, now: end.addingTimeInterval(7200)).sessions.first)
+        XCTAssertTrue(daily.points.isEmpty)
+        XCTAssertEqual(daily.duration, end.timeIntervalSince(day))
+        XCTAssertEqual(daily.distanceMeters, 0)
+        XCTAssertNil(daily.averageSpeedMetersPerSecond)
+        XCTAssertTrue(model.locationPoints.isEmpty)
+    }
+
     func testTimelineUsesHalfOpenDaysForPointsSessionsAndVisits() throws {
         let container = try makeInMemoryContainer()
         let model = makeViewModel(container: container)
