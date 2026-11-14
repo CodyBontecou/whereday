@@ -11,6 +11,7 @@ diag_avd=${diag_avd%%$'\n'*}
 diag_avd=${diag_avd%$'\r'}
 printf 'serial=%s\navd=%s\n' "$diag_serial" "$diag_avd" > "$reports/identity.txt"
 collector=''
+scope=${INPUT_PIN_SCOPE:-input-diagnostic}
 capture() {
     diag_status=$?
     trap - EXIT
@@ -19,7 +20,17 @@ capture() {
         wait "$collector" 2>/dev/null || true
         cp "$reports/observations-live.log" "$reports/observations.log"
     else
-        adb -s "$diag_serial" logcat -d -v brief -s System.out:I '*:S' | grep '\[DEBUG-input-pin\]' > "$reports/observations.log" || true
+        adb -s "$diag_serial" logcat -d -v brief -s System.out:I '*:S' | grep -E '\[DEBUG-(input-pin|photo-pixel)\]' > "$reports/observations.log" || true
+    fi
+    if [[ $scope == photo-pixel-diagnostic ]]; then
+        mkdir -p "$reports/photo-pixels"
+        for label in nearest-light group-dark; do
+            adb -s "$diag_serial" pull "/sdcard/Download/whereday-photo-dots-$label-original-zero-normal-20261030.png" "$reports/photo-pixels/" > "$reports/photo-pixels/$label-pull.log" 2>&1 || true
+        done
+        if [[ $diag_status == 0 ]] && ! grep -q '\[DEBUG-photo-pixel\]' "$reports/observations.log"; then
+            echo 'No original photo-pixel observation captured' >&2
+            diag_status=2
+        fi
     fi
     if [[ $diag_status == 0 ]] && ! grep -q original-initial-pin-count "$reports/observations.log"; then
         echo 'No original first-pin observation captured' >&2
@@ -28,7 +39,7 @@ capture() {
     exit "$diag_status"
 }
 trap capture EXIT
-if [[ ${INPUT_PIN_SCOPE:-input-diagnostic} == input-full-diagnostic ]]; then
+if [[ $scope == input-full-diagnostic ]]; then
     # The existing canonical workflow remains the single source of the full
     # selection. Its original wrapper enforces 94 classes/594 outcomes/two ignores.
     full_selection=$(python3 - <<'PY'
@@ -50,7 +61,11 @@ PY
 fi
 ./gradlew :app:assembleMapQa :app:assembleMapQaAndroidTest --no-daemon
 selection=com.bontecou.whereday.RoadAttributionRenderingTest,com.bontecou.whereday.GeoapifyRoutingConfigurationTest,com.bontecou.whereday.PhotoDotRenderingTest,com.bontecou.whereday.SoftwareNoticesTest,com.bontecou.whereday.SoftwareNoticesNavigationTest,com.bontecou.whereday.RoadConsentScreenTest,com.bontecou.whereday.RoadDisplayProducerTest,com.bontecou.whereday.RoadMapRenderingTest,com.bontecou.whereday.NativeMapInputReadinessTest
+set --
+if [[ $scope == photo-pixel-diagnostic ]]; then
+    set -- --extra observePhotoPixels=true --extra capturePhotoDots=true
+fi
 python3 scripts/run_qa_instrumentation.py \
     --adb "$(command -v adb)" --aapt2 "$ANDROID_HOME/build-tools/35.0.0/aapt2" \
     --serial "$diag_serial" --avd "$diag_avd" --module app \
-    --classes "$selection" --expected-tests 38 --output "$reports/native"
+    --classes "$selection" --expected-tests 38 "$@" --output "$reports/native"

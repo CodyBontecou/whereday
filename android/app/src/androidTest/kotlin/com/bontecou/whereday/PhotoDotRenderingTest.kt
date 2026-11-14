@@ -262,6 +262,17 @@ class PhotoDotRenderingTest {
             assertTrue(bounds.intersect(Rect(0,0,bitmap.width,bitmap.height)))
             val pixels=IntArray(bounds.width()*bounds.height());bitmap.getPixels(pixels,0,bounds.width(),bounds.left,bounds.top,bounds.width(),bounds.height())
             val green=pixels.count {kotlin.math.abs(Color.red(it)-94)<=10 && kotlin.math.abs(Color.green(it)-127)<=10 && kotlin.math.abs(Color.blue(it)-90)<=10}
+            if(InstrumentationRegistry.getArguments().getString("observePhotoPixels")=="true") {
+                // Diagnostic only, after the ORIGINAL screenshot and pixel count.
+                // These observations cannot change the immutable green result.
+                val state=compose.runOnIdle {
+                    val power=target.getSystemService(android.os.PowerManager::class.java)
+                    val keyguard=target.getSystemService(android.app.KeyguardManager::class.java)
+                    "interactive=${power.isInteractive} keyguardLocked=${keyguard.isKeyguardLocked} deviceLocked=${keyguard.isDeviceLocked} viewFocus=${view.hasWindowFocus()} decorFocus=${compose.activity.window.decorView.hasWindowFocus()} attached=${view.isAttachedToWindow} destroyed=${compose.activity.isDestroyed} size=${view.width}x${view.height} styleLoaded=${map.style?.isFullyLoaded}"
+                }
+                println("[DEBUG-photo-pixel] label=$label originalGreen=$green dots=$dots $state")
+                if(dots && green==0) save("$label-original-zero",bitmap)
+            }
             if(dots) {assertTrue("Displayed dots required: $green",green>30);assertTrue("Dots must remain small visuals",green<pixels.size/20);assertEquals(0,pixels.count {Color.red(it)>245 && Color.green(it)<10 && Color.blue(it)>245})}
             else assertEquals("Hidden dots must leave no displayed dot pixels",0,green)
             val centers=compose.runOnIdle {visuals.map {(c,size)->map.projection.toScreenLocation(LatLng(c.latitude,c.longitude)) to size}}
