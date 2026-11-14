@@ -1,0 +1,858 @@
+{
+  "base": "2958387f81923206b547a5dab782cc5b39278d6d",
+  "scope": "Only locale values missing from the four refreshed catalogs at this base; not full UI or linguistic acceptance",
+  "checks": [
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@ country stays · %@ photo matches",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@ new records",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@ OF %@ RECORDS",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@ outings · %@ saved places",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@ records restored",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@ visits · %@ points",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "%@: %@ must be a number",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "A year in days",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Build an export as a sentence, choose its format and destination, and save it as a recipe.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Existing record IDs are skipped. Nothing on this device is replaced. Photo matches need the original Photos library; image files are not part of the backup.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Explore your year in Atlas, colored by country. In Places, see how often you return to the places you've named.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Exports, in your words",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "New widgets, a Live Activity for the Lock Screen and Dynamic Island, and a refreshed Apple Watch app.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "No shared recording yet",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Open straight onto your day. Pull up the day sheet for your stops and moves, or replay a day on the map.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Open this app and check location permission and recording access",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Recording controls",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Recording controls synced",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Restore backup",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Restore your records",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Restored %@ records from backup.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Review this visit as a calendar event.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Row %lld: invalid departed_at date",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Start or stop on either device to update both. Offline changes wait for a connection; location permission and recording access are required on each device. Both devices can collect points for the shared outing. GPS recording uses extra battery; battery duration has not been measured.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "The backup contains duplicate record identifiers.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "The backup contains invalid records. Nothing was restored.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "The map is now home",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "This backup version is not supported. Update Whereday before restoring it.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Use a shorter file or folder name.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Visit at index %lld: invalid departedAt date",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Waiting for the other device",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Whereday backup",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Your changes to this stay have not been saved.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Your day at a glance",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Your day, on the map",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "key": "Your restored records are available in Whereday. Photo matches need access to the original Photos library.",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMe/InfoPlist.xcstrings",
+      "key": "NSLocalNetworkUsageDescription",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "InfoPlist"
+    },
+    {
+      "catalog": "IsoMe/InfoPlist.xcstrings",
+      "key": "NSMicrophoneUsageDescription",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "InfoPlist"
+    },
+    {
+      "catalog": "IsoMe/AppShortcuts.xcstrings",
+      "key": "Check in with ${applicationName}",
+      "kind": "stringSet",
+      "locales": [
+        "ar",
+        "bn",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "",
+      "table": "AppShortcuts"
+    },
+    {
+      "catalog": "IsoMeWatch/Localizable.xcstrings",
+      "key": "No shared recording yet",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "Watch/IsoMeWatch.app",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMeWatch/Localizable.xcstrings",
+      "key": "Open this app and check location permission and recording access",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "Watch/IsoMeWatch.app",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMeWatch/Localizable.xcstrings",
+      "key": "Recording controls synced",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "Watch/IsoMeWatch.app",
+      "table": "Localizable"
+    },
+    {
+      "catalog": "IsoMeWatch/Localizable.xcstrings",
+      "key": "Waiting for the other device",
+      "kind": "stringUnit",
+      "locales": [
+        "ar",
+        "bn",
+        "en",
+        "es",
+        "fr",
+        "hi",
+        "ja",
+        "pl",
+        "pt-BR",
+        "ru",
+        "zh-Hans"
+      ],
+      "bundle": "Watch/IsoMeWatch.app",
+      "table": "Localizable"
+    }
+  ]
+}

@@ -4,6 +4,86 @@
     "Check in with ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "سجّل الوصول باستخدام ${applicationName}"
+            ]
+          }
+        },
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} দিয়ে চেক ইন করুন"
+            ]
+          }
+        },
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Registra una visita con ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Enregistrez une visite avec ${applicationName}"
+            ]
+          }
+        },
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName} से चेक इन करें"
+            ]
+          }
+        },
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}でチェックイン"
+            ]
+          }
+        },
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Zamelduj się z ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Faça check-in com ${applicationName}"
+            ]
+          }
+        },
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Отметьте посещение с помощью ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "使用 ${applicationName} 签到"
+            ]
+          }
+        },
         "en" : {
           "stringSet" : {
             "state" : "new",
