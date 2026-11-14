@@ -1,0 +1,60 @@
+[ Silence ]
+>> Top back on.
+Allow Android accessibility to send you notifications.
+Allow, button.
+Double tap to activate.
+[ Silence ]
+Don't allow, button.
+Press all plus enter to activate.
+[ Silence ]
+We're day map QA back to setting, button in list.
+Press all plus enter to activate.
+How continuous reading works.
+After selecting, read from top, or read from focused item,
+you can still navigate to the previous or next item while the text is being read.
+This lets you go back or skip ahead with ease.
+To adjust the volume while top back speaks, press the volume upper volume down key.
+Out of list.
+Check, always show this message.
+Check box.
+Press all plus enter to toggle.
+Okay, button.
+Press all plus enter to activate.
+[ Silence ]
+Back to settings, button.
+Subscription, heading.
+W-H-E-R-E-D-A-Y plan.
+Yearly subscription.
+Renews automatically.
+Google Play shows your next renewal date.
+Details, heading, plan, yearly status.
+Renews automatically.
+Next renewal.
+Shown in Google Play.
+Build by Google Play.
+Included, heading.
+Recording.
+Every export format and automation.
+Manager cancel.
+Button.
+Change plan in Google Play.
+Button.
+Manager cancel shows one summary screen.
+Then opens your subscription in Google Play.
+Deleting the app or buying lifetime does not cancel a subscription.
+[ Silence ]
+Check manager cancel.
+Button.
+Press all plus enter to activate.
+Bottom sheet.
+Drag handle.
+Out of list.
+Actions available.
+Use all plus face to view.
+[ Silence ]
+[ Silence ]
+[ Silence ]
+[ Silence ]
+[ Silence ]
+[ Silence ]
+Before you go.

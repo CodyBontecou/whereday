@@ -1,0 +1,23 @@
+To tap back on, allow Android accessibility free to send you notifications.
+Allow, button, double tap to activate.
+Don't allow, button.
+Press Alt+Enter to activate.
+We're day map QA, back to settings, button, in list.
+Press Alt+Enter to activate.
+Manage your cancel, button.
+Press Alt+Enter to activate.
+Bottom sheet, drag handle, out of list.
+Actions available, use Alt+Face to view.
+Always show this message, after selecting, read from top, or read from focused item, you can still navigate to the previous or next item while the text is being read.
+This lets you go back or skip ahead with ease.
+To adjust the volume while talk back speaks, press the volume upper volume down key.
+How continuous reading works.
+OK, button. Press Alt+Enter to activate.
+OK, drag handle. Before you go, heading. Canceling happens in Google Play. Your plan stays active until the current period ends, and Google Play shows the date.
+After that, what stops? Heading. Starting or recording or visits only monitoring. Exporting files. Automatic exports. Web hooks and automation exports.
+What you keep, heading. Every day, visit, route and place already recorded stays on this phone. Map, Atlas, places, archive and country days stay open.
+Imports and export previews stay free. Keep my plan, button. Continue to cancel, button. Continue to cancel opens your were day subscription in Google Play.
+Close sheet. Press Alt+Enter to activate.
+Continue to cancel.
+Can, can keep my plan, button. Press Alt+Enter to activate.
+Talk back.
