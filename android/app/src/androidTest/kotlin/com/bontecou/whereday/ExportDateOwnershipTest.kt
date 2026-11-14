@@ -28,7 +28,7 @@ class ExportDateOwnershipTest {
         compose.onNodeWithText(target.getString(R.string.date_enter_iso)).assertIsDisplayed().performClick()
         compose.onNodeWithTag("date-range-from").performTextReplacement("2024-03-10")
         compose.onNodeWithTag("date-range-through").performTextReplacement("2024-03-10")
-        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).perform(closeQaKeyboard())
     }
     private fun approval()=compose.onNodeWithText(target.getString(R.string.map_apply_dates)).fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsActions.OnClick].action!!
     @Test fun heldApplyUsesTheCurrentUnrelatedFilters() {

@@ -1,0 +1,152 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "platform",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 33,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "changedStageBytesCannotMutateHistoryAndOrphansCannotDeleteLiveReviews"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "cancellationAfterWritesStartRollsBackEveryBatch"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "badEofAndInvalidUtf8LeaveNoReviewOrJournalWrites"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "flushedIdentityIndexRejectsConflictsAndReconstructionReapsOnlyOrphans"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "malformedAuditCannotProduceAnApprovedReviewOrChangeRoom"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "jsonCsvAndMarkdownAuditSurviveReviewAndAtomicRoomCommit"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "batchedFreshPointsMatchPendingAndPreviousPageRowsWithoutLosingDistinctLocations"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "replacementUsesStagedBaselinesAndPreservesSessionAndDetectorRules"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "pointAdmissionHandlesDescendingBucketsLaterDuplicatesAndReset"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "aStaleMatchInALaterBatchRollsBackEarlierNewRows"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "sealedChronologicalDigestRejectsMissingOrOrphanedRowsAndValidPayloadChanges"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportTest",
+      "test": "controllerReviewsAllFormatsWithoutWritingAndKeepsDuplicatesAndLocalRecords"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "freshPointAdmissionCanChooseAPreviouslyRejectedSourceRow"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "matchingPagesPastTwoHundredSameSecondRowsWithoutReadingTheirNotes"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "malformedLateGoogleContentCannotPublishAReviewOrLeaveScratch"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "cancellationAfterFirstWriteBatchRollsBackTheWholeGoogleImport"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "chronologyMutationAfterReviewCannotChangeAdmissionOrWriteHistory"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "existingHistoryChangesWhichIncomingVisitIsAdmitted"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "existingHistoryChangesWhichIncomingPointIsAdmitted"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "allThreeGoogleSourcesReviewWithoutWritesAndRepeatImportKeepsCorrectionsAndSessions"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "selectedPointsRecheckNewMatchingHistoryInsideTheCommit"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "freshVisitAdmissionCanChooseAPreviouslyRejectedSourceRow"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "sameArrivalWithDistinctDeparturesSurvivesStagingAndRoomCommit"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "tiedSemanticPathsRetainSwiftOrderInsteadOfJsonPropertyOrder"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.GoogleHistoryImportTest",
+      "test": "diskStagingReconcilesNontransitiveVisitMatchesInChronologicalOrder"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "largeLocalCorrectionsSplitMatchLoadsBeforeJavaRowsAreAccumulated"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "realJournalSqliteFullRollsBackTheApprovedTransaction"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "realScratchSqliteFullCannotCreateAnApprovedImport"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "validLargeUnicodeRecordsCanBeReviewedAgainAfterTheirFirstImport"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "oversizedEncodedStagePayloadCannotReachHistoryWrites"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "oversizedMatchingJournalTextRejectsReviewWithoutChangingThatRecord"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.ImportResourceBoundsTest",
+      "test": "stagePagesAndPendingFlushesObeyBytesAsWellAsRecordCounts"
+    },
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+      "test": "tenThousandJsonPointsReviewCommitDeduplicateAndClear"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+      "package": "com.bontecou.whereday.platform.test",
+      "sha256": "dc299d67798a7c88db6c9e1eabc9ecb48d37d1752f5b821b92138b2f87baee41"
+    }
+  ]
+}

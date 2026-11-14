@@ -24,15 +24,37 @@ import org.junit.*
 import org.junit.Assert.*
 import java.time.Instant
 
-/** Owned-AVD driver enables software IME and restores that device setting outside instrumentation. */
+/** Use a docked software IME: handwriting palettes do not obscure the lower pane. */
 class WorkspaceKeyboardTest {
     @get:Rule val compose=createAndroidComposeRule<ComponentActivity>()
     private val target get()=InstrumentationRegistry.getInstrumentation().targetContext
+    private val keyboardSettings=mutableMapOf<String,String?>()
+    private fun withSettingsPermission(block:()->Unit) {
+        val automation=InstrumentationRegistry.getInstrumentation().uiAutomation
+        automation.adoptShellPermissionIdentity(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+        try {block()} finally {automation.dropShellPermissionIdentity()}
+    }
     @Before fun setup() {
         check(target.packageName=="com.bontecou.whereday.mapqa")
+        withSettingsPermission {
+            val desired=mapOf("show_ime_with_hard_keyboard" to "1","stylus_handwriting_enabled" to "0")
+            desired.keys.forEach {key->keyboardSettings[key]=android.provider.Settings.Secure.getString(target.contentResolver,key)}
+            desired.forEach {(key,value)->check(android.provider.Settings.Secure.putString(target.contentResolver,key,value))}
+        }
         compose.activityRule.scenario.onActivity {activity->
             WindowCompat.setDecorFitsSystemWindows(activity.window,false)
             activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+        }
+    }
+    @After fun restoreKeyboardSettings() {
+        if(keyboardSettings.isNotEmpty()) withSettingsPermission {
+            val failures=mutableListOf<Throwable>()
+            keyboardSettings.forEach {(key,value)->
+                runCatching {check(android.provider.Settings.Secure.putString(target.contentResolver,key,value)) {"Could not restore $key"}}
+                    .exceptionOrNull()?.let(failures::add)
+            }
+            keyboardSettings.clear()
+            if(failures.isNotEmpty()) throw AssertionError("Could not restore QA keyboard settings").apply {failures.forEach(::addSuppressed)}
         }
     }
     private fun imeBottom(settle:Boolean=false):Int {
@@ -87,14 +109,15 @@ class WorkspaceKeyboardTest {
         compose.onNodeWithTag("visit-timestamp-date-input").performClick().performTextReplacement("2026-02-30")
         compose.waitUntil(10000) {imeBottom()>0}
         assertTrue("Software keyboard must actually be visible",imeBottom(settle=true)>0)
-        assertDialogInside("workspace-primary");capture("tabletop-ime")
+        capture("tabletop-ime");assertDialogInside("workspace-primary")
         val input=compose.onNodeWithTag("visit-timestamp-date-input").assertIsDisplayed().assertTextContains("2026-02-30")
         val node=input.fetchSemanticsNode()
         assertTrue("Keyboard must not clip the focused date field",node.boundsInWindow.height>=node.layoutInfo.coordinates.size.height-1)
         compose.onNodeWithText(target.getString(R.string.visit_apply_date)).assertIsDisplayed().assertIsNotEnabled()
         compose.onNodeWithText(target.getString(R.string.visit_cancel)).assertIsDisplayed()
         assertEquals(0,changes)
-        Espresso.closeSoftKeyboard();compose.waitUntil(10000) {imeBottom()==0}
+        Espresso.onView(ViewMatchers.isRoot()).inRoot(isDialog()).perform(closeQaKeyboard())
+        compose.waitUntil(10000) {imeBottom()==0}
         compose.onNodeWithTag("visit-timestamp-date-input").assertTextContains("2026-02-30");assertDialogInside("workspace-companion");capture("tabletop-restored")
         assertEquals(0,changes)
     }

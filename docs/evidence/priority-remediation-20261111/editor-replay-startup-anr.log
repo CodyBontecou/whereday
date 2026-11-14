@@ -1,0 +1,73 @@
+11-11 14:03:49.270   572 14438 E ActivityManager: ANR in com.bontecou.whereday.mapqa
+11-11 14:03:49.270   572 14438 E ActivityManager: PID: 14373
+11-11 14:03:49.270   572 14438 E ActivityManager: Reason: Process ProcessRecord{8761dbb 14373:com.bontecou.whereday.mapqa/u0a243} failed to complete startup
+11-11 14:03:49.270   572 14438 E ActivityManager: ErrorId: 14e87580-382f-48c0-9149-60748e71c2e7
+11-11 14:03:49.270   572 14438 E ActivityManager: Frozen: false
+11-11 14:03:49.270   572 14438 E ActivityManager: Load: 0.0 / 0.0 / 0.0
+11-11 14:03:49.270   572 14438 E ActivityManager: ----- Output from /proc/pressure/memory -----
+11-11 14:03:49.270   572 14438 E ActivityManager: some avg10=2.09 avg60=5.13 avg300=3.03 total=51569549
+11-11 14:03:49.270   572 14438 E ActivityManager: full avg10=0.78 avg60=1.76 avg300=0.88 total=17587871
+11-11 14:03:49.270   572 14438 E ActivityManager: ----- End output from /proc/pressure/memory -----
+11-11 14:03:49.270   572 14438 E ActivityManager: ----- Output from /proc/pressure/cpu -----
+11-11 14:03:49.270   572 14438 E ActivityManager: some avg10=59.07 avg60=60.65 avg300=40.72 total=1132317616
+11-11 14:03:49.270   572 14438 E ActivityManager: full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+11-11 14:03:49.270   572 14438 E ActivityManager: ----- End output from /proc/pressure/cpu -----
+11-11 14:03:49.270   572 14438 E ActivityManager: ----- Output from /proc/pressure/io -----
+11-11 14:03:49.270   572 14438 E ActivityManager: some avg10=6.85 avg60=12.59 avg300=7.20 total=185180517
+11-11 14:03:49.270   572 14438 E ActivityManager: full avg10=1.18 avg60=2.31 avg300=1.50 total=87567494
+11-11 14:03:49.270   572 14438 E ActivityManager: ----- End output from /proc/pressure/io -----
+11-11 14:03:49.270   572 14438 E ActivityManager: 
+11-11 14:03:49.270   572 14438 E ActivityManager: CPU usage from 43156ms to -19ms ago (2026-11-11 14:03:05.163 to 2026-11-11 14:03:48.338):
+11-11 14:03:49.270   572 14438 E ActivityManager:   78% 572/system_server: 46% user + 32% kernel / faults: 11301 minor 2 major
+11-11 14:03:49.270   572 14438 E ActivityManager:   22% 28910/com.google.android.apps.wellbeing: 12% user + 10% kernel / faults: 7760 minor 1609 major
+11-11 14:03:49.270   572 14438 E ActivityManager:   20% 1493/com.google.android.gms: 10% user + 10% kernel / faults: 2912 minor 3138 major
+11-11 14:03:49.270   572 14438 E ActivityManager:   12% 14284/com.google.android.permissioncontroller: 7.4% user + 4.9% kernel / faults: 4485 minor 21 major
+11-11 14:03:49.270   572 14438 E ActivityManager:   7.9% 1504/com.google.android.googlequicksearchbox:search: 3.6% user + 4.2% kernel / faults: 2861 minor 4921 major
+11-11 14:03:49.270   572 14438 E ActivityManager:   6.6% 428/surfaceflinger: 1.9% user + 4.7% kernel / faults: 67 minor
+11-11 14:03:49.270   572 14438 E ActivityManager:   6.3% 394/android.hardware.graphics.composer3-service.ranchu: 0.8% user + 5.5% kernel / faults: 6 minor
+11-11 14:03:49.270   572 14438 E ActivityManager:   4.5% 388/android.hardware.sensors-service.multihal: 1.4% user + 3% kernel / faults: 20 minor
+11-11 14:03:49.270   572 14438 E ActivityManager:   0.1% 56/kswapd0: 0% user + 0.1% kernel
+11-11 14:03:49.270   572 14438 E ActivityManager:   3.7% 1051/com.google.android.gms.persistent: 2.1% user + 1.5% kernel / faults: 1771 minor 11 major
+11-11 14:03:49.270   572 14438 E ActivityManager: 86% TOTAL: 18% user + 18% kernel + 2.4% iowait + 39% irq + 7% softirq
+11-11 14:03:49.270   572 14438 E ActivityManager: CPU usage from 11015858ms to 11015858ms ago (1969-12-31 20:00:00.000 to 1969-12-31 20:00:00.000) with 0% awake:
+11-11 14:03:49.270   572 14438 E ActivityManager: 0% TOTAL: 0% user + 0% kernel
+11-11 14:03:49.272   572 14438 I ActivityManager: Killing 14373:com.bontecou.whereday.mapqa/u0a243 (adj 0): bg anr
+11-11 14:03:49.274   572 14438 I am_kill : [0,14373,com.bontecou.whereday.mapqa,0,bg anr,265324]
+11-11 14:03:49.274   572 14440 I DropBoxManagerService: add tag=data_app_anr isTagEnabled=true flags=0x6
+11-11 14:03:49.286   572 14438 D ActivityManager: Completed ANR of com.bontecou.whereday.mapqa in 967ms, latency 5ms
+11-11 14:03:49.340   437   437 I adbd    : Remote process closed the socket (on MSG_PEEK)
+11-11 14:03:49.340   572  1730 I am_proc_died: [0,14373,com.bontecou.whereday.mapqa,0,19]
+11-11 14:03:49.344   572   604 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_10243/pid_14373
+
+"main" prio=5 tid=1 Runnable
+  | group="main" sCount=0 ucsCount=0 flags=0 obj=0x72df69b8 self=0xb400007655062380
+  | sysTid=14373 nice=0 cgrp=foreground sched=0/0 handle=0x7730191d20
+  | state=R schedstat=( 10875520489 14828301323 567 ) utm=949 stm=138 core=3 HZ=100
+  | stack=0x7fdfa9c000-0x7fdfa9e000 stackSize=8188KB
+  | held mutexes= "mutator lock"(shared held)
+  at androidx.room.RoomDatabase$Builder.build(RoomDatabase.android.kt:1784)
+  at androidx.work.impl.WorkDatabase$Companion.create(WorkDatabase.kt:165)
+  at androidx.work.impl.WorkManagerImplExtKt.createWorkManager$default(WorkManagerImplExt.kt:38)
+  at androidx.work.impl.WorkManagerImplExtKt.createWorkManager(unavailable:20)
+  at androidx.work.impl.WorkManagerImpl.initialize(WorkManagerImpl.java:214)
+  - locked <@addr=0x14052e78> (a java.lang.Object)
+  at androidx.work.WorkManager$Companion.initialize(WorkManager.kt:201)
+  at androidx.work.WorkManager.initialize(unavailable:2)
+  at androidx.work.WorkManagerInitializer.create(WorkManagerInitializer.java:39)
+  at androidx.work.WorkManagerInitializer.create(WorkManagerInitializer.java:30)
+  at androidx.startup.AppInitializer.doInitialize(AppInitializer.java:180)
+  at androidx.startup.AppInitializer.discoverAndInitialize(AppInitializer.java:238)
+  at androidx.startup.AppInitializer.discoverAndInitialize(AppInitializer.java:206)
+  at androidx.startup.InitializationProvider.onCreate(InitializationProvider.java:45)
+  at android.content.ContentProvider.attachInfo(ContentProvider.java:2644)
+  at android.content.ContentProvider.attachInfo(ContentProvider.java:2613)
+  at android.app.ActivityThread.installProvider(ActivityThread.java:8292)
+  at android.app.ActivityThread.installContentProviders(ActivityThread.java:7807)
+  at android.app.ActivityThread.handleBindApplication(ActivityThread.java:7488)
+  at android.app.ActivityThread.-$$Nest$mhandleBindApplication(unavailable:0)
+  at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2416)
+  at android.os.Handler.dispatchMessage(Handler.java:107)
+  at android.os.Looper.loopOnce(Looper.java:232)
+  at android.os.Looper.loop(Looper.java:317)
+  at android.app.ActivityThread.main(ActivityThread.java:8705)
+  at java.lang.reflect.Method.invoke(Native method)

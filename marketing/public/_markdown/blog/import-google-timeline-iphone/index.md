@@ -26,6 +26,8 @@ Keep the original Google archive separately. Imported visits and timed points ar
 
 These steps follow [Google’s iPhone export instructions](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en), checked October 30, 2026. Google notes that settings can vary during rollouts. Its encrypted device-transfer backup is separate from the downloadable JSON.
 
+History on an Android phone? On that phone, open the system Settings app, then Location → Location services → Timeline → Export Timeline data. Continue, choose a storage location, and save. Transfer the JSON to Files on your iPhone and keep the original. This follows [Google’s Android export instructions](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DAndroid&hl=en), checked November 11, 2026; labels may vary by device.
+
 If you already have a legacy Takeout ZIP, extract it first and select individual supported JSON files. Whereday does not accept a ZIP or an entire folder. Importing does not move or delete Google history and cannot recover records absent from your archive.
 
 ## 2. Check which JSON you have

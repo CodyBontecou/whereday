@@ -28,12 +28,33 @@ class DiskHistoryImportScaleTest {
     @Test fun millionJsonPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.json)}
     @Test fun millionCsvPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.csv)}
     @Test fun millionMarkdownPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.markdown)}
-    private suspend fun exercise(format:ExportFormat)=coroutineScope {
+    @Test fun tenThousandJsonPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.json,10_000)}
+    private suspend fun exercise(format:ExportFormat,count:Int=1_000_000)=coroutineScope {
         val context=InstrumentationRegistry.getInstrumentation().targetContext;check(context.packageName=="com.bontecou.whereday.platform.test")
         val name="import-scale-${UUID.randomUUID()}.db";val directory=File(context.cacheDir,"import-scale-${UUID.randomUUID()}")
         val db=HistoryDatabase.create(context,name)
-        val controller=HistoryImportController(DatabaseHistoryImportTarget(db),DiskHistoryImportWorkspaceFactory(directory))
-        val count=1_000_000;val epoch=Instant.parse("2026-10-26T00:00:00Z")
+        val actualTarget=DatabaseHistoryImportTarget(db)
+        val timedTarget=object:StagedHistoryImportTarget by actualTarget {
+            override suspend fun inspectPlan(stage:HistoryImportStage,check:()->Unit):HistoryImportInspection {
+                val started=System.nanoTime()
+                return try {actualTarget.inspectPlan(stage,check)}
+                finally {println("$format inspect: ${(System.nanoTime()-started)/1_000_000} ms")}
+            }
+            override suspend fun apply(stage:HistoryImportStage,policy:HistoryImportPolicy,check:()->Unit):HistoryImportCounts {
+                var verificationNanos=0L
+                val timedStage=object:HistoryImportStage by stage {
+                    override fun verify(check:()->Unit) {
+                        val started=System.nanoTime()
+                        try {stage.verify(check)} finally {verificationNanos+=System.nanoTime()-started}
+                    }
+                }
+                val started=System.nanoTime()
+                return try {actualTarget.apply(timedStage,policy,check)}
+                finally {println("$format apply: ${(System.nanoTime()-started)/1_000_000} ms; verification: ${verificationNanos/1_000_000} ms")}
+            }
+        }
+        val controller=HistoryImportController(timedTarget,DiskHistoryImportWorkspaceFactory(directory))
+        val epoch=Instant.parse("2026-10-26T00:00:00Z")
         fun input()=Fragments(sequence {
             yield(when(format) {ExportFormat.json->"{\"points\":[";ExportFormat.csv->"timestamp,latitude,longitude\n";else->"| Time | Lat | Lon |\n| --- | --- | --- |\n"})
             repeat(count) {i->val time=epoch.plusSeconds(i.toLong())
@@ -55,13 +76,15 @@ class DiskHistoryImportScaleTest {
                 controller.select(object:HistoryImportInput {override fun open()=input},Locale.US,ZoneOffset.UTC)!!.join()
                 val reviewAt=System.nanoTime();val state=controller.state.value
                 assertEquals(state.error,HistoryImportPhase.review,state.phase)
-                assertTrue(input.delivered>25L*1024*1024);assertEquals(count,state.review!!.points)
+                if(count==1_000_000) assertTrue(input.delivered>25L*1024*1024)
+                assertEquals(count,state.review!!.points)
                 assertEquals(0L,db.history().totalPointCount());assertEquals(0,state.review!!.existing)
                 println("$format review: ${input.delivered} bytes, $count points, ${(reviewAt-started)/1_000_000} ms")
                 controller.commit(state.review!!.id,HistoryImportPolicy.keepExisting)!!.join()
                 assertEquals(controller.state.value.error,HistoryImportPhase.complete,controller.state.value.phase)
                 assertEquals(HistoryImportCounts(points=count),controller.state.value.counts)
                 assertEquals(count.toLong(),db.history().totalPointCount())
+                println("$format commit: $count points, ${(System.nanoTime()-reviewAt)/1_000_000} ms")
                 assertFalse(directory.walkTopDown().any {it.name=="source"})
                 val local=db.history().exportFirstPoints(Instant.EPOCH,Instant.ofEpochMilli(Long.MAX_VALUE),null).first()
                 db.history().put(PointRow(local.value.copy(accuracy=9.0),"local-session"))

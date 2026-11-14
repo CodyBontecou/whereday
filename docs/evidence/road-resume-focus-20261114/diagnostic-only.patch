@@ -1,0 +1,368 @@
+diff --git a/android/app/src/androidTest/kotlin/com/bontecou/whereday/OrderedMapTrace.kt b/android/app/src/androidTest/kotlin/com/bontecou/whereday/OrderedMapTrace.kt
+new file mode 100644
+index 00000000..5dab10ec
+--- /dev/null
++++ b/android/app/src/androidTest/kotlin/com/bontecou/whereday/OrderedMapTrace.kt
+@@ -0,0 +1,49 @@
++package com.bontecou.whereday
++
++import com.bontecou.whereday.domain.RoadTransport
++import kotlin.coroutines.CoroutineContext
++
++/** Test-owned, no UI feedback. One lock serializes UI/render/provider observations;
++ * timestamps denote observation order, not a claim of cross-thread causal ordering.
++ * Only 256 formatted entries survive; no owner/source objects are retained. */
++internal class OrderedMapTrace:MapDiagnosticTrace {
++    private val lock=Any()
++    private val entries=java.util.ArrayDeque<String>(256)
++    private val started=System.nanoTime()
++    private var sequence=0L
++    private var dropped=0L
++    private var dumped=false
++    private var last:String?=null
++    override fun record(stage:String,owner:Any?,related:Any?,value:Int,flags:Int) {
++        synchronized(lock) {
++            val fields="$stage owner=${System.identityHashCode(owner)} related=${System.identityHashCode(related)} value=$value flags=$flags"
++            // Suppress identical adjacent observations, not transitions or provider ordinals.
++            if(last==fields) return
++            last=fields
++            if(entries.size==256) {entries.removeFirst();dropped++}
++            entries.addLast("${++sequence} +${System.nanoTime()-started}ns thread=${Thread.currentThread().id} $fields")
++        }
++    }
++    /** Stamp already exists in the real request context: no added context/wrapper/provider.
++     * Reflection is test-only and reads immutable Stamp fields, not mutable service/cache
++     * internals (which would require an additional production lock acquisition).
++     * Missing pinned implementation fields are explicit gaps, never inferred values. */
++    fun provider(stage:String,context:CoroutineContext,ordinal:Int,transport:RoadTransport,controller:Any) {
++        try {
++            val stamp=context.fold<Any?>(null) {found,element->
++                found ?: element.takeIf {it.javaClass.name.endsWith("RoadDisplayController\$Stamp")}
++            }
++            if(stamp==null) {record("$stage.stamp-unavailable",null,null,ordinal,transport.ordinal);return}
++            fun field(target:Any,name:String):Any?=target.javaClass.getDeclaredField(name).apply {isAccessible=true}.get(target)
++            val session=checkNotNull(field(stamp,"session"))
++            record(stage,stamp,session,ordinal,transport.ordinal)
++            record("provider.identity",field(controller,"provider"),stamp,ordinal,transport.ordinal)
++            record("provider.stamp-epoch",stamp,field(stamp,"epoch"),ordinal,transport.ordinal)
++        } catch(_:Exception) {record("$stage.ownership-unavailable",null,null,ordinal,transport.ordinal)}
++    }
++    fun dumpOnce():String=synchronized(lock) {
++        if(dumped) return@synchronized ""
++        dumped=true
++        "[DEBUG-android-ordered-trace] retained=${entries.size} dropped=$dropped\n"+entries.joinToString("\n")
++    }
++}
+diff --git a/android/app/src/androidTest/kotlin/com/bontecou/whereday/RoadDisplayProducerTest.kt b/android/app/src/androidTest/kotlin/com/bontecou/whereday/RoadDisplayProducerTest.kt
+index bf89ecd0..a9624a3b 100644
+--- a/android/app/src/androidTest/kotlin/com/bontecou/whereday/RoadDisplayProducerTest.kt
++++ b/android/app/src/androidTest/kotlin/com/bontecou/whereday/RoadDisplayProducerTest.kt
+@@ -30,6 +30,7 @@ class RoadDisplayProducerTest {
+     private val points=listOf(TrackPoint("a",Coordinate(48.8584,2.2945),Instant.EPOCH,5.0),
+         TrackPoint("b",Coordinate(48.8584,2.3045),Instant.EPOCH.plusSeconds(600),5.0))
+     private val calls=AtomicInteger()
++    private var diagnosticTrace:OrderedMapTrace?=null
+     private val settings=MutableStateFlow(AppSettings(roadDisplayEnabled=true,roadAccessRevision="a"))
+     private val journal=MutableStateFlow(JournalClearState(generation="a"))
+     private lateinit var controller:RoadDisplayController
+@@ -37,9 +38,17 @@ class RoadDisplayProducerTest {
+     private fun response(a:Coordinate,b:Coordinate)=RoadDirectionsResult(a.distanceTo(b)*1.3,listOf(a,Coordinate(a.latitude+.003,(a.longitude+b.longitude)/2),b))
+     private fun setup(blockFirst:Boolean=false) {
+         check(InstrumentationRegistry.getInstrumentation().targetContext.packageName=="com.bontecou.whereday.mapqa")
+-        controller=RoadDisplayController(RoadDirections {a,b,_->
+-            if(calls.incrementAndGet()==1 && blockFirst) withContext(NonCancellable) {release.await()}
+-            response(a,b)
++        val trace=diagnosticTrace // Capture once before publishing the existing provider to worker threads.
++        controller=RoadDisplayController(RoadDirections {a,b,transport->
++            val ordinal=calls.incrementAndGet()
++            trace?.provider("provider.invoke",currentCoroutineContext(),ordinal,transport,controller)
++            try {
++                if(ordinal==1 && blockFirst) withContext(NonCancellable) {release.await()}
++                response(a,b).also {trace?.provider("provider.complete",currentCoroutineContext(),ordinal,transport,controller)}
++            } catch(canceled:CancellationException) {
++                trace?.provider("provider.cancel",currentCoroutineContext(),ordinal,transport,controller)
++                throw canceled
++            }
+         },settings,{settings.value},{settings.value=settings.value.copy(roadDisplayEnabled=false)},journal,minimumRequestIntervalMillis=0)
+     }
+     @After fun close()=runBlocking {release.complete(Unit);if(::controller.isInitialized) controller.closeForTest()}
+@@ -69,18 +78,33 @@ class RoadDisplayProducerTest {
+         compose.onNodeWithTag("road-estimate-caption").assertDoesNotExist();assertEquals(2,calls.get())
+     }
+     @Test fun coveredSourceReleasesAdmissionAndLateWorkerCannotReplaceItsSuccessor() {
++        val trace=OrderedMapTrace();diagnosticTrace=trace
++        try {
+         setup(true);var visible by mutableStateOf(true)
+-        compose.setContent {MaterialTheme {Column(Modifier.fillMaxSize()) {JournalMap(points,emptyList(),roadController=controller,roadVisible=visible)}}}
++        compose.setContent {MaterialTheme {Column(Modifier.fillMaxSize()) {JournalMap(points,emptyList(),roadController=controller,roadVisible=visible,traceSink=trace)}}}
+         val map=map();compose.waitUntil(5000) {calls.get()==1}
++        trace.record("test.cover",controller,null,calls.get(),0)
+         compose.runOnIdle {visible=false};compose.waitUntil(5000) {controller.state.value.foregroundSessions==0}
++        trace.record("test.covered-zero-observed",controller,null,calls.get(),0)
+         assertEquals(0,roads(map));compose.runOnIdle {visible=true}
+         compose.waitUntil(5000) {controller.state.value.foregroundSessions==1}
+         assertEquals(1,calls.get());release.complete(Unit)
+         compose.waitUntil(10000) {calls.get()==2 && roads(map)>0}
++        trace.record("test.second-road-rendered-before-created",controller,null,calls.get(),0)
+         compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
++        trace.record("test.move-created-returned",controller,null,calls.get(),0)
+         compose.waitUntil(5000) {controller.state.value.foregroundSessions==0}
++        trace.record("test.zero-observed-before-resume",controller,null,calls.get(),0)
+         compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
+-        try {compose.waitUntil(10000) {calls.get()==3 && roads(map)>0}}
++        trace.record("test.move-resumed-returned",controller,null,calls.get(),0)
++        try {compose.waitUntil(10000) {
++            // Native/semantics reads may synchronize Compose. Read the count last,
++            // after those reads, rather than accepting a transient three before a fourth request.
++            val rendered=roads(map)>0
++            val focused=compose.runOnIdle {compose.activity.hasWindowFocus()}
++            val caption=compose.onAllNodesWithTag("road-estimate-caption").fetchSemanticsNodes().isNotEmpty()
++            rendered && focused && caption && calls.get()==3
++        }}
+         catch(error:ComposeTimeoutException) {
+             val nativeState=runCatching {compose.runOnIdle {
+                 val rendered=map.first.queryRenderedFeatures(android.graphics.RectF(0f,0f,map.second.width.toFloat(),map.second.height.toFloat()),"journal-road-path").size
+@@ -96,6 +120,11 @@ class RoadDisplayProducerTest {
+                 "lifecycle=${compose.activity.lifecycle.currentState}, $nativeState. Current semantics:\n"+
+                 semantics,error)
+         }
++        compose.runOnIdle {assertEquals("Settled resume must not prepare while native focus is stale",3,calls.get())}
++        } finally {
++            trace.record("test.finally",null,null,calls.get(),0)
++            println(trace.dumpOnce())
++        }
+     }
+     @Test fun replayFramesReusePreparedSourceAndRevealRoadOnlyAtItsRecordedEndpoint() {
+         setup();var frame by mutableStateOf(ReplayFrame(0,2,points[0],points.take(1),Duration.ZERO,Duration.ofSeconds(600),0.0,700.0))
+diff --git a/android/app/src/main/kotlin/com/bontecou/whereday/JournalMap.kt b/android/app/src/main/kotlin/com/bontecou/whereday/JournalMap.kt
+index 9b869cfb..1241de41 100644
+--- a/android/app/src/main/kotlin/com/bontecou/whereday/JournalMap.kt
++++ b/android/app/src/main/kotlin/com/bontecou/whereday/JournalMap.kt
+@@ -317,7 +317,7 @@ private class JournalMapRenderer {
+ 
+ @OptIn(ExperimentalLayoutApi::class)
+ @Composable internal fun JournalMap(points: List<TrackPoint>, visits: List<Visit>, modifier: Modifier=Modifier,replay:ReplayFrame?=null,endpoints:RouteEndpoints=RouteEndpoints.from(points),showOutliers:Boolean=false,onOutliers:((Boolean)->Unit)?=null,allOutlierFallback:Boolean=false,onVisitSelected:((Visit)->Unit)?=null,photoLayer:PhotoMapLayer?=null,follow:MapFollowUi?=null,followMetric:Boolean=true,activeRecording:ActiveRecordingMapUi?=null,roadRoute:RoadRoute?=null,showStraightSegments:Boolean=true,roadController:com.bontecou.whereday.platform.RoadDisplayController?=null,roadVisible:Boolean=true,visitFocus:VisitMapFocus?=null,onVisitFocusCleared:()->Unit={},inspectionScope:Any?=null,pointMarkerSource:MapPointMarkerSource?=null,
+-    home:MapHomeOptions?=null,fullBleed:Boolean=false) {
++    home:MapHomeOptions?=null,fullBleed:Boolean=false,traceSink:MapDiagnosticTrace?=null) {
+     val context=LocalContext.current
+     val pointLocale=LocalConfiguration.current.locales[0]
+     val lifecycle=LocalLifecycleOwner.current.lifecycle
+@@ -329,7 +329,7 @@ private class JournalMapRenderer {
+     renderer.inks=inks
+     renderer.startIcon=remember(flagScale,inks) {routeFlag(flagScale,false,inks)}
+     renderer.endIcon=remember(flagScale,inks) {routeFlag(flagScale,true,inks)}
+-    val mapView=remember(context) { MapLibre.getInstance(context); RendererReadyMapView(context).also { it.onCreate(null) } }
++    val mapView=remember(context) { MapLibre.getInstance(context); RendererReadyMapView(context,traceSink).also { it.onCreate(null) } }
+     var localOnline by rememberSaveable { mutableStateOf(false) }
+     var localPoints by rememberSaveable { mutableStateOf(true) }
+     var localPath by rememberSaveable {mutableStateOf(true)}
+@@ -356,7 +356,7 @@ private class JournalMapRenderer {
+     val latestPointSelection by rememberUpdatedState<(TrackPoint?)->Unit>({point->selectPoint(point)})
+     var pickingPoint by rememberSaveable {mutableStateOf(false)}
+     var configuring by rememberSaveable {mutableStateOf(false)}
+-    val preparedRoad=rememberRoadDisplay(roadController,points,roadVisible && showPath && !configuring && !pickingVisit && !pickingPoint,showOutliers,allOutlierFallback)
++    val preparedRoad=rememberRoadDisplay(roadController,points,roadVisible && showPath && !configuring && !pickingVisit && !pickingPoint,showOutliers,allOutlierFallback,traceSink)
+     val displayedRoad=if(roadController==null) roadRoute else preparedRoad
+     val attributionLinks=androidx.compose.ui.platform.LocalUriHandler.current
+     var attributionError by remember(displayedRoad) {mutableStateOf(false)}
+@@ -461,7 +461,10 @@ private class JournalMapRenderer {
+             if(!renderer.disposed && renderer.map!=null && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                 val firstReady=!renderer.queryReady
+                 renderer.queryReady=true;mapView.isEnabled=true
+-                if(firstReady) renderer.cameraSnapshot()?.let {savedCamera=it}
++                if(firstReady) {
++                    traceSink?.record("journal.first-frame-input-enabled",mapView,renderer.map,lifecycle.currentState.ordinal,MapTraceFlags.RESUMED)
++                    renderer.cameraSnapshot()?.let {savedCamera=it}
++                }
+                 if(viewport==null || viewportSize!=(mapView.width to mapView.height)) refreshViewport()
+             }
+         }
+@@ -469,12 +472,14 @@ private class JournalMapRenderer {
+         fun sync() {
+             val shouldStart=lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+             val shouldResume=lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
++            traceSink?.record("journal.lifecycle-sync",mapView,lifecycle,lifecycle.currentState.ordinal,
++                (if(shouldResume) MapTraceFlags.RESUMED else 0) or (if(mapView.isEnabled) MapTraceFlags.ENABLED else 0))
+             if(shouldStart && !started) { mapView.onStart(); started=true }
+             if(shouldResume && !resumed) {
+                 mapView.onResume();resumed=true
+                 renderer.map?.triggerRepaint()
+             }
+-            if(!shouldResume) {renderer.queryReady=false;mapView.isEnabled=false}
++            if(!shouldResume) {renderer.queryReady=false;mapView.isEnabled=false;traceSink?.record("journal.input-revoked",mapView,renderer.map,0,0)}
+             if(!shouldResume && resumed) { mapView.onPause(); resumed=false }
+             if(!shouldStart && started) { mapView.onStop(); started=false }
+         }
+@@ -487,6 +492,7 @@ private class JournalMapRenderer {
+         }
+         lifecycle.addObserver(observer); sync()
+         onDispose {
++            traceSink?.record("journal.dispose",mapView,renderer.map,0,0)
+             mapView.isEnabled=false;renderer.queryReady=false;renderer.disposed=true;renderer.map=null
+             lifecycle.removeObserver(observer);mapView.removeOnDidFinishRenderingFrameListener(rendered)
+             if(!destroyed) {if(resumed) mapView.onPause();if(started) mapView.onStop();mapView.onDestroy()}
+diff --git a/android/app/src/main/kotlin/com/bontecou/whereday/MapDiagnosticTrace.kt b/android/app/src/main/kotlin/com/bontecou/whereday/MapDiagnosticTrace.kt
+new file mode 100644
+index 00000000..571b0f1a
+--- /dev/null
++++ b/android/app/src/main/kotlin/com/bontecou/whereday/MapDiagnosticTrace.kt
+@@ -0,0 +1,27 @@
++package com.bontecou.whereday
++
++/** Optional observation only: implementations must be synchronous, bounded, thread-safe,
++ * non-throwing and must not feed UI state back into the producer. Call sites use safe
++ * calls so the default null path allocates no event, lambda or formatted message.
++ * Owners are ephemeral object identities, never coordinates, journal IDs or source text. */
++internal fun interface MapDiagnosticTrace {
++    fun record(stage:String,owner:Any?,related:Any?,value:Int,flags:Int)
++}
++
++/** Bit meanings are stage-specific; only booleans actually read at that stage are emitted. */
++internal object MapTraceFlags {
++    const val VISIBLE=1
++    const val FOCUSED=2
++    const val CONFIGURED=4
++    const val ENABLED=8
++    const val NETWORK=16
++    const val LOADING=32
++    const val CLEARING=64
++    const val UNAVAILABLE=128
++    const val JOURNAL_READY=256
++    const val RESUMED=512
++    const val ALIVE=1024
++    const val MAP_PRESENT=2048
++    const val SELECTED=4096
++    const val SOURCE_PRESENT=8192
++}
+diff --git a/android/app/src/main/kotlin/com/bontecou/whereday/RendererReadyMapView.kt b/android/app/src/main/kotlin/com/bontecou/whereday/RendererReadyMapView.kt
+index 95ccfbf7..5c30c9c0 100644
+--- a/android/app/src/main/kotlin/com/bontecou/whereday/RendererReadyMapView.kt
++++ b/android/app/src/main/kotlin/com/bontecou/whereday/RendererReadyMapView.kt
+@@ -5,7 +5,7 @@ import org.maplibre.android.maps.renderer.surfaceview.MapLibreVulkanSurfaceView
+ 
+ /** MapLibre dispatches gestures even when disabled; its annotation hit test can query
+  * the native renderer before surface initialization. Gate input before SDK dispatch. */
+-internal class RendererReadyMapView(context:android.content.Context):MapView(context) {
++internal class RendererReadyMapView(context:android.content.Context,private val traceSink:MapDiagnosticTrace?=null):MapView(context) {
+     init {
+         isEnabled=false
+         // In pinned 13.4.1, a first surface arriving before the Vulkan loop's
+@@ -15,13 +15,23 @@ internal class RendererReadyMapView(context:android.content.Context):MapView(con
+         (renderView as? MapLibreVulkanSurfaceView)?.let {surface->
+             check(!surface.isAttachedToWindow)
+             surface.surfaceDestroyed(surface.holder)
++            traceSink?.record("native.initial-no-surface-ack",this,surface,0,0)
++            if(traceSink!=null) surface.holder.addCallback(object:android.view.SurfaceHolder.Callback {
++                override fun surfaceCreated(holder:android.view.SurfaceHolder) {traceSink.record("native.surface-created",this@RendererReadyMapView,holder.surface,0,if(holder.surface.isValid) 1 else 0)}
++                override fun surfaceChanged(holder:android.view.SurfaceHolder,format:Int,width:Int,height:Int) {traceSink.record("native.surface-changed",this@RendererReadyMapView,holder.surface,0,if(holder.surface.isValid) 1 else 0)}
++                override fun surfaceDestroyed(holder:android.view.SurfaceHolder) {traceSink.record("native.surface-destroyed",this@RendererReadyMapView,holder.surface,0,if(holder.surface.isValid) 1 else 0)}
++            })
+         }
+     }
++    override fun onWindowFocusChanged(hasWindowFocus:Boolean) {
++        super.onWindowFocusChanged(hasWindowFocus)
++        traceSink?.record("native.window-focus",this,renderView,0,if(hasWindowFocus) MapTraceFlags.FOCUSED else 0)
++    }
+     override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean =
+-        if(!isEnabled) true else super.dispatchTouchEvent(event)
++        if(!isEnabled) {traceSink?.record("native.touch-suppressed",this,renderView,event.actionMasked,0);true} else super.dispatchTouchEvent(event)
+     override fun dispatchGenericMotionEvent(event:android.view.MotionEvent):Boolean =
+-        if(!isEnabled) false else super.dispatchGenericMotionEvent(event)
++        if(!isEnabled) {traceSink?.record("native.motion-suppressed",this,renderView,event.actionMasked,0);false} else super.dispatchGenericMotionEvent(event)
+     override fun dispatchKeyEvent(event:android.view.KeyEvent):Boolean =
+-        if(!isEnabled) false else super.dispatchKeyEvent(event)
++        if(!isEnabled) {traceSink?.record("native.key-suppressed",this,renderView,0,0);false} else super.dispatchKeyEvent(event)
+ }
+ 
+diff --git a/android/app/src/main/kotlin/com/bontecou/whereday/RoadDisplayMap.kt b/android/app/src/main/kotlin/com/bontecou/whereday/RoadDisplayMap.kt
+index 185665e4..30dbacce 100644
+--- a/android/app/src/main/kotlin/com/bontecou/whereday/RoadDisplayMap.kt
++++ b/android/app/src/main/kotlin/com/bontecou/whereday/RoadDisplayMap.kt
+@@ -10,13 +10,24 @@ import androidx.lifecycle.repeatOnLifecycle
+ import com.bontecou.whereday.domain.*
+ import com.bontecou.whereday.platform.RoadDisplayController
+ import kotlinx.coroutines.*
++import kotlinx.coroutines.flow.first
+ 
+ /** Derived display only. Never owns recording points, replay statistics or repository mutations. */
+ @Composable internal fun rememberRoadDisplay(controller:RoadDisplayController?,points:List<TrackPoint>,
+-    visible:Boolean,showOutliers:Boolean=false,allOutlierFallback:Boolean=false):RoadRoute? {
++    visible:Boolean,showOutliers:Boolean=false,allOutlierFallback:Boolean=false,traceSink:MapDiagnosticTrace?=null):RoadRoute? {
+     if(controller==null) return null
+-    val focused=LocalWindowInfo.current.isWindowFocused
++    val windowInfo=LocalWindowInfo.current
++    val focused=windowInfo.isWindowFocused
++    val traceView=if(traceSink!=null) androidx.compose.ui.platform.LocalView.current else null
+     val policy by controller.state.collectAsStateWithLifecycle()
++    if(traceSink!=null) SideEffect {
++        traceSink.record(if(!visible || !focused) "road.covered-suppression" else "road.committed-gates",controller,points,policy.foregroundSessions,
++            (if(visible) MapTraceFlags.VISIBLE else 0) or (if(focused) MapTraceFlags.FOCUSED else 0) or
++            (if(policy.configured) MapTraceFlags.CONFIGURED else 0) or (if(policy.enabled) MapTraceFlags.ENABLED else 0) or
++            (if(policy.networkAllowed) MapTraceFlags.NETWORK else 0) or (if(policy.loading) MapTraceFlags.LOADING else 0) or
++            (if(policy.clearing) MapTraceFlags.CLEARING else 0) or (if(policy.policyUnavailable) MapTraceFlags.UNAVAILABLE else 0) or
++            (if(policy.journalReady) MapTraceFlags.JOURNAL_READY else 0))
++    }
+     if(!visible || !focused || !policy.configured || !policy.enabled || !policy.networkAllowed || policy.loading ||
+         policy.clearing || policy.policyUnavailable || !policy.journalReady || points.size>RoadSnapping.maximumSourcePoints) return null
+     val source=remember(points,showOutliers,allOutlierFallback) {
+@@ -27,26 +38,50 @@ import kotlinx.coroutines.*
+     val fingerprint=remember(source) {RoadSnapping.fingerprint(source)}
+     val lifecycle=LocalLifecycleOwner.current.lifecycle
+     // A source/policy transition owns a new session. Late teardown cannot suspend its replacement.
+-    val session=remember(controller,fingerprint,policy.policyRevision,policy.journalGeneration) {controller.createSession()}
++    val session=remember(controller,fingerprint,policy.policyRevision,policy.journalGeneration) {controller.createSession().also {traceSink?.record("road.session-created",it,source,0,0)}}
+     var prepared by remember(session) {mutableStateOf<RoadDisplayPlan?>(null)}
+     DisposableEffect(session,lifecycle) {
+-        val observer=LifecycleEventObserver {_,_->
+-            if(!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) session.background()
++        val observer=LifecycleEventObserver {_,event->
++            traceSink?.record("road.lifecycle",session,lifecycle,event.ordinal,
++                if(lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) MapTraceFlags.RESUMED else 0)
++            if(!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
++                session.background()
++                traceSink?.record("road.revoke-returned",session,lifecycle,0,0)
++            }
+         }
+         lifecycle.addObserver(observer)
+-        onDispose {lifecycle.removeObserver(observer);session.close()}
++        onDispose {lifecycle.removeObserver(observer);session.close();traceSink?.record("road.release-returned",session,lifecycle,0,0)}
+     }
+-    LaunchedEffect(session,lifecycle) {
++    LaunchedEffect(session,lifecycle,windowInfo) {
+         lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
++            // Composition can still hold its pre-pause focus value when lifecycle resumes.
++            // Observe the live snapshot before admitting work; cancellation removes this wait.
++            snapshotFlow {windowInfo.isWindowFocused}.first {it}
+             session.foreground()
++            traceSink?.record("road.acquire-returned",session,lifecycle,0,0)
+             try {
+-                prepared=session.prepare(source)
++                traceSink?.record("road.prepare",session,source,0,0)
++                traceSink?.record("road.prepare-native-focus",session,traceView,0,
++                    if(traceView?.hasWindowFocus()==true) MapTraceFlags.FOCUSED else 0)
++                traceSink?.record("road.prepare-live-window-info",session,windowInfo,0,
++                    if(windowInfo.isWindowFocused) MapTraceFlags.FOCUSED else 0)
++                prepared=session.prepare(source).also {plan->
++                    traceSink?.record("road.prepare-complete",session,plan,
++                        plan.warnings.fold(0) {bits,warning->bits or (1 shl warning.ordinal)},if(plan.fromCache) 1 else 0)
++                }
+                 awaitCancellation()
+-            } catch(canceled:CancellationException) {throw canceled}
+-            catch(_:Exception) {prepared=null} // Raw geometry stays visible when preparation is unavailable.
+-            finally {prepared=null}
++            } catch(canceled:CancellationException) {
++                traceSink?.record("road.repeat-block-cancel",session,source,0,if(canceled is TimeoutCancellationException) 1 else 0)
++                throw canceled
++            }
++            catch(_:Exception) {prepared=null;traceSink?.record("road.prepare-failed",session,source,0,0)} // Raw geometry stays visible when preparation is unavailable.
++            finally {prepared=null;traceSink?.record("road.prepared-cleared",session,source,0,0)}
+         }
+     }
+     val candidate=prepared
+-    return candidate?.route?.takeIf {lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && session.isCurrent(candidate,fingerprint)}
++    return candidate?.route?.takeIf {
++        (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && session.isCurrent(candidate,fingerprint)).also {current->
++            traceSink?.record(if(current) "road.commit-check" else "road.stale-drop",session,candidate,0,0)
++        }
++    }
+ }

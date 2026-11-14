@@ -1,0 +1,53 @@
+diff --git a/android/platform/src/main/kotlin/com/bontecou/whereday/platform/HistoryImportWorkspace.kt b/android/platform/src/main/kotlin/com/bontecou/whereday/platform/HistoryImportWorkspace.kt
+index 21e2c27b..bc4e461f 100644
+--- a/android/platform/src/main/kotlin/com/bontecou/whereday/platform/HistoryImportWorkspace.kt
++++ b/android/platform/src/main/kotlin/com/bontecou/whereday/platform/HistoryImportWorkspace.kt
+@@ -11,8 +11,16 @@ import java.util.Locale
+ 
+ enum class ImportRecordKind {visit,point}
+ data class ImportStageRow(val kind:ImportRecordKind,val id:String,val payload:String,val baseline:String?=null,val explicitIdentity:Boolean=true) {
+-    fun visit():Visit=ImportStageCodec.gson.fromJson(payload,Visit::class.java).also {require(kind==ImportRecordKind.visit && it.id==id)}
+-    fun point():TrackPoint=ImportStageCodec.gson.fromJson(payload,TrackPoint::class.java).also {require(kind==ImportRecordKind.point && it.id==id)}
++    // A row is immutable and page-scoped. Reuse its decoded value for chronology,
++    // admission and writes, never across rows/pages or a fresh checksum scan.
++    @delegate:Transient private val decoded by lazy {
++        when(kind) {
++            ImportRecordKind.visit->ImportStageCodec.gson.fromJson(payload,Visit::class.java).also {require(it.id==id)}
++            ImportRecordKind.point->ImportStageCodec.gson.fromJson(payload,TrackPoint::class.java).also {require(it.id==id)}
++        }
++    }
++    fun visit():Visit {require(kind==ImportRecordKind.visit);return decoded as Visit}
++    fun point():TrackPoint {require(kind==ImportRecordKind.point);return decoded as TrackPoint}
+ }
+ internal object ImportStageCodec {
+     // Private, non-resumable scratch only: no public backup codec uses this Gson.
+diff --git a/android/platform/src/test/kotlin/com/bontecou/whereday/platform/ImportStageCodecTest.kt b/android/platform/src/test/kotlin/com/bontecou/whereday/platform/ImportStageCodecTest.kt
+index 63335c2c..7fed57f5 100644
+--- a/android/platform/src/test/kotlin/com/bontecou/whereday/platform/ImportStageCodecTest.kt
++++ b/android/platform/src/test/kotlin/com/bontecou/whereday/platform/ImportStageCodecTest.kt
+@@ -7,6 +7,25 @@ import org.junit.Test
+ import java.time.Instant
+ 
+ class ImportStageCodecTest {
++    @Test fun repeatedReadsReuseOnlyTheImmutableRowsDecodedValue() {
++        val point=TrackPoint(id="reused-point",coordinate=Coordinate(18.0,-66.0),time=Instant.EPOCH,accuracy=5.0)
++        val visit=Visit(id="reused-visit",coordinate=point.coordinate,arrivedAt=point.time,notes="Synthetic note")
++        val pointRow=ImportStageRow(ImportRecordKind.point,point.id,ImportStageCodec.gson.toJson(point))
++        val visitRow=ImportStageRow(ImportRecordKind.visit,visit.id,ImportStageCodec.gson.toJson(visit))
++        val serialized=ImportStageCodec.gson.toJson(pointRow)
++        assertEquals(point,pointRow.point());assertSame(pointRow.point(),pointRow.point())
++        assertEquals(serialized,ImportStageCodec.gson.toJson(pointRow))
++        assertFalse(serialized.contains("decoded"))
++        assertEquals(visit,visitRow.visit());assertSame(visitRow.visit(),visitRow.visit())
++        val corrected=point.copy(accuracy=9.0)
++        val copied=pointRow.copy(payload=ImportStageCodec.gson.toJson(corrected))
++        assertEquals(corrected,copied.point());assertNotSame(pointRow.point(),copied.point())
++        assertEquals(point,pointRow.point())
++        assertTrue(runCatching {pointRow.visit()}.isFailure)
++        assertTrue(runCatching {visitRow.point()}.isFailure)
++        assertTrue(runCatching {pointRow.copy(id="wrong-identity").point()}.isFailure)
++        assertTrue(runCatching {pointRow.copy(payload="malformed").point()}.isFailure)
++    }
+     @Test fun privateInstantsUseExactIntegerSecondAndNanosecondTuples() {
+         for(value in listOf(Instant.EPOCH,Instant.ofEpochSecond(-1,999_999_999),
+             Instant.ofEpochSecond(1,123_456_789),Instant.MIN,Instant.MAX)) {

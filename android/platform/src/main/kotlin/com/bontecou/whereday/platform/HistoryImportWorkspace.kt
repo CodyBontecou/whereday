@@ -15,9 +15,66 @@ data class ImportStageRow(val kind:ImportRecordKind,val id:String,val payload:St
     fun point():TrackPoint=ImportStageCodec.gson.fromJson(payload,TrackPoint::class.java).also {require(kind==ImportRecordKind.point && it.id==id)}
 }
 internal object ImportStageCodec {
-    val gson:Gson=GsonBuilder().serializeNulls().disableHtmlEscaping()
-        .registerTypeAdapter(Instant::class.java,JsonSerializer<Instant> {value,_,_->JsonPrimitive(value.toString())})
-        .registerTypeAdapter(Instant::class.java,JsonDeserializer<Instant> {value,_,_->Instant.parse(value.asString)}).create()
+    // Private, non-resumable scratch only: no public backup codec uses this Gson.
+    // Exact numeric tuples avoid formatting/parsing ISO dates on every bounded scan.
+    private val instant=object:TypeAdapter<Instant>() {
+        override fun write(out:com.google.gson.stream.JsonWriter,value:Instant) {
+            out.beginArray();out.value(value.epochSecond);out.value(value.nano);out.endArray()
+        }
+        override fun read(input:com.google.gson.stream.JsonReader):Instant {
+            input.beginArray()
+            fun integer():Long {
+                if(input.peek()!=com.google.gson.stream.JsonToken.NUMBER) throw JsonParseException("Invalid staged timestamp integer")
+                return input.nextString().toLongOrNull() ?: throw JsonParseException("Invalid staged timestamp integer")
+            }
+            val seconds=integer();val nanos=integer()
+            if(nanos !in 0..999_999_999L) throw JsonParseException("Invalid staged timestamp nanoseconds")
+            input.endArray()
+            return Instant.ofEpochSecond(seconds,nanos)
+        }
+    }.nullSafe()
+    // Fixed private point tuples avoid field-name/reflection work on every integrity scan.
+    // Null slots are retained, so unknown values remain distinct from known zero/empty values.
+    private val point=object:TypeAdapter<TrackPoint>() {
+        override fun write(out:com.google.gson.stream.JsonWriter,value:TrackPoint) {
+            // Gson invokes custom adapters with a lenient writer; retain its default finite-double rejection.
+            require(value.coordinate.latitude.isFinite() && value.coordinate.longitude.isFinite() && value.accuracy.isFinite() &&
+                (value.altitude?.isFinite() != false) && (value.speed?.isFinite() != false)) {"Nonfinite staged point number"}
+            out.beginArray();out.value(value.id);out.value(value.coordinate.latitude);out.value(value.coordinate.longitude)
+            instant.write(out,value.time);out.value(value.accuracy);out.value(value.altitude);out.value(value.speed)
+            out.value(value.outlier);out.value(value.countryCode);out.value(value.timeZone)
+            instant.write(out,value.countryResolutionAttemptedAt);out.endArray()
+        }
+        override fun read(input:com.google.gson.stream.JsonReader):TrackPoint {
+            fun string():String {
+                if(input.peek()!=com.google.gson.stream.JsonToken.STRING)throw JsonParseException("Invalid staged point string")
+                return input.nextString()
+            }
+            fun number():Double {
+                if(input.peek()!=com.google.gson.stream.JsonToken.NUMBER)throw JsonParseException("Invalid staged point number")
+                return input.nextDouble().also {if(!it.isFinite())throw JsonParseException("Nonfinite staged point number")}
+            }
+            fun optionalNumber():Double? {
+                if(input.peek()==com.google.gson.stream.JsonToken.NULL) {input.nextNull();return null}
+                return number()
+            }
+            fun optionalString():String? {
+                if(input.peek()==com.google.gson.stream.JsonToken.NULL) {input.nextNull();return null}
+                return string()
+            }
+            input.beginArray()
+            val id=string();val latitude=number();val longitude=number()
+            val time=instant.read(input) ?: throw JsonParseException("Missing staged point time")
+            val accuracy=number();val altitude=optionalNumber();val speed=optionalNumber()
+            if(input.peek()!=com.google.gson.stream.JsonToken.BOOLEAN)throw JsonParseException("Invalid staged point flag")
+            val outlier=input.nextBoolean();val country=optionalString();val zone=optionalString();val attempted=instant.read(input)
+            input.endArray()
+            return TrackPoint(id,Coordinate(latitude,longitude),time,accuracy,altitude,speed,outlier,country,zone,attempted)
+        }
+    }.nullSafe()
+    // Scratch visit payloads omit absent optional fields; public backup codecs are separate.
+    val gson:Gson=GsonBuilder().disableHtmlEscaping().registerTypeAdapter(Instant::class.java,instant)
+        .registerTypeAdapter(TrackPoint::class.java,point).create()
     fun hash(value:Any):String {
         val bytes=MessageDigest.getInstance("SHA-256").digest(gson.toJson(value).toByteArray(Charsets.UTF_8))
         val digits="0123456789abcdef"

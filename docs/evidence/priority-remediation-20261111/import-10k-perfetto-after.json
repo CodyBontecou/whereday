@@ -1,0 +1,34 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "platform",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+      "test": "tenThousandJsonPointsReviewCommitDeduplicateAndClear"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+      "package": "com.bontecou.whereday.platform.test",
+      "sha256": "656a2174445e3f75f67e06f81c1b7b694e56631e6b1b6e3a7e961bbfa9cbda62"
+    }
+  ],
+  "scope": "Same 10,000-point JSON control after filtering unchanged baseline writes; not the million-record performance gate",
+  "trace": {
+    "path": "/var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/argent-profiler-cwd/native-profiler-20261111-183836.pftrace",
+    "sha256": "41706c385d4112de8603b2da479c27fce94bec5e09b2bd47c4c703a8c57ff01e"
+  },
+  "comparison": {
+    "beforeMs": 11561,
+    "afterMs": 13892,
+    "conclusion": "After control was slower; one run each on a shared host does not prove a speed improvement. Native trace gives no managed method-level culprit. Full-size gates remain required."
+  }
+}

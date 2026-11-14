@@ -1,0 +1,98 @@
+{
+  "run": 43570950739,
+  "head": "6a6b7fe0b688a1b9d43fea1634157313889b8307",
+  "artifact": 14105507468,
+  "artifactDigest": "sha256:eca18fe25fb3e208f04c31f51c6828270778b24b9a867cbc9850bba6e0ff6c73",
+  "suite": {
+    "name": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2386.534",
+    "timestamp": "2026-11-14T08:10:02",
+    "hostname": "localhost"
+  },
+  "cases": [
+    {
+      "case": {
+        "name": "tenThousandJsonPointsReviewCommitDeduplicateAndClear",
+        "classname": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+        "time": "7.973"
+      },
+      "failure": false,
+      "skipped": false,
+      "logSha256": "10c588b61c9c49fb0014ff00551d8f6e2fba47706df90e6965892b4e6d2c58ee",
+      "phaseLines": [
+        "json inspect: 643 ms",
+        "json review: 670012 bytes, 10000 points, 3341 ms",
+        "json apply: 1083 ms; verification: 597 ms",
+        "json commit: 10000 points, 1089 ms",
+        "json inspect: 761 ms",
+        "json apply: 794 ms; verification: 600 ms",
+        "json reimport: 10000 existing records kept; no duplicate writes",
+        "json complete: 8017 ms; sampled Java peak 85888464; heap limit 201326592"
+      ]
+    },
+    {
+      "case": {
+        "name": "millionMarkdownPointsReviewCommitDeduplicateAndClear",
+        "classname": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+        "time": "920.583"
+      },
+      "failure": false,
+      "skipped": false,
+      "logSha256": "c8ba8beff504efd2d1dee866bb43d622c732dbfc65a2d4adaa550dfa071b69fd",
+      "phaseLines": [
+        "markdown inspect: 48111 ms",
+        "markdown review: 36000041 bytes, 1000000 points, 350017 ms",
+        "markdown apply: 114825 ms; verification: 59693 ms",
+        "markdown commit: 1000000 points, 114835 ms",
+        "markdown inspect: 69439 ms",
+        "markdown apply: 83698 ms; verification: 62123 ms",
+        "markdown reimport: 1000000 existing records kept; no duplicate writes",
+        "markdown complete: 920586 ms; sampled Java peak 12360128; heap limit 201326592"
+      ]
+    },
+    {
+      "case": {
+        "name": "millionCsvPointsReviewCommitDeduplicateAndClear",
+        "classname": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+        "time": "732.981"
+      },
+      "failure": false,
+      "skipped": false,
+      "logSha256": "75983e919c479623553b6be0c031f4130fa548b3cf266eecfda367b39061e011",
+      "phaseLines": [
+        "csv inspect: 46980 ms",
+        "csv review: 28000029 bytes, 1000000 points, 257931 ms",
+        "csv apply: 107519 ms; verification: 57314 ms",
+        "csv commit: 1000000 points, 107528 ms",
+        "csv inspect: 69064 ms",
+        "csv apply: 83516 ms; verification: 62261 ms",
+        "csv reimport: 1000000 existing records kept; no duplicate writes",
+        "csv complete: 732951 ms; sampled Java peak 12360128; heap limit 201326592"
+      ]
+    },
+    {
+      "case": {
+        "name": "millionJsonPointsReviewCommitDeduplicateAndClear",
+        "classname": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+        "time": "724.206"
+      },
+      "failure": false,
+      "skipped": false,
+      "logSha256": "796db6824e9be81e163949559386a8abe278a9a86ef5417a554fbd79d069ef3f",
+      "phaseLines": [
+        "json inspect: 48821 ms",
+        "json review: 67000012 bytes, 1000000 points, 253740 ms",
+        "json apply: 115073 ms; verification: 60235 ms",
+        "json commit: 1000000 points, 115080 ms",
+        "json inspect: 67467 ms",
+        "json apply: 82791 ms; verification: 62108 ms",
+        "json reimport: 1000000 existing records kept; no duplicate writes",
+        "json complete: 724185 ms; sampled Java peak 12331456; heap limit 201326592"
+      ]
+    }
+  ]
+}

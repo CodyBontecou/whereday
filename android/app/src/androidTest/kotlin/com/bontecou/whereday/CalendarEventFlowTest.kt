@@ -72,7 +72,16 @@ class CalendarEventFlowTest {
         }.also(instrumentation::addMonitor)
     }
     private fun click(scroll:Boolean=false) {val node=compose.onNodeWithTag("calendar-add");if(scroll) node.performScrollTo();node.performClick()}
-    private fun awaitIntent() {compose.waitUntil(10000) {intents.size==1}}
+    private fun awaitIntent() {
+        try {compose.waitUntil(10000) {intents.size==1}}
+        catch(error:ComposeTimeoutException) {
+            throw AssertionError("Calendar handoff timed out: intents=${intents.size}, "+
+                "lifecycle=${compose.activity.lifecycle.currentState}, windowFocus=${compose.activity.hasWindowFocus()}. "+
+                "Current source and action semantics:\n"+
+                runCatching {compose.onAllNodes(isRoot(),useUnmergedTree=true).printToString()}
+                    .getOrElse {"Semantics unavailable: ${it.javaClass.simpleName}"},error)
+        }
+    }
     private fun draft()=CalendarEventDraft.visit(visit,"Unknown",now)
     private fun heldClick()=compose.onNodeWithTag("calendar-add").fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
     @Test fun androidIntentHasExactDraftFieldsWithoutNotesAttendeesOrCalendarPermissions() {
@@ -149,7 +158,7 @@ class CalendarEventFlowTest {
         graph.history.dao.put(VisitRow(visit));intercept()
         content {VisitEditor(graph,visit,{}, {_,_,_,_->error("Calendar must not save the visit")},null)}
         compose.onNodeWithTag("visit-name").performTextReplacement("Unsaved name")
-        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
+        androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot()).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(closeQaKeyboard())
         click(true);awaitIntent()
         assertEquals("Saved Cafe",intents.single().getStringExtra(CalendarContract.Events.TITLE))
         assertEquals(visit,graph.history.dao.visit(visit.id)!!.value)
