@@ -12,7 +12,7 @@ on:
       suite:
         description: Heavy suite to run
         type: choice
-        options: [all, database, import-scale, input-diagnostic, input-full-diagnostic, photo-pixel-diagnostic]
+        options: [all, database, import-scale, input-diagnostic, input-full-diagnostic, photo-pixel-diagnostic, photo-full-diagnostic]
         default: all
 
 permissions:
@@ -25,9 +25,9 @@ concurrency:
 jobs:
   # Diagnostic branch only: original prefix or full default context, not a replacement gate.
   input-diagnostic:
-    if: github.event_name == 'workflow_dispatch' && (inputs.suite == 'input-diagnostic' || inputs.suite == 'input-full-diagnostic' || inputs.suite == 'photo-pixel-diagnostic')
+    if: github.event_name == 'workflow_dispatch' && (inputs.suite == 'input-diagnostic' || inputs.suite == 'input-full-diagnostic' || inputs.suite == 'photo-pixel-diagnostic' || inputs.suite == 'photo-full-diagnostic')
     runs-on: ubuntu-latest
-    timeout-minutes: ${{ inputs.suite == 'input-full-diagnostic' && 240 || 45 }}
+    timeout-minutes: ${{ (inputs.suite == 'input-full-diagnostic' || inputs.suite == 'photo-full-diagnostic') && 240 || 45 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -70,7 +70,7 @@ jobs:
           if-no-files-found: warn
 
   database:
-    if: github.event_name != 'workflow_dispatch' || (inputs.suite != 'import-scale' && inputs.suite != 'input-diagnostic' && inputs.suite != 'input-full-diagnostic' && inputs.suite != 'photo-pixel-diagnostic')
+    if: github.event_name != 'workflow_dispatch' || (inputs.suite != 'import-scale' && inputs.suite != 'input-diagnostic' && inputs.suite != 'input-full-diagnostic' && inputs.suite != 'photo-pixel-diagnostic' && inputs.suite != 'photo-full-diagnostic')
     runs-on: ubuntu-latest
     timeout-minutes: 240
     steps:
@@ -151,7 +151,7 @@ jobs:
             android/platform/build/outputs/androidTest-results/
 
   import-scale:
-    if: github.event_name != 'workflow_dispatch' || (inputs.suite != 'database' && inputs.suite != 'input-diagnostic' && inputs.suite != 'input-full-diagnostic' && inputs.suite != 'photo-pixel-diagnostic')
+    if: github.event_name != 'workflow_dispatch' || (inputs.suite != 'database' && inputs.suite != 'input-diagnostic' && inputs.suite != 'input-full-diagnostic' && inputs.suite != 'photo-pixel-diagnostic' && inputs.suite != 'photo-full-diagnostic')
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:

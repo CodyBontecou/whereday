@@ -22,7 +22,7 @@ capture() {
     else
         adb -s "$diag_serial" logcat -d -v brief -s System.out:I '*:S' | grep -E '\[DEBUG-(input-pin|photo-pixel)\]' > "$reports/observations.log" || true
     fi
-    if [[ $scope == photo-pixel-diagnostic ]]; then
+    if [[ $scope == photo-pixel-diagnostic || $scope == photo-full-diagnostic ]]; then
         mkdir -p "$reports/photo-pixels"
         for label in nearest-light group-dark; do
             adb -s "$diag_serial" pull "/sdcard/Download/whereday-photo-dots-$label-original-zero-normal-20261030.png" "$reports/photo-pixels/" > "$reports/photo-pixels/$label-pull.log" 2>&1 || true
@@ -39,7 +39,7 @@ capture() {
     exit "$diag_status"
 }
 trap capture EXIT
-if [[ $scope == input-full-diagnostic ]]; then
+if [[ $scope == input-full-diagnostic || $scope == photo-full-diagnostic ]]; then
     # The existing canonical workflow remains the single source of the full
     # selection. Its original wrapper enforces 94 classes/594 outcomes/two ignores.
     full_selection=$(python3 - <<'PY'
@@ -54,7 +54,7 @@ PY
 )
     # Keep early observations before an hour of later tests can evict logcat.
     # This passive collector is diagnostic-only and may itself affect timing.
-    adb -s "$diag_serial" logcat -v brief --regex='\[DEBUG-input-pin\]' -s System.out:I '*:S' > "$reports/observations-live.log" &
+    adb -s "$diag_serial" logcat -v brief --regex='\[DEBUG-(input-pin|photo-pixel)\]' -s System.out:I '*:S' > "$reports/observations-live.log" &
     collector=$!
     bash scripts/run_ui_baseline.sh "$full_selection"
     exit 0

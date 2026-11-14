@@ -47,10 +47,16 @@ trap capture EXIT
 # Same runner, process and complete selection; preserve the raw result stream
 # and require every expected completion. These are the only
 # two already-ignored cases in the original 594-case baseline.
+# Diagnostic branch only: observations execute after the original bitmap/count.
+# The ordinary full gate has no additional arguments or changed assertions.
+set --
+if [[ ${INPUT_PIN_SCOPE:-} == photo-full-diagnostic ]]; then
+    set -- --extra observePhotoPixels=true --extra capturePhotoDots=true
+fi
 python3 scripts/run_qa_instrumentation.py \
     --adb "$(command -v adb)" --aapt2 "$ANDROID_HOME/build-tools/35.0.0/aapt2" \
     --serial "$baseline_serial" --avd "$baseline_avd" --module app \
-    --classes "$selection" --expected-tests 594 \
+    --classes "$selection" --expected-tests 594 "$@" \
     --expected-ignored com.bontecou.whereday.CalendarEventFlowTest#timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor \
     --expected-ignored com.bontecou.whereday.CalendarEventFlowTest#timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence \
     --output app/build/outputs/androidTest-results/connected/mapQa
