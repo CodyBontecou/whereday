@@ -67,7 +67,9 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
             val active by RecordingRuntime.active.collectAsStateWithLifecycle()
             ListeningScreen(settings,active,back,null,{destination=SettingsDestination.visitsOnly},{destination=SettingsDestination.webhooks},
                 {try {context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.parse("package:${context.packageName}")))} catch(_:Exception) {graph.settingsActions.reportFailure(SettingsFailure.permissions)}},
-                {value->graph.settingsActions.update {it.copy(networkGeocoding=value)}})
+                {value->graph.settingsActions.update {it.copy(networkGeocoding=value)}},
+                // The same settings write as the Settings pickers, so a running recording keeps its policy until the next start.
+                {preset->graph.settingsActions.update {it.applying(preset)}})
             return
         }
         SettingsDestination.usage->{UsageAnalyticsScreen(graph.usageAnalytics,back);return}

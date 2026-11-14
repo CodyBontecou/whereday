@@ -1,8 +1,19 @@
 {
   "locale": "b+zh+Hans",
   "catalogLocale": "zh-Hans",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "锈红色路线仅显示当前记录，与所选日期无关。其起点旗标和当前位置标记独立于日期范围标记。",
     "active_recording_map_empty": "正在等待当前记录的位置点。",
@@ -519,8 +530,6 @@
     "listening_footer": "无需账户。服务器上没有你去过哪里的副本。记录运行期间会显示一条持续通知。",
     "listening_journal": "你的日志",
     "listening_journal_where": "仅限此手机",
-    "listening_mode_routes": "地点和路线",
-    "listening_mode_routes_body": "记录期间使用 GPS 记录每一次停留以及它们之间的路线。",
     "listening_mode_visits_body": "仅记录你停留的地方，使用省电的平衡定位，不记录停留之间的路线。",
     "listening_place_names": "地点名称",
     "listening_place_names_body": "网络地理编码会向地图服务查询",
@@ -814,6 +823,7 @@
     "onboarding_point_on_device": "位置历史保留在此手机上",
     "onboarding_point_routes": "随行记录路线",
     "onboarding_point_visits": "记住你到访的地点",
+    "onboarding_preset_custom_kept": "除非你选择预设，否则会保留你的自定义记录设置。",
     "onboarding_save_error": "无法保存设置。请重试。如果你请求了记录，它可能已经在进行中。",
     "onboarding_start_error": "无法开始记录。请重试，或关闭“立即开始记录”以完成设置。",
     "onboarding_start_finish": "开始记录并打开 Whereday",
@@ -1127,6 +1137,7 @@
     "recording_offline_hint": "获得第一个精确定位后，你的路线将显示在这里。记录不需要网络连接。",
     "recording_permission_start_failed": "无法开始记录。请检查位置权限后重试。",
     "recording_point_label": "记录的位置点",
+    "recording_preset_custom_body": "你在设置中自定的距离、间隔或自动停止。选择预设会替换它们。",
     "recording_reconciliation_failed": "无法更新到访历史。请尝试重新打开应用。",
     "recording_route_empty": "尚未记录路线",
     "recording_route_points": {

@@ -1,8 +1,19 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "O trajeto cor de ferrugem mostra apenas a gravação atual, independentemente das datas selecionadas. A bandeira de início e o marcador atual são separados dos marcadores do período.",
     "active_recording_map_empty": "Aguardando pontos da gravação atual.",
@@ -549,8 +560,6 @@
     "listening_footer": "Sem conta. Nenhuma cópia em servidor de onde você esteve. A gravação mostra uma notificação contínua enquanto está ativa.",
     "listening_journal": "Seu diário",
     "listening_journal_where": "Somente neste telefone",
-    "listening_mode_routes": "Lugares e trajetos",
-    "listening_mode_routes_body": "Cada parada e o caminho entre elas, usando GPS enquanto a gravação está ativa.",
     "listening_mode_visits_body": "Somente onde você fica, com localização de consumo equilibrado e sem trajeto entre paradas.",
     "listening_place_names": "Nomes de lugares",
     "listening_place_names_body": "A geocodificação pela rede consulta um serviço de mapas",
@@ -870,6 +879,7 @@
     "onboarding_point_on_device": "O histórico de localização fica neste telefone",
     "onboarding_point_routes": "Grave rotas enquanto se desloca",
     "onboarding_point_visits": "Lembre-se dos lugares que você visita",
+    "onboarding_preset_custom_kept": "Suas configurações de gravação personalizadas são mantidas, a menos que você escolha uma predefinição.",
     "onboarding_save_error": "Não foi possível salvar a configuração. Tente novamente. Se você pediu a gravação, ela pode já estar ativa.",
     "onboarding_start_error": "Não foi possível iniciar a gravação. Tente novamente ou desative a gravação imediata para concluir a configuração.",
     "onboarding_start_finish": "Começar a gravar e abrir o Whereday",
@@ -1199,6 +1209,7 @@
     "recording_offline_hint": "Sua rota aparecerá aqui após a primeira leitura de localização precisa. A gravação não exige conexão de rede.",
     "recording_permission_start_failed": "Não foi possível iniciar a gravação. Verifique o acesso à localização e tente novamente.",
     "recording_point_label": "Pontos registrados",
+    "recording_preset_custom_body": "Sua própria distância, intervalo ou parada automática definidos em Ajustes. Escolher uma predefinição os substitui.",
     "recording_reconciliation_failed": "Não foi possível atualizar o histórico de visitas. Tente reabrir o app.",
     "recording_route_empty": "Nenhuma rota registrada ainda",
     "recording_route_points": {

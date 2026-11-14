@@ -590,8 +590,6 @@
     <string name="listening_footer">دون حساب. ولا نسخة على أي خادم من الأماكن التي زرتها. يعرض التسجيل إشعارًا مستمرًا أثناء عمله.</string>
     <string name="listening_journal">يومياتك</string>
     <string name="listening_journal_where">هذا الهاتف فقط</string>
-    <string name="listening_mode_routes">الأماكن والمسارات</string>
-    <string name="listening_mode_routes_body">كل توقف والمسار بينها، باستخدام GPS أثناء التسجيل.</string>
     <string name="listening_mode_visits_body">الأماكن التي تمكث فيها فقط، بموقع متوازن الطاقة ودون مسار بين التوقفات.</string>
     <string name="listening_place_names">أسماء الأماكن</string>
     <string name="listening_place_names_body">يستعلم الترميز الجغرافي عبر الشبكة من خدمة خرائط</string>
@@ -921,6 +919,7 @@
     <string name="onboarding_point_on_device">يبقى سجل المواقع على هذا الهاتف</string>
     <string name="onboarding_point_routes">سجّل المسارات أثناء تنقلك</string>
     <string name="onboarding_point_visits">تذكّر الأماكن التي تزورها</string>
+    <string name="onboarding_preset_custom_kept">تبقى إعدادات التسجيل المخصصة لديك ما لم تختر إعدادًا مسبقًا.</string>
     <string name="onboarding_save_error">تعذّر حفظ الإعداد. حاول مجددًا. إذا طلبت التسجيل، فقد يكون نشطًا بالفعل.</string>
     <string name="onboarding_start_error">تعذّر بدء التسجيل. حاول مجددًا، أو أوقف التسجيل الفوري لإنهاء الإعداد.</string>
     <string name="onboarding_start_finish">بدء التسجيل وفتح Whereday</string>
@@ -1274,6 +1273,17 @@
     <string name="recording_offline_hint">سيظهر مسارك هنا بعد أول تحديد دقيق للموقع. لا يتطلب التسجيل اتصالًا بالشبكة.</string>
     <string name="recording_permission_start_failed">تعذّر بدء التسجيل. تحقّق من الوصول إلى الموقع وحاول مجددًا.</string>
     <string name="recording_point_label">النقاط المسجّلة</string>
+    <string name="recording_preset_custom">مخصص</string>
+    <string name="recording_preset_custom_body">المسافة أو الفاصل الزمني أو الإيقاف التلقائي الذي اخترته في الإعدادات. اختيار إعداد مسبق يستبدلها.</string>
+    <string name="recording_preset_every_step">كل خطوة</string>
+    <string name="recording_preset_every_step_body">نقاط الطريق حوالي كل 5 م. للمشي لمسافات طويلة وركوب الخيل. يتوقف من تلقاء نفسه بعد ساعتين.</string>
+    <string name="recording_preset_every_step_summary">مسارات عالية التفاصيل للمشي الجبلي وركوب الدراجات.</string>
+    <string name="recording_preset_places">الأماكن + الطرق المتفرقة</string>
+    <string name="recording_preset_places_body">يلاحظ التوقفات ويسجل نقاط الطريق كل 100 متر تقريبًا. يستمر حتى تتوقف.</string>
+    <string name="recording_preset_places_summary">محطات التوقف ونقاط الطريق كل 100 متر تقريبًا.</string>
+    <string name="recording_preset_routes">الأماكن + المسارات</string>
+    <string name="recording_preset_routes_body">يلاحظ التوقفات ويسجل نقاط الطريق كل 25 مترًا تقريبًا. يستمر حتى تتوقف.</string>
+    <string name="recording_preset_routes_summary">محطات التوقف ونقاط الطريق كل 25 مترًا تقريبًا.</string>
     <string name="recording_reconciliation_failed">تعذّر تحديث سجل الزيارات. جرّب إعادة فتح التطبيق.</string>
     <string name="recording_route_empty">لم يُسجَّل أي مسار بعد</string>
     <plurals name="recording_route_points">

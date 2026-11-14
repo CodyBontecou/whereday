@@ -1,7 +1,18 @@
 {
   "locale": "pl",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "Rdzawa ścieżka pokazuje tylko bieżące rejestrowanie, niezależnie od wybranych dat. Jej flaga startowa i znacznik bieżącej pozycji są niezależne od znaczników zakresu dat.",
     "active_recording_map_empty": "Oczekiwanie na punkty bieżącego rejestrowania.",
@@ -563,8 +574,6 @@
     "listening_footer": "Bez konta. Bez kopii Twoich lokalizacji na serwerze. Podczas rejestrowania widoczne jest stałe powiadomienie.",
     "listening_journal": "Twój dziennik",
     "listening_journal_where": "Tylko ten telefon",
-    "listening_mode_routes": "Miejsca i trasy",
-    "listening_mode_routes_body": "Każdy postój i trasa między nimi, z użyciem GPS podczas rejestrowania.",
     "listening_mode_visits_body": "Tylko miejsca, w których przebywasz, z lokalizacją oszczędzającą energię i bez tras między postojami.",
     "listening_place_names": "Nazwy miejsc",
     "listening_place_names_body": "Geokodowanie sieciowe pyta usługę map",
@@ -897,6 +906,7 @@
     "onboarding_point_on_device": "Historia lokalizacji zostaje na tym telefonie",
     "onboarding_point_routes": "Rejestruj trasy w ruchu",
     "onboarding_point_visits": "Zapamiętuj odwiedzane miejsca",
+    "onboarding_preset_custom_kept": "Twoje własne ustawienia nagrywania zostaną zachowane, chyba że wybierzesz ustawienie wstępne.",
     "onboarding_save_error": "Nie udało się zapisać konfiguracji. Spróbuj ponownie. Jeśli zażądano rejestrowania, może ono być już aktywne.",
     "onboarding_start_error": "Nie udało się rozpocząć rejestrowania. Spróbuj ponownie lub wyłącz natychmiastowe rejestrowanie, aby dokończyć konfigurację.",
     "onboarding_start_finish": "Rozpocznij rejestrowanie i otwórz Whereday",
@@ -1234,6 +1244,7 @@
     "recording_offline_hint": "Trasa pojawi się tutaj po pierwszym dokładnym odczycie lokalizacji. Rejestrowanie nie wymaga połączenia z siecią.",
     "recording_permission_start_failed": "Nie udało się rozpocząć rejestrowania. Sprawdź dostęp do lokalizacji i spróbuj ponownie.",
     "recording_point_label": "Zarejestrowane punkty",
+    "recording_preset_custom_body": "Własna odległość, interwał lub automatyczne zatrzymanie z Ustawień. Wybranie ustawienia wstępnego je zastąpi.",
     "recording_reconciliation_failed": "Nie udało się zaktualizować historii wizyt. Spróbuj ponownie otworzyć aplikację.",
     "recording_route_empty": "Nie zarejestrowano jeszcze trasy",
     "recording_route_points": {

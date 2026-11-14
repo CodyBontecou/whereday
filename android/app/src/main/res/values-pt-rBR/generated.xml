@@ -545,8 +545,6 @@
     <string name="listening_footer">Sem conta. Nenhuma cópia em servidor de onde você esteve. A gravação mostra uma notificação contínua enquanto está ativa.</string>
     <string name="listening_journal">Seu diário</string>
     <string name="listening_journal_where">Somente neste telefone</string>
-    <string name="listening_mode_routes">Lugares e trajetos</string>
-    <string name="listening_mode_routes_body">Cada parada e o caminho entre elas, usando GPS enquanto a gravação está ativa.</string>
     <string name="listening_mode_visits_body">Somente onde você fica, com localização de consumo equilibrado e sem trajeto entre paradas.</string>
     <string name="listening_place_names">Nomes de lugares</string>
     <string name="listening_place_names_body">A geocodificação pela rede consulta um serviço de mapas</string>
@@ -843,6 +841,7 @@
     <string name="onboarding_point_on_device">O histórico de localização fica neste telefone</string>
     <string name="onboarding_point_routes">Grave rotas enquanto se desloca</string>
     <string name="onboarding_point_visits">Lembre-se dos lugares que você visita</string>
+    <string name="onboarding_preset_custom_kept">Suas configurações de gravação personalizadas são mantidas, a menos que você escolha uma predefinição.</string>
     <string name="onboarding_save_error">Não foi possível salvar a configuração. Tente novamente. Se você pediu a gravação, ela pode já estar ativa.</string>
     <string name="onboarding_start_error">Não foi possível iniciar a gravação. Tente novamente ou desative a gravação imediata para concluir a configuração.</string>
     <string name="onboarding_start_finish">Começar a gravar e abrir o Whereday</string>
@@ -1172,6 +1171,17 @@
     <string name="recording_offline_hint">Sua rota aparecerá aqui após a primeira leitura de localização precisa. A gravação não exige conexão de rede.</string>
     <string name="recording_permission_start_failed">Não foi possível iniciar a gravação. Verifique o acesso à localização e tente novamente.</string>
     <string name="recording_point_label">Pontos registrados</string>
+    <string name="recording_preset_custom">Personalizado</string>
+    <string name="recording_preset_custom_body">Sua própria distância, intervalo ou parada automática definidos em Ajustes. Escolher uma predefinição os substitui.</string>
+    <string name="recording_preset_every_step">Cada passo</string>
+    <string name="recording_preset_every_step_body">Pontos de rota aproximadamente a cada 5 m. Para caminhadas e passeios. Pára sozinho após 2 horas.</string>
+    <string name="recording_preset_every_step_summary">Trajetos detalhados para trilhas e pedais.</string>
+    <string name="recording_preset_places">Lugares + rotas esparsas</string>
+    <string name="recording_preset_places_body">Anota paradas e registra pontos de rota a cada 100 m. Continua até você fazer uma pausa.</string>
+    <string name="recording_preset_places_summary">Paradas e pontos de rota aproximadamente a cada 100 m.</string>
+    <string name="recording_preset_routes">Lugares + trajetos</string>
+    <string name="recording_preset_routes_body">Anota paradas e registra pontos de rota a cada 25 m. Continua até você fazer uma pausa.</string>
+    <string name="recording_preset_routes_summary">Paradas e pontos de rota aproximadamente a cada 25 m.</string>
     <string name="recording_reconciliation_failed">Não foi possível atualizar o histórico de visitas. Tente reabrir o app.</string>
     <string name="recording_route_empty">Nenhuma rota registrada ainda</string>
     <plurals name="recording_route_points">

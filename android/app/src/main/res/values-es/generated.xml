@@ -530,8 +530,6 @@
     <string name="listening_footer">Sin cuenta. Sin copia en servidores de dónde has estado. La grabación muestra una notificación continua mientras funciona.</string>
     <string name="listening_journal">Tu diario</string>
     <string name="listening_journal_where">Solo en este teléfono</string>
-    <string name="listening_mode_routes">Lugares y rutas</string>
-    <string name="listening_mode_routes_body">Cada parada y el camino entre ellas, con GPS mientras graba.</string>
     <string name="listening_mode_visits_body">Solo dónde te quedas, con ubicación de bajo consumo y sin la ruta entre paradas.</string>
     <string name="listening_place_names">Nombres de lugares</string>
     <string name="listening_place_names_body">La geocodificación en red consulta un servicio de mapas</string>
@@ -817,6 +815,7 @@
     <string name="onboarding_point_on_device">El historial de ubicaciones se queda en este teléfono</string>
     <string name="onboarding_point_routes">Graba rutas mientras te mueves</string>
     <string name="onboarding_point_visits">Recuerda los lugares que visitas</string>
+    <string name="onboarding_preset_custom_kept">Tus ajustes de grabación personalizados se mantienen salvo que elijas un ajuste predefinido.</string>
     <string name="onboarding_save_error">No se pudo guardar la configuración. Inténtalo de nuevo. Si solicitaste una grabación, es posible que ya esté activa.</string>
     <string name="onboarding_start_error">No se pudo iniciar la grabación. Inténtalo de nuevo o desactiva la grabación inmediata para terminar la configuración.</string>
     <string name="onboarding_start_finish">Iniciar grabación y abrir Whereday</string>
@@ -1138,6 +1137,17 @@
     <string name="recording_offline_hint">Tu ruta aparecerá aquí tras recibir la primera ubicación precisa. La grabación no requiere conexión a internet.</string>
     <string name="recording_permission_start_failed">No se pudo iniciar la grabación. Comprueba el acceso a la ubicación e inténtalo de nuevo.</string>
     <string name="recording_point_label">Puntos registrados</string>
+    <string name="recording_preset_custom">Personalizado</string>
+    <string name="recording_preset_custom_body">Tu propia distancia, intervalo o detención automática de Ajustes. Elegir un ajuste predefinido los reemplaza.</string>
+    <string name="recording_preset_every_step">Cada paso</string>
+    <string name="recording_preset_every_step_body">Puntos de ruta aproximadamente cada 5 m. Para caminatas y paseos. Se detiene por sí solo después de 2 h.</string>
+    <string name="recording_preset_every_step_summary">Recorridos muy detallados para rutas a pie y en bici.</string>
+    <string name="recording_preset_places">Lugares + rutas dispersas</string>
+    <string name="recording_preset_places_body">Anota paradas y registra puntos de ruta aproximadamente cada 100 m. Continúa hasta hacer una pausa.</string>
+    <string name="recording_preset_places_summary">Paradas y puntos de ruta aproximadamente cada 100 m.</string>
+    <string name="recording_preset_routes">Lugares + rutas</string>
+    <string name="recording_preset_routes_body">Toma nota de las paradas y registra los puntos de la ruta aproximadamente cada 25 m. Continúa hasta hacer una pausa.</string>
+    <string name="recording_preset_routes_summary">Paradas y puntos de ruta aproximadamente cada 25 m.</string>
     <string name="recording_reconciliation_failed">No se pudo actualizar el historial de visitas. Prueba a volver a abrir la app.</string>
     <string name="recording_route_empty">Todavía no hay ninguna ruta grabada</string>
     <plurals name="recording_route_points">

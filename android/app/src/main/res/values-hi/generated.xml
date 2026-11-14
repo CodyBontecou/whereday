@@ -530,8 +530,6 @@
     <string name="listening_footer">कोई अकाउंट नहीं। आप कहाँ रहे, इसकी कोई सर्वर कॉपी नहीं। रिकॉर्डिंग चलने के दौरान एक जारी सूचना दिखती है।</string>
     <string name="listening_journal">आपका जर्नल</string>
     <string name="listening_journal_where">सिर्फ़ यह फ़ोन</string>
-    <string name="listening_mode_routes">जगहें और रूट</string>
-    <string name="listening_mode_routes_body">हर पड़ाव और उनके बीच का रास्ता, रिकॉर्डिंग के दौरान GPS से।</string>
     <string name="listening_mode_visits_body">सिर्फ़ जहाँ आप रुकते हैं, संतुलित-पावर स्थान के साथ और पड़ावों के बीच कोई रूट नहीं।</string>
     <string name="listening_place_names">जगहों के नाम</string>
     <string name="listening_place_names_body">नेटवर्क जियोकोडिंग एक मानचित्र सेवा से पूछती है</string>
@@ -817,6 +815,7 @@
     <string name="onboarding_point_on_device">स्थान इतिहास इसी फ़ोन पर रहता है</string>
     <string name="onboarding_point_routes">चलते-चलते रूट रिकॉर्ड करें</string>
     <string name="onboarding_point_visits">जिन जगहों पर जाते हैं उन्हें याद रखें</string>
+    <string name="onboarding_preset_custom_kept">जब तक आप कोई प्रीसेट नहीं चुनते, आपकी कस्टम रिकॉर्डिंग सेटिंग्स बनी रहती हैं।</string>
     <string name="onboarding_save_error">सेटअप सहेजा नहीं जा सका। फिर कोशिश करें। अगर आपने रिकॉर्डिंग का अनुरोध किया था, तो वह शायद पहले से चालू है।</string>
     <string name="onboarding_start_error">रिकॉर्डिंग शुरू नहीं हो सकी। फिर कोशिश करें, या सेटअप पूरा करने के लिए तुरंत रिकॉर्डिंग बंद करें।</string>
     <string name="onboarding_start_finish">रिकॉर्डिंग शुरू करें और Whereday खोलें</string>
@@ -1138,6 +1137,17 @@
     <string name="recording_offline_hint">पहले सटीक स्थान फ़िक्स के बाद आपका रूट यहाँ दिखेगा। रिकॉर्डिंग के लिए नेटवर्क कनेक्शन ज़रूरी नहीं।</string>
     <string name="recording_permission_start_failed">रिकॉर्डिंग शुरू नहीं हो सकी। स्थान एक्सेस जाँचें और फिर कोशिश करें।</string>
     <string name="recording_point_label">रिकॉर्ड किए गए पॉइंट</string>
+    <string name="recording_preset_custom">कस्टम</string>
+    <string name="recording_preset_custom_body">सेटिंग्स से आपकी अपनी दूरी, अंतराल या स्वतः रुकना। कोई प्रीसेट चुनने पर ये बदल जाते हैं।</string>
+    <string name="recording_preset_every_step">हर क़दम</string>
+    <string name="recording_preset_every_step_body">प्रत्येक 5 मीटर पर मार्ग बिंदु। लंबी पैदल यात्रा और सवारी के लिए. 2 घंटे के बाद अपने आप रुक जाता है।</string>
+    <string name="recording_preset_every_step_summary">हाइक और राइड के लिए बारीक ट्रैक।</string>
+    <string name="recording_preset_places">स्थान + विरल मार्ग</string>
+    <string name="recording_preset_places_body">प्रत्येक 100 मीटर पर स्टॉप को नोट करता है और मार्ग बिंदुओं को रिकॉर्ड करता है। जब तक आप रुकते नहीं तब तक जारी रहता है।</string>
+    <string name="recording_preset_places_summary">प्रत्येक 100 मीटर पर स्टॉप और मार्ग बिंदु।</string>
+    <string name="recording_preset_routes">जगहें + रूट</string>
+    <string name="recording_preset_routes_body">प्रत्येक 25 मीटर पर स्टॉप को नोट करता है और मार्ग बिंदुओं को रिकॉर्ड करता है। जब तक आप रुकते नहीं तब तक जारी रहता है।</string>
+    <string name="recording_preset_routes_summary">प्रत्येक 25 मीटर पर स्टॉप और मार्ग बिंदु।</string>
     <string name="recording_reconciliation_failed">विज़िट इतिहास अपडेट नहीं हो सका। ऐप फिर से खोलकर देखें।</string>
     <string name="recording_route_empty">अभी कोई रूट रिकॉर्ड नहीं हुआ</string>
     <plurals name="recording_route_points">

@@ -560,8 +560,6 @@
     <string name="listening_footer">Без аккаунта. Никаких копий ваших перемещений на сервере. Во время записи отображается постоянное уведомление.</string>
     <string name="listening_journal">Ваш журнал</string>
     <string name="listening_journal_where">Только на этом телефоне</string>
-    <string name="listening_mode_routes">Места и маршруты</string>
-    <string name="listening_mode_routes_body">Каждая остановка и путь между ними — с GPS во время записи.</string>
     <string name="listening_mode_visits_body">Только места, где вы задерживаетесь: энергосберегающее определение местоположения, без маршрута между остановками.</string>
     <string name="listening_place_names">Названия мест</string>
     <string name="listening_place_names_body">Сетевое геокодирование обращается к картографической службе</string>
@@ -869,6 +867,7 @@
     <string name="onboarding_point_on_device">История местоположений остаётся на этом телефоне</string>
     <string name="onboarding_point_routes">Записывайте маршруты в движении</string>
     <string name="onboarding_point_visits">Запоминайте места, где бываете</string>
+    <string name="onboarding_preset_custom_kept">Ваши собственные настройки записи сохранятся, если вы не выберете пресет.</string>
     <string name="onboarding_save_error">Не удалось сохранить настройку. Повторите попытку. Если вы запросили запись, она может уже идти.</string>
     <string name="onboarding_start_error">Не удалось начать запись. Повторите попытку или отключите немедленную запись, чтобы завершить настройку.</string>
     <string name="onboarding_start_finish">Начать запись и открыть Whereday</string>
@@ -1206,6 +1205,17 @@
     <string name="recording_offline_hint">Маршрут появится здесь после первого точного определения местоположения. Для записи не нужно подключение к сети.</string>
     <string name="recording_permission_start_failed">Не удалось начать запись. Проверьте доступ к местоположению и повторите попытку.</string>
     <string name="recording_point_label">Записанные точки</string>
+    <string name="recording_preset_custom">Свой</string>
+    <string name="recording_preset_custom_body">Ваши собственные расстояние, интервал или автоостановка из настроек. Выбор пресета заменит их.</string>
+    <string name="recording_preset_every_step">Каждый шаг</string>
+    <string name="recording_preset_every_step_body">Точки маршрута примерно через каждые 5 м. Для походов и поездок. Прекращается самостоятельно через 2 часа.</string>
+    <string name="recording_preset_every_step_summary">Подробные треки для походов и поездок.</string>
+    <string name="recording_preset_places">Места + редкие маршруты</string>
+    <string name="recording_preset_places_body">Отмечает остановки и записывает точки маршрута примерно через каждые 100 м. Продолжается до тех пор, пока вы не сделаете паузу.</string>
+    <string name="recording_preset_places_summary">Остановки и точки маршрута примерно через каждые 100 м.</string>
+    <string name="recording_preset_routes">Места + маршруты</string>
+    <string name="recording_preset_routes_body">Отмечает остановки и записывает точки маршрута примерно через каждые 25 метров. Продолжается до тех пор, пока вы не сделаете паузу.</string>
+    <string name="recording_preset_routes_summary">Остановки и точки маршрута примерно через каждые 25 метров.</string>
     <string name="recording_reconciliation_failed">Не удалось обновить историю посещений. Попробуйте открыть приложение заново.</string>
     <string name="recording_route_empty">Маршрут пока не записан</string>
     <plurals name="recording_route_points">

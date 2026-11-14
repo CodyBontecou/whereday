@@ -1,7 +1,18 @@
 {
   "locale": "hi",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "जंग-रंग का पथ केवल वर्तमान रिकॉर्डिंग दिखाता है, चुनी गई तारीख़ों से अलग। इसका शुरुआती झंडा और वर्तमान मार्कर तारीख़-अवधि के मार्करों से अलग हैं।",
     "active_recording_map_empty": "वर्तमान रिकॉर्डिंग में पॉइंट का इंतज़ार है।",
@@ -533,8 +544,6 @@
     "listening_footer": "कोई अकाउंट नहीं। आप कहाँ रहे, इसकी कोई सर्वर कॉपी नहीं। रिकॉर्डिंग चलने के दौरान एक जारी सूचना दिखती है।",
     "listening_journal": "आपका जर्नल",
     "listening_journal_where": "सिर्फ़ यह फ़ोन",
-    "listening_mode_routes": "जगहें और रूट",
-    "listening_mode_routes_body": "हर पड़ाव और उनके बीच का रास्ता, रिकॉर्डिंग के दौरान GPS से।",
     "listening_mode_visits_body": "सिर्फ़ जहाँ आप रुकते हैं, संतुलित-पावर स्थान के साथ और पड़ावों के बीच कोई रूट नहीं।",
     "listening_place_names": "जगहों के नाम",
     "listening_place_names_body": "नेटवर्क जियोकोडिंग एक मानचित्र सेवा से पूछती है",
@@ -841,6 +850,7 @@
     "onboarding_point_on_device": "स्थान इतिहास इसी फ़ोन पर रहता है",
     "onboarding_point_routes": "चलते-चलते रूट रिकॉर्ड करें",
     "onboarding_point_visits": "जिन जगहों पर जाते हैं उन्हें याद रखें",
+    "onboarding_preset_custom_kept": "जब तक आप कोई प्रीसेट नहीं चुनते, आपकी कस्टम रिकॉर्डिंग सेटिंग्स बनी रहती हैं।",
     "onboarding_save_error": "सेटअप सहेजा नहीं जा सका। फिर कोशिश करें। अगर आपने रिकॉर्डिंग का अनुरोध किया था, तो वह शायद पहले से चालू है।",
     "onboarding_start_error": "रिकॉर्डिंग शुरू नहीं हो सकी। फिर कोशिश करें, या सेटअप पूरा करने के लिए तुरंत रिकॉर्डिंग बंद करें।",
     "onboarding_start_finish": "रिकॉर्डिंग शुरू करें और Whereday खोलें",
@@ -1162,6 +1172,7 @@
     "recording_offline_hint": "पहले सटीक स्थान फ़िक्स के बाद आपका रूट यहाँ दिखेगा। रिकॉर्डिंग के लिए नेटवर्क कनेक्शन ज़रूरी नहीं।",
     "recording_permission_start_failed": "रिकॉर्डिंग शुरू नहीं हो सकी। स्थान एक्सेस जाँचें और फिर कोशिश करें।",
     "recording_point_label": "रिकॉर्ड किए गए पॉइंट",
+    "recording_preset_custom_body": "सेटिंग्स से आपकी अपनी दूरी, अंतराल या स्वतः रुकना। कोई प्रीसेट चुनने पर ये बदल जाते हैं।",
     "recording_reconciliation_failed": "विज़िट इतिहास अपडेट नहीं हो सका। ऐप फिर से खोलकर देखें।",
     "recording_route_empty": "अभी कोई रूट रिकॉर्ड नहीं हुआ",
     "recording_route_points": {

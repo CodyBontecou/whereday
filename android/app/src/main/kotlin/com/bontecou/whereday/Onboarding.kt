@@ -39,11 +39,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.CancellationException
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bontecou.whereday.platform.*
+import com.bontecou.whereday.domain.RecordingPreset
 
 internal data class OnboardingDecision(val start:Boolean,val authorization:UsageAuthorization,val permit:UsageActionPermit?)
 
-@Composable internal fun Onboarding(requestLocation: () -> Unit, requestNotifications: () -> Unit, analytics:UsageAnalyticsController?=null, authorization:UsageAuthorization=UsageAuthorization.unknown,access:RecordingAccessState?=null,onAccessOptions:(PermissionAccessKind)->Unit={}, complete:suspend (OnboardingDecision)->Unit) {
+@Composable internal fun Onboarding(requestLocation: () -> Unit, requestNotifications: () -> Unit, analytics:UsageAnalyticsController?=null, authorization:UsageAuthorization=UsageAuthorization.unknown,access:RecordingAccessState?=null,onAccessOptions:(PermissionAccessKind)->Unit={},
+    initialPreset:RecordingPreset?=null,choosePreset:(RecordingPreset)->Unit={}, complete:suspend (OnboardingDecision)->Unit) {
     var page by rememberSaveable { mutableIntStateOf(0) }
+    // iOS asks "How much should it remember?" before location access. Nothing selected means custom settings, which stay.
+    var presetKey by rememberSaveable {mutableStateOf(initialPreset?.key)}
+    val preset=RecordingPreset.fromKey(presetKey)
     val scope=rememberCoroutineScope()
     var startImmediately by rememberSaveable {mutableStateOf(false)}
     var busy by remember {mutableStateOf(false)}
@@ -90,6 +95,14 @@ internal data class OnboardingDecision(val start:Boolean,val authorization:Usage
             Text(stringResource(descriptions[page]),style=MaterialTheme.typography.bodyLarge,color=wd.textMuted,textAlign=TextAlign.Center,modifier=Modifier.fillMaxWidth())
             if(page==0) OnboardingPoints(listOf(Icons.Outlined.PhoneAndroid to R.string.onboarding_point_on_device,Icons.Outlined.NoAccounts to R.string.onboarding_point_no_account,Icons.Outlined.EditNote to R.string.onboarding_point_browse))
             if(page==1) OnboardingPoints(listOf(Icons.Outlined.Route to R.string.onboarding_point_routes,Icons.Outlined.Place to R.string.onboarding_point_visits,Icons.Outlined.BookmarkBorder to R.string.onboarding_point_notes))
+            if(page==1) Column(Modifier.fillMaxWidth().padding(top=8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(R.string.listening_remember),style=WdType.title3.copy(fontWeight=FontWeight.SemiBold),color=wd.textPrimary,modifier=Modifier.semantics {heading()})
+                RecordingPreset.entries.forEach {option->
+                    ListeningMode(stringResource(option.titleRes),stringResource(option.summaryRes),selected=option==preset,
+                        modifier=Modifier.testTag("onboarding-preset-${option.key}")) {if(!busy) presetKey=option.key}
+                }
+                if(preset==null) Text(stringResource(R.string.onboarding_preset_custom_kept),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
+            }
             if (page == 2) WdButton(stringResource(R.string.onboarding_allow_location),requestLocation,emphasis=WdEmphasis.primary,icon=Icons.Outlined.NearMe)
             if (page == 3) WdButton(stringResource(R.string.onboarding_allow_notifications),requestNotifications,emphasis=WdEmphasis.primary,icon=Icons.Outlined.NotificationsActive)
             if(page in 2..4) access?.let {RecordingAccessNotice(it,onAccessOptions,location=page!=3,notifications=page==3,contentPadding=PaddingValues(0.dp))}
@@ -130,7 +143,8 @@ internal data class OnboardingDecision(val start:Boolean,val authorization:Usage
             val label=stringResource(if(page!=4) R.string.common_continue else if(startImmediately && canStart) R.string.onboarding_start_finish else R.string.onboarding_finish)
             val advance={
                 if(!busy) {
-                    if(page!=4) {page++;failure=null}
+                    // The choice is written on leaving its step, before any recording can start on the last one.
+                    if(page!=4) {if(page==1) preset?.let(choosePreset);page++;failure=null}
                     else {
                         val decision=OnboardingDecision(startImmediately && canStart,authorization,analytics?.capture())
                         busy=true;failure=null
