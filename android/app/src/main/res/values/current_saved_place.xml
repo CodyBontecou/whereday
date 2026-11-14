@@ -1,0 +1,5 @@
+<resources>
+    <string name="current_saved_place_title">Suggested saved place</string>
+    <string name="current_saved_place_explanation">Your current location is within this saved place’s match radius. Review its saved name and location before using it.</string>
+    <string name="current_saved_place_use">Use saved place</string>
+</resources>

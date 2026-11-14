@@ -1,0 +1,57 @@
+steps:
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: "Recuerda tus d\xEDas"
+- await:
+    idle: true
+- tap:
+    text: Continuar
+- await:
+    visible:
+      text: Un diario de los lugares que visitas
+- await:
+    idle: true
+- tap:
+    text: Continuar
+- await:
+    visible:
+      text: Graba en segundo plano
+- await:
+    idle: true
+- tap:
+    text: Continuar
+- await:
+    visible:
+      text: "Controla tu grabaci\xF3n f\xE1cilmente"
+- await:
+    idle: true
+- tap:
+    text: Continuar
+- await:
+    visible:
+      text: "Todo listo para tu pr\xF3xima salida"
+- await:
+    idle: true
+- tap:
+    text: Abrir Whereday
+- await:
+    visible:
+      text: Tu diario de ubicaciones
+- await:
+    idle: true
+- await:
+    visible:
+      text: "Iniciar grabaci\xF3n"
+- await:
+    idle: true
+- await:
+    visible:
+      text: "L\xEDnea de tiempo"
+- await:
+    idle: true
+- await:
+    visible:
+      text: Ajustes
+- await:
+    idle: true

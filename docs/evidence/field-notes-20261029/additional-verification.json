@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-29",
+  "screens": [
+    "Outing details",
+    "Saved Locations",
+    "Country Days",
+    "Export",
+    "Settings"
+  ],
+  "supportingEditors": [
+    "Saved Place Editor",
+    "Country Stay Editor",
+    "Country day detail list"
+  ],
+  "excluded": [
+    "Onboarding",
+    "PaywallView",
+    "Main Map screen"
+  ],
+  "tests": {
+    "passed": 348,
+    "failed": 0,
+    "skipped": 0,
+    "configuration": "iOS Simulator, ad hoc signing"
+  },
+  "uiChecks": [
+    "Light appearance on all five primary screens",
+    "Dark Settings appearance",
+    "Open outing detail from Timeline",
+    "Saved Locations empty state and import/add affordances",
+    "Add and save a same-day country stay with invented data on isolated QA simulator",
+    "Export action footer has an opaque paper background; scrolled text does not show through its buttons"
+  ],
+  "limitations": [
+    "UI checks used an isolated simulator with synthetic records. No physical-device tracking check was performed."
+  ],
+  "artwork": "Existing bundled cloud and street illustrations; no new artwork or shared style changes in this extension."
+}

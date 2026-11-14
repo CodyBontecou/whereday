@@ -1,0 +1,166 @@
+{
+  "provenance": {
+    "exportkitRevision": "17993dc0361c41145dc6429738ed369d9976e550",
+    "sha256": {
+      "IsoMe/Utilities/ScheduledExportMergeStrategies.swift": "136d5e5883d00d5f84cd892bee98e4945ae57e93c7a8e8ea6fef53cba8a929c6",
+      "android/scripts/fixtures/MergeFixtures.swift": "581fc1d666f297cc05960b8484605818f2029d593956fb53c436316b20e405ff",
+      "android/scripts/fixtures/scheduled-merge-inputs.json": "84030eb6bc443757896506765ee458b6ffe362fe12f16a0851c6e5f2d780e065"
+    }
+  },
+  "cases": [
+    {
+      "existing": "a,b\n1,2\n",
+      "expected": "a,b\n1,2\n3,4\n",
+      "format": "csv",
+      "incoming": "a,b\n3,4\n",
+      "name": "csv-basic"
+    },
+    {
+      "existing": " a,b\r\n1,2\r\n\n",
+      "expected": " a,b\r\n1,2\r\n\n",
+      "format": "csv",
+      "incoming": "a,b\n\n",
+      "name": "csv-header-only"
+    },
+    {
+      "existing": " \n\t",
+      "expected": "a,b\n3,4\n",
+      "format": "csv",
+      "incoming": "a,b\n3,4\n",
+      "name": "csv-blank-old"
+    },
+    {
+      "existing": "id,note\n1,\"old\n note\"\n",
+      "expected": "id,note\n1,\"old\n note\"\n2,\"new\nnote\"\n",
+      "format": "csv",
+      "incoming": "id,note\n2,\"new\n note\"\n",
+      "name": "csv-quoted-multiline"
+    },
+    {
+      "existing": "# Combined\n# Generated old\n\n# VISITS (1)\na,b\n1,2\n\n# POINTS (0)\ntime,lat\n",
+      "expected": "# Combined\n# Generated old\n\n# VISITS (1)\na,b\n1,2\n\n# POINTS (0)\ntime,lat\n# Generated new\n# VISITS (0)\na,b\n# POINTS (1)\ntime,lat\n3,4\n",
+      "format": "csv",
+      "incoming": "# Combined\n# Generated new\n\n# VISITS (0)\na,b\n\n# POINTS (1)\ntime,lat\n3,4\n",
+      "name": "csv-combined"
+    },
+    {
+      "existing": "{\"exportDate\":\"old\",\"visits\":[{\"id\":\"same\",\"name\":\"first\"}],\"points\":[{\"id\":\"same\"}],\"removed\":true}",
+      "expected": "{\n  \"exportDate\" : \"new\",\n  \"points\" : [\n    {\n      \"id\" : \"same\"\n    },\n    {\n      \"id\" : \"next\"\n    }\n  ],\n  \"visits\" : [\n    {\n      \"id\" : \"same\",\n      \"name\" : \"first\"\n    },\n    {\n      \"id\" : \"later\"\n    }\n  ]\n}\n",
+      "format": "json",
+      "incoming": "{\"exportDate\":\"new\",\"visits\":[{\"id\":\"same\",\"name\":\"updated\"},{\"id\":\"later\"}],\"points\":[{\"id\":\"same\"},{\"id\":\"next\"}]}",
+      "name": "json-ids"
+    },
+    {
+      "existing": "{\"visits\":[{\"arrivedAt\":\"2026-01-01\",\"notes\":\"café 🗺️\"}]}",
+      "expected": "{\n  \"visits\" : [\n    {\n      \"arrivedAt\" : \"2026-01-01\",\n      \"notes\" : \"café 🗺️\"\n    },\n    {\n      \"arrivedAt\" : \"2026-01-02\"\n    }\n  ]\n}\n",
+      "format": "json",
+      "incoming": "{\"visits\":[{\"arrivedAt\":\"2026-01-01\",\"notes\":\"edited\"},{\"arrivedAt\":\"2026-01-02\"}]}",
+      "name": "json-arrival"
+    },
+    {
+      "existing": "[{\"tst\":1},7,{\"unknown\":true}]",
+      "expected": "[\n  {\n    \"tst\" : 1\n  },\n  7,\n  {\n    \"unknown\" : true\n  },\n  {\n    \"tst\" : 2\n  },\n  7\n]\n",
+      "format": "owntracks",
+      "incoming": "[{\"tst\":1},{\"tst\":2},7]",
+      "name": "json-arrays"
+    },
+    {
+      "existing": "{\"metadata\":true}",
+      "expected": "{\n  \"points\" : [\n    {\n      \"id\" : \"same\"\n    },\n    {\n      \"id\" : \"same\"\n    }\n  ]\n}\n",
+      "format": "json",
+      "incoming": "{\"points\":[{\"id\":\"same\"},{\"id\":\"same\"}]}",
+      "name": "json-missing-old-array"
+    },
+    {
+      "existing": "{\"type\":\"FeatureCollection\",\"features\":[{\"properties\":{\"timestamp\":\"old\"}}]}",
+      "expected": "{\n  \"features\" : [\n    {\n      \"properties\" : {\n        \"timestamp\" : \"old\"\n      }\n    },\n    {\n      \"properties\" : {\n        \"timestamp\" : \"old\"\n      }\n    }\n  ],\n  \"type\" : \"FeatureCollection\"\n}\n",
+      "format": "geojson",
+      "incoming": "{\"type\":\"FeatureCollection\",\"features\":[{\"properties\":{\"timestamp\":\"old\"}}]}",
+      "name": "json-feature-identity"
+    },
+    {
+      "existing": "[{\"id\":null,\"v\":1},{\"id\":true,\"v\":2}]",
+      "expected": "[\n  {\n    \"id\" : null,\n    \"v\" : 1\n  },\n  {\n    \"id\" : true,\n    \"v\" : 2\n  }\n]\n",
+      "format": "json",
+      "incoming": "[{\"id\":null,\"v\":3},{\"id\":true,\"v\":4}]",
+      "name": "json-null-identities"
+    },
+    {
+      "error": true,
+      "existing": "[]",
+      "format": "json",
+      "incoming": "{\"visits\":[]}",
+      "name": "json-wrong-root"
+    },
+    {
+      "error": true,
+      "existing": "{",
+      "format": "json",
+      "incoming": "{\"points\":[]}",
+      "name": "json-corrupt"
+    },
+    {
+      "existing": "Old preamble\n## Visits\nold\n## My notes\nkeep\n",
+      "expected": "New preamble\n## Visits\nnew\n## My notes\nkeep\n\n## Location Points\npoint\n\n",
+      "format": "markdown",
+      "incoming": "New preamble\n## Visits\nnew\n## Location Points\npoint\n",
+      "name": "markdown-sections"
+    },
+    {
+      "existing": "---\nowner: me\nstatus: old\n---\nOld\n## Visits\nold\n",
+      "expected": "---\nowner: me\nstatus: new\n---\nNew\n## Visits\nnew\n\n",
+      "format": "markdown",
+      "incoming": "---\nstatus: new\n---\nNew\n## Visits\nnew\n",
+      "name": "markdown-frontmatter"
+    },
+    {
+      "existing": "---\ntags: [one,\n  two]\nnotes: |\n  preserved note\n---\n## Notes\nkeep\n",
+      "expected": "---\ntags: [one,\n  two]\nnotes: |\n  preserved note\n\nstatus: updated\n---\n## Notes\nkeep\n\n## Visits\nrow\n\n",
+      "format": "markdown",
+      "incoming": "---\nstatus: updated\n---\n## Visits\nrow\n",
+      "name": "markdown-multiline"
+    },
+    {
+      "existing": "## Visits\na\n## Visits\nb\n## Personal\nkeep",
+      "expected": "## Visits\nlast\n## Visits\nlast\n## Personal\nkeep\n",
+      "format": "markdown",
+      "incoming": "## Visits\nfirst\n## Visits\nlast",
+      "name": "markdown-duplicate-headings"
+    },
+    {
+      "existing": "## Café!\nold\n## Private 🗺️\nkeep\n",
+      "expected": "## CafÉ\nnew\n\n## Private 🗺️\nkeep\n\n",
+      "format": "markdown",
+      "incoming": "## CafÉ\nnew\n",
+      "name": "markdown-unicode-headings"
+    },
+    {
+      "existing": "Old text",
+      "expected": "New text\n",
+      "format": "markdown",
+      "incoming": "New text",
+      "name": "markdown-no-headings"
+    },
+    {
+      "existing": "---\r\na: b\r\n---\r\n## Visits\r\nold\r\n",
+      "expected": "## Visits\r\nnew\r\n\n",
+      "format": "markdown",
+      "incoming": "## Visits\r\nnew\r\n",
+      "name": "markdown-crlf"
+    },
+    {
+      "existing": "---\na: b\n## Private\nkeep\n",
+      "expected": "## Private\nkeep\n\n## Visits\nnew\n\n",
+      "format": "markdown",
+      "incoming": "## Visits\nnew\n",
+      "name": "markdown-unclosed-frontmatter"
+    },
+    {
+      "existing": "[{\"tst\":1.0},{\"tst\":1e3},{\"tst\":-0.0}]",
+      "expected": "[\n  {\n    \"tst\" : 1\n  },\n  {\n    \"tst\" : 1000\n  },\n  {\n    \"tst\" : -0\n  },\n  {\n    \"tst\" : 0\n  }\n]\n",
+      "format": "owntracks",
+      "incoming": "[{\"tst\":1},{\"tst\":1000},{\"tst\":0}]",
+      "name": "json-equivalent-number-identities"
+    }
+  ]
+}

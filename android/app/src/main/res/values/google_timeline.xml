@@ -1,0 +1,13 @@
+<resources>
+    <string name="history_import_google_raw">Google Location History</string>
+    <string name="history_import_google_semantic">Google Semantic Timeline</string>
+    <string name="history_import_google_device">Google Device Timeline</string>
+    <string name="history_import_google_existing">Journal matches to keep: %1$d. Repeated file records combined: %2$d. Google imports compare locations and times.</string>
+    <plurals name="history_import_unsupported">
+        <item quantity="one">%d unsupported Google record will be skipped. Untimed waypoints are not given invented timestamps.</item>
+        <item quantity="other">%d unsupported Google records will be skipped. Untimed waypoints are not given invented timestamps.</item>
+    </plurals>
+    <string name="history_import_select_visits">Import visits</string>
+    <string name="history_import_select_points">Import location points</string>
+    <string name="history_import_selection_counts">Review counts cover the whole file. Only selected record types will be imported.</string>
+</resources>

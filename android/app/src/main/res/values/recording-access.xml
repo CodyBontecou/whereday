@@ -1,0 +1,21 @@
+<resources>
+    <string name="permission_location_title">Location access</string>
+    <string name="permission_location_none">Location access is off. You can browse and edit your journal, but new routes and automatic visits need location access.</string>
+    <string name="permission_location_denied">Location was not allowed. Recording has not started. You can keep using your existing journal.</string>
+    <string name="permission_approximate_title">Location accuracy</string>
+    <string name="permission_approximate_body">Approximate location is on. Routes may have gaps or no saved points, and visits may be missed. Precise location is optional.</string>
+    <string name="permission_notifications_title">Recording notifications</string>
+    <string name="permission_notifications_body">Notifications are off. Recording can continue, but Android may hide its status notification. Open Whereday to check or stop recording.</string>
+    <string name="permission_location_options">Location access options</string>
+    <string name="permission_notification_options">Notification options</string>
+    <string name="permission_review_location">Whereday uses location to save route points and detect visits while recording. You can browse and edit existing history without allowing location.</string>
+    <string name="permission_request_location">Allow location</string>
+    <string name="permission_request_location_start">Allow location and start recording</string>
+    <string name="permission_request_precise">Request precise location</string>
+    <string name="permission_request_notifications">Allow notifications</string>
+    <string name="permission_open_settings">Open app settings</string>
+    <string name="permission_not_now">Not now</string>
+    <string name="permission_settings_help">If Android no longer shows a request, change access in app settings. Returning from settings does not start recording.</string>
+    <string name="permission_request_failed">The permission request could not open. Try again, or use app settings.</string>
+    <string name="permission_settings_failed">App settings could not open. In Android Settings, find Whereday under Apps and review its permissions.</string>
+</resources>

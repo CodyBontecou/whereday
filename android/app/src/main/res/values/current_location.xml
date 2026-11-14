@@ -1,0 +1,27 @@
+<resources>
+    <string name="current_location_disclosure">Request a single location for this visit. Recording stays unchanged. No address lookup is performed.</string>
+    <string name="current_location_business_disclosure">Request one location for this visit. Recording stays unchanged. When network geocoding is allowed, Whereday checks saved places on this phone first, then sends this fix’s coordinates, a 500 m radius, language and place categories to Geoapify to suggest one business. Your journal history is not sent.</string>
+    <string name="current_location_quality">Use a fix from the last 5 minutes with accuracy within 100 m, or choose a saved place instead.</string>
+    <string name="current_location_no_fix">No fresh accurate location was found. Check device location settings, move where GPS is available, or choose a saved place.</string>
+    <string name="current_location_timeout">Location request timed out. Try again or choose a saved place.</string>
+    <string name="current_location_access_error">Location access is unavailable. Allow it in app settings or choose a saved place.</string>
+    <string name="current_location_error">Current location is unavailable. Check device location settings or choose a saved place.</string>
+    <string name="current_location_denied">Location access was not allowed. You can still choose a saved place.</string>
+    <string name="current_location_loading">Finding current location…</string>
+    <string name="current_location_request">Request location</string>
+    <string name="current_location_ready">Current location ready</string>
+    <string name="current_location_coordinate">%1$s, %2$s · ±%3$s m</string>
+    <string name="current_location_expired">This location has expired. Request a new location.</string>
+    <string name="current_location_permissions">Open app permissions</string>
+    <string name="current_location_use">Use coordinates</string>
+    <string name="current_location_cancel">Cancel</string>
+    <string name="current_location_interrupted">Request a new location after returning to the app.</string>
+    <string name="current_business_title">Suggested current place</string>
+    <string name="current_business_loading">Looking for a business near this location…</string>
+    <string name="current_business_empty">No nearby business was found. You can use the current coordinates or enter a place name yourself.</string>
+    <string name="current_business_error">The current place name could not be loaded. You can still use the current coordinates.</string>
+    <string name="current_business_paused">The place lookup stopped while the app was in the background. Search again to continue.</string>
+    <string name="current_business_retry">Search current place again</string>
+    <string name="current_business_explanation">Use this business to replace the name, address and coordinates in the unsaved visit.</string>
+    <string name="current_business_checking_saved">Checking saved places on this phone…</string>
+</resources>

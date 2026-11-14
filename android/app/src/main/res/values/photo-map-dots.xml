@@ -1,0 +1,4 @@
+<resources>
+    <string name="map_layer_photo_dots">Photo dots</string>
+    <string name="map_photo_dots_description">Use small dots instead of thumbnails or camera pins. Larger dots group photos. Tap a dot to browse. Turning dots off restores your image or pin preference.</string>
+</resources>

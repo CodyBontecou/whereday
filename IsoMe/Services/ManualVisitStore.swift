@@ -5,11 +5,14 @@ import WidgetKit
 
 enum VisitMutationError: LocalizedError {
     case invalidInput
+    case trackingAccessRequired
     case overlap(String)
     case persistence
 
     var errorDescription: String? {
         switch self {
+        case .trackingAccessRequired:
+            return String(localized: "Choose a Whereday plan before adding new visits.")
         case .invalidInput:
             return String(localized: "Enter a place name, location, and valid times.")
         case .overlap(let name):
@@ -39,6 +42,11 @@ final class ManualVisitStore {
         allowOverlap: Bool = false
     ) -> Visit? {
         visitMutationError = nil
+        guard StoreManager.shared.canTrack else {
+            visitMutationError = .trackingAccessRequired
+            NotificationCenter.default.post(name: .trackingAccessRequired, object: nil)
+            return nil
+        }
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty,
               CLLocationCoordinate2DIsValid(coordinate),

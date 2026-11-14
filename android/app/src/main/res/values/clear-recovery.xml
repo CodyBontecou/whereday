@@ -1,0 +1,11 @@
+<resources>
+    <string name="clear_recovery_checking">Opening your journal</string>
+    <string name="clear_recovery_checking_help">Please wait.</string>
+    <string name="clear_recovery_title">Journal deletion</string>
+    <string name="clear_recovery_progress">Deleting journal data. Please keep Whereday open.</string>
+    <string name="clear_recovery_failed">Deletion could not finish. Try again to finish clearing the journal.</string>
+    <string name="clear_recovery_unreadable">The previous deletion request could not be read. Review deleting the remaining journal data to continue.</string>
+    <string name="clear_recovery_review">Review deletion</string>
+    <string name="clear_recovery_retry">Try again</string>
+    <string name="clear_recovery_exports">Original photos and files already exported to your folders remain available.</string>
+</resources>

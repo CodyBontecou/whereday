@@ -20,7 +20,7 @@ struct WebhookSettingsView: View {
         ZStack {
             TE.surface.ignoresSafeArea()
 
-            if storeManager.isPurchased {
+            if storeManager.canExport {
                 ScrollView {
                     VStack(spacing: 0) {
                         if !privacyWarningDismissed {
@@ -66,7 +66,7 @@ struct WebhookSettingsView: View {
                 .font(TE.mono(.caption, weight: .bold))
                 .tracking(2)
                 .foregroundStyle(TE.textPrimary)
-            Text("Export features require a one-time purchase.")
+            Text("Choose a Whereday plan to unlock export features.")
                 .font(TE.mono(.caption2, weight: .medium))
                 .foregroundStyle(TE.textMuted)
                 .multilineTextAlignment(.center)

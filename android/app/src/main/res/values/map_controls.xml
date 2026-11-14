@@ -1,0 +1,71 @@
+<resources>
+    <string name="map_follow">Follow my location</string>
+    <string name="map_following">Following my location</string>
+    <string name="map_hide_location">Hide my location</string>
+    <string name="map_follow_denied">Location access was not allowed. You can still view your recorded history.</string>
+    <string name="map_follow_finding">Finding your location…</string>
+    <string name="map_follow_waiting">Waiting for a recent location. Check your phone’s location settings.</string>
+    <string name="map_follow_failed">Location could not be followed. Check location access and device settings, then try again.</string>
+    <string name="map_follow_question">Follow your location?</string>
+    <string name="map_follow_explanation">Allow location access to center this map on you while it is visible. Approximate location works too. The location marker stays visible when you pan. Use Hide my location to stop updates. This does not start recording or save points.</string>
+    <string name="map_follow_allow">Allow location access</string>
+    <string name="map_follow_later">Not now</string>
+    <string name="map_follow_accuracy">Location accuracy · about %1$d %2$s</string>
+    <string name="map_dates">Dates</string>
+    <string name="map_date_today">Today</string>
+    <string name="map_date_yesterday">Yesterday</string>
+    <string name="map_date_week">7 days</string>
+    <string name="map_date_month">30 days</string>
+    <string name="map_date_all">All</string>
+    <string name="map_date_custom">Custom</string>
+    <string name="map_choose_dates">Choose dates</string>
+    <string name="map_apply_dates">Apply</string>
+    <string name="map_cancel_dates">Cancel</string>
+    <string name="map_save_current">Save current place</string>
+    <string name="map_add_past">Add past visit</string>
+    <string name="map_visit_saved">Visit saved. Review it in Timeline.</string>
+    <string name="map_loading_history">Loading journal history…</string>
+    <string name="map_retry_history">Try again</string>
+    <string name="map_refresh_photos">Refresh matched photos</string>
+    <string name="map_checking_photos">Checking photo access…</string>
+    <string name="map_photo_limit">%1$d matched photos · at most 500 place or area markers.</string>
+    <string name="map_replay">Replay route</string>
+    <string name="map_layers">Map layers</string>
+    <string name="map_layer_path">Travel path</string>
+    <string name="map_layer_points">GPS points</string>
+    <string name="map_layer_visits">Visit markers</string>
+    <string name="map_layer_endpoints">Start and end markers</string>
+    <string name="map_layer_photos">Photo markers</string>
+    <string name="map_layer_images">Photo images</string>
+    <string name="map_layer_outliers">Show GPS outliers</string>
+    <string name="map_outliers_main">Outlier fixes are red. Outlier visibility is saved for the main map; original fixes stay unchanged.</string>
+    <string name="map_outliers_local">Outlier fixes are red. Layer choices only change this map.</string>
+    <string name="map_route_start">Route start · %1$s</string>
+    <string name="map_route_end">Route end · %1$s</string>
+    <string name="map_layers_done">Done map layers</string>
+    <string name="map_online">Online map</string>
+    <string name="map_fit">Fit route</string>
+    <string name="map_visits">Visits on map</string>
+    <string name="map_visits_empty">No visits are visible. Enable Visit markers in Map layers to choose a visit.</string>
+    <string name="map_visits_close">Close map visits</string>
+    <string name="map_photos">Photos on map</string>
+    <string name="map_browse_photos">Browse all photo places</string>
+    <string name="map_retry_photos">Retry photo places</string>
+    <string name="map_tiles_disclosure">Map tiles: OpenFreeMap / OpenMapTiles / OpenStreetMap. The map provider receives requests for the viewed area.</string>
+    <string name="map_tiles_failed">Map tiles could not load. Your recorded history is safe. Turn Online map off to view the route offline.</string>
+    <string name="map_offline">Offline route view. Enable Online map to load a street map.</string>
+    <string name="map_a11y_title">Journal map.</string>
+    <string name="map_a11y_path_shown">Travel path shown.</string>
+    <string name="map_a11y_path_hidden">Travel path hidden.</string>
+    <string name="map_a11y_endpoints_shown">Start and end flags shown.</string>
+    <string name="map_a11y_endpoints_hidden">Start and end flags hidden.</string>
+    <string name="map_a11y_location_shown">Your current location shown.</string>
+    <string name="map_a11y_location_hidden">Your current location not shown.</string>
+    <string name="map_a11y_gestures">Scroll by dragging two fingers. Zoom by pinching two fingers.</string>
+    <plurals name="map_a11y_points"><item quantity="one">%d GPS marker.</item><item quantity="other">%d GPS markers.</item></plurals>
+    <plurals name="map_a11y_visits"><item quantity="one">%d visit marker.</item><item quantity="other">%d visit markers.</item></plurals>
+    <plurals name="map_a11y_groups"><item quantity="one">%d photo group.</item><item quantity="other">%d photo groups.</item></plurals>
+    <plurals name="map_a11y_photos"><item quantity="one">%d photo.</item><item quantity="other">%d photos.</item></plurals>
+    <plurals name="map_a11y_places"><item quantity="one">%d photo place.</item><item quantity="other">%d photo places.</item></plurals>
+    <plurals name="map_a11y_areas"><item quantity="one">%d area group.</item><item quantity="other">%d area groups.</item></plurals>
+</resources>

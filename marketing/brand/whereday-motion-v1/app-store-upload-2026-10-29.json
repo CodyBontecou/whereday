@@ -1,0 +1,38 @@
+{
+  "appId": "6761960794",
+  "appName": "Whereday: Location History",
+  "submittedAt": "2026-10-29T13:30:00-04:00",
+  "submissionId": "4a603099-2ec7-4f60-93aa-a249073854cf",
+  "submissionUrl": "https://appstoreconnect.apple.com/apps/6761960794/distribution/reviewsubmissions/details/4a603099-2ec7-4f60-93aa-a249073854cf",
+  "status": "WAITING_FOR_REVIEW",
+  "uploaded": true,
+  "livePlacementChanged": false,
+  "existingVersionSubmission": "1.7.18 Waiting for Review; left intact",
+  "assets": [
+    {
+      "file": "whereday-header-3840x1646.mp4",
+      "assetId": "ea400019-30b5-855a-813d-89b7fe6fc4a9",
+      "sha256": "39ccfeee23ab38bfef641ad8ebe6941d4a1534f63f353846f922e835bce95fd4",
+      "status": "WAITING_FOR_REVIEW"
+    },
+    {
+      "file": "whereday-header-3840x1646.png",
+      "assetId": "1d800019-30b5-855a-8016-26bdb1e9adf7",
+      "sha256": "c9691655b95c8f58882436e8a5050bb62896cc2ca38f83e88f8fcc01dbd7da13",
+      "status": "WAITING_FOR_REVIEW"
+    },
+    {
+      "file": "whereday-search-1920x1280.mp4",
+      "assetId": "12400019-30b5-855a-8116-1c960b036e74",
+      "sha256": "6eaa54d2d0d009403132de34f8dc8050bf5973f3f22ef3acc2a7792d64599b8a",
+      "status": "WAITING_FOR_REVIEW"
+    },
+    {
+      "file": "whereday-search-1920x1280.png",
+      "assetId": "12400019-30b5-855a-8030-ad194aca311d",
+      "sha256": "fca6514ede5e8def113e0f484a167f1e048bf87eb757d5cdcbd27e1812298af2",
+      "status": "WAITING_FOR_REVIEW"
+    }
+  ],
+  "nextStep": "After approval, select the header video and search graphic on the live product page and publish their placements."
+}

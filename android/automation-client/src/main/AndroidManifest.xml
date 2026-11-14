@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <queries><package android:name="com.bontecou.whereday.mapqa" /></queries>
+    <application android:label="Automation QA Client" android:allowBackup="false" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <service android:name=".ResultReadService" android:exported="false" />
+        <activity android:name=".ClientActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent-filter></activity>
+        <provider android:name=".ReceiptProvider" android:authorities="com.bontecou.whereday.automationclient.receipts" android:exported="true" />
+    </application>
+</manifest>

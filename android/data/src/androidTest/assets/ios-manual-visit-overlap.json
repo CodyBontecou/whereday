@@ -1,0 +1,137 @@
+{
+  "provenance": {
+    "predicate": "2224c89147028317852875a7349059226f1120804e3ccc0e7a8f11875c669c62",
+    "inputs": "2fb575688ac5560b5f58f7926eb2310dc7775ba0bb5a5bf191df0daa23bce713",
+    "harness": "6afeadf512cdd71c8c413c211085d05555c8f26fbe9a102c8026467057946529",
+    "generator": "e6d73e1e4ca907f7ba79d43340c5cbe379d0194486d710b1a222b39d9c24ff4a"
+  },
+  "cases": [
+    {
+      "candidateFrom": -2000,
+      "candidateThrough": -1,
+      "from": 0,
+      "overlap": false,
+      "through": null
+    },
+    {
+      "candidateFrom": -2000,
+      "candidateThrough": 0,
+      "from": 0,
+      "overlap": false,
+      "through": null
+    },
+    {
+      "candidateFrom": -2000,
+      "candidateThrough": 1,
+      "from": 0,
+      "overlap": true,
+      "through": null
+    },
+    {
+      "candidateFrom": 0,
+      "candidateThrough": null,
+      "from": 0,
+      "overlap": true,
+      "through": null
+    },
+    {
+      "candidateFrom": 1000,
+      "candidateThrough": null,
+      "from": 0,
+      "overlap": true,
+      "through": null
+    },
+    {
+      "candidateFrom": 1000,
+      "candidateThrough": 1000,
+      "from": 0,
+      "overlap": true,
+      "through": null
+    },
+    {
+      "candidateFrom": -1000,
+      "candidateThrough": 0,
+      "from": 0,
+      "overlap": false,
+      "through": 1000
+    },
+    {
+      "candidateFrom": 1000,
+      "candidateThrough": 2000,
+      "from": 0,
+      "overlap": false,
+      "through": 1000
+    },
+    {
+      "candidateFrom": 0,
+      "candidateThrough": 1000,
+      "from": 0,
+      "overlap": true,
+      "through": 1000
+    },
+    {
+      "candidateFrom": 100,
+      "candidateThrough": 900,
+      "from": 0,
+      "overlap": true,
+      "through": 1000
+    },
+    {
+      "candidateFrom": -100,
+      "candidateThrough": 1100,
+      "from": 0,
+      "overlap": true,
+      "through": 1000
+    },
+    {
+      "candidateFrom": 0,
+      "candidateThrough": 0,
+      "from": 0,
+      "overlap": true,
+      "through": 0
+    },
+    {
+      "candidateFrom": 0,
+      "candidateThrough": null,
+      "from": 0,
+      "overlap": false,
+      "through": 0
+    },
+    {
+      "candidateFrom": 0,
+      "candidateThrough": 0,
+      "from": 0,
+      "overlap": false,
+      "through": 1000
+    },
+    {
+      "candidateFrom": 500,
+      "candidateThrough": 500,
+      "from": 0,
+      "overlap": true,
+      "through": 1000
+    },
+    {
+      "candidateFrom": -1000,
+      "candidateThrough": 0,
+      "from": -1500,
+      "overlap": true,
+      "through": -500
+    },
+    {
+      "candidateFrom": -2000,
+      "candidateThrough": -1500,
+      "from": -1500,
+      "overlap": false,
+      "through": null
+    },
+    {
+      "candidateFrom": 64092211200000,
+      "candidateThrough": 64092211200001,
+      "from": 0,
+      "overlap": false,
+      "through": null
+    }
+  ],
+  "futureMillis": 64092211200000
+}

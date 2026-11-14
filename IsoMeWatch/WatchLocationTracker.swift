@@ -1,6 +1,7 @@
 import CoreLocation
 import Foundation
 import WidgetKit
+import StoreKit
 
 /// A small, watch-native location tracker so the watch app can run without the
 /// iPhone companion app being installed or launched.
@@ -13,6 +14,10 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     private let syncClient = WatchLocationSyncClient.shared
     private let defaults: UserDefaults
     private var persistedState: PersistedWatchTrackingState
+    private var canTrack = false
+    private var accessExpiration: Date?
+    private var entitlementUpdates: Task<Void, Never>?
+    private var accessTimer: Timer?
 
     private let minimumMovementDistance: CLLocationDistance = 10
     private let visitDistanceThreshold: CLLocationDistance = 100
@@ -28,15 +33,24 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         super.init()
 
         configureLocationManager()
-        rollOverIfNeeded()
         syncClient.activate()
 
-        if locationData.isTrackingEnabled, canUseLocation {
-            syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
-            startLocationUpdates()
-        } else {
-            syncClient.syncPending(force: true)
+        // Persist a cohort marker before writing any new-install state.
+        if defaults.object(forKey: PaidTrackingMigration.legacyCohortKey) == nil {
+            defaults.set(defaults.data(forKey: Self.persistedStateKey) != nil || authorizationStatus != .notDetermined,
+                         forKey: PaidTrackingMigration.legacyCohortKey)
         }
+        rollOverIfNeeded()
+        Task { await refreshTrackingAccess() }
+        entitlementUpdates = Task { [weak self] in
+            for await _ in Transaction.updates { await self?.refreshTrackingAccess() }
+        }
+        syncClient.syncPending(force: true)
+    }
+
+    deinit {
+        entitlementUpdates?.cancel()
+        accessTimer?.invalidate()
     }
 
     var canUseLocation: Bool {
@@ -63,6 +77,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     }
 
     func refresh() {
+        Task { await refreshTrackingAccess() }
         authorizationStatus = locationManager.authorizationStatus
         rollOverIfNeeded()
     }
@@ -77,6 +92,10 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     }
 
     func startTracking() {
+        guard canTrack, accessExpiration.map({ $0 > Date() }) ?? true else {
+            lastErrorMessage = String(localized: "Open Whereday on iPhone to choose or restore a plan.")
+            return
+        }
         lastErrorMessage = nil
         rollOverIfNeeded()
 
@@ -125,7 +144,43 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         locationManager.allowsBackgroundLocationUpdates = true
     }
 
+    @MainActor
+    private func refreshTrackingAccess() async {
+        var legacy = defaults.bool(forKey: PaidTrackingMigration.legacyCohortKey)
+        if !legacy, let result = try? await AppTransaction.shared,
+           case .verified(let app) = result,
+           PaidTrackingMigration.restoreLegacyAccess(verifiedOriginalVersion: app.originalAppVersion, defaults: defaults) {
+            legacy = true
+        }
+        let lifetimeIDs: Set<String> = ["com.bontecou.isome.lifetime", "com.bontecou.isome.lifetime.individual", "com.bontecou.isome.lifetime.family.upgrade"]
+        let subscriptionIDs: Set<String> = ["com.bontecou.isome.individual.weekly", "com.bontecou.isome.individual.yearly", "com.bontecou.isome.family.weekly", "com.bontecou.isome.family.yearly"]
+        var lifetime = false
+        var expiry: Date?
+        for await result in Transaction.currentEntitlements {
+            guard case .verified(let transaction) = result,
+                  transaction.revocationDate == nil, !transaction.isUpgraded else { continue }
+            if lifetimeIDs.contains(transaction.productID) { lifetime = true }
+            if subscriptionIDs.contains(transaction.productID), let date = transaction.expirationDate, date > Date() {
+                expiry = max(expiry ?? date, date)
+            }
+        }
+        canTrack = legacy || lifetime || expiry != nil
+        accessExpiration = legacy || lifetime ? nil : expiry
+        accessTimer?.invalidate()
+        if let expiration = accessExpiration {
+            accessTimer = Timer.scheduledTimer(withTimeInterval: max(1, expiration.timeIntervalSinceNow), repeats: false) { [weak self] _ in
+                Task { await self?.refreshTrackingAccess() }
+            }
+        }
+        if !canTrack && locationData.isTrackingEnabled { stopTracking() }
+        if canTrack && locationData.isTrackingEnabled && canUseLocation {
+            syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
+            startLocationUpdates()
+        }
+    }
+
     private func startLocationUpdates() {
+        guard canTrack else { return }
         locationManager.startUpdatingLocation()
         locationManager.requestLocation()
     }
@@ -141,6 +196,10 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     }
 
     private func handleLocation(_ location: CLLocation) {
+        guard canTrack, accessExpiration.map({ $0 > Date() }) ?? true else {
+            if locationData.isTrackingEnabled { stopTracking() }
+            return
+        }
         guard location.horizontalAccuracy >= 0,
               location.horizontalAccuracy <= acceptableHorizontalAccuracy else {
             return

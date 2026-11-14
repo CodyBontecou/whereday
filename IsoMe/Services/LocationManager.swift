@@ -5,6 +5,10 @@ import Combine
 import ActivityKit
 import WidgetKit
 
+extension Notification.Name {
+    static let trackingAccessRequired = Notification.Name("trackingAccessRequired")
+}
+
 @MainActor
 final class LocationManager: NSObject, ObservableObject {
     /// Latest live instance, used by App Intents so Siri/Shortcuts can drive tracking.
@@ -24,6 +28,8 @@ final class LocationManager: NSObject, ObservableObject {
 
     // Safety-net auto-stop timer (only runs when stopAfterHours > 0)
     private var stopTrackingTimer: Timer?
+    private var accessObserver: AnyCancellable?
+    private var resumeAfterAccessResolution = false
 
     // Geocoding service
     private let geocodingService = GeocodingService()
@@ -102,8 +108,25 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.pausesLocationUpdatesAutomatically = false
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
 
+        // Resolve the cohort before any new-install defaults are written.
+        let store = StoreManager.shared
+        resumeAfterAccessResolution = UserDefaults.standard.bool(forKey: "isTrackingEnabled")
+        isTrackingEnabled = resumeAfterAccessResolution && store.canTrack
+        accessObserver = store.objectWillChange.sink { [weak self] in
+            Task { @MainActor in
+                guard let self else { return }
+                if store.canTrack {
+                    if self.resumeAfterAccessResolution && store.hasResolvedEntitlements {
+                        self.resumeAfterAccessResolution = false
+                        self.startTracking()
+                    }
+                } else if self.isTrackingEnabled {
+                    self.stopTracking()
+                }
+            }
+        }
+
         // Restore saved state
-        isTrackingEnabled = UserDefaults.standard.bool(forKey: "isTrackingEnabled")
         if UserDefaults.standard.object(forKey: "stopAfterHours") != nil {
             stopAfterHours = UserDefaults.standard.double(forKey: "stopAfterHours")
         }
@@ -176,6 +199,10 @@ final class LocationManager: NSObject, ObservableObject {
     // MARK: - Tracking Control
 
     func startTracking() {
+        guard StoreManager.shared.canTrack else {
+            NotificationCenter.default.post(name: .trackingAccessRequired, object: nil)
+            return
+        }
         guard hasLocationPermission else {
             requestAlwaysAuthorization()
             return
@@ -207,6 +234,7 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     func stopTracking() {
+        resumeAfterAccessResolution = false
         let endedAt = Date()
         endActiveRecordingSession(at: endedAt)
 
@@ -995,6 +1023,7 @@ extension LocationManager: CLLocationManagerDelegate {
 
     nonisolated func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         Task { @MainActor in
+            guard StoreManager.shared.canTrack else { return }
             saveVisit(visit)
         }
     }
@@ -1004,12 +1033,14 @@ extension LocationManager: CLLocationManagerDelegate {
             guard let location = locations.last else { return }
             currentLocation = location
 
+            guard StoreManager.shared.canTrack else { return }
+
             // Record every delivered location for daily distance history (stats only).
             for deliveredLocation in locations {
                 dailyDistanceTracker.recordLocation(deliveredLocation)
             }
 
-            guard isTrackingEnabled else { return }
+            guard isTrackingEnabled, StoreManager.shared.canTrack else { return }
 
             saveLocationPoints(locations)
 

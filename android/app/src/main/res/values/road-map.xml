@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="map_road_estimate_description">Road display is estimated. Recorded locations are unchanged.</string>
+</resources>

@@ -1,0 +1,79 @@
+steps:
+- run: map-qa-onboarding.yaml
+- echo: From empty Map enable Photo markers, open the complete directory, and verify both Close and Android Back
+    return to Map.
+- tap:
+    text: Map layers
+- await:
+    visible:
+      id: map-layer-photos
+- await:
+    idle: true
+- tap:
+    id: map-layer-photos
+- tap:
+    text: Done map layers
+- await:
+    visible:
+      id: browse-photo-places
+- await:
+    idle: true
+- tap:
+    id: browse-photo-places
+- await:
+    visible:
+      id: photo-place-directory-title
+- await:
+    idle: true
+- await:
+    visible:
+      text: No matched photo places in this date range.
+- await:
+    idle: true
+- tap:
+    text: Close photo places
+- await:
+    hidden:
+      id: photo-place-directory-title
+- await:
+    visible:
+      id: browse-photo-places
+- await:
+    idle: true
+- tap:
+    id: browse-photo-places
+- await:
+    visible:
+      id: photo-place-directory-title
+- await:
+    idle: true
+- tool: button
+  args:
+    button: back
+- await:
+    hidden:
+      id: photo-place-directory-title
+- await:
+    visible:
+      id: browse-photo-places
+- await:
+    idle: true
+- tap:
+    text: Map layers
+- await:
+    visible:
+      id: map-layer-photos
+- await:
+    idle: true
+- tap:
+    id: map-layer-photos
+- tap:
+    text: Done map layers
+- await:
+    hidden:
+      id: browse-photo-places
+- await:
+    visible:
+      text: Start recording
+- await:
+    idle: true

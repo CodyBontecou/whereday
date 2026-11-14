@@ -1,0 +1,81 @@
+<resources>
+    <string name="atlas_kicker">ATLAS · A YEAR IN DAYS</string>
+    <string name="atlas_all_years">All years</string>
+    <string name="atlas_range">Range</string>
+    <string name="atlas_range_year">Year</string>
+    <string name="atlas_range_all">All</string>
+    <string name="atlas_previous_year">Previous year</string>
+    <string name="atlas_next_year">Next year</string>
+    <string name="atlas_legend_none">No record</string>
+    <string name="atlas_legend_manual">Manual stay</string>
+    <string name="atlas_legend_travel">Travel day</string>
+    <string name="atlas_legend_ahead">Ahead</string>
+    <string name="atlas_grid">Calendar of recorded days, colored by country</string>
+    <string name="atlas_month_ahead">Ahead</string>
+    <plurals name="atlas_month_country">
+        <item quantity="one">%1$s, %2$s day</item>
+        <item quantity="other">%1$s, %2$s days</item>
+    </plurals>
+    <plurals name="atlas_month_empty">
+        <item quantity="one">%1$s day with no record</item>
+        <item quantity="other">%1$s days with no record</item>
+    </plurals>
+    <string name="atlas_empty_title">No country days yet</string>
+    <string name="atlas_empty_body">Countries appear as you record. Identify countries in your earlier history or add a manual stay to fill the year.</string>
+    <string name="atlas_identify">Identify countries</string>
+    <plurals name="atlas_country_days">
+        <item quantity="one">%1$s day</item>
+        <item quantity="other">%1$s days</item>
+    </plurals>
+    <string name="atlas_travel_note">Travel days count in both countries.</string>
+    <plurals name="atlas_travel_gaps">
+        <item quantity="one">Travel days count in both countries. %1$s day has no record — open Country days to add a stay.</item>
+        <item quantity="other">Travel days count in both countries. %1$s days have no record — open Country days to add a stay.</item>
+    </plurals>
+    <string name="atlas_country_days_action">Country days</string>
+    <string name="atlas_load_error">Country days could not be loaded.</string>
+    <string name="atlas_retry">Try again</string>
+    <string name="atlas_back">Back to Atlas</string>
+    <string name="atlas_recap">%1$s recap</string>
+    <string name="atlas_selected">SELECTED · %1$s</string>
+    <string name="atlas_no_record">No record</string>
+    <string name="atlas_open_day">Open the day</string>
+    <string name="atlas_add_stay">Add a stay</string>
+    <string name="atlas_days_by_country">DAYS BY COUNTRY</string>
+    <string name="recap_title">Month recap</string>
+    <string name="recap_done">Done</string>
+    <string name="recap_previous">Previous month</string>
+    <string name="recap_next">Next month</string>
+    <string name="recap_brand">Whereday</string>
+    <string name="recap_moved">MOVED</string>
+    <string name="recap_visits_label">VISITS</string>
+    <string name="recap_new_places">NEW PLACES</string>
+    <string name="recap_biggest_day">BIGGEST DAY</string>
+    <string name="recap_footer">Made on-device · no map coordinates included</string>
+    <string name="recap_share">Share recap</string>
+    <string name="recap_share_title">Whereday · %1$s</string>
+    <string name="recap_share_error">Unable to prepare the recap image. Try again.</string>
+    <string name="recap_privacy">The shared image shows place names and totals only. It never includes map coordinates.</string>
+    <string name="recap_bars_distance">Distance moved each day in %1$s</string>
+    <string name="recap_bars_places">Places visited each day in %1$s</string>
+    <plurals name="recap_days">
+        <item quantity="one">%1$d day,</item>
+        <item quantity="other">%1$d days,</item>
+    </plurals>
+    <plurals name="recap_places">
+        <item quantity="one">%1$d place,</item>
+        <item quantity="other">%1$d places,</item>
+    </plurals>
+    <plurals name="recap_cities">
+        <item quantity="one">one city.</item>
+        <item quantity="other">%1$d cities.</item>
+    </plurals>
+    <plurals name="recap_countries">
+        <item quantity="one">one country.</item>
+        <item quantity="other">%1$d countries.</item>
+    </plurals>
+    <plurals name="recap_visits">
+        <item quantity="one">one visit.</item>
+        <item quantity="other">%1$d visits.</item>
+    </plurals>
+</resources>

@@ -1,0 +1,23 @@
+{
+  "scope": "All currently externalized app/platform strings/plurals; hardcoded UI and other languages remain incomplete",
+  "locales": {
+    "es": {
+      "resourceCount": 1496,
+      "catalogAliases": 5,
+      "defaultSha256": "3f29df1423ffc7fc6b91492ad08f3ebb1bcdec25626ae4b33d053cdccdd1abe3",
+      "inputSha256": "f67baa91834b765c6563c2ada017bd884a18d8895eb31ddb386e3ec0eac0164f",
+      "selectedCatalogSha256": "6d75ba5fa09e9f66959fa6ae8da624c10ac79caddfa35e6e48577ae1070732c6",
+      "outputSha256": "edf2cbe006ee7a5c66471ccfb68fdd86762bc95b49648c13b6f1dad8aafe7ded",
+      "modules": {
+        "app": {
+          "resourceCount": 1480,
+          "outputSha256": "4c40721150772b8782663b3b5107aa131b4aa12d62de81cbbd569b938bfa0863"
+        },
+        "platform": {
+          "resourceCount": 16,
+          "outputSha256": "585940697f8f3e186e915c3c32ce6aa943efee613cadd238a0a1e176b720d838"
+        }
+      }
+    }
+  }
+}

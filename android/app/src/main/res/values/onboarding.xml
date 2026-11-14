@@ -1,0 +1,29 @@
+<resources>
+    <string name="onboarding_start_error">Recording could not start. Try again, or choose Not now to finish setup.</string>
+    <string name="onboarding_save_error">Setup could not be saved. Try again. If you requested recording, it may already be active.</string>
+    <string name="onboarding_step">Step %1$d of %2$d</string>
+    <string name="onboarding_dial">An empty day dial with the first place starting to fill in</string>
+    <string name="onboarding_title_page">Every day\nis a page.</string>
+    <string name="onboarding_body_page">Whereday quietly writes down where you were, so you can look back at any day, place or trip.</string>
+    <string name="onboarding_title_private">It stays\non this phone.</string>
+    <string name="onboarding_private_account">No account. Nothing to sign up for.</string>
+    <string name="onboarding_private_server">No server keeps a copy of where you\'ve been.</string>
+    <string name="onboarding_private_export">Export it anytime, in open formats.</string>
+    <string name="onboarding_title_remember">How much\nshould it remember?</string>
+    <string name="onboarding_detail_places">Places only</string>
+    <string name="onboarding_detail_places_body">Where you stop. Lightest on battery.</string>
+    <string name="onboarding_detail_routes">Places + routes</string>
+    <string name="onboarding_detail_routes_body">Your path while moving, quiet when still.</string>
+    <string name="onboarding_detail_every">Every step</string>
+    <string name="onboarding_detail_every_body">High-detail tracks for hikes and rides.</string>
+    <string name="onboarding_photos_title">Match photos to places</string>
+    <string name="onboarding_photos_body">Shows your photos on the days and places they were taken. Photos stay in your library.</string>
+    <string name="onboarding_note_default">You can change this anytime.</string>
+    <string name="onboarding_note_granted">Recording starts when you choose, and shows an ongoing notification while it runs. You can change this anytime.</string>
+    <string name="onboarding_note_denied">Location access is off. Turn it on in Android Settings → Apps → Whereday → Permissions.</string>
+    <string name="onboarding_start_recording">Start recording</string>
+    <string name="onboarding_open_settings">Open Android Settings</string>
+    <string name="onboarding_not_now">Not now</string>
+    <string name="onboarding_finish_without_location">Finish without location</string>
+    <string name="onboarding_import">I already have data — import</string>
+</resources>

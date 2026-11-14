@@ -276,6 +276,10 @@ nonisolated enum OnboardingAnalyticsProductID: String, CaseIterable, Sendable {
     case individualLifetime = "com.bontecou.isome.lifetime.individual"
     case familyLifetime = "com.bontecou.isome.lifetime"
     case familyLifetimeUpgrade = "com.bontecou.isome.lifetime.family.upgrade"
+    case individualWeekly = "com.bontecou.isome.individual.weekly"
+    case individualYearly = "com.bontecou.isome.individual.yearly"
+    case familyWeekly = "com.bontecou.isome.family.weekly"
+    case familyYearly = "com.bontecou.isome.family.yearly"
 }
 
 nonisolated enum OnboardingAnalyticsPurchaseOutcome: String, CaseIterable, Sendable {

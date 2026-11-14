@@ -9,6 +9,8 @@ struct LocationMapView: View {
     @State private var handledVisitRouteID: UUID?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Bindable var viewModel: LocationViewModel
+    var focusedVisit: Visit? = nil
+    var onSelectVisit: ((Visit) -> Void)? = nil
     @ObservedObject private var locationManager: LocationManager
     @State private var selectedVisit: Visit?
     @State private var selectedPointID: UUID?
@@ -45,11 +47,12 @@ struct LocationMapView: View {
     @State private var appliedMapFocusRequestID: UUID?
     @State private var activePreset: MapDatePreset? = .today
     @AppStorage("showOutliers") private var showOutliers = false
-    @AppStorage("discordPromoDismissed") private var discordPromoDismissed = false
     @AppStorage("photoPlacesPromptDismissed") private var photoPlacesPromptDismissed = false
 
-    init(viewModel: LocationViewModel) {
+    init(viewModel: LocationViewModel, focusedVisit: Visit? = nil, onSelectVisit: ((Visit) -> Void)? = nil) {
         self.viewModel = viewModel
+        self.focusedVisit = focusedVisit
+        self.onSelectVisit = onSelectVisit
         self.locationManager = viewModel.locationManager
     }
 
@@ -194,7 +197,7 @@ struct LocationMapView: View {
         guard !showStraightLinePathSegments else { return segments }
         return segments.filter(\.isSnapped)
     }
-    
+
     var spacedPoints: [LocationPoint] {
         MapPointMarkerSampler.sample(
             displayedTravelPathPoints,
@@ -207,434 +210,7 @@ struct LocationMapView: View {
     var body: some View {
         @Bindable var photoDetails = viewModel.photoDetails
         NavigationStack {
-            ZStack {
-                MapReader { mapProxy in
-                Map(position: $cameraPosition, selection: $selectedVisit) {
-                    // Current user location
-                    UserAnnotation()
-
-                    // Travel path from location points. In replay mode, keep the
-                    // full route hidden and only draw the segment the playhead has reached.
-                    // When road snapping is enabled, sparse GPS gaps are replaced with
-                    // MapKit route polylines so the path follows roads instead of drawing
-                    // abrupt straight chords between disconnected dots.
-                    if isRouteReplayEnabled, let routeReplaySnapshot {
-                        if let preparedRoadSnappedRoute {
-                            ForEach(displayedRoadSegments(from: preparedRoadSnappedRoute, upTo: routeReplaySnapshot.index)) { segment in
-                                MapPolyline(coordinates: segment.coordinates)
-                                    .stroke(
-                                        LinearGradient(
-                                            colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        ),
-                                        style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
-                                    )
-                            }
-                        } else if shouldDrawStraightLinePath, routeReplaySnapshot.visiblePoints.count >= 2 {
-                            let coordinates = routeReplaySnapshot.visiblePoints.map { $0.coordinate }
-                            MapPolyline(coordinates: coordinates)
-                                .stroke(
-                                    LinearGradient(
-                                        colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    ),
-                                    style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
-                                )
-                        }
-                    } else if showTravelPath && filteredPoints.count >= 2 {
-                        if let preparedRoadSnappedRoute {
-                            ForEach(displayedRoadSegments(from: preparedRoadSnappedRoute)) { segment in
-                                MapPolyline(coordinates: segment.coordinates)
-                                    .stroke(
-                                        LinearGradient(
-                                            colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        ),
-                                        style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
-                                    )
-                            }
-                        } else if shouldDrawStraightLinePath {
-                            let coordinates = filteredPoints.map { $0.coordinate }
-                            MapPolyline(coordinates: coordinates)
-                                .stroke(
-                                    LinearGradient(
-                                        colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    ),
-                                    style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
-                                )
-                        }
-                    }
-
-                    if isRouteReplayEnabled, let routeReplaySnapshot {
-                        Annotation(String(localized: "Route replay position"), coordinate: routeReplaySnapshot.currentPoint.coordinate) {
-                            RouteReplayMarker(snapshot: routeReplaySnapshot)
-                        }
-                    }
-                    
-                    // Live session path (moved from Track tab)
-                    if showSessionPath && activeSessionPoints.count >= 2 {
-                        let sessionCoordinates = activeSessionPoints.map { $0.coordinate }
-                        MapPolyline(coordinates: sessionCoordinates)
-                            .stroke(.blue, style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
-                    }
-                    
-                    if showSessionPath, let firstSessionPoint = activeSessionPoints.first {
-                        Annotation(String(localized: "Path start"), coordinate: firstSessionPoint.coordinate) {
-                            StartMarker(
-                                accessibilityLabel: String(localized: "Active session start"),
-                                accessibilityValue: firstSessionPoint.accessibilityValue
-                            )
-                        }
-                    }
-                    
-                    if showSessionPath,
-                       let lastSessionPoint = activeSessionPoints.last,
-                       activeSessionPoints.count > 1 {
-                        Annotation(String(localized: "Current location"), coordinate: lastSessionPoint.coordinate) {
-                            CurrentLocationMarker(
-                                accessibilityLabel: String(localized: "Active session current location"),
-                                accessibilityValue: lastSessionPoint.accessibilityValue
-                            )
-                        }
-                    }
-                    
-                    // Start marker (oldest point in range)
-                    if showStartEndMarkers, let firstPoint = filteredPoints.first {
-                        Annotation("", coordinate: firstPoint.coordinate) {
-                            PathStartMarker(timestamp: firstPoint.timestamp)
-                        }
-                    }
-                    
-                    // End marker (newest point in range, if different from start)
-                    if showStartEndMarkers, 
-                       let lastPoint = filteredPoints.last,
-                       filteredPoints.count > 1 {
-                        Annotation("", coordinate: lastPoint.coordinate) {
-                            PathEndMarker(timestamp: lastPoint.timestamp)
-                        }
-                    }
-                    
-                    // Point markers (spaced apart)
-                    if showPointMarkers {
-                        ForEach(spacedPoints) { point in
-                            Annotation("", coordinate: point.coordinate) {
-                                PathPointMarker(
-                                    point: point,
-                                    isSelected: selectedPointID == point.id,
-                                    onTap: { togglePointTooltip(for: point) }
-                                )
-                            }
-                        }
-                    }
-
-                    // Visit markers
-                    if showVisitMarkers {
-                        ForEach(filteredVisits) { visit in
-                            Annotation(
-                                visit.displayName,
-                                coordinate: visit.coordinate,
-                                anchor: .bottom
-                            ) {
-                                VisitMarker(
-                                    visit: visit,
-                                    isSelected: selectedVisit?.id == visit.id,
-                                    isCurrentVisit: viewModel.isCurrentVisit(visit)
-                                )
-                            }
-                            .tag(visit)
-                        }
-                    }
-
-                    // Photo markers. Nearby photos are grouped so stacked shots
-                    // taken at the same place open a navigable picker instead of
-                    // competing for the same tap target.
-                    ForEach(photoMomentClusters) { cluster in
-                        if let photo = cluster.onlyPhoto {
-                            Annotation(
-                                "Photo",
-                                coordinate: photo.coordinate,
-                                anchor: showPhotoMarkerDots ? .center : .bottom
-                            ) {
-                                PhotoMomentMapMarker(
-                                    photo: photo,
-                                    isSelected: photoDetails.photo?.id == photo.id,
-                                    showsImage: showPhotoMarkerImages,
-                                    showsDots: showPhotoMarkerDots,
-                                    onDotTap: { point in
-                                        selectPhotoDot(at: point, relativeTo: cluster, proxy: mapProxy)
-                                    },
-                                    action: { photoDetails.photo = photo }
-                                )
-                            }
-                        } else {
-                            Annotation(
-                                cluster.isArea ? "Photo Area" : "Photos",
-                                coordinate: cluster.coordinate,
-                                anchor: showPhotoMarkerDots ? .center : .bottom
-                            ) {
-                                PhotoMomentClusterMapMarker(
-                                    cluster: cluster,
-                                    isSelected: photoDetails.cluster?.id == cluster.id,
-                                    showsImage: showPhotoMarkerImages,
-                                    showsDots: showPhotoMarkerDots,
-                                    onDotTap: { point in
-                                        selectPhotoDot(at: point, relativeTo: cluster, proxy: mapProxy)
-                                    },
-                                    action: { photoDetails.cluster = cluster }
-                                )
-                            }
-                        }
-                    }
-                }
-                .mapControls {
-                    MapUserLocationButton()
-                    MapCompass()
-                    MapScaleView()
-                }
-                .onMapCameraChange(frequency: .onEnd) { context in
-                    visibleMapRegion = context.region
-                    visibleMapRect = context.rect
-                }
-                .background {
-                    GeometryReader { geometry in
-                        Color.clear
-                            .onAppear { mapViewportSize = geometry.size }
-                            .onChange(of: geometry.size) { _, size in
-                                mapViewportSize = size
-                            }
-                    }
-                }
-                .simultaneousGesture(
-                    SpatialTapGesture().onEnded { value in
-                        handleMapTap()
-                        guard showPhotoMarkerDots else { return }
-                        selectPhotoDot(at: value.location, proxy: mapProxy)
-                    }
-                )
-                .accessibilityLabel("Location map")
-                .accessibilityValue(mapAccessibilitySummary)
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    if !discordPromoDismissed {
-                        DiscordPromoBanner(onDismiss: dismissDiscordPromo)
-                            .padding(.horizontal, 12)
-                            .padding(.top, 6)
-                            .padding(.bottom, 4)
-                            .transition(.move(edge: .top).combined(with: .opacity))
-                    }
-                }
-                .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.82), value: discordPromoDismissed)
-
-                }
-
-                // Bottom liquid-glass tracking + filter controls
-                VStack(spacing: 8) {
-                    Spacer()
-
-                    if showPhotoMarkers, !viewModel.mapPhotoPlaces.isEmpty, !photoPlacesPromptDismissed {
-                        HStack(spacing: 0) {
-                            Button {
-                                photoDetails.showsPlaces = true
-                            } label: {
-                                Label("Browse \(viewModel.mapPhotoPlaces.count) photo places", systemImage: "photo.stack")
-                                    .font(TE.mono(.caption, weight: .semibold))
-                                    .padding(12)
-                            }
-                            .accessibilityHint("Lists every matched place, including places outside the visible map area.")
-
-                            Button {
-                                photoPlacesPromptDismissed = true
-                            } label: {
-                                Image(systemName: "xmark")
-                                    .font(.caption.weight(.semibold))
-                                    .foregroundStyle(TE.textMuted)
-                                    .frame(width: 44, height: 44)
-                                    .contentShape(Rectangle())
-                            }
-                            .accessibilityLabel("Close")
-                        }
-                        .buttonStyle(.plain)
-                        .background(TE.card, in: Capsule())
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-
-                    if isRouteReplayEnabled, let routeReplaySnapshot {
-                        RouteReplayControl(
-                            snapshot: routeReplaySnapshot,
-                            pointCount: routeReplaySourcePoints.count,
-                            progress: Binding(
-                                get: { routeReplayProgress },
-                                set: { routeReplayProgress = RouteReplayCalculator.clampedProgress($0) }
-                            ),
-                            isPlaying: isRouteReplayPlaying,
-                            onPlayPause: toggleRouteReplayPlayback,
-                            onScrub: { isRouteReplayPlaying = false },
-                            onClose: disableRouteReplay
-                        )
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
-
-                    if shouldShowCurrentPlacePrompt {
-                        CurrentPlaceCard(
-                            suggestion: currentPlaceSuggestion,
-                            isLoading: isLoadingCurrentPlace,
-                            lookupFailed: currentPlaceLookupFailed,
-                            hasFreshLocation: freshManualLocation != nil,
-                            hasLocationPermission: locationManager.hasLocationPermission,
-                            onSave: openSaveCurrentPlaceSheet,
-                            onNotHere: openBlankManualVisitSheet,
-                            onRequestLocation: locationManager.requestCurrentLocationForManualVisit,
-                            onDismiss: dismissCurrentPlacePrompt
-                        )
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
-
-                    MapTrackingControlPill(
-                        viewModel: viewModel,
-                        locationManager: locationManager,
-                        isTracking: isTracking,
-                        isExpanded: $trackingPillExpanded,
-                        onPrimaryTap: handleTrackingTap
-                    )
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-
-                    if isTracking,
-                       let remaining = locationManager.remainingTime {
-                        MapAutoOffPill(remaining: remaining)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .transition(.opacity.combined(with: .move(edge: .bottom)))
-                    }
-
-                    HStack(spacing: 8) {
-                        if showFilterBar {
-                            QuickFilterBar(
-                                activePreset: activePreset,
-                                showTravelPath: $showTravelPath,
-                                showPointMarkers: $showPointMarkers,
-                                showStartEndMarkers: $showStartEndMarkers,
-                                showSessionPath: $showSessionPath,
-                                showVisitMarkers: $showVisitMarkers,
-                                showPhotoMarkers: $showPhotoMarkers,
-                                showPhotoMarkerImages: $showPhotoMarkerImages,
-                                showPhotoMarkerDots: $showPhotoMarkerDots,
-                                snapTravelPathToRoads: $snapTravelPathToRoads,
-                                showStraightLinePathSegments: $showStraightLinePathSegments,
-                                isRouteReplayEnabled: isRouteReplayEnabled,
-                                canReplayRoute: canReplayRoute,
-                                hasSessionPoints: !activeSessionPoints.isEmpty,
-                                onSelectPreset: { preset in
-                                    activePreset = preset
-                                    let range = preset.range()
-                                    viewModel.mapDateRange = range
-                                    viewModel.loadMapLocationPoints(in: range)
-                                    viewModel.loadMapPhotoMoments(in: range)
-                                    syncPhotoMomentsForCurrentRangeIfAuthorized()
-                                    validateRouteReplayState()
-                                },
-                                onSelectCustom: {
-                                    showingFilters = true
-                                },
-                                onToggleRouteReplay: toggleRouteReplayMode,
-                                onFitContent: { fitMapToContent() },
-                                onFitSession: !activeSessionPoints.isEmpty ? { fitMapToSession() } : nil
-                            )
-                            .transition(.asymmetric(
-                                insertion: .move(edge: .trailing).combined(with: .opacity),
-                                removal: .move(edge: .trailing).combined(with: .opacity)
-                            ))
-                        } else {
-                            Spacer(minLength: 0)
-                        }
-
-                        if !showFilterBar {
-                            MapAddPlaceMenu(
-                                onSaveCurrentPlace: openSaveCurrentPlaceSheet,
-                                onAddPastVisit: openPastVisitSheet,
-                                onDropPin: openBlankManualVisitSheet
-                            )
-                            .transition(.scale(scale: 0.9).combined(with: .opacity))
-                        }
-
-                        FilterBarToggle(isOpen: showFilterBar) {
-                            withAnimation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.82)) {
-                                showFilterBar.toggle()
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 12)
-                .padding(.bottom, 8)
-                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isTracking)
-                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isRouteReplayEnabled)
-                .onChange(of: isTracking) { _, newValue in
-                    if !newValue {
-                        withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
-                            trackingPillExpanded = false
-                        }
-                    }
-                }
-            }
-            .toolbar(.hidden, for: .navigationBar)
-            .onChange(of: manualVisitRouter.request?.id, initial: true) { _, id in
-                guard id != nil else { return }
-                openManualVisitRoute()
-            }
-            .onChange(of: canPresentVisitRoute) { _, ready in
-                if ready { openManualVisitRoute() }
-            }
-            .sheet(item: $deepLinkedVisit) { visit in
-                NavigationStack { VisitDetailView(visit: visit, viewModel: viewModel) }
-            }
-            .sheet(item: $manualVisitDraft) { draft in
-                ManualVisitSheet(
-                    viewModel: viewModel,
-                    locationManager: locationManager,
-                    draft: draft,
-                    onSaved: { visit in
-                        if draft.hidesCurrentPlacePromptAfterSave {
-                            suppressCurrentPlacePromptForCurrentArea()
-                        }
-                        handleManualVisitSaved(visit, mode: draft.mode)
-                    }
-                )
-                .presentationDetents([.medium, .large])
-            }
-            .sheet(isPresented: $showingFilters) {
-                DateRangeFilterSheet(
-                    dateRange: $viewModel.mapDateRange,
-                    isPresented: $showingFilters,
-                    onApply: {
-                        activePreset = nil
-                        viewModel.loadMapLocationPoints(in: viewModel.mapDateRange)
-                        viewModel.loadMapPhotoMoments(in: viewModel.mapDateRange)
-                        syncPhotoMomentsForCurrentRangeIfAuthorized()
-                        validateRouteReplayState()
-                    }
-                )
-            }
-            .sheet(item: $selectedVisit) { visit in
-                VisitQuickView(visit: visit, viewModel: viewModel)
-                    .presentationDetents([.medium, .large])
-            }
-            .sheet(item: $photoDetails.cluster) { cluster in
-                if cluster.isArea {
-                    PhotoMomentPlacesView(places: cluster.places, title: "Photos in This Area", selection: photoDetails)
-                } else {
-                    PhotoMomentClusterQuickView(cluster: cluster, selection: photoDetails)
-                        .presentationDetents([.medium, .large])
-                }
-            }
-            .sheet(isPresented: $photoDetails.showsPlaces) {
-                PhotoMomentPlacesView(places: viewModel.mapPhotoPlaces, title: "All Photo Places", selection: photoDetails)
-            }
-            .fullScreenCover(item: $photoDetails.photo) { photo in
-                PhotoMomentFullScreenView(photo: photo)
-            }
+            mapWithPresentations
             .onAppear {
                 viewModel.loadAllVisits()
                 if !applyMapFocusRequestIfNeeded() {
@@ -705,6 +281,445 @@ struct LocationMapView: View {
         }
     }
 
+    private var mapWithPresentations: some View {
+        @Bindable var photoDetails = viewModel.photoDetails
+        return mapCanvas
+        .toolbar(.hidden, for: .navigationBar)
+        .onChange(of: manualVisitRouter.request?.id, initial: true) { _, id in
+            guard id != nil else { return }
+            openManualVisitRoute()
+        }
+        .onChange(of: canPresentVisitRoute) { _, ready in
+            if ready { openManualVisitRoute() }
+        }
+        .sheet(item: $deepLinkedVisit) { visit in
+            NavigationStack { VisitDetailView(visit: visit, viewModel: viewModel) }
+        }
+        .sheet(item: $manualVisitDraft) { draft in
+            ManualVisitSheet(
+                viewModel: viewModel,
+                locationManager: locationManager,
+                draft: draft,
+                onSaved: { visit in
+                    if draft.hidesCurrentPlacePromptAfterSave {
+                        suppressCurrentPlacePromptForCurrentArea()
+                    }
+                    handleManualVisitSaved(visit, mode: draft.mode)
+                }
+            )
+            .presentationDetents([.medium, .large])
+        }
+        .sheet(isPresented: $showingFilters) {
+            DateRangeFilterSheet(
+                dateRange: $viewModel.mapDateRange,
+                isPresented: $showingFilters,
+                onApply: {
+                    activePreset = nil
+                    viewModel.loadMapLocationPoints(in: viewModel.mapDateRange)
+                    viewModel.loadMapPhotoMoments(in: viewModel.mapDateRange)
+                    syncPhotoMomentsForCurrentRangeIfAuthorized()
+                    validateRouteReplayState()
+                }
+            )
+        }
+        .onChange(of: selectedVisit?.id) { _, _ in
+            showSelectedVisitInCompanion()
+        }
+        .onChange(of: focusedVisit?.id, initial: true) { _, _ in
+            focusCompanionVisit()
+        }
+        .sheet(item: selectedVisitSheet) { visit in
+            VisitQuickView(visit: visit, viewModel: viewModel)
+                .presentationDetents([.medium, .large])
+        }
+        .sheet(item: $photoDetails.cluster) { cluster in
+            if cluster.isArea {
+                PhotoMomentPlacesView(places: cluster.places, title: "Photos in This Area", selection: photoDetails)
+            } else {
+                PhotoMomentClusterQuickView(cluster: cluster, selection: photoDetails)
+                    .presentationDetents([.medium, .large])
+            }
+        }
+        .sheet(isPresented: $photoDetails.showsPlaces) {
+            PhotoMomentPlacesView(places: viewModel.mapPhotoPlaces, title: "All Photo Places", selection: photoDetails)
+        }
+        .fullScreenCover(item: $photoDetails.photo) { photo in
+            PhotoMomentFullScreenView(photo: photo)
+        }
+    }
+
+    private var mapCanvas: some View {
+        @Bindable var photoDetails = viewModel.photoDetails
+        return ZStack {
+            MapReader { mapProxy in
+            Map(position: $cameraPosition, selection: $selectedVisit) {
+                // Current user location
+                UserAnnotation()
+
+                // Travel path from location points. In replay mode, keep the
+                // full route hidden and only draw the segment the playhead has reached.
+                // When road snapping is enabled, sparse GPS gaps are replaced with
+                // MapKit route polylines so the path follows roads instead of drawing
+                // abrupt straight chords between disconnected dots.
+                if isRouteReplayEnabled, let routeReplaySnapshot {
+                    if let preparedRoadSnappedRoute {
+                        ForEach(displayedRoadSegments(from: preparedRoadSnappedRoute, upTo: routeReplaySnapshot.index)) { segment in
+                            MapPolyline(coordinates: segment.coordinates)
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    ),
+                                    style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
+                                )
+                        }
+                    } else if shouldDrawStraightLinePath, routeReplaySnapshot.visiblePoints.count >= 2 {
+                        let coordinates = routeReplaySnapshot.visiblePoints.map { $0.coordinate }
+                        MapPolyline(coordinates: coordinates)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ),
+                                style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
+                            )
+                    }
+                } else if showTravelPath && filteredPoints.count >= 2 {
+                    if let preparedRoadSnappedRoute {
+                        ForEach(displayedRoadSegments(from: preparedRoadSnappedRoute)) { segment in
+                            MapPolyline(coordinates: segment.coordinates)
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    ),
+                                    style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
+                                )
+                        }
+                    } else if shouldDrawStraightLinePath {
+                        let coordinates = filteredPoints.map { $0.coordinate }
+                        MapPolyline(coordinates: coordinates)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [.blue.opacity(0.3), .blue.opacity(0.7), .blue],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ),
+                                style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
+                            )
+                    }
+                }
+
+                if isRouteReplayEnabled, let routeReplaySnapshot {
+                    Annotation(String(localized: "Route replay position"), coordinate: routeReplaySnapshot.currentPoint.coordinate) {
+                        RouteReplayMarker(snapshot: routeReplaySnapshot)
+                    }
+                }
+
+                // Live session path (moved from Track tab)
+                if showSessionPath && activeSessionPoints.count >= 2 {
+                    let sessionCoordinates = activeSessionPoints.map { $0.coordinate }
+                    MapPolyline(coordinates: sessionCoordinates)
+                        .stroke(.blue, style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                }
+
+                if showSessionPath, let firstSessionPoint = activeSessionPoints.first {
+                    Annotation(String(localized: "Path start"), coordinate: firstSessionPoint.coordinate) {
+                        StartMarker(
+                            accessibilityLabel: String(localized: "Active session start"),
+                            accessibilityValue: firstSessionPoint.accessibilityValue
+                        )
+                    }
+                }
+
+                if showSessionPath,
+                   let lastSessionPoint = activeSessionPoints.last,
+                   activeSessionPoints.count > 1 {
+                    Annotation(String(localized: "Current location"), coordinate: lastSessionPoint.coordinate) {
+                        CurrentLocationMarker(
+                            accessibilityLabel: String(localized: "Active session current location"),
+                            accessibilityValue: lastSessionPoint.accessibilityValue
+                        )
+                    }
+                }
+
+                // Start marker (oldest point in range)
+                if showStartEndMarkers, let firstPoint = filteredPoints.first {
+                    Annotation("", coordinate: firstPoint.coordinate) {
+                        PathStartMarker(timestamp: firstPoint.timestamp)
+                    }
+                }
+
+                // End marker (newest point in range, if different from start)
+                if showStartEndMarkers,
+                   let lastPoint = filteredPoints.last,
+                   filteredPoints.count > 1 {
+                    Annotation("", coordinate: lastPoint.coordinate) {
+                        PathEndMarker(timestamp: lastPoint.timestamp)
+                    }
+                }
+
+                // Point markers (spaced apart)
+                if showPointMarkers {
+                    ForEach(spacedPoints) { point in
+                        Annotation("", coordinate: point.coordinate) {
+                            PathPointMarker(
+                                point: point,
+                                isSelected: selectedPointID == point.id,
+                                onTap: { togglePointTooltip(for: point) }
+                            )
+                        }
+                    }
+                }
+
+                // Visit markers
+                if showVisitMarkers {
+                    ForEach(filteredVisits) { visit in
+                        Annotation(
+                            visit.displayName,
+                            coordinate: visit.coordinate,
+                            anchor: .bottom
+                        ) {
+                            Button {
+                                selectedPointID = nil
+                                selectedVisit = visit
+                            } label: {
+                                VisitMarker(
+                                    visit: visit,
+                                    isSelected: selectedVisit?.id == visit.id || focusedVisit?.id == visit.id,
+                                    isCurrentVisit: viewModel.isCurrentVisit(visit)
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .tag(visit)
+                    }
+                }
+
+                // Photo markers. Nearby photos are grouped so stacked shots
+                // taken at the same place open a navigable picker instead of
+                // competing for the same tap target.
+                ForEach(photoMomentClusters) { cluster in
+                    if let photo = cluster.onlyPhoto {
+                        Annotation(
+                            "Photo",
+                            coordinate: photo.coordinate,
+                            anchor: showPhotoMarkerDots ? .center : .bottom
+                        ) {
+                            PhotoMomentMapMarker(
+                                photo: photo,
+                                isSelected: photoDetails.photo?.id == photo.id,
+                                showsImage: showPhotoMarkerImages,
+                                showsDots: showPhotoMarkerDots,
+                                onDotTap: { point in
+                                    selectPhotoDot(at: point, relativeTo: cluster, proxy: mapProxy)
+                                },
+                                action: { photoDetails.photo = photo }
+                            )
+                        }
+                    } else {
+                        Annotation(
+                            cluster.isArea ? "Photo Area" : "Photos",
+                            coordinate: cluster.coordinate,
+                            anchor: showPhotoMarkerDots ? .center : .bottom
+                        ) {
+                            PhotoMomentClusterMapMarker(
+                                cluster: cluster,
+                                isSelected: photoDetails.cluster?.id == cluster.id,
+                                showsImage: showPhotoMarkerImages,
+                                showsDots: showPhotoMarkerDots,
+                                onDotTap: { point in
+                                    selectPhotoDot(at: point, relativeTo: cluster, proxy: mapProxy)
+                                },
+                                action: { photoDetails.cluster = cluster }
+                            )
+                        }
+                    }
+                }
+            }
+            .mapControls {
+                MapUserLocationButton()
+                MapCompass()
+                MapScaleView()
+            }
+            .onMapCameraChange(frequency: .onEnd) { context in
+                visibleMapRegion = context.region
+                visibleMapRect = context.rect
+            }
+            .background {
+                GeometryReader { geometry in
+                    Color.clear
+                        .onAppear { mapViewportSize = geometry.size }
+                        .onChange(of: geometry.size) { _, size in
+                            mapViewportSize = size
+                        }
+                }
+            }
+            .simultaneousGesture(
+                SpatialTapGesture().onEnded { value in
+                    handleMapTap()
+                    guard showPhotoMarkerDots else { return }
+                    selectPhotoDot(at: value.location, proxy: mapProxy)
+                }
+            )
+            .accessibilityLabel("Location map")
+            .accessibilityValue(mapAccessibilitySummary)
+
+            }
+
+            // Bottom liquid-glass tracking + filter controls
+            VStack(spacing: 8) {
+                Spacer()
+
+                if showPhotoMarkers, !viewModel.mapPhotoPlaces.isEmpty, !photoPlacesPromptDismissed {
+                    HStack(spacing: 0) {
+                        Button {
+                            photoDetails.showsPlaces = true
+                        } label: {
+                            Label("Browse \(viewModel.mapPhotoPlaces.count) photo places", systemImage: "photo.stack")
+                                .font(TE.mono(.caption, weight: .semibold))
+                                .padding(12)
+                        }
+                        .accessibilityHint("Lists every matched place, including places outside the visible map area.")
+
+                        Button {
+                            photoPlacesPromptDismissed = true
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(TE.textMuted)
+                                .frame(width: 44, height: 44)
+                                .contentShape(Rectangle())
+                        }
+                        .accessibilityLabel("Close")
+                    }
+                    .buttonStyle(.plain)
+                    .background(TE.card, in: Capsule())
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+
+                if isRouteReplayEnabled, let routeReplaySnapshot {
+                    RouteReplayControl(
+                        snapshot: routeReplaySnapshot,
+                        pointCount: routeReplaySourcePoints.count,
+                        progress: Binding(
+                            get: { routeReplayProgress },
+                            set: { routeReplayProgress = RouteReplayCalculator.clampedProgress($0) }
+                        ),
+                        isPlaying: isRouteReplayPlaying,
+                        onPlayPause: toggleRouteReplayPlayback,
+                        onScrub: { isRouteReplayPlaying = false },
+                        onClose: disableRouteReplay
+                    )
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+
+                if shouldShowCurrentPlacePrompt {
+                    CurrentPlaceCard(
+                        suggestion: currentPlaceSuggestion,
+                        isLoading: isLoadingCurrentPlace,
+                        lookupFailed: currentPlaceLookupFailed,
+                        hasFreshLocation: freshManualLocation != nil,
+                        hasLocationPermission: locationManager.hasLocationPermission,
+                        onSave: openSaveCurrentPlaceSheet,
+                        onNotHere: openBlankManualVisitSheet,
+                        onRequestLocation: locationManager.requestCurrentLocationForManualVisit,
+                        onDismiss: dismissCurrentPlacePrompt
+                    )
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+
+                MapTrackingControlPill(
+                    viewModel: viewModel,
+                    locationManager: locationManager,
+                    isTracking: isTracking,
+                    isExpanded: $trackingPillExpanded,
+                    onPrimaryTap: handleTrackingTap
+                )
+                .frame(maxWidth: .infinity, alignment: .trailing)
+
+                if isTracking,
+                   let remaining = locationManager.remainingTime {
+                    MapAutoOffPill(remaining: remaining)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                }
+
+                HStack(spacing: 8) {
+                    if showFilterBar {
+                        QuickFilterBar(
+                            activePreset: activePreset,
+                            showTravelPath: $showTravelPath,
+                            showPointMarkers: $showPointMarkers,
+                            showStartEndMarkers: $showStartEndMarkers,
+                            showSessionPath: $showSessionPath,
+                            showVisitMarkers: $showVisitMarkers,
+                            showPhotoMarkers: $showPhotoMarkers,
+                            showPhotoMarkerImages: $showPhotoMarkerImages,
+                            showPhotoMarkerDots: $showPhotoMarkerDots,
+                            snapTravelPathToRoads: $snapTravelPathToRoads,
+                            showStraightLinePathSegments: $showStraightLinePathSegments,
+                            isRouteReplayEnabled: isRouteReplayEnabled,
+                            canReplayRoute: canReplayRoute,
+                            hasSessionPoints: !activeSessionPoints.isEmpty,
+                            onSelectPreset: { preset in
+                                activePreset = preset
+                                let range = preset.range()
+                                viewModel.mapDateRange = range
+                                viewModel.loadMapLocationPoints(in: range)
+                                viewModel.loadMapPhotoMoments(in: range)
+                                syncPhotoMomentsForCurrentRangeIfAuthorized()
+                                validateRouteReplayState()
+                            },
+                            onSelectCustom: {
+                                showingFilters = true
+                            },
+                            onToggleRouteReplay: toggleRouteReplayMode,
+                            onFitContent: { fitMapToContent() },
+                            onFitSession: !activeSessionPoints.isEmpty ? { fitMapToSession() } : nil
+                        )
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing).combined(with: .opacity),
+                            removal: .move(edge: .trailing).combined(with: .opacity)
+                        ))
+                    } else {
+                        Spacer(minLength: 0)
+                    }
+
+                    if !showFilterBar {
+                        MapAddPlaceMenu(
+                            onSaveCurrentPlace: openSaveCurrentPlaceSheet,
+                            onAddPastVisit: openPastVisitSheet,
+                            onDropPin: openBlankManualVisitSheet
+                        )
+                        .transition(.scale(scale: 0.9).combined(with: .opacity))
+                    }
+
+                    FilterBarToggle(isOpen: showFilterBar) {
+                        withAnimation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.82)) {
+                            showFilterBar.toggle()
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.bottom, 8)
+            .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isTracking)
+            .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82), value: isRouteReplayEnabled)
+            .onChange(of: isTracking) { _, newValue in
+                if !newValue {
+                    withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
+                        trackingPillExpanded = false
+                    }
+                }
+            }
+        }
+    }
+
     private func dismissCurrentPlacePrompt() {
         withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
             suppressCurrentPlacePromptForCurrentArea()
@@ -717,6 +732,34 @@ struct LocationMapView: View {
         if let location = freshManualLocation {
             dismissedCurrentPlaceArea = CurrentPlacePromptSuppression(center: location.coordinate)
         }
+    }
+
+    private var selectedVisitSheet: Binding<Visit?> {
+        Binding<Visit?>(
+            get: { onSelectVisit == nil ? selectedVisit : nil },
+            set: { selectedVisit = $0 }
+        )
+    }
+
+    private func showSelectedVisitInCompanion() {
+        guard let selectedVisit, let onSelectVisit else { return }
+        onSelectVisit(selectedVisit)
+        self.selectedVisit = nil
+    }
+
+    private func focusCompanionVisit() {
+        guard let focusedVisit else { return }
+        selectedPointID = nil
+        let start = Calendar.current.startOfDay(for: focusedVisit.arrivedAt)
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(86400)
+        let range = start...end
+        viewModel.mapDateRange = range
+        viewModel.loadMapLocationPoints(in: range)
+        viewModel.loadMapPhotoMoments(in: range)
+        cameraPosition = .region(MKCoordinateRegion(
+            center: focusedVisit.coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)
+        ))
     }
 
     private var canPresentVisitRoute: Bool {
@@ -938,7 +981,7 @@ struct LocationMapView: View {
         let region = MKCoordinateRegion(coordinates: coordinates)
         cameraPosition = .region(region)
     }
-    
+
     private func fitMapToSession() {
         guard !activeSessionPoints.isEmpty else { return }
         let coordinates = activeSessionPoints.map { $0.coordinate }
@@ -988,12 +1031,6 @@ struct LocationMapView: View {
         guard showPhotoMarkers else { return }
         Task {
             await viewModel.syncPhotoMomentsIfAuthorized(in: viewModel.mapDateRange)
-        }
-    }
-
-    private func dismissDiscordPromo() {
-        withAnimation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.82)) {
-            discordPromoDismissed = true
         }
     }
 
@@ -1640,7 +1677,7 @@ struct PathStartMarker: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let timestamp: Date
     @State private var showingTooltip = false
-    
+
     var body: some View {
         Button {
             withAnimation(reduceMotion ? nil : .spring(duration: 0.2)) {
@@ -1706,7 +1743,7 @@ struct PathEndMarker: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let timestamp: Date
     @State private var showingTooltip = false
-    
+
     var body: some View {
         Button {
             withAnimation(reduceMotion ? nil : .spring(duration: 0.2)) {

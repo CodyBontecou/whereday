@@ -1,0 +1,30 @@
+steps:
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Nearby businesses
+      timeoutMs: 15000
+  - fold: closed
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Done
+      timeoutMs: 15000
+  - fold: open
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        text: Done
+      timeoutMs: 15000
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Nearby businesses
+      timeoutMs: 15000
+executionPrerequisite: iPhone Duo is open, Map tab selected, and the Valencia
+  Street Stop inspector is open beside the map using local screenshot demo data.
+  Tracking is off. Do not edit visit fields.

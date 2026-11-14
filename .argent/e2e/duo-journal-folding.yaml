@@ -1,0 +1,43 @@
+# Dedicated iPhone Duo simulator only: --seed-screenshot-data replaces local QA records.
+# Recorded AX checks remain raw tools because the native hierarchy cannot uniquely
+# select the foreground app across the Duo displays. No coordinate actions are stored.
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --seed-screenshot-data
+          - -hasCompletedOnboarding
+          - YES
+          - -webhook.enabled
+          - NO
+  - fold: open
+  - fold: open
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Day & recording options
+      timeoutMs: 15000
+  - fold: half-open
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Day & recording options
+      timeoutMs: 15000
+  - fold: closed
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        text: Day & recording options
+      timeoutMs: 15000
+  - fold: open
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Day & recording options
+      timeoutMs: 15000

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-29",
+  "simulator": "Whereday Field Notes QA — iPhone 18 Pro, iOS 27.0",
+  "testSuite": {
+    "passed": 348,
+    "failed": 0,
+    "skipped": 0,
+    "signing": "Simulator ad hoc signing enabled. An earlier unsigned test run failed Keychain assertions; rerunning with signing passed."
+  },
+  "uiChecks": [
+    "Map → Timeline → Visit Details navigation",
+    "Live MapKit map panning with decorative artwork present",
+    "Visit arrival/departure and notes controls remain accessible by scrolling",
+    "Light and dark Timeline appearance",
+    "Map at accessibility-extra-extra-extra-large text size; restored to large afterward"
+  ],
+  "data": "Invented screenshot fixtures on a newly created isolated simulator; no private journal was used.",
+  "limits": [
+    "Visual and interaction checks used an iPhone simulator. Physical-device background location recording was not exercised."
+  ],
+  "artworkPrompts": "../../field-notes-artwork.json",
+  "followUp": "Removed decorative header and title sections entirely. Artwork is now a stationary, noninteractive background behind Timeline and Visit Details, with nearly opaque paper panels over it. Map remains full-screen. Rebuilt successfully and checked light/dark Timeline plus navigation into Visit Details. The full 348-test pass predates these later presentation-only changes."
+}

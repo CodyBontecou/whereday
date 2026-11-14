@@ -1,0 +1,819 @@
+{
+  "scope": "Verbatim selected Swift timeline properties/methods with value-only model/event seams; Foundation Gregorian calendar, not SwiftUI execution or full timeline membership",
+  "provenance": {
+    "latest": "5ce21e0ae3a791f2d9273c1b274274e319eec4eb1a73952a2af65b7d64b5b53d",
+    "initial": "91ff431eeaa586f10d665423def3d7f26a229690f7763151c768a88b1f1016c7",
+    "label": "3ac29d20dbd46c18f9a426599f77677024d37063d4ed513799bde7a72fb7cd4f",
+    "action": "aeef11eddb0813c8fdbe74ac62ebfa30d3ac02d0a009a1c1adf57a59445a7ce8",
+    "ordering": "1e4eb51f3afeb1b3a54a04e3e4313dc464e570f6bb7be7545074237d88a315b1",
+    "priority": "9b6f9e2cc638d740aa4747d88353a29f8478817264090c9e60c274c4dad60658",
+    "generator": "67eb4353dcd9bcfc93df897396ed7f42c4863f3c471de5ff75c31e4825d3b49d"
+  },
+  "sourceContextSha256": "8b130a6c9656564ff90f23dc80a4fac0c904f544976391ed176d3a18deb5f98e",
+  "cases": [
+    {
+      "input": {
+        "id": "older-visit",
+        "selected": 0,
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-30",
+        "handled": true,
+        "initial": "2026-10-30",
+        "latestMillis": 1793350800000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "today-has-events",
+        "selected": 0,
+        "visits": [
+          {
+            "id": "old",
+            "day": -3
+          }
+        ],
+        "displayedVisits": [
+          {
+            "id": "today",
+            "day": 0
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-30",
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": 1793350800000,
+        "order": [
+          "today"
+        ],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "no-history",
+        "selected": 0
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": null,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "explicit-past",
+        "selected": -7,
+        "handled": true,
+        "visits": [
+          {
+            "id": "old",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-30",
+        "handled": true,
+        "initial": "2026-10-26",
+        "latestMillis": 1793350800000,
+        "order": [],
+        "selected": "2026-10-26",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "session-end-wins",
+        "selected": 0,
+        "sessions": [
+          {
+            "id": "outing",
+            "day": -7,
+            "end": -2
+          }
+        ],
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-31",
+        "handled": true,
+        "initial": "2026-10-31",
+        "latestMillis": 1793437200000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "point-wins",
+        "selected": 0,
+        "sessions": [
+          {
+            "id": "outing",
+            "day": -7,
+            "end": -3
+          }
+        ],
+        "points": [
+          {
+            "id": "point",
+            "day": -1
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-01",
+        "handled": true,
+        "initial": "2026-11-01",
+        "latestMillis": 1793523600000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "latest-is-selected",
+        "selected": -3,
+        "handled": true,
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO TODAY",
+        "emptyTarget": "2026-11-02",
+        "handled": true,
+        "initial": "2026-10-30",
+        "latestMillis": 1793350800000,
+        "order": [],
+        "selected": "2026-10-30",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "future-history",
+        "selected": 0,
+        "points": [
+          {
+            "id": "point",
+            "day": 1
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-03",
+        "handled": true,
+        "initial": "2026-11-03",
+        "latestMillis": 1793696400000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "same-day-no-jump",
+        "selected": 0,
+        "points": [
+          {
+            "id": "point",
+            "day": 0
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": 1793610000000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "mixed-order",
+        "selected": 0,
+        "handled": true,
+        "displayedSessions": [
+          {
+            "id": "late-outing",
+            "day": -1
+          },
+          {
+            "id": "tied-outing",
+            "day": -3
+          }
+        ],
+        "displayedVisits": [
+          {
+            "id": "tied-visit",
+            "day": -3
+          },
+          {
+            "id": "first-visit",
+            "day": -4
+          }
+        ]
+      },
+      "zone": "UTC",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": null,
+        "order": [
+          "first-visit",
+          "tied-visit",
+          "tied-outing",
+          "late-outing"
+        ],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "older-visit",
+        "selected": 0,
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-30",
+        "handled": true,
+        "initial": "2026-10-30",
+        "latestMillis": 1793365200000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "today-has-events",
+        "selected": 0,
+        "visits": [
+          {
+            "id": "old",
+            "day": -3
+          }
+        ],
+        "displayedVisits": [
+          {
+            "id": "today",
+            "day": 0
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-30",
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": 1793365200000,
+        "order": [
+          "today"
+        ],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "no-history",
+        "selected": 0
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": null,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "explicit-past",
+        "selected": -7,
+        "handled": true,
+        "visits": [
+          {
+            "id": "old",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-30",
+        "handled": true,
+        "initial": "2026-10-26",
+        "latestMillis": 1793365200000,
+        "order": [],
+        "selected": "2026-10-26",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "session-end-wins",
+        "selected": 0,
+        "sessions": [
+          {
+            "id": "outing",
+            "day": -7,
+            "end": -2
+          }
+        ],
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-31",
+        "handled": true,
+        "initial": "2026-10-31",
+        "latestMillis": 1793451600000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "point-wins",
+        "selected": 0,
+        "sessions": [
+          {
+            "id": "outing",
+            "day": -7,
+            "end": -3
+          }
+        ],
+        "points": [
+          {
+            "id": "point",
+            "day": -1
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-01",
+        "handled": true,
+        "initial": "2026-11-01",
+        "latestMillis": 1793538000000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "latest-is-selected",
+        "selected": -3,
+        "handled": true,
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO TODAY",
+        "emptyTarget": "2026-11-02",
+        "handled": true,
+        "initial": "2026-10-30",
+        "latestMillis": 1793365200000,
+        "order": [],
+        "selected": "2026-10-30",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "future-history",
+        "selected": 0,
+        "points": [
+          {
+            "id": "point",
+            "day": 1
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-03",
+        "handled": true,
+        "initial": "2026-11-03",
+        "latestMillis": 1793714400000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "same-day-no-jump",
+        "selected": 0,
+        "points": [
+          {
+            "id": "point",
+            "day": 0
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": 1793628000000,
+        "order": [],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "mixed-order",
+        "selected": 0,
+        "handled": true,
+        "displayedSessions": [
+          {
+            "id": "late-outing",
+            "day": -1
+          },
+          {
+            "id": "tied-outing",
+            "day": -3
+          }
+        ],
+        "displayedVisits": [
+          {
+            "id": "tied-visit",
+            "day": -3
+          },
+          {
+            "id": "first-visit",
+            "day": -4
+          }
+        ]
+      },
+      "zone": "America/New_York",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": null,
+        "order": [
+          "first-visit",
+          "tied-visit",
+          "tied-outing",
+          "late-outing"
+        ],
+        "selected": "2026-11-02",
+        "today": "2026-11-02"
+      }
+    },
+    {
+      "input": {
+        "id": "older-visit",
+        "selected": 0,
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-31",
+        "handled": true,
+        "initial": "2026-10-31",
+        "latestMillis": 1793386800000,
+        "order": [],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "today-has-events",
+        "selected": 0,
+        "visits": [
+          {
+            "id": "old",
+            "day": -3
+          }
+        ],
+        "displayedVisits": [
+          {
+            "id": "today",
+            "day": 0
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-31",
+        "handled": true,
+        "initial": "2026-11-03",
+        "latestMillis": 1793386800000,
+        "order": [
+          "today"
+        ],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "no-history",
+        "selected": 0
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-03",
+        "latestMillis": null,
+        "order": [],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "explicit-past",
+        "selected": -7,
+        "handled": true,
+        "visits": [
+          {
+            "id": "old",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-10-31",
+        "handled": true,
+        "initial": "2026-10-27",
+        "latestMillis": 1793386800000,
+        "order": [],
+        "selected": "2026-10-27",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "session-end-wins",
+        "selected": 0,
+        "sessions": [
+          {
+            "id": "outing",
+            "day": -7,
+            "end": -2
+          }
+        ],
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-01",
+        "handled": true,
+        "initial": "2026-11-01",
+        "latestMillis": 1793473200000,
+        "order": [],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "point-wins",
+        "selected": 0,
+        "sessions": [
+          {
+            "id": "outing",
+            "day": -7,
+            "end": -3
+          }
+        ],
+        "points": [
+          {
+            "id": "point",
+            "day": -1
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-02",
+        "handled": true,
+        "initial": "2026-11-02",
+        "latestMillis": 1793559600000,
+        "order": [],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "latest-is-selected",
+        "selected": -3,
+        "handled": true,
+        "visits": [
+          {
+            "id": "visit",
+            "day": -3
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO TODAY",
+        "emptyTarget": "2026-11-03",
+        "handled": true,
+        "initial": "2026-10-31",
+        "latestMillis": 1793386800000,
+        "order": [],
+        "selected": "2026-10-31",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "future-history",
+        "selected": 0,
+        "points": [
+          {
+            "id": "point",
+            "day": 1
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": "JUMP TO LATEST DATA",
+        "emptyTarget": "2026-11-04",
+        "handled": true,
+        "initial": "2026-11-04",
+        "latestMillis": 1793732400000,
+        "order": [],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "same-day-no-jump",
+        "selected": 0,
+        "points": [
+          {
+            "id": "point",
+            "day": 0
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-03",
+        "latestMillis": 1793646000000,
+        "order": [],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    },
+    {
+      "input": {
+        "id": "mixed-order",
+        "selected": 0,
+        "handled": true,
+        "displayedSessions": [
+          {
+            "id": "late-outing",
+            "day": -1
+          },
+          {
+            "id": "tied-outing",
+            "day": -3
+          }
+        ],
+        "displayedVisits": [
+          {
+            "id": "tied-visit",
+            "day": -3
+          },
+          {
+            "id": "first-visit",
+            "day": -4
+          }
+        ]
+      },
+      "zone": "Pacific/Kiritimati",
+      "expected": {
+        "emptyLabel": null,
+        "emptyTarget": null,
+        "handled": true,
+        "initial": "2026-11-03",
+        "latestMillis": null,
+        "order": [
+          "first-visit",
+          "tied-visit",
+          "tied-outing",
+          "late-outing"
+        ],
+        "selected": "2026-11-03",
+        "today": "2026-11-03"
+      }
+    }
+  ]
+}

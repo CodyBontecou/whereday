@@ -1,0 +1,30 @@
+<resources>
+    <string name="photo_places_loading">Loading all photo places…</string>
+    <string name="photo_places_error">Photo places could not be loaded.</string>
+    <string name="photo_places_all">All Photo Places</string>
+    <string name="photo_places_area">Photos in This Area</string>
+    <string name="photo_places_map">Photo Places on Map</string>
+    <string name="photo_places_open_error">This photo place could not be opened. Try again.</string>
+    <string name="photo_places_here">Photos Here</string>
+    <string name="photo_places_back">Back to photo places</string>
+    <string name="photo_places_close">Close photo places</string>
+    <string name="photo_places_range_description">Every place in this date range is listed, including places outside the visible map.</string>
+    <string name="photo_places_area_description">These places are grouped for the map. The marker is anchored at one member place; the photos were taken at the individual places listed here.</string>
+    <string name="photo_places_summary">%1$s · %2$s</string>
+    <string name="photo_places_at">%1$s at %2$s</string>
+    <string name="photo_places_coordinates">%1$s, %2$s</string>
+    <string name="photo_places_empty">No matched photo places in this date range.</string>
+    <string name="photo_places_open">Open this place</string>
+    <string name="photo_places_retry">Retry photo places</string>
+    <string name="photo_places_previous">Previous page</string>
+    <string name="photo_places_next">Next page</string>
+    <string name="photo_places_page">Page %1$d</string>
+    <plurals name="photo_places_count">
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+    </plurals>
+    <plurals name="photo_places_photo_count">
+        <item quantity="one">%d photo</item>
+        <item quantity="other">%d photos</item>
+    </plurals>
+</resources>

@@ -1,6 +1,641 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Day & recording options": {
+      "comment": "Field notes journal interface heading or recording-options disclosure label.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خيارات اليوم والتسجيل"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "দিন ও রেকর্ডিংয়ের বিকল্প"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day & recording options"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opciones de día y grabación"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options du jour et d’enregistrement"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिन और रिकॉर्डिंग के विकल्प"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日付と記録のオプション"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcje dnia i rejestrowania"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opções de dia e gravação"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки дня и записи"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日期与记录选项"
+          }
+        }
+      }
+    },
+    "A life of places.\nYours to keep.": {
+      "comment": "Illustrated paywall headline. Warm travel-journal voice; places become a personal history to keep. Adapt the line break naturally.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "أماكن تعيشها.\nذكريات تحتفظ بها."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "জীবন জুড়ে কত জায়গা।\nস্মৃতি থাকুক আপনার কাছে।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "A life of places.\nYours to keep."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Una vida de lugares.\nUna historia que conservar."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Tous ces lieux.\nVotre histoire à garder."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "जगहों से बनी ज़िंदगी।\nसहेजें अपनी कहानी।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "訪れた場所が、\nあなたの物語に。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Życie pełne miejsc.\nHistoria, która zostaje."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Lugares que marcam.\nHistórias para guardar."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Места вашей жизни.\nИстория, которая с вами."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "走过的地方，\n都是你的故事。"}}
+      }
+    },
+    "Your Whereday plan": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "خطتك في Whereday"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার Whereday প্ল্যান"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Your Whereday plan"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Tu plan de Whereday"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Votre formule Whereday"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपका Whereday प्लान"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "ご利用中のWheredayプラン"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Twój plan Whereday"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Seu plano Whereday"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Ваш план Whereday"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "你的 Whereday 方案"}}
+      }
+    },
+    "Manage your purchase and Family Sharing.": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "أدر مشترياتك والمشاركة العائلية."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার কেনাকাটা ও ফ্যামিলি শেয়ারিং পরিচালনা করুন।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Manage your purchase and Family Sharing."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Gestiona tu compra y En familia."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Gérez votre achat et le partage familial."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "अपनी खरीदारी और फ़ैमिली शेयरिंग प्रबंधित करें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "購入内容とファミリー共有を管理できます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zarządzaj zakupem i Chmurą rodzinną."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Gerencie sua compra e o Compartilhamento Familiar."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Управляйте покупкой и Семейным доступом."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "管理购买项目和家人共享。"}}
+      }
+    },
+    "Track your days. Revisit your places.\nKeep your history private and on-device.": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "سجّل أيامك وعُد إلى أماكنك.\nتبقى سجلاتك خاصة وعلى جهازك."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "দিনের চলাফেরা লিখে রাখুন। ফিরে দেখুন আপনার জায়গাগুলো।\nআপনার ইতিহাস ব্যক্তিগত, আপনার ডিভাইসেই।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Track your days. Revisit your places.\nKeep your history private and on-device."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Registra tus días. Vuelve a tus lugares.\nTu historial, privado y en tu dispositivo."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Gardez une trace de vos journées. Retrouvez vos lieux.\nVotre historique reste privé, sur votre appareil."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "अपने दिन दर्ज करें। अपनी जगहों को फिर देखें।\nआपका इतिहास निजी है, आपके डिवाइस पर ही।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "日々を記録し、訪れた場所を振り返る。\n履歴はデバイスの中に、あなただけのもの。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zapisuj swoje dni. Wracaj do swoich miejsc.\nTwoja historia jest prywatna i zostaje na urządzeniu."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Registre seus dias. Relembre seus lugares.\nSeu histórico fica privado, no seu dispositivo."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Записывайте дни. Возвращайтесь к своим местам.\nВаша история конфиденциальна и хранится на устройстве."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "记录日常，重温足迹。\n历史记录保存在设备上，私密由你掌握。"}}
+      }
+    },
+    "Add Apple Family Sharing to your lifetime purchase.": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "أضف المشاركة العائلية من Apple إلى شرائك مدى الحياة."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার আজীবনের কেনাকাটায় Apple ফ্যামিলি শেয়ারিং যোগ করুন।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Add Apple Family Sharing to your lifetime purchase."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Añade En familia de Apple a tu compra de por vida."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Ajoutez le partage familial Apple à votre achat à vie."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "अपनी आजीवन खरीदारी में Apple फ़ैमिली शेयरिंग जोड़ें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "買い切りプランにAppleのファミリー共有を追加できます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Dodaj Chmurę rodzinną Apple do swojego dożywotniego zakupu."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Adicione o Compartilhamento Familiar da Apple à sua compra vitalícia."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Добавьте Семейный доступ Apple к своей бессрочной покупке."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "为终身版购买项目添加 Apple 家人共享。"}}
+      }
+    },
+    "Share with up to 5 family members using Apple Family Sharing": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "شارك مع ما يصل إلى ٥ من أفراد العائلة عبر المشاركة العائلية من Apple"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "Apple ফ্যামিলি শেয়ারিং দিয়ে পরিবারের সর্বোচ্চ ৫ জন সদস্যের সঙ্গে শেয়ার করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Share with up to 5 family members using Apple Family Sharing"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Comparte con hasta 5 familiares mediante En familia de Apple"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Partagez avec jusqu’à 5 membres de votre famille grâce au partage familial Apple"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "Apple फ़ैमिली शेयरिंग से परिवार के अधिकतम 5 सदस्यों के साथ साझा करें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "Appleのファミリー共有で最大5人の家族と共有"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Udostępnij maksymalnie 5 członkom rodziny przez Chmurę rodzinną Apple"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Compartilhe com até 5 familiares pelo Compartilhamento Familiar da Apple"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Делитесь через Семейный доступ Apple не более чем с 5 членами семьи"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "通过 Apple 家人共享，与最多 5 位家庭成员共享"}}
+      }
+    },
+    "Your existing records remain available to view and export if your subscription ends.": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تبقى سجلاتك الحالية متاحة للعرض والتصدير إذا انتهى اشتراكك."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "সাবস্ক্রিপশন শেষ হলেও আপনার আগের রেকর্ডগুলো দেখা ও এক্সপোর্ট করা যাবে।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Your existing records remain available to view and export if your subscription ends."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Si tu suscripción termina, podrás seguir viendo y exportando tus registros existentes."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Si votre abonnement prend fin, vos données existantes restent consultables et exportables."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "सदस्यता समाप्त होने पर भी आपके मौजूदा रिकॉर्ड देखने और एक्सपोर्ट करने के लिए उपलब्ध रहेंगे।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "サブスクリプションが終了しても、これまでの記録は閲覧・書き出しができます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Po zakończeniu subskrypcji nadal możesz przeglądać i eksportować dotychczasowe zapisy."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Se sua assinatura terminar, seus registros existentes continuarão disponíveis para consulta e exportação."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "После окончания подписки ваши существующие записи останутся доступны для просмотра и экспорта."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "即使订阅结束，你仍可查看和导出现有记录。"}}
+      }
+    },
+    "No active purchase found. For a Family plan, check your Family Sharing settings.": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "لم يتم العثور على شراء نشط. إذا كانت لديك خطة عائلية، فتحقق من إعدادات المشاركة العائلية."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "কোনো সক্রিয় কেনাকাটা পাওয়া যায়নি। পারিবারিক প্ল্যানের জন্য ফ্যামিলি শেয়ারিং সেটিংস দেখুন।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "No active purchase found. For a Family plan, check your Family Sharing settings."}},
+        "es": {"stringUnit": {"state": "translated", "value": "No se ha encontrado ninguna compra activa. Si tienes un plan Familiar, revisa los ajustes de En familia."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Aucun achat actif trouvé. Pour une formule Famille, vérifiez vos réglages de partage familial."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "कोई सक्रिय खरीदारी नहीं मिली। पारिवारिक प्लान के लिए अपनी फ़ैमिली शेयरिंग सेटिंग्स जाँचें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "有効な購入が見つかりませんでした。ファミリープランの場合は、ファミリー共有の設定をご確認ください。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Nie znaleziono aktywnego zakupu. W przypadku planu rodzinnego sprawdź ustawienia Chmury rodzinnej."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Nenhuma compra ativa encontrada. Para um plano Familiar, verifique os ajustes do Compartilhamento Familiar."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Активная покупка не найдена. Для семейного плана проверьте настройки Семейного доступа."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "未找到有效购买。如果使用家庭方案，请检查家人共享设置。"}}
+      }
+    },
+    "Cancel in Apple subscription settings at least 24 hours before renewal.": {
+      "comment": "Subscription cancellation instruction. Preserve Apple subscription settings and the at-least-24-hours-before-renewal requirement.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "ألغِ الاشتراك من إعدادات اشتراكات Apple قبل موعد التجديد بـ٢٤ ساعة على الأقل."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "নবায়নের অন্তত ২৪ ঘণ্টা আগে Apple-এর সাবস্ক্রিপশন সেটিংস থেকে বাতিল করুন।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Cancel in Apple subscription settings at least 24 hours before renewal."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Cancela en los ajustes de suscripciones de Apple al menos 24 horas antes de la renovación."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Annulez dans les réglages des abonnements Apple au moins 24 heures avant le renouvellement."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "नवीनीकरण से कम से कम 24 घंटे पहले Apple की सदस्यता सेटिंग्स में रद्द करें।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "更新の24時間前までに、Appleのサブスクリプション設定でキャンセルしてください。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Anuluj w ustawieniach subskrypcji Apple co najmniej 24 godziny przed odnowieniem."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Cancele nos ajustes de assinaturas da Apple pelo menos 24 horas antes da renovação."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Отмените подписку в настройках подписок Apple не менее чем за 24 часа до продления."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "请至少在续订前 24 小时于 Apple 订阅设置中取消。"}}
+      }
+    },
+    "%@ charged once to your Apple Account. No subscription.": {
+      "comment": "Lifetime or Family-upgrade charge. %@ is StoreKit's localized price, inserted unchanged. One payment, no recurring subscription.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "تُخصم %@ مرة واحدة من حساب Apple الخاص بك. دون اشتراك."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আপনার Apple অ্যাকাউন্টে একবারই %@ চার্জ করা হবে। কোনো সাবস্ক্রিপশন নেই।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%@ charged once to your Apple Account. No subscription."}},
+        "es": {"stringUnit": {"state": "translated", "value": "Se cargarán %@ una sola vez a tu cuenta de Apple. Sin suscripción."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Un paiement unique de %@ sera débité de votre compte Apple. Sans abonnement."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आपके Apple खाते से एक बार %@ लिए जाएँगे। कोई सदस्यता नहीं।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "Apple Accountに%@を一度だけ請求します。サブスクリプションではありません。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Jednorazowa opłata %@ zostanie pobrana z Twojego konta Apple. Bez subskrypcji."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Cobrança única de %@ na sua Conta Apple. Sem assinatura."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "С вашего Аккаунта Apple однократно спишется %@. Без подписки."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "将向你的 Apple 账户一次性收取 %@。无需订阅。"}}
+      }
+    },
+    "%@ per week, automatically renewing until canceled.": {
+      "comment": "Weekly subscription with no trial. %@ is StoreKit's localized price; preserve weekly billing and automatic renewal until cancellation.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "%@ أسبوعيًا، مع تجديد تلقائي حتى الإلغاء."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতি সপ্তাহে %@, বাতিল না করা পর্যন্ত স্বয়ংক্রিয়ভাবে নবায়ন হবে।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%@ per week, automatically renewing until canceled."}},
+        "es": {"stringUnit": {"state": "translated", "value": "%@ por semana, con renovación automática hasta que canceles."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%@ par semaine, avec renouvellement automatique jusqu’à résiliation."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "प्रति सप्ताह %@, रद्द करने तक अपने-आप नवीनीकरण होगा।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "週額%@。キャンセルするまで自動更新されます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "%@ za tydzień, z automatycznym odnawianiem do czasu anulowania."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ por semana, com renovação automática até o cancelamento."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "%@ в неделю с автоматическим продлением до отмены."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每周 %@，自动续订，直至取消。"}}
+      }
+    },
+    "%@ per year, automatically renewing until canceled.": {
+      "comment": "Yearly subscription with no trial. %@ is StoreKit's localized price; preserve annual billing and automatic renewal until cancellation.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "%@ سنويًا، مع تجديد تلقائي حتى الإلغاء."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতি বছরে %@, বাতিল না করা পর্যন্ত স্বয়ংক্রিয়ভাবে নবায়ন হবে।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%@ per year, automatically renewing until canceled."}},
+        "es": {"stringUnit": {"state": "translated", "value": "%@ al año, con renovación automática hasta que canceles."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%@ par an, avec renouvellement automatique jusqu’à résiliation."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "प्रति वर्ष %@, रद्द करने तक अपने-आप नवीनीकरण होगा।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "年額%@。キャンセルするまで自動更新されます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "%@ za rok, z automatycznym odnawianiem do czasu anulowania."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ por ano, com renovação automática até o cancelamento."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "%@ в год с автоматическим продлением до отмены."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每年 %@，自动续订，直至取消。"}}
+      }
+    },
+    "7 days free, then %@ per week, automatically renewing until canceled.": {
+      "comment": "Seven-day free trial followed by a weekly auto-renewing subscription. %@ is StoreKit's localized price. Preserve trial length, weekly price, and renewal terms.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "٧ أيام مجانًا، ثم %@ أسبوعيًا، مع تجديد تلقائي حتى الإلغاء."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৭ দিন বিনামূল্যে, তারপর প্রতি সপ্তাহে %@, বাতিল না করা পর্যন্ত স্বয়ংক্রিয়ভাবে নবায়ন হবে।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "7 days free, then %@ per week, automatically renewing until canceled."}},
+        "es": {"stringUnit": {"state": "translated", "value": "7 días gratis, después %@ por semana, con renovación automática hasta que canceles."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "7 jours gratuits, puis %@ par semaine, avec renouvellement automatique jusqu’à résiliation."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "7 दिन मुफ़्त, फिर प्रति सप्ताह %@, रद्द करने तक अपने-आप नवीनीकरण होगा।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "7日間無料、その後は週額%@。キャンセルするまで自動更新されます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "7 dni bez opłat, potem %@ za tydzień, z automatycznym odnawianiem do czasu anulowania."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "7 dias grátis, depois %@ por semana, com renovação automática até o cancelamento."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "7 дней бесплатно, затем %@ в неделю с автоматическим продлением до отмены."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "免费试用 7 天，之后每周 %@，自动续订，直至取消。"}}
+      }
+    },
+    "7 days free, then %@ per year, automatically renewing until canceled.": {
+      "comment": "Seven-day free trial followed by a yearly auto-renewing subscription. %@ is StoreKit's localized price. Preserve trial length, annual price, and renewal terms.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "٧ أيام مجانًا، ثم %@ سنويًا، مع تجديد تلقائي حتى الإلغاء."}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৭ দিন বিনামূল্যে, তারপর প্রতি বছরে %@, বাতিল না করা পর্যন্ত স্বয়ংক্রিয়ভাবে নবায়ন হবে।"}},
+        "en": {"stringUnit": {"state": "translated", "value": "7 days free, then %@ per year, automatically renewing until canceled."}},
+        "es": {"stringUnit": {"state": "translated", "value": "7 días gratis, después %@ al año, con renovación automática hasta que canceles."}},
+        "fr": {"stringUnit": {"state": "translated", "value": "7 jours gratuits, puis %@ par an, avec renouvellement automatique jusqu’à résiliation."}},
+        "hi": {"stringUnit": {"state": "translated", "value": "7 दिन मुफ़्त, फिर प्रति वर्ष %@, रद्द करने तक अपने-आप नवीनीकरण होगा।"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "7日間無料、その後は年額%@。キャンセルするまで自動更新されます。"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "7 dni bez opłat, potem %@ za rok, z automatycznym odnawianiem do czasu anulowania."}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "7 dias grátis, depois %@ por ano, com renovação automática até o cancelamento."}},
+        "ru": {"stringUnit": {"state": "translated", "value": "7 дней бесплатно, затем %@ в год с автоматическим продлением до отмены."}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "免费试用 7 天，之后每年 %@，自动续订，直至取消。"}}
+      }
+    },
+    "Back": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "رجوع"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ফিরে যান"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Back"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Atrás"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Retour"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "वापस"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "戻る"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wstecz"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Voltar"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Назад"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "返回"}}
+      }
+    },
+    "Step %lld of %lld": {
+      "comment": "Accessible onboarding progress. First integer is the current step, second is the total number of steps.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "الخطوة %lld من %lld"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ধাপ %lld, মোট %lld"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Step %lld of %lld"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Paso %lld de %lld"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Étape %lld sur %lld"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "चरण %lld / %lld"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "ステップ %lld / %lld"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Krok %lld z %lld"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Etapa %lld de %lld"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Шаг %lld из %lld"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "第 %lld 步，共 %lld 步"}}
+      }
+    },
+    "Checking purchases…": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "جارٍ التحقق من المشتريات…"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "কেনাকাটা যাচাই করা হচ্ছে…"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Checking purchases…"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Comprobando compras…"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Vérification des achats…"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "खरीदारी की जाँच हो रही है…"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "購入内容を確認中…"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Sprawdzanie zakupów…"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Verificando compras…"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Проверяем покупки…"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "正在检查购买记录…"}}
+      }
+    },
+    "Family Lifetime Upgrade": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "الترقية إلى الخطة العائلية مدى الحياة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আজীবন পারিবারিক প্ল্যানে আপগ্রেড"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Family Lifetime Upgrade"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Ampliación a Familiar de por vida"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Passage à la formule Famille à vie"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आजीवन पारिवारिक प्लान में अपग्रेड"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "ファミリー買い切りへのアップグレード"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Rozszerzenie do dożywotniego planu rodzinnego"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Upgrade para Familiar vitalício"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Переход на семейный бессрочный план"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "升级至家庭终身版"}}
+      }
+    },
+    "Individual Weekly": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "فردي أسبوعي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ব্যক্তিগত সাপ্তাহিক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Individual Weekly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Individual semanal"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Individuel hebdomadaire"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "व्यक्तिगत साप्ताहिक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "個人・週額"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Indywidualny tygodniowy"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Individual semanal"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Личный на неделю"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "个人周订阅"}}
+      }
+    },
+    "Individual Yearly": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "فردي سنوي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "ব্যক্তিগত বার্ষিক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Individual Yearly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Individual anual"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Individuel annuel"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "व्यक्तिगत वार्षिक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "個人・年額"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Indywidualny roczny"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Individual anual"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Личный на год"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "个人年订阅"}}
+      }
+    },
+    "Family Weekly": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "عائلي أسبوعي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "পারিবারিক সাপ্তাহিক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Family Weekly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Familiar semanal"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Famille · hebdomadaire"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "पारिवारिक साप्ताहिक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "ファミリー・週額"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Rodzinny tygodniowy"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Familiar semanal"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Семейный на неделю"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "家庭周订阅"}}
+      }
+    },
+    "Family Yearly": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "عائلي سنوي"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "পারিবারিক বার্ষিক"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Family Yearly"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Familiar anual"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Famille · annuel"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "पारिवारिक वार्षिक"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "ファミリー・年額"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Rodzinny roczny"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Familiar anual"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Семейный на год"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "家庭年订阅"}}
+      }
+    },
+    "per week": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "أسبوعيًا"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতি সপ্তাহে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "per week"}},
+        "es": {"stringUnit": {"state": "translated", "value": "por semana"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "par semaine"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "प्रति सप्ताह"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "毎週"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "za tydzień"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "por semana"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "в неделю"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每周"}}
+      }
+    },
+    "per year": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "سنويًا"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্রতি বছরে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "per year"}},
+        "es": {"stringUnit": {"state": "translated", "value": "por año"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "par an"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "प्रति वर्ष"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "毎年"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "za rok"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "por ano"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "в год"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "每年"}}
+      }
+    },
+    "once": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "مرة واحدة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "একবারই"}},
+        "en": {"stringUnit": {"state": "translated", "value": "once"}},
+        "es": {"stringUnit": {"state": "translated", "value": "un solo pago"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "en une fois"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "एक बार"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "一度のみ"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "jednorazowo"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "uma só vez"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "один раз"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "一次性"}}
+      }
+    },
+    "7 days free": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "٧ أيام مجانًا"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৭ দিন বিনামূল্যে"}},
+        "en": {"stringUnit": {"state": "translated", "value": "7 days free"}},
+        "es": {"stringUnit": {"state": "translated", "value": "7 días gratis"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "7 jours gratuits"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "7 दिन मुफ़्त"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "7日間無料"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "7 dni bez opłat"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "7 dias grátis"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "7 дней бесплатно"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "免费试用 7 天"}}
+      }
+    },
+    "One-time purchase": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "شراء لمرة واحدة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "এককালীন কেনাকাটা"}},
+        "en": {"stringUnit": {"state": "translated", "value": "One-time purchase"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Compra única"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Achat unique"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "एक बार की खरीदारी"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "買い切り"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zakup jednorazowy"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Compra única"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Разовая покупка"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "一次性购买"}}
+      }
+    },
+    "%@, one-time purchase": {
+      "comment": "StoreKit-formatted price for the one-time Family upgrade. Keep the price placeholder intact.",
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "%@، شراء لمرة واحدة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "%@, এককালীন কেনাকাটা"}},
+        "en": {"stringUnit": {"state": "translated", "value": "%@, one-time purchase"}},
+        "es": {"stringUnit": {"state": "translated", "value": "%@, compra única"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "%@, achat unique"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "%@, एक बार की खरीदारी"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "%@の買い切り"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "%@, zakup jednorazowy"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "%@, compra única"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "%@, разовая покупка"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "%@，一次性购买"}}
+      }
+    },
+    "Start 7-day free trial": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "ابدأ التجربة المجانية لمدة ٧ أيام"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "৭ দিনের বিনামূল্যের ট্রায়াল শুরু করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Start 7-day free trial"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Probar 7 días gratis"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Essayer 7 jours gratuitement"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "7 दिन का मुफ़्त ट्रायल शुरू करें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "7日間の無料体験を始める"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wypróbuj 7 dni bez opłat"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Experimentar 7 dias grátis"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Попробовать 7 дней бесплатно"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "开始 7 天免费试用"}}
+      }
+    },
+    "Subscribe": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "اشترك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "সাবস্ক্রাইব করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Subscribe"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Suscribirse"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "S’abonner"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "सदस्यता लें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "登録する"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Subskrybuj"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Assinar"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Оформить подписку"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "订阅"}}
+      }
+    },
+    "Buy Lifetime": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "اشترِ الوصول مدى الحياة"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "আজীবনের জন্য কিনুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Buy Lifetime"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Comprar acceso de por vida"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Acheter l’accès à vie"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "आजीवन एक्सेस खरीदें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "買い切りで購入"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Kup dostęp dożywotni"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Comprar acesso vitalício"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Купить бессрочный доступ"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "购买终身版"}}
+      }
+    },
+    "Restore Purchases": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "استعادة المشتريات"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "কেনাকাটা পুনরুদ্ধার করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Restore Purchases"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Restaurar compras"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Restaurer les achats"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "खरीदारी बहाल करें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "購入を復元"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Przywróć zakupy"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Restaurar compras"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Восстановить покупки"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "恢复购买"}}
+      }
+    },
+    "Terms": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "الشروط"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "শর্তাবলি"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Terms"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Condiciones"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Conditions"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "शर्तें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "利用規約"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Warunki"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Termos"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Условия"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "条款"}}
+      }
+    },
+    "Who is this for?": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "لمن هذه الخطة؟"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "কার জন্য এই প্ল্যান?"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Who is this for?"}},
+        "es": {"stringUnit": {"state": "translated", "value": "¿Para quién es?"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Pour qui est cette formule ?"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "यह प्लान किसके लिए है?"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "誰が使いますか？"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Dla kogo jest ten plan?"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Para quem é este plano?"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Для кого этот план?"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "谁会使用这个方案？"}}
+      }
+    },
+    "Active purchase": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "شراء نشط"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "সক্রিয় কেনাকাটা"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Active purchase"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Compra activa"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Achat actif"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "सक्रिय खरीदारी"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "有効な購入"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Aktywny zakup"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Compra ativa"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Активная покупка"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "有效购买"}}
+      }
+    },
+    "Manage subscription": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "إدارة الاشتراك"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "সাবস্ক্রিপশন পরিচালনা করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Manage subscription"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Gestionar suscripción"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Gérer l’abonnement"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "सदस्यता प्रबंधित करें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "サブスクリプションを管理"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Zarządzaj subskrypcją"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Gerenciar assinatura"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Управлять подпиской"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "管理订阅"}}
+      }
+    },
+    "Retry loading plans": {
+      "localizations": {
+        "ar": {"stringUnit": {"state": "translated", "value": "إعادة محاولة تحميل الخطط"}},
+        "bn": {"stringUnit": {"state": "translated", "value": "প্ল্যান আবার লোড করুন"}},
+        "en": {"stringUnit": {"state": "translated", "value": "Retry loading plans"}},
+        "es": {"stringUnit": {"state": "translated", "value": "Volver a cargar los planes"}},
+        "fr": {"stringUnit": {"state": "translated", "value": "Réessayer de charger les formules"}},
+        "hi": {"stringUnit": {"state": "translated", "value": "प्लान फिर से लोड करें"}},
+        "ja": {"stringUnit": {"state": "translated", "value": "プランを再読み込み"}},
+        "pl": {"stringUnit": {"state": "translated", "value": "Wczytaj plany ponownie"}},
+        "pt-BR": {"stringUnit": {"state": "translated", "value": "Recarregar planos"}},
+        "ru": {"stringUnit": {"state": "translated", "value": "Загрузить планы снова"}},
+        "zh-Hans": {"stringUnit": {"state": "translated", "value": "重新加载方案"}}
+      }
+    },
     "Add Event to Calendar": {
       "comment": "Action that opens the system calendar editor for a single timeline visit or outing.",
       "localizations": {
@@ -23850,6 +24485,77 @@
           "stringUnit": {
             "state": "translated",
             "value": "Każda kolumna CSV musi mieć nagłówek."
+          }
+        }
+      }
+    },
+    "Every day\nhas a story.": {
+      "comment": "Welcome headline. Warm, understated travel-journal voice; adapt the line break naturally for each language.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لكل يوم\nحكاية."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "প্রতিটি দিনের\nএকটি গল্প আছে।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every day\nhas a story."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada día\ncuenta una historia."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour\nraconte une histoire."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हर दिन की\nएक कहानी है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日に、\n物語がある。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Każdy dzień\nma swoją historię."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada dia\nconta uma história."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У каждого дня\nсвоя история."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每一天，\n都有故事。"
           }
         }
       }
@@ -55149,6 +55855,77 @@
         }
       }
     },
+    "Ready for your\nnext chapter.": {
+      "comment": "Final onboarding headline. An inviting next chapter, not a sales slogan; prefer gender-neutral phrasing where possible.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل شيء جاهز\nلفصلك القادم."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "পরের অধ্যায়ের জন্য\nআপনি প্রস্তুত।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready for your\nnext chapter."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo listo para\ntu próximo capítulo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Place à votre\nprochain chapitre."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अगले अध्याय के लिए\nसब तैयार है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次の一章を、\nここから。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Czas na Twój\nkolejny rozdział."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tudo pronto para\nseu próximo capítulo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё готово\nк новой главе."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一章，\n就从这里开始。"
+          }
+        }
+      }
+    },
     "Recent files with data in this preview: %lld. Export will process every selected file.": {
       "localizations": {
         "ar": {
@@ -68293,6 +69070,77 @@
         }
       }
     },
+    "The shape\nof your day.": {
+      "comment": "Features headline: the visits, paths, and details that form a picture of a day. Use a natural editorial metaphor, not a literal geometric shape.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملامح\nيومك."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনার দিনের\nরূপরেখা।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The shape\nof your day."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu día\ntoma forma."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre journée\nse dessine."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके दिन की\nएक झलक।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一日の軌跡を、\nひと目で。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twój dzień\nnabiera kształtu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu dia\nganha forma."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваш день\nв деталях."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的一天，\n清晰呈现。"
+          }
+        }
+      }
+    },
     "The start date must be before the end date.": {
       "localizations": {
         "ar": {
@@ -77264,6 +78112,148 @@
           "stringUnit": {
             "state": "translated",
             "value": "你的导出权限永久有效。只需升级一次，即可通过 Apple 家人共享与家人共享。"
+          }
+        }
+      }
+    },
+    "Your places,\nautomatically.": {
+      "comment": "Location-permission headline: visited places are recorded automatically once access is granted. Calm and personal, without implying permission is already granted.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أماكنك،\nتُسجَّل تلقائيًا."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "যেখানে যান,\nআপনা থেকেই নথিভুক্ত।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your places,\nautomatically."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus lugares,\nde forma automática."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos lieux,\nnotés automatiquement."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी जगहें,\nअपने-आप दर्ज।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "訪れた場所を、\n自動で記録。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje miejsca.\nZapisują się same."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seus lugares,\nautomaticamente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваши места —\nзапишутся сами."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "走过的地方，\n自动为你记下。"
+          }
+        }
+      }
+    },
+    "Your places.\nYour photographs.": {
+      "comment": "Optional Photos headline. Two short, parallel phrases connecting personal places and photographs; keep the quiet, travel-journal tone.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أماكنك.\nصورك."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনার জায়গাগুলো।\nআপনার ছবিগুলো।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your places.\nYour photographs."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus lugares.\nTus fotografías."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos lieux.\nVos photographies."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी जगहें।\nआपकी तस्वीरें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "訪れた場所。\nあなたの写真。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje miejsca.\nTwoje zdjęcia."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seus lugares.\nSuas fotografias."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваши места.\nВаши фотографии."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你去过的地方。\n你拍下的照片。"
           }
         }
       }

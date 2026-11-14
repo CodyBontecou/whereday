@@ -24,7 +24,10 @@ struct MyselfClaimView: View {
                     Button {
                         Task { await claim() }
                     } label: {
-                        if busy { ProgressView("Verifying purchase…") }
+                        if busy {
+                            ProgressView("Verifying purchase…")
+                                .frame(maxWidth: .infinity)
+                        }
                         else { Text(openedClaim ? "Open claim again" : "Verify purchase and continue") }
                     }
                     .disabled(busy)

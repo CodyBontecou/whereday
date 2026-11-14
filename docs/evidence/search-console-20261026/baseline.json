@@ -1,0 +1,73 @@
+{
+  "capture_date": "2026-10-26",
+  "property": "sc-domain:isolated.tech",
+  "site": "https://isome.isolated.tech/",
+  "page_regex": "^https://isome\\.isolated\\.tech/",
+  "search_type": "Web (text-based)",
+  "start_date": "2026-09-27",
+  "end_date": "2026-10-24",
+  "days": 28,
+  "clicks": 5,
+  "impressions": 297,
+  "ctr_percent_calculated": 1.6835016835016834,
+  "ctr_displayed": "1.7%",
+  "average_position_displayed": 6.0,
+  "dedicated_property_performance_status": "processing",
+  "sitemap": {
+    "url": "https://isome.isolated.tech/sitemap.xml",
+    "status": "Success",
+    "submitted": "2026-06-13",
+    "last_read": "2026-10-25",
+    "discovered_pages": 17
+  },
+  "queries": {
+    "rows": 9,
+    "click_sum": 1,
+    "impression_sum": 111
+  },
+  "pages": {
+    "rows": 16,
+    "click_sum": 5,
+    "impression_sum": 297
+  },
+  "countries": {
+    "rows": 31,
+    "click_sum": 1,
+    "impression_sum": 111
+  },
+  "devices": {
+    "rows": 2,
+    "click_sum": 1,
+    "impression_sum": 111
+  },
+  "source_report_url": "https://search.google.com/search-console/performance/search-analytics?resource_id=sc-domain%3Aisolated.tech&num_of_days=28&page=~%5Ehttps%3A%2F%2Fisome%5C.isolated%5C.tech%2F&metrics=CLICKS%2CIMPRESSIONS%2CCTR%2CPOSITION",
+  "connection_method": "Existing authenticated browser session; automatic ownership verification via domain-name provider",
+  "dedicated_property": "https://isome.isolated.tech/",
+  "coverage_totals": {
+    "indexed": null,
+    "not_indexed": null,
+    "status": "processing"
+  },
+  "filter_warning": "Chart totals and table results might be partial when filters are applied.",
+  "url_inspections": [
+    {
+      "url": "https://isome.isolated.tech/",
+      "indexed": true,
+      "last_crawl_displayed": "Oct 15, 2026, 12:14:34 AM",
+      "sitemap_association": "Temporary processing error"
+    },
+    {
+      "url": "https://isome.isolated.tech/blog/private-location-journal-iphone/",
+      "indexed": true,
+      "last_crawl_displayed": "Sep 30, 2026, 5:37:50 AM",
+      "sitemap_association": "https://isome.isolated.tech/sitemap.xml"
+    },
+    {
+      "url": "https://isome.isolated.tech/docs/export-import/",
+      "indexed": true,
+      "last_crawl_displayed": "Sep 28, 2026, 5:52:40 AM",
+      "sitemap_association": "https://isome.isolated.tech/sitemap.xml"
+    }
+  ],
+  "raw_export_sha256": "d7ec3dca53bf409b74285b96ce179b877e5767fb5d63ddc75800f682ba5b4ca2"
+}

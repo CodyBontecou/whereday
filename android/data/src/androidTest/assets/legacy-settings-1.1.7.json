@@ -1,0 +1,29 @@
+{
+  "source": {
+    "java": "c10621be9bccd4d2200949b7242bfc7828b6ecccbeaa6077facff68b3fe95e14",
+    "python": "01f90b3bf90a117623ba891a21c103961ae4f8aef5ec1d7a7166f540255e5739"
+  },
+  "artifacts": [
+    {
+      "coordinate": "androidx.datastore:datastore-preferences-core-android:1.1.7",
+      "sha256": "31cebf4444b1df57876e695109a0a63c9a93ff05df503d27a3927b86af0cfac0"
+    },
+    {
+      "coordinate": "androidx.datastore:datastore-core-android:1.1.7",
+      "sha256": "adca1d7cde73406fcca2a0eeabac63459adc9d1fe201b79ba08711fa2e331984"
+    },
+    {
+      "coordinate": "androidx.datastore:datastore-preferences-proto:1.1.7",
+      "sha256": "63686a612f39b8ca603bebe3376d55fb6c9ee28a4a5173efa49c89cbcca8a127"
+    },
+    {
+      "coordinate": "androidx.datastore:datastore-preferences-external-protobuf:1.1.7",
+      "sha256": "fcb3f373cf743426c85ebb0d3cc644aefaf26f39b7fa55bb90238d41b689eca7"
+    },
+    {
+      "coordinate": "org.jetbrains.kotlin:kotlin-stdlib:2.1.20",
+      "sha256": "1bcc74e8ce84e2c25eaafde10f1248349cce3062b6e36978cbeec610db1e930a"
+    }
+  ],
+  "fixtureSha256": "91a4db13eb1a42be597063c4cdb77f9835a1cea73a956fe0ff7907299b5909ac"
+}

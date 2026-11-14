@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <cache-path name="prepared_exports" path="exports/" />
+    <!-- Month recap cards: place names and totals only, never coordinates. -->
+    <cache-path name="month_recaps" path="recaps/" />
+</paths>

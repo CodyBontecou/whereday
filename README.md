@@ -82,15 +82,19 @@ iOS lock screen widget via Live Activities and watchOS complications for quick t
 
 ## Pricing
 
-Tracking is free and unlimited — visits, continuous routes, watch app, Live Activities, widgets. No subscription, no ads, no usage caps.
+The next release introduces paid tracking for **new users only**. Target US prices for that release (subscription drafts are ready to submit; no build or subscription has been submitted):
 
-The one paid feature is **export**, offered as lifetime purchases with no recurring charge. US prices verified in App Store Connect on October 26, 2026; other storefronts vary:
+| Plan | Individual | Apple Family Sharing |
+|---|---:|---:|
+| Weekly | $0.99 | $1.99 |
+| Yearly | $29.99 | $49.99 |
+| Lifetime | $49.99 | $89.99 |
 
-- **Individual Lifetime — $19.99** for one Apple ID
-- **Family Lifetime — $39.99** with Apple Family Sharing for up to five family members
-- **Family Upgrade — $19.99** for Individual Lifetime owners who later want Family Sharing
+**Live pricing is on hold:** Individual Lifetime remains $19.99, Family Lifetime $39.99, and Family Upgrade $19.99 in the U.S. Apply the new lifetime targets only after the subscriptions are approved, the subscription-enabled app is live, and the user authorizes the price changes. No future increase is scheduled.
 
-Everyone who bought the original `com.bontecou.isome.lifetime` unlock is grandfathered into Family Lifetime automatically. Recording and local review remain free. File exports provide optional portability; their contents depend on the selected data, fields, and filters. Check the saved records before relying on a backup.
+Weekly and yearly subscriptions offer a 7-day free trial to eligible subscribers, then renew automatically. Lifetime is a one-time purchase without a trial. Viewing and exporting existing records remain available after subscription expiration; new tracking and manual check-ins require access.
+
+Existing users retain free tracking and their previous export purchase requirement. Every existing lifetime purchase remains valid, including the original `com.bontecou.isome.lifetime` Family Sharing unlock. See the [paid-tracking rollout checklist](docs/paid-tracking-rollout.md) before releasing or updating public pricing.
 
 ## Tech Stack
 
@@ -110,7 +114,7 @@ Everyone who bought the original `com.bontecou.isome.lifetime` unlock is grandfa
 | SwiftData | On-device persistence for visits and location points |
 | ActivityKit | Live Activities on lock screen and Dynamic Island |
 | WidgetKit | Home screen and watch widgets |
-| StoreKit 2 | In-app purchase (lifetime unlock) |
+| StoreKit 2 | Subscriptions, trials, lifetime purchases, and Family Sharing |
 | MapKit | Map visualization and route display |
 | Combine | Reactive state management |
 

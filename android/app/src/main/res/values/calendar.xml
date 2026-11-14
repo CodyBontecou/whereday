@@ -1,0 +1,9 @@
+<resources>
+    <string name="calendar_add">Add event to calendar</string>
+    <string name="calendar_opening">Opening calendar…</string>
+    <string name="calendar_unavailable">No calendar editor is available. Install or enable a calendar app and try again.</string>
+    <string name="calendar_prepare_error">Could not prepare this calendar event. Reopen the activity and try again.</string>
+    <string name="calendar_saved_visit">The calendar draft uses the saved visit. Unsaved edits are not included.</string>
+    <string name="calendar_unknown_place">Unknown Location</string>
+    <string name="calendar_outing_title">Outing %1$d</string>
+</resources>

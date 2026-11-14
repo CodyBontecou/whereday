@@ -106,7 +106,9 @@ struct ExportView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                TE.surface.ignoresSafeArea()
+                FieldNotesBackground()
+                    .overlay(TE.surface.opacity(0.45))
+                    .allowsHitTesting(false)
 
                 if dynamicTypeSize.isAccessibilitySize {
                     ScrollView {
@@ -139,14 +141,7 @@ struct ExportView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("EXPORT")
-                        .font(TE.mono(.caption, weight: .bold))
-                        .tracking(3)
-                        .foregroundStyle(TE.textMuted)
-                }
-            }
+            .toolbarBackground(.hidden, for: .navigationBar)
             .alert("Remove Default Folder?", isPresented: $showingClearFolderConfirmation) {
                 Button("Cancel", role: .cancel) {}
                 Button("Remove", role: .destructive) { exportFolderManager.clearDefaultFolder() }
@@ -181,7 +176,7 @@ struct ExportView: View {
             .onAppear {
                 ensurePointDataIfNeeded()
             }
-            .onChange(of: storeManager.isPurchased) { _, _ in ensurePointDataIfNeeded() }
+            .onChange(of: storeManager.canExport) { _, _ in ensurePointDataIfNeeded() }
             .onChange(of: options) { _, _ in persistExportPreferences() }
             .onChange(of: options.dataKind.rawValue) { _, _ in ensurePointDataIfNeeded() }
             .onChange(of: selectedFormatTokensKey) { _, _ in
@@ -199,7 +194,7 @@ struct ExportView: View {
             dataKindSection
             webhookSection
             exportFolderSection
-            if exportFolderManager.hasDefaultFolder && storeManager.isPurchased {
+            if exportFolderManager.hasDefaultFolder && storeManager.canExport {
                 dailyExportSection
             }
             filenameSection
@@ -227,7 +222,7 @@ struct ExportView: View {
                 .tracking(2)
                 .foregroundStyle(TE.textPrimary)
 
-            Text("Tracking is free and unlimited. Unlock data export with a one-time purchase.")
+            Text("Your existing free tracking access is preserved. Choose a plan to unlock data export.")
                 .font(TE.mono(.caption2, weight: .medium))
                 .foregroundStyle(TE.textMuted)
                 .multilineTextAlignment(.center)
@@ -279,7 +274,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DATA")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 if dynamicTypeSize.isAccessibilitySize {
                     segmentedButton("VISITS", isSelected: options.dataKind == .visits) { selectDataKind(.visits) }
                     Rectangle().fill(TE.border).frame(height: 1)
@@ -310,7 +305,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "WEBHOOK")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     NavigationLink {
                         WebhookSettingsView()
@@ -343,7 +338,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "EXPORT FOLDER")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     if let folderName = exportFolderManager.selectedFolderName {
                         TERow {
@@ -460,7 +455,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "AUTO EXPORT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow(showDivider: dailyScheduler.isEnabled) {
                         toggleRow("ENABLE", isOn: Binding(
@@ -673,7 +668,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "FILE PATH")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         if dynamicTypeSize.isAccessibilitySize {
@@ -799,7 +794,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "OUTPUT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     toggleRow(showsOutingExport ? "ONE FILE PER OUTING" : "ONE FILE PER DAY", isOn: $options.splitByDay)
                 }
@@ -827,7 +822,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DATE RANGE")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     ForEach(Array(ExportOptions.DateRangePreset.allCases.enumerated()), id: \.element.id) { idx, preset in
                         let isLast = idx == ExportOptions.DateRangePreset.allCases.count - 1
@@ -895,7 +890,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "TIME OF DAY")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow(showDivider: options.timeOfDayEnabled) {
                         toggleRow("ENABLE", isOn: $options.timeOfDayEnabled)
@@ -941,7 +936,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "FILTERS")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     if showsVisitFields {
                         TERow {
@@ -1001,7 +996,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "VISIT FIELDS")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         toggleRow("LOCATION NAME", isOn: $options.includeVisitLocationName)
@@ -1032,7 +1027,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "POINT FIELDS")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         toggleRow("ALTITUDE", isOn: $options.includePointAltitude)
@@ -1060,7 +1055,7 @@ struct ExportView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "OUTING EXPORT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack(spacing: 8) {
@@ -1091,8 +1086,8 @@ struct ExportView: View {
 
     private var exportFooter: some View {
         VStack(spacing: 8) {
-            if !storeManager.isPurchased && totalCount > 0 {
-                Text("Preview is free. Unlock export with a one-time purchase.")
+            if !storeManager.canExport && totalCount > 0 {
+                Text("Preview is free. Choose a plan to unlock export.")
                     .font(TE.mono(.caption2, weight: .medium))
                     .foregroundStyle(TE.textMuted)
                     .multilineTextAlignment(.center)
@@ -1151,16 +1146,7 @@ struct ExportView: View {
         .padding(.horizontal, 16)
         .padding(.top, 12)
         .padding(.bottom, 16)
-        .background(
-            LinearGradient(
-                colors: [TE.surface.opacity(0), TE.surface],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: 120)
-            .allowsHitTesting(false),
-            alignment: .bottom
-        )
+        .background(TE.surface)
     }
 
     private var previewButtonLabel: LocalizedStringKey {
@@ -1173,7 +1159,7 @@ struct ExportView: View {
 
     private var exportButtonLabel: LocalizedStringKey {
         if totalCount == 0 { return "NOTHING TO EXPORT" }
-        if !storeManager.isPurchased { return "UNLOCK EXPORT" }
+        if !storeManager.canExport { return "UNLOCK EXPORT" }
         let n = splitFileCount
         if n == 0 { return "NOTHING TO EXPORT" }
         if n == 1 { return "EXPORT 1 FILE" }
@@ -1232,7 +1218,7 @@ struct ExportView: View {
     // MARK: - Actions
 
     private func runExport() {
-        guard storeManager.isPurchased else {
+        guard storeManager.canExport else {
             showingPaywall = true
             return
         }
@@ -1308,7 +1294,7 @@ private struct ExportFormatSection: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "FORMATS")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 ExportFormatGrid(
                     selectedFormats: selectedFormats,
                     toggleFormat: toggleFormat

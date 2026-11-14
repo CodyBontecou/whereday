@@ -38,7 +38,9 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                TE.surface.ignoresSafeArea()
+                FieldNotesBackground()
+                    .overlay(TE.surface.opacity(0.45))
+                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(spacing: 0) {
@@ -61,14 +63,7 @@ struct SettingsView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("SETTINGS")
-                        .font(TE.mono(.caption, weight: .bold))
-                        .tracking(3)
-                        .foregroundStyle(TE.textMuted)
-                }
-            }
+            .toolbarBackground(.hidden, for: .navigationBar)
             .alert("Clear All Data?", isPresented: $showingClearConfirmation) {
                 Button("Cancel", role: .cancel) {}
                 Button("Clear", role: .destructive) { viewModel.clearAllData() }
@@ -108,7 +103,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DATA EXPORT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     if storeManager.isPurchased {
                         TERow {
@@ -129,7 +124,7 @@ struct SettingsView: View {
                         }
                     } else {
                         TERow {
-                            settingsButton("UNLOCK EXPORT", icon: "lock.open.fill") {
+                            settingsButton(storeManager.hasLegacyTrackingAccess ? "UNLOCK EXPORT" : "CHOOSE A PLAN", icon: "lock.open.fill") {
                                 showingPaywall = true
                             }
                         }
@@ -145,9 +140,11 @@ struct SettingsView: View {
             .padding(.horizontal, 16)
 
             if storeManager.isPurchased {
-                TESectionFooter(text: "Export is unlocked forever. Manage your plan or Apple Family Sharing here.")
+                TESectionFooter(text: "Manage your plan or Apple Family Sharing here.")
             } else {
-                TESectionFooter(text: "Tracking is free and unlimited. Choose an Individual or Family one-time purchase for data export.")
+                TESectionFooter(text: storeManager.hasLegacyTrackingAccess
+                    ? "Your existing free tracking access is preserved. Choose a plan to unlock export."
+                    : "Choose a plan to track. Your existing records remain available to view and export.")
             }
         }
     }
@@ -155,7 +152,7 @@ struct SettingsView: View {
     private var myselfClaimSection: some View {
         VStack(spacing: 0) {
             TESectionHeader(title: "MYSELF.MD")
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     settingsButton("CLAIM MYSELF.MD ACCESS", icon: "gift.fill") { showingMyselfClaim = true }
                 }
@@ -166,19 +163,13 @@ struct SettingsView: View {
     }
 
     private var currentPurchasePlanName: String {
-        if storeManager.isFamilyUnlocked {
-            return String(localized: "Family Lifetime").uppercased()
-        }
-        if storeManager.isIndividualUnlocked {
-            return String(localized: "Individual Lifetime").uppercased()
-        }
-        return String(localized: "Lifetime Export active").uppercased()
+        (storeManager.activePurchaseOption?.title ?? String(localized: "No active plan")).uppercased()
     }
 
     private var appearanceSection: some View {
         VStack(spacing: 0) {
             TESectionHeader(title: "APPEARANCE")
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     settingsPickerRow(title: "THEME") {
                         Picker("Theme", selection: $appAppearance) {
@@ -202,7 +193,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "LOCATION TRACKING")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         settingsToggle(
@@ -291,7 +282,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "INFERRED OUTINGS")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow(showDivider: includesInferredSessions) {
                         settingsToggle("AUTO-GENERATE", isOn: $includesInferredSessions)
@@ -368,7 +359,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "LIVE ACTIVITY MONITOR")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     settingsToggle(
                         "ENABLED",
@@ -391,7 +382,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "UNITS")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     if dynamicTypeSize.isAccessibilitySize {
                         unitButton("METRIC", isSelected: usesMetricDistanceUnits) {
@@ -447,7 +438,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "MAP DISPLAY")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         settingsToggle("VISIT SUGGESTIONS", isOn: $showVisitSuggestions)
@@ -469,7 +460,7 @@ struct SettingsView: View {
     private var savedLocationsSection: some View {
         VStack(spacing: 0) {
             TESectionHeader(title: "SAVED LOCATIONS")
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     NavigationLink {
                         SavedLocationsView(viewModel: viewModel)
@@ -497,7 +488,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DATA IMPORT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow(showDivider: false) {
                         settingsButton("IMPORT FILE", icon: "square.and.arrow.down") {
@@ -518,7 +509,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DATA")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         HStack {
@@ -563,7 +554,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "ONBOARDING")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 TERow(showDivider: false) {
                     settingsButton("REPLAY ONBOARDING", icon: "sparkles") {
                         hasCompletedOnboarding = false
@@ -580,7 +571,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "SUPPORT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         NavigationLink {
@@ -635,7 +626,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "ABOUT")
 
-            TECard {
+            TECard(paperOpacity: 0.97) {
                 VStack(spacing: 0) {
                     TERow {
                         HStack {

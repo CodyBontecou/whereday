@@ -1,0 +1,3 @@
+Browser tab: 3, Title: "URL Inspection", URL: "https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aisolated.tech&id=CCPsib3LByySSFMsxyFjjA".
+There has been no change in the accessibility tree.
+The focused UI element is 87 button (expanded) Page indexing Page is indexed, Secondary Actions: Collapse

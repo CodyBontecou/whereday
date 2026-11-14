@@ -253,6 +253,7 @@ enum VisitConfirmationStatus: String, Codable, CaseIterable {
 enum VisitPlaceSource: String, Codable, CaseIterable {
     case coreLocationGeocode
     case appleMaps
+    case geoapify
     case userEntered
     case `import`
 
@@ -260,6 +261,7 @@ enum VisitPlaceSource: String, Codable, CaseIterable {
         switch self {
         case .coreLocationGeocode: return String(localized: "Core Location")
         case .appleMaps: return String(localized: "Apple Maps")
+        case .geoapify: return "Geoapify"
         case .userEntered: return String(localized: "User entered")
         case .import: return String(localized: "Import")
         }

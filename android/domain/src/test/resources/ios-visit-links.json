@@ -1,0 +1,558 @@
+{
+  "scope": "Verbatim current Swift route parser; normalized URL inputs, no routing/UI or writes",
+  "provenance": {
+    "sourceSha256": "df4ea664ba0db7916a09a4ff11560e73e22bd53084f2a41e27bb013e403d38f0",
+    "parserSha256": "cdc6014e4a7dddb47395f8a622870e5caad9904877a9dced67479a23d25d93c9",
+    "generatorSha256": "fb1182f6c4c3e304c09ef91a70367e8433b90801e0f922694deffff3107269ae"
+  },
+  "now": "2026-11-01T00:00:00Z",
+  "cases": [
+    {
+      "arrival": null,
+      "input": "isome://check-in",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "departure": null,
+      "input": "whereday://log-visit/",
+      "kind": "pastVisit",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "whereday://log-visit/",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?name=Cafe%20日本語&latitude=18.1&longitude=-66.2",
+      "kind": "checkIn",
+      "latitude": 18.1,
+      "longitude": -66.2,
+      "name": "Cafe%20日本語",
+      "url": "isome://check-in?name=Cafe%2520%E6%97%A5%E6%9C%AC%E8%AA%9E&latitude=18.1&longitude=-66.2",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?name=A+B",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": "A+B",
+      "url": "isome://check-in?name=A+B",
+      "valid": true
+    },
+    {
+      "arrival": 1793449800000,
+      "input": "isome://check-in?arrival=2026-10-31T12:30:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-10-31T12:30:00Z",
+      "valid": true
+    },
+    {
+      "arrival": 1793449800000,
+      "departure": 1793453400000,
+      "input": "isome://log-visit?arrival=2026-10-31T12:30:00Z&departure=2026-10-31T13:30:00Z",
+      "kind": "pastVisit",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://log-visit?arrival=2026-10-31T12:30:00Z&departure=2026-10-31T13:30:00Z",
+      "valid": true
+    },
+    {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "input": "whereday://visit/123E4567-E89B-12D3-A456-426614174000",
+      "kind": "visit",
+      "url": "whereday://visit/123E4567-E89B-12D3-A456-426614174000",
+      "valid": true
+    },
+    {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "input": "isome://visit/123e4567-e89b-12d3-a456-426614174000",
+      "kind": "visit",
+      "url": "isome://visit/123e4567-e89b-12d3-a456-426614174000",
+      "valid": true
+    },
+    {
+      "input": "ISOME://check-in",
+      "url": "ISOME://check-in",
+      "valid": false
+    },
+    {
+      "input": "isome://CHECK-IN",
+      "url": "isome://CHECK-IN",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://%63heck-in",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://%63heck-in",
+      "valid": true
+    },
+    {
+      "input": "https://check-in",
+      "url": "https://check-in",
+      "valid": false
+    },
+    {
+      "input": "isome://user@check-in",
+      "url": "isome://user@check-in",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in:80",
+      "url": "isome://check-in:80",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in#",
+      "url": "isome://check-in#",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in/path",
+      "url": "isome://check-in/path",
+      "valid": false
+    },
+    {
+      "input": "isome://visit/123e4567-e89b-12d3-a456-426614174000?",
+      "url": "isome://visit/123e4567-e89b-12d3-a456-426614174000?",
+      "valid": false
+    },
+    {
+      "input": "isome://visit/not-a-uuid",
+      "url": "isome://visit/not-a-uuid",
+      "valid": false
+    },
+    {
+      "input": "isome://visit/123e4567e89b12d3a456426614174000",
+      "url": "isome://visit/123e4567e89b12d3a456426614174000",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?name",
+      "url": "isome://check-in?name",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?name=",
+      "url": "isome://check-in?name=",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?name=%20%20",
+      "url": "isome://check-in?name=%20%20",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?name=%C2%A0Cafe%C2%A0",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": "Cafe",
+      "url": "isome://check-in?name=%C2%A0Cafe%C2%A0",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?name=A&name=B",
+      "url": "isome://check-in?name=A&name=B",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?name=A&%6eame=B",
+      "url": "isome://check-in?name=A&%6eame=B",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?unknown=A",
+      "url": "isome://check-in?unknown=A",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?latitude=1",
+      "url": "isome://check-in?latitude=1",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=90&longitude=180",
+      "kind": "checkIn",
+      "latitude": 90,
+      "longitude": 180,
+      "name": null,
+      "url": "isome://check-in?latitude=90&longitude=180",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=-90&longitude=-180",
+      "kind": "checkIn",
+      "latitude": -90,
+      "longitude": -180,
+      "name": null,
+      "url": "isome://check-in?latitude=-90&longitude=-180",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?latitude=91&longitude=0",
+      "url": "isome://check-in?latitude=91&longitude=0",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?latitude=nan&longitude=0",
+      "url": "isome://check-in?latitude=nan&longitude=0",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?latitude=Infinity&longitude=0",
+      "url": "isome://check-in?latitude=Infinity&longitude=0",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?latitude=%201&longitude=0",
+      "url": "isome://check-in?latitude=%201&longitude=0",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=0x10&longitude=0",
+      "kind": "checkIn",
+      "latitude": 16,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=0x10&longitude=0",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=0x1p0&longitude=0",
+      "kind": "checkIn",
+      "latitude": 1,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=0x1p0&longitude=0",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=1e1&longitude=-0.5",
+      "kind": "checkIn",
+      "latitude": 10,
+      "longitude": -0.5,
+      "name": null,
+      "url": "isome://check-in?latitude=1e1&longitude=-0.5",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=+1&longitude=0",
+      "kind": "checkIn",
+      "latitude": 1,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=+1&longitude=0",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?arrival=2026-11-02T00:00:00Z",
+      "url": "isome://check-in?arrival=2026-11-02T00:00:00Z",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?arrival=2026-10-31T12:30:00.123Z",
+      "url": "isome://check-in?arrival=2026-10-31T12:30:00.123Z",
+      "valid": false
+    },
+    {
+      "arrival": 1793446200000,
+      "input": "isome://check-in?arrival=2026-10-31T12:30:00+01:00",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-10-31T12:30:00+01:00",
+      "valid": true
+    },
+    {
+      "arrival": 1793446200000,
+      "input": "isome://check-in?arrival=2026-10-31T12:30:00+0100",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-10-31T12:30:00+0100",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?arrival=20261031T123000Z",
+      "url": "isome://check-in?arrival=20261031T123000Z",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?arrival=2026-10-31T12:30Z",
+      "url": "isome://check-in?arrival=2026-10-31T12:30Z",
+      "valid": false
+    },
+    {
+      "arrival": 1772454600000,
+      "input": "isome://check-in?arrival=2026-02-30T12:30:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-02-30T12:30:00Z",
+      "valid": true
+    },
+    {
+      "input": "isome://log-visit?arrival=2026-10-31T12:30:00Z",
+      "url": "isome://log-visit?arrival=2026-10-31T12:30:00Z",
+      "valid": false
+    },
+    {
+      "input": "isome://log-visit?departure=2026-10-31T13:30:00Z",
+      "url": "isome://log-visit?departure=2026-10-31T13:30:00Z",
+      "valid": false
+    },
+    {
+      "input": "isome://log-visit?arrival=2026-10-31T13:30:00Z&departure=2026-10-31T12:30:00Z",
+      "url": "isome://log-visit?arrival=2026-10-31T13:30:00Z&departure=2026-10-31T12:30:00Z",
+      "valid": false
+    },
+    {
+      "arrival": 1793449800000,
+      "departure": 1793449800000,
+      "input": "isome://log-visit?arrival=2026-10-31T12:30:00Z&departure=2026-10-31T12:30:00Z",
+      "kind": "pastVisit",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://log-visit?arrival=2026-10-31T12:30:00Z&departure=2026-10-31T12:30:00Z",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?departure=2026-10-31T12:30:00Z",
+      "url": "isome://check-in?departure=2026-10-31T12:30:00Z",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?name=%2520",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": "%20",
+      "url": "isome://check-in?name=%2520",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?name=A%26B%3DC",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": "A&B=C",
+      "url": "isome://check-in?name=A%26B%3DC",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?name=%FF",
+      "url": "isome://check-in?name=%FF",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?name=%",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": "%",
+      "url": "isome://check-in?name=%25",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?latitude=&longitude=0",
+      "url": "isome://check-in?latitude=&longitude=0",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=1.&longitude=0",
+      "kind": "checkIn",
+      "latitude": 1,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=1.&longitude=0",
+      "valid": true
+    },
+    {
+      "input": "isome://visit/123e4567-e89b-12d3-a456-426614174000/",
+      "url": "isome://visit/123e4567-e89b-12d3-a456-426614174000/",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?arrival=2026-13-01T00:00:00Z",
+      "url": "isome://check-in?arrival=2026-13-01T00:00:00Z",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?arrival=2026-01-32T00:00:00Z",
+      "url": "isome://check-in?arrival=2026-01-32T00:00:00Z",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?arrival=2026-01-00T00:00:00Z",
+      "url": "isome://check-in?arrival=2026-01-00T00:00:00Z",
+      "valid": false
+    },
+    {
+      "arrival": 1767312000000,
+      "input": "isome://check-in?arrival=2026-01-01T24:00:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-01-01T24:00:00Z",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?arrival=2026-01-01T23:59:60Z",
+      "url": "isome://check-in?arrival=2026-01-01T23:59:60Z",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?arrival=2026-01-01T23:60:00Z",
+      "url": "isome://check-in?arrival=2026-01-01T23:60:00Z",
+      "valid": false
+    },
+    {
+      "arrival": 1793446200000,
+      "input": "isome://check-in?arrival=2026-10-31T12:30:00+01",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-10-31T12:30:00+01",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?arrival=2026-10-31t12:30:00z",
+      "url": "isome://check-in?arrival=2026-10-31t12:30:00z",
+      "valid": false
+    },
+    {
+      "arrival": 1793449800000,
+      "input": "isome://check-in?arrival=2026-10-31T12:30:00Zextra",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=2026-10-31T12:30:00Zextra",
+      "valid": true
+    },
+    {
+      "arrival": -3786825600000,
+      "input": "isome://check-in?arrival=1850-01-01T00:00:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=1850-01-01T00:00:00Z",
+      "valid": true
+    },
+    {
+      "arrival": -14825808000000,
+      "input": "isome://check-in?arrival=1500-03-01T00:00:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=1500-03-01T00:00:00Z",
+      "valid": true
+    },
+    {
+      "arrival": -62135769600000,
+      "input": "isome://check-in?arrival=0001-01-01T00:00:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=0001-01-01T00:00:00Z",
+      "valid": true
+    },
+    {
+      "arrival": -62167392000000,
+      "input": "isome://check-in?arrival=0000-01-01T00:00:00Z",
+      "kind": "checkIn",
+      "latitude": null,
+      "longitude": null,
+      "name": null,
+      "url": "isome://check-in?arrival=0000-01-01T00:00:00Z",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?latitude=1d&longitude=0",
+      "url": "isome://check-in?latitude=1d&longitude=0",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?latitude=1f&longitude=0",
+      "url": "isome://check-in?latitude=1f&longitude=0",
+      "valid": false
+    },
+    {
+      "input": "isome://check-in?latitude=0X10&longitude=0",
+      "url": "isome://check-in?latitude=0X10&longitude=0",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=0x1.8&longitude=0",
+      "kind": "checkIn",
+      "latitude": 1.5,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=0x1.8&longitude=0",
+      "valid": true
+    },
+    {
+      "input": "isome://check-in?latitude=1_0&longitude=0",
+      "url": "isome://check-in?latitude=1_0&longitude=0",
+      "valid": false
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=.5&longitude=0",
+      "kind": "checkIn",
+      "latitude": 0.5,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=.5&longitude=0",
+      "valid": true
+    },
+    {
+      "arrival": null,
+      "input": "isome://check-in?latitude=%2B1&longitude=0",
+      "kind": "checkIn",
+      "latitude": 1,
+      "longitude": 0,
+      "name": null,
+      "url": "isome://check-in?latitude=%2B1&longitude=0",
+      "valid": true
+    }
+  ]
+}

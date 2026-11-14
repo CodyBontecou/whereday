@@ -10,6 +10,17 @@ struct ContentView: View {
     @AppStorage("appAppearance") private var appAppearance = AppAppearance.system.rawValue
     @State private var crashLog: String?
     @State private var pendingTrackingStart = false
+    @ObservedObject private var storeManager = StoreManager.shared
+    @State private var showingTrackingPaywall = false
+
+    private var showsInitialPaywall: Bool {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("--review-hard-paywall") && !storeManager.isPurchased {
+            return true
+        }
+        #endif
+        return hasCompletedOnboarding && storeManager.requiresInitialPaywall
+    }
 
     private var bypassOnboardingForWatchReplay: Bool {
         #if DEBUG && targetEnvironment(simulator)
@@ -22,7 +33,11 @@ struct ContentView: View {
     var body: some View {
         Group {
             if let viewModel = viewModel {
-                if hasCompletedOnboarding || bypassOnboardingForWatchReplay {
+                if !storeManager.hasResolvedEntitlements {
+                    ProgressView("Checking purchases…")
+                } else if showsInitialPaywall {
+                    PaywallView(storeManager: storeManager, context: .onboarding, isRequired: true)
+                } else if hasCompletedOnboarding || bypassOnboardingForWatchReplay {
                     Group {
                         #if DEBUG
                         if ProcessInfo.processInfo.arguments.contains("--review-upgrade-paywall") {
@@ -41,10 +56,7 @@ struct ContentView: View {
                         #endif
                     }
                         .onAppear {
-                            if pendingTrackingStart {
-                                pendingTrackingStart = false
-                                startTrackingFromOnboarding(viewModel: viewModel)
-                            }
+                            startPendingTrackingIfAllowed(viewModel: viewModel)
                         }
                 } else {
                     OnboardingView(viewModel: viewModel) { shouldStartTracking in
@@ -56,8 +68,18 @@ struct ContentView: View {
                 ProgressView("Loading...")
             }
         }
+        .onChange(of: storeManager.canTrack) { _, canTrack in
+            if canTrack, hasCompletedOnboarding, let viewModel {
+                startPendingTrackingIfAllowed(viewModel: viewModel)
+            }
+        }
         .preferredColorScheme((AppAppearance(rawValue: appAppearance) ?? .system).colorScheme)
-        .tint(TE.accent)
+        .background {
+            if !hasCompletedOnboarding || showsInitialPaywall {
+                InkPaperPalette.paper.ignoresSafeArea()
+            }
+        }
+        .tint(!hasCompletedOnboarding || showsInitialPaywall ? InkPaperPalette.ink : TE.accent)
         .task {
             if viewModel == nil {
                 let manager = LocationManager()
@@ -92,7 +114,14 @@ struct ContentView: View {
                 }
             }
         }
+        .sheet(isPresented: $showingTrackingPaywall) {
+            PaywallView(storeManager: storeManager, context: .onboarding)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .trackingAccessRequired)) { _ in
+            if !storeManager.requiresInitialPaywall { showingTrackingPaywall = true }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .appDidBecomeActive)) { _ in
+            Task { await storeManager.checkEntitlement() }
             viewModel?.loadData()
             if let viewModel {
                 Task {
@@ -131,7 +160,9 @@ struct ContentView: View {
         }
     }
 
-    private func startTrackingFromOnboarding(viewModel: LocationViewModel) {
+    private func startPendingTrackingIfAllowed(viewModel: LocationViewModel) {
+        guard pendingTrackingStart, storeManager.canTrack else { return }
+        pendingTrackingStart = false
         viewModel.startTracking()
     }
 }
@@ -144,27 +175,27 @@ private struct MainTabView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            LocationMapView(viewModel: viewModel)
+            journalWorkspace(mapIsPrimary: true)
                 .tabItem {
                     Label("Map", systemImage: "map.fill")
                 }
                 .tag(0)
 
-            OutingsView(viewModel: viewModel) {
-                selectedTab = 0
-            }
+            journalWorkspace(mapIsPrimary: false)
             .tabItem {
                 Label("Timeline", systemImage: "calendar")
             }
             .tag(3)
 
             ExportView(viewModel: viewModel)
+                .modifier(JournalFlowPresentation())
                 .tabItem {
                     Label("Export", systemImage: "square.and.arrow.up")
                 }
                 .tag(1)
 
             SettingsView(viewModel: viewModel)
+                .modifier(JournalFlowPresentation())
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
@@ -192,6 +223,19 @@ private struct MainTabView: View {
         .isoMeReleaseNotesSheet()
     }
 
+    @ViewBuilder
+    private func journalWorkspace(mapIsPrimary: Bool) -> some View {
+        if #available(iOS 27.1, *) {
+            DuoJournalWorkspace(viewModel: viewModel, mapIsPrimary: mapIsPrimary) {
+                selectedTab = 0
+            }
+        } else if mapIsPrimary {
+            LocationMapView(viewModel: viewModel)
+        } else {
+            OutingsView(viewModel: viewModel) { selectedTab = 0 }
+        }
+    }
+
     private static func initialTabFromLaunchArguments() -> Int {
         #if DEBUG
         let prefix = "--default-tab="
@@ -205,8 +249,107 @@ private struct MainTabView: View {
     }
 }
 
+
+/// System arrangements retain the primary screen while the inner display gains a companion.
+/// They also keep each page clear of the active hinge without device-name or orientation checks.
+@available(iOS 27.1, *)
+private struct DuoJournalWorkspace: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    let viewModel: LocationViewModel
+    let mapIsPrimary: Bool
+    let onShowOnMap: () -> Void
+    @State private var focusedVisit: Visit?
+    @State private var inspectedVisit: Visit?
+    @State private var hasUsedCompanion = false
+    @State private var coverInspector: Visit?
+
+    private var hasCompanion: Bool { horizontalSizeClass == .regular }
+
+    var body: some View {
+        ArrangementView {
+            if mapIsPrimary {
+                LocationMapView(
+                    viewModel: viewModel,
+                    focusedVisit: focusedVisit,
+                    onSelectVisit: hasCompanion || hasUsedCompanion ? { visit in
+                        focusedVisit = visit
+                        inspectedVisit = visit
+                        if !hasCompanion { coverInspector = visit }
+                    } : nil
+                )
+            } else {
+                timeline
+            }
+        } secondary: {
+            if mapIsPrimary {
+                ZStack {
+                    timeline
+                        .opacity(inspectedVisit == nil ? 1 : 0)
+                        .allowsHitTesting(inspectedVisit == nil)
+                        .accessibilityHidden(inspectedVisit != nil)
+                    if let inspectedVisit {
+                        NavigationStack {
+                            VisitDetailView(visit: inspectedVisit, viewModel: viewModel, showsMap: false)
+                                .toolbar {
+                                    ToolbarItem(placement: .topBarLeading) {
+                                        Button("Timeline", systemImage: "chevron.left") {
+                                            self.inspectedVisit = nil
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                }
+                .overlay(alignment: .leading) { Rectangle().fill(TE.border).frame(width: 1).allowsHitTesting(false) }
+            } else {
+                LocationMapView(viewModel: viewModel, focusedVisit: focusedVisit)
+            }
+        }
+        .arrangementViewStyle(.split.axes(hasCompanion ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
+        .onChange(of: hasCompanion, initial: true) { _, expanded in
+            // Keep a single presentation owner while crossing to the cover display.
+            if expanded {
+                hasUsedCompanion = true
+                coverInspector = nil
+            } else {
+                coverInspector = inspectedVisit
+            }
+        }
+        .onChange(of: inspectedVisit?.id) { _, _ in
+            if !hasCompanion { coverInspector = inspectedVisit }
+        }
+        .sheet(item: $coverInspector) { visit in
+            NavigationStack {
+                VisitDetailView(visit: visit, viewModel: viewModel)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") {
+                                inspectedVisit = nil
+                                coverInspector = nil
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    private var timeline: some View {
+        OutingsView(
+            viewModel: viewModel,
+            usesCompanionMap: hasCompanion,
+            onVisitOpened: { visit in focusedVisit = visit },
+            onShowOnMap: {
+                if !hasCompanion { onShowOnMap() }
+            }
+        )
+    }
+
+
+}
+
 private struct OnboardingView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let viewModel: LocationViewModel
     let onComplete: (Bool) -> Void
     private let analytics = OnboardingAnalyticsClient.shared
@@ -246,11 +389,6 @@ private struct OnboardingView: View {
             OnboardingBackdrop()
 
             VStack(spacing: 0) {
-                pageIndicators
-                    .padding(.top, 58)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 14)
-
                 TabView(selection: $selectedPage) {
                     welcomePage
                         .tag(0)
@@ -270,12 +408,21 @@ private struct OnboardingView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(reduceMotion ? nil : .spring(response: 0.42, dampingFraction: 0.84), value: selectedPage)
 
-                controls
-                    .padding(.horizontal, 24)
-                    .padding(.top, 10)
-                    .padding(.bottom, 42)
+                VStack(spacing: 16) {
+                    pageIndicators
+                    controls
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+                .padding(.bottom, 16)
+                .background {
+                    LinearGradient(colors: [InkPaperPalette.paper.opacity(0), InkPaperPalette.paper, InkPaperPalette.paper], startPoint: .top, endPoint: .bottom)
+                        .ignoresSafeArea(edges: .bottom)
+                }
             }
         }
+        .modifier(JournalFlowPresentation())
+        .tint(OnboardingPalette.accent)
         .onAppear {
             trackOnboardingStartedIfNeeded()
             trackOnboardingStepViewed(for: selectedPage)
@@ -305,11 +452,10 @@ private struct OnboardingView: View {
 
     private var welcomePage: some View {
         LocationOnboardingPageView(
-            icon: "",
+            icon: "mappin.and.ellipse",
             eyebrow: "Welcome",
-            title: "WHEREDAY",
-            description: "A calm, private timeline of where your day takes you — always on-device and in your control.",
-            useAppIcon: true
+            title: "Every day\nhas a story.",
+            description: "A calm, private timeline of where your day takes you — always on-device and in your control."
         ) {
             VStack(spacing: 10) {
                 OnboardingChecklistRow(icon: "mappin.and.ellipse", text: "Auto-detect places you visit")
@@ -323,7 +469,7 @@ private struct OnboardingView: View {
         LocationOnboardingPageView(
             icon: "square.grid.2x2.fill",
             eyebrow: "Core Features",
-            title: "KEY FEATURES",
+            title: "The shape\nof your day.",
             description: "Glanceable, battery-aware, and deeply contextual when you need it."
         ) {
             VStack(spacing: 12) {
@@ -351,25 +497,27 @@ private struct OnboardingView: View {
     private var permissionsPage: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 14) {
-                VStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 14) {
                     Text("PERMISSION SETUP")
                         .font(.onboardingMicro)
                         .tracking(2.2)
                         .foregroundStyle(OnboardingPalette.textMuted)
 
-                    Text("BACKGROUND VISIT DETECTION")
-                        .font(.onboardingTitle)
-                        .tracking(1.2)
+                    Text("Your places,\nautomatically.")
+                        .font(.onboardingDisplay)
+                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundStyle(OnboardingPalette.textPrimary)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.leading)
 
                     Text("Background visit detection lets Whereday keep recording when the app is closed.")
                         .font(.onboardingBody)
                         .foregroundStyle(OnboardingPalette.textSecondary)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.leading)
                         .lineSpacing(3)
                 }
-                .padding(.top, 12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 64)
+                .padding(.bottom, 12)
 
                 VStack(spacing: 10) {
                     OnboardingStatusRow(
@@ -393,7 +541,9 @@ private struct OnboardingView: View {
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 14)
+            .frame(maxWidth: 560).frame(maxWidth: .infinity)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     @ViewBuilder
@@ -501,7 +651,7 @@ private struct OnboardingView: View {
         LocationOnboardingPageView(
             icon: "photo.on.rectangle.angled",
             eyebrow: "Optional",
-            title: "CONNECT PHOTOS",
+            title: "Your places.\nYour photographs.",
             description: "Let Whereday automatically show iPhone photos on your map and outings. Photos stay in your Photos library."
         ) {
             VStack(spacing: 12) {
@@ -576,9 +726,9 @@ private struct OnboardingView: View {
 
     private var finishPage: some View {
         LocationOnboardingPageView(
-            icon: locationManager.hasAlwaysPermission ? "checkmark.seal.fill" : "sparkles",
+            icon: "checkmark.seal",
             eyebrow: "Ready",
-            title: "YOU'RE ALL SET",
+            title: "Ready for your\nnext chapter.",
             description: "Start now, or fine-tune tracking behavior later in Settings."
         ) {
             VStack(spacing: 12) {
@@ -626,18 +776,27 @@ private struct OnboardingView: View {
     }
 
     private var pageIndicators: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<pageCount, id: \.self) { index in
-                Capsule()
-                    .fill(index <= selectedPage ? OnboardingPalette.accent : OnboardingPalette.border)
-                    .frame(height: 4)
-                    .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.88), value: selectedPage)
+        HStack {
+            Spacer(minLength: 0)
+            HStack(spacing: 8) {
+                ForEach(0..<pageCount, id: \.self) { index in
+                    Circle()
+                        .fill(index <= selectedPage ? OnboardingPalette.accent : .clear)
+                        .frame(width: 7, height: 7)
+                        .overlay(Circle().stroke(OnboardingPalette.accent.opacity(0.5), lineWidth: 1))
+                }
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("Step \(selectedPage + 1) of \(pageCount)"))
+            Spacer(minLength: 0)
         }
     }
 
     private var controls: some View {
-        HStack(spacing: 12) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 12))
+        return layout {
             if selectedPage > 0 {
                 Button {
                     withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.85)) {
@@ -647,31 +806,31 @@ private struct OnboardingView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "chevron.left")
                             .font(.caption.weight(.semibold))
-                        Text("BACK")
+                        Text("Back")
                     }
                 }
                 .buttonStyle(OnboardingTextButtonStyle())
-            } else {
-                Spacer()
-                    .frame(width: 86)
+                .accessibilityIdentifier("onboarding-back")
             }
-
-            Spacer()
 
             if !isAwaitingPermissionRequest {
                 Button {
                     handlePrimaryAction()
                 } label: {
                     HStack(spacing: 6) {
-                        Text(primaryButtonTitle.uppercased())
+                        Text(primaryButtonTitle)
 
                         Image(systemName: selectedPage == pageCount - 1 ? "checkmark" : "chevron.right")
                             .font(.caption.weight(.semibold))
                     }
+                    .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(OnboardingPrimaryButtonStyle())
+                .accessibilityIdentifier("onboarding-next")
             }
         }
+        .frame(maxWidth: 512)
+        .frame(maxWidth: .infinity)
     }
 
     private var isAwaitingPermissionRequest: Bool {
@@ -793,73 +952,49 @@ private struct OnboardingView: View {
 }
 
 private struct LocationOnboardingPageView<AccentContent: View>: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let icon: String
     let eyebrow: LocalizedStringKey
     let title: LocalizedStringKey
     let description: LocalizedStringKey
-    var useAppIcon: Bool = false
     @ViewBuilder let accentContent: () -> AccentContent
 
     var body: some View {
-        VStack(spacing: 26) {
-            Spacer(minLength: 20)
-
-            if useAppIcon,
-               let icons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
-               let primary = icons["CFBundlePrimaryIcon"] as? [String: Any],
-               let iconFiles = primary["CFBundleIconFiles"] as? [String],
-               let iconName = iconFiles.last,
-               let uiImage = UIImage(named: iconName) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 102, height: 102)
-                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-            } else {
-                ZStack {
-                    Circle()
-                        .fill(OnboardingPalette.cardSoft)
-                        .frame(width: 102, height: 102)
-                        .overlay {
-                            Circle()
-                                .stroke(OnboardingPalette.border, lineWidth: 1)
-                        }
-
-                    Image(systemName: icon)
-                        .font(.largeTitle.weight(.light))
-                        .foregroundStyle(OnboardingPalette.accent)
-                }
-            }
-
-            VStack(spacing: 12) {
-                Text(eyebrow)
-                    .textCase(.uppercase)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 24) {
+                VStack(alignment: .leading, spacing: 14) {
+                    Label { Text(eyebrow).textCase(.uppercase) } icon: {
+                        Image(systemName: icon)
+                    }
                     .font(.onboardingMicro)
-                    .tracking(2.5)
-                    .foregroundStyle(OnboardingPalette.textMuted)
+                    .tracking(2)
+                    .foregroundStyle(OnboardingPalette.accent)
 
-                Text(title)
-                    .font(.onboardingDisplay)
-                    .tracking(1.4)
-                    .foregroundStyle(OnboardingPalette.textPrimary)
-                    .multilineTextAlignment(.center)
+                    Text(title)
+                        .font(.onboardingDisplay)
+                        .tracking(dynamicTypeSize.isAccessibilitySize ? -1 : 0)
+                        .foregroundStyle(OnboardingPalette.textPrimary)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
 
-                Text(description)
-                    .font(.onboardingBody)
-                    .foregroundStyle(OnboardingPalette.textSecondary)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(3)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 10)
+                    Text(description)
+                        .font(.onboardingBody)
+                        .foregroundStyle(OnboardingPalette.textSecondary)
+                        .multilineTextAlignment(.leading)
+                        .lineSpacing(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                accentContent()
+                    .frame(maxWidth: .infinity)
             }
-
-            accentContent()
-                .frame(maxWidth: .infinity)
-
-            Spacer(minLength: 14)
+            .padding(.horizontal, 24)
+            .padding(.top, 64)
+            .padding(.bottom, 32)
+            .frame(maxWidth: 560).frame(maxWidth: .infinity)
         }
-        .padding(.horizontal, 24)
-        .padding(.bottom, 10)
+        .scrollBounceBehavior(.basedOnSize)
     }
 }
 
@@ -870,11 +1005,6 @@ private struct OnboardingFeatureCard: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            RoundedRectangle(cornerRadius: 1.5)
-                .fill(OnboardingPalette.accent)
-                .frame(width: 3, height: 32)
-                .padding(.top, 2)
-
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
                     Image(systemName: icon)
@@ -929,11 +1059,31 @@ private struct OnboardingStatusRow: View {
 }
 
 private struct OnboardingSummaryRow: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let icon: String
     let title: LocalizedStringKey
     let value: String
 
     var body: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            VStack(alignment: .leading, spacing: 6) {
+                Label { Text(title) } icon: {
+                    Image(systemName: icon).foregroundStyle(OnboardingPalette.accent)
+                }
+                .font(.onboardingCaption)
+                .foregroundStyle(OnboardingPalette.textPrimary)
+                Text(value)
+                    .font(.onboardingMicro)
+                    .foregroundStyle(OnboardingPalette.textSecondary)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            summaryLine
+        }
+    }
+
+    private var summaryLine: some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.caption.weight(.semibold))
@@ -1015,43 +1165,9 @@ private struct OnboardingSignalColumn: View {
 
 private struct OnboardingBackdrop: View {
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    OnboardingPalette.backgroundTop,
-                    OnboardingPalette.backgroundBottom
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-
-            Circle()
-                .fill(OnboardingPalette.accent.opacity(0.16))
-                .frame(width: 340, height: 340)
-                .blur(radius: 42)
-                .offset(x: -130, y: -300)
-
-            Circle()
-                .fill(OnboardingPalette.accent.opacity(0.12))
-                .frame(width: 300, height: 300)
-                .blur(radius: 38)
-                .offset(x: 140, y: 330)
-
-            Rectangle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.white.opacity(0.3),
-                            Color.clear
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
-        }
+        InkJournalBackground()
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
     }
 }
 
@@ -1062,12 +1178,11 @@ private struct OnboardingCardModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(padding)
-            .background(fill, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .background(fill, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
             .overlay {
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(OnboardingPalette.border, lineWidth: 1)
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(OnboardingPalette.border, lineWidth: 0.75)
             }
-            .shadow(color: Color.black.opacity(0.03), radius: 9, x: 0, y: 5)
     }
 }
 
@@ -1078,87 +1193,54 @@ private extension View {
 }
 
 private struct OnboardingPrimaryButtonStyle: ButtonStyle {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.onboardingButton)
-            .textCase(.uppercase)
-            .tracking(1.4)
-            .foregroundStyle(.white)
+            .foregroundStyle(InkPaperPalette.paper)
             .padding(.horizontal, 20)
-            .padding(.vertical, 12)
-            .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(OnboardingPalette.accent)
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(OnboardingPalette.accent.opacity(0.82), lineWidth: 1)
-            }
-            .shadow(color: OnboardingPalette.accent.opacity(0.24), radius: 10, x: 0, y: 6)
-            .scaleEffect(configuration.isPressed ? 0.98 : 1)
-            .opacity(configuration.isPressed ? 0.92 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .padding(.vertical, 17)
+            .frame(minHeight: 52)
+            .background(OnboardingPalette.accent, in: RoundedRectangle(cornerRadius: 12))
+            .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 
 private struct OnboardingSecondaryButtonStyle: ButtonStyle {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.onboardingButton)
-            .textCase(.uppercase)
-            .tracking(1.2)
-            .foregroundStyle(OnboardingPalette.textPrimary)
+            .foregroundStyle(OnboardingPalette.accent)
             .padding(.horizontal, 18)
-            .padding(.vertical, 12)
-            .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(OnboardingPalette.card)
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(OnboardingPalette.border, lineWidth: 1)
-            }
-            .scaleEffect(configuration.isPressed ? 0.98 : 1)
-            .opacity(configuration.isPressed ? 0.92 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .padding(.vertical, 17)
+            .frame(minHeight: 52)
+            .background(OnboardingPalette.card, in: RoundedRectangle(cornerRadius: 12))
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(OnboardingPalette.border, lineWidth: 1))
+            .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 
 private struct OnboardingTextButtonStyle: ButtonStyle {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.onboardingMicro)
-            .tracking(1.3)
-            .foregroundStyle(OnboardingPalette.textSecondary)
+            .font(.subheadline.weight(.medium))
+            .foregroundStyle(OnboardingPalette.accent)
             .padding(.horizontal, 8)
-            .padding(.vertical, 6)
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(OnboardingPalette.card.opacity(configuration.isPressed ? 0.8 : 0.001))
-            )
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .frame(minWidth: 44, minHeight: 52)
+            .contentShape(Rectangle())
+            .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 
 private enum OnboardingPalette {
-    static let backgroundTop = TE.surface
-    static let backgroundBottom = TE.surface
+    static let card = InkPaperPalette.paper.opacity(0.94)
+    static let cardSoft = InkPaperPalette.paper.opacity(0.94)
+    static let border = InkPaperPalette.border
 
-    static let card = TE.card
-    static let cardSoft = TE.surface
-    static let border = TE.border
+    static let accent = InkPaperPalette.ink
 
-    static let accent = TE.accent
-
-    static let textPrimary = TE.textPrimary
-    static let textSecondary = TE.textMuted
-    static let textMuted = TE.textMuted
+    static let textPrimary = Color.primary
+    static let textSecondary = InkPaperPalette.pencil
+    static let textMuted = InkPaperPalette.pencil
 
     static let success = TE.success
     static let warning = TE.warning
@@ -1166,13 +1248,12 @@ private enum OnboardingPalette {
 }
 
 private extension Font {
-    static let onboardingDisplay = Font.system(.largeTitle, design: .monospaced, weight: .semibold)
-    static let onboardingTitle = Font.system(.title2, design: .monospaced, weight: .semibold)
-    static let onboardingHeadline = Font.system(.headline, design: .monospaced, weight: .semibold)
-    static let onboardingBody = Font.system(.body, design: .rounded, weight: .regular)
-    static let onboardingCaption = Font.system(.callout, design: .rounded, weight: .regular)
-    static let onboardingMicro = Font.system(.footnote, design: .monospaced, weight: .semibold)
-    static let onboardingButton = Font.system(.callout, design: .monospaced, weight: .semibold)
+    static let onboardingDisplay = Font.system(.largeTitle, design: .serif, weight: .medium)
+    static let onboardingHeadline = Font.system(.headline, weight: .medium)
+    static let onboardingBody = Font.system(.subheadline)
+    static let onboardingCaption = Font.system(.subheadline)
+    static let onboardingMicro = Font.system(.caption, weight: .medium)
+    static let onboardingButton = Font.system(.headline)
 }
 
 private extension CLAuthorizationStatus {

@@ -188,6 +188,7 @@ struct CheckInIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog & ReturnsValue<VisitEntity> {
+        await StoreManager.shared.checkEntitlement()
         var resolvedName = name
         if savedPlace == nil && (name?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
             resolvedName = try await $name.requestValue("What is the place name?")
@@ -236,6 +237,7 @@ extension VisitMutationError: CustomLocalizedStringResourceConvertible {
     var localizedStringResource: LocalizedStringResource {
         switch self {
         case .invalidInput: return "Enter a place name, location, and valid times."
+        case .trackingAccessRequired: return "Choose a Whereday plan before adding new visits."
         case .overlap(let name): return "These times overlap your visit to \(name). Review the times or save both visits."
         case .persistence: return "The visit could not be saved. Please try again."
         }

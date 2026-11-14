@@ -1,0 +1,134 @@
+{
+  "provenance": {
+    "IsoMe/Models/CountryStay.swift": "e37d7d778d2e35212e5668a8680768190800335b6943108e36929f06d3e772b1",
+    "android/scripts/fixtures/CountryCsvFixtures.swift": "d53584139d3bf9d1ec5f1bf89573ecc3f5f15549690e1a359739af98ec7ef3bb",
+    "android/scripts/fixtures/country-csv-inputs.json": "8bb6d0e3d32a49b4b627638cc399e9d5fd597ad0d992bbd7d3982e3f26a87aa7"
+  },
+  "cases": [
+    {
+      "days": [],
+      "expected": "country_code,local_date,source\r\n",
+      "name": "empty"
+    },
+    {
+      "days": [
+        {
+          "country": "US",
+          "day": "2026-01-01",
+          "manual": false,
+          "recorded": true
+        },
+        {
+          "country": "US",
+          "day": "2026-01-02",
+          "manual": true,
+          "recorded": false
+        },
+        {
+          "country": "US",
+          "day": "2026-01-03",
+          "manual": true,
+          "recorded": true
+        }
+      ],
+      "expected": "country_code,local_date,source\r\nUS,2026-01-01,recorded\r\nUS,2026-01-02,manual\r\nUS,2026-01-03,recorded+manual\r\n",
+      "name": "provenance"
+    },
+    {
+      "days": [
+        {
+          "country": "US",
+          "day": "2026-12-31",
+          "manual": false,
+          "recorded": true
+        },
+        {
+          "country": "CA",
+          "day": "2026-03-01",
+          "manual": true,
+          "recorded": false
+        },
+        {
+          "country": "US",
+          "day": "2026-01-01",
+          "manual": true,
+          "recorded": false
+        },
+        {
+          "country": "CA",
+          "day": "2026-02-28",
+          "manual": true,
+          "recorded": true
+        }
+      ],
+      "expected": "country_code,local_date,source\r\nCA,2026-02-28,recorded+manual\r\nCA,2026-03-01,manual\r\nUS,2026-01-01,manual\r\nUS,2026-12-31,recorded\r\n",
+      "name": "country-date-order"
+    },
+    {
+      "days": [
+        {
+          "country": "JP",
+          "day": "2026-10-27",
+          "manual": false,
+          "recorded": true
+        },
+        {
+          "country": "US",
+          "day": "2026-10-27",
+          "manual": false,
+          "recorded": true
+        }
+      ],
+      "expected": "country_code,local_date,source\r\nJP,2026-10-27,recorded\r\nUS,2026-10-27,recorded\r\n",
+      "name": "travel-day"
+    },
+    {
+      "days": [
+        {
+          "country": "CA",
+          "day": "2020-03-01",
+          "manual": true,
+          "recorded": false
+        },
+        {
+          "country": "CA",
+          "day": "2020-02-29",
+          "manual": true,
+          "recorded": false
+        },
+        {
+          "country": "CA",
+          "day": "2020-02-28",
+          "manual": true,
+          "recorded": false
+        }
+      ],
+      "expected": "country_code,local_date,source\r\nCA,2020-02-28,manual\r\nCA,2020-02-29,manual\r\nCA,2020-03-01,manual\r\n",
+      "name": "leap-day"
+    },
+    {
+      "days": [
+        {
+          "country": "NZ",
+          "day": "2029-01-01",
+          "manual": true,
+          "recorded": false
+        }
+      ],
+      "expected": "country_code,local_date,source\r\nNZ,2029-01-01,manual\r\n",
+      "name": "manual-future"
+    },
+    {
+      "days": [
+        {
+          "country": "GB",
+          "day": "1969-12-31",
+          "manual": false,
+          "recorded": true
+        }
+      ],
+      "expected": "country_code,local_date,source\r\nGB,1969-12-31,recorded\r\n",
+      "name": "older-year"
+    }
+  ]
+}

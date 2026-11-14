@@ -1,0 +1,17 @@
+{
+  "app": "isome",
+  "kind": "upgrade",
+  "id": "6807491599",
+  "us_price": "19.99",
+  "non_us_overrides": 153,
+  "territories_verified": 175,
+  "mismatches": [],
+  "actual_us": {
+    "price_point_id": "eyJzIjoiNjgwNzQ5MTU5OSIsInQiOiJVU0EiLCJwIjoiMTAxNzcifQ",
+    "price": "19.99",
+    "proceeds": "16.99",
+    "currency": "USD",
+    "manual": true
+  },
+  "method": "Raw API includes matched by full product/territory/point ID; CLI resolved output had incorrect amounts in some storefronts."
+}

@@ -1,0 +1,7 @@
+<resources>
+    <string name="visits_notification_title">Visits only</string>
+    <string name="visits_notification_preparing">Preparing visit detection…</string>
+    <string name="visits_notification_active">Detecting visits with balanced-power location</string>
+    <string name="visits_notification_route">Detecting visits using route recording</string>
+    <string name="visits_notification_stop">Stop Visits only</string>
+</resources>

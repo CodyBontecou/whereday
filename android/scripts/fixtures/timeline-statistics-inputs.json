@@ -1,0 +1,1144 @@
+[
+  {
+    "id": "empty",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [],
+    "sessions": []
+  },
+  {
+    "id": "unassigned-inference-off",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": false,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.1,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "disjoint-recordings",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793501200000,
+        "lat": 40,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000004",
+        "time": 1793501300000,
+        "lat": 40.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "abcdefab-cdef-4abc-8def-abcdefabcdef",
+        "start": 1793491300000,
+        "end": 1793491400000
+      },
+      {
+        "id": "00000000-0000-0000-0000-00000000000B",
+        "start": 1793501200000,
+        "end": 1793501300000
+      }
+    ]
+  },
+  {
+    "id": "overlap-timestamp-membership",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793491500000,
+        "lat": 18.02,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491250000,
+        "end": 1793491500000
+      },
+      {
+        "id": "00000000-0000-0000-0000-00000000000B",
+        "start": 1793491400000,
+        "end": 1793491500000
+      }
+    ]
+  },
+  {
+    "id": "stored-cross-midnight",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491100000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793577700000,
+        "lat": 18.02,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491000000,
+        "end": 1793577800000
+      }
+    ]
+  },
+  {
+    "id": "inferred-cross-midnight",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 150,
+    "minimumPoints": 2,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "fedcbafe-dcba-4fed-8cba-fedcbafedcba",
+        "time": 1793491100000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "inference-gap-equal",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793493100000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "inference-gap-over",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793493101000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "stored-consumption-does-not-split-remaining",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793491500000,
+        "lat": 18.02,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491400000,
+        "end": 1793491400000
+      }
+    ]
+  },
+  {
+    "id": "all-outliers",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": true
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": true
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491250000,
+        "end": 1793491450000
+      }
+    ]
+  },
+  {
+    "id": "mixed-outliers",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491350000,
+        "lat": 55,
+        "lon": -66.0,
+        "outlier": true
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491250000,
+        "end": 1793491450000
+      }
+    ]
+  },
+  {
+    "id": "active-split-bypasses-minimum",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 3600,
+    "minimumPoints": 10,
+    "activeStart": 1793491350000,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "active-chunk-crosses-start",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 10,
+    "activeStart": 1793491250000,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793491500000,
+        "lat": 18.02,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "open-stored-effective-last-point",
+    "zone": "UTC",
+    "selected": 1793620800000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491250000,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "open-stored-empty-effective-now",
+    "zone": "UTC",
+    "selected": 1793620800000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491250000,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "inclusive-next-midnight",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793577600000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793577660000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793577600000,
+        "end": 1793577660000
+      }
+    ]
+  },
+  {
+    "id": "all-outlier-inferred",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": true
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": true
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "global-sequence-before-day",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793486200000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793491400000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793481200000,
+        "end": 1793482200000
+      },
+      {
+        "id": "00000000-0000-0000-0000-00000000000B",
+        "start": 1793491250000,
+        "end": 1793491450000
+      }
+    ]
+  },
+  {
+    "id": "open-session-does-not-consume-future",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491500000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491700000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491250000,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "empty-and-reversed-records",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491300000,
+        "end": 1793491300000
+      },
+      {
+        "id": "00000000-0000-0000-0000-00000000000B",
+        "start": 1793491700000,
+        "end": 1793491600000
+      }
+    ]
+  },
+  {
+    "id": "stored-cross-midnight-America/New_York",
+    "zone": "America/New_York",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491100000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793577700000,
+        "lat": 18.02,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491000000,
+        "end": 1793577800000
+      }
+    ]
+  },
+  {
+    "id": "inferred-cross-midnight-America/New_York",
+    "zone": "America/New_York",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 150,
+    "minimumPoints": 2,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491100000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "inclusive-next-midnight-America/New_York",
+    "zone": "America/New_York",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793577600000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793577660000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793577600000,
+        "end": 1793577660000
+      }
+    ]
+  },
+  {
+    "id": "stored-cross-midnight-Pacific/Kiritimati",
+    "zone": "Pacific/Kiritimati",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491100000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000003",
+        "time": 1793577700000,
+        "lat": 18.02,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793491000000,
+        "end": 1793577800000
+      }
+    ]
+  },
+  {
+    "id": "inferred-cross-midnight-Pacific/Kiritimati",
+    "zone": "Pacific/Kiritimati",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 150,
+    "minimumPoints": 2,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491100000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": []
+  },
+  {
+    "id": "inclusive-next-midnight-Pacific/Kiritimati",
+    "zone": "Pacific/Kiritimati",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793577600000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793577660000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-00000000000A",
+        "start": 1793577600000,
+        "end": 1793577660000
+      }
+    ]
+  },
+  {
+    "id": "closed-visit-boundaries",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [],
+    "sessions": [],
+    "visits": [
+      {
+        "id": "arrive-next-midnight",
+        "start": 1793577600000,
+        "end": 1793577660000
+      },
+      {
+        "id": "depart-at-start",
+        "start": 1793491100000,
+        "end": 1793491200000
+      },
+      {
+        "id": "outside",
+        "start": 1793577600001,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "open-visit-does-not-extend-into-future",
+    "zone": "UTC",
+    "selected": 1793793600000,
+    "now": 1793664000000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [],
+    "sessions": [],
+    "visits": [
+      {
+        "id": "open",
+        "start": 1793491200000,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "closed-delayed-fixes",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491800000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491320000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491380000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "start": 1793491200000,
+        "end": 1793491800000
+      }
+    ],
+    "visits": [
+      {
+        "id": "visit-at-end",
+        "start": 1793491800000,
+        "end": 1793491801000
+      },
+      {
+        "id": "visit-after-end",
+        "start": 1793491800001,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "open-old-last-fix",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491800000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491320000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491380000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "start": 1793491200000,
+        "end": null
+      }
+    ],
+    "visits": [
+      {
+        "id": "visit-at-end",
+        "start": 1793491380000,
+        "end": 1793491381000
+      },
+      {
+        "id": "visit-after-end",
+        "start": 1793491380001,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "empty-open-captured-now",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491800000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "start": 1793491200000,
+        "end": null
+      }
+    ],
+    "visits": [
+      {
+        "id": "visit-at-end",
+        "start": 1793491800000,
+        "end": 1793491801000
+      },
+      {
+        "id": "visit-after-end",
+        "start": 1793491800001,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "zero-duration-moving-fixes",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491800000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491300000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "time": 1793491300000,
+        "lat": 18.01,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "start": 1793491300000,
+        "end": 1793491300000
+      }
+    ],
+    "visits": [
+      {
+        "id": "visit-at-end",
+        "start": 1793491300000,
+        "end": 1793491301000
+      },
+      {
+        "id": "visit-after-end",
+        "start": 1793491300001,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "future-open-at-unconsumed-fix",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491500000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491700000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "start": 1793491700000,
+        "end": null
+      }
+    ]
+  },
+  {
+    "id": "reversed-record-at-unconsumed-fix",
+    "zone": "UTC",
+    "selected": 1793534400000,
+    "now": 1793491500000,
+    "enabled": true,
+    "gapSeconds": 1800,
+    "minimumSeconds": 0,
+    "minimumPoints": 1,
+    "activeStart": null,
+    "points": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "time": 1793491700000,
+        "lat": 18.0,
+        "lon": -66.0,
+        "outlier": false
+      }
+    ],
+    "sessions": [
+      {
+        "id": "00000000-0000-0000-0000-000000000010",
+        "start": 1793491700000,
+        "end": 1793491600000
+      }
+    ]
+  }
+]

@@ -51,8 +51,15 @@ struct SavedPlaceEditorView: View {
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background {
+                FieldNotesBackground()
+                    .overlay(TE.surface.opacity(0.45))
+                    .allowsHitTesting(false)
+            }
             .navigationTitle(initialDraft.existingPlaceID == nil ? "Add Location" : "Edit Location")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", action: cancel)
@@ -108,6 +115,7 @@ struct SavedPlaceEditorView: View {
         } header: {
             sectionHeader("LOCATION DETAILS")
         }
+        .listRowBackground(TE.card.opacity(0.97))
     }
 
     private var locationSection: some View {
@@ -138,6 +146,7 @@ struct SavedPlaceEditorView: View {
         } footer: {
             Text("Search for an address or place a pin anywhere, including places missing from Maps.")
         }
+        .listRowBackground(TE.card.opacity(0.97))
     }
 
     private var coordinatesSection: some View {
@@ -149,6 +158,7 @@ struct SavedPlaceEditorView: View {
         } footer: {
             Text("You can also enter coordinates directly instead of using the map.")
         }
+        .listRowBackground(TE.card.opacity(0.97))
     }
 
     private var radiusSection: some View {
@@ -170,6 +180,7 @@ struct SavedPlaceEditorView: View {
         } footer: {
             Text("Future automatic visits inside this radius use the saved name. Choose 25–10,000 meters. Editing a saved location does not change past visits.")
         }
+        .listRowBackground(TE.card.opacity(0.97))
     }
 
     private func coordinateField(_ title: LocalizedStringKey, placeholder: LocalizedStringKey, text: Binding<String>, field: Field) -> some View {

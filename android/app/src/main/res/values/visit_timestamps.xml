@@ -1,0 +1,20 @@
+<resources>
+    <string name="visit_timestamp_date_action">%1$s date: %2$s</string>
+    <string name="visit_timestamp_time_action">%1$s time: %2$s</string>
+    <string name="visit_timestamp_edit_date">%1$s · date</string>
+    <string name="visit_timestamp_edit_time">%1$s · time</string>
+    <string name="visit_timestamp_date">Date</string>
+    <string name="visit_timestamp_zone">Time zone: %1$s</string>
+    <string name="visit_timestamp_kept_time">Time kept: %1$s</string>
+    <string name="visit_timestamp_kept_date">Date kept: %1$s</string>
+    <string name="visit_timestamp_invalid">Choose a valid date and time.</string>
+    <string name="visit_timestamp_gap">This local date and time did not occur in %1$s. Choose another date or time.</string>
+    <string name="visit_timestamp_ambiguous">This local time occurs twice. Choose which occurrence to use.</string>
+    <string name="visit_timestamp_first">First occurrence · %1$s</string>
+    <string name="visit_timestamp_second">Second occurrence · %1$s</string>
+    <string name="visit_timestamp_enter_time">Enter time</string>
+    <string name="visit_timestamp_use_clock">Use clock</string>
+    <string name="visit_timestamp_hour_24">Hour (0–23)</string>
+    <string name="visit_timestamp_hour_12">Hour (1–12)</string>
+    <string name="visit_timestamp_minute">Minute (0–59)</string>
+</resources>

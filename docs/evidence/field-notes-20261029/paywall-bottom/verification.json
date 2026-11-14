@@ -1,0 +1,22 @@
+{
+  "branch": "codex/reconciled-local-main-20261028",
+  "source_checkout": "/Users/codybontecou/dev/whereday",
+  "destination_checkout": "/Users/codybontecou/dev/iso.me",
+  "integration": "Merged onboarding/paywall, localized copy, catalog and necessary access/analytics/Watch support into existing redesign. Preserved existing design strings and other screen changes.",
+  "paywall_footer": "safeAreaInset bottom; purchase, Family Upgrade, and subscription management actions remain outside scrolling content. Solid paper backing.",
+  "verification": {
+    "build": "passed",
+    "xctest_without_purchase_integration": 348,
+    "swift_testing": 11,
+    "storekit_integration": 1,
+    "localization_python": 4,
+    "test_runner_guardrails": 12,
+    "analytics_worker": 14,
+    "visual": "Purchase CTA stays at bottom before/after scrolling; legal and restore controls reachable."
+  },
+  "result_bundles": [
+    "/private/tmp/whereday-integrated-redesign-tests2.xcresult",
+    "/private/tmp/whereday-integrated-storekit-tests.xcresult"
+  ],
+  "notes": "All changes local and uncommitted alongside existing redesign. Live pricing unchanged; catalog targets and rollout hold carried from pi work."
+}

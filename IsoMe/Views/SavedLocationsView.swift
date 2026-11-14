@@ -43,7 +43,9 @@ struct SavedLocationsView: View {
                                     .foregroundStyle(TE.accent)
                                     .accessibilityHidden(true)
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(place.name).foregroundStyle(.primary)
+                                    Text(place.name)
+                                        .font(TE.editorial(.headline))
+                                        .foregroundStyle(TE.textPrimary)
                                     if let address = place.address, !address.isEmpty {
                                         Text(address).font(.subheadline).foregroundStyle(.secondary)
                                     }
@@ -68,6 +70,7 @@ struct SavedLocationsView: View {
             } footer: {
                 Text("Saved locations name nearby future visits. Editing or deleting one keeps your past visits unchanged.")
             }
+            .listRowBackground(TE.card.opacity(0.94))
 
             Section {
                 Button {
@@ -83,10 +86,14 @@ struct SavedLocationsView: View {
             } footer: {
                 Text("Use name, latitude, longitude, address, and radius_meters columns. Address and radius are optional; the default radius is 150 meters. You can review the locations before importing.")
             }
+            .listRowBackground(TE.card.opacity(0.94))
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Saved Locations")
+        .scrollContentBackground(.hidden)
+        .background(FieldNotesBackground())
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .searchable(text: $searchText, prompt: "Search saved locations")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

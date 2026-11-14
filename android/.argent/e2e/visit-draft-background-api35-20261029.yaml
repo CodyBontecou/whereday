@@ -1,0 +1,32 @@
+steps:
+- run: map-qa-onboarding.yaml
+- tap:
+    text: Save current place
+- await:
+    visible:
+      id: visit-editor-fields
+- await:
+    idle: true
+- tap:
+    text: Name
+- tool: keyboard
+  args:
+    text: Unsaved process QA 20261029
+- tool: button
+  args:
+    button: back
+- tap:
+    text: Keep editing
+- await:
+    visible:
+      id: visit-editor-fields
+- await:
+    idle: true
+- await:
+    visible:
+      text: Unsaved process QA 20261029
+- await:
+    idle: true
+- tool: button
+  args:
+    button: home

@@ -1,0 +1,47 @@
+steps:
+- run: map-qa-onboarding.yaml
+- tap:
+    text: Map layers
+- await:
+    visible:
+      id: map-layer-active-recording
+- await:
+    idle: true
+- await:
+    visible:
+      id: map-layer-active-recording
+- await:
+    idle: true
+- await:
+    visible:
+      id: map-layer-outliers
+- await:
+    idle: true
+- tap:
+    text: Current recording path
+- tap:
+    text: Done map layers
+- await:
+    visible:
+      text: Start recording to show its path.
+- await:
+    idle: true
+- await:
+    visible:
+      id: fit-active-recording
+- await:
+    idle: true
+- tap:
+    text: Map layers
+- await:
+    visible:
+      id: map-layer-active-recording
+- await:
+    idle: true
+- tap:
+    id: map-layer-active-recording
+- tap:
+    text: Done map layers
+- await:
+    hidden:
+      id: fit-active-recording

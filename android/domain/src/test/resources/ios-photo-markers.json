@@ -1,0 +1,288 @@
+{
+  "provenance": {
+    "algorithm": "b706398d6a756fa3b397bcc3a685e6159471c91c5eafd430bb751f9194031dd6",
+    "harness": "6128ad29dacc903d86a904a533b78e4d20545bb02029592f0a9cfa7211b26a0a",
+    "generator": "3a9eed300ff710b71ac4d9da4e30812ad4d58a0d4437b7ce682ef57ff0cc94a6"
+  },
+  "hits": [
+    {
+      "centers": [],
+      "index": null,
+      "name": "empty",
+      "point": [
+        0,
+        0
+      ]
+    },
+    {
+      "centers": [
+        null
+      ],
+      "index": null,
+      "name": "unprojectable",
+      "point": [
+        0,
+        0
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ]
+      ],
+      "index": 0,
+      "name": "center",
+      "point": [
+        100,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ]
+      ],
+      "index": 0,
+      "name": "inclusive-edge",
+      "point": [
+        122,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ]
+      ],
+      "index": null,
+      "name": "outside-edge",
+      "point": [
+        122.001,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ]
+      ],
+      "index": 0,
+      "name": "inclusive-corner",
+      "point": [
+        122,
+        122
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ]
+      ],
+      "index": null,
+      "name": "outside-vertical",
+      "point": [
+        100,
+        122.001
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ],
+        [
+          120,
+          100
+        ]
+      ],
+      "index": 1,
+      "name": "nearest-overlap",
+      "point": [
+        119,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          120,
+          100
+        ],
+        [
+          100,
+          100
+        ]
+      ],
+      "index": 0,
+      "name": "nearest-reversed",
+      "point": [
+        119,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ],
+        [
+          120,
+          100
+        ]
+      ],
+      "index": 0,
+      "name": "stable-tie",
+      "point": [
+        110,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ],
+        [
+          100,
+          100
+        ]
+      ],
+      "index": 0,
+      "name": "coincident",
+      "point": [
+        100,
+        100
+      ]
+    },
+    {
+      "centers": [
+        null,
+        [
+          100,
+          100
+        ]
+      ],
+      "index": 1,
+      "name": "missing-first",
+      "point": [
+        100,
+        100
+      ]
+    },
+    {
+      "centers": [
+        [
+          10100,
+          -9900
+        ],
+        [
+          10120,
+          -9900
+        ]
+      ],
+      "index": 1,
+      "name": "translated",
+      "point": [
+        10119,
+        -9900
+      ]
+    },
+    {
+      "centers": [
+        [
+          100,
+          100
+        ],
+        [
+          120,
+          100
+        ]
+      ],
+      "index": null,
+      "name": "outside-all",
+      "point": [
+        200,
+        200
+      ]
+    }
+  ],
+  "locals": [
+    {
+      "center": [
+        100,
+        200
+      ],
+      "local": [
+        22,
+        22
+      ],
+      "point": [
+        100,
+        200
+      ]
+    },
+    {
+      "center": [
+        -10,
+        10
+      ],
+      "local": [
+        0,
+        0
+      ],
+      "point": [
+        -32,
+        -12
+      ]
+    },
+    {
+      "center": [
+        100,
+        200
+      ],
+      "local": [
+        44,
+        44
+      ],
+      "point": [
+        122,
+        222
+      ]
+    }
+  ],
+  "styles": [
+    {
+      "dots": false,
+      "images": false,
+      "style": "pins"
+    },
+    {
+      "dots": true,
+      "images": false,
+      "style": "dots"
+    },
+    {
+      "dots": false,
+      "images": true,
+      "style": "images"
+    },
+    {
+      "dots": true,
+      "images": true,
+      "style": "dots"
+    }
+  ]
+}

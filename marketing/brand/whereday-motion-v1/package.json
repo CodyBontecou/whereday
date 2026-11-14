@@ -1,0 +1,13 @@
+{
+  "name": "whereday-motion-assets",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "python3 -m http.server 8863 --bind 127.0.0.1",
+    "build": "node source/render.mjs && node source/derivatives.mjs && python3 source/package.py"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.0",
+    "sharp": "^0.35.0"
+  }
+}

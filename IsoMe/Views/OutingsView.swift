@@ -6,6 +6,15 @@ import Combine
 struct OutingsView: View {
     @Bindable var viewModel: LocationViewModel
     let onShowOnMap: () -> Void
+    let usesCompanionMap: Bool
+    let onVisitOpened: ((Visit) -> Void)?
+
+    init(viewModel: LocationViewModel, usesCompanionMap: Bool = false, onVisitOpened: ((Visit) -> Void)? = nil, onShowOnMap: @escaping () -> Void) {
+        self.viewModel = viewModel
+        self.usesCompanionMap = usesCompanionMap
+        self.onVisitOpened = onVisitOpened
+        self.onShowOnMap = onShowOnMap
+    }
 
     @State private var calendarDraft: CalendarEventDraft?
     @State private var selectedDate = Date()
@@ -28,14 +37,6 @@ struct OutingsView: View {
         return start...end
     }
 
-    private var selectedDayTitle: String {
-        if Calendar.current.isDateInToday(selectedDate) {
-            return String(localized: "Today")
-        }
-
-        return selectedDate.formatted(date: .complete, time: .omitted)
-    }
-
     private var selectedDaySubtitle: String {
         selectedDayRange.lowerBound.formatted(.dateTime.weekday(.wide).month(.abbreviated).day().year())
     }
@@ -51,7 +52,7 @@ struct OutingsView: View {
         let dayOffset = calendar.dateComponents([.day], from: selectedDay, to: today).day ?? 0
         guard dayOffset != 0 else { return String(localized: "TODAY") }
 
-        var formatter = RelativeDateTimeFormatter()
+        let formatter = RelativeDateTimeFormatter()
         formatter.dateTimeStyle = .numeric
         formatter.unitsStyle = .full
         return formatter.localizedString(from: DateComponents(day: -dayOffset))
@@ -120,7 +121,7 @@ struct OutingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                TE.surface.ignoresSafeArea()
+                FieldNotesBackground()
 
                 if !hasLoadedSessions && hasAnyTimelineData {
                     ProgressView("Building timeline…")
@@ -130,28 +131,31 @@ struct OutingsView: View {
                     ScrollView {
                         VStack(spacing: 0) {
                             overviewSection
-                            countryDaysSection
-                            dayControlsSection
+
+                            DisclosureGroup {
+                                dayControlsSection
+                            } label: {
+                                Text("Day & recording options")
+                                    .font(.subheadline)
+                                    .foregroundStyle(TE.accent)
+                                    .frame(minHeight: 44)
+                            }
+                            .padding(.horizontal, 24)
 
                             if timelineEvents.isEmpty {
                                 emptyTimelineSection
                             } else {
                                 timelineSection
                             }
+
+                            countryDaysSection
                         }
                         .padding(.bottom, 28)
                     }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("TIMELINE")
-                        .font(TE.mono(.caption, weight: .bold))
-                        .tracking(3)
-                        .foregroundStyle(TE.textMuted)
-                }
-            }
+            .toolbarBackground(.hidden, for: .navigationBar)
             .sheet(item: $calendarDraft) { draft in
                 CalendarEventEditor(draft: draft)
             }
@@ -167,7 +171,7 @@ struct OutingsView: View {
     }
 
     private var countryDaysSection: some View {
-        TECard {
+        TECard(paperOpacity: 0.94) {
             NavigationLink {
                 CountryDaysView()
             } label: {
@@ -200,50 +204,35 @@ struct OutingsView: View {
 
     private var overviewSection: some View {
         VStack(spacing: 0) {
-            TESectionHeader(title: "DAY")
+            Text(selectedDaySubtitle)
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(TE.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
 
-            TECard {
-                VStack(spacing: 0) {
-                    TERow {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(selectedDayTitle.uppercased())
-                                .font(TE.mono(.headline, weight: .bold))
-                                .tracking(1.6)
-                                .foregroundStyle(TE.textPrimary)
+            HStack(spacing: 12) {
+                OutingOverviewMetric(
+                    label: "MOVES",
+                    value: "\(sessions.count)",
+                    systemImage: "figure.walk.motion"
+                )
 
-                            Text(selectedDaySubtitle)
-                                .font(TE.mono(.caption2, weight: .medium))
-                                .foregroundStyle(TE.textMuted)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                OutingOverviewMetric(
+                    label: "VISITS",
+                    value: "\(dayVisits.count)",
+                    systemImage: "mappin.and.ellipse"
+                )
 
-                    TERow(showDivider: false) {
-                        HStack(spacing: 12) {
-                            OutingOverviewMetric(
-                                label: "MOVES",
-                                value: "\(sessions.count)",
-                                systemImage: "figure.walk.motion"
-                            )
-
-                            OutingOverviewMetric(
-                                label: "VISITS",
-                                value: "\(dayVisits.count)",
-                                systemImage: "mappin.and.ellipse"
-                            )
-
-                            OutingOverviewMetric(
-                                label: "DISTANCE",
-                                value: DistanceFormatter.format(meters: totalDistance, usesMetric: usesMetricDistanceUnits),
-                                systemImage: "point.topleft.down.to.point.bottomright.curvepath"
-                            )
-                        }
-                    }
-                }
+                OutingOverviewMetric(
+                    label: "DISTANCE",
+                    value: DistanceFormatter.format(meters: totalDistance, usesMetric: usesMetricDistanceUnits),
+                    systemImage: "point.topleft.down.to.point.bottomright.curvepath"
+                )
             }
-            .padding(.horizontal, 16)
-
-            TESectionFooter(text: "Timeline combines visits and movement sessions for the selected day. Movement comes from exact recordings plus optional inferred GPS outings.")
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
         }
     }
 
@@ -251,7 +240,7 @@ struct OutingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "CONTROLS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 VStack(spacing: 0) {
                     TERow {
                         HStack(spacing: 10) {
@@ -392,7 +381,8 @@ struct OutingsView: View {
 
                     case .visit(let visit):
                         NavigationLink {
-                            VisitDetailView(visit: visit, viewModel: viewModel)
+                            VisitDetailView(visit: visit, viewModel: viewModel, showsMap: !usesCompanionMap)
+                                .onAppear { onVisitOpened?(visit) }
                         } label: {
                             TimelineVisitCard(visit: visit, isCurrent: viewModel.isCurrentVisit(visit))
                         }
@@ -413,7 +403,7 @@ struct OutingsView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "EVENTS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 emptyState
                     .frame(maxWidth: .infinity)
             }
@@ -591,7 +581,7 @@ private struct TimelineMovementCard: View {
     let usesMetricDistanceUnits: Bool
 
     var body: some View {
-        TECard {
+        TECard(paperOpacity: 0.94) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .top, spacing: 10) {
                     Image(systemName: session.isInferred ? "wand.and.stars" : "figure.walk.motion")
@@ -615,11 +605,10 @@ private struct TimelineMovementCard: View {
                             }
                         }
 
-                        Text(session.title.uppercased())
-                            .font(TE.mono(.caption, weight: .bold))
-                            .tracking(1.1)
+                        Text(session.title)
+                            .font(.headline)
                             .foregroundStyle(TE.textPrimary)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         Text(session.formattedTimeRange)
                             .font(TE.mono(.caption2, weight: .medium))
@@ -667,13 +656,13 @@ private struct TimelineVisitCard: View {
     let isCurrent: Bool
 
     var body: some View {
-        TECard {
+        TECard(paperOpacity: 0.94) {
             HStack(alignment: .top, spacing: 10) {
                 Image(systemName: isCurrent ? "mappin.circle.fill" : "mappin.and.ellipse")
                     .font(.caption.weight(.bold))
-                    .foregroundStyle(isCurrent ? TE.accent : TE.danger)
+                    .foregroundStyle(isCurrent ? TE.accent : TE.inkRust)
                     .frame(width: 28, height: 28)
-                    .background((isCurrent ? TE.accent : TE.danger).opacity(0.12), in: Circle())
+                    .background((isCurrent ? TE.accent : TE.inkRust).opacity(0.12), in: Circle())
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 5) {
@@ -694,11 +683,10 @@ private struct TimelineVisitCard: View {
                         }
                     }
 
-                    Text(visit.displayName.uppercased())
-                        .font(TE.mono(.caption, weight: .bold))
-                        .tracking(1.1)
+                    Text(visit.displayName)
+                        .font(.headline)
                         .foregroundStyle(TE.textPrimary)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Text("\(visit.formattedTimeRange) • \(visit.formattedDuration)")
                         .font(TE.mono(.caption2, weight: .medium))
@@ -900,7 +888,7 @@ private struct RecordingSessionDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                headerSection
+                summarySection
 
                 if session.points.isEmpty {
                     noPointsSection
@@ -924,9 +912,10 @@ private struct RecordingSessionDetailView: View {
             }
             .padding(.bottom, 28)
         }
-        .background(TE.surface.ignoresSafeArea())
-        .navigationTitle(session.title)
+        .background(FieldNotesBackground())
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .onAppear {
             nameText = session.storedSession?.displayName(defaultName: session.defaultTitle) ?? session.title
             notesText = session.storedSession?.notes ?? ""
@@ -974,17 +963,14 @@ private struct RecordingSessionDetailView: View {
         }
     }
 
-    private var headerSection: some View {
+    private var summarySection: some View {
         VStack(spacing: 0) {
-            TESectionHeader(title: "OUTING")
-
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 TERow(showDivider: false) {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(spacing: 6) {
-                            Text(session.title.uppercased())
-                                .font(TE.mono(.headline, weight: .bold))
-                                .tracking(1.4)
+                            Text(session.title)
+                                .font(TE.editorial(.title2))
                                 .foregroundStyle(TE.textPrimary)
                                 .lineLimit(2)
 
@@ -1004,6 +990,7 @@ private struct RecordingSessionDetailView: View {
                 }
             }
             .padding(.horizontal, 16)
+            .padding(.top, 16)
         }
     }
 
@@ -1106,7 +1093,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "PATH")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 TERow(showDivider: false) {
                     HStack(spacing: 10) {
                         Image(systemName: "location.slash")
@@ -1126,7 +1113,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "STATS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 VStack(spacing: 0) {
                     detailRow(label: "START", value: session.startedAt.formatted(date: .abbreviated, time: .shortened))
                     detailRow(label: session.isActive ? "LATEST" : "END", value: session.effectiveEndDate.formatted(date: .abbreviated, time: .shortened))
@@ -1149,7 +1136,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DETAILS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 VStack(spacing: 0) {
                     TERow {
                         VStack(alignment: .leading, spacing: 6) {
@@ -1203,7 +1190,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "DETAILS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 TERow(showDivider: false) {
                     HStack(alignment: .top, spacing: 10) {
                         Image(systemName: "wand.and.stars")
@@ -1225,7 +1212,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "VISITS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 if visits.isEmpty {
                     TERow(showDivider: false) {
                         Text("No visits were detected during this outing.")
@@ -1278,7 +1265,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "PHOTOS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 VStack(spacing: 0) {
                     if !viewModel.photoLibraryAccessState.canRead {
                         photoAccessPromptRow
@@ -1445,7 +1432,7 @@ private struct RecordingSessionDetailView: View {
         VStack(spacing: 0) {
             TESectionHeader(title: "ACTIONS")
 
-            TECard {
+            TECard(paperOpacity: 0.94) {
                 TERow(showDivider: false) {
                     HStack(spacing: 12) {
                         Text("FORMAT")
@@ -1516,13 +1503,13 @@ private struct RecordingSessionDetailView: View {
                             .font(TE.mono(.caption, weight: .bold))
                             .tracking(2)
                     }
-                    .foregroundStyle(storeManager.isPurchased ? TE.accent : TE.textMuted)
+                    .foregroundStyle(storeManager.canExport ? TE.accent : TE.textMuted)
                     .frame(maxWidth: .infinity)
                     .frame(height: 46)
-                    .background(storeManager.isPurchased ? TE.accent.opacity(0.08) : TE.textMuted.opacity(0.08))
+                    .background(storeManager.canExport ? TE.accent.opacity(0.08) : TE.textMuted.opacity(0.08))
                     .overlay {
                         RoundedRectangle(cornerRadius: 4)
-                            .strokeBorder(storeManager.isPurchased ? TE.accent.opacity(0.5) : TE.textMuted.opacity(0.25), lineWidth: 1)
+                            .strokeBorder(storeManager.canExport ? TE.accent.opacity(0.5) : TE.textMuted.opacity(0.25), lineWidth: 1)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
@@ -1572,7 +1559,7 @@ private struct RecordingSessionDetailView: View {
     }
 
     private var exportButtonTitle: String {
-        if !storeManager.isPurchased { return String(localized: "UNLOCK EXPORT") }
+        if !storeManager.canExport { return String(localized: "UNLOCK EXPORT") }
         let formatName = outingExportFormat.displayName.uppercased()
         if exportFolderManager.hasDefaultFolder && useDefaultExportFolder {
             return String(localized: "EXPORT \(formatName)")
@@ -1642,7 +1629,7 @@ private struct RecordingSessionDetailView: View {
     }
 
     private func exportOuting() {
-        guard storeManager.isPurchased else {
+        guard storeManager.canExport else {
             showingPaywall = true
             return
         }

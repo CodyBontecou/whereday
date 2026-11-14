@@ -1,0 +1,17 @@
+<resources>
+    <string name="geo_license_back_overview">Back to geographic data</string>
+    <string name="geo_license_back_settings">Back to settings</string>
+    <string name="geo_license_title">Geographic data and licenses</string>
+    <string name="geo_license_boundary_disclosure">Time-zone boundaries © OpenStreetMap contributors, distributed by timezone-boundary-builder and Timeshape under the Open Database License 1.0. Boundaries are bundled with the app; time-zone lookup sends no coordinates over the network.</string>
+    <string name="geo_license_versions">Boundary source: Timeshape 2026b.29 · Copyright Roman Iakovlev 2018 · MIT tools and ODbL data. Geometry engine: Esri Geometry API 2.2.4 · Apache License 2.0.</string>
+    <string name="geo_license_timeshape">Timeshape license</string>
+    <string name="geo_license_boundaries">Time-zone data license</string>
+    <string name="geo_license_geometry">Geometry engine license</string>
+    <string name="geo_license_boundary_source">Boundary data and source</string>
+    <string name="geo_license_timeshape_source">Timeshape source and packaged data</string>
+    <string name="geo_license_geocoder_disclosure">Country, submitted place-search text and selected-pin address lookup use Android’s geocoding service when you enable network geocoding and request a lookup. Availability and accuracy depend on the device’s provider. Search does not read device location or journal history. Recorded coordinates and user corrections remain in your journal.</string>
+    <string name="geo_license_loading">Loading license…</string>
+    <string name="geo_license_load_failed">This license could not be opened. Try again.</string>
+    <string name="geo_license_retry">Try again</string>
+    <string name="geo_license_link_failed">The source link could not be opened. Try again when a browser is available.</string>
+</resources>

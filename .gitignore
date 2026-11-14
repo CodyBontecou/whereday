@@ -47,3 +47,6 @@ metadata/isome/version/1.3.0/
 
 # Local Android planning scratchpad.
 docs/android-native-roadmap.md
+
+# Local Android QA videos; keep reusable e2e YAML separately.
+.argent/recordings/

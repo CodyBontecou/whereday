@@ -46,9 +46,10 @@ struct CountryDaysView: View {
                 .padding(16)
                 .padding(.bottom, 24)
             }
-            .background(TE.surface.ignoresSafeArea())
-            .navigationTitle("Country Days")
+            .background(FieldNotesBackground())
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Export", systemImage: "square.and.arrow.up") { export() }
@@ -82,10 +83,10 @@ struct CountryDaysView: View {
     }
 
     private var overview: some View {
-        TECard {
+        TECard(paperOpacity: 0.94) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(summaries.count == 1 ? String(localized: "1 country") : String(localized: "\(summaries.count) countries"))
-                    .font(TE.mono(.title2, weight: .bold))
+                    .font(TE.editorial(.title2))
                     .foregroundStyle(TE.textPrimary)
                     .monospacedDigit()
                 let uniqueDays = Set(summaries.flatMap { $0.days.map(\.day) }).count
@@ -99,7 +100,7 @@ struct CountryDaysView: View {
     }
 
     private var analysis: some View {
-        TECard {
+        TECard(paperOpacity: 0.94) {
             VStack(alignment: .leading, spacing: 12) {
                 Label("Identify countries", systemImage: "location.magnifyingglass")
                     .font(.headline)
@@ -134,10 +135,12 @@ struct CountryDaysView: View {
         return VStack(alignment: .leading, spacing: 8) {
             Text("COUNTRIES").font(TE.mono(.caption, weight: .semibold)).foregroundStyle(TE.textMuted)
             if countrySummaries.isEmpty {
-                ContentUnavailableView("No country days yet", systemImage: "globe.europe.africa",
-                                       description: Text("Analyze saved locations or add a manual stay. Try All time to see older records."))
+                TECard(paperOpacity: 0.94) {
+                    ContentUnavailableView("No country days yet", systemImage: "globe.europe.africa",
+                                           description: Text("Analyze saved locations or add a manual stay. Try All time to see older records."))
+                }
             } else {
-                TECard {
+                TECard(paperOpacity: 0.94) {
                     LazyVStack(spacing: 0) {
                         ForEach(countrySummaries) { summary in
                             NavigationLink {
@@ -187,7 +190,7 @@ struct CountryDaysView: View {
             Text("Fill missing days. Overlapping stays and recorded days are counted only once.")
                 .font(.footnote).foregroundStyle(TE.textMuted)
             if !stays.isEmpty {
-                TECard {
+                TECard(paperOpacity: 0.94) {
                     LazyVStack(spacing: 0) {
                         ForEach(stays) { stay in
                             HStack {
@@ -217,7 +220,7 @@ struct CountryDaysView: View {
     }
 
     private func export() {
-        guard storeManager.isPurchased else { showingPaywall = true; return }
+        guard storeManager.canExport else { showingPaywall = true; return }
         exportDocument = CountryDaysCSVDocument(text: CountryDayCalculator.csv(summaries))
         showingExport = true
     }
@@ -228,8 +231,10 @@ private struct CountryDayDetailView: View {
     var body: some View {
         List {
             Section {
+                LabeledContent("Country", value: summary.name)
                 LabeledContent("Days present", value: summary.days.count.formatted())
             }
+            .listRowBackground(TE.card.opacity(0.94))
             Section("Local dates") {
                 ForEach(summary.days, id: \.day) { presence in
                     LabeledContent(presence.day) {
@@ -238,9 +243,13 @@ private struct CountryDayDetailView: View {
                     }
                 }
             }
+            .listRowBackground(TE.card.opacity(0.94))
         }
-        .navigationTitle(summary.name)
+        .scrollContentBackground(.hidden)
+        .background(FieldNotesBackground())
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
     }
 }
 
@@ -301,13 +310,21 @@ private struct CountryStayEditor: View {
                 } footer: {
                     Text("Both dates count, including a same-day visit. Recorded presence in other countries is kept.")
                 }
+                .listRowBackground(TE.card.opacity(0.97))
                 if firstDay > lastDay {
                     Text("Departure must be on or after arrival.").foregroundStyle(.red)
                 }
                 if let errorMessage { Text(errorMessage).foregroundStyle(.red) }
             }
+            .scrollContentBackground(.hidden)
+            .background {
+                FieldNotesBackground()
+                    .overlay(TE.surface.opacity(0.45))
+                    .allowsHitTesting(false)
+            }
             .navigationTitle(stay == nil ? "Add Country Stay" : "Edit Country Stay")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {

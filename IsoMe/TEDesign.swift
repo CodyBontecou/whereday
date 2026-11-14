@@ -1,26 +1,27 @@
 import SwiftUI
 import UIKit
 
-/// Teenage Engineering–inspired design tokens shared across all views.
+/// Paper and blue ink tokens shared across Whereday's journal and utility screens.
 enum TE {
     // MARK: - Colors
-    /// Dynamic colors preserve the existing light palette and adapt across sheets and controls.
+    /// Paper and ink adapt across sheets and controls in both appearances.
     static func adaptive(_ light: UIColor, _ dark: UIColor) -> Color {
         Color(uiColor: UIColor { traits in
             traits.userInterfaceStyle == .dark ? dark : light
         })
     }
 
-    static let accent = adaptive(UIColor(red: 0.196, green: 0.455, blue: 0.956, alpha: 1),
-                                 UIColor(red: 0.38, green: 0.62, blue: 1, alpha: 1))
-    static let surface = adaptive(UIColor(red: 0.96, green: 0.955, blue: 0.94, alpha: 1),
-                                  UIColor(red: 0.09, green: 0.09, blue: 0.085, alpha: 1))
+    static let accent = adaptive(UIColor(red: 0.208, green: 0.310, blue: 0.525, alpha: 1),
+                                 UIColor(red: 0.69, green: 0.77, blue: 0.95, alpha: 1))
+    static let surface = adaptive(UIColor(red: 0.969, green: 0.957, blue: 0.922, alpha: 1),
+                                  UIColor(red: 0.106, green: 0.125, blue: 0.169, alpha: 1))
     static let surfaceDark = Color(red: 0.12, green: 0.12, blue: 0.12)
-    static let card = adaptive(.white, UIColor(red: 0.14, green: 0.14, blue: 0.135, alpha: 1))
-    static let border = adaptive(UIColor(red: 0.82, green: 0.81, blue: 0.79, alpha: 1),
-                                 UIColor(red: 0.30, green: 0.30, blue: 0.28, alpha: 1))
+    static let card = adaptive(UIColor(red: 1, green: 0.992, blue: 0.965, alpha: 1),
+                              UIColor(red: 0.145, green: 0.18, blue: 0.235, alpha: 1))
+    static let border = adaptive(UIColor(red: 0.847, green: 0.843, blue: 0.804, alpha: 1),
+                                 UIColor(red: 0.267, green: 0.302, blue: 0.365, alpha: 1))
     static let borderDark = Color(red: 0.25, green: 0.25, blue: 0.25)
-    static let textPrimary = adaptive(UIColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1),
+    static let textPrimary = adaptive(UIColor(red: 0.141, green: 0.231, blue: 0.357, alpha: 1),
                                       UIColor(red: 0.95, green: 0.95, blue: 0.93, alpha: 1))
     static let textMuted = adaptive(UIColor(red: 0.44, green: 0.43, blue: 0.41, alpha: 1),
                                     UIColor(red: 0.68, green: 0.67, blue: 0.64, alpha: 1))
@@ -30,14 +31,106 @@ enum TE {
     static let danger = Color(uiColor: .systemRed)
     static let warning = Color(uiColor: .systemOrange)
     static let success = Color(uiColor: .systemGreen)
+    static let inkRust = adaptive(UIColor(red: 0.64, green: 0.28, blue: 0.20, alpha: 1),
+                                  UIColor(red: 0.93, green: 0.67, blue: 0.59, alpha: 1))
 
     // MARK: - Typography
     static func mono(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
         Font.system(style, design: .monospaced).weight(weight)
     }
+
+    static func editorial(_ style: Font.TextStyle) -> Font {
+        Font.system(style, design: .serif)
+    }
 }
 
 // MARK: - Reusable Components
+
+/// Decorative ink is confined to its own layout space and never intercepts map gestures.
+struct FieldNotesArtwork: View {
+    enum Subject: String {
+        case clouds = "JournalClouds"
+        case street = "JournalStreet"
+    }
+
+    let subject: Subject
+    var height: CGFloat = 140
+
+    var body: some View {
+        GeometryReader { geometry in
+            if subject == .clouds {
+                inkImage
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
+                    .mask {
+                        LinearGradient(
+                            stops: [
+                                .init(color: .clear, location: 0),
+                                .init(color: .black, location: 0.08),
+                                .init(color: .black, location: 0.88),
+                                .init(color: .clear, location: 1)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .mask {
+                            LinearGradient(
+                                stops: [
+                                    .init(color: .clear, location: 0),
+                                    .init(color: .black, location: 0.06),
+                                    .init(color: .black, location: 0.94),
+                                    .init(color: .clear, location: 1)
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        }
+                    }
+            } else {
+                inkImage
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .trailing)
+                    .clipped()
+            }
+        }
+        .frame(height: height)
+        .accessibilityHidden(true)
+        .allowsHitTesting(false)
+    }
+
+    private var inkImage: some View {
+        Image(decorative: subject.rawValue)
+            .renderingMode(.template)
+            .resizable()
+            .foregroundStyle(TE.accent)
+            .accessibilityHidden(true)
+    }
+}
+
+/// Stationary ink behind the journal UI, with no space reserved in the content layout.
+struct FieldNotesBackground: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                TE.surface
+
+                VStack(spacing: 0) {
+                    FieldNotesArtwork(subject: .clouds, height: min(geometry.size.height * 0.36, 280))
+                        .opacity(0.28)
+
+                    Spacer(minLength: 0)
+
+                    FieldNotesArtwork(subject: .street, height: min(geometry.size.height * 0.48, 360))
+                        .opacity(0.34)
+                }
+            }
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+        .allowsHitTesting(false)
+    }
+}
 
 /// TE-styled section header: uppercase, tracked, monospaced.
 struct TESectionHeader: View {
@@ -57,22 +150,24 @@ struct TESectionHeader: View {
     }
 }
 
-/// TE-styled card container with 4px radius and 1px border.
+/// A quiet paper surface for grouped controls.
 struct TECard<Content: View>: View {
     let content: Content
+    let paperOpacity: Double
 
-    init(@ViewBuilder content: () -> Content) {
+    init(paperOpacity: Double = 1, @ViewBuilder content: () -> Content) {
+        self.paperOpacity = paperOpacity
         self.content = content()
     }
 
     var body: some View {
         content
             .background(
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(TE.card)
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(TE.card.opacity(paperOpacity))
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 4)
+                RoundedRectangle(cornerRadius: 10)
                     .strokeBorder(TE.border, lineWidth: 1)
             )
     }
@@ -198,6 +293,101 @@ enum AppAppearance: String, CaseIterable, Identifiable {
         case .system: "System"
         case .light: "Light"
         case .dark: "Dark"
+        }
+    }
+}
+
+// MARK: - Illustrated onboarding and purchase flow
+
+/// Kept separate from TE so the rest of the app retains its existing appearance.
+enum InkPaperPalette {
+    static let ink = TE.adaptive(
+        UIColor(red: 0.14, green: 0.27, blue: 0.62, alpha: 1),
+        UIColor(red: 0.58, green: 0.70, blue: 1, alpha: 1)
+    )
+    static let paper = TE.adaptive(
+        UIColor(red: 0.98, green: 0.97, blue: 0.94, alpha: 1),
+        UIColor(red: 0.09, green: 0.11, blue: 0.15, alpha: 1)
+    )
+    static let pencil = TE.adaptive(
+        UIColor(red: 0.39, green: 0.39, blue: 0.38, alpha: 1),
+        UIColor(red: 0.72, green: 0.73, blue: 0.76, alpha: 1)
+    )
+    static let wash = ink.opacity(0.045)
+    static let border = ink.opacity(0.24)
+}
+
+
+/// Decorative ink sketches sit behind the flow, never reserving header space.
+struct InkJournalBackground: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                InkPaperPalette.paper
+                VStack(spacing: 0) {
+                    sketch("JournalClouds")
+                        .frame(height: min(geometry.size.height * 0.38, 320))
+                        .opacity(dynamicTypeSize.isAccessibilitySize ? 0.15 : 0.30)
+                        .mask(LinearGradient(stops: [.init(color: .black, location: 0), .init(color: .black, location: 0.6), .init(color: .clear, location: 1)], startPoint: .top, endPoint: .bottom))
+                    Spacer(minLength: 0)
+                    sketch("JournalStreet")
+                        .frame(height: min(geometry.size.height * 0.48, 400))
+                        .opacity(dynamicTypeSize.isAccessibilitySize ? 0.16 : 0.42)
+                }
+                InkPaperGrain(ink: InkPaperPalette.ink)
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
+    private func sketch(_ name: String) -> some View {
+        GeometryReader { geometry in
+            Image(decorative: name)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFill()
+                .foregroundStyle(InkPaperPalette.ink)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                .clipped()
+        }
+    }
+}
+
+
+/// On the inner display, forms and their bottom action stay together on one page.
+/// The second page is only background artwork, with no extra header or controls.
+struct JournalFlowPresentation: ViewModifier {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 27.1, *) {
+            ArrangementView {
+                content
+            } secondary: {
+                GeometryReader { geometry in
+                    ZStack {
+                        InkPaperPalette.paper
+                        VStack(spacing: 0) {
+                            FieldNotesArtwork(subject: .clouds, height: geometry.size.height * 0.36)
+                                .opacity(0.35)
+                            Spacer(minLength: 0)
+                            FieldNotesArtwork(subject: .street, height: geometry.size.height * 0.60)
+                                .opacity(0.60)
+                        }
+                    }
+                }
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            }
+            .arrangementViewStyle(.split.axes(horizontalSizeClass == .regular ? Axis.Set.horizontal.union(.vertical) : Axis.Set()))
+        } else {
+            content
         }
     }
 }

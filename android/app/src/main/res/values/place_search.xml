@@ -1,0 +1,17 @@
+<resources>
+    <string name="place_search_cancel">Cancel place search</string>
+    <string name="place_search_title">Search places</string>
+    <string name="place_search_disclosure">Search sends the text you submit to your device’s geocoding service. Coverage varies by provider. No device location or journal history is sent.</string>
+    <string name="place_search_disabled">Network geocoding is disabled. Enable it in Settings to search, or choose coordinates offline.</string>
+    <string name="place_search_query">Place name or address</string>
+    <string name="place_search_clear">Clear search</string>
+    <string name="place_search_submit">Search</string>
+    <string name="place_search_stop">Cancel lookup</string>
+    <string name="place_search_loading">Searching places…</string>
+    <string name="place_search_empty">No matching places. Try a city, landmark, or full address.</string>
+    <string name="place_search_hint">Enter at least two characters and tap Search. Typing does not send a request.</string>
+    <string name="place_search_coordinate">%1$s, %2$s</string>
+    <string name="place_search_select">Select this place</string>
+    <string name="place_search_error">Place search is unavailable. Check your connection or try again. You can still choose coordinates offline.</string>
+    <string name="place_search_timeout">Place search timed out. Try again or choose coordinates offline.</string>
+</resources>

@@ -85,6 +85,10 @@ struct StartTrackingIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let manager = IntentSupport.ensureLocationManager()
+        await StoreManager.shared.checkEntitlement()
+        guard StoreManager.shared.canTrack else {
+            return .result(dialog: "Open Whereday to choose a plan before tracking.")
+        }
         guard manager.hasLocationPermission else {
             throw IsoMeIntentError.noLocationPermission
         }

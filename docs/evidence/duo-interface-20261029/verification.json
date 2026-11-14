@@ -1,0 +1,45 @@
+{
+  "branch": "codex/reconciled-local-main-20261028",
+  "device": "iPhone Duo simulator, iOS 27.1",
+  "sdk": "Xcode 27.1",
+  "implementation": [
+    "Native ArrangementView splits Map and Timeline on the inner display and collapses to the primary screen on the cover.",
+    "Map selections show inline visit details and focus the map. Timeline visits use the companion map.",
+    "Persistent selection is independent of the cover sheet presentation; close/open retains the inspected visit.",
+    "Onboarding, paywall, Export and Settings keep forms/actions in a single native arrangement pane; artwork fills the companion pane.",
+    "Blue paywall CTA stays at the bottom of its pane.",
+    "Larger text stacks visit date controls beneath intact labels; accessibility text separates date/time controls.",
+    "iOS 18\u201327.0 retains the existing screen layout via availability guards."
+  ],
+  "validation": {
+    "build": "Final build passed: /private/tmp/whereday-duo-large-text-build.log",
+    "regressions": "349 XCTest + 11 Swift Testing passed after fold-continuity fix; subsequent date-label polish verified by final build and XL screenshot.",
+    "xcresult": "/private/tmp/whereday-duo-release-check.xcresult",
+    "localization": "4 Python checks passed",
+    "duo_folding": "10/10 replay steps passed: open, half-open, cover, open",
+    "duo_flows": "6/6 replay steps passed: paywall CTA and onboarding controls",
+    "duo_visit_continuity": "6/6 replay steps passed: inline inspector \u2192 cover Done action \u2192 inline inspector retained",
+    "visual": [
+      "Map/Timeline",
+      "Visit inspector",
+      "Hinge gap at half-open",
+      "Cover map",
+      "Onboarding",
+      "Paywall with CTA in one pane",
+      "Dark inspector",
+      "XXX-Large Dynamic Type with stacked date labels"
+    ]
+  },
+  "qa_details": {
+    "data": "Local synthetic screenshot fixtures; tracking off.",
+    "manual_marker_selection": "Selected upper portion of the map-marker frame from a fresh AX tree because the center overlapped a route point. Native view-label lookup yielded no SwiftUI matches; this manual setup is a prerequisite for the continuity fragment and is not stored as a coordinate action.",
+    "native_projection": "Auto-targeting native hierarchy sees multiple foreground system services on Duo. Tests retain working recorded AX-service checks.",
+    "recording": "/Users/codybontecou/dev/iso.me/.argent/recordings/screen-recording-EFCA90F1-0956-45E3-BB31-8BDF3FD56190-1793307390424.mp4",
+    "recording_note": "Recording is ignored by Git. Panel switching introduces rotated/black capture frames; filmstrip documents layout states, not frame-rate performance."
+  },
+  "references": [
+    "https://developer.apple.com/videos/play/tech-talks/111463/",
+    "https://developer.apple.com/videos/play/tech-talks/111461/"
+  ],
+  "status": "Local, uncommitted on the existing redesign branch."
+}

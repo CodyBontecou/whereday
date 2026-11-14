@@ -5,7 +5,9 @@ import SwiftData
 struct VisitDetailView: View {
     @Bindable var visit: Visit
     @Bindable var viewModel: LocationViewModel
+    var showsMap = true
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var showingDeleteConfirmation = false
     @State private var nameText: String = ""
     @State private var notesText: String = ""
@@ -25,8 +27,9 @@ struct VisitDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Map
-                mapSection
+                if showsMap {
+                    mapSection
+                }
 
                 // Location Info
                 locationInfoSection
@@ -42,7 +45,10 @@ struct VisitDetailView: View {
             }
             .padding()
         }
-        .navigationTitle("Visit Details")
+        .background(FieldNotesBackground())
+        .foregroundStyle(TE.textPrimary)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             syncEditableStateFromVisit()
@@ -106,7 +112,7 @@ struct VisitDetailView: View {
 
             HStack(alignment: .center, spacing: 8) {
                 TextField("Visit name", text: $nameText)
-                    .font(.title2.weight(.semibold))
+                    .font(TE.editorial(.title))
                     .textFieldStyle(.plain)
                     .submitLabel(.done)
                     .focused($focusedField, equals: .name)
@@ -162,8 +168,15 @@ struct VisitDetailView: View {
                     .foregroundStyle(.tertiary)
             }
 
-            NearbyVisitNameSuggestionSection(visit: visit) { suggestion in
-                correctVisit(with: suggestion)
+            DisclosureGroup {
+                NearbyVisitNameSuggestionSection(visit: visit) { suggestion in
+                    correctVisit(with: suggestion)
+                }
+            } label: {
+                Text("Nearby businesses")
+                    .font(.subheadline)
+                    .foregroundStyle(TE.accent)
+                    .frame(minHeight: 44)
             }
 
             // Coordinates (for debugging/reference)
@@ -173,13 +186,13 @@ struct VisitDetailView: View {
                 .monospaced()
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
+        .background(TE.card.opacity(0.94))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
     private var timeInfoSection: some View {
         VStack(spacing: 0) {
-            DatePicker("Arrived", selection: $arrivedAt, displayedComponents: [.date, .hourAndMinute])
+            visitDatePicker("Arrived", selection: $arrivedAt)
                 .padding()
                 .onChange(of: arrivedAt) { _, _ in validateEditedTimes() }
 
@@ -192,7 +205,7 @@ struct VisitDetailView: View {
             if !isStillHere {
                 Divider()
 
-                DatePicker("Departed", selection: $departedAt, displayedComponents: [.date, .hourAndMinute])
+                visitDatePicker("Departed", selection: $departedAt)
                     .padding()
                     .onChange(of: departedAt) { _, _ in validateEditedTimes() }
             }
@@ -232,8 +245,29 @@ struct VisitDetailView: View {
                 .padding()
             }
         }
-        .background(Color(.secondarySystemBackground))
+        .background(TE.card.opacity(0.94))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    @ViewBuilder
+    private func visitDatePicker(_ title: LocalizedStringKey, selection: Binding<Date>) -> some View {
+        if dynamicTypeSize >= .xxLarge {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(title)
+                if dynamicTypeSize.isAccessibilitySize {
+                    DatePicker(title, selection: selection, displayedComponents: .date)
+                        .labelsHidden()
+                    DatePicker(title, selection: selection, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                } else {
+                    DatePicker(title, selection: selection, displayedComponents: [.date, .hourAndMinute])
+                        .labelsHidden()
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            DatePicker(title, selection: selection, displayedComponents: [.date, .hourAndMinute])
+        }
     }
 
     private var notesSection: some View {
@@ -253,7 +287,7 @@ struct VisitDetailView: View {
                 }
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
+        .background(TE.card.opacity(0.94))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 

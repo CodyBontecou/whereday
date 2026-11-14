@@ -1,0 +1,91 @@
+<resources>
+    <string name="saved_title">Saved places</string>
+    <string name="saved_back_settings">Back to settings</string>
+    <string name="saved_back_library">Back to saved places</string>
+    <string name="saved_add">Add place</string>
+    <string name="saved_import_csv">Import CSV</string>
+    <string name="saved_empty">No saved places yet. Add a place or import a CSV file.</string>
+    <string name="saved_no_match">No saved places match your search.</string>
+    <string name="saved_radius">Match radius: %1$s m</string>
+    <string name="saved_changed">Saved places changed. Review the updated list before saving or importing.</string>
+    <string name="saved_editor_add">Save a place</string>
+    <string name="saved_editor_edit">Edit saved place</string>
+    <string name="saved_editor_radius">Match radius (meters)</string>
+    <string name="saved_editor_delete">Delete saved place</string>
+    <string name="saved_editor_invalid">Enter a name, valid coordinates and a radius from 25 to 10,000 meters.</string>
+    <string name="saved_editor_save_error">Place could not be saved. Check available storage and try again.</string>
+    <string name="saved_editor_delete_error">Place could not be deleted. Try again.</string>
+    <string name="saved_delete_title">Delete this saved place?</string>
+    <string name="saved_delete_body">Visits and route history remain in your journal.</string>
+    <string name="saved_delete_action">Delete place</string>
+    <string name="saved_discard_title">Discard saved place changes?</string>
+    <string name="saved_discard_action">Discard changes</string>
+    <string name="saved_csv_preview">CSV import preview</string>
+    <string name="saved_csv_cancel">Cancel import</string>
+    <string name="saved_csv_help">CSV: name, latitude, longitude; optional address and radius_meters. Use a dot for decimals. Up to 5 MB and 10,000 rows. Review duplicates before importing.</string>
+    <string name="saved_csv_reading">Reading CSV…</string>
+    <string name="saved_csv_canceled">Import canceled.</string>
+    <string name="saved_csv_choose">Choose a CSV document.</string>
+    <string name="saved_csv_open">The CSV file could not be opened.</string>
+    <string name="saved_csv_read_error">The CSV file could not be read. Choose it again and check access.</string>
+    <string name="saved_csv_file_size">Choose a CSV file of 5 MB or smaller.</string>
+    <string name="saved_csv_encoding">Could not read the CSV file as UTF-8 text.</string>
+    <string name="saved_csv_header_quotes">The CSV header contains invalid quotation marks.</string>
+    <string name="saved_csv_header_empty">Every CSV column must have a header.</string>
+    <string name="saved_csv_header_duplicate">The CSV header contains duplicate column names.</string>
+    <string name="saved_csv_header_missing">Missing required CSV columns: %1$s.</string>
+    <string name="saved_csv_row_limit">Import up to 10,000 saved places at a time.</string>
+    <string name="saved_csv_file_empty">The CSV file is empty.</string>
+    <string name="saved_csv_no_rows">The CSV file has no saved-place rows.</string>
+    <string name="saved_csv_field_count">Expected %1$d columns, found %2$d.</string>
+    <string name="saved_csv_name">A saved place needs a name.</string>
+    <string name="saved_csv_latitude">Latitude must be a number from -90 to 90.</string>
+    <string name="saved_csv_longitude">Longitude must be a number from -180 to 180.</string>
+    <string name="saved_csv_radius">Radius must be a number from 25 to 10,000 metres.</string>
+    <string name="saved_csv_quote_whole">Quotation marks must enclose the whole field; escape an inner quote with two quotation marks.</string>
+    <string name="saved_csv_after_quote">Unexpected text after a quoted field.</string>
+    <string name="saved_csv_closing_quote">A quoted field is missing its closing quotation mark.</string>
+    <string name="saved_csv_counts">%1$s · %2$s. Invalid rows will not be imported.</string>
+    <string name="saved_csv_policy">Matching places</string>
+    <string name="saved_csv_keep">Keep existing places</string>
+    <string name="saved_csv_update">Update matching places</string>
+    <string name="saved_csv_matching">Names match without case differences when coordinates are within either place’s radius. The nearest matching place is used; later rows are compared with earlier changes.</string>
+    <string name="saved_csv_plan">%1$s · %2$s · %3$s</string>
+    <string name="saved_csv_import_valid">Import valid places</string>
+    <string name="saved_csv_row_title">Row %1$d · %2$s</string>
+    <string name="saved_csv_unnamed">Unnamed place</string>
+    <string name="saved_csv_action_add">Add new place</string>
+    <string name="saved_csv_action_update">Update matching place</string>
+    <string name="saved_csv_action_skip">Keep existing place; skip this row</string>
+    <string name="saved_csv_coordinate">%1$s, %2$s · %3$s m</string>
+    <string name="saved_csv_confirm_title">Import saved places?</string>
+    <string name="saved_csv_confirm_body">Planned changes: %1$s. Invalid rows excluded: %2$d. Existing visits and routes remain unchanged.</string>
+    <string name="saved_csv_importing">Importing saved places…</string>
+    <string name="saved_csv_commit">Import places</string>
+    <string name="saved_csv_result">Added: %1$d. Updated: %2$d. Skipped: %3$d.</string>
+    <string name="saved_csv_import_error">Saved places could not be imported. Check available storage and try again.</string>
+    <plurals name="saved_count">
+        <item quantity="one">%1$d of %2$d saved place</item>
+        <item quantity="other">%1$d of %2$d saved places</item>
+    </plurals>
+    <plurals name="saved_csv_valid_rows">
+        <item quantity="one">%1$d valid row</item>
+        <item quantity="other">%1$d valid rows</item>
+    </plurals>
+    <plurals name="saved_csv_invalid_rows">
+        <item quantity="one">%1$d invalid row</item>
+        <item quantity="other">%1$d invalid rows</item>
+    </plurals>
+    <plurals name="saved_csv_added">
+        <item quantity="one">%1$d added</item>
+        <item quantity="other">%1$d added</item>
+    </plurals>
+    <plurals name="saved_csv_updated">
+        <item quantity="one">%1$d updated</item>
+        <item quantity="other">%1$d updated</item>
+    </plurals>
+    <plurals name="saved_csv_skipped">
+        <item quantity="one">%1$d skipped</item>
+        <item quantity="other">%1$d skipped</item>
+    </plurals>
+</resources>

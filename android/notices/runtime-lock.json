@@ -1,0 +1,902 @@
+{
+  "schemaVersion": 1,
+  "basis": "Selected POM/artifact identity lock for notice correspondence; not legal approval.",
+  "components": {
+    "androidx.activity:activity-compose:1.10.1": {
+      "pomSha256": "e64db6b7126fb512394bc3cf4332a38828009daa8dd56ecbe6c0c7300b2127f5",
+      "artifacts": [
+        "f89af1b26ccc834634387c857c2dd4f4654d37650890039c527c2fed07db6a61"
+      ]
+    },
+    "androidx.activity:activity-ktx:1.10.1": {
+      "pomSha256": "4213490e4ce2b5750e4445246dfe9de4f6655c2123c04a79a8248cc8893e2bf4",
+      "artifacts": [
+        "f396f58dbd772c065b873696b74a3d4d087554b3766280e63b49b25dbb53ab16"
+      ]
+    },
+    "androidx.activity:activity:1.10.1": {
+      "pomSha256": "0ae4de888974f5cef982660900ec32a33f10968750db7afa9438daec183f14e7",
+      "artifacts": [
+        "b62b528c917de9be497eb6f88830197c20e9d21267c3916c613492e5ee837d4d"
+      ]
+    },
+    "androidx.annotation:annotation-experimental:1.5.0": {
+      "pomSha256": "7a94595399931c25a49f9af93daa4e977dc2d375458e4e74bb8d35ebcb51848d",
+      "artifacts": [
+        "02b0a4256618f85386c92e5cec166dc7f300820888a290227a3c0c65b82cbb36"
+      ]
+    },
+    "androidx.annotation:annotation-jvm:1.10.0": {
+      "pomSha256": "5eece0903b4810aa1da85414dc4c2746046d878a543aa12dd4f1fe74171f7506",
+      "artifacts": [
+        "ddd072ddbb553178e205517ce777b2f05aa9e412982d9ecb4eedc74f1212f697"
+      ]
+    },
+    "androidx.annotation:annotation:1.10.0": {
+      "pomSha256": "880f7bf4b35d060746cbef319d4a052b4bd826bb71b40500e55319721ffa4e76",
+      "artifacts": []
+    },
+    "androidx.arch.core:core-common:2.2.0": {
+      "pomSha256": "1e17d4af8d6425be2a69f8af4d654a87e0456259a9eef1542869bcb023547e28",
+      "artifacts": [
+        "65308a06b1c00ee186cb9e19321383f043b993813f1522c47f4a3e3303bdba41"
+      ]
+    },
+    "androidx.arch.core:core-runtime:2.2.0": {
+      "pomSha256": "0f953706598140d9d8735cdd5aeb1fa35933f4e2f31c0bf3eb81a053a4c8c1a5",
+      "artifacts": [
+        "a1be5e0caa2b07623862af6ae21b3ab0718123245184d0e30dea81b53f990a47"
+      ]
+    },
+    "androidx.autofill:autofill:1.0.0": {
+      "pomSha256": "3677abead5d4e06cf76cbacb954151e051779c2274494451fb424e375aa9e450",
+      "artifacts": [
+        "c9468f56e05006ea151a426c54957cd0799b8b83a579d2846dd22061f33e5ecd"
+      ]
+    },
+    "androidx.collection:collection-jvm:1.6.0": {
+      "pomSha256": "87a94bb3e8b6a1472f3b0ddc177a9f121ef71aa01e1e30491d1a065b57d70712",
+      "artifacts": [
+        "839fcec147704611a222159fa84e3e062f68eee80caa549ddd1222d5210a13df"
+      ]
+    },
+    "androidx.collection:collection-ktx:1.6.0": {
+      "pomSha256": "3ab4624b71ed2294dedca050ac68437799d1ec3c901b7345942c27db014f6258",
+      "artifacts": [
+        "939b4a8697640e77d83e4e8b4c4a9d18f8130198c5961194af8dd9db9dc7c353"
+      ]
+    },
+    "androidx.collection:collection:1.6.0": {
+      "pomSha256": "0e12fc515b33ede942f2e0881960a9d36fd4392ad3e5a8b82118e54306713234",
+      "artifacts": []
+    },
+    "androidx.compose.animation:animation-android:1.8.3": {
+      "pomSha256": "3f902c2ea58e8cbfb53f594f85a992cdc0583a3a5bef57b53e93403a2feba541",
+      "artifacts": [
+        "01c7ccea4579bd2096f3a01dea58a7891900e96db8c80e127be1c44c78a8f7f9"
+      ]
+    },
+    "androidx.compose.animation:animation-core-android:1.8.3": {
+      "pomSha256": "035f4eef2fc781dab781d50b6d94f3bc8e8936b6cde43919771340a5d78cf0ec",
+      "artifacts": [
+        "24a964ca12d87a5e0cb15a084ec80a7da5588e49ed2a7195c4a640916bc08917"
+      ]
+    },
+    "androidx.compose.animation:animation-core:1.8.3": {
+      "pomSha256": "226f64acdd7e13231741f46fa5c6916d0eaf62f6354d8fa0202775b7640e9f42",
+      "artifacts": []
+    },
+    "androidx.compose.animation:animation:1.8.3": {
+      "pomSha256": "0743515a6a7bdeddce7cbf0c0f6cb8bc8841c8de3c39cab8e21d87ff55228f70",
+      "artifacts": []
+    },
+    "androidx.compose.foundation:foundation-android:1.8.3": {
+      "pomSha256": "bd49a5c056d81d2dde528729a7a3604b5d00e0d7053305772cc1ccf0f29530b9",
+      "artifacts": [
+        "ddc815d857480c018c960ee73f1ee5bbebd012b2562864672c3a1ac7304278e5"
+      ]
+    },
+    "androidx.compose.foundation:foundation-layout-android:1.8.3": {
+      "pomSha256": "ddd806fbca9ad9cb442d187de860df7f681aa68952d07fdd95bc2df23f10bd40",
+      "artifacts": [
+        "053fc28015c454bf68a2ebf298c031ad6329b5628ae4a8d2370831be1dc4320d"
+      ]
+    },
+    "androidx.compose.foundation:foundation-layout:1.8.3": {
+      "pomSha256": "e7fc2f5fdb59377d46c7042c4077dc5e84159890927e2f2f7a9eadc6fd58d569",
+      "artifacts": []
+    },
+    "androidx.compose.foundation:foundation:1.8.3": {
+      "pomSha256": "7334756ad41416a342cfbb7b8a69ee287552eeeb506af0f4138f6e77a3253409",
+      "artifacts": []
+    },
+    "androidx.compose.material3:material3-android:1.3.2": {
+      "pomSha256": "6f7aa2f96e971fab29637c01e1427116deed4f01b9be6ffb465a67520d9bdf74",
+      "artifacts": [
+        "847666d9fc2d4348b6ec76a6a6094f14fb60de631ee4f6992004ec71a4f44336"
+      ]
+    },
+    "androidx.compose.material3:material3:1.3.2": {
+      "pomSha256": "2f338a1aa3a9c029b6e65871387faa8e975426faef1c6f7ab9f758c3955f58e7",
+      "artifacts": []
+    },
+    "androidx.compose.material:material-icons-core-android:1.7.8": {
+      "pomSha256": "df671e1144120b43f83464e1e94ff828d0ded8132b3b15b86de07f1b82d0d932",
+      "artifacts": [
+        "332c06b25e662cc417fb087e76b8faa5cb249f4992ffa3360084a3d4ab882284"
+      ]
+    },
+    "androidx.compose.material:material-icons-core:1.7.8": {
+      "pomSha256": "eeefc6cd1c66baf21dbf4e916c46504017787784cd2327233cec23806422299a",
+      "artifacts": []
+    },
+    "androidx.compose.material:material-icons-extended-android:1.7.8": {
+      "pomSha256": "e1582bfe84d5df59487c3ed2d3399601dc2a16241708ecb6721a25809df8558e",
+      "artifacts": [
+        "64e86269f1106848981dd76f0046f81b46f3bd92efb22645de8fd044c0402b61"
+      ]
+    },
+    "androidx.compose.material:material-icons-extended:1.7.8": {
+      "pomSha256": "dad3723163c1b04d0c4cce4d280e7ddc1041b08d73b8c4f8d07a67c755758515",
+      "artifacts": []
+    },
+    "androidx.compose.material:material-ripple-android:1.8.3": {
+      "pomSha256": "24ac2d4d4bb9f790d12b12132ea586c7e15dc2a1fd75dc9ec0137eb9853768fa",
+      "artifacts": [
+        "5709ee08c1236f0a0575bf015cf18c302c2b55ba2bf3e0cbdd157cee7cb076bb"
+      ]
+    },
+    "androidx.compose.material:material-ripple:1.8.3": {
+      "pomSha256": "5490cd56c8f34c2bd98c4d65d860de134318e1876e644195a9c4b0389850ae60",
+      "artifacts": []
+    },
+    "androidx.compose.runtime:runtime-android:1.8.3": {
+      "pomSha256": "ab1d6cc48de4cd6bbd6ae89beee0472bff780ea462f61bd99b00919b19519928",
+      "artifacts": [
+        "038732e3ef283b8a974b7d79e2eafd91e2d0dd8e123644ecc5096c06ccb515ef"
+      ]
+    },
+    "androidx.compose.runtime:runtime-saveable-android:1.8.3": {
+      "pomSha256": "d67cb1afd04caa540cb852c415f5c24b9c0b6770bf46076f1dd8e542865670f0",
+      "artifacts": [
+        "ef81bbff631ffc2903df746bca008f1dee9e32ef923472d46be3e50384b02ea7"
+      ]
+    },
+    "androidx.compose.runtime:runtime-saveable:1.8.3": {
+      "pomSha256": "6227306852a088371b9d77a5f928927a5a2745c1c04e3bdf603358df1c5c2713",
+      "artifacts": []
+    },
+    "androidx.compose.runtime:runtime:1.8.3": {
+      "pomSha256": "2099f90dc5ba4ae73dcfb880da1d2b5c4eadb3f47c825065d8cba8452f45f6a5",
+      "artifacts": []
+    },
+    "androidx.compose.ui:ui-android:1.8.3": {
+      "pomSha256": "7384663a766e3131682264f2f3a66d779db0e1d6ea1295c7e364e2b4eed60d1c",
+      "artifacts": [
+        "b4ac5be52e40d0c58003eea027f544264cada8ac94b17e8cf5b0acd2666fcd35"
+      ]
+    },
+    "androidx.compose.ui:ui-geometry-android:1.8.3": {
+      "pomSha256": "cad8c47bbdca615c96c2d80e487a41e94cfe2ab8f4c5a491ec80a6be02f71bb6",
+      "artifacts": [
+        "3b6b6a3871ce3a31565db6e6832556a0d1da555f5c8449ff937df4f509e06edb"
+      ]
+    },
+    "androidx.compose.ui:ui-geometry:1.8.3": {
+      "pomSha256": "992d9422051da57e90986d1a907179949e5c55a59b3e8ea36e38544d6dbf2d5b",
+      "artifacts": []
+    },
+    "androidx.compose.ui:ui-graphics-android:1.8.3": {
+      "pomSha256": "58f04cf2001375b70b98ce3a7532391247108cd989891578efa4e3959bb219ae",
+      "artifacts": [
+        "f247cdeda5e98865b9d9465fda28ae44418191cb62a82678e2df3e48615ccf18"
+      ]
+    },
+    "androidx.compose.ui:ui-graphics:1.8.3": {
+      "pomSha256": "074576fb046d768f4e68b4a751936dbe1dad8d909144c8a80e949c32b414913d",
+      "artifacts": []
+    },
+    "androidx.compose.ui:ui-text-android:1.8.3": {
+      "pomSha256": "4a68eca940c799a726c493c6b280cd0b938e86dd87f748763450268e1ce6af64",
+      "artifacts": [
+        "3d8191b48686e48a843b4902143bd339e6bfa6a037c485cf281b83c4c4c72a93"
+      ]
+    },
+    "androidx.compose.ui:ui-text:1.8.3": {
+      "pomSha256": "73ace8394e5d16deac27d9af6fba4904d332ddbb82abde7d0df47ca4060c0688",
+      "artifacts": []
+    },
+    "androidx.compose.ui:ui-unit-android:1.8.3": {
+      "pomSha256": "7f6ebcae5ca9ec45c9f6e467cd96a7cb17bfe770cbe598afd767f1e14bf1ec80",
+      "artifacts": [
+        "1bc7011b35339e016b61787e6ef854817b11d35ea3a70b47142d7d3336e6f386"
+      ]
+    },
+    "androidx.compose.ui:ui-unit:1.8.3": {
+      "pomSha256": "daa7bad4f194e56fe88eb3fe96136e89143a374892a914157235fd10b6e679d2",
+      "artifacts": []
+    },
+    "androidx.compose.ui:ui-util-android:1.8.3": {
+      "pomSha256": "b99318c68c2354573ab02ab01ffb2539459becc07e4a20357290f58defab5b50",
+      "artifacts": [
+        "123818b76aa874db83cc9e842dd9fa14eae4c5f82bec1d7336bd354d98651dfe"
+      ]
+    },
+    "androidx.compose.ui:ui-util:1.8.3": {
+      "pomSha256": "27fc379c887b5a9a2276f4b523bf472ee77cd2b7840d7d7b249d528919c45ede",
+      "artifacts": []
+    },
+    "androidx.compose.ui:ui:1.8.3": {
+      "pomSha256": "6025e1efa9969995c90793c2b4b2c81abb2ee24494d24f09f28f1daf89460127",
+      "artifacts": []
+    },
+    "androidx.compose:compose-bom:2025.06.01": {
+      "pomSha256": "ef9b4ba4e0c4236e6da565bdb471b196aab00d2cd5ccfcf246b5ee8ff1e94ee9",
+      "artifacts": []
+    },
+    "androidx.concurrent:concurrent-futures-ktx:1.1.0": {
+      "pomSha256": "c903f8f51e3f4ea5e7e1f0a6fe3be873c357221227d103d08d7fd042f4b7570c",
+      "artifacts": [
+        "1968bf52039e38636aa6f114cd17d7256919d1e8997417716fef9d1da1f24d85"
+      ]
+    },
+    "androidx.concurrent:concurrent-futures:1.1.0": {
+      "pomSha256": "748a34eb5d13d19d187adecaea82667fded5f1b0b98a655e13ed2e4a8b3d8ae6",
+      "artifacts": [
+        "0ce067c514a0d1049d1bebdf709e344ed3266fe9744275682937cdcb13334e9e"
+      ]
+    },
+    "androidx.core:core-ktx:1.16.0": {
+      "pomSha256": "4660cfb606ed89828ba3e10f79b29809ffb677ee5d2346fe9bcb03dfc4b9b645",
+      "artifacts": [
+        "1766dbd82f64a12dcd359ecb6f15f3cf35db4d66d22961a7c51b2ffc6468314c"
+      ]
+    },
+    "androidx.core:core-viewtree:1.0.0": {
+      "pomSha256": "d4f2ed1176fa8c5612b80f74c952a8799142a9ed36022a1a238fde5b140580d9",
+      "artifacts": [
+        "dc1b678d58ebcf2bfa1587be68ff826694ce3d221251b9ef30d4d4b36297e6de"
+      ]
+    },
+    "androidx.core:core:1.16.0": {
+      "pomSha256": "074974a1550221af7aa85ded6903c3d84c9bdedf9e6b4ff3b0cb471329b5ac77",
+      "artifacts": [
+        "6bf03d39dbe3744acce227d3b697374c3625aae1025fbec8ad9fd7bd58bce431"
+      ]
+    },
+    "androidx.customview:customview-poolingcontainer:1.0.0": {
+      "pomSha256": "9fa62196c4c4e79b6a58dbb38a8c022bef8db21989d7dae2da0f6f5b66289a9c",
+      "artifacts": [
+        "3584102fc49bf399c56e3b7be4bfe12000c46112320cd8cf85cc0a8f93f3e752"
+      ]
+    },
+    "androidx.customview:customview:1.0.0": {
+      "pomSha256": "ce9e47b87184f5bd5e139e9becd5b26476d42d78c31bf2fdedc37acb41b9ad49",
+      "artifacts": [
+        "20e5b8f6526a34595a604f56718da81167c0b40a7a94a57daa355663f2594df2"
+      ]
+    },
+    "androidx.datastore:datastore-android:1.3.0": {
+      "pomSha256": "ab652694e3d2087e14a71b059c85e18df9d8e77c724418ec7a093531dcaa08af",
+      "artifacts": [
+        "c187fea8ed248eb25f43c71af323e6108db1d3c35945120983954f77e7769eb9"
+      ]
+    },
+    "androidx.datastore:datastore-core-android:1.3.0": {
+      "pomSha256": "f3f3058388634d0f012467e6123a11c2095a9d866fcd828199e8cd5262f9f759",
+      "artifacts": [
+        "b518fe03fbc8cdd1bfaddc1c0ab8a28ba7570c42462ac0a8c6caed7a389cc875"
+      ]
+    },
+    "androidx.datastore:datastore-core-okio-jvm:1.3.0": {
+      "pomSha256": "591f0db1357b30378a0338682404235232f96e5f735ccfb16a01639cebfb44b0",
+      "artifacts": [
+        "54cbdc3e6d477078a2f1dba43b6328870dfee23cc356da5aa1b2271151cc29a4"
+      ]
+    },
+    "androidx.datastore:datastore-core-okio:1.3.0": {
+      "pomSha256": "2d6dfefc1e8250d1d800be75d017948daeb66b274f132f83d67d4f947d92fb00",
+      "artifacts": []
+    },
+    "androidx.datastore:datastore-core:1.3.0": {
+      "pomSha256": "8b3751f99c7aeda91cd5b73a8db4fff5166071519be5e1c48ce0899c1eb3eb6a",
+      "artifacts": []
+    },
+    "androidx.datastore:datastore-preferences-android:1.3.0": {
+      "pomSha256": "1d67392ce291d87885075f63e3062c0d2a3a0a033a9a411dbb7f67a3e41335c3",
+      "artifacts": [
+        "1a6b2952271e6f87262338eb530561d5f4b47ef4bd9aadd2793b3beae10c69b5"
+      ]
+    },
+    "androidx.datastore:datastore-preferences-core-android:1.3.0": {
+      "pomSha256": "61ab89cb3ea80e72b505666f47759cf5a0094bf24dbc833817778179bc6ef23b",
+      "artifacts": [
+        "45f9b2b89e8122c347e53ed1cfd6f30850777521f078d707d5b06ffa5337876a"
+      ]
+    },
+    "androidx.datastore:datastore-preferences-core:1.3.0": {
+      "pomSha256": "4e084f2720ae39f0727b4ee9170f20af7eea49b80af64250237ee9dd06c8109c",
+      "artifacts": []
+    },
+    "androidx.datastore:datastore-preferences-external-protobuf:1.3.0": {
+      "pomSha256": "62a2d080d027b3fd6581f1dd49b12b630d79303dd98b143b1e029ec8cbfcaf1d",
+      "artifacts": [
+        "59226809f449e3409058da98df384a18d24316443e4a1d657e63771b5fd87e36"
+      ]
+    },
+    "androidx.datastore:datastore-preferences-proto:1.3.0": {
+      "pomSha256": "656b948a03ca0c1c95f26cd67bf2f2a4090282ed87e29f5cbe72be1bd970412e",
+      "artifacts": [
+        "dcc7a13558f43a9742aefcf2ece90b44f12c0f6c873d19f0b64460198e2d4eed"
+      ]
+    },
+    "androidx.datastore:datastore-preferences:1.3.0": {
+      "pomSha256": "b18a1452be4ebbfacc0374379c5f9895e9bd81b6ac5e87403b93fa25ed96ea3e",
+      "artifacts": []
+    },
+    "androidx.datastore:datastore:1.3.0": {
+      "pomSha256": "4c9d8cc805fd0a939d20914e64a2efe5feb98c65199edf01fcf2cc5b69affe7e",
+      "artifacts": []
+    },
+    "androidx.documentfile:documentfile:1.0.1": {
+      "pomSha256": "7a11bf7829b9bcad5caf98b957f8ec15662ec5dab07ba2433331f7c476c6baac",
+      "artifacts": [
+        "9c53d24ce55e7836b44e5a85b3f6fa006fdf8742d4a1a80d8d432deea66108d1"
+      ]
+    },
+    "androidx.emoji2:emoji2:1.4.0": {
+      "pomSha256": "1f67221484f7d1260eb6e2b490cd4e7046bf5cb536276d79f972ad3f198b474d",
+      "artifacts": [
+        "433febd3434a45667176c76a64f3f205ca6335a6b544c5b5d57f25a38a375242"
+      ]
+    },
+    "androidx.exifinterface:exifinterface:1.4.2": {
+      "pomSha256": "b11c0763f3094d28664412b7d3316bb5d1a785810fb7b4fe5f356cd5cbcd1725",
+      "artifacts": [
+        "6bb2b68682a2023c55f35f941444ffea0157947b061e4fd7606ba935e2e77425"
+      ]
+    },
+    "androidx.fragment:fragment:1.8.9": {
+      "pomSha256": "8135a58b3ec9379c8afb4acce863f35e7654fddf1c602191f8d3feec13afed36",
+      "artifacts": [
+        "12de5b89ab6641c1d8da82b63dc816652622b06d2781b949b6fbd2dff9fac492"
+      ]
+    },
+    "androidx.graphics:graphics-path:1.0.1": {
+      "pomSha256": "866fb357c7146f5f7678ad44e4bc6c2823d568defce1ed2805bb6c899606b228",
+      "artifacts": [
+        "8ca4032b6d79b351f0b59ad4b580eddbb9423e1652f7c958830687f1eee2ec03"
+      ]
+    },
+    "androidx.interpolator:interpolator:1.0.0": {
+      "pomSha256": "0ddc07cc39699f48ecd9ec894b5830c0f09e22e82959294edf37217224c88b7b",
+      "artifacts": [
+        "33193135a64fe21fa2c35eec6688f1a76e512606c0fc83dc1b689e37add7732a"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-common-java8:2.9.0": {
+      "pomSha256": "cf39cf63ce66ddeb9f3b307d62c1044657acfee1fd9bfe438956cfa27955ef3d",
+      "artifacts": [
+        "497dd84de9f2fd46324f25f9a3af032d3a23d087e87af515c4b19435f6d6a651"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-common-jvm:2.9.0": {
+      "pomSha256": "54beadc62da90fbe038dc30ead0605522b3697b61d91f76e4969b60202483cc1",
+      "artifacts": [
+        "37d89b2101f074ac6c260917dabb185607645ee200aa3018c7c5bde70edcf184"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-common:2.9.0": {
+      "pomSha256": "68635facb41349b06b869ce8fb2c630edd25a57c97e5ff098bbad15ffcf31ff6",
+      "artifacts": []
+    },
+    "androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.0": {
+      "pomSha256": "2377ddd0f460ea0fe4d16657e8f28cb6004b34e5713004f6d0b8d6b45b36a259",
+      "artifacts": [
+        "f265a665819e51322b3eea2a6ff2ab90186cadf1787a81dd8bef0ce93c4a600a"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-livedata-core:2.9.0": {
+      "pomSha256": "20363ac987c763e48870234a0ed8fc7fd9a0597583e7c8b3b8416def7354a271",
+      "artifacts": [
+        "64f96b52c70895807f3020e2e8fa11f3ec2da9c157f62aae21a2c9d3b484a747"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-livedata:2.9.0": {
+      "pomSha256": "87056d33c5acdddde61b7b44599872b5b7271be27e140a393ca688d456aef908",
+      "artifacts": [
+        "46382ddfba348db97846cfa81d67d72304dc156bb96224358b429fe748bc6ab4"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-process:2.9.0": {
+      "pomSha256": "ad86f00646155856b83456ed6f04c3165c4f9205088d555b93c7e7deaf560916",
+      "artifacts": [
+        "c15ce972cc28936a596a9cd256b32f22768a61d5dd810fa56ba945522a0ee7a5"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-runtime-android:2.9.0": {
+      "pomSha256": "5db05802cf540514dcc2ea581a4f67f996546cba568d9bb14bf273b29cd0233c",
+      "artifacts": [
+        "d4223ae6a8447677267dff22863b6d6988ca68b4d27ca6d74b81046b04794257"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-runtime-compose-android:2.9.0": {
+      "pomSha256": "e3dbf11d16a7872fa98add5916522f4b179eb3d5f4fc1e04748d38f5910df060",
+      "artifacts": [
+        "5f68bcea0cf1daac5320a2fd57157237e30945cf7e6586717fbc714b35b32e6f"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-runtime-compose:2.9.0": {
+      "pomSha256": "5d48bc6e62c8075b3b30bc9f12fc0c376a69a95388f47a442117bc6b18392099",
+      "artifacts": []
+    },
+    "androidx.lifecycle:lifecycle-runtime-ktx-android:2.9.0": {
+      "pomSha256": "8dd817a9b6767b2b9e93698bda6b6c9dd72306a530c028f807bcdf36b31cb119",
+      "artifacts": [
+        "333fa2ce6db70ac372b791dfeba99c02c0d97b1a8b4ab4a84d4762466d12b207"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-runtime-ktx:2.9.0": {
+      "pomSha256": "b4545401dbd055fd04903d4698623d5bb406dde2e32800d80a61e5824f477da9",
+      "artifacts": []
+    },
+    "androidx.lifecycle:lifecycle-runtime:2.9.0": {
+      "pomSha256": "d0142198185e44992924aa0e8c67b0795b127139203abc8715957c56756957f8",
+      "artifacts": []
+    },
+    "androidx.lifecycle:lifecycle-service:2.9.0": {
+      "pomSha256": "6838189383bee6e2e448b54c4aa72fe3929a81eff2ccc569dfdd2beca4898f5e",
+      "artifacts": [
+        "c78580ca38cd14e474323861ebe822d04c04231cb7e59b24de801406a511376a"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-viewmodel-android:2.9.0": {
+      "pomSha256": "75d3a8e143aaaf489b07434c4e30030942b1a82a699b229bf887377b603c3f91",
+      "artifacts": [
+        "fa9d7511a8fe0d5edc53099706d64f37621dcfeb9f2c557369ed83645fc87a23"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0": {
+      "pomSha256": "99c4a88d509f4c43a681d14d20948182641691b74f6dd6c4d6996caabbd4c677",
+      "artifacts": [
+        "af42fd84f4e52b44dcabaf9ecf94120553929bc1a059beb2240a9ec1dbee814f"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.9.0": {
+      "pomSha256": "02f383e140adfc2bd5c94e15ec994d9069a4d4538a3700f5cf31b2774f156768",
+      "artifacts": [
+        "db367838716e55866823c6deed62fcec23fce487bf2a8fa565a36f149ab3d1ef"
+      ]
+    },
+    "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.9.0": {
+      "pomSha256": "76ca959ea12a33a3c608fd1f2448a48909d38e930d8f38c580374ea60f1a38cc",
+      "artifacts": []
+    },
+    "androidx.lifecycle:lifecycle-viewmodel:2.9.0": {
+      "pomSha256": "f49d4b68b6854111e4d193c90c9a4b75840ad2f373b2ed1842cb56ac50b6a846",
+      "artifacts": [
+        "cab404b05d5faed209104a2aef14c0cbb316ab9fabe4a8f037b043e5d2f43435"
+      ]
+    },
+    "androidx.loader:loader:1.0.0": {
+      "pomSha256": "c978d550808b47434aa49a63164110a50b55b0bcc6160a93a2e37d5110df8c5e",
+      "artifacts": [
+        "11f735cb3b55c458d470bed9e25254375b518b4b1bad6926783a7026db0f5025"
+      ]
+    },
+    "androidx.paging:paging-common-android:3.3.6": {
+      "pomSha256": "a9ccfbd82978609aa02caca15f52d8de0e897188c2f62254dce4178dbd5f3e1b",
+      "artifacts": [
+        "792a0dd40a6d0c51f4935482d8aeb740136b80e60ae15cda7db2a24d37b669ce"
+      ]
+    },
+    "androidx.paging:paging-common:3.3.6": {
+      "pomSha256": "42a12eb7a5ab78c6b6e102b6c3448bce19827de163ddfc2f4fa3d3f6c0a37740",
+      "artifacts": []
+    },
+    "androidx.paging:paging-compose-android:3.3.6": {
+      "pomSha256": "747b3d673323132281cb05235ffb470b6344cb5488d10fe0c384ec1df6b602f3",
+      "artifacts": [
+        "c21f60e6b8a2bd86eb2083e42de6430eb017976bc780133c66d44ed423180192"
+      ]
+    },
+    "androidx.paging:paging-compose:3.3.6": {
+      "pomSha256": "675c35c5dea77f71af567ae904f6ce72cc7cbe879e9181fc6a4d22ac4c9dcc91",
+      "artifacts": []
+    },
+    "androidx.profileinstaller:profileinstaller:1.4.0": {
+      "pomSha256": "d5fe39981a3b4b7c39585130da0bfc93835054c834a438d3e63e065e5f78be55",
+      "artifacts": [
+        "d502141fcce902430f62b674c32aecd0f75262e7ee2cd15c74adb617cd13130a"
+      ]
+    },
+    "androidx.room:room-common-jvm:2.8.4": {
+      "pomSha256": "1c8f5bd00eacfc4be791390ad0d953aaee07644a91425490de790245d36a73b7",
+      "artifacts": [
+        "dc7b4e1a75a790f29c97afd5516b8bf8002d9b6e83e295bc569b33566f3b1ec0"
+      ]
+    },
+    "androidx.room:room-common:2.8.4": {
+      "pomSha256": "681e3f6fd5308843aefbbb474dd3638ffd685d1ad8f7fa96b8559e5ea5ef202c",
+      "artifacts": []
+    },
+    "androidx.room:room-ktx:2.8.4": {
+      "pomSha256": "98d08b944bfe947e4e3e3ae666473a8db19ae86e1ad5636d2904b6cc80bc80e4",
+      "artifacts": [
+        "f604fde53e259759633467c11bd3d8a36cc24d6ddb88894c96cddc5a0cf1f83d"
+      ]
+    },
+    "androidx.room:room-paging-android:2.8.4": {
+      "pomSha256": "ed334cb6d9bf0e7858b6e8e7fa8cc462e54d7ba26bad9484f3fa9fc6cf4fbc21",
+      "artifacts": [
+        "a459735434922d92eec7808054393a5b1e7950e04f0d77d027b43be9021b51d5"
+      ]
+    },
+    "androidx.room:room-paging:2.8.4": {
+      "pomSha256": "d6f601d54724096c65c2460db893711c6da6a7749761ebfea9fa352f7eec1160",
+      "artifacts": []
+    },
+    "androidx.room:room-runtime-android:2.8.4": {
+      "pomSha256": "80a198f43bb65bd7b0edfa19ee2c26e144bf379141c30be3a071a47a157b65e7",
+      "artifacts": [
+        "3293575082024fa0a92b081c4e2d0609f14b5c109635ec227bc509db141a4e20"
+      ]
+    },
+    "androidx.room:room-runtime:2.8.4": {
+      "pomSha256": "61b13fd132369dd7c3fb9d0b3076ceefa8e57ec699a8e03fb87aecb81cedd99b",
+      "artifacts": []
+    },
+    "androidx.savedstate:savedstate-android:1.3.0": {
+      "pomSha256": "22ebd3d8b1e2c8bfa0ded23fe2f0179961683daa25b476deb991350c6ca94c38",
+      "artifacts": [
+        "210b6909bbd515dbf415905cbb220fca93a87fa546838f754077ebc8e0488590"
+      ]
+    },
+    "androidx.savedstate:savedstate-ktx:1.3.0": {
+      "pomSha256": "757560e597520f07044b1e033bbde439bf1fbe47eec916186735eed0999cd3e7",
+      "artifacts": [
+        "45c5f6412840f50de7bf7d9b1c4a8c81ea236832487a1138cb320b8c997416f2"
+      ]
+    },
+    "androidx.savedstate:savedstate:1.3.0": {
+      "pomSha256": "dc5a6c42f3f4ecd3747f6dfece0cdf68b67842c70945686af17c74030df9e515",
+      "artifacts": []
+    },
+    "androidx.sqlite:sqlite-android:2.6.2": {
+      "pomSha256": "1407cf53cb40a813434903fee252420f32c109f88560ac8adc771858260d7a3c",
+      "artifacts": [
+        "514f8de4f7bdba2fa8d748d2b22fdcdfb623bd3770a667bf0adc0ad259f03ed2"
+      ]
+    },
+    "androidx.sqlite:sqlite-bundled-android:2.6.2": {
+      "pomSha256": "fe8af7fc6676bdbcbb14610099227493544aaf649ea885f66492b7ce4a176350",
+      "artifacts": [
+        "156a1fb3a89a18620c5aacc57b340897e5a5d7efed202eda7b0972ddc551a9df"
+      ]
+    },
+    "androidx.sqlite:sqlite-bundled:2.6.2": {
+      "pomSha256": "ba7c4c3b39d1cfac2e6da681baeea7f09a69a5ad82c5b30f82d9ad95e5f13972",
+      "artifacts": []
+    },
+    "androidx.sqlite:sqlite-framework-android:2.6.2": {
+      "pomSha256": "2618a352ec57009a207575830c11bd6013cd5548df472a0dba678c64821c0446",
+      "artifacts": [
+        "b19125c7fff34222e0f380361fc179ab214e4d82e1a50b0c068ca26c851a6231"
+      ]
+    },
+    "androidx.sqlite:sqlite-framework:2.6.2": {
+      "pomSha256": "90fbc4507a16d2969558d9e9f14f1a11898c6eda789b703f49a79d77b5a297b2",
+      "artifacts": []
+    },
+    "androidx.sqlite:sqlite:2.6.2": {
+      "pomSha256": "ed8ff01ea1ae7c9903126a8217e6b0d849cfc2cdf198d0ee93513d96b700f41c",
+      "artifacts": []
+    },
+    "androidx.startup:startup-runtime:1.1.1": {
+      "pomSha256": "f4114b5c6859bb1bc3caf281cb6d6f25998fa7f7292c64ceaea74a93210e746b",
+      "artifacts": [
+        "e0a6329a371262fe4c450372b70fdaf33b769ef6917094723787cfce896b1dd3"
+      ]
+    },
+    "androidx.tracing:tracing-android:2.0.1": {
+      "pomSha256": "3b2064b50360f6c62356fced0327e9c79feb74b04257c6cfd025042d97ded2fb",
+      "artifacts": [
+        "d094408d356e5d2556db33362eae90c4fe0f22856c72982dd5f744634fdeb18c"
+      ]
+    },
+    "androidx.tracing:tracing-ktx:2.0.1": {
+      "pomSha256": "2dc476b4f6057b75f0e6622f4092ba95f659ef5172e8749cab0f69ce59b6c42c",
+      "artifacts": [
+        "65b9f5d4ebbc7c286379d0dd9d70c68b1ed68c7452c22541f501e8467c31282d"
+      ]
+    },
+    "androidx.tracing:tracing:2.0.1": {
+      "pomSha256": "bf8746609d53a10652196df9ca5e275ce0a186930fdc41cb25e411ca849d62d6",
+      "artifacts": []
+    },
+    "androidx.versionedparcelable:versionedparcelable:1.1.1": {
+      "pomSha256": "5f51e65873ca612de3838fa90d2ee95b8d040efd31b9c390a19bf94d615cdb2f",
+      "artifacts": [
+        "57e8d93260d18d5b9007c9eed3c64ad159de90c8609ebfc74a347cbd514535a4"
+      ]
+    },
+    "androidx.viewpager:viewpager:1.0.0": {
+      "pomSha256": "1f72f836339d03c6eb013f65075e76ca87075a577578eb4f95f74a3a5d253128",
+      "artifacts": [
+        "147af4e14a1984010d8f155e5e19d781f03c1d70dfed02a8e0d18428b8fc8682"
+      ]
+    },
+    "androidx.window:window-core-android:1.5.1": {
+      "pomSha256": "462ae4100a7bc2a0f1ff61f615091fc330d6e67aa0341747270c3d714c90e0cd",
+      "artifacts": [
+        "b289ce85090f1f976569fa92bbac84011f54ba1b21f0ce883655b34c8f9f9eea"
+      ]
+    },
+    "androidx.window:window-core:1.5.1": {
+      "pomSha256": "2548b2304530681d715d636d5eec3f7cda29ffaa8e7b003ac97ba90b79f3d40d",
+      "artifacts": []
+    },
+    "androidx.window:window:1.5.1": {
+      "pomSha256": "0a28fe17feed5c0175fbfbd6722ce78c575a1eeac09d858f08e49353f34707e0",
+      "artifacts": [
+        "3c3061966f012fc22f2e99701f683e82e732435ae2f2a1d5b2f99d82bb7b8864"
+      ]
+    },
+    "androidx.work:work-runtime-ktx:2.10.0": {
+      "pomSha256": "127377f175877ec97282f98dd23e71e3c1f7ec949aa0c2d02a450db4dd0584bd",
+      "artifacts": [
+        "8273692ccc17094d746cafd04b679f259cbf501b2ea8475e349fba24ed3976b9"
+      ]
+    },
+    "androidx.work:work-runtime:2.10.0": {
+      "pomSha256": "1aecc515671afc84b5ff5b28d5895efb443dddab49dd5cc7400976a1cfc510c9",
+      "artifacts": [
+        "2ee10cd3345a7e6e37d50898fd0ebdd91e4a59267aa928effa8e507dae85c88b"
+      ]
+    },
+    "com.android.billingclient:billing:9.1.0": {
+      "pomSha256": "99b89f5001a3df1971e5c5b8c3742f1c5197848a64c8105bbc81b4fa6299a545",
+      "artifacts": [
+        "d28286d4e4c18725510980de01211d9b72501e7146d96817fa0c9999af9b0d22"
+      ]
+    },
+    "com.esri.geometry:esri-geometry-api:2.2.4": {
+      "pomSha256": "3a8fa70e0677071208b5ccee96bb0b373767ffbf23162eb9ef563dca034f8f5f",
+      "artifacts": [
+        "eb5e0c8395a9a27d5192b6c54bfbe04d8f4565de73794d997e1fc80ab493f90d"
+      ]
+    },
+    "com.fasterxml.jackson.core:jackson-core:2.9.6": {
+      "pomSha256": "7ddd2dc8fd0a634e27e306a9aa854959ccc47245797628c50bc8371775a42e32",
+      "artifacts": [
+        "fab8746aedd6427788ee390ea04d438ec141bff7eb3476f8bdd5d9110fb2718a"
+      ]
+    },
+    "com.google.android.datatransport:transport-api:3.0.0": {
+      "pomSha256": "1537bebd44da2eb7e3be73fc4259e1116f2a68a5305f4fe23c6cea9a6f84f791",
+      "artifacts": [
+        "4e6983c0703b357df6f1c6ceacb1b5dfc2c5006a789c799fec2298b2b5337466"
+      ]
+    },
+    "com.google.android.datatransport:transport-backend-cct:3.1.8": {
+      "pomSha256": "42698696ebd5af1eb33f917e582baa416e289a21cd83ee329c255852216b8a78",
+      "artifacts": [
+        "e17edd1ef7fd475c90baa4e39422332f27087d34bcb46cb48ce86af9a54a612e"
+      ]
+    },
+    "com.google.android.datatransport:transport-runtime:3.1.8": {
+      "pomSha256": "d6ff762251fb35594afe5efe860b5871064e18c0bd1bdb77084e3573f90e4e8f",
+      "artifacts": [
+        "cb9353ef1791ae17097d878ca711e25a9c32cec9042adc49b00cadfee1a7290b"
+      ]
+    },
+    "com.google.android.gms:play-services-base:18.5.0": {
+      "pomSha256": "2570b515c2717af386c890e97f644782e3f86da7b677a4ff1036147e7ea622a4",
+      "artifacts": [
+        "59a5c0c2da12311d75d965ce1f419498536b1a167fb28ff7dfc2dfd9cefa4157"
+      ]
+    },
+    "com.google.android.gms:play-services-basement:18.9.0": {
+      "pomSha256": "601ef047167c6c280b8b190942d9e94a0463e891acd9c6ccf532eb298a5efe5b",
+      "artifacts": [
+        "c6ed7236b1b3ce0296b508a5c0a09108fd52d83559d35cad2639505cd04ab255"
+      ]
+    },
+    "com.google.android.gms:play-services-location:21.0.1": {
+      "pomSha256": "8ae68d07bd09884e86dd279442f7e88a4c41662f2fea9cb31efa0623a48483ac",
+      "artifacts": [
+        "bc89f1a6118965216b45439e7e9360a6f2054654e4823354768e7884fb3b6b0c"
+      ]
+    },
+    "com.google.android.gms:play-services-tasks:18.2.0": {
+      "pomSha256": "6b99c48a895d155e58abcee66cc22146db83abd5d84caf6c8f7a2aea9b1bcd21",
+      "artifacts": [
+        "7f2aaa8f502068eaf54356ca92aec04271d6e7c416c52c45c0d23440fcbd1654"
+      ]
+    },
+    "com.google.android.play:core-common:2.0.4": {
+      "pomSha256": "8dde961cb7e10ca5fa0e55261e7babc1e340bf5972ba3538c7cf4e34d338efbe",
+      "artifacts": [
+        "36400824014fc61d9379b13dd1ab13f6514847fb04347c0fdfe618bace78f3ed"
+      ]
+    },
+    "com.google.android.play:integrity:1.6.0": {
+      "pomSha256": "a85716bce77406e4338a6952181088be0571b31799545209c2aa0504edb08d4d",
+      "artifacts": [
+        "e6a0a877245b1f8c59aeccfa6c2b9bc07a7e44b551e3a372ce091533976b5188"
+      ]
+    },
+    "com.google.android.play:review:2.0.2": {
+      "pomSha256": "df4f2490cddb651ffbe784c8c5b979ec69996bc687ca7cd678c7d5f65b2897e8",
+      "artifacts": [
+        "1602026678231dba0f7482d1244e45ff83d9ff22fc8b6d6be8961228ac7a32dd"
+      ]
+    },
+    "com.google.code.gson:gson:2.13.2": {
+      "pomSha256": "3aa06aa7c0f9af092961a42d09578e4324be146348a0ee6ed47857f7c2677b76",
+      "artifacts": [
+        "dd0ce1b55a3ed2080cb70f9c655850cda86c206862310009dcb5e5c95265a5e0"
+      ]
+    },
+    "com.google.errorprone:error_prone_annotations:2.41.0": {
+      "pomSha256": "a151df1e2e0b48618d8b06a180748a29b3abb39b1b2396f6a1c879a727488c6e",
+      "artifacts": [
+        "a56e782b5b50811ac204073a355a21d915a2107fce13ec711331ad036f660fcc"
+      ]
+    },
+    "com.google.firebase:firebase-encoders-json:18.0.0": {
+      "pomSha256": "3a7d59795a799683afa6435931066c5bb634adfebd2883a08b4765f38cdd3ea1",
+      "artifacts": [
+        "80aece7e1ef58957ca2fc1957bc9208ec92a3a9528201331d3c63e3182570f97"
+      ]
+    },
+    "com.google.firebase:firebase-encoders-proto:16.0.0": {
+      "pomSha256": "5f5fb74af3fff0e1f961fcb5f3f99267c103b16a23c89b556c8cb4a711a8dcb2",
+      "artifacts": [
+        "293db96a0d1d43f033167881b638d8fde844e4e5495f5101cf52295765295e0e"
+      ]
+    },
+    "com.google.firebase:firebase-encoders:17.0.0": {
+      "pomSha256": "423575e3500e9910e3aa83f9d7a6d755b5f76ac591823baf67570fb6ce7ea816",
+      "artifacts": [
+        "282a5a703f9b7eb56508dde97ea918e95d73318b157050f457f7a86dca750150"
+      ]
+    },
+    "com.google.guava:listenablefuture:1.0": {
+      "pomSha256": "53873caf26bc1ed8a567ea6c939ab2aaa3f47a5e32d5cade95ddf5080d23238a",
+      "artifacts": [
+        "e4ad7607e5c0477c6f890ef26a49cb8d1bb4dffb650bab4502afee64644e3069"
+      ]
+    },
+    "com.jakewharton.timber:timber:5.0.1": {
+      "pomSha256": "47caeb2d78b331edf9eebff21de4599cec469ec75f9c9cf118e42455412ce917",
+      "artifacts": [
+        "c6edddfcc8eff42a1604c8577fcfa4b4ffd9f252122c52ea36cfe7967f512f71"
+      ]
+    },
+    "com.squareup.okhttp3:okhttp:4.12.0": {
+      "pomSha256": "7c737040a9419522e7c50cc027416a70fe7c7629e52b219935ade6b4119c7d38",
+      "artifacts": [
+        "b1050081b14bb7a3a7e55a4d3ef01b5dcfabc453b4573a4fc019767191d5f4e0"
+      ]
+    },
+    "com.squareup.okio:okio-jvm:3.17.0": {
+      "pomSha256": "e4e44237a66f4091bc0f5b1d5a2bbe228ac014ab3c0f918cd6fc02ba31999030",
+      "artifacts": [
+        "3b13dcc3e1573047c2d507fc4f7fcb0bb0cbcd9d395da21d20e09406e2cd6a73"
+      ]
+    },
+    "com.squareup.okio:okio:3.17.0": {
+      "pomSha256": "15b4831e84f5ca52dd37c1d6e1709a2907e2e9bc2a9c3ea13f282031de0c0135",
+      "artifacts": []
+    },
+    "javax.inject:javax.inject:1": {
+      "pomSha256": "943e12b100627804638fa285805a0ab788a680266531e650921ebfe4621a8bfa",
+      "artifacts": [
+        "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff"
+      ]
+    },
+    "org.jetbrains.kotlin:kotlin-stdlib-common:2.2.20": {
+      "pomSha256": "fd789cb32e2410ecc683b8739f7b75003d09da33330c3f8a65c269db6b2f6c75",
+      "artifacts": []
+    },
+    "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.21": {
+      "pomSha256": "9bb107d5d5e3930bc5977f007a43cd20b7d24d91b1c1e528ea6ee0f248f14d36",
+      "artifacts": [
+        "33d148db0e11debd0d90677d28242bced907f9c77730000fd597867089039d86"
+      ]
+    },
+    "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21": {
+      "pomSha256": "3839d728d7c309a5c368b0270b44b4f1c7878ff5ca5d32a9a204faa3491459d8",
+      "artifacts": [
+        "3db752a30074f06ee6c57984aa6f27da44f4d2bbc7f5442651f6988f1cb2b7d7"
+      ]
+    },
+    "org.jetbrains.kotlin:kotlin-stdlib:2.2.20": {
+      "pomSha256": "4a8b086e6431bcf623637f52b2ff192e1adb913838742e5c0eea70a8dee429c4",
+      "artifacts": [
+        "8836ccffd3585fadda9901244b20d42901d2f3cd581058d8434e2ffabcf3a3e7"
+      ]
+    },
+    "org.jetbrains.kotlinx:atomicfu-jvm:0.28.0": {
+      "pomSha256": "dd7fad5d5d4b21ca9db0788750b0997ba1db6882ded86e5212f5c83fc51facec",
+      "artifacts": [
+        "39576ec46b83412ff7a2909d24cccbba90400e91f9aa67b250309bc0872ecf52"
+      ]
+    },
+    "org.jetbrains.kotlinx:atomicfu:0.28.0": {
+      "pomSha256": "c9ba01ef3e6899d42cf070d59ba39d572fc5863bf296c729a99722c0647df6ca",
+      "artifacts": []
+    },
+    "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2": {
+      "pomSha256": "b92d3672e7f9e8f4c4e2ab187c3e31fecc506496396f4a5f27ee1c957a42b319",
+      "artifacts": [
+        "e713f1f874244115a07571065cffa0f24f5e78300e9720fea16de3af1d75fd41"
+      ]
+    },
+    "org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2": {
+      "pomSha256": "faf0c6538e53ddc0499a63664d8e763c216580b2e18e722ccbdf1b431a6afe26",
+      "artifacts": []
+    },
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2": {
+      "pomSha256": "658f576b96c832e7382406adb197d64d8e2e97de10e96dfa3700decfa2a60def",
+      "artifacts": [
+        "5ca175b38df331fd64155b35cd8cae1251fa9ee369709b36d42e0a288ccce3fd"
+      ]
+    },
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2": {
+      "pomSha256": "519da5400096f3462a4dae80783ad050413d4bc81ec7ae53fae76aef0ccbed4c",
+      "artifacts": []
+    },
+    "org.jetbrains.kotlinx:kotlinx-serialization-bom:1.7.3": {
+      "pomSha256": "4226a491c5b59ce909f73b65aa98944191c8dcac3825637c6be1069e6b589a46",
+      "artifacts": []
+    },
+    "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3": {
+      "pomSha256": "734f5f749208dd0bef3d98caa594cf9222afdf0fee5b6843347a8fe64e240427",
+      "artifacts": [
+        "f0adde45864144475385cf4aa7e0b7feb27f61fcf9472665ed98cc971b06b1eb"
+      ]
+    },
+    "org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3": {
+      "pomSha256": "31d111776b9af777ca167103f2d61fbeeaa32dae6dd6635906b76d8278ba5730",
+      "artifacts": []
+    },
+    "org.jetbrains:annotations:23.0.0": {
+      "pomSha256": "c9490f655132328df2cfbcfdf743f53fc3916d6c1d10437175a6ca6e3a67771c",
+      "artifacts": [
+        "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05"
+      ]
+    },
+    "org.jspecify:jspecify:1.0.0": {
+      "pomSha256": "cdab929a3b95211f43d2090c5e2d0dfe8465960e378bc32b35841dab324433a6",
+      "artifacts": [
+        "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab"
+      ]
+    },
+    "org.maplibre.gl:android-sdk-geojson:6.0.1": {
+      "pomSha256": "c4c5d3ca85dc344e0fbdf2c40a22eb2e55bdc5892b44e94377e54fa7bd0c28e2",
+      "artifacts": [
+        "0c4e4258ce258da9740c17c76f3ae90f89fcfa5822a797f5d466b35410571363"
+      ]
+    },
+    "org.maplibre.gl:android-sdk-turf:6.0.1": {
+      "pomSha256": "d1412707b1caac09be5bc25338189b9d89250806f7eb6be90655c0ff54b3f6f9",
+      "artifacts": [
+        "c0fd543d17fbd3b7c2e946515caf2d53b602f0eac1438ad4dca731d9a508af79"
+      ]
+    },
+    "org.maplibre.gl:android-sdk:13.4.1": {
+      "pomSha256": "57cd9e5f5597369c24084da088e6a0305207865d5f4f074b105d4a2c5384cd72",
+      "artifacts": [
+        "7d9b9f568ef4d9b07d20ab6dd9feb94801a74573d5828dcf84ee71dfb9545275"
+      ]
+    },
+    "org.maplibre.gl:maplibre-android-gestures:0.0.4": {
+      "pomSha256": "4f7f178c649295c89a4b5fa3927bc714ffb9e29866d66ca635c5f0415ea83f2e",
+      "artifacts": [
+        "44ff4fc2dd8bfbcf54a06f219e7ab40a2062eb6b4a10dcbf1f4e02b4a30c61af"
+      ]
+    }
+  }
+}

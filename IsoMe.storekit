@@ -1,87 +1,67 @@
 {
-  "identifier" : "IsoMeStore",
-  "nonRenewingSubscriptions" : [
-
-  ],
-  "products" : [
+  "identifier": "IsoMeStore",
+  "nonRenewingSubscriptions": [],
+  "products": [
     {
-      "displayPrice" : "10.00",
-      "familyShareable" : false,
-      "internalID" : "A50A1E75-7217-443E-8CF5-E36B64D1D64F",
-      "localizations" : [
-        {
-          "description" : "Unlock Whereday data export forever for your Apple ID.",
-          "displayName" : "Whereday Individual Lifetime",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "com.bontecou.isome.lifetime.individual",
-      "referenceName" : "Individual Lifetime Export",
-      "type" : "NonConsumable"
+      "displayPrice": "49.99", "familyShareable": false,
+      "internalID": "A50A1E75-7217-443E-8CF5-E36B64D1D64F",
+      "localizations": [{"description": "Track and export forever for your Apple Account.", "displayName": "Whereday Individual Lifetime", "locale": "en_US"}],
+      "productID": "com.bontecou.isome.lifetime.individual", "referenceName": "Individual Lifetime", "type": "NonConsumable"
     },
     {
-      "displayPrice" : "20.00",
-      "familyShareable" : true,
-      "internalID" : "86F588B9-F970-4411-A550-487F4E68195D",
-      "localizations" : [
-        {
-          "description" : "Unlock Whereday data export forever and share it with your Apple Family.",
-          "displayName" : "Whereday Family Lifetime",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "com.bontecou.isome.lifetime",
-      "referenceName" : "Family Lifetime Export",
-      "type" : "NonConsumable"
+      "displayPrice": "89.99", "familyShareable": true,
+      "internalID": "86F588B9-F970-4411-A550-487F4E68195D",
+      "localizations": [{"description": "Lifetime tracking and export with Apple Family Sharing.", "displayName": "Whereday Family Lifetime", "locale": "en_US"}],
+      "productID": "com.bontecou.isome.lifetime", "referenceName": "Family Lifetime", "type": "NonConsumable"
     },
     {
-      "displayPrice" : "10.00",
-      "familyShareable" : true,
-      "internalID" : "D081C3E1-934A-46E2-9952-13609560B334",
-      "localizations" : [
-        {
-          "description" : "Upgrade an Individual Lifetime purchase to Apple Family Sharing.",
-          "displayName" : "Whereday Family Upgrade",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "com.bontecou.isome.lifetime.family.upgrade",
-      "referenceName" : "Family Lifetime Upgrade",
-      "type" : "NonConsumable"
+      "displayPrice": "40.00", "familyShareable": true,
+      "internalID": "D081C3E1-934A-46E2-9952-13609560B334",
+      "localizations": [{"description": "Add Family Sharing to Individual Lifetime.", "displayName": "Whereday Family Upgrade", "locale": "en_US"}],
+      "productID": "com.bontecou.isome.lifetime.family.upgrade", "referenceName": "Family Lifetime Upgrade", "type": "NonConsumable"
     }
   ],
-  "settings" : {
-    "_failTransactionsEnabled" : false,
-    "_locale" : "en_US",
-    "_storefront" : "USA",
-    "_storeKitErrors" : [
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Load Products"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Purchase"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Verification"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "App Store Sync"
-      }
-    ]
-  },
-  "subscriptionGroups" : [
-
+  "settings": {"_failTransactionsEnabled": false, "_locale": "en_US", "_storefront": "USA", "_storeKitErrors": []},
+  "subscriptionGroups": [
+    {
+      "id": "F4D48C70-3182-4B6E-BBE2-2E95E3D6F500",
+      "name": "Whereday Tracking",
+      "localizations": [{"description": "Whereday tracking and export", "displayName": "Whereday", "locale": "en_US"}],
+      "subscriptions": [
+        {
+          "adHocOffers": [], "codeOffers": [], "displayPrice": "0.99", "familyShareable": false, "groupNumber": 2,
+          "internalID": "1CB8980C-E264-4F8B-9401-C213EF324501",
+          "introductoryOffer": {"internalID": "B09AC43C-0001-4CFA-AB80-111111111111", "numberOfPeriods": 1, "paymentMode": "free", "subscriptionPeriod": "P1W"},
+          "localizations": [{"description": "Individual tracking, billed weekly.", "displayName": "Whereday Individual Weekly", "locale": "en_US"}],
+          "productID": "com.bontecou.isome.individual.weekly", "recurringSubscriptionPeriod": "P1W", "referenceName": "Individual Weekly",
+          "subscriptionGroupID": "F4D48C70-3182-4B6E-BBE2-2E95E3D6F500", "type": "RecurringSubscription"
+        },
+        {
+          "adHocOffers": [], "codeOffers": [], "displayPrice": "29.99", "familyShareable": false, "groupNumber": 2,
+          "internalID": "1CB8980C-E264-4F8B-9401-C213EF324502",
+          "introductoryOffer": {"internalID": "B09AC43C-0002-4CFA-AB80-111111111111", "numberOfPeriods": 1, "paymentMode": "free", "subscriptionPeriod": "P1W"},
+          "localizations": [{"description": "Individual tracking, billed yearly.", "displayName": "Whereday Individual Yearly", "locale": "en_US"}],
+          "productID": "com.bontecou.isome.individual.yearly", "recurringSubscriptionPeriod": "P1Y", "referenceName": "Individual Yearly",
+          "subscriptionGroupID": "F4D48C70-3182-4B6E-BBE2-2E95E3D6F500", "type": "RecurringSubscription"
+        },
+        {
+          "adHocOffers": [], "codeOffers": [], "displayPrice": "1.99", "familyShareable": true, "groupNumber": 1,
+          "internalID": "1CB8980C-E264-4F8B-9401-C213EF324503",
+          "introductoryOffer": {"internalID": "B09AC43C-0003-4CFA-AB80-111111111111", "numberOfPeriods": 1, "paymentMode": "free", "subscriptionPeriod": "P1W"},
+          "localizations": [{"description": "Family tracking, billed weekly.", "displayName": "Whereday Family Weekly", "locale": "en_US"}],
+          "productID": "com.bontecou.isome.family.weekly", "recurringSubscriptionPeriod": "P1W", "referenceName": "Family Weekly",
+          "subscriptionGroupID": "F4D48C70-3182-4B6E-BBE2-2E95E3D6F500", "type": "RecurringSubscription"
+        },
+        {
+          "adHocOffers": [], "codeOffers": [], "displayPrice": "49.99", "familyShareable": true, "groupNumber": 1,
+          "internalID": "1CB8980C-E264-4F8B-9401-C213EF324504",
+          "introductoryOffer": {"internalID": "B09AC43C-0004-4CFA-AB80-111111111111", "numberOfPeriods": 1, "paymentMode": "free", "subscriptionPeriod": "P1W"},
+          "localizations": [{"description": "Family tracking, billed yearly.", "displayName": "Whereday Family Yearly", "locale": "en_US"}],
+          "productID": "com.bontecou.isome.family.yearly", "recurringSubscriptionPeriod": "P1Y", "referenceName": "Family Yearly",
+          "subscriptionGroupID": "F4D48C70-3182-4B6E-BBE2-2E95E3D6F500", "type": "RecurringSubscription"
+        }
+      ]
+    }
   ],
-  "version" : {
-    "major" : 4,
-    "minor" : 0
-  }
+  "version": {"major": 4, "minor": 0}
 }

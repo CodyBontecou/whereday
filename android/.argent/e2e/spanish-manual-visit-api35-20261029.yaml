@@ -1,0 +1,108 @@
+steps:
+- run: spanish-onboarding-api35-20261029.yaml
+- tap:
+    text: Guardar lugar actual
+- await:
+    visible:
+      id: visit-name
+- await:
+    idle: true
+- tap:
+    id: visit-name
+- tool: keyboard
+  args:
+    text: QA visita local 20261029
+- tap:
+    id: visit-address
+- tool: keyboard
+  args:
+    text: QA address
+- tap:
+    id: visit-latitude
+- tool: keyboard
+  args:
+    text: 48,8584
+- tap:
+    id: visit-longitude
+- tool: keyboard
+  args:
+    text: 2,2945
+- tap:
+    id: visit-notes
+- tool: keyboard
+  args:
+    text: QA note 20261029
+- tap:
+    text: Guardar
+- await:
+    visible:
+      text: "Visita guardada. Rev\xEDsala en la l\xEDnea de tiempo."
+- await:
+    idle: true
+- launch: com.bontecou.whereday.mapqa
+- await:
+    visible:
+      text: Tu diario de ubicaciones
+- await:
+    idle: true
+- tap:
+    text: "L\xEDnea de tiempo"
+- await:
+    visible:
+      text: QA visita local 20261029
+- await:
+    idle: true
+- tap:
+    text: QA visita local 20261029
+- await:
+    visible:
+      text: Editar visita
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA address
+- await:
+    idle: true
+- await:
+    visible:
+      text: '48.8584'
+- await:
+    idle: true
+- await:
+    visible:
+      text: '2.2945'
+- await:
+    idle: true
+- await:
+    visible:
+      text: QA note 20261029
+- await:
+    idle: true
+- scroll-to:
+    target:
+      text: Eliminar visita
+    direction: down
+    within:
+      id: visit-editor-fields
+- tap:
+    text: Eliminar visita
+- await:
+    visible:
+      text: "\xBFEliminar esta visita?"
+- await:
+    idle: true
+- tap:
+    text: Eliminar
+- await:
+    visible:
+      text: No hay salidas ni visitas para este día.
+- await:
+    idle: true
+- tap:
+    text: Mapa
+- await:
+    visible:
+      text: "Iniciar grabaci\xF3n"
+- await:
+    idle: true
