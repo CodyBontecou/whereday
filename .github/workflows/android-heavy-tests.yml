@@ -57,15 +57,7 @@ jobs:
             ./gradlew :automation-client:assembleDebug --no-daemon
             adb install -r automation-client/build/outputs/apk/debug/automation-client-debug.apk
             ./gradlew :app:assembleMapQa :app:assembleMapQaAndroidTest --no-daemon
-            mkdir -p build/reports/input-pin
-            diag_serial=$(adb get-serialno)
-            diag_avd=$(adb -s "$diag_serial" emu avd name | head -n 1 | tr -d '\r')
-            set +e
-            python3 scripts/run_qa_instrumentation.py --adb "$(command -v adb)" --aapt2 "$ANDROID_HOME/build-tools/35.0.0/aapt2" --serial "$diag_serial" --avd "$diag_avd" --module app --classes com.bontecou.whereday.RoadAttributionRenderingTest,com.bontecou.whereday.GeoapifyRoutingConfigurationTest,com.bontecou.whereday.PhotoDotRenderingTest,com.bontecou.whereday.SoftwareNoticesTest,com.bontecou.whereday.SoftwareNoticesNavigationTest,com.bontecou.whereday.RoadConsentScreenTest,com.bontecou.whereday.RoadDisplayProducerTest,com.bontecou.whereday.RoadMapRenderingTest,com.bontecou.whereday.NativeMapInputReadinessTest --expected-tests 38 --output build/reports/input-pin/native
-            diag_status=$?
-            adb logcat -d -v brief -s System.out:I '*:S' | grep '\[DEBUG-input-pin\]' > build/reports/input-pin/observations.log || true
-            if [ "$diag_status" -eq 0 ] && ! grep -q original-initial-pin-count build/reports/input-pin/observations.log; then exit 2; fi
-            exit "$diag_status"
+            bash scripts/run_input_pin_diagnostic.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
