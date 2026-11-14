@@ -51,4 +51,8 @@ The actual four-call road pattern is now traced and corrected: the resumed corou
 
 The app-only focus correction changes no platform import source, dependency, schema or scale-test input from the passing `6a6b7fe0` component. Preserve that completed gate rather than repeating unaffected work.
 
-Keep draft until the **new-head complete hosted UI/database and downstream selections**, plus ordinary checks, are verified. Local subsets and the passing import component are not proof those later suites passed; no merge-ready/completion claim yet.
+The completed run43575545218 now verifies the **full original594-case default selection**:592 passed, zero failures/errors and exactly the two original ignores. It then passes expanded-workspace32 and short-keyboard2, but fails **eight of23 WorkspaceActivityResizeTest cases**. Later database/downstream selections did not execute. These are additional real blockers, not a green full baseline.
+
+New ordinary recovery failed only combined reboot after eight successful prefix cases. The separate hosted observation reproduced it with the cached Activity demonstrably DESTROYED after visit-service acknowledgment and before route start. The production foreground guard is correct. A test-only live ActivityScenario owner resolver plus a deterministic actual-recreation RED→GREEN regression corrects the fixture while preserving the original focus-wait budget and service deadlines. Both native lifecycle cases and a canonical actual-process combined reboot pass locally; full hosted nine-case acceptance remains. [Exact trace, regression, gate audit and still-open expanded failures](location-owner-20261114.md).
+
+Keep draft until current-head ordinary recovery, all expanded recreation failures and complete database/downstream gates are verified. No merge-ready/completion claim.

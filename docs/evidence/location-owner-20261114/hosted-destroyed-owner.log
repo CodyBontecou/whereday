@@ -1,0 +1,7 @@
+I/System.out( 1720): [DEBUG-location-focus] recover/both/reboot retained=6 dropped=0
+I/System.out( 1720): [DEBUG-location-focus] 154731 recover/both/reboot before-wait main=false owner=265978135 lifecycle=RESUMED focus=true attached=true finishing=false destroyed=false
+I/System.out( 1720): [DEBUG-location-focus] 389001 recover/both/reboot after-wait main=false owner=265978135 lifecycle=RESUMED focus=true attached=true finishing=false destroyed=false
+I/System.out( 1720): [DEBUG-location-focus] 402221 recover/both/reboot before-visits main=false owner=265978135 lifecycle=RESUMED focus=true attached=true finishing=false destroyed=false
+I/System.out( 1720): [DEBUG-location-focus] 3129047371 recover/both/reboot after-visits main=false owner=265978135 lifecycle=DESTROYED focus=false attached=false finishing=false destroyed=true
+I/System.out( 1720): [DEBUG-location-focus] 3129102663 recover/both/reboot before-route main=false owner=265978135 lifecycle=DESTROYED focus=false attached=false finishing=false destroyed=true
+I/System.out( 1720): [DEBUG-location-focus] 3132365342 recover/both/reboot failure-RecordingNeedsForeground main=false owner=265978135 lifecycle=DESTROYED focus=false attached=false finishing=false destroyed=true
