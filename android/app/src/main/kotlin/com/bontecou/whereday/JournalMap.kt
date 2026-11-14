@@ -89,6 +89,8 @@ private class JournalMapRenderer {
     var styleJson:(Boolean,Boolean)->String={_,dark->"""{"version":8,"sources":{},"layers":[{"id":"background","type":"background","paint":{"background-color":"${inks.hex(MapStyles.land(dark))}"}}]}"""}
     /** The map-first presentation's coloured legs, labelled pins and chips; null for the framed journal map. */
     var home:MapHomeRender?=null
+    /** An outing's "Fit route" frames its route; a stay far off the route would shrink it to a dot. */
+    var fitRouteOnly=false
     private val homeImages=mutableMapOf<String,android.graphics.Bitmap>()
     /** Insets (px) that fitting keeps clear of floating chrome: left, top, right, bottom. */
     var chromePadding:IntArray?=null
@@ -292,7 +294,7 @@ private class JournalMapRenderer {
         val fitPoints=points.filter {layers.outliers || !it.outlier}.ifEmpty {if(fallback) points else emptyList()}
         val (start,end)=ends.selected(layers.outliers,fallback)
         val coordinates=(if(layers.path || layers.points) fitPoints.map {it.coordinate} else emptyList()) +
-            (if(layers.visits) visits.map {it.coordinate} else emptyList()) +
+            (if(layers.visits && !(fitRouteOnly && fitPoints.isNotEmpty())) visits.map {it.coordinate} else emptyList()) +
             (if(layers.endpoints) listOfNotNull(start?.coordinate,end?.coordinate) else emptyList()) + listOfNotNull(replay?.current?.coordinate) + photos.map {it.coordinate} + activeCoordinates() + roadGeometry.fit
         fitCoordinates(coordinates);autoFitted=true
     }
@@ -317,12 +319,13 @@ private class JournalMapRenderer {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable internal fun JournalMap(points: List<TrackPoint>, visits: List<Visit>, modifier: Modifier=Modifier,replay:ReplayFrame?=null,endpoints:RouteEndpoints=RouteEndpoints.from(points),showOutliers:Boolean=false,onOutliers:((Boolean)->Unit)?=null,allOutlierFallback:Boolean=false,onVisitSelected:((Visit)->Unit)?=null,photoLayer:PhotoMapLayer?=null,follow:MapFollowUi?=null,followMetric:Boolean=true,activeRecording:ActiveRecordingMapUi?=null,roadRoute:RoadRoute?=null,showStraightSegments:Boolean=true,roadController:com.bontecou.whereday.platform.RoadDisplayController?=null,roadVisible:Boolean=true,visitFocus:VisitMapFocus?=null,onVisitFocusCleared:()->Unit={},inspectionScope:Any?=null,pointMarkerSource:MapPointMarkerSource?=null,
-    home:MapHomeOptions?=null,fullBleed:Boolean=false) {
+    home:MapHomeOptions?=null,fullBleed:Boolean=false,fitRouteOnly:Boolean=false) {
     val context=LocalContext.current
     val pointLocale=LocalConfiguration.current.locales[0]
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     var savedCamera by rememberSaveable(stateSaver=JournalMapCamera.Saver) {mutableStateOf<JournalMapCamera?>(null)}
     val renderer=remember(context) { JournalMapRenderer().apply {val scale=context.resources.displayMetrics.density;fitPaddingPixels=kotlin.math.ceil(48*scale).toInt()} }
+    renderer.fitRouteOnly=fitRouteOnly
     // Route ink follows the Whereday palette: accent paths, place inks for visits/flags, live dot, rust highlights.
     val inks=mapInks()
     val flagScale=context.resources.displayMetrics.density

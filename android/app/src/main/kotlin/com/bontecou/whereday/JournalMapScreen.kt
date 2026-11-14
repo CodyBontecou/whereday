@@ -203,7 +203,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
                 else if(story!=null) MapDayContent(story,metric,now,{stay->
                     model.mapSelection.value=model.mapSelection.value.copy(visitFocus=VisitMapFocus(stay.visit.id,stay.visit.coordinate))
                     quickVisitId=stay.visit.id;detent=DaySheetDetent.peek
-                },{detent=DaySheetDetent.peek;onOpenTimeline()},large)
+                },{detent=DaySheetDetent.peek;model.timelineDay.value=story.day;onOpenTimeline()},large)
                 else WdLoading()
                 access?.let {RecordingAccessNotice(it,onAccessOptions,contentPadding=PaddingValues(top=8.dp))}
             }

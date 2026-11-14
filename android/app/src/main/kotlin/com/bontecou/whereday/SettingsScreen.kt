@@ -70,7 +70,7 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
             ListeningScreen(settings,active,back,null,{destination=SettingsDestination.visitsOnly},{destination=SettingsDestination.webhooks},
                 {try {context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.parse("package:${context.packageName}")))} catch(_:Exception) {graph.settingsActions.reportFailure(SettingsFailure.permissions)}},
                 {value->graph.settingsActions.update {it.copy(networkGeocoding=value)}},
-                // The same settings write as the Settings pickers, so a running recording keeps its policy until the next start.
+                // The same settings write as the Settings pickers; a running recording picks the new policy up right away.
                 {preset->graph.settingsActions.update {it.applying(preset)}})
             return
         }

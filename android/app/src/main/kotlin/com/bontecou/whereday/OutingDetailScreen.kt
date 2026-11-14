@@ -85,7 +85,7 @@ private sealed interface OutingState {
                 val photos=matchedPhotos(graph,photoRange)
                 val photoLayer=photoMapLayer(graph,photoRange,photos.count!=null,validationFailed=photos.error!=null)
                 val live=session.endedAt==null
-                JournalMap(detail.points,detail.visits,followMetric=metric,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
+                JournalMap(detail.points,detail.visits,followMetric=metric,fitRouteOnly=true,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
                     roadController=graph.roadDisplay,roadVisible=!visitInspectionActive && !editing && !deleting && selectedVisit==null && !replayShowing,
                     pointMarkerSource=rememberHistoryPointMarkerSource(graph,replayRequest))
                 RouteReplayButton(graph,replayRequest,metric,
