@@ -60,7 +60,7 @@
       "catalogAliases": 5,
       "defaultSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
       "inputSha256": "d1438dd4122925a5999ad6460c52665cc1218bb06503ed642976817f828a2b02",
-      "selectedCatalogSha256": "9693494a30604e7e454b9e6d03f3cb183405dd7e12987d71a61faf2a880abf55",
+      "selectedCatalogSha256": "5aa163e50894287d4a85e9bc7d9934ae3771f31a4faac458427abe1e83749015",
       "outputSha256": "a5fa03adaeeeb344dd5825ef4279147b14f30c3babe507eaa7e4103934d4271b",
       "modules": {
         "app": {
