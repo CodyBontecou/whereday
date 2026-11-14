@@ -26,6 +26,12 @@ The six new cases cover nested mixed Google families with unrelated/backup exclu
 
 Actual Swift Google/duplicate fixture producers were rerun; all 100 non-provenance case outputs remain unchanged from the reused branch. All **30** CI source-reference checks and `git diff --check` pass.
 
+## Hosted compiler feedback follow-up
+
+Hosted iOS run `43548700543` at `c6ff203a` failed before tests: Swift could not type-check the single-expression centroid fixture in `VisitInferenceTests.swift:71` in reasonable time. The local suite above genuinely passed, but did not establish compatibility with the hosted compiler.
+
+Split only that fixture expression into an explicitly typed point array, timestamp, latitude and accuracy values. The six point arguments and all assertions are unchanged; no production inference code, test selection, timeout or skip changed. Fresh full local verification after this test-only correction again passes **580 XCTest +20 Swift Testing tests** (`artifacts/merge-readiness/google-compiler-fix.log`). The next hosted run must verify its compiler accepts the change; no hosted GREEN is claimed yet.
+
 ## Requirement boundary / open gates
 
 This is progress toward #59, not epic completion. Remaining: actual Files folder picker and authorized local/FileProvider policy with useful errors/progress, folder review presentation including exclusions, current visible inference/review UI verification, on-device memory/latency evidence, Watch/widget refresh acceptance, and explicit ZIP decision documentation/issue. Hosted Android/iOS checks must also pass on the pushed head. There is no fresh device UI/screenshot, physical import, network capture, or million-record claim in this receipt. Keep original exports; approximate deduplication and conservative inference are not universal lossless Google migration.

@@ -68,7 +68,12 @@ final class VisitInferenceTests: XCTestCase {
     }
 
     func testInverseAccuracyCentroidStaysNearBetterEvidence() throws {
-        let points = (0...5).map { point(Double($0) * 180, latitude: $0 == 0 ? 18 : 18.0001, accuracy: $0 == 0 ? 10 : 100) }
+        let points: [ImportedLocationPoint] = (0...5).map { index in
+            let seconds = Double(index) * 180.0
+            let latitude: Double = index == 0 ? 18.0 : 18.0001
+            let accuracy: Double = index == 0 ? 10.0 : 100.0
+            return point(seconds, latitude: latitude, accuracy: accuracy)
+        }
         let visit = try XCTUnwrap(VisitInferenceService.infer(points: points).first)
         XCTAssertGreaterThan(visit.latitude, 18)
         XCTAssertLessThan(visit.latitude, 18.00005)
