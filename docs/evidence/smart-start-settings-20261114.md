@@ -32,6 +32,10 @@ Observed:
 
 The separate prior test-host guest (`9DBF4207-832B-4A34-88DB-AE841A6383DA`) had queued Notification/Motion prompts after the full runtime suite. Its interrupted third capture is retained, not a clean UX result or evidence that opening Settings requested Motion. The UI-only guest avoided that ambiguity. Both owned guests are shut down; recorders stopped, UI-only appearance/content size restored/read back to light/large. No physical/default simulator or original dirty fleet lane was used.
 
+## Hosted provenance follow-up
+
+At `37650bee`, hosted iOS tests and location recovery passed, but Android build stopped at the visit-reconciliation source-provenance check. The Settings-facing comment edit in `LocationManager.swift` legitimately changed its whole-file source digest. Ran the actual Swift producer (`python3 android/scripts/generate_visit_reconciliation_fixtures.py`), not a hand-edited hash. All17 generated reconciliation case outputs compare identical to the prior committed cases; both fixture copies match byte-for-byte. Only their provenance digest changes. All **31** actual CI `--check-source` commands then pass; log `artifacts/merge-readiness/smart-settings-provenance-checks.log`. This metadata correction changes no iOS behavior and does not require repeating the already passing580+20 suite locally. New hosted Android build still must complete.
+
 ## Still open — keep PR120 draft
 
 New copy localization and denied/authorized permission UI on real hardware remain unverified. Optional onboarding/post-onboarding explanation, expanded intent source/duration/profile options, real locked/background/force-quit/reboot delivery, CarPlay/Bluetooth/workout/Focus recipes in actual Shortcuts, battery/false-positive tuning and complete motion/accessibility acceptance remain. This screen, its model tests and simulator observations do not complete issue60 or establish whole-PR merge readiness.
