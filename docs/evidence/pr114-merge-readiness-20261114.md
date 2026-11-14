@@ -43,6 +43,12 @@ A clean PR checkout without the trace draft passed **all six original WorkspaceD
 
 This narrow local result does not prove the full hosted baseline or resolve the road request-count/performance failures. No unchanged expensive heavy run was restarted merely for the test synchronization change.
 
-## Open merge gates
+## Latest measured resolution and remaining merge gates
 
-Keep draft until current-head complete UI/database + downstream selections and all three unchanged million-record formats pass. Historical million-record run **43079881479** succeeded at `585facc5`; it does not prove the newly integrated head. Current-head ordinary hosted checks, native diagnostic execution, and heavy acceptance remain required.
+The original full-size import gate **43570950739**, exact candidate `6a6b7fe0`, now **passes all four original cases**, zero failures/errors/skips. The million-record Markdown/CSV/JSON cases completed in920.583/732.981/724.206seconds, within the unchanged20-minute limit, including review, commit, reimport/dedup/local-edit preservation and clear. Downloaded XML and phase logs, not only the green check, are captured in [the point-tuple receipt](import-point-tuples-20261114.md). Database was correctly skipped for that import-only dispatch.
+
+The actual four-call road pattern is now traced and corrected: the resumed coroutine admitted work with a stale composition-time focus Boolean although both live WindowInfo and native focus were false. Six nominally green old-code class runs still contained four actual requests, exposing a synchronizing-read race in their predicate. The strengthened unchanged-deadline/exact-count regression fails clean old production with calls=4; a live snapshot focus wait before foreground admission fixes it. **24 traced and24 clean repeated native cases**, plus the related **16-case road/consent/workspace selection**, pass. **107 app +154 platform JVM cases** pass. No observer/reflection/native-view probe ships. See [actual RED, trace and clean GREEN](road-resume-focus-20261114.md).
+
+The app-only focus correction changes no platform import source, dependency, schema or scale-test input from the passing `6a6b7fe0` component. Preserve that completed gate rather than repeating unaffected work.
+
+Keep draft until the **new-head complete hosted UI/database and downstream selections**, plus ordinary checks, are verified. Local subsets and the passing import component are not proof those later suites passed; no merge-ready/completion claim yet.

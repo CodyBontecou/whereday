@@ -80,7 +80,14 @@ class RoadDisplayProducerTest {
         compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
         compose.waitUntil(5000) {controller.state.value.foregroundSessions==0}
         compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
-        try {compose.waitUntil(10000) {calls.get()==3 && roads(map)>0}}
+        try {compose.waitUntil(10000) {
+            // Native/semantics reads may synchronize Compose. Read the count last,
+            // after those reads, rather than accepting a transient three before a fourth request.
+            val rendered=roads(map)>0
+            val focused=compose.runOnIdle {compose.activity.hasWindowFocus()}
+            val caption=compose.onAllNodesWithTag("road-estimate-caption").fetchSemanticsNodes().isNotEmpty()
+            rendered && focused && caption && calls.get()==3
+        }}
         catch(error:ComposeTimeoutException) {
             val nativeState=runCatching {compose.runOnIdle {
                 val rendered=map.first.queryRenderedFeatures(android.graphics.RectF(0f,0f,map.second.width.toFloat(),map.second.height.toFloat()),"journal-road-path").size
@@ -96,6 +103,7 @@ class RoadDisplayProducerTest {
                 "lifecycle=${compose.activity.lifecycle.currentState}, $nativeState. Current semantics:\n"+
                 semantics,error)
         }
+        compose.runOnIdle {assertEquals("Settled resume must not prepare while native focus is stale",3,calls.get())}
     }
     @Test fun replayFramesReusePreparedSourceAndRevealRoadOnlyAtItsRecordedEndpoint() {
         setup();var frame by mutableStateOf(ReplayFrame(0,2,points[0],points.take(1),Duration.ZERO,Duration.ofSeconds(600),0.0,700.0))

@@ -10,12 +10,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bontecou.whereday.domain.*
 import com.bontecou.whereday.platform.RoadDisplayController
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 
 /** Derived display only. Never owns recording points, replay statistics or repository mutations. */
 @Composable internal fun rememberRoadDisplay(controller:RoadDisplayController?,points:List<TrackPoint>,
     visible:Boolean,showOutliers:Boolean=false,allOutlierFallback:Boolean=false):RoadRoute? {
     if(controller==null) return null
-    val focused=LocalWindowInfo.current.isWindowFocused
+    val windowInfo=LocalWindowInfo.current
+    val focused=windowInfo.isWindowFocused
     val policy by controller.state.collectAsStateWithLifecycle()
     if(!visible || !focused || !policy.configured || !policy.enabled || !policy.networkAllowed || policy.loading ||
         policy.clearing || policy.policyUnavailable || !policy.journalReady || points.size>RoadSnapping.maximumSourcePoints) return null
@@ -36,8 +38,11 @@ import kotlinx.coroutines.*
         lifecycle.addObserver(observer)
         onDispose {lifecycle.removeObserver(observer);session.close()}
     }
-    LaunchedEffect(session,lifecycle) {
+    LaunchedEffect(session,lifecycle,windowInfo) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            // Composition can still hold its pre-pause focus value when lifecycle resumes.
+            // Observe the live snapshot before admitting work; cancellation removes this wait.
+            snapshotFlow {windowInfo.isWindowFocused}.first {it}
             session.foreground()
             try {
                 prepared=session.prepare(source)

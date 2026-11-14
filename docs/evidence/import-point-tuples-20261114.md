@@ -1,4 +1,4 @@
-# Private point tuples — measured candidate, full-scale acceptance pending
+# Private point tuples — original million-record gate passed
 
 ## Storage-layout hypothesis tested and rejected
 
@@ -47,6 +47,21 @@ After measurement, the additional100k method and its conditional heap logger wer
 
 The canonical test APK is rebuilt after this cleanup. Native35 coverage above ran the same candidate production logic; only the temporary unselected diagnostic method/logger was subsequently removed. No native result is being relabeled as million-scale acceptance.
 
-Prior published-head run43557730812 still has three1M timeouts. The first point candidate6ae9d013 briefly started run43569920207; it was cancelled when the new nonfinite-writer RED exposed that correctness edge. It is superseded, not a performance retry or a passing result. The corrected finite-guarded candidate was remeasured above and all35 native cases passed again after diagnostic cleanup. This corrected candidate must now face the original full-size hosted gate. Keep #114 draft: full-scale performance, actual road four-call ownership and the complete downstream baseline remain unresolved. No completion claim follows from this receipt.
+Prior published-head run43557730812 still has three1M timeouts. The first point candidate6ae9d013 briefly started run43569920207; it was cancelled when the new nonfinite-writer RED exposed that correctness edge. It is superseded, not a performance retry or a passing result. The corrected finite-guarded candidate was remeasured above and all35 native cases passed again after diagnostic cleanup. This corrected candidate faced the original full-size hosted gate below. Earlier failures and the cancelled correctness-invalid candidate remain historical failures, not silently relabeled successes. PR114 stays draft pending the complete UI/database and downstream baseline; a scale pass is not whole-PR completion.
+
+## Original hosted full-scale acceptance — completed, not extrapolated
+
+Run **43570950739**, exact finite-guarded head **6a6b7fe0b688a1b9d43fea1634157313889b8307**, completed successfully. Downloaded artifact **14105507468**, digest `sha256:eca18fe25fb3e208f04c31f51c6828270778b24b9a867cbc9850bba6e0ff6c73`. Actual XML: **four tests, zero failures/errors/skips**. Original ordering, all original assertions, three million-record formats, 25MiB minimum and 1,200,000ms per-case deadline unchanged.
+
+| Original case | JUnit seconds | Input bytes | First review ms | First commit ms | Complete ms | Sampled Java peak bytes |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10k JSON control | 7.973 | 670012 | 3341 | 1089 | 8017 | 85888464 |
+| 1M Markdown | 920.583 | 36000041 | 350017 | 114835 | 920586 | 12360128 |
+| 1M CSV | 732.981 | 28000029 | 257931 | 107528 | 732951 | 12360128 |
+| 1M JSON | 724.206 | 67000012 | 253740 | 115080 | 724185 | 12331456 |
+
+All four phase logs explicitly report the full expected existing-record count kept with **no duplicate writes** on reimport and a final complete line. Passing unchanged assertions also covers preservation of local edits and final clear; the original heap limit remains201326592 bytes. Sampled peaks are not calibrated RSS or maximum-transient-allocation claims. The `database` job was skipped because this dispatch selected import-scale only: it is **not** a database/UI pass.
+
+Adjacent `hosted-scale-results.xml` is the downloaded XML; `hosted-scale-verification.json` retains phase lines, raw-log digests, case verdicts and artifact identity. Raw extraction: `/tmp/whereday-merge-readiness/point-tuples-hosted-scale/`; run log: `/tmp/whereday-merge-readiness/point-tuples-hosted-scale.log`. The later app-only live-focus fix and its test/receipts change no platform import dependency/input; do not cancel/repeat this passing component gate merely for that independent UI correction.
 
 Raw local receipts: `artifacts/merge-readiness/{row-layout-native-1,layout-control-before-1,layout-control-before-2,layout-control-after-1,point-control-after-1,point-control-before-3,point-control-after-2,point-tuple-native-35,point-control-after-3-finite,point-finite-native-35}` and point-tuple build/unit logs. Adjacent JSON records exact values/native verdicts. All owned runs restored/read back animation settings, removed scoped packages, gracefully exited the emulator and stopped private ADB; the dedicated metric collector stopped. No physical/default device or original dirty fleet lane was touched.
