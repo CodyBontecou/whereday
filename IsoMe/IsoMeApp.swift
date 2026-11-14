@@ -56,7 +56,6 @@ struct IsoMeApp: App {
                     // Never sync into the empty stand-in: the watch would drop data it thinks was saved.
                     guard AppModelStore.openFailure == nil else { return }
                     watchSyncReceiver.configure(modelContainer: sharedModelContainer)
-                    DailyExportScheduler.shared.attach(modelContainer: sharedModelContainer)
                     DailyExportScheduler.shared.scheduleNextBackgroundRun()
                     await DailyExportScheduler.shared.runIfDue()
                 }

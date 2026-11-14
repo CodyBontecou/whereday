@@ -18,10 +18,10 @@ enum IntentSupport {
     /// Returns the live LocationManager if one exists, otherwise creates a background-launch
     /// instance wired to the shared store. Lets Start/Stop intents work even when the app's
     /// UI hasn't booted yet.
-    static func ensureLocationManager() -> LocationManager {
-        if let existing = LocationManager.shared { return existing }
-        let manager = LocationManager()
-        manager.setModelContext(makeContext())
+    static func ensureLocationManager(using services: AppTrackingServices = .shared) throws -> LocationManager {
+        guard let manager = services.boot(isBackgroundLaunch: true) else {
+            throw IsoMeIntentError.storeUnavailable
+        }
         return manager
     }
 
@@ -49,6 +49,7 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case invalidDateRange
     case emptyName
     case itemNotFound
+    case storeUnavailable
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -64,6 +65,8 @@ enum IsoMeIntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
             return "Enter a name."
         case .itemNotFound:
             return "That Whereday item couldn't be found."
+        case .storeUnavailable:
+            return "Whereday couldn't open your saved data. Open the app to try again."
         }
     }
 }
@@ -77,7 +80,7 @@ struct StartTrackingIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let manager = IntentSupport.ensureLocationManager()
+        let manager = try IntentSupport.ensureLocationManager()
         await StoreManager.shared.checkEntitlement()
         guard StoreManager.shared.canTrack else {
             return .result(dialog: "Open Whereday to choose a plan before tracking.")

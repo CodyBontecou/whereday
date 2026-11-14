@@ -2,6 +2,57 @@ import UIKit
 import CoreLocation
 import UserNotifications
 import ExportAutomationKit
+import SwiftData
+
+/// One tracking service graph per process, available before any scene/view task.
+/// A failed persistent store never starts sensors against the empty recovery container.
+@MainActor
+final class AppTrackingServices {
+    static let shared = AppTrackingServices(modelContainer: {
+        guard AppModelStore.openFailure == nil else { return nil }
+        return AppModelStore.shared
+    }, makeManager: { allowsSmartStartRuntime in
+        LocationManager(startsSmartStartRuntime: allowsSmartStartRuntime)
+    }, attachServices: { container, manager in
+        WebhookManager.shared.attach(modelContainer: container, locationManager: manager)
+        DailyExportScheduler.shared.attach(modelContainer: container)
+    })
+
+    private let defaults: UserDefaults
+    private let modelContainer: () -> ModelContainer?
+    private let makeManager: (Bool) -> LocationManager
+    private let attachServices: (ModelContainer, LocationManager) -> Void
+    private var manager: LocationManager?
+
+    init(defaults: UserDefaults = .standard, modelContainer: @escaping () -> ModelContainer?,
+         makeManager: @escaping (Bool) -> LocationManager,
+         attachServices: @escaping (ModelContainer, LocationManager) -> Void) {
+        self.defaults = defaults
+        self.modelContainer = modelContainer
+        self.makeManager = makeManager
+        self.attachServices = attachServices
+    }
+
+    @discardableResult
+    func boot(isBackgroundLaunch: Bool) -> LocationManager? {
+        if let manager { return manager }
+        guard let container = modelContainer() else { return nil }
+        let launch = LaunchGuard.beginLaunch(defaults: defaults, isBackgroundLaunch: isBackgroundLaunch)
+        if let stage = launch.previousStage {
+            LogManager.shared.warning("Previous launch didn't finish · last step: \(stage)", category: .general)
+        }
+        if launch.pausedTracking {
+            LogManager.shared.warning("Tracking paused after \(launch.previousUnconfirmedLaunches) launches that didn't finish", category: .location)
+            Task { await LiveActivityManager.shared.endAllActivities() }
+        }
+        LaunchGuard.mark(.locationManager, defaults: defaults)
+        let created = makeManager(!launch.pausedTracking)
+        created.setModelContext(container.mainContext)
+        manager = created
+        attachServices(container, created)
+        return created
+    }
+}
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     // Shared location manager instance for background launches
@@ -27,12 +78,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         // Register the daily-export background task before applicationDidFinishLaunching returns.
         DailyExportScheduler.registerBackgroundTask()
 
-        // Check if app was launched due to a location event
-        if let locationKey = launchOptions?[.location] as? Bool, locationKey {
-            // App was launched in background due to location event
-            // The LocationManager will be initialized and will receive the pending events
-            print("App launched from location event")
-        }
+        // Location and silent-push launches may never create ContentView. Attach the
+        // real store, exports and webhook services before pending callbacks arrive.
+        let isLocationLaunch = launchOptions?[.location] as? Bool == true
+        Self.sharedLocationManager = AppTrackingServices.shared.boot(
+            isBackgroundLaunch: isLocationLaunch || application.applicationState == .background
+        )
 
         return true
     }

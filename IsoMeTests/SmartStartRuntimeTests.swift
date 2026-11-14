@@ -29,6 +29,101 @@ private final class SessionVisitFixture: CLVisit {
 }
 
 @MainActor
+final class AppTrackingServicesTests: XCTestCase {
+    private func makeInMemoryContainer() throws -> ModelContainer {
+        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self])
+        return try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)])
+    }
+
+    private func makeManager(_ defaults: UserDefaults) -> LocationManager {
+        let manager = LocationManager(defaults: defaults, registersAsShared: false,
+                                      monitoring: TestLocationMonitor(), trackingAccess: { true },
+                                      startsSmartStartRuntime: false)
+        manager.authorizationStatus = .authorizedAlways
+        manager.setLiveActivityEnabled(false)
+        return manager
+    }
+
+    func testBackgroundThenForegroundBootReusesOneManagerAndAttachesServicesOnce() throws {
+        let defaults = makeIsolatedDefaults()
+        let container = try makeInMemoryContainer()
+        var created = 0
+        var attached = 0
+        let services = AppTrackingServices(defaults: defaults, modelContainer: { container }, makeManager: { allowed in
+            XCTAssertTrue(allowed)
+            created += 1
+            return self.makeManager(defaults)
+        }, attachServices: { store, _ in
+            XCTAssertTrue(store === container)
+            attached += 1
+        })
+        let background = try XCTUnwrap(services.boot(isBackgroundLaunch: true))
+        let intent = try IntentSupport.ensureLocationManager(using: services)
+        let foreground = try XCTUnwrap(services.boot(isBackgroundLaunch: false))
+        XCTAssertTrue(background === intent)
+        XCTAssertTrue(background === foreground)
+        XCTAssertEqual(created, 1)
+        XCTAssertEqual(attached, 1)
+        XCTAssertEqual(defaults.integer(forKey: LaunchGuard.unconfirmedLaunchesKey), 0)
+        background.stopTracking()
+    }
+
+    func testBackgroundServicesCanPersistBeforeAnyViewModelExists() throws {
+        let defaults = makeIsolatedDefaults()
+        let container = try makeInMemoryContainer()
+        let services = AppTrackingServices(defaults: defaults, modelContainer: { container }, makeManager: { _ in
+            self.makeManager(defaults)
+        }, attachServices: { _, manager in manager.startTracking() })
+        let manager = try XCTUnwrap(services.boot(isBackgroundLaunch: true))
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 1)
+        manager.stopTracking()
+        let session = try XCTUnwrap(container.mainContext.fetch(FetchDescriptor<RecordingSession>()).first)
+        XCTAssertNotNil(session.endedAt)
+    }
+
+    func testFailedStoreDoesNotCreateManagerAttachServicesOrConsumeLaunchGuard() throws {
+        let defaults = makeIsolatedDefaults()
+        defaults.set(true, forKey: "isTrackingEnabled")
+        let services = AppTrackingServices(defaults: defaults, modelContainer: { nil }, makeManager: { _ in
+            XCTFail("Never initialize sensors against the recovery stand-in")
+            return self.makeManager(defaults)
+        }, attachServices: { _, _ in XCTFail("Never attach exports/webhooks to the recovery stand-in") })
+        XCTAssertNil(services.boot(isBackgroundLaunch: false))
+        XCTAssertThrowsError(try IntentSupport.ensureLocationManager(using: services)) { error in
+            guard let intentError = error as? IsoMeIntentError, case .storeUnavailable = intentError else {
+                return XCTFail("Start intent must report the failed store, not create a fallback manager")
+            }
+        }
+        XCTAssertTrue(defaults.bool(forKey: "isTrackingEnabled"))
+        XCTAssertEqual(defaults.integer(forKey: LaunchGuard.unconfirmedLaunchesKey), 0)
+    }
+
+    func testLaunchGuardRunsBeforeManagerAndSuppressesAutomaticRuntimeWithoutChangingOptIn() throws {
+        let defaults = makeIsolatedDefaults()
+        defaults.set(true, forKey: "isTrackingEnabled")
+        defaults.set(LaunchGuard.failureThreshold, forKey: LaunchGuard.unconfirmedLaunchesKey)
+        var settings = SmartStartSettings()
+        settings.isEnabled = true
+        try SmartStartStateStore(defaults: defaults).saveSettings(settings)
+        let container = try makeInMemoryContainer()
+        let services = AppTrackingServices(defaults: defaults, modelContainer: { container }, makeManager: { allowed in
+            XCTAssertFalse(defaults.bool(forKey: "isTrackingEnabled"))
+            XCTAssertFalse(allowed, "A crash-loop pause must not immediately auto-start again")
+            return self.makeManager(defaults)
+        }, attachServices: { _, _ in })
+        let first = try XCTUnwrap(services.boot(isBackgroundLaunch: false))
+        XCTAssertFalse(first.isTrackingEnabled)
+        XCTAssertFalse(first.ambientMonitoringActive)
+        XCTAssertTrue(first.smartStartSettings.isEnabled, "Preserve the user's opt-in for their next intentional launch")
+        XCTAssertTrue(try XCTUnwrap(services.boot(isBackgroundLaunch: false)) === first)
+        XCTAssertEqual(defaults.integer(forKey: LaunchGuard.unconfirmedLaunchesKey), 1)
+        XCTAssertTrue(LaunchGuard.consumePausedTrackingNotice(defaults: defaults))
+        first.stopTracking()
+    }
+}
+
+@MainActor
 final class SmartStartCorrectionTests: XCTestCase {
     private var defaults: UserDefaults!
     private var manager: LocationManager!

@@ -28,8 +28,16 @@ Result: `artifacts/test-results/IsoMe-20261113-230035-73995.xcresult`. Local log
 
 All **30** CI source-reference checks and `git diff --check` pass. Actual reconciliation regeneration preserves all **17** expected case outputs from main. No temporary production logging or sensor instrumentation was added.
 
+## Shared boot follow-up
+
+`AppTrackingServices` now owns the graph before any view task: AppDelegate boots it on foreground/location/background launches, and ContentView and Start intents reuse its manager. It runs LaunchGuard before manager construction, attaches the real SwiftData context before webhook/export services, and refuses to initialize against the recovery stand-in. Start intents surface a store-unavailable error. A crash-loop pause suppresses the automatic runtime for this process without resetting the user's opt-in.
+
+Four new real-manager/in-memory-store tests verify one instance/attachment across background→intent→foreground entry, ability to persist before any view model, failed-store refusal including the actual intent helper, and launch-guard ordering/automatic-runtime suppression. The initial authored-test compile attempt also had a missing test-container helper; that authoring error was corrected, not hidden as a sole intended RED. Targeted four-test GREEN and final full suite pass **572 XCTest +20 Swift Testing tests**, result `artifacts/test-results/IsoMe-20261113-233438-5374.xcresult`, log `tracking-boot-final.log`. All 30 source-reference checks and diff checks pass.
+
+This proves the synchronous boot/intent seam, not actual OS relaunch, permission prompts, wake delivery, or physical background persistence. Watch receiver configuration remains unchanged in this branch.
+
 ## #60 requirement boundary
 
 Implemented and tested at source/simulator level: off-by-default persisted settings, session/source/cooldowns, pure admission policy, motion adapter, ambient/active split, coordinator lifecycle, no auto permission prompt, movement thresholds, stationary stop ownership, permissions/access guards, stale fix admission and expired timer leases. Existing simple Start intent carries shortcut source.
 
-Still incomplete: unified background service boot/AppDelegate wake wiring, opt-in Settings/onboarding UI and final localized permission/limitation presentation, expanded Shortcuts options/recipes, diagnostics/energy tuning, real-device locked/background/force-quit/reboot/battery and denied-state matrix. Main's shared recording control path must retain its own paired acceptance boundaries. No fresh device motion, energy, physical Watch or UI acceptance is claimed. Hosted checks on the pushed head remain required. This is not whole-epic completion.
+Still incomplete: physical verification of the new shared boot/AppDelegate wake path, opt-in Settings/onboarding UI and final localized permission/limitation presentation, expanded Shortcuts options/recipes, diagnostics/energy tuning, real-device locked/background/force-quit/reboot/battery and denied-state matrix. Main's shared recording control path must retain its own paired acceptance boundaries. No fresh device motion, energy, physical Watch or UI acceptance is claimed. Hosted checks on the pushed head remain required. This is not whole-epic completion.

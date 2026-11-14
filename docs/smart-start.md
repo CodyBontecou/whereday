@@ -90,26 +90,29 @@ The real adapter has one stream and one current-generation history query in flig
 An invalidated Apple query may still finish after stop/restart; its result is ignored. Replacing the
 shared LocationManager permanently shuts down the prior manager's coordinator,
 so its foreground/access observers cannot restart a competing motion stream.
-This does not solve competing legacy route-manager construction; central boot is
-still required. CoreMotion does not offer query cancellation, so completion
-rejection is mandatory.
+CoreMotion does not offer query cancellation, so completion rejection is mandatory.
 
-The current manager initializes this local runtime, but central application boot
-has deliberately **not** changed. Next slice must:
+`AppTrackingServices` now owns the process's tracking graph. AppDelegate boots it
+for foreground/background launches before returning; ContentView and Start intents
+reuse it. The real store is attached before webhook/export services, and the launch
+guard runs before manager construction. A failed store creates no manager or service
+attachments; Start intents report the failure. A crash-loop pause suppresses the
+automatic runtime for that process without deleting the user's opt-in. Simulator
+regressions exercise this seam; actual OS background launch/wake delivery remains a
+physical-device verification requirement, not a guarantee.
 
-1. Establish one strong process-owned LocationManager with the shared SwiftData
-   context before background location callbacks; reuse it from ContentView and
-   IntentSupport rather than constructing competing managers. Preserve launch
-   recovery guards, WebhookManager/export attachment and existing watch sync.
-2. Wire real background launch/lifecycle behavior in AppDelegate/IsoMeApp and prove
-   initialization diagnostics without claiming guaranteed iOS wake delivery.
-3. Add a narrow Settings section calling `try updateSmartStartSettings` and handling
+Next slice must:
+
+1. Verify actual background launch/lifecycle diagnostics on a device, including
+   callbacks before a scene exists, permission/access resolution and webhook/export
+   recovery. Preserve existing Watch sync and its acceptance boundaries.
+2. Add a narrow Settings section calling `try updateSmartStartSettings` and handling
    validation errors (activity duration supported range: greater than 0 through 900
    seconds), only after
    explicit opt-in and reliability explanation. Display Always/Motion statuses,
    unavailable/denied paths and activity/cooldown/stationary-stop choices. Do not
    silently enable for existing users or prompt Motion during ordinary onboarding.
-4. Keep `LocationManager.startTracking` as explicit/manual intent and feed inferred
+3. Keep `LocationManager.startTracking` as explicit/manual intent and feed inferred
    activity/location wakes only through the coordinator. Do not bypass policy
    based on significant-change distance, visit departure, steps, or a timer.
 
