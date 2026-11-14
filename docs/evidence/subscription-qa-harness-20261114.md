@@ -38,10 +38,16 @@ The first inspection's UTF-8 decoding failed on unrelated non-UTF-8 dexdump stri
 
 Local details: `artifacts/merge-readiness/variant-artifact-audit.json`, `mapQa-manifest.txt`, `release-manifest.txt`. No install, account, real billing, Play action or deployment occurred.
 
-## Remaining acceptance / do not merge yet
+## Native verification follow-up
 
-Run the **20 native cases**: six SubscriptionScreen, one SubscriptionSettingsIntegration, six WorkspaceDialog, four ExportSubscriptionManagement, and three SubscriptionQaFixture cases. The APK compiles these tests; none was executed in this continuation. Native fixture tests must not run concurrently with TalkBack/UiAutomation speech testing.
+Reused the separately verified WorkspaceDialog posture synchronization fix as `52611328`: the existing five-second native-bounds helper waits for owner containment rather than merely finding old bounds. Original final containment/positive-size assertions remain intact.
 
-Then follow the retained private speech plan for actual TalkBack static/heading traversal, Settings/Export owner entry/dismissal/focus restoration, large text, scrim behavior and localized workflows. Current session has no exposed Argent device tools; no device interaction was attempted as a substitute. Prior preview Back/Keep speech evidence is narrower and must not be generalized.
+The strict native verifier then passed **all 20 cases, no skips**: six SubscriptionScreen, one SubscriptionSettingsIntegration, six WorkspaceDialog, four ExportSubscriptionManagement, and three SubscriptionQaFixture cases. Actual Settings/Export owners, provider caller policy, and external-action suppression are exercised by those tests. Receipt: `artifacts/merge-readiness/subscription-native-1/native/verification.json`; raw native stream and APK hashes are retained alongside it. This used an owned read-only API 35 emulator, private ADB 5064/serial emulator-5586, not a physical/default device. Native animation settings were restored/read back, scoped packages removed, owned emulator exited gracefully and private ADB stopped. No TalkBack service was enabled or concurrent speech acceptance claimed.
 
-This branch stays separate from the already-green #113 until native/runtime and review gates are satisfied. Building this harness and proving release artifact separation does not close #115, establish visual/motion acceptance, or complete the overall goal.
+The branch can now be integrated into #113 for fresh hosted validation; its 49 JVM cases and actual release artifact separation remain as documented above. The posture follow-up changes test code only, not those packaged production bytes.
+
+## Remaining spoken acceptance
+
+Follow the retained private speech plan for actual TalkBack static/heading traversal, Settings/Export owner entry/dismissal/focus restoration, large text, scrim behavior and localized workflows. Current session has no exposed Argent device tools; no device interaction was attempted as a substitute. Prior preview Back/Keep speech evidence is narrower and must not be generalized.
+
+The completed build/native fixture gates do not close #115 or establish visual/motion/speech acceptance. Fresh hosted validation is still required after integration into #113. Actual spoken traversal, headings, owners, large text, scrim restoration and localized workflows remain independently pending; no whole-goal completion is claimed.
