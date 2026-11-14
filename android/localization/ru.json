@@ -1,7 +1,10 @@
 {
   "locale": "ru",
-  "defaultSourceSha256": "8f91ba8b9f33f71e60cbba902c3b73a2fd4a33e27bc72b4b700ce75eb5768c54",
+  "defaultSourceSha256": "d4905555ed1df1bf31958f209b32a106dcbe1c38c71ee4b27a12a1bd8abb2e4c",
   "catalog": {
+    "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
+    "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
+    "outing_view_complete": "View complete outing",
     "recording_preset_custom": "Custom",
     "recording_preset_every_step": "Every step",
     "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
@@ -919,6 +922,7 @@
     "onboarding_title_welcome": "Ваши дни — в памяти",
     "outing_average_speed": "В среднем %1$s/ч",
     "outing_average_unavailable": "Средняя скорость недоступна",
+    "outing_day_title": "Движение по %1$s",
     "outing_default_name": "Название по умолчанию",
     "outing_delete": "Удалить прогулку",
     "outing_delete_error": "Не удалось удалить прогулку.",

@@ -802,6 +802,9 @@
     <string name="onboarding_title_welcome">你的每一天，都被记住</string>
     <string name="outing_average_speed">平均 %1$s/小时</string>
     <string name="outing_average_unavailable">无法获取平均速度</string>
+    <string name="outing_complete_explanation">打开完整的郊游以对其进行重命名、编辑注释或删除。</string>
+    <string name="outing_day_scope">这里的路线、统计、人次和出口仅涵盖这一天。</string>
+    <string name="outing_day_title">%1$s上的动态</string>
     <string name="outing_default_name">使用默认名称</string>
     <string name="outing_delete">删除出行</string>
     <string name="outing_delete_error">无法删除此出行。</string>
@@ -827,6 +830,7 @@
     <string name="outing_save">保存出行</string>
     <string name="outing_save_error">无法保存你对出行的更改。</string>
     <string name="outing_show_map">在地图上显示</string>
+    <string name="outing_view_complete">查看完整的郊游</string>
     <string name="paywall_badge_once">一次性</string>
     <string name="paywall_badge_trial">免费 %1$d 天</string>
     <string name="paywall_benefit_automatic_body">每天一个文件，保存到你选择的文件夹。</string>

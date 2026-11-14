@@ -854,6 +854,9 @@
     <string name="onboarding_title_welcome">Seus dias, lembrados</string>
     <string name="outing_average_speed">Média de %1$s/h</string>
     <string name="outing_average_unavailable">Velocidade média indisponível</string>
+    <string name="outing_complete_explanation">Abra o passeio completo para renomeá-lo, editar notas ou excluí-lo.</string>
+    <string name="outing_day_scope">O percurso, as estatísticas, as visitas e as exportações aqui abrangem apenas este dia.</string>
+    <string name="outing_day_title">Movimento em %1$s</string>
     <string name="outing_default_name">Usar nome padrão</string>
     <string name="outing_delete">Excluir passeio</string>
     <string name="outing_delete_error">Não foi possível excluir o passeio.</string>
@@ -883,6 +886,7 @@
     <string name="outing_save">Salvar passeio</string>
     <string name="outing_save_error">Não foi possível salvar as alterações do passeio.</string>
     <string name="outing_show_map">Mostrar no mapa</string>
+    <string name="outing_view_complete">Veja o passeio completo</string>
     <string name="paywall_badge_once">Pagamento único</string>
     <string name="paywall_badge_trial">%1$d dias grátis</string>
     <string name="paywall_benefit_automatic_body">Um arquivo por dia, salvo na pasta que você escolher.</string>

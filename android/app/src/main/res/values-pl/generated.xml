@@ -880,6 +880,9 @@
     <string name="onboarding_title_welcome">Twoje dni zapamiętane</string>
     <string name="outing_average_speed">Średnio %1$s/h</string>
     <string name="outing_average_unavailable">Średnia prędkość niedostępna</string>
+    <string name="outing_complete_explanation">Otwórz całą wycieczkę, aby zmienić jej nazwę, edytować notatki lub ją usunąć.</string>
+    <string name="outing_day_scope">Trasa, statystyki, wizyty i eksporty obejmują tylko ten dzień.</string>
+    <string name="outing_day_title">Ruch na %1$s</string>
     <string name="outing_default_name">Użyj nazwy domyślnej</string>
     <string name="outing_delete">Usuń podróż</string>
     <string name="outing_delete_error">Nie udało się usunąć podróży.</string>
@@ -911,6 +914,7 @@
     <string name="outing_save">Zapisz podróż</string>
     <string name="outing_save_error">Nie udało się zapisać zmian podróży.</string>
     <string name="outing_show_map">Pokaż na mapie</string>
+    <string name="outing_view_complete">Zobacz całą wycieczkę</string>
     <string name="paywall_badge_once">Jednorazowo</string>
     <string name="paywall_badge_trial">%1$d dni za darmo</string>
     <string name="paywall_benefit_automatic_body">Jeden plik dziennie, zapisany w wybranym folderze.</string>

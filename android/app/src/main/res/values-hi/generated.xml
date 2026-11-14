@@ -828,6 +828,9 @@
     <string name="onboarding_title_welcome">आपके दिन, याद रखे गए</string>
     <string name="outing_average_speed">औसत %1$s/h</string>
     <string name="outing_average_unavailable">औसत गति उपलब्ध नहीं</string>
+    <string name="outing_complete_explanation">इसका नाम बदलने, नोट्स संपादित करने या हटाने के लिए संपूर्ण आउटिंग खोलें।</string>
+    <string name="outing_day_scope">यहां का मार्ग, आंकड़े, दौरे और निर्यात केवल इसी दिन को कवर करते हैं।</string>
+    <string name="outing_day_title">%1$s पर आंदोलन</string>
     <string name="outing_default_name">डिफ़ॉल्ट नाम उपयोग करें</string>
     <string name="outing_delete">आउटिंग हटाएँ</string>
     <string name="outing_delete_error">आउटिंग हटाई नहीं जा सकी।</string>
@@ -855,6 +858,7 @@
     <string name="outing_save">आउटिंग सहेजें</string>
     <string name="outing_save_error">आपके आउटिंग बदलाव सहेजे नहीं जा सके।</string>
     <string name="outing_show_map">मानचित्र पर दिखाएँ</string>
+    <string name="outing_view_complete">पूरी सैर देखें</string>
     <string name="paywall_badge_once">एक बार</string>
     <string name="paywall_badge_trial">%1$d दिन मुफ़्त</string>
     <string name="paywall_benefit_automatic_body">हर दिन एक फ़ाइल, आपके चुने फ़ोल्डर में सहेजी गई।</string>

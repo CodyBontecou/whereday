@@ -880,6 +880,9 @@
     <string name="onboarding_title_welcome">Ваши дни — в памяти</string>
     <string name="outing_average_speed">В среднем %1$s/ч</string>
     <string name="outing_average_unavailable">Средняя скорость недоступна</string>
+    <string name="outing_complete_explanation">Откройте всю публикацию, чтобы переименовать ее, отредактировать заметки или удалить.</string>
+    <string name="outing_day_scope">Маршрут, статистика, посещения и вывозы здесь охватывают только этот день.</string>
+    <string name="outing_day_title">Движение по %1$s</string>
     <string name="outing_default_name">Название по умолчанию</string>
     <string name="outing_delete">Удалить прогулку</string>
     <string name="outing_delete_error">Не удалось удалить прогулку.</string>
@@ -911,6 +914,7 @@
     <string name="outing_save">Сохранить прогулку</string>
     <string name="outing_save_error">Не удалось сохранить изменения прогулки.</string>
     <string name="outing_show_map">Показать на карте</string>
+    <string name="outing_view_complete">Посмотреть полную экскурсию</string>
     <string name="paywall_badge_once">Разово</string>
     <string name="paywall_badge_trial">%1$d дн. бесплатно</string>
     <string name="paywall_benefit_automatic_body">Файл в день — в выбранную вами папку.</string>
