@@ -829,6 +829,9 @@
     <string name="onboarding_title_welcome">Recuerda tus días</string>
     <string name="outing_average_speed">%1$s/h de media</string>
     <string name="outing_average_unavailable">Velocidad media no disponible</string>
+    <string name="outing_complete_explanation">Abra la salida completa para cambiarle el nombre, editar notas o eliminarla.</string>
+    <string name="outing_day_scope">La ruta, estadísticas, visitas y exportaciones aquí cubren únicamente este día.</string>
+    <string name="outing_day_title">Movimiento en %1$s</string>
     <string name="outing_default_name">Usar nombre predeterminado</string>
     <string name="outing_delete">Eliminar salida</string>
     <string name="outing_delete_error">No se pudo eliminar la salida.</string>
@@ -856,6 +859,7 @@
     <string name="outing_save">Guardar salida</string>
     <string name="outing_save_error">No se pudieron guardar los cambios de la salida.</string>
     <string name="outing_show_map">Mostrar en el mapa</string>
+    <string name="outing_view_complete">Ver salida completa</string>
     <string name="paywall_badge_once">Pago único</string>
     <string name="paywall_badge_trial">%1$d días gratis</string>
     <string name="paywall_benefit_automatic_body">Un archivo al día, guardado en la carpeta que elijas.</string>

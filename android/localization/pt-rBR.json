@@ -1,8 +1,12 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "b91de0a055f2526de6a24c62006ccd96b13d97944a31e83a949e603b431962a9",
+  "catalog": {
+    "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
+    "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
+    "outing_view_complete": "View complete outing"
+  },
   "translations": {
     "active_recording_map_description": "O trajeto cor de ferrugem mostra apenas a gravação atual, independentemente das datas selecionadas. A bandeira de início e o marcador atual são separados dos marcadores do período.",
     "active_recording_map_empty": "Aguardando pontos da gravação atual.",
@@ -882,6 +886,7 @@
     "onboarding_title_welcome": "Seus dias, lembrados",
     "outing_average_speed": "Média de %1$s/h",
     "outing_average_unavailable": "Velocidade média indisponível",
+    "outing_day_title": "Movimento em %1$s",
     "outing_default_name": "Usar nome padrão",
     "outing_delete": "Excluir passeio",
     "outing_delete_error": "Não foi possível excluir o passeio.",

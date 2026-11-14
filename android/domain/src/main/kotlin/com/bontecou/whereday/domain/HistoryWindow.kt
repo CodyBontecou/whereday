@@ -65,7 +65,8 @@ class UniformPointSampler(total: Long, val limit: Int = 2500) {
 }
 
 data class HistoryWindow(val range: HistoryRange, val points: List<TrackPoint>, val summary: PointSummary, val visits: List<Visit>, val sessions: List<RecordingSession>, val inferred: List<InferredOutingHeader> = emptyList(),val endpoints:RouteEndpoints=RouteEndpoints())
-data class OutingDetail(val session: RecordingSession, val points: List<TrackPoint>, val summary: PointSummary, val visits: List<Visit>,val inferred: Boolean=false,val endpoints:RouteEndpoints=RouteEndpoints())
+/** [session] is the presented header; for a day slice it is clipped and [slice] carries the day scope. */
+data class OutingDetail(val session: RecordingSession, val points: List<TrackPoint>, val summary: PointSummary, val visits: List<Visit>,val inferred: Boolean=false,val endpoints:RouteEndpoints=RouteEndpoints(),val slice:RecordingDaySlice?=null)
 data class ActiveRecordingMap(val session:RecordingSession,val points:List<TrackPoint>,val count:Long,val endpoints:RouteEndpoints,val segments:List<List<TrackPoint>>)
 data class InferredOutingHeader(val id: String,val startedAt: Instant,val endedAt: Instant,val summary: PointSummary)
 

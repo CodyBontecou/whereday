@@ -829,6 +829,9 @@
     <string name="onboarding_title_welcome">আপনার দিনগুলো, মনে রাখা</string>
     <string name="outing_average_speed">গড় %1$s/ঘণ্টা</string>
     <string name="outing_average_unavailable">গড় গতি পাওয়া যাচ্ছে না</string>
+    <string name="outing_complete_explanation">এটির নাম পরিবর্তন করতে, নোট সম্পাদনা করতে বা মুছতে সম্পূর্ণ আউটিংটি খুলুন৷</string>
+    <string name="outing_day_scope">রুট, পরিসংখ্যান, পরিদর্শন এবং রপ্তানি এখানে শুধুমাত্র এই দিন কভার.</string>
+    <string name="outing_day_title">%1$s এ চলাচল</string>
     <string name="outing_default_name">ডিফল্ট নাম ব্যবহার করুন</string>
     <string name="outing_delete">আউটিং মুছে দিন</string>
     <string name="outing_delete_error">আউটিংটি মোছা যায়নি।</string>
@@ -856,6 +859,7 @@
     <string name="outing_save">আউটিং সংরক্ষণ করুন</string>
     <string name="outing_save_error">আপনার আউটিংয়ের পরিবর্তন সংরক্ষণ করা যায়নি।</string>
     <string name="outing_show_map">মানচিত্রে দেখান</string>
+    <string name="outing_view_complete">সম্পূর্ণ আউটিং দেখুন</string>
     <string name="paywall_badge_once">এককালীন</string>
     <string name="paywall_badge_trial">%1$d দিন বিনামূল্যে</string>
     <string name="paywall_benefit_automatic_body">দিনে একটি ফাইল, আপনার বেছে নেওয়া ফোল্ডারে সংরক্ষিত।</string>

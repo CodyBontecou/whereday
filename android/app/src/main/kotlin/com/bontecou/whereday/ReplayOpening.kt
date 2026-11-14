@@ -9,14 +9,15 @@ internal data class ReplayOpening(val owner:String,val request:ReplayRequest) {
     companion object {
         fun saved(value:ReplayOpening):List<Any> = listOf(1,value.owner)+when(val r=value.request) {
             is ReplayRequest.Range->listOf("range",r.range.from.toString(),r.range.until.toString(),r.includeOutliers)
-            is ReplayRequest.Outing->listOf("outing",r.id)
+            is ReplayRequest.Outing->listOf("outing",r.id)+(r.day?.let {listOf(it.from.toString(),it.until.toString())} ?: emptyList())
             is ReplayRequest.Inferred->with(r.header) {listOf("inferred",id,startedAt.toString(),endedAt.toString(),summary.count,summary.outlierCount,summary.distanceMeters,summary.firstTime?.toString().orEmpty(),summary.lastTime?.toString().orEmpty())}
         }
         fun restored(values:List<Any>):ReplayOpening?=runCatching {
             require(values[0]==1)
             val request=when(values[2]) {
                 "range"->{require(values.size==6);ReplayRequest.Range(HistoryRange(Instant.parse(values[3] as String),Instant.parse(values[4] as String)),values[5] as Boolean)}
-                "outing"->{require(values.size==4);ReplayRequest.Outing((values[3] as String).also {require(it.isNotBlank())})}
+                "outing"->{require(values.size==4 || values.size==6)
+                    ReplayRequest.Outing((values[3] as String).also {require(it.isNotBlank())},if(values.size==6) HistoryRange(Instant.parse(values[4] as String),Instant.parse(values[5] as String)) else null)}
                 "inferred"->{
                     require(values.size==11)
                     val start=Instant.parse(values[4] as String);val end=Instant.parse(values[5] as String);require(start<=end)

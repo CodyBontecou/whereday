@@ -434,7 +434,7 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         val range=when(request) {
             is ReplayRequest.Range->request.range
             is ReplayRequest.Outing->{val session=dao.session(request.id)?.value ?: error("This outing was deleted")
-                HistoryRange(session.startedAt,(session.endedAt ?: clock.instant()).coerceAtLeast(session.startedAt).plusMillis(1))}
+                RecordingDayClip.range(session,clock.instant(),request.day)}
             is ReplayRequest.Inferred->HistoryRange(request.header.startedAt,request.header.endedAt.plusMillis(1))
         }
         val sessions=if(request is ReplayRequest.Inferred) dao.rangeSessions(range.from,range.until).map {it.value} else emptyList()
@@ -553,12 +553,19 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         rows.singleOrNull()?.value
     }
 
-    suspend fun outingDetail(id: String, displayLimit: Int = 2500): OutingDetail = database.readSnapshot {
+    /** With [day], only that local day of the recording: route, statistics and visits are clipped (iOS clipped(to:)). */
+    suspend fun outingDetail(id: String, displayLimit: Int = 2500, day: HistoryRange? = null): OutingDetail = database.readSnapshot {
         val session=dao.session(id)?.value ?: error("This outing was deleted")
-        val end=session.endedAt ?: clock.instant()
-        val range=HistoryRange(session.startedAt,end.coerceAtLeast(session.startedAt).plusMillis(1))
+        val now=clock.instant()
+        val slice=day?.let {
+            RecordingDayClip.clip(session,it,now)
+                ?.takeIf {slice->slice.startedAt<slice.endedAt || dao.rangePointCount(slice.window.from,slice.window.until)>0}
+                ?: error("This outing has no movement on this day.")
+        }
+        val range=slice?.window ?: RecordingDayClip.range(session,now)
         val (points,summary,endpoints)=sampleAndSummarize(range,displayLimit,includeOutliers=false,fallback=true)
-        OutingDetail(session,points,summary,dao.rangeVisits(range.from,range.until).map { it.value },endpoints=endpoints)
+        val visits=dao.rangeVisits(range.from,range.until).map { it.value }.let {all->if(slice==null) all else all.filter(slice::overlapsDay)}
+        OutingDetail(slice?.presented ?: session,points,summary,visits,endpoints=endpoints,slice=slice)
     }
 
     private suspend fun sampleAndSummarize(range: HistoryRange, limit: Int,includeOutliers:Boolean=true,fallback:Boolean=false,each: (TrackPoint)->Unit={}): Triple<List<TrackPoint>,PointSummary,RouteEndpoints> {

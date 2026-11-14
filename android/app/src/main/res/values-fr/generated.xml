@@ -855,6 +855,9 @@
     <string name="onboarding_title_welcome">Vos journées, en mémoire</string>
     <string name="outing_average_speed">%1$s/h en moyenne</string>
     <string name="outing_average_unavailable">Vitesse moyenne indisponible</string>
+    <string name="outing_complete_explanation">Ouvrez la sortie complète pour la renommer, modifier des notes ou la supprimer.</string>
+    <string name="outing_day_scope">Le parcours, les statistiques, les visites et les exportations couvrent ici cette journée uniquement.</string>
+    <string name="outing_day_title">Mouvement sur %1$s</string>
     <string name="outing_default_name">Utiliser le nom par défaut</string>
     <string name="outing_delete">Supprimer la sortie</string>
     <string name="outing_delete_error">Impossible de supprimer la sortie.</string>
@@ -884,6 +887,7 @@
     <string name="outing_save">Enregistrer la sortie</string>
     <string name="outing_save_error">Impossible d’enregistrer les modifications de la sortie.</string>
     <string name="outing_show_map">Afficher sur la carte</string>
+    <string name="outing_view_complete">Voir la sortie complète</string>
     <string name="paywall_badge_once">Paiement unique</string>
     <string name="paywall_badge_trial">%1$d jours gratuits</string>
     <string name="paywall_benefit_automatic_body">Un fichier par jour, enregistré dans le dossier de votre choix.</string>

@@ -933,6 +933,9 @@
     <string name="onboarding_title_welcome">أيامك محفوظة في الذاكرة</string>
     <string name="outing_average_speed">متوسط %1$s/س</string>
     <string name="outing_average_unavailable">متوسط السرعة غير متاح</string>
+    <string name="outing_complete_explanation">افتح الرحلة الكاملة لإعادة تسميتها أو تعديل الملاحظات أو حذفها.</string>
+    <string name="outing_day_scope">يغطي المسار والإحصائيات والزيارات والصادرات هنا هذا اليوم فقط.</string>
+    <string name="outing_day_title">الحركة على %1$s</string>
     <string name="outing_default_name">استخدام الاسم الافتراضي</string>
     <string name="outing_delete">حذف النزهة</string>
     <string name="outing_delete_error">تعذّر حذف النزهة.</string>
@@ -968,6 +971,7 @@
     <string name="outing_save">حفظ النزهة</string>
     <string name="outing_save_error">تعذّر حفظ تغييرات النزهة.</string>
     <string name="outing_show_map">عرض على الخريطة</string>
+    <string name="outing_view_complete">عرض النزهة كاملة</string>
     <string name="paywall_badge_once">لمرة واحدة</string>
     <string name="paywall_badge_trial">%1$d أيام مجانًا</string>
     <string name="paywall_benefit_automatic_body">ملف كل يوم، يُحفظ في المجلد الذي تختاره.</string>

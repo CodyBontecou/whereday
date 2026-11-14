@@ -138,13 +138,13 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
     /** Membership is a closed time window, including imported fixes with no session foreign key. */
     suspend fun prepareOuting(id:String,format:ExportFormat,options:ExportOptions=ExportOptions(),
         filenamePattern:String=FilenamePlanner.defaultPattern,sequence:Int=1,inferred:InferredOutingHeader?=null,
-        generatedAt:Instant=Instant.now()):PreparedExport {
+        generatedAt:Instant=Instant.now(),day:HistoryRange?=null):PreparedExport {
         val displayLocale=AndroidHistoryLocale.capture(context)
         require(inferred==null || inferred.id==id)
         var relativePath="outing.${format.extension}"
         return prepareGenerated(format,relativePath,finalPath={relativePath}) {writer,checkpoint,directory ->
             database.readSnapshot {dao ->
-                val outing=SnapshotOutingExport(dao,generatedAt,checkpoint).individual(id,sequence,inferred,options)
+                val outing=SnapshotOutingExport(dao,generatedAt,checkpoint).individual(id,sequence,inferred,options,day)
                 relativePath=OutingFilenamePlanner.path(filenamePattern,format,outing.summary,options,mutableSetOf())
                 StreamingOutingExporter.write(writer,outing.summary,outing.source,format,options,generatedAt,scratchDirectory=directory,locale=displayLocale)
             }
