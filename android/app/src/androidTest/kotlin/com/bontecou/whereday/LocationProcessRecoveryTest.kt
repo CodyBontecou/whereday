@@ -50,11 +50,48 @@ class LocationProcessRecoveryTest {
             for(permission in permissions) instrumentation.uiAutomation.grantRuntimePermission(context.packageName,permission)
         }
         suspend fun start(activity:ComponentActivity) {
-            waitFor("visible window") {activity.hasWindowFocus()}
-            if(visits) graph.visitMonitoringCommands.startVisible(activity,graph.journalClear.state.value.generation)
-            if(route) graph.recordingCommands.startVisible(activity)
-            waitFor {RecordingRuntime.active.value==route && VisitMonitoringRuntime.state.value==
-                if(visits) {if(route) VisitMonitoringMode.route else VisitMonitoringMode.balanced} else VisitMonitoringMode.off}
+            // Observation only. Worker-thread reads are labeled, not claimed as Main truth.
+            // Bounded scalar trace; never changes admission, timing limits or UI state.
+            val trace=ArrayDeque<String>();var dropped=0;val started=android.os.SystemClock.elapsedRealtimeNanos()
+            fun observe(stage:String) {
+                synchronized(trace) {
+                    if(trace.size==64) {trace.removeFirst();dropped++}
+                    trace.addLast("${android.os.SystemClock.elapsedRealtimeNanos()-started} $phase/$mode/$termination $stage "+
+                        "main=${android.os.Looper.myLooper()==android.os.Looper.getMainLooper()} owner=${System.identityHashCode(activity)} lifecycle=${activity.lifecycle.currentState} "+
+                        "focus=${activity.hasWindowFocus()} attached=${activity.window.decorView.isAttachedToWindow} "+
+                        "finishing=${activity.isFinishing} destroyed=${activity.isDestroyed}")
+                }
+            }
+            val listener=android.view.ViewTreeObserver.OnWindowFocusChangeListener {focus->observe("native-focus-$focus")}
+            instrumentation.runOnMainSync {activity.window.decorView.viewTreeObserver.addOnWindowFocusChangeListener(listener)}
+            try {
+                observe("before-wait")
+                waitFor("visible window") {activity.hasWindowFocus()}
+                observe("after-wait")
+                if(visits) {
+                    observe("before-visits")
+                    graph.visitMonitoringCommands.startVisible(activity,graph.journalClear.state.value.generation)
+                    observe("after-visits")
+                }
+                if(route) {
+                    observe("before-route")
+                    graph.recordingCommands.startVisible(activity)
+                    observe("after-route")
+                }
+                waitFor {RecordingRuntime.active.value==route && VisitMonitoringRuntime.state.value==
+                    if(visits) {if(route) VisitMonitoringMode.route else VisitMonitoringMode.balanced} else VisitMonitoringMode.off}
+            } catch(error:Throwable) {
+                observe("failure-${error.javaClass.simpleName}")
+                throw error
+            } finally {
+                instrumentation.runOnMainSync {
+                    activity.window.decorView.viewTreeObserver.takeIf {it.isAlive}?.removeOnWindowFocusChangeListener(listener)
+                    synchronized(trace) {
+                        println("[DEBUG-location-focus] $phase/$mode/$termination retained=${trace.size} dropped=$dropped")
+                        trace.forEach {println("[DEBUG-location-focus] $it")}
+                    }
+                }
+            }
         }
         when(phase) {
             "seed"->{
