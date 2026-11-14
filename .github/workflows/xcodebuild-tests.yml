@@ -27,8 +27,18 @@ jobs:
       - name: Test iOS runner guardrails
         run: python3 -m unittest discover -s scripts -p test_test_ios.py
 
+      - name: Verify catalog coverage and newly extracted copy
+        run: |
+          python3 -m unittest discover -s scripts -p '*localization*.py'
+          python3 scripts/localization_catalog.py audit
+
       - name: Run IsoMe tests
         run: scripts/test-ios.sh --result-bundle-path artifacts/test-results/IsoMe.xcresult
+
+      - name: Verify actual compiled new catalog resources
+        run: |
+          app_path=$(xcodebuild -project IsoMe.xcodeproj -scheme IsoMe -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -showBuildSettings -json | python3 -c 'import json,sys; settings=next(item["buildSettings"] for item in json.load(sys.stdin) if item["target"] == "IsoMe"); print(settings["TARGET_BUILD_DIR"] + "/" + settings["FULL_PRODUCT_NAME"])')
+          swift scripts/check_new_catalog_resources.swift "$app_path"
 
       - name: Upload xcresult on failure
         if: failure()

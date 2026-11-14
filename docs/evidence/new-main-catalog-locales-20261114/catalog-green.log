@@ -1,0 +1,17 @@
+.................
+----------------------------------------------------------------------
+Ran 17 tests in 0.158s
+
+OK
+Audited 2266 active catalog keys across 9 catalogs and 11 locales.
+  ar: 10 non-allowlisted values identical to English
+  bn: 12 non-allowlisted values identical to English
+  es: 24 non-allowlisted values identical to English
+  fr: 40 non-allowlisted values identical to English
+  hi: 21 non-allowlisted values identical to English
+  ja: 10 non-allowlisted values identical to English
+  pl: 13 non-allowlisted values identical to English
+  pt-BR: 25 non-allowlisted values identical to English
+  ru: 10 non-allowlisted values identical to English
+  zh-Hans: 11 non-allowlisted values identical to English
+PASS: no missing translations or placeholder mismatches
