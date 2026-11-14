@@ -49,7 +49,9 @@ private data class VisitSaveKey(val baseline:Visit?,val draft:VisitDraft,val reu
 private data class VisitOverlapReview(val id:Long,val key:VisitSaveKey,val value:Visit,val rememberPlace:Boolean,val conflicting:Visit)
 private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:List<SavedPlace>,val plan:SavedPlaceReusePlan)
 
-@Composable internal fun VisitEditor(graph:AppGraph,visit:Visit?,dismiss:()->Unit,save:suspend (Visit,SavedPlaceReuseSave?,Boolean,Boolean)->Unit,delete:(suspend ()->Unit)?,mode:ManualVisitMode=ManualVisitMode.past,nearbyLookup:PlaceLookupService=graph.placeLookup,nearbyAvailable:Boolean=com.bontecou.whereday.platform.GeoapifyPlaceLookup.available,currentLocationSource:CurrentVisitLocationSource=graph.currentVisitLocation,seed:VisitLinkSeed?=null,onShowOnMap:((Visit)->Unit)?=null,inline:Boolean=false,inlineBackLabel:Int=R.string.common_back) {
+@Composable internal fun VisitEditor(graph:AppGraph,visit:Visit?,dismiss:()->Unit,save:suspend (Visit,SavedPlaceReuseSave?,Boolean,Boolean)->Unit,delete:(suspend ()->Unit)?,mode:ManualVisitMode=ManualVisitMode.past,nearbyLookup:PlaceLookupService=graph.placeLookup,nearbyAvailable:Boolean=com.bontecou.whereday.platform.GeoapifyPlaceLookup.available,currentLocationSource:CurrentVisitLocationSource=graph.currentVisitLocation,seed:VisitLinkSeed?=null,onShowOnMap:((Visit)->Unit)?=null,inline:Boolean=false,inlineBackLabel:Int=R.string.common_back,
+    /** New stops only: saves while trimming overlapped stays in one transaction, as iOS ManualVisitSheet does. Null keeps both visits on overlap review. */
+    trimOverlaps:(suspend (Visit,SavedPlaceReuseSave?)->Unit)?=null) {
     BlockVisitLinks()
     val context=LocalContext.current
     fun failure(error:Exception,fallback:Int)=context.getString(when(error) {is VisitChanged->R.string.visit_error_changed;is SavedPlacesChanged->R.string.visit_error_places_changed;else->fallback})
@@ -133,6 +135,14 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
         return VisitSaveKey(latestBaseline,currentDraft(),if(reuse) latestReuse?.let {SavedPlaceReuseSave(it.candidate,it.existing)} else null,reuse,reusableRadius,latestMode)
     }
     val saveKey=currentKey()
+    // iOS ManualVisitSheet.refreshOverlapCheck: stored stays the stop's times would overlap, shown before saving.
+    val trimsOverlaps=visit==null && trimOverlaps!=null
+    val overlapCheck by produceState<VisitOverlapCheck>(VisitOverlapCheck.None,trimsOverlaps,arrivalMillis,departureMillis,stillHere) {
+        val arrival=Instant.ofEpochMilli(arrivalMillis);val departure=if(stillHere) null else Instant.ofEpochMilli(departureMillis)
+        val now=Instant.now()
+        value=if(!trimsOverlaps || arrival>now || departure!=null && departure !in arrival..now) VisitOverlapCheck.None
+            else try {graph.history.overlapCheck(arrival,departure,id)} catch(e:Exception) {if(e is CancellationException) throw e;VisitOverlapCheck.None}
+    }
     val needsReuse=saveKey.needsReuse
     LaunchedEffect(saveKey) {if(overlapReview?.key!=saveKey) overlapReview=null}
     LaunchedEffect(saveKey) {if(mapReview!=saveKey) mapReview=null}
@@ -161,7 +171,11 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
         if(!interactive() || busy || currentKey()!=key) return
         busy=true;error=null;overlapReview=null
         scope.launch {
-            try {save(value,reuse,remember,allowOverlap);dismiss()}
+            try {
+                val trim=trimOverlaps?.takeIf {visit==null && !allowOverlap}
+                if(trim!=null) trim(value,reuse) else save(value,reuse,remember,allowOverlap)
+                dismiss()
+            }
             catch(e:Exception) {
                 if(e is CancellationException) throw e
                 if(e is VisitOverlap) {
@@ -239,6 +253,9 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
                     else Text(stringResource(R.string.visit_past_times),style=WdType.caption2,color=wd.textMuted)
                     if(!stillHere) VisitDateTimeControl(stringResource(R.string.visit_departed),Instant.ofEpochMilli(departureMillis),enabled=!busy,modifier=Modifier.testTag("visit-departure-time")) {departureMillis=it.toEpochMilli()}
                 }
+            }
+            overlapNotices(overlapCheck).forEach {notice->
+                WdNotice(notice,Modifier.testTag("visit-overlap-notice"),icon=Icons.Outlined.WarningAmber,warning=true)
             }
             VisitEditorSection(stringResource(R.string.redesign_visit_section_notes)) {
                 OutlinedTextField(notes,{notes=it},label={Text(stringResource(R.string.visit_notes))},enabled=!busy,colors=fieldColors,textStyle=WdType.serifBody,modifier=Modifier.fillMaxWidth().padding(12.dp).testTag("visit-notes"))
@@ -333,9 +350,7 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
         WorkspaceAlertDialog(onDismissRequest={if(overlapReview==ticket) overlapReview=null},modifier=Modifier.testTag("visit-overlap-dialog"),
             title={Text(stringResource(R.string.visit_overlap_title))},text={
                 Column(Modifier.verticalScroll(rememberScrollState()).testTag("visit-overlap-body")) {
-                    val name=ticket.conflicting.name?.trim()?.takeIf {it.isNotEmpty()}
-                        ?: ticket.conflicting.address?.trim()?.takeIf {it.isNotEmpty()} ?: stringResource(R.string.visit_overlap_unnamed)
-                    Text(stringResource(R.string.visit_overlap_message,name))
+                    Text(stringResource(R.string.visit_overlap_message,overlapName(ticket.conflicting)))
                 }
             },confirmButton={TextButton(enabled=!busy,onClick={
                 if(overlapReview==ticket) {
@@ -364,6 +379,32 @@ private data class ReusablePlaceReview(val candidate:SavedPlace,val existing:Lis
     if(deleting) WorkspaceAlertDialog(onDismissRequest={if(!busy) deleting=false},title={Text(stringResource(R.string.visit_delete_title))},text={Text(stringResource(R.string.visit_delete_description))},confirmButton={TextButton(enabled=!busy,onClick={scope.launch {
         busy=true;try {delete?.invoke();dismiss()} catch(e:Exception) {if(e is CancellationException) throw e;error=failure(e,R.string.visit_error_delete);deleting=false} finally {busy=false}
     }}) {Text(stringResource(R.string.visit_delete),color=if(busy) wd.textMuted else wd.inkRust)}},dismissButton={TextButton(enabled=!busy,onClick={deleting=false}) {Text(stringResource(R.string.visit_cancel))}})
+}
+
+@Composable private fun overlapName(visit:Visit):String=visit.name?.trim()?.takeIf {it.isNotEmpty()}
+    ?: visit.address?.trim()?.takeIf {it.isNotEmpty()} ?: stringResource(R.string.visit_overlap_unnamed)
+
+/** iOS ManualVisitSheet.overlapNotices: "Overlaps Mission Office by 15 min (until 12:30). Saving will end that visit at 12:15." */
+@Composable private fun overlapNotices(check:VisitOverlapCheck):List<String> {
+    val clock=rememberClockFormatter()
+    return when(check) {
+        VisitOverlapCheck.None->emptyList()
+        is VisitOverlapCheck.Conflict->{
+            val end=check.visit.departedAt?.let(clock::format) ?: stringResource(R.string.visit_overlap_now)
+            listOf(stringResource(R.string.visit_overlap_conflict,overlapName(check.visit),clock.format(check.visit.arrivedAt),end))
+        }
+        is VisitOverlapCheck.Trims->check.resolutions.map {resolution->
+            val name=overlapName(resolution.visit)
+            val minutes=VisitOverlaps.noticeMinutes(resolution).toInt()
+            when(val change=resolution.change) {
+                is VisitOverlapResolution.Change.EndsAt->resolution.visit.departedAt?.let {until->
+                    stringResource(R.string.visit_overlap_trim_end,name,minutes,clock.format(until),clock.format(change.at))
+                } ?: stringResource(R.string.visit_overlap_trim_end_open,name,clock.format(change.at))
+                is VisitOverlapResolution.Change.StartsAt->
+                    stringResource(R.string.visit_overlap_trim_start,name,minutes,clock.format(resolution.visit.arrivedAt),clock.format(change.at))
+            }
+        }
+    }
 }
 
 /** A tracked mono caption over a hairline card, as iOS groups the visit detail into TECard sections. */

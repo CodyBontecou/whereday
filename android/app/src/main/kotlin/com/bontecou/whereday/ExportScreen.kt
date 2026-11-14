@@ -65,6 +65,8 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
 @Composable fun ExportScreen(graph: AppGraph,renderPreview:suspend (ExportFormat,ExportOptions,Boolean,InferenceRules?)->String={f,o,outings,inference->graph.exports.preview(f,o,outings,inference)},onSettings:(()->Unit)?=null) {
     val importing by graph.historyImports.state.collectAsStateWithLifecycle()
     if(importing.phase!=com.bontecou.whereday.platform.HistoryImportPhase.idle) {HistoryImportScreen(graph.historyImports);return}
+    val restoring by graph.backupRestore.state.collectAsStateWithLifecycle()
+    if(restoring.phase!=com.bontecou.whereday.platform.BackupRestorePhase.idle) {BackupRestoreScreen(graph.backupRestore);return}
     // Null until the first read so re-entering Archive does not flash "0 route points" / "Nothing recorded yet".
     val count by remember(graph) {graph.history.dao.pointCount().map<Long,Long?> {it}}.collectAsStateWithLifecycle(null)
     val history=archiveHistory(count)
@@ -162,8 +164,12 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             finally {operation=null}
         }
     }
-    val importer=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {uri->
-        if(uri!=null) graph.historyImports.select(com.bontecou.whereday.platform.AndroidHistoryImportInput(context,uri),locale=com.bontecou.whereday.platform.AndroidHistoryLocale.capture(context))
+    // Several documents may be chosen together only as the numbered files of one Whereday backup (as on iOS).
+    val importer=rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {uris->
+        if(uris.isNotEmpty()) {
+            val locale=com.bontecou.whereday.platform.AndroidHistoryLocale.capture(context)
+            graph.backupRestore.select(uris.map {com.bontecou.whereday.platform.AndroidHistoryImportInput(context,it)}) {single->graph.historyImports.select(single,locale=locale)}
+        }
     }
     LaunchedEffect(Unit) {graph.usageFunnel.paywall(com.bontecou.whereday.platform.UsagePaywall.export)}
     val deliverable=!busy && ready && picker.loaded && !picker.busy && pending==null
@@ -259,7 +265,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             ExportCard {
                 WdNavRow(stringResource(R.string.export_import),icon=Icons.Outlined.FileUpload,divider=false,enabled=!busy) {importer.launch(arrayOf("application/json","text/*","application/octet-stream"))}
             }
-            WdSectionFooter(stringResource(R.string.export_import_help))
+            WdSectionFooter(stringResource(R.string.export_import_help)+" "+stringResource(R.string.backup_import_help))
             WdSectionHeader(stringResource(R.string.export_redesign_section_options))
             ExportCard {
                 WdRow(Modifier.testTag("export-advanced"),divider=false,onClick={advanced=!advanced}) {

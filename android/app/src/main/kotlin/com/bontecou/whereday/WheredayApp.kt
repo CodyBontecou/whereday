@@ -85,7 +85,8 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             }
         }
         if (!current.onboarded) {
-            JournalWorkspaceFrame(false,primary={Onboarding(onRequestLocation,onRequestNotifications,graph.usageAnalytics,onboardingAuthorization,access,onAccessOptions) {decision->
+            JournalWorkspaceFrame(false,primary={Onboarding(onRequestLocation,onRequestNotifications,graph.usageAnalytics,onboardingAuthorization,access,onAccessOptions,
+                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}}) {decision->
                 val start=decision.start
                 val permit=decision.permit
                 val authorization=decision.authorization

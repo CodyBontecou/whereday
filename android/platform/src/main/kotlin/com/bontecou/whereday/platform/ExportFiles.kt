@@ -138,13 +138,13 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
     /** Membership is a closed time window, including imported fixes with no session foreign key. */
     suspend fun prepareOuting(id:String,format:ExportFormat,options:ExportOptions=ExportOptions(),
         filenamePattern:String=FilenamePlanner.defaultPattern,sequence:Int=1,inferred:InferredOutingHeader?=null,
-        generatedAt:Instant=Instant.now()):PreparedExport {
+        generatedAt:Instant=Instant.now(),day:HistoryRange?=null):PreparedExport {
         val displayLocale=AndroidHistoryLocale.capture(context)
         require(inferred==null || inferred.id==id)
         var relativePath="outing.${format.extension}"
         return prepareGenerated(format,relativePath,finalPath={relativePath}) {writer,checkpoint,directory ->
             database.readSnapshot {dao ->
-                val outing=SnapshotOutingExport(dao,generatedAt,checkpoint).individual(id,sequence,inferred,options)
+                val outing=SnapshotOutingExport(dao,generatedAt,checkpoint).individual(id,sequence,inferred,options,day)
                 relativePath=OutingFilenamePlanner.path(filenamePattern,format,outing.summary,options,mutableSetOf())
                 StreamingOutingExporter.write(writer,outing.summary,outing.source,format,options,generatedAt,scratchDirectory=directory,locale=displayLocale)
             }
@@ -181,6 +181,31 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
                     }
                 }
                 checkCurrent(epoch);authorize(Capability.fileExport);checkCurrent(epoch)
+                PreparedExport(id,files).also {journal.save(it)}
+            } catch(e:Throwable) {directory.deleteRecursively();throw e}
+        }
+    }
+
+    /**
+     * The lossless backup of everything Clear All Data erases, in the shared iOS/Android Whereday backup format.
+     * Export filters, field choices and date ranges never trim it. Paid like every file export, as iOS gates it
+     * behind `canExport`. Large journals become a numbered multipart set (deliver with Share or the folder).
+     */
+    suspend fun prepareBackup():PreparedExport=withContext(Dispatchers.IO) {
+        authorize(Capability.fileExport)
+        val epoch=generation.get();val coroutine=currentCoroutineContext()
+        lock.withLock {
+            checkCurrent(epoch);check(root.mkdirs() || root.isDirectory);cleanupExpiredLocked()
+            val id=UUID.randomUUID().toString();val directory=File(root,id);check(directory.mkdir()) {"Not enough storage to prepare export"}
+            try {
+                val exportedAt=Instant.now().toEpochMilli()
+                val checkpoint={coroutine.ensureActive();checkGeneration(epoch)}
+                val written=JournalBackupStore(database).snapshot {snapshot->
+                    WheredayBackupWriter().write(directory,exportedAt,SnapshotBackupSource(snapshot,exportedAt),check=checkpoint)
+                }
+                checkCurrent(epoch);authorize(Capability.fileExport);checkCurrent(epoch)
+                val files=written.map {PreparedExportFile(it.file,it.name,ExportFormat.json,
+                    ExportCounts(it.counts.getValue(BackupCollection.visits).toLong(),it.counts.getValue(BackupCollection.points).toLong()),it.bytes,digest(it.file))}
                 PreparedExport(id,files).also {journal.save(it)}
             } catch(e:Throwable) {directory.deleteRecursively();throw e}
         }

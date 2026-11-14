@@ -44,10 +44,14 @@ private sealed interface OutingState {
     data class Ready(val detail: OutingDetail): OutingState
     data object Failed: OutingState
 }
-@Composable fun OutingDetailScreen(graph: AppGraph,id: String,metric: Boolean,back: () -> Unit,showOnMap: (RecordingSession) -> Unit,inferredHeader: InferredOutingHeader?=null,sequence:Int=1,onVisitOpened:((Visit)->Unit)?=null,visitInspectionActive:Boolean=false) {
-    val state by produceState<OutingState>(OutingState.Loading,id,inferredHeader?.endedAt) {
+@Composable fun OutingDetailScreen(graph: AppGraph,id: String,metric: Boolean,back: () -> Unit,showOnMap: (RecordingSession) -> Unit,inferredHeader: InferredOutingHeader?=null,sequence:Int=1,onVisitOpened:((Visit)->Unit)?=null,visitInspectionActive:Boolean=false,day:HistoryRange?=null) {
+    // Opened from one day of a longer recording, the detail covers that day until the complete outing is opened.
+    var complete by rememberSaveable(id) {mutableStateOf(false)}
+    val dayScope=day?.takeIf {!complete && inferredHeader==null}
+    val state by produceState<OutingState>(OutingState.Loading,id,inferredHeader?.endedAt,dayScope) {
+        value=OutingState.Loading
         graph.database.invalidationTracker.createFlow("points","sessions","visits").collectLatest {
-            try { value=OutingState.Ready(if(inferredHeader==null) graph.history.outingDetail(id) else graph.history.inferredDetail(inferredHeader)) }
+            try { value=OutingState.Ready(if(inferredHeader==null) graph.history.outingDetail(id,day=dayScope) else graph.history.inferredDetail(inferredHeader)) }
             catch(e:Exception) { if(e is CancellationException) throw e; value=OutingState.Failed }
         }
     }
@@ -63,24 +67,28 @@ private sealed interface OutingState {
     val locale=LocalConfiguration.current.locales[0] ?: Locale.getDefault()
     val scope=rememberCoroutineScope()
     val exportSettings by graph.exportSettings.state.collectAsStateWithLifecycle()
-    BackHandler(onBack=back)
+    // Back from the complete outing returns to the day it was opened from.
+    val leave={if(complete && day!=null) complete=false else back()}
+    BackHandler(onBack=leave)
     Box(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).testTag("outing-detail-content").padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-        WdBackChip(stringResource(R.string.timeline_back),back)
+        WdBackChip(stringResource(R.string.timeline_back),leave)
         when(val current=state) {
             OutingState.Loading -> WdLoading()
             OutingState.Failed -> WdNotice(stringResource(R.string.outing_load_error),icon=Icons.Outlined.ErrorOutline,warning=true)
             is OutingState.Ready -> {
                 val detail=current.detail
                 val session=detail.session
-                val photoRange=remember(session.startedAt,session.endedAt,detail.summary.count) {HistoryRange(session.startedAt,(session.endedAt ?: java.time.Instant.now()).plusMillis(1))}
+                val slice=detail.slice
+                val replayRequest=if(inferredHeader==null) ReplayRequest.Outing(id,slice?.day) else ReplayRequest.Inferred(inferredHeader)
+                val photoRange=remember(session.startedAt,session.endedAt,detail.summary.count,slice) {slice?.window ?: HistoryRange(session.startedAt,(session.endedAt ?: java.time.Instant.now()).plusMillis(1))}
                 val photos=matchedPhotos(graph,photoRange)
                 val photoLayer=photoMapLayer(graph,photoRange,photos.count!=null,validationFailed=photos.error!=null)
                 val live=session.endedAt==null
-                JournalMap(detail.points,detail.visits,followMetric=metric,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
+                JournalMap(detail.points,detail.visits,followMetric=metric,fitRouteOnly=true,endpoints=detail.endpoints,allOutlierFallback=true,onVisitSelected={visit->if(onVisitOpened!=null) onVisitOpened(visit) else selectedVisit=visit},photoLayer=photoLayer,
                     roadController=graph.roadDisplay,roadVisible=!visitInspectionActive && !editing && !deleting && selectedVisit==null && !replayShowing,
-                    pointMarkerSource=rememberHistoryPointMarkerSource(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader)))
-                RouteReplayButton(graph,if(inferredHeader==null) ReplayRequest.Outing(id) else ReplayRequest.Inferred(inferredHeader),metric,
+                    pointMarkerSource=rememberHistoryPointMarkerSource(graph,replayRequest))
+                RouteReplayButton(graph,replayRequest,metric,
                     ((detail.summary.count-detail.summary.outlierCount).takeIf {it>0} ?: detail.summary.count)>=2,onShowingChange={replayShowing=it})
                 Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
                     Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
@@ -91,6 +99,15 @@ private sealed interface OutingState {
                     }
                     Text(session.name ?: stringResource(if(detail.inferred) R.string.timeline_inferred else R.string.outing_details),style=WdType.title.copy(fontWeight=FontWeight.Normal),color=wd.textPrimary,modifier=Modifier.semantics {heading()}.testTag("outing-title"))
                     Text(timelineRange(session.startedAt,session.endedAt,R.string.timeline_recording),style=WdType.caption,color=if(live) wd.inkRust else wd.textMuted)
+                }
+                if(slice!=null) WdCard {
+                    Column(Modifier.padding(horizontal=20.dp,vertical=16.dp).testTag("outing-day-scope"),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                        val dayText=slice.day.from.atZone(java.time.ZoneId.systemDefault()).toLocalDate().format(java.time.format.DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.MEDIUM).withLocale(locale))
+                        Text(stringResource(R.string.outing_day_title,dayText),style=MaterialTheme.typography.titleSmall,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
+                        Text(stringResource(R.string.outing_day_scope),style=WdType.caption,color=wd.textMuted)
+                        WdButton(stringResource(R.string.outing_view_complete),{ complete=true },Modifier.testTag("outing-view-complete"))
+                        Text(stringResource(R.string.outing_complete_explanation),style=WdType.caption,color=wd.textMuted)
+                    }
                 }
                 // Outing board: the route first, then the title, then the figures in one surface-container row.
                 WdCard {
@@ -117,8 +134,9 @@ private sealed interface OutingState {
                 }
                 val calendarTitle=stringResource(R.string.calendar_outing_title,sequence)
                 CalendarEventButton(session to detail.endpoints.first,enabled=!busy,makeDraft={now->CalendarEventDraft.outing(session,detail.endpoints.first?.coordinate,calendarTitle,now)})
-                WdButton(stringResource(R.string.outing_show_map),{ showOnMap(session) },emphasis=WdEmphasis.primary,icon=Icons.Outlined.Map)
-                if(!detail.inferred) WdButton(stringResource(R.string.outing_edit),{ editingId=id },enabled=!busy,icon=Icons.Outlined.Edit)
+                WdButton(stringResource(R.string.outing_show_map),{ showOnMap(slice?.closedWindowSession ?: session) },emphasis=WdEmphasis.primary,icon=Icons.Outlined.Map)
+                // A day slice shares the recording's identity: rename, notes and delete belong to the complete outing.
+                if(!detail.inferred) {if(slice==null) WdButton(stringResource(R.string.outing_edit),{ editingId=id },enabled=!busy,icon=Icons.Outlined.Edit)}
                 else WdNotice(stringResource(R.string.outing_inferred_explanation),icon=Icons.Outlined.Info)
                 if(detail.visits.isNotEmpty()) {
                     OutingSectionLabel(stringResource(R.string.outing_linked_visits))
@@ -132,11 +150,11 @@ private sealed interface OutingState {
                 Text(stringResource(R.string.outing_format_explanation),style=WdType.caption2,color=wd.textMuted)
                 HistoryFileActions(graph,stringResource(R.string.outing_export),!busy && exportSettings.ready && !exportSettings.saving && exportSettings.error==null) {
                     val selection=exportSettings.selection
-                    graph.exports.prepareOuting(id,selection.format,selection.options,selection.filename,sequence,inferredHeader)
+                    graph.exports.prepareOuting(id,selection.format,selection.options,selection.filename,sequence,inferredHeader,day=slice?.day)
                 }
                 exportSettings.failure?.let {Text(exportSettingsText(it),style=MaterialTheme.typography.bodyMedium,color=wd.inkRust)}
-                WdButton(stringResource(R.string.outing_delete),{ deleting=true },Modifier.padding(top=8.dp),emphasis=WdEmphasis.destructive,enabled=!busy,icon=Icons.Outlined.DeleteOutline)
-                if(editing) key(id) {OutingEditor(session,{if(!busy) editingId=null},busy) {name,notes->
+                if(slice==null) WdButton(stringResource(R.string.outing_delete),{ deleting=true },Modifier.padding(top=8.dp),emphasis=WdEmphasis.destructive,enabled=!busy,icon=Icons.Outlined.DeleteOutline)
+                if(editing && slice==null) key(id) {OutingEditor(session,{if(!busy) editingId=null},busy) {name,notes->
                     if(!busy && editingId==id) {
                         busy=true
                         scope.launch {

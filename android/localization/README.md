@@ -1,6 +1,6 @@
 # Android localization inputs
 
-The default English resources and ten translation packs cover 1,730 currently externalized app/platform strings and plurals. The packs are Arabic, Bangla, Spanish, French, Hindi, Japanese, Polish, Brazilian Portuguese, Russian and Simplified Chinese. Android 13+ per-app language selection is generated from the packaged resources (`generateLocaleConfig` and `app/src/main/res/resources.properties`). Hardcoded Kotlin text still needs externalization; native-language editorial review, TalkBack, RTL/large-text acceptance and release acceptance remain open. Resource coverage alone does not establish complete workflow localization.
+The default English resources and ten translation packs cover 1,794 currently externalized app/platform strings and plurals. The packs are Arabic, Bangla, Spanish, French, Hindi, Japanese, Polish, Brazilian Portuguese, Russian and Simplified Chinese. Android 13+ per-app language selection is generated from the packaged resources (`generateLocaleConfig` and `app/src/main/res/resources.properties`). Hardcoded Kotlin text still needs externalization; native-language editorial review, TalkBack, RTL/large-text acceptance and release acceptance remain open. Resource coverage alone does not establish complete workflow localization.
 
 The November 8 integration includes the import-rejection reasons introduced by QA, the locked-export notice, and current plan resource names. Recording is not described as free: only imports and export previews retain that claim. Weekly, Yearly and Lifetime plans all include file exports, scheduled exports and webhooks. Translation wording remains a draft pending native-language review. See [the Android integration checks and remaining gaps](../REDESIGN_READINESS_20261108.md).
 
@@ -72,3 +72,5 @@ Software-notice navigation, search, loading, empty and error/retry controls and 
 Photo-dot layer controls and their explanation use English/Spanish resources. The underlying image preference is retained while its control is disabled, and original library/photo identifiers remain untranslated.
 
 October 31 routing adds three explicitly reviewed English/Spanish attribution and link-error resources; the generated resource check now covers 1,160 resources.
+
+November 14 adds 46 backup and restore resources: Settings › Back up journal, the clear confirmation's Export everything first, the backup review/restore states and its typed format rejections. Strings that match iOS (Export everything first and the set-selection errors) reuse the iOS catalog translations; the rest are new drafts pending native-language review.

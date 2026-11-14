@@ -70,6 +70,8 @@ import java.time.*
     val formattedDay=day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale))
     val todayHint=stringResource(R.string.timeline_today_hint,formattedDay)
     var selectedSession by rememberSaveable { mutableStateOf<String?>(null) }
+    // A recording that crosses midnight opens as this day's slice; single-day outings open complete, as before.
+    var selectedDayScoped by rememberSaveable { mutableStateOf(false) }
     var editing by rememberSaveable(stateSaver=VisitEditorVisitSaver) { mutableStateOf<Visit?>(null) }
     var adding by rememberSaveable { mutableStateOf(false) }
     var openedVisitId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -85,7 +87,8 @@ import java.time.*
             val chronological=(window?.sessions.orEmpty().map {it.id to it.startedAt}+window?.inferred.orEmpty().map {it.id to it.startedAt})
                 .sortedWith(compareBy({it.second},{it.first}))
             val sequence=(chronological.indexOfFirst {it.first==selectedSession}+1).coerceAtLeast(1)
-            OutingDetailScreen(graph,selectedSession!!,metric,{ selectedSession=null },showOnMap,header,sequence,onVisitOpened,visitInspectionActive)
+            OutingDetailScreen(graph,selectedSession!!,metric,{ selectedSession=null;selectedDayScoped=false },showOnMap,header,sequence,onVisitOpened,visitInspectionActive,
+                day=if(selectedDayScoped && header==null) HistoryRange.day(day,java.time.ZoneId.systemDefault()) else null)
         }
         return
     }
@@ -132,10 +135,16 @@ import java.time.*
                 val dayStart=day.atStartOfDay(zone).toInstant()
                 val dayEnd=day.plusDays(1).atStartOfDay(zone).toInstant()
                 val nowInstant=java.time.Instant.now()
+                // Continuous recordings are clipped to this local day (iOS clipped(to:)): a recording that only
+                // touches midnight is not listed, and one crossing midnight shows only this day's time.
+                val dayRange=HistoryRange(dayStart,dayEnd)
+                val slices=window.sessions.mapNotNull {RecordingDayClip.clip(it,dayRange,nowInstant)}
+                val partial=slices.filter {it.isPartial}.associateBy {it.session.id}
+                val daySessions=slices.map {if(it.isPartial) it.presented else it.session}
                 // The same place inks as the map's pins and day sheet.
                 val inks=PlaceInks.index(window.visits)
                 fun inkIndex(visit:Visit)=inks[placeKey(visit)] ?: 0
-                val outings=window.sessions.size+window.inferred.size
+                val outings=daySessions.size+window.inferred.size
                 val visits=window.visits.size
                 // Hero: the 24-hour dial (tap to replay on the map) beside the day's three figures.
                 item("today-hero") {
@@ -143,7 +152,7 @@ import java.time.*
                     fun fraction(at:java.time.Instant)=(java.time.Duration.between(dayStart,at).toMillis()/86_400_000f).coerceIn(0f,1f)
                     // The same day story as the map's day sheet: outings faint beneath, each stay in its place ink.
                     val story=remember(window,day,nowInstant.epochSecond/60) {DayStory.build(day,zone,window.visits,window.points,nowInstant,window.summary.distanceMeters)}
-                    val segments=window.sessions.map {WdDialSegment(fraction(it.startedAt),fraction(it.endedAt ?: nowInstant),wd.textMuted.copy(alpha=0.45f))}+dayDialSegments(story)
+                    val segments=daySessions.map {WdDialSegment(fraction(it.startedAt),fraction(it.endedAt ?: nowInstant),wd.textMuted.copy(alpha=0.45f))}+dayDialSegments(story)
                     val lastFix=window.summary.lastTime
                     // The same 12/24-hour clock as the rows below and the visit editor.
                     val clock=rememberClockFormatter()
@@ -211,7 +220,7 @@ import java.time.*
                         }
                     }
                 }
-                val entries=(window.visits.map { TimelineEntry(it.id,it.arrivedAt,visit=it) }+window.sessions.map { TimelineEntry(it.id,it.startedAt,session=it) }+window.inferred.map { TimelineEntry(it.id,it.startedAt,inferred=it) }).sortedBy { it.time }
+                val entries=(window.visits.map { TimelineEntry(it.id,it.arrivedAt,visit=it) }+daySessions.map { TimelineEntry(it.id,it.startedAt,session=it) }+window.inferred.map { TimelineEntry(it.id,it.startedAt,inferred=it) }).sortedBy { it.time }
                 if(entries.isEmpty() && isToday && today!=null) item("today-empty") {
                     Column(Modifier.fillMaxWidth().padding(horizontal=16.dp).padding(top=12.dp).clip(RoundedCornerShape(28.dp)).background(wd.containerLow).padding(20.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                         Text(stringResource(R.string.today_empty_title),style=WdType.title2.copy(fontSize=24.sp,lineHeight=30.sp,fontWeight=FontWeight.Normal),color=wd.textPrimary,modifier=Modifier.semantics {heading()})
@@ -262,7 +271,7 @@ import java.time.*
                         val label=session.name?.takeIf {it.isNotBlank()} ?: stringResource(if(entry.inferred!=null) R.string.timeline_inferred else R.string.timeline_outing)
                         val parts=listOfNotNull(label,entry.inferred?.let {distanceText(it.summary.distanceMeters,metric,locale)},
                             if(live) stringResource(R.string.timeline_recording) else journalDuration(session.startedAt,session.endedAt!!))
-                        Row(rowModifier.clickable { selectedSession=session.id }.heightIn(min=32.dp).padding(horizontal=20.dp,vertical=2.dp).testTag("today-move-${session.id}"),
+                        Row(rowModifier.clickable { selectedDayScoped=entry.session!=null && session.id in partial;selectedSession=session.id }.heightIn(min=32.dp).padding(horizontal=20.dp,vertical=2.dp).testTag("today-move-${session.id}"),
                             horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
                             Spacer(Modifier.width(journalClockWidth))
                             Box(Modifier.width(14.dp).height(28.dp).drawBehind {
@@ -308,7 +317,8 @@ import java.time.*
     }
     if(adding || editing!=null) {
         val expected=editing
-        VisitEditor(graph,expected,{adding=false;editing=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,expected,reuse,remember,overlap)},expected?.let {value->{graph.history.deleteVisit(value)}})
+        VisitEditor(graph,expected,{adding=false;editing=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,expected,reuse,remember,overlap)},expected?.let {value->{graph.history.deleteVisit(value)}},
+            trimOverlaps=if(expected==null) ({value,reuse->graph.history.saveVisitTrimmingOverlaps(value,reuse)}) else null)
     }
 }
 private data class TimelineEntry(val id: String,val time: Instant,val visit: Visit?=null,val session: RecordingSession?=null,val inferred: InferredOutingHeader?=null)

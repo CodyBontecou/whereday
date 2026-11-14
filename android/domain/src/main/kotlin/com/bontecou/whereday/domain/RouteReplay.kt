@@ -24,7 +24,8 @@ object RouteReplay {
 
 sealed interface ReplayRequest {
     data class Range(val range:HistoryRange,val includeOutliers:Boolean=false):ReplayRequest
-    data class Outing(val id:String):ReplayRequest
+    /** A stored outing, or only its slice of [day] when the timeline opened one local day of a longer recording. */
+    data class Outing(val id:String,val day:HistoryRange?=null):ReplayRequest
     data class Inferred(val header:InferredOutingHeader):ReplayRequest
 }
 
