@@ -15,10 +15,26 @@ data class ImportStageRow(val kind:ImportRecordKind,val id:String,val payload:St
     fun point():TrackPoint=ImportStageCodec.gson.fromJson(payload,TrackPoint::class.java).also {require(kind==ImportRecordKind.point && it.id==id)}
 }
 internal object ImportStageCodec {
+    // Private, non-resumable scratch only: no public backup codec uses this Gson.
+    // Exact numeric tuples avoid formatting/parsing ISO dates on every bounded scan.
+    private val instant=object:TypeAdapter<Instant>() {
+        override fun write(out:com.google.gson.stream.JsonWriter,value:Instant) {
+            out.beginArray();out.value(value.epochSecond);out.value(value.nano);out.endArray()
+        }
+        override fun read(input:com.google.gson.stream.JsonReader):Instant {
+            input.beginArray()
+            fun integer():Long {
+                if(input.peek()!=com.google.gson.stream.JsonToken.NUMBER) throw JsonParseException("Invalid staged timestamp integer")
+                return input.nextString().toLongOrNull() ?: throw JsonParseException("Invalid staged timestamp integer")
+            }
+            val seconds=integer();val nanos=integer()
+            if(nanos !in 0..999_999_999L) throw JsonParseException("Invalid staged timestamp nanoseconds")
+            input.endArray()
+            return Instant.ofEpochSecond(seconds,nanos)
+        }
+    }.nullSafe()
     // Scratch payloads omit absent optional fields; decoded values still retain nulls.
-    val gson:Gson=GsonBuilder().disableHtmlEscaping()
-        .registerTypeAdapter(Instant::class.java,JsonSerializer<Instant> {value,_,_->JsonPrimitive(value.toString())})
-        .registerTypeAdapter(Instant::class.java,JsonDeserializer<Instant> {value,_,_->Instant.parse(value.asString)}).create()
+    val gson:Gson=GsonBuilder().disableHtmlEscaping().registerTypeAdapter(Instant::class.java,instant).create()
     fun hash(value:Any):String {
         val bytes=MessageDigest.getInstance("SHA-256").digest(gson.toJson(value).toByteArray(Charsets.UTF_8))
         val digits="0123456789abcdef"

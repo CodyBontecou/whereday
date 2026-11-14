@@ -7,6 +7,28 @@ import org.junit.Test
 import java.time.Instant
 
 class ImportStageCodecTest {
+    @Test fun privateInstantsUseExactIntegerSecondAndNanosecondTuples() {
+        for(value in listOf(Instant.EPOCH,Instant.ofEpochSecond(-1,999_999_999),
+            Instant.ofEpochSecond(1,123_456_789),Instant.MIN,Instant.MAX)) {
+            val encoded=ImportStageCodec.gson.toJson(value,Instant::class.java)
+            val element=com.google.gson.JsonParser.parseString(encoded)
+            assertTrue("Private timestamp should avoid ISO formatting: $encoded",element.isJsonArray)
+            val tuple=element.asJsonArray
+            assertEquals(2,tuple.size())
+            assertTrue(tuple[0].asJsonPrimitive.isNumber);assertTrue(tuple[1].asJsonPrimitive.isNumber)
+            assertEquals(value.epochSecond.toString(),tuple[0].asString)
+            assertEquals(value.nano.toString(),tuple[1].asString)
+            assertEquals(value,ImportStageCodec.gson.fromJson(encoded,Instant::class.java))
+        }
+        assertNull(ImportStageCodec.gson.fromJson("null",Instant::class.java))
+    }
+    @Test fun invalidPrivateInstantTuplesCannotNormalizeOrLosePrecision() {
+        for(encoded in listOf("[]","[0]","[0,0,0]","[0,-1]","[0,1000000000]",
+            "[9223372036854775807,0]","[0,0.5]","[0,1e-999]","[1.0,0]","[\"1\",0]","[true,0]")) {
+            val result=runCatching {ImportStageCodec.gson.fromJson(encoded,Instant::class.java)}
+            assertTrue("Invalid private timestamp accepted: $encoded",result.isFailure)
+        }
+    }
     @Test fun absentOptionalValuesStayDistinctFromKnownZeroAndEmptyValues() {
         val unknown=TrackPoint(id="optional-values",coordinate=Coordinate(18.0,-66.0),time=Instant.EPOCH,accuracy=5.0)
         val knownZero=unknown.copy(altitude=0.0,speed=0.0,countryCode="",timeZone="")
