@@ -16,14 +16,12 @@ import com.bontecou.whereday.billing.*
 class SubscriptionPreviewActivity:ComponentActivity() {
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
-        check(packageName=="com.bontecou.whereday.mapqa")
+        check(SubscriptionPreview.allowed(packageName,BuildConfig.BUILD_TYPE))
         enableEdgeToEdge()
         val mode=intent.data?.getQueryParameter("state") ?: "offline-subscription"
-        val lifetime=mode in setOf("lifetime","lifetime-renewing","offline-lifetime")
-        val summary=if(mode=="lapsed") SubscriptionSummary(SubscriptionStatus.lapsed) else PlanRetention.summary(
-            BillingState(AccessState.active,activeProductId=if(lifetime) "lifetime" else "individual",autoRenewing=mode=="renewing",
-                activePurchaseHash="preview",subscriptionRenewing=mode=="lifetime-renewing",renewalKnown=!mode.startsWith("offline-")),
-            PlanHistory(true,StorePlan.yearly,"preview"),"individual")
+        val state=when(mode) {"renewing"->"renewing-yearly";"ending"->"ending-yearly";else->mode}
+        val fixture=requireNotNull(SubscriptionPreview.fixture(state))
+        val summary=PlanRetention.summary(fixture.billing,fixture.history,"whereday_individual")
         val dark=intent.data?.getQueryParameter("dark")=="true"
         setContent {
             val view=LocalView.current
@@ -33,7 +31,7 @@ class SubscriptionPreviewActivity:ComponentActivity() {
             WheredayTheme(dark=dark) {
                 Scaffold(containerColor=wd.surface,contentWindowInsets=WindowInsets.statusBars) {padding->
                     Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding)) {
-                        SubscriptionScreen(summary,false,"https://play.google.com/store/account/subscriptions",::finish,::finish)
+                        SubscriptionScreen(summary,false,"https://play.google.com/store/account/subscriptions",::finish,::finish,openManagement={})
                     }
                 }
             }

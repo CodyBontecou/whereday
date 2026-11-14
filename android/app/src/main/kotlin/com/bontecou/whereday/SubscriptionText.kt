@@ -1,12 +1,9 @@
 package com.bontecou.whereday
 
 import androidx.annotation.StringRes
-import com.bontecou.whereday.billing.BillingState
-import com.bontecou.whereday.billing.PlanHistory
 import com.bontecou.whereday.billing.StorePlan
 import com.bontecou.whereday.billing.SubscriptionStatus
 import com.bontecou.whereday.billing.SubscriptionSummary
-import kotlinx.coroutines.flow.MutableStateFlow
 
 /** The Settings plan card's three lines. */
 internal data class PlanCardText(@StringRes val kicker:Int,@StringRes val title:Int,@StringRes val body:Int)
@@ -63,13 +60,4 @@ internal object SubscriptionText {
     }
 
     @StringRes fun endedFootnote(trialAvailable:Boolean)=if(trialAvailable) R.string.subscription_ended_plans_trial else R.string.subscription_ended_plans
-}
-
-/**
- * A debug-only stand-in for Play billing, set from the ADB shell by the debug source set's provider.
- * Release builds contain no writer, so this stays null there and Settings shows the real state.
- */
-internal object SubscriptionPreview {
-    data class Value(val billing:BillingState,val history:PlanHistory)
-    val override=MutableStateFlow<Value?>(null)
 }

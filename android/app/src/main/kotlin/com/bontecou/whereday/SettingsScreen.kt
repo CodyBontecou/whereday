@@ -53,6 +53,7 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
 
 @Composable fun SettingsScreen(graph:AppGraph,settings:AppSettings,places:List<SavedPlace>,count:Long,onClose:(()->Unit)?=null) {
     val context=LocalContext.current
+    val managementUriHandler=androidx.compose.ui.platform.LocalUriHandler.current
     // The overview owns its position while a child destination is shown.
     val scroll=rememberLazyListState()
     var destination by rememberSaveable {mutableStateOf<SettingsDestination?>(null)}
@@ -63,10 +64,9 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
     val back={destination=null}
     val livePurchase by graph.purchases.state.collectAsStateWithLifecycle()
     val liveHistory by graph.purchases.planHistory.collectAsStateWithLifecycle()
-    val preview by SubscriptionPreview.override.collectAsStateWithLifecycle()
-    // Debug builds can stand in a billing state from the ADB shell; release builds have no writer for it.
-    val purchase=preview?.billing ?: livePurchase
-    val summary=com.bontecou.whereday.billing.PlanRetention.summary(purchase,preview?.history ?: liveHistory,graph.purchases.subscriptionId)
+    val presentation=rememberSubscriptionPresentation(livePurchase,liveHistory)
+    val purchase=presentation.billing
+    val summary=com.bontecou.whereday.billing.PlanRetention.summary(purchase,presentation.history,graph.purchases.subscriptionId)
     var plans by rememberSaveable {mutableStateOf(false)}
     androidx.activity.compose.BackHandler(enabled=destination!=null) {destination=null}
     when(destination) {
@@ -94,8 +94,10 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
             val activity=androidx.activity.compose.LocalActivity.current
             // A plan that renews again, or a lapse that ends in a purchase, leaves nothing for this page to show.
             if(!SubscriptionText.cardOpensSubscription(summary) && !plans) {LaunchedEffect(Unit) {destination=null};return}
-            SubscriptionScreen(summary,purchase.trialProduct!=null,graph.purchases.manageUri(),back) {plans=true}
-            if(plans) PaywallDialog(purchase,checkout,{plan->if(activity!=null) graph.purchases.purchase(activity,plan,UsagePaywall.settings)},{graph.purchases.restore(UsagePaywall.settings)},{plans=false})
+            SubscriptionScreen(summary,purchase.trialProduct!=null,graph.purchases.manageUri(),back,seePlans={plans=true},
+                openManagement={presentation.storeAction {runCatching {managementUriHandler.openUri(graph.purchases.manageUri())}}})
+            if(plans) PaywallDialog(purchase,checkout,{plan->presentation.storeAction {if(activity!=null) graph.purchases.purchase(activity,plan,UsagePaywall.settings)}},
+                {presentation.storeAction {graph.purchases.restore(UsagePaywall.settings)}},{plans=false})
             return
         }
         else->Unit
@@ -117,7 +119,8 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
             if(SubscriptionText.cardOpensSubscription(summary)) destination=SettingsDestination.subscription else plans=true
         }
     }})
-    if(plans) PaywallDialog(purchase,checkout,{plan->if(activity!=null) graph.purchases.purchase(activity,plan,UsagePaywall.settings)},{graph.purchases.restore(UsagePaywall.settings)},{plans=false})
+    if(plans) PaywallDialog(purchase,checkout,{plan->presentation.storeAction {if(activity!=null) graph.purchases.purchase(activity,plan,UsagePaywall.settings)}},
+        {presentation.storeAction {graph.purchases.restore(UsagePaywall.settings)}},{plans=false})
     if(addingPlace) PlaceEditor(null,{addingPlace=false},{graph.savedPlaces.save(it,null)},null)
 }
 

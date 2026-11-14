@@ -72,7 +72,9 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
     val context = LocalContext.current
     val purchase by graph.purchases.state.collectAsStateWithLifecycle()
     val planHistory by graph.purchases.planHistory.collectAsStateWithLifecycle()
-    val subscription=com.bontecou.whereday.billing.PlanRetention.summary(purchase,planHistory,graph.purchases.subscriptionId)
+    // Only this card's render inputs may be synthetic. Delivery, locks and checkout below keep the live purchase.
+    val presentation=rememberSubscriptionPresentation(purchase,planHistory,SubscriptionPresentationOwner.export)
+    val subscription=com.bontecou.whereday.billing.PlanRetention.summary(presentation.billing,presentation.history,graph.purchases.subscriptionId)
     val checkout by graph.purchases.checkoutInFlight.collectAsStateWithLifecycle()
     val loadedSettings by graph.preferences.settings.collectAsStateWithLifecycle(initialValue=null)
     val settings=loadedSettings ?: AppSettings()
@@ -209,9 +211,9 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             if(history==ArchiveHistory.empty) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
             Box(Modifier.exportInset().padding(top=16.dp)) {
                 val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
-                ExportAccessCard(purchase,checkout,buy=buy,restore=restore,
+                ExportAccessCard(presentation.billing,checkout,buy={plan->presentation.storeAction {buy(plan)}},restore={presentation.storeAction {restore()}},
                     manage=if(subscription.managesInPlay)
-                        {{runCatching {uriHandler.openUri(graph.purchases.manageUri())}}} else null)
+                        {{presentation.storeAction {runCatching {uriHandler.openUri(graph.purchases.manageUri())}}}} else null)
             }
             saved.failure?.let {ExportCallout(exportSettingsText(it),Modifier.exportInset().padding(top=12.dp),warning=true) {
                 WdButton(stringResource(if(saved.ready) R.string.export_settings_retry else R.string.export_settings_reset),{if(saved.ready) graph.exportSettings.retry() else graph.exportSettings.reset()})

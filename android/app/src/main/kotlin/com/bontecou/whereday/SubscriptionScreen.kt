@@ -45,12 +45,13 @@ import com.bontecou.whereday.billing.SubscriptionSummary
 
 /** Settings › Subscription: the plan, its status, and the only path to cancel, which goes through Before you go. */
 @OptIn(ExperimentalComposeUiApi::class)
-@Composable internal fun SubscriptionScreen(summary:SubscriptionSummary,trialAvailable:Boolean,manageUri:String,back:()->Unit,seePlans:()->Unit) {
+@Composable internal fun SubscriptionScreen(summary:SubscriptionSummary,trialAvailable:Boolean,manageUri:String,back:()->Unit,seePlans:()->Unit,
+    openManagement:(()->Unit)?=null) {
     val uriHandler=LocalUriHandler.current
     var leaving by rememberSaveable {mutableStateOf(false)}
     // Back on the page returns to Settings; the sheet handles its own dismissal first.
     BackHandler(enabled=!leaving,onBack=back)
-    fun openPlay() {runCatching {uriHandler.openUri(manageUri)}}
+    fun openPlay() {if(openManagement!=null) openManagement() else runCatching {uriHandler.openUri(manageUri)}}
     val card=Modifier.padding(horizontal=16.dp)
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("subscription-screen"),contentPadding=PaddingValues(bottom=32.dp)) {
         item {SettingsBackHeader(stringResource(R.string.subscription_title),stringResource(R.string.subscription_back),back,backTag="subscription-back")}
