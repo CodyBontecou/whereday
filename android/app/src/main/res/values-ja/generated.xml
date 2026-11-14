@@ -1330,7 +1330,6 @@
     <string name="settings_preferences_failed">設定を保存できませんでした。もう一度お試しください。</string>
     <string name="settings_privacy">データとプライバシー</string>
     <string name="settings_recording">記録</string>
-    <string name="settings_recording_help">記録の設定は次回の開始時から適用されます。</string>
     <string name="settings_replay_onboarding">オンボーディングをもう一度見る</string>
     <string name="settings_route_interval">間隔</string>
     <string name="settings_route_mode">ポイントの記録</string>

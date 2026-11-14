@@ -1555,7 +1555,6 @@
     <string name="settings_preferences_failed">تعذّر حفظ الإعدادات. حاول مجددًا.</string>
     <string name="settings_privacy">البيانات والخصوصية</string>
     <string name="settings_recording">التسجيل</string>
-    <string name="settings_recording_help">تنطبق إعدادات التسجيل عند البدء التالي.</string>
     <string name="settings_replay_onboarding">إعادة عرض الإعداد الأولي</string>
     <string name="settings_route_interval">كل</string>
     <string name="settings_route_mode">تسجيل النقاط</string>

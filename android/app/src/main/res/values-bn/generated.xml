@@ -1375,7 +1375,6 @@
     <string name="settings_preferences_failed">সেটিংস সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।</string>
     <string name="settings_privacy">ডেটা ও গোপনীয়তা</string>
     <string name="settings_recording">রেকর্ডিং</string>
-    <string name="settings_recording_help">রেকর্ডিংয়ের সেটিংস পরের শুরুতে প্রযোজ্য হবে।</string>
     <string name="settings_replay_onboarding">পরিচিতি আবার দেখুন</string>
     <string name="settings_route_interval">প্রতি</string>
     <string name="settings_route_mode">পয়েন্ট রেকর্ড</string>

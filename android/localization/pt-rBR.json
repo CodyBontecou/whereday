@@ -1,7 +1,7 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "d4905555ed1df1bf31958f209b32a106dcbe1c38c71ee4b27a12a1bd8abb2e4c",
+  "defaultSourceSha256": "e6ed629297d1d9581e89c84ee1f2787ae0be430ed7e9cfb7c1ed4d21458577e9",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1448,7 +1448,6 @@
     "settings_preferences_failed": "Não foi possível salvar as configurações. Tente novamente.",
     "settings_privacy": "Dados e privacidade",
     "settings_recording": "Gravação",
-    "settings_recording_help": "As configurações de gravação valem a partir do próximo início.",
     "settings_replay_onboarding": "Rever introdução",
     "settings_route_interval": "A cada",
     "settings_route_mode": "Registrar pontos",

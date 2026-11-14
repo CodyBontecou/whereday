@@ -1465,7 +1465,6 @@
     <string name="settings_preferences_failed">Nie udało się zapisać ustawień. Spróbuj ponownie.</string>
     <string name="settings_privacy">Dane i prywatność</string>
     <string name="settings_recording">Rejestrowanie</string>
-    <string name="settings_recording_help">Ustawienia rejestrowania obowiązują od następnego uruchomienia.</string>
     <string name="settings_replay_onboarding">Pokaż ponownie wprowadzenie</string>
     <string name="settings_route_interval">Co</string>
     <string name="settings_route_mode">Zapisuj punkty</string>

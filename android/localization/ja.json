@@ -1,6 +1,6 @@
 {
   "locale": "ja",
-  "defaultSourceSha256": "d4905555ed1df1bf31958f209b32a106dcbe1c38c71ee4b27a12a1bd8abb2e4c",
+  "defaultSourceSha256": "e6ed629297d1d9581e89c84ee1f2787ae0be430ed7e9cfb7c1ed4d21458577e9",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1353,7 +1353,6 @@
     "settings_preferences_failed": "設定を保存できませんでした。もう一度お試しください。",
     "settings_privacy": "データとプライバシー",
     "settings_recording": "記録",
-    "settings_recording_help": "記録の設定は次回の開始時から適用されます。",
     "settings_replay_onboarding": "オンボーディングをもう一度見る",
     "settings_route_interval": "間隔",
     "settings_route_mode": "ポイントの記録",

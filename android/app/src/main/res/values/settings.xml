@@ -5,7 +5,6 @@
     <string name="settings_stop_after">Stop after</string>
     <string name="settings_never">Never</string>
     <string name="settings_hours">%1$s h</string>
-    <string name="settings_recording_help">Recording settings apply to the next start.</string>
     <string name="settings_route_mode">Record points</string>
     <string name="settings_route_mode_distance">By distance</string>
     <string name="settings_route_mode_time">By time</string>

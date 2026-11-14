@@ -37,6 +37,20 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
         }
     }
 
+    /**
+     * Re-derives the auto-stop deadline after the setting changes mid-recording. Like iOS
+     * `scheduleStopTrackingTimer`, it counts from the session's start, so a deadline already
+     * passed stops the recording at the service's next check. Does nothing for another session.
+     */
+    suspend fun updateDeadline(sessionId: String, stopAfterHours: Int) = lock.withLock {
+        database.writeTransaction {
+            val current = dao.recording() ?: return@writeTransaction
+            if (!current.requested || current.sessionId != sessionId) return@writeTransaction
+            val startedAt = dao.session(sessionId)?.value?.startedAt ?: return@writeTransaction
+            dao.put(current.copy(deadline = stopAfterHours.takeIf { it > 0 }?.let { startedAt.plus(Duration.ofHours(it.toLong())) }))
+        }
+    }
+
     suspend fun stop(reason: String? = null) = lock.withLock {
         database.writeTransaction {
             val now = clock.instant()

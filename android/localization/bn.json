@@ -1,6 +1,6 @@
 {
   "locale": "bn",
-  "defaultSourceSha256": "d4905555ed1df1bf31958f209b32a106dcbe1c38c71ee4b27a12a1bd8abb2e4c",
+  "defaultSourceSha256": "e6ed629297d1d9581e89c84ee1f2787ae0be430ed7e9cfb7c1ed4d21458577e9",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1400,7 +1400,6 @@
     "settings_preferences_failed": "সেটিংস সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
     "settings_privacy": "ডেটা ও গোপনীয়তা",
     "settings_recording": "রেকর্ডিং",
-    "settings_recording_help": "রেকর্ডিংয়ের সেটিংস পরের শুরুতে প্রযোজ্য হবে।",
     "settings_replay_onboarding": "পরিচিতি আবার দেখুন",
     "settings_route_interval": "প্রতি",
     "settings_route_mode": "পয়েন্ট রেকর্ড",

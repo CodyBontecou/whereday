@@ -80,7 +80,7 @@ private data class ClearConfirmation(val id:Long,val attempt:Long)
             SettingsChoiceRow("settings-stop") {Choice(stringResource(R.string.settings_stop_after),settings.stopAfterHours.toString(),hours.keys.toList(),editable,labelFor={hours[it] ?: resources.getString(R.string.settings_hours,number.format(it.toInt()))}) {key->edit {it.copy(stopAfterHours=key.toInt())}}}
             WdNavRow(stringResource(R.string.settings_permissions),icon=Icons.Outlined.LocationOn,divider=false,enabled=!busy,onClick={if(foreground() && !currentClear.busy) actions.permissions()})
         }}
-        item("recording-help") {WdSectionFooter(if(routeMode.usesInterval) stringResource(R.string.settings_recording_help)+" "+stringResource(R.string.settings_route_sampling_help) else stringResource(R.string.settings_recording_help))}
+        if(routeMode.usesInterval) item("recording-help") {WdSectionFooter(stringResource(R.string.settings_route_sampling_help))}
         item("inference") {WdSectionHeader(stringResource(R.string.settings_inferred))}
         item("inference-card") {WdCard(card) {
             SettingsToggle(stringResource(R.string.settings_include_inferred),settings.inferredEnabled,editable,Modifier.testTag("settings-inferred-enabled"),divider=settings.inferredEnabled) {value->edit {it.copy(inferredEnabled=value)}}

@@ -1420,7 +1420,6 @@
     <string name="settings_preferences_failed">Impossible d’enregistrer les réglages. Réessayez.</string>
     <string name="settings_privacy">Données et confidentialité</string>
     <string name="settings_recording">Enregistrement</string>
-    <string name="settings_recording_help">Les réglages d’enregistrement s’appliquent au prochain démarrage.</string>
     <string name="settings_replay_onboarding">Revoir la présentation</string>
     <string name="settings_route_interval">Toutes les</string>
     <string name="settings_route_mode">Points</string>

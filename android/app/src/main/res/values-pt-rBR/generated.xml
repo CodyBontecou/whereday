@@ -1420,7 +1420,6 @@
     <string name="settings_preferences_failed">Não foi possível salvar as configurações. Tente novamente.</string>
     <string name="settings_privacy">Dados e privacidade</string>
     <string name="settings_recording">Gravação</string>
-    <string name="settings_recording_help">As configurações de gravação valem a partir do próximo início.</string>
     <string name="settings_replay_onboarding">Rever introdução</string>
     <string name="settings_route_interval">A cada</string>
     <string name="settings_route_mode">Registrar pontos</string>

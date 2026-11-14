@@ -96,7 +96,6 @@ internal val RecordingPreset.listeningBodyRes get()=when(this) {
                     Text(routeSamplingSummary(settings),Modifier.testTag("listening-route-summary"),style=WdType.caption,color=wd.textMuted)}
                 WdRow(divider=false) {Text(stringResource(R.string.settings_stop_after),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge)
                     Text(if(settings.stopAfterHours==0) stringResource(R.string.settings_never) else stringResource(R.string.settings_hours,number.format(settings.stopAfterHours)),style=WdType.caption,color=wd.textMuted)}
-                Text(stringResource(R.string.settings_recording_help),Modifier.padding(start=20.dp,end=20.dp,bottom=12.dp),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
             }
             WdSectionHeader(stringResource(R.string.listening_stays_leaves))
             WdCard(Modifier.padding(horizontal=16.dp)) {

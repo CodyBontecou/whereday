@@ -1375,7 +1375,6 @@
     <string name="settings_preferences_failed">No se pudieron guardar los ajustes. Inténtalo de nuevo.</string>
     <string name="settings_privacy">Datos y privacidad</string>
     <string name="settings_recording">Grabación</string>
-    <string name="settings_recording_help">Los ajustes de grabación se aplican al próximo inicio.</string>
     <string name="settings_replay_onboarding">Repetir la introducción</string>
     <string name="settings_route_interval">Cada</string>
     <string name="settings_route_mode">Registrar puntos</string>

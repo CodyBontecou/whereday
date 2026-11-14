@@ -1330,7 +1330,6 @@
     <string name="settings_preferences_failed">无法保存设置。请重试。</string>
     <string name="settings_privacy">数据和隐私</string>
     <string name="settings_recording">记录</string>
-    <string name="settings_recording_help">记录设置将在下次开始时生效。</string>
     <string name="settings_replay_onboarding">重新查看新手引导</string>
     <string name="settings_route_interval">间隔</string>
     <string name="settings_route_mode">记录轨迹点</string>
