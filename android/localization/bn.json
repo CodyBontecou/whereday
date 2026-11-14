@@ -1,6 +1,6 @@
 {
   "locale": "bn",
-  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "defaultSourceSha256": "8f91ba8b9f33f71e60cbba902c3b73a2fd4a33e27bc72b4b700ce75eb5768c54",
   "catalog": {
     "recording_preset_custom": "Custom",
     "recording_preset_every_step": "Every step",
@@ -1654,9 +1654,14 @@
     "visit_longitude": "দ্রাঘিমাংশ",
     "visit_name": "নাম",
     "visit_notes": "নোট",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) এই থামার ভেতরে পড়ে, তাই এটি ছাঁটা যাবে না। সময়গুলো দেখে নিন, অথবা দুটি ভিজিট রাখতে সংরক্ষণ করুন।",
     "visit_overlap_message": "এই সময়গুলো %1$s-এ আপনার ভিজিটের সাথে মিলে যায়। সময়গুলো দেখে নিন বা দুটি ভিজিটই সংরক্ষণ করুন।",
+    "visit_overlap_now": "এখন",
     "visit_overlap_save": "তবুও সংরক্ষণ করুন",
     "visit_overlap_title": "একই সময়ের ভিজিট",
+    "visit_overlap_trim_end": "%1$s-এর সঙ্গে %2$d মিনিট ওভারল্যাপ করে (%3$s পর্যন্ত)। সংরক্ষণ করলে সেই ভিজিট %4$s-এ শেষ হবে।",
+    "visit_overlap_trim_end_open": "%1$s-এর সঙ্গে ওভারল্যাপ করে, যা এখনো চলছে। সংরক্ষণ করলে সেই ভিজিট %2$s-এ শেষ হবে।",
+    "visit_overlap_trim_start": "%1$s-এর সঙ্গে %2$d মিনিট ওভারল্যাপ করে (%3$s থেকে)। সংরক্ষণ করলে সেই ভিজিট %4$s-এ শুরু হবে।",
     "visit_overlap_unnamed": "ভিজিট",
     "visit_past_times": "অতীতের ভিজিটের জন্য আগমন ও প্রস্থানের সময় প্রয়োজন।",
     "visit_radius": "ম্যাচ ব্যাসার্ধ",

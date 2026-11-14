@@ -1,6 +1,6 @@
 {
   "locale": "ar",
-  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "defaultSourceSha256": "8f91ba8b9f33f71e60cbba902c3b73a2fd4a33e27bc72b4b700ce75eb5768c54",
   "catalog": {
     "recording_preset_custom": "Custom",
     "recording_preset_every_step": "Every step",
@@ -1854,9 +1854,14 @@
     "visit_longitude": "خط الطول",
     "visit_name": "اسم",
     "visit_notes": "ملحوظات",
+    "visit_overlap_conflict": "يقع %1$s (%2$s–%3$s) داخل هذا التوقف، لذا لا يمكن قصّه. راجع الأوقات، أو احفظ للإبقاء على الزيارتين.",
     "visit_overlap_message": "تتداخل هذه الأوقات مع زيارتك إلى %1$s. راجع الأوقات أو احفظ الزيارتين كلتيهما.",
+    "visit_overlap_now": "الآن",
     "visit_overlap_save": "الحفظ على أي حال",
     "visit_overlap_title": "زيارة متداخلة",
+    "visit_overlap_trim_end": "يتداخل مع %1$s بمقدار %2$d د (حتى %3$s). سيؤدي الحفظ إلى إنهاء تلك الزيارة في %4$s.",
+    "visit_overlap_trim_end_open": "يتداخل مع %1$s، الذي لا يزال جاريًا. سيؤدي الحفظ إلى إنهاء تلك الزيارة في %2$s.",
+    "visit_overlap_trim_start": "يتداخل مع %1$s بمقدار %2$d د (من %3$s). سيؤدي الحفظ إلى بدء تلك الزيارة في %4$s.",
     "visit_overlap_unnamed": "زيارة",
     "visit_past_times": "الزيارات السابقة تحتاج إلى وقتَي الوصول والمغادرة.",
     "visit_radius": "نطاق المطابقة",

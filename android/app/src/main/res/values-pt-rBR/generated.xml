@@ -1673,9 +1673,14 @@
     <string name="visit_longitude">Longitude</string>
     <string name="visit_name">Nome</string>
     <string name="visit_notes">Notas</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) fica dentro desta parada, então não é possível ajustar o horário. Revise os horários ou salve para manter as duas visitas.</string>
     <string name="visit_overlap_message">Estes horários se sobrepõem à sua visita a %1$s. Revise os horários ou salve as duas visitas.</string>
+    <string name="visit_overlap_now">agora</string>
     <string name="visit_overlap_save">Salvar mesmo assim</string>
     <string name="visit_overlap_title">Visita sobreposta</string>
+    <string name="visit_overlap_trim_end">Sobrepõe %1$s em %2$d min (até %3$s). Ao salvar, essa visita terminará às %4$s.</string>
+    <string name="visit_overlap_trim_end_open">Sobrepõe %1$s, que ainda está em andamento. Ao salvar, essa visita terminará às %2$s.</string>
+    <string name="visit_overlap_trim_start">Sobrepõe %1$s em %2$d min (a partir de %3$s). Ao salvar, essa visita começará às %4$s.</string>
     <string name="visit_overlap_unnamed">Visita</string>
     <string name="visit_past_times">Visitas anteriores precisam de horários de chegada e partida.</string>
     <string name="visit_radius">Raio de correspondência</string>

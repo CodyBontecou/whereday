@@ -62,6 +62,11 @@
     <string name="visit_overlap_message">These times overlap your visit to %1$s. Review the times or save both visits.</string>
     <string name="visit_overlap_save">Save Anyway</string>
     <string name="visit_overlap_unnamed">Visit</string>
+    <string name="visit_overlap_trim_end">Overlaps %1$s by %2$d min (until %3$s). Saving will end that visit at %4$s.</string>
+    <string name="visit_overlap_trim_end_open">Overlaps %1$s, which is still in progress. Saving will end that visit at %2$s.</string>
+    <string name="visit_overlap_trim_start">Overlaps %1$s by %2$d min (from %3$s). Saving will start that visit at %4$s.</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) falls inside this stop, so it can’t be trimmed. Review the times, or save to keep both visits.</string>
+    <string name="visit_overlap_now">now</string>
     <string name="visit_checkout">Check Out</string>
     <string name="visit_checkout_description">Finish this manual visit now. Unsaved edits in this form are not included.</string>
 </resources>

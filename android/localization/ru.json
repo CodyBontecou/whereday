@@ -1,6 +1,6 @@
 {
   "locale": "ru",
-  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "defaultSourceSha256": "8f91ba8b9f33f71e60cbba902c3b73a2fd4a33e27bc72b4b700ce75eb5768c54",
   "catalog": {
     "recording_preset_custom": "Custom",
     "recording_preset_every_step": "Every step",
@@ -1754,9 +1754,14 @@
     "visit_longitude": "Долгота",
     "visit_name": "Имя",
     "visit_notes": "Примечания",
+    "visit_overlap_conflict": "Посещение %1$s (%2$s–%3$s) целиком попадает в эту остановку, поэтому его нельзя обрезать. Проверьте время или сохраните, чтобы оставить оба посещения.",
     "visit_overlap_message": "Это время пересекается с вашим посещением места %1$s. Проверьте время или сохраните оба посещения.",
+    "visit_overlap_now": "сейчас",
     "visit_overlap_save": "Всё равно сохранить",
     "visit_overlap_title": "Пересекающееся посещение",
+    "visit_overlap_trim_end": "Пересекается с посещением %1$s на %2$d мин (до %3$s). При сохранении оно завершится в %4$s.",
+    "visit_overlap_trim_end_open": "Пересекается с посещением %1$s, которое ещё продолжается. При сохранении оно завершится в %2$s.",
+    "visit_overlap_trim_start": "Пересекается с посещением %1$s на %2$d мин (с %3$s). При сохранении оно начнётся в %4$s.",
     "visit_overlap_unnamed": "Посещение",
     "visit_past_times": "Для прошлых посещений нужно время прибытия и отъезда.",
     "visit_radius": "Радиус совпадения",

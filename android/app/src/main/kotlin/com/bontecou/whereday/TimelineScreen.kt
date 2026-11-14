@@ -308,7 +308,8 @@ import java.time.*
     }
     if(adding || editing!=null) {
         val expected=editing
-        VisitEditor(graph,expected,{adding=false;editing=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,expected,reuse,remember,overlap)},expected?.let {value->{graph.history.deleteVisit(value)}})
+        VisitEditor(graph,expected,{adding=false;editing=null},{value,reuse,remember,overlap->graph.history.saveVisit(value,expected,reuse,remember,overlap)},expected?.let {value->{graph.history.deleteVisit(value)}},
+            trimOverlaps=if(expected==null) ({value,reuse->graph.history.saveVisitTrimmingOverlaps(value,reuse)}) else null)
     }
 }
 private data class TimelineEntry(val id: String,val time: Instant,val visit: Visit?=null,val session: RecordingSession?=null,val inferred: InferredOutingHeader?=null)

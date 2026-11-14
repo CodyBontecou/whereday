@@ -1625,9 +1625,14 @@
     <string name="visit_longitude">দ্রাঘিমাংশ</string>
     <string name="visit_name">নাম</string>
     <string name="visit_notes">নোট</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) এই থামার ভেতরে পড়ে, তাই এটি ছাঁটা যাবে না। সময়গুলো দেখে নিন, অথবা দুটি ভিজিট রাখতে সংরক্ষণ করুন।</string>
     <string name="visit_overlap_message">এই সময়গুলো %1$s-এ আপনার ভিজিটের সাথে মিলে যায়। সময়গুলো দেখে নিন বা দুটি ভিজিটই সংরক্ষণ করুন।</string>
+    <string name="visit_overlap_now">এখন</string>
     <string name="visit_overlap_save">তবুও সংরক্ষণ করুন</string>
     <string name="visit_overlap_title">একই সময়ের ভিজিট</string>
+    <string name="visit_overlap_trim_end">%1$s-এর সঙ্গে %2$d মিনিট ওভারল্যাপ করে (%3$s পর্যন্ত)। সংরক্ষণ করলে সেই ভিজিট %4$s-এ শেষ হবে।</string>
+    <string name="visit_overlap_trim_end_open">%1$s-এর সঙ্গে ওভারল্যাপ করে, যা এখনো চলছে। সংরক্ষণ করলে সেই ভিজিট %2$s-এ শেষ হবে।</string>
+    <string name="visit_overlap_trim_start">%1$s-এর সঙ্গে %2$d মিনিট ওভারল্যাপ করে (%3$s থেকে)। সংরক্ষণ করলে সেই ভিজিট %4$s-এ শুরু হবে।</string>
     <string name="visit_overlap_unnamed">ভিজিট</string>
     <string name="visit_past_times">অতীতের ভিজিটের জন্য আগমন ও প্রস্থানের সময় প্রয়োজন।</string>
     <string name="visit_radius">ম্যাচ ব্যাসার্ধ</string>

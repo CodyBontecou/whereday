@@ -213,6 +213,8 @@ interface HistoryDao {
     suspend fun commandSavedPlaces(afterName:String?,afterId:String):List<PlaceRow>
     @Query("SELECT * FROM visits WHERE (:excludingId IS NULL OR value_id<>:excludingId) AND ((value_arrivedAt<:through AND COALESCE(value_departedAt,:future)>:from) OR (value_arrivedAt=:from AND COALESCE(value_departedAt,:future)=:through)) ORDER BY value_arrivedAt DESC,value_id DESC LIMIT 1")
     suspend fun manualVisitOverlap(from:Instant,through:Instant,future:Instant,excludingId:String?=null):VisitRow?
+    @Query("SELECT * FROM visits WHERE (:excludingId IS NULL OR value_id<>:excludingId) AND ((value_arrivedAt<:through AND COALESCE(value_departedAt,:future)>:from) OR (value_arrivedAt=:from AND COALESCE(value_departedAt,:future)=:through)) ORDER BY value_arrivedAt,value_id")
+    suspend fun visitsOverlapping(from:Instant,through:Instant,future:Instant,excludingId:String?=null):List<VisitRow>
     @Query("SELECT * FROM visits WHERE value_id=:id") suspend fun visit(id: String): VisitRow?
     @Query("SELECT * FROM visits WHERE value_id=:id COLLATE NOCASE LIMIT 2") suspend fun visitLinkCandidates(id:String):List<VisitRow>
     @Query("SELECT * FROM places") suspend fun places(): List<PlaceRow>

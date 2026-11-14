@@ -230,7 +230,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     editorMode?.let {mode->
         VisitEditor(graph,null,{editorMode=null;editorSeed=null},{value,reuse,remember,overlap->
             graph.history.saveVisit(value,null,reuse,remember,overlap);visitSaved=true
-        },null,ManualVisitMode.valueOf(mode),seed=editorSeed)
+        },null,ManualVisitMode.valueOf(mode),seed=editorSeed,trimOverlaps={value,reuse->graph.history.saveVisitTrimmingOverlaps(value,reuse);visitSaved=true})
     }
     if(custom) {
         val draft=remember(selected) {model.mapRangeDraft()}

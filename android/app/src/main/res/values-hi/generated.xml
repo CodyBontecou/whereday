@@ -1625,9 +1625,14 @@
     <string name="visit_longitude">देशांतर</string>
     <string name="visit_name">नाम</string>
     <string name="visit_notes">टिप्पणियाँ</string>
+    <string name="visit_overlap_conflict">%1$s (%2$s–%3$s) इस पड़ाव के अंदर आता है, इसलिए इसे छोटा नहीं किया जा सकता। समय जाँचें, या दोनों विज़िट रखने के लिए सहेजें।</string>
     <string name="visit_overlap_message">ये समय %1$s की आपकी विज़िट से टकराते हैं। समय की समीक्षा करें या दोनों विज़िट सहेजें।</string>
+    <string name="visit_overlap_now">अभी</string>
     <string name="visit_overlap_save">फिर भी सहेजें</string>
     <string name="visit_overlap_title">टकराती विज़िट</string>
+    <string name="visit_overlap_trim_end">%1$s से %2$d मिनट ओवरलैप (%3$s तक)। सहेजने पर वह विज़िट %4$s पर समाप्त होगी।</string>
+    <string name="visit_overlap_trim_end_open">%1$s से ओवरलैप होता है, जो अभी जारी है। सहेजने पर वह विज़िट %2$s पर समाप्त हो जाएगी।</string>
+    <string name="visit_overlap_trim_start">%1$s से %2$d मिनट ओवरलैप (%3$s से)। सहेजने पर वह विज़िट %4$s से शुरू होगी।</string>
     <string name="visit_overlap_unnamed">विज़िट</string>
     <string name="visit_past_times">पिछली विज़िट के लिए आगमन और प्रस्थान समय चाहिए।</string>
     <string name="visit_radius">मिलान दायरा</string>

@@ -1,7 +1,7 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "defaultSourceSha256": "8f91ba8b9f33f71e60cbba902c3b73a2fd4a33e27bc72b4b700ce75eb5768c54",
   "catalog": {
     "recording_preset_custom": "Custom",
     "recording_preset_every_step": "Every step",
@@ -1705,9 +1705,14 @@
     "visit_longitude": "Longitude",
     "visit_name": "Nome",
     "visit_notes": "Notas",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) fica dentro desta parada, então não é possível ajustar o horário. Revise os horários ou salve para manter as duas visitas.",
     "visit_overlap_message": "Estes horários se sobrepõem à sua visita a %1$s. Revise os horários ou salve as duas visitas.",
+    "visit_overlap_now": "agora",
     "visit_overlap_save": "Salvar mesmo assim",
     "visit_overlap_title": "Visita sobreposta",
+    "visit_overlap_trim_end": "Sobrepõe %1$s em %2$d min (até %3$s). Ao salvar, essa visita terminará às %4$s.",
+    "visit_overlap_trim_end_open": "Sobrepõe %1$s, que ainda está em andamento. Ao salvar, essa visita terminará às %2$s.",
+    "visit_overlap_trim_start": "Sobrepõe %1$s em %2$d min (a partir de %3$s). Ao salvar, essa visita começará às %4$s.",
     "visit_overlap_unnamed": "Visita",
     "visit_past_times": "Visitas anteriores precisam de horários de chegada e partida.",
     "visit_radius": "Raio de correspondência",

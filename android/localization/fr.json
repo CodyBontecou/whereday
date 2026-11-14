@@ -1,6 +1,6 @@
 {
   "locale": "fr",
-  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "defaultSourceSha256": "8f91ba8b9f33f71e60cbba902c3b73a2fd4a33e27bc72b4b700ce75eb5768c54",
   "catalog": {
     "recording_preset_custom": "Custom",
     "recording_preset_every_step": "Every step",
@@ -1704,9 +1704,14 @@
     "visit_longitude": "Longitude",
     "visit_name": "Nom",
     "visit_notes": "Notes",
+    "visit_overlap_conflict": "%1$s (%2$s–%3$s) se situe dans cet arrêt et ne peut donc pas être raccourci. Vérifiez les heures, ou enregistrez pour conserver les deux visites.",
     "visit_overlap_message": "Ces heures chevauchent votre visite à %1$s. Vérifiez les heures ou enregistrez les deux visites.",
+    "visit_overlap_now": "maintenant",
     "visit_overlap_save": "Enregistrer quand même",
     "visit_overlap_title": "Visite qui se chevauche",
+    "visit_overlap_trim_end": "Chevauche %1$s de %2$d min (jusqu’à %3$s). L’enregistrement terminera cette visite à %4$s.",
+    "visit_overlap_trim_end_open": "Chevauche %1$s, toujours en cours. L’enregistrement terminera cette visite à %2$s.",
+    "visit_overlap_trim_start": "Chevauche %1$s de %2$d min (à partir de %3$s). L’enregistrement fera commencer cette visite à %4$s.",
     "visit_overlap_unnamed": "Visite",
     "visit_past_times": "Les visites passées nécessitent des heures d’arrivée et de départ.",
     "visit_radius": "Rayon de correspondance",
