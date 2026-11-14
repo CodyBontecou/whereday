@@ -391,6 +391,22 @@ struct ImportPreviewView: View {
     @ViewBuilder
     private func standardReview(_ preview: ImportPreview) -> some View {
         fileCard(name: preview.fileName, detail: fileDetail(preview))
+        if let folder = preview.folderSummary {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Google JSON files: \(folder.googleFileCount.formatted())")
+                Text("Excluded entries: \(folder.excludedEntryCount.formatted())")
+                Text("Excluded entries are not imported. If any Google file cannot be checked, the entire folder is rejected.")
+                    .font(.caption).foregroundStyle(TE.textMuted)
+            }
+            .font(.subheadline)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 18).fill(TE.card))
+            .padding(.horizontal, 16).padding(.top, 12)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("import-folder-summary")
+        }
 
         VStack(alignment: .leading, spacing: 12) {
             recordToggle(

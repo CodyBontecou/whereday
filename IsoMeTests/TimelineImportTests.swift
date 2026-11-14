@@ -338,6 +338,41 @@ final class TimelineImportTests: XCTestCase {
         return try await body(root)
     }
 
+    func testPickerSelectedFolderUsesTheOrdinaryAsyncPreviewEntryWithoutSaving() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        try await withFolder([("Takeout/Records.json", raw([point()])), ("notes.txt", Data("synthetic unrelated item".utf8))]) { root in
+            let preview = try await service.preview(urls: [root])
+            XCTAssertEqual(preview.payload.format, .googleRaw)
+            XCTAssertEqual(preview.fileName, root.lastPathComponent)
+            XCTAssertEqual(preview.newPointCount, 1)
+            XCTAssertEqual(preview.folderSummary, ImportFolderSummary(googleFileCount: 1, excludedEntryCount: 1))
+            var options = preview.options
+            options.inferVisits = false
+            let reviewed = try await service.review(preview, options: options)
+            XCTAssertEqual(reviewed.folderSummary, preview.folderSummary)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+            let result = try await service.commit(reviewed, options: options)
+            XCTAssertEqual(result.pointCount, 1)
+        }
+    }
+
+    func testPickerRejectsFolderMixedWithFilesBeforeOfferingAnyPartialPreview() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        try await withFolder([("Records.json", raw([point()]))]) { root in
+            do {
+                _ = try await service.preview(urls: [root.appendingPathComponent("Records.json"), root])
+                XCTFail("A folder must be selected on its own")
+            } catch let error as ImportError {
+                guard case .invalidData(let message) = error else { return XCTFail("Expected selection admission error") }
+                XCTAssertEqual(message, String(localized: "Choose one Google folder on its own, or select import files without folders."))
+            }
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
     func testFolderPreviewCombinesGoogleFamiliesIgnoresUnrelatedFilesAndCommitsOnce() async throws {
         let container = try container()
         let service = TimelineImportService(container: container)

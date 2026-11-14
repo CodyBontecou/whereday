@@ -170,7 +170,7 @@ struct TodayView: View {
         // Bring in your Google Timeline: the same picker and review as Settings → Import.
         .fileImporter(
             isPresented: $showingImportPicker,
-            allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
+            allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText, .folder],
             allowsMultipleSelection: true
         ) { result in
             switch result {

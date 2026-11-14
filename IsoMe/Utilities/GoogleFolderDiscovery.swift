@@ -8,7 +8,7 @@ enum GoogleFolderDiscovery {
         case entries, probedFiles, candidates, directoryDepth, probeFileBytes, probeTotalBytes, payloadBytes, jsonDepth
     }
 
-    struct Failure: Error {
+    struct Failure: LocalizedError {
         enum Reason: Equatable {
             case invalidLimits, unsafeRoot, metadataUnavailable, enumerationFailed, sourceChanged
             case indeterminate, malformedLikelyGoogle, noCandidates, linkedFile, readFailed
@@ -16,6 +16,22 @@ enum GoogleFolderDiscovery {
             case limit(Bound)
         }
         let reason: Reason
+        var errorDescription: String? {
+            switch reason {
+            case .noCandidates:
+                return String(localized: "No supported Google Timeline JSON files were found in this folder.")
+            case .limit:
+                return String(localized: "This folder exceeds the safe scan or import limits. Choose a smaller folder; nothing was saved.")
+            case .unsafeRoot, .metadataUnavailable, .enumerationFailed, .readFailed:
+                return String(localized: "This folder could not be read locally. Make it available offline in Files, then choose it again. Nothing was saved.")
+            case .malformedLikelyGoogle, .indeterminate:
+                return String(localized: "A possible Google export could not be validated. Check the files before trying again; nothing was saved.")
+            case .sourceChanged, .linkedFile:
+                return String(localized: "Some files changed or use unsafe links. Choose stable local copies and try again; nothing was saved.")
+            default:
+                return String(localized: "This folder could not be safely reviewed. Choose the folder again; nothing was saved.")
+            }
+        }
         /// Relative only; this module does not log paths or source content.
         let relativePath: String?
         /// Accounted work only, never a complete manifest or a ready partial subset.

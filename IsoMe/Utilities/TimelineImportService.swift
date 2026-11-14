@@ -82,6 +82,11 @@ struct ImportOptions: Sendable, Equatable {
     }
 }
 
+struct ImportFolderSummary: Sendable, Equatable {
+    let googleFileCount: Int
+    let excludedEntryCount: Int
+}
+
 struct ImportPreview: Identifiable, Sendable {
     let id = UUID()
     let fileName: String
@@ -98,6 +103,7 @@ struct ImportPreview: Identifiable, Sendable {
     var filteredPointCount = 0
     var unknownAccuracyPointCount = 0
     var sourceByteCount: Int64 = 0
+    var folderSummary: ImportFolderSummary?
 }
 
 struct ImportCommitResult: Sendable {
@@ -198,13 +204,31 @@ actor TimelineImportService {
             guard var combined else { throw TimelineImportError.noRecords }
             combined.visits.sort { $0.arrivedAt < $1.arrivedAt }
             combined.points.sort { $0.timestamp < $1.timestamp }
-            return try standardPreview(combined, fileName: folder.lastPathComponent,
-                                       sourceBytes: Int64(manifest.statistics.candidatePayloadBytes))
+            var preview = try standardPreview(combined, fileName: folder.lastPathComponent,
+                                              sourceBytes: Int64(manifest.statistics.candidatePayloadBytes))
+            preview.folderSummary = ImportFolderSummary(googleFileCount: manifest.candidates.count,
+                                                        excludedEntryCount: manifest.exclusionCounts.values.reduce(0, +))
+            return preview
         }
     }
 
     func preview(urls: [URL]) throws -> ImportPreview {
         guard !urls.isEmpty else { throw TimelineImportError.noRecords }
+        // The system picker may return files OR a single unzipped folder. Resolve
+        // metadata on this worker, with authorization, before decoding any file.
+        var folders: [URL] = []
+        for url in urls {
+            try Task.checkCancellation()
+            let accessed = url.startAccessingSecurityScopedResource()
+            defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+            if try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true { folders.append(url) }
+        }
+        if let folder = folders.first {
+            guard urls.count == 1 else {
+                throw ImportError.invalidData(String(localized: "Choose one Google folder on its own, or select import files without folders."))
+            }
+            return try preview(folder: folder)
+        }
         var backups: [WheredayBackup] = []
         var combined: ImportPayload?
         var totalBytes = 0
@@ -271,7 +295,9 @@ actor TimelineImportService {
 
     func review(_ preview: ImportPreview, options: ImportOptions) throws -> ImportPreview {
         guard preview.payload.backup == nil else { return preview }
-        return try standardPreview(preview.payload, fileName: preview.fileName, options: options, sourceBytes: preview.sourceByteCount)
+        var reviewed = try standardPreview(preview.payload, fileName: preview.fileName, options: options, sourceBytes: preview.sourceByteCount)
+        reviewed.folderSummary = preview.folderSummary
+        return reviewed
     }
 
     private func standardPreview(_ payload: ImportPayload, fileName: String, options: ImportOptions = .init(), sourceBytes: Int64 = 0) throws -> ImportPreview {
