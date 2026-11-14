@@ -1,0 +1,18 @@
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.bontecou.whereday.NativeMapInputReadinessTest.pickerInputWaitsForTheFirstFrameAndWorksAfterResume(NativeMapInputReadinessTest.kt:95)
+
+INSTRUMENTATION_STATUS: stream=
+Error in pickerInputWaitsForTheFirstFrameAndWorksAfterResume(com.bontecou.whereday.NativeMapInputReadinessTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.bontecou.whereday.NativeMapInputReadinessTest.pickerInputWaitsForTheFirstFrameAndWorksAfterResume(NativeMapInputReadinessTest.kt:95)
+
+INSTRUMENTATION_STATUS: test=pickerInputWaitsForTheFirstFrameAndWorksAfterResume
+INSTRUMENTATION_STATUS_CODE: -2

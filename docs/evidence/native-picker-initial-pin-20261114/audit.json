@@ -1,0 +1,567 @@
+{
+  "run": 43588141287,
+  "head": "603efd83fb7ac0dce1e78cf73b05e3ab4e7619e0",
+  "artifact": 14112629280,
+  "artifactDigest": "sha256:54b3b990910e42030a4284e88fcb7afce772287aea41083919aa30e64902d453",
+  "announced": 594,
+  "uniqueTerminalCases": 594,
+  "passed": 591,
+  "failed": [
+    {
+      "code": -2,
+      "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+      "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+    }
+  ],
+  "ignored": [
+    {
+      "code": -3,
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor"
+    },
+    {
+      "code": -3,
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence"
+    }
+  ],
+  "rawNativeLogSha256": "f1df4b8bd8fd5091c7defbb1c3e422b3f1333d6b7a2e4551b1281cfe92dae1ca",
+  "boundary": "NativeMapInputReadinessTest.kt95 INITIAL selected-pin rendered-feature query before any select() or resume loop; expected1 actual0",
+  "roadRegressionPassed": true,
+  "localIsolated": {
+    "scope": "up to six clean original NativeMapInputReadinessTest full-class attempts, stop at first failure; no production or assertion change",
+    "attempts": [
+      {
+        "attempt": 1,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 2,
+          "passed": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      },
+      {
+        "attempt": 2,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 2,
+          "passed": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      },
+      {
+        "attempt": 3,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 2,
+          "passed": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      },
+      {
+        "attempt": 4,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 2,
+          "passed": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      },
+      {
+        "attempt": 5,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 2,
+          "passed": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      },
+      {
+        "attempt": 6,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 2,
+          "passed": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      }
+    ],
+    "reproduced": false,
+    "emulatorPID": 52651,
+    "emulatorCommand": [
+      "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+      "-avd",
+      "whereday-priority-20261111-api35",
+      "-port",
+      "5586",
+      "-read-only",
+      "-no-snapshot-load",
+      "-no-snapshot-save",
+      "-no-window",
+      "-no-audio",
+      "-no-boot-anim",
+      "-gpu",
+      "swiftshader_indirect",
+      "-memory",
+      "2048",
+      "-cores",
+      "2"
+    ],
+    "stopReason": "Six attempts exhausted; no changed production behavior or acceptance claim",
+    "cleanup": [
+      {
+        "filteredCollectorStopped": true
+      },
+      {
+        "setting": "window_animation_scale",
+        "restored": true
+      },
+      {
+        "setting": "transition_animation_scale",
+        "restored": true
+      },
+      {
+        "setting": "animator_duration_scale",
+        "restored": true
+      },
+      {
+        "emulatorGracefulExit": 0
+      },
+      {
+        "privateAdbStop": 0
+      }
+    ],
+    "originalSettings": {
+      "window_animation_scale": "1.0",
+      "transition_animation_scale": "1.0",
+      "animator_duration_scale": "null"
+    }
+  },
+  "localExact38CasePrefix": {
+    "scope": "one original hosted first36-case prefix plus NativeMapInputReadinessTest2; no production, ordering or assertion change",
+    "attempts": [
+      {
+        "attempt": 1,
+        "runnerExit": 0,
+        "verification": {
+          "serial": "emulator-5586",
+          "avd": "whereday-priority-20261111-api35",
+          "module": "app",
+          "adbServerPort": 5064,
+          "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+          "tests": 38,
+          "passed": 38,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "ignoredCases": [],
+          "cases": [
+            {
+              "class": "com.bontecou.whereday.RoadAttributionRenderingTest",
+              "test": "creditsAreLinkedAndDisappearWhenThePathIsHiddenOrSourceBecomesStale"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadAttributionRenderingTest",
+              "test": "spanishDarkCreditsWrapAndLinkFailureUsesASanitizedMessage"
+            },
+            {
+              "class": "com.bontecou.whereday.GeoapifyRoutingConfigurationTest",
+              "test": "productionBuildBindingRequiresFreshConsentWithoutCreatingARoutingSession"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "dotAndPinModesDoNotRequestThumbnailsAndKeepTheirStoredPreference"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "dotsPaintWithoutSpritesAndNearest48dpTargetWinsAfterCameraRotation"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "lateThumbnailFailureCannotPruneTheCurrentPhotoAfterADotRoundTrip"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "lateThumbnailCannotReplaceTheNewImageAfterADotRoundTrip"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "spanishControlsPreserveImagesAndRejectAHeldImageActionWhileDotsAreOn"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "dotsReplaceSpritesSurviveDarkStyleReloadAndDisappearWhenHidden"
+            },
+            {
+              "class": "com.bontecou.whereday.PhotoDotRenderingTest",
+              "test": "nativeDotOpensItsCompleteProductionCollectionAndEligibilityLossDismissesIt"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "actualAssetCatalogAndEveryReadableDocumentHaveVerifiedOriginalBytes"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "backgroundCancelsTheReadAndResumeRequiresAFreshResult"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "catalogFailureHasAnExplicitRetryAndNoRawException"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "documentAndQueryRestoreAfterActivitySavedStateRecreation"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "actualMapLibreNoticeReachesItsFinalTextAndReturnsToTheSameSearch"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "spanishDarkTextAndLongContentKeepNavigationReachable"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "everySupplementalNativeNoticeOpensVerbatimAndReachesItsEnd"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "searchEmptyStateAndAllThreeBackLevelsKeepTheirMeaning"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "documentFailureIsSanitizedAndOnlyExplicitRetryLoadsIt"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "leavingDuringANonCooperativeReadCannotPublishTheLateDocument"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesTest",
+              "test": "aHeldDocumentActionCannotRetargetAnAlreadyOpenReader"
+            },
+            {
+              "class": "com.bontecou.whereday.SoftwareNoticesNavigationTest",
+              "test": "actualSettingsOpensOfflineNoticesAndReturnsToItsOwnRow"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadConsentScreenTest",
+              "test": "actualSettingsNavigationReportsTheUnconfiguredProductionBuild"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadConsentScreenTest",
+              "test": "explicitConfirmationCancelAndDisableUseTheRealSession"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadConsentScreenTest",
+              "test": "networkGateAndBackgroundingCannotApproveSharing"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadConsentScreenTest",
+              "test": "storageFailureKeepsOffAndRetryNeedsNewConfirmation"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadConsentScreenTest",
+              "test": "spanishDarkDisclosureAndConfirmationRemainReachable"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadConsentScreenTest",
+              "test": "unavailableBuildCanOnlyTurnOffAnExistingPreference"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+              "test": "changedSourceAndOptOutCannotLeavePreparedRoadsOnTheMap"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+              "test": "outlierFallbackWindowFocusAndPathChoiceControlActualPreparation"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+              "test": "coveredSourceReleasesAdmissionAndLateWorkerCannotReplaceItsSuccessor"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+              "test": "replayFramesReusePreparedSourceAndRevealRoadOnlyAtItsRecordedEndpoint"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadMapRenderingTest",
+              "test": "aRoadDetoursFitAndRemovalRestoresRawPath"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadMapRenderingTest",
+              "test": "bReplayWaitsForSampledEndpointRatherThanUsingFullHistoryIndex"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadMapRenderingTest",
+              "test": "cStaleRouteAndPathControlsCannotLeaveRoadPixelsBehind"
+            },
+            {
+              "class": "com.bontecou.whereday.RoadMapRenderingTest",
+              "test": "dSpanishDarkMapDescribesEstimatedDisplay"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "pickerInputWaitsForTheFirstFrameAndWorksAfterResume"
+            },
+            {
+              "class": "com.bontecou.whereday.NativeMapInputReadinessTest",
+              "test": "inputWaitsForTheFirstFrameAndWorksAfterBothResumePaths"
+            }
+          ],
+          "apks": [
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+              "package": "com.bontecou.whereday.mapqa",
+              "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+            },
+            {
+              "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+              "package": "com.bontecou.whereday.mapqa.test",
+              "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+            }
+          ]
+        },
+        "missingPinFailure": false
+      }
+    ],
+    "reproduced": false,
+    "emulatorPID": 59900,
+    "emulatorCommand": [
+      "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+      "-avd",
+      "whereday-priority-20261111-api35",
+      "-port",
+      "5586",
+      "-read-only",
+      "-no-snapshot-load",
+      "-no-snapshot-save",
+      "-no-window",
+      "-no-audio",
+      "-no-boot-anim",
+      "-gpu",
+      "swiftshader_indirect",
+      "-memory",
+      "2048",
+      "-cores",
+      "2"
+    ],
+    "stopReason": "One actual hosted-prefix control completed; not a cause/fix or full acceptance claim",
+    "cleanup": [
+      {
+        "filteredCollectorStopped": true
+      },
+      {
+        "setting": "window_animation_scale",
+        "restored": true
+      },
+      {
+        "setting": "transition_animation_scale",
+        "restored": true
+      },
+      {
+        "setting": "animator_duration_scale",
+        "restored": true
+      },
+      {
+        "emulatorGracefulExit": 0
+      },
+      {
+        "privateAdbStop": 0
+      }
+    ],
+    "originalSettings": {
+      "window_animation_scale": "1.0",
+      "transition_animation_scale": "1.0",
+      "animator_duration_scale": "null"
+    }
+  },
+  "originalHostedPrefixOrderingMatchesLocal": true,
+  "scope": "Failure harvested, not fixed. Local12 isolated +38prefix passes are controls, not full baseline acceptance. Expanded and all later downstream stages did not run."
+}
