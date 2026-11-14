@@ -162575,6 +162575,77 @@
           }
         }
       }
+    },
+    "Watch recording runs independently of your iPhone and does not pause when they are nearby. Both devices can record at once. Stop it on the Watch when you do not need it. GPS recording uses extra battery; battery duration has not been measured.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتم تشغيل تسجيل المشاهدة بشكل مستقل عن iPhone الخاص بك ولا يتوقف مؤقتًا عندما يكون قريبًا. يمكن لكلا الجهازين التسجيل في وقت واحد. أوقفه على الساعة عندما لا تحتاج إليه. يستخدم تسجيل GPS بطارية إضافية؛ لم يتم قياس مدة البطارية."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ঘড়ির রেকর্ডিং আপনার iPhone থেকে স্বাধীনভাবে চলে এবং যখন তারা কাছাকাছি থাকে তখন বিরতি দেয় না। উভয় ডিভাইস একবারে রেকর্ড করতে পারে। আপনার যখন এটির প্রয়োজন হবে না তখন এটি ঘড়িতে বন্ধ করুন। GPS রেকর্ডিং অতিরিক্ত ব্যাটারি ব্যবহার করে; ব্যাটারির সময়কাল পরিমাপ করা হয়নি।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch recording runs independently of your iPhone and does not pause when they are nearby. Both devices can record at once. Stop it on the Watch when you do not need it. GPS recording uses extra battery; battery duration has not been measured."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La grabación del reloj se ejecuta independientemente de tu iPhone y no se detiene cuando están cerca. Ambos dispositivos pueden grabar a la vez. Detenlo en el Watch cuando no lo necesites. La grabación GPS utiliza batería adicional; No se ha medido la duración de la batería."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'enregistrement de la montre s'exécute indépendamment de votre iPhone et ne s'arrête pas lorsqu'il est à proximité. Les deux appareils peuvent enregistrer en même temps. Arrêtez-le sur la montre lorsque vous n'en avez pas besoin. L'enregistrement GPS utilise une batterie supplémentaire ; la durée de la batterie n’a pas été mesurée."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "घड़ी की रिकॉर्डिंग आपके iPhone से स्वतंत्र रूप से चलती है और जब वे पास में होते हैं तो रुकती नहीं है। दोनों डिवाइस एक साथ रिकॉर्ड कर सकते हैं. जब आपको इसकी आवश्यकता न हो तो इसे वॉच पर रोक दें। GPS रिकॉर्डिंग में अतिरिक्त बैटरी का उपयोग होता है; बैटरी अवधि मापी नहीं गई है."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時計の録画はiPhoneとは独立して実行され、iPhone が近くにある場合でも一時停止しません。両方のデバイスで同時に録音できます。不要なときはWatch上で停止させてください。 GPS記録は余分なバッテリーを使用します。バッテリー持続時間は測定されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oglądaj nagrywanie, które działa niezależnie od Twojego iPhone i nie zatrzymuje się, gdy znajduje się on w pobliżu. Obydwa urządzenia mogą nagrywać jednocześnie. Zatrzymaj go na zegarku, gdy go nie potrzebujesz. Nagrywanie GPS zużywa dodatkową baterię; czas pracy baterii nie został zmierzony."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A gravação do relógio é executada independentemente do seu iPhone e não é pausada quando eles estão por perto. Ambos os dispositivos podem gravar ao mesmo tempo. Pare no Watch quando não precisar dele. A gravação GPS usa bateria extra; a duração da bateria não foi medida."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись часов происходит независимо от вашего iPhone и не приостанавливается, когда они находятся рядом. Оба устройства могут записывать одновременно. Остановите его на Дозоре, когда он вам не нужен. Запись GPS использует дополнительную батарею; Срок службы батареи не измерялся."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "观看录音独立于您的iPhone运行，并且当它们在附近时不会暂停。两个设备都可以同时录制。当您不需要时，将其停止在手表上。 GPS记录需要额外的电池；电池持续时间尚未测量。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

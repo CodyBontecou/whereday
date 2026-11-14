@@ -5,6 +5,7 @@ import StoreKit
 
 /// A small, watch-native location tracker so the watch app can run without the
 /// iPhone companion app being installed or launched.
+@MainActor
 final class WatchLocationTracker: NSObject, ObservableObject {
     @Published private(set) var locationData: SharedLocationData
     @Published private(set) var authorizationStatus: CLAuthorizationStatus
@@ -33,6 +34,9 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         super.init()
 
         configureLocationManager()
+        SharedRecordingControl.shared.apply = { [weak self] intent in
+            self?.applySharedRecordingIntent(intent) ?? false
+        }
         syncClient.activate()
 
         // Persist a cohort marker before writing any new-install state.
@@ -91,6 +95,18 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         locationData.isTrackingEnabled ? stopTracking() : startTracking()
     }
 
+    private func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
+        if !intent.isRecording {
+            stopTracking()
+            return true
+        }
+        guard canTrack, canUseLocation, accessExpiration.map({ $0 > Date() }) ?? true else { return false }
+        syncClient.adoptSession(id: intent.sessionID, startedAt: intent.startedAt, changedAt: intent.changedAt)
+        locationData.trackingStartTime = intent.startedAt
+        startTracking()
+        return locationData.isTrackingEnabled
+    }
+
     func startTracking() {
         guard canTrack, accessExpiration.map({ $0 > Date() }) ?? true else {
             lastErrorMessage = String(localized: "Open Whereday on iPhone to choose or restore a plan.")
@@ -108,20 +124,33 @@ final class WatchLocationTracker: NSObject, ObservableObject {
             locationData.trackingStartTime = Date()
             locationData.routeDistanceMeters = 0
         }
+        let wasTracking = locationData.isTrackingEnabled
         locationData.isTrackingEnabled = true
-        syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
+        let startedAt = locationData.trackingStartTime ?? Date()
+        let id = syncClient.ensureActiveSession(startedAt: startedAt)
         saveLocationData()
         startLocationUpdates()
+        if !wasTracking {
+            SharedRecordingControl.shared.publish(isRecording: true, sessionID: id, startedAt: startedAt)
+        }
     }
 
     func stopTracking() {
+        let control = SharedRecordingControl.shared
+        let wasTracking = locationData.isTrackingEnabled
+        let id = syncClient.activeSessionID ?? control.intent?.sessionID
+        let startedAt = locationData.trackingStartTime ?? control.intent?.startedAt ?? Date()
+        let endedAt = control.isApplying ? (control.intent?.changedAt ?? Date()) : Date()
         locationData.isTrackingEnabled = false
         locationData.trackingStartTime = nil
         locationData.stopAfterHours = nil
         locationData.routeDistanceMeters = nil
-        syncClient.endActiveSession(endedAt: Date())
+        syncClient.endActiveSession(endedAt: endedAt)
         saveLocationData()
         locationManager.stopUpdatingLocation()
+        if (wasTracking || control.intent?.isRecording == true), let id {
+            control.publish(isRecording: false, sessionID: id, startedAt: startedAt, now: endedAt)
+        }
     }
 
     func resetToday() {
@@ -175,6 +204,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
             }
         }
         if !canTrack && locationData.isTrackingEnabled { stopTracking() }
+        SharedRecordingControl.shared.flush()
         if canTrack && locationData.isTrackingEnabled && canUseLocation {
             syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
             startLocationUpdates()
@@ -189,6 +219,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
 
     private func handleAuthorizationChange(_ status: CLAuthorizationStatus) {
         authorizationStatus = status
+        SharedRecordingControl.shared.flush()
 
         if canUseLocation, locationData.isTrackingEnabled {
             startLocationUpdates()
@@ -198,6 +229,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     }
 
     private func handleLocation(_ location: CLLocation) {
+        guard locationData.isTrackingEnabled else { return }
         guard canTrack, accessExpiration.map({ $0 > Date() }) ?? true else {
             if locationData.isTrackingEnabled { stopTracking() }
             return
@@ -333,19 +365,19 @@ final class WatchLocationTracker: NSObject, ObservableObject {
 }
 
 extension WatchLocationTracker: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         DispatchQueue.main.async { [weak self] in
             self?.handleAuthorizationChange(manager.authorizationStatus)
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         DispatchQueue.main.async { [weak self] in
             locations.forEach { self?.handleLocation($0) }
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         DispatchQueue.main.async { [weak self] in
             if let clError = error as? CLError, clError.code == .locationUnknown {
                 return

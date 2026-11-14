@@ -559,11 +559,9 @@ struct WatchSyncSnapshot {
     }
 }
 
-/// Apple Watch, from "How Whereday listens": whether the watch app is there and when it last handed over points.
-///
-/// There is no "Sync now": the watch pushes its queue on its own (WatchLocationSyncClient), and the iPhone side
-/// has no request to make it send. Points still waiting are counted on the watch, not visible here.
+/// Watch route transfers and acknowledged, bidirectional recording control.
 struct WatchSyncDetailView: View {
+    @ObservedObject private var recordingControl = SharedRecordingControl.shared
     @AppStorage(WatchSyncStatus.lastImportDateKey) private var lastWatchImport: Double = 0
     @State private var waitingPointCount: Int?
     @State private var isSyncing = false
@@ -586,6 +584,8 @@ struct WatchSyncDetailView: View {
                                   valueColor: snapshot.pairing == .notInstalled ? TE.inkRust : TE.textMuted)
                         BackPageDivider()
                         statusRow("In range now", value: snapshot.reachableText)
+                        BackPageDivider()
+                        statusRow("Recording controls", value: recordingControl.statusDescription)
                     }
                     .padding(.horizontal, 16)
 
@@ -631,6 +631,7 @@ struct WatchSyncDetailView: View {
                     }
 
                     BackPageFootnote(footnote(for: snapshot))
+                    BackPageFootnote("Start or stop on either device to update both. Offline changes wait for a connection; location permission and recording access are required on each device. Both devices can collect points for the shared outing. GPS recording uses extra battery; battery duration has not been measured.")
                 }
                 .padding(.bottom, 40)
             }
@@ -643,6 +644,7 @@ struct WatchSyncDetailView: View {
     }
 
     private func syncNow() {
+        recordingControl.flush()
         isSyncing = true
         syncMessage = nil
         WatchLocationSyncReceiver.requestWatchSync { count in
