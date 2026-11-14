@@ -1,0 +1,206 @@
+{
+  "run": 43599179208,
+  "artifact": 14115442503,
+  "unchangedProductTestBase": "d3faede5309648c6a600ae8c3031d01201f62292",
+  "cases": [
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "route",
+      "termination": "kill",
+      "bootBefore": 1,
+      "bootAfter": 1,
+      "proof": {
+        "bootCount": 1,
+        "phase": "recovered",
+        "mode": "route",
+        "pid": 4489,
+        "session": "b0094cd2-943d-4dbf-8e91-788102abd887",
+        "visitGeneration": null,
+        "recoveredPid": 4650,
+        "recoveredBootCount": 1,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "route",
+      "termination": "force-stop",
+      "bootBefore": 1,
+      "bootAfter": 1,
+      "proof": {
+        "bootCount": 1,
+        "phase": "recovered",
+        "mode": "route",
+        "pid": 4972,
+        "session": "c34d9e19-4fb8-45a8-a5d0-6c0963d3e382",
+        "visitGeneration": null,
+        "recoveredPid": 5109,
+        "recoveredBootCount": 1,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "route",
+      "termination": "reboot",
+      "bootBefore": 1,
+      "bootAfter": 2,
+      "proof": {
+        "bootCount": 1,
+        "phase": "recovered",
+        "mode": "route",
+        "pid": 5405,
+        "session": "128e26b1-63af-454a-8937-bc3a4659d24e",
+        "visitGeneration": null,
+        "recoveredPid": 1692,
+        "recoveredBootCount": 2,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "visits",
+      "termination": "kill",
+      "bootBefore": 2,
+      "bootAfter": 2,
+      "proof": {
+        "bootCount": 2,
+        "phase": "recovered",
+        "mode": "visits",
+        "pid": 3550,
+        "session": null,
+        "visitGeneration": "6ffff5ed-ee8e-4aad-90fb-d2bb6e259659",
+        "recoveredPid": 3732,
+        "recoveredBootCount": 2,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "visits",
+      "termination": "force-stop",
+      "bootBefore": 2,
+      "bootAfter": 2,
+      "proof": {
+        "bootCount": 2,
+        "phase": "recovered",
+        "mode": "visits",
+        "pid": 4080,
+        "session": null,
+        "visitGeneration": "22385db7-4bf2-4012-a7c6-2c9d85694fdd",
+        "recoveredPid": 4225,
+        "recoveredBootCount": 2,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "visits",
+      "termination": "reboot",
+      "bootBefore": 2,
+      "bootAfter": 3,
+      "proof": {
+        "bootCount": 2,
+        "phase": "recovered",
+        "mode": "visits",
+        "pid": 4512,
+        "session": null,
+        "visitGeneration": "34669bd1-d4c8-410e-8fb6-e17e15f82517",
+        "recoveredPid": 1654,
+        "recoveredBootCount": 3,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "both",
+      "termination": "kill",
+      "bootBefore": 3,
+      "bootAfter": 3,
+      "proof": {
+        "bootCount": 3,
+        "phase": "recovered",
+        "mode": "both",
+        "pid": 3403,
+        "session": "b1212b79-7bb1-4d8c-819a-dbeb4f6655e9",
+        "visitGeneration": "ddea65b7-0d91-4fec-b0a4-eeb3e010265c",
+        "recoveredPid": 3555,
+        "recoveredBootCount": 3,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "both",
+      "termination": "force-stop",
+      "bootBefore": 3,
+      "bootAfter": 3,
+      "proof": {
+        "bootCount": 3,
+        "phase": "recovered",
+        "mode": "both",
+        "pid": 3864,
+        "session": "0cf60546-13ef-4c29-aa70-04ac6dac2be0",
+        "visitGeneration": "ace63955-b502-4969-8bbd-2cc4a655ac59",
+        "recoveredPid": 4001,
+        "recoveredBootCount": 3,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    },
+    {
+      "serial": "emulator-5554",
+      "avd": "test",
+      "mode": "both",
+      "termination": "reboot",
+      "bootBefore": 3,
+      "bootAfter": 4,
+      "proof": {
+        "bootCount": 3,
+        "phase": "recovered",
+        "mode": "both",
+        "pid": 4288,
+        "session": "cf4db146-e3be-4441-9b5c-96cc49f240d0",
+        "visitGeneration": "cc894374-2119-4aca-8d82-7890241bec0e",
+        "recoveredPid": 1612,
+        "recoveredBootCount": 4,
+        "permissionsRegranted": false,
+        "preservedPoints": 1
+      },
+      "apkSha256": "fd9fc3fb269180d1fd6ac74ad8081b499af888c6aba5effa07e53f4ae23274f9",
+      "testApkSha256": "175bfd1f5fc7f69ab287cb2f8fa9f3c2b2718da91c3de6aeaa52064464a54e1b"
+    }
+  ],
+  "scope": "Healthy nine-case control; historical ANR not reproduced or fixed"
+}

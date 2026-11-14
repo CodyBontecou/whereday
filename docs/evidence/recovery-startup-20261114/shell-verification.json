@@ -1,0 +1,33 @@
+{
+  "scope": "Mocked shell orchestration only, NOT native acceptance",
+  "cases": [
+    {
+      "build": 0,
+      "native": 0,
+      "serial": "emulator-5554",
+      "exit": 0,
+      "calls": 10
+    },
+    {
+      "build": 9,
+      "native": 0,
+      "serial": "emulator-5554",
+      "exit": 9,
+      "calls": 1
+    },
+    {
+      "build": 0,
+      "native": 7,
+      "serial": "emulator-5554",
+      "exit": 7,
+      "calls": 2
+    },
+    {
+      "build": 0,
+      "native": 0,
+      "serial": "physical-device",
+      "exit": 2,
+      "calls": 0
+    }
+  ]
+}
