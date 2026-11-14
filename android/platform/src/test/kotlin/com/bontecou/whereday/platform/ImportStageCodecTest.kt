@@ -29,6 +29,35 @@ class ImportStageCodecTest {
             assertTrue("Invalid private timestamp accepted: $encoded",result.isFailure)
         }
     }
+    @Test fun privatePointsUseExactFixedFieldTuples() {
+        val value=TrackPoint(id="point-tuple",coordinate=Coordinate(18.0,-66.0),time=Instant.ofEpochSecond(-1,123456789),accuracy=1.5,
+            altitude=-2.5,speed=3.5,outlier=true,countryCode="PR",timeZone="America/Puerto_Rico",countryResolutionAttemptedAt=Instant.EPOCH)
+        val payload=ImportStageCodec.gson.toJson(value)
+        val encoded=com.google.gson.JsonParser.parseString(payload)
+        assertTrue("Private point should avoid reflective field-name scans: $payload",encoded.isJsonArray)
+        val tuple=encoded.asJsonArray
+        assertEquals(11,tuple.size());assertEquals(value.id,tuple[0].asString)
+        assertEquals(18.0,tuple[1].asDouble,0.0);assertEquals(-66.0,tuple[2].asDouble,0.0)
+        assertEquals(value,ImportStageRow(ImportRecordKind.point,value.id,payload).point())
+        val unknown=value.copy(altitude=null,speed=null,countryCode=null,timeZone=null,countryResolutionAttemptedAt=null)
+        val absent=com.google.gson.JsonParser.parseString(ImportStageCodec.gson.toJson(unknown)).asJsonArray
+        for(index in listOf(5,6,8,9,10))assertTrue(absent[index].isJsonNull)
+        assertEquals(unknown,ImportStageCodec.gson.fromJson(absent,TrackPoint::class.java))
+        for(at in listOf(Instant.MIN,Instant.MAX)) {
+            val extremes=value.copy(coordinate=Coordinate(-0.0,0.0),time=at,accuracy=Double.MIN_VALUE,
+                altitude=Double.MAX_VALUE,speed=-0.0,countryCode="",timeZone="UTC | 北",countryResolutionAttemptedAt=at)
+            assertEquals(extremes,ImportStageCodec.gson.fromJson(ImportStageCodec.gson.toJson(extremes),TrackPoint::class.java))
+        }
+    }
+    @Test fun malformedPrivatePointTuplesFailClosed() {
+        val base=com.google.gson.JsonParser.parseString("[\"point-tuple\",18,-66,[0,0],0,null,null,false,null,null,null]").asJsonArray
+        val invalid=mutableListOf(base.deepCopy().also {it.remove(10)},base.deepCopy().also {it.add(0)})
+        for((index,value) in listOf(0 to com.google.gson.JsonPrimitive(42),1 to com.google.gson.JsonPrimitive("18"),
+            1 to com.google.gson.JsonPrimitive(91),2 to com.google.gson.JsonPrimitive(181),3 to com.google.gson.JsonNull.INSTANCE,
+            4 to com.google.gson.JsonPrimitive("NaN"),7 to com.google.gson.JsonPrimitive("false"),8 to com.google.gson.JsonPrimitive(42),
+            9 to com.google.gson.JsonPrimitive(true),10 to com.google.gson.JsonArray()))invalid+=base.deepCopy().also {it.set(index,value)}
+        for(tuple in invalid)assertTrue("Malformed point accepted: $tuple",runCatching {ImportStageCodec.gson.fromJson(tuple,TrackPoint::class.java)}.isFailure)
+    }
     @Test fun absentOptionalValuesStayDistinctFromKnownZeroAndEmptyValues() {
         val unknown=TrackPoint(id="optional-values",coordinate=Coordinate(18.0,-66.0),time=Instant.EPOCH,accuracy=5.0)
         val knownZero=unknown.copy(altitude=0.0,speed=0.0,countryCode="",timeZone="")
