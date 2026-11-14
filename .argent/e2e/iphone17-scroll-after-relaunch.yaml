@@ -1,0 +1,62 @@
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --default-tab=2
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: gearshape
+      timeoutMs: 5000
+  - tap:
+      id: gearshape
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Back to Archive
+      timeoutMs: 3000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.3
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Diagnostics & logs
+      timeoutMs: 3000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.3
+      toX: 0.5
+      toY: 0.9
+      momentum: false
+  - tap:
+      text: How Whereday listens
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: RECORDING · WHAT STAYS ON THIS IPHONE
+      timeoutMs: 3000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.3
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Live Activity, Tracking progress on the Lock Screen and Dynamic Island
+      timeoutMs: 3000

@@ -415,7 +415,12 @@ extension WatchLocationSyncReceiver: WCSessionDelegate {
         Task { @MainActor in
             WatchLocationSyncReceiver.flushTodayContext()
             self.publishManualVisitSnapshot()
+            SharedRecordingControl.shared.flush()
         }
+    }
+
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
+        Task { @MainActor in SharedRecordingControl.shared.flush() }
     }
 
     nonisolated func sessionWatchStateDidChange(_ session: WCSession) {
@@ -463,6 +468,10 @@ extension WatchLocationSyncReceiver: WCSessionDelegate {
 
     /// "Mark" sent live while the iPhone is reachable; the reply carries the result.
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        if message[SharedRecordingControl.messageKey] != nil || message[SharedRecordingControl.ackKey] != nil {
+            Task { @MainActor in replyHandler(SharedRecordingControl.shared.receive(message)) }
+            return
+        }
         if message[WatchVisitTransport.snapshotRequestKey] as? Bool == true {
             Task { @MainActor [weak self] in
                 guard let data = self?.manualVisitSnapshotData() else { replyHandler([:]); return }
@@ -486,6 +495,10 @@ extension WatchLocationSyncReceiver: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        if userInfo[SharedRecordingControl.messageKey] != nil || userInfo[SharedRecordingControl.ackKey] != nil {
+            Task { @MainActor in SharedRecordingControl.shared.receive(userInfo) }
+            return
+        }
         if let command = userInfo[WatchVisitTransport.commandKey] as? Data {
             Task { @MainActor [weak self] in
                 guard let self, let reply = manualVisitReplyData(command) else { return }

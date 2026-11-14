@@ -34,6 +34,9 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         super.init()
 
         configureLocationManager()
+        SharedRecordingControl.shared.apply = { [weak self] intent in
+            self?.applySharedRecordingIntent(intent) ?? false
+        }
         syncClient.activate()
 
         // Persist a cohort marker before writing any new-install state.
@@ -92,6 +95,18 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         locationData.isTrackingEnabled ? stopTracking() : startTracking()
     }
 
+    private func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
+        if !intent.isRecording {
+            stopTracking()
+            return true
+        }
+        guard canTrack, canUseLocation, accessExpiration.map({ $0 > Date() }) ?? true else { return false }
+        syncClient.adoptSession(id: intent.sessionID, startedAt: intent.startedAt, changedAt: intent.changedAt)
+        locationData.trackingStartTime = intent.startedAt
+        startTracking()
+        return locationData.isTrackingEnabled
+    }
+
     func startTracking() {
         guard canTrack, accessExpiration.map({ $0 > Date() }) ?? true else {
             lastErrorMessage = String(localized: "Open Whereday on iPhone to choose or restore a plan.")
@@ -109,20 +124,33 @@ final class WatchLocationTracker: NSObject, ObservableObject {
             locationData.trackingStartTime = Date()
             locationData.routeDistanceMeters = 0
         }
+        let wasTracking = locationData.isTrackingEnabled
         locationData.isTrackingEnabled = true
-        syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
+        let startedAt = locationData.trackingStartTime ?? Date()
+        let id = syncClient.ensureActiveSession(startedAt: startedAt)
         saveLocationData()
         startLocationUpdates()
+        if !wasTracking {
+            SharedRecordingControl.shared.publish(isRecording: true, sessionID: id, startedAt: startedAt)
+        }
     }
 
     func stopTracking() {
+        let control = SharedRecordingControl.shared
+        let wasTracking = locationData.isTrackingEnabled
+        let id = syncClient.activeSessionID ?? control.intent?.sessionID
+        let startedAt = locationData.trackingStartTime ?? control.intent?.startedAt ?? Date()
+        let endedAt = control.isApplying ? (control.intent?.changedAt ?? Date()) : Date()
         locationData.isTrackingEnabled = false
         locationData.trackingStartTime = nil
         locationData.stopAfterHours = nil
         locationData.routeDistanceMeters = nil
-        syncClient.endActiveSession(endedAt: Date())
+        syncClient.endActiveSession(endedAt: endedAt)
         saveLocationData()
         locationManager.stopUpdatingLocation()
+        if (wasTracking || control.intent?.isRecording == true), let id {
+            control.publish(isRecording: false, sessionID: id, startedAt: startedAt, now: endedAt)
+        }
     }
 
     func resetToday() {
@@ -176,6 +204,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
             }
         }
         if !canTrack && locationData.isTrackingEnabled { stopTracking() }
+        SharedRecordingControl.shared.flush()
         if canTrack && locationData.isTrackingEnabled && canUseLocation {
             syncClient.ensureActiveSession(startedAt: locationData.trackingStartTime ?? Date())
             startLocationUpdates()
@@ -190,6 +219,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
 
     private func handleAuthorizationChange(_ status: CLAuthorizationStatus) {
         authorizationStatus = status
+        SharedRecordingControl.shared.flush()
 
         if canUseLocation, locationData.isTrackingEnabled {
             startLocationUpdates()
@@ -199,6 +229,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     }
 
     private func handleLocation(_ location: CLLocation) {
+        guard locationData.isTrackingEnabled else { return }
         guard canTrack, accessExpiration.map({ $0 > Date() }) ?? true else {
             if locationData.isTrackingEnabled { stopTracking() }
             return

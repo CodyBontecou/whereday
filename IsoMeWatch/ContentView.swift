@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var tracker = WatchLocationTracker()
     @ObservedObject private var syncClient = WatchLocationSyncClient.shared
+    @ObservedObject private var recordingControl = SharedRecordingControl.shared
     @Environment(\.scenePhase) private var scenePhase
     @State private var showingManualVisits = false
 
@@ -34,6 +35,12 @@ struct ContentView: View {
                     .buttonStyle(WatchCapsuleButtonStyle(filled: false))
                     .accessibilityIdentifier("watchManualVisits")
                     errorView
+                    if recordingControl.intent != nil {
+                        Text(recordingControl.statusDescription)
+                            .font(WatchTE.mono(size: 10, relativeTo: .caption2))
+                            .foregroundStyle(WatchTE.textMuted)
+                            .multilineTextAlignment(.center)
+                    }
                     todaySection
                     if !locationData.isTrackingEnabled {
                         syncSection
@@ -54,6 +61,8 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                tracker.refresh()
+                recordingControl.flush()
                 syncClient.syncPending(force: true)
             }
         }

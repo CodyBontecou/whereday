@@ -10,6 +10,78 @@ final class WatchLocationSyncTests: XCTestCase {
     private let start = Date(timeIntervalSince1970: 1_800_000_000)
     private let sessionID = UUID()
 
+    @MainActor
+    func testRecordingControlsConvergeAfterConcurrentOfflineStartAndStop() throws {
+        let aDefaults = UserDefaults(suiteName: "recording-control-test.\(UUID())")!
+        let bDefaults = UserDefaults(suiteName: "recording-control-test.\(UUID())")!
+        defer {
+            aDefaults.removeObject(forKey: "sharedRecordingControl.v1")
+            bDefaults.removeObject(forKey: "sharedRecordingControl.v1")
+        }
+        let a = SharedRecordingControl(defaults: aDefaults, enablesTransport: false)
+        let b = SharedRecordingControl(defaults: bDefaults, enablesTransport: false)
+        a.apply = { _ in true }
+        b.apply = { _ in true }
+        a.publish(isRecording: true, sessionID: sessionID, startedAt: start)
+        b.publish(isRecording: false, sessionID: sessionID, startedAt: start)
+        let startMessage = [SharedRecordingControl.messageKey: try JSONEncoder().encode(a.intent!)]
+        let stopMessage = [SharedRecordingControl.messageKey: try JSONEncoder().encode(b.intent!)]
+        a.receive(stopMessage)
+        b.receive(startMessage)
+        XCTAssertEqual(a.intent, b.intent)
+        XCTAssertEqual(a.intent?.isRecording, false)
+        // A later intentional start supersedes the resolved offline stop.
+        a.publish(isRecording: true, sessionID: UUID(), startedAt: start)
+        let ack = b.receive([SharedRecordingControl.messageKey: try JSONEncoder().encode(a.intent!)])
+        a.receive(ack)
+        XCTAssertEqual(a.intent, b.intent)
+        XCTAssertFalse(a.isWaitingForPeer)
+    }
+
+    @MainActor
+    func testRecordingControlPersistsPendingIntentAndOnlyAcknowledgesSuccessfulApplication() throws {
+        let defaults = UserDefaults(suiteName: "recording-control-test.\(UUID())")!
+        defer { defaults.removeObject(forKey: "sharedRecordingControl.v1") }
+        let incoming = SharedRecordingIntent(revision: 8, origin: UUID(), sessionID: sessionID,
+            startedAt: start, changedAt: start, isRecording: true)
+        let message = [SharedRecordingControl.messageKey: try JSONEncoder().encode(incoming)]
+        let first = SharedRecordingControl(defaults: defaults, enablesTransport: false)
+        first.apply = { _ in false }
+        XCTAssertTrue(first.receive(message).isEmpty)
+        let restored = SharedRecordingControl(defaults: defaults, enablesTransport: false)
+        var applications = 0
+        restored.apply = { command in
+            XCTAssertEqual(command.sessionID, self.sessionID)
+            applications += 1
+            return true
+        }
+        let ack = restored.receive(message)
+        XCTAssertNotNil(ack[SharedRecordingControl.ackKey])
+        restored.receive(message)
+        XCTAssertEqual(applications, 1, "Duplicate deliveries must not restart recording")
+        XCTAssertEqual(restored.intent, incoming)
+        restored.publish(isRecording: false, sessionID: sessionID, startedAt: start)
+        XCTAssertEqual(restored.intent?.revision, 9)
+        restored.receive(ack)
+        XCTAssertTrue(restored.isWaitingForPeer, "An old acknowledgement cannot clear a newer stop")
+    }
+
+    func testRecordingIntentTieBreakIsStableWithoutWallClockOrdering() {
+        let low = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        let high = UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
+        let a = SharedRecordingIntent(revision: 1, origin: low, sessionID: sessionID,
+            startedAt: start, changedAt: start.addingTimeInterval(1000), isRecording: true)
+        var b = a
+        b.origin = high
+        b.changedAt = start.addingTimeInterval(-1000)
+        XCTAssertTrue(b.supersedes(a))
+        XCTAssertFalse(a.supersedes(b))
+        b.isRecording = false
+        XCTAssertTrue(b.supersedes(a))
+        b.revision = 0
+        XCTAssertFalse(b.supersedes(a))
+    }
+
     func testRecordedPlacesSurviveRelaunchAndEncodeForPhone() throws {
         var state = WatchLocationSyncState(deviceID: UUID())
         XCTAssertTrue(state.recordPoint(point(seconds: 0)))

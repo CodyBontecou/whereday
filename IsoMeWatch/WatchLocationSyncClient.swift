@@ -157,6 +157,20 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         }
     }
 
+    var activeSessionID: UUID? { state.activeSessionID }
+
+    func adoptSession(id: UUID, startedAt: Date, changedAt: Date) {
+        guard state.activeSessionID != id else { return }
+        endActiveSession(endedAt: changedAt)
+        if let index = state.sessions.firstIndex(where: { $0.id == id }) {
+            state.sessions[index].endedAt = nil
+        } else {
+            state.sessions.append(WatchLocationSyncSession(id: id, startedAt: startedAt, endedAt: nil))
+        }
+        state.activeSessionID = id
+        saveState()
+    }
+
     @discardableResult
     func ensureActiveSession(startedAt: Date = Date()) -> UUID {
         if let activeSessionID = state.activeSessionID,
@@ -381,6 +395,7 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         let receivedContext = session.receivedApplicationContext
         DispatchQueue.main.async { [weak self] in
             self?.removeOrphanedPayloadFiles(over: WCSession.default)
+            SharedRecordingControl.shared.flush()
             self?.applyApplicationContext(receivedContext)
             self?.flushPendingMarkRequests()
             self?.syncPending(force: true)
@@ -396,6 +411,7 @@ extension WatchLocationSyncClient: WCSessionDelegate {
     nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
         guard session.isReachable else { return }
         DispatchQueue.main.async { [weak self] in
+            SharedRecordingControl.shared.flush()
             self?.syncPending(force: true)
         }
     }
@@ -407,6 +423,10 @@ extension WatchLocationSyncClient: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        if message[SharedRecordingControl.messageKey] != nil || message[SharedRecordingControl.ackKey] != nil {
+            DispatchQueue.main.async { replyHandler(SharedRecordingControl.shared.receive(message)) }
+            return
+        }
         guard message[WatchLocationSyncTransport.syncRequestMessageKey] != nil else {
             replyHandler([:])
             return
@@ -420,6 +440,10 @@ extension WatchLocationSyncClient: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        if userInfo[SharedRecordingControl.messageKey] != nil || userInfo[SharedRecordingControl.ackKey] != nil {
+            DispatchQueue.main.async { SharedRecordingControl.shared.receive(userInfo) }
+            return
+        }
         if let data = userInfo[WatchVisitTransport.replyKey] as? Data {
             Task { @MainActor [weak self] in _ = self?.manualVisits.handleReply(data) }
             return

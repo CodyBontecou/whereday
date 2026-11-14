@@ -141,7 +141,12 @@ final class LocationManager: NSObject, ObservableObject {
     init(defaults: UserDefaults = .standard, registersAsShared: Bool = true) {
         self.defaults = defaults
         super.init()
-        if registersAsShared { Self.shared = self }
+        if registersAsShared {
+            Self.shared = self
+            SharedRecordingControl.shared.apply = { [weak self] intent in
+                self?.applySharedRecordingIntent(intent) ?? false
+            }
+        }
         locationManager.delegate = self
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
@@ -154,6 +159,7 @@ final class LocationManager: NSObject, ObservableObject {
         accessObserver = store.objectWillChange.sink { [weak self] in
             Task { @MainActor in
                 guard let self else { return }
+                if Self.shared === self { SharedRecordingControl.shared.retryApplication() }
                 if store.canTrack {
                     if self.resumeAfterAccessResolution && store.hasResolvedEntitlements {
                         self.resumeAfterAccessResolution = false
@@ -162,6 +168,7 @@ final class LocationManager: NSObject, ObservableObject {
                 } else if self.isTrackingEnabled {
                     self.stopTracking(reason: .accessEnded)
                 }
+                if Self.shared === self { SharedRecordingControl.shared.flush() }
             }
         }
 
@@ -210,6 +217,37 @@ final class LocationManager: NSObject, ObservableObject {
         self.modelContext = context
         reconcileOpenVisits()
         reconcileRecordingSessions()
+        if Self.shared === self { SharedRecordingControl.shared.flush() }
+    }
+
+    /// No permission prompts or access bypasses from background peer commands.
+    private func applySharedRecordingIntent(_ intent: SharedRecordingIntent) -> Bool {
+        guard let context = modelContext else { return false }
+        if !intent.isRecording {
+            stopTracking()
+            return true
+        }
+        guard StoreManager.shared.canTrack, hasLocationPermission else { return false }
+        do {
+            if activeRecordingSessionID != intent.sessionID {
+                endActiveRecordingSession(at: intent.changedAt)
+            }
+            let session = try recordingSession(withID: intent.sessionID, in: context)
+                ?? makeRecordingSession(startedAt: intent.startedAt)
+            if session.modelContext == nil {
+                session.id = intent.sessionID
+                context.insert(session)
+            }
+            session.endedAt = nil
+            activeRecordingSessionID = intent.sessionID
+            trackingStartTime = intent.startedAt
+            try context.save()
+            startTracking()
+            return isTrackingEnabled
+        } catch {
+            lastError = error.localizedDescription
+            return false
+        }
     }
 
     // MARK: - Permission Handling
@@ -337,6 +375,10 @@ final class LocationManager: NSObject, ObservableObject {
 
         scheduleStopTrackingTimer()
         syncDataToWatch()
+        if isTrackingEnabled, !wasTracking, reason != .relaunch, Self.shared === self, let id = activeRecordingSessionID {
+            SharedRecordingControl.shared.publish(isRecording: true, sessionID: id,
+                startedAt: trackingStartTime ?? Date())
+        }
     }
 
     func stopTracking() {
@@ -345,7 +387,12 @@ final class LocationManager: NSObject, ObservableObject {
 
     private func stopTracking(reason: TrackingChangeReason) {
         resumeAfterAccessResolution = false
-        let endedAt = Date()
+        let control = SharedRecordingControl.shared
+        let endedAt = control.isApplying && control.intent?.isRecording == false
+            ? (control.intent?.changedAt ?? Date()) : Date()
+        let sharedSessionID = activeRecordingSessionID ?? control.intent?.sessionID
+        let sharedStartedAt = trackingStartTime ?? control.intent?.startedAt ?? endedAt
+        let wasTracking = isTrackingEnabled
         if isTrackingEnabled {
             let minutes = trackingStartTime.map { Int(endedAt.timeIntervalSince($0) / 60) }
             let span = minutes.map { " after \($0 / 60)h \(String(format: "%02d", $0 % 60))m" } ?? ""
@@ -381,6 +428,18 @@ final class LocationManager: NSObject, ObservableObject {
         }
 
         syncDataToWatch()
+        if (wasTracking || control.intent?.isRecording == true), Self.shared === self, let id = sharedSessionID {
+            if control.isApplying && reason == .autoStop {
+                // A delayed remote start may already exceed this phone's timer.
+                // Publish the resulting local stop after the receive transaction ends.
+                Task { @MainActor [weak self] in
+                    guard let self, !self.isTrackingEnabled else { return }
+                    control.publish(isRecording: false, sessionID: id, startedAt: sharedStartedAt, now: endedAt)
+                }
+            } else {
+                control.publish(isRecording: false, sessionID: id, startedAt: sharedStartedAt, now: endedAt)
+            }
+        }
     }
 
     private func logTrackingStart(reason: TrackingChangeReason, wasTracking: Bool) {
@@ -1276,6 +1335,7 @@ extension LocationManager: CLLocationManagerDelegate {
                 Self.logAuthorizationChange(status: authorizationStatus, accuracy: accuracyAuthorization)
             }
 
+            if Self.shared === self { SharedRecordingControl.shared.flush() }
             if hasLocationPermission && isTrackingEnabled {
                 // Reattach the CL APIs once permission lands
                 startTracking(reason: .permissionGranted)

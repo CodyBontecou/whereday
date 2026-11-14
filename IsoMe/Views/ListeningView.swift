@@ -33,10 +33,9 @@ struct ListeningView: View {
         _locationManager = ObservedObject(initialValue: viewModel.locationManager)
     }
 
-    /// nil while recording by time: none of the distance presets describes that.
+    /// Custom filters, timers and time-based sampling must not select a different preset.
     private var currentDetail: RecordingDetail? {
-        guard locationManager.routeSamplingMode == .distance else { return nil }
-        return RecordingDetail(distanceFilter: locationManager.distanceFilter)
+        RecordingDetail.allCases.first { $0.matches(locationManager) }
     }
 
     var body: some View {
@@ -57,7 +56,7 @@ struct ListeningView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
-                BackPageFootnote("Every mode also notes the places you stop and large moves, even when Whereday is closed.")
+                BackPageFootnote("Leave Record my days on to keep a continuous journal. Timeline shows each day separately; the complete outing runs from Start to Stop. Every preset records route points as well as stops, and keeps high-accuracy location requested while recording.")
 
                 BackPageLabel("FINE-TUNE")
                 fineTuneCard
@@ -72,6 +71,8 @@ struct ListeningView: View {
                 BackPageLabel("WHAT STAYS · WHAT LEAVES")
                 privacyCard
                     .padding(.horizontal, 16)
+
+                BackPageFootnote("Names you enter stay in your journal unless you export them or send them through a webhook. Place lookups send coordinates or search queries to Apple. Custom app analytics are removed for all users; updating clears the old local identifier and unsent queue, but does not delete previously received server records.")
 
                 deviceCard
                     .padding(.horizontal, 16)
@@ -319,7 +320,7 @@ struct ListeningView: View {
                 Text("Your journal")
                     .font(.subheadline)
                 Spacer(minLength: 8)
-                Text("This iPhone only")
+                Text("Stored on this iPhone")
                     .font(TE.mono(.caption))
                     .foregroundStyle(TE.textMuted)
             }
@@ -559,11 +560,9 @@ struct WatchSyncSnapshot {
     }
 }
 
-/// Apple Watch, from "How Whereday listens": whether the watch app is there and when it last handed over points.
-///
-/// There is no "Sync now": the watch pushes its queue on its own (WatchLocationSyncClient), and the iPhone side
-/// has no request to make it send. Points still waiting are counted on the watch, not visible here.
+/// Watch route transfers and acknowledged, bidirectional recording control.
 struct WatchSyncDetailView: View {
+    @ObservedObject private var recordingControl = SharedRecordingControl.shared
     @AppStorage(WatchSyncStatus.lastImportDateKey) private var lastWatchImport: Double = 0
     @State private var waitingPointCount: Int?
     @State private var isSyncing = false
@@ -586,6 +585,8 @@ struct WatchSyncDetailView: View {
                                   valueColor: snapshot.pairing == .notInstalled ? TE.inkRust : TE.textMuted)
                         BackPageDivider()
                         statusRow("In range now", value: snapshot.reachableText)
+                        BackPageDivider()
+                        statusRow("Recording controls", value: recordingControl.statusDescription)
                     }
                     .padding(.horizontal, 16)
 
@@ -631,6 +632,7 @@ struct WatchSyncDetailView: View {
                     }
 
                     BackPageFootnote(footnote(for: snapshot))
+                    BackPageFootnote("Start or stop on either device to update both. Offline changes wait for a connection; location permission and recording access are required on each device. Both devices can collect points for the shared outing. GPS recording uses extra battery; battery duration has not been measured.")
                 }
                 .padding(.bottom, 40)
             }
@@ -643,6 +645,7 @@ struct WatchSyncDetailView: View {
     }
 
     private func syncNow() {
+        recordingControl.flush()
         isSyncing = true
         syncMessage = nil
         WatchLocationSyncReceiver.requestWatchSync { count in
