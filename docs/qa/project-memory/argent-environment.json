@@ -1,1 +1,45 @@
-{"workspace":"/Users/codybontecou/dev/whereday","is_react_native":false,"is_native_ios":true,"is_native_android":false,"platforms":["iOS","watchOS"],"project":"IsoMe.xcodeproj","scheme":"IsoMe","bundle_id":"com.bontecou.isome","test_command":"scripts/test-ios.sh -only-testing:IsoMeTests/TimelineImportTests","test_requirements":{"configuration":"Debug","signing":"Required; runner sets CODE_SIGNING_ALLOWED=YES","result_bundle":"artifacts/test-results/*.xcresult","environment":"XCODE_XCCONFIG_FILE must be unset"},"frozen_release":{"version":"1.8","build":"52","source":".asc/artifacts/stage-1.8-52/source","base_commit":"f774ee6d2c0d5b89dbd521a681b5aef6eaad0fa0","manifest":".asc/artifacts/stage-1.8-52/source-manifest.json"},"import_qa":{"fixture":"IsoMeTests/Fixtures/google-timeline-preview.json","ui_path":"Settings > Data Import > Import File","clean_preview":"1 new visit, 2 new points, 1 duplicate visit, 2 duplicate points, 1 invalid entry","repeat_preview":"0 new records, 2 duplicate visits and 4 duplicate points","isolation":"Synthetic fixture in isolated simulator, location permission denied"}}
+{
+  "workspace": "/Users/codybontecou/dev/whereday",
+  "is_react_native": false,
+  "is_native_ios": true,
+  "is_native_android": true,
+  "platforms": [
+    "iOS",
+    "watchOS",
+    "Android"
+  ],
+  "project": "IsoMe.xcodeproj",
+  "scheme": "IsoMe",
+  "bundle_id": "com.bontecou.isome",
+  "test_command": "scripts/test-ios.sh -only-testing:IsoMeTests/TimelineImportTests",
+  "test_requirements": {
+    "configuration": "Debug",
+    "signing": "Required; runner sets CODE_SIGNING_ALLOWED=YES",
+    "result_bundle": "artifacts/test-results/*.xcresult",
+    "environment": "XCODE_XCCONFIG_FILE must be unset"
+  },
+  "frozen_release": {
+    "version": "1.8",
+    "build": "52",
+    "source": ".asc/artifacts/stage-1.8-52/source",
+    "base_commit": "f774ee6d2c0d5b89dbd521a681b5aef6eaad0fa0",
+    "manifest": ".asc/artifacts/stage-1.8-52/source-manifest.json"
+  },
+  "import_qa": {
+    "fixture": "IsoMeTests/Fixtures/google-timeline-preview.json",
+    "ui_path": "Settings > Data Import > Import File",
+    "clean_preview": "1 new visit, 2 new points, 1 duplicate visit, 2 duplicate points, 1 invalid entry",
+    "repeat_preview": "0 new records, 2 duplicate visits and 4 duplicate points",
+    "isolation": "Synthetic fixture in isolated simulator, location permission denied"
+  },
+  "version": "2.0",
+  "inspected_at": "2026-11-14",
+  "android": {
+    "project": "android/",
+    "application_id": "com.bontecou.whereday",
+    "qa_application_id": "com.bontecou.whereday.mapqa",
+    "build_command": "cd android && ./gradlew :app:assembleDebug",
+    "ui_test_command": "cd android && ./gradlew :app:connectedMapQaAndroidTest",
+    "warning": "Use the mapQa package for instrumentation; Gradle/UTP cleanup uninstalls the target app."
+  }
+}

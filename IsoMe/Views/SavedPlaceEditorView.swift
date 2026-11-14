@@ -53,7 +53,7 @@ struct SavedPlaceEditorView: View {
                         addressField
                         coordinatesSection
 
-                        if isDirty, let message = formDraft.validationMessage {
+                        if isDirty, !nameIsMissing, let message = formDraft.validationMessage {
                             Text(message)
                                 .font(.footnote)
                                 .foregroundStyle(TE.inkRust)
@@ -217,6 +217,12 @@ struct SavedPlaceEditorView: View {
                 .accessibilityLabel("Location name")
                 .id(Field.name)
                 .modifier(PlaceEditorFieldChrome())
+            if isDirty, nameIsMissing {
+                Text("Enter a location name.")
+                    .font(.footnote)
+                    .foregroundStyle(TE.inkRust)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 
@@ -355,6 +361,10 @@ struct SavedPlaceEditorView: View {
         result.longitude = Self.number(from: longitudeText)
         result.radiusMeters = Self.number(from: radiusText) ?? .nan
         return result
+    }
+
+    private var nameIsMissing: Bool {
+        draft.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     private var validCoordinate: CLLocationCoordinate2D? {

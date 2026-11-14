@@ -113,6 +113,7 @@ struct PlaceSelectionView: View {
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var reverseGeocodingTask: Task<Void, Never>?
     @State private var isReverseGeocoding = false
+    @State private var isSearchPresented = false
 
     init(
         initialSelection: ManualLocationSelection? = nil,
@@ -188,7 +189,7 @@ struct PlaceSelectionView: View {
             .tint(TE.inkRust)
             .navigationTitle("Choose Location")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchModel.query, prompt: "Search places or addresses")
+            .searchable(text: $searchModel.query, isPresented: $isSearchPresented, prompt: "Search places or addresses")
             .onSubmit(of: .search) {
                 searchModel.submit(region: searchRegion)
             }
@@ -382,6 +383,8 @@ struct PlaceSelectionView: View {
         isReverseGeocoding = false
         selection = .appleMapsResult(result)
         cameraPosition = .region(Self.region(around: result.coordinate))
+        // Active system search hides the navigation toolbar, including Use.
+        isSearchPresented = false
     }
 
     private func selectMapPin(at coordinate: CLLocationCoordinate2D) {
@@ -402,6 +405,7 @@ struct PlaceSelectionView: View {
             source: .mapPin,
             visitPlaceSource: .userEntered
         )
+        isSearchPresented = false
 
         guard allowNetworkGeocoding else {
             isReverseGeocoding = false
