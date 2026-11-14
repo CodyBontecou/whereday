@@ -14,8 +14,11 @@ these injected tests or the simulator UI walkthrough.
 
 Native CarPlay entitlement/UI and HealthKit/workout background execution are not
 MVP capabilities. Settings includes recipes using the retained Start/Stop shortcuts;
-optional intent duration/profile parameters and actual automation/device acceptance
-remain future work.
+the Start intent now accepts an optional generic/CarPlay/workout Source label without
+opting into Smart Start. Omission preserves the original simple action and active
+sessions stay idempotent. Optional duration/profile parameters and actual
+Shortcuts editor/automation/device acceptance remain future work. See the
+[actual helper/manager verification](evidence/smart-start-shortcut-source-20261114.md).
 
 ## State and effects
 

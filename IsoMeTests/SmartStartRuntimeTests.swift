@@ -773,3 +773,94 @@ final class SmartStartMonitoringTests: XCTestCase {
         XCTAssertFalse(manager.isTrackingEnabled)
     }
 }
+
+@MainActor
+final class TrackingShortcutSourceTests: XCTestCase {
+    private var defaults: UserDefaults!
+    private var suite: String!
+    private var manager: LocationManager!
+    private var monitor: TestLocationMonitor!
+    private var container: ModelContainer!
+    private var scheduler: QueuedStopAfterScheduler!
+    private var allowed = true
+
+    override func setUpWithError() throws {
+        suite = "TrackingShortcutSourceTests.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suite)!
+        monitor = TestLocationMonitor()
+        scheduler = QueuedStopAfterScheduler()
+        manager = LocationManager(defaults: defaults, registersAsShared: false, monitoring: monitor,
+            trackingAccess: { [weak self] in self?.allowed == true }, startsSmartStartRuntime: false,
+            stopAfterScheduler: scheduler)
+        manager.authorizationStatus = .authorizedWhenInUse
+        manager.isLiveActivityEnabled = false
+        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self])
+        container = try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)])
+        manager.setModelContext(container.mainContext)
+        manager.setStopAfterHours(2)
+    }
+
+    override func tearDown() {
+        manager.stopTracking()
+        manager = nil
+        container = nil
+        defaults.removePersistentDomain(forName: suite)
+        defaults = nil
+    }
+
+    func testOmittedSourcePreservesSimpleShortcutAndTimerPreference() throws {
+        try TrackingIntentSupport.startTracking(using: manager, source: nil)
+        XCTAssertTrue(manager.isTrackingEnabled)
+        XCTAssertEqual(manager.trackingStartSource, .shortcut)
+        XCTAssertEqual(SmartStartStateStore(defaults: defaults).trackingStartSource, .shortcut)
+        XCTAssertEqual(manager.stopAfterHours, 2)
+        XCTAssertEqual(defaults.double(forKey: "stopAfterHours"), 2)
+        XCTAssertFalse(manager.smartStartSettings.isEnabled)
+        XCTAssertNil(SmartStartStateStore(defaults: defaults).lastAutoStartAt)
+    }
+
+    func testCarPlayAndWorkoutPersistExplicitNonInferredSources() throws {
+        for (choice, expected) in [(ShortcutTrackingSource.carPlay, TrackingStartSource.carPlayShortcut), (.workout, .workoutShortcut)] {
+            try TrackingIntentSupport.startTracking(using: manager, source: choice)
+            XCTAssertEqual(manager.trackingStartSource, expected)
+            XCTAssertEqual(SmartStartStateStore(defaults: defaults).trackingStartSource, expected)
+            XCTAssertFalse(expected.isAutomatic)
+            XCTAssertFalse(manager.smartStartSettings.isEnabled)
+            XCTAssertNil(SmartStartStateStore(defaults: defaults).lastAutoStartAt)
+            manager.stopTracking()
+        }
+    }
+
+    func testRepeatedShortcutCannotRelabelOrRescheduleAnExistingManualSession() throws {
+        manager.startTracking()
+        let started = manager.trackingStartTime
+        let expiries = scheduler.expiries.count
+        let session = defaults.string(forKey: "activeRecordingSessionID")
+        try TrackingIntentSupport.startTracking(using: manager, source: .carPlay)
+        XCTAssertEqual(manager.trackingStartSource, .manual)
+        XCTAssertEqual(manager.trackingStartTime, started)
+        XCTAssertEqual(defaults.string(forKey: "activeRecordingSessionID"), session)
+        XCTAssertEqual(scheduler.expiries.count, expiries)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 1)
+    }
+
+    func testMissingPermissionFailsWithoutStartingOrEnablingAnything() {
+        manager.authorizationStatus = .denied
+        XCTAssertThrowsError(try TrackingIntentSupport.startTracking(using: manager, source: .workout)) { error in
+            guard case IsoMeIntentError.noLocationPermission = error else { return XCTFail("Expected permission explanation") }
+        }
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertFalse(manager.smartStartSettings.isEnabled)
+        XCTAssertEqual(monitor.activeStarts, 0)
+    }
+
+    func testAccessLossDoesNotReportSuccessfulStart() {
+        allowed = false
+        XCTAssertThrowsError(try TrackingIntentSupport.startTracking(using: manager, source: .carPlay)) { error in
+            guard case IsoMeIntentError.trackingUnavailable = error else { return XCTFail("Expected rejected-start explanation") }
+        }
+        XCTAssertFalse(manager.isTrackingEnabled)
+        XCTAssertNil(SmartStartStateStore(defaults: defaults).trackingStartSource)
+        XCTAssertEqual(monitor.activeStarts, 0)
+    }
+}
