@@ -1,0 +1,147 @@
+{
+  "fullResize": {
+    "tests": 24,
+    "failures": [
+      {
+        "case": "timelineOutingNavigationAndNativeMapRecoverAfterRealWindowRecreation",
+        "message": "java.lang.AssertionError: Failed: assertExists."
+      },
+      {
+        "case": "mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations",
+        "message": "java.lang.AssertionError: Semantic Node has no parent layout with a Scroll SemanticsAction"
+      },
+      {
+        "case": "mapPhotoCollectionAndLastViewedAssetSurviveBothActualRecreations",
+        "message": "java.lang.AssertionError: Semantic Node has no parent layout with a Scroll SemanticsAction"
+      },
+      {
+        "case": "mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes",
+        "message": "java.lang.AssertionError: Action performScrollTo() failed."
+      },
+      {
+        "case": "stoppedAndOldResumedPlaceAndOutingSaveActionsCannotWrite",
+        "message": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms"
+      }
+    ],
+    "passed": 19,
+    "rawNativeSha256": "36e43514a8ac43192fadb1ed675938cf7bd498daaedcdfa4f82938ae9e5404e9",
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": false,
+      "emulatorPID": 24715,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "originalSize": "Physical size: 1080x2400",
+      "originalDensity": "Physical density: 420",
+      "runnerExit": 1,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "displayRestored": true,
+          "imeRestored": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    }
+  },
+  "visitMapFocus": {
+    "serial": "emulator-5586",
+    "avd": "whereday-priority-20261111-api35",
+    "module": "app",
+    "adbServerPort": 5064,
+    "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+    "tests": 8,
+    "passed": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "ignoredCases": [],
+    "cases": [
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "failedPreparationIsSanitizedAndCanBeRetriedWithoutSaving"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "linkedOutingVisitUsesTheSharedInspectionAndMapAction"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "explicitFollowReplacesDateLineFocusAndClearsItsSelection"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "deletedSavedVisitShowsRecoveryWithoutNavigating"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "savedVisitActionLoadsItsInclusiveDayAndCentersTheNativePin"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "repeatMapActionRefocusesTheSameVisitWithoutRecreatingItsWindow"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "dirtyDraftSurvivesCanceledReviewAndRestorationBeforeExplicitDiscard"
+      },
+      {
+        "class": "com.bontecou.whereday.VisitMapFocusTest",
+        "test": "existingVisitLinkCanShowTheSavedVisitWithoutSavingIt"
+      }
+    ],
+    "apks": [
+      {
+        "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+        "package": "com.bontecou.whereday.mapqa",
+        "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+      },
+      {
+        "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+        "package": "com.bontecou.whereday.mapqa.test",
+        "sha256": "9d6cfd3cc8a6954837640a3b4d1a0c701a319a86a39778bd1f416f45264a015c"
+      }
+    ]
+  }
+}

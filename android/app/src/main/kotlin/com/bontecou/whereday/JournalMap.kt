@@ -135,7 +135,8 @@ private class JournalMapRenderer {
     fun render(points: List<TrackPoint>, visits: List<Visit>, online: Boolean, dark: Boolean, layers:MapLayers,replay:ReplayFrame?,ends:RouteEndpoints,fallback:Boolean,photos:List<PhotoMapMarker>,photoIcons:Map<String,android.graphics.Bitmap>,activeRecording:ActiveRecordingMap?=null,roadGeometry:RoadMapGeometry,photoDots:Boolean=false,visitFocus:VisitMapFocus?=null) {
         this.points=points; this.visits=visits;this.replay=replay;this.ends=ends;this.layers=layers;this.fallback=fallback;this.photos=photos;this.photoDots=photoDots;this.photoIcons=if(photoDots) emptyMap() else photoIcons
         this.activeRecording=activeRecording;this.roadGeometry=roadGeometry;this.visitFocus=visitFocus
-        if(visitFocus==null) appliedVisitFocus=null
+        // Keep the last consumed request across a transient absent selection during restore.
+        // Explicit focus actions have a new requestId and are still applied.
         val target=map ?: return
         val styleKey="paper:online=$online:dark=$dark"
         if(requestedStyle != styleKey) {

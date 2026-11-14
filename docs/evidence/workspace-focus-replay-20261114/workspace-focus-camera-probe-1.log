@@ -1,0 +1,3 @@
+--------- beginning of main
+I/WdCameraProbe( 2471): [DEBUG-workspace-camera] stage=focus-before target=LatLng [latitude=18.200000000000003, longitude=-66.19999999999999, altitude=0.0] center=LatLng [latitude=18.199999999963225, longitude=-66.19999999998286, altitude=0.0] padding=0.0, 0.0, 0.0, 0.0 focus=2f3912ed-deae-463a-a23a-029459d3189c
+I/WdCameraProbe( 2471): [DEBUG-workspace-camera] stage=focus-wide target=LatLng [latitude=18.00000004538331, longitude=-66.0000000000053, altitude=0.0] center=LatLng [latitude=18.000000045395737, longitude=-66.00000000003098, altitude=0.0] padding=0.0, 0.0, 0.0, 0.0 focus=2f3912ed-deae-463a-a23a-029459d3189c

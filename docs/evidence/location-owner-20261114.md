@@ -24,6 +24,10 @@ A new method in the already-selected dedicated `RoadActivityLifecycleTest` class
 
 Actual strict-verifier/session receipts and instrumentation digests: `location-owner-20261114/red-green-verification.json`. Local raw artifacts: `artifacts/merge-readiness/{location-owner-red-1,location-owner-green-1,location-owner-both-reboot-1}` plus build logs. Owned read-only API35 guest,2cores/2GiB/private ADB5064/emulator5586; settings restored/read back, scoped packages removed, emulator/private ADB stopped and lock released. No physical/default device used.
 
+## Hosted nine-case recovery acceptance at871b40fd
+
+Run **43583502993**, artifact **14109791137**, completes all nine original route/visits/both ×kill/force-stop/reboot cases. Downloaded each actual native `recover.log`: all end `OK (1 test)`, no failure marker; every proof has recovered phase, changed PID, preserved point and the correct changed/unchanged boot identity for its termination. `hosted-nine-case-871b.json` preserves all nine original verifications. This resolves the observed recovery fixture failure on that head without retrying a rejected production command. It does not close expanded UI/database gates.
+
 ## Completed baseline audit — additional blockers, not whole-job acceptance
 
 Downloaded run **43575545218**, head763d6346, artifact **14108333739**. The initial default selection now completes **594 announced cases:592 passed, zero failures/errors, exactly the two original Calendar ignores**. Native instrumentation ends `OK (592 tests)`; the previously failing covered-road method explicitly has start1/end0. This verifies the road-focus correction in its original full context, not merely a local subset.
