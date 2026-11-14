@@ -183,7 +183,9 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
                 self?.applySharedRecordingIntent(intent) ?? false
             }
         }
-        locationManager.delegate = self
+        // An injected monitor owns delivery. The otherwise-unused native manager
+        // must not race that fixture/provider's explicit authorization state.
+        if monitoring == nil { locationManager.delegate = self }
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -1627,8 +1629,13 @@ final class LocationManager: NSObject, ObservableObject, SmartStartTracking {
 extension LocationManager: CLLocationManagerDelegate {
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in
-            handleAuthorizationChange(status: manager.authorizationStatus, accuracy: manager.accuracyAuthorization)
+            handleNativeAuthorizationChange(status: manager.authorizationStatus, accuracy: manager.accuracyAuthorization)
         }
+    }
+
+    func handleNativeAuthorizationChange(status: CLAuthorizationStatus, accuracy: CLAccuracyAuthorization) {
+        guard locationManager.delegate === self else { return }
+        handleAuthorizationChange(status: status, accuracy: accuracy)
     }
 
     func handleAuthorizationChange(status: CLAuthorizationStatus, accuracy: CLAccuracyAuthorization) {

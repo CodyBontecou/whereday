@@ -1,0 +1,6 @@
+/Users/codybontecou/dev/whereday-shortcut-session-ready/IsoMeTests/SmartStartRuntimeTests.swift:220: error: -[IsoMeTests.SmartStartCorrectionTests testNativeAuthorizationDeliveryCannotOverwriteAnInjectedMonitoringFixture] : XCTAssertEqual failed: ("CLAuthorizationStatus(rawValue: 0)") is not equal to ("CLAuthorizationStatus(rawValue: 3)")
+/Users/codybontecou/dev/whereday-shortcut-session-ready/IsoMeTests/SmartStartRuntimeTests.swift:221: error: -[IsoMeTests.SmartStartCorrectionTests testNativeAuthorizationDeliveryCannotOverwriteAnInjectedMonitoringFixture] : XCTAssertTrue failed
+/Users/codybontecou/dev/whereday-shortcut-session-ready/IsoMeTests/SmartStartRuntimeTests.swift:224: error: -[IsoMeTests.SmartStartCorrectionTests testNativeAuthorizationDeliveryCannotOverwriteAnInjectedMonitoringFixture] : XCTAssertNotNil failed - Injected monitoring must not lose its session admission to an unrelated native permission callback
+	 Executed 1 test, with 3 failures (0 unexpected) in 0.333 (0.333) seconds
+	 Executed 1 test, with 3 failures (0 unexpected) in 0.333 (0.334) seconds
+	 Executed 1 test, with 3 failures (0 unexpected) in 0.333 (0.334) seconds

@@ -213,6 +213,28 @@ final class SmartStartCorrectionTests: XCTestCase {
         XCTAssertTrue(manager.isTrackingEnabled, "Stationary policy must not stop an explicit peer recording")
     }
 
+    func testDefaultNativeMonitoringStillReceivesAuthorizationAndAccuracyChanges() {
+        let native = LocationManager(defaults: makeIsolatedDefaults(), registersAsShared: false,
+                                     trackingAccess: { true }, startsSmartStartRuntime: false)
+        native.handleNativeAuthorizationChange(status: .restricted, accuracy: .reducedAccuracy)
+        XCTAssertEqual(native.authorizationStatus, .restricted)
+        XCTAssertEqual(native.accuracyAuthorization, .reducedAccuracy)
+        XCTAssertFalse(native.isTrackingEnabled)
+        XCTAssertFalse(native.ambientMonitoringActive)
+        native.stopTracking()
+    }
+
+    func testNativeAuthorizationDeliveryCannotOverwriteAnInjectedMonitoringFixture() {
+        // Replay the native callback boundary after setup has installed its
+        // explicit permission state, before the async test's manual start.
+        manager.handleNativeAuthorizationChange(status: .notDetermined, accuracy: .fullAccuracy)
+        XCTAssertEqual(manager.authorizationStatus, .authorizedAlways)
+        XCTAssertTrue(manager.hasLocationPermission)
+        // Do not raise a real permission dialog when the precondition regresses.
+        if manager.hasLocationPermission { manager.startTracking() }
+        XCTAssertNotNil(manager.trackingStartTime, "Injected monitoring must not lose its session admission to an unrelated native permission callback")
+    }
+
     func testCachedPreSessionFixDeliveredAfterStartCannotReachAnyRecordingConsumer() async throws {
         manager.setRouteSamplingMode(.time)
         manager.setRouteSampleInterval(60)

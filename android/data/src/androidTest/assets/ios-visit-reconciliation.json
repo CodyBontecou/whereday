@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "IsoMe/Services/LocationManager.swift": "39acd33ac44b0531ced45d5bcc60adeca7ef1fddb6039ecc3ef676ca9cbbe094",
+    "IsoMe/Services/LocationManager.swift": "fe7c93201600230cf16a281f6fa601b540536a601c23371c13e93187add6e8ac",
     "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
     "android/scripts/fixtures/VisitReconciliationFixtures.swift": "1758fc5a146f364117b9710c7eb379c1408d18d2556d44b2983633a124e94bd7",
     "android/scripts/generate_visit_reconciliation_fixtures.py": "3ba1b3183250b2ee620008d22367c2f54cc22cb583ab1dda10b9d2b8ac931069"

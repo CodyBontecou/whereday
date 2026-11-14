@@ -1,0 +1,38 @@
+	 Executed 613 tests, with 0 failures (0 unexpected) in 17.959 (18.084) seconds
+	 Executed 613 tests, with 0 failures (0 unexpected) in 17.959 (18.084) seconds
+✔ Test run with 20 tests in 2 suites passed after 0.090 seconds.
+** TEST SUCCEEDED **
+PASS: 561 actual compiled Bundle lookups (51 keys × 11 locales)
+PASS all17 actual Swift reconciliation outputs unchanged
+Swift visit-link reference provenance verified
+Swift Google Timeline provenance verified
+Swift timeline duplicate provenance verified
+Calendar Swift reference provenance verified
+PASS: schedule fixture source hashes match
+PASS: merge fixture source hashes and package revision match
+PASS: country CSV fixture source hashes match
+PASS: country-region source hashes and generated Kotlin match
+PASS: outing fixture source hashes match
+PASS: outing Markdown source/model/harness/input and native fixture provenance
+PASS: Core Location distance and native route fixture provenance
+PASS: history import fixture source hashes match
+PASS: visit reconciliation fixture source hashes match
+PASS: nearby-place fixture source hashes match
+PASS: JSON/CSV/Markdown renderer and native locale fixture provenance
+PASS: JSON location fixture source hashes match
+PASS: KML fixture source hashes match
+PASS: GPX fixture source hashes match
+PASS: filename fixture source hashes match
+PASS: saved-place CSV fixture source hashes match
+PASS: saved-place plan fixture source hashes match
+PASS: actual iOS replay fixture provenance
+PASS: actual iOS road-snapping helper/adapter provenance
+PASS: actual Swift photo fixture provenance
+PASS: actual Swift photo-cluster fixture provenance
+PASS: actual Swift photo marker style/hit-test provenance
+PASS: actual Swift viewport point marker provenance
+PASS: actual Swift map-date preset provenance
+PASS: selected native iOS custom-date sheet and reference harness provenance
+PASS: selected actual Swift manual-overlap predicate provenance
+Swift visit-map-focus provenance verified
+PASS all31 actual CI source checks

@@ -34,6 +34,10 @@ No SwiftData model, public backup format, import admission rule or route samplin
 
 The first authoring build failed because adding a defaulted third argument did not satisfy the original protocol; an exact two-argument forwarding method restores it. A later authoring compile exposed an optional parameter shadowing the stored resolution closure; explicit `self` fixed it. Neither is a credential/environment regression. An early SQLite test passed assertions while deleting its directory before manager teardown; log inspection caught that fixture cleanup error. Stopping/releasing before removal produced a clean focused rerun and final session tests. Expected corrupt-store diagnostics in existing LaunchRecoveryTests are not relabeled as session failures.
 
+## Subsequent native fixture-isolation correction
+
+The first hosted173cb gate failed one existing async correction test before start metadata existed, despite all26 new option tests passing. A deterministic native authorization replay reproduces the injected-monitor race; the [owned-delegate correction](smart-start-native-authorization-20261114.md) preserves default production permission delivery and now passes **613 XCTest +20 Swift Testing** locally. This supersedes611 as the current local total, not as proof of hosted success or the owner identity of the historical CI callback.
+
 ## Artifacts and open acceptance
 
 Adjacent `verification.json`, resource-preservation and compiled-metadata records map these claims to source hashes/results. Full intermediate failed/successful logs remain in this worktree's `artifacts/merge-readiness/`; final resource/reference log is `/tmp/whereday-merge-readiness/shortcut-session-final-checks.log`.

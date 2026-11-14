@@ -1,0 +1,38 @@
+{
+  "priorHosted": {
+    "run": 43622903816,
+    "head": "173cb83f259e791e0c458e903d3e51951a103bcc",
+    "XCTest": 611,
+    "failures": 1,
+    "newSessionTests": 26,
+    "newSessionFailures": 0,
+    "SwiftTesting": 20,
+    "failedCase": "SmartStartCorrectionTests.testCachedPreSessionFixDeliveredAfterStartCannotReachAnyRecordingConsumer",
+    "surface": "trackingStartTime nil before any cached-fix admission",
+    "artifact": 14125585944,
+    "digest": "sha256:3efd37811b522fa85061e3e30d2a7d5f8b4a6b35d7714c0bbcdb75d7b15c6cfc"
+  },
+  "regression": {
+    "replayMethod": "testNativeAuthorizationDeliveryCannotOverwriteAnInjectedMonitoringFixture",
+    "REDTests": 1,
+    "REDAssertions": 3,
+    "defaultNativeDeliveryPositiveTest": true,
+    "focusedGreen": 50,
+    "scope": "Modeled native callback after injected permission setup; old CI logs lack owner IDs"
+  },
+  "finalLocal": {
+    "XCTest": 613,
+    "SwiftTesting": 20,
+    "failures": 0,
+    "compiledLookups": 561,
+    "actualSourceChecks": 31,
+    "actualSwiftOutputsUnchanged": 17,
+    "result": "artifacts/test-results/IsoMe-20261114-140644-27719.xcresult"
+  },
+  "sha256": {
+    "IsoMe/Services/LocationManager.swift": "fe7c93201600230cf16a281f6fa601b540536a601c23371c13e93187add6e8ac",
+    "IsoMeTests/SmartStartRuntimeTests.swift": "18c18ecc05734a157a4c8cd1312792acdadc4bd45bd6492a5824d57786fbe7f8",
+    "android/domain/src/test/resources/ios-visit-reconciliation.json": "165c99de669836e719156c23395c22434a4b1c5e425dfd2267000688d795bac9",
+    "android/data/src/androidTest/assets/ios-visit-reconciliation.json": "165c99de669836e719156c23395c22434a4b1c5e425dfd2267000688d795bac9"
+  }
+}
