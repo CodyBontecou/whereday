@@ -22,6 +22,7 @@ paths = [ROOT / p for p in [
     'IsoMe/Models/Visit.swift', 'IsoMe/Models/LocationPoint.swift',
     'IsoMe/Utilities/ImportService.swift', 'IsoMe/Utilities/GoogleTimelineImportService.swift',
     'IsoMe/Utilities/TimelineImportService.swift',
+    'IsoMe/Utilities/VisitInferenceService.swift', 'IsoMe/Utilities/GoogleFolderDiscovery.swift',
     'IsoMe/Utilities/WheredayBackupService.swift', 'IsoMe/Models/RecordingSession.swift',
     'IsoMe/Models/PhotoMoment.swift', 'IsoMe/Models/CountryStay.swift', 'Shared/DistanceFormatter.swift']]
 formats = ROOT / 'IsoMe/Utilities/ExportService.swift'

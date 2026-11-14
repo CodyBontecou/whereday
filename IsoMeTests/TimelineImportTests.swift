@@ -208,6 +208,277 @@ final class TimelineImportTests: XCTestCase {
         } catch TimelineImportError.nothingSelected {}
     }
 
+    private func withFiles(_ files: [(String, Data)], run: ([URL]) async throws -> Void) async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let urls = try files.map { name, data in
+            let url = directory.appendingPathComponent(name)
+            try data.write(to: url)
+            return url
+        }
+        try await run(urls)
+    }
+
+    func testMultipleGoogleFamiliesShareOneReadOnlyPreviewAndRepeatSafeCommit() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let device = try json(["semanticSegments": [[
+            "startTime": "2020-01-01T00:00:00Z", "endTime": "2020-01-01T01:00:00Z",
+            "visit": ["topCandidate": ["placeLocation": "geo:37.7,-122.4"]],
+            "timelinePath": [["point": "geo:37.7,-122.4", "time": "2020-01-01T00:00:00Z"]]
+        ]]])
+        let semantic = try json(["timelineObjects": [["placeVisit": [
+            "location": ["latitudeE7": 377_000_000, "longitudeE7": -1_224_000_000],
+            "duration": ["startTimestamp": "2020-01-01T00:00:00Z", "endTimestamp": "2020-01-01T01:00:00Z"]
+        ]], ["unknown": [:]]]])
+        try await withFiles([("device.json", device), ("Records.json", raw([point(), point(latitude: 999_000_000)])),
+                             ("2020_JANUARY.json", semantic)]) { urls in
+            let preview = try await service.preview(urls: urls)
+            XCTAssertEqual(preview.payload.format, .googleMixed)
+            XCTAssertEqual(preview.newVisitCount, 1)
+            XCTAssertEqual(preview.newPointCount, 1)
+            XCTAssertEqual(preview.duplicateVisitCount, 1)
+            XCTAssertEqual(preview.duplicatePointCount, 1)
+            XCTAssertEqual(preview.payload.invalidRecordCount, 1)
+            XCTAssertEqual(preview.payload.unsupportedRecordCount, 1)
+            XCTAssertTrue(preview.fileName.contains("2020_JANUARY.json"))
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+            let result = try await service.commit(preview, options: ImportOptions())
+            XCTAssertEqual(result.visitCount, 1)
+            XCTAssertEqual(result.pointCount, 1)
+            let repeated = try await service.preview(urls: urls)
+            XCTAssertEqual(repeated.newVisitCount + repeated.newPointCount, 0)
+            XCTAssertEqual(repeated.duplicateVisitCount + repeated.duplicatePointCount, 4)
+        }
+    }
+
+    func testMultipleGoogleFilesSortBeforeExistingDateRangeDuplicateLookup() async throws {
+        let container = try container()
+        container.mainContext.insert(LocationPoint(latitude: 37.7, longitude: -122.4, timestamp: time, horizontalAccuracy: 8))
+        try container.mainContext.save()
+        let service = TimelineImportService(container: container)
+        try await withFiles([("later.json", raw([point(milliseconds: 1_577_836_801_000)])),
+                             ("earlier.json", raw([point()]))]) { urls in
+            let preview = try await service.preview(urls: urls)
+            XCTAssertEqual(preview.payload.format, .googleRaw)
+            XCTAssertEqual(preview.newPointCount, 1)
+            XCTAssertEqual(preview.duplicatePointCount, 1)
+            XCTAssertEqual(preview.payload.points.first?.timestamp, time)
+        }
+    }
+
+    func testMalformedOrUnrelatedGoogleSelectionRejectsWholePreview() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        for invalid in [Data("{".utf8), try json(["unrelated": []]), try backup(visits: [visit()])] {
+            try await withFiles([("Records.json", raw([point()])), ("other.json", invalid)]) { urls in
+                do {
+                    _ = try await service.preview(urls: urls)
+                    XCTFail("The entire selection must be valid Google files")
+                } catch { }
+                XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+            }
+        }
+    }
+
+    func testGoogleAndFullBackupCannotBeMixedInEitherOrder() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .millisecondsSince1970
+        let fullBackup = try encoder.encode(WheredayBackup(exportedAt: time))
+        XCTAssertNotNil(try TimelineImportService.parse(data: fullBackup, fileName: "backup.json").backup)
+        try await withFiles([("Records.json", raw([point()])), ("backup.json", fullBackup)]) { urls in
+            for selection in [urls, Array(urls.reversed())] {
+                do {
+                    _ = try await service.preview(urls: selection)
+                    XCTFail("Google data and a full backup must stay separate")
+                } catch ImportError.invalidData { }
+                XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+            }
+        }
+    }
+
+    func testGoogleSelectionEnforcesAggregateRecordLimitBeforeDeduplication() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let records = try raw(Array(repeating: point(), count: ImportPayload.maximumRecordCount / 2 + 1))
+        try await withFiles([("first.json", records), ("second.json", records)]) { urls in
+            do {
+                _ = try await service.preview(urls: urls)
+                XCTFail("Per-file limits must not bypass the selection limit")
+            } catch TimelineImportError.tooManyRecords { }
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
+    func testGoogleSelectionEnforcesAggregateByteLimit() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let data = try json(["locations": [point()], "padding": String(repeating: " ", count: ImportPayload.maximumFileSize / 2)])
+        try await withFiles([("first.json", data), ("second.json", data)]) { urls in
+            do {
+                _ = try await service.preview(urls: urls)
+                XCTFail("The selection must stay within the byte budget")
+            } catch TimelineImportError.fileTooLarge { }
+        }
+    }
+
+    private func withFolder<T>(_ files: [(String, Data)], body: (URL) async throws -> T) async throws -> T {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("GoogleFolderImport-\(UUID())", isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        for (name, data) in files {
+            let url = root.appendingPathComponent(name)
+            try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: url)
+        }
+        return try await body(root)
+    }
+
+    func testPickerSelectedFolderUsesTheOrdinaryAsyncPreviewEntryWithoutSaving() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        try await withFolder([("Takeout/Records.json", raw([point()])), ("notes.txt", Data("synthetic unrelated item".utf8))]) { root in
+            let preview = try await service.preview(urls: [root])
+            XCTAssertEqual(preview.payload.format, .googleRaw)
+            XCTAssertEqual(preview.fileName, root.lastPathComponent)
+            XCTAssertEqual(preview.newPointCount, 1)
+            XCTAssertEqual(preview.folderSummary, ImportFolderSummary(googleFileCount: 1, excludedEntryCount: 1))
+            var options = preview.options
+            options.inferVisits = false
+            let reviewed = try await service.review(preview, options: options)
+            XCTAssertEqual(reviewed.folderSummary, preview.folderSummary)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+            let result = try await service.commit(reviewed, options: options)
+            XCTAssertEqual(result.pointCount, 1)
+        }
+    }
+
+    func testPickerRejectsFolderMixedWithFilesBeforeOfferingAnyPartialPreview() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        try await withFolder([("Records.json", raw([point()]))]) { root in
+            do {
+                _ = try await service.preview(urls: [root.appendingPathComponent("Records.json"), root])
+                XCTFail("A folder must be selected on its own")
+            } catch let error as ImportError {
+                guard case .invalidData(let message) = error else { return XCTFail("Expected selection admission error") }
+                XCTAssertEqual(message, String(localized: "Choose one Google folder on its own, or select import files without folders."))
+            }
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
+    func testFolderPreviewCombinesGoogleFamiliesIgnoresUnrelatedFilesAndCommitsOnce() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let semantic = try json(["timelineObjects": [["placeVisit": [
+            "location": ["latitudeE7": 377_000_000, "longitudeE7": -1_224_000_000],
+            "duration": ["startTimestamp": "2020-01-01T00:00:00Z", "endTimestamp": "2020-01-01T01:00:00Z"]
+        ]]]])
+        let records = try raw([point(), point()])
+        try await withFolder([("Takeout/Records.json", records), ("Takeout/2020/January.json", semantic),
+                              ("other/settings.json", json(["theme": "dark"])),
+                              ("notes.txt", Data("synthetic unrelated file".utf8)),
+                              ("backup.json", backup(visits: [visit()]))]) { root in
+            let preview = try await service.preview(folder: root)
+            XCTAssertEqual(preview.payload.format, .googleMixed)
+            XCTAssertEqual(preview.sourceByteCount, Int64(records.count + semantic.count))
+            XCTAssertEqual(preview.newVisitCount, 1)
+            XCTAssertEqual(preview.newPointCount, 1)
+            XCTAssertEqual(preview.duplicatePointCount, 1)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<Visit>()), 0)
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+            let first = try await service.commit(preview, options: preview.options)
+            XCTAssertEqual(first.visitCount, 1)
+            XCTAssertEqual(first.pointCount, 1)
+            let second = try await service.commit(preview, options: preview.options)
+            XCTAssertEqual(second.visitCount, 0)
+            XCTAssertEqual(second.pointCount, 0)
+            XCTAssertEqual(second.duplicateVisitCount, 1)
+            XCTAssertEqual(second.duplicatePointCount, 2)
+        }
+    }
+
+    func testFolderPreviewRejectsMalformedCandidateWithoutChangingExistingHistory() async throws {
+        let container = try container()
+        let existing = Visit(latitude: 1, longitude: 2, arrivedAt: time, customName: "Preserve synthetic visit")
+        container.mainContext.insert(existing)
+        try container.mainContext.save()
+        let service = TimelineImportService(container: container)
+        try await withFolder([("good.json", raw([point()])), ("bad.json", Data("{\"locations\":[".utf8))]) { root in
+            do {
+                _ = try await service.preview(folder: root)
+                XCTFail("A malformed Google candidate must reject the whole folder, not offer a partial preview")
+            } catch { }
+            let visits = try ModelContext(container).fetch(FetchDescriptor<Visit>())
+            XCTAssertEqual(visits.map(\.id), [existing.id])
+            XCTAssertEqual(visits.first?.customName, "Preserve synthetic visit")
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
+    func testFolderCandidateHintsDoNotBypassFullCodecValidation() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        // The prefix identifies a likely Google file, but the actual record array is invalid.
+        try await withFolder([("good.json", raw([point()])), ("bad.json", json(["locations": "invalid"]))]) { root in
+            do {
+                _ = try await service.preview(folder: root)
+                XCTFail("Discovery hints must not be treated as validated records")
+            } catch { }
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
+    func testFolderPreviewSupportsDeviceRootArrays() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let data = try json([["startTime": "2020-01-01T00:00:00Z", "endTime": "2020-01-01T01:00:00Z",
+                              "visit": ["topCandidate": ["placeLocation": "geo:37.7,-122.4"]]]])
+        try await withFolder([("Timeline.json", data)]) { root in
+            let preview = try await service.preview(folder: root)
+            XCTAssertEqual(preview.payload.format, .googleDevice)
+            XCTAssertEqual(preview.newVisitCount, 1)
+            XCTAssertEqual(preview.sourceByteCount, Int64(data.count))
+        }
+    }
+
+    func testFolderPreviewEnforcesAggregateRecordLimitBeforeDeduplication() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        let records = try raw(Array(repeating: point(), count: ImportPayload.maximumRecordCount / 2 + 1))
+        try await withFolder([("first.json", records), ("nested/second.json", records)]) { root in
+            do {
+                _ = try await service.preview(folder: root)
+                XCTFail("Folder selections must retain the ordinary aggregate record budget")
+            } catch TimelineImportError.tooManyRecords { }
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
+    func testFolderPreviewDoesNotFollowSymlinkedGoogleFiles() async throws {
+        let container = try container()
+        let service = TimelineImportService(container: container)
+        try await withFolder([("source.json", raw([point()]))]) { outer in
+            let selected = outer.appendingPathComponent("selected", isDirectory: true)
+            try FileManager.default.createDirectory(at: selected, withIntermediateDirectories: true)
+            try FileManager.default.createSymbolicLink(at: selected.appendingPathComponent("linked.json"),
+                                                      withDestinationURL: outer.appendingPathComponent("source.json"))
+            do {
+                _ = try await service.preview(folder: selected)
+                XCTFail("A symlink must not import a file outside the authorized root")
+            } catch let failure as GoogleFolderDiscovery.Failure {
+                XCTAssertEqual(failure.reason, .noCandidates)
+            }
+            XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        }
+    }
+
     func testCancellationBeforeCommitDoesNotWriteRecords() async throws {
         let container = try container()
         let service = TimelineImportService(container: container)

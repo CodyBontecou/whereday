@@ -77,7 +77,7 @@ struct SettingsView: View {
         }
         .fileImporter(
             isPresented: $showingImportPicker,
-            allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText],
+            allowedContentTypes: [.json, .commaSeparatedText, UTType(filenameExtension: "md") ?? .plainText, .folder],
             allowsMultipleSelection: true
         ) { result in
             handleImportResult(result)
@@ -310,8 +310,8 @@ struct SettingsView: View {
     private var importRow: some View {
         Button { showingImportPicker = true } label: {
             BackPageRowLabel(
-                title: Text("Import a file"),
-                subtitle: Text("Google Timeline JSON, or Whereday JSON, CSV, Markdown. Duplicates are skipped."),
+                title: Text("Import files or a folder"),
+                subtitle: Text("Select import files, or one unzipped Google folder. Make the folder available offline in Files first. ZIP files are not supported."),
                 minHeight: 64
             )
         }

@@ -15,6 +15,10 @@
 		B05100000000000000000002 /* PaidTrackingMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05100000000000000000001 /* PaidTrackingMigration.swift */; };
 		B05100000000000000000003 /* PaidTrackingMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05100000000000000000001 /* PaidTrackingMigration.swift */; };
 		FA110004212F000100000004 /* IsoMe.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FA110003212F000000000003 /* IsoMe.storekit */; };
+		D05900000000000000000001 /* VisitInferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05900000000000000000002 /* VisitInferenceService.swift */; };
+		D05900000000000000000003 /* VisitInferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05900000000000000000004 /* VisitInferenceTests.swift */; };
+		D05920000000000000000001 /* GoogleFolderDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05920000000000000000002 /* GoogleFolderDiscovery.swift */; };
+		D05920000000000000000003 /* GoogleFolderDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05920000000000000000004 /* GoogleFolderDiscoveryTests.swift */; };
 		F2DCEC8ADF4641F4AFEBB1BA /* TimelineImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */; };
 		2CC3A28B9A3146D59DF28C11 /* ImportPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF3AA76C3AB454B8655127B /* ImportPreviewView.swift */; };
 		D4F646027F3544B28CA1C8ED /* TimelineImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF988D99D664DF8A3F3B0B4 /* TimelineImportService.swift */; };
@@ -287,6 +291,10 @@
 		CA1029A00000000000000000 /* PaywallContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallContext.swift; sourceTree = "<group>"; };
 		CA1E00870000000000000002 /* TEActionContrastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TEActionContrastTests.swift; sourceTree = "<group>"; };
 		B05100000000000000000001 /* PaidTrackingMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidTrackingMigration.swift; sourceTree = "<group>"; };
+		D05900000000000000000002 /* VisitInferenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitInferenceService.swift; sourceTree = "<group>"; };
+		D05900000000000000000004 /* VisitInferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitInferenceTests.swift; sourceTree = "<group>"; };
+		D05920000000000000000002 /* GoogleFolderDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleFolderDiscovery.swift; sourceTree = "<group>"; };
+		D05920000000000000000004 /* GoogleFolderDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleFolderDiscoveryTests.swift; sourceTree = "<group>"; };
 		8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineImportTests.swift; sourceTree = "<group>"; };
 		2BF3AA76C3AB454B8655127B /* ImportPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPreviewView.swift; sourceTree = "<group>"; };
 		4EF988D99D664DF8A3F3B0B4 /* TimelineImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineImportService.swift; sourceTree = "<group>"; };
@@ -718,7 +726,9 @@
 				E9A100000000000000000001 /* IsoMeExportKitAdapter.swift */,
 				A1000020212F000000000020 /* ImportService.swift */,
 				393B7133DA6C49FA9333C111 /* WheredayBackupService.swift */,
+				D05900000000000000000002 /* VisitInferenceService.swift */,
 				4EF988D99D664DF8A3F3B0B4 /* TimelineImportService.swift */,
+				D05920000000000000000002 /* GoogleFolderDiscovery.swift */,
 				16C93238ACDE4723BBB542B6 /* GoogleTimelineImportService.swift */,
 				5F000001212F000000000001 /* ExportFolderManager.swift */,
 				5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */,
@@ -816,6 +826,8 @@
 				76AB00000000000000000031 /* ManualVisitAutomationTests.swift */,
 				D2A10003212F000000000003 /* RemotePastVisitTests.swift */,
 				5B11700000000000000000A1 /* SplitVisitTests.swift */,
+				D05900000000000000000004 /* VisitInferenceTests.swift */,
+				D05920000000000000000004 /* GoogleFolderDiscoveryTests.swift */,
 				8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */,
 				644670CB99144980BD7FC378 /* WheredayBackupTests.swift */,
 				F8AA00000000000000000002 /* MonthRecapTests.swift */,
@@ -1133,7 +1145,9 @@
 				A1000031212F000100000031 /* ExportView.swift in Sources */,
 				A1000020212F000100000020 /* ImportService.swift in Sources */,
 				D362A9E546FD488DA87D3E03 /* WheredayBackupService.swift in Sources */,
+				D05900000000000000000001 /* VisitInferenceService.swift in Sources */,
 				D4F646027F3544B28CA1C8ED /* TimelineImportService.swift in Sources */,
+				D05920000000000000000001 /* GoogleFolderDiscovery.swift in Sources */,
 				A30F32016A3C45B08E910CC2 /* GoogleTimelineImportService.swift in Sources */,
 				A1000008212F000100000008 /* LocationViewModel.swift in Sources */,
 				A100000B212F00010000000B /* MapView.swift in Sources */,
@@ -1276,6 +1290,8 @@
 				76AB00000000000000000032 /* ManualVisitAutomationTests.swift in Sources */,
 				D2A10003212F000100000003 /* RemotePastVisitTests.swift in Sources */,
 				5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */,
+				D05900000000000000000003 /* VisitInferenceTests.swift in Sources */,
+				D05920000000000000000003 /* GoogleFolderDiscoveryTests.swift in Sources */,
 				F2DCEC8ADF4641F4AFEBB1BA /* TimelineImportTests.swift in Sources */,
 				FDFB1C9B057842D2AEAF9F09 /* WheredayBackupTests.swift in Sources */,
 				F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */,

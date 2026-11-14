@@ -1,0 +1,44 @@
+{
+  "sourceBase": "090f0d6d",
+  "actualRed": "two ordinary preview(urls:) entry tests fail with NSCocoaErrorDomain256/POSIX21 Is a directory",
+  "targetedWorkerTests": 26,
+  "fullXCTest": 583,
+  "swiftTesting": 20,
+  "resultBundle": "artifacts/test-results/IsoMe-20261114-080108-28539.xcresult",
+  "actualSwiftReferenceOutputs": [
+    {
+      "path": "android/export/src/test/resources/ios-google-timeline.json",
+      "unchangedActualSwiftCases": 50
+    },
+    {
+      "path": "android/domain/src/test/resources/ios-timeline-duplicates.json",
+      "unchangedActualSwiftCases": 50
+    }
+  ],
+  "sourceChecks": 31,
+  "nativeUIOnlyUDID": "DD0819DF-30A5-460C-8781-57A7537A60C2",
+  "pickerProvider": "separate synthetic UIFileSharing helper, not production Info.plist",
+  "nativeReview": {
+    "googleFiles": 2,
+    "excludedEntries": 2,
+    "newPoints": 2,
+    "newVisits": 1,
+    "duplicatePoints": 1
+  },
+  "nativeCancel": {
+    "visits": 0,
+    "points": 0
+  },
+  "nativeCommit": {
+    "visits": 1,
+    "points": 2,
+    "duplicatesSkipped": 1
+  },
+  "rawSemanticsSha256": {
+    "review.json": "6b9fdf83a80dae40fbf0fb9e5f24138ab90d18f72c15ef0e6255f26a4687b7b2",
+    "cancelled.json": "3c37b7870bc8ac991315f09f928e9530021da4a9ec632544b1444f5c492dfe92",
+    "complete.json": "f554d0f4c99ccf70d08f968d253e73e27bd96b9790639bb1f6907a766f677235",
+    "saved-settings.json": "a6b1cd3ffbce1a5b27da8eb991b16d2144eb61d41c9374bc6f2349d0cff1dead"
+  },
+  "scope": "Native On My iPhone picker/local provider only. No cloud materialization, all-provider, localized/full-motion/accessibility/device-performance/Watch/widget acceptance claim."
+}

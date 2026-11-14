@@ -1,6 +1,55 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported.": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported." } } }
+    },
+    "%@ rejected raw samples break inference continuity": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ rejected raw samples break inference continuity" } } }
+    },
+    "%@ route samples have unknown accuracy; excluded from visit inference": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ route samples have unknown accuracy; excluded from visit inference" } } }
+    },
+    "Infer visits from raw points": {
+      "comment": "Google import review opt-out. Other locales currently use English fallback.",
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Infer visits from raw points" } } }
+    },
+    "%@ inferred candidates before duplicate matching": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ inferred candidates before duplicate matching" } } }
+    },
+    "Dwell: %lld min": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Dwell: %lld min" } } }
+    },
+    "Radius: %lld m": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Radius: %lld m" } } }
+    },
+    "Accepted accuracy: %lld m": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Accepted accuracy: %lld m" } } }
+    },
+    "Include poor-accuracy route points": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Include poor-accuracy route points" } } }
+    },
+    "%@ route points excluded by accuracy": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ route points excluded by accuracy" } } }
+    },
+    "%@ inferred candidates suppressed by existing visits": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ inferred candidates suppressed by existing visits" } } }
+    },
+    "Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected.": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected." } } }
+    },
+    "Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit.": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit." } } }
+    },
+    "Updating review…": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Updating review…" } } }
+    },
+    "Choose valid inference limits: radius 25–500 m, dwell 5–120 minutes, accuracy 1–500 m, and gap 30–900 seconds no longer than dwell.": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Choose valid inference limits: radius 25–500 m, dwell 5–120 minutes, accuracy 1–500 m, and gap 30–900 seconds no longer than dwell." } } }
+    },
+    "Review the updated inference and accuracy counts before importing.": {
+      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Review the updated inference and accuracy counts before importing." } } }
+    },
     "Select all files from the same backup. Nothing was restored.": {
       "comment": "Multipart local backup admission error.",
       "localizations": {
