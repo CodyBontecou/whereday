@@ -1,7 +1,18 @@
 {
   "locale": "ja",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "赤茶色の経路は、選択した日付に関係なく現在の記録だけを表示します。開始フラグと現在地マーカーは、期間のマーカーとは別に表示されます。",
     "active_recording_map_empty": "現在の記録のポイントを待っています。",
@@ -518,8 +529,6 @@
     "listening_footer": "アカウントは不要です。訪れた場所のコピーがサーバーに置かれることはありません。記録中は、実行中であることを示す通知が表示されます。",
     "listening_journal": "あなたの記録",
     "listening_journal_where": "このスマートフォンのみ",
-    "listening_mode_routes": "場所とルート",
-    "listening_mode_routes_body": "記録中は GPS を使って、すべての立ち寄り先とその間の経路を記録します。",
     "listening_mode_visits_body": "省電力のバランスモードの位置情報で、滞在した場所だけを記録します。立ち寄り先の間のルートは記録しません。",
     "listening_place_names": "場所の名前",
     "listening_place_names_body": "ネットワークジオコーディングで地図サービスに問い合わせます",
@@ -813,6 +822,7 @@
     "onboarding_point_on_device": "位置情報の履歴はこのスマートフォンに保存",
     "onboarding_point_routes": "移動しながらルートを記録",
     "onboarding_point_visits": "訪れた場所を記録",
+    "onboarding_preset_custom_kept": "プリセットを選ばない限り、カスタムの記録設定はそのまま保持されます。",
     "onboarding_save_error": "セットアップを保存できませんでした。もう一度お試しください。記録をリクエストした場合は、すでに記録が始まっている可能性があります。",
     "onboarding_start_error": "記録を開始できませんでした。もう一度試すか、すぐに記録する設定をオフにしてセットアップを完了してください。",
     "onboarding_start_finish": "記録を開始して Whereday を開く",
@@ -1126,6 +1136,7 @@
     "recording_offline_hint": "最初の正確な測位の後、ルートがここに表示されます。記録にネットワーク接続は必要ありません。",
     "recording_permission_start_failed": "記録を開始できませんでした。位置情報へのアクセスを確認して、もう一度お試しください。",
     "recording_point_label": "記録したポイント",
+    "recording_preset_custom_body": "設定で選んだ独自の距離、間隔、自動停止。プリセットを選ぶと置き換わります。",
     "recording_reconciliation_failed": "訪問の履歴を更新できませんでした。アプリを開き直してみてください。",
     "recording_route_empty": "まだルートが記録されていません",
     "recording_route_points": {

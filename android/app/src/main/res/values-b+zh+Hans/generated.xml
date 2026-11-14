@@ -515,8 +515,6 @@
     <string name="listening_footer">无需账户。服务器上没有你去过哪里的副本。记录运行期间会显示一条持续通知。</string>
     <string name="listening_journal">你的日志</string>
     <string name="listening_journal_where">仅限此手机</string>
-    <string name="listening_mode_routes">地点和路线</string>
-    <string name="listening_mode_routes_body">记录期间使用 GPS 记录每一次停留以及它们之间的路线。</string>
     <string name="listening_mode_visits_body">仅记录你停留的地方，使用省电的平衡定位，不记录停留之间的路线。</string>
     <string name="listening_place_names">地点名称</string>
     <string name="listening_place_names_body">网络地理编码会向地图服务查询</string>
@@ -791,6 +789,7 @@
     <string name="onboarding_point_on_device">位置历史保留在此手机上</string>
     <string name="onboarding_point_routes">随行记录路线</string>
     <string name="onboarding_point_visits">记住你到访的地点</string>
+    <string name="onboarding_preset_custom_kept">除非你选择预设，否则会保留你的自定义记录设置。</string>
     <string name="onboarding_save_error">无法保存设置。请重试。如果你请求了记录，它可能已经在进行中。</string>
     <string name="onboarding_start_error">无法开始记录。请重试，或关闭“立即开始记录”以完成设置。</string>
     <string name="onboarding_start_finish">开始记录并打开 Whereday</string>
@@ -1104,6 +1103,17 @@
     <string name="recording_offline_hint">获得第一个精确定位后，你的路线将显示在这里。记录不需要网络连接。</string>
     <string name="recording_permission_start_failed">无法开始记录。请检查位置权限后重试。</string>
     <string name="recording_point_label">记录的位置点</string>
+    <string name="recording_preset_custom">自定义</string>
+    <string name="recording_preset_custom_body">你在设置中自定的距离、间隔或自动停止。选择预设会替换它们。</string>
+    <string name="recording_preset_every_step">每一步</string>
+    <string name="recording_preset_every_step_body">大约每 5 m 有一个路线点。适合远足和骑行。 2小时后自行停止。</string>
+    <string name="recording_preset_every_step_summary">适合徒步和骑行的高精度轨迹。</string>
+    <string name="recording_preset_places">地点+稀疏路线</string>
+    <string name="recording_preset_places_body">大约每 100 m 记录一次停靠点并记录路线点。继续直到您暂停。</string>
+    <string name="recording_preset_places_summary">大约每 100 m 就有一个停靠站和路线点。</string>
+    <string name="recording_preset_routes">地点 + 路线</string>
+    <string name="recording_preset_routes_body">大约每 25 m 记录一次停靠点并记录路线点。继续直到您暂停。</string>
+    <string name="recording_preset_routes_summary">大约每 25 m 就有一个停靠站和路线点。</string>
     <string name="recording_reconciliation_failed">无法更新到访历史。请尝试重新打开应用。</string>
     <string name="recording_route_empty">尚未记录路线</string>
     <plurals name="recording_route_points">

@@ -1,7 +1,18 @@
 {
   "locale": "fr",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "Le tracé rouille montre uniquement l’enregistrement en cours, indépendamment des dates sélectionnées. Son drapeau de départ et son marqueur actuel sont distincts des marqueurs de la période.",
     "active_recording_map_empty": "En attente de points dans l’enregistrement en cours.",
@@ -548,8 +559,6 @@
     "listening_footer": "Pas de compte. Aucune copie serveur de vos déplacements. L’enregistrement affiche une notification permanente pendant qu’il est actif.",
     "listening_journal": "Votre journal",
     "listening_journal_where": "Ce téléphone uniquement",
-    "listening_mode_routes": "Lieux et trajets",
-    "listening_mode_routes_body": "Chaque arrêt et le chemin entre eux, via le GPS pendant l’enregistrement.",
     "listening_mode_visits_body": "Uniquement les lieux où vous restez, avec une localisation économe en énergie et sans trajet entre les arrêts.",
     "listening_place_names": "Noms de lieux",
     "listening_place_names_body": "Le géocodage réseau interroge un service de cartographie",
@@ -869,6 +878,7 @@
     "onboarding_point_on_device": "L’historique de localisation reste sur ce téléphone",
     "onboarding_point_routes": "Enregistrez vos trajets en vous déplaçant",
     "onboarding_point_visits": "Gardez en mémoire les lieux que vous visitez",
+    "onboarding_preset_custom_kept": "Vos réglages d’enregistrement personnalisés restent en place, sauf si vous choisissez un préréglage.",
     "onboarding_save_error": "Impossible d’enregistrer la configuration. Réessayez. Si vous avez demandé l’enregistrement, il est peut-être déjà actif.",
     "onboarding_start_error": "L’enregistrement n’a pas pu démarrer. Réessayez, ou désactivez l’enregistrement immédiat pour terminer la configuration.",
     "onboarding_start_finish": "Enregistrer et ouvrir Whereday",
@@ -1198,6 +1208,7 @@
     "recording_offline_hint": "Votre trajet apparaîtra ici après la première position précise. L’enregistrement ne nécessite pas de connexion réseau.",
     "recording_permission_start_failed": "L’enregistrement n’a pas pu démarrer. Vérifiez l’accès à la localisation et réessayez.",
     "recording_point_label": "Points enregistrés",
+    "recording_preset_custom_body": "Votre propre distance, intervalle ou arrêt automatique définis dans Réglages. Choisir un préréglage les remplace.",
     "recording_reconciliation_failed": "Impossible de mettre à jour l’historique des visites. Essayez de rouvrir l’application.",
     "recording_route_empty": "Aucun trajet enregistré pour l’instant",
     "recording_route_points": {

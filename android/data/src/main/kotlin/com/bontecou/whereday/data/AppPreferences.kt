@@ -26,6 +26,13 @@ data class AppSettings(val onboarded: Boolean = false, val appearance: String = 
     val routeSampleIntervalSeconds:Int=com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS) {
     val routeSampling get()=com.bontecou.whereday.domain.RouteSamplingPolicy(com.bontecou.whereday.domain.RouteSamplingMode.fromKey(routeSamplingMode),distanceFilter,
         routeSampleIntervalSeconds.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS)
+    /** The recording preset these settings match exactly, or null when they were tuned by hand (Custom). */
+    val recordingPreset get()=com.bontecou.whereday.domain.RecordingPreset.matching(com.bontecou.whereday.domain.RouteSamplingMode.fromKey(routeSamplingMode),distanceFilter,stopAfterHours)
+    /** Onboarding's preselection: the matching preset, Places + routes on untouched install defaults, otherwise none. */
+    val onboardingPreset get()=AppSettings().let {fresh->com.bontecou.whereday.domain.RecordingPreset.onboardingChoice(com.bontecou.whereday.domain.RouteSamplingMode.fromKey(routeSamplingMode),distanceFilter,stopAfterHours,
+        untouchedDefaults=routeSamplingMode==fresh.routeSamplingMode && distanceFilter==fresh.distanceFilter && stopAfterHours==fresh.stopAfterHours)}
+    /** Writes a preset's sampling mode, distance filter and auto-stop, as iOS RecordingDetail.apply does; the interval is kept. */
+    fun applying(preset:com.bontecou.whereday.domain.RecordingPreset)=copy(routeSamplingMode=preset.samplingMode.key,distanceFilter=preset.distanceMeters,stopAfterHours=preset.stopAfterHours)
     val inferenceRules get()=com.bontecou.whereday.domain.InferenceRules(java.time.Duration.ofMinutes(inferredGapMinutes.toLong()),java.time.Duration.ofMinutes(inferredMinimumMinutes.toLong()),inferredMinimumPoints)
 }
 /** The map's persisted layer choices, mirroring iOS's @AppStorage keys where they exist. */

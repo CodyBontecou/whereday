@@ -515,8 +515,6 @@
     <string name="listening_footer">アカウントは不要です。訪れた場所のコピーがサーバーに置かれることはありません。記録中は、実行中であることを示す通知が表示されます。</string>
     <string name="listening_journal">あなたの記録</string>
     <string name="listening_journal_where">このスマートフォンのみ</string>
-    <string name="listening_mode_routes">場所とルート</string>
-    <string name="listening_mode_routes_body">記録中は GPS を使って、すべての立ち寄り先とその間の経路を記録します。</string>
     <string name="listening_mode_visits_body">省電力のバランスモードの位置情報で、滞在した場所だけを記録します。立ち寄り先の間のルートは記録しません。</string>
     <string name="listening_place_names">場所の名前</string>
     <string name="listening_place_names_body">ネットワークジオコーディングで地図サービスに問い合わせます</string>
@@ -791,6 +789,7 @@
     <string name="onboarding_point_on_device">位置情報の履歴はこのスマートフォンに保存</string>
     <string name="onboarding_point_routes">移動しながらルートを記録</string>
     <string name="onboarding_point_visits">訪れた場所を記録</string>
+    <string name="onboarding_preset_custom_kept">プリセットを選ばない限り、カスタムの記録設定はそのまま保持されます。</string>
     <string name="onboarding_save_error">セットアップを保存できませんでした。もう一度お試しください。記録をリクエストした場合は、すでに記録が始まっている可能性があります。</string>
     <string name="onboarding_start_error">記録を開始できませんでした。もう一度試すか、すぐに記録する設定をオフにしてセットアップを完了してください。</string>
     <string name="onboarding_start_finish">記録を開始して Whereday を開く</string>
@@ -1104,6 +1103,17 @@
     <string name="recording_offline_hint">最初の正確な測位の後、ルートがここに表示されます。記録にネットワーク接続は必要ありません。</string>
     <string name="recording_permission_start_failed">記録を開始できませんでした。位置情報へのアクセスを確認して、もう一度お試しください。</string>
     <string name="recording_point_label">記録したポイント</string>
+    <string name="recording_preset_custom">カスタム</string>
+    <string name="recording_preset_custom_body">設定で選んだ独自の距離、間隔、自動停止。プリセットを選ぶと置き換わります。</string>
+    <string name="recording_preset_every_step">すべての歩み</string>
+    <string name="recording_preset_every_step_body">ルートポイントは約5mごと。ハイキングや乗り物に。 2 時間後に自動的に停止します。</string>
+    <string name="recording_preset_every_step_summary">ハイキングやサイクリング向けの高精細な記録。</string>
+    <string name="recording_preset_places">場所 + まばらなルート</string>
+    <string name="recording_preset_places_body">Notes は約 100 メートルごとに停止し、ルート ポイントを記録します。一時停止するまで継続します。</string>
+    <string name="recording_preset_places_summary">約 100 メートルごとに停留所とルートポイントがあります。</string>
+    <string name="recording_preset_routes">場所＋ルート</string>
+    <string name="recording_preset_routes_body">Notes は約 25 メートルごとに停止し、ルート ポイントを記録します。一時停止するまで継続します。</string>
+    <string name="recording_preset_routes_summary">約 25 メートルごとに停留所とルートポイントがあります。</string>
     <string name="recording_reconciliation_failed">訪問の履歴を更新できませんでした。アプリを開き直してみてください。</string>
     <string name="recording_route_empty">まだルートが記録されていません</string>
     <plurals name="recording_route_points">

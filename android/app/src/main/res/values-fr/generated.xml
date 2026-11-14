@@ -545,8 +545,6 @@
     <string name="listening_footer">Pas de compte. Aucune copie serveur de vos déplacements. L’enregistrement affiche une notification permanente pendant qu’il est actif.</string>
     <string name="listening_journal">Votre journal</string>
     <string name="listening_journal_where">Ce téléphone uniquement</string>
-    <string name="listening_mode_routes">Lieux et trajets</string>
-    <string name="listening_mode_routes_body">Chaque arrêt et le chemin entre eux, via le GPS pendant l’enregistrement.</string>
     <string name="listening_mode_visits_body">Uniquement les lieux où vous restez, avec une localisation économe en énergie et sans trajet entre les arrêts.</string>
     <string name="listening_place_names">Noms de lieux</string>
     <string name="listening_place_names_body">Le géocodage réseau interroge un service de cartographie</string>
@@ -843,6 +841,7 @@
     <string name="onboarding_point_on_device">L’historique de localisation reste sur ce téléphone</string>
     <string name="onboarding_point_routes">Enregistrez vos trajets en vous déplaçant</string>
     <string name="onboarding_point_visits">Gardez en mémoire les lieux que vous visitez</string>
+    <string name="onboarding_preset_custom_kept">Vos réglages d’enregistrement personnalisés restent en place, sauf si vous choisissez un préréglage.</string>
     <string name="onboarding_save_error">Impossible d’enregistrer la configuration. Réessayez. Si vous avez demandé l’enregistrement, il est peut-être déjà actif.</string>
     <string name="onboarding_start_error">L’enregistrement n’a pas pu démarrer. Réessayez, ou désactivez l’enregistrement immédiat pour terminer la configuration.</string>
     <string name="onboarding_start_finish">Enregistrer et ouvrir Whereday</string>
@@ -1172,6 +1171,17 @@
     <string name="recording_offline_hint">Votre trajet apparaîtra ici après la première position précise. L’enregistrement ne nécessite pas de connexion réseau.</string>
     <string name="recording_permission_start_failed">L’enregistrement n’a pas pu démarrer. Vérifiez l’accès à la localisation et réessayez.</string>
     <string name="recording_point_label">Points enregistrés</string>
+    <string name="recording_preset_custom">Personnalisé</string>
+    <string name="recording_preset_custom_body">Votre propre distance, intervalle ou arrêt automatique définis dans Réglages. Choisir un préréglage les remplace.</string>
+    <string name="recording_preset_every_step">Chaque pas</string>
+    <string name="recording_preset_every_step_body">Points d\'itinéraire tous les 5 m environ. Pour randonnées et balades. S\'arrête tout seul au bout de 2 h.</string>
+    <string name="recording_preset_every_step_summary">Traces très détaillées pour la randonnée et le vélo.</string>
+    <string name="recording_preset_places">Lieux + itinéraires clairsemés</string>
+    <string name="recording_preset_places_body">Note les arrêts et enregistre les points d\'itinéraire tous les 100 m environ. Continue jusqu\'à ce que vous fassiez une pause.</string>
+    <string name="recording_preset_places_summary">Arrêts et points d\'itinéraire tous les 100 m environ.</string>
+    <string name="recording_preset_routes">Lieux + trajets</string>
+    <string name="recording_preset_routes_body">Note les arrêts et enregistre les points d\'itinéraire tous les 25 m environ. Continue jusqu\'à ce que vous fassiez une pause.</string>
+    <string name="recording_preset_routes_summary">Arrêts et points d\'itinéraire tous les 25 m environ.</string>
     <string name="recording_reconciliation_failed">Impossible de mettre à jour l’historique des visites. Essayez de rouvrir l’application.</string>
     <string name="recording_route_empty">Aucun trajet enregistré pour l’instant</string>
     <plurals name="recording_route_points">

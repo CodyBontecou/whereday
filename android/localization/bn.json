@@ -1,7 +1,18 @@
 {
   "locale": "bn",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "মরিচা রঙের পথটি শুধু বর্তমান রেকর্ডিং দেখায়, নির্বাচিত তারিখ যা-ই হোক। এর শুরুর পতাকা ও বর্তমান চিহ্ন তারিখ-পরিসরের চিহ্নগুলো থেকে আলাদা।",
     "active_recording_map_empty": "বর্তমান রেকর্ডিংয়ের পয়েন্টের জন্য অপেক্ষা করা হচ্ছে।",
@@ -533,8 +544,6 @@
     "listening_footer": "কোনো অ্যাকাউন্ট নেই। আপনি কোথায় ছিলেন তার কোনো সার্ভার কপি নেই। রেকর্ডিং চলার সময় একটি চলমান নোটিফিকেশন দেখায়।",
     "listening_journal": "আপনার জার্নাল",
     "listening_journal_where": "শুধু এই ফোনে",
-    "listening_mode_routes": "জায়গা ও রুট",
-    "listening_mode_routes_body": "রেকর্ডিং চলার সময় GPS ব্যবহার করে প্রতিটি থামা এবং তাদের মাঝের পথ।",
     "listening_mode_visits_body": "শুধু যেখানে আপনি থাকেন, ব্যালান্সড-পাওয়ার লোকেশন দিয়ে এবং থামাগুলোর মাঝে কোনো রুট ছাড়া।",
     "listening_place_names": "জায়গার নাম",
     "listening_place_names_body": "নেটওয়ার্ক জিওকোডিং একটি মানচিত্র পরিষেবাকে জিজ্ঞেস করে",
@@ -841,6 +850,7 @@
     "onboarding_point_on_device": "লোকেশন ইতিহাস এই ফোনেই থাকে",
     "onboarding_point_routes": "চলার সময় রুট রেকর্ড করুন",
     "onboarding_point_visits": "যেসব জায়গায় যান সেগুলো মনে রাখুন",
+    "onboarding_preset_custom_kept": "আপনি কোনো প্রিসেট বেছে না নিলে আপনার কাস্টম রেকর্ডিং সেটিংস থেকে যাবে।",
     "onboarding_save_error": "সেটআপ সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন। আপনি রেকর্ডিংয়ের অনুরোধ করে থাকলে এটি হয়তো আগেই চালু আছে।",
     "onboarding_start_error": "রেকর্ডিং শুরু করা যায়নি। আবার চেষ্টা করুন, অথবা সেটআপ শেষ করতে তাৎক্ষণিক রেকর্ডিং বন্ধ করুন।",
     "onboarding_start_finish": "রেকর্ডিং শুরু করে Whereday খুলুন",
@@ -1162,6 +1172,7 @@
     "recording_offline_hint": "প্রথম নির্ভুল অবস্থান পাওয়ার পর আপনার রুট এখানে দেখা যাবে। রেকর্ডিংয়ের জন্য নেটওয়ার্ক সংযোগ লাগে না।",
     "recording_permission_start_failed": "রেকর্ডিং শুরু করা যায়নি। লোকেশন অ্যাক্সেস দেখে আবার চেষ্টা করুন।",
     "recording_point_label": "রেকর্ড করা পয়েন্ট",
+    "recording_preset_custom_body": "সেটিংসে আপনার নিজের দূরত্ব, ব্যবধান বা স্বয়ংক্রিয় বন্ধ। একটি প্রিসেট বেছে নিলে সেগুলো প্রতিস্থাপিত হবে।",
     "recording_reconciliation_failed": "ভিজিটের ইতিহাস আপডেট করা যায়নি। অ্যাপটি আবার খুলে দেখুন।",
     "recording_route_empty": "এখনো কোনো রুট রেকর্ড হয়নি",
     "recording_route_points": {

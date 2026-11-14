@@ -1,7 +1,18 @@
 {
   "locale": "ru",
-  "defaultSourceSha256": "3440d647bb46a9adfd706858234fb4bffb9dfa641bb93c067821d41ef869b397",
-  "catalog": {},
+  "defaultSourceSha256": "358346db23ac5b01631dd77eb44654745e863b058e558bcb76523d94e9ada73e",
+  "catalog": {
+    "recording_preset_custom": "Custom",
+    "recording_preset_every_step": "Every step",
+    "recording_preset_every_step_body": "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.",
+    "recording_preset_every_step_summary": "High-detail tracks for hikes and rides.",
+    "recording_preset_places": "Places + sparse routes",
+    "recording_preset_places_body": "Notes stops and records route points about every 100 m. Continues until you pause.",
+    "recording_preset_places_summary": "Stops and route points about every 100 m.",
+    "recording_preset_routes": "Places + routes",
+    "recording_preset_routes_body": "Notes stops and records route points about every 25 m. Continues until you pause.",
+    "recording_preset_routes_summary": "Stops and route points about every 25 m."
+  },
   "translations": {
     "active_recording_map_description": "Рыжий путь показывает только текущую запись, независимо от выбранных дат. Её флаг начала и текущий маркер отделены от маркеров диапазона дат.",
     "active_recording_map_empty": "Ожидание точек текущей записи.",
@@ -563,8 +574,6 @@
     "listening_footer": "Без аккаунта. Никаких копий ваших перемещений на сервере. Во время записи отображается постоянное уведомление.",
     "listening_journal": "Ваш журнал",
     "listening_journal_where": "Только на этом телефоне",
-    "listening_mode_routes": "Места и маршруты",
-    "listening_mode_routes_body": "Каждая остановка и путь между ними — с GPS во время записи.",
     "listening_mode_visits_body": "Только места, где вы задерживаетесь: энергосберегающее определение местоположения, без маршрута между остановками.",
     "listening_place_names": "Названия мест",
     "listening_place_names_body": "Сетевое геокодирование обращается к картографической службе",
@@ -897,6 +906,7 @@
     "onboarding_point_on_device": "История местоположений остаётся на этом телефоне",
     "onboarding_point_routes": "Записывайте маршруты в движении",
     "onboarding_point_visits": "Запоминайте места, где бываете",
+    "onboarding_preset_custom_kept": "Ваши собственные настройки записи сохранятся, если вы не выберете пресет.",
     "onboarding_save_error": "Не удалось сохранить настройку. Повторите попытку. Если вы запросили запись, она может уже идти.",
     "onboarding_start_error": "Не удалось начать запись. Повторите попытку или отключите немедленную запись, чтобы завершить настройку.",
     "onboarding_start_finish": "Начать запись и открыть Whereday",
@@ -1234,6 +1244,7 @@
     "recording_offline_hint": "Маршрут появится здесь после первого точного определения местоположения. Для записи не нужно подключение к сети.",
     "recording_permission_start_failed": "Не удалось начать запись. Проверьте доступ к местоположению и повторите попытку.",
     "recording_point_label": "Записанные точки",
+    "recording_preset_custom_body": "Ваши собственные расстояние, интервал или автоостановка из настроек. Выбор пресета заменит их.",
     "recording_reconciliation_failed": "Не удалось обновить историю посещений. Попробуйте открыть приложение заново.",
     "recording_route_empty": "Маршрут пока не записан",
     "recording_route_points": {

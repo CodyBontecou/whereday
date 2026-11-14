@@ -560,8 +560,6 @@
     <string name="listening_footer">Bez konta. Bez kopii Twoich lokalizacji na serwerze. Podczas rejestrowania widoczne jest stałe powiadomienie.</string>
     <string name="listening_journal">Twój dziennik</string>
     <string name="listening_journal_where">Tylko ten telefon</string>
-    <string name="listening_mode_routes">Miejsca i trasy</string>
-    <string name="listening_mode_routes_body">Każdy postój i trasa między nimi, z użyciem GPS podczas rejestrowania.</string>
     <string name="listening_mode_visits_body">Tylko miejsca, w których przebywasz, z lokalizacją oszczędzającą energię i bez tras między postojami.</string>
     <string name="listening_place_names">Nazwy miejsc</string>
     <string name="listening_place_names_body">Geokodowanie sieciowe pyta usługę map</string>
@@ -869,6 +867,7 @@
     <string name="onboarding_point_on_device">Historia lokalizacji zostaje na tym telefonie</string>
     <string name="onboarding_point_routes">Rejestruj trasy w ruchu</string>
     <string name="onboarding_point_visits">Zapamiętuj odwiedzane miejsca</string>
+    <string name="onboarding_preset_custom_kept">Twoje własne ustawienia nagrywania zostaną zachowane, chyba że wybierzesz ustawienie wstępne.</string>
     <string name="onboarding_save_error">Nie udało się zapisać konfiguracji. Spróbuj ponownie. Jeśli zażądano rejestrowania, może ono być już aktywne.</string>
     <string name="onboarding_start_error">Nie udało się rozpocząć rejestrowania. Spróbuj ponownie lub wyłącz natychmiastowe rejestrowanie, aby dokończyć konfigurację.</string>
     <string name="onboarding_start_finish">Rozpocznij rejestrowanie i otwórz Whereday</string>
@@ -1206,6 +1205,17 @@
     <string name="recording_offline_hint">Trasa pojawi się tutaj po pierwszym dokładnym odczycie lokalizacji. Rejestrowanie nie wymaga połączenia z siecią.</string>
     <string name="recording_permission_start_failed">Nie udało się rozpocząć rejestrowania. Sprawdź dostęp do lokalizacji i spróbuj ponownie.</string>
     <string name="recording_point_label">Zarejestrowane punkty</string>
+    <string name="recording_preset_custom">Własny</string>
+    <string name="recording_preset_custom_body">Własna odległość, interwał lub automatyczne zatrzymanie z Ustawień. Wybranie ustawienia wstępnego je zastąpi.</string>
+    <string name="recording_preset_every_step">Każdy krok</string>
+    <string name="recording_preset_every_step_body">Punkty trasy mniej więcej co 5 m. Na wędrówki i przejażdżki. Zatrzymuje się samoczynnie po 2 godz.</string>
+    <string name="recording_preset_every_step_summary">Szczegółowe ślady na wędrówki i przejażdżki.</string>
+    <string name="recording_preset_places">Miejsca + rzadkie trasy</string>
+    <string name="recording_preset_places_body">Zapisuje przystanki i punkty trasy mniej więcej co 100 m. Kontynuuje, dopóki nie zrobisz pauzy.</string>
+    <string name="recording_preset_places_summary">Przystanki i punkty trasy mniej więcej co 100 m.</string>
+    <string name="recording_preset_routes">Miejsca + trasy</string>
+    <string name="recording_preset_routes_body">Zapisuje przystanki i punkty trasy mniej więcej co 25 m. Kontynuuje, dopóki nie zrobisz pauzy.</string>
+    <string name="recording_preset_routes_summary">Przystanki i punkty trasy co około 25 m.</string>
     <string name="recording_reconciliation_failed">Nie udało się zaktualizować historii wizyt. Spróbuj ponownie otworzyć aplikację.</string>
     <string name="recording_route_empty">Nie zarejestrowano jeszcze trasy</string>
     <plurals name="recording_route_points">
