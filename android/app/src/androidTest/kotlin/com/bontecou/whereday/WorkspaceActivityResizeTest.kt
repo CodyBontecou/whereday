@@ -177,12 +177,20 @@ class WorkspaceActivityResizeTest {
             compose.waitUntil(15000) {compose.onAllNodesWithText(outing.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
             resize(true);awaitTag("outing-title");awaitTag("workspace-companion")
-            compose.onNodeWithTag("timeline-content").assertExists()
+            // Outing detail replaces the timeline list; Back must recover that list.
+            compose.onNodeWithTag("outing-detail-content").assertIsDisplayed()
             compose.onNodeWithTag("outing-title").assertTextEquals(outing.name!!)
             awaitNativeMaps()
+            androidx.test.espresso.Espresso.pressBack();awaitTag("timeline-content")
+            compose.onNodeWithTag("timeline-content").assertIsDisplayed()
+            compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
             resize(false);awaitTag("outing-title")
-            compose.onNodeWithTag("timeline-content").assertExists()
+            compose.onNodeWithTag("outing-detail-content").assertIsDisplayed()
+            compose.onNodeWithTag("outing-title").assertTextEquals(outing.name!!)
             compose.onNodeWithTag("workspace-companion").assertDoesNotExist()
+            androidx.test.espresso.Espresso.pressBack();awaitTag("timeline-content")
+            compose.onNodeWithTag("timeline-content").assertIsDisplayed()
+            compose.onNodeWithText(outing.name!!).performScrollTo().assertIsDisplayed()
             assertEquals(original,graph.history.dao.visit(original.id)!!.value)
             assertEquals(2L,graph.history.dao.totalPointCount())
         }
@@ -486,6 +494,8 @@ class WorkspaceActivityResizeTest {
         awaitTag("place-detail-edit");compose.onNodeWithTag("place-detail-edit").performClick();awaitTag("saved-name")
     }
     private fun openStoredOuting() {
+        // A previous independent editor flow may have left Settings selected.
+        awaitTag("navigation-map");compose.onNodeWithTag("navigation-map").performClick()
         awaitTag("map-day-peek");compose.openTimeline()
         compose.waitUntil(10000) {compose.onAllNodesWithText(outing.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
         compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
@@ -559,7 +569,8 @@ class WorkspaceActivityResizeTest {
     private fun openMapPhotoPlaces() {
         awaitTag("navigation-map")
         compose.waitUntil(15000) {nodes("browse-photo-places").size==1}
-        compose.onNodeWithTag("browse-photo-places").performScrollTo().performClick();awaitDirectoryPage(1)
+        // This is floating map chrome, not a child of a scrolling layout.
+        compose.onNodeWithTag("browse-photo-places").assertIsDisplayed().performClick();awaitDirectoryPage(1)
     }
     @Test fun mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations():Unit=runBlocking {
         seedPhotoFixture(52,true);graph.preferences.update {it.copy(showPhotoMarkers=true,showPhotoImages=false)}
@@ -618,8 +629,8 @@ class WorkspaceActivityResizeTest {
     }
     @Test fun mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes():Unit=runBlocking {
         launch().use {
-            awaitTag("navigation-map")
-            compose.onNodeWithText("Replay route").performScrollTo().performClick();awaitTag("replay-progress")
+            awaitTag("navigation-map");awaitTag("map-replay-dial")
+            compose.onNodeWithTag("map-replay-dial").assertIsDisplayed().performClick();awaitTag("replay-progress")
             compose.onNodeWithTag("replay-end").performScrollTo().performClick();awaitReplayPoint(2,2)
             // Observe the real 30-second live-window cadence, without changing its selection.
             val journal=model();val openingUntil=(journal.mapWindow.value as WindowState.Ready).window.range.until
