@@ -1,0 +1,25 @@
+steps:
+  - tap:
+      id: gearshape
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Back to Archive
+      timeoutMs: 3000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.78
+      toX: 0.5
+      toY: 0.3
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Diagnostics & logs
+      timeoutMs: 3000
+executionPrerequisite: Physical iPhone running diagnostic Whereday build with
+  --scroll-diagnostics; Archive screen open. Records diagnostic gestures without
+  changing preferences.
