@@ -1,0 +1,54 @@
+{
+  "runs": [
+    {
+      "run": 43606223330,
+      "head": "7e1468765ca5e4bb3d25d26eb404a31731dd97dd",
+      "artifact": 14118915340,
+      "artifactDigest": "sha256:4e66ec8bfccd6efb43f23233e64ecdb2c6fc0dc7390e9e87c04e11510cee2d61",
+      "outcomes": 38,
+      "pass": 38,
+      "ignored": [],
+      "uniqueExecutedClasses": 9,
+      "executedCaseIdentityOrderSha256": "7fa9dbc236e111a952bb2b2fb6605e6c8a101eb59ca34fabbc20b1f94e51be5c",
+      "firstPixelObservations": {
+        "nearestLight": 311,
+        "groupDark": 468,
+        "hiddenDark": 0
+      },
+      "initialPin": 1,
+      "nativeFailure": false,
+      "missingZeroBitmap": "Expected on nonreproduction",
+      "scope": "Observer-only run, not an untraced candidate/downstream gate or causal fix"
+    },
+    {
+      "run": 43607694157,
+      "head": "bb6eaee5f9cfad3a86f2de24f0bb314acbf705c1",
+      "artifact": 14120587935,
+      "artifactDigest": "sha256:e4d62c639258e02b4851b8974034670df57ac2a0a345cfd6108a6b96358fdd14",
+      "outcomes": 594,
+      "pass": 592,
+      "ignored": [
+        "com.bontecou.whereday.CalendarEventFlowTest#timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor",
+        "com.bontecou.whereday.CalendarEventFlowTest#timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence"
+      ],
+      "uniqueExecutedClasses": 94,
+      "executedCaseIdentityOrderSha256": "1a4c22285172da695feb5be58d857fbb95742735d07cf57a72b9fc8cdee6f4a3",
+      "firstPixelObservations": {
+        "nearestLight": 311,
+        "groupDark": 468,
+        "hiddenDark": 0
+      },
+      "initialPin": 1,
+      "nativeFailure": false,
+      "missingZeroBitmap": "Expected on nonreproduction",
+      "scope": "Observer-only run, not an untraced candidate/downstream gate or causal fix"
+    }
+  ],
+  "limits": [
+    "Original initial-zero and later pixel/selection failures not reproduced",
+    "Post-count state cannot establish earlier failing state",
+    "Callbacks are not render-worker completion",
+    "Observers may perturb timing; capture enabled",
+    "No expanded workspace/database/downstream selected"
+  ]
+}
