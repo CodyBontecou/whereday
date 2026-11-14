@@ -4,6 +4,11 @@ on:
   pull_request:
     paths: ['android/**', 'worker/play-purchase-verifier/**', 'worker/onboarding-analytics/**', 'IsoMe/**', 'Shared/**', 'IsoMe.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', '.github/workflows/android-tests.yml', '.github/workflows/android-release.yml']
   workflow_dispatch:
+    inputs:
+      locationStartupOnly:
+        description: 'Diagnostic-only startup observations around the unchanged recovery selection'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -14,6 +19,7 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ !inputs.locationStartupOnly }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     defaults:
@@ -164,6 +170,7 @@ jobs:
             android/build/reports/timeline-admission/swift.json
 
   purchase-verifier:
+    if: ${{ !inputs.locationStartupOnly }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     defaults:
@@ -181,6 +188,7 @@ jobs:
       - run: npm test
 
   analytics-contract:
+    if: ${{ !inputs.locationStartupOnly }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     defaults:
@@ -198,6 +206,7 @@ jobs:
       - run: npm test
 
   map-point-scale:
+    if: ${{ !inputs.locationStartupOnly }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -261,10 +270,11 @@ jobs:
           disable-animations: true
           working-directory: android
           script: |
-            ./gradlew :app:assembleMapQa :app:assembleMapQaAndroidTest --no-daemon
-            ci_location_serial=$(adb get-serialno); ci_location_avd=$(adb -s "$ci_location_serial" emu avd name | sed -n '1p' | tr -d '\r'); for mode in route visits both; do for termination in kill force-stop reboot; do python3 scripts/verify_location_process_recovery.py --adb "$(command -v adb)" --aapt2 "$ANDROID_HOME/build-tools/35.0.0/aapt2" --serial "$ci_location_serial" --avd "$ci_location_avd" --apk app/build/outputs/apk/mapQa/app-mapQa.apk --test-apk app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk --mode "$mode" --termination "$termination" --output "build/reports/location-recovery/$mode-$termination" || exit; done; done
+            bash scripts/observe_location_startup.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: android-location-process-recovery
-          path: android/build/reports/location-recovery/
+          name: android-location-startup-diagnostic
+          path: |
+            android/build/reports/location-recovery/
+            android/build/reports/location-startup/
