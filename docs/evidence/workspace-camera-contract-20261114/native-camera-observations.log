@@ -1,0 +1,3 @@
+--------- beginning of main
+I/WdCameraProbe( 2884): [DEBUG-workspace-camera] stage=before view=700x1600 target=LatLng [latitude=18.200000000000003, longitude=-66.20000000000002, altitude=0.0] center=LatLng [latitude=18.180823939081407, longitude=-66.19744855227552, altitude=0.0] padding=45.0, 217.99999237060547, 125.0, 327.99999237060547 zoom=11.0 bearing=25.0 tilt=29.999999999999996
+I/WdCameraProbe( 2884): [DEBUG-workspace-camera] stage=wide view=985x1600 target=LatLng [latitude=18.180823939081414, longitude=-66.19744855227555, altitude=0.0] center=LatLng [latitude=18.180823939102368, longitude=-66.19744855230076, altitude=0.0] padding=0.0, 0.0, 0.0, 0.0 zoom=11.0 bearing=25.0 tilt=29.999999999999996

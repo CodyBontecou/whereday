@@ -200,7 +200,8 @@ class WorkspaceActivityResizeTest {
         launch().use {
             val (_,map)=nativeMap()
             val requested=org.maplibre.android.camera.CameraPosition.Builder().target(org.maplibre.android.geometry.LatLng(18.2,-66.2)).zoom(11.0).bearing(25.0).tilt(30.0).build()
-            instrumentation.runOnMainSync {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
+            // A literal target is a screen-center request only without inherited auto-fit padding.
+            instrumentation.runOnMainSync {map.setPadding(0,0,0,0);map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
             fun assertCamera(actual:org.maplibre.android.camera.CameraPosition) {
                 assertEquals(requested.target!!.latitude,actual.target!!.latitude,0.000001)
                 assertEquals(requested.target!!.longitude,actual.target!!.longitude,0.000001)
@@ -212,6 +213,31 @@ class WorkspaceActivityResizeTest {
             resize(true);val (_,wide)=nativeMap();compose.runOnIdle {assertCamera(wide.cameraPosition)}
             capture("wide-camera")
             resize(false);val (_,compact)=nativeMap();compose.runOnIdle {assertCamera(compact.cameraPosition)}
+            assertEquals(original,graph.history.dao.visit(original.id)!!.value)
+        }
+    }
+
+    @Test fun paddedManualCameraPreservesVisualCenterThroughBothActualRecreations():Unit=runBlocking {
+        launch().use {
+            val (view,map)=nativeMap()
+            val requested=org.maplibre.android.camera.CameraPosition.Builder().target(org.maplibre.android.geometry.LatLng(18.2,-66.2)).zoom(11.0).bearing(25.0).tilt(30.0).build()
+            instrumentation.runOnMainSync {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
+            compose.waitForIdle()
+            val expected=compose.runOnIdle {
+                assertTrue("Exercise inherited floating-chrome padding",map.cameraPosition.padding?.any {it!=0.0}==true)
+                assertEquals(18.2,map.cameraPosition.target!!.latitude,0.000001)
+                map.projection.fromScreenLocation(android.graphics.PointF(view.width/2f,view.height/2f))
+            }
+            fun assertVisualCenter(view:org.maplibre.android.maps.MapView,map:org.maplibre.android.maps.MapLibreMap) {
+                val actual=map.projection.fromScreenLocation(android.graphics.PointF(view.width/2f,view.height/2f))
+                assertEquals(expected.latitude,actual.latitude,0.000001)
+                assertEquals(expected.longitude,actual.longitude,0.000001)
+                assertEquals(requested.zoom,map.cameraPosition.zoom,0.000001)
+                assertEquals(requested.bearing,map.cameraPosition.bearing,0.000001)
+                assertEquals(requested.tilt,map.cameraPosition.tilt,0.000001)
+            }
+            resize(true);val (wideView,wide)=nativeMap();compose.runOnIdle {assertVisualCenter(wideView,wide)}
+            resize(false);val (compactView,compact)=nativeMap();compose.runOnIdle {assertVisualCenter(compactView,compact)}
             assertEquals(original,graph.history.dao.visit(original.id)!!.value)
         }
     }

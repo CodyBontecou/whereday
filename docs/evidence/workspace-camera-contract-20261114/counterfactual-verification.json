@@ -1,0 +1,401 @@
+[
+  {
+    "run": "workspace-camera-before-1",
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": false,
+      "emulatorPID": 86734,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "originalSize": "Physical size: 1080x2400",
+      "originalDensity": "Physical density: 420",
+      "runnerExit": 1,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "displayRestored": true,
+          "imeRestored": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "strictVerification": null,
+    "nativeLogSha256": "e3cb534bafc7c997424fc09e147e7caafbb1c873db07da80fdcc89d034c9fbcd",
+    "failureLines": [
+      "INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<18.2> but was:<18.180823939081414>"
+    ]
+  },
+  {
+    "run": "workspace-camera-probe-1",
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": false,
+      "emulatorPID": 96321,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "originalSize": "Physical size: 1080x2400",
+      "originalDensity": "Physical density: 420",
+      "runnerExit": 1,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "displayRestored": true,
+          "imeRestored": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "strictVerification": null,
+    "nativeLogSha256": "e40360cb046e586cb24d8985a1394d68751b2a8b9d414971ff9da00a9cf34a08",
+    "failureLines": [
+      "INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<18.2> but was:<18.180823939081414>"
+    ]
+  },
+  {
+    "run": "workspace-camera-contract-1",
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": true,
+      "emulatorPID": 620,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "originalSize": "Physical size: 1080x2400",
+      "originalDensity": "Physical density: 420",
+      "runnerExit": 0,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "displayRestored": true,
+          "imeRestored": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "strictVerification": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "app",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 2,
+      "passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "paddedManualCameraPreservesVisualCenterThroughBothActualRecreations"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "manuallyPositionedCameraSurvivesBothActualWindowRecreationDirections"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-location-diagnosis/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+          "package": "com.bontecou.whereday.mapqa",
+          "sha256": "13a6c8dc71bd80fd809139434817488ecb8c75b43cdb74a1ab33b54fa1010a73"
+        },
+        {
+          "path": "/Users/codybontecou/dev/whereday-location-diagnosis/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+          "package": "com.bontecou.whereday.mapqa.test",
+          "sha256": "3871c690019cdd315d662f70c1def9a3aa63fb880319c7aaad0155efeae51a35"
+        }
+      ]
+    },
+    "nativeLogSha256": "cee9589df96ade3fdaf922be9685c4f902309f9ea1682522ae3e1b9b334b5e6f",
+    "failureLines": []
+  },
+  {
+    "run": "workspace-camera-mutant-1",
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": false,
+      "emulatorPID": 3296,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "originalSize": "Physical size: 1080x2400",
+      "originalDensity": "Physical density: 420",
+      "runnerExit": 1,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "displayRestored": true,
+          "imeRestored": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "strictVerification": null,
+    "nativeLogSha256": "4f1ec791a4eff48205b0d000507962e90c659a74bb8e76ccf5ef4e85b08eee3c",
+    "failureLines": [
+      "INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<18.180823939081407> but was:<18.19999999997502>"
+    ]
+  },
+  {
+    "run": "workspace-camera-clean-1",
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": true,
+      "emulatorPID": 7387,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "originalSize": "Physical size: 1080x2400",
+      "originalDensity": "Physical density: 420",
+      "runnerExit": 0,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "displayRestored": true,
+          "imeRestored": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "strictVerification": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "app",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 2,
+      "passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "paddedManualCameraPreservesVisualCenterThroughBothActualRecreations"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "manuallyPositionedCameraSurvivesBothActualWindowRecreationDirections"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+          "package": "com.bontecou.whereday.mapqa",
+          "sha256": "5104ad12d6cd67fa9df9254f8297c43a185611a2d6436c1f397ff55ce419671d"
+        },
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+          "package": "com.bontecou.whereday.mapqa.test",
+          "sha256": "9d6cfd3cc8a6954837640a3b4d1a0c701a319a86a39778bd1f416f45264a015c"
+        }
+      ]
+    },
+    "nativeLogSha256": "df33c54a158e264f73784806d9bc9517dd64573f3458ee79327fda479a4cfc08",
+    "failureLines": []
+  }
+]
