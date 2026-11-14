@@ -29,6 +29,9 @@ struct OutingsView: View {
     @State private var calendarDraft: CalendarEventDraft?
     @State private var selectedDate = Date()
     @State private var hasLoadedSessions = false
+    @State private var daySnapshot = TimelineDaySnapshot()
+    @State private var timelineError: String?
+    @State private var latestActivityDate: Date?
     @State private var hasAutoSelectedInitialTimelineDate = false
     @State private var showingDayPicker = false
 
@@ -87,16 +90,13 @@ struct OutingsView: View {
         return formatter.localizedString(from: DateComponents(day: -dayOffset))
     }
 
-    private var allSessions: [RecordingSessionSummary] {
-        viewModel.recordingSessionSummaries(inferenceConfiguration: inferenceConfiguration)
-    }
+    private var sessions: [RecordingSessionSummary] { daySnapshot.sessions }
+    private var dayVisits: [Visit] { daySnapshot.visits }
 
-    private var sessions: [RecordingSessionSummary] {
-        allSessions.filter { rangesOverlap($0.dateRange, selectedDayRange) }
-    }
-
-    private var dayVisits: [Visit] {
-        viewModel.visitsOverlappingDateRange(selectedDayRange)
+    // Requery one day when recording or inference changes, without sorting the full journal
+    // on every SwiftUI body evaluation.
+    private var timelineQueryKey: String {
+        "\(selectedDayRange.lowerBound)-\(includesInferredSessions)-\(inferenceGapPresetRawValue)-\(inferenceMinimumDurationPresetRawValue)-\(inferenceMinimumPointCount)-\(viewModel.totalLocationPointCount)-\(viewModel.allVisits.count)-\(viewModel.allRecordingSessions.count)-\(viewModel.locationManager.isTrackingEnabled)"
     }
 
     private var timelineEvents: [TimelineEvent] {
@@ -139,19 +139,6 @@ struct OutingsView: View {
         sessions.reduce(0) { $0 + $1.distanceMeters }
     }
 
-    private var latestActivityDate: Date? {
-        let sessionDates = viewModel.allRecordingSessions.flatMap { session -> [Date] in
-            var dates = [session.startedAt]
-            if let endedAt = session.endedAt {
-                dates.append(endedAt)
-            }
-            return dates
-        }
-        let visitDates = viewModel.allVisits.map(\.arrivedAt)
-        let pointDates = viewModel.locationPoints.last.map { [$0.timestamp] } ?? []
-        return (sessionDates + visitDates + pointDates).max()
-    }
-
     private var hasAnyTimelineData: Bool {
         viewModel.totalLocationPointCount > 0 || !viewModel.allVisits.isEmpty || !viewModel.allRecordingSessions.isEmpty
     }
@@ -161,7 +148,14 @@ struct OutingsView: View {
             ZStack {
                 TE.surface.ignoresSafeArea()
 
-                if !hasLoadedSessions && hasAnyTimelineData {
+                if let timelineError {
+                    VStack(spacing: 16) {
+                        Text("Could not load this day")
+                        Text(timelineError).font(.footnote)
+                        Button("Try again") { refreshTimelineData() }
+                    }
+                    .padding(24)
+                } else if !hasLoadedSessions && hasAnyTimelineData {
                     ProgressView("Building timeline…")
                         .font(TE.mono(.caption, weight: .medium))
                         .foregroundStyle(TE.textMuted)
@@ -209,7 +203,7 @@ struct OutingsView: View {
             .sheet(isPresented: $showingDayPicker) {
                 dayPickerSheet
             }
-            .task {
+            .task(id: timelineQueryKey) {
                 refreshTimelineData()
                 selectInitialTimelineDateIfNeeded()
             }
@@ -382,7 +376,7 @@ struct OutingsView: View {
                         } label: {
                             TimelineMoveRow(
                                 session: session,
-                                title: session.displayTitle(visits: viewModel.visitsNearOuting(session)),
+                                title: session.displayTitle(visits: dayVisits),
                                 usesMetricDistanceUnits: usesMetricDistanceUnits
                             )
                         }
@@ -601,10 +595,17 @@ struct OutingsView: View {
     }
 
     private func refreshTimelineData() {
-        viewModel.loadAllVisits()
-        viewModel.loadRecordingSessions()
-        viewModel.ensureAllLocationPointsLoaded()
-        hasLoadedSessions = true
+        do {
+            daySnapshot = try viewModel.timelineDay(
+                in: selectedDayRange.lowerBound..<selectedDayRange.upperBound,
+                inferenceConfiguration: inferenceConfiguration
+            )
+            latestActivityDate = try viewModel.latestTimelineDate()
+            timelineError = nil
+            hasLoadedSessions = true
+        } catch {
+            timelineError = error.localizedDescription
+        }
     }
 
     private func selectInitialTimelineDateIfNeeded() {
@@ -624,9 +625,6 @@ struct OutingsView: View {
         selectedDate = Calendar.current.date(byAdding: .day, value: value, to: selectedDate) ?? selectedDate
     }
 
-    private func rangesOverlap(_ lhs: ClosedRange<Date>, _ rhs: ClosedRange<Date>) -> Bool {
-        lhs.lowerBound <= rhs.upperBound && rhs.lowerBound <= lhs.upperBound
-    }
 }
 
 private enum TimelineEvent: Identifiable {
@@ -809,6 +807,30 @@ private struct TimelineDottedLine: Shape {
     }
 }
 
+private struct CompleteRecordingDetailView: View {
+    let stored: RecordingSession
+    let viewModel: LocationViewModel
+    let onShowOnMap: () -> Void
+    @State private var summary: RecordingSessionSummary?
+    @State private var loadError: String?
+
+    var body: some View {
+        Group {
+            if let summary {
+                RecordingSessionDetailView(session: summary, viewModel: viewModel, onShowOnMap: onShowOnMap)
+            } else if let loadError {
+                Text(loadError).padding(24)
+            } else {
+                ProgressView("Loading complete outing…")
+            }
+        }
+        .task {
+            do { summary = try viewModel.completeRecordingSession(stored) }
+            catch { loadError = error.localizedDescription }
+        }
+    }
+}
+
 private struct RecordingSessionDetailView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -845,12 +867,14 @@ private struct RecordingSessionDetailView: View {
     private let routeReplayTimer = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
 
     private var visits: [Visit] {
-        viewModel.visitsOverlappingDateRange(session.dateRange)
+        let overlapping = viewModel.visitsOverlappingDateRange(session.dateRange)
+        guard let day = session.dayRange else { return overlapping }
+        return overlapping.filter { $0.arrivedAt < day.upperBound && ($0.departedAt ?? Date()) > day.lowerBound }
     }
 
     /// "Morning ride to Ferry Building", from the stay the outing ended at.
     private var automaticTitle: String {
-        session.automaticTitle(visits: viewModel.visitsNearOuting(session))
+        session.automaticTitle(visits: session.dayRange == nil ? viewModel.visitsNearOuting(session) : visits)
     }
 
     /// The name typed here once saved, otherwise the automatic title.
@@ -861,7 +885,7 @@ private struct RecordingSessionDetailView: View {
     }
 
     private var photoMoments: [PhotoMoment] {
-        viewModel.photosInDateRange(session.dateRange)
+        viewModel.photosInDateRange(session.dateRange).filter { session.dayRange?.contains($0.takenAt) ?? true }
     }
 
     private var routeReplayPoints: [LocationPoint] {
@@ -951,7 +975,23 @@ private struct RecordingSessionDetailView: View {
                         .padding(.horizontal, 16)
                         .padding(.top, 14)
 
-                    if let storedSession = session.storedSession {
+                    if let day = session.dayRange {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Movement on \(day.lowerBound.formatted(date: .abbreviated, time: .omitted))")
+                                .font(.subheadline)
+                            Text("The route, statistics, visits and exports here cover this day only.")
+                                .font(.footnote).foregroundStyle(TE.textMuted)
+                            if let stored = session.storedSession {
+                                NavigationLink("View complete outing") {
+                                    CompleteRecordingDetailView(stored: stored, viewModel: viewModel, onShowOnMap: onShowOnMap)
+                                }
+                                .buttonStyle(PlacesInkButtonStyle())
+                                Text("Open the complete outing to rename it, edit notes or delete it.")
+                                    .font(.footnote).foregroundStyle(TE.textMuted)
+                            }
+                        }
+                        .padding(24)
+                    } else if let storedSession = session.storedSession {
                         editableDetailsSection(storedSession)
                     } else {
                         inferredSection
@@ -1291,7 +1331,7 @@ private struct RecordingSessionDetailView: View {
     private var keptPointCount: Int { session.distancePoints.count }
 
     private var pointsCountText: String {
-        if let received = session.storedSession?.receivedLocationCount, received >= keptPointCount, received > 0 {
+        if session.dayRange == nil, let received = session.storedSession?.receivedLocationCount, received >= keptPointCount, received > 0 {
             return String(localized: "\(keptPointCount.formatted()) of \(received.formatted())")
         }
         return keptPointCount == 1 ? String(localized: "1 point") : String(localized: "\(keptPointCount.formatted()) points")
@@ -1667,11 +1707,13 @@ private struct RecordingSessionDetailView: View {
             ? AnyLayout(VStackLayout(spacing: 8))
             : AnyLayout(HStackLayout(spacing: 8))
         return layout {
-            Button("Delete", role: .destructive) {
-                showingDeleteConfirmation = true
+            if session.dayRange == nil {
+                Button("Delete", role: .destructive) {
+                    showingDeleteConfirmation = true
+                }
+                .buttonStyle(PlacesInkButtonStyle(emphasis: .destructive))
+                .accessibilityHint("Deletes this outing and its GPS points after confirmation. Visits are kept.")
             }
-            .buttonStyle(PlacesInkButtonStyle(emphasis: .destructive))
-            .accessibilityHint("Deletes this outing and its GPS points after confirmation. Visits are kept.")
 
             Button("Share") {
                 shareOuting()
@@ -1728,7 +1770,7 @@ private struct RecordingSessionDetailView: View {
     }
 
     private func saveEditableDetails() {
-        guard let storedSession = session.storedSession else { return }
+        guard session.dayRange == nil, let storedSession = session.storedSession else { return }
         viewModel.updateRecordingSession(
             storedSession,
             customName: nameText,

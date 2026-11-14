@@ -11,6 +11,11 @@ struct MapSessionFocusRequest: Equatable {
     let range: ClosedRange<Date>
 }
 
+struct TimelineDaySnapshot {
+    var sessions: [RecordingSessionSummary] = []
+    var visits: [Visit] = []
+}
+
 @MainActor
 @Observable
 final class LocationViewModel {
@@ -955,6 +960,67 @@ final class LocationViewModel {
         )
     }
 
+    /// Query only the selected day. Opening Timeline must not hydrate the export cache
+    /// or materialize every point in a recording that has been running for weeks.
+    func timelineDay(
+        in range: Range<Date>,
+        inferenceConfiguration: RecordingSessionInferenceConfiguration = .legacy(gapThreshold: RecordingSessionBuilder.defaultGapThreshold),
+        now: Date = Date()
+    ) throws -> TimelineDaySnapshot {
+        let start = range.lowerBound
+        let end = range.upperBound
+        var pointsQuery = FetchDescriptor<LocationPoint>(predicate: #Predicate {
+            $0.timestamp >= start && $0.timestamp < end && $0.timestamp <= now
+        })
+        pointsQuery.sortBy = [SortDescriptor(\.timestamp)]
+        let points = try modelContext.fetch(pointsQuery)
+        let sessionsQuery = FetchDescriptor<RecordingSession>(predicate: #Predicate {
+            $0.startedAt < end && ($0.endedAt ?? now) >= start
+        })
+        let stored = try modelContext.fetch(sessionsQuery)
+        var visitsQuery = FetchDescriptor<Visit>(predicate: #Predicate {
+            $0.arrivedAt < end && $0.arrivedAt <= now && ($0.departedAt ?? now) > start
+        })
+        visitsQuery.sortBy = [SortDescriptor(\.arrivedAt)]
+        let sessions = RecordingSessionBuilder.summaries(
+            storedSessions: stored, points: points,
+            activeTrackingStart: locationManager.trackingStartTime,
+            inferenceConfiguration: inferenceConfiguration, now: now
+        ).compactMap { $0.clipped(to: range) }
+        return TimelineDaySnapshot(sessions: sessions, visits: try modelContext.fetch(visitsQuery))
+    }
+
+    /// One limited, descending fetch per record type, instead of loading history to find its last day.
+    func latestTimelineDate() throws -> Date? {
+        var points = FetchDescriptor<LocationPoint>(sortBy: [SortDescriptor(\.timestamp, order: .reverse)])
+        points.fetchLimit = 1
+        var visits = FetchDescriptor<Visit>(sortBy: [SortDescriptor(\.arrivedAt, order: .reverse)])
+        visits.fetchLimit = 1
+        var starts = FetchDescriptor<RecordingSession>(sortBy: [SortDescriptor(\.startedAt, order: .reverse)])
+        starts.fetchLimit = 1
+        var ends = FetchDescriptor<RecordingSession>(sortBy: [SortDescriptor(\.endedAt, order: .reverse)])
+        ends.fetchLimit = 1
+        return try [modelContext.fetch(points).first?.timestamp,
+                    modelContext.fetch(visits).first?.arrivedAt,
+                    modelContext.fetch(starts).first?.startedAt,
+                    modelContext.fetch(ends).first?.endedAt].compactMap { $0 }.max()
+    }
+
+    /// Full history is fetched only after the person chooses View complete outing.
+    func completeRecordingSession(_ stored: RecordingSession, now: Date = Date()) throws -> RecordingSessionSummary? {
+        let start = stored.startedAt
+        let end = stored.endedAt ?? now
+        var query = FetchDescriptor<LocationPoint>(predicate: #Predicate {
+            $0.timestamp >= start && $0.timestamp <= end
+        })
+        query.sortBy = [SortDescriptor(\.timestamp)]
+        return RecordingSessionBuilder.summaries(
+            storedSessions: [stored], points: try modelContext.fetch(query),
+            activeTrackingStart: locationManager.trackingStartTime,
+            inferenceConfiguration: .stored(), now: now
+        ).first
+    }
+
     func focusMap(on session: RecordingSessionSummary) {
         mapDateRange = session.dateRange
         loadMapLocationPoints(in: session.dateRange)
@@ -1317,6 +1383,10 @@ final class LocationViewModel {
     // MARK: - Recording Session Management
 
     func deleteRecordingSession(_ session: RecordingSessionSummary) {
+        // A daily slice shares the source session's identity. Deleting it would otherwise
+        // remove that session while leaving most of its points orphaned.
+        guard session.dayRange == nil else { return }
+
         let isCurrentlyRecordingSession = locationManager.isTrackingEnabled
             && session.isActive
             && (session.storedSession?.endedAt == nil)

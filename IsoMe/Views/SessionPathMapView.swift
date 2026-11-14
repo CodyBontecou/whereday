@@ -66,9 +66,9 @@ struct SessionPathMapView: View {
                 }
             } else if let lastPoint = points.last, points.count > 1 {
                 // End/Current marker (last point)
-                Annotation(String(localized: "Current location"), coordinate: lastPoint.coordinate) {
+                Annotation(String(localized: "Path end"), coordinate: lastPoint.coordinate) {
                     CurrentLocationMarker(
-                        accessibilityLabel: String(localized: "Current location"),
+                        accessibilityLabel: String(localized: "Path end"),
                         accessibilityValue: lastPoint.accessibilityValue
                     )
                 }
