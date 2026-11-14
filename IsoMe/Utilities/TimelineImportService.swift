@@ -438,8 +438,9 @@ actor TimelineImportService {
             // An existing semantic/manual visit may begin before the imported range.
             // Suppress all overlapping nonmatches, not merely near-arrival duplicates.
             if let start = inferred.first?.arrivedAt, let end = inferred.last?.departedAt {
+                let distantFuture = Date.distantFuture
                 let descriptor = FetchDescriptor<Visit>(predicate: #Predicate {
-                    $0.arrivedAt <= end && ($0.departedAt == nil || $0.departedAt! >= start)
+                    $0.arrivedAt <= end && ($0.departedAt ?? distantFuture) >= start
                 })
                 let existing = try context.fetch(descriptor).sorted { $0.arrivedAt < $1.arrivedAt }
                 var coverage: [ClosedRange<Date>] = []

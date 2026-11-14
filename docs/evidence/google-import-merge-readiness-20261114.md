@@ -45,6 +45,16 @@ TZ=UTC python3 android/scripts/verify_timeline_admission.py --output artifacts/m
 
 These local results establish the corrected source lists and existing UTC fixture scenarios, not timezone-independent Markdown round trips or fresh hosted acceptance. The next hosted checks still must pass.
 
+## Older SwiftData predicate compatibility follow-up
+
+Hosted iOS job `132314320865` at `45acec20` compiled successfully but failed five inference-import methods: its SwiftData runtime rejects `PredicateExpressions.ForcedUnwrap`. Reproduced the **same five failures among ten methods** on a newly created, owned iOS 26.5 test simulator; this is a real runtime RED, not a source-only counterfactual.
+
+Replaced the forced unwrap in the existing bounded overlap query with `(departedAt ?? distantFuture) >= start`, matching the already-used ManualVisitStore pattern. Arrival bounds, inclusive endpoint semantics and read-only preview behavior are unchanged. Added a four-case regression covering open visits, a closed visit ending before the range, exact arrival-boundary overlap, and a closed overlapping visit.
+
+The complete signed suite on iOS 26.5 now passes **581 XCTest +20 Swift Testing tests**, result `artifacts/test-results/IsoMe-20261113-233821-9184.xcresult`. Logs: `google-ios26-predicate-red.log` and `google-ios26-predicate-green.log`. The owned compatibility simulator was deleted afterward; a preceding shutdown command reported it was already shut down, not a successful shutdown operation. No pre-existing simulator was altered.
+
+Actual Google/duplicate fixture producers were rerun: all 100 non-provenance outputs unchanged; all 30 source-reference checks pass. Current actual UTC interop/admission harnesses also pass 12 Android files and seven SwiftData scenarios (`google-predicate-interop.log`). Fresh hosted gates still remain required on this pushed source; earlier newer-runtime local passes did not establish older-runtime compatibility.
+
 ## Requirement boundary / open gates
 
 This is progress toward #59, not epic completion. Remaining: actual Files folder picker and authorized local/FileProvider policy with useful errors/progress, folder review presentation including exclusions, current visible inference/review UI verification, on-device memory/latency evidence, Watch/widget refresh acceptance, and explicit ZIP decision documentation/issue. Hosted Android/iOS checks must also pass on the pushed head. There is no fresh device UI/screenshot, physical import, network capture, or million-record claim in this receipt. Keep original exports; approximate deduplication and conservative inference are not universal lossless Google migration.

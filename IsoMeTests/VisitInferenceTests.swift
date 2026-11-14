@@ -493,6 +493,22 @@ final class VisitInferenceImportTests: XCTestCase {
         XCTAssertEqual(try store.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), 0)
     }
 
+    func testOpenAndClosedVisitCoverageUsesInclusiveOverlap() async throws {
+        let departures: [Date?] = [nil, start.addingTimeInterval(-1), start, start.addingTimeInterval(900)]
+        for departure in departures {
+            let store = try container()
+            store.mainContext.insert(Visit(latitude: 18, longitude: -66, arrivedAt: start.addingTimeInterval(-3600),
+                                           departedAt: departure, source: .manual))
+            try store.mainContext.save()
+            let preview = try await TimelineImportService(container: store).preview(data: raw(), fileName: "Records.json")
+            let overlaps = departure == nil || departure! >= start
+            XCTAssertEqual(preview.suppressedInferredVisitCount, overlaps ? 1 : 0)
+            XCTAssertEqual(preview.inferredVisitCount, overlaps ? 0 : 1)
+            XCTAssertEqual(preview.newPointCount, 6)
+            XCTAssertEqual(try store.mainContext.fetchCount(FetchDescriptor<Visit>()), 1, "Preview must remain read-only")
+        }
+    }
+
     func testExistingSemanticCoverageBeginningBeforeRawRangeSuppressesInference() async throws {
         let store = try container()
         store.mainContext.insert(Visit(latitude: 18, longitude: -66, arrivedAt: start.addingTimeInterval(-3600),
