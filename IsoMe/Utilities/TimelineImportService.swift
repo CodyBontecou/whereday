@@ -162,6 +162,47 @@ actor TimelineImportService {
         try preview(urls: [url])
     }
 
+    private static func appendGooglePayload(_ payload: ImportPayload, to combined: inout ImportPayload?) throws {
+        guard combined != nil else { combined = payload; return }
+        guard combined!.visits.count + combined!.points.count + payload.visits.count + payload.points.count
+                + combined!.rawInferenceBarrierDates.count + payload.rawInferenceBarrierDates.count
+                + combined!.unorderableRawObservationCount + payload.unorderableRawObservationCount
+                <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
+        if combined!.format != payload.format { combined!.format = .googleMixed }
+        combined!.visits.append(contentsOf: payload.visits)
+        combined!.points.append(contentsOf: payload.points)
+        combined!.invalidRecordCount += payload.invalidRecordCount
+        combined!.unsupportedRecordCount += payload.unsupportedRecordCount
+        combined!.rawInferencePoints.append(contentsOf: payload.rawInferencePoints)
+        combined!.rawInferenceBarrierDates.append(contentsOf: payload.rawInferenceBarrierDates)
+        combined!.unorderableRawObservationCount += payload.unorderableRawObservationCount
+    }
+
+    /// Bounded local-folder adapter. Keep the authorization and borrowed reader alive until
+    /// every discovered candidate is codec-validated. A failure never returns a partial preview.
+    /// FileProvider materialization and folder-picker presentation remain caller responsibilities.
+    func preview(folder: URL) throws -> ImportPreview {
+        let accessed = folder.startAccessingSecurityScopedResource()
+        defer { if accessed { folder.stopAccessingSecurityScopedResource() } }
+        return try GoogleFolderDiscovery.withDiscoveredFiles(in: folder) { manifest, reader in
+            var combined: ImportPayload?
+            for candidate in manifest.candidates {
+                try Task.checkCancellation()
+                let data = try reader.read(candidate)
+                let payload = try Self.parse(data: data, fileName: candidate.relativePath)
+                guard [.googleRaw, .googleSemantic, .googleDevice].contains(payload.format), payload.backup == nil else {
+                    throw TimelineImportError.invalidGoogleArray
+                }
+                try Self.appendGooglePayload(payload, to: &combined)
+            }
+            guard var combined else { throw TimelineImportError.noRecords }
+            combined.visits.sort { $0.arrivedAt < $1.arrivedAt }
+            combined.points.sort { $0.timestamp < $1.timestamp }
+            return try standardPreview(combined, fileName: folder.lastPathComponent,
+                                       sourceBytes: Int64(manifest.statistics.candidatePayloadBytes))
+        }
+    }
+
     func preview(urls: [URL]) throws -> ImportPreview {
         guard !urls.isEmpty else { throw TimelineImportError.noRecords }
         var backups: [WheredayBackup] = []
@@ -191,20 +232,7 @@ actor TimelineImportService {
                 // Bound the entire Google selection, not just each monthly file.
                 totalBytes += data.count
                 guard totalBytes <= ImportPayload.maximumFileSize else { throw TimelineImportError.fileTooLarge }
-                if combined != nil {
-                    guard combined!.visits.count + combined!.points.count + payload.visits.count + payload.points.count
-                            + combined!.rawInferenceBarrierDates.count + payload.rawInferenceBarrierDates.count
-                            + combined!.unorderableRawObservationCount + payload.unorderableRawObservationCount
-                            <= ImportPayload.maximumRecordCount else { throw TimelineImportError.tooManyRecords }
-                    if combined!.format != payload.format { combined!.format = .googleMixed }
-                    combined!.visits.append(contentsOf: payload.visits)
-                    combined!.points.append(contentsOf: payload.points)
-                    combined!.invalidRecordCount += payload.invalidRecordCount
-                    combined!.unsupportedRecordCount += payload.unsupportedRecordCount
-                    combined!.rawInferencePoints.append(contentsOf: payload.rawInferencePoints)
-                    combined!.rawInferenceBarrierDates.append(contentsOf: payload.rawInferenceBarrierDates)
-                    combined!.unorderableRawObservationCount += payload.unorderableRawObservationCount
-                } else { combined = payload }
+                try Self.appendGooglePayload(payload, to: &combined)
             }
         }
         if var combined {
