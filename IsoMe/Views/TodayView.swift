@@ -1041,7 +1041,7 @@ enum RecordingDetail: CaseIterable, Identifiable {
 
     var title: LocalizedStringKey {
         switch self {
-        case .places: "Places only"
+        case .places: "Places + sparse routes"
         case .routes: "Places + routes"
         case .everyStep: "Every step"
         }
@@ -1050,8 +1050,8 @@ enum RecordingDetail: CaseIterable, Identifiable {
     /// First run, step 3: the short version.
     var summary: LocalizedStringKey {
         switch self {
-        case .places: "Where you stop. Lightest on battery."
-        case .routes: "Your path while moving, quiet when still."
+        case .places: "Stops and route points about every 100 m."
+        case .routes: "Stops and route points about every 25 m."
         case .everyStep: "High-detail tracks for hikes and rides."
         }
     }
@@ -1059,7 +1059,7 @@ enum RecordingDetail: CaseIterable, Identifiable {
     /// "How Whereday listens" names the routes mode in full.
     var listeningTitle: LocalizedStringKey {
         switch self {
-        case .routes: "Places + routes while moving"
+        case .routes: "Places + routes"
         default: title
         }
     }
@@ -1067,10 +1067,16 @@ enum RecordingDetail: CaseIterable, Identifiable {
     /// "How Whereday listens": what each mode keeps, and what it costs.
     var listeningSummary: LocalizedStringKey {
         switch self {
-        case .places: "Notes where you stop. No path between. Lightest on battery."
-        case .routes: "Draws your path when you're out, sleeps when you're still."
-        case .everyStep: "A point every 5 m, always. For hikes and rides. Stops on its own after 2 h."
+        case .places: "Notes stops and records route points about every 100 m. Continues until you pause."
+        case .routes: "Notes stops and records route points about every 25 m. Continues until you pause."
+        case .everyStep: "Route points about every 5 m. For hikes and rides. Stops on its own after 2 h."
         }
+    }
+
+    @MainActor
+    func matches(_ manager: LocationManager) -> Bool {
+        manager.routeSamplingMode == .distance && manager.distanceFilter == distanceFilter
+            && manager.stopAfterHours == stopAfterHours
     }
 
     @MainActor

@@ -1,0 +1,18 @@
+steps:
+  - tool: gesture-swipe
+    args:
+      fromX: 0.95
+      fromY: 0.85
+      toX: 0.95
+      toY: 0.25
+      durationMs: 1000
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Live Activity, Tracking progress on the Lock Screen and Dynamic Island
+      timeoutMs: 3000
+executionPrerequisite: Physical iPhone with Whereday open to How Whereday
+  listens at the top, presented from Archive Settings. Do not change recording
+  preferences.

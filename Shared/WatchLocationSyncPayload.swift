@@ -171,3 +171,150 @@ struct WatchMarkPlaceAck: Codable, Hashable {
     var placeName: String?
     var errorMessage: String?
 }
+
+/// A Lamport revision avoids depending on synchronized phone/watch wall clocks.
+/// Concurrent stops beat starts; otherwise origin breaks ties deterministically.
+struct SharedRecordingIntent: Codable, Equatable {
+    var revision: Int64
+    var origin: UUID
+    var sessionID: UUID
+    var startedAt: Date
+    var changedAt: Date
+    var isRecording: Bool
+
+    func supersedes(_ other: Self) -> Bool {
+        if revision != other.revision { return revision > other.revision }
+        if isRecording != other.isRecording { return !isRecording }
+        return origin.uuidString > other.origin.uuidString
+    }
+}
+
+#if canImport(WatchConnectivity)
+import WatchConnectivity
+import Combine
+
+/// Persisted control-plane state, separate from the existing durable route queue.
+/// The WCSession delegates forward these dictionaries; this never owns the session.
+@MainActor
+final class SharedRecordingControl: ObservableObject {
+    static let shared = SharedRecordingControl(defaults: .standard)
+    nonisolated static let messageKey = "sharedRecordingIntent.v1"
+    nonisolated static let ackKey = "sharedRecordingAck.v1"
+    private static let storageKey = "sharedRecordingControl.v1"
+
+    private struct State: Codable {
+        var origin = UUID()
+        var intent: SharedRecordingIntent?
+        var applied: SharedRecordingIntent?
+        var acknowledged: SharedRecordingIntent?
+    }
+
+    private let defaults: UserDefaults
+    private let enablesTransport: Bool
+    @Published private var state: State
+    /// Return false when permission/access/store readiness prevents applying a command.
+    var apply: ((SharedRecordingIntent) -> Bool)?
+    private(set) var isApplying = false
+    var intent: SharedRecordingIntent? { state.intent }
+    var isWaitingForPeer: Bool { state.intent != nil && state.acknowledged != state.intent }
+    var statusDescription: String {
+        guard let intent = state.intent else { return String(localized: "No shared recording yet") }
+        if state.applied != intent {
+            return String(localized: "Open this app and check location permission and recording access")
+        }
+        if isWaitingForPeer { return String(localized: "Waiting for the other device") }
+        return String(localized: "Recording controls synced")
+    }
+
+    init(defaults: UserDefaults, enablesTransport: Bool = true) {
+        self.defaults = defaults
+        self.enablesTransport = enablesTransport
+        state = defaults.data(forKey: Self.storageKey)
+            .flatMap { try? JSONDecoder().decode(State.self, from: $0) } ?? State()
+    }
+
+    private func save() {
+        if let data = try? JSONEncoder().encode(state) {
+            defaults.set(data, forKey: Self.storageKey)
+        }
+    }
+
+    func publish(isRecording: Bool, sessionID: UUID, startedAt: Date, now: Date = Date()) {
+        guard !isApplying else { return }
+        let next = SharedRecordingIntent(revision: (state.intent?.revision ?? 0) + 1,
+            origin: state.origin, sessionID: sessionID, startedAt: startedAt,
+            changedAt: now, isRecording: isRecording)
+        state.intent = next
+        state.applied = next
+        state.acknowledged = nil
+        save()
+        flush()
+    }
+
+    /// Called on activation/reachability and after local prerequisites change.
+    func flush() {
+        retryApplication()
+        guard enablesTransport, WCSession.isSupported(), WCSession.default.activationState == .activated,
+              let intent = state.intent, state.acknowledged != intent,
+              let data = try? JSONEncoder().encode(intent) else { return }
+        let session = WCSession.default
+        #if os(iOS)
+        guard session.isPaired, session.isWatchAppInstalled else { return }
+        #endif
+        let message: [String: Any] = [Self.messageKey: data]
+        // Avoid enqueuing identical commands on every foreground/reachability event.
+        if !session.outstandingUserInfoTransfers.contains(where: {
+            ($0.userInfo[Self.messageKey] as? Data) == data
+        }) {
+            session.transferUserInfo(message)
+        }
+        if session.isReachable {
+            session.sendMessage(message, replyHandler: { reply in
+                Task { @MainActor in self.receive(reply) }
+            }, errorHandler: { _ in /* Durable transfer remains queued. */ })
+        }
+    }
+
+    @discardableResult
+    func receive(_ message: [String: Any]) -> [String: Any] {
+        if let data = message[Self.ackKey] as? Data,
+           let ack = try? JSONDecoder().decode(SharedRecordingIntent.self, from: data),
+           ack == state.intent {
+            state.acknowledged = ack
+            save()
+        }
+        guard let data = message[Self.messageKey] as? Data,
+              let incoming = try? JSONDecoder().decode(SharedRecordingIntent.self, from: data),
+              incoming.revision > 0, incoming.revision < Int64.max else { return [:] }
+        if state.intent == nil || incoming.supersedes(state.intent!) {
+            state.intent = incoming
+            state.acknowledged = nil
+            save()
+        }
+        retryApplication()
+        // Only acknowledge exactly the command actually applied, not mere receipt.
+        if state.applied == incoming {
+            let ack: [String: Any] = [Self.ackKey: data]
+            if enablesTransport, WCSession.isSupported(), WCSession.default.activationState == .activated {
+                WCSession.default.transferUserInfo(ack)
+            }
+            return ack
+        }
+        // A stale sender must learn the winning intent (including an offline stop).
+        if state.intent != incoming { flush() }
+        return [:]
+    }
+
+    func retryApplication() {
+        guard !isApplying, let intent = state.intent, state.applied != intent,
+              let apply else { return }
+        isApplying = true
+        let succeeded = apply(intent)
+        isApplying = false
+        if succeeded {
+            state.applied = intent
+            save()
+        }
+    }
+}
+#endif
