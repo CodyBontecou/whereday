@@ -1,0 +1,11 @@
+{
+  "beforeSHA256": "8a44b92368d607890306c123d31ddba9485af1fda486173db389edff316ae85d",
+  "afterSHA256": "293b02d4028c671e9781d0e1896ed5b519406accee6992a5d4c8377ddd672af0",
+  "oldEntries": 2399,
+  "oldEntryMetadataAndLocaleValuesUnchanged": true,
+  "oldBytesRecoveredByRemovingInsertions": true,
+  "missingValuesFilled": 160,
+  "newKeys": 13,
+  "newValues": 143,
+  "addedTotalValues": 303
+}

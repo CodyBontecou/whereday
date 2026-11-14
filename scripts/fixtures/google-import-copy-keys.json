@@ -1,0 +1,35 @@
+{
+  "existingMissingKeys": [
+    "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported.",
+    "%@ rejected raw samples break inference continuity",
+    "%@ route samples have unknown accuracy; excluded from visit inference",
+    "Infer visits from raw points",
+    "%@ inferred candidates before duplicate matching",
+    "Dwell: %lld min",
+    "Radius: %lld m",
+    "Accepted accuracy: %lld m",
+    "Include poor-accuracy route points",
+    "%@ route points excluded by accuracy",
+    "%@ inferred candidates suppressed by existing visits",
+    "Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected.",
+    "Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit.",
+    "Updating review…",
+    "Choose valid inference limits: radius 25–500 m, dwell 5–120 minutes, accuracy 1–500 m, and gap 30–900 seconds no longer than dwell.",
+    "Review the updated inference and accuracy counts before importing."
+  ],
+  "newKeys": [
+    "Added to Atlas: %@.",
+    "No supported Google Timeline JSON files were found in this folder.",
+    "This folder exceeds the safe scan or import limits. Choose a smaller folder; nothing was saved.",
+    "This folder could not be read locally. Make it available offline in Files, then choose it again. Nothing was saved.",
+    "A possible Google export could not be validated. Check the files before trying again; nothing was saved.",
+    "Some files changed or use unsafe links. Choose stable local copies and try again; nothing was saved.",
+    "This folder could not be safely reviewed. Choose the folder again; nothing was saved.",
+    "Choose one Google folder on its own, or select import files without folders.",
+    "Import files or a folder",
+    "Select import files, or one unzipped Google folder. Make the folder available offline in Files first. ZIP files are not supported.",
+    "Google JSON files: %@",
+    "Excluded entries: %@",
+    "Excluded entries are not imported. If any Google file cannot be checked, the entire folder is rejected."
+  ]
+}

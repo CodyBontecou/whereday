@@ -33,6 +33,10 @@ Visual inspection also found a **pre-existing completion-copy defect**, “Two d
 
 Raw `/tmp/whereday-merge-readiness/import-progress-ui-1/`: full light538.681667s movie, dark/XL137.561667s movie, all trees/screenshots/fixture/cleanup and operation times. Adjacent verification records retain media hashes and selected actual frames. Restored/read-back light/large, terminated app, uninstalled synthetic helper, verified guest Shutdown and both recorders gone. Test-host9DB also remains separate; no physical/default guest touched.
 
+## Subsequent copy/resource correction
+
+The isolated [copy/RTL follow-up](google-import-copy-20261114.md) fixes the observed two-days grammar with a native RED/GREEN, fills160 prior missing values plus143 new folder/completion values without changing old translations, and corrects the observed Arabic caption-shaping defect only inside this sheet. Current local592 XCTest +20 Swift Testing and363 actual resource lookups pass; full catalog audit is now green. This supersedes the160-resource/grammar blockers for that follow-up, not the original4aaef record or unverified full UI/provider acceptance.
+
 ## Still open
 
-Native slow scanning/parsing, errors/cancellation during materialization, cloud/stale/denied FileProvider coordination, all new Google copy locales, completion-copy correction, full localized/spoken/motion states, inference controls/device performance and Watch/widget acceptance. Current-head hosted verification and authorized main/catalog integration are separate. This component does not complete #59, PR119 readiness or the thread goal.
+Native slow scanning/parsing, errors/cancellation during materialization, cloud/stale/denied FileProvider coordination, complete localized inference/review/error UI, full spoken/motion states, inference controls/device performance and Watch/widget acceptance. Current-head hosted verification and authorized main/catalog integration are separate. This component does not complete #59, PR119 readiness or the thread goal.

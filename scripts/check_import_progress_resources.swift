@@ -1,13 +1,20 @@
 import Foundation
 
 // Check the actual compiled lproj values, not English fallback or source presence.
-let keys = ["Scanning files…", "Parsing files…", "Checking duplicates…", "Saving import…"]
+var keys = ["Scanning files…", "Parsing files…", "Checking duplicates…", "Saving import…"]
 let locales = ["ar", "bn", "en", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"]
 func fail(_ message: String) -> Never {
     FileHandle.standardError.write(Data("FAIL: \(message)\n".utf8))
     exit(1)
 }
-guard CommandLine.arguments.count == 2 else { fail("Usage: swift scripts/check_import_progress_resources.swift /path/to/IsoMe.app") }
+guard (2...3).contains(CommandLine.arguments.count) else { fail("Usage: swift scripts/check_import_progress_resources.swift /path/to/IsoMe.app [copy-key-inventory.json]") }
+if CommandLine.arguments.count == 3 {
+    let data = try Data(contentsOf: URL(fileURLWithPath: CommandLine.arguments[2]))
+    guard let scope = try JSONSerialization.jsonObject(with: data) as? [String: [String]],
+          let existing = scope["existingMissingKeys"], let added = scope["newKeys"] else { fail("Invalid copy-key inventory") }
+    keys += existing + added
+    guard Set(keys).count == keys.count else { fail("Duplicate resource-check keys") }
+}
 let app = URL(fileURLWithPath: CommandLine.arguments[1])
 let source = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("IsoMe/Localizable.xcstrings")
 let catalog = try JSONSerialization.jsonObject(with: Data(contentsOf: source)) as! [String: Any]
@@ -26,4 +33,4 @@ for locale in locales {
         checked += 1
     }
 }
-print("PASS: \(checked) actual compiled import-progress resource lookups")
+print("PASS: \(checked) actual compiled import-copy/progress resource lookups")

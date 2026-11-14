@@ -1,0 +1,87 @@
+{
+  "base": "4aaef17110a10747d2427e449fa7bed33f91fd46",
+  "scope": "Resource/completion/RTL component only; PR119/head/main unchanged",
+  "nativeRED": {
+    "tests": 3,
+    "assertions": 4,
+    "scope": "Actual old completion phrase; earlier missing-isOutlier authoring compile is not RED"
+  },
+  "catalogRED": {
+    "tests": 2,
+    "missingValueFailures": 303
+  },
+  "final": {
+    "XCTest": 592,
+    "SwiftTesting": 20,
+    "failures": 0,
+    "localizationTests": 6,
+    "actualCompiledLookups": 363,
+    "catalogActiveKeys": 2603,
+    "catalogs": 9,
+    "locales": 11,
+    "missing": 0,
+    "placeholderMismatch": 0,
+    "sourceChecks": 31,
+    "fixturesChanged": false,
+    "result": "artifacts/test-results/IsoMe-20261114-145048-70371.xcresult"
+  },
+  "ui": {
+    "ownedDevice": "1778B03A-D2F5-4656-B92A-8CDEAF3C2755",
+    "uiOnly": true,
+    "realNewVisits": 1,
+    "newPoints": 0,
+    "oldPointsPreserved": 150000,
+    "totalVisitsAfter": 2,
+    "completion": "Added to Atlas: two days.",
+    "error": "Actual Empty folder no-candidates in Arabic, no write",
+    "RTL": "Before broken mono/captions, after joined system/zero tracking scoped to import sheet",
+    "sampledStates": [
+      "English completion",
+      "Arabic import help",
+      "Arabic no-candidates",
+      "Arabic dark/XL scroll to detail"
+    ],
+    "unverified": [
+      "all-locale UI",
+      "native speaker",
+      "spoken",
+      "full motion",
+      "physical provider/performance"
+    ],
+    "cleanup": {
+      "appearance": "light",
+      "contentSize": "large",
+      "helperUninstalled": true,
+      "appTerminated": true,
+      "ownedStates": {
+        "1778B03A-D2F5-4656-B92A-8CDEAF3C2755": "Shutdown",
+        "9DBF4207-832B-4A34-88DB-AE841A6383DA": "Shutdown"
+      }
+    },
+    "media": {
+      "english.mov": {
+        "bytes": 15142591,
+        "sha256": "011a87ac32f93a1a49f3d0da22929b61f8793a4eaf1fb3dc15e4bf07813a8dbe",
+        "scope": "Recorded; screenshots sampled, not a full-speed/frame-by-frame motion verdict"
+      },
+      "arabic.mov": {
+        "bytes": 12241188,
+        "sha256": "ccb08429e69e608044aa41916274c8f067b504f570a2833b1fd5f5a03c2d1e40",
+        "scope": "Recorded; screenshots sampled, not a full-speed/frame-by-frame motion verdict"
+      },
+      "arabic-corrected.mov": {
+        "bytes": 12050541,
+        "sha256": "3e4e95bd0c51c2390aa48c169f20a895b7e7c8952a64a73d1a3d4bd59ee22ff3",
+        "scope": "Recorded; screenshots sampled, not a full-speed/frame-by-frame motion verdict"
+      }
+    }
+  },
+  "sha256": {
+    "IsoMe/Localizable.xcstrings": "293b02d4028c671e9781d0e1896ed5b519406accee6992a5d4c8377ddd672af0",
+    "IsoMe/Views/ImportPreviewView.swift": "b718aeef5bad3f28a7c5f59fcf458a847fd0e6053d57aab081bb095bc09a6b6c",
+    "IsoMeTests/TimelineImportTests.swift": "c1012d1678aa4ae0d74c5209be27ce255dd2924d36b86388030bc58e7557cfdc",
+    "scripts/fixtures/google-import-copy-keys.json": "a9cc68c0bb0ada2c716a515431844795e3266c3f737c04f93cfac88a71f63c7b",
+    "scripts/check_import_progress_resources.swift": "59c722d5130e7c2b66aee75449a97cbc560a68934fbafc21c3ea244dbabdc83a",
+    "scripts/test_google_import_localization.py": "9b42e7ced8a9d2049d4a98bed4220a6f76f6734f5a7a2aaea8d00b360c1595d8"
+  }
+}

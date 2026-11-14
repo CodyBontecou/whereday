@@ -5,6 +5,33 @@ struct ImportFileSelection: Identifiable {
     let urls: [URL]
 }
 
+/// Completion copy is separate from rendering so calendar boundaries and natural
+/// language composition can be tested without opening or committing an import.
+struct ImportCompletionText {
+    static func detail(_ preview: ImportPreview, calendar: Calendar = .current) -> String {
+        if preview.payload.backup != nil {
+            return String(localized: "Your restored records are available in Whereday. Photo matches need access to the original Photos library.")
+        }
+        guard let range = preview.payload.dateRange else {
+            return String(localized: "They now show in Atlas.")
+        }
+        let days = (calendar.dateComponents([.day], from: calendar.startOfDay(for: range.lowerBound),
+                                            to: calendar.startOfDay(for: range.upperBound)).day ?? 0) + 1
+        if days <= 1 {
+            return String(localized: "\(range.lowerBound.formatted(date: .abbreviated, time: .omitted)) now shows in Atlas.")
+        }
+        let formatter = DateComponentsFormatter()
+        formatter.calendar = calendar
+        formatter.unitsStyle = .spellOut
+        formatter.allowedUnits = [.year, .month, .day]
+        formatter.maximumUnitCount = 1
+        guard let span = formatter.string(from: range.lowerBound, to: range.upperBound.addingTimeInterval(86_400)) else {
+            return String(localized: "They now show in Atlas.")
+        }
+        return String(localized: "Added to Atlas: \(span).")
+    }
+}
+
 /// One owner per asynchronous policy review. Kept separate from SwiftUI rendering for deterministic completion tests.
 struct ImportReviewState {
     struct Request: Sendable {
@@ -64,6 +91,7 @@ struct ImportPreviewView: View {
     var onChooseAnotherFile: (() -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.layoutDirection) private var layoutDirection
     @StateObject private var progress = ImportProgress()
     @State private var phase: Phase = .reading
     @State private var options = ImportOptions()
@@ -146,13 +174,23 @@ struct ImportPreviewView: View {
 
     private var url: URL { urls[0] }
 
+    // Monospaced fallback glyphs and tracking separate cursive Arabic letters.
+    // Scope the system font/zero tracking to this sheet's RTL captions only.
+    private func captionFont(_ style: Font.TextStyle) -> Font {
+        layoutDirection == .rightToLeft ? .system(style) : TE.mono(style)
+    }
+
+    private func captionTracking(_ spacing: CGFloat) -> CGFloat {
+        layoutDirection == .rightToLeft ? 0 : spacing
+    }
+
     // MARK: - Header
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text("NOTHING IS SAVED UNTIL YOU SAY SO")
-                .font(TE.mono(.caption2))
-                .tracking(1.5)
+                .font(captionFont(.caption2))
+                .tracking(captionTracking(1.5))
                 .foregroundStyle(TE.textMuted)
                 .fixedSize(horizontal: false, vertical: true)
             Text("Review import")
@@ -179,8 +217,8 @@ struct ImportPreviewView: View {
         case .complete(let result, let preview):
             VStack(alignment: .leading, spacing: 6) {
                 Text("IMPORT COMPLETE")
-                    .font(TE.mono(.caption2))
-                    .tracking(1.2)
+                    .font(captionFont(.caption2))
+                    .tracking(captionTracking(1.2))
                     .foregroundStyle(TE.onInkCardMuted)
                 Text(verbatim: completionHeadline(result))
                     .font(TE.editorial(.title))
@@ -190,7 +228,7 @@ struct ImportPreviewView: View {
                     .font(.subheadline)
                     .fixedSize(horizontal: false, vertical: true)
                 Text(verbatim: duplicatesSummary(result))
-                    .font(TE.mono(.caption2))
+                    .font(captionFont(.caption2))
                     .foregroundStyle(TE.onInkCardMuted)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 4)
@@ -204,8 +242,8 @@ struct ImportPreviewView: View {
         case .failed(let detail, let whileSaving):
             VStack(alignment: .leading, spacing: 6) {
                 Text("IMPORT FAILED · NOTHING WAS SAVED")
-                    .font(TE.mono(.caption2))
-                    .tracking(1.2)
+                    .font(captionFont(.caption2))
+                    .tracking(captionTracking(1.2))
                     .foregroundStyle(TE.inkRust)
                     .fixedSize(horizontal: false, vertical: true)
                 Text(whileSaving ? "This import couldn't be saved." : "This file isn't one Whereday can read.")
@@ -219,7 +257,7 @@ struct ImportPreviewView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 if !detail.isEmpty {
                     Text(verbatim: detail)
-                        .font(TE.mono(.caption2))
+                        .font(captionFont(.caption2))
                         .foregroundStyle(TE.textMuted)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 4)
@@ -260,8 +298,8 @@ struct ImportPreviewView: View {
                     .tint(TE.inkRust)
             }
             Text(verbatim: progressCaption(preview, completed: completed, total: total))
-                .font(TE.mono(.caption2))
-                .tracking(1)
+                .font(captionFont(.caption2))
+                .tracking(captionTracking(1))
                 .foregroundStyle(TE.textMuted)
                 .monospacedDigit()
         }
@@ -306,29 +344,8 @@ struct ImportPreviewView: View {
         }
     }
 
-    /// "Five years of days now show in Atlas." from the imported file's real date range.
     private func completionDetail(_ preview: ImportPreview) -> String {
-        if preview.payload.backup != nil {
-            return String(localized: "Your restored records are available in Whereday. Photo matches need access to the original Photos library.")
-        }
-        guard let range = preview.payload.dateRange else {
-            return String(localized: "They now show in Atlas.")
-        }
-        let calendar = Calendar.current
-        let days = (calendar.dateComponents([.day], from: calendar.startOfDay(for: range.lowerBound),
-                                            to: calendar.startOfDay(for: range.upperBound)).day ?? 0) + 1
-        if days <= 1 {
-            return String(localized: "\(range.lowerBound.formatted(date: .abbreviated, time: .omitted)) now shows in Atlas.")
-        }
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .spellOut
-        formatter.allowedUnits = [.year, .month, .day]
-        formatter.maximumUnitCount = 1
-        guard let span = formatter.string(from: range.lowerBound, to: range.upperBound.addingTimeInterval(86_400)) else {
-            return String(localized: "They now show in Atlas.")
-        }
-        let sentence = String(localized: "\(span) of days now show in Atlas.")
-        return sentence.prefix(1).uppercased() + sentence.dropFirst()
+        ImportCompletionText.detail(preview)
     }
 
     private func duplicatesSummary(_ result: ImportCommitResult) -> String {
@@ -356,12 +373,12 @@ struct ImportPreviewView: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(verbatim: name)
-                    .font(TE.mono(.footnote))
+                    .font(captionFont(.footnote))
                     .lineLimit(2)
                     .truncationMode(.middle)
                 if let detail {
                     Text(verbatim: detail)
-                        .font(TE.mono(.caption2))
+                        .font(captionFont(.caption2))
                         .foregroundStyle(TE.textMuted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -457,7 +474,7 @@ struct ImportPreviewView: View {
             if let skipped = skippedSummary(preview) {
                 hairline
                 Text(verbatim: skipped)
-                    .font(TE.mono(.caption2))
+                    .font(captionFont(.caption2))
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -560,7 +577,7 @@ struct ImportPreviewView: View {
                 }
                 .font(TE.editorial(.title))
                 Text(verbatim: caption)
-                    .font(TE.mono(.caption2))
+                    .font(captionFont(.caption2))
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }

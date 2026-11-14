@@ -1,0 +1,7 @@
+/Users/codybontecou/dev/whereday-import-copy-ready/IsoMeTests/TimelineImportTests.swift:596: error: -[IsoMeTests.ImportCompletionTextTests testInclusiveCalendarDaysRemainTwoAcrossFallBack] : XCTAssertEqual failed: ("Two days of days now show in Atlas.") is not equal to ("Added to Atlas: two days.")
+/Users/codybontecou/dev/whereday-import-copy-ready/IsoMeTests/TimelineImportTests.swift:591: error: -[IsoMeTests.ImportCompletionTextTests testInclusiveCalendarDaysRemainTwoAcrossSpringForward] : XCTAssertEqual failed: ("Two days of days now show in Atlas.") is not equal to ("Added to Atlas: two days.")
+/Users/codybontecou/dev/whereday-import-copy-ready/IsoMeTests/TimelineImportTests.swift:585: error: -[IsoMeTests.ImportCompletionTextTests testTwoDayCompletionDoesNotAppendDaysToAnAlreadyFormattedUnit] : XCTAssertEqual failed: ("Two days of days now show in Atlas.") is not equal to ("Added to Atlas: two days.")
+/Users/codybontecou/dev/whereday-import-copy-ready/IsoMeTests/TimelineImportTests.swift:586: error: -[IsoMeTests.ImportCompletionTextTests testTwoDayCompletionDoesNotAppendDaysToAnAlreadyFormattedUnit] : XCTAssertFalse failed
+	 Executed 3 tests, with 4 failures (0 unexpected) in 0.382 (0.386) seconds
+	 Executed 3 tests, with 4 failures (0 unexpected) in 0.382 (0.386) seconds
+	 Executed 3 tests, with 4 failures (0 unexpected) in 0.382 (0.387) seconds

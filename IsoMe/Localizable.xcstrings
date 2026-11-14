@@ -1,6 +1,916 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Added to Atlas: %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added to Atlas: %@."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تمت الإضافة إلى الأطلس: %@."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "অ্যাটলাসে যোগ করা হয়েছে: %@।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añadido a Atlas: %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouté à Atlas : %@."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एटलस में जोड़ा गया: %@।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アトラスに追加：%@。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodano do Atlasu: %@."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionado ao Atlas: %@."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавлено в Атлас: %@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已添加到地图集：%@。"
+          }
+        }
+      }
+    },
+    "No supported Google Timeline JSON files were found in this folder.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No supported Google Timeline JSON files were found in this folder."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم العثور على ملفات Google Timeline JSON المدعومة في هذا المجلد."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই ফোল্ডারে কোনো সমর্থিত Google টাইমলাইন JSON ফাইল পাওয়া যায়নি।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontraron archivos JSON de línea de tiempo de Google compatibles en esta carpeta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun fichier JSON Google Timeline pris en charge n'a été trouvé dans ce dossier."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस फ़ोल्डर में कोई समर्थित Google टाइमलाइन JSON फ़ाइलें नहीं मिलीं।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このフォルダーには、サポートされている Google タイムラインJSONファイルが見つかりませんでした。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W tym folderze nie znaleziono obsługiwanych plików JSON osi czasu Google."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum arquivo JSON compatível do Google Timeline foi encontrado nesta pasta."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В этой папке не найдено поддерживаемых файлов JSON временной шкалы Google."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在此文件夹中找不到受支持的 Google 时间线JSON文件。"
+          }
+        }
+      }
+    },
+    "This folder exceeds the safe scan or import limits. Choose a smaller folder; nothing was saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This folder exceeds the safe scan or import limits. Choose a smaller folder; nothing was saved."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتجاوز هذا المجلد الحدود الآمنة للفحص أو الاستيراد. اختر مجلدًا أصغر؛ لم يتم حفظ أي شيء."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই ফোল্ডারটি নিরাপদ স্ক্যান বা আমদানি সীমা অতিক্রম করেছে৷ একটি ছোট ফোল্ডার চয়ন করুন; কিছুই সংরক্ষিত হয়নি।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta carpeta excede los límites de escaneo o importación seguros. Elija una carpeta más pequeña; no se guardó nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce dossier dépasse les limites d'analyse ou d'importation sécurisées. Choisissez un dossier plus petit ; rien n'a été sauvegardé."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह फ़ोल्डर सुरक्षित स्कैन या आयात सीमा से अधिक है। एक छोटा फ़ोल्डर चुनें; कुछ भी सहेजा नहीं गया।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このフォルダーは安全なスキャンまたはインポートの制限を超えています。より小さいフォルダーを選択してください。何も保存されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten folder przekracza limity bezpiecznego skanowania lub importu. Wybierz mniejszy folder; nic nie zapisano."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta pasta excede os limites seguros de verificação ou importação. Escolha uma pasta menor; nada foi salvo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эта папка превышает ограничения безопасного сканирования или импорта. Выберите папку меньшего размера; ничего не сохранено."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此文件夹超出了安全扫描或导入限制。选择较小的文件夹；什么都没有保存。"
+          }
+        }
+      }
+    },
+    "This folder could not be read locally. Make it available offline in Files, then choose it again. Nothing was saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This folder could not be read locally. Make it available offline in Files, then choose it again. Nothing was saved."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن قراءة هذا المجلد محلياً. اجعله متاحًا دون اتصال بالإنترنت في تطبيق \"الملفات\"، ثم اختره مرة أخرى. لم يتم حفظ أي شيء."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই ফোল্ডারটি স্থানীয়ভাবে পড়া যাবে না। এটিকে ফাইলে অফলাইনে উপলব্ধ করুন, তারপরে এটি আবার বেছে নিন। কিছুই সংরক্ষণ করা হয়নি।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta carpeta no se pudo leer localmente. Hazlo disponible sin conexión en Archivos y luego selecciónalo nuevamente. No se guardó nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce dossier n'a pas pu être lu localement. Rendez-le disponible hors ligne dans Fichiers, puis choisissez-le à nouveau. Rien n'a été sauvegardé."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह फ़ोल्डर स्थानीय रूप से पढ़ा नहीं जा सका. इसे फ़ाइलों में ऑफ़लाइन उपलब्ध कराएं, फिर इसे दोबारा चुनें। कुछ भी सहेजा नहीं गया।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このフォルダーをローカルで読み取ることができませんでした。 [ファイル] でオフラインで使用できるようにしてから、もう一度選択します。何も保存されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można odczytać tego folderu lokalnie. Udostępnij go offline w Plikach, a następnie wybierz go ponownie. Nic nie zapisano."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta pasta não pôde ser lida localmente. Disponibilize-o off-line em Arquivos e escolha-o novamente. Nada foi salvo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эту папку невозможно прочитать локально. Сделайте его доступным офлайн в «Файлах», а затем выберите его еще раз. Ничего не сохранено."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法在本地读取此文件夹。在“文件”中使其脱机可用，然后再次选择它。什么都没有保存。"
+          }
+        }
+      }
+    },
+    "A possible Google export could not be validated. Check the files before trying again; nothing was saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A possible Google export could not be validated. Check the files before trying again; nothing was saved."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن التحقق من صحة تصدير Google المحتمل. التحقق من الملفات قبل المحاولة مرة أخرى؛ لم يتم حفظ أي شيء."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "একটি সম্ভাব্য Google রপ্তানি যাচাই করা যায়নি। আবার চেষ্টা করার আগে ফাইল চেক করুন; কিছুই সংরক্ষিত হয়নি।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo validar una posible exportación de Google. Verifique los archivos antes de volver a intentarlo; no se guardó nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un éventuel export Google n'a pas pu être validé. Vérifiez les fichiers avant de réessayer ; rien n'a été sauvegardé."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संभावित Google निर्यात सत्यापित नहीं किया जा सका. दोबारा प्रयास करने से पहले फ़ाइलें जांचें; कुछ भी सहेजा नहीं गया।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google エクスポートの可能性を検証できませんでした。再試行する前にファイルを確認してください。何も保存されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można zweryfikować możliwego eksportu Google. Sprawdź pliki przed ponowną próbą; nic nie zapisano."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível validar uma possível exportação do Google. Verifique os arquivos antes de tentar novamente; nada foi salvo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось проверить возможный экспорт Google. Проверьте файлы, прежде чем повторить попытку; ничего не сохранено."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法验证可能的 Google 导出。重试之前检查文件；什么都没有保存。"
+          }
+        }
+      }
+    },
+    "Some files changed or use unsafe links. Choose stable local copies and try again; nothing was saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Some files changed or use unsafe links. Choose stable local copies and try again; nothing was saved."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم تغيير بعض الملفات أو استخدام روابط غير آمنة. اختر نسخًا محلية مستقرة وحاول مرة أخرى؛ لم يتم حفظ أي شيء."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "কিছু ফাইল পরিবর্তিত হয়েছে বা অনিরাপদ লিঙ্ক ব্যবহার করেছে। স্থিতিশীল স্থানীয় অনুলিপি চয়ন করুন এবং আবার চেষ্টা করুন; কিছুই সংরক্ষিত হয়নি।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algunos archivos cambiaron o utilizan enlaces no seguros. Elija copias locales estables y vuelva a intentarlo; no se guardó nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Certains fichiers ont été modifiés ou utilisent des liens dangereux. Choisissez des copies locales stables et réessayez ; rien n'a été sauvegardé."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कुछ फ़ाइलें बदल गईं या असुरक्षित लिंक का उपयोग किया गया। स्थिर स्थानीय प्रतिलिपियाँ चुनें और पुनः प्रयास करें; कुछ भी सहेजा नहीं गया।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一部のファイルが変更されているか、安全でないリンクが使用されています。安定したローカル コピーを選択して再試行してください。何も保存されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niektóre pliki zostały zmienione lub zawierają niebezpieczne linki. Wybierz stabilne kopie lokalne i spróbuj ponownie; nic nie zapisano."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alguns arquivos foram alterados ou usam links inseguros. Escolha cópias locais estáveis e tente novamente; nada foi salvo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Некоторые файлы изменены или используют небезопасные ссылки. Выберите стабильные локальные копии и повторите попытку; ничего не сохранено."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "某些文件已更改或使用不安全的链接。选择稳定的本地副本并重试；什么都没有保存。"
+          }
+        }
+      }
+    },
+    "This folder could not be safely reviewed. Choose the folder again; nothing was saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This folder could not be safely reviewed. Choose the folder again; nothing was saved."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن مراجعة هذا المجلد بأمان. اختر المجلد مرة أخرى؛ لم يتم حفظ أي شيء."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই ফোল্ডারটি নিরাপদে পর্যালোচনা করা যায়নি৷ আবার ফোল্ডার নির্বাচন করুন; কিছুই সংরক্ষিত হয়নি।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta carpeta no se pudo revisar de forma segura. Elija la carpeta nuevamente; no se guardó nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce dossier n'a pas pu être examiné en toute sécurité. Choisissez à nouveau le dossier ; rien n'a été sauvegardé."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस फ़ोल्डर की सुरक्षित रूप से समीक्षा नहीं की जा सकी. फ़ोल्डर फिर से चुनें; कुछ भी सहेजा नहीं गया।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このフォルダーを安全にレビューできませんでした。フォルダーを再度選択します。何も保存されていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można bezpiecznie przejrzeć tego folderu. Wybierz folder ponownie; nic nie zapisano."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta pasta não pôde ser revisada com segurança. Escolha a pasta novamente; nada foi salvo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эту папку невозможно безопасно просмотреть. Выберите папку еще раз; ничего не сохранено."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法安全地查看此文件夹。再次选择文件夹；什么都没有保存。"
+          }
+        }
+      }
+    },
+    "Choose one Google folder on its own, or select import files without folders.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose one Google folder on its own, or select import files without folders."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر مجلد Google واحدًا فقط، أو اختر ملفات للاستيراد دون أي مجلدات."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "নিজে থেকে একটি Google ফোল্ডার চয়ন করুন, অথবা ফোল্ডার ছাড়া ফাইল আমদানি নির্বাচন করুন৷"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elija una carpeta de Google por sí sola o seleccione importar archivos sin carpetas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez un seul dossier Google, ou des fichiers à importer sans aucun dossier."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्वयं एक Google फ़ोल्डर चुनें, या फ़ोल्डरों के बिना फ़ाइलें आयात करें चुनें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Googleフォルダーを1つだけ選択するか、フォルダーを含めずにインポートするファイルを選択してください。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz jeden folder Google lub wybierz import plików bez folderów."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha uma pasta do Google ou selecione importar arquivos sem pastas."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите одну папку Google отдельно или выберите импорт файлов без папок."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "单独选择一个 Google 文件夹，或选择导入不带文件夹的文件。"
+          }
+        }
+      }
+    },
+    "Import files or a folder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import files or a folder"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استيراد الملفات أو المجلد"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ফাইল বা একটি ফোল্ডার আমদানি করুন"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar archivos o una carpeta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer des fichiers ou un dossier"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ाइलें या फ़ोल्डर आयात करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイルまたはフォルダーをインポートする"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importuj pliki lub folder"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importe arquivos ou uma pasta"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Импортировать файлы или папку"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入文件或文件夹"
+          }
+        }
+      }
+    },
+    "Select import files, or one unzipped Google folder. Make the folder available offline in Files first. ZIP files are not supported.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select import files, or one unzipped Google folder. Make the folder available offline in Files first. ZIP files are not supported."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدد ملفات للاستيراد، أو مجلد Google واحدًا بعد فك ضغطه. اجعل المجلد متاحًا دون اتصال في تطبيق «الملفات» أولًا. ملفات ZIP غير مدعومة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আমদানি ফাইল বা একটি আনজিপ করা Google ফোল্ডার নির্বাচন করুন৷ প্রথমে ফাইলে ফোল্ডারটিকে অফলাইনে উপলব্ধ করুন৷ ZIP ফাইল সমর্থিত নয়।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seleccione archivos de importación o una carpeta de Google descomprimida. Primero haga que la carpeta esté disponible sin conexión en Archivos. Los archivos ZIP no son compatibles."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez des fichiers à importer ou un seul dossier Google décompressé. Rendez d’abord le dossier disponible hors ligne dans Fichiers. Les fichiers ZIP ne sont pas pris en charge."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आयात करने के लिए फ़ाइलें या एक अनज़िप किया गया Google फ़ोल्डर चुनें। पहले फ़ाइलें ऐप में फ़ोल्डर को ऑफ़लाइन उपलब्ध करें। ZIP फ़ाइलें समर्थित नहीं हैं।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "インポート ファイル、または 1 つの解凍された Google フォルダーを選択します。まず、ファイルでフォルダーをオフラインで使用できるようにします。 ZIP ファイルはサポートされていません。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz pliki importu lub jeden rozpakowany folder Google. Najpierw udostępnij folder w trybie offline w Plikach. Pliki ZIP nie są obsługiwane."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione importar arquivos ou uma pasta do Google descompactada. Disponibilize a pasta offline em Arquivos primeiro. Arquivos ZIP não são suportados."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите файлы импорта или одну разархивированную папку Google. Сначала сделайте папку доступной в автономном режиме в Файлах. ZIP-файлы не поддерживаются."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择导入文件或一个解压的 Google 文件夹。首先在“文件”中使该文件夹脱机可用。不支持 ZIP 文件。"
+          }
+        }
+      }
+    },
+    "Google JSON files: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google JSON files: %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملفات Google JSON: %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google JSON ফাইল: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archivos JSON de Google: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers JSON Google : %@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google JSON फ़ाइलें: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google JSONファイル: %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pliki Google JSON: %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arquivos JSON do Google: %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы Google JSON: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google JSON 文件：%@"
+          }
+        }
+      }
+    },
+    "Excluded entries: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excluded entries: %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإدخالات المستبعدة: %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "বাদ দেওয়া এন্ট্রি: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entradas excluidas: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrées exclues : %@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बहिष्कृत प्रविष्टियाँ: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "除外されたエントリ: %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wykluczone wpisy: %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entradas excluídas: %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исключенные записи: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "排除的条目： %@"
+          }
+        }
+      }
+    },
+    "Excluded entries are not imported. If any Google file cannot be checked, the entire folder is rejected.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excluded entries are not imported. If any Google file cannot be checked, the entire folder is rejected."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يتم استيراد الإدخالات المستبعدة. إذا تعذر التحقق من أي ملف من ملفات Google، فسيتم رفض المجلد بأكمله."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "বাদ এন্ট্রি আমদানি করা হয় না. কোনো Google ফাইল চেক করা না গেলে, পুরো ফোল্ডারটি প্রত্যাখ্যান করা হয়।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las entradas excluidas no se importan. Si no se puede comprobar algún archivo de Google, se rechaza toda la carpeta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les entrées exclues ne sont pas importées. Si un fichier Google ne peut pas être vérifié, l'intégralité du dossier est rejetée."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बहिष्कृत प्रविष्टियाँ आयात नहीं की जाती हैं। यदि किसी Google फ़ाइल की जाँच नहीं की जा सकती, तो संपूर्ण फ़ोल्डर अस्वीकार कर दिया जाता है।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "除外されたエントリはインポートされません。 Google ファイルをチェックできない場合は、フォルダー全体が拒否されます。"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wykluczone wpisy nie są importowane. Jeśli choć jednego pliku Google nie można sprawdzić, cały folder zostaje odrzucony."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As entradas excluídas não são importadas. Se algum arquivo do Google não puder ser verificado, a pasta inteira será rejeitada."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исключенные записи не импортируются. Если какой-либо файл Google не может быть проверен, вся папка отклоняется."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "排除的条目不会导入。只要有一个 Google 文件无法检查，整个文件夹就会被拒绝。"
+          }
+        }
+      }
+    },
     "Scanning files…": {
       "localizations": {
         "ar": {
@@ -212,53 +1122,53 @@
       }
     },
     "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported.": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported." } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "تم تعطيل الاستدلال لهذا التحديد لأن الملاحظة الأولية المرفوضة لا تحتوي على طابع زمني صالح. لا يزال من الممكن استيراد نقاط الطريق الصالحة."}}, "bn": {"stringUnit": {"state": "translated", "value": "এই নির্বাচনের জন্য অনুমান অক্ষম করা হয়েছে কারণ একটি প্রত্যাখ্যান করা কাঁচা পর্যবেক্ষণের কোনো বৈধ টাইমস্ট্যাম্প নেই৷ বৈধ রুট পয়েন্ট এখনও আমদানি করা যেতে পারে."}}, "es": {"stringUnit": {"state": "translated", "value": "La inferencia está deshabilitada para esta selección porque una observación sin procesar rechazada no tiene una marca de tiempo válida. Aún se pueden importar puntos de ruta válidos."}}, "fr": {"stringUnit": {"state": "translated", "value": "L'inférence est désactivée pour cette sélection car une observation brute rejetée n'a pas d'horodatage valide. Des points d'itinéraire valides peuvent toujours être importés."}}, "hi": {"stringUnit": {"state": "translated", "value": "इस चयन के लिए अनुमान अक्षम है क्योंकि अस्वीकृत कच्चे अवलोकन में कोई वैध टाइमस्टैम्प नहीं है। वैध मार्ग बिंदु अभी भी आयात किए जा सकते हैं।"}}, "ja": {"stringUnit": {"state": "translated", "value": "拒否された生の観測には有効なタイムスタンプがないため、この選択では推論が無効になります。有効なルート ポイントは引き続きインポートできます。"}}, "pl": {"stringUnit": {"state": "translated", "value": "Wnioskowanie jest wyłączone dla tego wyboru, ponieważ odrzucona nieprzetworzona obserwacja nie ma prawidłowego znacznika czasu. Nadal można importować prawidłowe punkty trasy."}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "A inferência está desabilitada para esta seleção porque uma observação bruta rejeitada não possui carimbo de data/hora válido. Os pontos de rota válidos ainda podem ser importados."}}, "ru": {"stringUnit": {"state": "translated", "value": "Определение посещений отключено для этого набора: у отклонённого исходного образца нет корректной метки времени. Допустимые точки маршрута по-прежнему можно импортировать."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "此选择中有被拒绝的原始样本缺少有效时间戳，因此已停用到访推断。有效的路线点仍可导入。"}}, "en": { "stringUnit": { "state": "translated", "value": "Inference is disabled for this selection because a rejected raw observation has no valid timestamp. Valid route points can still be imported." } } }
     },
     "%@ rejected raw samples break inference continuity": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ rejected raw samples break inference continuity" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "عينات أولية مرفوضة تقطع استمرارية الاستدلال: %@"}}, "bn": {"stringUnit": {"state": "translated", "value": "অনুমানের ধারাবাহিকতা ভাঙে এমন প্রত্যাখ্যাত মূল নমুনা: %@"}}, "es": {"stringUnit": {"state": "translated", "value": "Muestras rechazadas que interrumpen la continuidad de la inferencia: %@"}}, "fr": {"stringUnit": {"state": "translated", "value": "Échantillons bruts rejetés interrompant la continuité de l’estimation : %@"}}, "hi": {"stringUnit": {"state": "translated", "value": "अनुमान की निरंतरता तोड़ने वाले अस्वीकृत मूल नमूने: %@"}}, "ja": {"stringUnit": {"state": "translated", "value": "推定の連続性を断つ除外された元サンプル：%@件"}}, "pl": {"stringUnit": {"state": "translated", "value": "Odrzucone próbki przerywające ciągłość wnioskowania: %@"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Amostras brutas rejeitadas que interrompem a continuidade da inferência: %@"}}, "ru": {"stringUnit": {"state": "translated", "value": "Отклонённых исходных образцов, нарушающих непрерывность определения: %@"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "因被拒绝而中断推断连续性的原始样本：%@ 个"}}, "en": { "stringUnit": { "state": "translated", "value": "%@ rejected raw samples break inference continuity" } } }
     },
     "%@ route samples have unknown accuracy; excluded from visit inference": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ route samples have unknown accuracy; excluded from visit inference" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "عينات مسار بدقة غير معروفة، مستبعدة من استنتاج الزيارات: %@"}}, "bn": {"stringUnit": {"state": "translated", "value": "অজানা নির্ভুলতার কারণে অবস্থান অনুমান থেকে বাদ দেওয়া রুটের নমুনা: %@"}}, "es": {"stringUnit": {"state": "translated", "value": "Muestras de ruta de precisión desconocida excluidas de la inferencia de visitas: %@"}}, "fr": {"stringUnit": {"state": "translated", "value": "Échantillons d’itinéraire de précision inconnue, exclus de l’estimation des visites : %@"}}, "hi": {"stringUnit": {"state": "translated", "value": "अज्ञात सटीकता के कारण ठहराव के अनुमान से बाहर रखे गए मार्ग नमूने: %@"}}, "ja": {"stringUnit": {"state": "translated", "value": "精度不明のため訪問推定から除外されたルートサンプル：%@件"}}, "pl": {"stringUnit": {"state": "translated", "value": "Próbki trasy o nieznanej dokładności, wykluczone z wnioskowania o wizytach: %@"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Amostras de rota com precisão desconhecida, excluídas da inferência de visitas: %@"}}, "ru": {"stringUnit": {"state": "translated", "value": "Образцов маршрута с неизвестной точностью, исключённых из определения посещений: %@"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "精度未知、未用于到访推断的路线样本：%@ 个"}}, "en": { "stringUnit": { "state": "translated", "value": "%@ route samples have unknown accuracy; excluded from visit inference" } } }
     },
     "Infer visits from raw points": {
       "comment": "Google import review opt-out. Other locales currently use English fallback.",
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Infer visits from raw points" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "استنتج الزيارات من النقاط الخام"}}, "bn": {"stringUnit": {"state": "translated", "value": "কাঁচা পয়েন্ট থেকে পরিদর্শন অনুমান করুন"}}, "es": {"stringUnit": {"state": "translated", "value": "Inferir visitas a partir de puntos sin procesar"}}, "fr": {"stringUnit": {"state": "translated", "value": "Déduire les visites à partir de points bruts"}}, "hi": {"stringUnit": {"state": "translated", "value": "कच्चे बिंदुओं से यात्राओं का अनुमान लगाएं"}}, "ja": {"stringUnit": {"state": "translated", "value": "生のポイントから訪問を推測する"}}, "pl": {"stringUnit": {"state": "translated", "value": "Wnioskuj wizyty na podstawie nieprzetworzonych punktów"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Inferir visitas a partir de pontos brutos"}}, "ru": {"stringUnit": {"state": "translated", "value": "Определять посещения по исходным точкам"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "从原始轨迹点推断到访记录"}}, "en": { "stringUnit": { "state": "translated", "value": "Infer visits from raw points" } } }
     },
     "%@ inferred candidates before duplicate matching": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ inferred candidates before duplicate matching" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "زيارات محتملة مستنتجة قبل فحص التكرار: %@"}}, "bn": {"stringUnit": {"state": "translated", "value": "সদৃশ রেকর্ড মেলানোর আগে অনুমিত অবস্থান: %@"}}, "es": {"stringUnit": {"state": "translated", "value": "%@ posibles visitas inferidas antes de comprobar duplicados"}}, "fr": {"stringUnit": {"state": "translated", "value": "%@ visites estimées avant la détection des doublons"}}, "hi": {"stringUnit": {"state": "translated", "value": "डुप्लिकेट जाँच से पहले अनुमानित संभावित ठहराव: %@"}}, "ja": {"stringUnit": {"state": "translated", "value": "重複チェック前の訪問候補：%@件"}}, "pl": {"stringUnit": {"state": "translated", "value": "%@ potencjalnych wizyt przed sprawdzeniem duplikatów"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ possíveis visitas inferidas antes da verificação de duplicatas"}}, "ru": {"stringUnit": {"state": "translated", "value": "Предполагаемых посещений до проверки дубликатов: %@"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "检查重复记录前的推断到访候选：%@ 个"}}, "en": { "stringUnit": { "state": "translated", "value": "%@ inferred candidates before duplicate matching" } } }
     },
     "Dwell: %lld min": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Dwell: %lld min" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "مدة البقاء: %lld دقيقة"}}, "bn": {"stringUnit": {"state": "translated", "value": "অবস্থানের সময়: %lld মিনিট"}}, "es": {"stringUnit": {"state": "translated", "value": "Permanencia: %lld min"}}, "fr": {"stringUnit": {"state": "translated", "value": "Durée sur place : %lld min"}}, "hi": {"stringUnit": {"state": "translated", "value": "ठहराव: %lld मिनट"}}, "ja": {"stringUnit": {"state": "translated", "value": "滞在時間：%lld分"}}, "pl": {"stringUnit": {"state": "translated", "value": "Czas pobytu: %lld min"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Permanência: %lld min"}}, "ru": {"stringUnit": {"state": "translated", "value": "Время пребывания: %lld мин"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "停留时间：%lld 分钟"}}, "en": { "stringUnit": { "state": "translated", "value": "Dwell: %lld min" } } }
     },
     "Radius: %lld m": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Radius: %lld m" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "نصف القطر: %lld م"}}, "bn": {"stringUnit": {"state": "translated", "value": "ব্যাসার্ধ: %lld m"}}, "es": {"stringUnit": {"state": "translated", "value": "Radio: %lld m"}}, "fr": {"stringUnit": {"state": "translated", "value": "Rayon : %lld m"}}, "hi": {"stringUnit": {"state": "translated", "value": "त्रिज्या: %lld मी"}}, "ja": {"stringUnit": {"state": "translated", "value": "半径: %lld m"}}, "pl": {"stringUnit": {"state": "translated", "value": "Promień: %lld m"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Raio: %lld m"}}, "ru": {"stringUnit": {"state": "translated", "value": "Радиус: %lld м"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "半径： %lld米"}}, "en": { "stringUnit": { "state": "translated", "value": "Radius: %lld m" } } }
     },
     "Accepted accuracy: %lld m": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Accepted accuracy: %lld m" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "الدقة المقبولة: %lld م"}}, "bn": {"stringUnit": {"state": "translated", "value": "অনুমোদিত নির্ভুলতা: %lld মি"}}, "es": {"stringUnit": {"state": "translated", "value": "Precisión aceptada: %lld m"}}, "fr": {"stringUnit": {"state": "translated", "value": "Précision acceptée : %lld m"}}, "hi": {"stringUnit": {"state": "translated", "value": "स्वीकृत सटीकता: %lld मी"}}, "ja": {"stringUnit": {"state": "translated", "value": "許容される精度: %lld m"}}, "pl": {"stringUnit": {"state": "translated", "value": "Akceptowana dokładność: %lld m"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Precisão aceita: %lld m"}}, "ru": {"stringUnit": {"state": "translated", "value": "Приемлемая точность: %lld м"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "可接受的精度：%lld 米"}}, "en": { "stringUnit": { "state": "translated", "value": "Accepted accuracy: %lld m" } } }
     },
     "Include poor-accuracy route points": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Include poor-accuracy route points" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "قم بتضمين نقاط طريق منخفضة الدقة"}}, "bn": {"stringUnit": {"state": "translated", "value": "দুর্বল-নির্ভুলতার রুট পয়েন্ট অন্তর্ভুক্ত করুন"}}, "es": {"stringUnit": {"state": "translated", "value": "Incluir puntos de ruta de baja precisión"}}, "fr": {"stringUnit": {"state": "translated", "value": "Inclure les points d'itinéraire de mauvaise précision"}}, "hi": {"stringUnit": {"state": "translated", "value": "खराब-सटीकता वाले मार्ग बिंदु शामिल करें"}}, "ja": {"stringUnit": {"state": "translated", "value": "精度の低いルート ポイントを含める"}}, "pl": {"stringUnit": {"state": "translated", "value": "Uwzględnij punkty trasy o niskiej dokładności"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Incluir pontos de rota com baixa precisão"}}, "ru": {"stringUnit": {"state": "translated", "value": "Включить точки маршрута с низкой точностью"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "包括精度较差的路线点"}}, "en": { "stringUnit": { "state": "translated", "value": "Include poor-accuracy route points" } } }
     },
     "%@ route points excluded by accuracy": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ route points excluded by accuracy" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "تم استبعاد %@ نقاط الطريق من حيث الدقة"}}, "bn": {"stringUnit": {"state": "translated", "value": "%@ রুট পয়েন্ট যথার্থতা দ্বারা বাদ"}}, "es": {"stringUnit": {"state": "translated", "value": "%@ puntos de ruta excluidos por precisión"}}, "fr": {"stringUnit": {"state": "translated", "value": "%@ points d'itinéraire exclus par précision"}}, "hi": {"stringUnit": {"state": "translated", "value": "कम सटीकता के कारण हटाए गए मार्ग बिंदु: %@"}}, "ja": {"stringUnit": {"state": "translated", "value": "%@精度により除外されたルート ポイント"}}, "pl": {"stringUnit": {"state": "translated", "value": "%@ punkty trasy wykluczone ze względu na dokładność"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ pontos de rota excluídos por precisão"}}, "ru": {"stringUnit": {"state": "translated", "value": "%@ точек маршрута, исключенных по точности"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "%@因精度而排除的路线点"}}, "en": { "stringUnit": { "state": "translated", "value": "%@ route points excluded by accuracy" } } }
     },
     "%@ inferred candidates suppressed by existing visits": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "%@ inferred candidates suppressed by existing visits" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "زيارات محتملة مستنتجة تم استبعادها بسبب الزيارات الموجودة: %@"}}, "bn": {"stringUnit": {"state": "translated", "value": "বিদ্যমান অবস্থানের কারণে বাদ দেওয়া অনুমিত অবস্থান: %@"}}, "es": {"stringUnit": {"state": "translated", "value": "%@ posibles visitas inferidas omitidas por visitas existentes"}}, "fr": {"stringUnit": {"state": "translated", "value": "%@ visites estimées écartées en raison de visites existantes"}}, "hi": {"stringUnit": {"state": "translated", "value": "मौजूदा ठहरावों के कारण हटाए गए अनुमानित संभावित ठहराव: %@"}}, "ja": {"stringUnit": {"state": "translated", "value": "既存の訪問により除外された訪問候補：%@件"}}, "pl": {"stringUnit": {"state": "translated", "value": "%@ potencjalnych wizyt pominiętych z powodu istniejących wizyt"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "%@ possíveis visitas inferidas excluídas por visitas existentes"}}, "ru": {"stringUnit": {"state": "translated", "value": "Предполагаемых посещений, исключённых из-за существующих: %@"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "因现有到访记录而排除的推断到访候选：%@ 个"}}, "en": { "stringUnit": { "state": "translated", "value": "%@ inferred candidates suppressed by existing visits" } } }
     },
     "Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected.": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected." } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "الزيارات المستنتجة تقديرات مبنية على الأوقات المسجلة، وليست زيارات الأماكن من Google. لا يمكن إثبات زيارة باستخدام عينات متباعدة أو متحركة أو مجهولة الدقة أو ضعيفة الدقة. تظل الفترات الزمنية للزيارات الدلالية والزيارات الموجودة محمية."}}, "bn": {"stringUnit": {"state": "translated", "value": "অনুমিত অবস্থান রেকর্ড করা সময়ের ভিত্তিতে করা অনুমান, Google-এর স্থান পরিদর্শনের রেকর্ড নয়। বিচ্ছিন্ন, চলন্ত, অজানা নির্ভুলতা বা কম নির্ভুলতার নমুনা দিয়ে কোনো স্থানে অবস্থান নিশ্চিত করা যায় না। Google-এর সেমান্টিক পরিদর্শন এবং বিদ্যমান অবস্থানের সময়সীমা সুরক্ষিত থাকে।"}}, "es": {"stringUnit": {"state": "translated", "value": "Las visitas inferidas son estimaciones basadas en las horas registradas, no visitas a lugares de Google. Las muestras escasas, en movimiento, de precisión desconocida o baja no permiten establecer una visita. Se protegen los intervalos de las visitas semánticas y existentes."}}, "fr": {"stringUnit": {"state": "translated", "value": "Les visites estimées reposent sur les horaires enregistrés, et non sur les visites de lieux Google. Des échantillons trop espacés, en mouvement, de précision inconnue ou faible ne permettent pas d’établir une visite. Les périodes des visites sémantiques et existantes sont protégées."}}, "hi": {"stringUnit": {"state": "translated", "value": "अनुमानित ठहराव दर्ज किए गए समय पर आधारित हैं, Google के स्थान-भ्रमण रिकॉर्ड नहीं हैं। विरल, चलते हुए, अज्ञात सटीकता या कम सटीकता वाले नमूने किसी ठहराव की पुष्टि नहीं कर सकते। सिमेंटिक और मौजूदा ठहरावों की समय-सीमाएँ सुरक्षित रहती हैं।"}}, "ja": {"stringUnit": {"state": "translated", "value": "推定された訪問は記録時刻に基づく推定であり、Googleの場所への訪問記録ではありません。まばらなサンプル、移動中のサンプル、精度不明または低精度のサンプルからは訪問を判定できません。セマンティック訪問と既存の訪問の時間範囲は保護されます。"}}, "pl": {"stringUnit": {"state": "translated", "value": "Wizyty są szacowane na podstawie zapisanych czasów, a nie wizyt w miejscach Google. Rzadkie próbki, próbki w ruchu oraz próbki o nieznanej lub niskiej dokładności nie pozwalają ustalić wizyty. Przedziały czasowe wizyt semantycznych i istniejących pozostają chronione."}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "As visitas inferidas são estimativas baseadas nos horários registrados, não registros de visitas a lugares do Google. Amostras esparsas, em movimento, com precisão desconhecida ou baixa não permitem determinar uma visita. Os períodos das visitas semânticas e existentes são protegidos."}}, "ru": {"stringUnit": {"state": "translated", "value": "Предполагаемые посещения определяются по записанному времени, а не по посещениям мест из Google. Редкие образцы, образцы в движении, с неизвестной или низкой точностью не позволяют установить посещение. Временные интервалы семантических и существующих посещений защищены."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "推断的到访记录基于已记录的时间进行估算，并非 Google 地点到访记录。稀疏、移动中、精度未知或精度较低的样本无法确定一次到访。语义到访和现有到访的时间范围均受到保护。"}}, "en": { "stringUnit": { "state": "translated", "value": "Inferred visits are estimates from recorded times, not Google place visits. Sparse, moving, unknown-accuracy and poor-accuracy samples cannot establish a visit. Semantic and existing visit windows are protected." } } }
     },
     "Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit.": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit." } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "تُحفظ العينات مجهولة الدقة للمسارات فقط. السماح بنقاط مسار ضعيفة الدقة لا يلغي أبدًا حد الدقة المستخدم لاستنتاج الزيارات."}}, "bn": {"stringUnit": {"state": "translated", "value": "অজানা নির্ভুলতার নমুনা শুধু রুটের জন্য রাখা হয়। কম নির্ভুলতার রুট পয়েন্ট অন্তর্ভুক্ত করার অনুমতি কখনোই অবস্থান অনুমানের নির্ভুলতার সীমা বদলায় না।"}}, "es": {"stringUnit": {"state": "translated", "value": "Las muestras de precisión desconocida se conservan solo para las rutas. Incluir puntos de ruta de baja precisión nunca anula el límite de precisión de la inferencia."}}, "fr": {"stringUnit": {"state": "translated", "value": "Les échantillons de précision inconnue sont conservés uniquement pour les itinéraires. L’inclusion de points d’itinéraire peu précis ne modifie jamais la limite de précision de l’estimation des visites."}}, "hi": {"stringUnit": {"state": "translated", "value": "अज्ञात सटीकता वाले नमूने केवल मार्गों के लिए रखे जाते हैं। कम सटीकता वाले मार्ग बिंदु शामिल करने से ठहराव के अनुमान की सटीकता सीमा कभी नहीं बदलती।"}}, "ja": {"stringUnit": {"state": "translated", "value": "精度不明のサンプルはルートにのみ残されます。低精度のルートポイントを含めても、訪問推定の精度上限は変更されません。"}}, "pl": {"stringUnit": {"state": "translated", "value": "Próbki o nieznanej dokładności są zachowywane tylko dla tras. Włączenie punktów trasy o niskiej dokładności nigdy nie zmienia limitu dokładności wnioskowania o wizytach."}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Amostras com precisão desconhecida são mantidas apenas nas rotas. Incluir pontos de rota com baixa precisão nunca altera o limite de precisão da inferência."}}, "ru": {"stringUnit": {"state": "translated", "value": "Образцы с неизвестной точностью сохраняются только для маршрутов. Включение точек маршрута с низкой точностью не меняет предел точности определения посещений."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "精度未知的样本仅保留用于路线。选择包含低精度路线点，绝不会改变到访推断的精度限制。"}}, "en": { "stringUnit": { "state": "translated", "value": "Unknown accuracy is retained for routes only. Poor-accuracy route opt-in never overrides the inference accuracy limit." } } }
     },
     "Updating review…": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Updating review…" } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "جارٍ تحديث معاينة الاستيراد…"}}, "bn": {"stringUnit": {"state": "translated", "value": "আমদানির পূর্বরূপ আপডেট করা হচ্ছে…"}}, "es": {"stringUnit": {"state": "translated", "value": "Actualizando la vista previa…"}}, "fr": {"stringUnit": {"state": "translated", "value": "Mise à jour de l’aperçu…"}}, "hi": {"stringUnit": {"state": "translated", "value": "आयात पूर्वावलोकन अपडेट हो रहा है…"}}, "ja": {"stringUnit": {"state": "translated", "value": "インポートのプレビューを更新中…"}}, "pl": {"stringUnit": {"state": "translated", "value": "Aktualizowanie podglądu importu…"}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Atualizando a prévia da importação…"}}, "ru": {"stringUnit": {"state": "translated", "value": "Обновление предпросмотра импорта…"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "正在更新导入预览…"}}, "en": { "stringUnit": { "state": "translated", "value": "Updating review…" } } }
     },
     "Choose valid inference limits: radius 25–500 m, dwell 5–120 minutes, accuracy 1–500 m, and gap 30–900 seconds no longer than dwell.": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Choose valid inference limits: radius 25–500 m, dwell 5–120 minutes, accuracy 1–500 m, and gap 30–900 seconds no longer than dwell." } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "اختر حدود استدلال صالحة: نصف قطر 25–500 م، ومدة بقاء 5–120 دقيقة، ودقة 1–500 م، وفاصل بين العينات 30–900 ثانية لا يتجاوز مدة البقاء."}}, "bn": {"stringUnit": {"state": "translated", "value": "অনুমানের বৈধ সীমা বেছে নিন: ব্যাসার্ধ 25–500 মি, অবস্থানের সময় 5–120 মিনিট, নির্ভুলতা 1–500 মি এবং নমুনার ব্যবধান 30–900 সেকেন্ড, যা অবস্থানের সময়ের বেশি নয়।"}}, "es": {"stringUnit": {"state": "translated", "value": "Elija límites de inferencia válidos: radio de 25–500 m, permanencia de 5–120 minutos, precisión de 1–500 m e intervalo entre muestras de 30–900 segundos, no superior a la permanencia."}}, "fr": {"stringUnit": {"state": "translated", "value": "Choisissez des limites valides : rayon de 25–500 m, durée sur place de 5–120 minutes, précision de 1–500 m et intervalle entre échantillons de 30–900 secondes, sans dépasser la durée sur place."}}, "hi": {"stringUnit": {"state": "translated", "value": "अनुमान के लिए मान्य सीमाएँ चुनें: त्रिज्या 25–500 मी, ठहराव 5–120 मिनट, सटीकता 1–500 मी और नमूनों के बीच अंतराल 30–900 सेकंड, जो ठहराव से अधिक न हो।"}}, "ja": {"stringUnit": {"state": "translated", "value": "有効な推定条件を選択してください：半径25〜500 m、滞在時間5〜120分、精度1〜500 m、サンプル間隔30〜900秒。サンプル間隔は滞在時間以下にしてください。"}}, "pl": {"stringUnit": {"state": "translated", "value": "Wybierz prawidłowe limity wnioskowania: promień 25–500 m, czas pobytu 5–120 minut, dokładność 1–500 m i odstęp między próbkami 30–900 sekund, nie dłuższy niż czas pobytu."}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Escolha limites válidos: raio de 25–500 m, permanência de 5–120 minutos, precisão de 1–500 m e intervalo entre amostras de 30–900 segundos, sem ultrapassar o tempo de permanência."}}, "ru": {"stringUnit": {"state": "translated", "value": "Выберите допустимые параметры: радиус 25–500 м, время пребывания 5–120 минут, точность 1–500 м и интервал между образцами 30–900 секунд, не превышающий время пребывания."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "请选择有效的推断条件：半径 25–500 米、停留时间 5–120 分钟、精度 1–500 米，以及 30–900 秒的采样间隔。采样间隔不得超过停留时间。"}}, "en": { "stringUnit": { "state": "translated", "value": "Choose valid inference limits: radius 25–500 m, dwell 5–120 minutes, accuracy 1–500 m, and gap 30–900 seconds no longer than dwell." } } }
     },
     "Review the updated inference and accuracy counts before importing.": {
-      "localizations": { "en": { "stringUnit": { "state": "translated", "value": "Review the updated inference and accuracy counts before importing." } } }
+      "localizations": { "ar": {"stringUnit": {"state": "translated", "value": "قم بمراجعة الاستدلال المحدث وأعداد الدقة قبل الاستيراد."}}, "bn": {"stringUnit": {"state": "translated", "value": "আমদানি করার আগে আপডেট করা অনুমান এবং নির্ভুলতা গণনা পর্যালোচনা করুন।"}}, "es": {"stringUnit": {"state": "translated", "value": "Revise los recuentos actualizados de inferencia y precisión antes de importar."}}, "fr": {"stringUnit": {"state": "translated", "value": "Vérifiez les décomptes d’inférence et de précision mis à jour avant l’importation."}}, "hi": {"stringUnit": {"state": "translated", "value": "आयात करने से पहले अद्यतन अनुमान और सटीकता गणना की समीक्षा करें।"}}, "ja": {"stringUnit": {"state": "translated", "value": "インポートする前に、更新された推論と精度のカウントを確認してください。"}}, "pl": {"stringUnit": {"state": "translated", "value": "Przed zaimportowaniem przejrzyj zaktualizowane liczniki wniosków i dokładności."}}, "pt-BR": {"stringUnit": {"state": "translated", "value": "Revise as contagens atualizadas de inferência e precisão antes de importar."}}, "ru": {"stringUnit": {"state": "translated", "value": "Перед импортом просмотрите обновленные значения вывода и точности."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "导入前查看更新的推理和准确性计数。"}}, "en": { "stringUnit": { "state": "translated", "value": "Review the updated inference and accuracy counts before importing." } } }
     },
     "Select all files from the same backup. Nothing was restored.": {
       "comment": "Multipart local backup admission error.",

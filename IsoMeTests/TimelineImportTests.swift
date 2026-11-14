@@ -562,6 +562,42 @@ final class ImportReviewValidationTests: XCTestCase {
 }
 
 @MainActor
+final class ImportCompletionTextTests: XCTestCase {
+    private func calendar(_ zone: String) -> Calendar {
+        var result = Calendar(identifier: .gregorian)
+        result.timeZone = TimeZone(identifier: zone)!
+        result.locale = Locale(identifier: "en_US")
+        return result
+    }
+
+    private func preview(_ start: String, _ end: String) -> ImportPreview {
+        let formatter = ISO8601DateFormatter()
+        let points = [start, end].map {
+            ImportedLocationPoint(latitude: 12, longitude: 34, timestamp: formatter.date(from: $0)!,
+                                  altitude: nil, speed: nil, horizontalAccuracy: 5, isOutlier: false)
+        }
+        return ImportPreview(fileName: "synthetic.json", payload: ImportPayload(format: .googleRaw, points: points),
+                             newVisitCount: 0, newPointCount: 2, duplicateVisitCount: 0, duplicatePointCount: 0)
+    }
+
+    func testTwoDayCompletionDoesNotAppendDaysToAnAlreadyFormattedUnit() {
+        let text = ImportCompletionText.detail(preview("2020-01-01T10:00:00Z", "2020-01-02T10:00:00Z"), calendar: calendar("UTC"))
+        XCTAssertEqual(text, "Added to Atlas: two days.")
+        XCTAssertFalse(text.contains("of days"))
+    }
+
+    func testInclusiveCalendarDaysRemainTwoAcrossSpringForward() {
+        let text = ImportCompletionText.detail(preview("2024-03-09T12:00:00-05:00", "2024-03-10T12:00:00-04:00"), calendar: calendar("America/New_York"))
+        XCTAssertEqual(text, "Added to Atlas: two days.")
+    }
+
+    func testInclusiveCalendarDaysRemainTwoAcrossFallBack() {
+        let text = ImportCompletionText.detail(preview("2024-11-02T12:00:00-04:00", "2024-11-03T12:00:00-05:00"), calendar: calendar("America/New_York"))
+        XCTAssertEqual(text, "Added to Atlas: two days.")
+    }
+}
+
+@MainActor
 final class ImportProgressTests: XCTestCase {
     func testQueuedPreviousImportCannotPopulateTheNextImport() async {
         let progress = ImportProgress()

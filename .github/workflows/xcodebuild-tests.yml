@@ -27,8 +27,10 @@ jobs:
       - name: Test iOS runner guardrails
         run: python3 -m unittest discover -s scripts -p test_test_ios.py
 
-      - name: Verify import progress localization
-        run: python3 -m unittest discover -s scripts -p test_import_progress_localization.py
+      - name: Verify Google import copy and progress localization
+        run: |
+          python3 -m unittest discover -s scripts -p '*import*localization.py'
+          python3 scripts/localization_catalog.py audit
 
       - name: Run IsoMe tests
         run: scripts/test-ios.sh --result-bundle-path artifacts/test-results/IsoMe.xcresult
@@ -38,7 +40,7 @@ jobs:
           settings=$(mktemp)
           xcodebuild -project IsoMe.xcodeproj -scheme IsoMe -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -showBuildSettings -json > "$settings"
           app=$(python3 -c 'import json,sys; s=next(x["buildSettings"] for x in json.load(open(sys.argv[1])) if x["target"]=="IsoMe"); print(s["TARGET_BUILD_DIR"]+"/"+s["FULL_PRODUCT_NAME"])' "$settings")
-          swift scripts/check_import_progress_resources.swift "$app"
+          swift scripts/check_import_progress_resources.swift "$app" scripts/fixtures/google-import-copy-keys.json
 
       - name: Upload xcresult on failure
         if: failure()
