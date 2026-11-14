@@ -82,7 +82,17 @@ class NativeMapInputReadinessTest {
         compose.setContent {MaterialTheme {PlaceLocationPicker(coordinate,lookup,allowed,{},{},{map.set(it)})}}
         val view=compose.runOnIdle {checkNotNull(findNativeMapView())}
         val rendered=AtomicBoolean()
-        compose.runOnUiThread {view.addOnDidFinishRenderingFrameListener {_,_,_->rendered.set(true)}}
+        val probe=InputPinProbe()
+        val renderListener=MapView.OnDidFinishRenderingFrameListener {fully,_,_->rendered.set(true);probe.record("frame",if(fully) 1 else 0)}
+        val styleListener=MapView.OnDidFinishLoadingStyleListener {probe.record("style-loaded")}
+        val sourceListener=MapView.OnSourceChangedListener {id->if(id=="selected-place") probe.record("selected-source-changed")}
+        compose.runOnUiThread {
+            view.addOnDidFinishRenderingFrameListener(renderListener)
+            view.addOnDidFinishLoadingStyleListener(styleListener)
+            view.addOnSourceChangedListener(sourceListener)
+        }
+        try {
+        probe.record("listeners-attached")
         compose.waitUntil(10_000) {compose.runOnUiThread {map.get()?.style?.isFullyLoaded==true}}
         if(InstrumentationRegistry.getArguments().getString("requireRendererHold")=="true") {
             assertFalse("The controlled picker probe must reach pre-frame input",rendered.get())
@@ -90,9 +100,23 @@ class NativeMapInputReadinessTest {
             tap(view,compose.runOnUiThread {PointF(view.width/2f+80f,view.height/2f)})
             assertFalse(rendered.get())
         }
+        probe.record("before-frame-wait")
         compose.awaitNativeMapFrame(view,map.get())
+        probe.record("after-frame-wait")
         assertTrue(compose.runOnUiThread {view.isEnabled})
-        assertEquals(1,compose.runOnUiThread {map.get().queryRenderedFeatures(map.get().projection.toScreenLocation(LatLng(coordinate.latitude,coordinate.longitude)),"selected-pin").size})
+        probe.record("before-initial-query")
+        // Keep the original await/enable/query ordering; do not query to collect
+        // diagnostics until AFTER the first original result is irrevocably captured.
+        val firstPins=compose.runOnUiThread {map.get().queryRenderedFeatures(map.get().projection.toScreenLocation(LatLng(coordinate.latitude,coordinate.longitude)),"selected-pin").size}
+        probe.record("original-initial-pin-count",firstPins)
+        if(firstPins!=1) compose.runOnUiThread {
+            val target=map.get();val pixel=target.projection.toScreenLocation(LatLng(coordinate.latitude,coordinate.longitude))
+            val all=target.queryRenderedFeatures(android.graphics.RectF(0f,0f,view.width.toFloat(),view.height.toFloat()),"selected-pin").size
+            val source=target.style?.getSourceAs<org.maplibre.android.style.sources.GeoJsonSource>("selected-place")!=null
+            val layer=target.style?.getLayer("selected-pin")!=null
+            println("[DEBUG-input-pin] post-zero width=${view.width} height=${view.height} pixelX=${pixel.x} pixelY=${pixel.y} allPins=$all source=$source layer=$layer styleLoaded=${target.style?.isFullyLoaded} enabled=${view.isEnabled} focus=${view.hasWindowFocus()}")
+        }
+        assertEquals(1,firstPins)
         fun select(offset:Float) {
             SystemClock.sleep(android.view.ViewConfiguration.getDoubleTapTimeout().toLong()+50)
             val pixel=compose.runOnUiThread {PointF(view.width/2f+offset,view.height/2f)}
@@ -106,6 +130,14 @@ class NativeMapInputReadinessTest {
             compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
             compose.waitUntil(5000) {compose.runOnUiThread {view.isEnabled}}
             select(if(index==0) -50f else 100f)
+        }
+        } finally {
+            compose.runOnUiThread {
+                view.removeOnDidFinishRenderingFrameListener(renderListener)
+                view.removeOnDidFinishLoadingStyleListener(styleListener)
+                view.removeOnSourceChangedListener(sourceListener)
+            }
+            probe.dump()
         }
     }
 

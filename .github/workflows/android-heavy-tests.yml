@@ -12,7 +12,7 @@ on:
       suite:
         description: Heavy suite to run
         type: choice
-        options: [all, database, import-scale]
+        options: [all, database, import-scale, input-diagnostic]
         default: all
 
 permissions:
@@ -23,8 +23,58 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Diagnostic branch only: original hosted prefix, never a replacement baseline gate.
+  input-diagnostic:
+    if: github.event_name == 'workflow_dispatch' && inputs.suite == 'input-diagnostic'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Put the runner's Android command-line tools on PATH
+        run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Observe original first-pin query after exact hosted prefix
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          avd-name: whereday-heavy-database-api35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: android
+          script: |
+            ./gradlew :automation-client:assembleDebug --no-daemon
+            adb install -r automation-client/build/outputs/apk/debug/automation-client-debug.apk
+            ./gradlew :app:assembleMapQa :app:assembleMapQaAndroidTest --no-daemon
+            mkdir -p build/reports/input-pin
+            diag_serial=$(adb get-serialno)
+            diag_avd=$(adb -s "$diag_serial" emu avd name | head -n 1 | tr -d '\r')
+            set +e
+            python3 scripts/run_qa_instrumentation.py --adb "$(command -v adb)" --aapt2 "$ANDROID_HOME/build-tools/35.0.0/aapt2" --serial "$diag_serial" --avd "$diag_avd" --module app --classes com.bontecou.whereday.RoadAttributionRenderingTest,com.bontecou.whereday.GeoapifyRoutingConfigurationTest,com.bontecou.whereday.PhotoDotRenderingTest,com.bontecou.whereday.SoftwareNoticesTest,com.bontecou.whereday.SoftwareNoticesNavigationTest,com.bontecou.whereday.RoadConsentScreenTest,com.bontecou.whereday.RoadDisplayProducerTest,com.bontecou.whereday.RoadMapRenderingTest,com.bontecou.whereday.NativeMapInputReadinessTest --expected-tests 38 --output build/reports/input-pin/native
+            diag_status=$?
+            adb logcat -d -v brief -s System.out:I '*:S' | grep '\[DEBUG-input-pin\]' > build/reports/input-pin/observations.log || true
+            if [ "$diag_status" -eq 0 ] && ! grep -q original-initial-pin-count build/reports/input-pin/observations.log; then exit 2; fi
+            exit "$diag_status"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-input-pin-diagnostic
+          path: android/build/reports/input-pin/
+          if-no-files-found: warn
+
   database:
-    if: github.event_name != 'workflow_dispatch' || inputs.suite != 'import-scale'
+    if: github.event_name != 'workflow_dispatch' || (inputs.suite != 'import-scale' && inputs.suite != 'input-diagnostic')
     runs-on: ubuntu-latest
     timeout-minutes: 240
     steps:
@@ -105,7 +155,7 @@ jobs:
             android/platform/build/outputs/androidTest-results/
 
   import-scale:
-    if: github.event_name != 'workflow_dispatch' || inputs.suite != 'database'
+    if: github.event_name != 'workflow_dispatch' || (inputs.suite != 'database' && inputs.suite != 'input-diagnostic')
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
