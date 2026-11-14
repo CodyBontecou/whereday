@@ -49,7 +49,7 @@ import com.bontecou.whereday.data.*
 import com.bontecou.whereday.domain.*
 import com.bontecou.whereday.platform.*
 
-internal enum class SettingsDestination {listening,usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly}
+internal enum class SettingsDestination {listening,usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly,backup}
 
 @Composable fun SettingsScreen(graph:AppGraph,settings:AppSettings,places:List<SavedPlace>,count:Long,onClose:(()->Unit)?=null) {
     val context=LocalContext.current
@@ -57,6 +57,8 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
     val scroll=rememberLazyListState()
     var destination by rememberSaveable {mutableStateOf<SettingsDestination?>(null)}
     var addingPlace by rememberSaveable {mutableStateOf(false)}
+    var backupBeforeClear by rememberSaveable {mutableStateOf(false)}
+    var reopenClear by rememberSaveable {mutableStateOf(false)}
     val clear by graph.journalClear.state.collectAsStateWithLifecycle()
     val commands by graph.settingsActions.state.collectAsStateWithLifecycle()
     val folder=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {uri->if(uri!=null) graph.settingsActions.folder(uri.toString())}
@@ -84,6 +86,7 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
         SettingsDestination.webhooks->{WebhookScreen(graph,back);return}
         SettingsDestination.photos->{PhotosScreen(graph,back=back);return}
         SettingsDestination.places->{SavedPlacesScreen(graph,places,back);return}
+        SettingsDestination.backup->{BackupScreen(graph,backupBeforeClear,back) {destination=null;reopenClear=true};return}
         else->Unit
     }
     val actions=SettingsActions(
@@ -92,6 +95,7 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
         {try {context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.parse("package:${context.packageName}")))} catch(_:Exception) {graph.settingsActions.reportFailure(SettingsFailure.permissions)}},
         {if(it==SettingsDestination.addPlace) addingPlace=true else destination=it},
         {graph.journalClear.clear()},graph.journalClear::dismiss,graph.settingsActions::dismiss,
+        {beforeClear->backupBeforeClear=beforeClear;destination=SettingsDestination.backup},
     )
     // Opened from Archive on the phone tab bar, Back returns there.
     if(onClose!=null) androidx.activity.compose.BackHandler(onBack=onClose)
@@ -100,7 +104,7 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
     var plans by rememberSaveable {mutableStateOf(false)}
     val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
     val activity=androidx.activity.compose.LocalActivity.current
-    SettingsContent(settings,places.size,count,commands,clear,actions,scroll,onBack=onClose,planCard=if(!purchase.enforced) null else {{
+    SettingsContent(settings,places.size,count,commands,clear,actions,scroll,onBack=onClose,reopenClear=reopenClear,reopenedClear={reopenClear=false},planCard=if(!purchase.enforced) null else {{
         SettingsPlanCard(purchase,graph.purchases.subscriptionId) {
             if(purchase.access==com.bontecou.whereday.billing.AccessState.active && purchase.activeProductId==graph.purchases.subscriptionId) runCatching {uriHandler.openUri(graph.purchases.manageUri())}
             else plans=true

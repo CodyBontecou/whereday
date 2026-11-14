@@ -239,6 +239,27 @@ interface HistoryDao {
     @Query("DELETE FROM points WHERE value_id IN (:ids)") suspend fun deletePointsById(ids: List<String>)
     @Query("DELETE FROM points WHERE value_time >= :from AND value_time <= :until") suspend fun deletePointsInSessionWindow(from: Instant, until: Instant)
     @Query("DELETE FROM sessions WHERE value_id=:id") suspend fun deleteSession(id: String)
+    // Complete backup pages: keyset order on each primary key, never a display window or sample.
+    @Query("SELECT * FROM visits WHERE value_id>:after ORDER BY value_id LIMIT 500") suspend fun backupVisits(after:String):List<VisitRow>
+    @Query("SELECT * FROM points WHERE value_id>:after ORDER BY value_id LIMIT 500") suspend fun backupPoints(after:String):List<PointRow>
+    @Query("SELECT * FROM sessions WHERE value_id>:after ORDER BY value_id LIMIT 500") suspend fun backupSessions(after:String):List<SessionRow>
+    @Query("SELECT * FROM places WHERE value_id>:after ORDER BY value_id LIMIT 500") suspend fun backupPlaces(after:String):List<PlaceRow>
+    @Query("SELECT * FROM photo_moments WHERE uri>:after ORDER BY uri LIMIT 500") suspend fun backupPhotos(after:String):List<PhotoRow>
+    @Query("SELECT * FROM country_stays WHERE value_id>:after ORDER BY value_id LIMIT 500") suspend fun backupStays(after:String):List<StayRow>
+    @Query("SELECT value_id FROM visits WHERE value_id IN (:ids)") suspend fun existingVisitIds(ids:List<String>):List<String>
+    @Query("SELECT value_id FROM points WHERE value_id IN (:ids)") suspend fun existingPointIds(ids:List<String>):List<String>
+    @Query("SELECT value_id FROM sessions WHERE value_id IN (:ids)") suspend fun existingSessionIds(ids:List<String>):List<String>
+    @Query("SELECT value_id FROM places WHERE value_id IN (:ids)") suspend fun existingPlaceIds(ids:List<String>):List<String>
+    @Query("SELECT value_id FROM country_stays WHERE value_id IN (:ids)") suspend fun existingStayIds(ids:List<String>):List<String>
+    @Query("SELECT uri FROM photo_moments WHERE uri IN (:uris)") suspend fun existingPhotoUris(uris:List<String>):List<String>
+    // A restore only adds records; an identifier that already exists is never overwritten.
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restoreVisits(rows:List<VisitRow>)
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restorePoints(rows:List<PointRow>)
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restoreSessions(rows:List<SessionRow>)
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restorePlaces(rows:List<PlaceRow>)
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restoreStays(rows:List<StayRow>)
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restorePhotos(rows:List<PhotoRow>)
+    @Insert(onConflict=OnConflictStrategy.IGNORE) suspend fun restorePhotoAssets(rows:List<PhotoAssetRow>)
 }
 
 @Database(entities = [PointRow::class, VisitRow::class, SessionRow::class, PlaceRow::class, StayRow::class,

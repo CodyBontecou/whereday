@@ -186,6 +186,31 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
         }
     }
 
+    /**
+     * The lossless backup of everything Clear All Data erases, in the shared iOS/Android Whereday backup format.
+     * Export filters, field choices and date ranges never trim it. Paid like every file export, as iOS gates it
+     * behind `canExport`. Large journals become a numbered multipart set (deliver with Share or the folder).
+     */
+    suspend fun prepareBackup():PreparedExport=withContext(Dispatchers.IO) {
+        authorize(Capability.fileExport)
+        val epoch=generation.get();val coroutine=currentCoroutineContext()
+        lock.withLock {
+            checkCurrent(epoch);check(root.mkdirs() || root.isDirectory);cleanupExpiredLocked()
+            val id=UUID.randomUUID().toString();val directory=File(root,id);check(directory.mkdir()) {"Not enough storage to prepare export"}
+            try {
+                val exportedAt=Instant.now().toEpochMilli()
+                val checkpoint={coroutine.ensureActive();checkGeneration(epoch)}
+                val written=JournalBackupStore(database).snapshot {snapshot->
+                    WheredayBackupWriter().write(directory,exportedAt,SnapshotBackupSource(snapshot,exportedAt),check=checkpoint)
+                }
+                checkCurrent(epoch);authorize(Capability.fileExport);checkCurrent(epoch)
+                val files=written.map {PreparedExportFile(it.file,it.name,ExportFormat.json,
+                    ExportCounts(it.counts.getValue(BackupCollection.visits).toLong(),it.counts.getValue(BackupCollection.points).toLong()),it.bytes,digest(it.file))}
+                PreparedExport(id,files).also {journal.save(it)}
+            } catch(e:Throwable) {directory.deleteRecursively();throw e}
+        }
+    }
+
     private suspend fun prepareGenerated(format:ExportFormat,path:String,finalPath:()->String={path},write:suspend (Writer,()->Unit,File)->ExportCounts):PreparedExport=withContext(Dispatchers.IO) {
         authorize(Capability.fileExport)
         val epoch=generation.get();val coroutine=currentCoroutineContext()
