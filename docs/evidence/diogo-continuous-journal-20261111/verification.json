@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-11",
+  "build": "2.0 (60) Debug",
+  "base_commit": "e4be58542c5de391aa2d6c9c1862d6eaa8a444d7",
+  "data": "Invented 1,000-hour recording, 60,001 points, two visits on different days. No customer data.",
+  "observed": {
+    "yesterday": "24 h, 1,440 points, 22.6 km, Yesterday stop only",
+    "complete_outing": "60,001 points, 941.1 km, full September 30\u2013November 11 date range",
+    "daily_mutation": "No Delete or metadata editor in daily details; explicit complete-outing link restores full controls",
+    "watch": "Independent recording, no proximity pause, extra battery use and unmeasured duration explained",
+    "privacy": "Local storage, optional Apple lookups and sends, and historical server analytics distinction shown",
+    "preset_selection": "Custom 5 m / Never settings select no preset; Every step is selected only with its 2 h auto-stop. Verified in UI and regression.",
+    "map_boundary": "Focused regression reproduced 1,441 instead of 1,440 points on Show on map; final test proves 1,440 and excludes next midnight."
+  },
+  "synthetic_query_milliseconds": 12.066006660461426,
+  "test_result_bundle": "artifacts/test-results/IsoMe-20261111-100057-91857.xcresult",
+  "passed_ios_tests": 129,
+  "additional_checks": [
+    "2 analytics removal checks passed",
+    "4 onboarding localization checks passed",
+    "11-language catalog audit passed",
+    "No missing compiler-extracted keys in changed ListeningView, OutingsView or TodayView"
+  ],
+  "known_baseline_check": "Whole-project compiler extraction reports 30 existing missing keys outside the changed interface files. The translation and placeholder audit passes.",
+  "qa_launch_arguments": [
+    "--seed-screenshot-data",
+    "--seed-continuous-recording-data",
+    "--default-tab=3",
+    "-tracking.cohort.legacy.v1",
+    "YES",
+    "-allowNetworkGeocoding",
+    "NO",
+    "-snapTravelPathToRoads",
+    "NO"
+  ],
+  "limits": [
+    "No physical Watch battery benchmark.",
+    "Timing is a synthetic simulator day query, not a real-device responsiveness guarantee."
+  ],
+  "screenshots": [
+    "yesterday-timeline.png",
+    "daily-details.png",
+    "complete-outing.png",
+    "recording-copy.png",
+    "privacy-copy.png",
+    "watch-guidance.png"
+  ],
+  "test_classes": [
+    "LocationViewModelPointScalingTests",
+    "TimelineStaySummaryTests",
+    "RouteSamplerTests",
+    "LocationManagerRouteSamplingTests",
+    "StoreManagerTests",
+    "ExportKitIntegrationTests",
+    "ExportDataIntentTests"
+  ]
+}
