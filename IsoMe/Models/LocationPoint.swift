@@ -12,6 +12,8 @@ final class LocationPoint {
     var speed: Double?
     var horizontalAccuracy: Double
     var isOutlier: Bool = false
+    /// Scalar mileage ownership; legacy points remain unassigned after migration.
+    var tripID: UUID? = nil
 
     var countryCode: String?
     var countryTimeZoneIdentifier: String?

@@ -4073,7 +4073,7 @@
   "provenance": {
     "IsoMe/Models/CountryStay.swift": "37d3ac74ed574206c519813013eb12ea00f218d8e8da8fb5be8870cf2f4d927d",
     "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
-    "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
+    "IsoMe/Models/LocationPoint.swift": "ba34682c435cc3bab9e443bfe698d274324ca2cc770812fec4d368daa007a451",
     "android/scripts/fixtures/CountryRegions.swift": "c859cdbb863dea200bdbf6a6036a115a96ae263f11d264e2ca7b262909241dac",
     "android/scripts/generate_country_regions.py": "250fd55427d11975916a4e95bed1381fbf98902870a9d853aeb0139e4ca10431",
     "IsoMe/Views/CountryDaysView.swift#CountryStayEditor.countries": "600bfa3d82cff5d6a732bb00b3509e9584cd9c73f94f4f6ddb16921458c32ed5",
