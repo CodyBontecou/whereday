@@ -26,6 +26,8 @@ final class LocationViewModel {
     // Cached data
     var todayVisits: [Visit] = []
     var allVisits: [Visit] = []
+    /// Invalidates cached daily membership even when an edit leaves record counts unchanged.
+    private(set) var timelineDataRevision = 0
     var allRecordingSessions: [RecordingSession] = []
     var savedPlaces: [SavedPlace] = []
     var photoLibraryAccessState: PhotoLibraryAccessState = PhotoLibraryManager.shared.authorizationState
@@ -177,6 +179,7 @@ final class LocationViewModel {
 
         do {
             allVisits = try modelContext.fetch(descriptor)
+            timelineDataRevision += 1
         } catch {
             print("Failed to fetch all visits: \(error)")
             allVisits = []
@@ -189,6 +192,7 @@ final class LocationViewModel {
 
         do {
             allRecordingSessions = try modelContext.fetch(descriptor)
+            timelineDataRevision += 1
         } catch {
             print("Failed to fetch recording sessions: \(error)")
             allRecordingSessions = []
