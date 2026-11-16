@@ -505,3 +505,48 @@ final class TimelineStaySummaryTests: XCTestCase {
         }
     }
 }
+
+final class MapSheetDragTests: XCTestCase {
+    private let height: CGFloat = 874
+
+    private func settle(_ detent: MapSheetDetent, drag: CGFloat, predicted: CGFloat? = nil) -> MapSheetDetent {
+        MapSheetDetent.settledDetent(from: detent, translation: drag, predicted: predicted ?? drag, containerHeight: height)
+    }
+
+    func testANudgeKeepsTheDetent() {
+        XCTAssertEqual(settle(.medium, drag: 40), .medium)
+        XCTAssertEqual(settle(.medium, drag: -40), .medium)
+        XCTAssertEqual(settle(.large, drag: 60), .large)
+    }
+
+    func testADragAndHoldSettlesWhereTheFingerLeftIt() {
+        // The scrawl: grab the medium sheet, drag well down, hold, let go with no velocity.
+        XCTAssertEqual(settle(.medium, drag: 300, predicted: 300), .peek)
+        XCTAssertEqual(settle(.large, drag: 250, predicted: 250), .medium)
+        XCTAssertEqual(settle(.large, drag: 600, predicted: 600), .peek)
+    }
+
+    func testAFlickCarriesOnInItsDirection() {
+        XCTAssertEqual(settle(.medium, drag: 50, predicted: 320), .peek)
+        XCTAssertEqual(settle(.medium, drag: -50, predicted: -260), .large)
+    }
+
+    func testMomentumNeverReversesTheFinger() {
+        XCTAssertEqual(settle(.medium, drag: 300, predicted: 20), .peek)
+    }
+
+    func testThePeekCardOnlyOpens() {
+        XCTAssertEqual(settle(.peek, drag: -80), .medium)
+        XCTAssertEqual(settle(.peek, drag: 80), .peek)
+    }
+
+    func testTheSheetTracksTheFingerDownAndStretchesOnlyALittlePastLarge() {
+        let medium = MapSheetDetent.sheetHeight(detent: .medium, containerHeight: height, dragOffset: 0)
+        XCTAssertEqual(MapSheetDetent.sheetHeight(detent: .medium, containerHeight: height, dragOffset: 100), medium - 100, accuracy: 0.01)
+
+        let large = MapSheetDetent.sheetHeight(detent: .large, containerHeight: height, dragOffset: 0)
+        let pulledUp = MapSheetDetent.sheetHeight(detent: .large, containerHeight: height, dragOffset: -400)
+        XCTAssertGreaterThan(pulledUp, large)
+        XCTAssertLessThan(pulledUp, large + 40)
+    }
+}
