@@ -13,6 +13,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     static let shared = WatchLocationSyncClient()
 
     @Published private(set) var syncStatus: String?
+    let manualVisits = WatchManualVisitClient()
     /// Points recorded on the watch that the iPhone hasn't acknowledged yet.
     @Published private(set) var pendingPointCount = 0
     /// Today's stays from the iPhone, for the glance dial. Persisted in the App Group.
@@ -52,6 +53,9 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     // MARK: - Today context from iPhone
 
     private func applyApplicationContext(_ context: [String: Any]) {
+        if let data = context[WatchVisitTransport.snapshotKey] as? Data {
+            manualVisits.handleSnapshot(data)
+        }
         guard let data = context[WatchTodayContext.applicationContextKey] as? Data,
               let decoded = try? decoder.decode(WatchTodayContext.self, from: data) else { return }
         // Application contexts can arrive out of order across relaunches; keep the newest.
@@ -228,6 +232,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     }
 
     func syncPending(force: Bool = false) {
+        manualVisits.sync()
         guard !state.sessions.isEmpty || !state.points.isEmpty || !state.visits.isEmpty else {
             syncStatus = String(localized: "Nothing to sync.")
             return
@@ -253,10 +258,27 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         guard let payload = state.makePayload(maxPoints: maxPointsPerPayload) else { return }
         guard let payloadData = try? encoder.encode(payload) else { return }
 
+        let payloadFile: URL?
+        if WatchLocationSyncTransport.inlinePayload(payloadData) == nil {
+            do {
+                payloadFile = try WatchLocationSyncTransport.writePayloadFile(payloadData, directory: payloadDirectory)
+            } catch {
+                syncStatus = String(localized: "Sync failed. Please try again.")
+                return
+            }
+        } else { payloadFile = nil }
+
         state.registerTransfer(payload)
         saveState()
 
         syncStatus = String(localized: "Sync queued. Open Whereday on your iPhone.")
+        if let payloadFile {
+            session.transferFile(payloadFile, metadata: [
+                WatchLocationSyncTransport.payloadFileMetadataKey: true,
+                WatchLocationSyncTransport.payloadFileNameKey: payloadFile.lastPathComponent
+            ])
+            return
+        }
         session.transferUserInfo([
             WatchLocationSyncTransport.payloadUserInfoKey: payloadData
         ])
@@ -273,6 +295,7 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     }
 
     private func handleAckData(_ data: Data) {
+        if manualVisits.handleReply(data) { return }
         guard let ack = try? decoder.decode(WatchLocationSyncAck.self, from: data) else { return }
         handleAck(ack)
     }
@@ -316,6 +339,26 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         }
     }
 
+    private var payloadDirectory: URL {
+        stateURL.deletingLastPathComponent().appendingPathComponent("Payloads", isDirectory: true)
+    }
+
+    private func removePayloadFile(named name: String) {
+        guard name.hasPrefix("route-"), name.hasSuffix(".json"),
+              UUID(uuidString: String(name.dropFirst(6).dropLast(5))) != nil else { return }
+        try? FileManager.default.removeItem(at: payloadDirectory.appendingPathComponent(name))
+    }
+
+    private func removeOrphanedPayloadFiles(over session: WCSession) {
+        let pending = Set(session.outstandingFileTransfers.compactMap {
+            $0.file.metadata?[WatchLocationSyncTransport.payloadFileNameKey] as? String
+        })
+        guard let files = try? FileManager.default.contentsOfDirectory(at: payloadDirectory, includingPropertiesForKeys: nil) else { return }
+        for file in files where !pending.contains(file.lastPathComponent) {
+            removePayloadFile(named: file.lastPathComponent)
+        }
+    }
+
     private static func loadState(from url: URL) -> WatchLocationSyncState? {
         guard let data = try? Data(contentsOf: url) else { return nil }
         return try? JSONDecoder().decode(WatchLocationSyncState.self, from: data)
@@ -333,6 +376,15 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
 }
 
 extension WatchLocationSyncClient: WCSessionDelegate {
+    nonisolated func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
+        let name = fileTransfer.file.metadata?[WatchLocationSyncTransport.payloadFileNameKey] as? String
+        Task { @MainActor [weak self] in
+            // Delivery is not an import acknowledgement. The persisted route
+            // remains queued until the phone saves it and returns its normal ack.
+            if let name { self?.removePayloadFile(named: name) }
+        }
+    }
+
     nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated, error == nil else {
             DispatchQueue.main.async { [weak self] in
@@ -342,6 +394,7 @@ extension WatchLocationSyncClient: WCSessionDelegate {
         }
         let receivedContext = session.receivedApplicationContext
         DispatchQueue.main.async { [weak self] in
+            self?.removeOrphanedPayloadFiles(over: WCSession.default)
             SharedRecordingControl.shared.flush()
             self?.applyApplicationContext(receivedContext)
             self?.flushPendingMarkRequests()
@@ -389,6 +442,10 @@ extension WatchLocationSyncClient: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         if userInfo[SharedRecordingControl.messageKey] != nil || userInfo[SharedRecordingControl.ackKey] != nil {
             DispatchQueue.main.async { SharedRecordingControl.shared.receive(userInfo) }
+            return
+        }
+        if let data = userInfo[WatchVisitTransport.replyKey] as? Data {
+            Task { @MainActor [weak self] in _ = self?.manualVisits.handleReply(data) }
             return
         }
         if let markAck = userInfo[WatchLocationSyncTransport.markAckUserInfoKey] as? Data {

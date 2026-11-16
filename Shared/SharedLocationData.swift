@@ -19,6 +19,7 @@ struct SharedLocationData: Codable {
     /// Distance of the route currently being recorded on this device, in meters.
     /// The watch keeps it per route session; the iPhone leaves it nil.
     var routeDistanceMeters: Double? = nil
+    var manualVisitStatus: WatchManualVisitStatus? = nil
 
     static let appGroupIdentifier = "group.com.bontecou.isome"
     private static let userDefaultsKey = "sharedLocationData"
