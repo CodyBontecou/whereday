@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-11",
+  "decision": "accepted-by-owner; further manual Watch edge-case testing ended",
+  "ownerStatement": "okay im tired of testing these edge cases, the watch app is looking good to me",
+  "acceptedBuild": "dcd25b4ca573c4706aa33c52d1829b2064cfc7b9",
+  "manualCommandChecksBuild": "1228bafbd15d0842ec3ff027dd4e9746db382fdf",
+  "devices": [
+    "iPhone 17 Pro",
+    "Apple Watch Series 7 / watchOS 26.6.1"
+  ],
+  "completedPhysicalChecks": [
+    "Reachable test check-in persisted on phone; checkout completed with phone departure 13:30 for arrival 12:54",
+    "With iPhone powered off, saved-place check-in and dependent checkout stayed Pending across Watch force quit/reopen",
+    "Both offline commands reached Completed on reconnect; one closed phone visit retained 13:39 times before reconnection around 13:42",
+    "Allow Overlap off produced Failed with overlap explanation",
+    "After dcd25b4c was installed, owner reported Synced / zero waiting"
+  ],
+  "notClaimedPassed": [
+    "Remaining physical permission-denied/unavailable/inaccurate-location and exhaustive invalid-time/target checks",
+    "Debugger-injected invalid command probes (no verifiable outcome)",
+    "Captured physical file-byte count for the oversized route transfer"
+  ],
+  "automatedEvidence": {
+    "signedFullSuite": {
+      "xctest": 484,
+      "swiftTesting": 42,
+      "failures": 0,
+      "bundle": "artifacts/test-results/IsoMe-20261111-133018-84223.xcresult"
+    },
+    "targetedRouteTests": 16
+  },
+  "sourceSha256": {
+    "Shared/WatchLocationSyncPayload.swift": "3bcaab7f86eaa88f3c758d8a6b7b0cc8b21c00c1ad8094fc1a601ff150ee2f70",
+    "IsoMeWatch/WatchLocationSyncClient.swift": "cdd1fd4dfeac8fc102f890876aea65089679a696b79f2941f6179775840f6982",
+    "IsoMeWatch/WatchManualVisitClient.swift": "cdddf690f0fcb714460eb5f11ec829760083c916fe3f7dc1bb2157737297d1ed",
+    "IsoMeWatch/WatchManualVisitView.swift": "9b88d691d2e21fc8fdcd541427f42a04691aefe687e52494531366d216047da6",
+    "IsoMe/Services/WatchLocationSyncReceiver.swift": "cb0b68f7a70ec4aa4ab06bd08096db4a594620509d56af68d4cebfe484195a3e",
+    "IsoMe/Services/WatchVisitCommandProcessor.swift": "8e088174d21711a4d80a3b7fa5fc4295fddcdeebc7461f3b1f2d3b8e6d07fece"
+  },
+  "mergeGate": "Fresh CI must pass; owner acceptance does not waive CI failures"
+}

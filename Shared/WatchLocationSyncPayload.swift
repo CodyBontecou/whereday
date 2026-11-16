@@ -145,6 +145,28 @@ struct WatchLocationSyncAck: Codable {
 }
 
 enum WatchLocationSyncTransport {
+    // Keep dictionary and interactive messages small. Larger route batches use
+    // WCSession's durable file transport without changing their wire format.
+    static let inlinePayloadByteLimit = 48 * 1024
+    static let payloadFileMetadataKey = "com.bontecou.isome.watchLocationFile"
+    static let payloadFileNameKey = "com.bontecou.isome.watchLocationFileName"
+    static func inlinePayload(_ data: Data) -> Data? {
+        data.count <= inlinePayloadByteLimit ? data : nil
+    }
+
+    static func writePayloadFile(_ data: Data, directory: URL) throws -> URL {
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let url = directory.appendingPathComponent("route-\(UUID().uuidString).json")
+        try data.write(to: url, options: .atomic)
+        return url
+    }
+
+    /// Read before the WCSession delegate returns: its received file URL is temporary.
+    static func readPayloadFile(_ url: URL, metadata: [String: Any]?) throws -> Data? {
+        guard metadata?[payloadFileMetadataKey] as? Bool == true else { return nil }
+        return try Data(contentsOf: url)
+    }
+
     static let payloadUserInfoKey = "com.bontecou.isome.watchLocationPayload"
     static let ackUserInfoKey = "com.bontecou.isome.watchLocationAck"
     static let markRequestUserInfoKey = "com.bontecou.isome.watchMarkPlace"

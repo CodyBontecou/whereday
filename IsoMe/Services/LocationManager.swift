@@ -1289,7 +1289,8 @@ final class LocationManager: NSObject, ObservableObject {
             todayPointsCount: todayPointsCount,
             trackingStartTime: trackingStartTime,
             stopAfterHours: stopAfterHours > 0 ? stopAfterHours : nil,
-            usesMetricDistanceUnits: usesMetricDistanceUnits
+            usesMetricDistanceUnits: usesMetricDistanceUnits,
+            manualVisitStatus: SharedLocationData.load()?.manualVisitStatus
         )
 
         sharedData.save()
