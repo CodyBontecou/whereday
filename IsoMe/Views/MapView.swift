@@ -3339,11 +3339,9 @@ struct ManualVisitSheet: View {
     @FocusState private var isSearchFocused: Bool
     @State private var previewCamera: MapCameraPosition
     @State private var previewCenter: CLLocationCoordinate2D?
+    @State private var visiblePreviewRegion: MKCoordinateRegion?
     /// Stored stays the stop's times would overlap, checked before saving.
     @State private var overlapCheck: VisitOverlapCheck = .none
-    @State private var pinLookupTask: Task<Void, Never>?
-
-    private static let pinGeocoder = GeocodingService()
 
     init(
         viewModel: LocationViewModel,
@@ -3502,7 +3500,6 @@ struct ManualVisitSheet: View {
                     locationManager.requestCurrentLocationForManualVisit()
                 }
             }
-            .onDisappear { pinLookupTask?.cancel() }
             .onChange(of: overlapCheckKey, initial: true) { _, _ in
                 refreshOverlapCheck()
             }
@@ -3535,7 +3532,7 @@ struct ManualVisitSheet: View {
             .sheet(isPresented: $showingLocationPicker) {
                 PlaceSelectionView(
                     initialSelection: locationSelection,
-                    initialRegion: initialSearchRegion,
+                    initialRegion: visiblePreviewRegion ?? initialSearchRegion,
                     onSelect: applyLocationSelection
                 )
                 .presentationDetents([.large])
@@ -3653,14 +3650,7 @@ struct ManualVisitSheet: View {
         .mapControls {}
         .onMapCameraChange(frequency: .onEnd) { context in
             previewCenter = context.region.center
-        }
-        .overlay {
-            // The centre a dropped pin would use.
-            Image(systemName: "plus")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(TE.textPrimary.opacity(0.55))
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
+            visiblePreviewRegion = context.region
         }
         .overlay(alignment: .topTrailing) {
             Button {
@@ -3818,11 +3808,12 @@ struct ManualVisitSheet: View {
             }
 
             Button {
-                dropPinAtMapCentre()
+                isSearchFocused = false
+                showingLocationPicker = true
             } label: {
                 LogStopResultRow(
-                    title: String(localized: "Drop a pin here"),
-                    subtitle: String(localized: "Use the map centre"),
+                    title: String(localized: "Save custom location"),
+                    subtitle: String(localized: "Choose a place on the map"),
                     trailing: nil,
                     ink: TE.inkRust,
                     systemImage: "mappin.and.ellipse",
@@ -3830,13 +3821,11 @@ struct ManualVisitSheet: View {
                 )
             }
             .buttonStyle(.plain)
-            .disabled(previewCenter == nil)
-            .accessibilityHint("Pins the stop where the map preview is centred.")
+            .accessibilityHint("Search for a place or move a pin on the map.")
 
             if mode != .addPastVisit, selectedSavedPlaceID != nil || locationSelection != nil {
                 Divider().overlay(TE.border).padding(.leading, 38)
                 Button {
-                    pinLookupTask?.cancel()
                     selectedSavedPlaceID = nil
                     locationSelection = nil
                     locationManager.requestCurrentLocationForManualVisit()
@@ -3865,30 +3854,6 @@ struct ManualVisitSheet: View {
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Divider().overlay(TE.border).padding(.leading, 12)
-        }
-    }
-
-    /// Pins the stop at the preview map's centre, then names it from Apple's lookup if still unnamed.
-    private func dropPinAtMapCentre() {
-        guard let center = previewCenter, CLLocationCoordinate2DIsValid(center) else { return }
-        applyLocationSelection(ManualLocationSelection(name: "", address: nil, coordinate: center, source: .mapPin))
-
-        pinLookupTask?.cancel()
-        guard NetworkGeocodingPolicy.isAllowed else { return }
-        pinLookupTask = Task {
-            let location = CLLocation(latitude: center.latitude, longitude: center.longitude)
-            guard let result = try? await Self.pinGeocoder.reverseGeocode(location: location),
-                  !Task.isCancelled,
-                  let selection = locationSelection,
-                  selection.source == .mapPin,
-                  Self.distance(from: selection.coordinate, to: center) < 1 else { return }
-            if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-               let suggested = result.name ?? result.address?.components(separatedBy: ",").first {
-                nameBinding.wrappedValue = suggested
-            }
-            if address.isEmpty, let suggestedAddress = result.address, !suggestedAddress.isEmpty {
-                addressBinding.wrappedValue = suggestedAddress
-            }
         }
     }
 

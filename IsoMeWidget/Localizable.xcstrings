@@ -1,3856 +1,3859 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "%lld": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ from %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ من %@"
           }
         },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ থেকে"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ from %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ desde %@"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ depuis %@"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ से"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@（%@から）"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ od %@"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ desde %@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ с %@"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld"
-          }
-        }
-      }
-    },
-    "%lldh %lldm": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lldh %2$lldm"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld ح %2$lld م"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld ঘন্টা %2$lld মি"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld h %2$lld m"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld h %2$lld m"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lldh %2$lldm"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld h %2$lld m"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld h %2$lld m"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld ч %2$lld м"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld小时%2$lld分钟"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$lld godz. %2$lld min"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@，从 %@ 起"
           }
         }
       }
     },
-    "%lldm": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+    "%@ PTS" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ نقطة"
           }
         },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ पॉइंट"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PKT"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lldm"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ТЧК"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld min"
-          }
-        }
-      }
-    },
-    "Stop": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "إيقاف"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "থামান"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detener"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrêter"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रोकें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停止"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Parar"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановить"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停止"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zatrzymaj"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 个点"
           }
         }
       }
     },
-    "Tracking": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tracking"
+    "%@ PTS · %@ LEFT" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ نقطة · متبقٍ %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Seguimiento"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS · %@ বাকি"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suivi"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS · %@ LEFT"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ट्रैकिंग"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS · QUEDAN %@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "トラッキング"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS · RESTE %@"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отслеживание"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ पॉइंट · %@ बाकी"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "追踪"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS · 残り%@"
           }
         },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تتبع"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PKT · POZOSTAŁO %@"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ট্র্যাকিং"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ PTS · RESTAM %@"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Monitorando"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ТЧК · ОСТАЛОСЬ %@"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Śledzenie"
-          }
-        }
-      }
-    },
-    "Tracking since %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tracking since %@"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "التتبع منذ %@"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ থেকে ট্র্যাক করা হচ্ছে"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Seguimiento desde %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suivi depuis %@"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ से ट्रैकिंग"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@から追跡中"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rastreando desde %@"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отслеживание с %@"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自%@开始追踪"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Śledzenie od %@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 个点 · 剩余 %@"
           }
         }
       }
     },
-    "No places yet today": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "لا أماكن اليوم بعد"
+    "%lld" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "আজ এখনো কোনো জায়গা নেই"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No places yet today"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aún no hay lugares hoy"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aucun lieu aujourd’hui pour l’instant"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आज अभी कोई जगह नहीं"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日はまだ場所がありません"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dziś jeszcze brak miejsc"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nenhum lugar hoje ainda"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сегодня мест пока нет"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今天还没有地点"
-          }
-        }
-      }
-    },
-    "%@ from %@": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ من %@"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@, %@ থেকে"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ from %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ desde %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ depuis %@"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@, %@ से"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@（%@から）"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ od %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ desde %@"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ с %@"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@，从 %@ 起"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
           }
         }
       }
     },
-    "Today's places": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "أماكن اليوم"
+    "%lldh %lldm" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ح %2$lld م"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "আজকের জায়গা"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ঘন্টা %2$lld মি"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today's places"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lldh %2$lldm"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lugares de hoy"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld h %2$lld m"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lieux du jour"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld h %2$lld m"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आज की जगहें"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lldh %2$lldm"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日の場所"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld h %2$lld m"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dzisiejsze miejsca"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld godz. %2$lld min"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lugares de hoje"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld h %2$lld m"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Места сегодня"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ч %2$lld м"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今天的地点"
-          }
-        }
-      }
-    },
-    "Today's stays as a 24-hour strip.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "إقامات اليوم كشريط 24 ساعة."
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "২৪-ঘন্টার স্ট্রিপে আজকের অবস্থান।"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today's stays as a 24-hour strip."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Las estancias de hoy en una franja de 24 horas."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les arrêts du jour sur une bande de 24 heures."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आज के ठहराव, 24-घंटे की पट्टी में।"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日の滞在を24時間の帯で表示。"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dzisiejsze pobyty jako pasek 24-godzinny."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "As paradas de hoje em uma faixa de 24 horas."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сегодняшние остановки на 24-часовой ленте."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "以 24 小时条形图显示今天的停留。"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld小时%2$lld分钟"
           }
         }
       }
     },
-    "Today": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "اليوم"
+    "%lldm" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "আজ"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hoy"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aujourd’hui"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आज"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dzisiaj"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hoje"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сегодня"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今天"
-          }
-        }
-      }
-    },
-    "SINCE %@": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "منذ %@"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ থেকে"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "SINCE %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DESDE %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DEPUIS %@"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ से"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@から"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OD %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DESDE %@"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "С %@"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自 %@ 起"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
           }
         }
       }
     },
-    "NO STAYS YET": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "لا إقامات بعد"
+    "● RECORDING" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● تسجيل"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "এখনো অবস্থান নেই"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● রেকর্ডিং"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NO STAYS YET"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● RECORDING"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "SIN ESTANCIAS AÚN"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● GRABANDO"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AUCUN ARRÊT"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● ENREGISTREMENT"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अभी कोई ठहराव नहीं"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● रिकॉर्डिंग"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "滞在なし"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● 記録中"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "BRAK POBYTÓW"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● NAGRYWANIE"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NENHUMA PARADA AINDA"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● GRAVANDO"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ОСТАНОВОК ПОКА НЕТ"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● ЗАПИСЬ"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "尚无停留"
-          }
-        }
-      }
-    },
-    "MOVING": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "في حركة"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "চলমান"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MOVING"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "EN MOVIMIENTO"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "EN MOUVEMENT"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "चलते हुए"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "移動中"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "W RUCHU"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "EM MOVIMENTO"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "В ПУТИ"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "移动中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● 记录中"
           }
         }
       }
     },
-    "Day %lld": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "اليوم %lld"
+    "● RECORDING · %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● تسجيل · %@"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "দিন %lld"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● রেকর্ডিং · %@"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day %lld"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● RECORDING · %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Día %lld"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● GRABANDO · %@"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Jour %lld"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● ENREGISTREMENT · %@"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "दिन %lld"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● रिकॉर्डिंग · %@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld日目"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● 記録中 · %@"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dzień %lld"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● NAGRYWANIE · %@"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dia %lld"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● GRAVANDO · %@"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "День %lld"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● ЗАПИСЬ · %@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "第 %lld 天"
-          }
-        }
-      }
-    },
-    "PLACES": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "الأماكن"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "জায়গা"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PLACES"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LUGARES"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LIEUX"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "जगहें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "場所"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MIEJSCA"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "LUGARES"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "МЕСТА"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "地点"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● 记录中 · %@"
           }
         }
       }
     },
-    "MOVED": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "التنقّل"
+    "24-hour dial: %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قرص 24 ساعة: %@"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "চলাচল"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "২৪-ঘন্টার ডায়াল: %@"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MOVED"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24-hour dial: %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "RECORRIDO"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esfera de 24 horas: %@"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PARCOURU"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadran 24 heures : %@"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "चले"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24-घंटे का डायल: %@"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "移動"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24時間ダイヤル：%@"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PRZEBYTO"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarcza 24-godzinna: %@"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PERCORRIDO"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrador de 24 horas: %@"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ПРОЙДЕНО"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24-часовой циферблат: %@"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "移动"
-          }
-        }
-      }
-    },
-    "STAYS": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "الإقامات"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "অবস্থান"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "STAYS"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ESTANCIAS"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ARRÊTS"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ठहराव"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "滞在"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "POBYTY"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PARADAS"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ОСТАНОВКИ"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停留"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24 小时表盘：%@"
           }
         }
       }
     },
-    "RECORDED": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "مسجّل"
+    "Bike" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دراجة"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "রেকর্ড"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সাইকেল"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "RECORDED"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bike"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GRABADO"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bici"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ENREGISTRÉ"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vélo"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रिकॉर्ड किया"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "साइकिल"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自転車"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ZAREJESTROWANO"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rower"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GRAVADO"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bicicleta"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ЗАПИСАНО"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Велосипед"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已记录"
-          }
-        }
-      }
-    },
-    "Day dial": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "قرص اليوم"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "দিনের ডায়াল"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day dial"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esfera del día"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cadran du jour"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "दिन-डायल"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1日のダイヤル"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tarcza dnia"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mostrador do dia"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Циферблат дня"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "日表盘"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "骑行"
           }
         }
       }
     },
-    "Today's places around a 24-hour dial.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "أماكن اليوم حول قرص 24 ساعة."
+    "Check in at your current place from the Whereday Live Activity." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سجّل الوصول إلى مكانك الحالي من النشاط المباشر لـ Whereday."
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "২৪-ঘন্টার ডায়ালে আজকের জায়গা।"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whereday লাইভ অ্যাক্টিভিটি থেকে আপনার বর্তমান জায়গায় চেক ইন করুন।"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today's places around a 24-hour dial."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check in at your current place from the Whereday Live Activity."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Los lugares de hoy en una esfera de 24 horas."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra la llegada a tu lugar actual desde la Actividad en Vivo de Whereday."
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les lieux du jour autour d’un cadran de 24 heures."
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez votre arrivée au lieu actuel depuis l’activité en direct Whereday."
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24-घंटे के डायल पर आज की जगहें।"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whereday Live Activity से अपनी वर्तमान जगह पर चेक इन करें।"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日の場所を24時間のダイヤルで表示。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wheredayのライブアクティビティから現在地にチェックインします。"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dzisiejsze miejsca na tarczy 24-godzinnej."
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozpocznij wizytę w bieżącym miejscu z poziomu aktywności na żywo Whereday."
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Os lugares de hoje em um mostrador de 24 horas."
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faça check-in no lugar onde você está pela Atividade ao Vivo do Whereday."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сегодняшние места на 24-часовом циферблате."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметьте прибытие в текущее место из Live Activity Whereday."
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在 24 小时表盘上显示今天的地点。"
-          }
-        }
-      }
-    },
-    "24-hour dial: %@": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "قرص 24 ساعة: %@"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "২৪-ঘন্টার ডায়াল: %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24-hour dial: %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esfera de 24 horas: %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cadran 24 heures : %@"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24-घंटे का डायल: %@"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24時間ダイヤル：%@"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tarcza 24-godzinna: %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mostrador de 24 horas: %@"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24-часовой циферблат: %@"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "24 小时表盘：%@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从 Whereday 实时活动在你当前的地点签到。"
           }
         }
       }
     },
-    "Mark This Place": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "علِّم هذا المكان"
+    "Checks in at your current place" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يسجّل الوصول إلى مكانك الحالي"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "এই জায়গা চিহ্নিত করুন"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার বর্তমান জায়গায় চেক ইন করে"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mark This Place"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checks in at your current place"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marcar este lugar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra la llegada a tu lugar actual"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marquer ce lieu"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistre votre arrivée au lieu actuel"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "यह जगह दर्ज करें"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपकी वर्तमान जगह पर चेक इन करता है"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この場所を記録"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在地にチェックインします"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oznacz to miejsce"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozpoczyna wizytę w bieżącym miejscu"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marcar este lugar"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faz check-in onde você está"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отметить это место"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмечает прибытие в текущее место"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "标记此地点"
-          }
-        }
-      }
-    },
-    "Check in at your current place from the Whereday Live Activity.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "سجّل الوصول إلى مكانك الحالي من النشاط المباشر لـ Whereday."
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Whereday লাইভ অ্যাক্টিভিটি থেকে আপনার বর্তমান জায়গায় চেক ইন করুন।"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check in at your current place from the Whereday Live Activity."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registra la llegada a tu lugar actual desde la Actividad en Vivo de Whereday."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistrez votre arrivée au lieu actuel depuis l’activité en direct Whereday."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Whereday Live Activity से अपनी वर्तमान जगह पर चेक इन करें।"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wheredayのライブアクティビティから現在地にチェックインします。"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rozpocznij wizytę w bieżącym miejscu z poziomu aktywności na żywo Whereday."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Faça check-in no lugar onde você está pela Atividade ao Vivo do Whereday."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отметьте прибытие в текущее место из Live Activity Whereday."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "从 Whereday 实时活动在你当前的地点签到。"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在你当前的地点签到"
           }
         }
       }
     },
-    "Place Name": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "اسم المكان"
+    "Cycling" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بالدراجة"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "জায়গার নাম"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সাইকেলে"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Place Name"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cycling"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nombre del lugar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En bici"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nom du lieu"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À vélo"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "जगह का नाम"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "साइकिल चला रहे"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "場所の名前"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サイクリング"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nazwa miejsca"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rowerem"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nome do lugar"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pedalando"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Название места"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На велосипеде"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "地点名称"
-          }
-        }
-      }
-    },
-    "Latitude": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "خط العرض"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "অক্ষাংশ"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Latitude"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Latitud"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Latitude"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अक्षांश"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "緯度"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Szerokość geograficzna"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Latitude"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Широта"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "纬度"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "骑行中"
           }
         }
       }
     },
-    "Longitude": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "خط الطول"
+    "Day %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اليوم %lld"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "দ্রাঘিমাংশ"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দিন %lld"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Longitude"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day %lld"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Longitud"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día %lld"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Longitude"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jour %lld"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "देशांतर"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दिन %lld"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "経度"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日目"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Długość geograficzna"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzień %lld"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Longitude"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dia %lld"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Долгота"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "День %lld"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "经度"
-          }
-        }
-      }
-    },
-    "Stop Route": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "إيقاف المسار"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "রুট থামান"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop Route"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detener ruta"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrêter le trajet"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रूट रोकें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ルートを停止"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zatrzymaj trasę"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Parar trajeto"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановить маршрут"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停止路线"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 天"
           }
         }
       }
     },
-    "Stop the current Whereday recording from the Live Activity.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "أوقف تسجيل Whereday الحالي من النشاط المباشر."
+    "Day dial" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قرص اليوم"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "লাইভ অ্যাক্টিভিটি থেকে বর্তমান Whereday রেকর্ডিং থামান।"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দিনের ডায়াল"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop the current Whereday recording from the Live Activity."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day dial"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detén la grabación actual de Whereday desde la Actividad en Vivo."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esfera del día"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrêtez l’enregistrement Whereday en cours depuis l’activité en direct."
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadran du jour"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity से वर्तमान Whereday रिकॉर्डिंग रोकें।"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दिन-डायल"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ライブアクティビティから現在のWheredayの記録を停止します。"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1日のダイヤル"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zatrzymaj bieżące rejestrowanie Whereday z poziomu aktywności na żywo."
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarcza dnia"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pare a gravação atual do Whereday pela Atividade ao Vivo."
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrador do dia"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановите текущую запись Whereday из Live Activity."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Циферблат дня"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "从实时活动停止当前的 Whereday 记录。"
-          }
-        }
-      }
-    },
-    "● RECORDING · %@": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● تسجيل · %@"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● রেকর্ডিং · %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● RECORDING · %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● GRABANDO · %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● ENREGISTREMENT · %@"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● रिकॉर्डिंग · %@"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● 記録中 · %@"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● NAGRYWANIE · %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● GRAVANDO · %@"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● ЗАПИСЬ · %@"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● 记录中 · %@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日表盘"
           }
         }
       }
     },
-    "● RECORDING": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● تسجيل"
+    "Drive" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قيادة"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● রেকর্ডিং"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ড্রাইভ"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● RECORDING"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● GRABANDO"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coche"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● ENREGISTREMENT"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voiture"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● रिकॉर्डिंग"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ड्राइव"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● 記録中"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "車"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● NAGRYWANIE"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● GRAVANDO"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carro"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● ЗАПИСЬ"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Авто"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "● 记录中"
-          }
-        }
-      }
-    },
-    "%@ PTS · %@ LEFT": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ نقطة · متبقٍ %@"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS · %@ বাকি"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS · %@ LEFT"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS · QUEDAN %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS · RESTE %@"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ पॉइंट · %@ बाकी"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS · 残り%@"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PKT · POZOSTAŁO %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS · RESTAM %@"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ ТЧК · ОСТАЛОСЬ %@"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ 个点 · 剩余 %@"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "驾车"
           }
         }
       }
     },
-    "%@ PTS": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ نقطة"
+    "Driving" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بالسيارة"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গাড়িতে"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Driving"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conduciendo"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En voiture"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ पॉइंट"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ड्राइव कर रहे"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "運転中"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PKT"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autem"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ PTS"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirigindo"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ ТЧК"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За рулём"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ 个点"
-          }
-        }
-      }
-    },
-    "Recording": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تسجيل"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "রেকর্ডিং"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recording"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Grabando"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistrement"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रिकॉर्डिंग"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録中"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nagrywanie"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gravando"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запись"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "记录中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "驾车中"
           }
         }
       }
     },
-    "Today's dial: %@": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "قرص اليوم: %@"
+    "Flight" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طيران"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "আজকের ডায়াল: %@"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ফ্লাইট"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today's dial: %@"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flight"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esfera de hoy: %@"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuelo"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cadran du jour : %@"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avion"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आज का डायल: %@"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "उड़ान"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日のダイヤル：%@"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "飛行機"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dzisiejsza tarcza: %@"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lot"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mostrador de hoje: %@"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voo"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Циферблат дня: %@"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перелёт"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今天的表盘：%@"
-          }
-        }
-      }
-    },
-    "TODAY": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "اليوم"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "আজ"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TODAY"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HOY"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AUJOURD’HUI"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आज"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DZISIAJ"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HOJE"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "СЕГОДНЯ"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今天"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "飞行"
           }
         }
       }
     },
-    "POINTS": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "النقاط"
+    "Flying" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في الطائرة"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "পয়েন্ট"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "উড়ছেন"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "POINTS"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flying"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PUNTOS"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volando"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "POINTS"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En avion"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "पॉइंट"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "उड़ान में"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ポイント"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "飛行中"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PUNKTY"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samolotem"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "PONTOS"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voando"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ТОЧКИ"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В полёте"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "位置点"
-          }
-        }
-      }
-    },
-    "RECORDING FOR": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "مدة التسجيل"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "রেকর্ডিং চলছে"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "RECORDING FOR"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GRABANDO DESDE HACE"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ENREGISTRE DEPUIS"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रिकॉर्डिंग अवधि"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録時間"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "CZAS NAGRYWANIA"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GRAVANDO HÁ"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ИДЁТ ЗАПИСЬ"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已记录"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "飞行中"
           }
         }
       }
     },
-    "UNTIL AUTO-OFF": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "حتى الإيقاف"
+    "Latitude" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خط العرض"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "অটো-অফ পর্যন্ত"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অক্ষাংশ"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "UNTIL AUTO-OFF"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HASTA APAGARSE"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitud"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AVANT ARRÊT AUTO"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ऑटो-ऑफ़ तक"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अक्षांश"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自動停止まで"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "緯度"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DO WYŁĄCZENIA"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szerokość geograficzna"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ATÉ DESLIGAR"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ДО АВТОВЫКЛ."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Широта"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "距自动停止"
-          }
-        }
-      }
-    },
-    "Checks in at your current place": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يسجّل الوصول إلى مكانك الحالي"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "আপনার বর্তমান জায়গায় চেক ইন করে"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Checks in at your current place"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registra la llegada a tu lugar actual"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistre votre arrivée au lieu actuel"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आपकी वर्तमान जगह पर चेक इन करता है"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "現在地にチェックインします"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rozpoczyna wizytę w bieżącym miejscu"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Faz check-in onde você está"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отмечает прибытие в текущее место"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在你当前的地点签到"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纬度"
           }
         }
       }
     },
-    "Stops recording": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يوقف التسجيل"
+    "Longitude" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خط الطول"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "রেকর্ডিং থামায়"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দ্রাঘিমাংশ"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stops recording"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detiene la grabación"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’enregistrement"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रिकॉर्डिंग रोकता है"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "देशांतर"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録を停止します"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "経度"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zatrzymuje nagrywanie"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Długość geograficzna"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Para a gravação"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Останавливает запись"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Долгота"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停止记录"
-          }
-        }
-      }
-    },
-    "Mark this place": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "علِّم هذا المكان"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "এই জায়গা চিহ্নিত করুন"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mark this place"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marcar este lugar"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marquer ce lieu"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "यह जगह दर्ज करें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この場所を記録"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oznacz to miejsce"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marcar este lugar"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отметить это место"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "标记此地点"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经度"
           }
         }
       }
     },
-    "Stop route": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "إيقاف المسار"
+    "Mark this place" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "علِّم هذا المكان"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "রুট থামান"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই জায়গা চিহ্নিত করুন"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop route"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark this place"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detener ruta"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar este lugar"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrêter le trajet"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marquer ce lieu"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "रूट रोकें"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह जगह दर्ज करें"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ルートを停止"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この場所を記録"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zatrzymaj trasę"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oznacz to miejsce"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Parar trajeto"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar este lugar"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановить маршрут"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметить это место"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "停止路线"
-          }
-        }
-      }
-    },
-    "Walk": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "مشي"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "হাঁটা"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Walk"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A pie"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marche"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "पैदल"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "徒歩"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Spacer"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Caminhada"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ходьба"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "步行"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标记此地点"
           }
         }
       }
     },
-    "Run": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "جري"
+    "Mark This Place" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "علِّم هذا المكان"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "দৌড়"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই জায়গা চিহ্নিত করুন"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Run"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark This Place"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Carrera"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar este lugar"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Course"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marquer ce lieu"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "दौड़"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह जगह दर्ज करें"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ラン"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この場所を記録"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bieg"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oznacz to miejsce"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Corrida"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar este lugar"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Бег"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметить это место"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "跑步"
-          }
-        }
-      }
-    },
-    "Bike": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "دراجة"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "সাইকেল"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bike"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bici"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vélo"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "साइकिल"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "自転車"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rower"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bicicleta"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Велосипед"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "骑行"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标记此地点"
           }
         }
       }
     },
-    "Drive": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "قيادة"
+    "MOVED" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التنقّل"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ড্রাইভ"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "চলাচল"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOVED"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Coche"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECORRIDO"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voiture"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PARCOURU"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ड्राइव"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चले"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "車"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Auto"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PRZEBYTO"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Carro"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PERCORRIDO"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Авто"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРОЙДЕНО"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "驾车"
-          }
-        }
-      }
-    },
-    "Train": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "قطار"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ট্রেন"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Train"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tren"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Train"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ट्रेन"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "電車"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pociąg"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Trem"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поезд"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "火车"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动"
           }
         }
       }
     },
-    "Flight": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "طيران"
+    "MOVING" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في حركة"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ফ্লাইট"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "চলমান"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Flight"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOVING"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vuelo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EN MOVIMIENTO"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Avion"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EN MOUVEMENT"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "उड़ान"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चलते हुए"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "飛行機"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動中"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lot"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W RUCHU"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voo"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EM MOVIMENTO"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перелёт"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В ПУТИ"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "飞行"
-          }
-        }
-      }
-    },
-    "Walking": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "مشيًا"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "হাঁটছেন"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Walking"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Caminando"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "À pied"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "पैदल चल रहे"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "徒歩"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pieszo"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Caminhando"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пешком"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "步行中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动中"
           }
         }
       }
     },
-    "Running": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "جريًا"
+    "No places yet today" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا أماكن اليوم بعد"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "দৌড়াচ্ছেন"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আজ এখনো কোনো জায়গা নেই"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Running"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No places yet today"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Corriendo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay lugares hoy"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Course à pied"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun lieu aujourd’hui pour l’instant"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "दौड़ रहे"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आज अभी कोई जगह नहीं"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ランニング"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日はまだ場所がありません"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Biegiem"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dziś jeszcze brak miejsc"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Correndo"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum lugar hoje ainda"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Бегом"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня мест пока нет"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "跑步中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天还没有地点"
           }
         }
       }
     },
-    "Cycling": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "بالدراجة"
+    "NO STAYS YET" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا إقامات بعد"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "সাইকেলে"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এখনো অবস্থান নেই"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cycling"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NO STAYS YET"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En bici"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SIN ESTANCIAS AÚN"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "À vélo"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AUCUN ARRÊT"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "साइकिल चला रहे"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अभी कोई ठहराव नहीं"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "サイクリング"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滞在なし"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rowerem"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BRAK POBYTÓW"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pedalando"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NENHUMA PARADA AINDA"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "На велосипеде"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОСТАНОВОК ПОКА НЕТ"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "骑行中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚无停留"
           }
         }
       }
     },
-    "Driving": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "بالسيارة"
+    "On a train" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في القطار"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "গাড়িতে"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ট্রেনে"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Driving"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On a train"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conduciendo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En tren"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En voiture"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En train"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ड्राइव कर रहे"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ट्रेन में"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "運転中"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "電車で移動中"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Autem"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pociągiem"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dirigindo"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No trem"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "За рулём"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В поезде"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "驾车中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "乘火车中"
           }
         }
       }
     },
-    "On a train": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "في القطار"
+    "Place Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المكان"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ট্রেনে"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "জায়গার নাম"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "On a train"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place Name"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En tren"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del lugar"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En train"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom du lieu"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ट्रेन में"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जगह का नाम"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "電車で移動中"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "場所の名前"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pociągiem"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa miejsca"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No trem"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome do lugar"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "В поезде"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название места"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "乘火车中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地点名称"
           }
         }
       }
     },
-    "Flying": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "في الطائرة"
+    "PLACES" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأماكن"
           }
         },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "উড়ছেন"
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "জায়গা"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Flying"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PLACES"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Volando"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LUGARES"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En avion"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LIEUX"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "उड़ान में"
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जगहें"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "飛行中"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "場所"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Samolotem"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIEJSCA"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voando"
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LUGARES"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "В полёте"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "МЕСТА"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "飞行中"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地点"
+          }
+        }
+      }
+    },
+    "POINTS" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النقاط"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "পয়েন্ট"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POINTS"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PUNTOS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POINTS"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पॉइंट"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポイント"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PUNKTY"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PONTOS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ТОЧКИ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置点"
+          }
+        }
+      }
+    },
+    "RECORDED" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسجّل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রেকর্ড"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECORDED"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GRABADO"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ENREGISTRÉ"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकॉर्ड किया"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ZAREJESTROWANO"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GRAVADO"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ЗАПИСАНО"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已记录"
+          }
+        }
+      }
+    },
+    "Recording" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রেকর্ডিং"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabando"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकॉर्डिंग"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録中"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagrywanie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gravando"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запись"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录中"
+          }
+        }
+      }
+    },
+    "RECORDING FOR" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مدة التسجيل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রেকর্ডিং চলছে"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECORDING FOR"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GRABANDO DESDE HACE"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ENREGISTRE DEPUIS"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकॉर्डिंग अवधि"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録時間"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CZAS NAGRYWANIA"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GRAVANDO HÁ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИДЁТ ЗАПИСЬ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已记录"
+          }
+        }
+      }
+    },
+    "Run" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جري"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দৌড়"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrera"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दौड़"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ラン"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bieg"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бег"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步"
+          }
+        }
+      }
+    },
+    "Running" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جريًا"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দৌড়াচ্ছেন"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corriendo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course à pied"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दौड़ रहे"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ランニング"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biegiem"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correndo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бегом"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跑步中"
+          }
+        }
+      }
+    },
+    "SINCE %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %@"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ থেকে"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SINCE %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DESDE %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEPUIS %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ से"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@から"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OD %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DESDE %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "С %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自 %@ 起"
+          }
+        }
+      }
+    },
+    "STAYS" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإقامات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অবস্থান"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STAYS"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ESTANCIAS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ARRÊTS"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ठहराव"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滞在"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POBYTY"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PARADAS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОСТАНОВКИ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停留"
+          }
+        }
+      }
+    },
+    "Stop" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "থামান"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रोकें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymaj"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止"
+          }
+        }
+      }
+    },
+    "Stop route" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف المسار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রুট থামান"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop route"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener ruta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter le trajet"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रूट रोकें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ルートを停止"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymaj trasę"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar trajeto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить маршрут"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止路线"
+          }
+        }
+      }
+    },
+    "Stop Route" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف المسار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রুট থামান"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop Route"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener ruta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter le trajet"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रूट रोकें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ルートを停止"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymaj trasę"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar trajeto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить маршрут"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止路线"
+          }
+        }
+      }
+    },
+    "Stop the current Whereday recording from the Live Activity." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أوقف تسجيل Whereday الحالي من النشاط المباشر."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "লাইভ অ্যাক্টিভিটি থেকে বর্তমান Whereday রেকর্ডিং থামান।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop the current Whereday recording from the Live Activity."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detén la grabación actual de Whereday desde la Actividad en Vivo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêtez l’enregistrement Whereday en cours depuis l’activité en direct."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity से वर्तमान Whereday रिकॉर्डिंग रोकें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライブアクティビティから現在のWheredayの記録を停止します。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymaj bieżące rejestrowanie Whereday z poziomu aktywności na żywo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pare a gravação atual do Whereday pela Atividade ao Vivo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановите текущую запись Whereday из Live Activity."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从实时活动停止当前的 Whereday 记录。"
+          }
+        }
+      }
+    },
+    "Stops recording" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يوقف التسجيل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রেকর্ডিং থামায়"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stops recording"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detiene la grabación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrête l’enregistrement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकॉर्डिंग रोकता है"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録を停止します"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymuje nagrywanie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para a gravação"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Останавливает запись"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止记录"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اليوم"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আজ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aujourd’hui"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आज"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzisiaj"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoje"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天"
+          }
+        }
+      }
+    },
+    "TODAY" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اليوم"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আজ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TODAY"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOY"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AUJOURD’HUI"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आज"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DZISIAJ"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOJE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СЕГОДНЯ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天"
+          }
+        }
+      }
+    },
+    "Today's dial: %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قرص اليوم: %@"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আজকের ডায়াল: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's dial: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esfera de hoy: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadran du jour : %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आज का डायल: %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日のダイヤル：%@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzisiejsza tarcza: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrador de hoje: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Циферблат дня: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天的表盘：%@"
+          }
+        }
+      }
+    },
+    "Today's places" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أماكن اليوم"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আজকের জায়গা"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's places"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lugares de hoy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieux du jour"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आज की जगहें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の場所"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzisiejsze miejsca"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lugares de hoje"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Места сегодня"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天的地点"
+          }
+        }
+      }
+    },
+    "Today's places around a 24-hour dial." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أماكن اليوم حول قرص 24 ساعة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "২৪-ঘন্টার ডায়ালে আজকের জায়গা।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's places around a 24-hour dial."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los lugares de hoy en una esfera de 24 horas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les lieux du jour autour d’un cadran de 24 heures."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24-घंटे के डायल पर आज की जगहें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の場所を24時間のダイヤルで表示。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzisiejsze miejsca na tarczy 24-godzinnej."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os lugares de hoje em um mostrador de 24 horas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодняшние места на 24-часовом циферблате."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 24 小时表盘上显示今天的地点。"
+          }
+        }
+      }
+    },
+    "Today's stays as a 24-hour strip." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إقامات اليوم كشريط 24 ساعة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "২৪-ঘন্টার স্ট্রিপে আজকের অবস্থান।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's stays as a 24-hour strip."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las estancias de hoy en una franja de 24 horas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les arrêts du jour sur une bande de 24 heures."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आज के ठहराव, 24-घंटे की पट्टी में।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の滞在を24時間の帯で表示。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzisiejsze pobyty jako pasek 24-godzinny."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As paradas de hoje em uma faixa de 24 horas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодняшние остановки на 24-часовой ленте."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以 24 小时条形图显示今天的停留。"
+          }
+        }
+      }
+    },
+    "Tracking" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتبع"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ট্র্যাকিং"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracking"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivi"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ट्रैकिंग"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トラッキング"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śledzenie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitorando"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отслеживание"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追踪"
+          }
+        }
+      }
+    },
+    "Tracking since %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التتبع منذ %@"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ থেকে ট্র্যাক করা হচ্ছে"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracking since %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguimiento desde %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivi depuis %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ से ट्रैकिंग"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@から追跡中"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śledzenie od %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rastreando desde %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отслеживание с %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自%@开始追踪"
+          }
+        }
+      }
+    },
+    "Train" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قطار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ট্রেন"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Train"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Train"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ट्रेन"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "電車"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pociąg"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trem"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поезд"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "火车"
+          }
+        }
+      }
+    },
+    "UNTIL AUTO-OFF" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حتى الإيقاف"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অটো-অফ পর্যন্ত"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UNTIL AUTO-OFF"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HASTA APAGARSE"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AVANT ARRÊT AUTO"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ऑटो-ऑफ़ तक"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動停止まで"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DO WYŁĄCZENIA"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ATÉ DESLIGAR"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДО АВТОВЫКЛ."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "距自动停止"
+          }
+        }
+      }
+    },
+    "Walk" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "হাঁটা"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pie"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marche"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पैदल"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "徒歩"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spacer"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caminhada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ходьба"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "步行"
+          }
+        }
+      }
+    },
+    "Walking" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشيًا"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "হাঁটছেন"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walking"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caminando"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À pied"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पैदल चल रहे"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "徒歩"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pieszo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caminhando"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пешком"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "步行中"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

@@ -30,9 +30,12 @@ internal class SnapshotOutingExport(private val dao:HistoryDao,private val now:I
         return result
     }
 
-    suspend fun individual(id:String,sequence:Int,inferred:InferredOutingHeader?,options:ExportOptions):SnapshotOuting {
-        val session=if(inferred==null) dao.session(id)?.value ?: error("This outing was deleted.")
+    /** With [day], a recorded outing exports only that local day's slice, ending before the next midnight. */
+    suspend fun individual(id:String,sequence:Int,inferred:InferredOutingHeader?,options:ExportOptions,day:HistoryRange?=null):SnapshotOuting {
+        require(inferred==null || day==null)
+        val stored=if(inferred==null) dao.session(id)?.value ?: error("This outing was deleted.")
             else RecordingSession(id,inferred.startedAt,inferred.endedAt)
+        val session=if(day==null) stored else (RecordingDayClip.clip(stored,day,now) ?: error("This outing has no movement on this day.")).closedWindowSession
         val excluded=ClosedOutingWindows(if(inferred==null) emptyList() else sessions().map {it.startedAt to maxOf(it.startedAt,it.endedAt ?: now)})
         return one(session,sequence,inferred!=null,options,false,excluded).also {
             require(inferred==null || it.summary.pointCount>0) {"This inferred outing no longer exists."}

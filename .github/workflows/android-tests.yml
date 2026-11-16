@@ -65,6 +65,8 @@ jobs:
           python3 scripts/generate_distance_fixtures.py --check-source
       - name: Verify iOS history import fixture provenance
         run: python3 scripts/generate_history_import_fixtures.py --check-source
+      - name: Verify iOS backup fixture provenance
+        run: python3 scripts/generate_backup_fixtures.py --check-source
       - name: Verify iOS visit reconciliation fixture provenance
         run: python3 scripts/generate_visit_reconciliation_fixtures.py --check-source
       - name: Verify iOS nearby-place fixture provenance

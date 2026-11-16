@@ -33,12 +33,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.bontecou.whereday.data.AppSettings
+import com.bontecou.whereday.domain.RecordingPreset
 import java.text.NumberFormat
+
+internal val RecordingPreset.titleRes get()=when(this) {
+    RecordingPreset.places->R.string.recording_preset_places
+    RecordingPreset.routes->R.string.recording_preset_routes
+    RecordingPreset.everyStep->R.string.recording_preset_every_step
+}
+/** First run: the short version. */
+internal val RecordingPreset.summaryRes get()=when(this) {
+    RecordingPreset.places->R.string.recording_preset_places_summary
+    RecordingPreset.routes->R.string.recording_preset_routes_summary
+    RecordingPreset.everyStep->R.string.recording_preset_every_step_summary
+}
+/** "How Whereday listens": what each preset keeps, and how long it runs. */
+internal val RecordingPreset.listeningBodyRes get()=when(this) {
+    RecordingPreset.places->R.string.recording_preset_places_body
+    RecordingPreset.routes->R.string.recording_preset_routes_body
+    RecordingPreset.everyStep->R.string.recording_preset_every_step_body
+}
 
 /** "How Whereday listens" (iOS ListeningView, the Recording board): what is recording now, how much it keeps,
  *  the recording settings in effect, and what stays on the phone versus what leaves it. Values are the real settings. */
 @Composable internal fun ListeningScreen(settings:AppSettings,active:Boolean,back:()->Unit,onRecord:(()->Unit)?,openVisitsOnly:()->Unit,
-    openSends:()->Unit,openPermissions:()->Unit,setGeocoding:(Boolean)->Unit) {
+    openSends:()->Unit,openPermissions:()->Unit,setGeocoding:(Boolean)->Unit,choosePreset:(RecordingPreset)->Unit) {
     BackHandler(onBack=back)
     val number=NumberFormat.getIntegerInstance(LocalConfiguration.current.locales[0])
     Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("listening-screen")) {
@@ -60,7 +79,14 @@ import java.text.NumberFormat
             }
             WdSectionHeader(stringResource(R.string.listening_remember))
             Column(Modifier.padding(horizontal=16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                ListeningMode(stringResource(R.string.listening_mode_routes),stringResource(R.string.listening_mode_routes_body),selected=active,onClick=null)
+                // Custom filters, timers and time-based sampling select no preset (iOS ba63da5b); Custom says so.
+                val current=settings.recordingPreset
+                RecordingPreset.entries.forEach {preset->
+                    ListeningMode(stringResource(preset.titleRes),stringResource(preset.listeningBodyRes),selected=preset==current,
+                        modifier=Modifier.testTag("listening-preset-${preset.key}")) {choosePreset(preset)}
+                }
+                if(current==null) ListeningMode(stringResource(R.string.recording_preset_custom),stringResource(R.string.recording_preset_custom_body),selected=true,
+                    modifier=Modifier.testTag("listening-preset-custom"),onClick=null)
                 ListeningMode(stringResource(R.string.visits_title),stringResource(R.string.listening_mode_visits_body),selected=false,onClick=openVisitsOnly)
             }
             WdCard(Modifier.padding(horizontal=16.dp).padding(top=12.dp)) {
@@ -70,7 +96,6 @@ import java.text.NumberFormat
                     Text(routeSamplingSummary(settings),Modifier.testTag("listening-route-summary"),style=WdType.caption,color=wd.textMuted)}
                 WdRow(divider=false) {Text(stringResource(R.string.settings_stop_after),Modifier.weight(1f),style=MaterialTheme.typography.bodyLarge)
                     Text(if(settings.stopAfterHours==0) stringResource(R.string.settings_never) else stringResource(R.string.settings_hours,number.format(settings.stopAfterHours)),style=WdType.caption,color=wd.textMuted)}
-                Text(stringResource(R.string.settings_recording_help),Modifier.padding(start=20.dp,end=20.dp,bottom=12.dp),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
             }
             WdSectionHeader(stringResource(R.string.listening_stays_leaves))
             WdCard(Modifier.padding(horizontal=16.dp)) {
@@ -87,9 +112,9 @@ import java.text.NumberFormat
     }
 }
 
-@Composable private fun ListeningMode(title:String,body:String,selected:Boolean,onClick:(()->Unit)?) {
+@Composable internal fun ListeningMode(title:String,body:String,selected:Boolean,modifier:Modifier=Modifier,onClick:(()->Unit)?) {
     val shape=RoundedCornerShape(20.dp)
-    Row(Modifier.fillMaxWidth().clip(shape).background(if(selected) wd.secondaryContainer else wd.containerLow)
+    Row(modifier.fillMaxWidth().clip(shape).background(if(selected) wd.secondaryContainer else wd.containerLow)
         .then(if(onClick!=null) Modifier.clickable(role=Role.Button,onClick=onClick) else Modifier).semantics {this.selected=selected}
         .padding(16.dp),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
         Box(Modifier.padding(top=3.dp).size(20.dp).clip(CircleShape).border(2.dp,if(selected) wd.inkRust else wd.outline,CircleShape),contentAlignment=Alignment.Center) {

@@ -8,9 +8,6 @@ enum MapSheetDetent: Int, Comparable {
 
     static func < (lhs: Self, rhs: Self) -> Bool { lhs.rawValue < rhs.rawValue }
 
-    var larger: MapSheetDetent { MapSheetDetent(rawValue: min(rawValue + 1, 2)) ?? .large }
-    var smaller: MapSheetDetent { MapSheetDetent(rawValue: max(rawValue - 1, 0)) ?? .peek }
-
     /// Where the sheet's top edge sits, as a fraction of the map's height (the board's sheet starts at 330 of 844).
     var topFraction: CGFloat {
         switch self {
@@ -18,6 +15,38 @@ enum MapSheetDetent: Int, Comparable {
         case .medium: 0.39
         case .large: 0.12
         }
+    }
+
+    /// The sheet follows the finger down freely; past the large detent it only stretches a little, so a hard
+    /// upward drag can't slide it over the date header.
+    static func sheetHeight(detent: Self, containerHeight: CGFloat, dragOffset: CGFloat) -> CGFloat {
+        let resting = containerHeight * (1 - detent.topFraction)
+        let tallest = containerHeight * (1 - Self.large.topFraction)
+        let proposed = resting - dragOffset
+        guard proposed > tallest else { return max(120, proposed) }
+        let overshoot = proposed - tallest
+        return tallest + overshoot / (1 + overshoot / 40)
+    }
+
+    /// Where a released drag lands: the detent nearest the sheet's projected top edge, so a slow drag-and-hold
+    /// settles where the finger left it and a flick carries on in its direction.
+    static func settledDetent(
+        from detent: Self,
+        translation: CGFloat,
+        predicted: CGFloat,
+        containerHeight: CGFloat
+    ) -> Self {
+        guard detent != .peek else {
+            return predicted < -60 ? .medium : .peek
+        }
+        guard containerHeight > 0 else { return detent }
+        // Lean on the flick, but never let momentum pull the sheet the opposite way to the finger.
+        let projected = abs(predicted) > abs(translation) ? predicted : translation
+        let top = detent.topFraction + projected / containerHeight
+        let candidates: [Self] = [.large, .medium, .peek]
+        // The peek's "top" is the card above the tab bar, not the screen's bottom edge.
+        func anchor(_ candidate: Self) -> CGFloat { candidate == .peek ? 0.72 : candidate.topFraction }
+        return candidates.min { abs(anchor($0) - top) < abs(anchor($1) - top) } ?? detent
     }
 }
 
@@ -29,9 +58,12 @@ struct MapDaySheet<Peek: View, Content: View>: View {
     let containerHeight: CGFloat
     @ViewBuilder var peek: () -> Peek
     @ViewBuilder var content: () -> Content
-    @GestureState private var dragOffset: CGFloat = 0
+    /// The finger's travel while the grabber is held. Resets with the sheet's spring so a release that keeps
+    /// the detent slides back instead of jumping.
+    @GestureState(resetTransaction: Transaction(animation: .spring(response: 0.35, dampingFraction: 0.86))) private var dragOffset: CGFloat = 0
 
-    private var animation: Animation? { reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.86) }
+    private static var spring: Animation { .spring(response: 0.35, dampingFraction: 0.86) }
+    private var animation: Animation? { reduceMotion ? nil : Self.spring }
 
     var body: some View {
         Group {
@@ -50,23 +82,24 @@ struct MapDaySheet<Peek: View, Content: View>: View {
     }
 
     private var sheetHeight: CGFloat {
-        max(200, containerHeight * (1 - detent.topFraction) - dragOffset)
+        MapSheetDetent.sheetHeight(detent: detent, containerHeight: containerHeight, dragOffset: dragOffset)
     }
 
     private var sheet: some View {
         VStack(spacing: 0) {
-            Button {
-                withAnimation(animation) { detent = detent == .large ? .medium : .large }
-            } label: {
-                Capsule()
-                    .fill(TE.adaptive(0xCFC8B7, 0x2C3754))
-                    .frame(width: 36, height: 4)
-                    .frame(maxWidth: .infinity, minHeight: 30)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .gesture(dragGesture)
-            .accessibilityLabel(detent == .large ? "Shrink the day" : "Expand the day")
+            // A plain view, not a Button: a Button's own touch tracking held the drag back, so the sheet sat
+            // still under the finger and only jumped once it was released.
+            Capsule()
+                .fill(TE.adaptive(0xCFC8B7, 0x2C3754))
+                .frame(width: 36, height: 4)
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .contentShape(Rectangle())
+                .onTapGesture { toggleSize() }
+                .highPriorityGesture(dragGesture)
+                .accessibilityElement()
+                .accessibilityAddTraits(.isButton)
+                .accessibilityAction { toggleSize() }
+                .accessibilityLabel(detent == .large ? "Shrink the day" : "Expand the day")
             .accessibilityAction(named: "Collapse the day") {
                 withAnimation(animation) { detent = .peek }
             }
@@ -87,22 +120,28 @@ struct MapDaySheet<Peek: View, Content: View>: View {
         .accessibilityLabel("The day so far")
     }
 
+    private func toggleSize() {
+        withAnimation(animation) { detent = detent == .large ? .medium : .large }
+    }
+
     private var dragGesture: some Gesture {
-        DragGesture(minimumDistance: 8)
-            .updating($dragOffset) { value, state, _ in
-                if detent != .peek { state = value.translation.height }
+        DragGesture(minimumDistance: 4, coordinateSpace: .global)
+            .updating($dragOffset) { value, state, transaction in
+                guard detent != .peek else { return }
+                transaction.animation = nil
+                state = value.translation.height
             }
             .onEnded { value in
-                let distance = value.predictedEndTranslation.height
-                withAnimation(animation) {
-                    if distance < -60 {
-                        detent = detent.larger
-                    } else if distance > 60 {
-                        detent = distance > 360 ? .peek : detent.smaller
-                    }
-                }
+                let target = MapSheetDetent.settledDetent(
+                    from: detent,
+                    translation: value.translation.height,
+                    predicted: value.predictedEndTranslation.height,
+                    containerHeight: containerHeight
+                )
+                withAnimation(animation) { detent = target }
             }
     }
+
 }
 
 // MARK: - Several days (M6)

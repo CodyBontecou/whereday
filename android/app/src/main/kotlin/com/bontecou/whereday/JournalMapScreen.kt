@@ -203,7 +203,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
                 else if(story!=null) MapDayContent(story,metric,now,{stay->
                     model.mapSelection.value=model.mapSelection.value.copy(visitFocus=VisitMapFocus(stay.visit.id,stay.visit.coordinate))
                     quickVisitId=stay.visit.id;detent=DaySheetDetent.peek
-                },{detent=DaySheetDetent.peek;onOpenTimeline()},large)
+                },{detent=DaySheetDetent.peek;model.timelineDay.value=story.day;onOpenTimeline()},large)
                 else WdLoading()
                 access?.let {RecordingAccessNotice(it,onAccessOptions,contentPadding=PaddingValues(top=8.dp))}
             }
@@ -230,7 +230,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     editorMode?.let {mode->
         VisitEditor(graph,null,{editorMode=null;editorSeed=null},{value,reuse,remember,overlap->
             graph.history.saveVisit(value,null,reuse,remember,overlap);visitSaved=true
-        },null,ManualVisitMode.valueOf(mode),seed=editorSeed)
+        },null,ManualVisitMode.valueOf(mode),seed=editorSeed,trimOverlaps={value,reuse->graph.history.saveVisitTrimmingOverlaps(value,reuse);visitSaved=true})
     }
     if(custom) {
         val draft=remember(selected) {model.mapRangeDraft()}

@@ -1,944 +1,957 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "Export ${applicationName} data": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Check in with ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Check in with ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Export ${applicationName} data" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "تصدير بيانات ${applicationName}",
               "تصدير البيانات من ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} ডেটা রপ্তানি করুন",
               "${applicationName} থেকে ডেটা রপ্তানি করুন"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Export ${applicationName} data",
               "Export data from ${applicationName}"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Exportar datos de ${applicationName}",
               "Exportar datos desde ${applicationName}"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Exporter les données ${applicationName}",
               "Exporter les données depuis ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} डेटा निर्यात करें",
               "${applicationName} से डेटा निर्यात करें"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}のデータをエクスポートします",
               "${applicationName}からデータをエクスポートします"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Eksportuj dane z ${applicationName}",
+              "Wyeksportuj dane ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Exporte os dados do ${applicationName}",
               "Exporte dados de ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Экспортируйте данные ${applicationName}",
               "Экспортируйте данные из ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "导出${applicationName}数据",
               "从${applicationName}导出数据"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Eksportuj dane z ${applicationName}",
-              "Wyeksportuj dane ${applicationName}"
             ]
           }
         }
       }
     },
-    "How far have I gone with ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "How far have I gone with ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "إلى أي مدى وصلت مع ${applicationName}",
               "مسافة ${applicationName} اليوم"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "আমি ${applicationName} নিয়ে কতদূর গেছি",
               "আজ ${applicationName} দূরত্ব"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "How far have I gone with ${applicationName}",
               "${applicationName} distance today"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "¿Hasta dónde he llegado con ${applicationName}",
               "${applicationName} distancia hoy"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Jusqu'où suis-je allé avec ${applicationName}",
               "Distance de ${applicationName} aujourd'hui"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "मैं ${applicationName} के साथ कितनी दूर चला गया हूँ",
               "${applicationName} दूरी आज"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}でどれくらい移動しましたか",
               "今日の${applicationName}移動距離"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Jaki dystans pokonano dzisiaj z ${applicationName}",
+              "Dzisiejszy dystans w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Até onde fui com ${applicationName}",
               "Distância de ${applicationName} hoje"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Как далеко я зашел с ${applicationName}",
               "Расстояние ${applicationName} сегодня"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "我在${applicationName}上已经走了多远",
               "今天${applicationName}距离"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Jaki dystans pokonano dzisiaj z ${applicationName}",
-              "Dzisiejszy dystans w ${applicationName}"
             ]
           }
         }
       }
     },
-    "How long have I been tracking with ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "How long have I been tracking with ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "منذ متى وأنا أتتبع باستخدام ${applicationName}",
               "مدة تتبع ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "আমি কতদিন ধরে ${applicationName} দিয়ে ট্র্যাক করছি",
               "${applicationName} ট্র্যাকিং সময়কাল"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "How long have I been tracking with ${applicationName}",
               "${applicationName} tracking duration"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "¿Cuánto tiempo llevo rastreando con ${applicationName}",
               "${applicationName} duración del seguimiento"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Depuis combien de temps ai-je suivi avec ${applicationName}",
               "Durée de suivi ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "मैं ${applicationName} के साथ कितने समय से ट्रैकिंग कर रहा हूं",
               "${applicationName} ट्रैकिंग अवधि"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}を使ってどれくらい追跡していますか",
               "${applicationName}追跡期間"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Jak długo trwa śledzenie w ${applicationName}",
+              "Czas śledzenia w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Há quanto tempo estou rastreando com ${applicationName}",
               "Duração do rastreamento de ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Как долго я отслеживаю с помощью ${applicationName}",
               "Продолжительность отслеживания ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "我使用${applicationName}进行跟踪有多久了",
               "${applicationName}跟踪持续时间"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Jak długo trwa śledzenie w ${applicationName}",
-              "Czas śledzenia w ${applicationName}"
             ]
           }
         }
       }
     },
-    "How many visits today in ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "How many visits today in ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "كم عدد الزيارات اليوم في ${applicationName}",
               "عدد الزيارات ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}-এ আজ কতটি ভিজিট আছে",
               "${applicationName}-এর ভিজিট সংখ্যা"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "How many visits today in ${applicationName}",
               "${applicationName} visit count"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "¿Cuántas visitas hoy en ${applicationName}",
               "${applicationName} recuento de visitas"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Combien de visites aujourd'hui dans ${applicationName}",
               "Nombre de visites ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} में आज कितनी विज़िटें",
               "${applicationName} विज़िट संख्या"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}での今日の訪問数",
               "${applicationName}訪問数"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Ile wizyt dzisiaj w ${applicationName}",
+              "Liczba wizyt w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Quantas visitas hoje em ${applicationName}",
               "contagem de visitas ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Сколько посещений сегодня в ${applicationName}",
               "Количество посещений ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}今天有多少次访问",
               "${applicationName}访问计数"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Ile wizyt dzisiaj w ${applicationName}",
-              "Liczba wizyt w ${applicationName}"
             ]
           }
         }
       }
     },
-    "Rename a movement in ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "Rename a movement in ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "إعادة تسمية تنقل في ${applicationName}",
               "قم بتسمية تنقلي في ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}-এ একটি চলাচলের নাম পরিবর্তন করুন",
               "আমার ${applicationName} চলাচলের নাম দিন"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Rename a movement in ${applicationName}",
               "Name my ${applicationName} movement"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Cambiar el nombre de un desplazamiento en ${applicationName}",
               "Nombra mi desplazamiento de ${applicationName}"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Renommer un déplacement dans ${applicationName}",
               "Nommez mon déplacement ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} में एक मूवमेंट का नाम बदलें",
               "मेरे ${applicationName} मूवमेंट को नाम दें"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}で移動の名前を変更します",
               "私の${applicationName}の移動に名前を付けます"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Zmień nazwę przemieszczenia w ${applicationName}",
+              "Nazwij przemieszczenie w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Renomeie um deslocamento em ${applicationName}",
               "Dê um nome ao meu deslocamento ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Переименовать перемещение в ${applicationName}",
               "Назвать моё перемещение в ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "重命名${applicationName}中的行程",
               "为我的${applicationName}行程命名"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Zmień nazwę przemieszczenia w ${applicationName}",
-              "Nazwij przemieszczenie w ${applicationName}"
             ]
           }
         }
       }
     },
-    "Rename a visit in ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "Rename a visit in ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "إعادة تسمية زيارة في ${applicationName}",
               "قم بتسمية زيارتي في ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}-এ একটি ভিজিটের নাম পরিবর্তন করুন",
               "আমার ${applicationName} ভিজিটের নাম দিন"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Rename a visit in ${applicationName}",
               "Name my ${applicationName} visit"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Cambiar el nombre de una visita en ${applicationName}",
               "Nombra mi visita de ${applicationName}"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Renommer une visite dans ${applicationName}",
               "Nommez ma visite ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} में एक विज़िट का नाम बदलें",
               "मेरी ${applicationName} विज़िट को नाम दें"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}で訪問の名前を変更します",
               "私の${applicationName}の訪問に名前を付けます"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Zmień nazwę wizyty w ${applicationName}",
+              "Nazwij wizytę w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Renomeie uma visita em ${applicationName}",
               "Dê um nome à minha visita ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Переименовать посещение в ${applicationName}",
               "Назвать моё посещение в ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "重命名${applicationName}中的访问",
               "为我的${applicationName}访问命名"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Zmień nazwę wizyty w ${applicationName}",
-              "Nazwij wizytę w ${applicationName}"
             ]
           }
         }
       }
     },
-    "Rename current outing in ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "Rename current outing in ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "إعادة تسمية النزهة الحالية في ${applicationName}",
               "قم بتسمية نزهة ${applicationName} الخاصة بي"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} -এ বর্তমান ভ্রমণের নাম পরিবর্তন করুন",
               "আমার ${applicationName} ভ্রমণের নাম দিন"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Rename current outing in ${applicationName}",
               "Name my ${applicationName} outing"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Cambiar el nombre de la salida actual en ${applicationName}",
               "Nombra mi salida ${applicationName}"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Renommer la sortie en cours en ${applicationName}",
               "Nommez ma sortie ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} में वर्तमान आउटिंग का नाम बदलें",
               "मेरी ${applicationName} आउटिंग को नाम दें"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}の現在の外出の名前を変更します",
               "${applicationName}外出に名前を付けます"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Zmień nazwę bieżącej podróży w ${applicationName}",
+              "Nazwij podróż w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Renomeie a saída atual em ${applicationName}",
               "Dê um nome ao meu passeio ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Переименовать текущую прогулку в ${applicationName}",
               "Назвать мою прогулку в ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "重命名${applicationName}中当前的出行记录",
               "为我的${applicationName}出行记录命名"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Zmień nazwę bieżącej podróży w ${applicationName}",
-              "Nazwij podróż w ${applicationName}"
             ]
           }
         }
       }
     },
-    "Start ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "Start ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "ابدأ ${applicationName}",
               "ابدأ التسجيل في ${applicationName}",
               "سجل المسار باستخدام ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} শুরু করুন",
               "${applicationName} এ রেকর্ডিং শুরু করুন",
               "${applicationName} দিয়ে রুট রেকর্ড করুন"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Start ${applicationName}",
               "Begin recording in ${applicationName}",
               "Record route with ${applicationName}"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Iniciar ${applicationName}",
               "Comience a grabar en ${applicationName}",
               "Grabar ruta con ${applicationName}"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Démarrer ${applicationName}",
               "Commencer l'enregistrement dans ${applicationName}",
               "Enregistrer l'itinéraire avec ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} प्रारंभ करें",
               "${applicationName} में रिकॉर्डिंग प्रारंभ करें",
               "${applicationName} के साथ मार्ग रिकॉर्ड करें"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}を開始します",
               "${applicationName}で記録を開始します",
               "${applicationName}でルートを記録する"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Uruchom ${applicationName}",
+              "Rozpocznij rejestrowanie w ${applicationName}",
+              "Rejestruj trasę z ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Iniciar ${applicationName}",
               "Comece a gravar em ${applicationName}",
               "Registrar rota com ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Запустить ${applicationName}",
               "Начать запись в ${applicationName}",
               "Запишите маршрут с помощью ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "启动${applicationName}",
               "开始在${applicationName}中记录",
               "使用${applicationName}记录路线"
             ]
           }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Uruchom ${applicationName}",
-              "Rozpocznij rejestrowanie w ${applicationName}",
-              "Rejestruj trasę z ${applicationName}"
-            ]
-          }
         }
       }
     },
-    "Stop tracking with ${applicationName}": {
-      "localizations": {
-        "ar": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+    "Stop tracking with ${applicationName}" : {
+      "localizations" : {
+        "ar" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "إيقاف التتبع باستخدام ${applicationName}",
               "أوقف تتبع ${applicationName}"
             ]
           }
         },
-        "bn": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "bn" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} দিয়ে ট্র্যাক করা বন্ধ করুন",
               "${applicationName} ট্র্যাকিং বন্ধ করুন"
             ]
           }
         },
-        "en": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "en" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Stop tracking with ${applicationName}",
               "Stop ${applicationName} tracking"
             ]
           }
         },
-        "es": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "es" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Detener el seguimiento con ${applicationName}",
               "Detener el seguimiento de ${applicationName}"
             ]
           }
         },
-        "fr": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Arrêter le suivi avec ${applicationName}",
               "Arrêter le suivi de ${applicationName}"
             ]
           }
         },
-        "hi": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "hi" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName} से ट्रैकिंग बंद करें",
               "${applicationName} ट्रैकिंग बंद करें"
             ]
           }
         },
-        "ja": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ja" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "${applicationName}による追跡を停止する",
               "${applicationName}追跡を停止します"
             ]
           }
         },
-        "pt-BR": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "pl" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Zatrzymaj śledzenie w ${applicationName}",
+              "Zakończ śledzenie w ${applicationName}"
+            ]
+          }
+        },
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Pare de rastrear com ${applicationName}",
               "Interromper o rastreamento ${applicationName}"
             ]
           }
         },
-        "ru": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "ru" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "Прекратите отслеживание с помощью ${applicationName}",
               "Прекратить отслеживание ${applicationName}"
             ]
           }
         },
-        "zh-Hans": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
+        "zh-Hans" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
               "停止使用${applicationName}进行跟踪",
               "停止${applicationName}跟踪"
-            ]
-          }
-        },
-        "pl": {
-          "stringSet": {
-            "state": "translated",
-            "values": [
-              "Zatrzymaj śledzenie w ${applicationName}",
-              "Zakończ śledzenie w ${applicationName}"
             ]
           }
         }
       }
     }
   },
-  "version": "1.2"
+  "version" : "1.2"
 }

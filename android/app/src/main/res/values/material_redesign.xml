@@ -77,8 +77,19 @@
     <string name="listening_status_on">Recording places and routes</string>
     <string name="listening_status_off">Not recording right now</string>
     <string name="listening_remember">How much should it remember?</string>
-    <string name="listening_mode_routes">Places and routes</string>
-    <string name="listening_mode_routes_body">Every stop and the path between them, using GPS while recording runs.</string>
+    <!-- Recording presets (iOS RecordingDetail): titles, the short onboarding summaries, and the How Whereday listens bodies. -->
+    <string name="recording_preset_places">Places + sparse routes</string>
+    <string name="recording_preset_routes">Places + routes</string>
+    <string name="recording_preset_every_step">Every step</string>
+    <string name="recording_preset_places_summary">Stops and route points about every 100 m.</string>
+    <string name="recording_preset_routes_summary">Stops and route points about every 25 m.</string>
+    <string name="recording_preset_every_step_summary">High-detail tracks for hikes and rides.</string>
+    <string name="recording_preset_places_body">Notes stops and records route points about every 100 m. Continues until you pause.</string>
+    <string name="recording_preset_routes_body">Notes stops and records route points about every 25 m. Continues until you pause.</string>
+    <string name="recording_preset_every_step_body">Route points about every 5 m. For hikes and rides. Stops on its own after 2 h.</string>
+    <string name="recording_preset_custom">Custom</string>
+    <string name="recording_preset_custom_body">Your own distance, interval or auto-stop from Settings. Choosing a preset replaces them.</string>
+    <string name="onboarding_preset_custom_kept">Your custom recording settings stay unless you choose a preset.</string>
     <string name="listening_mode_visits_body">Only where you stay, with balanced-power location and no route between stops.</string>
     <string name="listening_stays_leaves">What stays · what leaves</string>
     <string name="listening_journal">Your journal</string>

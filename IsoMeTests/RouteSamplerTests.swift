@@ -29,6 +29,25 @@ final class RouteSamplerTests: XCTestCase {
         locations.map { Int($0.timestamp.timeIntervalSince(start).rounded()) }
     }
 
+    // MARK: - Fixes from before the recording
+
+    func testCachedFixFromDaysBeforeTheRecordingIsSkipped() {
+        let stale = fix(t: -3 * 86_400)
+        let fresh = fix(t: 5, north: 30)
+        XCTAssertEqual(seconds(RecordingFixWindow.fixes([stale, fresh], recordingSince: start)), [5])
+    }
+
+    func testFixJustBeforeTheStartTapIsKept() {
+        let leadIn = fix(t: -RecordingFixWindow.leadIn)
+        let earlier = fix(t: -RecordingFixWindow.leadIn - 1)
+        XCTAssertEqual(seconds(RecordingFixWindow.fixes([earlier, leadIn], recordingSince: start)), [-10])
+    }
+
+    func testFixesPassThroughWithoutAStartTime() {
+        let stale = fix(t: -86_400)
+        XCTAssertEqual(RecordingFixWindow.fixes([stale], recordingSince: nil).count, 1)
+    }
+
     // MARK: - Distance mode is unchanged
 
     func testDistanceModePassesEveryFixThroughAtFullPower() {

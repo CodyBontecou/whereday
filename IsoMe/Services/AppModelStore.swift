@@ -19,6 +19,7 @@ enum AppModelStore {
         RecordingSession.self,
         PhotoMoment.self,
         SavedPlace.self,
+        WatchVisitCommandReceipt.self,
         CountryStay.self
     ])
 

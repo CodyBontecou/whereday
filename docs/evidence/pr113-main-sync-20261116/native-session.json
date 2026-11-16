@@ -1,0 +1,53 @@
+{
+  "scope": "owned read-only native instrumentation, no physical devices",
+  "passed": true,
+  "emulatorPID": 49393,
+  "emulatorCommand": [
+    "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+    "-avd",
+    "whereday-priority-20261111-api35",
+    "-port",
+    "5586",
+    "-read-only",
+    "-no-snapshot-load",
+    "-no-snapshot-save",
+    "-no-window",
+    "-no-audio",
+    "-no-boot-anim",
+    "-gpu",
+    "swiftshader_indirect",
+    "-memory",
+    "2048",
+    "-cores",
+    "2"
+  ],
+  "runnerExit": 0,
+  "cleanup": [
+    {
+      "metricCollectorStopped": true
+    },
+    {
+      "setting": "window_animation_scale",
+      "restored": true
+    },
+    {
+      "setting": "transition_animation_scale",
+      "restored": true
+    },
+    {
+      "setting": "animator_duration_scale",
+      "restored": true
+    },
+    {
+      "emulatorGracefulExit": 0
+    },
+    {
+      "privateAdbStop": 0
+    }
+  ],
+  "originalSettings": {
+    "window_animation_scale": "1.0",
+    "transition_animation_scale": "1.0",
+    "animator_duration_scale": "null"
+  }
+}

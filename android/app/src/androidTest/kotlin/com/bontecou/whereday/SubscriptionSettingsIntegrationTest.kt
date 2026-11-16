@@ -49,6 +49,21 @@ class SubscriptionSettingsIntegrationTest {
             compose.onNodeWithTag("subscription-manage-play").performScrollTo().assertIsDisplayed()
             compose.onNodeWithTag("subscription-back").performScrollTo().performClick()
             compose.onNodeWithTag("settings-screen").assertExists()
+            // The merged Settings host must retain main's backup routes as well as Subscription.
+            val clearAttempt=graph.journalClear.state.value.attempt
+            compose.onNodeWithTag("settings-screen").performScrollToNode(hasTestTag("settings-backup"))
+            compose.onNodeWithTag("settings-backup").performClick()
+            compose.onNodeWithTag("backup-screen").assertExists()
+            compose.onNodeWithTag("backup-back").performClick()
+            compose.onNodeWithTag("settings-screen").performScrollToNode(hasTestTag("settings-clear"))
+            compose.onNodeWithTag("settings-clear").performClick()
+            compose.onNodeWithTag("settings-clear-export-first").performClick()
+            compose.onNodeWithTag("backup-screen").assertExists()
+            compose.onNodeWithTag("backup-continue-clear").performScrollTo().performClick()
+            compose.onNodeWithTag("settings-clear-confirm").assertExists()
+            compose.onNodeWithTag("settings-clear-cancel").performClick()
+            compose.onNodeWithTag("settings-clear-confirm").assertDoesNotExist()
+            assertEquals(clearAttempt,graph.journalClear.state.value.attempt)
             assertEquals(access,graph.purchases.state.value.access)
         } finally {
             SubscriptionPreview.override.value=oldPreview

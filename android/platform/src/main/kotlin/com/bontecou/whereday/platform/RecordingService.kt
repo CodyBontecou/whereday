@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.conflate
 import com.bontecou.whereday.domain.PointSummary
 import com.bontecou.whereday.domain.RecordingInterruption
 import com.bontecou.whereday.domain.RouteSampler
+import com.bontecou.whereday.domain.RouteSamplingPolicy
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.Instant
@@ -28,6 +29,7 @@ class RecordingService : Service() {
     private var generation=0L
     private var ticker:Job?=null
     private var summaryJob:Job?=null
+    private var settingsJob:Job?=null
     private var summary:PointSummary?=null
     private var metric=true
     private var startedAt:Instant?=null
@@ -105,18 +107,21 @@ class RecordingService : Service() {
                 val recording=graph.history.start(settings.stopAfterHours,locationBootCount(this@RecordingService))
                 startedAt=recording.sessionId?.let {graph.history.dao.session(it)?.value?.startedAt}
                 metric=settings.metric
-                // Settings apply to the next start, so one sampler serves this whole recording.
-                val sampling=settings.routeSampling
-                val sampler=RouteSampler(sampling)
-                source.start(sampling,onPoints={points ->scope.launch {commands.withLock {
-                    if(epoch!=generation) return@withLock
-                    try {
-                        if(sampling.mode.usesInterval) graph.history.ingest(points,sampler.process(points).mapTo(HashSet()) {it.id})
-                        else graph.history.ingest(points)
-                    }
-                    catch(e:CancellationException) {throw e}
-                    catch(_:Exception) {finish(RecordingInterruption.historyUnavailable,startId)}
-                }}},onError={scope.launch {commands.withLock {if(epoch==generation) finish(RecordingInterruption.locationUnavailable,startId)}}})
+                // Each attachment gets its own sampler. A sampling change mid-recording re-attaches
+                // the source, as iOS applies new settings to its live location manager.
+                suspend fun attach(sampling:RouteSamplingPolicy) {
+                    val sampler=RouteSampler(sampling)
+                    source.start(sampling,onPoints={points ->scope.launch {commands.withLock {
+                        if(epoch!=generation) return@withLock
+                        try {
+                            if(sampling.mode.usesInterval) graph.history.ingest(points,sampler.process(points).mapTo(HashSet()) {it.id})
+                            else graph.history.ingest(points)
+                        }
+                        catch(e:CancellationException) {throw e}
+                        catch(_:Exception) {finish(RecordingInterruption.historyUnavailable,startId)}
+                    }}},onError={scope.launch {commands.withLock {if(epoch==generation) finish(RecordingInterruption.locationUnavailable,startId)}}})
+                }
+                attach(settings.routeSampling)
                 if(ticket!=null && !RecordingStartTickets.valid(ticket)) throw CancellationException()
                 RecordingRuntime.update(true)
                 refreshWidgets()
@@ -129,6 +134,24 @@ class RecordingService : Service() {
                         catch(e:CancellationException) {throw e}
                         catch(_:Exception) {if(epoch==generation) summary=null}
                         delay(5_000)
+                    }
+                }
+                // Presets and Settings apply to the running recording, as on iOS: sampling changes
+                // re-attach the source, and auto-stop is re-derived from the session's start.
+                settingsJob?.cancel();settingsJob=scope.launch {
+                    var applied=settings
+                    graph.preferences.settings.collect {next->
+                        if(next.routeSampling==applied.routeSampling && next.stopAfterHours==applied.stopAfterHours) return@collect
+                        commands.withLock {
+                            if(epoch!=generation) return@withLock
+                            try {
+                                if(next.stopAfterHours!=applied.stopAfterHours) graph.history.updateDeadline(sessionId,next.stopAfterHours)
+                                if(next.routeSampling!=applied.routeSampling) {source.stop();attach(next.routeSampling)}
+                                applied=next
+                            }
+                            catch(e:CancellationException) {throw e}
+                            catch(_:Exception) {finish(RecordingInterruption.locationUnavailable,startId)}
+                        }
                     }
                 }
                 ticker?.cancel();ticker=scope.launch {
@@ -186,6 +209,8 @@ class RecordingService : Service() {
         generation++;source.stop()
         graph.webhookController.permissionsChanged()
         summaryJob?.cancel();summaryJob=null;summary=null
+        // Cancelled last, like the ticker: either may be the coroutine running this finish.
+        val previousSettings=settingsJob;settingsJob=null
         val previousTicker=ticker;ticker=null
         try {
             graph.history.stop(reason?.code)
@@ -196,6 +221,7 @@ class RecordingService : Service() {
             stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf(startId)
             previousTicker?.cancel()
+            previousSettings?.cancel()
         }
     }
     /** Home-screen widgets live in the app module; a package-scoped broadcast asks them to re-render. */

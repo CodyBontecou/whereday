@@ -1289,7 +1289,8 @@ final class LocationManager: NSObject, ObservableObject {
             todayPointsCount: todayPointsCount,
             trackingStartTime: trackingStartTime,
             stopAfterHours: stopAfterHours > 0 ? stopAfterHours : nil,
-            usesMetricDistanceUnits: usesMetricDistanceUnits
+            usesMetricDistanceUnits: usesMetricDistanceUnits,
+            manualVisitStatus: SharedLocationData.load()?.manualVisitStatus
         )
 
         sharedData.save()
@@ -1382,10 +1383,20 @@ extension LocationManager: CLLocationManagerDelegate {
 
             guard isTrackingEnabled, StoreManager.shared.canTrack else { return }
 
+            // A cached fix from before this recording began is not part of it.
+            let recordable = RecordingFixWindow.fixes(locations, recordingSince: trackingStartTime)
+            let staleCount = locations.count - recordable.count
+            if staleCount > 0 {
+                LogManager.shared.info(
+                    "Skipped \(staleCount) cached fix\(staleCount == 1 ? "" : "es") from before recording started",
+                    category: .location
+                )
+            }
+
             // Distance mode passes every fix through; time modes keep one per interval.
-            let samples = routeSampler.process(locations)
+            let samples = routeSampler.process(recordable)
             if preciseFixRequestedAt != nil,
-               locations.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
+               recordable.contains(where: { $0.horizontalAccuracy >= 0 && $0.horizontalAccuracy <= RouteSamplingPolicy.preciseAccuracy }) {
                 preciseFixRequestedAt = nil
             }
             applyRoutePowerLevel()

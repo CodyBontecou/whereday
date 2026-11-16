@@ -160,6 +160,7 @@ private struct LiveActivityModel {
 
 struct LockScreenView: View {
     let context: ActivityViewContext<LocationActivityAttributes>
+    @Environment(\.colorScheme) private var colorScheme
 
     private var model: LiveActivityModel { LiveActivityModel(context: context) }
 
@@ -225,8 +226,11 @@ struct LockScreenView: View {
         .padding(.horizontal, 16)
         .padding(.top, 16)
         .padding(.bottom, 14)
-        .activityBackgroundTint(WidgetTE.surface.opacity(0.94))
-        .activitySystemActionForegroundColor(WidgetTE.textPrimary)
+        // The system doesn't reliably resolve a dynamic UIColor (or a translucent one) for the
+        // activity background, which left a washed-out tan plate behind dark-mode content.
+        // Resolve the surface from the view's color scheme and keep it opaque.
+        .activityBackgroundTint(WidgetTE.fixed(colorScheme == .dark ? 0x0F1626 : 0xF3EFE6))
+        .activitySystemActionForegroundColor(WidgetTE.fixed(colorScheme == .dark ? 0xECE6D8 : 0x1E2B45))
     }
 
     private func stat<Value: View>(label: LocalizedStringKey, @ViewBuilder value: () -> Value) -> some View {

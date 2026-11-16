@@ -59,7 +59,7 @@ class ReplayRepository(private val root:File,private val history:HistoryReposito
 
                 val range=when(request) {
                     is ReplayRequest.Range->request.range
-                    is ReplayRequest.Outing->{val session=dao.session(request.id)?.value ?: error("This outing was deleted.");HistoryRange(session.startedAt,(session.endedAt ?: Instant.now()).coerceAtLeast(session.startedAt).plusMillis(1))}
+                    is ReplayRequest.Outing->{val session=dao.session(request.id)?.value ?: error("This outing was deleted.");RecordingDayClip.range(session,Instant.now(),request.day)}
                     is ReplayRequest.Inferred->HistoryRange(request.header.startedAt,request.header.endedAt.plusMillis(1))
                 }
                 val sessions=if(request is ReplayRequest.Inferred) dao.rangeSessions(range.from,range.until).map {it.value} else emptyList()
