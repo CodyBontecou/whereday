@@ -385,6 +385,14 @@ struct OutingsView: View {
                             Button("Add Event to Calendar", systemImage: "calendar.badge.plus") {
                                 calendarDraft = CalendarEventDraft(session: session)
                             }
+                            if let stored = session.storedSession {
+                                TravelModeMenu(
+                                    session: stored,
+                                    inferredMode: session.inferredTravelMode
+                                ) { mode in
+                                    viewModel.updateRecordingSessionTravelMode(stored, mode: mode)
+                                }
+                            }
                         }
 
                     case .visit(let visit):
@@ -1193,7 +1201,7 @@ private struct RecordingSessionDetailView: View {
         } else {
             status = String(localized: "RECORDED")
         }
-        guard let mode = metrics?.travelMode else { return status }
+        guard let mode = session.storedSession?.storedTravelMode ?? metrics?.inferredTravelMode else { return status }
         return "\(mode.label.uppercased()) · \(status)"
     }
 
@@ -1421,6 +1429,23 @@ private struct RecordingSessionDetailView: View {
                         }
                     }
 
+                    TERow {
+                        HStack(spacing: 12) {
+                            Text("MODE")
+                                .font(TE.mono(.caption2, weight: .semibold))
+                                .tracking(1)
+                                .foregroundStyle(TE.textMuted)
+                            Spacer(minLength: 8)
+                            TravelModeMenu(
+                                session: storedSession,
+                                inferredMode: metrics?.inferredTravelMode,
+                                style: .inline
+                            ) { mode in
+                                viewModel.updateRecordingSessionTravelMode(storedSession, mode: mode)
+                            }
+                        }
+                    }
+
                     TERow(showDivider: false) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("NOTES")
@@ -1445,7 +1470,7 @@ private struct RecordingSessionDetailView: View {
 
             TESectionFooter(text: storedSession.isActive
                 ? LocalizedStringKey("This outing is currently being recorded.")
-                : LocalizedStringKey("Names and notes stay on-device with the recording session."))
+                : LocalizedStringKey("Names, modes and notes stay on-device with the recording session. A mode you pick here is never changed automatically."))
         }
     }
 
@@ -2033,5 +2058,68 @@ extension LocationViewModel {
     /// Stays overlapping an outing, plus any that began shortly after it ended (its destination).
     func visitsNearOuting(_ session: RecordingSessionSummary) -> [Visit] {
         visitsOverlappingDateRange(session.startedAt...session.effectiveEndDate.addingTimeInterval(20 * 60))
+    }
+}
+
+/// Picks an outing's travel mode: Automatic (inferred from GPS speed) or one chosen by hand.
+struct TravelModeMenu: View {
+    enum Style { case contextMenu, inline }
+
+    let session: RecordingSession
+    /// What automatic detection reads for this outing, shown beside "Automatic".
+    let inferredMode: TravelMode?
+    var style: Style = .contextMenu
+    let onSelect: (TravelMode?) -> Void
+
+    private var selection: Binding<TravelMode?> {
+        Binding(
+            get: { session.storedTravelMode },
+            set: { onSelect($0) }
+        )
+    }
+
+    private var automaticTitle: String {
+        guard let inferredMode else { return String(localized: "Automatic") }
+        return String(localized: "Automatic (\(inferredMode.label))")
+    }
+
+    private var picker: some View {
+        Picker("Transport Mode", selection: selection) {
+            Label(automaticTitle, systemImage: "wand.and.stars").tag(TravelMode?.none)
+            ForEach(TravelMode.allCases, id: \.self) { mode in
+                Label(mode.label, systemImage: mode.systemImage).tag(TravelMode?.some(mode))
+            }
+        }
+    }
+
+    var body: some View {
+        switch style {
+        case .contextMenu:
+            Menu {
+                picker.pickerStyle(.inline)
+            } label: {
+                Label("Transport Mode", systemImage: (session.storedTravelMode ?? inferredMode)?.systemImage ?? "figure.walk.motion")
+            }
+        case .inline:
+            Menu {
+                picker.pickerStyle(.inline)
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: (session.storedTravelMode ?? inferredMode)?.systemImage ?? "wand.and.stars")
+                        .accessibilityHidden(true)
+                    Text(session.storedTravelMode?.label ?? automaticTitle)
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.caption2)
+                        .accessibilityHidden(true)
+                }
+                .font(TE.mono(.caption, weight: .medium))
+                .foregroundStyle(TE.textPrimary)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+            }
+            .accessibilityLabel("Transport mode")
+            .accessibilityValue(session.storedTravelMode?.label ?? automaticTitle)
+            .accessibilityIdentifier("outing-travel-mode")
+        }
     }
 }

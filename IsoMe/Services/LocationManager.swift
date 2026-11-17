@@ -660,12 +660,14 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     private func makeRecordingSession(startedAt: Date) -> RecordingSession {
-        RecordingSession(
+        let session = RecordingSession(
             startedAt: startedAt,
             distanceFilterMeters: distanceFilter,
             routeSamplingModeRawValue: routeSamplingMode.rawValue,
             routeSampleIntervalSeconds: routeSamplingMode.usesTimeInterval ? routeSampleInterval : nil
         )
+        session.applyDefaultTravelMode(TravelModePreference.stored(in: defaults))
+        return session
     }
 
     private func endActiveRecordingSession(at endedAt: Date) {

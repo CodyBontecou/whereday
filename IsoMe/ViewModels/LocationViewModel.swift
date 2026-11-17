@@ -1443,6 +1443,13 @@ final class LocationViewModel {
         loadRecordingSessions()
     }
 
+    /// Sets an outing's travel mode by hand, or returns it to automatic detection with nil.
+    func updateRecordingSessionTravelMode(_ session: RecordingSession, mode: TravelMode?) {
+        session.setManualTravelMode(mode)
+        try? modelContext.save()
+        loadRecordingSessions()
+    }
+
     // MARK: - Export
 
     func exportVisits(format: ExportFormat, dateRange: ClosedRange<Date>? = nil) {

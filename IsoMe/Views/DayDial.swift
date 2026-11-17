@@ -182,7 +182,7 @@ struct TodayDay {
             case .drive: return String(localized: "after a \(distance) drive")
             case .transit: return String(localized: "after a \(distance) train ride")
             case .fly: return String(localized: "after a \(distance) flight")
-            case nil: return String(localized: "after \(distance) on the move")
+            case .other, nil: return String(localized: "after \(distance) on the move")
             }
         }
     }

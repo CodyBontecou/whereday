@@ -212,6 +212,7 @@
 		F0A74500212F00010000F0A7 /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */; };
 		D362A9E546FD488DA87D3E03 /* WheredayBackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393B7133DA6C49FA9333C111 /* WheredayBackupService.swift */; };
 		FDFB1C9B057842D2AEAF9F09 /* WheredayBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644670CB99144980BD7FC378 /* WheredayBackupTests.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* TravelModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* TravelModeTests.swift */; };
 		75CA00000000000000000002 /* WatchVisitCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CA00000000000000000001 /* WatchVisitCommands.swift */; };
 		75CA00000000000000000003 /* WatchVisitCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CA00000000000000000001 /* WatchVisitCommands.swift */; };
 		75CA00000000000000000004 /* WatchVisitCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CA00000000000000000001 /* WatchVisitCommands.swift */; };
@@ -475,6 +476,7 @@
 		F0A70005212F00000000F0A7 /* IBMPlexMono-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-SemiBold.ttf"; sourceTree = "<group>"; };
 		393B7133DA6C49FA9333C111 /* WheredayBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheredayBackupService.swift; sourceTree = "<group>"; };
 		644670CB99144980BD7FC378 /* WheredayBackupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheredayBackupTests.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5D /* TravelModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelModeTests.swift; sourceTree = "<group>"; };
 		75CA00000000000000000001 /* WatchVisitCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchVisitCommands.swift; sourceTree = "<group>"; };
 		75CA00000000000000000101 /* WatchVisitCommandProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchVisitCommandProcessor.swift; sourceTree = "<group>"; };
 		75CA00000000000000000201 /* WatchManualVisitClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchManualVisitClient.swift; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 				5B11700000000000000000A1 /* SplitVisitTests.swift */,
 				8E371E5863464D0AB0D58071 /* TimelineImportTests.swift */,
 				644670CB99144980BD7FC378 /* WheredayBackupTests.swift */,
+				A1B2C3D4E5F60718293A4B5D /* TravelModeTests.swift */,
 				F8AA00000000000000000002 /* MonthRecapTests.swift */,
 				A0660001212F000000000001 /* PhotoMomentMembershipTests.swift */,
 				5F000007212F000000000001 /* IntervalScheduledExportTests.swift */,
@@ -1312,6 +1315,7 @@
 				5B11700000000000000000A2 /* SplitVisitTests.swift in Sources */,
 				F2DCEC8ADF4641F4AFEBB1BA /* TimelineImportTests.swift in Sources */,
 				FDFB1C9B057842D2AEAF9F09 /* WheredayBackupTests.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* TravelModeTests.swift in Sources */,
 				F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */,
 				A0660001212F000100000001 /* PhotoMomentMembershipTests.swift in Sources */,
 			);

@@ -233,13 +233,13 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
                         }
                     }
                 } else {
-                    modelContext.insert(
-                        RecordingSession(
-                            id: sessionDTO.id,
-                            startedAt: sessionDTO.startedAt,
-                            endedAt: sessionDTO.endedAt
-                        )
+                    let session = RecordingSession(
+                        id: sessionDTO.id,
+                        startedAt: sessionDTO.startedAt,
+                        endedAt: sessionDTO.endedAt
                     )
+                    session.applyDefaultTravelMode(TravelModePreference.stored())
+                    modelContext.insert(session)
                     importedSessionCount += 1
                 }
             }
