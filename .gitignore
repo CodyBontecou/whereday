@@ -51,3 +51,6 @@ docs/android-native-roadmap.md
 .derived/
 
 .argent/recordings/
+
+# Python bytecode from running scripts/ tests.
+__pycache__/

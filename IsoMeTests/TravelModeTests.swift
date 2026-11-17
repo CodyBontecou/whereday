@@ -1,5 +1,6 @@
 import XCTest
 import SwiftData
+import CoreLocation
 @testable import IsoMe
 
 /// An outing's travel mode: picked by hand, applied from the Settings default, or inferred from GPS.
@@ -312,5 +313,32 @@ final class TravelModeTests: XCTestCase {
                                            startedAt: points[0].timestamp, endedAt: nil, points: points,
                                            isInferred: true, isActive: true, now: points.last!.timestamp)
         XCTAssertFalse(live.canEditTravelMode)
+    }
+
+    // MARK: - Live Activity
+
+    func testLiveActivityShowsStoredModeOnlyWhileMoving() {
+        let start = base
+        let moving = (0..<5).map { index in
+            CLLocation(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: Double(index) * 0.0005),
+                       altitude: 0, horizontalAccuracy: 5, verticalAccuracy: 5,
+                       timestamp: start.addingTimeInterval(Double(index) * 10))
+        }
+        XCTAssertEqual(LiveActivityManager.liveTravelMode(for: moving, stored: nil), .bike)
+        XCTAssertEqual(LiveActivityManager.liveTravelMode(for: moving, stored: .drive), .drive)
+        let still = moving.map { CLLocation(coordinate: moving[0].coordinate, altitude: 0, horizontalAccuracy: 5,
+                                            verticalAccuracy: 5, timestamp: $0.timestamp) }
+        XCTAssertNil(LiveActivityManager.liveTravelMode(for: still, stored: .drive))
+    }
+
+    func testActiveRecordingCarriesDefaultModeForLiveActivity() throws {
+        let defaults = makeIsolatedDefaults()
+        defaults.set(TravelMode.transit.rawValue, forKey: TravelModePreference.storageKey)
+        let manager = makeIsolatedLocationManager(defaults: defaults)
+        let container = try makeContainer()
+        manager.isTrackingEnabled = true
+        manager.trackingStartTime = base
+        manager.setModelContext(container.mainContext)
+        XCTAssertEqual(manager.activeRecordingTravelMode, .transit)
     }
 }

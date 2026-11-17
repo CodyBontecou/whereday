@@ -470,7 +470,8 @@ final class LocationManager: NSObject, ObservableObject {
             liveActivityManager.updateActivity(
                 location: nil,
                 locationName: currentLocationName,
-                remainingSeconds: liveActivityRemainingSeconds
+                remainingSeconds: liveActivityRemainingSeconds,
+                storedTravelMode: activeRecordingTravelMode
             )
         }
     }
@@ -707,6 +708,12 @@ final class LocationManager: NSObject, ObservableObject {
         )
         descriptor.sortBy = [SortDescriptor(\.startedAt, order: .forward)]
         return try context.fetch(descriptor)
+    }
+
+    /// The mode stored on the recording in progress (picked by hand, or the default it started with).
+    var activeRecordingTravelMode: TravelMode? {
+        guard let context = modelContext, let activeRecordingSessionID else { return nil }
+        return (try? recordingSession(withID: activeRecordingSessionID, in: context))?.storedTravelMode
     }
 
     private func recordingSession(withID id: UUID, in context: ModelContext) throws -> RecordingSession? {
@@ -1412,7 +1419,8 @@ extension LocationManager: CLLocationManagerDelegate {
                 liveActivityManager.updateActivity(
                     location: location,
                     locationName: currentLocationName,
-                    remainingSeconds: liveActivityRemainingSeconds
+                    remainingSeconds: liveActivityRemainingSeconds,
+                    storedTravelMode: activeRecordingTravelMode
                 )
             }
         }
