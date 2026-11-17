@@ -1450,6 +1450,29 @@ final class LocationViewModel {
         loadRecordingSessions()
     }
 
+    /// Saves a travel mode for any finished outing. An inferred outing has nowhere to keep it, so the
+    /// first mode chosen saves it as a stored outing over the same span; it can then be named as well.
+    /// Returns the stored outing, or nil when nothing could be saved (a live inferred outing, or
+    /// choosing Automatic for an outing that was never saved).
+    @discardableResult
+    func setTravelMode(_ mode: TravelMode?, for summary: RecordingSessionSummary) -> RecordingSession? {
+        if let stored = summary.storedSession {
+            updateRecordingSessionTravelMode(stored, mode: mode)
+            return stored
+        }
+        guard let mode, summary.canEditTravelMode, let endedAt = summary.endedAt else { return nil }
+        let session = RecordingSession(startedAt: summary.startedAt, endedAt: max(summary.startedAt, endedAt))
+        session.setManualTravelMode(mode)
+        modelContext.insert(session)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save inferred outing's travel mode: \(error)")
+        }
+        loadRecordingSessions()
+        return session
+    }
+
     // MARK: - Export
 
     func exportVisits(format: ExportFormat, dateRange: ClosedRange<Date>? = nil) {

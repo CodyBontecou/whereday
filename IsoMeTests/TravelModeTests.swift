@@ -211,4 +211,106 @@ final class TravelModeTests: XCTestCase {
         XCTAssertEqual(restored.storedTravelMode, .fly)
         XCTAssertEqual(restored.travelModeSource, .defaultSetting)
     }
+
+    // MARK: - Top speed rule
+
+    /// One GPS jump out and back touches at most two speed buckets; a walk stays a walk.
+    func testSingleGPSJumpDoesNotMakeAWalkADrive() {
+        var points = straightPoints(count: 180, metersPerSecond: 1.2)
+        let jumped = points[90]
+        points[90] = LocationPoint(latitude: jumped.latitude + 0.005, longitude: jumped.longitude,
+                                   timestamp: jumped.timestamp, horizontalAccuracy: 5)
+        let metrics = RouteMetrics(points: points)
+        XCTAssertGreaterThan(metrics.topSpeedMetersPerSecond ?? 0, RouteMetrics.motorizedSpeedThreshold,
+                             "The jump is fast enough to have tripped a top-speed-only rule")
+        XCTAssertEqual(metrics.inferredTravelMode, .walk)
+    }
+
+    /// A brief fast descent on a long ride stays a ride.
+    func testShortFastDescentKeepsABikeABike() {
+        let ride = straightPoints(count: 360, metersPerSecond: 6)
+        let descent = straightPoints(count: 10, metersPerSecond: 15, start: ride.last!.timestamp.addingTimeInterval(10)).map { point in
+            LocationPoint(latitude: point.latitude, longitude: point.longitude + ride.last!.longitude,
+                          timestamp: point.timestamp, horizontalAccuracy: 5)
+        }
+        XCTAssertEqual(RouteMetrics(points: ride + descent).inferredTravelMode, .bike)
+    }
+
+    // MARK: - Moves between stays and stored modes
+
+    func testStoredModeLookupNeedsAnOutingCoveringMostOfTheStretch() {
+        let drive = RecordingSession(startedAt: base, endedAt: base.addingTimeInterval(600))
+        drive.setManualTravelMode(.drive)
+        let automatic = RecordingSession(startedAt: base.addingTimeInterval(600), endedAt: base.addingTimeInterval(1200))
+        let lookup = StoredTravelModeLookup(sessions: [drive, automatic])
+
+        XCTAssertEqual(lookup.mode(from: base.addingTimeInterval(60), to: base.addingTimeInterval(500)), .drive)
+        XCTAssertEqual(lookup.mode(from: base.addingTimeInterval(300), to: base.addingTimeInterval(800)), .drive)
+        XCTAssertNil(lookup.mode(from: base.addingTimeInterval(500), to: base.addingTimeInterval(1200)),
+                     "Less than half the stretch is covered by an outing with a stored mode")
+        XCTAssertEqual(lookup.mode(from: base.addingTimeInterval(100), to: base.addingTimeInterval(100)), .drive)
+    }
+
+    /// A drive between two stays, then five minutes standing still before the next stay is detected,
+    /// used to divide the distance by the whole gap and read as a run.
+    func testDayMoveUsesMovingSpeedNotTheWholeGap() {
+        let drive = straightPoints(count: 40, metersPerSecond: 9, start: base.addingTimeInterval(600))
+        let arrival = drive.last!.timestamp.addingTimeInterval(20 * 60)
+        let visits = [
+            Visit(latitude: 0, longitude: 0, arrivedAt: base, departedAt: base.addingTimeInterval(600)),
+            Visit(latitude: 0, longitude: drive.last!.longitude, arrivedAt: arrival, departedAt: arrival.addingTimeInterval(600))
+        ]
+        let day = TodayDay(visits: visits, points: drive, startOfDay: base, now: arrival.addingTimeInterval(600),
+                           isCurrentVisit: { _ in false })
+        let move = day.stays.last?.arrival
+        XCTAssertEqual(TravelMode.infer(meters: move?.distance ?? 0, seconds: move?.duration ?? 1), .run)
+        XCTAssertEqual(move?.mode, .drive)
+    }
+
+    func testDayMoveShowsTheModeStoredOnItsOuting() {
+        let walk = straightPoints(count: 60, metersPerSecond: 1.4, start: base.addingTimeInterval(600))
+        let arrival = walk.last!.timestamp.addingTimeInterval(10)
+        let visits = [
+            Visit(latitude: 0, longitude: 0, arrivedAt: base, departedAt: base.addingTimeInterval(600)),
+            Visit(latitude: 0, longitude: walk.last!.longitude, arrivedAt: arrival, departedAt: arrival.addingTimeInterval(600))
+        ]
+        let session = RecordingSession(startedAt: base.addingTimeInterval(590), endedAt: arrival)
+        session.setManualTravelMode(.transit)
+        let day = TodayDay(visits: visits, points: walk, startOfDay: base, now: arrival.addingTimeInterval(600),
+                           storedModes: StoredTravelModeLookup(sessions: [session]), isCurrentVisit: { _ in false })
+        XCTAssertEqual(day.stays.last?.arrival?.mode, .transit)
+    }
+
+    // MARK: - Inferred outings
+
+    func testChoosingAModeSavesAnInferredOuting() throws {
+        let container = try makeContainer()
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: makeIsolatedLocationManager())
+        let points = straightPoints(count: 30, metersPerSecond: 1.4)
+        let inferred = summary(for: nil, points: points)
+        XCTAssertTrue(inferred.canEditTravelMode)
+
+        XCTAssertNil(viewModel.setTravelMode(nil, for: inferred), "Automatic on an unsaved outing saves nothing")
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 0)
+
+        let saved = try XCTUnwrap(viewModel.setTravelMode(.bike, for: inferred))
+        XCTAssertEqual(saved.startedAt, points.first!.timestamp)
+        XCTAssertEqual(saved.endedAt, points.last!.timestamp)
+        XCTAssertEqual(saved.storedTravelMode, .bike)
+        XCTAssertEqual(saved.travelModeSource, .manual)
+
+        // The rebuilt outing covers the same points and keeps the mode.
+        let rebuilt = RecordingSessionBuilder.summaries(storedSessions: [saved], points: points, activeTrackingStart: nil)
+        XCTAssertEqual(rebuilt.count, 1)
+        XCTAssertEqual(rebuilt.first?.pointCount, points.count)
+        XCTAssertEqual(rebuilt.first?.travelMode, .bike)
+    }
+
+    func testLiveInferredOutingCannotBeEdited() {
+        let points = straightPoints(count: 10, metersPerSecond: 1.4)
+        let live = RecordingSessionSummary(id: "live", storedSession: nil, sequenceNumber: 1,
+                                           startedAt: points[0].timestamp, endedAt: nil, points: points,
+                                           isInferred: true, isActive: true, now: points.last!.timestamp)
+        XCTAssertFalse(live.canEditTravelMode)
+    }
 }

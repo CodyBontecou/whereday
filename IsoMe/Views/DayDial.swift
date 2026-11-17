@@ -240,6 +240,7 @@ struct TodayDay {
             now: now,
             home: home,
             marksUnrecordedGaps: marksUnrecordedGaps,
+            storedModes: StoredTravelModeLookup(sessions: viewModel.allRecordingSessions, now: now),
             isCurrentVisit: viewModel.isCurrentVisit
         )
     }
@@ -258,6 +259,7 @@ struct TodayDay {
             startOfDay: startOfDay,
             now: min(lastRecord ?? endOfDay, endOfDay),
             home: home,
+            storedModes: StoredTravelModeLookup(sessions: viewModel.allRecordingSessions, now: endOfDay),
             isCurrentVisit: { _ in false }
         )
     }
@@ -269,6 +271,7 @@ struct TodayDay {
         now: Date,
         home: SavedPlace? = nil,
         marksUnrecordedGaps: Bool = false,
+        storedModes: StoredTravelModeLookup = StoredTravelModeLookup(sessions: []),
         isCurrentVisit: (Visit) -> Bool
     ) {
 
@@ -325,11 +328,13 @@ struct TodayDay {
                         entries.append(Entry(id: "gap-\(stays[index].id)", kind: .unrecorded(gap)))
                     } else {
                         let distance = Self.pathDistance(window)
-                        let move = Move(
-                            distance: distance,
-                            duration: gap,
-                            mode: distance > 0 ? TravelMode.infer(meters: distance, seconds: gap) : nil
-                        )
+                        // A mode stored on the outing covering this move wins; otherwise moving speed,
+                        // not the whole gap, which counts time stopped before the stay was detected.
+                        let mode = distance > 0
+                            ? storedModes.mode(from: gapStart, to: gapEnd)
+                                ?? TravelMode.inferMove(points: window, distanceMeters: distance, spanning: gap)
+                            : nil
+                        let move = Move(distance: distance, duration: gap, mode: mode)
                         stays[index].arrival = move
                         entries.append(Entry(id: "move-\(stays[index].id)", kind: .move(move)))
                     }

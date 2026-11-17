@@ -96,6 +96,54 @@ final class RecordingSession {
     }
 }
 
+extension TravelMode {
+    /// The mode of a move between two stays, from its points' moving speed. Time spent stopped
+    /// inside the move (at lights, or before the next stay was detected) doesn't drag it toward walking.
+    /// Points too far apart to measure moving time fall back to the whole span.
+    static func inferMove(points: [LocationPoint], distanceMeters: Double, spanning seconds: TimeInterval) -> TravelMode? {
+        guard distanceMeters > 0 else { return nil }
+        let metrics = RouteMetrics(points: points, distanceMeters: distanceMeters)
+        if metrics.movingTime > 0 { return metrics.inferredTravelMode }
+        return infer(meters: distanceMeters, seconds: seconds)
+    }
+}
+
+/// The modes stored on outings, by the span each covers, so moves between stays and the map's
+/// status lines show a mode the person picked (or their default) instead of re-guessing it.
+struct StoredTravelModeLookup {
+    private struct Span {
+        let start: Date
+        let end: Date
+        let mode: TravelMode
+    }
+
+    private let spans: [Span]
+
+    init(sessions: [RecordingSession], now: Date = Date()) {
+        spans = sessions.compactMap { session in
+            guard let mode = session.storedTravelMode else { return nil }
+            return Span(start: session.startedAt, end: max(session.startedAt, session.endedAt ?? now), mode: mode)
+        }
+    }
+
+    var isEmpty: Bool { spans.isEmpty }
+
+    /// The stored mode of the outing covering most of a stretch, when it covers at least half of it.
+    /// A zero-length stretch (one moment) takes the mode of an outing that contains it.
+    func mode(from start: Date, to end: Date) -> TravelMode? {
+        let length = end.timeIntervalSince(start)
+        guard length > 0 else {
+            return spans.last { $0.start <= start && start <= $0.end }?.mode
+        }
+        let best = spans
+            .map { span in (span, min(span.end, end).timeIntervalSince(max(span.start, start))) }
+            .filter { $0.1 > 0 }
+            .max { $0.1 < $1.1 }
+        guard let best, best.1 >= length / 2 else { return nil }
+        return best.0.mode
+    }
+}
+
 /// Who set an outing's stored travel mode.
 enum TravelModeSource: String, Codable, Sendable {
     /// Picked on the outing; nothing else changes it.
@@ -166,9 +214,10 @@ struct RecordingSessionSummary: Identifiable {
     }
 
     /// "Morning ride to Ferry Building": part of day, travel mode, and the stay it ended at when known.
-    func automaticTitle(visits: [Visit], calendar: Calendar = .current) -> String {
+    /// Pass `travelMode` when a screen has already resolved it, to skip inferring it again.
+    func automaticTitle(visits: [Visit], calendar: Calendar = .current, travelMode resolved: TravelMode? = nil) -> String {
         let part = Self.partOfDay(for: startedAt, calendar: calendar)
-        let noun = Self.travelNoun(for: travelMode)
+        let noun = Self.travelNoun(for: resolved ?? travelMode)
         if let destination = destinationVisit(in: visits)?.displayName, !destination.isEmpty {
             return String(localized: "\(part) \(noun) to \(destination)")
         }
@@ -249,6 +298,17 @@ struct RecordingSessionSummary: Identifiable {
     /// The outing's mode: the one stored on it (chosen by hand or from the default), else inferred.
     var travelMode: TravelMode? {
         storedSession?.storedTravelMode ?? inferredTravelMode
+    }
+
+    /// The same resolution as `travelMode`, reusing metrics a screen has already computed.
+    func travelMode(using metrics: RouteMetrics?) -> TravelMode? {
+        storedSession?.storedTravelMode ?? metrics?.inferredTravelMode
+    }
+
+    /// Whether choosing a mode can be saved for this outing. Inferred outings are saved as a stored
+    /// outing over the same span the first time a mode is chosen; a live one is still growing.
+    var canEditTravelMode: Bool {
+        storedSession != nil || (isInferred && !isActive && endedAt != nil)
     }
 
     /// Whether the person picked this outing's mode by hand.
@@ -385,19 +445,32 @@ struct RouteMetrics {
     }
 
     /// Bucket speeds above this rule out walking, running and cycling (≈45 km/h).
-    static let motorizedTopSpeedThreshold: Double = 12.5
+    static let motorizedSpeedThreshold: Double = 12.5
+    /// How many speed buckets must exceed `motorizedSpeedThreshold` before a slow average reads as a drive.
+    /// One GPS jump out and back touches at most two buckets; a short fast descent on a bike stays under this.
+    static let minimumMotorizedBuckets = 3
+    /// ...and the share of all buckets they must make up, so a long ride with one fast stretch stays a ride.
+    static let minimumMotorizedShare = 0.1
 
-    /// The mode estimated from moving speed. A walk to the car followed by a drive averages out
-    /// at cycling speed, so a sustained top speed no one walks, runs or cycles at reads as a drive.
+    /// The mode estimated from moving speed. A walk to the car followed by a drive averages out at
+    /// cycling speed, so speed sustained over several buckets that no one walks, runs or cycles at
+    /// reads as a drive.
     var inferredTravelMode: TravelMode? {
         let mode = TravelMode.infer(meters: distanceMeters, seconds: movingTime)
         switch mode {
         case .walk, .run, .bike:
-            if let top = topSpeedMetersPerSecond, top > Self.motorizedTopSpeedThreshold { return .drive }
-            return mode
+            return hasSustainedMotorizedSpeed ? .drive : mode
         default:
             return mode
         }
+    }
+
+    /// Whether enough of the route was covered faster than anyone walks, runs or cycles.
+    var hasSustainedMotorizedSpeed: Bool {
+        guard !speedSamples.isEmpty else { return false }
+        let fast = speedSamples.filter { $0.metersPerSecond > Self.motorizedSpeedThreshold }.count
+        return fast >= Self.minimumMotorizedBuckets
+            && Double(fast) / Double(speedSamples.count) >= Self.minimumMotorizedShare
     }
 
     /// Sum of rises in a moving-average-smoothed altitude profile, with hysteresis.
