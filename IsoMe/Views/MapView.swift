@@ -1976,12 +1976,12 @@ struct LocationMapView: View {
         return index
     }
 
-    /// GPS speed when the fix carries one, otherwise the pace to the neighbouring point.
     /// Modes stored on outings (picked by hand or from the default), which status lines prefer to a guess.
     private func storedTravelModes(now: Date) -> StoredTravelModeLookup {
         StoredTravelModeLookup(sessions: viewModel.allRecordingSessions, now: now)
     }
 
+    /// GPS speed when the fix carries one, otherwise the pace to the neighbouring point.
     private func movementSpeed(at index: Int, in points: [LocationPoint]) -> Double? {
         if let speed = points[index].speed, speed.isFinite, speed > 0.5 { return speed }
         let neighbour = index + 1 < points.count ? index + 1 : index - 1

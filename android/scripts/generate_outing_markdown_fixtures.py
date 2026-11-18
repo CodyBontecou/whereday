@@ -22,12 +22,14 @@ recording=declaration(s,'final class RecordingSession')
 summary=s[s.index('struct RecordingSessionSummary:'):s.index('    var formattedTimeRange:')]+'\n}\n'
 location=p[p.index('final class LocationPoint'):p.index('    var accessibilityTimestamp:')]+'\n}\n'
 builder='enum RecordingSessionBuilder {\n'+declaration(s,'static func totalDistance(')+'\n}\n'
-parts=[declaration(e,marker) for marker in ['private static let iso8601Formatter:', 'struct ExportableVisit:', 'private static func exportableVisit(', 'private static func auditMetadata(', 'private static func escapeMarkdownTableCell(', 'private static func formattedDateReadable(', 'static func exportOutingsToMarkdown(', 'private static func outingMarkdownPage(', 'private static func outingVisits(', 'private static func outingNotes(', 'private static func outingVisitsMarkdown(', 'private static func outingPointsMarkdown(', 'private static func formattedDateTime(', 'private static func yamlString(', 'private static func yamlStringArray(', 'private static func yamlNumber(', 'private static func yamlOptionalNumber(', 'private static func yamlQuoted(']]
+# Travel-mode types the session and summary reference (stored mode, default, moving-speed inference).
+travel_modes='\n'.join(declaration(s,marker) for marker in ['enum TravelModeSource:','enum TravelModePreference:','struct RouteMetrics {'])+'\n'
+parts=[declaration(e,marker) for marker in ['private static let iso8601Formatter:', 'struct ExportableVisit:', 'private static func exportableVisit(', 'private static func auditMetadata(', 'private static func escapeMarkdownTableCell(', 'private static func formattedDateReadable(', 'static func exportOutingsToMarkdown(', 'private static func outingMarkdownPage(', 'private static func outingVisits(', 'private static func outingNotes(', 'static func travelModeSource(', 'private static func outingVisitsMarkdown(', 'private static func outingPointsMarkdown(', 'private static func formattedDateTime(', 'private static func yamlString(', 'private static func yamlStringArray(', 'private static func yamlNumber(', 'private static func yamlOptionalNumber(', 'private static func yamlQuoted(']]
 parts[0]+='()'
 audit=e[e.index('struct VisitAuditMetadata:'):e.index('\nstruct ExportService {')]
 display=v[v.index('    var automaticDisplayName:'):v.index('    var hasCustomName:')]
 duration=declaration(v,'var durationMinutes:')
-selected='import Foundation\nimport CoreLocation\n'+declaration(t,'enum TravelMode:')+'\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'+audit+'\nstruct RecordingSessionFormatter {\n'+declaration(s,'static func duration(')+'\n}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
+selected='import Foundation\nimport CoreLocation\n'+declaration(t,'enum TravelMode:')+'\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'+travel_modes+audit+'\nstruct RecordingSessionFormatter {\n'+declaration(s,'static func duration(')+'\n}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
 with tempfile.TemporaryDirectory(prefix='whereday-outing-markdown-') as directory:
     work=Path(directory);(work/'Selected.swift').write_text(selected);(work/'main.swift').write_text(harness.read_text().replace('// ACTUAL_VISIT_DISPLAY',display).replace('// ACTUAL_VISIT_DURATION',duration))
     binary=work/'fixtures';subprocess.run(['swiftc','-module-cache-path',str(work/'modules'),str(work/'Selected.swift'),str(work/'main.swift'),'-o',str(binary)],check=True)
@@ -37,8 +39,20 @@ with tempfile.TemporaryDirectory(prefix='whereday-outing-markdown-') as director
         subset=work/'inputs.json';subset.write_text(json.dumps([c for c in originals if context(c)==(zone,locale)]))
         for c in json.loads(subprocess.run([str(binary),str(subset),'-AppleLocale',locale],check=True,capture_output=True,text=True).stdout):by_name[c['name']]=c
     cases=[by_name[c['name']] for c in originals]
-for c in cases:c['expected']=re.sub(r'(?m)^\*\*Export Date:\*\* .*$', '**Export Date:** <GENERATED>',c['expected'])
-output.write_text(json.dumps({'provenance':provenance,'normalization':'Only generated bulk export dates are normalized; all outing data and locale display remain.','cases':cases},ensure_ascii=False,indent=2)+'\n')
+def without_travel_mode(md):
+    # iOS-only (PARITY_RECONCILIATION.md, November 18): travel mode front matter, the page's Mode row
+    # and the bulk table's Mode column. Android has no travel mode, so its renderer omits them.
+    md=re.sub(r'(?m)^travel_mode(?:_source)?: .*\n','',md)
+    md=re.sub(r'(?m)^\| Mode \| .* \|\n','',md)
+    lines=md.split('\n');table=False
+    for i,line in enumerate(lines):
+        table=line.startswith('| Start | End | Title | Mode |') or (table and line.startswith('|'))
+        if not table: continue
+        if line.startswith('|-'): cells=line.split('|');lines[i]='|'.join(cells[:4]+cells[5:])
+        else: cells=line[2:-2].split(' | ');lines[i]='| '+' | '.join(cells[:3]+cells[4:])+' |'
+    return '\n'.join(lines)
+for c in cases:c['expected']=without_travel_mode(re.sub(r'(?m)^\*\*Export Date:\*\* .*$', '**Export Date:** <GENERATED>',c['expected']))
+output.write_text(json.dumps({'provenance':provenance,'normalization':'Generated bulk export dates are normalized and iOS-only travel mode output is removed; all other outing data and locale display remain.','cases':cases},ensure_ascii=False,indent=2)+'\n')
 native_output.parent.mkdir(parents=True,exist_ok=True)
 native_output.write_text(json.dumps(native_cases(cases),ensure_ascii=False,indent=2)+'\n')
 print('Generated',len(cases),'actual Swift outing Markdown fixtures and',len(native_cases(cases)),'native real-file references')
