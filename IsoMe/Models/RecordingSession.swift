@@ -359,6 +359,16 @@ struct RecordingSessionSummary: Identifiable {
         storedSession != nil || (isInferred && !isActive && endedAt != nil)
     }
 
+    /// This outing backed by `stored`: the session saved for it when a mode was first chosen.
+    /// Edits and deletes need it, or they act on the inferred outing and miss the saved session.
+    func backed(by stored: RecordingSession) -> RecordingSessionSummary {
+        RecordingSessionSummary(
+            id: id, storedSession: stored, sequenceNumber: sequenceNumber,
+            startedAt: startedAt, endedAt: endedAt, points: points,
+            isInferred: isInferred, isActive: isActive, now: now, dayRange: dayRange
+        )
+    }
+
     /// Whether the person picked this outing's mode by hand.
     var hasManualTravelMode: Bool {
         storedSession?.travelModeSource == .manual

@@ -911,7 +911,7 @@ private struct RecordingSessionDetailView: View {
 
     private func selectTravelMode(_ mode: TravelMode?) {
         let hadStoredSession = storedSession != nil
-        let saved = viewModel.setTravelMode(mode, for: summaryForModeChange)
+        let saved = viewModel.setTravelMode(mode, for: currentSummary)
         if let saved {
             returnedToInference = false
             if session.storedSession == nil { savedSession = saved }
@@ -923,14 +923,11 @@ private struct RecordingSessionDetailView: View {
         }
     }
 
-    /// The summary to change: this one, or the same outing backed by the session saved on this screen.
-    private var summaryForModeChange: RecordingSessionSummary {
+    /// The outing as it stands now: this summary, or the same outing backed by the session saved on
+    /// this screen. Mode changes and deletes go through it so they reach that saved session.
+    private var currentSummary: RecordingSessionSummary {
         guard session.storedSession == nil, let savedSession, !returnedToInference else { return session }
-        return RecordingSessionSummary(
-            id: session.id, storedSession: savedSession, sequenceNumber: session.sequenceNumber,
-            startedAt: session.startedAt, endedAt: session.endedAt, points: session.points,
-            isInferred: session.isInferred, isActive: session.isActive, now: session.now, dayRange: session.dayRange
-        )
+        return session.backed(by: savedSession)
     }
 
     private func modeRow(showDivider: Bool) -> some View {
@@ -1127,7 +1124,8 @@ private struct RecordingSessionDetailView: View {
         .alert("Delete Outing?", isPresented: $showingDeleteConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) {
-                viewModel.deleteRecordingSession(session)
+                // An inferred outing saved here has a stored session the original summary doesn't know about.
+                viewModel.deleteRecordingSession(currentSummary)
                 dismiss()
             }
         } message: {

@@ -309,6 +309,38 @@ final class TravelModeTests: XCTestCase {
         XCTAssertEqual(rebuilt.first?.travelMode, .bike)
     }
 
+    func testDeletingAnInferredOutingSavedForItsModeRemovesTheSavedSession() throws {
+        let container = try makeContainer()
+        let context = container.mainContext
+        let viewModel = LocationViewModel(modelContext: context, locationManager: makeIsolatedLocationManager())
+        let points = straightPoints(count: 30, metersPerSecond: 1.4)
+        points.forEach(context.insert)
+        try context.save()
+        let inferred = summary(for: nil, points: points)
+
+        // The detail screen saves the inferred outing when a mode is picked, then deletes it.
+        let saved = try XCTUnwrap(viewModel.setTravelMode(.bike, for: inferred))
+        viewModel.deleteRecordingSession(inferred.backed(by: saved))
+
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<LocationPoint>()), 0)
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<RecordingSession>()), 0,
+                       "No empty outing is left behind with the mode but none of the points")
+    }
+
+    func testBackedSummaryKeepsTheOutingAndAddsTheSavedSession() throws {
+        let points = straightPoints(count: 30, metersPerSecond: 1.4)
+        let inferred = summary(for: nil, points: points)
+        let saved = RecordingSession(startedAt: inferred.startedAt, endedAt: inferred.endedAt)
+        let backed = inferred.backed(by: saved)
+        XCTAssertTrue(backed.storedSession === saved)
+        XCTAssertEqual(backed.id, inferred.id)
+        XCTAssertEqual(backed.startedAt, inferred.startedAt)
+        XCTAssertEqual(backed.endedAt, inferred.endedAt)
+        XCTAssertEqual(backed.pointCount, inferred.pointCount)
+        XCTAssertEqual(backed.isInferred, inferred.isInferred)
+        XCTAssertEqual(backed.dayRange, inferred.dayRange)
+    }
+
     func testLiveInferredOutingCannotBeEdited() {
         let points = straightPoints(count: 10, metersPerSecond: 1.4)
         let live = RecordingSessionSummary(id: "live", storedSession: nil, sequenceNumber: 1,
