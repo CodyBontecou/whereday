@@ -240,7 +240,7 @@ struct TodayDay {
             now: now,
             home: home,
             marksUnrecordedGaps: marksUnrecordedGaps,
-            storedModes: StoredTravelModeLookup(sessions: viewModel.allRecordingSessions, now: now),
+            storedModes: viewModel.storedTravelModes,
             isCurrentVisit: viewModel.isCurrentVisit
         )
     }
@@ -259,7 +259,7 @@ struct TodayDay {
             startOfDay: startOfDay,
             now: min(lastRecord ?? endOfDay, endOfDay),
             home: home,
-            storedModes: StoredTravelModeLookup(sessions: viewModel.allRecordingSessions, now: endOfDay),
+            storedModes: viewModel.storedTravelModes,
             isCurrentVisit: { _ in false }
         )
     }
@@ -331,7 +331,7 @@ struct TodayDay {
                         // A mode stored on the outing covering this move wins; otherwise moving speed,
                         // not the whole gap, which counts time stopped before the stay was detected.
                         let mode = distance > 0
-                            ? storedModes.mode(from: gapStart, to: gapEnd)
+                            ? storedModes.mode(from: gapStart, to: gapEnd, now: now)
                                 ?? TravelMode.inferMove(points: window, distanceMeters: distance, spanning: gap)
                             : nil
                         let move = Move(distance: distance, duration: gap, mode: mode)

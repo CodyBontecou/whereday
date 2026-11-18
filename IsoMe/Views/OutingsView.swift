@@ -862,6 +862,8 @@ private struct RecordingSessionDetailView: View {
     @State private var metrics: RouteMetrics?
     /// The stored outing an inferred one became when a mode was chosen for it here.
     @State private var savedSession: RecordingSession?
+    /// Set when choosing Automatic returned an outing saved from inference to inference.
+    @State private var returnedToInference = false
     @State private var showingGPXExporter = false
     @State private var gpxDocument = RouteGPXDocument(data: Data())
     @FocusState private var isNameFieldFocused: Bool
@@ -899,7 +901,7 @@ private struct RecordingSessionDetailView: View {
 
     /// The outing's stored session: recorded, or saved from an inferred outing on this screen.
     private var storedSession: RecordingSession? {
-        session.storedSession ?? savedSession
+        returnedToInference ? nil : session.storedSession ?? savedSession
     }
 
     /// One resolution for the badge and the title: a stored mode, else moving-speed inference.
@@ -908,9 +910,27 @@ private struct RecordingSessionDetailView: View {
     }
 
     private func selectTravelMode(_ mode: TravelMode?) {
-        if let saved = viewModel.setTravelMode(mode, for: session), session.storedSession == nil {
-            savedSession = saved
+        let hadStoredSession = storedSession != nil
+        let saved = viewModel.setTravelMode(mode, for: summaryForModeChange)
+        if let saved {
+            returnedToInference = false
+            if session.storedSession == nil { savedSession = saved }
+        } else if hadStoredSession {
+            // The saved session was removed; this screen's summary no longer has data behind it.
+            returnedToInference = true
+            savedSession = nil
+            if session.storedSession != nil { dismiss() }
         }
+    }
+
+    /// The summary to change: this one, or the same outing backed by the session saved on this screen.
+    private var summaryForModeChange: RecordingSessionSummary {
+        guard session.storedSession == nil, let savedSession, !returnedToInference else { return session }
+        return RecordingSessionSummary(
+            id: session.id, storedSession: savedSession, sequenceNumber: session.sequenceNumber,
+            startedAt: session.startedAt, endedAt: session.endedAt, points: session.points,
+            isInferred: session.isInferred, isActive: session.isActive, now: session.now, dayRange: session.dayRange
+        )
     }
 
     private func modeRow(showDivider: Bool) -> some View {

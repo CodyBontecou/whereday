@@ -36,8 +36,6 @@ struct LocationMapView: View {
     @ObservedObject private var locationManager: LocationManager
     /// Streets under the playhead, keyed by `StreetNameLookup.cellKey`.
     @State private var streetNames: [String: String] = [:]
-    /// Stored outing modes for the status line, kept until outings reload.
-    @State private var storedTravelModeCache = StoredTravelModeLookupCache()
     @State private var calendarDraft: CalendarEventDraft?
     @Namespace private var mapScope
     @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
@@ -1979,10 +1977,8 @@ struct LocationMapView: View {
     }
 
     /// Modes stored on outings (picked by hand or from the default), which status lines prefer to a guess.
-    /// Rebuilt only when outings reload (which every mode edit does), not on every status-line frame.
-    private var storedTravelModes: StoredTravelModeLookup {
-        storedTravelModeCache.lookup(revision: viewModel.timelineDataRevision) { viewModel.allRecordingSessions }
-    }
+    /// Shared with the day dial and rebuilt only when outings reload, not on every status-line frame.
+    private var storedTravelModes: StoredTravelModeLookup { viewModel.storedTravelModes }
 
     /// GPS speed when the fix carries one, otherwise the pace to the neighbouring point.
     private func movementSpeed(at index: Int, in points: [LocationPoint]) -> Double? {

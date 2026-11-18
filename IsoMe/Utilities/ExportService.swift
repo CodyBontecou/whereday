@@ -1190,8 +1190,9 @@ extension ExportService {
         md += "**Export Date:** \(formattedDateReadable())\n\n"
         md += "**Total Outings:** \(sortedOutings.count)\n\n"
         md += "---\n\n"
-        md += "| Start | End | Title | Mode | Duration | Distance | Points | Visits | Notes |\n"
-        md += "|------|-----|-------|------|----------|----------|--------|--------|-------|\n"
+        // Mode is appended so every earlier column keeps its position for anyone reading by column.
+        md += "| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |\n"
+        md += "|------|-----|-------|----------|----------|--------|--------|-------|------|\n"
 
         for outing in sortedOutings {
             let visitsForOuting = outingVisits(outing, visits: visits)
@@ -1200,12 +1201,12 @@ extension ExportService {
                 formattedDateTime(outing.startedAt),
                 outing.endedAt.map(formattedDateTime) ?? (outing.isActive ? "now" : formattedDateTime(outing.effectiveEndDate)),
                 escapeMarkdownTableCell(outing.title),
-                escapeMarkdownTableCell(outing.travelMode?.label ?? ""),
                 RecordingSessionFormatter.duration(outing.duration),
                 String(format: "%.0f m", outing.distanceMeters),
                 String(outing.pointCount),
                 String(visitsForOuting.count),
-                escapeMarkdownTableCell(notes)
+                escapeMarkdownTableCell(notes),
+                escapeMarkdownTableCell(outing.travelMode?.label ?? "")
             ]
             md += "| " + cells.joined(separator: " | ") + " |\n"
         }

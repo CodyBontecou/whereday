@@ -28,6 +28,16 @@ final class LocationViewModel {
     var allVisits: [Visit] = []
     /// Invalidates cached daily membership even when an edit leaves record counts unchanged.
     private(set) var timelineDataRevision = 0
+    @ObservationIgnored private let storedTravelModeCache = StoredTravelModeLookupCache()
+
+    /// Modes stored on outings, for the day dial's moves and the map's status line. Built once per
+    /// reload of the outings (every mode edit reloads them), not on every evaluation.
+    var storedTravelModes: StoredTravelModeLookup {
+        storedTravelModeCache.lookup(revision: timelineDataRevision) { allRecordingSessions }
+    }
+
+    /// Times `storedTravelModes` was rebuilt; for tests.
+    var storedTravelModeBuildCount: Int { storedTravelModeCache.buildCount }
     var allRecordingSessions: [RecordingSession] = []
     var savedPlaces: [SavedPlace] = []
     var photoLibraryAccessState: PhotoLibraryAccessState = PhotoLibraryManager.shared.authorizationState
@@ -1452,26 +1462,42 @@ final class LocationViewModel {
     }
 
     /// Saves a travel mode for any finished outing. An inferred outing has nowhere to keep it, so the
-    /// first mode chosen saves it as a stored outing over the same span; it can then be named as well.
-    /// Returns the stored outing, or nil when nothing could be saved (a live inferred outing, or
-    /// choosing Automatic for an outing that was never saved).
+    /// first mode chosen saves it as a stored outing over the same span, marked as saved from inference:
+    /// it still reads and exports as inferred. Choosing Automatic for it again removes that stored outing
+    /// (only the session, never its points or visits), so it returns to inference, unless it has since
+    /// been named or given notes; then only the mode is cleared.
+    /// Returns the stored outing, or nil when none remains (a live inferred outing, Automatic for an
+    /// outing that was never saved, or an inferred outing returned to inference).
     @discardableResult
     func setTravelMode(_ mode: TravelMode?, for summary: RecordingSessionSummary) -> RecordingSession? {
         if let stored = summary.storedSession {
+            if mode == nil, stored.savedFromInferredOuting == true,
+               stored.normalizedCustomName == nil,
+               (stored.notes ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                modelContext.delete(stored)
+                saveTravelModeChange()
+                return nil
+            }
             updateRecordingSessionTravelMode(stored, mode: mode)
             return stored
         }
         guard let mode, summary.canEditTravelMode, let endedAt = summary.endedAt else { return nil }
         let session = RecordingSession(startedAt: summary.startedAt, endedAt: max(summary.startedAt, endedAt))
         session.setManualTravelMode(mode)
+        session.savedFromInferredOuting = true
         modelContext.insert(session)
+        saveTravelModeChange()
+        return session
+    }
+
+    private func saveTravelModeChange() {
         do {
             try modelContext.save()
         } catch {
-            print("Failed to save inferred outing's travel mode: \(error)")
+            print("Failed to save travel mode change: \(error)")
         }
+        locationManager.invalidateActiveRecordingTravelMode()
         loadRecordingSessions()
-        return session
     }
 
     // MARK: - Export

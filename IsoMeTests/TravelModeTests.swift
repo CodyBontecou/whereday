@@ -208,9 +208,11 @@ final class TravelModeTests: XCTestCase {
     func testBackupRecordKeepsMode() {
         let session = RecordingSession(startedAt: base)
         session.applyDefaultTravelMode(.fixed(.fly))
+        session.savedFromInferredOuting = true
         let restored = WheredayBackup.RecordingSessionRecord(session).makeModel()
         XCTAssertEqual(restored.storedTravelMode, .fly)
         XCTAssertEqual(restored.travelModeSource, .defaultSetting)
+        XCTAssertEqual(restored.savedFromInferredOuting, true)
     }
 
     // MARK: - Top speed rule
@@ -407,11 +409,15 @@ final class TravelModeTests: XCTestCase {
         XCTAssertEqual(after[1].startedAt, before[1].startedAt)
         XCTAssertEqual(after[1].endedAt, before[1].endedAt)
         XCTAssertEqual(after[1].travelMode, .transit)
+        XCTAssertTrue(after[1].isInferred, "Saving only keeps the mode; the outing is still an inferred one")
 
-        // Saved, it exports as a recorded outing that keeps the mode chosen for it.
+        // Saved, it still exports as inferred, with the mode chosen for it.
         let csv = String(decoding: ExportService.exportOutingsToCSV(outings: [after[1]], visits: []), as: UTF8.self)
         let row = try XCTUnwrap(csv.split(separator: "\n").last)
-        XCTAssertTrue(row.hasSuffix(",false,false,,\(after[1].startPoint!.latitude),\(after[1].startPoint!.longitude),\(after[1].endPoint!.latitude),\(after[1].endPoint!.longitude),transit,manual"), String(row))
+        XCTAssertTrue(row.hasSuffix(",true,false,,\(after[1].startPoint!.latitude),\(after[1].startPoint!.longitude),\(after[1].endPoint!.latitude),\(after[1].endPoint!.longitude),transit,manual"), String(row))
+        let markdown = String(decoding: ExportService.exportOutingsToMarkdown(outings: [after[1]], visits: []), as: UTF8.self)
+        XCTAssertTrue(markdown.contains("is_inferred: true\n"))
+        XCTAssertTrue(markdown.contains("source: \"inferred\"\n"))
     }
 
     // MARK: - Localization
@@ -446,18 +452,18 @@ final class TravelModeTests: XCTestCase {
         try container.mainContext.save()
         viewModel.loadRecordingSessions()
 
-        let cache = StoredTravelModeLookupCache()
+        // The map's status line and the day dial both read the view model's one lookup.
         let moment = base.addingTimeInterval(300)
+        let builds = viewModel.storedTravelModeBuildCount
         for _ in 0..<20 {
-            XCTAssertNil(cache.lookup(revision: viewModel.timelineDataRevision) { viewModel.allRecordingSessions }
-                .mode(from: moment, to: moment))
+            XCTAssertNil(viewModel.storedTravelModes.mode(from: moment, to: moment))
+            _ = TodayDay(viewModel: viewModel, now: base.addingTimeInterval(3600))
         }
-        XCTAssertEqual(cache.buildCount, 1)
+        XCTAssertEqual(viewModel.storedTravelModeBuildCount, builds + 1)
 
         viewModel.updateRecordingSessionTravelMode(session, mode: .drive)
-        XCTAssertEqual(cache.lookup(revision: viewModel.timelineDataRevision) { viewModel.allRecordingSessions }
-            .mode(from: moment, to: moment), .drive)
-        XCTAssertEqual(cache.buildCount, 2)
+        XCTAssertEqual(viewModel.storedTravelModes.mode(from: moment, to: moment), .drive)
+        XCTAssertEqual(viewModel.storedTravelModeBuildCount, builds + 2)
     }
 
     /// A kept lookup still covers an outing that is recording, up to whatever moment is asked about.
@@ -484,5 +490,78 @@ final class TravelModeTests: XCTestCase {
         let header = csv.split(separator: "\n").first.map { $0.split(separator: ",").map(String.init) } ?? []
         XCTAssertEqual(Array(header.prefix(previous.count)), previous)
         XCTAssertEqual(Array(header.dropFirst(previous.count)), ["travel_mode", "travel_mode_source"])
+    }
+
+    // MARK: - Returning a saved inferred outing to inference
+
+    func testChoosingAutomaticReturnsASavedInferredOutingToInference() throws {
+        let gap = RecordingSessionBuilder.defaultGapThreshold + 60
+        let first = straightPoints(count: 20, metersPerSecond: 1.4)
+        let second = straightPoints(count: 20, metersPerSecond: 6, start: first.last!.timestamp.addingTimeInterval(gap))
+        let points = first + second
+        let now = second.last!.timestamp.addingTimeInterval(3600)
+        let container = try makeContainer()
+        for point in points { container.mainContext.insert(point) }
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: makeIsolatedLocationManager())
+        let before = RecordingSessionBuilder.summaries(storedSessions: [], points: points, activeTrackingStart: nil, now: now)
+
+        let saved = try XCTUnwrap(viewModel.setTravelMode(.drive, for: before[1]))
+        XCTAssertEqual(saved.savedFromInferredOuting, true)
+        let edited = RecordingSessionBuilder.summaries(storedSessions: [saved], points: points, activeTrackingStart: nil, now: now)
+
+        XCTAssertNil(viewModel.setTravelMode(nil, for: edited[1]))
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 0)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<LocationPoint>()), points.count,
+                       "Only the saved session goes; its points stay")
+        let after = RecordingSessionBuilder.summaries(storedSessions: [], points: points, activeTrackingStart: nil, now: now)
+        XCTAssertEqual(after.map(\.id), before.map(\.id))
+        XCTAssertEqual(after.map(\.pointCount), before.map(\.pointCount))
+        XCTAssertTrue(after.allSatisfy { $0.isInferred && $0.storedSession == nil })
+    }
+
+    func testAutomaticKeepsASavedInferredOutingThatWasNamed() throws {
+        let points = straightPoints(count: 20, metersPerSecond: 6)
+        let container = try makeContainer()
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: makeIsolatedLocationManager())
+        let saved = try XCTUnwrap(viewModel.setTravelMode(.bike, for: summary(for: nil, points: points)))
+        viewModel.updateRecordingSession(saved, customName: "Commute", notes: "")
+        let named = RecordingSessionBuilder.summaries(storedSessions: [saved], points: points, activeTrackingStart: nil,
+                                                      now: points.last!.timestamp.addingTimeInterval(60))
+
+        XCTAssertTrue(viewModel.setTravelMode(nil, for: named[0]) === saved)
+        XCTAssertNil(saved.storedTravelMode)
+        XCTAssertEqual(saved.customName, "Commute")
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 1)
+    }
+
+    /// A recorded outing (not saved from inference) is never removed by choosing Automatic.
+    func testAutomaticNeverRemovesARecordedOuting() throws {
+        let container = try makeContainer()
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: makeIsolatedLocationManager())
+        let points = straightPoints(count: 20, metersPerSecond: 6)
+        let recorded = RecordingSession(startedAt: points[0].timestamp, endedAt: points.last!.timestamp)
+        recorded.setManualTravelMode(.bike)
+        container.mainContext.insert(recorded)
+        try container.mainContext.save()
+        XCTAssertTrue(viewModel.setTravelMode(nil, for: summary(for: recorded, points: points)) === recorded)
+        XCTAssertNil(recorded.storedTravelMode)
+        XCTAssertEqual(try container.mainContext.fetchCount(FetchDescriptor<RecordingSession>()), 1)
+    }
+
+    // MARK: - Markdown table column order
+
+    /// The bulk table only appends Mode: every earlier column keeps its header and position.
+    func testOutingMarkdownTableAppendsModeLast() throws {
+        let points = straightPoints(count: 30, metersPerSecond: 1.4)
+        let session = RecordingSession(startedAt: points[0].timestamp, endedAt: points.last!.timestamp)
+        session.setManualTravelMode(.transit)
+        let earlier = summary(for: nil, points: straightPoints(count: 5, metersPerSecond: 1.4, start: base.addingTimeInterval(-7200)))
+        let markdown = String(decoding: ExportService.exportOutingsToMarkdown(outings: [summary(for: session, points: points), earlier], visits: []), as: UTF8.self)
+        let lines = markdown.split(separator: "\n").map(String.init)
+        let header = try XCTUnwrap(lines.first { $0.hasPrefix("| Start |") })
+        XCTAssertEqual(header, "| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |")
+        let rows = lines.filter { $0.hasPrefix("| ") && $0 != header }
+        XCTAssertEqual(rows.count, 2)
+        XCTAssertTrue(rows.contains { $0.hasSuffix(" | \(TravelMode.transit.label) |") })
     }
 }

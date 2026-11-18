@@ -47,12 +47,12 @@
     },
     {
       "kind": "markdown",
-      "swift": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 2\n\n---\n\n| Start | End | Title | Mode | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|------|----------|----------|--------|--------|-------|\n| Feb 29, 2020 at 7:00 AM | Feb 29, 2020 at 7:01 AM | Outing 1 | - | 1m | 0 m | 0 | 0 | - |\n| Feb 29, 2020 at 8:00 AM | Feb 29, 2020 at 8:01 AM | Outing 3 | - | 1m | 0 m | 0 | 2 | - |\n",
+      "swift": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 2\n\n---\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |\n|------|-----|-------|----------|----------|--------|--------|-------|------|\n| Feb 29, 2020 at 7:00 AM | Feb 29, 2020 at 7:01 AM | Outing 1 | 1m | 0 m | 0 | 0 | - | - |\n| Feb 29, 2020 at 8:00 AM | Feb 29, 2020 at 8:01 AM | Outing 3 | 1m | 0 m | 0 | 2 | - | - |\n",
       "android": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 2\n\n---\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|----------|----------|--------|--------|-------|\n| Feb 29, 2020 at 7:00 AM | Feb 29, 2020 at 7:01 AM | Outing 1 | 1m | 0 m | 0 | 0 | - |\n| Feb 29, 2020 at 8:00 AM | Feb 29, 2020 at 8:01 AM | Outing 3 | 1m | 0 m | 0 | 2 | - |\n"
     },
     {
       "kind": "markdown",
-      "swift": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 0\n\n---\n\n| Start | End | Title | Mode | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|------|----------|----------|--------|--------|-------|\n",
+      "swift": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 0\n\n---\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |\n|------|-----|-------|----------|----------|--------|--------|-------|------|\n",
       "android": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 0\n\n---\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|----------|----------|--------|--------|-------|\n"
     }
   ]

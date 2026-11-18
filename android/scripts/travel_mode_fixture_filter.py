@@ -6,7 +6,7 @@ drop exactly what Swift adds for it before Android compares against the rest:
 - CSV: the trailing `travel_mode,travel_mode_source` columns.
 - JSON: each outing's `travelMode` (omitted when nil) and `travelModeSource` fields.
 - Markdown: `travel_mode`/`travel_mode_source` front matter, a page's `| Mode | … |` summary row and the
-  bulk table's Mode column.
+  bulk table's trailing Mode column.
 
 Each removal is checked against the shape Swift writes. Anything else raises `TravelModeFilterError`,
 so a format change stops fixture generation instead of producing a wrong reference.
@@ -17,7 +17,7 @@ import re
 
 TRAVEL_COLUMNS = ['travel_mode', 'travel_mode_source']
 TRAVEL_JSON_FIELDS = ('travelMode', 'travelModeSource')
-BULK_TABLE_HEADER = '| Start | End | Title | Mode |'
+BULK_TABLE_HEADER = '| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |'
 BULK_TABLE_CELLS = 9
 
 
@@ -76,17 +76,19 @@ def without_travel_markdown(md):
             continue
         if line.startswith('|-'):
             cells = line.split('|')
-            lines[i] = '|'.join(cells[:4] + cells[5:])
+            if len(cells) != BULK_TABLE_CELLS + 2:
+                raise TravelModeFilterError(f'Unexpected outing Markdown table separator: {line}')
+            lines[i] = '|'.join(cells[:-2] + [''])
         else:
             cells = line[2:-2].split(' | ')
             if len(cells) != BULK_TABLE_CELLS:
                 raise TravelModeFilterError(f'Unexpected outing Markdown table row: {line}')
-            lines[i] = '| ' + ' | '.join(cells[:3] + cells[4:]) + ' |'
+            lines[i] = '| ' + ' | '.join(cells[:-1]) + ' |'
     pages = md.count('\ntype: "outing"\n')
     if front != 2 * pages or rows > pages or tables != ('# Whereday Outings Export' in md):
         raise TravelModeFilterError(
             f'Unexpected outing Markdown travel output: front={front} rows={rows} tables={tables} pages={pages}')
     md = '\n'.join(lines)
-    if 'travel_mode' in md or '| Mode |' in md:
+    if 'travel_mode' in md or '| Mode |' in md or 'Notes | Mode' in md:
         raise TravelModeFilterError('Outing Markdown travel output left behind')
     return md

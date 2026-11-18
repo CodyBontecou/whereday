@@ -69,9 +69,9 @@ class MarkdownTest(unittest.TestCase):
     PAGE = ('---\ntype: "outing"\ntitle: "A"\nsource: "recorded"\ntravel_mode: "bike"\ntravel_mode_source: "manual"\n'
             'notes: null\n---\n\n# A\n\n| Field | Value |\n|------|-------|\n| Distance | 5 m |\n| Mode | Bike |\n'
             '| GPS points | 2 |\n')
-    TABLE = ('# Whereday Outings Export\n\n| Start | End | Title | Mode | Duration | Distance | Points | Visits | Notes |\n'
-             '|------|-----|-------|------|----------|----------|--------|--------|-------|\n'
-             '| s | e | Walk \\| run | Walk | 1m | 5 m | 2 | 0 | - |\n')
+    TABLE = ('# Whereday Outings Export\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |\n'
+             '|------|-----|-------|----------|----------|--------|--------|-------|------|\n'
+             '| s | e | Walk \\| run | 1m | 5 m | 2 | 0 | - | Walk |\n')
 
     def test_removes_front_matter_mode_row_and_table_column(self):
         page = without_travel_markdown(self.PAGE)
@@ -86,8 +86,8 @@ class MarkdownTest(unittest.TestCase):
     def test_rejects_unexpected_shapes(self):
         for md in [
             self.PAGE.replace('travel_mode_source: "manual"\n', ''),                     # front matter incomplete
-            self.TABLE.replace('| - |\n', '| - | extra |\n'),                             # table row gained a cell
-            self.TABLE.replace('| Mode | Duration', '| Duration | Mode'),                 # Mode column moved
+            self.TABLE.replace('| Walk |\n', '| Walk | extra |\n'),                       # table row gained a cell
+            self.TABLE.replace('| Notes | Mode |', '| Mode | Notes |'),                   # Mode column moved
             self.PAGE + '\n| Mode | Bike |\n',                                           # more Mode rows than pages
         ]:
             with self.subTest(md=md), self.assertRaises(TravelModeFilterError):

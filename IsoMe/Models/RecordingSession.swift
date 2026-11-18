@@ -24,6 +24,10 @@ final class RecordingSession {
     /// `TravelModeSource` raw value: who set `travelModeRawValue`. Only stored modes have a source,
     /// so automatic inference never writes here and can never overwrite a person's choice.
     var travelModeSourceRawValue: String?
+    /// true when this session only exists because a mode was chosen for an inferred outing. It still
+    /// reads and exports as inferred, and choosing Automatic again removes it (unless it was named or
+    /// given notes), returning the outing to inference. nil for recorded sessions.
+    var savedFromInferredOuting: Bool?
 
     init(
         id: UUID = UUID(),
@@ -873,7 +877,7 @@ enum RecordingSessionBuilder {
                 startedAt: storedSession.startedAt,
                 endedAt: storedSession.endedAt,
                 points: sessionPoints,
-                isInferred: false,
+                isInferred: storedSession.savedFromInferredOuting == true,
                 isActive: storedSession.endedAt == nil
             ))
         }
