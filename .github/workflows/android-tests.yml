@@ -62,6 +62,7 @@ jobs:
         run: |
           python3 scripts/generate_outing_fixtures.py --check-source
           python3 scripts/generate_outing_markdown_fixtures.py --check-source
+          python3 -m unittest discover -s scripts -p test_travel_mode_fixture_filter.py
           python3 scripts/generate_distance_fixtures.py --check-source
       - name: Verify iOS history import fixture provenance
         run: python3 scripts/generate_history_import_fixtures.py --check-source

@@ -113,16 +113,22 @@ extension TravelMode {
 struct StoredTravelModeLookup {
     private struct Span {
         let start: Date
-        let end: Date
+        /// nil while the outing is still recording; it then runs to the moment asked about.
+        let end: Date?
         let mode: TravelMode
+
+        func end(now: Date) -> Date { max(start, end ?? now) }
     }
 
     private let spans: [Span]
 
-    init(sessions: [RecordingSession], now: Date = Date()) {
+    /// With `now`, outings still recording end there; without it they stay open, so one lookup can be
+    /// kept and asked at any later moment.
+    init(sessions: [RecordingSession], now: Date? = nil) {
         spans = sessions.compactMap { session in
             guard let mode = session.storedTravelMode else { return nil }
-            return Span(start: session.startedAt, end: max(session.startedAt, session.endedAt ?? now), mode: mode)
+            let end = session.endedAt ?? now
+            return Span(start: session.startedAt, end: end.map { max(session.startedAt, $0) }, mode: mode)
         }
     }
 
@@ -130,17 +136,35 @@ struct StoredTravelModeLookup {
 
     /// The stored mode of the outing covering most of a stretch, when it covers at least half of it.
     /// A zero-length stretch (one moment) takes the mode of an outing that contains it.
-    func mode(from start: Date, to end: Date) -> TravelMode? {
+    func mode(from start: Date, to end: Date, now: Date = Date()) -> TravelMode? {
         let length = end.timeIntervalSince(start)
         guard length > 0 else {
-            return spans.last { $0.start <= start && start <= $0.end }?.mode
+            return spans.last { $0.start <= start && start <= $0.end(now: now) }?.mode
         }
         let best = spans
-            .map { span in (span, min(span.end, end).timeIntervalSince(max(span.start, start))) }
+            .map { span in (span, min(span.end(now: now), end).timeIntervalSince(max(span.start, start))) }
             .filter { $0.1 > 0 }
             .max { $0.1 < $1.1 }
         guard let best, best.1 >= length / 2 else { return nil }
         return best.0.mode
+    }
+}
+
+/// Keeps one `StoredTravelModeLookup` until the outings it was built from are reloaded, so a screen
+/// that asks on every frame (the map's status line while scrubbing) doesn't rebuild it each time.
+final class StoredTravelModeLookupCache {
+    private var revision: Int?
+    private var lookup = StoredTravelModeLookup(sessions: [])
+    private(set) var buildCount = 0
+
+    /// The lookup for `revision`, rebuilt from `sessions` only when the revision changes.
+    func lookup(revision: Int, sessions: () -> [RecordingSession]) -> StoredTravelModeLookup {
+        if self.revision != revision {
+            lookup = StoredTravelModeLookup(sessions: sessions())
+            self.revision = revision
+            buildCount += 1
+        }
+        return lookup
     }
 }
 

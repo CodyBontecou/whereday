@@ -435,4 +435,54 @@ final class TravelModeTests: XCTestCase {
             }
         }
     }
+
+    // MARK: - Map status lookup cache
+
+    func testMapLookupIsBuiltOncePerReloadAndSeesAnEdit() throws {
+        let container = try makeContainer()
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: makeIsolatedLocationManager())
+        let session = RecordingSession(startedAt: base, endedAt: base.addingTimeInterval(600))
+        container.mainContext.insert(session)
+        try container.mainContext.save()
+        viewModel.loadRecordingSessions()
+
+        let cache = StoredTravelModeLookupCache()
+        let moment = base.addingTimeInterval(300)
+        for _ in 0..<20 {
+            XCTAssertNil(cache.lookup(revision: viewModel.timelineDataRevision) { viewModel.allRecordingSessions }
+                .mode(from: moment, to: moment))
+        }
+        XCTAssertEqual(cache.buildCount, 1)
+
+        viewModel.updateRecordingSessionTravelMode(session, mode: .drive)
+        XCTAssertEqual(cache.lookup(revision: viewModel.timelineDataRevision) { viewModel.allRecordingSessions }
+            .mode(from: moment, to: moment), .drive)
+        XCTAssertEqual(cache.buildCount, 2)
+    }
+
+    /// A kept lookup still covers an outing that is recording, up to whatever moment is asked about.
+    func testKeptLookupExtendsAnOpenOutingToTheMomentAsked() {
+        let live = RecordingSession(startedAt: base)
+        live.setManualTravelMode(.bike)
+        let lookup = StoredTravelModeLookup(sessions: [live])
+        let later = base.addingTimeInterval(3600)
+        XCTAssertEqual(lookup.mode(from: later, to: later, now: later), .bike)
+        XCTAssertNil(lookup.mode(from: later, to: later, now: base.addingTimeInterval(60)))
+        XCTAssertNil(StoredTravelModeLookup(sessions: [live], now: base.addingTimeInterval(60)).mode(from: later, to: later, now: later),
+                     "An explicit now closes the open outing there, as the day dial expects")
+    }
+
+    // MARK: - CSV column order
+
+    /// Columns are only appended: every column an existing CSV consumer reads keeps its name and position.
+    func testOutingCSVKeepsEveryExistingColumnInPlace() {
+        let previous = ["id", "title", "sequence_number", "started_at", "ended_at", "effective_end_at",
+                        "duration_seconds", "distance_meters", "average_speed_mps", "point_count", "outlier_count",
+                        "visit_count", "is_inferred", "is_active", "notes", "start_latitude", "start_longitude",
+                        "end_latitude", "end_longitude"]
+        let csv = String(decoding: ExportService.exportOutingsToCSV(outings: [], visits: []), as: UTF8.self)
+        let header = csv.split(separator: "\n").first.map { $0.split(separator: ",").map(String.init) } ?? []
+        XCTAssertEqual(Array(header.prefix(previous.count)), previous)
+        XCTAssertEqual(Array(header.dropFirst(previous.count)), ["travel_mode", "travel_mode_source"])
+    }
 }

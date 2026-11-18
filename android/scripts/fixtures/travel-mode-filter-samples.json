@@ -1,0 +1,59 @@
+{
+  "source": "Actual Swift output captured from generate_outing_fixtures.py and generate_outing_markdown_fixtures.py on November 18; android is the filtered reference Android compares against.",
+  "samples": [
+    {
+      "kind": "csv",
+      "swift": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude,travel_mode,travel_mode_source\nouting,\"Café, \"\"quoted\"\" | café\",3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,0,0,2,false,false,\"First line\nSecond line\",,,,,,automatic\n",
+      "android": "id,title,sequence_number,started_at,ended_at,effective_end_at,duration_seconds,distance_meters,average_speed_mps,point_count,outlier_count,visit_count,is_inferred,is_active,notes,start_latitude,start_longitude,end_latitude,end_longitude\nouting,\"Café, \"\"quoted\"\" | café\",3,2020-02-29T12:00:00.000Z,2020-02-29T12:01:00.000Z,2020-02-29T12:01:00.000Z,60,0.00,,0,0,2,false,false,\"First line\nSecond line\",,,,\n"
+    },
+    {
+      "kind": "json",
+      "swift": {
+        "distanceMeters": 0,
+        "durationSeconds": 60,
+        "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+        "endedAt": "2020-02-29T12:01:00.000Z",
+        "id": "outing",
+        "isActive": false,
+        "isInferred": false,
+        "outlierCount": 0,
+        "pointCount": 0,
+        "sequenceNumber": 3,
+        "startedAt": "2020-02-29T12:00:00.000Z",
+        "title": "Outing 3",
+        "travelModeSource": "automatic",
+        "visitCount": 2
+      },
+      "android": {
+        "distanceMeters": 0,
+        "durationSeconds": 60,
+        "effectiveEndAt": "2020-02-29T12:01:00.000Z",
+        "endedAt": "2020-02-29T12:01:00.000Z",
+        "id": "outing",
+        "isActive": false,
+        "isInferred": false,
+        "outlierCount": 0,
+        "pointCount": 0,
+        "sequenceNumber": 3,
+        "startedAt": "2020-02-29T12:00:00.000Z",
+        "title": "Outing 3",
+        "visitCount": 2
+      }
+    },
+    {
+      "kind": "markdown",
+      "swift": "---\ntype: \"outing\"\napp: \"Whereday\"\nid: \"outing\"\ntitle: \"Outing 3\"\nsequence: 3\nstart: \"2020-02-29T12:00:00.000Z\"\nend: \"2020-02-29T12:01:00.000Z\"\neffective_end: \"2020-02-29T12:01:00.000Z\"\nduration_seconds: 60\ndistance_meters: 0.00\naverage_speed_mps: null\npoint_count: 0\noutlier_count: 0\nvisit_count: 2\nis_inferred: false\nis_active: false\nsource: \"recorded\"\ntravel_mode: null\ntravel_mode_source: \"automatic\"\nnotes: null\nstart_latitude: null\nstart_longitude: null\nend_latitude: null\nend_longitude: null\nvisits:\n  - \"Unknown Location\"\n  - \"Unknown Location\"\n---\n\n# Outing 3\n\n## Summary\n\n| Field | Value |\n|------|-------|\n| Start | Feb 29, 2020 at 8:00 AM |\n| End | Feb 29, 2020 at 8:01 AM |\n| Duration | 1m |\n| Distance | 0 m |\n| GPS points | 0 |\n| Visits | 2 |\n| Source | Recorded |\n\n## Visits\n\n| Arrived | Departed | Duration | Lat | Lon | Location | Address | Notes | Visit Metadata |\n|------|------|------|------|------|------|------|------|------|\n| Feb 29, 2020 at 8:00 AM | - | - | 0.000000 | 0.000000 | - | - | - | {\"source\":\"automatic\",\"confirmationStatus\":\"unconfirmed\"} |\n| Feb 29, 2020 at 8:01 AM | - | - | 0.000000 | 0.000000 | - | - | - | {\"source\":\"automatic\",\"confirmationStatus\":\"unconfirmed\"} |\n\n",
+      "android": "---\ntype: \"outing\"\napp: \"Whereday\"\nid: \"outing\"\ntitle: \"Outing 3\"\nsequence: 3\nstart: \"2020-02-29T12:00:00.000Z\"\nend: \"2020-02-29T12:01:00.000Z\"\neffective_end: \"2020-02-29T12:01:00.000Z\"\nduration_seconds: 60\ndistance_meters: 0.00\naverage_speed_mps: null\npoint_count: 0\noutlier_count: 0\nvisit_count: 2\nis_inferred: false\nis_active: false\nsource: \"recorded\"\nnotes: null\nstart_latitude: null\nstart_longitude: null\nend_latitude: null\nend_longitude: null\nvisits:\n  - \"Unknown Location\"\n  - \"Unknown Location\"\n---\n\n# Outing 3\n\n## Summary\n\n| Field | Value |\n|------|-------|\n| Start | Feb 29, 2020 at 8:00 AM |\n| End | Feb 29, 2020 at 8:01 AM |\n| Duration | 1m |\n| Distance | 0 m |\n| GPS points | 0 |\n| Visits | 2 |\n| Source | Recorded |\n\n## Visits\n\n| Arrived | Departed | Duration | Lat | Lon | Location | Address | Notes | Visit Metadata |\n|------|------|------|------|------|------|------|------|------|\n| Feb 29, 2020 at 8:00 AM | - | - | 0.000000 | 0.000000 | - | - | - | {\"source\":\"automatic\",\"confirmationStatus\":\"unconfirmed\"} |\n| Feb 29, 2020 at 8:01 AM | - | - | 0.000000 | 0.000000 | - | - | - | {\"source\":\"automatic\",\"confirmationStatus\":\"unconfirmed\"} |\n\n"
+    },
+    {
+      "kind": "markdown",
+      "swift": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 2\n\n---\n\n| Start | End | Title | Mode | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|------|----------|----------|--------|--------|-------|\n| Feb 29, 2020 at 7:00 AM | Feb 29, 2020 at 7:01 AM | Outing 1 | - | 1m | 0 m | 0 | 0 | - |\n| Feb 29, 2020 at 8:00 AM | Feb 29, 2020 at 8:01 AM | Outing 3 | - | 1m | 0 m | 0 | 2 | - |\n",
+      "android": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 2\n\n---\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|----------|----------|--------|--------|-------|\n| Feb 29, 2020 at 7:00 AM | Feb 29, 2020 at 7:01 AM | Outing 1 | 1m | 0 m | 0 | 0 | - |\n| Feb 29, 2020 at 8:00 AM | Feb 29, 2020 at 8:01 AM | Outing 3 | 1m | 0 m | 0 | 2 | - |\n"
+    },
+    {
+      "kind": "markdown",
+      "swift": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 0\n\n---\n\n| Start | End | Title | Mode | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|------|----------|----------|--------|--------|-------|\n",
+      "android": "# Whereday Outings Export\n\n**Export Date:** <GENERATED>\n\n**Total Outings:** 0\n\n---\n\n| Start | End | Title | Duration | Distance | Points | Visits | Notes |\n|------|-----|-------|----------|----------|--------|--------|-------|\n"
+    }
+  ]
+}

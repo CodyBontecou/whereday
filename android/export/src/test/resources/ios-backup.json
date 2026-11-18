@@ -21,7 +21,7 @@
     "IsoMe/Models/CountryStay.swift": "37d3ac74ed574206c519813013eb12ea00f218d8e8da8fb5be8870cf2f4d927d",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
     "IsoMe/Models/PhotoMoment.swift": "24fde6e3a6cd564a0efdb7257232c388f4fdb6a5dc945aa106e0ff31aa6554f3",
-    "IsoMe/Models/RecordingSession.swift": "1b982c3527432def0c4df521cea580240a8c55db19bb22332e0bf24b5a6c72de",
+    "IsoMe/Models/RecordingSession.swift": "31c55c405fd2ee6b521879ca6a9878c8ca927419466f86557e15468ab9c8adf0",
     "IsoMe/Models/Visit.swift": "c9e7525665bd2fe1ca2779b8181063db3b730f8e2a328ac7fe150ec3216060a4",
     "IsoMe/Utilities/ExportService.swift": "fa0f4f0c429fcdb69a74f23b629dd2abd9cf04bea53d5443249346311625f64c",
     "IsoMe/Utilities/GoogleTimelineImportService.swift": "ef40fbd7724a839f62327c1afe11d094fb3a6604778705c651f923dae8576406",

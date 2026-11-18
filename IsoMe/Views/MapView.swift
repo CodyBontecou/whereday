@@ -36,6 +36,8 @@ struct LocationMapView: View {
     @ObservedObject private var locationManager: LocationManager
     /// Streets under the playhead, keyed by `StreetNameLookup.cellKey`.
     @State private var streetNames: [String: String] = [:]
+    /// Stored outing modes for the status line, kept until outings reload.
+    @State private var storedTravelModeCache = StoredTravelModeLookupCache()
     @State private var calendarDraft: CalendarEventDraft?
     @Namespace private var mapScope
     @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
@@ -1907,7 +1909,7 @@ struct LocationMapView: View {
             }
             // "WALKING · 4 KM/H": the mode stored on the outing at this moment, else an estimate from GPS speed.
             var kicker = String(localized: "ON THE MOVE")
-            let storedMode = storedTravelModes(now: now).mode(from: time, to: time)
+            let storedMode = storedTravelModes.mode(from: time, to: time, now: now)
             if let speed = movementSpeed(at: index, in: points) {
                 if let mode = storedMode ?? TravelMode.infer(averageSpeed: speed) {
                     kicker = mode.activeLabel.uppercased()
@@ -1957,7 +1959,7 @@ struct LocationMapView: View {
         guard meters > 50 else { return nil }
         let distance = DistanceFormatter.format(meters: meters, usesMetric: usesMetricDistanceUnits)
         let kicker: String
-        let mode = storedTravelModes(now: now).mode(from: start, to: next.arrivedAt)
+        let mode = storedTravelModes.mode(from: start, to: next.arrivedAt, now: now)
             ?? TravelMode.inferMove(points: movePoints, distanceMeters: meters, spanning: duration)
         if let mode {
             kicker = String(localized: "ARRIVING · \(mode.label.uppercased()) \(distance.uppercased())")
@@ -1977,8 +1979,9 @@ struct LocationMapView: View {
     }
 
     /// Modes stored on outings (picked by hand or from the default), which status lines prefer to a guess.
-    private func storedTravelModes(now: Date) -> StoredTravelModeLookup {
-        StoredTravelModeLookup(sessions: viewModel.allRecordingSessions, now: now)
+    /// Rebuilt only when outings reload (which every mode edit does), not on every status-line frame.
+    private var storedTravelModes: StoredTravelModeLookup {
+        storedTravelModeCache.lookup(revision: viewModel.timelineDataRevision) { viewModel.allRecordingSessions }
     }
 
     /// GPS speed when the fix carries one, otherwise the pace to the neighbouring point.
