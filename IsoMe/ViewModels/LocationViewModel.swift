@@ -1447,6 +1447,7 @@ final class LocationViewModel {
     func updateRecordingSessionTravelMode(_ session: RecordingSession, mode: TravelMode?) {
         session.setManualTravelMode(mode)
         try? modelContext.save()
+        locationManager.invalidateActiveRecordingTravelMode()
         loadRecordingSessions()
     }
 

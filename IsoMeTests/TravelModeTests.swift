@@ -341,4 +341,98 @@ final class TravelModeTests: XCTestCase {
         manager.setModelContext(container.mainContext)
         XCTAssertEqual(manager.activeRecordingTravelMode, .transit)
     }
+
+    // MARK: - Caching
+
+    func testSummaryInfersItsModeOnceAcrossRendersAndCopies() {
+        let outing = summary(for: nil, points: straightPoints(count: 120, metersPerSecond: 6))
+        XCTAssertEqual(outing.inferredTravelModeComputations, 0)
+        let copy = outing
+        for _ in 0..<5 {
+            _ = outing.automaticTitle(visits: [])
+            _ = copy.travelMode
+        }
+        XCTAssertEqual(outing.inferredTravelMode, .bike)
+        XCTAssertEqual(outing.inferredTravelModeComputations, 1)
+    }
+
+    func testLiveActivityModeIsFetchedOncePerRecordingAndRefreshedAfterAnEdit() throws {
+        let defaults = makeIsolatedDefaults()
+        defaults.set(TravelMode.walk.rawValue, forKey: TravelModePreference.storageKey)
+        let manager = makeIsolatedLocationManager(defaults: defaults)
+        let container = try makeContainer()
+        manager.isTrackingEnabled = true
+        manager.trackingStartTime = base
+        manager.setModelContext(container.mainContext)
+
+        for _ in 0..<10 { XCTAssertEqual(manager.activeRecordingTravelMode, .walk) }
+        XCTAssertEqual(manager.activeRecordingTravelModeFetchCount, 1)
+
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: manager)
+        let session = try XCTUnwrap(container.mainContext.fetch(FetchDescriptor<RecordingSession>()).first)
+        viewModel.updateRecordingSessionTravelMode(session, mode: .bike)
+        XCTAssertEqual(manager.activeRecordingTravelMode, .bike)
+        XCTAssertEqual(manager.activeRecordingTravelModeFetchCount, 2)
+    }
+
+    // MARK: - Saving an inferred outing
+
+    /// Saving the middle of three inferred outings leaves the other two exactly as they were.
+    func testSavingAnInferredOutingLeavesItsNeighboursUnchanged() throws {
+        let gap = RecordingSessionBuilder.defaultGapThreshold + 60
+        let first = straightPoints(count: 20, metersPerSecond: 1.4)
+        let middle = straightPoints(count: 20, metersPerSecond: 6, start: first.last!.timestamp.addingTimeInterval(gap))
+        let last = straightPoints(count: 20, metersPerSecond: 15, start: middle.last!.timestamp.addingTimeInterval(gap))
+        let points = first + middle + last
+        let now = last.last!.timestamp.addingTimeInterval(3600)
+        let before = RecordingSessionBuilder.summaries(storedSessions: [], points: points, activeTrackingStart: nil, now: now)
+        XCTAssertEqual(before.count, 3)
+        XCTAssertTrue(before.allSatisfy(\.isInferred))
+
+        let container = try makeContainer()
+        let viewModel = LocationViewModel(modelContext: container.mainContext, locationManager: makeIsolatedLocationManager())
+        let saved = try XCTUnwrap(viewModel.setTravelMode(.transit, for: before[1]))
+
+        let after = RecordingSessionBuilder.summaries(storedSessions: [saved], points: points, activeTrackingStart: nil, now: now)
+        XCTAssertEqual(after.count, 3)
+        for index in [0, 2] {
+            XCTAssertTrue(after[index].isInferred)
+            XCTAssertNil(after[index].storedSession)
+            XCTAssertEqual(after[index].startedAt, before[index].startedAt)
+            XCTAssertEqual(after[index].endedAt, before[index].endedAt)
+            XCTAssertEqual(after[index].pointCount, before[index].pointCount)
+            XCTAssertEqual(after[index].travelMode, before[index].travelMode)
+        }
+        XCTAssertEqual(after[1].pointCount, before[1].pointCount)
+        XCTAssertEqual(after[1].startedAt, before[1].startedAt)
+        XCTAssertEqual(after[1].endedAt, before[1].endedAt)
+        XCTAssertEqual(after[1].travelMode, .transit)
+
+        // Saved, it exports as a recorded outing that keeps the mode chosen for it.
+        let csv = String(decoding: ExportService.exportOutingsToCSV(outings: [after[1]], visits: []), as: UTF8.self)
+        let row = try XCTUnwrap(csv.split(separator: "\n").last)
+        XCTAssertTrue(row.hasSuffix(",false,false,,\(after[1].startPoint!.latitude),\(after[1].startPoint!.longitude),\(after[1].endPoint!.latitude),\(after[1].endPoint!.longitude),transit,manual"), String(row))
+    }
+
+    // MARK: - Localization
+
+    func testTravelModeStringsAreTranslatedInEveryShippedLocale() throws {
+        let keys = ["Moving", "Other", "Automatic", "Automatic (%@)", "Transport Mode", "Transport mode", "MODE",
+                    "Default transport mode",
+                    "Automatic estimates the mode from GPS speed. Other choices apply to new outings; change any outing's mode from its details.",
+                    "Names, modes and notes stay on-device with the recording session. A mode you pick here is never changed automatically.",
+                    "Choosing a mode saves this inferred outing, so it keeps the mode and can be named.",
+                    "This outing was auto-inferred from your GPS history using your inferred outing settings. New Shortcut start/stop recordings are saved exactly and can be named. Choosing a mode saves this outing so it keeps the mode."]
+        for locale in ["ar", "bn", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"] {
+            let url = Bundle.main.bundleURL.appendingPathComponent("\(locale).lproj")
+            let bundle = try XCTUnwrap(Bundle(url: url), "Missing compiled locale: \(locale)")
+            // Some translations are spelled like the English ("Train", "MODE" in French), so check that
+            // each locale has an entry rather than that it differs.
+            let missing = "\u{0}missing"
+            XCTAssertEqual(bundle.localizedString(forKey: "No such TravelModeTests key", value: missing, table: nil), missing)
+            for key in keys + TravelMode.allCases.flatMap({ [$0.label, $0.activeLabel] }) {
+                XCTAssertNotEqual(bundle.localizedString(forKey: key, value: missing, table: nil), missing, "\(locale): \(key)")
+            }
+        }
+    }
 }

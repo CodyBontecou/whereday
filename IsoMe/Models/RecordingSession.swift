@@ -144,6 +144,23 @@ struct StoredTravelModeLookup {
     }
 }
 
+/// Holds a summary's inferred travel mode once computed; shared by copies of the same summary.
+final class InferredTravelModeCache: @unchecked Sendable {
+    private let lock = NSLock()
+    private var computed: TravelMode??
+    private(set) var computeCount = 0
+
+    func value(_ compute: () -> TravelMode?) -> TravelMode? {
+        lock.lock()
+        defer { lock.unlock() }
+        if let computed { return computed }
+        let mode = compute()
+        computed = .some(mode)
+        computeCount += 1
+        return mode
+    }
+}
+
 /// Who set an outing's stored travel mode.
 enum TravelModeSource: String, Codable, Sendable {
     /// Picked on the outing; nothing else changes it.
@@ -198,6 +215,9 @@ struct RecordingSessionSummary: Identifiable {
     let now: Date
     /// A daily presentation of a recording; never a separately deletable outing.
     var dayRange: Range<Date>? = nil
+    /// Points never change on a summary, so its inferred mode is computed once: list rows read it for
+    /// every title render, and a full moving-speed pass over a long outing is not free.
+    private let inferredTravelModeCache = InferredTravelModeCache()
 
     var title: String {
         storedSession?.displayName(defaultName: defaultTitle) ?? defaultTitle
@@ -316,9 +336,14 @@ struct RecordingSessionSummary: Identifiable {
         storedSession?.travelModeSource == .manual
     }
 
+    /// How many times this summary (and its copies) computed the inferred mode; for tests.
+    var inferredTravelModeComputations: Int { inferredTravelModeCache.computeCount }
+
     /// The mode estimated from GPS alone, from moving time rather than the outing's whole span.
     var inferredTravelMode: TravelMode? {
-        RouteMetrics(points: distancePoints, distanceMeters: distanceMeters).inferredTravelMode
+        inferredTravelModeCache.value {
+            RouteMetrics(points: distancePoints, distanceMeters: distanceMeters).inferredTravelMode
+        }
     }
 
     var averageSpeedMetersPerSecond: Double? {

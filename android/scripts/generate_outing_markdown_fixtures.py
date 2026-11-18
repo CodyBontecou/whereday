@@ -23,7 +23,7 @@ summary=s[s.index('struct RecordingSessionSummary:'):s.index('    var formattedT
 location=p[p.index('final class LocationPoint'):p.index('    var accessibilityTimestamp:')]+'\n}\n'
 builder='enum RecordingSessionBuilder {\n'+declaration(s,'static func totalDistance(')+'\n}\n'
 # Travel-mode types the session and summary reference (stored mode, default, moving-speed inference).
-travel_modes='\n'.join(declaration(s,marker) for marker in ['enum TravelModeSource:','enum TravelModePreference:','struct RouteMetrics {'])+'\n'
+travel_modes='\n'.join(declaration(s,marker) for marker in ['enum TravelModeSource:','enum TravelModePreference:','struct RouteMetrics {','final class InferredTravelModeCache'])+'\n'
 parts=[declaration(e,marker) for marker in ['private static let iso8601Formatter:', 'struct ExportableVisit:', 'private static func exportableVisit(', 'private static func auditMetadata(', 'private static func escapeMarkdownTableCell(', 'private static func formattedDateReadable(', 'static func exportOutingsToMarkdown(', 'private static func outingMarkdownPage(', 'private static func outingVisits(', 'private static func outingNotes(', 'static func travelModeSource(', 'private static func outingVisitsMarkdown(', 'private static func outingPointsMarkdown(', 'private static func formattedDateTime(', 'private static func yamlString(', 'private static func yamlStringArray(', 'private static func yamlNumber(', 'private static func yamlOptionalNumber(', 'private static func yamlQuoted(']]
 parts[0]+='()'
 audit=e[e.index('struct VisitAuditMetadata:'):e.index('\nstruct ExportService {')]
@@ -42,15 +42,25 @@ with tempfile.TemporaryDirectory(prefix='whereday-outing-markdown-') as director
 def without_travel_mode(md):
     # iOS-only (PARITY_RECONCILIATION.md, November 18): travel mode front matter, the page's Mode row
     # and the bulk table's Mode column. Android has no travel mode, so its renderer omits them.
-    md=re.sub(r'(?m)^travel_mode(?:_source)?: .*\n','',md)
-    md=re.sub(r'(?m)^\| Mode \| .* \|\n','',md)
-    lines=md.split('\n');table=False
+    # Each removal is counted against what Swift must have written; anything else stops generation.
+    md,front=re.subn(r'(?m)^travel_mode(?:_source)?: .*\n','',md)
+    md,rows=re.subn(r'(?m)^\| Mode \| .* \|\n','',md)
+    lines=md.split('\n');table=False;tables=0
     for i,line in enumerate(lines):
-        table=line.startswith('| Start | End | Title | Mode |') or (table and line.startswith('|'))
+        start=line.startswith('| Start | End | Title | Mode |')
+        tables+=start;table=start or (table and line.startswith('|'))
         if not table: continue
         if line.startswith('|-'): cells=line.split('|');lines[i]='|'.join(cells[:4]+cells[5:])
-        else: cells=line[2:-2].split(' | ');lines[i]='| '+' | '.join(cells[:3]+cells[4:])+' |'
-    return '\n'.join(lines)
+        else:
+            cells=line[2:-2].split(' | ')
+            if len(cells)!=9: raise SystemExit(f'Unexpected outing Markdown table row: {line}')
+            lines[i]='| '+' | '.join(cells[:3]+cells[4:])+' |'
+    pages=md.count('\ntype: "outing"\n')
+    if front!=2*pages or rows>pages or tables!=('# Whereday Outings Export' in md):
+        raise SystemExit(f'Unexpected outing Markdown travel output: front={front} rows={rows} tables={tables} pages={pages}')
+    md='\n'.join(lines)
+    if 'travel_mode' in md or '| Mode |' in md: raise SystemExit('Outing Markdown travel output left behind')
+    return md
 for c in cases:c['expected']=without_travel_mode(re.sub(r'(?m)^\*\*Export Date:\*\* .*$', '**Export Date:** <GENERATED>',c['expected']))
 output.write_text(json.dumps({'provenance':provenance,'normalization':'Generated bulk export dates are normalized and iOS-only travel mode output is removed; all other outing data and locale display remain.','cases':cases},ensure_ascii=False,indent=2)+'\n')
 native_output.parent.mkdir(parents=True,exist_ok=True)

@@ -35,7 +35,7 @@ summary=s[s.index('struct RecordingSessionSummary:'):s.index('    var formattedT
 location=p[p.index('final class LocationPoint'):p.index('    var accessibilityTimestamp:')]+ '\n}\n'
 builder='enum RecordingSessionBuilder {\n'+declaration(s,'static func totalDistance(')+'\n}\n'
 # Travel-mode types the session and summary reference (stored mode, default, moving-speed inference).
-travel_modes='\n'.join(declaration(s,marker) for marker in ['enum TravelModeSource:','enum TravelModePreference:','struct RouteMetrics {'])+'\n'
+travel_modes='\n'.join(declaration(s,marker) for marker in ['enum TravelModeSource:','enum TravelModePreference:','struct RouteMetrics {','final class InferredTravelModeCache'])+'\n'
 parts=[declaration(e,marker) for marker in ['struct ExportableOuting:', 'struct OutingsExportData:',
     'private static let iso8601Formatter:', 'static func exportOutingsToJSON(', 'static func exportOutingsToCSV(',
     'private static func exportableOuting(', 'private static func outingVisits(', 'private static func outingNotes(', 'static func travelModeSource(',
@@ -53,12 +53,32 @@ with tempfile.TemporaryDirectory(prefix='whereday-outings-') as directory:
     cases=json.loads(subprocess.run([str(binary),str(inputs)],capture_output=True,text=True,check=True).stdout)
 # iOS-only (PARITY_RECONCILIATION.md, November 18): Android has no travel mode, so the trailing CSV
 # columns and JSON fields are removed from the actual Swift output before Android compares against it.
-import re
+# Every step is checked; any other shape (moved columns, quoted values) stops generation instead.
+import csv,io
+TRAVEL_COLUMNS=['travel_mode','travel_mode_source']
+def without_travel_columns(text):
+    rows=list(csv.reader(io.StringIO(text,newline='')))
+    if rows[0][-2:]!=TRAVEL_COLUMNS or any(name in rows[0][:-2] for name in TRAVEL_COLUMNS):
+        raise SystemExit(f'Unexpected outing CSV header: {rows[0]}')
+    header=','.join(TRAVEL_COLUMNS)
+    stripped=text.replace(','+header+'\n','\n',1);position=stripped.index('\n')+1;kept=[stripped[:position]]
+    for row in rows[1:]:
+        suffix=','+','.join(row[-2:])+'\n'
+        end=stripped.find(suffix,position)
+        if any(ch in field for field in row[-2:] for ch in ',"\n') or end<0:
+            raise SystemExit(f'Unexpected outing CSV travel fields: {row[-2:]}')
+        kept.append(stripped[position:end]+'\n');position=end+len(suffix)
+    result=''.join(kept)
+    if position!=len(stripped) or list(csv.reader(io.StringIO(result,newline='')))!=[row[:-2] for row in rows]:
+        raise SystemExit('Outing CSV travel columns could not be removed exactly')
+    return result
 for c in cases:
     for key in ['expectedCSV','expectedPairCSV']:
-        c[key]=re.sub(r',(?:[a-z]+)?,(?:manual|default|automatic)\n','\n',c[key].replace(',travel_mode,travel_mode_source\n','\n',1))
+        c[key]=without_travel_columns(c[key])
     for key in ['expectedJSON','expectedPairJSON']:
         for outing in c[key]['outings']:
-            outing.pop('travelMode',None);outing.pop('travelModeSource',None)
+            if set(outing).isdisjoint({'travelMode','travelModeSource'}) or 'travelModeSource' not in outing:
+                raise SystemExit(f'Unexpected outing JSON travel fields: {sorted(outing)}')
+            outing.pop('travelMode',None);outing.pop('travelModeSource')
     output.write_text(json.dumps({'provenance':provenance,'cases':cases},ensure_ascii=False,indent=2)+'\n')
 print(f'Generated {len(cases)} actual iOS outing renderer fixtures')
