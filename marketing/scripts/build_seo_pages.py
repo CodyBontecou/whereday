@@ -171,7 +171,7 @@ DRAFTS = []
 
 # Keep next steps specific to the task on each page.
 PAGES.extend([
-    {"path": "/tools/", "section": "Tools", "section_path": "/tools/", "title": "Free Location File Tools — Whereday", "headline": "Make sense of your location files", "description": "Free browser tools for your location files: inspect GPX and Google Timeline JSON, or count days in each country from a CSV. Nothing is uploaded.", "lede": "Practical tools for checking your own files before importing or converting them.", "modified": "2026-11-18", "content": '<section class="card"><h2><a href="/tools/country-days-calculator/">Days-in-country calculator</a></h2><p>Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.</p><p>Expand each count to see its dates. <a href="/blog/track-days-in-country-iphone/">See how Whereday records country days</a>.</p></section><section class="card"><h2><a href="/tools/gpx-viewer/">GPX viewer and file inspector</a></h2><p>Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.</p><p><a href="/blog/check-gpx-file/">Follow the worked inspection tutorial</a> with an invented five-point example.</p><p>Have a different file type? <a href="/blog/gpx-kml-geojson-location-history/">Compare GPX, KML, GeoJSON and CSV</a> before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.</p></section><section class="card"><h2><a href="/tools/google-timeline-inspector/">Google Timeline JSON inspector</a></h2><p>Identify supported raw, semantic and device Timeline structures. Check coordinates and times, inspect findings and try invented examples before opening your own archive.</p><p><a href="/blog/google-timeline-json-formats/">Learn which Timeline JSON file you have</a> and why browser counts can differ from a native import preview. Your selected file stays in the tool page.</p></section>'},
+    {"path": "/tools/", "section": "Tools", "section_path": "/tools/", "title": "Free Location File Tools — Whereday", "headline": "Make sense of your location files", "description": "Free browser tools for your location files: merge or inspect GPX, check Google Timeline JSON, or count days in each country from a CSV. Nothing is uploaded.", "lede": "Practical tools for checking your own files before importing or converting them.", "modified": "2026-11-19", "content": '<section class="card"><h2><a href="/tools/merge-gpx/">Merge GPX files</a></h2><p>Combine several GPX files into one, such as a week of daily exports. Keep tracks separate, join them as segments or make one continuous line, drop exact duplicate points, and check the summary and preview before you download.</p><p>Then <a href="/tools/gpx-viewer/">open the result in the GPX viewer</a>. Your files stay in your browser.</p></section><section class="card"><h2><a href="/tools/country-days-calculator/">Days-in-country calculator</a></h2><p>Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.</p><p>Expand each count to see its dates. <a href="/blog/track-days-in-country-iphone/">See how Whereday records country days</a>.</p></section><section class="card"><h2><a href="/tools/gpx-viewer/">GPX viewer and file inspector</a></h2><p>Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.</p><p><a href="/blog/check-gpx-file/">Follow the worked inspection tutorial</a> with an invented five-point example.</p><p>Have a different file type? <a href="/blog/gpx-kml-geojson-location-history/">Compare GPX, KML, GeoJSON and CSV</a> before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.</p></section><section class="card"><h2><a href="/tools/google-timeline-inspector/">Google Timeline JSON inspector</a></h2><p>Identify supported raw, semantic and device Timeline structures. Check coordinates and times, inspect findings and try invented examples before opening your own archive.</p><p><a href="/blog/google-timeline-json-formats/">Learn which Timeline JSON file you have</a> and why browser counts can differ from a native import preview. Your selected file stays in the tool page.</p></section>'},
     {"path": "/tools/gpx-viewer/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "GPX viewer", "title": "Free GPX Viewer and File Inspector — Whereday", "headline": "See your route. Understand your GPX.", "description": "View GPX files locally, check tracks and timestamps, and convert GPX to CSV or GeoJSON. Keep segments separate without uploading your location file.", "lede": "A free GPX viewer with clear file checks and a local route plot. Your file stays on your device.", "modified": "2026-10-30", "local_file_tool": True, "source": "gpx-viewer.html"},
     {"path": "/blog/check-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Check a GPX file", "type": "BlogPosting", "title": "Check a GPX File Before Importing It — Whereday", "headline": "Check your GPX before you import it", "description": "Inspect GPX points, segments and timestamps locally. Follow a five-point example, understand warnings, and check documented CSV and GeoJSON downloads.", "lede": "Start with a known example, check your file’s actual records, and keep the original before making changes.", "published": "2026-10-30", "modified": "2026-11-01", "source": "check-gpx-file.html"}
 ])
@@ -225,7 +225,33 @@ PAGES.append({
     "image_alt": "Whereday’s map home, with an invented day’s route coloured by place",
 })
 
+PAGES.append({
+    "path": "/tools/merge-gpx/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "Merge GPX",
+    "title": "Merge GPX Files Online, Free and Private — Whereday",
+    "headline": "Merge GPX files in your browser. Nothing is uploaded.",
+    "description": "Combine GPX files into one in your browser. Keep tracks separate or join segments, drop duplicate points and check gaps before you download. Nothing is uploaded.",
+    "lede": "Join a recording split across days, devices or app restarts, or turn daily exports into one trip file. Choose what the merge does and check the result first.",
+    "published": "2026-11-19", "modified": "2026-11-19", "local_file_tool": True, "source": "merge-gpx.html",
+})
+
 RELATED = {
+ '/tools/merge-gpx/': [
+     ('/tools/gpx-viewer/', 'Check the merged file',
+      'Open it in the GPX viewer and compare points, segments and times.'),
+     ('/blog/check-gpx-file/', 'Understand GPX warnings',
+      'Follow a worked example of gaps, missing times and segments.'),
+     ('/blog/record-iphone-route-gpx/', 'Record your next route',
+      'Record in Whereday and export points as GPX.')],
+ '/tools/gpx-viewer/': [
+     ('/tools/merge-gpx/', 'Have several files? Merge them first',
+      'Combine daily or split GPX files into one, without uploading them.'),
+     ('/blog/check-gpx-file/', 'Follow the worked GPX check',
+      'Expected counts and warnings for an invented five-point file.')],
+ '/blog/check-gpx-file/': [
+     ('/tools/merge-gpx/', 'Merge several GPX files into one',
+      'Keep segments separate so viewers don’t draw lines across gaps.'),
+     ('/blog/gpx-kml-geojson-location-history/', 'Choose another file format',
+      'Compare GPX, KML, GeoJSON and CSV with the same invented trip.')],
  '/blog/find-my-location-history/': [
      ('/blog/significant-locations-iphone/', 'Check Significant Locations and Visited Places',
       'See the two Apple features that do remember places, and why neither exports.'),

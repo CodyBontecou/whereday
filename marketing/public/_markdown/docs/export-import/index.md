@@ -58,7 +58,7 @@ File names come from a template you control. These tokens are available:
 
 ## Output layout
 
-- Single file (default) or one file per day — handy for journals and incremental backups.
+- Single file (default) or one file per day — handy for journals and incremental backups. To combine daily GPX files into one trip file later, use the free [GPX merge tool](https://whereday.com/tools/merge-gpx/#daily-exports).
 - Exporting outings produces one file per outing automatically.
 - Collisions are auto-suffixed so nothing overwrites.
 

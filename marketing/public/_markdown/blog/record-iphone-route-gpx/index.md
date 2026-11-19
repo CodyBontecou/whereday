@@ -78,6 +78,8 @@ Choose the data you actually need
 
 A GPX export with only visits can be valid but show pins instead of a line. Pick Points or an outing if the path is the part you want to keep.
 
+Exporting a trip with One file per day turned on under Output? [Merge the daily GPX files into one trip file](https://whereday.com/tools/merge-gpx/#daily-exports) in your browser.
+
 ![Example Whereday export interface with data types and file format choices](https://whereday.com/screenshots/export-480.webp)
 
 The export interface. This screenshot illustrates the workflow and may show sample data or earlier labels.

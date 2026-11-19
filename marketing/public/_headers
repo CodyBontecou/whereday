@@ -74,3 +74,15 @@
 /samples/synthetic-google-device-converted.gpx
   Content-Disposition: attachment; filename="synthetic-google-device-converted.gpx"
   Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-walk-day-1.gpx
+  Content-Disposition: attachment; filename="synthetic-walk-day-1.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-walk-day-2.gpx
+  Content-Disposition: attachment; filename="synthetic-walk-day-2.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-walk-day-3.gpx
+  Content-Disposition: attachment; filename="synthetic-walk-day-3.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8

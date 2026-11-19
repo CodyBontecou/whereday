@@ -30,7 +30,7 @@ Choose a destination that explicitly supports GPX; this viewer does not import t
 Choose a GPX 1.0 or 1.1 XML file of at most 10 MiB and 50,000 points. On iPhone, save a local copy in Files first if a cloud provider cannot supply it. The tool reads track points, route points and waypoints; these are different GPX objects.
 
 - Point count: Compare valid points with the count in the source app. Points with missing or out-of-range coordinates are counted as omitted.
-- Segments: Separate segments can represent pauses or separate recordings. The viewer keeps them separate rather than drawing a trip you did not record.
+- Segments: Separate segments can represent pauses or separate recordings. The viewer keeps them separate rather than drawing a trip you did not record. Joining several files? [Merge them with segments kept separate](https://whereday.com/tools/merge-gpx/#gaps) so viewers don’t draw lines across the gaps.
 - Dates: Check UTC dates and times, including the day at either end. UTC can differ from the date displayed in your local timezone.
 - Route shape: The local plot has north at the top and no street tiles. It is a shape check, not turn-by-turn navigation. Large files draw a sample of up to 2,000 points; the CSV and GeoJSON downloads include every valid point.
 
@@ -97,5 +97,15 @@ For GPX’s track, route, waypoint and segment definitions, see the [GPX 1.1 sch
 ## Need another format?
 
 Use the [GPX, KML, GeoJSON and CSV comparison](https://whereday.com/blog/gpx-kml-geojson-location-history/) to check coordinate order, timestamps and grouping before choosing a file for another app. It includes four representations of the same invented trip.
+
+## Read next
+
+- [Merge several GPX files into one](https://whereday.com/tools/merge-gpx/)
+
+Keep segments separate so viewers don’t draw lines across gaps.
+
+- [Choose another file format](https://whereday.com/blog/gpx-kml-geojson-location-history/)
+
+Compare GPX, KML, GeoJSON and CSV with the same invented trip.
 
 Source: https://whereday.com/blog/check-gpx-file/

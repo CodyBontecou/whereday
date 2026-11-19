@@ -29,8 +29,9 @@ export function parseGPX(text, Parser = globalThis.DOMParser) {
   const groups = [], points = [];
   const issues = { invalidCoordinates: 0, missingTime: 0, invalidTime: 0, invalidElevation: 0, duplicatePositions: 0, timeGaps: 0, reversedTime: 0 };
   let sourcePoints = 0;
-  function group(node, kind, pointTag, label) {
-    const entry = { kind, index: groups.length + 1, name: label, points: [] };
+  // `source` and `element` let other local tools (the GPX merger) reuse this parse.
+  function group(node, kind, pointTag, label, source = node) {
+    const entry = Object.defineProperty({ kind, index: groups.length + 1, name: label, points: [] }, 'source', { value: source });
     let previous = null;
     for (const [index, element] of children(node, pointTag).entries()) {
       if (++sourcePoints > MAX_POINTS) throw new Error('This file exceeds 50,000 points. Export a smaller date range and try again.');
@@ -46,6 +47,7 @@ export function parseGPX(text, Parser = globalThis.DOMParser) {
       const elevation = DECIMAL.test(rawElevation) && Number.isFinite(Number(rawElevation)) ? Number(rawElevation) : null;
       if (rawElevation && elevation === null) issues.invalidElevation++;
       const point = { lat, lon, time, rawTime, elevation, group: entry.index, kind, index: index + 1, name: value(element, 'name') };
+      Object.defineProperty(point, 'element', { value: element });
       if (previous) {
         if (previous.lat === lat && previous.lon === lon) issues.duplicatePositions++;
         if (previous.time !== null && time !== null) {
@@ -59,17 +61,17 @@ export function parseGPX(text, Parser = globalThis.DOMParser) {
     groups.push(entry);
   }
   const tracks = children(root, 'trk'), routes = children(root, 'rte'), waypoints = children(root, 'wpt');
-  for (const track of tracks) for (const segment of children(track, 'trkseg')) group(segment, 'track', 'trkpt', value(track, 'name'));
+  for (const track of tracks) for (const segment of children(track, 'trkseg')) group(segment, 'track', 'trkpt', value(track, 'name'), track);
   for (const route of routes) group(route, 'route', 'rtept', value(route, 'name'));
   // A waypoint is independent; never infer a line or time gap between waypoints.
-  for (const waypoint of waypoints) group({ childNodes: [waypoint] }, 'waypoint', 'wpt', value(waypoint, 'name'));
+  for (const waypoint of waypoints) group({ childNodes: [waypoint] }, 'waypoint', 'wpt', value(waypoint, 'name'), waypoint);
   if (!sourcePoints) throw new Error('No track points, route points or waypoints were found. This GPX may be empty.');
   const timed = points.filter(p => p.time !== null).map(p => p.time);
   return { groups, points, issues, sourcePoints, tracks: tracks.length, routes: routes.length,
     segments: groups.filter(g => g.kind === 'track').length, waypoints: waypoints.length,
     firstTime: timed.length ? new Date(Math.min(...timed)).toISOString() : null,
     lastTime: timed.length ? new Date(Math.max(...timed)).toISOString() : null,
-    namespaceMissing: !namespace };
+    namespaceMissing: !namespace, namespace, version: root.getAttribute('version') };
 }
 
 export function toCSV(model) {
