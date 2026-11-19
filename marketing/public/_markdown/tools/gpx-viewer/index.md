@@ -36,6 +36,8 @@ It reads GPX 1.0 and 1.1 track points, routes and waypoints. The route plot keep
 
 A time gap can be intentional. A valid file does not prove an accurate GPS recording. This is a practical inspector, not full GPX schema validation, route navigation, file repair, or a complete journal backup tool. Google Timeline JSON, KML, FIT, TCX and ZIP files are not supported.
 
+Have several files? [Merge them first](https://whereday.com/tools/merge-gpx/), then open the merged GPX here.
+
 Choosing between file types? Compare [GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) with the same invented trip in four formats.
 
 Start with [the worked GPX inspection tutorial](https://whereday.com/blog/check-gpx-file/) or [download the exact synthetic example](https://whereday.com/samples/synthetic-app-export.gpx). It has five points in two segments. Its 11-minute break is between segments and is deliberately not joined.
@@ -65,5 +67,15 @@ The web server still receives an ordinary request when you visit the page or loa
 ## Need to record your next route?
 
 Whereday records your own visits and GPS points on iPhone and Apple Watch. See the [recording and GPX export guide](https://whereday.com/blog/record-iphone-route-gpx/) for tracking access, permissions, and file-writing requirements. This browser viewer is free and does not require the app.
+
+## Read next
+
+- [Have several files? Merge them first](https://whereday.com/tools/merge-gpx/)
+
+Combine daily or split GPX files into one, without uploading them.
+
+- [Follow the worked GPX check](https://whereday.com/blog/check-gpx-file/)
+
+Expected counts and warnings for an invented five-point file.
 
 Source: https://whereday.com/tools/gpx-viewer/

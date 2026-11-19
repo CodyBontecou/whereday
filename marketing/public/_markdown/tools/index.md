@@ -7,7 +7,13 @@ iPhone location journals
 
 Practical tools for checking your own files before importing or converting them.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 18, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 19, 2026
+
+## [Merge GPX files](https://whereday.com/tools/merge-gpx/)
+
+Combine several GPX files into one, such as a week of daily exports. Keep tracks separate, join them as segments or make one continuous line, drop exact duplicate points, and check the summary and preview before you download.
+
+Then [open the result in the GPX viewer](https://whereday.com/tools/gpx-viewer/). Your files stay in your browser.
 
 ## [Days-in-country calculator](https://whereday.com/tools/country-days-calculator/)
 

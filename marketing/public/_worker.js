@@ -40,6 +40,7 @@ const pages = {
   "/tools/google-timeline-inspector/": "/_markdown/tools/google-timeline-inspector/index.md",
   "/tools/gpx-viewer/": "/_markdown/tools/gpx-viewer/index.md",
   "/tools/": "/_markdown/tools/index.md",
+  "/tools/merge-gpx/": "/_markdown/tools/merge-gpx/index.md",
   "/zh-hans/": "/_markdown/zh-hans/index.md"
 };
 
@@ -172,7 +173,7 @@ export default {
         response.headers.append('Link', `<${url.origin}${url.pathname}>; rel="alternate"; type="text/markdown"`);
       }
     }
-    if (['/tools/gpx-viewer', '/tools/gpx-viewer/', '/tools/gpx-viewer/index.html', '/tools/google-timeline-inspector', '/tools/google-timeline-inspector/', '/tools/google-timeline-inspector/index.html', '/tools/country-days-calculator', '/tools/country-days-calculator/', '/tools/country-days-calculator/index.html'].includes(url.pathname) && response.ok) {
+    if (['/tools/gpx-viewer', '/tools/gpx-viewer/', '/tools/gpx-viewer/index.html', '/tools/google-timeline-inspector', '/tools/google-timeline-inspector/', '/tools/google-timeline-inspector/index.html', '/tools/country-days-calculator', '/tools/country-days-calculator/', '/tools/country-days-calculator/index.html', '/tools/merge-gpx', '/tools/merge-gpx/', '/tools/merge-gpx/index.html'].includes(url.pathname) && response.ok) {
       response.headers.set('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'; object-src 'none'");
       response.headers.set('Referrer-Policy', 'no-referrer');
       response.headers.set('X-Content-Type-Options', 'nosniff');

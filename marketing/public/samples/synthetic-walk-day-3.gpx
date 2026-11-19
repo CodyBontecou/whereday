@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday synthetic example" xmlns="http://www.topografix.com/GPX/1/1" xmlns:synthetic="https://whereday.com/samples/synthetic-extension">
+  <metadata>
+    <name>Synthetic walk, day 3</name>
+    <desc>Invented points for the Whereday GPX merge tool. Not a real recording.</desc>
+  </metadata>
+  <wpt lat="0.0025" lon="10.0030">
+    <ele>16.0</ele>
+    <name>Camp (synthetic)</name>
+    <sym>Campground</sym>
+  </wpt>
+  <rte>
+    <name>Planned return (synthetic)</name>
+    <rtept lat="0.0045" lon="10.0040"/>
+    <rtept lat="0.0025" lon="10.0030"/>
+    <rtept lat="0.0000" lon="10.0000"/>
+  </rte>
+  <trk>
+    <name>Synthetic walk, day 3</name>
+    <trkseg>
+      <trkpt lat="0.0030" lon="10.0040">
+        <ele>17.0</ele>
+        <time>2000-01-03T07:00:00Z</time>
+        <extensions>
+          <synthetic:note>Invented extension value</synthetic:note>
+        </extensions>
+      </trkpt>
+      <trkpt lat="0.0035" lon="10.0040">
+        <ele>18.0</ele>
+        <time>2000-01-03T07:01:00Z</time>
+      </trkpt>
+      <trkpt lat="0.0040" lon="10.0040">
+        <ele>19.0</ele>
+        <time>2000-01-03T07:02:00Z</time>
+      </trkpt>
+      <trkpt lat="0.0045" lon="10.0040">
+        <ele>20.0</ele>
+        <time>2000-01-03T07:03:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

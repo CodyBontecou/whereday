@@ -287,7 +287,7 @@ BODIES["export-import"] = """
 
 <h2>Output layout</h2>
 <ul>
-<li><strong>Single file</strong> (default) or <strong>one file per day</strong> — handy for journals and incremental backups.</li>
+<li><strong>Single file</strong> (default) or <strong>one file per day</strong> — handy for journals and incremental backups. To combine daily GPX files into one trip file later, use the free <a href="/tools/merge-gpx/#daily-exports">GPX merge tool</a>.</li>
 <li>Exporting <em>outings</em> produces one file per outing automatically.</li>
 <li>Collisions are auto-suffixed so nothing overwrites.</li>
 </ul>

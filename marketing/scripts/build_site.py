@@ -49,6 +49,8 @@ def build():
         "device": "samples/synthetic-google-timeline.json", "raw": "samples/synthetic-google-raw.json", "semantic": "samples/synthetic-google-semantic.json"
     }.items()}
     country_days = (PUBLIC / "samples/synthetic-country-days.csv").read_bytes().decode("utf-8")
+    merge_samples = [{"name": f"synthetic-walk-day-{day}.gpx", "text": (PUBLIC / f"samples/synthetic-walk-day-{day}.gpx").read_text()} for day in (1, 2, 3)]
+    (PUBLIC / "assets/gpx-merge-demo.mjs").write_text("export const MERGE_SAMPLES = " + json.dumps(merge_samples) + ";\n")
     (PUBLIC / "assets/country-days-demo.mjs").write_text("export const DEMO_COUNTRY_DAYS = " + json.dumps(country_days) + ";\n")
     (PUBLIC / "assets/timeline-demo.mjs").write_text("export const TIMELINE_EXAMPLES = " + json.dumps(examples) + ";\n")
     from build_seo_pages import DRAFTS, PAGES
