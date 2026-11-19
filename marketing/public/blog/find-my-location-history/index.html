@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Does Find My Show Location History on iPhone? — Whereday</title>
+  <meta name="description" content="No. Find My shows only a current or last known location. See what Find My, iCloud.com and Send Last Location keep, and how to keep your own history.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/blog/find-my-location-history/">
+  <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Does Find My Show Location History on iPhone? — Whereday">
+  <meta property="og:description" content="No. Find My shows only a current or last known location. See what Find My, iCloud.com and Send Last Location keep, and how to keep your own history.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/blog/find-my-location-history/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map-home.png">
+  <meta property="og:image:alt" content="Whereday’s map home, with an invented day’s route coloured by place">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Does Find My Show Location History on iPhone? — Whereday">
+  <meta name="twitter:description" content="No. Find My shows only a current or last known location. See what Find My, iCloud.com and Send Last Location keep, and how to keep your own history.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map-home.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6;
+  --card: #FBF9F4;
+  --ink: #1E2B45;
+  --muted: #66645D;
+  --rule: #D8D2C3;
+  --rule-soft: #E4DED0;
+  --accent: #A8381F;
+  --rust: #C2462A;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); font-size: 17px; line-height: 1.6; }
+a { color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--rust); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: var(--card); z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-family: var(--serif); font-size: 1.3rem; font-weight: 500; text-decoration: none; }
+.brand img { border-radius: 7px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.footer-links a { color: var(--ink); }
+.button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 15px; line-height: 22px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #8E2E19; border-color: #8E2E19; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 72px; }
+.breadcrumbs { font-family: var(--mono); font-size: 12px; line-height: 20px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs a { color: var(--muted); }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li { margin: 0; }
+.breadcrumbs li + li::before { content: "·"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--serif); text-wrap: balance; letter-spacing: -0.01em; color: var(--ink); }
+h1 { max-width: 760px; font-size: 52px; line-height: 1.05; margin: 16px 0 24px; font-weight: 400; }
+h2 { font-size: 32px; line-height: 1.15; font-weight: 400; margin: 0 0 16px; }
+h3 { font-size: 22px; line-height: 1.25; font-weight: 500; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 1.55; color: var(--ink-soft, #3A465F); }
+header { padding-bottom: 40px; border-bottom: 1px solid var(--rule); }
+section { margin-top: 56px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+li::marker { color: var(--rust); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 18px; margin-bottom: 16px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+caption { text-align: left; font-family: var(--serif); font-size: 19px; font-weight: 500; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border-bottom: 1px solid var(--rule-soft); min-width: 160px; }
+th + th, td + td { border-left: 1px solid var(--rule-soft); }
+thead { background: var(--paper-deep, #ECE6D8); }
+thead th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 28px; border: 6px solid var(--ink); }
+.route-example { margin: 48px 0; }
+.route-example img { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--rule); }
+.route-example figcaption { max-width: none; margin-top: 12px; }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 36px; border-radius: 22px; background: var(--ink); color: var(--paper); }
+.closing h2, .closing h3 { color: var(--paper); font-size: 36px; line-height: 1.1; }
+.closing a:not(.button) { color: #F08A6B; }
+.closing .button { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.closing .button:hover { background: #ECE6D8; border-color: #ECE6D8; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); overflow-x: auto; font-size: 14px; line-height: 20px; }
+code, pre { font-family: var(--mono); }
+code { overflow-wrap: anywhere; font-size: 0.92em; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 38px; line-height: 1.08; }
+  h2 { font-size: 26px; line-height: 1.2; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/blog/find-my-location-history/",
+      "url": "https://whereday.com/blog/find-my-location-history/",
+      "name": "Does Find My Show Location History on iPhone? — Whereday",
+      "description": "No. Find My shows only a current or last known location. See what Find My, iCloud.com and Send Last Location keep, and how to keep your own history.",
+      "inLanguage": "en",
+      "dateModified": "2026-11-19",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "Does Find My show location history?",
+      "datePublished": "2026-11-19",
+      "mainEntityOfPage": "https://whereday.com/blog/find-my-location-history/",
+      "image": "https://whereday.com/screenshots/map-home.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://whereday.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Find My history",
+          "item": "https://whereday.com/blog/find-my-location-history/"
+        }
+      ]
+    }
+  ]
+}</script>
+<style id="shared-navigation-styles">/* Whereday "Reimagined" theme — shared fonts, tokens and base type. Inlined on every page by build_navigation.py, after each page's own styles, so these tokens win. */
+@font-face { font-family: "Inter"; src: url("/assets/fonts/inter-latin-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6; --paper-deep: #ECE6D8; --paper-warm: #F7F4EC; --card: #FBF9F4;
+  --ink: #1E2B45; --ink-soft: #3A465F; --mute: #66645D; --muted: #66645D;
+  --rule: #D8D2C3; --rule-soft: #E4DED0;
+  --accent: #A8381F; --accent-deep: #8E2E19; --accent-soft: rgba(194, 70, 42, 0.10); --rust: #C2462A;
+  --ochre: #B7862B; --sage: #5E7F5A; --slate: #7A86A8;
+  --lcd: #3F5C3C; --lcd-bright: #5E7F5A; --lcd-bg: #DFE6D6;
+  --danger: #A8381F; --warning: #8A6420;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --display: var(--serif);
+  --radius: 14px; --radius-lg: 22px;
+  --shadow: 0 18px 50px -30px rgba(30, 43, 69, 0.45);
+}
+html { background: var(--paper); }
+body { font-family: var(--sans); color: var(--ink); background: var(--paper); }
+::selection { background: rgba(194, 70, 42, 0.18); }
+:where(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.02em; }
+:where(h1, h2, h3) em { font-style: normal; }
+:where(a):focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; border-radius: 4px; }
+/* Shared components across hand-built pages */
+.btn { border-radius: 999px; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.btn-primary, .btn.btn-primary { background: var(--ink); border-color: var(--ink); color: var(--paper) !important; }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-ghost { border-color: var(--ink); }
+.eyebrow::before { background: var(--rust); }
+.ticker { background: var(--ink); border-color: var(--ink); }
+.ticker-track { color: var(--paper); }
+.ticker-track span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #F08A6B; }
+/* Navigation */
+.shared-navigation .brand { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+.shared-navigation .brand img { border-radius: 7px; border: 0; }
+.shared-navigation .brand-dot { display: none; }
+nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-color: var(--rule); }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { border-radius: 999px; padding-inline: 18px; background: var(--ink); border-color: var(--ink); color: var(--paper) !important; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.shared-navigation .nav-links > .btn:hover, .shared-navigation .nav-links > .button:hover { background: var(--accent-deep); border-color: var(--accent-deep); transform: none; }
+.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #D8D2C3); border-radius:999px; background:var(--paper, #F3EFE6); color:var(--ink, #1E2B45); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--rust, #C2462A); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #F3EFE6); border:1px solid var(--rule, #D8D2C3); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#ECE6D8; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#ECE6D8; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+/* Night ink: dark appearance follows the system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0F1626; --paper-deep: #141C30; --paper-warm: #121A2C; --card: #18213A;
+    --ink: #ECE6D8; --ink-soft: #C9CEDA; --mute: #9AA3B8; --muted: #9AA3B8;
+    --rule: #2C3754; --rule-soft: #222C46;
+    --accent: #F0805F; --accent-deep: #F4A088; --accent-soft: rgba(240, 128, 95, 0.14); --rust: #F0805F;
+    --ochre: #E0B565; --sage: #9DC097; --slate: #8E9BC2;
+    --lcd: #9DC097; --lcd-bright: #9DC097; --lcd-bg: #1F2D24;
+    --danger: #F0805F; --warning: #E0B565; --warn-bg: #2A2416;
+    --shadow: 0 18px 50px -30px rgba(0, 0, 0, 0.8);
+  }
+  /* Panels that are ink-on-paper inverted in light mode stay dark here, one step above the page */
+  .privacy-strip, .trust-card, footer, .ticker, .closing, .cta-panel {
+    --paper: #ECE6D8; --ink: #1B2540; --card: #1B2540; --rule: #2C3754;
+    border: 1px solid #2C3754;
+  }
+  .privacy-readout { background: #141C30 !important; }
+  nav.top, nav.top.shared-navigation { background: rgba(15, 22, 38, 0.9); }
+  .hero-stats { background: var(--card); }
+  .phone { box-shadow: 0 40px 80px -36px rgba(0, 0, 0, 0.9); outline: 1px solid #2C3754; }
+  img[src*="app-store-qr"] { background: #FBF9F4; padding: 8px; border-radius: 10px; }
+  .shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { color: #0F1626 !important; }
+  .btn-primary, .btn.btn-primary { color: #0F1626 !important; }
+  .pricing-side .anti-features li::before, .checklist li::before { background-color: #3F5C3C; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">Whereday</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/" aria-current="true">Guides</a><a href="/tools/">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/blog/">Guides</a></li><li>Find My history</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">Does Find My show location history?</h1><p class="lede">What Find My, iCloud.com and Send Last Location actually keep, what you can see when a phone is lost, how consent works, and how to keep a history of your own from now on.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-19">November 19, 2026</time></p></header>
+    <section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Does Find My keep location history?</h2>
+  <p><strong>No. Find My doesn’t keep a location history.</strong> It shows where a device is now or, if the device is offline, the last location it sent to Apple. It never shows a route or a list of places the device has been, and iCloud.com/find doesn’t either.</p>
+  <p>If you want to see where your iPhone has been in the past, look in <a href="/blog/significant-locations-iphone/">Significant Locations and Apple Maps Visited Places</a> instead, or start recording your own history from today. Nothing can bring back places from before a feature was turned on.</p>
+  <nav class="article-toc" aria-label="In this post"><strong>In this post</strong><ol><li><a href="#what-find-my-shows">What Find My does show</a></li><li><a href="#send-last-location">Send Last Location</a></li><li><a href="#lost-phone">If your phone is lost</a></li><li><a href="#apple-features-compared">What each feature keeps</a></li><li><a href="#other-people">Other people’s locations and consent</a></li><li><a href="#keep-your-own-history">Keep your own history from now on</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="what-find-my-shows">
+  <h2 id="what-find-my-shows">What Find My does show</h2>
+  <ul>
+    <li><strong>A live location.</strong> When your device is turned on and connected, Find My shows where it is now, in the app or on iCloud.com/find.</li>
+    <li><strong>A last known location.</strong> If the battery has run out or the device can’t report, Apple says you can see the last known location “for up to seven days in the Find My app.” After more than seven days without a report, it shows <strong>No location found</strong>. On iCloud.com, Apple says locations are shown for up to 24 hours.</li>
+    <li><strong>Offline finding through the Find My network.</strong> With the <strong>Find My network</strong> setting on, nearby Apple devices can help locate an offline iPhone. Apple’s iOS 26 guide says this works for up to 24 hours after it’s turned off, or up to 5 hours in power reserve mode.</li>
+    <li><strong>People and Items.</strong> People shows the current location of anyone sharing with you. Items shows where an AirTag is, or was last seen. Neither has a timeline.</li>
+  </ul>
+  <p>Each of these is a single point on the map. Apple documents no list of earlier points to scroll back through. Sources: Apple’s <a href="https://support.apple.com/HT210515">Use Find My to locate your lost Apple device or AirTag</a> and <a href="https://support.apple.com/guide/iphone/add-your-iphone-iph9a847efc7/26/ios/26">Add your iPhone to Find My</a> (iOS 26).</p>
+</section>
+
+<section aria-labelledby="send-last-location">
+  <h2 id="send-last-location">Send Last Location, and how to turn it on</h2>
+  <p>Apple’s iOS 26 guide says that with Send Last Location on, “if your device’s battery charge level becomes critically low, its location is sent to Apple automatically.” That’s one last point, not a path.</p>
+  <ol>
+    <li>Open <strong>Settings</strong> and tap <strong>[your name]</strong>, then <strong>Find My</strong>.</li>
+    <li>Tap <strong>Find My iPhone</strong> and turn on <strong>Find My iPhone</strong>.</li>
+    <li>On the same screen, turn on <strong>Send Last Location</strong>. Turn on <strong>Find My network</strong> too if you want offline finding.</li>
+  </ol>
+  <p><strong>Do this now, before anything goes wrong.</strong> It’s a setting on the phone itself, so it has to be on before the phone is lost or its battery dies.</p>
+</section>
+
+<section aria-labelledby="lost-phone">
+  <h2 id="lost-phone">Your phone is lost: what you can and can’t see</h2>
+  <ul>
+    <li><strong>Where to look:</strong> open the Find My app on another Apple device, a Family Sharing member’s device, or <strong>icloud.com/find</strong>. Choose the phone under <strong>All Devices</strong>.</li>
+    <li><strong>What you’ll see:</strong> its current location if it’s on and connected, or its last known location. If Find My wasn’t turned on before the phone was lost, Apple says you can’t locate, lock or erase it.</li>
+    <li><strong>Mark it as lost:</strong> choose <strong>Mark As Lost</strong> (Lost Mode). It locks the phone with your passcode, suspends Apple Pay cards and lets you show a phone number and message to whoever finds it.</li>
+    <li><strong>If it’s gone for good:</strong> Apple suggests reporting it to the police and your carrier. Keep the device in Find My, even if you erase it, so Activation Lock stays on.</li>
+  </ul>
+  <p><strong>Why there’s no path of where it went:</strong> Apple documents a current or last known location, not a log. Once the phone stops reporting, you see only the last point it sent.</p>
+  <p>Source: Apple’s <a href="https://support.apple.com/en-us/101593">How to find your lost iPhone or iPad</a>.</p>
+</section>
+
+<section aria-labelledby="apple-features-compared">
+  <h2 id="apple-features-compared">What each feature keeps</h2>
+  <p>These features are easy to mix up. None of Apple’s can be exported.</p>
+  <div class="table-scroll" role="region" aria-label="What Find My, Significant Locations, Visited Places and a self-recorded journal keep" tabindex="0"><table>
+    <caption>What each feature keeps, as Apple documents it</caption>
+    <thead><tr><th scope="col">Feature</th><th scope="col">What it keeps</th><th scope="col">How far back</th><th scope="col">Export</th><th scope="col">Where it’s stored</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Find My</th><td>One current or last known location per device, person or item</td><td>Last known location for up to seven days in the app; up to 24 hours on iCloud.com</td><td>None</td><td>Sent to Apple</td></tr>
+      <tr><th scope="row">Send Last Location</th><td>One location, sent when the battery is critically low</td><td>A single point; Apple doesn’t state a separate window</td><td>None</td><td>Sent to Apple</td></tr>
+      <tr><th scope="row">Significant Locations &amp; Routes</th><td>Places and routes your iPhone learns to power features such as predictive routes</td><td>No retention setting documented</td><td>None documented</td><td>On your devices, synced with end-to-end encryption</td></tr>
+      <tr><th scope="row">Apple Maps Visited Places</th><td>A list of places you’ve been (iOS 26, where available)</td><td>Your <strong>Keep Visits</strong> choice</td><td>None documented</td><td>On your devices, synced with end-to-end encryption</td></tr>
+      <tr><th scope="row">A journal you record yourself (Whereday)</th><td>Visits and GPS route points</td><td>From the day you start recording</td><td>GPX, CSV, JSON, Markdown, GeoJSON, KML and more</td><td>On your iPhone, no account</td></tr>
+    </tbody>
+  </table></div>
+  <p>The <a href="/blog/significant-locations-iphone/">Significant Locations and Visited Places guide</a> covers the two Maps features in detail, and <a href="/blog/view-location-history-iphone/">how to see your location history on iPhone</a> lists every other place a history can live, including Google Maps Timeline.</p>
+</section>
+
+<section aria-labelledby="other-people">
+  <h2 id="other-people">Other people’s locations and consent</h2>
+  <p>Location sharing in Find My shows a person’s <strong>current</strong> location, and only after they chose to share it. It doesn’t show where they were earlier. When they stop sharing, Apple says their location disappears from your Find My, Maps, Contacts and Messages.</p>
+  <p>Only use location features on your own devices, or with someone’s clear agreement. This post doesn’t cover tracking another person’s phone without their knowledge, and you shouldn’t do it.</p>
+  <p>If you think someone is tracking you:</p>
+  <ul>
+    <li>Open <strong>Settings → Privacy &amp; Security → Safety Check</strong> (iOS 16 or later). <strong>Manage Sharing &amp; Access</strong> lets you review who can see your location, person by person. <strong>Emergency Reset</strong> stops sharing with everyone at once. See Apple’s <a href="https://support.apple.com/guide/personal-safety/safety-check-iphone-ios-16-ips2aad835e1/web">Safety Check guide</a>.</li>
+    <li>Read Apple’s <a href="https://support.apple.com/guide/personal-safety/welcome/web">Personal Safety User Guide</a>, including <a href="https://support.apple.com/guide/personal-safety/find-my-and-location-sharing-ips05ede4573/web">Find My and location sharing</a> and <a href="https://support.apple.com/guide/personal-safety/detect-unwanted-trackers-ips139b15fd9/web">Detect unwanted trackers</a>.</li>
+  </ul>
+  <p>If you’re in immediate danger, contact local emergency services first.</p>
+</section>
+
+<section aria-labelledby="keep-your-own-history">
+  <h2 id="keep-your-own-history">How to keep a history of where you’ve been from now on</h2>
+  <p>To look back at where you’ve been, you have to record it as it happens. Whereday is a location journal for your own iPhone:</p>
+  <ul>
+    <li><strong>Recording:</strong> tap Start on the map to turn on visit detection and GPS route recording together. With Always location access it keeps recording in the background. See <a href="/docs/tracking/">how tracking works</a>, or <a href="/blog/record-iphone-route-gpx/">record a single route as GPX</a>.</li>
+    <li><strong>Looking back:</strong> pick Today, Yesterday, 7D, 30D, All or a custom range to see your stays and the routes between them. The <a href="/blog/private-location-journal-iphone/">private location journal guide</a> walks through setup.</li>
+    <li><strong>Exporting:</strong> save visits or route points as GPX, CSV, JSON, Markdown, GeoJSON or KML, and <a href="/blog/back-up-iphone-location-history/">keep a backup copy</a>.</li>
+    <li><strong>Storage:</strong> records stay on your iPhone, with no Whereday account and no Whereday server. The <a href="/docs/privacy-data/">privacy and data reference</a> lists what can leave your device, such as Apple’s place-name lookups.</li>
+  </ul>
+  <p><strong>The honest limit:</strong> Whereday records from the day you install it and start tracking. It can’t recover earlier places, and it can’t read Find My, Significant Locations or Visited Places.</p>
+  <p>Access: from version 1.8, new users need an eligible trial, subscription or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Import and Export Preview are free. New users from 1.8 keep exports after tracking access ends; existing free users keep their previous export-unlock requirement.</p>
+  <p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></p>
+</section>
+
+<figure class="product-example"><img src="/screenshots/map-home-480.webp" srcset="/screenshots/map-home-480.webp 480w, /screenshots/map-home-720.webp 720w, /screenshots/map-home.webp 900w" sizes="240px" width="1206" height="2622" alt="Whereday’s map home, with an invented day’s route coloured by place" loading="lazy" decoding="async"><figcaption>Whereday’s map of a day. This illustrative screenshot uses an invented journal, not real location data.</figcaption></figure>
+
+<section aria-labelledby="questions">
+  <h2 id="questions">Common questions</h2>
+  <h3>Can I see where my iPhone was yesterday in Find My?</h3>
+  <p>No. To see yesterday’s places, check <a href="/blog/significant-locations-iphone/#visited-places">Visited Places in Apple Maps</a> if it was turned on, or an app that was recording at the time.</p>
+  <h3>Does iCloud.com show location history?</h3>
+  <p>No. It shows a current or last known location, for up to 24 hours, with no timeline.</p>
+  <h3>Does Find My keep AirTag history?</h3>
+  <p>No. The Items tab shows where an AirTag is now or was last seen. There’s no trail, and AirTags can’t be located on iCloud.com at all, only in the Find My app.</p>
+  <h3>Can Find My show where a lost phone went after it died?</h3>
+  <p>No. You get the last location it sent, which is the Send Last Location point if that was on. The Find My network may locate it for a limited time after it turns off, but that’s still one point, not a route.</p>
+  <h3>Is Significant Locations the same as Find My?</h3>
+  <p>No. Significant Locations &amp; Routes is a Location Services setting that learns places that matter to you, and it can’t be exported. Find My locates devices, people and items. See the <a href="/blog/significant-locations-iphone/">Significant Locations guide</a>.</p>
+</section>
+
+<section class="closing" aria-labelledby="start-history">
+  <h2 id="start-history">Start a location history you keep yourself.</h2>
+  <p>Whereday records your own visits and routes on your iPhone from the day you install it, and exports them as GPX, CSV or JSON whenever you want. It won’t bring back earlier days.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+  <p><a href="/docs/tracking/">Read how tracking works</a></p>
+</section>
+
+<p class="source-note">Apple details checked November 19, 2026 against Apple’s Find My support article (HT210515), the iOS 26 iPhone User Guide page “Add your iPhone to Find My”, “How to find your lost iPhone or iPad” and the Personal Safety User Guide. Menus can vary by iOS version and region. Whereday features follow the published tracking, export and privacy references. The screenshot shows Whereday with invented data.</p>
+
+    </article>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/significant-locations-iphone/">Check Significant Locations and Visited Places</a><p>See the two Apple features that do remember places, and why neither exports.</p></li><li><a href="/blog/view-location-history-iphone/">Find any iPhone location history</a><p>Check Apple Maps, Google Timeline and Whereday, and choose the right download.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
+<script defer src="/assets/acquisition.js"></script>
+</body>
+</html>
