@@ -165,7 +165,7 @@ Use a free travel journal template and a linked example vault, then inspect nati
 
 ## Check a location file before using it.
 
-[Open the free GPX viewer with CSV and GeoJSON downloads](https://whereday.com/tools/gpx-viewer/), or [follow the worked GPX inspection tutorial](https://whereday.com/blog/check-gpx-file/). Compare [GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) with downloadable versions of the same invented trip. Use an invented example before opening your own file. For Google exports, [identify your Timeline JSON structure](https://whereday.com/blog/google-timeline-json-formats/) with the [local JSON inspector](https://whereday.com/tools/google-timeline-inspector/).
+[Open the free GPX viewer with CSV and GeoJSON downloads](https://whereday.com/tools/gpx-viewer/), or [follow the worked GPX inspection tutorial](https://whereday.com/blog/check-gpx-file/). Compare [GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) with downloadable versions of the same invented trip. Use an invented example before opening your own file. For Google exports, [identify your Timeline JSON structure](https://whereday.com/blog/google-timeline-json-formats/) with the [local JSON inspector](https://whereday.com/tools/google-timeline-inspector/). Count days per country from a Country Days CSV with the [days-in-country calculator](https://whereday.com/tools/country-days-calculator/), including the Schengen 90/180 check.
 
 § 02 Export and connect
 

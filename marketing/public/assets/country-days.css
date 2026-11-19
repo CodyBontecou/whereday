@@ -1,0 +1,31 @@
+.cdc-tool fieldset { border:1px solid var(--rule, #D8D2C3); border-radius:12px; padding:16px 20px; margin:20px 0; min-width:0; }
+.cdc-tool legend { font-family:var(--serif); font-size:19px; font-weight:500; padding:0 6px; }
+.cdc-tool label { display:block; font-weight:600; margin-top:12px; }
+.cdc-tool input, .cdc-tool select { margin:6px 0 0; }
+.cdc-tool input[type="number"] { width:9em; padding:10px; }
+.cdc-tool input[type="date"] { padding:8px 10px; }
+.cdc-row { display:flex; flex-wrap:wrap; gap:0 20px; align-items:flex-end; }
+.cdc-row > div { min-width:0; }
+.cdc-limits { border-left:4px solid var(--accent, #A8381F); background:var(--paper, #F3EFE6); padding:12px 16px; border-radius:0 8px 8px 0; margin:16px 0; }
+.cdc-tool h3 { margin-top:36px; }
+#cdc-summary { font-size:18px; font-weight:600; }
+#cdc-stays { padding-left:20px; }
+#cdc-stays li { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
+#cdc-stays button, .cdc-tool .cdc-inline button { min-height:36px; padding:6px 12px; font-size:15px; }
+.cdc-error { color:var(--accent, #A8381F); font-weight:600; min-height:1.6em; margin:8px 0 0; }
+.cdc-figures { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin:16px 0; }
+.cdc-figures div, .cdc-figures dt, .cdc-figures dd { margin:0; }
+.cdc-figures dt { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted, #66645D); }
+.cdc-figures dd { font-size:22px; font-weight:600; overflow-wrap:anywhere; }
+.cdc-flag { font-weight:700; color:var(--accent, #A8381F); }
+.cdc-tool tr.cdc-highlight th, .cdc-tool tr.cdc-highlight td { background:rgba(194,70,42,.16); font-weight:700; }
+.cdc-tool details summary { cursor:pointer; color:var(--accent, #A8381F); }
+.cdc-dates { margin:8px 0 0; padding-left:18px; font-family:var(--mono); font-size:13px; max-height:320px; overflow:auto; }
+.cdc-dates li { margin-bottom:2px; }
+.cdc-tool th, .cdc-tool td { min-width:120px; }
+.cdc-members { font-size:15px; }
+@media(max-width:640px) {
+  .cdc-figures { grid-template-columns:1fr 1fr; }
+  .cdc-tool fieldset { padding:12px; }
+}
+#cdc-window-result { margin-top:16px; }

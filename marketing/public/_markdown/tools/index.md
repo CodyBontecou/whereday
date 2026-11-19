@@ -7,7 +7,13 @@ iPhone location journals
 
 Practical tools for checking your own files before importing or converting them.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 18, 2026
+
+## [Days-in-country calculator](https://whereday.com/tools/country-days-calculator/)
+
+Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.
+
+Expand each count to see its dates. [See how Whereday records country days](https://whereday.com/blog/track-days-in-country-iphone/).
 
 ## [GPX viewer and file inspector](https://whereday.com/tools/gpx-viewer/)
 

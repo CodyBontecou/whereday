@@ -89,12 +89,12 @@ Analysis can identify a country for an existing coordinate. It cannot recover lo
 
 Use the export control in Country Days and save the CSV to a destination you choose. The file includes country codes, local dates, and recorded/manual source information. Viewing and editing your counts are free; writing the CSV follows the export access rules above. See [current pricing](https://whereday.com/#pricing).
 
-The CSV uses `country_code`, `local_date`, and `source`. Source is `recorded`, `manual`, or `recorded+manual`; the last value still represents one country/date. Compare your file with the [checked four-row example](https://whereday.com/blog/track-days-in-country-iphone/#checked-example) and inspect a known date and a travel day. A country-date CSV is a summary, not a backup of every visit, route point, or manual stay. Keep your underlying records using the [backup checklist](https://whereday.com/blog/back-up-iphone-location-history/).
+The CSV uses `country_code`, `local_date`, and `source`. Source is `recorded`, `manual`, or `recorded+manual`; the last value still represents one country/date. Compare your file with the [checked four-row example](https://whereday.com/blog/track-days-in-country-iphone/#checked-example) and inspect a known date and a travel day. A country-date CSV is a summary, not a backup of every visit, route point, or manual stay. Keep your underlying records using the [backup checklist](https://whereday.com/blog/back-up-iphone-location-history/). [Check your exported CSV with the days-in-country calculator](https://whereday.com/tools/country-days-calculator/): it counts the same dates in your browser and adds Schengen 90/180, rolling-window and calendar-year views.
 
 ## Remember the country.
 Keep the dates behind the count.
 
-Check your tracking access and review Country Days on your iPhone.
+Check your tracking access and review Country Days on your iPhone. Then [check your exported CSV with the days-in-country calculator](https://whereday.com/tools/country-days-calculator/).
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
