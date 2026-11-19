@@ -169,9 +169,12 @@ test('the article’s worked Schengen example matches the calculator exactly', (
   }
   assert.deepEqual(rows.map(r => r[1]), [...SCHENGEN_EXAMPLE.references]);
   // The prose states the same dates and counts.
-  for (const text of ['5 January to 5 March 2026', '6 March to 14 April', '15 April to 14 May', '61 days are used and 29 remain', 'start on 13 August']) assert.ok(article.includes(text), text);
+  for (const text of ['5 January to 5 March 2026', '6 March to 14 April', '15 April to 14 May', '61 days are used and 29 remain', 'start on 13 August', '15 May to 12 August']) assert.ok(article.includes(text), text);
   const fr = SCHENGEN_EXAMPLE.stays[0], gapDays = d(SCHENGEN_EXAMPLE.stays[1].first) - d(fr.last) - 1;
   assert.equal(gapDays, 40);
+  // 90 clear days after the last Schengen day, then the new stay starts.
+  assert.equal(formatDay(d(SCHENGEN_EXAMPLE.stays[1].last) + 91), '2026-08-13');
+  assert.equal(formatDay(d(SCHENGEN_EXAMPLE.stays[1].last) + 90), '2026-08-12');
 });
 
 test('the visible member list matches the dated constant', () => {

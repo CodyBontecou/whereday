@@ -27,5 +27,8 @@
 @media(max-width:640px) {
   .cdc-figures { grid-template-columns:1fr 1fr; }
   .cdc-tool fieldset { padding:12px; }
+  .cdc-tool th, .cdc-tool td { min-width:0; padding:10px 8px; font-size:15px; }
+  .cdc-tool thead th { font-size:11px; letter-spacing:.04em; }
+  .cdc-tool .cdc-range { display:none; }
 }
 #cdc-window-result { margin-top:16px; }

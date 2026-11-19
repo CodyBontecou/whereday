@@ -118,7 +118,7 @@ Calculator output for the invented trip
 | 2026-05-14 | 2025-11-16 to 2026-05-14 | 90 | 0 | 2026-08-13
 | 2026-08-01 | 2026-02-03 to 2026-08-01 | 61 | 29 | 2026-08-13
 
-On 14 May the window reaches back to November 2025 and holds all 90 days, so none remain: the traveller must leave. By 1 August, the 31 days from 5 January to 2 February have dropped out of the window. The 31 days from 3 February to 5 March and the 30 days in Italy still count, so 61 days are used and 29 remain. A full 90-day stay can start on 13 August, 90 days after the last day in Italy.
+On 14 May the window reaches back to November 2025 and holds all 90 days, so none remain: the traveller must leave. By 1 August, the 31 days from 5 January to 2 February have dropped out of the window. The 31 days from 3 February to 5 March and the 30 days in Italy still count, so 61 days are used and 29 remain. The last day in Italy is 14 May; the 90 days after it, 15 May to 12 August, have no Schengen presence, so a full 90-day stay can start on 13 August.
 
 ## What “183 days” can mean
 

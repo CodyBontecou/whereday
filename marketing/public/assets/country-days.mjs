@@ -138,7 +138,7 @@ function renderTotals(idx, period) {
     const row = document.createElement('tr');
     cell(row, label(item.country), true);
     cell(row, number.format(item.count));
-    cell(row, `${formatDay(item.days[0])} to ${formatDay(item.days.at(-1))}`);
+    cell(row, `${formatDay(item.days[0])} to ${formatDay(item.days.at(-1))}`).className = 'cdc-range';
     const details = node('details');
     details.append(node('summary', `Show ${plural(item.count, 'date')}`));
     const list = node('ul', undefined, 'cdc-dates'); list.tabIndex = 0; list.setAttribute('aria-label', `Dates counted for ${countryName(item.country)}`);

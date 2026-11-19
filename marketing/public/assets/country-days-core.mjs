@@ -185,8 +185,10 @@ function countBetween(sorted, from, to) {
 
 /**
  * Largest number of dates in any `length`-day window (inclusive of its end date)
- * whose end date lies in [rangeFirst, rangeLast]. Returns the earliest end date
- * that reaches the maximum. A window ending on E covers E-length+1 … E.
+ * whose end date lies in [rangeFirst, rangeLast]. A window ending on E covers
+ * E-length+1 … E. The reported end is the range start or a recorded date: the
+ * earliest such candidate that reaches the maximum. An earlier, unrecorded end
+ * date can hold the same count; the count itself is always the maximum.
  */
 export function maxWindow(sortedDays, length, rangeFirst, rangeLast) {
   if (!(length >= 1) || rangeFirst === null || rangeLast === null || rangeLast < rangeFirst) return { max: 0, end: null };
