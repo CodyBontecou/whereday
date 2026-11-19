@@ -212,7 +212,25 @@ PAGES.append({
     "image_alt": "Whereday’s map home, with an invented day’s route coloured by place",
 })
 
+PAGES.append({
+    "path": "/blog/find-my-location-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Find My history",
+    "type": "BlogPosting",
+    "title": "Does Find My Show Location History on iPhone? — Whereday",
+    "headline": "Does Find My show location history?",
+    "description": "No. Find My shows only a current or last known location. See what Find My, iCloud.com and Send Last Location keep, and how to keep your own history.",
+    "lede": "What Find My, iCloud.com and Send Last Location actually keep, what you can see when a phone is lost, how consent works, and how to keep a history of your own from now on.",
+    "published": "2026-11-19", "modified": "2026-11-19",
+    "source": "find-my-location-history.html",
+    "image": "/screenshots/map-home.png",
+    "image_alt": "Whereday’s map home, with an invented day’s route coloured by place",
+})
+
 RELATED = {
+ '/blog/find-my-location-history/': [
+     ('/blog/significant-locations-iphone/', 'Check Significant Locations and Visited Places',
+      'See the two Apple features that do remember places, and why neither exports.'),
+     ('/blog/view-location-history-iphone/', 'Find any iPhone location history',
+      'Check Apple Maps, Google Timeline and Whereday, and choose the right download.')],
  '/blog/import-google-timeline-iphone/': [
      ('/blog/back-up-iphone-location-history/', 'Keep a restorable Whereday copy', 'Choose supported visit and point exports after checking the import.'),
      ('/compare/google-maps-timeline/', 'Compare recording workflows', 'Review access, backups, privacy, and portability before switching.')],
@@ -228,6 +246,8 @@ RELATED = {
      ('/blog/back-up-iphone-location-history/', 'Keep the underlying records',
       'A country-date summary is not a complete backup.')],
  '/blog/significant-locations-iphone/': [
+     ('/blog/find-my-location-history/', 'Looking in Find My instead?',
+      'Find My keeps no history, only a current or last known location.'),
      ('/blog/view-location-history-iphone/', 'Find any iPhone location history',
       'Check Apple Maps, Google Timeline and Whereday, and choose the right download.'),
      ('/blog/back-up-iphone-location-history/', 'Keep a copy of the history you record',

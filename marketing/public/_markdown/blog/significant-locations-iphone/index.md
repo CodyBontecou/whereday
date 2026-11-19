@@ -187,6 +187,10 @@ Apple documents Clear History as the way to delete significant locations, on eve
 
 Apple doesn’t document a way to restore cleared significant locations, and there’s no export to restore from. Apple says the data syncs between devices signed in to your Apple Account. Clear History removes it from all of them.
 
+### Does Find My show my location history?
+
+No. Find My keeps no history: it shows only a current or last known location. See [what Find My does and doesn’t keep](https://whereday.com/blog/find-my-location-history/).
+
 ### Is Visited Places the same as Google Timeline?
 
 No. Visited Places is a list of places in Apple Maps that syncs across your Apple devices. Google Maps Timeline is a separate history in Google Maps, and Google provides a JSON export for it. See the [iPhone location history guide](https://whereday.com/blog/view-location-history-iphone/) to find each one.
@@ -202,6 +206,10 @@ Start recording today, review and correct each day on your iPhone, and save it a
 Apple steps checked November 19, 2026 against Apple’s iOS 26 iPhone User Guide (Visited Places; Clear location history in Maps), Apple’s Location Services & Privacy page, the Personal Safety guide and the Stolen Device Protection article. Apple’s iOS 27 guide uses the same Visited Places path. Menus can vary by version and region. Whereday features follow the published tracking, places, export and privacy references. The screenshot shows Whereday with invented data.
 
 ## Read next
+
+- [Looking in Find My instead?](https://whereday.com/blog/find-my-location-history/)
+
+Find My keeps no history, only a current or last known location.
 
 - [Find any iPhone location history](https://whereday.com/blog/view-location-history-iphone/)
 

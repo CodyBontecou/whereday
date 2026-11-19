@@ -3,6 +3,7 @@ const pages = {
   "/about": "/_markdown/about.md",
   "/blog/back-up-iphone-location-history/": "/_markdown/blog/back-up-iphone-location-history/index.md",
   "/blog/check-gpx-file/": "/_markdown/blog/check-gpx-file/index.md",
+  "/blog/find-my-location-history/": "/_markdown/blog/find-my-location-history/index.md",
   "/blog/google-timeline-json-formats/": "/_markdown/blog/google-timeline-json-formats/index.md",
   "/blog/gpx-kml-geojson-location-history/": "/_markdown/blog/gpx-kml-geojson-location-history/index.md",
   "/blog/import-google-timeline-iphone/": "/_markdown/blog/import-google-timeline-iphone/index.md",
