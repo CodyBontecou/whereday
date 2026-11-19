@@ -48,6 +48,8 @@ def build():
     examples = {key: (PUBLIC / path).read_text() for key, path in {
         "device": "samples/synthetic-google-timeline.json", "raw": "samples/synthetic-google-raw.json", "semantic": "samples/synthetic-google-semantic.json"
     }.items()}
+    country_days = (PUBLIC / "samples/synthetic-country-days.csv").read_bytes().decode("utf-8")
+    (PUBLIC / "assets/country-days-demo.mjs").write_text("export const DEMO_COUNTRY_DAYS = " + json.dumps(country_days) + ";\n")
     (PUBLIC / "assets/timeline-demo.mjs").write_text("export const TIMELINE_EXAMPLES = " + json.dumps(examples) + ";\n")
     from build_seo_pages import DRAFTS, PAGES
     revised = {page["path"]: page["modified"] for page in PAGES if "modified" in page}

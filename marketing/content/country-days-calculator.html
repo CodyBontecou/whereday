@@ -1,0 +1,164 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/country-days.css">
+<section class="gpx-tool cdc-tool" aria-labelledby="add-dates">
+  <h2 id="add-dates">Add your dates. They stay in this page.</h2>
+  <p class="cdc-limits" id="limits-summary"><strong>This is a count, not a ruling.</strong> It is not legal, tax or immigration advice. Border officials use official records, such as passport stamps and the EU Entry/Exit System, and tax authorities apply their own tests. Dates missing from your input are not filled in, so a missing stay makes every count too low. <a href="#limits">Read the limits</a>.</p>
+  <p>Load a CSV of country dates, add stays by hand, or both. The calculator counts distinct dates per country, checks any rolling window, runs the Schengen 90/180 check and shows calendar-year totals. No account, upload or analytics.</p>
+  <noscript><p>JavaScript is needed to read files and count dates in your browser. The explanations and sample download below work without it.</p></noscript>
+  <div id="cdc-tool" hidden>
+    <fieldset>
+      <legend>Load a CSV</legend>
+      <label for="cdc-file">Choose a Country Days CSV <span class="gpx-small">(columns <code>country_code</code> and <code>local_date</code>; up to 10 MiB)</span></label>
+      <input id="cdc-file" type="file" accept=".csv,text/csv" aria-describedby="cdc-status">
+    </fieldset>
+    <fieldset>
+      <legend>Add a stay by hand</legend>
+      <form id="cdc-stay-form" novalidate>
+        <div class="cdc-row">
+          <div><label for="cdc-country">Country</label><select id="cdc-country" required></select></div>
+          <div><label for="cdc-first">First date</label><input id="cdc-first" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="cdc-last">Last date <span class="gpx-small">(inclusive)</span></label><input id="cdc-last" type="date" min="1900-01-01" max="2100-12-31" required></div>
+        </div>
+        <div class="gpx-actions"><button id="cdc-add" type="submit">Add stay</button><button id="cdc-cancel" type="button" hidden>Cancel edit</button></div>
+        <p id="cdc-stay-error" class="cdc-error" role="alert"></p>
+      </form>
+      <h3 id="cdc-stays-title">Your manual stays</h3>
+      <p id="cdc-stays-empty" class="gpx-small">None yet. A stay counts every date from its first to its last date.</p>
+      <ul id="cdc-stays" aria-labelledby="cdc-stays-title"></ul>
+    </fieldset>
+    <div class="gpx-actions"><button id="cdc-demo" type="button">Try the synthetic example</button><button id="cdc-demo-schengen" type="button">Add the Schengen worked example</button><button id="cdc-clear" type="button" disabled>Clear everything</button></div>
+    <p id="cdc-status" role="status" aria-live="polite">Choose a file or add a stay. The examples use invented dates.</p>
+    <div id="cdc-rejected" hidden>
+      <h3 id="cdc-rejected-title">Rows that were not counted</h3>
+      <p id="cdc-rejected-note"></p>
+      <div class="table-scroll" role="region" aria-labelledby="cdc-rejected-title" tabindex="0"><table><thead><tr><th scope="col">File line</th><th scope="col">Problem</th><th scope="col">Row text</th></tr></thead><tbody id="cdc-rejected-rows"></tbody></table></div>
+    </div>
+    <div id="cdc-results" hidden>
+      <h2 id="cdc-results-title">Your results</h2>
+      <p id="cdc-summary"></p>
+      <h3 id="cdc-totals-title">Days per country</h3>
+      <label for="cdc-period">Period</label>
+      <select id="cdc-period"></select>
+      <div id="cdc-custom" class="cdc-row" hidden>
+        <div><label for="cdc-from">From</label><input id="cdc-from" type="date" min="1900-01-01" max="2100-12-31"></div>
+        <div><label for="cdc-to">To <span class="gpx-small">(inclusive)</span></label><input id="cdc-to" type="date" min="1900-01-01" max="2100-12-31"></div>
+      </div>
+      <p id="cdc-total-note" class="gpx-small"></p>
+      <div class="table-scroll" role="region" aria-labelledby="cdc-totals-title" tabindex="0"><table><thead><tr><th scope="col">Country</th><th scope="col">Days</th><th scope="col" class="cdc-range">First to last date</th><th scope="col">Dates</th></tr></thead><tbody id="cdc-total-rows"></tbody></table></div>
+
+      <h3 id="cdc-window-title">Rolling-window check</h3>
+      <p class="gpx-small">The most dates in any window of N days that ends inside the period above. The window includes its end date.</p>
+      <div class="cdc-row">
+        <div><label for="cdc-group">Country or group</label><select id="cdc-group"></select></div>
+        <div><label for="cdc-length">Window length (days)</label><input id="cdc-length" type="number" min="1" max="3660" step="1" value="365" inputmode="numeric"></div>
+        <div><label for="cdc-threshold">Threshold (days)</label><input id="cdc-threshold" type="number" min="1" step="1" value="183" inputmode="numeric"></div>
+      </div>
+      <p id="cdc-window-result" aria-live="polite"></p>
+
+      <h3 id="cdc-schengen-title">Schengen 90/180 check</h3>
+      <label for="cdc-reference">Reference date</label>
+      <input id="cdc-reference" type="date" min="1900-01-01" max="2100-12-31">
+      <div id="cdc-schengen-result" aria-live="polite"></div>
+      <p id="cdc-schengen-detail-note" class="gpx-small"></p>
+      <div class="table-scroll" role="region" aria-label="Schengen dates in the 180-day window" tabindex="0"><table><thead><tr><th scope="col">Date</th><th scope="col">Schengen countries on that date</th></tr></thead><tbody id="cdc-schengen-rows"></tbody></table></div>
+
+      <h3 id="cdc-years-title">Calendar-year totals and the 183-day mark</h3>
+      <p class="gpx-small">Rows at 183 days or more are highlighted. This is one common reading of “183 days”. Many countries use other tests, and the US uses a weighted three-year test; see <a href="#183-days">what 183 days can mean</a>.</p>
+      <div class="table-scroll" role="region" aria-labelledby="cdc-years-title" tabindex="0"><table><thead><tr><th scope="col">Year</th><th scope="col">Country</th><th scope="col">Days</th><th scope="col">183-day mark</th></tr></thead><tbody id="cdc-year-rows"></tbody></table></div>
+
+      <h3>Download your results</h3>
+      <p class="gpx-small">Both files are made in your browser. The totals use the period selected above; the Schengen file uses the reference date.</p>
+      <div class="gpx-actions"><button id="cdc-download-totals" type="button" disabled>Download country totals (CSV)</button><button id="cdc-download-schengen" type="button" disabled>Download Schengen window (CSV)</button></div>
+    </div>
+  </div>
+  <h3 id="schengen-members">Schengen member states used</h3>
+  <p class="cdc-members" data-schengen-checked="2026-11-18">Austria, Belgium, Bulgaria, Croatia, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden and Switzerland (29 states). Cyprus and Ireland are not members.</p>
+  <p class="gpx-small">List checked on 18 November 2026 against the <a href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en">European Commission’s Schengen area page</a>. The current list is applied to every date, so days in Bulgaria and Romania before they joined on 1 January 2025, or in Croatia before 1 January 2023, are counted as Schengen days.</p>
+</section>
+
+<section aria-labelledby="how-it-counts">
+  <h2 id="how-it-counts">How the calculator counts a day</h2>
+  <p>These rules match Whereday’s own Country Days screen.</p>
+  <ul>
+    <li><strong>Any presence on a local date is a full day</strong> in that country. One record is enough.</li>
+    <li><strong>A travel day can count in two countries.</strong> The Schengen Borders Code also treats the day you enter and the day you leave as days of stay, so the Schengen check matches it.</li>
+    <li><strong>Gaps are not filled in.</strong> If a stay is missing from your record, every count that includes it will be too low. Add the stay by hand.</li>
+    <li><strong>Dates are taken as written.</strong> The calculator uses the <code>local_date</code> in your file. Whereday writes the local date of the place where each record was made, not your phone’s current timezone.</li>
+  </ul>
+  <div class="table-scroll" role="region" aria-labelledby="how-it-counts-caption" tabindex="0"><table><caption id="how-it-counts-caption">Common situations</caption><thead><tr><th scope="col">Situation</th><th scope="col">What is counted</th></tr></thead><tbody>
+    <tr><th scope="row">Many records in the same country on one date</th><td>One day for that country.</td></tr>
+    <tr><th scope="row">Lisbon in the morning, Madrid in the evening</th><td>One day in Portugal and one day in Spain. The country totals add up to more than the number of dates.</td></tr>
+    <tr><th scope="row">A week with no records</th><td>Nothing. The calculator does not assume where you were.</td></tr>
+    <tr><th scope="row">A CSV row and a manual stay for the same country and date</th><td>One day. The expanded date list shows both sources.</td></tr>
+    <tr><th scope="row">France and Italy on the same date</th><td>One day each in the per-country table, but one Schengen day.</td></tr>
+  </tbody></table></div>
+</section>
+
+<section aria-labelledby="schengen">
+  <h2 id="schengen">How the Schengen 90/180 rule works</h2>
+  <p>Short stays in the Schengen area are limited to 90 days in any 180-day period (<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0399">Regulation (EU) 2016/399, Article 6</a>). The 180 days are not a fixed calendar half-year. On any day you check, look back over the 180 days ending on that day, including it. Every date you spent in any member state in that window counts once, and the total must not be more than 90.</p>
+  <p>Days drop out of the window as time passes, so your allowance comes back gradually. To be sure of another full 90-day stay, you need 90 days in a row with no Schengen presence before it. The calculator shows that date as the earliest start for a full 90 days, assuming you spend no more Schengen days after the reference date. The European Commission’s <a href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-visas/short-stay-calculator_en">short-stay calculator</a> uses the same rolling count.</p>
+  <h3 id="schengen-example">A worked example with invented dates</h3>
+  <p>This trip is made up. A traveller spends 60 days in France (5 January to 5 March 2026), leaves the Schengen area for 40 days (6 March to 14 April), then spends 30 days in Italy (15 April to 14 May). Press <strong>Add the Schengen worked example</strong> above to load the same two stays.</p>
+  <div class="table-scroll" role="region" aria-labelledby="schengen-example-caption" tabindex="0"><table id="schengen-example-results"><caption id="schengen-example-caption">Calculator output for the invented trip</caption><thead><tr><th scope="col">Reference date</th><th scope="col">180-day window</th><th scope="col">Days used</th><th scope="col">Days remaining</th><th scope="col">Earliest start for a full 90 days</th></tr></thead><tbody>
+    <tr data-reference="2026-05-14" data-window-start="2025-11-16" data-used="90" data-remaining="0" data-earliest="2026-08-13"><th scope="row">2026-05-14</th><td>2025-11-16 to 2026-05-14</td><td>90</td><td>0</td><td>2026-08-13</td></tr>
+    <tr data-reference="2026-08-01" data-window-start="2026-02-03" data-used="61" data-remaining="29" data-earliest="2026-08-13"><th scope="row">2026-08-01</th><td>2026-02-03 to 2026-08-01</td><td>61</td><td>29</td><td>2026-08-13</td></tr>
+  </tbody></table></div>
+  <p>On 14 May the window reaches back to November 2025 and holds all 90 days, so none remain: the traveller must leave. By 1 August, the 31 days from 5 January to 2 February have dropped out of the window. The 31 days from 3 February to 5 March and the 30 days in Italy still count, so 61 days are used and 29 remain. The last day in Italy is 14 May; the 90 days after it, 15 May to 12 August, have no Schengen presence, so a full 90-day stay can start on 13 August.</p>
+</section>
+
+<section aria-labelledby="183-days">
+  <h2 id="183-days">What “183 days” can mean</h2>
+  <p>“183 days” is a common shorthand for spending more than half a year somewhere. It is used in different ways:</p>
+  <ul>
+    <li><strong>A calendar year.</strong> Some domestic rules count days from 1 January to 31 December. The calendar-year table above shows this count.</li>
+    <li><strong>Any 12-month period.</strong> Many tax treaties follow the OECD Model Tax Convention, whose Article 15(2) refers to 183 days “in any twelve month period commencing or ending in the fiscal year concerned” (<a href="https://www.oecd-ilibrary.org/taxation/model-tax-convention-on-income-and-on-capital-2017-full-version_ee524f5e-en">OECD Model Tax Convention</a>). Use the rolling-window check with a 365-day window and a threshold of 183.</li>
+    <li><strong>The US substantial presence test.</strong> It is weighted: all days in the current year, one third of the days in the year before and one sixth of the days in the year before that, with at least 31 days in the current year (<a href="https://www.irs.gov/individuals/international-taxpayers/substantial-presence-test">IRS, Substantial Presence Test</a>; <a href="https://www.irs.gov/publications/p519">Publication 519</a>). This calculator does not compute it.</li>
+  </ul>
+  <p>Reaching 183 days does not make you tax resident, and staying under it does not make you non-resident. Residency rules also look at your home, family, work and other ties, and each country defines its own days and exceptions. Use the count as evidence to discuss with a qualified adviser.</p>
+</section>
+
+<section aria-labelledby="csv-format">
+  <h2 id="csv-format">The CSV format</h2>
+  <p>The first row must name the columns. Two are required and the others are ignored:</p>
+  <ul>
+    <li><code>country_code</code>: a two-letter ISO 3166-1 alpha-2 code, such as <code>PT</code> or <code>FR</code>. Lowercase is accepted.</li>
+    <li><code>local_date</code>: a calendar date written <code>YYYY-MM-DD</code>.</li>
+    <li><code>source</code> (optional): shown next to each date when present. Whereday writes <code>recorded</code>, <code>manual</code> or <code>recorded+manual</code>.</li>
+  </ul>
+  <p>Rows with a missing value, an unknown code or an impossible date (such as <code>2026-02-29</code>) are listed with their line numbers and left out of every count. Repeated rows for the same country and date count once.</p>
+  <div class="table-scroll" role="region" aria-labelledby="csv-example-caption" tabindex="0"><table><caption id="csv-example-caption">The synthetic example file (invented dates)</caption><thead><tr><th scope="col">country_code</th><th scope="col">local_date</th><th scope="col">source</th></tr></thead><tbody>
+    <tr><td>ES</td><td>2026-10-01</td><td>recorded</td></tr>
+    <tr><td>FR</td><td>2026-10-03</td><td>recorded</td></tr>
+    <tr><td>PT</td><td>2026-10-01</td><td>recorded+manual</td></tr>
+    <tr><td>PT</td><td>2026-10-02</td><td>manual</td></tr>
+  </tbody></table></div>
+  <p>The calculator gives Portugal 2 days, Spain 1 and France 1: four country-dates over three distinct dates. All three are Schengen states, so on 3 October 2026 the Schengen check counts 3 days used, because 1 October counts once. <a href="/samples/synthetic-country-days.csv" download>Download the synthetic CSV</a>.</p>
+  <h3 id="export-from-whereday">Export the file from Whereday</h3>
+  <ol>
+    <li>Open <strong>Timeline</strong>, then <strong>Country Days</strong>.</li>
+    <li>Choose <strong>All time</strong> if you want every date. The export contains the period that is selected.</li>
+    <li>Tap <strong>Export</strong> and save the CSV to Files, then choose it here.</li>
+  </ol>
+  <p>Viewing Country Days and adding manual stays are free. From version 1.8, new users keep exports after tracking access expires; existing free users keep their previous export-unlock requirement. See <a href="/blog/track-days-in-country-iphone/">how Whereday records country days</a> for travel days, timezones, adding a missing stay and finding countries in older records.</p>
+  <p>A country-date CSV is a summary. It is not a backup of your visits, route points or manual stays; <a href="/blog/back-up-iphone-location-history/">keep a restorable copy</a> as well. More about the screen is in the <a href="/docs/timeline-outings/">Timeline documentation</a>.</p>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits of this calculator</h2>
+  <ul>
+    <li><strong>Not advice.</strong> It is not legal, tax or immigration advice and does not decide your visa or tax status.</li>
+    <li><strong>Official records count.</strong> At the Schengen external border, the <a href="https://home-affairs.ec.europa.eu/policies/schengen/smart-borders/entry-exit-system_en">Entry/Exit System</a> records entries and exits of non-EU short-stay travellers and has replaced passport stamping since 10 April 2026. Where your record and an official record differ, the official record is what counts.</li>
+    <li><strong>Only the dates you give it.</strong> Missing records make counts too low. Wrong local dates make them wrong.</li>
+    <li><strong>Not modelled:</strong> microstates and special territories (such as Monaco, San Marino, Vatican City, and overseas territories of member states), bilateral visa-waiver agreements, residence permits and long-stay visas, which do not count towards the 90 days, and member-state join dates.</li>
+    <li><strong>Not a tax test.</strong> The US weighted test, treaty tie-breaker rules and country-specific day definitions are not built in.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="file-privacy">
+  <h2 id="file-privacy">Your dates stay in this page</h2>
+  <p>Reading the file, counting and making the downloads all happen in your browser. This page blocks network connections and does not include the website’s analytics. The web server receives an ordinary request when you open the page and its scripts, but not your file, your dates or your results. Clearing the page or closing the tab removes them; your original file is never changed. Try the <a href="/tools/gpx-viewer/">GPX viewer</a> for route files.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Stop typing trips into calculators.</h2><p>Whereday records the countries you visit on your iPhone and exports this CSV. Viewing Country Days and adding manual stays are free.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/country-days.mjs?v=20261118c"></script>
