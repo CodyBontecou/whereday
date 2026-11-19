@@ -79,6 +79,14 @@ Find existing Apple or Google records, check why a day is empty, and understand 
 
 [Find your recorded history](https://whereday.com/blog/view-location-history-iphone/)
 
+Apple location features
+
+### [Significant Locations and Visited Places on iPhone](https://whereday.com/blog/significant-locations-iphone/)
+
+Find both Apple features, check why they show only a few places, and learn why neither can be exported.
+
+[Read the Apple location guide](https://whereday.com/blog/significant-locations-iphone/)
+
 Google Timeline migration
 
 ### [Import Google Timeline into Whereday](https://whereday.com/blog/import-google-timeline-iphone/)

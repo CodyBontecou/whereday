@@ -12,6 +12,7 @@ const pages = {
   "/blog/missing-location-history-iphone/": "/_markdown/blog/missing-location-history-iphone/index.md",
   "/blog/private-location-journal-iphone/": "/_markdown/blog/private-location-journal-iphone/index.md",
   "/blog/record-iphone-route-gpx/": "/_markdown/blog/record-iphone-route-gpx/index.md",
+  "/blog/significant-locations-iphone/": "/_markdown/blog/significant-locations-iphone/index.md",
   "/blog/track-days-in-country-iphone/": "/_markdown/blog/track-days-in-country-iphone/index.md",
   "/blog/view-location-history-iphone/": "/_markdown/blog/view-location-history-iphone/index.md",
   "/compare/google-maps-timeline/": "/_markdown/compare/google-maps-timeline/index.md",

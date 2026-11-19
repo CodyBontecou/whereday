@@ -43,7 +43,7 @@ Directions you requested, places you searched for, and a recorded visit are diff
 - Choose Visited Places, if it is available.
 - Search for a place or filter by date, category, or city. Use All Visits to browse.
 
-Visited Places depends on prior setup and regional availability. In Apple’s iOS 26 instructions, check Settings → Apps → Maps → Location for Precise Location and Visited Places. Also check Location Services and Significant Locations & Routes under System Services. Follow [Apple’s versioned instructions](https://support.apple.com/guide/iphone/view-and-manage-visited-places-iph0c2597c4f/26/ios/26) when labels differ.
+Visited Places depends on prior setup and regional availability. In Apple’s iOS 26 instructions, check Settings → Apps → Maps → Location for Precise Location and Visited Places. Also check Location Services and Significant Locations & Routes under System Services. Follow [Apple’s versioned instructions](https://support.apple.com/guide/iphone/view-and-manage-visited-places-iph0c2597c4f/26/ios/26) when labels differ. For filters, Keep Visits and why the list can look empty, read the [full guide to Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/#visited-places).
 
 For older entries, review Keep Visits at the bottom of Visited Places. A retention choice may explain a missing date; changing it does not establish that an older visit still exists.
 
@@ -51,7 +51,7 @@ For older entries, review Keep Visits at the bottom of Visited Places. A retenti
 
 Open Settings → Privacy & Security → Location Services → System Services → Significant Locations & Routes. Some versions use the shorter label Significant Locations.
 
-Apple documents this as a setting used for location-related Maps features. It is separate from the Visited Places list. For the records in this guide, return to the app that saved them. See [Apple’s Maps location settings](https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios).
+Apple documents this as a setting used for location-related Maps features. It is separate from the Visited Places list. For the records in this guide, return to the app that saved them. See [Apple’s Maps location settings](https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios). The [full guide to Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/) covers clearing it, turning it off and why neither feature can be exported.
 
 ## Open Google Maps Timeline
 
@@ -146,6 +146,10 @@ Check your tracking access, then record and review the route and visits on your 
 Download guidance reviewed October 31, 2026 against the linked Apple iOS 26 and current Maps guidance, Google’s iPhone Timeline help, and the published Whereday export and file-inspection guides. Earlier native workflow evidence retains its own dates; no new device-transfer test is claimed. Apple and Google steps follow their linked help pages; menus may vary by version and region. The screenshot illustrates Whereday.
 
 ## Read next
+
+- [Understand Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/)
+
+See where each Apple feature lives, why it shows little, and why neither exports.
 
 - [Check missing Whereday records](https://whereday.com/blog/missing-location-history-iphone/)
 
