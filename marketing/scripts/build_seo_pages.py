@@ -199,6 +199,19 @@ PAGES.append({
     "published": "2026-11-18", "modified": "2026-11-18", "local_file_tool": True, "source": "country-days-calculator.html",
 })
 
+PAGES.append({
+    "path": "/blog/significant-locations-iphone/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Significant Locations",
+    "type": "BlogPosting",
+    "title": "Significant Locations and Visited Places on iPhone — Whereday",
+    "headline": "Significant Locations and Visited Places on iPhone",
+    "description": "Find Significant Locations and Apple Maps Visited Places on iPhone, see why they show little, and what to do since neither can be exported.",
+    "lede": "Where each feature lives in iOS 26, why it often shows only a few places, how to clear or turn it off, and how to keep a history you can export from now on.",
+    "published": "2026-11-19", "modified": "2026-11-19",
+    "source": "significant-locations-iphone.html",
+    "image": "/screenshots/map-home.png",
+    "image_alt": "Whereday’s map home, with an invented day’s route coloured by place",
+})
+
 RELATED = {
  '/blog/import-google-timeline-iphone/': [
      ('/blog/back-up-iphone-location-history/', 'Keep a restorable Whereday copy', 'Choose supported visit and point exports after checking the import.'),
@@ -214,7 +227,16 @@ RELATED = {
       'Start a local journal before you leave.'),
      ('/blog/back-up-iphone-location-history/', 'Keep the underlying records',
       'A country-date summary is not a complete backup.')],
- '/blog/view-location-history-iphone/': [('/blog/missing-location-history-iphone/',
+ '/blog/significant-locations-iphone/': [
+     ('/blog/view-location-history-iphone/', 'Find any iPhone location history',
+      'Check Apple Maps, Google Timeline and Whereday, and choose the right download.'),
+     ('/blog/back-up-iphone-location-history/', 'Keep a copy of the history you record',
+      'Export visits and points as Whereday JSON and check the files.')],
+ '/blog/view-location-history-iphone/': [('/blog/significant-locations-iphone/',
+                                          'Understand Significant Locations and Visited Places',
+                                          'See where each Apple feature lives, why it shows '
+                                          'little, and why neither exports.'),
+                                         ('/blog/missing-location-history-iphone/',
                                           'Check missing Whereday records',
                                           'Diagnose recording gaps, hidden points, Watch '
                                           'transfers, and export filters.'),
@@ -230,7 +252,11 @@ RELATED = {
                                      'Investigate an incomplete route',
                                      'Check recording state and filters before repeating the '
                                      'export.')],
- '/blog/back-up-iphone-location-history/': [('/blog/iphone-location-journal-obsidian/',
+ '/blog/back-up-iphone-location-history/': [('/blog/significant-locations-iphone/',
+                                             'Why Apple’s location history can’t be backed up',
+                                             'Significant Locations and Visited Places have no '
+                                             'export; record your own from now on.'),
+                                            ('/blog/iphone-location-journal-obsidian/',
                                              'Make a readable Markdown note',
                                              'Copy a visit table into a desktop Obsidian vault.'),
                                             ('/docs/automatic-exports/',

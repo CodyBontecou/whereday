@@ -173,6 +173,10 @@ Reviewed October 26, 2026 against Whereday’s export, import, and scheduling be
 
 ## Read next
 
+- [Why Apple’s location history can’t be backed up](https://whereday.com/blog/significant-locations-iphone/)
+
+Significant Locations and Visited Places have no export; record your own from now on.
+
 - [Make a readable Markdown note](https://whereday.com/blog/iphone-location-journal-obsidian/)
 
 Copy a visit table into a desktop Obsidian vault.
