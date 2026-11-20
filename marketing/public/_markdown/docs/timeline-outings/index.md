@@ -64,7 +64,7 @@ If a recorded day looks incomplete, follow the [missing visits and route points 
 
 Timeline → Country Days counts local dates represented by visits, route points, and manual stays. Review this year, the last 365 days, or all time. A travel date can count in more than one country; gaps are not filled automatically. Viewing and manual stays are free; writing the country-date CSV follows the [new-user and existing-user export rules](https://whereday.com/#export-access).
 
-See [how to track days spent in each country](https://whereday.com/blog/track-days-in-country-iphone/) for timezone, network-geocoding, and counting details, including a [checked four-row CSV example](https://whereday.com/blog/track-days-in-country-iphone/#checked-example). For location files from other apps, the free [visited-countries map](https://whereday.com/tools/visited-countries-map/) shades the countries a GPX, KML, GeoJSON or Google Timeline file contains.
+See [how to track days spent in each country](https://whereday.com/blog/track-days-in-country-iphone/) for timezone, network-geocoding, and counting details, including a [checked four-row CSV example](https://whereday.com/blog/track-days-in-country-iphone/#checked-example).
 
 [← PreviousVisits, routes & battery](https://whereday.com/docs/tracking/) [Next →Save and edit places in your iPhone location journal](https://whereday.com/docs/places/)
 

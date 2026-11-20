@@ -578,7 +578,7 @@ BODIES["apple-watch"] = """
 BODIES["timeline-outings"] += """
 <h2>Country Days</h2>
 <p>Timeline → <strong>Country Days</strong> counts local dates represented by visits, route points, and manual stays. Review this year, the last 365 days, or all time. A travel date can count in more than one country; gaps are not filled automatically. Viewing and manual stays are free; writing the country-date CSV follows the <a href="/#export-access">new-user and existing-user export rules</a>.</p>
-<p>See <a href="/blog/track-days-in-country-iphone/">how to track days spent in each country</a> for timezone, network-geocoding, and counting details, including a <a href="/blog/track-days-in-country-iphone/#checked-example">checked four-row CSV example</a>. For location files from other apps, the free <a href="/tools/visited-countries-map/">visited-countries map</a> shades the countries a GPX, KML, GeoJSON or Google Timeline file contains.</p>
+<p>See <a href="/blog/track-days-in-country-iphone/">how to track days spent in each country</a> for timezone, network-geocoding, and counting details, including a <a href="/blog/track-days-in-country-iphone/#checked-example">checked four-row CSV example</a>.</p>
 """
 
 BODIES["privacy-data"] = """

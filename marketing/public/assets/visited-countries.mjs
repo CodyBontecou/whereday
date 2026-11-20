@@ -82,6 +82,7 @@ function renderTable() {
     tr.append(name, el('td', dayText(r.first) || '–'), el('td', dayText(r.last) || '–'), el('td', String(r.dates)), el('td', r.source));
     const action = el('td'), button = el('button', r.source === 'removed manually' ? 'Add back' : r.source === 'manual' ? 'Undo add' : 'Remove');
     button.type = 'button'; button.setAttribute('aria-label', `${button.textContent} ${r.name}`);
+    button.dataset.code = r.code;
     button.addEventListener('click', () => toggle(r.code));
     action.append(button); tr.append(action); table.tBodies[0].append(tr);
   }
@@ -112,6 +113,8 @@ function toggle(code) {
   const name = countryName(code, b);
   const message = { added: `Added ${name} by hand.`, removed: `Removed ${name} by hand.`, restored: `Added ${name} back.`, 'removed-manual': `Undid the manual add of ${name}.` }[result.action];
   update(`${message} Now ${plural(summarize(files.filter(f => f.analysis).map(f => f.analysis), manual, b).count, 'country', 'countries')}.`);
+  const again = [...document.querySelectorAll('#vc-table td button[data-code]')].find(x => x.dataset.code === code);
+  (again || $('vc-country')).focus();
 }
 
 async function addFiles(list) {

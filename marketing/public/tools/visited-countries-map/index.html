@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visited Countries Map From Your Location File — Whereday</title>
@@ -311,7 +313,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <li><strong>Border and water.</strong> A point inside one country but within about 10 km of another country’s outline is counted as “near a border”, not as a visit. A point in no outline, such as open water, is “unmatched”. A country that only has such points is listed under “near a border or coast, not counted”, with a button to add it by hand.</li>
     <li><strong>Dates.</strong> A timestamp with a UTC offset (such as <code>+02:00</code>) uses the date as written. A timestamp ending in <code>Z</code> uses its UTC date. Google Timeline times are read as UTC dates. Each file shows which rule it used. Points with no usable date still count towards the country, but add no date.</li>
   </ol>
-  <p>The boundaries are <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/">Natural Earth 1:50m Admin 0 – Countries</a>, version 5.1.2, which are in the public domain (<a href="https://www.naturalearthdata.com/about/terms-of-use/">terms of use</a>). We simplified them to a tolerance of about 0.01° (roughly 1 km) and bundled them as a script, <code>/assets/visited-countries-data.mjs</code>: about 420 KB, about 150 KB gzipped, with 240 country and territory outlines (Antarctica included). The file formats are defined in the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema</a>, <a href="https://www.rfc-editor.org/rfc/rfc7946">GeoJSON (RFC 7946)</a> and <a href="https://www.ogc.org/standard/kml/">OGC KML 2.2</a>.</p>
+  <p>The boundaries are <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/">Natural Earth 1:50m Admin 0 – Countries</a>, version 5.1.2, which are in the public domain (<a href="https://www.naturalearthdata.com/about/terms-of-use/">terms of use</a>). We simplified them to a tolerance of about 0.01° (roughly 1 km) and bundled them as a script, <code>/assets/visited-countries-data.mjs</code>: about 420 KB, about 150 KB gzipped, with 238 country and territory outlines (Antarctica included). The file formats are defined in the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema</a>, <a href="https://www.rfc-editor.org/rfc/rfc7946">GeoJSON (RFC 7946)</a> and <a href="https://www.ogc.org/standard/kml/">OGC KML 2.2</a>.</p>
   <p>Longitudes are wrapped so that 180° and −180° are the same meridian, and the outlines are already split there, so a track that crosses the date line is handled. Points at the poles are tested like any other and usually come out unmatched, except in Antarctica.</p>
 </section>
 

@@ -396,12 +396,15 @@ def render(page):
     # Preserve the site's existing production-host and analytics-gate behavior.
     home = (PUBLIC / "index.html").read_text()
     analytics = home[home.index("<!-- Cloudflare Web Analytics -->"):home.index("<!-- End Cloudflare Web Analytics -->") + len("<!-- End Cloudflare Web Analytics -->")]
+    local_head = ""
     if page.get("local_file_tool"):
         analytics = ""
+        local_head = ("<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'\">\n"
+                      "  <meta name=\"referrer\" content=\"no-referrer\">\n  ")
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  {local_head}<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{escape(page["title"])}</title>
   <meta name="description" content="{escape(page["description"], quote=True)}">

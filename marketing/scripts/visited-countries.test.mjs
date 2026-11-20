@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
+import { createHash } from 'node:crypto';
 import { test } from 'node:test';
 import { DOMParser } from '@xmldom/xmldom';
 import {
@@ -12,7 +13,6 @@ import { VISITED_DEMO } from '../public/assets/visited-countries-demo.mjs';
 class XMLParser extends DOMParser { constructor() { super({ onError: () => { throw new Error('Malformed XML'); } }); } }
 const read = (text, name) => readLocationFile(text, name, { Parser: XMLParser });
 const table = (...files) => summarize(files.map(f => analyze(read(...f))));
-const fixture = name => new URL(`./fixtures/${name}`, import.meta.url);
 const sample = name => readFile(new URL(`../public/samples/${name}`, import.meta.url), 'utf8');
 const b = boundaries();
 const brief = s => s.rows.map(r => [r.code, r.first, r.last, r.dates, r.source].join('|'));
@@ -200,15 +200,11 @@ test('sorting keys order the table', async () => {
   assert.deepEqual(sortRows(s.rows, 'dates').map(r => r.code), ['FR', 'ES', 'PT']);
 });
 
-test('the synthetic demo downloads match the expected fixtures', async () => {
+test('the synthetic demo downloads match the expected output', async () => {
   const s = summarize([analyze(read(VISITED_DEMO.text, VISITED_DEMO.name))]);
   const csv = tableCSV(s), svg = mapSVG(s.codes, { count: s.count });
-  if (process.env.UPDATE_FIXTURES) {
-    await writeFile(fixture('visited-countries-demo.csv'), csv);
-    await writeFile(fixture('visited-countries-demo.svg'), svg);
-  }
-  assert.equal(csv, await readFile(fixture('visited-countries-demo.csv'), 'utf8'));
-  assert.equal(svg, await readFile(fixture('visited-countries-demo.svg'), 'utf8'));
+  assert.equal(csv, 'country_code,country,first_date,last_date,distinct_dates,points,source\r\nES,Spain,2000-01-03,2000-01-04,2,2,file\r\nFR,France,2000-01-06,2000-01-07,2,2,file\r\nPT,Portugal,2000-01-01,2000-01-01,1,1,file\r\n');
+  assert.equal(createHash('sha256').update(svg).digest('hex'), '9e55af03ea499942c0782e9593c6d74448b549eaec7f436d06944156129c27e5');
   // The PNG is this SVG drawn at a fixed 2:1 size, so its dimensions are checked here.
   assert.deepEqual(pngSize(), { width: 2400, height: 1200 });
   assert.match(svg, /width="1440" height="720"/);
