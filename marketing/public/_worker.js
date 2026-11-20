@@ -41,6 +41,7 @@ const pages = {
   "/tools/gpx-viewer/": "/_markdown/tools/gpx-viewer/index.md",
   "/tools/": "/_markdown/tools/index.md",
   "/tools/merge-gpx/": "/_markdown/tools/merge-gpx/index.md",
+  "/tools/visited-countries-map/": "/_markdown/tools/visited-countries-map/index.md",
   "/zh-hans/": "/_markdown/zh-hans/index.md"
 };
 

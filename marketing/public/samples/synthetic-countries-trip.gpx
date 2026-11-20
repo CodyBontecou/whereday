@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday synthetic example" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Synthetic three-country trip</name>
+    <desc>Invented points for the Whereday visited-countries map. Not a real recording.</desc>
+  </metadata>
+  <trk>
+    <name>Synthetic three-country trip</name>
+    <trkseg>
+      <trkpt lat="39.5000" lon="-8.0000"><time>2000-01-01T09:00:00Z</time></trkpt>
+      <trkpt lat="40.2000" lon="-3.8000"><time>2000-01-03T10:00:00Z</time></trkpt>
+      <trkpt lat="40.3000" lon="-3.7000"><time>2000-01-04T10:00:00Z</time></trkpt>
+      <trkpt lat="46.6000" lon="2.5000"><time>2000-01-06T12:00:00Z</time></trkpt>
+      <trkpt lat="46.7000" lon="2.6000"><time>2000-01-07T12:00:00Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

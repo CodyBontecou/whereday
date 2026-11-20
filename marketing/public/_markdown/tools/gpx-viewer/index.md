@@ -30,6 +30,8 @@ JavaScript is needed to read and plot files locally. The guide and sample downlo
 
 | Kind | Group / point | Latitude, longitude | Time in UTC
 
+[Turn this file into a visited-countries map](https://whereday.com/tools/visited-countries-map/).
+
 ## What this GPX viewer checks
 
 It reads GPX 1.0 and 1.1 track points, routes and waypoints. The route plot keeps segments separate and breaks lines at invalid coordinates. It highlights missing or unusable timestamps, consecutive duplicate positions, backwards timestamps, and gaps longer than 10 minutes within the same segment or route.

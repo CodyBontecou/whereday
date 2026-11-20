@@ -171,7 +171,7 @@ DRAFTS = []
 
 # Keep next steps specific to the task on each page.
 PAGES.extend([
-    {"path": "/tools/", "section": "Tools", "section_path": "/tools/", "title": "Free Location File Tools — Whereday", "headline": "Make sense of your location files", "description": "Free browser tools for your location files: merge or inspect GPX, check Google Timeline JSON, or count days in each country from a CSV. Nothing is uploaded.", "lede": "Practical tools for checking your own files before importing or converting them.", "modified": "2026-11-19", "content": '<section class="card"><h2><a href="/tools/merge-gpx/">Merge GPX files</a></h2><p>Combine several GPX files into one, such as a week of daily exports. Keep tracks separate, join them as segments or make one continuous line, drop exact duplicate points, and check the summary and preview before you download.</p><p>Then <a href="/tools/gpx-viewer/">open the result in the GPX viewer</a>. Your files stay in your browser.</p></section><section class="card"><h2><a href="/tools/country-days-calculator/">Days-in-country calculator</a></h2><p>Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.</p><p>Expand each count to see its dates. <a href="/blog/track-days-in-country-iphone/">See how Whereday records country days</a>.</p></section><section class="card"><h2><a href="/tools/gpx-viewer/">GPX viewer and file inspector</a></h2><p>Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.</p><p><a href="/blog/check-gpx-file/">Follow the worked inspection tutorial</a> with an invented five-point example.</p><p>Have a different file type? <a href="/blog/gpx-kml-geojson-location-history/">Compare GPX, KML, GeoJSON and CSV</a> before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.</p></section><section class="card"><h2><a href="/tools/google-timeline-inspector/">Google Timeline JSON inspector</a></h2><p>Identify supported raw, semantic and device Timeline structures. Check coordinates and times, inspect findings and try invented examples before opening your own archive.</p><p><a href="/blog/google-timeline-json-formats/">Learn which Timeline JSON file you have</a> and why browser counts can differ from a native import preview. Your selected file stays in the tool page.</p></section>'},
+    {"path": "/tools/", "section": "Tools", "section_path": "/tools/", "title": "Free Location File Tools — Whereday", "headline": "Make sense of your location files", "description": "Free browser tools for your location files: map visited countries, merge or inspect GPX, check Google Timeline JSON, or count days in each country. Nothing is uploaded.", "lede": "Practical tools for checking your own files before importing or converting them.", "modified": "2026-11-20", "content": '<section class="card"><h2><a href="/tools/visited-countries-map/">Visited countries map</a></h2><p>Turn a GPX, KML, GeoJSON, Google Timeline JSON or Country Days CSV file into a shaded world map with a count and a per-country list of first and last dates. Add or remove countries by hand, then save the map as SVG or PNG and the table as CSV.</p><p>Borders and coastlines are simplified, so points near them are listed rather than guessed. Your files stay in your browser.</p></section><section class="card"><h2><a href="/tools/merge-gpx/">Merge GPX files</a></h2><p>Combine several GPX files into one, such as a week of daily exports. Keep tracks separate, join them as segments or make one continuous line, drop exact duplicate points, and check the summary and preview before you download.</p><p>Then <a href="/tools/gpx-viewer/">open the result in the GPX viewer</a>. Your files stay in your browser.</p></section><section class="card"><h2><a href="/tools/country-days-calculator/">Days-in-country calculator</a></h2><p>Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.</p><p>Expand each count to see its dates. <a href="/blog/track-days-in-country-iphone/">See how Whereday records country days</a>.</p></section><section class="card"><h2><a href="/tools/gpx-viewer/">GPX viewer and file inspector</a></h2><p>Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.</p><p><a href="/blog/check-gpx-file/">Follow the worked inspection tutorial</a> with an invented five-point example.</p><p>Have a different file type? <a href="/blog/gpx-kml-geojson-location-history/">Compare GPX, KML, GeoJSON and CSV</a> before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.</p></section><section class="card"><h2><a href="/tools/google-timeline-inspector/">Google Timeline JSON inspector</a></h2><p>Identify supported raw, semantic and device Timeline structures. Check coordinates and times, inspect findings and try invented examples before opening your own archive.</p><p><a href="/blog/google-timeline-json-formats/">Learn which Timeline JSON file you have</a> and why browser counts can differ from a native import preview. Your selected file stays in the tool page.</p></section>'},
     {"path": "/tools/gpx-viewer/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "GPX viewer", "title": "Free GPX Viewer and File Inspector — Whereday", "headline": "See your route. Understand your GPX.", "description": "View GPX files locally, check tracks and timestamps, and convert GPX to CSV or GeoJSON. Keep segments separate without uploading your location file.", "lede": "A free GPX viewer with clear file checks and a local route plot. Your file stays on your device.", "modified": "2026-10-30", "local_file_tool": True, "source": "gpx-viewer.html"},
     {"path": "/blog/check-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Check a GPX file", "type": "BlogPosting", "title": "Check a GPX File Before Importing It — Whereday", "headline": "Check your GPX before you import it", "description": "Inspect GPX points, segments and timestamps locally. Follow a five-point example, understand warnings, and check documented CSV and GeoJSON downloads.", "lede": "Start with a known example, check your file’s actual records, and keep the original before making changes.", "published": "2026-10-30", "modified": "2026-11-01", "source": "check-gpx-file.html"}
 ])
@@ -226,6 +226,15 @@ PAGES.append({
 })
 
 PAGES.append({
+    "path": "/tools/visited-countries-map/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "Visited countries map",
+    "title": "Visited Countries Map From Your Location File — Whereday",
+    "headline": "Map the countries you’ve visited from your own location file",
+    "description": "Turn a GPX, KML, GeoJSON or Google Timeline file into a shaded map of visited countries, with dates for each. Nothing is uploaded; it runs in your browser.",
+    "lede": "Drop in a file you already have. The map fills itself in from your points, and every country shows the dates behind it, so you can check each one.",
+    "published": "2026-11-20", "modified": "2026-11-20", "local_file_tool": True, "source": "visited-countries-map.html",
+})
+
+PAGES.append({
     "path": "/tools/merge-gpx/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "Merge GPX",
     "title": "Merge GPX Files Online, Free and Private — Whereday",
     "headline": "Merge GPX files in your browser. Nothing is uploaded.",
@@ -235,6 +244,13 @@ PAGES.append({
 })
 
 RELATED = {
+ '/tools/visited-countries-map/': [
+     ('/tools/country-days-calculator/', 'Count days instead of countries',
+      'Check Schengen 90/180, rolling windows and 183-day totals from a Country Days CSV.'),
+     ('/blog/track-days-in-country-iphone/', 'Record the countries automatically',
+      'See how Whereday records country days on your iPhone.'),
+     ('/tools/merge-gpx/', 'Merge several files first',
+      'Combine daily GPX files into one before you map them.')],
  '/tools/merge-gpx/': [
      ('/tools/gpx-viewer/', 'Check the merged file',
       'Open it in the GPX viewer and compare points, segments and times.'),
@@ -262,6 +278,8 @@ RELATED = {
      ('/compare/google-maps-timeline/', 'Compare recording workflows', 'Review access, backups, privacy, and portability before switching.')],
  '/integrations/dawarich/': [('/docs/webhooks/', 'Review send modes and queue limits', 'Check realtime, batching, retries, and manual-send behavior.'), ('/blog/back-up-iphone-location-history/', 'Keep a separate backup', 'A receiver copy is different from a restorable Whereday journal.')],
  '/tools/country-days-calculator/': [
+     ('/tools/visited-countries-map/', 'Map the countries instead of counting days',
+      'Shade the countries in a location file and see the dates behind each one.'),
      ('/blog/track-days-in-country-iphone/', 'Record the dates automatically',
       'See how Whereday records country days, adds a missing stay and analyses older records.'),
      ('/blog/back-up-iphone-location-history/', 'Keep the records behind the count',
@@ -378,12 +396,15 @@ def render(page):
     # Preserve the site's existing production-host and analytics-gate behavior.
     home = (PUBLIC / "index.html").read_text()
     analytics = home[home.index("<!-- Cloudflare Web Analytics -->"):home.index("<!-- End Cloudflare Web Analytics -->") + len("<!-- End Cloudflare Web Analytics -->")]
+    local_head = ""
     if page.get("local_file_tool"):
         analytics = ""
+        local_head = ("<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'\">\n"
+                      "  <meta name=\"referrer\" content=\"no-referrer\">\n  ")
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  {local_head}<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{escape(page["title"])}</title>
   <meta name="description" content="{escape(page["description"], quote=True)}">
