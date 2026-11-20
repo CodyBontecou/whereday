@@ -31,7 +31,7 @@ In this guide
 - Swipe up, or tap the Info button (ⓘ).
 - If the photo has a location, a small map and place name appear. Tap the map or the address link for more details.
 
-Videos work the same way. Apple’s guide describes these steps in [Browse photos and videos by location](https://support.apple.com/guide/iphone/browse-photos-and-videos-by-location-iph390138909/ios). Where the details screen offers it, you can open the place in Maps or copy the address or coordinates; the options on offer vary by iOS version. If no map appears, the photo has no location. See [why below](https://whereday.com/blog/iphone-photos-map/#missing).
+Tap Show Nearby Photos to see more photos and videos from that spot. Videos work the same way. Apple documents these steps in [Browse photos and videos by location](https://support.apple.com/guide/iphone/browse-photos-and-videos-by-location-iph390138909/ios). If no map appears, the photo has no location; see [why below](https://whereday.com/blog/iphone-photos-map/#missing).
 
 ## See all your photos on a map
 
@@ -60,7 +60,7 @@ Apple explains the Camera permission in [Location Services and privacy](https://
 
 ## Add or change a photo’s location
 
-Open the photo, swipe up or tap Info, then use Add Location (or Adjust if it already has one) and search for a place. Removing a location uses the same screen. Apple documents this in [its iPhone User Guide](https://support.apple.com/guide/iphone/browse-photos-and-videos-by-location-iph390138909/ios) (see the related “Change the date, time, or location” article linked there); the exact buttons depend on your iOS version, so check the guide for yours, including whether you can change several photos at once.
+Open the photo, swipe up or tap Info, then use Add Location (or Adjust if it already has one) and search for a place. Removing a location uses the same screen. Apple documents this in [its iPhone User Guide](https://support.apple.com/guide/iphone/browse-photos-and-videos-by-location-iph390138909/ios) (see the related “Change the date, time, or location” article linked there); Apple’s Info screen is the place to look, and Apple documents the details in its “Change the date, time, or location of a photo or video” article. I haven’t confirmed the exact buttons for every iOS version, so follow that article for yours, including whether you can change several photos at once.
 
 ## Place photos that have no GPS with Whereday
 
@@ -137,7 +137,7 @@ Record your days with Whereday, then turn on photo moments. It can’t place pho
 
 [Read the photo reference](https://whereday.com/docs/photos/)
 
-Apple steps checked November 20, 2026 against Apple’s iPhone User Guide, “Browse photos and videos by location”. The add-location steps, Camera permission and share-sheet Options are described in general terms and linked to Apple’s pages; check them for your iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.
+Apple steps checked November 20, 2026 against the text of Apple’s iPhone User Guide, “Browse photos and videos by location” (Show Map, swipe up or Info, Show Nearby Photos); not tested on a device. The add-location steps, Camera permission and share-sheet Options are described in general terms and linked to Apple’s pages; check them for your iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.
 
 ## Read next
 
