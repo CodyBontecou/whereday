@@ -1,0 +1,109 @@
+<section aria-labelledby="short-answer">
+  <h2 id="short-answer">Short answer: pick by the job you need done</h2>
+  <p><strong>Disclosure: Whereday publishes this page and is one of the apps compared.</strong> Every app below is judged on the same criteria, and each claim about another product links to its own documentation or App Store listing.</p>
+  <p>If you want a private journal with portable files and no account, look at Whereday or Arc Timeline 4. If you already pay for Arc, check its current terms before you rely on it. If you want your own server, send OwnTracks or Overland points to Dawarich. If you want to see family members, that is a different job, so use Life360 or Find My. No app can rebuild days that were never recorded.</p>
+  <nav class="article-toc" aria-label="In this post"><strong>In this post</strong><ol><li><a href="#how-we-compared">How we compared</a></li><li><a href="#comparison-table">Comparison table</a></li><li><a href="#built-in">Built-in Apple features</a></li><li><a href="#whereday">Whereday</a></li><li><a href="#arc-timeline">Arc Timeline 4</a></li><li><a href="#google-maps-timeline">Google Maps Timeline</a></li><li><a href="#self-hosted">Self-hosted</a></li><li><a href="#family-sharing">Family sharing apps</a></li><li><a href="#before-you-commit">Questions to ask before you commit</a></li><li><a href="#switching">Switching</a></li><li><a href="#faq">FAQ</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="how-we-compared">
+  <h2 id="how-we-compared">How we compared</h2>
+  <p>This page answers “which app should record my history from now on?” To find where your existing history already is, read <a href="/blog/view-location-history-iphone/">how to see your location history on iPhone</a>.</p>
+  <p>Every app gets the same nine criteria: routes or stops only, where the data lives, whether you need an account, what you can see if you stop paying, export formats, Apple Watch recording, Google Timeline JSON import, and price model. Competitor cells come from the app’s own App Store listing, developer pages or documentation. Where we found no such statement, the cell says “Not documented”. We link App Store listings instead of copying prices, because prices change. Sources were checked on November 20, 2026.</p>
+</section>
+
+<section aria-labelledby="comparison-table">
+  <h2 id="comparison-table">Comparison table</h2>
+  <div class="table-scroll" role="region" aria-label="Location history apps compared" tabindex="0">
+    <table>
+      <caption>Location history apps for iPhone, compared on the same criteria</caption>
+      <thead><tr><th scope="col">App</th><th scope="col">Routes or stops</th><th scope="col">Where data lives</th><th scope="col">Account</th><th scope="col">If you stop paying</th><th scope="col">Export formats</th><th scope="col">Apple Watch recording</th><th scope="col">Google Timeline JSON import</th><th scope="col">Price model</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Apple Significant Locations / Visited Places</th><td>Places and predictive routes, per <a href="https://support.apple.com/en-us/HT207056">Apple</a></td><td>On your devices, end-to-end encrypted; Apple says it “cannot be read by Apple”</td><td>Apple Account for sync</td><td>Not a paid service</td><td>Apple documents no export</td><td>Not documented</td><td>No</td><td>Part of iOS</td></tr>
+        <tr><th scope="row">Find My</th><td>One point: current location, or the last known location for up to seven days (<a href="https://support.apple.com/en-us/104978">Apple</a>). Apple documents no history view.</td><td>Apple’s Find My service</td><td>Apple Account</td><td>Not a paid service</td><td>Apple documents no export</td><td>Not documented</td><td>No</td><td>Part of iOS</td></tr>
+        <tr><th scope="row">Whereday (publisher of this page)</th><td>Visits and GPS routes</td><td>On your iPhone (<a href="/docs/privacy-data/">privacy and data</a>)</td><td>No Whereday account</td><td>New users keep file export after a subscription ends. Existing free users keep their earlier export-unlock requirement.</td><td>JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks, Overland (<a href="/docs/export-import/">docs</a>)</td><td>Yes, records on its own and queues the transfer to the iPhone (<a href="/docs/apple-watch/">docs</a>)</td><td>Yes, free, since version 1.8</td><td>New users: trial, subscription or Lifetime. <a href="https://apps.apple.com/app/id6761960794">App Store listing</a></td></tr>
+        <tr><th scope="row">Arc Timeline 4 (Big Paua)</th><td>Not documented in the sources checked</td><td>“All data stored on your device” (<a href="https://apps.apple.com/us/app/arc-timeline-4/id6740688708">listing</a>); optional iCloud backup (<a href="https://www.bigpaua.com/arcapp/">Big Paua</a>)</td><td>“No accounts, no sign-ups” (listing)</td><td>Developer, November 2025, before Arc Timeline 4: “Currently you need an active subscription to view your data in the app. You can however export your data to GPX and then view it in other apps, but that’s not really ideal.” (<a href="https://support.bigpaua.com/t/accessing-timeline-without-subscription/1040">forum</a>). Not stated for Arc Timeline 4.</td><td>JSON or GPX (“export your data at any time, as JSON or GPX”, Big Paua)</td><td>Not documented</td><td>Not documented</td><td>“A free trial is included. An active subscription or lifetime purchase is required after the trial period.” (listing)</td></tr>
+        <tr><th scope="row">Google Maps Timeline</th><td>Visits and routes saved on signed-in devices (<a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google Help</a>)</td><td>On your device; optional encrypted backup on Google’s servers</td><td>Google account</td><td>Not documented</td><td>JSON (<code>location-history.json</code>)</td><td>Not documented</td><td>Not documented</td><td>Not documented</td></tr>
+        <tr><th scope="row">Dawarich with OwnTracks or Overland</th><td>The points your tracking app sends (<a href="https://dawarich.app/docs/getting-started/track-your-location/">Dawarich docs</a>)</td><td>Your own server (<a href="https://owntracks.org/booklet/">OwnTracks: “a server of your choice”</a>)</td><td>Not documented</td><td>“Self-host for free — every Pro feature, your server, zero cost”; paid hosted plans (<a href="https://dawarich.app/pricing">pricing</a>)</td><td>GPX, GeoJSON (Dawarich FAQ, <a href="https://dawarich.app">dawarich.app</a>)</td><td>Not documented</td><td>Yes (<a href="https://dawarich.app/docs/features/imports/">Dawarich imports</a>)</td><td>Free to self-host; hosted plans are paid</td></tr>
+        <tr><th scope="row">Life360</th><td>Family location sharing; its listing says Silver: 2 days, Gold: 30 days of Location History (<a href="https://apps.apple.com/us/app/life360-find-family-friends/id384830320">App Store</a>)</td><td>Not documented</td><td>Not documented</td><td>Not documented</td><td>Not documented</td><td>Not documented</td><td>No</td><td>Subscription tiers on the <a href="https://apps.apple.com/us/app/life360-find-family-friends/id384830320">App Store listing</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="source-note">Checked November 20, 2026. “Not documented” means we found no statement in the linked sources, not that the feature is absent. “No” in the import column for Apple, Find My and Life360 means Whereday does not import their data. Whereday cells are checked against the app and its <a href="/docs/">documentation</a>.</p>
+</section>
+
+<section aria-labelledby="built-in">
+  <h2 id="built-in">Built-in Apple features</h2>
+  <p>Apple’s <a href="https://support.apple.com/en-us/HT207056">Location Services &amp; Privacy</a> page says Significant Locations keeps “places you have recently been” and “the routes you take” to give you personalized features, such as predictive routes and Memories in Photos. Apple says this is end-to-end encrypted and cannot be read by Apple. Apple documents no export, so you cannot take that list out as a file. Read <a href="/blog/significant-locations-iphone/">Significant Locations and Visited Places explained</a> for what each keeps.</p>
+  <p><strong>Find My</strong> shows the current location, or the last known location for up to seven days, according to <a href="https://support.apple.com/en-us/104978">Apple’s Find My article</a>. Apple documents no history view. See <a href="/blog/find-my-location-history/">whether Find My keeps location history</a>.</p>
+</section>
+
+<section aria-labelledby="whereday">
+  <h2 id="whereday">Whereday</h2>
+  <p>We make Whereday, so weigh this section accordingly. It records visits and GPS routes on your iPhone. The Apple Watch app can record GPS on its own and queues the transfer to your iPhone (<a href="/docs/apple-watch/">Apple Watch docs</a>). Records are stored locally and there is no Whereday account (<a href="/docs/privacy-data/">privacy and data</a>).</p>
+  <p>Export writes eight formats: JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks and Overland (<a href="/docs/export-import/">export and import docs</a>). Import and Export Preview are free. Whereday imports Google Timeline JSON in the raw, legacy semantic and on-device formats, and its own JSON, CSV, Markdown and backup files. It does not import GPX, KML or GeoJSON.</p>
+  <p><strong>Access rules.</strong> From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. New users keep file export after a subscription ends. Existing free users keep their earlier export-unlock requirement.</p>
+  <p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></p>
+  <p>Access rules for new and existing users are on the <a href="/#export-access">homepage</a>.</p>
+</section>
+
+<section aria-labelledby="arc-timeline">
+  <h2 id="arc-timeline">Arc Timeline 4</h2>
+  <p>This is Arc Timeline, the location app from Big Paua, not the Arc browser. The current app is <a href="https://apps.apple.com/us/app/arc-timeline-4/id6740688708">Arc Timeline 4</a>. Its listing says “All data stored on your device”, “No accounts, no sign-ups” and “Export your data anytime in standard JSON format”. It also says: “A free trial is included. An active subscription or lifetime purchase is required after the trial period.” <a href="https://www.bigpaua.com/arcapp/">Big Paua’s Arc page</a> says data is stored on iPhone, with no account and optional iCloud backup, and that you can “export your data at any time, as JSON or GPX”.</p>
+  <p>The original Arc Timeline listing (<a href="https://apps.apple.com/us/app/arc-timeline-trips-places/id1063151918">id1063151918</a>) says in its 3.17.4 release notes: “All new subscriptions and Lifetime purchases now happen in Arc Timeline 4. This app stays in place for existing subscribers.”</p>
+  <p>On what happens when you stop paying, Big Paua’s developer wrote on its <a href="https://support.bigpaua.com/t/accessing-timeline-without-subscription/1040">support forum</a> (November 2025, before Arc Timeline 4): “Currently you need an active subscription to view your data in the app. You can however export your data to GPX and then view it in other apps, but that’s not really ideal.” We found no Arc Timeline 4 statement on this, so we don’t claim it applies. The safe advice is to export while your access is active.</p>
+</section>
+
+<section aria-labelledby="google-maps-timeline">
+  <h2 id="google-maps-timeline">Google Maps Timeline</h2>
+  <p>Per <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s Timeline help for iPhone</a>, visits and routes are saved on signed-in devices. Timeline is off by default and opt-in, and you need a Google account. Backup is an encrypted copy on Google’s servers and requires auto-delete to be off. Auto-delete runs at 3, 18 or 36 months. To export, open your profile picture → <strong>Settings → Location &amp; Privacy → Export Timeline data</strong>, which saves <code>location-history.json</code>. For depth, read <a href="/compare/google-maps-timeline/">Whereday and Google Timeline compared</a>.</p>
+</section>
+
+<section aria-labelledby="self-hosted">
+  <h2 id="self-hosted">Self-hosted: OwnTracks or Overland to Dawarich</h2>
+  <p>OwnTracks sends to “a server of your choice” (<a href="https://owntracks.org/booklet/">OwnTracks booklet</a>). <a href="https://dawarich.app">Dawarich</a> is a server you run, and its <a href="https://dawarich.app/docs/getting-started/track-your-location/">tracking docs</a> list Overland, OwnTracks, Traccar Client and GPSLogger, and name official Dawarich apps for iOS and Android. It imports <a href="https://dawarich.app/docs/features/imports/">Google Timeline JSON</a>, and its <a href="https://dawarich.app/pricing">pricing page</a> says “Self-host for free — every Pro feature, your server, zero cost”, with paid hosted plans.</p>
+  <p>The trade-off is effort: you run, secure and back up the server yourself. Whereday can also send points to Dawarich; see <a href="/integrations/dawarich/">Dawarich integration</a>.</p>
+</section>
+
+<section aria-labelledby="family-sharing">
+  <h2 id="family-sharing">Family sharing apps</h2>
+  <p>Life360 and Find My do a different job: they share live location with people you choose, and aren’t built as a personal journal. The <a href="https://apps.apple.com/us/app/life360-find-family-friends/id384830320">Life360 listing</a> describes family safety and location sharing. If that is what you need, use them. Read <a href="/blog/find-my-location-history/">does Find My keep location history</a> for what Apple keeps.</p>
+</section>
+
+<section aria-labelledby="before-you-commit">
+  <h2 id="before-you-commit">Questions to ask before you commit</h2>
+  <ul>
+    <li>Can I export before the trial ends? Do it before then.</li>
+    <li>Does a GPX or CSV export open in another tool on day one? Test it with a short outing (see the <a href="/tools/gpx-viewer/">GPX viewer</a> and <a href="/docs/export-import/">export docs</a>).</li>
+    <li>Are the battery and permission settings right? Read <a href="/blog/iphone-location-tracking-battery/">location tracking and battery</a>.</li>
+    <li>Do I keep the original file after any export or import? Keep it, and see <a href="/blog/back-up-iphone-location-history/">backing up your history</a>.</li>
+    <li>What can I see if I stop paying? Check the cell for that app above.</li>
+  </ul>
+  <p>No app can rebuild days that were never recorded. See <a href="/blog/missing-location-history-iphone/">missing location history</a> and the <a href="/blog/private-location-journal-iphone/">private location journal guide</a>.</p>
+</section>
+
+<section aria-labelledby="switching">
+  <h2 id="switching">Switching: moving existing history</h2>
+  <p>Whereday imports Google Timeline JSON in the raw, legacy semantic and on-device formats, and its own JSON, CSV, Markdown and backup files. Follow <a href="/blog/import-google-timeline-iphone/">the Google Timeline import walkthrough</a>. Whereday does not import GPX, KML or GeoJSON, and it does not import Arc, Life360 or Apple data. You can still inspect GPX files in the <a href="/tools/gpx-viewer/">GPX viewer</a> and combine them with <a href="/tools/merge-gpx/">Merge GPX</a>.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">FAQ</h2>
+  <h3>Does iPhone keep a location history?</h3>
+  <p>Apple keeps Significant Locations, which it says is encrypted and unreadable by Apple, with no documented export. See <a href="/blog/significant-locations-iphone/">Significant Locations</a>.</p>
+  <h3>Is there an app that tracks everywhere I go?</h3>
+  <p>Several apps record visits or routes; the table shows how each does it. Any app is limited by permissions, battery settings and the days it was running.</p>
+  <h3>Can I export my location history from iPhone?</h3>
+  <p>Not from Apple’s built-in features, which document no export. Apps like Whereday, Arc Timeline 4 and Google Maps Timeline offer exports. See <a href="/blog/view-location-history-iphone/">how to see your location history</a>.</p>
+</section>
+
+<figure class="product-example">
+  <img src="/screenshots/map-home-480.webp" srcset="/screenshots/map-home-480.webp 480w, /screenshots/map-home-720.webp 720w, /screenshots/map-home.webp 900w" sizes="240px" alt="Whereday’s map home: today’s route coloured by place, visit names, date range chips and the day card" width="1206" height="2622" loading="lazy" decoding="async">
+  <figcaption>Whereday’s map of the day. The screenshot is illustrative and uses an invented journal.</figcaption>
+</figure>
+
+<section class="closing" aria-labelledby="start">
+  <h2 id="start">Record your own history from today.</h2>
+  <p>Check your access, then record a short outing and test the export.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+  <p>Access rules for new and existing users are on the <a href="/#export-access">homepage</a>.</p>
+</section>

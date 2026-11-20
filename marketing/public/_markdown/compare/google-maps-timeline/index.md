@@ -86,6 +86,8 @@ Read the [privacy policy](https://whereday.com/privacy), [recording controls](ht
 
 Whereday opens on a map of the day. The screenshot is illustrative and uses an invented journal.
 
+Comparing more than two apps? See [location history apps for iPhone compared](https://whereday.com/compare/location-history-apps-iphone/).
+
 ## Record your next route.
 Keep a copy you can use.
 

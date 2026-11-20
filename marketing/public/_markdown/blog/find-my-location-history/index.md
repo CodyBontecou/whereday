@@ -123,6 +123,8 @@ No. You get the last location it sent, which is the Send Last Location point if 
 
 No. Significant Locations & Routes is a Location Services setting that learns places that matter to you, and it can’t be exported. Find My locates devices, people and items. See the [Significant Locations guide](https://whereday.com/blog/significant-locations-iphone/).
 
+Choosing an app to keep your own history? [Compare location history apps for iPhone](https://whereday.com/compare/location-history-apps-iphone/).
+
 ## Start a location history you keep yourself.
 
 Whereday records your own visits and routes on your iPhone from the day you install it, and exports them as GPX, CSV or JSON whenever you want. It won’t bring back earlier days.

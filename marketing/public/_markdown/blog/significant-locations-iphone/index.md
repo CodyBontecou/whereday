@@ -195,6 +195,8 @@ No. Find My keeps no history: it shows only a current or last known location. Se
 
 No. Visited Places is a list of places in Apple Maps that syncs across your Apple devices. Google Maps Timeline is a separate history in Google Maps, and Google provides a JSON export for it. See the [iPhone location history guide](https://whereday.com/blog/view-location-history-iphone/) to find each one.
 
+Choosing an app to keep your own history? [Compare location history apps for iPhone](https://whereday.com/compare/location-history-apps-iphone/).
+
 ## Keep a location history you can actually open and export.
 
 Start recording today, review and correct each day on your iPhone, and save it as GPX, CSV or JSON whenever you want. It won’t bring back earlier days.
