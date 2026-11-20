@@ -97,19 +97,30 @@ internal class DiskHistoryImportStage(private val file:File,maximumPages:Int?=nu
     }
     @Synchronized override fun admitPreview(rows:List<ImportStageRow>,check:()->Unit):ImportStageDuplicates {
         check(!closed && recordsDone && sealed==null);require(rows.size<=200)
+        if(rows.isEmpty()) return ImportStageDuplicates()
         var visits=0;var points=0
         db.beginTransaction()
         try {
+            // A point matches only its rounded-second bucket. A bucket beyond
+            // the current maximum cannot match any previously admitted point.
+            // Read the maximum inside this transaction; callers need not be sorted.
+            var maximumPointBucket=if(rows.any {it.kind==ImportRecordKind.point}) db.rawQuery(
+                "SELECT bucket FROM google_matches WHERE kind=? ORDER BY bucket DESC LIMIT 1",
+                arrayOf(ImportRecordKind.point.ordinal.toString())).use {if(it.moveToFirst()) it.getLong(0) else null} else null
             for(row in rows) {check()
                 val match=if(row.kind==ImportRecordKind.visit) TimelineImportMatch.from(row.visit()) else TimelineImportMatch.from(row.point())
                 val span=if(match.visit) 1 else 0
-                val duplicate=db.rawQuery("SELECT latitude,longitude,time,departure FROM google_matches WHERE kind=? AND bucket BETWEEN ? AND ? AND latitude BETWEEN ? AND ?",arrayOf(row.kind.ordinal.toString(),(match.bucket-span).toString(),(match.bucket+span).toString(),(match.coordinate.latitude-0.001).toString(),(match.coordinate.latitude+0.001).toString())).use {cursor->
+                val newPointBucket=!match.visit && (maximumPointBucket==null || match.bucket>maximumPointBucket!!)
+                val duplicate=!newPointBucket && db.rawQuery("SELECT latitude,longitude,time,departure FROM google_matches WHERE kind=? AND bucket BETWEEN ? AND ? AND latitude BETWEEN ? AND ?",arrayOf(row.kind.ordinal.toString(),(match.bucket-span).toString(),(match.bucket+span).toString(),(match.coordinate.latitude-0.001).toString(),(match.coordinate.latitude+0.001).toString())).use {cursor->
                     var found=false;while(cursor.moveToNext()) {check()
                         if(match.matches(TimelineImportMatch(match.visit,Coordinate(cursor.getDouble(0),cursor.getDouble(1)),java.time.Instant.parse(cursor.getString(2)),if(cursor.isNull(3)) null else java.time.Instant.parse(cursor.getString(3))))) {found=true;break}
                     };found
                 }
                 if(duplicate) {if(match.visit) visits++ else points++}
-                else db.execSQL("INSERT INTO google_matches(kind,bucket,latitude,longitude,time,departure) VALUES(?,?,?,?,?,?)",arrayOf<Any?>(row.kind.ordinal,match.bucket,match.coordinate.latitude,match.coordinate.longitude,match.time.toString(),match.departure?.toString()))
+                else {
+                    db.execSQL("INSERT INTO google_matches(kind,bucket,latitude,longitude,time,departure) VALUES(?,?,?,?,?,?)",arrayOf<Any?>(row.kind.ordinal,match.bucket,match.coordinate.latitude,match.coordinate.longitude,match.time.toString(),match.departure?.toString()))
+                    if(!match.visit) maximumPointBucket=maxOf(maximumPointBucket ?: match.bucket,match.bucket)
+                }
             }
             db.setTransactionSuccessful()
         } finally {db.endTransaction()}
@@ -145,27 +156,27 @@ internal class DiskHistoryImportStage(private val file:File,maximumPages:Int?=nu
     }
     private fun digest(check:()->Unit):ByteArray {
         val digest=MessageDigest.getInstance("SHA-256");digest.update(source.name.toByteArray(Charsets.UTF_8))
-        var recordCount=0L
-        batches(check) {rows->rows.forEach {row->
-            recordCount++
-            check()
-            for(value in listOf(row.kind.name,row.id,row.payload,row.baseline,row.explicitIdentity.toString())) {
+        val length=java.nio.ByteBuffer.allocate(4)
+        check()
+        val recordCount=db.compileStatement("SELECT COUNT(*) FROM records").use {it.simpleQueryForLong()}
+        val orderCount=db.compileStatement("SELECT COUNT(*) FROM google_order").use {it.simpleQueryForLong()}
+        check(recordCount==orderCount) {"Import chronology is incomplete"}
+        var orderedCount=0L
+        // The validated chronological join already contains every payload and
+        // index field. Hash both in one bounded scan instead of rereading all
+        // payloads in identity order. Seals are private to this live workspace.
+        chronologicalBatches(check) {rows->for(item in rows) {
+            orderedCount++;check()
+            val row=item.row
+            for(value in listOf(row.kind.name,row.id,row.payload,row.baseline,row.explicitIdentity.toString(),
+                item.cursor.seconds.toString(),item.cursor.nanos.toString(),item.cursor.sequence.toString())) {
                 if(value==null) digest.update(0) else {
                     digest.update(1);val bytes=value.toByteArray(Charsets.UTF_8)
-                    digest.update(java.nio.ByteBuffer.allocate(4).putInt(bytes.size).array());digest.update(bytes)
+                    length.clear();length.putInt(bytes.size);digest.update(length.array());digest.update(bytes)
                 }
             }
         }}
-        run {
-            var orderedCount=0L
-            chronologicalBatches(check) {rows->for(item in rows) {
-                orderedCount++;check()
-                for(value in listOf(item.row.kind.name,item.row.id,item.cursor.seconds.toString(),item.cursor.nanos.toString(),item.cursor.sequence.toString())) {
-                    val bytes=value.toByteArray(Charsets.UTF_8);digest.update(java.nio.ByteBuffer.allocate(4).putInt(bytes.size).array());digest.update(bytes)
-                }
-            }}
-            check(orderedCount==recordCount) {"Import chronology is incomplete"}
-        }
+        check(orderedCount==recordCount) {"Import chronology is incomplete"}
         return digest.digest()
     }
     @Synchronized override fun seal(check:()->Unit) {check(!closed && recordsDone && sealed==null);sealed=digest(check)}

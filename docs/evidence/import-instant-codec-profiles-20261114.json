@@ -1,0 +1,42 @@
+[
+  {
+    "session": "import-profile-before-2",
+    "completedMs": 13209,
+    "sampledCpuNanoseconds": 5305000000,
+    "samples": 1061,
+    "profileSha256": "e8a165ce7cba62172c2d4b3dc90ee0936187c3f6a3d9ad9a58988c0d97166b24",
+    "nativeExit": 0,
+    "profilerExit": 0,
+    "parseExit": 0
+  },
+  {
+    "session": "import-profile-before-3",
+    "completedMs": 10510,
+    "sampledCpuNanoseconds": 5150000000,
+    "samples": 1030,
+    "profileSha256": "821df22ccb865d4a50f7646ebbd13b77b426b3b70436a0122fccd06254e65c50",
+    "nativeExit": 0,
+    "profilerExit": 0,
+    "parseExit": 0
+  },
+  {
+    "session": "import-profile-after-1",
+    "completedMs": 11846,
+    "sampledCpuNanoseconds": 4760000000,
+    "samples": 952,
+    "profileSha256": "c1cfdfa54cb670a16277a816f03f0096a62f2fda9cf69d554cb2598511f9e1e6",
+    "nativeExit": 0,
+    "profilerExit": 0,
+    "parseExit": 0
+  },
+  {
+    "session": "import-profile-after-3",
+    "completedMs": 12109,
+    "sampledCpuNanoseconds": 4550000000,
+    "samples": 910,
+    "profileSha256": "b9d370b99024641865f9f23b3cea5bca19d83e9bf8a225240c223e5317619a6d",
+    "nativeExit": 0,
+    "profilerExit": 0,
+    "parseExit": 0
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 19,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "changedSourceAndOptOutCannotLeavePreparedRoadsOnTheMap"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "outlierFallbackWindowFocusAndPathChoiceControlActualPreparation"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "coveredSourceReleasesAdmissionAndLateWorkerCannotReplaceItsSuccessor"
+    },
+    {
+      "class": "com.bontecou.whereday.RoadDisplayProducerTest",
+      "test": "replayFramesReusePreparedSourceAndRevealRoadOnlyAtItsRecordedEndpoint"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "pendingOptOutRejectsLateResponseWithoutRetryAfterReenable"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "dismissCancelsPendingAndHeldUseCannotEmit"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "offlineMapRendersThePinAtTheNewAccessibleDropCoordinate"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "savedStateRestoreCancelsPendingAndDoesNotResumeIt"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "explicitCancelRejectsPendingResponseAndRetryCanFindAddress"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "savedStateRestoreKeepsReviewedMetadataWithoutNewLookup"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "openingIsOfflineAndUsingInitialCoordinatePreservesEditorMetadata"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "emptyInitialSelectionNeedsExplicitPinAndDismissWritesNothing"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "heldUseReadsNewPinAndClearedMetadataBeforeRecomposition"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "timeoutIsLocalizedAndDoesNotReplaceMetadata"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "backgroundCancelsPendingLookupAndReturnDoesNotRetry"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "searchSelectionCancelsReverseAndMovesPinAndMetadataTogether"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "changedPinRejectsLateNonCooperativeReverseResponse"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "explicitReverseKeepsPinCoordinateAndReturnsUnmodifiedProviderMetadata"
+    },
+    {
+      "class": "com.bontecou.whereday.PlaceLocationPickerTest",
+      "test": "emptyAndSanitizedErrorHaveLocalizedMessagesAndKeepRawCoordinate"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "9ee6eff49dd371706516ee4728c411118096022499f263aae7f8db276f91eb9e"
+    },
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "193b86ac654986f5c4b9a6f898e0b2048b8b0fac9b13edb11d0fc526e44dc6a4"
+    }
+  ]
+}

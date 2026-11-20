@@ -24,8 +24,8 @@ def plan(module):
     return package, package, [(ROOT/f'{module}/build/outputs/apk/androidTest/debug/{module}-debug-androidTest.apk', package)]
 
 
-def result(raw, expected, classes):
-    bundle = {}; cases = []; statuses = []
+def result(raw, expected, classes, expected_ignored=()):
+    bundle = {}; cases = []; ignored = []; statuses = []
     for line in raw.splitlines():
         if line.startswith('INSTRUMENTATION_STATUS: '):
             field = line[len('INSTRUMENTATION_STATUS: '):]
@@ -35,16 +35,38 @@ def result(raw, expected, classes):
             code = int(line.split(':', 1)[1].strip()); statuses.append(code)
             if code == 0 and bundle.get('class') and bundle.get('test'):
                 cases.append((bundle['class'], bundle['test']))
+            if code == -3 and bundle.get('class') and bundle.get('test'):
+                ignored.append(bundle['class']+'#'+bundle['test'])
             bundle = {}
     success = re.search(r'\bOK \((\d+) tests?\)', raw)
-    if (not success or int(success[1]) != expected or 'INSTRUMENTATION_CODE: -1' not in raw
-            or 'FAILURES!!!' in raw or any(code < 0 for code in statuses)
-            or len(cases) != expected or len(set(cases)) != expected):
-        raise ValueError('Native results do not prove the expected complete, passing, unskipped run')
-    for name, method in cases:
+    passed = expected-len(expected_ignored)
+    if (not success or int(success[1]) != passed
+            or not re.search(r'^INSTRUMENTATION_CODE: -1\s*$', raw, re.MULTILINE)
+            or 'FAILURES!!!' in raw or any(code < 0 and code != -3 for code in statuses)
+            or len(cases) != passed or len(set(cases)) != passed
+            or len(ignored) != len(expected_ignored) or set(ignored) != set(expected_ignored)
+            or statuses.count(-3) != len(ignored)
+            or set(ignored) & {name+'#'+method for name,method in cases}):
+        raise ValueError('Native results do not prove the expected complete, passing run and exact declared ignores')
+    for name, method in cases+[tuple(spec.split('#')) for spec in ignored]:
         if not any(spec == name or spec == name+'#'+method for spec in classes):
             raise ValueError('Native runner executed an unexpected test')
     return [{'class': name, 'test': method} for name, method in cases]
+
+
+def capture_failure(adb, output, package):
+    """Capture the still-installed target before cleanup destroys its evidence."""
+    commands = [
+        ('failure-logcat.log', ['logcat', '-d', '-b', 'main', '-b', 'system', '-b', 'crash', '-b', 'events']),
+        ('failure-exit-info.log', ['shell', 'dumpsys', 'activity', 'exit-info', package]),
+        ('failure-memory.log', ['shell', 'dumpsys', 'meminfo', package]),
+    ]
+    for name, command in commands:
+        with (output/name).open('w') as stream:
+            try:
+                subprocess.run(adb+command, stdout=stream, stderr=subprocess.STDOUT, timeout=15)
+            except (subprocess.TimeoutExpired, OSError) as error:
+                print(f'Diagnostic unavailable: {error}', file=stream)
 
 
 def main():
@@ -55,6 +77,8 @@ def main():
     parser.add_argument('--module', choices=('app', 'data', 'platform'), required=True)
     parser.add_argument('--classes', required=True)
     parser.add_argument('--expected-tests', type=int, required=True)
+    parser.add_argument('--expected-ignored', action='append', default=[],
+                        help='Exact pre-existing class#method ignore; missing or additional skips fail')
     parser.add_argument('--extra', action='append', default=[])
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -65,6 +89,10 @@ def main():
     classes = args.classes.split(',')
     if args.expected_tests < 1 or not all(CLASS.fullmatch(name) for name in classes):
         parser.error('Expected a positive test count and explicit Whereday class/method names')
+    if (len(set(args.expected_ignored)) != len(args.expected_ignored)
+            or len(args.expected_ignored) >= args.expected_tests
+            or any(not CLASS.fullmatch(spec) or '#' not in spec for spec in args.expected_ignored)):
+        parser.error('Expected unique, exact ignored method names and at least one passing test')
     extras = []
     for item in args.extra:
         key, sep, value = item.partition('=')
@@ -121,11 +149,20 @@ def main():
         identity('before-tests')
         raw = run('instrumentation', ['shell', 'am', 'instrument', '-w', '-r', '-e', 'class', args.classes,
                                      *extras, test_package+'/'+RUNNER])
-        cases = result(raw, args.expected_tests, classes)
+        cases = result(raw, args.expected_tests, classes, args.expected_ignored)
         proof = {'serial':args.serial, 'avd':args.avd, 'module':args.module, 'adbServerPort':args.server_port,
                  'execution':'Direct AndroidJUnitRunner; no Gradle device discovery',
-                 'tests':len(cases), 'failures':0, 'errors':0, 'skipped':0,
+                 'tests':len(cases)+len(args.expected_ignored), 'passed':len(cases),
+                 'failures':0, 'errors':0, 'skipped':len(args.expected_ignored),
+                 'ignoredCases':args.expected_ignored,
                  'cases':cases, 'apks':provenance}
+    except BaseException:
+        try:
+            identity('before-failure-diagnostics')
+            capture_failure(adb, args.output, package)
+        except Exception as error:
+            print(f'Failure diagnostics unavailable: {error}', flush=True)
+        raise
     finally:
         if installed:
             identity('before-target-stop')

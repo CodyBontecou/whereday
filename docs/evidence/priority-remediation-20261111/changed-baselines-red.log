@@ -1,0 +1,74 @@
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.platform.DiskHistoryImportTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.bontecou.whereday.platform.DiskHistoryImportTest:
+INSTRUMENTATION_STATUS: test=reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.platform.DiskHistoryImportTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[0b65ad27-86b5-3fbf-a94f-afe0e9d4f97e]> but was:<[0b65ad27-86b5-3fbf-a94f-afe0e9d4f97e, 0ab8bca7-2c10-47cc-9c09-32671d177101]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.bontecou.whereday.platform.DiskHistoryImportTest$reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches$1$1.invokeSuspend(DiskHistoryImportTest.kt:48)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at com.bontecou.whereday.platform.DiskHistoryImportTest.reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches(DiskHistoryImportTest.kt:39)
+
+INSTRUMENTATION_STATUS: stream=
+Error in reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches(com.bontecou.whereday.platform.DiskHistoryImportTest):
+java.lang.AssertionError: expected:<[0b65ad27-86b5-3fbf-a94f-afe0e9d4f97e]> but was:<[0b65ad27-86b5-3fbf-a94f-afe0e9d4f97e, 0ab8bca7-2c10-47cc-9c09-32671d177101]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.bontecou.whereday.platform.DiskHistoryImportTest$reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches$1$1.invokeSuspend(DiskHistoryImportTest.kt:48)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at com.bontecou.whereday.platform.DiskHistoryImportTest.reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches(DiskHistoryImportTest.kt:39)
+
+INSTRUMENTATION_STATUS: test=reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.178
+There was 1 failure:
+1) reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches(com.bontecou.whereday.platform.DiskHistoryImportTest)
+java.lang.AssertionError: expected:<[0b65ad27-86b5-3fbf-a94f-afe0e9d4f97e]> but was:<[0b65ad27-86b5-3fbf-a94f-afe0e9d4f97e, 0ab8bca7-2c10-47cc-9c09-32671d177101]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.bontecou.whereday.platform.DiskHistoryImportTest$reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches$1$1.invokeSuspend(DiskHistoryImportTest.kt:48)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at com.bontecou.whereday.platform.DiskHistoryImportTest.reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches(DiskHistoryImportTest.kt:39)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,49 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 3,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.WorkspaceKeyboardTest",
+      "test": "invalidNativeClockTextAndModeSurviveBothDialogPresentationDirections"
+    },
+    {
+      "class": "com.bontecou.whereday.WorkspaceKeyboardTest",
+      "test": "tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen"
+    },
+    {
+      "class": "com.bontecou.whereday.QaKeyboardTest",
+      "test": "invalidDateDraftSurvivesActualSoftwareKeyboardDismissal"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "9ee6eff49dd371706516ee4728c411118096022499f263aae7f8db276f91eb9e"
+    },
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "193b86ac654986f5c4b9a6f898e0b2048b8b0fac9b13edb11d0fc526e44dc6a4"
+    }
+  ],
+  "rootCause": "Gboard floating handwriting palette was visible without obscuring the lower safe pane; the test assumed a docked IME",
+  "settingsAfter": {
+    "stylus_handwriting_enabled": null,
+    "show_ime_with_hard_keyboard": "1"
+  },
+  "fixtureSha256": "4413e0b2a0fb4048b212e06bf390efe9f25adcfe015cc4b954aa7818edb4aeef",
+  "screenshots": {
+    "tabletop-handwriting.png": "891acb1adfb6719afe75270455bde9b0ee3b57582f564f99b64e51dad9cc3cb1",
+    "tabletop-docked-keyboard.png": "ffa4d856f6b159ff6e5d80351071bf0542f800ba186544d2864de56010e2d81e",
+    "tabletop-restored.png": "91591b04d35b8a77b432dc9dd8d21c6e7260c01cac33b1359d11ba75823511e3"
+  },
+  "screenshotScope": "Before external temporary configuration and passing docked/restored run. Final self-contained setup and robust teardown were independently rerun in the three-case receipt."
+}

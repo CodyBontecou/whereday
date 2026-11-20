@@ -1,0 +1,30 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "platform",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+      "test": "tenThousandJsonPointsReviewCommitDeduplicateAndClear"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+      "package": "com.bontecou.whereday.platform.test",
+      "sha256": "e3787755b8fcca8f499efbd9529381e6baf6a5efd07920dd766bf1c1ad763792"
+    }
+  ],
+  "scope": "Existing 10,000-point JSON control, profiled; not proof of the million-record performance gate",
+  "trace": {
+    "path": "/var/folders/vh/t562rzcx5dx1w0j01ky690rm0000gn/T/argent-profiler-cwd/native-profiler-20261111-183515.pftrace",
+    "sha256": "bd19b496cb2da8b8beabe20c9d6632917394edc0bed32d99b585c0efa5c5df82"
+  },
+  "profileLimit": "Native samples did not identify a managed Kotlin method-level culprit; no confirmed memory leak"
+}

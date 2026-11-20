@@ -1,0 +1,22 @@
+{
+  "run": "https://github.com/CodyBontecou/whereday/actions/runs/43049439309",
+  "head": "561febce",
+  "cases": {
+    "tenThousandJsonPointsReviewCommitDeduplicateAndClear": {
+      "status": "passed",
+      "seconds": "12.22"
+    },
+    "millionMarkdownPointsReviewCommitDeduplicateAndClear": {
+      "status": "failed",
+      "seconds": "1215.004"
+    },
+    "millionCsvPointsReviewCommitDeduplicateAndClear": {
+      "status": "passed",
+      "seconds": "1161.863"
+    },
+    "millionJsonPointsReviewCommitDeduplicateAndClear": {
+      "status": "passed",
+      "seconds": "1145.78"
+    }
+  }
+}

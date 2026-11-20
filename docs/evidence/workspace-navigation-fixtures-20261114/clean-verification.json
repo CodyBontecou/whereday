@@ -1,0 +1,422 @@
+{
+  "sourceBase": "7f2c312dc9388d4b1ec3c7ee9a63ff32eb4cea07 plus documented test-only navigation changes",
+  "originalMethods": [
+    "automaticAnchorClockDraftSurvivesActualActivityRecreationAndRequiresApply",
+    "dirtyDraftMovesThroughActualActivityRecreationsAndSavesOnlyOnExplicitApply",
+    "exportDateBackgroundRetainsDraftButRejectsTheOldApplyAfterResume",
+    "exportDateIsoDraftSurvivesRealRecreationAndOnlyCorrectedDatesApply",
+    "exportTimeClockDraftSurvivesActualActivityRecreationAndCancelLeavesSettingsUntouched",
+    "invalidFrameworkClockTextAndModeSurviveBothRealRecreationDirections",
+    "invalidNestedIsoDraftSurvivesActualCompactExpandedRecreationsWithoutMutation",
+    "libraryCurrentPhotoSurvivesActualRecreationBeyondItsOpeningAsset",
+    "manuallyPositionedCameraSurvivesBothActualWindowRecreationDirections",
+    "mapPhotoCollectionAndLastViewedAssetSurviveBothActualRecreations",
+    "mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations",
+    "mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes",
+    "nestedPlaceMapSurvivesActualRecreationAndReturnsToThePendingEditor",
+    "newPlaceDraftSurvivesRealRecreationWithoutCreatingAnythingBeforeSave",
+    "ordinaryBackgroundAfterRecreationDismissesBothClocksAndRejectsOldApprovals",
+    "outingCurrentPhotoSurvivesActualRecreationAfterValidation",
+    "outingNameAndNotesSurviveRealRecreationAndPreserveLatestEndMetadata",
+    "outingReplayRestoresPausedPositionAcrossBothActualRecreations",
+    "restoredCameraDoesNotReplayAnAlreadyAppliedVisitFocusButAcceptsANewRequest",
+    "restoredPlaceEditorKeepsTheOriginalConflictBaseline",
+    "stoppedAndOldResumedPlaceAndOutingSaveActionsCannotWrite",
+    "storedPlaceDraftSurvivesRealRecreationAndPreservesItsIdentityOnSave",
+    "timelineOutingNavigationAndNativeMapRecoverAfterRealWindowRecreation"
+  ],
+  "originalMethodCount": 23,
+  "addedMethods": [
+    "paddedManualCameraPreservesVisualCenterThroughBothActualRecreations"
+  ],
+  "allOriginalMethodsRetained": true,
+  "checks": [
+    {
+      "run": "map-entry-clean-3-1",
+      "verification": {
+        "serial": "emulator-5586",
+        "avd": "whereday-priority-20261111-api35",
+        "module": "app",
+        "adbServerPort": 5064,
+        "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+        "tests": 3,
+        "passed": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "ignoredCases": [],
+        "cases": [
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "mapPhotoCollectionAndLastViewedAssetSurviveBothActualRecreations"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes"
+          }
+        ],
+        "apks": [
+          {
+            "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+            "package": "com.bontecou.whereday.mapqa",
+            "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+          },
+          {
+            "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+            "package": "com.bontecou.whereday.mapqa.test",
+            "sha256": "059dd7ce2a40347afe51cefd5056907eab6276e1834c948b23a122336532d134"
+          }
+        ]
+      },
+      "session": {
+        "scope": "owned read-only native instrumentation, no physical devices",
+        "passed": true,
+        "emulatorPID": 44726,
+        "emulatorCommand": [
+          "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+          "-avd",
+          "whereday-priority-20261111-api35",
+          "-port",
+          "5586",
+          "-read-only",
+          "-no-snapshot-load",
+          "-no-snapshot-save",
+          "-no-window",
+          "-no-audio",
+          "-no-boot-anim",
+          "-gpu",
+          "swiftshader_indirect",
+          "-memory",
+          "2048",
+          "-cores",
+          "2"
+        ],
+        "originalSize": "Physical size: 1080x2400",
+        "originalDensity": "Physical density: 420",
+        "runnerExit": 0,
+        "cleanup": [
+          {
+            "metricCollectorStopped": true
+          },
+          {
+            "displayRestored": true,
+            "imeRestored": true
+          },
+          {
+            "setting": "window_animation_scale",
+            "restored": true
+          },
+          {
+            "setting": "transition_animation_scale",
+            "restored": true
+          },
+          {
+            "setting": "animator_duration_scale",
+            "restored": true
+          },
+          {
+            "emulatorGracefulExit": 0
+          },
+          {
+            "privateAdbStop": 0
+          }
+        ],
+        "originalSettings": {
+          "window_animation_scale": "1.0",
+          "transition_animation_scale": "1.0",
+          "animator_duration_scale": "null"
+        }
+      },
+      "instrumentationLogSha256": "6ca8f5777cc6c4f75b171edf0f26cf900c029a6189480c3085ea9ffbb9d3ccfc"
+    },
+    {
+      "run": "timeline-entry-clean-2-1",
+      "verification": {
+        "serial": "emulator-5586",
+        "avd": "whereday-priority-20261111-api35",
+        "module": "app",
+        "adbServerPort": 5064,
+        "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+        "tests": 2,
+        "passed": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "ignoredCases": [],
+        "cases": [
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "timelineOutingNavigationAndNativeMapRecoverAfterRealWindowRecreation"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "stoppedAndOldResumedPlaceAndOutingSaveActionsCannotWrite"
+          }
+        ],
+        "apks": [
+          {
+            "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+            "package": "com.bontecou.whereday.mapqa",
+            "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+          },
+          {
+            "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+            "package": "com.bontecou.whereday.mapqa.test",
+            "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+          }
+        ]
+      },
+      "session": {
+        "scope": "owned read-only native instrumentation, no physical devices",
+        "passed": true,
+        "emulatorPID": 51005,
+        "emulatorCommand": [
+          "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+          "-avd",
+          "whereday-priority-20261111-api35",
+          "-port",
+          "5586",
+          "-read-only",
+          "-no-snapshot-load",
+          "-no-snapshot-save",
+          "-no-window",
+          "-no-audio",
+          "-no-boot-anim",
+          "-gpu",
+          "swiftshader_indirect",
+          "-memory",
+          "2048",
+          "-cores",
+          "2"
+        ],
+        "originalSize": "Physical size: 1080x2400",
+        "originalDensity": "Physical density: 420",
+        "runnerExit": 0,
+        "cleanup": [
+          {
+            "metricCollectorStopped": true
+          },
+          {
+            "displayRestored": true,
+            "imeRestored": true
+          },
+          {
+            "setting": "window_animation_scale",
+            "restored": true
+          },
+          {
+            "setting": "transition_animation_scale",
+            "restored": true
+          },
+          {
+            "setting": "animator_duration_scale",
+            "restored": true
+          },
+          {
+            "emulatorGracefulExit": 0
+          },
+          {
+            "privateAdbStop": 0
+          }
+        ],
+        "originalSettings": {
+          "window_animation_scale": "1.0",
+          "transition_animation_scale": "1.0",
+          "animator_duration_scale": "null"
+        }
+      },
+      "instrumentationLogSha256": "afd4cf4de9289f6bffb666a74cd124b362e820edc371e467aad165fbbf51ec81"
+    },
+    {
+      "run": "workspace-resize-clean-24-2",
+      "verification": {
+        "serial": "emulator-5586",
+        "avd": "whereday-priority-20261111-api35",
+        "module": "app",
+        "adbServerPort": 5064,
+        "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+        "tests": 24,
+        "passed": 24,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "ignoredCases": [],
+        "cases": [
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "outingNameAndNotesSurviveRealRecreationAndPreserveLatestEndMetadata"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "automaticAnchorClockDraftSurvivesActualActivityRecreationAndRequiresApply"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "exportTimeClockDraftSurvivesActualActivityRecreationAndCancelLeavesSettingsUntouched"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "paddedManualCameraPreservesVisualCenterThroughBothActualRecreations"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "timelineOutingNavigationAndNativeMapRecoverAfterRealWindowRecreation"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "restoredCameraDoesNotReplayAnAlreadyAppliedVisitFocusButAcceptsANewRequest"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "restoredPlaceEditorKeepsTheOriginalConflictBaseline"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "newPlaceDraftSurvivesRealRecreationWithoutCreatingAnythingBeforeSave"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "mapPhotoCollectionAndLastViewedAssetSurviveBothActualRecreations"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "exportDateBackgroundRetainsDraftButRejectsTheOldApplyAfterResume"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "storedPlaceDraftSurvivesRealRecreationAndPreservesItsIdentityOnSave"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "invalidFrameworkClockTextAndModeSurviveBothRealRecreationDirections"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "invalidNestedIsoDraftSurvivesActualCompactExpandedRecreationsWithoutMutation"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "libraryCurrentPhotoSurvivesActualRecreationBeyondItsOpeningAsset"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "manuallyPositionedCameraSurvivesBothActualWindowRecreationDirections"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "stoppedAndOldResumedPlaceAndOutingSaveActionsCannotWrite"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "nestedPlaceMapSurvivesActualRecreationAndReturnsToThePendingEditor"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "dirtyDraftMovesThroughActualActivityRecreationsAndSavesOnlyOnExplicitApply"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "outingReplayRestoresPausedPositionAcrossBothActualRecreations"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "outingCurrentPhotoSurvivesActualRecreationAfterValidation"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "ordinaryBackgroundAfterRecreationDismissesBothClocksAndRejectsOldApprovals"
+          },
+          {
+            "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+            "test": "exportDateIsoDraftSurvivesRealRecreationAndOnlyCorrectedDatesApply"
+          }
+        ],
+        "apks": [
+          {
+            "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+            "package": "com.bontecou.whereday.mapqa",
+            "sha256": "5ad92a68cc12fb17c71fe04ae5def73c9a136eecb79d25962f1f0867418c7d60"
+          },
+          {
+            "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+            "package": "com.bontecou.whereday.mapqa.test",
+            "sha256": "4b91cfa07bb17f87d02672fdfbe783e6f5daab394b4c63900663f3654cbf605c"
+          }
+        ]
+      },
+      "session": {
+        "scope": "owned read-only native instrumentation, no physical devices",
+        "passed": true,
+        "emulatorPID": 52244,
+        "emulatorCommand": [
+          "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+          "-avd",
+          "whereday-priority-20261111-api35",
+          "-port",
+          "5586",
+          "-read-only",
+          "-no-snapshot-load",
+          "-no-snapshot-save",
+          "-no-window",
+          "-no-audio",
+          "-no-boot-anim",
+          "-gpu",
+          "swiftshader_indirect",
+          "-memory",
+          "2048",
+          "-cores",
+          "2"
+        ],
+        "originalSize": "Physical size: 1080x2400",
+        "originalDensity": "Physical density: 420",
+        "runnerExit": 0,
+        "cleanup": [
+          {
+            "metricCollectorStopped": true
+          },
+          {
+            "displayRestored": true,
+            "imeRestored": true
+          },
+          {
+            "setting": "window_animation_scale",
+            "restored": true
+          },
+          {
+            "setting": "transition_animation_scale",
+            "restored": true
+          },
+          {
+            "setting": "animator_duration_scale",
+            "restored": true
+          },
+          {
+            "emulatorGracefulExit": 0
+          },
+          {
+            "privateAdbStop": 0
+          }
+        ],
+        "originalSettings": {
+          "window_animation_scale": "1.0",
+          "transition_animation_scale": "1.0",
+          "animator_duration_scale": "null"
+        }
+      },
+      "instrumentationLogSha256": "81dea0c7d0205459fa9bb5aa2fa12014580bcec0fcd7cdf368f1ffc7e7b4d31e"
+    }
+  ],
+  "scope": "Native focused loops and full resize class on owned API35. Not full hosted/downstream acceptance; historical intermittent layout exception not claimed fixed."
+}

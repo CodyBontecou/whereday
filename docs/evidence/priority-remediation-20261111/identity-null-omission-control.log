@@ -1,0 +1,8 @@
+11-11 12:45:14.358 21109 21154 I System.out: json inspect: 1318 ms
+11-11 12:45:14.963 21109 21151 I System.out: json review: 670012 bytes, 10000 points, 5123 ms
+11-11 12:45:16.870 21109 21154 I System.out: json apply: 1906 ms; verification: 880 ms
+11-11 12:45:16.871 21109 21151 I System.out: json commit: 10000 points, 1910 ms
+11-11 12:45:18.716 21109 21163 I System.out: json inspect: 1019 ms
+11-11 12:45:19.942 21109 21163 I System.out: json apply: 894 ms; verification: 627 ms
+11-11 12:45:19.944 21109 21151 I System.out: json reimport: 10000 existing records kept; no duplicate writes
+11-11 12:45:19.962 21109 21151 I System.out: json complete: 10124 ms; sampled Java peak 13607472; heap limit 201326592

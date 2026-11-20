@@ -1,0 +1,58 @@
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.WorkspaceKeyboardTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.bontecou.whereday.WorkspaceKeyboardTest:
+INSTRUMENTATION_STATUS: test=invalidNativeClockTextAndModeSurviveBothDialogPresentationDirections
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.WorkspaceKeyboardTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=invalidNativeClockTextAndModeSurviveBothDialogPresentationDirections
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.WorkspaceKeyboardTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.WorkspaceKeyboardTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Rect.fromLTRB(0.0, 1348.0, 1080.0, 2220.0) must stay within Rect.fromLTRB(0.0, 0.0, 1080.0, 1169.0) without crossing the fold
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.bontecou.whereday.WorkspaceKeyboardTest.assertDialogInside(WorkspaceKeyboardTest.kt:58)
+	at com.bontecou.whereday.WorkspaceKeyboardTest.tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen(WorkspaceKeyboardTest.kt:90)
+
+INSTRUMENTATION_STATUS: stream=
+Error in tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen(com.bontecou.whereday.WorkspaceKeyboardTest):
+java.lang.AssertionError: Rect.fromLTRB(0.0, 1348.0, 1080.0, 2220.0) must stay within Rect.fromLTRB(0.0, 0.0, 1080.0, 1169.0) without crossing the fold
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.bontecou.whereday.WorkspaceKeyboardTest.assertDialogInside(WorkspaceKeyboardTest.kt:58)
+	at com.bontecou.whereday.WorkspaceKeyboardTest.tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen(WorkspaceKeyboardTest.kt:90)
+
+INSTRUMENTATION_STATUS: test=tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 8.098
+There was 1 failure:
+1) tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen(com.bontecou.whereday.WorkspaceKeyboardTest)
+java.lang.AssertionError: Rect.fromLTRB(0.0, 1348.0, 1080.0, 2220.0) must stay within Rect.fromLTRB(0.0, 0.0, 1080.0, 1169.0) without crossing the fold
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.bontecou.whereday.WorkspaceKeyboardTest.assertDialogInside(WorkspaceKeyboardTest.kt:58)
+	at com.bontecou.whereday.WorkspaceKeyboardTest.tabletopIsoDraftAndActionsRemainReachableWithActualKeyboardOpen(WorkspaceKeyboardTest.kt:90)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

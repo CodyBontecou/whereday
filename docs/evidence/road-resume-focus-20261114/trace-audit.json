@@ -1,0 +1,371 @@
+[
+  {
+    "group": "road-repeat-1",
+    "attempt": "attempt-01",
+    "sha256": "655a1b7808ca57830755794985ba683d58a393b77a52ff697742d3149d0c2b63",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-repeat-1",
+    "attempt": "attempt-02",
+    "sha256": "bbb0b81f1a7e16b0fa17aab3f992ed8e9c51c14be9711bc1bcaa4f4ca092ef79",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-repeat-1",
+    "attempt": "attempt-03",
+    "sha256": "3f2a72a89eab35a67ffa118ff1d55e516fa36d06b89aff4770495acaf34b8c49",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-repeat-1",
+    "attempt": "attempt-04",
+    "sha256": "930cc1fe341f07091c4e61856a3cf8ee084e9d90478cdbf94cac79e4178433cb",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-repeat-1",
+    "attempt": "attempt-05",
+    "sha256": "f4dcaf9bd3e60b837086fa6dadcd04fe4d690b5710be62970830d839d7f1f32f",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-repeat-1",
+    "attempt": "attempt-06",
+    "sha256": "a7172135fb217f2a41300ac34c159db98087d3749c55051b627c792467058820",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-red-1",
+    "attempt": "attempt-01",
+    "sha256": "765808c8ce619fe4e4c6c58eec7f84f572569baf19ae91b9b78d3ad1055ce7c4",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      0
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-red-2",
+    "attempt": "attempt-01",
+    "sha256": "f3059fc529a526c661c533e2aad3407d85d1770db64202c8f5e3885da98ccdda",
+    "providerOrdinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "finalCalls": [
+      4
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-green-1",
+    "attempt": "attempt-01",
+    "sha256": "a024403df48b08c4013861223d52e25dc8c1c8116698348b19d2a5534dd43a6d",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-green-1",
+    "attempt": "attempt-02",
+    "sha256": "e44ea2921978267d72c1a2ab190f4d0dc433100a6baf3a615b732aff5de7166a",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-green-1",
+    "attempt": "attempt-03",
+    "sha256": "143839b052cfad0cd8f5e222c48059773582454d86133d2af2560ee6f317909d",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-green-1",
+    "attempt": "attempt-04",
+    "sha256": "df8c093c9c363c94214e46f563ae9f80ccddba378e77042dcfc14be3fa1101a0",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-green-1",
+    "attempt": "attempt-05",
+    "sha256": "bf4d930a4eb837c5d214d1ee1efc3a530246923c2e31a3a7b3dc9aca031ef81b",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  },
+  {
+    "group": "road-settled-green-1",
+    "attempt": "attempt-06",
+    "sha256": "d93693301a782c2f61be4f28be7870d66e4e3d611a827fde4e4af1b62a5c3ba7",
+    "providerOrdinals": [
+      1,
+      2,
+      3
+    ],
+    "nativeFocusFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "liveWindowInfoFlagsBeforePrepare": [
+      2,
+      2,
+      2
+    ],
+    "finalCalls": [
+      3
+    ],
+    "dropped": [
+      0
+    ],
+    "stampGaps": false
+  }
+]

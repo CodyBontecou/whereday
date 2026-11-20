@@ -1,0 +1,17 @@
+{
+  "hostedRun": 43076919484,
+  "head": "29301222",
+  "expectedCases": 594,
+  "receivedCompletions": 139,
+  "independentUiFailure": "RoadDisplayProducerTest.coveredSourceReleasesAdmissionAndLateWorkerCannotReplaceItsSuccessor timed out",
+  "lastStartedResult": "PlaceLocationPickerTest.explicitCancelRejectsPendingResponseAndRetryCanFindAddress",
+  "rawStreamSha256": "202d22eb16b999e2ae02546f162dafe08ec01d569332fb69f5072c782a59c18d",
+  "original94ClassSelectionSha256": "f7aef17f69645e645ede0e45077d0074e0a08288eb88799c868b1887b715e339",
+  "selectedLogcat": [
+    "11-11 18:42:59.598  4438  4455 I TestRunner: finished: explicitCancelRejectsPendingResponseAndRetryCanFindAddress(com.bontecou.whereday.PlaceLocationPickerTest)",
+    "11-11 18:42:59.601  4438  4455 E IPCThreadState: Binder transaction failure. id: 1022391, BR_*: 29189, error: -22 (Invalid argument)",
+    "11-11 18:42:59.632   555  1891 W ActivityManager: pid 4438 com.bontecou.whereday.mapqa sent binder code 1 with flags 2 to frozen apps and got error -32",
+    "11-11 18:42:59.634  4438  4455 I TestRunner: started: savedStateRestoreKeepsReviewedMetadataWithoutNewLookup(com.bontecou.whereday.PlaceLocationPickerTest)"
+  ],
+  "conclusion": "Result stream stopped before the completion even though native tests continued. Binder error wording alone does not establish a frozen recipient or its identity. No independent target crash before Gradle uninstall is proved."
+}

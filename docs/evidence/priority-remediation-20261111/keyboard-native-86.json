@@ -1,0 +1,369 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 86,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "countrySearchUsesLocalizedNamesAccentFoldingAndEmptyState"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "creatingStayUsesPastCivilDatesAndKeepsOneStableIdentity"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "repeatedCountryPickerDismissalsKeepTheStayWindowReadyToSave"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "staleRestoredEditorReportsConflictWithoutOverwritingNewStay"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "sarkIsSearchableByNameAndSurvivesRestorationAndSave"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "kosovoCanBeEditedToAscensionWithItsOriginalSnapshot"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "busySaveRejectsQueuedDuplicateAndCancelUntilCommitCompletes"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "draftAndFrozenExpectedSnapshotSurviveRestoration"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "staleDeleteRemainsOpenAndPreservesLatestRecord"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "dirtyCancelOffersKeepEditingAndExplicitDiscardWithoutWrites"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "deleteRequiresConfirmationAndKeepsJournalRecords"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "failureIsLocalizedAndRetryAfterRestoreKeepsDraftIdentity"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryStayEditorTest",
+      "test": "futureStayCannotBeSavedAndDateRangeCannotApplyFutureCivilDates"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "savingManualStayUpdatesOverviewWithoutChangingRecordedMetadata"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "backgroundCancelsWithoutRestartingOnResume"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "overviewDeduplicatesTravelAndOverlappingDaysAndDetailsAreNewestFirst"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "disposingCountryScreenCancelsItsPendingAnalysis"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "optOutRejectsLateNonCooperativeResultAndDoesNotRetryAfterOptIn"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "enteringCountryDetailStopsPendingAnalysisWithoutRestartingOnBack"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "overviewFormatsLargeCountsAndPeriodChoiceKeepsStableWireKeys"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "successfulAnalysisPersistsMetadataAndShowsLocalizedCompletion"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "freeCsvPreviewKeepsProtocolHeadersAndSourceValuesUntranslated"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "oldConfirmationCannotStartAfterBackgroundAndResume"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "providerFailureIsLocalizedAndDoesNotExposeProviderDetails"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "disclosureCancelAndHeldActionCannotStartAnalysis"
+    },
+    {
+      "class": "com.bontecou.whereday.CountryDaysFlowTest",
+      "test": "countryDetailStartsAtTopAndReturnsToOverviewScrollPosition"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "accessCardOpensPlansAndDisablesPendingCheckoutAndBusyActions"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "changedOptionsDiscardEvenANonCooperativeLatePreviewWithoutAutoRetry"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "dataChoicesKeepStableKeysAndRetainHiddenFieldPreferences"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "nativeTimePickerReturnsAnOvernightWindowWithoutChangingDates"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "disposalStopsPreviewPreparation"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "planCarouselWithoutStoreProductsShowsPlayUnavailable"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "allEightRealFreePreviewsKeepWireFormatAndStoredSettings"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "pointCountsAndUnavailablePurchaseAreLocalizedWithoutChangingStoredData"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "dateApplicationPreservesDstCivilBoundsAndResetKeepsOtherFilters"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "changingAndRestoringFiltersDoesNotBringBackAnOldPreview"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "backgroundCancelsPreviewAndReturningDoesNotRestartIt"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "heldDoubleActionStartsOnceAndExplicitCancelStopsThePreview"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "billingNoticeUsesCurrentUiLocaleWithoutChangingItsIdentity"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "heldButtonActionUsesTheCurrentSelection"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "fractionalAccuracyIsDisplayedWithoutTruncationAndTranslatedAnyIsNull"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "withoutAnEligibleTrialTheCarouselSkipsTheFreeWeekAndTheGateCannotBeClosed"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "filenamePresetLabelsDoNotTranslatePatternsOrUserTemplates"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "configuredCharacterLimitWithManyLinesCanBeDisplayedAndScrolled"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "planCarouselOffersTheFreeWeekBuysTheSelectedPlanAndUsesTheCallbacks"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportOptionsFlowTest",
+      "test": "previewFailureIsLocalizedAndRetryUsesTheRealFreeRenderer"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportDateOwnershipTest",
+      "test": "heldApplyUsesTheCurrentUnrelatedFilters"
+    },
+    {
+      "class": "com.bontecou.whereday.ExportDateOwnershipTest",
+      "test": "changedRangeInvalidatesTheOldReviewAndItsHeldApply"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitReviewLifecycleTest",
+      "test": "notesOnlySaveDoesNotCreateACorrectionOrRememberAPlace"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitReviewLifecycleTest",
+      "test": "repeatedCorrectionsAndRestorationKeepFirstConfirmationAndManagedMemory"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitReviewLifecycleTest",
+      "test": "repeatedRestoredAddressEditsUseTheCurrentEditor"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitReviewLifecycleTest",
+      "test": "undoRetainsAuditButHidesUndoUntilAnotherCorrection"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "androidIntentHasExactDraftFieldsWithoutNotesAttendeesOrCalendarPermissions"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "oneClickCapturesNowAndDoubleDeliveryCannotOpenTwoEditors"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "replacedSourceRejectsHeldActionsAndLatePreparation"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "exactOutingHandsOffStoredBoundsAndFullRouteFirstPointWithoutMutation"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "disposedActionCannotOpenAnEditor"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "savedVisitCalendarActionIgnoresDirtyEditorFieldsAndKeepsHistory"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "latePausedPreparationCannotClearTheBusyFenceOfANewerRequest"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "missingCalendarShowsSpanishRecoveryAndCanRetry"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "preparationFailureDoesNotLaunchOrExposePrivateError"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "backgroundReturnCannotLaunchAPreviouslyPreparedEvent"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "unsavedVisitDoesNotOfferCalendarExport"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "inferredOutingHandsOffItsRangeWithoutCreatingAStoredSession"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "anotherLinkDoesNotReplaceAnAlreadyOpenLinkedDraft"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "restoredExistingVisitRetainsTheOriginalOptimisticLockBaseline"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "anotherWindowDefersTheLinkUntilMainWindowFocusReturns"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "restoredLinkedDraftKeepsEditsAndSavesOnlyOneVisit"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "pastVisitLinkKeepsBothSuppliedTimesThroughTheNormalSavePath"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "invalidAndMissingLinksShowLocalizedFeedbackWithoutChangingHistory"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "anotherLinkWaitsForAnUnfinishedEditorAndOnlyTheLatestPendingLinkOpens"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "existingUuidLinkLoadsTheSavedSnapshotWithoutCreatingAnotherVisit"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "missingCoordinatesNeverTriggerGpsOrAnAutomaticSave"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "checkInLinkPrefillsButOnlyExplicitSaveCreatesTheOpenManualVisit"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "aLinkReceivedWhileBackgroundedWaitsForForeground"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "linkedIntervalsStillRequireExplicitOverlapAdmission"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "aPendingRequestFromAnErasedGenerationIsConsumedWithoutOpening"
+    },
+    {
+      "class": "com.bontecou.whereday.VisitLinkFlowTest",
+      "test": "aDateFilterBlocksAnIncomingLinkUntilTheFilterIsDismissed"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "inferredDetailsHaveNoExactSessionEditorOrStoredSession"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "mapFocusReceivesTheOriginalSession"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "spanishDeleteRequiresConfirmationAndPreservesVisitsAndOtherOutings"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "editorActionsStayReachableWithLongSpanishText"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "spanishRenameAndFormatSelectionKeepRecordIdentity"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "defaultNameRemainsNullAndLinkedVisitNavigationPreservesVisit"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "missingOutingHasSpanishFailureAndBackAction"
+    },
+    {
+      "class": "com.bontecou.whereday.OutingLocalizationTest",
+      "test": "detailsLocalizeCountsDurationAndDistanceWithoutChangingHistory"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "beaa3595958d7a92df4b3d94342412e5654f03c20a3349d5fde29f638b5fcc7f"
+    },
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "f817710e0f0b6b93cc5b18a50d83ffa6389e37eeb3c8d01647fec3e443b9de87"
+    }
+  ]
+}

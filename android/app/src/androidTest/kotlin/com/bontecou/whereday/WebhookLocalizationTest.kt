@@ -152,7 +152,7 @@ class WebhookLocalizationTest {
     }
     @Test fun freeDeliveryActionShowsLocalizedPurchaseWithoutDispatching() {
         show(paid=false);click("Probar la conexión")
-        compose.onNodeWithText("Acceso de por vida a las exportaciones").assertIsDisplayed()
+        compose.onNodeWithText("Planes de Whereday").assertIsDisplayed()
         compose.onNodeWithText("Panel de compra de prueba").assertIsDisplayed()
         compose.onNodeWithText("Cerrar").performClick();compose.onNodeWithTag("webhook-screen").assertExists()
         compose.runOnIdle {assertTrue(calls.isEmpty());assertTrue(saves.isEmpty())}

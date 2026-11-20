@@ -1,0 +1,50 @@
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.platform.DiskHistoryImportScaleTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.bontecou.whereday.platform.DiskHistoryImportScaleTest:
+INSTRUMENTATION_STATUS: test=millionJsonPointsReviewCommitDeduplicateAndClear
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.bontecou.whereday.platform.DiskHistoryImportScaleTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 1200000 ms
+	at kotlinx.coroutines.TimeoutKt.TimeoutCancellationException(Timeout.kt:189)
+	at kotlinx.coroutines.TimeoutCoroutine.run(Timeout.kt:157)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedRunnableTask.run(EventLoop.common.kt:505)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.DefaultExecutor.run(DefaultExecutor.kt:105)
+	at java.lang.Thread.run(Thread.java:1012)
+
+INSTRUMENTATION_STATUS: stream=
+Error in millionJsonPointsReviewCommitDeduplicateAndClear(com.bontecou.whereday.platform.DiskHistoryImportScaleTest):
+kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 1200000 ms
+	at kotlinx.coroutines.TimeoutKt.TimeoutCancellationException(Timeout.kt:189)
+	at kotlinx.coroutines.TimeoutCoroutine.run(Timeout.kt:157)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedRunnableTask.run(EventLoop.common.kt:505)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.DefaultExecutor.run(DefaultExecutor.kt:105)
+	at java.lang.Thread.run(Thread.java:1012)
+
+INSTRUMENTATION_STATUS: test=millionJsonPointsReviewCommitDeduplicateAndClear
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1,200.195
+There was 1 failure:
+1) millionJsonPointsReviewCommitDeduplicateAndClear(com.bontecou.whereday.platform.DiskHistoryImportScaleTest)
+kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 1200000 ms
+	at kotlinx.coroutines.TimeoutKt.TimeoutCancellationException(Timeout.kt:189)
+	at kotlinx.coroutines.TimeoutCoroutine.run(Timeout.kt:157)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedRunnableTask.run(EventLoop.common.kt:505)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.DefaultExecutor.run(DefaultExecutor.kt:105)
+	at java.lang.Thread.run(Thread.java:1012)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

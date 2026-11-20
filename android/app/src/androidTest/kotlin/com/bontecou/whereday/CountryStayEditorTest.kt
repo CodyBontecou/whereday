@@ -67,7 +67,7 @@ class CountryStayEditorTest {
         // The stay editor owns a dialog window; the default root can be its unfocused background Activity.
         androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isRoot())
             .inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog())
-            .perform(androidx.test.espresso.action.ViewActions.closeSoftKeyboard())
+            .perform(closeQaKeyboard())
     }
     private fun save() {
         // IME window dismissal is independent of Compose's idle clock after a country dialog closes.

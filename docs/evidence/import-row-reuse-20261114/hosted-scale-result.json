@@ -1,0 +1,37 @@
+{
+  "run": 43557730812,
+  "head": "bf035f191f388b1d4de16492ee6f494b6cdb5d37",
+  "artifact": 14100404797,
+  "counts": {
+    "name": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+    "tests": "4",
+    "failures": "3",
+    "errors": "0",
+    "skipped": "0",
+    "time": "3657.013",
+    "timestamp": "2026-11-14T05:47:14",
+    "hostname": "localhost"
+  },
+  "cases": [
+    {
+      "name": "tenThousandJsonPointsReviewCommitDeduplicateAndClear",
+      "time": "13.785",
+      "failure": null
+    },
+    {
+      "name": "millionMarkdownPointsReviewCommitDeduplicateAndClear",
+      "time": "1200.084",
+      "failure": null
+    },
+    {
+      "name": "millionCsvPointsReviewCommitDeduplicateAndClear",
+      "time": "1200.126",
+      "failure": null
+    },
+    {
+      "name": "millionJsonPointsReviewCommitDeduplicateAndClear",
+      "time": "1242.205",
+      "failure": null
+    }
+  ]
+}

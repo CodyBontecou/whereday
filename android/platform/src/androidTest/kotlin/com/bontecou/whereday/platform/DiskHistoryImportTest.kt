@@ -36,6 +36,96 @@ class DiskHistoryImportTest {
         try {text.byteInputStream().use {workspace.capture(it) {}};workspace.prepare(Locale.US,ZoneOffset.UTC) {};return workspace}
         catch(error:Throwable) {workspace.close();throw error}
     }
+    @Test fun reviewWritesOnlyChangedBaselinesAndClearsRemovedMatches():Unit=runBlocking {fixture {db,factory,_->
+        val incoming=point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(1000))
+        prepare(factory,json(listOf(visit),listOf(incoming))).use {workspace->
+            val updates=mutableListOf<ImportStageRow>()
+            val observed=object:HistoryImportStage by workspace.stage {
+                override fun baselines(rows:List<ImportStageRow>) {updates+=rows;workspace.stage.baselines(rows)}
+            }
+            val target=DatabaseHistoryImportTarget(db)
+            assertEquals(1,target.inspect(observed) {})
+            assertEquals(listOf(visit.id),updates.map {it.id})
+            assertNotNull(updates.single().baseline)
+            updates.clear()
+            assertEquals(1,target.inspect(observed) {})
+            assertTrue("Unchanged baseline hashes must not be rewritten",updates.isEmpty())
+            db.clearAllTables()
+            assertEquals(0,target.inspect(observed) {})
+            assertEquals(listOf(visit.id),updates.map {it.id})
+            assertNull("A removed local match must clear its previous baseline",updates.single().baseline)
+            workspace.stage.seal {};workspace.stage.verify {}
+            assertEquals(HistoryImportCounts(visits=1,points=1),target.apply(observed,HistoryImportPolicy.replaceExisting) {})
+            assertEquals(visit,db.history().visit(visit.id)!!.value)
+            assertEquals(incoming,db.history().point(incoming.id)!!.value)
+        }
+    }}
+    @Test fun keepRechecksIdentitiesAddedSinceReviewAndPreservesTheirCurrentMetadata():Unit=runBlocking {fixture {db,factory,_->
+        val incomingPoints=(1..201).map {point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(it.toLong()))}
+        val incomingVisit=visit.copy(id=UUID.randomUUID().toString(),arrivedAt=now.plusSeconds(10000),departedAt=now.plusSeconds(10060))
+        prepare(factory,json(listOf(incomingVisit),incomingPoints)).use {workspace->
+            val target=DatabaseHistoryImportTarget(db)
+            assertEquals(0,target.inspectPlan(workspace.stage) {}.existing)
+            workspace.stage.seal {}
+            val localPoint=PointRow(incomingPoints.first().copy(time=now.plusSeconds(30000),accuracy=99.0),"new-local-session")
+            val localVisit=incomingVisit.copy(arrivedAt=now.plusSeconds(20000),departedAt=now.plusSeconds(20060),notes="Keep the new local edit",confirmation=Confirmation.corrected)
+            db.history().put(localPoint);db.history().put(VisitRow(localVisit))
+            assertEquals(HistoryImportCounts(points=200,kept=2),target.apply(workspace.stage,HistoryImportPolicy.keepExisting) {})
+            assertEquals(localPoint,db.history().point(localPoint.value.id))
+            assertEquals(localVisit,db.history().visit(localVisit.id)!!.value)
+            assertEquals(202L,db.history().totalPointCount())
+        }
+    }}
+    @Test fun sealedChronologicalDigestRejectsMissingOrOrphanedRowsAndValidPayloadChanges():Unit=runBlocking {fixture {db,factory,directory->
+        val changed=point.copy(accuracy=9.0)
+        val mutations=listOf(
+            "DELETE FROM google_order" to emptyArray<Any>(),
+            "UPDATE google_order SET id='orphan'" to emptyArray<Any>(),
+            "UPDATE google_order SET seconds=seconds+1" to emptyArray<Any>(),
+            "UPDATE records SET payload=?" to arrayOf<Any>(ImportStageCodec.gson.toJson(changed.copy(accuracy=8.0))),
+            "UPDATE records SET baseline='changed'" to emptyArray<Any>(),
+            "UPDATE records SET provided_id=1-provided_id" to emptyArray<Any>())
+        for((sql,args) in mutations) prepare(factory,json(emptyList(),listOf(changed))).use {workspace->
+            workspace.stage.seal {}
+            val file=directory.walkTopDown().single {it.name=="records.db"}
+            SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READWRITE).use {it.execSQL(sql,args)}
+            assertThrows(sql,IllegalStateException::class.java) {workspace.stage.verify {}}
+            assertEquals(point,db.history().point(point.id)!!.value)
+            assertEquals(1L,db.history().totalPointCount())
+        }
+    }}
+    @Test fun pointAdmissionHandlesDescendingBucketsLaterDuplicatesAndReset():Unit=runBlocking {fixture {_,factory,_->
+        fun candidate(seconds:Long,coordinate:Coordinate=point.coordinate)=point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(seconds),coordinate=coordinate)
+        val high=candidate(10);val low=candidate(5);val repeatedLow=candidate(5)
+        val distinct=candidate(5,Coordinate(19.0,-66.0));val repeatedHigh=candidate(10);val newest=candidate(11)
+        val values=listOf(high,low,repeatedLow,distinct,repeatedHigh,newest)
+        fun row(value:TrackPoint)=ImportStageRow(ImportRecordKind.point,value.id,ImportStageCodec.gson.toJson(value))
+        prepare(factory,json(emptyList(),values)).use {workspace->
+            val stage=workspace.stage
+            stage.resetAdmission()
+            assertEquals(ImportStageDuplicates(points=1),stage.admitPreview(values.take(4).map(::row)) {})
+            assertEquals(ImportStageDuplicates(points=1),stage.admitPreview(values.drop(4).map(::row)) {})
+            stage.resetAdmission()
+            assertEquals(ImportStageDuplicates(),stage.admitPreview(listOf(row(high))) {})
+        }
+    }}
+    @Test fun batchedFreshPointsMatchPendingAndPreviousPageRowsWithoutLosingDistinctLocations():Unit=runBlocking {fixture {db,factory,_->
+        withContext(Dispatchers.IO) {db.clearAllTables()}
+        val values=(0..200).map {point.copy(id=UUID.randomUUID().toString(),time=now.plusSeconds(it.toLong()))}
+        val duplicateInPage=values[100].copy(id=UUID.randomUUID().toString(),time=values[100].time.plusMillis(100))
+        val duplicateAcrossPage=values[198].copy(id=UUID.randomUUID().toString(),time=values[198].time.plusMillis(100))
+        val distinct=values.last().copy(id=UUID.randomUUID().toString(),time=values.last().time.plusMillis(100),coordinate=Coordinate(19.0,-66.0))
+        prepare(factory,json(emptyList(),values+duplicateInPage+duplicateAcrossPage+distinct)).use {workspace->
+            val target=DatabaseHistoryImportTarget(db)
+            assertEquals(2,target.inspectPlan(workspace.stage) {}.repeated.points)
+            workspace.stage.seal {}
+            assertEquals(HistoryImportCounts(points=202,kept=2),target.apply(workspace.stage,HistoryImportPolicy.keepExisting) {})
+            assertEquals(202L,db.history().totalPointCount())
+            assertNotNull(db.history().importPoints(listOf(distinct.id)).singleOrNull())
+            assertEquals(HistoryImportCounts(kept=204),target.apply(workspace.stage,HistoryImportPolicy.keepExisting) {})
+            assertEquals(202L,db.history().totalPointCount())
+        }
+    }}
     @Test fun malformedAuditCannotProduceAnApprovedReviewOrChangeRoom():Unit=runBlocking {fixture {db,factory,directory->
         val text="""arrived_at,latitude,longitude,visit_metadata
 2026-10-28T12:00:00.000Z,18,-66,"{""originalLocationName"":""\ud800""}"

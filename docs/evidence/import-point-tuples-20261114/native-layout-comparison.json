@@ -1,0 +1,142 @@
+[
+  {
+    "iteration": 0,
+    "withoutRowid": true,
+    "rows": 100000,
+    "insertNanos": 10906684381,
+    "fileBytes": 34168832,
+    "sqliteVersion": "3.44.3",
+    "plan": [
+      "SEARCH o USING COVERING INDEX google_chronology ((kind,seconds,nanos,sequence)>(?,?,?,?))",
+      "SEARCH r USING PRIMARY KEY (kind=? AND id=?)"
+    ],
+    "scans": [
+      {
+        "trial": 0,
+        "rows": 100000,
+        "queryNanos": 538831714,
+        "totalNanos": 2223688334,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 1,
+        "rows": 100000,
+        "queryNanos": 491588672,
+        "totalNanos": 2032243001,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 2,
+        "rows": 100000,
+        "queryNanos": 318114830,
+        "totalNanos": 1407726959,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      }
+    ]
+  },
+  {
+    "iteration": 1,
+    "withoutRowid": false,
+    "rows": 100000,
+    "insertNanos": 3212575418,
+    "fileBytes": 37437440,
+    "sqliteVersion": "3.44.3",
+    "plan": [
+      "SEARCH o USING COVERING INDEX google_chronology ((kind,seconds,nanos,sequence)>(?,?,?,?))",
+      "SEARCH r USING INDEX sqlite_autoindex_records_1 (kind=? AND id=?)"
+    ],
+    "scans": [
+      {
+        "trial": 0,
+        "rows": 100000,
+        "queryNanos": 253198750,
+        "totalNanos": 1299613126,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 1,
+        "rows": 100000,
+        "queryNanos": 263032829,
+        "totalNanos": 1317207626,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 2,
+        "rows": 100000,
+        "queryNanos": 263906629,
+        "totalNanos": 1325736625,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      }
+    ]
+  },
+  {
+    "iteration": 2,
+    "withoutRowid": false,
+    "rows": 100000,
+    "insertNanos": 3190586001,
+    "fileBytes": 37437440,
+    "sqliteVersion": "3.44.3",
+    "plan": [
+      "SEARCH o USING COVERING INDEX google_chronology ((kind,seconds,nanos,sequence)>(?,?,?,?))",
+      "SEARCH r USING INDEX sqlite_autoindex_records_1 (kind=? AND id=?)"
+    ],
+    "scans": [
+      {
+        "trial": 0,
+        "rows": 100000,
+        "queryNanos": 248693876,
+        "totalNanos": 1287190459,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 1,
+        "rows": 100000,
+        "queryNanos": 243738842,
+        "totalNanos": 1278317168,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 2,
+        "rows": 100000,
+        "queryNanos": 253551204,
+        "totalNanos": 1306955834,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      }
+    ]
+  },
+  {
+    "iteration": 3,
+    "withoutRowid": true,
+    "rows": 100000,
+    "insertNanos": 3466990710,
+    "fileBytes": 34168832,
+    "sqliteVersion": "3.44.3",
+    "plan": [
+      "SEARCH o USING COVERING INDEX google_chronology ((kind,seconds,nanos,sequence)>(?,?,?,?))",
+      "SEARCH r USING PRIMARY KEY (kind=? AND id=?)"
+    ],
+    "scans": [
+      {
+        "trial": 0,
+        "rows": 100000,
+        "queryNanos": 280629844,
+        "totalNanos": 1317652542,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 1,
+        "rows": 100000,
+        "queryNanos": 288188671,
+        "totalNanos": 1328732084,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      },
+      {
+        "trial": 2,
+        "rows": 100000,
+        "queryNanos": 314699585,
+        "totalNanos": 1377994917,
+        "payloadSha256": "7b615998c2fe2bb6a1b6d3f568c77ea0279344e1f2d4a77ba228e19e08eb75df"
+      }
+    ]
+  }
+]
