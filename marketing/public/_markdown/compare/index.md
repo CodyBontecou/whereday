@@ -9,6 +9,12 @@ Understand the account, recording, backup, and export choices before changing th
 
 By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed October 30, 2026
 
+## [Location history apps for iPhone](https://whereday.com/compare/location-history-apps-iphone/)
+
+Apple’s built-in features, Whereday, Arc Timeline 4, Google Maps Timeline, self-hosted Dawarich and family sharing apps, compared on routes, storage, exports and what you can see if you stop paying.
+
+[Compare location history apps](https://whereday.com/compare/location-history-apps-iphone/)
+
 ## [Whereday and Google Timeline](https://whereday.com/compare/google-maps-timeline/)
 
 A comparison of recording controls, device storage, backup, export formats, and payment. Learn where each fits and why your existing Google archive needs to be kept separately.

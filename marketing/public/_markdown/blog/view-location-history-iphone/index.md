@@ -107,6 +107,8 @@ Photos, receipts, and calendar entries may help you remember a day, but they are
 
 ## Record your next day with Whereday
 
+Choosing an app to record from now on? [Compare the options](https://whereday.com/compare/location-history-apps-iphone/).
+
 If you want a separate journal without a Whereday account, try a short recording before a longer trip:
 
 - Install Whereday and complete permission setup. Always location access allows recording in the background.

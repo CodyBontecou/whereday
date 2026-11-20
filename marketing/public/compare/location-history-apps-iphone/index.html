@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location History Apps for iPhone Compared — Whereday</title>
+  <meta name="description" content="Compare iPhone location history apps on routes, export formats and what you can see if you stop paying: Whereday, Arc Timeline 4, Google, Dawarich.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/compare/location-history-apps-iphone/">
+  <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Location History Apps for iPhone Compared — Whereday">
+  <meta property="og:description" content="Compare iPhone location history apps on routes, export formats and what you can see if you stop paying: Whereday, Arc Timeline 4, Google, Dawarich.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://whereday.com/compare/location-history-apps-iphone/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map-home.png">
+  <meta property="og:image:alt" content="Whereday’s map home with today’s route coloured by place, using an invented journal">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Location History Apps for iPhone Compared — Whereday">
+  <meta name="twitter:description" content="Compare iPhone location history apps on routes, export formats and what you can see if you stop paying: Whereday, Arc Timeline 4, Google, Dawarich.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map-home.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6;
+  --card: #FBF9F4;
+  --ink: #1E2B45;
+  --muted: #66645D;
+  --rule: #D8D2C3;
+  --rule-soft: #E4DED0;
+  --accent: #A8381F;
+  --rust: #C2462A;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); font-size: 17px; line-height: 1.6; }
+a { color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--rust); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: var(--card); z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-family: var(--serif); font-size: 1.3rem; font-weight: 500; text-decoration: none; }
+.brand img { border-radius: 7px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.footer-links a { color: var(--ink); }
+.button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 15px; line-height: 22px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #8E2E19; border-color: #8E2E19; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 72px; }
+.breadcrumbs { font-family: var(--mono); font-size: 12px; line-height: 20px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs a { color: var(--muted); }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li { margin: 0; }
+.breadcrumbs li + li::before { content: "·"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--serif); text-wrap: balance; letter-spacing: -0.01em; color: var(--ink); }
+h1 { max-width: 760px; font-size: 52px; line-height: 1.05; margin: 16px 0 24px; font-weight: 400; }
+h2 { font-size: 32px; line-height: 1.15; font-weight: 400; margin: 0 0 16px; }
+h3 { font-size: 22px; line-height: 1.25; font-weight: 500; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 1.55; color: var(--ink-soft, #3A465F); }
+header { padding-bottom: 40px; border-bottom: 1px solid var(--rule); }
+section { margin-top: 56px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+li::marker { color: var(--rust); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 18px; margin-bottom: 16px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+caption { text-align: left; font-family: var(--serif); font-size: 19px; font-weight: 500; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border-bottom: 1px solid var(--rule-soft); min-width: 160px; }
+th + th, td + td { border-left: 1px solid var(--rule-soft); }
+thead { background: var(--paper-deep, #ECE6D8); }
+thead th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 28px; border: 6px solid var(--ink); }
+.route-example { margin: 48px 0; }
+.route-example img { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--rule); }
+.route-example figcaption { max-width: none; margin-top: 12px; }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 36px; border-radius: 22px; background: var(--ink); color: var(--paper); }
+.closing h2, .closing h3 { color: var(--paper); font-size: 36px; line-height: 1.1; }
+.closing a:not(.button) { color: #F08A6B; }
+.closing .button { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.closing .button:hover { background: #ECE6D8; border-color: #ECE6D8; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); overflow-x: auto; font-size: 14px; line-height: 20px; }
+code, pre { font-family: var(--mono); }
+code { overflow-wrap: anywhere; font-size: 0.92em; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 38px; line-height: 1.08; }
+  h2 { font-size: 26px; line-height: 1.2; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://whereday.com/compare/location-history-apps-iphone/",
+      "url": "https://whereday.com/compare/location-history-apps-iphone/",
+      "name": "Location History Apps for iPhone Compared — Whereday",
+      "description": "Compare iPhone location history apps on routes, export formats and what you can see if you stop paying: Whereday, Arc Timeline 4, Google, Dawarich.",
+      "inLanguage": "en",
+      "dateModified": "2026-11-20",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      },
+      "headline": "Location history apps for iPhone, compared",
+      "datePublished": "2026-11-20",
+      "mainEntityOfPage": "https://whereday.com/compare/location-history-apps-iphone/",
+      "image": "https://whereday.com/screenshots/map-home.png",
+      "publisher": {
+        "@type": "Organization",
+        "name": "isolated.tech",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Compare",
+          "item": "https://whereday.com/compare/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Location history apps",
+          "item": "https://whereday.com/compare/location-history-apps-iphone/"
+        }
+      ]
+    }
+  ]
+}</script>
+<style id="shared-navigation-styles">/* Whereday "Reimagined" theme — shared fonts, tokens and base type. Inlined on every page by build_navigation.py, after each page's own styles, so these tokens win. */
+@font-face { font-family: "Inter"; src: url("/assets/fonts/inter-latin-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6; --paper-deep: #ECE6D8; --paper-warm: #F7F4EC; --card: #FBF9F4;
+  --ink: #1E2B45; --ink-soft: #3A465F; --mute: #66645D; --muted: #66645D;
+  --rule: #D8D2C3; --rule-soft: #E4DED0;
+  --accent: #A8381F; --accent-deep: #8E2E19; --accent-soft: rgba(194, 70, 42, 0.10); --rust: #C2462A;
+  --ochre: #B7862B; --sage: #5E7F5A; --slate: #7A86A8;
+  --lcd: #3F5C3C; --lcd-bright: #5E7F5A; --lcd-bg: #DFE6D6;
+  --danger: #A8381F; --warning: #8A6420;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --display: var(--serif);
+  --radius: 14px; --radius-lg: 22px;
+  --shadow: 0 18px 50px -30px rgba(30, 43, 69, 0.45);
+}
+html { background: var(--paper); }
+body { font-family: var(--sans); color: var(--ink); background: var(--paper); }
+::selection { background: rgba(194, 70, 42, 0.18); }
+:where(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.02em; }
+:where(h1, h2, h3) em { font-style: normal; }
+:where(a):focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; border-radius: 4px; }
+/* Shared components across hand-built pages */
+.btn { border-radius: 999px; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.btn-primary, .btn.btn-primary { background: var(--ink); border-color: var(--ink); color: var(--paper) !important; }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-ghost { border-color: var(--ink); }
+.eyebrow::before { background: var(--rust); }
+.ticker { background: var(--ink); border-color: var(--ink); }
+.ticker-track { color: var(--paper); }
+.ticker-track span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #F08A6B; }
+/* Navigation */
+.shared-navigation .brand { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+.shared-navigation .brand img { border-radius: 7px; border: 0; }
+.shared-navigation .brand-dot { display: none; }
+nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-color: var(--rule); }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { border-radius: 999px; padding-inline: 18px; background: var(--ink); border-color: var(--ink); color: var(--paper) !important; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.shared-navigation .nav-links > .btn:hover, .shared-navigation .nav-links > .button:hover { background: var(--accent-deep); border-color: var(--accent-deep); transform: none; }
+.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #D8D2C3); border-radius:999px; background:var(--paper, #F3EFE6); color:var(--ink, #1E2B45); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--rust, #C2462A); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #F3EFE6); border:1px solid var(--rule, #D8D2C3); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#ECE6D8; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#ECE6D8; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+/* Night ink: dark appearance follows the system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0F1626; --paper-deep: #141C30; --paper-warm: #121A2C; --card: #18213A;
+    --ink: #ECE6D8; --ink-soft: #C9CEDA; --mute: #9AA3B8; --muted: #9AA3B8;
+    --rule: #2C3754; --rule-soft: #222C46;
+    --accent: #F0805F; --accent-deep: #F4A088; --accent-soft: rgba(240, 128, 95, 0.14); --rust: #F0805F;
+    --ochre: #E0B565; --sage: #9DC097; --slate: #8E9BC2;
+    --lcd: #9DC097; --lcd-bright: #9DC097; --lcd-bg: #1F2D24;
+    --danger: #F0805F; --warning: #E0B565; --warn-bg: #2A2416;
+    --shadow: 0 18px 50px -30px rgba(0, 0, 0, 0.8);
+  }
+  /* Panels that are ink-on-paper inverted in light mode stay dark here, one step above the page */
+  .privacy-strip, .trust-card, footer, .ticker, .closing, .cta-panel {
+    --paper: #ECE6D8; --ink: #1B2540; --card: #1B2540; --rule: #2C3754;
+    border: 1px solid #2C3754;
+  }
+  .privacy-readout { background: #141C30 !important; }
+  nav.top, nav.top.shared-navigation { background: rgba(15, 22, 38, 0.9); }
+  .hero-stats { background: var(--card); }
+  .phone { box-shadow: 0 40px 80px -36px rgba(0, 0, 0, 0.9); outline: 1px solid #2C3754; }
+  img[src*="app-store-qr"] { background: #FBF9F4; padding: 8px; border-radius: 10px; }
+  .shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { color: #0F1626 !important; }
+  .btn-primary, .btn.btn-primary { color: #0F1626 !important; }
+  .pricing-side .anti-features li::before, .checklist li::before { background-color: #3F5C3C; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">Whereday</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/">Guides</a><a href="/tools/">Tools</a><a href="/compare/" aria-current="true">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/">Guides</a><a href="/tools/">Tools</a><a href="/compare/" aria-current="true">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/compare/">Compare</a></li><li>Location history apps</li></ol></nav>
+    <article aria-labelledby="article-title">
+    <header><p class="eyebrow">Practical iPhone guides</p><h1 id="article-title">Location history apps for iPhone, compared</h1><p class="lede">Choose an app to record your own history from now on, judged on the same criteria. Whereday publishes this page and is one of the apps compared.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-20">November 20, 2026</time></p></header>
+    <section aria-labelledby="short-answer">
+  <h2 id="short-answer">Short answer: pick by the job you need done</h2>
+  <p><strong>Disclosure: Whereday publishes this page and is one of the apps compared.</strong> Every app below is judged on the same criteria, and each claim about another product links to its own documentation or App Store listing.</p>
+  <p>If you want a private journal with portable files and no account, look at Whereday or Arc Timeline 4. If you already pay for Arc, check its current terms before you rely on it. If you want your own server, send OwnTracks or Overland points to Dawarich. If you want to see family members, that is a different job, so use Life360 or Find My. No app can rebuild days that were never recorded.</p>
+  <nav class="article-toc" aria-label="In this post"><strong>In this post</strong><ol><li><a href="#how-we-compared">How we compared</a></li><li><a href="#comparison-table">Comparison table</a></li><li><a href="#built-in">Built-in Apple features</a></li><li><a href="#whereday">Whereday</a></li><li><a href="#arc-timeline">Arc Timeline 4</a></li><li><a href="#google-maps-timeline">Google Maps Timeline</a></li><li><a href="#self-hosted">Self-hosted</a></li><li><a href="#family-sharing">Family sharing apps</a></li><li><a href="#before-you-commit">Questions to ask before you commit</a></li><li><a href="#switching">Switching</a></li><li><a href="#faq">FAQ</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="how-we-compared">
+  <h2 id="how-we-compared">How we compared</h2>
+  <p>This page answers “which app should record my history from now on?” To find where your existing history already is, read <a href="/blog/view-location-history-iphone/">how to see your location history on iPhone</a>.</p>
+  <p>Every app gets the same nine criteria: routes or stops only, where the data lives, whether you need an account, what you can see if you stop paying, export formats, Apple Watch recording, Google Timeline JSON import, and price model. Competitor cells come from the app’s own App Store listing, developer pages or documentation. Where we found no such statement, the cell says “Not documented”. We link App Store listings instead of copying prices, because prices change. Sources were checked on November 20, 2026.</p>
+</section>
+
+<section aria-labelledby="comparison-table">
+  <h2 id="comparison-table">Comparison table</h2>
+  <div class="table-scroll" role="region" aria-label="Location history apps compared" tabindex="0">
+    <table>
+      <caption>Location history apps for iPhone, compared on the same criteria</caption>
+      <thead><tr><th scope="col">App</th><th scope="col">Routes or stops</th><th scope="col">Where data lives</th><th scope="col">Account</th><th scope="col">If you stop paying</th><th scope="col">Export formats</th><th scope="col">Apple Watch recording</th><th scope="col">Google Timeline JSON import</th><th scope="col">Price model</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Apple Significant Locations / Visited Places</th><td>Places and predictive routes, per <a href="https://support.apple.com/en-us/HT207056">Apple</a></td><td>On your devices, end-to-end encrypted; Apple says it “cannot be read by Apple”</td><td>Apple Account for sync</td><td>Not a paid service</td><td>Apple documents no export</td><td>Not documented</td><td>No</td><td>Part of iOS</td></tr>
+        <tr><th scope="row">Find My</th><td>One point: current location, or the last known location for up to seven days (<a href="https://support.apple.com/en-us/104978">Apple</a>). Apple documents no history view.</td><td>Apple’s Find My service</td><td>Apple Account</td><td>Not a paid service</td><td>Apple documents no export</td><td>Not documented</td><td>No</td><td>Part of iOS</td></tr>
+        <tr><th scope="row">Whereday (publisher of this page)</th><td>Visits and GPS routes</td><td>On your iPhone (<a href="/docs/privacy-data/">privacy and data</a>)</td><td>No Whereday account</td><td>New users keep file export after a subscription ends. Existing free users keep their earlier export-unlock requirement.</td><td>JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks, Overland (<a href="/docs/export-import/">docs</a>)</td><td>Yes, records on its own and queues the transfer to the iPhone (<a href="/docs/apple-watch/">docs</a>)</td><td>Yes, free, since version 1.8</td><td>New users: trial, subscription or Lifetime. <a href="https://apps.apple.com/app/id6761960794">App Store listing</a></td></tr>
+        <tr><th scope="row">Arc Timeline 4 (Big Paua)</th><td>Not documented in the sources checked</td><td>“All data stored on your device” (<a href="https://apps.apple.com/us/app/arc-timeline-4/id6740688708">listing</a>); optional iCloud backup (<a href="https://www.bigpaua.com/arcapp/">Big Paua</a>)</td><td>“No accounts, no sign-ups” (listing)</td><td>Developer, November 2025, before Arc Timeline 4: “Currently you need an active subscription to view your data in the app. You can however export your data to GPX and then view it in other apps, but that’s not really ideal.” (<a href="https://support.bigpaua.com/t/accessing-timeline-without-subscription/1040">forum</a>). Not stated for Arc Timeline 4.</td><td>JSON or GPX (“export your data at any time, as JSON or GPX”, Big Paua)</td><td>Not documented</td><td>Not documented</td><td>“A free trial is included. An active subscription or lifetime purchase is required after the trial period.” (listing)</td></tr>
+        <tr><th scope="row">Google Maps Timeline</th><td>Visits and routes saved on signed-in devices (<a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google Help</a>)</td><td>On your device; optional encrypted backup on Google’s servers</td><td>Google account</td><td>Not documented</td><td>JSON (<code>location-history.json</code>)</td><td>Not documented</td><td>Not documented</td><td>Not documented</td></tr>
+        <tr><th scope="row">Dawarich with OwnTracks or Overland</th><td>The points your tracking app sends (<a href="https://dawarich.app/docs/getting-started/track-your-location/">Dawarich docs</a>)</td><td>Your own server (<a href="https://owntracks.org/booklet/">OwnTracks: “a server of your choice”</a>)</td><td>Not documented</td><td>“Self-host for free — every Pro feature, your server, zero cost”; paid hosted plans (<a href="https://dawarich.app/pricing">pricing</a>)</td><td>GPX, GeoJSON (Dawarich FAQ, <a href="https://dawarich.app">dawarich.app</a>)</td><td>Not documented</td><td>Yes (<a href="https://dawarich.app/docs/features/imports/">Dawarich imports</a>)</td><td>Free to self-host; hosted plans are paid</td></tr>
+        <tr><th scope="row">Life360</th><td>Family location sharing; its listing says Silver: 2 days, Gold: 30 days of Location History (<a href="https://apps.apple.com/us/app/life360-find-family-friends/id384830320">App Store</a>)</td><td>Not documented</td><td>Not documented</td><td>Not documented</td><td>Not documented</td><td>Not documented</td><td>No</td><td>Subscription tiers on the <a href="https://apps.apple.com/us/app/life360-find-family-friends/id384830320">App Store listing</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="source-note">Checked November 20, 2026. “Not documented” means we found no statement in the linked sources, not that the feature is absent. “No” in the import column for Apple, Find My and Life360 means Whereday does not import their data. Whereday cells are checked against the app and its <a href="/docs/">documentation</a>.</p>
+</section>
+
+<section aria-labelledby="built-in">
+  <h2 id="built-in">Built-in Apple features</h2>
+  <p>Apple’s <a href="https://support.apple.com/en-us/HT207056">Location Services &amp; Privacy</a> page says Significant Locations keeps “places you have recently been” and “the routes you take” to give you personalized features, such as predictive routes and Memories in Photos. Apple says this is end-to-end encrypted and cannot be read by Apple. Apple documents no export, so you cannot take that list out as a file. Read <a href="/blog/significant-locations-iphone/">Significant Locations and Visited Places explained</a> for what each keeps.</p>
+  <p><strong>Find My</strong> shows the current location, or the last known location for up to seven days, according to <a href="https://support.apple.com/en-us/104978">Apple’s Find My article</a>. Apple documents no history view. See <a href="/blog/find-my-location-history/">whether Find My keeps location history</a>.</p>
+</section>
+
+<section aria-labelledby="whereday">
+  <h2 id="whereday">Whereday</h2>
+  <p>We make Whereday, so weigh this section accordingly. It records visits and GPS routes on your iPhone. The Apple Watch app can record GPS on its own and queues the transfer to your iPhone (<a href="/docs/apple-watch/">Apple Watch docs</a>). Records are stored locally and there is no Whereday account (<a href="/docs/privacy-data/">privacy and data</a>).</p>
+  <p>Export writes eight formats: JSON, CSV, Markdown, GPX, KML, GeoJSON, OwnTracks and Overland (<a href="/docs/export-import/">export and import docs</a>). Import and Export Preview are free. Whereday imports Google Timeline JSON in the raw, legacy semantic and on-device formats, and its own JSON, CSV, Markdown and backup files. It does not import GPX, KML or GeoJSON.</p>
+  <p><strong>Access rules.</strong> From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. New users keep file export after a subscription ends. Existing free users keep their earlier export-unlock requirement.</p>
+  <p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></p>
+  <p>Access rules for new and existing users are on the <a href="/#export-access">homepage</a>.</p>
+</section>
+
+<section aria-labelledby="arc-timeline">
+  <h2 id="arc-timeline">Arc Timeline 4</h2>
+  <p>This is Arc Timeline, the location app from Big Paua, not the Arc browser. The current app is <a href="https://apps.apple.com/us/app/arc-timeline-4/id6740688708">Arc Timeline 4</a>. Its listing says “All data stored on your device”, “No accounts, no sign-ups” and “Export your data anytime in standard JSON format”. It also says: “A free trial is included. An active subscription or lifetime purchase is required after the trial period.” <a href="https://www.bigpaua.com/arcapp/">Big Paua’s Arc page</a> says data is stored on iPhone, with no account and optional iCloud backup, and that you can “export your data at any time, as JSON or GPX”.</p>
+  <p>The original Arc Timeline listing (<a href="https://apps.apple.com/us/app/arc-timeline-trips-places/id1063151918">id1063151918</a>) says in its 3.17.4 release notes: “All new subscriptions and Lifetime purchases now happen in Arc Timeline 4. This app stays in place for existing subscribers.”</p>
+  <p>On what happens when you stop paying, Big Paua’s developer wrote on its <a href="https://support.bigpaua.com/t/accessing-timeline-without-subscription/1040">support forum</a> (November 2025, before Arc Timeline 4): “Currently you need an active subscription to view your data in the app. You can however export your data to GPX and then view it in other apps, but that’s not really ideal.” We found no Arc Timeline 4 statement on this, so we don’t claim it applies. The safe advice is to export while your access is active.</p>
+</section>
+
+<section aria-labelledby="google-maps-timeline">
+  <h2 id="google-maps-timeline">Google Maps Timeline</h2>
+  <p>Per <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Google’s Timeline help for iPhone</a>, visits and routes are saved on signed-in devices. Timeline is off by default and opt-in, and you need a Google account. Backup is an encrypted copy on Google’s servers and requires auto-delete to be off. Auto-delete runs at 3, 18 or 36 months. To export, open your profile picture → <strong>Settings → Location &amp; Privacy → Export Timeline data</strong>, which saves <code>location-history.json</code>. For depth, read <a href="/compare/google-maps-timeline/">Whereday and Google Timeline compared</a>.</p>
+</section>
+
+<section aria-labelledby="self-hosted">
+  <h2 id="self-hosted">Self-hosted: OwnTracks or Overland to Dawarich</h2>
+  <p>OwnTracks sends to “a server of your choice” (<a href="https://owntracks.org/booklet/">OwnTracks booklet</a>). <a href="https://dawarich.app">Dawarich</a> is a server you run, and its <a href="https://dawarich.app/docs/getting-started/track-your-location/">tracking docs</a> list Overland, OwnTracks, Traccar Client and GPSLogger, and name official Dawarich apps for iOS and Android. It imports <a href="https://dawarich.app/docs/features/imports/">Google Timeline JSON</a>, and its <a href="https://dawarich.app/pricing">pricing page</a> says “Self-host for free — every Pro feature, your server, zero cost”, with paid hosted plans.</p>
+  <p>The trade-off is effort: you run, secure and back up the server yourself. Whereday can also send points to Dawarich; see <a href="/integrations/dawarich/">Dawarich integration</a>.</p>
+</section>
+
+<section aria-labelledby="family-sharing">
+  <h2 id="family-sharing">Family sharing apps</h2>
+  <p>Life360 and Find My do a different job: they share live location with people you choose, and aren’t built as a personal journal. The <a href="https://apps.apple.com/us/app/life360-find-family-friends/id384830320">Life360 listing</a> describes family safety and location sharing. If that is what you need, use them. Read <a href="/blog/find-my-location-history/">does Find My keep location history</a> for what Apple keeps.</p>
+</section>
+
+<section aria-labelledby="before-you-commit">
+  <h2 id="before-you-commit">Questions to ask before you commit</h2>
+  <ul>
+    <li>Can I export before the trial ends? Do it before then.</li>
+    <li>Does a GPX or CSV export open in another tool on day one? Test it with a short outing (see the <a href="/tools/gpx-viewer/">GPX viewer</a> and <a href="/docs/export-import/">export docs</a>).</li>
+    <li>Are the battery and permission settings right? Read <a href="/blog/iphone-location-tracking-battery/">location tracking and battery</a>.</li>
+    <li>Do I keep the original file after any export or import? Keep it, and see <a href="/blog/back-up-iphone-location-history/">backing up your history</a>.</li>
+    <li>What can I see if I stop paying? Check the cell for that app above.</li>
+  </ul>
+  <p>No app can rebuild days that were never recorded. See <a href="/blog/missing-location-history-iphone/">missing location history</a> and the <a href="/blog/private-location-journal-iphone/">private location journal guide</a>.</p>
+</section>
+
+<section aria-labelledby="switching">
+  <h2 id="switching">Switching: moving existing history</h2>
+  <p>Whereday imports Google Timeline JSON in the raw, legacy semantic and on-device formats, and its own JSON, CSV, Markdown and backup files. Follow <a href="/blog/import-google-timeline-iphone/">the Google Timeline import walkthrough</a>. Whereday does not import GPX, KML or GeoJSON, and it does not import Arc, Life360 or Apple data. You can still inspect GPX files in the <a href="/tools/gpx-viewer/">GPX viewer</a> and combine them with <a href="/tools/merge-gpx/">Merge GPX</a>.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">FAQ</h2>
+  <h3>Does iPhone keep a location history?</h3>
+  <p>Apple keeps Significant Locations, which it says is encrypted and unreadable by Apple, with no documented export. See <a href="/blog/significant-locations-iphone/">Significant Locations</a>.</p>
+  <h3>Is there an app that tracks everywhere I go?</h3>
+  <p>Several apps record visits or routes; the table shows how each does it. Any app is limited by permissions, battery settings and the days it was running.</p>
+  <h3>Can I export my location history from iPhone?</h3>
+  <p>Not from Apple’s built-in features, which document no export. Apps like Whereday, Arc Timeline 4 and Google Maps Timeline offer exports. See <a href="/blog/view-location-history-iphone/">how to see your location history</a>.</p>
+</section>
+
+<figure class="product-example">
+  <img src="/screenshots/map-home-480.webp" srcset="/screenshots/map-home-480.webp 480w, /screenshots/map-home-720.webp 720w, /screenshots/map-home.webp 900w" sizes="240px" alt="Whereday’s map home: today’s route coloured by place, visit names, date range chips and the day card" width="1206" height="2622" loading="lazy" decoding="async">
+  <figcaption>Whereday’s map of the day. The screenshot is illustrative and uses an invented journal.</figcaption>
+</figure>
+
+<section class="closing" aria-labelledby="start">
+  <h2 id="start">Record your own history from today.</h2>
+  <p>Check your access, then record a short outing and test the export.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+  <p>Access rules for new and existing users are on the <a href="/#export-access">homepage</a>.</p>
+</section>
+
+    </article>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/blog/view-location-history-iphone/">Find your existing history</a><p>Check Apple Maps, Google Timeline and Whereday before choosing an app.</p></li><li><a href="/docs/export-import/">Check the export formats</a><p>See the files Whereday writes and the files it can import.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  <!-- Cloudflare Web Analytics -->
+<script>
+(function () {
+  var productionHosts = {
+    'instareply.isolated.tech': true,
+    'voxboard.isolated.tech': true,
+    'healthmd.isolated.tech': true,
+    'whereday.com': true,
+    'gitsyncmd.isolated.tech': true,
+    'timemd.isolated.tech': true,
+    'imghost.isolated.tech': true
+  };
+
+  if (!productionHosts[window.location.hostname]) {
+    return;
+  }
+
+  function loadCloudflareBeacon() {
+    if (document.querySelector('script[src="https://static.cloudflareinsights.com/beacon.min.js"]')) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token":"090f363070334cddad5c5cc1509b8807"}');
+    document.head.appendChild(script);
+  }
+
+  fetch('https://img-host.costream.workers.dev/analytics-gate', {
+    cache: 'no-store',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+    .then(function (response) {
+      return response.ok ? response.json() : { track: false };
+    })
+    .then(function (gate) {
+      if (gate && gate.track) {
+        loadCloudflareBeacon();
+      }
+    })
+    .catch(function () {
+      // Fail closed so excluded IPs are not accidentally tracked.
+    });
+})();
+</script>
+<!-- End Cloudflare Web Analytics -->
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
+<script defer src="/assets/acquisition.js"></script>
+</body>
+</html>

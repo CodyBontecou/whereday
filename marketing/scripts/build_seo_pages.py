@@ -48,7 +48,7 @@ PAGES = [
         "headline": "Choose how you keep your location history.",
         "description": "Compare Whereday with Google Timeline on iPhone: accounts, recording, backups, exports, and the limits of moving an existing archive.",
         "lede": "Understand the account, recording, backup, and export choices before changing the way you keep your own visits and routes.",
-        "content": '<section class="card"><h2><a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a></h2><p>A comparison of recording controls, device storage, backup, export formats, and payment. Learn where each fits and why your existing Google archive needs to be kept separately.</p><a href="/compare/google-maps-timeline/">Read the Google Timeline comparison</a></section><section><h2>Moving an existing Google archive?</h2><p>Choose the <a href="/blog/import-google-timeline-iphone/">Google Timeline import walkthrough</a> if you already have a supported JSON file and want its visits and timed points in Whereday. Version 1.8 previews new records, approximate duplicates, and skipped entries before saving. Keep your original archive: importing selected records does not reproduce every Google activity or replace Google’s device-transfer backup.</p><p>For records already in Whereday, use the <a href="/blog/back-up-iphone-location-history/">backup and restore guide</a>. A GPX route for a viewer and a restorable journal copy are different outputs.</p></section><section><h2>New to recording your own history?</h2><p>Start with <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>, or check <a href="/docs/export-import/">which files Whereday can export and restore</a>.</p></section>',
+        "content": '<section class="card"><h2><a href="/compare/location-history-apps-iphone/">Location history apps for iPhone</a></h2><p>Apple’s built-in features, Whereday, Arc Timeline 4, Google Maps Timeline, self-hosted Dawarich and family sharing apps, compared on routes, storage, exports and what you can see if you stop paying.</p><a href="/compare/location-history-apps-iphone/">Compare location history apps</a></section><section class="card"><h2><a href="/compare/google-maps-timeline/">Whereday and Google Timeline</a></h2><p>A comparison of recording controls, device storage, backup, export formats, and payment. Learn where each fits and why your existing Google archive needs to be kept separately.</p><a href="/compare/google-maps-timeline/">Read the Google Timeline comparison</a></section><section><h2>Moving an existing Google archive?</h2><p>Choose the <a href="/blog/import-google-timeline-iphone/">Google Timeline import walkthrough</a> if you already have a supported JSON file and want its visits and timed points in Whereday. Version 1.8 previews new records, approximate duplicates, and skipped entries before saving. Keep your original archive: importing selected records does not reproduce every Google activity or replace Google’s device-transfer backup.</p><p>For records already in Whereday, use the <a href="/blog/back-up-iphone-location-history/">backup and restore guide</a>. A GPX route for a viewer and a restorable journal copy are different outputs.</p></section><section><h2>New to recording your own history?</h2><p>Start with <a href="/blog/private-location-journal-iphone/">the private location journal guide</a>, or check <a href="/docs/export-import/">which files Whereday can export and restore</a>.</p></section>',
     },
     {
         "path": "/compare/google-maps-timeline/",
@@ -164,6 +164,18 @@ PAGES.append({
     "source": "import-google-timeline-iphone.html",
     "image": "/screenshots/google-import-preview-1-8.png",
     "image_alt": "Whereday 1.8 preview of an invented Google Timeline file",
+})
+PAGES.append({
+    "path": "/compare/location-history-apps-iphone/", "section": "Compare", "section_path": "/compare/",
+    "breadcrumb": "Location history apps", "type": "BlogPosting",
+    "title": "Location History Apps for iPhone Compared — Whereday",
+    "headline": "Location history apps for iPhone, compared",
+    "description": "Compare iPhone location history apps on routes, export formats and what you can see if you stop paying: Whereday, Arc Timeline 4, Google, Dawarich.",
+    "lede": "Choose an app to record your own history from now on, judged on the same criteria. Whereday publishes this page and is one of the apps compared.",
+    "published": "2026-11-20", "modified": "2026-11-20",
+    "source": "location-history-apps-iphone.html",
+    "image": "/screenshots/map-home.png",
+    "image_alt": "Whereday’s map home with today’s route coloured by place, using an invented journal",
 })
 DRAFTS = []
 
@@ -350,6 +362,9 @@ RELATED = {
                                               'Review automatic export behavior',
                                               'Check what a scheduled run writes and which files '
                                               'it can replace.')],
+ '/compare/location-history-apps-iphone/': [
+     ('/blog/view-location-history-iphone/', 'Find your existing history', 'Check Apple Maps, Google Timeline and Whereday before choosing an app.'),
+     ('/docs/export-import/', 'Check the export formats', 'See the files Whereday writes and the files it can import.')],
  '/compare/google-maps-timeline/': [('/blog/view-location-history-iphone/',
                                      'Find your existing records',
                                      'Check the service that recorded them before changing apps.'),
