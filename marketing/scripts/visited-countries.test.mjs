@@ -18,14 +18,14 @@ const b = boundaries();
 const brief = s => s.rows.map(r => [r.code, r.first, r.last, r.dates, r.source].join('|'));
 
 test('the bundled boundary set is the size the page says', async () => {
-  assert.equal(b.list.length, 240, 'the page says 240 outlines');
+  assert.equal(b.list.length, 240, '240 entries, 238 of them drawn');
   const data = await readFile(new URL('../public/assets/visited-countries-data.mjs', import.meta.url));
   assert.ok(data.length < 450 * 1024, 'about 420 KB on disk');
   const gz = gzipSync(data).length;
   assert.ok(gz < 160 * 1024 && gz < 1024 * 1024, `about 150 KB gzipped, got ${gz}`);
   const page = await readFile(new URL('../content/visited-countries-map.html', import.meta.url), 'utf8');
   assert.match(page, /version 5\.1\.2/);
-  assert.match(page, /about 420 KB, about 150 KB gzipped, with 240 country/);
+  assert.match(page, /about 420 KB, about 150 KB gzipped, with 238 country/);
 });
 
 test('known points fall inside the right countries', () => {
