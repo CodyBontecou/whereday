@@ -19,6 +19,15 @@ final class RecordingSession {
     var routeSamplingModeRawValue: String?
     /// Seconds between route points when recorded in a time-based mode.
     var routeSampleIntervalSeconds: Double?
+    /// `TravelMode` raw value chosen for this outing. nil means it is inferred from GPS speed.
+    var travelModeRawValue: String?
+    /// `TravelModeSource` raw value: who set `travelModeRawValue`. Only stored modes have a source,
+    /// so automatic inference never writes here and can never overwrite a person's choice.
+    var travelModeSourceRawValue: String?
+    /// true when this session only exists because a mode was chosen for an inferred outing. It still
+    /// reads and exports as inferred, and choosing Automatic again removes it (unless it was named or
+    /// given notes), returning the outing to inference. nil for recorded sessions.
+    var savedFromInferredOuting: Bool?
 
     init(
         id: UUID = UUID(),
@@ -29,7 +38,9 @@ final class RecordingSession {
         receivedLocationCount: Int? = nil,
         distanceFilterMeters: Double? = nil,
         routeSamplingModeRawValue: String? = nil,
-        routeSampleIntervalSeconds: Double? = nil
+        routeSampleIntervalSeconds: Double? = nil,
+        travelModeRawValue: String? = nil,
+        travelModeSourceRawValue: String? = nil
     ) {
         self.id = id
         self.startedAt = startedAt
@@ -40,6 +51,31 @@ final class RecordingSession {
         self.distanceFilterMeters = distanceFilterMeters
         self.routeSamplingModeRawValue = routeSamplingModeRawValue
         self.routeSampleIntervalSeconds = routeSampleIntervalSeconds
+        self.travelModeRawValue = travelModeRawValue
+        self.travelModeSourceRawValue = travelModeSourceRawValue
+    }
+
+    /// The mode the person chose, or the default mode applied when it was recorded.
+    var storedTravelMode: TravelMode? {
+        travelModeRawValue.flatMap(TravelMode.init(rawValue:))
+    }
+
+    var travelModeSource: TravelModeSource? {
+        guard storedTravelMode != nil else { return nil }
+        return travelModeSourceRawValue.flatMap(TravelModeSource.init(rawValue:)) ?? .manual
+    }
+
+    /// Sets the mode by hand; nil returns the outing to automatic detection.
+    func setManualTravelMode(_ mode: TravelMode?) {
+        travelModeRawValue = mode?.rawValue
+        travelModeSourceRawValue = mode == nil ? nil : TravelModeSource.manual.rawValue
+    }
+
+    /// Gives a newly recorded outing the default mode from Settings, unless it already has one.
+    func applyDefaultTravelMode(_ preference: TravelModePreference) {
+        guard travelModeRawValue == nil, let mode = preference.mode else { return }
+        travelModeRawValue = mode.rawValue
+        travelModeSourceRawValue = TravelModeSource.defaultSetting.rawValue
     }
 
     /// Adds fixes delivered by Core Location, counted before any are discarded.
@@ -64,6 +100,137 @@ final class RecordingSession {
     }
 }
 
+extension TravelMode {
+    /// The mode of a move between two stays, from its points' moving speed. Time spent stopped
+    /// inside the move (at lights, or before the next stay was detected) doesn't drag it toward walking.
+    /// Points too far apart to measure moving time fall back to the whole span.
+    static func inferMove(points: [LocationPoint], distanceMeters: Double, spanning seconds: TimeInterval) -> TravelMode? {
+        guard distanceMeters > 0 else { return nil }
+        let metrics = RouteMetrics(points: points, distanceMeters: distanceMeters)
+        if metrics.movingTime > 0 { return metrics.inferredTravelMode }
+        return infer(meters: distanceMeters, seconds: seconds)
+    }
+}
+
+/// The modes stored on outings, by the span each covers, so moves between stays and the map's
+/// status lines show a mode the person picked (or their default) instead of re-guessing it.
+struct StoredTravelModeLookup {
+    private struct Span {
+        let start: Date
+        /// nil while the outing is still recording; it then runs to the moment asked about.
+        let end: Date?
+        let mode: TravelMode
+
+        func end(now: Date) -> Date { max(start, end ?? now) }
+    }
+
+    private let spans: [Span]
+
+    /// With `now`, outings still recording end there; without it they stay open, so one lookup can be
+    /// kept and asked at any later moment.
+    init(sessions: [RecordingSession], now: Date? = nil) {
+        spans = sessions.compactMap { session in
+            guard let mode = session.storedTravelMode else { return nil }
+            let end = session.endedAt ?? now
+            return Span(start: session.startedAt, end: end.map { max(session.startedAt, $0) }, mode: mode)
+        }
+    }
+
+    var isEmpty: Bool { spans.isEmpty }
+
+    /// The stored mode of the outing covering most of a stretch, when it covers at least half of it.
+    /// A zero-length stretch (one moment) takes the mode of an outing that contains it.
+    func mode(from start: Date, to end: Date, now: Date = Date()) -> TravelMode? {
+        let length = end.timeIntervalSince(start)
+        guard length > 0 else {
+            return spans.last { $0.start <= start && start <= $0.end(now: now) }?.mode
+        }
+        let best = spans
+            .map { span in (span, min(span.end(now: now), end).timeIntervalSince(max(span.start, start))) }
+            .filter { $0.1 > 0 }
+            .max { $0.1 < $1.1 }
+        guard let best, best.1 >= length / 2 else { return nil }
+        return best.0.mode
+    }
+}
+
+/// Keeps one `StoredTravelModeLookup` until the outings it was built from are reloaded, so a screen
+/// that asks on every frame (the map's status line while scrubbing) doesn't rebuild it each time.
+final class StoredTravelModeLookupCache {
+    private var revision: Int?
+    private var lookup = StoredTravelModeLookup(sessions: [])
+    private(set) var buildCount = 0
+
+    /// The lookup for `revision`, rebuilt from `sessions` only when the revision changes.
+    func lookup(revision: Int, sessions: () -> [RecordingSession]) -> StoredTravelModeLookup {
+        if self.revision != revision {
+            lookup = StoredTravelModeLookup(sessions: sessions())
+            self.revision = revision
+            buildCount += 1
+        }
+        return lookup
+    }
+}
+
+/// Holds a summary's inferred travel mode once computed; shared by copies of the same summary.
+final class InferredTravelModeCache: @unchecked Sendable {
+    private let lock = NSLock()
+    private var computed: TravelMode??
+    private(set) var computeCount = 0
+
+    func value(_ compute: () -> TravelMode?) -> TravelMode? {
+        lock.lock()
+        defer { lock.unlock() }
+        if let computed { return computed }
+        let mode = compute()
+        computed = .some(mode)
+        computeCount += 1
+        return mode
+    }
+}
+
+/// Who set an outing's stored travel mode.
+enum TravelModeSource: String, Codable, Sendable {
+    /// Picked on the outing; nothing else changes it.
+    case manual
+    /// The default mode from Settings, applied when the outing started.
+    case defaultSetting
+}
+
+/// The default mode for new outings: Automatic keeps inferring it from GPS speed.
+enum TravelModePreference: Hashable, Sendable {
+    case automatic
+    case fixed(TravelMode)
+
+    static let storageKey = "defaultTravelMode"
+    static let automaticRawValue = "automatic"
+
+    init(rawValue: String) {
+        self = TravelMode(rawValue: rawValue).map(TravelModePreference.fixed) ?? .automatic
+    }
+
+    var rawValue: String {
+        mode?.rawValue ?? Self.automaticRawValue
+    }
+
+    var mode: TravelMode? {
+        if case .fixed(let mode) = self { return mode }
+        return nil
+    }
+
+    static var allCases: [TravelModePreference] {
+        [.automatic] + TravelMode.allCases.map(TravelModePreference.fixed)
+    }
+
+    static func stored(in defaults: UserDefaults = .standard) -> TravelModePreference {
+        TravelModePreference(rawValue: defaults.string(forKey: storageKey) ?? automaticRawValue)
+    }
+
+    var label: String {
+        mode?.label ?? String(localized: "Automatic")
+    }
+}
+
 struct RecordingSessionSummary: Identifiable {
     let id: String
     let storedSession: RecordingSession?
@@ -76,6 +243,9 @@ struct RecordingSessionSummary: Identifiable {
     let now: Date
     /// A daily presentation of a recording; never a separately deletable outing.
     var dayRange: Range<Date>? = nil
+    /// Points never change on a summary, so its inferred mode is computed once: list rows read it for
+    /// every title render, and a full moving-speed pass over a long outing is not free.
+    private let inferredTravelModeCache = InferredTravelModeCache()
 
     var title: String {
         storedSession?.displayName(defaultName: defaultTitle) ?? defaultTitle
@@ -92,9 +262,10 @@ struct RecordingSessionSummary: Identifiable {
     }
 
     /// "Morning ride to Ferry Building": part of day, travel mode, and the stay it ended at when known.
-    func automaticTitle(visits: [Visit], calendar: Calendar = .current) -> String {
+    /// Pass `travelMode` when a screen has already resolved it, to skip inferring it again.
+    func automaticTitle(visits: [Visit], calendar: Calendar = .current, travelMode resolved: TravelMode? = nil) -> String {
         let part = Self.partOfDay(for: startedAt, calendar: calendar)
-        let noun = Self.travelNoun(for: averageSpeedMetersPerSecond.flatMap { TravelMode.infer(averageSpeed: $0) })
+        let noun = Self.travelNoun(for: resolved ?? travelMode)
         if let destination = destinationVisit(in: visits)?.displayName, !destination.isEmpty {
             return String(localized: "\(part) \(noun) to \(destination)")
         }
@@ -129,7 +300,7 @@ struct RecordingSessionSummary: Identifiable {
         case .run: return String(localized: "run", comment: "Travel noun in an automatic outing title")
         case .bike: return String(localized: "ride", comment: "Travel noun in an automatic outing title")
         case .drive: return String(localized: "drive", comment: "Travel noun in an automatic outing title")
-        case .transit, .fly, nil: return String(localized: "trip", comment: "Travel noun in an automatic outing title")
+        case .transit, .fly, .other, nil: return String(localized: "trip", comment: "Travel noun in an automatic outing title")
         }
     }
 
@@ -170,6 +341,47 @@ struct RecordingSessionSummary: Identifiable {
 
     var distanceMeters: Double {
         RecordingSessionBuilder.totalDistance(in: distancePoints)
+    }
+
+    /// The outing's mode: the one stored on it (chosen by hand or from the default), else inferred.
+    var travelMode: TravelMode? {
+        storedSession?.storedTravelMode ?? inferredTravelMode
+    }
+
+    /// The same resolution as `travelMode`, reusing metrics a screen has already computed.
+    func travelMode(using metrics: RouteMetrics?) -> TravelMode? {
+        storedSession?.storedTravelMode ?? metrics?.inferredTravelMode
+    }
+
+    /// Whether choosing a mode can be saved for this outing. Inferred outings are saved as a stored
+    /// outing over the same span the first time a mode is chosen; a live one is still growing.
+    var canEditTravelMode: Bool {
+        storedSession != nil || (isInferred && !isActive && endedAt != nil)
+    }
+
+    /// This outing backed by `stored`: the session saved for it when a mode was first chosen.
+    /// Edits and deletes need it, or they act on the inferred outing and miss the saved session.
+    func backed(by stored: RecordingSession) -> RecordingSessionSummary {
+        RecordingSessionSummary(
+            id: id, storedSession: stored, sequenceNumber: sequenceNumber,
+            startedAt: startedAt, endedAt: endedAt, points: points,
+            isInferred: isInferred, isActive: isActive, now: now, dayRange: dayRange
+        )
+    }
+
+    /// Whether the person picked this outing's mode by hand.
+    var hasManualTravelMode: Bool {
+        storedSession?.travelModeSource == .manual
+    }
+
+    /// How many times this summary (and its copies) computed the inferred mode; for tests.
+    var inferredTravelModeComputations: Int { inferredTravelModeCache.computeCount }
+
+    /// The mode estimated from GPS alone, from moving time rather than the outing's whole span.
+    var inferredTravelMode: TravelMode? {
+        inferredTravelModeCache.value {
+            RouteMetrics(points: distancePoints, distanceMeters: distanceMeters).inferredTravelMode
+        }
     }
 
     var averageSpeedMetersPerSecond: Double? {
@@ -295,8 +507,33 @@ struct RouteMetrics {
         return distanceMeters / movingTime
     }
 
-    var travelMode: TravelMode? {
-        TravelMode.infer(meters: distanceMeters, seconds: movingTime)
+    /// Bucket speeds above this rule out walking, running and cycling (≈45 km/h).
+    static let motorizedSpeedThreshold: Double = 12.5
+    /// How many speed buckets must exceed `motorizedSpeedThreshold` before a slow average reads as a drive.
+    /// One GPS jump out and back touches at most two buckets; a short fast descent on a bike stays under this.
+    static let minimumMotorizedBuckets = 3
+    /// ...and the share of all buckets they must make up, so a long ride with one fast stretch stays a ride.
+    static let minimumMotorizedShare = 0.1
+
+    /// The mode estimated from moving speed. A walk to the car followed by a drive averages out at
+    /// cycling speed, so speed sustained over several buckets that no one walks, runs or cycles at
+    /// reads as a drive.
+    var inferredTravelMode: TravelMode? {
+        let mode = TravelMode.infer(meters: distanceMeters, seconds: movingTime)
+        switch mode {
+        case .walk, .run, .bike:
+            return hasSustainedMotorizedSpeed ? .drive : mode
+        default:
+            return mode
+        }
+    }
+
+    /// Whether enough of the route was covered faster than anyone walks, runs or cycles.
+    var hasSustainedMotorizedSpeed: Bool {
+        guard !speedSamples.isEmpty else { return false }
+        let fast = speedSamples.filter { $0.metersPerSecond > Self.motorizedSpeedThreshold }.count
+        return fast >= Self.minimumMotorizedBuckets
+            && Double(fast) / Double(speedSamples.count) >= Self.minimumMotorizedShare
     }
 
     /// Sum of rises in a moving-average-smoothed altitude profile, with hysteresis.
@@ -650,7 +887,7 @@ enum RecordingSessionBuilder {
                 startedAt: storedSession.startedAt,
                 endedAt: storedSession.endedAt,
                 points: sessionPoints,
-                isInferred: false,
+                isInferred: storedSession.savedFromInferredOuting == true,
                 isActive: storedSession.endedAt == nil
             ))
         }

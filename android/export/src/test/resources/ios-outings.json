@@ -1,11 +1,12 @@
 {
   "provenance": {
-    "IsoMe/Utilities/ExportService.swift": "1c206bd7b3bf8552c5268b6250bd8917ee8d65507d4f8eb3b26890cb2a48d21c",
-    "IsoMe/Models/RecordingSession.swift": "d369419e74d9caffa24a40e24ec28f3e7b06714c36bcaf8e7c6f01ff787b9aff",
+    "IsoMe/Utilities/ExportService.swift": "089aeb77c20814ece311271b75adce2d7d59ddf48755443e3fcca6a82a4e8d4f",
+    "IsoMe/Models/RecordingSession.swift": "99cdc39e094ca85a12e58115f318ed125fbe94f6b25a0ac8d6450cd01332846f",
     "IsoMe/Models/LocationPoint.swift": "71f362cfe8811c9b57665a446e5bab19e4e587435f3b5233a75347e0d68cdcc8",
-    "Shared/DistanceFormatter.swift": "ce8261b4ad14706a40cd79b8e672fc6f4f41952c603dfbfe6b8e020e254d8603",
+    "Shared/DistanceFormatter.swift": "ddab8fd1b203a724acd09edbfa925d3c781315348c88a4c6f4bd1e07b1e3a022",
     "android/scripts/fixtures/OutingFixtures.swift": "90cd471b722dda95bc8557d49008870cae8e19f9331ce098bd7661013427a284",
-    "android/scripts/fixtures/outing-inputs.json": "af1e4a6f001d67131fb6f13377a3d4a8fe9ca16937306ed844f6d55c64d864b9"
+    "android/scripts/fixtures/outing-inputs.json": "af1e4a6f001d67131fb6f13377a3d4a8fe9ca16937306ed844f6d55c64d864b9",
+    "android/scripts/travel_mode_fixture_filter.py": "63a63c0c985cbd653d024b7c27df3c24e6baf1b9ce7a216754b7c5547960a69e"
   },
   "cases": [
     {

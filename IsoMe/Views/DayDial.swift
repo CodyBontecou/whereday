@@ -182,7 +182,7 @@ struct TodayDay {
             case .drive: return String(localized: "after a \(distance) drive")
             case .transit: return String(localized: "after a \(distance) train ride")
             case .fly: return String(localized: "after a \(distance) flight")
-            case nil: return String(localized: "after \(distance) on the move")
+            case .other, nil: return String(localized: "after \(distance) on the move")
             }
         }
     }
@@ -240,6 +240,7 @@ struct TodayDay {
             now: now,
             home: home,
             marksUnrecordedGaps: marksUnrecordedGaps,
+            storedModes: viewModel.storedTravelModes,
             isCurrentVisit: viewModel.isCurrentVisit
         )
     }
@@ -258,6 +259,7 @@ struct TodayDay {
             startOfDay: startOfDay,
             now: min(lastRecord ?? endOfDay, endOfDay),
             home: home,
+            storedModes: viewModel.storedTravelModes,
             isCurrentVisit: { _ in false }
         )
     }
@@ -269,6 +271,7 @@ struct TodayDay {
         now: Date,
         home: SavedPlace? = nil,
         marksUnrecordedGaps: Bool = false,
+        storedModes: StoredTravelModeLookup = StoredTravelModeLookup(sessions: []),
         isCurrentVisit: (Visit) -> Bool
     ) {
 
@@ -325,11 +328,13 @@ struct TodayDay {
                         entries.append(Entry(id: "gap-\(stays[index].id)", kind: .unrecorded(gap)))
                     } else {
                         let distance = Self.pathDistance(window)
-                        let move = Move(
-                            distance: distance,
-                            duration: gap,
-                            mode: distance > 0 ? TravelMode.infer(meters: distance, seconds: gap) : nil
-                        )
+                        // A mode stored on the outing covering this move wins; otherwise moving speed,
+                        // not the whole gap, which counts time stopped before the stay was detected.
+                        let mode = distance > 0
+                            ? storedModes.mode(from: gapStart, to: gapEnd, now: now)
+                                ?? TravelMode.inferMove(points: window, distanceMeters: distance, spanning: gap)
+                            : nil
+                        let move = Move(distance: distance, duration: gap, mode: mode)
                         stays[index].arrival = move
                         entries.append(Entry(id: "move-\(stays[index].id)", kind: .move(move)))
                     }

@@ -1905,13 +1905,16 @@ struct LocationMapView: View {
             if let arriving = arrivingStatus(at: time, day: day, now: now, points: points) {
                 return (datePrefix + arriving.kicker, arriving.title)
             }
-            // "WALKING · 4 KM/H": the mode is an estimate from GPS speed alone.
+            // "WALKING · 4 KM/H": the mode stored on the outing at this moment, else an estimate from GPS speed.
             var kicker = String(localized: "ON THE MOVE")
+            let storedMode = storedTravelModes.mode(from: time, to: time, now: now)
             if let speed = movementSpeed(at: index, in: points) {
-                if let mode = TravelMode.infer(averageSpeed: speed) {
+                if let mode = storedMode ?? TravelMode.infer(averageSpeed: speed) {
                     kicker = mode.activeLabel.uppercased()
                 }
                 kicker += " · " + formattedSpeed(speed).uppercased()
+            } else if let storedMode {
+                kicker = storedMode.activeLabel.uppercased()
             }
             let title: String
             if let street = streetNames[StreetNameLookup.cellKey(for: points[index].coordinate)] {
@@ -1954,7 +1957,9 @@ struct LocationMapView: View {
         guard meters > 50 else { return nil }
         let distance = DistanceFormatter.format(meters: meters, usesMetric: usesMetricDistanceUnits)
         let kicker: String
-        if let mode = TravelMode.infer(meters: meters, seconds: duration) {
+        let mode = storedTravelModes.mode(from: start, to: next.arrivedAt, now: now)
+            ?? TravelMode.inferMove(points: movePoints, distanceMeters: meters, spanning: duration)
+        if let mode {
             kicker = String(localized: "ARRIVING · \(mode.label.uppercased()) \(distance.uppercased())")
         } else {
             kicker = String(localized: "ARRIVING · \(distance.uppercased())")
@@ -1970,6 +1975,10 @@ struct LocationMapView: View {
               abs(points[index].timestamp.timeIntervalSince(time)) <= 15 * 60 else { return nil }
         return index
     }
+
+    /// Modes stored on outings (picked by hand or from the default), which status lines prefer to a guess.
+    /// Shared with the day dial and rebuilt only when outings reload, not on every status-line frame.
+    private var storedTravelModes: StoredTravelModeLookup { viewModel.storedTravelModes }
 
     /// GPS speed when the fix carries one, otherwise the pace to the neighbouring point.
     private func movementSpeed(at index: Int, in points: [LocationPoint]) -> Double? {

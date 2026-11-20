@@ -32,6 +32,7 @@ struct SettingsView: View {
     @AppStorage("usesMetricDistanceUnits") private var usesMetricDistanceUnits = true
     @AppStorage("allowNetworkGeocoding") private var allowNetworkGeocoding = true
     @AppStorage("showOutliers") private var showOutliers = false
+    @AppStorage(TravelModePreference.storageKey) private var defaultTravelMode = TravelModePreference.automaticRawValue
     @AppStorage(LocationViewModel.showVisitSuggestionsKey) private var showVisitSuggestions = false
 
     init(viewModel: LocationViewModel) {
@@ -454,6 +455,24 @@ struct SettingsView: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Manage Saved Locations")
+
+            BackPageDivider()
+            BackPagePickerRow(title: "Default transport mode") {
+                Picker("Default transport mode", selection: $defaultTravelMode) {
+                    ForEach(TravelModePreference.allCases, id: \.self) { preference in
+                        Text(preference.label).tag(preference.rawValue)
+                    }
+                }
+                .labelsHidden()
+                .accessibilityIdentifier("settings-default-travel-mode")
+            }
+            Text("Automatic estimates the mode from GPS speed. Other choices apply to new outings; change any outing's mode from its details.")
+                .font(.caption)
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
 
             BackPageDivider()
             BackPageToggleRow(

@@ -470,7 +470,8 @@ final class LocationManager: NSObject, ObservableObject {
             liveActivityManager.updateActivity(
                 location: nil,
                 locationName: currentLocationName,
-                remainingSeconds: liveActivityRemainingSeconds
+                remainingSeconds: liveActivityRemainingSeconds,
+                storedTravelMode: activeRecordingTravelMode
             )
         }
     }
@@ -660,12 +661,14 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     private func makeRecordingSession(startedAt: Date) -> RecordingSession {
-        RecordingSession(
+        let session = RecordingSession(
             startedAt: startedAt,
             distanceFilterMeters: distanceFilter,
             routeSamplingModeRawValue: routeSamplingMode.rawValue,
             routeSampleIntervalSeconds: routeSamplingMode.usesTimeInterval ? routeSampleInterval : nil
         )
+        session.applyDefaultTravelMode(TravelModePreference.stored(in: defaults))
+        return session
     }
 
     private func endActiveRecordingSession(at endedAt: Date) {
@@ -705,6 +708,29 @@ final class LocationManager: NSObject, ObservableObject {
         )
         descriptor.sortBy = [SortDescriptor(\.startedAt, order: .forward)]
         return try context.fetch(descriptor)
+    }
+
+    /// The mode stored on the recording in progress (picked by hand, or the default it started with).
+    /// Read on every Live Activity update, so it is fetched once per recording and kept until an
+    /// outing's mode is edited (`invalidateActiveRecordingTravelMode()`) or another recording starts.
+    var activeRecordingTravelMode: TravelMode? {
+        guard let context = modelContext, let activeRecordingSessionID else { return nil }
+        if let cached = cachedActiveRecordingTravelMode, cached.sessionID == activeRecordingSessionID {
+            return cached.mode
+        }
+        let mode = (try? recordingSession(withID: activeRecordingSessionID, in: context))?.storedTravelMode
+        cachedActiveRecordingTravelMode = (activeRecordingSessionID, mode)
+        activeRecordingTravelModeFetchCount += 1
+        return mode
+    }
+
+    private var cachedActiveRecordingTravelMode: (sessionID: UUID, mode: TravelMode?)?
+    /// Fetches behind `activeRecordingTravelMode`; for tests.
+    private(set) var activeRecordingTravelModeFetchCount = 0
+
+    /// Call after an outing's stored mode changes so the Live Activity picks it up.
+    func invalidateActiveRecordingTravelMode() {
+        cachedActiveRecordingTravelMode = nil
     }
 
     private func recordingSession(withID id: UUID, in context: ModelContext) throws -> RecordingSession? {
@@ -1410,7 +1436,8 @@ extension LocationManager: CLLocationManagerDelegate {
                 liveActivityManager.updateActivity(
                     location: location,
                     locationName: currentLocationName,
-                    remainingSeconds: liveActivityRemainingSeconds
+                    remainingSeconds: liveActivityRemainingSeconds,
+                    storedTravelMode: activeRecordingTravelMode
                 )
             }
         }

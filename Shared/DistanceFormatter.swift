@@ -41,8 +41,8 @@ enum DistanceFormatter {
     }
 }
 
-/// How a stretch of movement was most likely travelled, inferred from its average speed.
-/// Whereday records no motion activity, so this is an estimate from GPS alone.
+/// How a stretch of movement was travelled: inferred from its average speed, or chosen by the person.
+/// Whereday records no motion activity, so an inferred mode is an estimate from GPS alone.
 enum TravelMode: String, Codable, CaseIterable, Sendable {
     case walk
     case run
@@ -50,6 +50,8 @@ enum TravelMode: String, Codable, CaseIterable, Sendable {
     case drive
     case transit
     case fly
+    /// Only ever chosen by the person (a boat, a ferry, a horse); never inferred.
+    case other
 
     /// Infers a mode from an average speed in metres per second, or nil when too slow or unknown.
     static func infer(averageSpeed metersPerSecond: Double) -> TravelMode? {
@@ -79,6 +81,7 @@ enum TravelMode: String, Codable, CaseIterable, Sendable {
         case .drive: return String(localized: "Drive")
         case .transit: return String(localized: "Train")
         case .fly: return String(localized: "Flight")
+        case .other: return String(localized: "Other")
         }
     }
 
@@ -91,6 +94,7 @@ enum TravelMode: String, Codable, CaseIterable, Sendable {
         case .drive: return String(localized: "Driving")
         case .transit: return String(localized: "On a train")
         case .fly: return String(localized: "Flying")
+        case .other: return String(localized: "Moving")
         }
     }
 
@@ -102,6 +106,7 @@ enum TravelMode: String, Codable, CaseIterable, Sendable {
         case .drive: return "car"
         case .transit: return "tram"
         case .fly: return "airplane"
+        case .other: return "ellipsis.circle"
         }
     }
 }

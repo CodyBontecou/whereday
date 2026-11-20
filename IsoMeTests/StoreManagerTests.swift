@@ -299,8 +299,19 @@ final class StoreManagerTests: XCTestCase {
         session.resetToDefaultState()
         session.disableDialogs = true
         session.timeRate = .realTime
+        // Clearing lands asynchronously. Wait for it here and again at teardown, so a transaction this
+        // run (or an earlier one) leaves can't spend the next run's trial or keep it entitled after expiry.
         session.clearTransactions()
-        defer { session.clearTransactions() }
+        addTeardownBlock {
+            session.clearTransactions()
+            for _ in 0..<50 where !session.allTransactions().isEmpty {
+                try await Task.sleep(for: .milliseconds(100))
+            }
+        }
+        for _ in 0..<50 where !session.allTransactions().isEmpty {
+            try await Task.sleep(for: .milliseconds(100))
+        }
+        XCTAssertTrue(session.allTransactions().isEmpty)
         let suite = "StoreKitIntegration.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defaults.set(false, forKey: "tracking.cohort.legacy.v1")
@@ -321,6 +332,12 @@ final class StoreManagerTests: XCTestCase {
             let product = try XCTUnwrap(store.product(for: option))
             XCTAssertEqual(product.price, price)
             XCTAssertEqual(product.isFamilyShareable, option.isFamilyPlan)
+        }
+        // Intro-offer eligibility catches up with the cleared history asynchronously; on a simulator
+        // that ran this test before, that took about seven seconds.
+        for _ in 0..<300 where !store.trialEligibleProductIDs.contains(IsoMePurchaseOption.individualWeekly.productID) {
+            try await Task.sleep(for: .milliseconds(100))
+            await store.loadProducts()
         }
         XCTAssertTrue(store.trialEligibleProductIDs.contains(IsoMePurchaseOption.individualWeekly.productID))
         // Exercise real StoreKit transactions without purchase-sheet presentation,
@@ -343,10 +360,10 @@ final class StoreManagerTests: XCTestCase {
         let restoreResult = await restoredStore.restorePurchases()
         XCTAssertEqual(restoreResult, .restored)
         XCTAssertTrue(restoredStore.canTrack)
-        let subscription = try XCTUnwrap(session.allTransactions().first { $0.productIdentifier == IsoMePurchaseOption.individualWeekly.productID })
-        try session.disableAutoRenewForTransaction(identifier: subscription.identifier)
+        // The trial bought above, not whichever weekly transaction the session lists first.
+        try session.disableAutoRenewForTransaction(identifier: UInt(trial.id))
         try session.expireSubscription(productIdentifier: IsoMePurchaseOption.individualWeekly.productID)
-        for _ in 0..<50 {
+        for _ in 0..<300 {
             await store.checkEntitlement()
             if !store.isPurchased { break }
             try await Task.sleep(for: .milliseconds(100))

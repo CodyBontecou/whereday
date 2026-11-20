@@ -116,7 +116,8 @@ final class LiveActivityManager: ObservableObject {
     func updateActivity(
         location: CLLocation?,
         locationName: String? = nil,
-        remainingSeconds: Int? = nil
+        remainingSeconds: Int? = nil,
+        storedTravelMode: TravelMode? = nil
     ) {
         guard let activity = currentActivity else { return }
 
@@ -151,7 +152,7 @@ final class LiveActivityManager: ObservableObject {
             originLocationName: originLocationName,
             latitude: lastLocation?.coordinate.latitude,
             longitude: lastLocation?.coordinate.longitude,
-            travelMode: Self.travelMode(for: recentLocations)
+            travelMode: Self.liveTravelMode(for: recentLocations, stored: storedTravelMode)
         )
 
         Task {
@@ -191,6 +192,13 @@ final class LiveActivityManager: ObservableObject {
         #if DEBUG
         print("Ended Live Activity")
         #endif
+    }
+
+    /// The mode shown while moving: the one stored on the recording (picked by hand, or the default
+    /// from Settings) when there is one, otherwise the estimate. nil while standing still either way.
+    static func liveTravelMode(for locations: [CLLocation], stored: TravelMode?) -> TravelMode? {
+        guard let estimated = travelMode(for: locations) else { return nil }
+        return stored ?? estimated
     }
 
     /// Estimates walk/bike/drive from the path covered by recent fixes, falling back to the

@@ -6,6 +6,7 @@ import hashlib
 import json
 import subprocess
 import tempfile
+from travel_mode_fixture_filter import without_travel_columns,without_travel_fields
 
 root=Path(__file__).resolve().parents[2]
 export=root/'IsoMe/Utilities/ExportService.swift'
@@ -14,8 +15,9 @@ point=root/'IsoMe/Models/LocationPoint.swift'
 travel=root/'Shared/DistanceFormatter.swift'
 harness=root/'android/scripts/fixtures/OutingFixtures.swift'
 inputs=root/'android/scripts/fixtures/outing-inputs.json'
+filter_module=root/'android/scripts/travel_mode_fixture_filter.py'
 output=root/'android/export/src/test/resources/ios-outings.json'
-provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [export,session,point,travel,harness,inputs]}
+provenance={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [export,session,point,travel,harness,inputs,filter_module]}
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check-source',action='store_true');args=parser.parse_args()
 if args.check_source:
     if json.loads(output.read_text())['provenance']!=provenance: raise SystemExit('Outing fixture sources changed; regenerate on macOS')
@@ -34,13 +36,15 @@ recording=declaration(s,'final class RecordingSession')
 summary=s[s.index('struct RecordingSessionSummary:'):s.index('    var formattedTimeRange:')]+ '\n}\n'
 location=p[p.index('final class LocationPoint'):p.index('    var accessibilityTimestamp:')]+ '\n}\n'
 builder='enum RecordingSessionBuilder {\n'+declaration(s,'static func totalDistance(')+'\n}\n'
+# Travel-mode types the session and summary reference (stored mode, default, moving-speed inference).
+travel_modes='\n'.join(declaration(s,marker) for marker in ['enum TravelModeSource:','enum TravelModePreference:','struct RouteMetrics {','final class InferredTravelModeCache'])+'\n'
 parts=[declaration(e,marker) for marker in ['struct ExportableOuting:', 'struct OutingsExportData:',
     'private static let iso8601Formatter:', 'static func exportOutingsToJSON(', 'static func exportOutingsToCSV(',
-    'private static func exportableOuting(', 'private static func outingVisits(', 'private static func outingNotes(',
+    'private static func exportableOuting(', 'private static func outingVisits(', 'private static func outingNotes(', 'static func travelModeSource(',
     'private static func escapeCSVField(']]
 # The formatter is an immediately invoked closure in the original declaration.
 parts[2]+='()'
-selected='import Foundation\nimport CoreLocation\n'+declaration(t,'enum TravelMode:')+'\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'
+selected='import Foundation\nimport CoreLocation\n'+declaration(t,'enum TravelMode:')+'\n'+recording+'\n'+location+'\n'+summary+'\n'+builder+'\n'+travel_modes
 # Only arrival participates in these two renderers; no personal or persisted Visit is loaded.
 # Coordinates and name exist only so the outing title helpers compile; the renderers never read them.
 selected+='struct Visit {let arrivedAt: Date;var latitude: Double=0;var longitude: Double=0;var displayName: String=""}\nstruct ExportService {\n'+'\n'.join(parts)+'\n}\n'
@@ -49,5 +53,11 @@ with tempfile.TemporaryDirectory(prefix='whereday-outings-') as directory:
     source.write_text(selected);main.write_bytes(harness.read_bytes())
     subprocess.run(['swiftc','-module-cache-path',str(work/'modules'),str(source),str(main),'-o',str(binary)],check=True)
     cases=json.loads(subprocess.run([str(binary),str(inputs)],capture_output=True,text=True,check=True).stdout)
+    # iOS-only travel-mode output (PARITY_RECONCILIATION.md, November 18) is removed with checks.
+    for c in cases:
+        for key in ['expectedCSV','expectedPairCSV']:
+            c[key]=without_travel_columns(c[key])
+        for key in ['expectedJSON','expectedPairJSON']:
+            for outing in c[key]['outings']: without_travel_fields(outing)
     output.write_text(json.dumps({'provenance':provenance,'cases':cases},ensure_ascii=False,indent=2)+'\n')
 print(f'Generated {len(cases)} actual iOS outing renderer fixtures')

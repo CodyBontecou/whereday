@@ -141,6 +141,636 @@
         }
       }
     },
+    "Automatic (%@)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تلقائي (%@)"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "স্বয়ংক্রিয় (%@)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic (%@)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático (%@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatique (%@)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्वचालित (%@)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動（%@）"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatycznie (%@)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático (%@)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автоматически (%@)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动（%@）"
+          }
+        }
+      }
+    },
+    "Automatic estimates the mode from GPS speed. Other choices apply to new outings; change any outing's mode from its details." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يقدّر الوضع التلقائي وسيلة التنقل من سرعة GPS. تنطبق الخيارات الأخرى على النزهات الجديدة؛ ويمكنك تغيير وسيلة أي نزهة من تفاصيلها."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "স্বয়ংক্রিয় GPS গতি থেকে মাধ্যম অনুমান করে। অন্য বিকল্পগুলো নতুন আউটিংয়ে প্রযোজ্য; যেকোনো আউটিংয়ের মাধ্যম তার বিবরণ থেকে বদলান।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic estimates the mode from GPS speed. Other choices apply to new outings; change any outing's mode from its details."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático estima el medio a partir de la velocidad GPS. Las demás opciones se aplican a las salidas nuevas; cambia el medio de cualquier salida desde sus detalles."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatique estime le mode à partir de la vitesse GPS. Les autres choix s’appliquent aux nouvelles sorties ; modifiez le mode de n’importe quelle sortie depuis ses détails."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्वचालित GPS गति से साधन का अनुमान लगाता है। अन्य विकल्प नई आउटिंग पर लागू होते हैं; किसी भी आउटिंग का साधन उसके विवरण से बदलें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動ではGPSの速度から移動手段を推定します。その他の選択は新しい外出に適用されます。外出の移動手段は詳細画面から変更できます。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb automatyczny określa środek transportu na podstawie prędkości GPS. Pozostałe opcje dotyczą nowych podróży; środek dowolnej podróży zmienisz w jej szczegółach."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático estima o meio pela velocidade do GPS. As outras opções valem para passeios novos; altere o meio de qualquer passeio nos detalhes dele."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автоматический режим определяет способ по скорости GPS. Остальные варианты применяются к новым прогулкам; способ любой прогулки можно изменить в её подробностях."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“自动”会根据 GPS 速度推断出行方式。其他选项适用于新的出行；可在任意出行的详情中更改其方式。"
+          }
+        }
+      }
+    },
+    "Choosing a mode saves this inferred outing, so it keeps the mode and can be named." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يؤدي اختيار وسيلة تنقل إلى حفظ هذه النزهة المستنتجة، فتحتفظ بالوسيلة ويمكن تسميتها."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "একটি মাধ্যম বেছে নিলে এই অনুমান করা আউটিংটি সেভ হয়, ফলে মাধ্যমটি থেকে যায় এবং এর নাম দেওয়া যায়।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choosing a mode saves this inferred outing, so it keeps the mode and can be named."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir un medio guarda esta salida inferida, así conserva el medio y se le puede poner nombre."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir un mode enregistre cette sortie déduite : elle conserve ce mode et peut être nommée."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "साधन चुनने से यह अनुमानित आउटिंग सहेज ली जाती है, ताकि साधन बना रहे और इसे नाम दिया जा सके।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動手段を選ぶと、この推測された外出が保存され、移動手段が保持されて名前も付けられるようになります。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybranie środka transportu zapisuje tę oszacowaną podróż, dzięki czemu zachowuje ona środek i można nadać jej nazwę."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolher um meio salva este passeio inferido, para que ele mantenha o meio e possa receber um nome."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбор способа сохраняет эту предполагаемую прогулку: способ сохранится, и ей можно будет дать название."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择出行方式会保存这次推断的出行，使其保留该方式并可命名。"
+          }
+        }
+      }
+    },
+    "Default transport mode" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وسيلة التنقل الافتراضية"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ডিফল্ট যাতায়াতের মাধ্যম"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default transport mode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medio de transporte predeterminado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de transport par défaut"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "डिफ़ॉल्ट यात्रा साधन"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトの移動手段"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domyślny środek transportu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meio de transporte padrão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Способ передвижения по умолчанию"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认出行方式"
+          }
+        }
+      }
+    },
+    "Moving" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتحرك"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "চলমান"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moving"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En movimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En déplacement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "गतिमान"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動中"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W ruchu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em movimento"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В движении"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移动中"
+          }
+        }
+      }
+    },
+    "Names, modes and notes stay on-device with the recording session. A mode you pick here is never changed automatically." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تبقى الأسماء ووسائل التنقل والملاحظات على الجهاز أثناء جلسة التسجيل. لا تتغير الوسيلة التي تختارها هنا تلقائيًا أبدًا."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নাম, মাধ্যম এবং নোট রেকর্ডিং সেশনের সাথে ডিভাইসে থাকে। এখানে আপনি যে মাধ্যম বেছে নেন তা কখনো স্বয়ংক্রিয়ভাবে বদলায় না।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Names, modes and notes stay on-device with the recording session. A mode you pick here is never changed automatically."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los nombres, los medios y las notas permanecen en el dispositivo durante la sesión de grabación. El medio que elijas aquí nunca cambia automáticamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les noms, les modes et les notes restent sur l’appareil pendant la session d’enregistrement. Le mode que vous choisissez ici n’est jamais modifié automatiquement."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकॉर्डिंग सत्र के साथ नाम, साधन और नोट्स डिवाइस पर बने रहते हैं। यहाँ चुना गया साधन कभी अपने-आप नहीं बदलता।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名前、移動手段、メモは、記録セッションとともにデバイス上に残ります。ここで選んだ移動手段が自動で変わることはありません。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwy, środki transportu i notatki pozostają na urządzeniu razem z zarejestrowaną sesją. Wybrany tutaj środek nigdy nie zmienia się automatycznie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nomes, meios e notas permanecem no dispositivo durante a sessão de gravação. O meio que você escolher aqui nunca muda automaticamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имена, способы передвижения и заметки остаются на устройстве во время сеанса записи. Выбранный здесь способ никогда не меняется автоматически."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称、出行方式和备注会随记录会话保留在设备上。你在此选择的方式绝不会被自动更改。"
+          }
+        }
+      }
+    },
+    "This outing was auto-inferred from your GPS history using your inferred outing settings. New Shortcut start/stop recordings are saved exactly and can be named. Choosing a mode saves this outing so it keeps the mode." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم استنتاج هذه النزهة تلقائيًا من سجل نظام GPS الخاص بك باستخدام إعدادات النزهة المستنتجة. يتم حفظ تسجيلات بدء/إيقاف الاختصارات الجديدة تمامًا ويمكن تسميتها. يؤدي اختيار وسيلة تنقل إلى حفظ هذه النزهة لتحتفظ بالوسيلة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার অনুমান করা আউটিং সেটিংস ব্যবহার করে এই আউটিংটি আপনার GPS ইতিহাস থেকে স্বয়ংক্রিয়ভাবে অনুমান করা হয়েছে৷ নতুন শর্টকাট স্টার্ট/স্টপ রেকর্ডিং ঠিক সেভ করা হয়েছে এবং নাম দেওয়া যেতে পারে। একটি মাধ্যম বেছে নিলে এই আউটিংটি সেভ হয়, যাতে মাধ্যমটি থেকে যায়।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This outing was auto-inferred from your GPS history using your inferred outing settings. New Shortcut start/stop recordings are saved exactly and can be named. Choosing a mode saves this outing so it keeps the mode."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta salida se infirió automáticamente a partir de su historial GPS utilizando la configuración de salida inferida. Las nuevas grabaciones de inicio/detención de accesos directos se guardan exactamente y se les puede asignar un nombre. Elegir un medio guarda esta salida para que lo conserve."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette sortie a été automatiquement déduite de votre historique GPS à l'aide de vos paramètres de sortie déduits. Les nouveaux enregistrements de démarrage/arrêt de raccourci sont enregistrés exactement et peuvent être nommés. Choisir un mode enregistre cette sortie pour qu’elle le conserve."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपकी अनुमानित आउटिंग सेटिंग्स का उपयोग करके आपके GPS इतिहास से इस आउटिंग का स्वतः अनुमान लगाया गया था। नई शॉर्टकट स्टार्ट/स्टॉप रिकॉर्डिंग बिल्कुल सहेजी जाती हैं और उन्हें नाम दिया जा सकता है। साधन चुनने से यह आउटिंग सहेज ली जाती है ताकि साधन बना रहे।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この外出は、推測された外出設定を使用して、 GPS履歴から自動的に推測されました。新しいショートカットの開始/停止記録は正確に保存され、名前を付けることができます。移動手段を選ぶと、この外出が保存され、移動手段が保持されます。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta podróż została automatycznie oszacowana na podstawie historii GPS i ustawień szacowania podróży. Nowe sesje rozpoczynane i kończone przez Skróty są zapisywane dokładnie i można im nadawać nazwy. Wybranie środka transportu zapisuje tę podróż, aby go zachowała."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este passeio foi inferido automaticamente a partir do seu histórico GPS usando as configurações do passeio inferido. Novas gravações de início/parada de atalho são salvas exatamente e podem ser nomeadas. Escolher um meio salva este passeio para que ele o mantenha."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта прогулка была автоматически выведена из вашей истории GPS по настройкам предполагаемых прогулок. Новые записи, начатые и остановленные через Быстрые команды, сохраняются точно, и им можно дать название. Выбор способа сохраняет эту прогулку, чтобы способ сохранился."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这次出行是根据你的推断出行设置，从 GPS 历史记录中自动推断的。通过快捷指令开始/停止的新记录会被准确保存并可命名。选择出行方式会保存这次出行，使其保留该方式。"
+          }
+        }
+      }
+    },
+    "Transport Mode" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وسيلة التنقل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "যাতায়াতের মাধ্যম"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transport Mode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medio de transporte"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de transport"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यात्रा का साधन"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動手段"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Środek transportu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meio de transporte"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Способ передвижения"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出行方式"
+          }
+        }
+      }
+    },
+    "Transport mode" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وسيلة التنقل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "যাতায়াতের মাধ্যম"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transport mode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medio de transporte"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de transport"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यात्रा का साधन"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移動手段"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Środek transportu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meio de transporte"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Способ передвижения"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出行方式"
+          }
+        }
+      }
+    },
     "—" : {
       "localizations" : {
         "ar" : {

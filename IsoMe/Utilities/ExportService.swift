@@ -1080,6 +1080,10 @@ extension ExportService {
         let startLongitude: Double?
         let endLatitude: Double?
         let endLongitude: Double?
+        /// `TravelMode` raw value: chosen by hand, the default from Settings, or inferred.
+        let travelMode: String?
+        /// "manual", "default" or "automatic".
+        let travelModeSource: String
     }
 
     struct OutingsExportData: Codable {
@@ -1132,7 +1136,7 @@ extension ExportService {
             "id", "title", "sequence_number", "started_at", "ended_at", "effective_end_at",
             "duration_seconds", "distance_meters", "average_speed_mps", "point_count", "outlier_count",
             "visit_count", "is_inferred", "is_active", "notes", "start_latitude", "start_longitude",
-            "end_latitude", "end_longitude"
+            "end_latitude", "end_longitude", "travel_mode", "travel_mode_source"
         ]
         var csv = headers.joined(separator: ",") + "\n"
 
@@ -1157,7 +1161,9 @@ extension ExportService {
                 exportable.startLatitude.map { String($0) } ?? "",
                 exportable.startLongitude.map { String($0) } ?? "",
                 exportable.endLatitude.map { String($0) } ?? "",
-                exportable.endLongitude.map { String($0) } ?? ""
+                exportable.endLongitude.map { String($0) } ?? "",
+                exportable.travelMode ?? "",
+                exportable.travelModeSource
             ]
             csv.append(fields.joined(separator: ",") + "\n")
         }
@@ -1184,8 +1190,9 @@ extension ExportService {
         md += "**Export Date:** \(formattedDateReadable())\n\n"
         md += "**Total Outings:** \(sortedOutings.count)\n\n"
         md += "---\n\n"
-        md += "| Start | End | Title | Duration | Distance | Points | Visits | Notes |\n"
-        md += "|------|-----|-------|----------|----------|--------|--------|-------|\n"
+        // Mode is appended so every earlier column keeps its position for anyone reading by column.
+        md += "| Start | End | Title | Duration | Distance | Points | Visits | Notes | Mode |\n"
+        md += "|------|-----|-------|----------|----------|--------|--------|-------|------|\n"
 
         for outing in sortedOutings {
             let visitsForOuting = outingVisits(outing, visits: visits)
@@ -1198,7 +1205,8 @@ extension ExportService {
                 String(format: "%.0f m", outing.distanceMeters),
                 String(outing.pointCount),
                 String(visitsForOuting.count),
-                escapeMarkdownTableCell(notes)
+                escapeMarkdownTableCell(notes),
+                escapeMarkdownTableCell(outing.travelMode?.label ?? "")
             ]
             md += "| " + cells.joined(separator: " | ") + " |\n"
         }
@@ -1226,8 +1234,19 @@ extension ExportService {
             startLatitude: outing.startPoint?.latitude,
             startLongitude: outing.startPoint?.longitude,
             endLatitude: outing.endPoint?.latitude,
-            endLongitude: outing.endPoint?.longitude
+            endLongitude: outing.endPoint?.longitude,
+            travelMode: outing.travelMode?.rawValue,
+            travelModeSource: travelModeSource(outing)
         )
+    }
+
+    /// "manual" for a mode picked by hand, "default" for the Settings default, else "automatic".
+    static func travelModeSource(_ outing: RecordingSessionSummary) -> String {
+        switch outing.storedSession?.travelModeSource {
+        case .manual: return "manual"
+        case .defaultSetting: return "default"
+        case nil: return "automatic"
+        }
     }
 
     private static func outingMarkdownPage(
@@ -1253,6 +1272,8 @@ extension ExportService {
         md += "is_inferred: \(outing.isInferred ? "true" : "false")\n"
         md += "is_active: \(outing.isActive ? "true" : "false")\n"
         md += yamlString("source", outing.isInferred ? "inferred" : "recorded")
+        md += yamlString("travel_mode", outing.travelMode?.rawValue)
+        md += yamlString("travel_mode_source", travelModeSource(outing))
         md += yamlString("notes", outingNotes(outing))
         md += yamlOptionalNumber("start_latitude", outing.startPoint?.latitude, decimals: 6)
         md += yamlOptionalNumber("start_longitude", outing.startPoint?.longitude, decimals: 6)
@@ -1269,6 +1290,9 @@ extension ExportService {
         md += "| End | \(escapeMarkdownTableCell(outing.endedAt.map(formattedDateTime) ?? (outing.isActive ? "Now" : formattedDateTime(outing.effectiveEndDate)))) |\n"
         md += "| Duration | \(escapeMarkdownTableCell(RecordingSessionFormatter.duration(outing.duration))) |\n"
         md += "| Distance | \(escapeMarkdownTableCell(String(format: "%.0f m", outing.distanceMeters))) |\n"
+        if let mode = outing.travelMode {
+            md += "| Mode | \(escapeMarkdownTableCell(mode.label)) |\n"
+        }
         md += "| GPS points | \(outing.pointCount) |\n"
         md += "| Visits | \(visits.count) |\n"
         md += "| Source | \(outing.isInferred ? "Inferred" : "Recorded") |\n\n"

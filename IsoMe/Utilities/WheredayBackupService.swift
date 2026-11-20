@@ -189,6 +189,9 @@ struct WheredayBackup: Codable, Sendable {
         let distanceFilterMeters: Double?
         let routeSamplingModeRawValue: String?
         let routeSampleIntervalSeconds: Double?
+        let travelModeRawValue: String?
+        let travelModeSourceRawValue: String?
+        let savedFromInferredOuting: Bool?
 
         init(_ model: RecordingSession) {
             id = model.id
@@ -200,6 +203,9 @@ struct WheredayBackup: Codable, Sendable {
             distanceFilterMeters = model.distanceFilterMeters
             routeSamplingModeRawValue = model.routeSamplingModeRawValue
             routeSampleIntervalSeconds = model.routeSampleIntervalSeconds
+            travelModeRawValue = model.travelModeRawValue
+            travelModeSourceRawValue = model.travelModeSourceRawValue
+            savedFromInferredOuting = model.savedFromInferredOuting
         }
 
         func makeModel() -> RecordingSession {
@@ -213,6 +219,9 @@ struct WheredayBackup: Codable, Sendable {
             model.distanceFilterMeters = distanceFilterMeters
             model.routeSamplingModeRawValue = routeSamplingModeRawValue
             model.routeSampleIntervalSeconds = routeSampleIntervalSeconds
+            model.travelModeRawValue = travelModeRawValue
+            model.travelModeSourceRawValue = travelModeSourceRawValue
+            model.savedFromInferredOuting = savedFromInferredOuting
             return model
         }
     }

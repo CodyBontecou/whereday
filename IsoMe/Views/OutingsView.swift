@@ -385,6 +385,14 @@ struct OutingsView: View {
                             Button("Add Event to Calendar", systemImage: "calendar.badge.plus") {
                                 calendarDraft = CalendarEventDraft(session: session)
                             }
+                            if session.canEditTravelMode {
+                                TravelModeMenu(
+                                    currentMode: session.storedSession?.storedTravelMode,
+                                    inferredMode: session.inferredTravelMode
+                                ) { mode in
+                                    viewModel.setTravelMode(mode, for: session)
+                                }
+                            }
                         }
 
                     case .visit(let visit):
@@ -852,6 +860,10 @@ private struct RecordingSessionDetailView: View {
     @State private var isSyncingPhotos = false
     @State private var selectedPhotoMoment: PhotoMoment?
     @State private var metrics: RouteMetrics?
+    /// The stored outing an inferred one became when a mode was chosen for it here.
+    @State private var savedSession: RecordingSession?
+    /// Set when choosing Automatic returned an outing saved from inference to inference.
+    @State private var returnedToInference = false
     @State private var showingGPXExporter = false
     @State private var gpxDocument = RouteGPXDocument(data: Data())
     @FocusState private var isNameFieldFocused: Bool
@@ -874,14 +886,66 @@ private struct RecordingSessionDetailView: View {
 
     /// "Morning ride to Ferry Building", from the stay the outing ended at.
     private var automaticTitle: String {
-        session.automaticTitle(visits: session.dayRange == nil ? viewModel.visitsNearOuting(session) : visits)
+        session.automaticTitle(
+            visits: session.dayRange == nil ? viewModel.visitsNearOuting(session) : visits,
+            travelMode: resolvedTravelMode
+        )
     }
 
     /// The name typed here once saved, otherwise the automatic title.
     private var displayTitle: String {
         let typed = nameText.trimmingCharacters(in: .whitespacesAndNewlines)
-        if session.storedSession != nil { return typed.isEmpty ? automaticTitle : typed }
+        if storedSession != nil { return typed.isEmpty ? automaticTitle : typed }
         return automaticTitle
+    }
+
+    /// The outing's stored session: recorded, or saved from an inferred outing on this screen.
+    private var storedSession: RecordingSession? {
+        returnedToInference ? nil : session.storedSession ?? savedSession
+    }
+
+    /// One resolution for the badge and the title: a stored mode, else moving-speed inference.
+    private var resolvedTravelMode: TravelMode? {
+        storedSession?.storedTravelMode ?? session.travelMode(using: metrics)
+    }
+
+    private func selectTravelMode(_ mode: TravelMode?) {
+        let hadStoredSession = storedSession != nil
+        let saved = viewModel.setTravelMode(mode, for: currentSummary)
+        if let saved {
+            returnedToInference = false
+            if session.storedSession == nil { savedSession = saved }
+        } else if hadStoredSession {
+            // The saved session was removed; this screen's summary no longer has data behind it.
+            returnedToInference = true
+            savedSession = nil
+            if session.storedSession != nil { dismiss() }
+        }
+    }
+
+    /// The outing as it stands now: this summary, or the same outing backed by the session saved on
+    /// this screen. Mode changes and deletes go through it so they reach that saved session.
+    private var currentSummary: RecordingSessionSummary {
+        guard session.storedSession == nil, let savedSession, !returnedToInference else { return session }
+        return session.backed(by: savedSession)
+    }
+
+    private func modeRow(showDivider: Bool) -> some View {
+        TERow(showDivider: showDivider) {
+            HStack(spacing: 12) {
+                Text("MODE")
+                    .font(TE.mono(.caption2, weight: .semibold))
+                    .tracking(1)
+                    .foregroundStyle(TE.textMuted)
+                Spacer(minLength: 8)
+                TravelModeMenu(
+                    currentMode: storedSession?.storedTravelMode,
+                    inferredMode: metrics?.inferredTravelMode,
+                    style: .inline,
+                    onSelect: selectTravelMode
+                )
+            }
+        }
     }
 
     private var photoMoments: [PhotoMoment] {
@@ -981,7 +1045,14 @@ private struct RecordingSessionDetailView: View {
                                 .font(.subheadline)
                             Text("The route, statistics, visits and exports here cover this day only.")
                                 .font(.footnote).foregroundStyle(TE.textMuted)
-                            if let stored = session.storedSession {
+                            if storedSession == nil, session.canEditTravelMode {
+                                TECard(paperOpacity: 0.94) {
+                                    modeRow(showDivider: false)
+                                }
+                                Text("Choosing a mode saves this inferred outing, so it keeps the mode and can be named.")
+                                    .font(.footnote).foregroundStyle(TE.textMuted)
+                            }
+                            if let stored = storedSession {
                                 NavigationLink("View complete outing") {
                                     CompleteRecordingDetailView(stored: stored, viewModel: viewModel, onShowOnMap: onShowOnMap)
                                 }
@@ -991,7 +1062,7 @@ private struct RecordingSessionDetailView: View {
                             }
                         }
                         .padding(24)
-                    } else if let storedSession = session.storedSession {
+                    } else if let storedSession {
                         editableDetailsSection(storedSession)
                     } else {
                         inferredSection
@@ -1053,7 +1124,8 @@ private struct RecordingSessionDetailView: View {
         .alert("Delete Outing?", isPresented: $showingDeleteConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) {
-                viewModel.deleteRecordingSession(session)
+                // An inferred outing saved here has a stored session the original summary doesn't know about.
+                viewModel.deleteRecordingSession(currentSummary)
                 dismiss()
             }
         } message: {
@@ -1193,7 +1265,7 @@ private struct RecordingSessionDetailView: View {
         } else {
             status = String(localized: "RECORDED")
         }
-        guard let mode = metrics?.travelMode else { return status }
+        guard let mode = resolvedTravelMode else { return status }
         return "\(mode.label.uppercased()) · \(status)"
     }
 
@@ -1421,6 +1493,8 @@ private struct RecordingSessionDetailView: View {
                         }
                     }
 
+                    modeRow(showDivider: true)
+
                     TERow(showDivider: false) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("NOTES")
@@ -1445,7 +1519,7 @@ private struct RecordingSessionDetailView: View {
 
             TESectionFooter(text: storedSession.isActive
                 ? LocalizedStringKey("This outing is currently being recorded.")
-                : LocalizedStringKey("Names and notes stay on-device with the recording session."))
+                : LocalizedStringKey("Names, modes and notes stay on-device with the recording session. A mode you pick here is never changed automatically."))
         }
     }
 
@@ -1454,13 +1528,16 @@ private struct RecordingSessionDetailView: View {
             TESectionHeader(title: "DETAILS")
 
             TECard(paperOpacity: 0.94) {
+                if session.canEditTravelMode {
+                    modeRow(showDivider: true)
+                }
                 TERow(showDivider: false) {
                     HStack(alignment: .top, spacing: 10) {
                         Image(systemName: "wand.and.stars")
                             .foregroundStyle(TE.warning)
                             .accessibilityHidden(true)
 
-                        Text("This outing was auto-inferred from your GPS history using your inferred outing settings. New Shortcut start/stop recordings are saved exactly and can be named.")
+                        Text("This outing was auto-inferred from your GPS history using your inferred outing settings. New Shortcut start/stop recordings are saved exactly and can be named. Choosing a mode saves this outing so it keeps the mode.")
                             .font(TE.mono(.caption2, weight: .medium))
                             .foregroundStyle(TE.textMuted)
                             .fixedSize(horizontal: false, vertical: true)
@@ -1770,7 +1847,7 @@ private struct RecordingSessionDetailView: View {
     }
 
     private func saveEditableDetails() {
-        guard session.dayRange == nil, let storedSession = session.storedSession else { return }
+        guard session.dayRange == nil, let storedSession else { return }
         viewModel.updateRecordingSession(
             storedSession,
             customName: nameText,
@@ -2033,5 +2110,66 @@ extension LocationViewModel {
     /// Stays overlapping an outing, plus any that began shortly after it ended (its destination).
     func visitsNearOuting(_ session: RecordingSessionSummary) -> [Visit] {
         visitsOverlappingDateRange(session.startedAt...session.effectiveEndDate.addingTimeInterval(20 * 60))
+    }
+}
+
+/// Picks an outing's travel mode: Automatic (inferred from GPS speed) or one chosen by hand.
+struct TravelModeMenu: View {
+    enum Style { case contextMenu, inline }
+
+    /// The mode stored on the outing, or nil while it is automatic.
+    let currentMode: TravelMode?
+    /// What automatic detection reads for this outing, shown beside "Automatic".
+    let inferredMode: TravelMode?
+    var style: Style = .contextMenu
+    let onSelect: (TravelMode?) -> Void
+
+    private var selection: Binding<TravelMode?> {
+        Binding(get: { currentMode }, set: { onSelect($0) })
+    }
+
+    private var automaticTitle: String {
+        guard let inferredMode else { return String(localized: "Automatic") }
+        return String(localized: "Automatic (\(inferredMode.label))")
+    }
+
+    private var picker: some View {
+        Picker("Transport Mode", selection: selection) {
+            Label(automaticTitle, systemImage: "wand.and.stars").tag(TravelMode?.none)
+            ForEach(TravelMode.allCases, id: \.self) { mode in
+                Label(mode.label, systemImage: mode.systemImage).tag(TravelMode?.some(mode))
+            }
+        }
+    }
+
+    var body: some View {
+        switch style {
+        case .contextMenu:
+            Menu {
+                picker.pickerStyle(.inline)
+            } label: {
+                Label("Transport Mode", systemImage: (currentMode ?? inferredMode)?.systemImage ?? "figure.walk.motion")
+            }
+        case .inline:
+            Menu {
+                picker.pickerStyle(.inline)
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: (currentMode ?? inferredMode)?.systemImage ?? "wand.and.stars")
+                        .accessibilityHidden(true)
+                    Text(currentMode?.label ?? automaticTitle)
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.caption2)
+                        .accessibilityHidden(true)
+                }
+                .font(TE.mono(.caption, weight: .medium))
+                .foregroundStyle(TE.textPrimary)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+            }
+            .accessibilityLabel("Transport mode")
+            .accessibilityValue(currentMode?.label ?? automaticTitle)
+            .accessibilityIdentifier("outing-travel-mode")
+        }
     }
 }
