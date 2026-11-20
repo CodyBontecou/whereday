@@ -18,7 +18,7 @@ android {
             require(it.matches(Regex("[0-9]+\\.[0-9]+\\.[0-9]+(?:-[A-Za-z0-9.]+)?"))) { "Use a numeric major.minor.patch version with an optional suffix" }
         }
     }
-    buildFeatures { compose = true }
+    buildFeatures { compose = true; buildConfig = true }
     // Lists the translated values-* folders as the app's languages, so Android 13+ offers them in per-app language settings.
     androidResources { generateLocaleConfig = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }

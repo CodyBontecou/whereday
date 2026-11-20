@@ -67,6 +67,44 @@ class BillingSessionTest {
         assertEquals(BillingNotice.verificationFailed,offline.state.value.notice)
         clock.now=clock.now.plusSeconds(8*86400);denied(offline)
     }
+    @Test fun coldOfflineSubscriptionDoesNotInventCancellation()=runBlocking {
+        val cache=Cache().apply {value=CachedGrant(lease(product="individual"),clock.now)}
+        val offline=session(cache,{throw IOException("offline fixture")},{PurchaseVerification.Revoked})
+        assertEquals(BillingRefreshResult.failed,offline.refresh())
+        offline.requireAccess(Capability.recording)
+        val summary=PlanRetention.summary(offline.state.value,PlanHistory(true),"individual")
+        assertEquals("A cached lease contains no cancellation information",SubscriptionStatus.active,summary.status)
+        assertFalse(summary.renewalKnown)
+        assertTrue("Play management must remain reachable",summary.managesInPlay)
+    }
+    @Test fun coldOfflineLifetimeDoesNotHidePossibleRenewingSubscription()=runBlocking {
+        val cache=Cache().apply {value=CachedGrant(lease(),clock.now)}
+        val offline=session(cache,{throw IOException("offline fixture")},{PurchaseVerification.Revoked})
+        offline.refresh();offline.requireAccess(Capability.fileExport)
+        val summary=PlanRetention.summary(offline.state.value,PlanHistory(true),"individual")
+        assertEquals(SubscriptionStatus.lifetime,summary.status)
+        assertTrue("Lifetime's cached lease cannot prove there is no separate subscription",summary.managesInPlay)
+    }
+    @Test fun freshPlayRenewalSurvivesVerifierFailureWithValidCachedAccess()=runBlocking {
+        val subscription=StorePurchase(purchase.token,"individual",StorePurchaseState.purchased,autoRenewing=true)
+        val cache=Cache().apply {value=CachedGrant(lease(product="individual"),clock.now)}
+        val offline=session(cache,{owned(subscription)},{throw IOException("verifier offline fixture")})
+        offline.refresh();offline.requireAccess(Capability.recording)
+        assertEquals(SubscriptionStatus.renewing,PlanRetention.summary(offline.state.value,PlanHistory(true),"individual").status)
+    }
+    @Test fun aLaterOfflineRefreshCannotReuseOldRenewalInformation()=runBlocking {
+        val subscription=StorePurchase(purchase.token,"individual",StorePurchaseState.purchased,autoRenewing=true)
+        var online=true
+        val current=session(Cache(),{if(online) owned(subscription) else throw IOException("offline fixture")},
+            {PurchaseVerification.Active(lease(product="individual"))})
+        assertEquals(BillingRefreshResult.verified,current.refresh())
+        assertEquals(SubscriptionStatus.renewing,PlanRetention.summary(current.state.value,PlanHistory(true),"individual").status)
+        online=false
+        assertEquals(BillingRefreshResult.failed,current.refresh());current.requireAccess(Capability.recording)
+        val summary=PlanRetention.summary(current.state.value,PlanHistory(true),"individual")
+        assertEquals(SubscriptionStatus.active,summary.status);assertFalse(summary.renewalKnown)
+        assertFalse(summary.offersCancel);assertTrue(summary.managesInPlay)
+    }
     @Test fun refundOrFreshEmptyPlayOwnershipClearsDurableCache()=runBlocking {
         val cache=Cache();cache.value=CachedGrant(lease(),clock.now)
         val revoked=session(cache,{ owned() },{ PurchaseVerification.Revoked })

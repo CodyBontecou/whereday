@@ -36,6 +36,10 @@ import com.bontecou.whereday.billing.*
 /** Export access on the Export tab: every subscription plan and Lifetime include exports. [manage] opens Play's subscription page. */
 @Composable internal fun ExportAccessCard(purchase:BillingState,checkout:Boolean,buy:(StorePlan)->Unit,restore:()->Unit,manage:(()->Unit)?=null) {
     var paywall by rememberSaveable {mutableStateOf(false)}
+    var leaving by rememberSaveable {mutableStateOf(false)}
+    // Match Settings: only a freshly confirmed renewing subscription gets the factual cancellation summary.
+    // Cached access is not proof of renewal (or cancellation); keep its management link direct and neutral.
+    if(leaving && manage!=null) BeforeYouGoSheet({leaving=false}) {leaving=false;manage()}
     if(paywall) PaywallDialog(purchase,checkout,buy,restore,dismiss={paywall=false},entry=PaywallEntry.export)
     WdCard(Modifier.testTag("export-access")) {
         Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
@@ -68,7 +72,9 @@ import com.bontecou.whereday.billing.*
                 else if(purchase.access!=AccessState.checking) WdButton(stringResource(R.string.paywall_preview),{paywall=true},Modifier.testTag("export-access-paywall"),
                     icon=Icons.Outlined.Info)
             }
-            if(manage!=null) WdButton(stringResource(R.string.paywall_manage),manage,Modifier.testTag("export-access-manage"),icon=Icons.Outlined.OpenInNew)
+            if(manage!=null) WdButton(stringResource(R.string.paywall_manage),{
+                if(purchase.renewalKnown && purchase.autoRenewing) leaving=true else manage()
+            },Modifier.testTag("export-access-manage"),icon=Icons.Outlined.OpenInNew)
             WdButton(stringResource(R.string.export_access_restore),restore,Modifier.testTag("export-access-restore"),enabled=!purchase.busy && !checkout,icon=Icons.Outlined.Restore)
             if(purchase.busy) Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
                 CircularProgressIndicator(Modifier.size(16.dp),color=wd.accent,trackColor=wd.dialTrack,strokeWidth=2.dp)

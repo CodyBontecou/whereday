@@ -1,8 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <queries><package android:name="com.bontecou.whereday.automationclient" /></queries>
     <application>
+        <!-- Dedicated-package shell-only presentation fixture; no purchase or entitlement writes. -->
+        <provider android:name=".QaSubscriptionPreviewProvider" android:authorities="${applicationId}.subscriptionpreview"
+            android:exported="true" android:readPermission="android.permission.DUMP" android:writePermission="android.permission.DUMP" />
         <activity android:name=".ForwardAutomationProbeActivity" android:exported="true" />
         <!-- QA-only demo journal for screenshots; never part of debug or release builds. -->
         <activity android:name=".DemoJournalActivity" android:exported="true" />
+        <activity android:name=".SubscriptionPreviewActivity" android:exported="true" android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="whereday-qa" android:host="subscription" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

@@ -1,0 +1,71 @@
+{
+  "device": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "package": "com.bontecou.whereday.mapqa",
+  "captures": [
+    {
+      "file": "offline-subscription-en.png",
+      "locale": "en",
+      "fontScale": 1.0,
+      "dark": false,
+      "sha256": "c43c26eee9b78d9a650847f8d0919ffef4d81feb26727b43c68db77226b83765",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "offline-lifetime-en-dark.png",
+      "locale": "en",
+      "fontScale": 1.0,
+      "dark": true,
+      "sha256": "d6a5943207275efcf194313365590199604a9f223180bf0fbfed1ee04fc34ae1",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "retention-summary-en.png",
+      "locale": "en",
+      "fontScale": 1.0,
+      "dark": false,
+      "sha256": "061017a4d1e0ec45c7f3b6937a110712a69623fdfb65d8cb4a064432d0235fe2",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "retention-ar-large-top.png",
+      "locale": "ar",
+      "fontScale": 1.8,
+      "dark": true,
+      "sha256": "437bf9771164b2c62867a5d4c812cdb25ac39ea4bbc332616b822fc7b90dbf9a",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "retention-ar-large-actions.png",
+      "locale": "ar",
+      "fontScale": 1.8,
+      "dark": true,
+      "sha256": "00eb8357f8cfcc45e022fc415d6cab84e1fb1d42c12fc2056ca0387607ed4fc7",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "renewing-ar-after-dismiss.png",
+      "locale": "ar",
+      "fontScale": 1.8,
+      "dark": true,
+      "sha256": "aed5ffd4a53bea59e901599f6f0151e09e144ba3946d270bd66470dd6fb4610c",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "lapsed-es-large-top.png",
+      "locale": "es",
+      "fontScale": 1.8,
+      "dark": false,
+      "sha256": "c2960d187d7654f792195f22d3c338486cad2412a7300c37e241cf9dfac1b24c",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    },
+    {
+      "file": "lapsed-es-large-actions.png",
+      "locale": "es",
+      "fontScale": 1.8,
+      "dark": false,
+      "sha256": "05ad358dd7b28169d61c9b1207fb4c2d893164ee826b53577e3110fc22eb1dab",
+      "apkSha256": "c67a28bbd3bf94893431cc8bb7722b12467decb76d3de3756b5deec8f2199bf8"
+    }
+  ]
+}

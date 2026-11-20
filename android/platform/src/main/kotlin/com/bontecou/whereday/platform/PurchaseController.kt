@@ -7,6 +7,7 @@ import com.bontecou.whereday.billing.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.time.Clock
 
@@ -22,11 +23,16 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
     private val restoring=java.util.concurrent.atomic.AtomicBoolean()
     /** The plan whose Play sheet is open, so a completed free-week checkout can schedule its reminder. */
     private val checkoutPlan=java.util.concurrent.atomic.AtomicReference<StoreProduct?>()
+    private val planMemory=PlanHistoryStore(context)
+    private val history=MutableStateFlow(planMemory.load())
+    /** What this installation remembers about its plan: whether it ever had a subscription, and the base plan it bought. */
+    val planHistory:StateFlow<PlanHistory> = history.asStateFlow()
     private val store=PlayPurchaseStore(context,configuration.productId,configuration.subscriptionId) { result ->
         val code=result.code
         val attempt=purchaseUsage.getAndSet(null)
         val plan=checkoutPlan.getAndSet(null)
         checkout.value=false
+        if(code==BillingClient.BillingResponseCode.OK && plan!=null) remember {PlanRetention.checkoutCompleted(it,plan.plan,result.purchaseTokenHash)}
         if(code==BillingClient.BillingResponseCode.OK && plan!=null && plan.freeTrialDays>0 && result.purchasedAt!=null)
             TrialReminder.schedule(context,result.purchasedAt.plus(java.time.Duration.ofDays(plan.freeTrialDays.toLong())),plan.formattedPrice,plan.plan==StorePlan.yearly)
         if(code==BillingClient.BillingResponseCode.OK) scope.launch {refreshUsage(attempt)}
@@ -42,11 +48,21 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
         PurchaseGrantCache(context),Clock.systemUTC())
     val state=session.state
 
-    init { scope.launch { for(signal in refreshes) {session.refresh();reconcileReminder()} } }
+    init {
+        scope.launch { for(signal in refreshes) {session.refresh();reconcileReminder()} }
+        // A lapse is only recognizable against a subscription this installation has verified before.
+        scope.launch { session.state.collect { current -> remember {PlanRetention.observe(it,current,configuration.subscriptionId)} } }
+    }
+    @Synchronized private fun remember(change:(PlanHistory)->PlanHistory) {
+        val before=history.value
+        val after=change(before)
+        if(after!=before) {planMemory.save(after);history.value=after}
+    }
     /** A canceled or replaced trial keeps no reminder; Play itself reports cancellation as auto-renew off. */
     private fun reconcileReminder() {
         val current=state.value
-        if(current.access==AccessState.active && (current.activeProductId!=configuration.subscriptionId || !current.autoRenewing)) TrialReminder.cancel(context)
+        if(current.access==AccessState.active && current.renewalKnown &&
+            (current.activeProductId!=configuration.subscriptionId || !current.autoRenewing)) TrialReminder.cancel(context)
         else if(current.access==AccessState.free) TrialReminder.cancel(context)
     }
     val subscriptionId get()=configuration.subscriptionId

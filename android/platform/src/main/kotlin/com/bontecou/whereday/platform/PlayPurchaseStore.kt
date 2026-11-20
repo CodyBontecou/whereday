@@ -12,7 +12,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /** A completed Play checkout, reported before verification. [purchaseTime] starts a free trial's clock. */
-data class CheckoutResult(val code:Int,val purchasedAt:Instant?)
+data class CheckoutResult(val code:Int,val purchasedAt:Instant?,val purchaseTokenHash:String?=null)
 
 class PlayPurchaseStore(context:Context,private val lifetimeId:String,private val subscriptionId:String,private val events:(CheckoutResult)->Unit):PurchaseStore {
     private val connectionMutex=Mutex()
@@ -20,7 +20,10 @@ class PlayPurchaseStore(context:Context,private val lifetimeId:String,private va
     /** The offer token each plan launches with: a subscription base plan's eligible trial offer, or the Lifetime buy option. */
     @Volatile private var offers:Map<StorePlan,Pair<ProductDetails,String>> = emptyMap()
     private val client=BillingClient.newBuilder(context.applicationContext)
-        .setListener { result,purchases -> events(CheckoutResult(result.responseCode,purchases?.firstOrNull { subscriptionId in it.products }?.let { Instant.ofEpochMilli(it.purchaseTime) })) }
+        .setListener { result,purchases ->
+            val subscription=purchases?.firstOrNull { subscriptionId in it.products }
+            events(CheckoutResult(result.responseCode,subscription?.let { Instant.ofEpochMilli(it.purchaseTime) },subscription?.let { sha256(it.purchaseToken.toByteArray()) }))
+        }
         .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
         .enableAutoServiceReconnection().build()
 
