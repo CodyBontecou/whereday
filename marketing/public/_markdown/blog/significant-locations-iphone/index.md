@@ -70,6 +70,8 @@ Turn off the Significant Locations & Routes switch on that screen. Before you do
 
 ## How to open and manage Visited Places in Apple Maps
 
+Looking for photos on a map instead? See [how to see your photos on a map on iPhone](https://whereday.com/blog/iphone-photos-map/).
+
 ### Turn it on (iOS 26)
 
 - Open Settings → Apps → Maps → Location. Turn on Precise Location and Visited Places.
@@ -218,5 +220,9 @@ Check Apple Maps, Google Timeline and Whereday, and choose the right download.
 - [Keep a copy of the history you record](https://whereday.com/blog/back-up-iphone-location-history/)
 
 Export visits and points as Whereday JSON and check the files.
+
+- [See your photos on a map](https://whereday.com/blog/iphone-photos-map/)
+
+Use the Photos map and place photos that have no GPS.
 
 Source: https://whereday.com/blog/significant-locations-iphone/

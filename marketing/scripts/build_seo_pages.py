@@ -213,6 +213,19 @@ PAGES.append({
 })
 
 PAGES.append({
+    "path": "/blog/iphone-photos-map/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Photos map on iPhone",
+    "type": "BlogPosting",
+    "title": "See Your Photos on a Map on iPhone — Whereday",
+    "headline": "See your photos on a map on iPhone",
+    "description": "See where a photo was taken, view all photos on a map, fix photos missing from it, and place photos with no GPS using Whereday.",
+    "lede": "How to see one photo’s location and all your photos on a map, why some are missing, and how to place photos that have no GPS.",
+    "published": "2026-11-20", "modified": "2026-11-20",
+    "source": "iphone-photos-map.html",
+    "image": "/screenshots/map-layers.png",
+    "image_alt": "Whereday’s Layers sheet showing the Photos row, off by default",
+})
+
+PAGES.append({
     "path": "/blog/find-my-location-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Find My history",
     "type": "BlogPosting",
     "title": "Does Find My Show Location History on iPhone? — Whereday",
@@ -244,6 +257,13 @@ PAGES.append({
 })
 
 RELATED = {
+ '/blog/iphone-photos-map/': [
+     ('/docs/photos/', 'Read the photo feature reference',
+      'Matching order, the 15-minute window, privacy and controls.'),
+     ('/blog/view-location-history-iphone/', 'Looking for where you were?',
+      'Check Apple Maps, Google Timeline and Whereday.'),
+     ('/blog/missing-location-history-iphone/', 'Gaps on a day?',
+      'Photos can only be matched on days with records; check why records are missing.')],
  '/tools/visited-countries-map/': [
      ('/tools/country-days-calculator/', 'Count days instead of countries',
       'Check Schengen 90/180, rolling windows and 183-day totals from a Country Days CSV.'),
@@ -295,7 +315,9 @@ RELATED = {
      ('/blog/view-location-history-iphone/', 'Find any iPhone location history',
       'Check Apple Maps, Google Timeline and Whereday, and choose the right download.'),
      ('/blog/back-up-iphone-location-history/', 'Keep a copy of the history you record',
-      'Export visits and points as Whereday JSON and check the files.')],
+      'Export visits and points as Whereday JSON and check the files.'),
+     ('/blog/iphone-photos-map/', 'See your photos on a map',
+      'Use the Photos map and place photos that have no GPS.')],
  '/blog/view-location-history-iphone/': [('/blog/significant-locations-iphone/',
                                           'Understand Significant Locations and Visited Places',
                                           'See where each Apple feature lives, why it shows '
@@ -307,7 +329,11 @@ RELATED = {
                                          ('/blog/private-location-journal-iphone/',
                                           'Start a journal for future trips',
                                           'Set up recording before the next trip you want to '
-                                          'remember.')],
+                                          'remember.'),
+                                         ('/blog/iphone-photos-map/',
+                                          'See your photos on a map',
+                                          'Use the Photos map and place photos that have no '
+                                          'GPS.')],
  '/blog/record-iphone-route-gpx/': [('/blog/back-up-iphone-location-history/',
                                      'Keep a restorable copy',
                                      'GPX is a map file; retain supported visits and points '

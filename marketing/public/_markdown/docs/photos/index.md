@@ -47,6 +47,8 @@ Photo files never leave your Photos library. Whereday stores only each photo's l
 
 If a photo disappears from your library (with full access), Whereday cleans up its record automatically.
 
+See also: [See your photos on a map on iPhone](https://whereday.com/blog/iphone-photos-map/), including why photos go missing from Apple's Photos map.
+
 [← PreviousSave and edit places in your iPhone location journal](https://whereday.com/docs/places/) [Next →Export and restore location history](https://whereday.com/docs/export-import/)
 
 Source: https://whereday.com/docs/photos/
