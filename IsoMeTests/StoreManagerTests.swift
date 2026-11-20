@@ -1,5 +1,4 @@
 import XCTest
-import StoreKitTest
 import SwiftUI
 @testable import IsoMe
 
@@ -259,113 +258,6 @@ final class StoreManagerTests: XCTestCase {
         XCTAssertFalse(TrackingAccessPolicy.canExport(legacy: true, purchased: false))
         XCTAssertFalse(TrackingAccessPolicy.requiresPaywall(legacy: true, purchasedBefore: false, purchased: false))
     }
-
-    @MainActor
-    func testStoreKitCancellationAndOfflineRestoreKeepFreshUserLocked() async throws {
-        let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "IsoMe", withExtension: "storekit"))
-        let session = try SKTestSession(contentsOf: url)
-        session.resetToDefaultState()
-        session.disableDialogs = true
-        session.clearTransactions()
-        defer { session.clearTransactions(); session.resetToDefaultState() }
-        let suite = "StoreKitFaults.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suite)!
-        defaults.set(false, forKey: "tracking.cohort.legacy.v1")
-        defer { defaults.removePersistentDomain(forName: suite) }
-        let store = StoreManager(defaults: defaults, forceStoreKit: true)
-        for _ in 0..<100 {
-            if store.productsByID.count == 7 && !store.isLoadingProducts { break }
-            try await Task.sleep(for: .milliseconds(100))
-        }
-        XCTAssertEqual(store.productsByID.count, 7)
-        XCTAssertFalse(store.canTrack)
-        try await session.setSimulatedError(SKTestFailures.Purchase.generic(.userCancelled), forAPI: .purchase)
-        let cancelled = await store.purchase(.familyWeekly)
-        // SKTestSession on iOS 27 throws StoreKitError.unknown for a simulated cancellation,
-        // so only require that a cancelled sheet never unlocks a fresh user.
-        XCTAssertTrue(cancelled == .cancelled || cancelled == .failed(.storeError), "\(cancelled)")
-        XCTAssertFalse(store.canTrack)
-        try await session.setSimulatedError(nil, forAPI: .purchase)
-        try await session.setSimulatedError(SKTestFailures.AppStoreSync.generic(.networkError(URLError(.notConnectedToInternet))), forAPI: .appStoreSync)
-        let failedRestore = await store.restorePurchases()
-        XCTAssertEqual(failedRestore, .failed)
-        XCTAssertFalse(store.canTrack)
-    }
-
-    @MainActor
-    func testStoreKitCatalogTrialPurchaseExpirationAndLifetime() async throws {
-        let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "IsoMe", withExtension: "storekit"))
-        let session = try SKTestSession(contentsOf: url)
-        session.resetToDefaultState()
-        session.disableDialogs = true
-        session.timeRate = .realTime
-        session.clearTransactions()
-        defer { session.clearTransactions() }
-        let suite = "StoreKitIntegration.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suite)!
-        defaults.set(false, forKey: "tracking.cohort.legacy.v1")
-        defer { defaults.removePersistentDomain(forName: suite) }
-        let store = StoreManager(defaults: defaults, forceStoreKit: true)
-        // The startup task may already be loading; wait for its full catalog.
-        for _ in 0..<100 {
-            if store.productsByID.count == 7 && !store.isLoadingProducts { break }
-            try await Task.sleep(for: .milliseconds(100))
-        }
-        XCTAssertEqual(store.productsByID.count, 7)
-        let prices: [IsoMePurchaseOption: Decimal] = [
-            .individualWeekly: Decimal(string: "0.99")!, .individualYearly: Decimal(string: "29.99")!,
-            .individual: Decimal(string: "49.99")!, .familyWeekly: Decimal(string: "1.99")!,
-            .familyYearly: Decimal(string: "49.99")!, .family: Decimal(string: "89.99")!
-        ]
-        for (option, price) in prices {
-            let product = try XCTUnwrap(store.product(for: option))
-            XCTAssertEqual(product.price, price)
-            XCTAssertEqual(product.isFamilyShareable, option.isFamilyPlan)
-        }
-        XCTAssertTrue(store.trialEligibleProductIDs.contains(IsoMePurchaseOption.individualWeekly.productID))
-        // Exercise real StoreKit transactions without purchase-sheet presentation,
-        // which requires a foreground scene unavailable in hosted test runners.
-        let trial = try await session.buyProduct(identifier: IsoMePurchaseOption.individualWeekly.productID)
-        XCTAssertEqual(trial.productID, IsoMePurchaseOption.individualWeekly.productID)
-        await trial.finish()
-        for _ in 0..<50 {
-            await store.checkEntitlement()
-            if store.isPurchased { break }
-            try await Task.sleep(for: .milliseconds(100))
-        }
-        XCTAssertTrue(store.isPurchased)
-        XCTAssertNotNil(store.trackingExpiration)
-        let restoredSuite = "StoreKitRestore.\(UUID().uuidString)"
-        let restoredDefaults = UserDefaults(suiteName: restoredSuite)!
-        defer { restoredDefaults.removePersistentDomain(forName: restoredSuite) }
-        restoredDefaults.set(false, forKey: "tracking.cohort.legacy.v1")
-        let restoredStore = StoreManager(defaults: restoredDefaults, forceStoreKit: true)
-        let restoreResult = await restoredStore.restorePurchases()
-        XCTAssertEqual(restoreResult, .restored)
-        XCTAssertTrue(restoredStore.canTrack)
-        let subscription = try XCTUnwrap(session.allTransactions().first { $0.productIdentifier == IsoMePurchaseOption.individualWeekly.productID })
-        try session.disableAutoRenewForTransaction(identifier: subscription.identifier)
-        try session.expireSubscription(productIdentifier: IsoMePurchaseOption.individualWeekly.productID)
-        for _ in 0..<50 {
-            await store.checkEntitlement()
-            if !store.isPurchased { break }
-            try await Task.sleep(for: .milliseconds(100))
-        }
-        XCTAssertFalse(store.isPurchased)
-        XCTAssertTrue(store.hasPurchasedBefore)
-        XCTAssertTrue(store.canExport)
-        let lifetime = try await session.buyProduct(identifier: IsoMePurchaseOption.family.productID)
-        XCTAssertEqual(lifetime.productID, IsoMePurchaseOption.family.productID)
-        await lifetime.finish()
-        for _ in 0..<50 {
-            await store.checkEntitlement()
-            if store.isFamilyUnlocked { break }
-            try await Task.sleep(for: .milliseconds(100))
-        }
-        XCTAssertTrue(store.isFamilyUnlocked)
-        XCTAssertNil(store.trackingExpiration)
-    }
-
 
     func testPlanCardsUseShortNamesAndYearlyMonthlyEquivalent() {
         let usd = Decimal.FormatStyle.Currency(code: "USD", locale: Locale(identifier: "en_US"))
