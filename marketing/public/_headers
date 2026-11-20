@@ -86,3 +86,7 @@
 /samples/synthetic-walk-day-3.gpx
   Content-Disposition: attachment; filename="synthetic-walk-day-3.gpx"
   Content-Type: application/gpx+xml; charset=utf-8
+
+/samples/synthetic-countries-trip.gpx
+  Content-Disposition: attachment; filename="synthetic-countries-trip.gpx"
+  Content-Type: application/gpx+xml; charset=utf-8

@@ -63,6 +63,8 @@ JSON inspection and plotting happen in your browser. This tool page omits site a
 
 The server receives ordinary page and public-script requests when you open the tool. Selected filenames, coordinates and results are not sent to it. Following a normal link leaves this tool’s privacy boundary.
 
+[Turn this file into a visited-countries map](https://whereday.com/tools/visited-countries-map/).
+
 ## Choose the next step for your archive
 
 Use the [format-identification tutorial](https://whereday.com/blog/google-timeline-json-formats/) for worked examples and unsupported-file cases. For Whereday, follow the [Google Timeline import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/), inspect its actual native preview, and keep the original archive. This tool cannot recover missing records or import a file into Google Maps.

@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/visited-countries.css">
+<nav class="article-toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#make-map">Make your map</a></li><li><a href="#how-it-works">How points become countries</a></li><li><a href="#which-file">Which file to use</a></li><li><a href="#count-rules">What counts as visited</a></li><li><a href="#limits">Limits</a></li><li><a href="#file-privacy">Your file stays in this page</a></li></ol></nav>
+
+<section class="gpx-tool vc-tool" aria-labelledby="make-map">
+  <h2 id="make-map">Add your files. They stay in this page.</h2>
+  <p>Drop in a GPX, KML, GeoJSON, Google Timeline JSON or Whereday Country Days CSV file, or several. The countries your points fall in are shaded on the map and listed with the first date, last date and number of distinct dates, so you can check each one. No account, upload or analytics.</p>
+  <p><strong>This is a record of where a phone was, not proof of where you lived or were present.</strong> GPS points can be wrong or missing, and this page is not legal or tax evidence. For day counts, use the <a href="/tools/country-days-calculator/">days-in-country calculator</a>.</p>
+  <noscript><p>JavaScript is needed to read files and draw the map in your browser. The explanations below work without it.</p></noscript>
+  <div id="vc-tool" hidden>
+    <div id="vc-drop" class="vc-drop">
+      <label for="vc-file"><strong>Choose files</strong> or drop them here · GPX, KML, GeoJSON, Google Timeline JSON or Country Days CSV · up to 10 MiB and 50,000 points per file</label>
+      <input id="vc-file" type="file" multiple accept=".gpx,.kml,.json,.geojson,.csv,application/gpx+xml,application/vnd.google-earth.kml+xml,application/geo+json,application/json,application/xml,text/xml,text/csv" aria-describedby="vc-status">
+    </div>
+    <div class="gpx-actions"><button id="vc-demo" type="button">Try a synthetic example</button><button id="vc-reset" type="button">Reset manual changes</button><button id="vc-clear" type="button">Clear everything</button></div>
+    <p id="vc-status" role="status" aria-live="polite">Add files, or try the synthetic example first: five invented points in three countries.</p>
+    <div id="vc-files-section" hidden>
+      <h3 id="vc-files-title">Files</h3>
+      <ul id="vc-files" aria-labelledby="vc-files-title"></ul>
+    </div>
+    <div id="vc-results" hidden>
+      <p id="vc-count" class="vc-headline" aria-live="polite"></p>
+      <p class="gpx-small">The count depends on the boundary set. Territories and disputed areas follow Natural Earth, so it can differ from other lists. <a href="#count-rules">See what counts</a>.</p>
+      <figure id="vc-figure">
+        <div id="vc-map"></div>
+        <figcaption class="gpx-small">Visited countries are dark red. Click a country on the map to add or remove it by hand, or use the table or the country list below, which also work from the keyboard. The table is the full, accessible version of this map.</figcaption>
+      </figure>
+      <h3>How the points matched</h3>
+      <dl id="vc-stats" class="vc-figures"></dl>
+      <p id="vc-rule" class="gpx-small"></p>
+      <p id="vc-undrawn" class="gpx-small"></p>
+      <div class="table-scroll" role="region" aria-label="Visited countries table" tabindex="0"><table id="vc-table"></table></div>
+      <div id="vc-near-section" hidden>
+        <h3>Near a border or coast, not counted</h3>
+        <p>These countries only have points within about 10 km of another country’s border, or just off a simplified coastline. They are not counted, because the boundary data is not exact enough to say. If you know you were there, add them by hand.</p>
+        <ul id="vc-near"></ul>
+      </div>
+      <div class="vc-add">
+        <label for="vc-country"><strong>Add a country by hand</strong> (for trips before your file)</label>
+        <select id="vc-country"></select>
+        <button id="vc-add" type="button">Add country</button>
+      </div>
+      <p class="gpx-small">Manual changes are marked “manual” or “removed manually” in the table and in the CSV.</p>
+      <div class="vc-downloads"><button id="vc-svg" type="button" disabled>Download map (SVG)</button><button id="vc-png" type="button" disabled>Download map (PNG)</button><button id="vc-csv" type="button" disabled>Download table (CSV)</button></div>
+      <p class="gpx-small">The map downloads have no watermark.</p>
+    </div>
+  </div>
+  <p class="gpx-small">The synthetic example is <a href="/samples/synthetic-countries-trip.gpx" download>synthetic-countries-trip.gpx</a>: five invented points on 1, 3, 4, 6 and 7 January 2000, one in Portugal, two in Spain and two in France. It is not anyone’s recording.</p>
+</section>
+
+<section aria-labelledby="how-it-works">
+  <h2 id="how-it-works">How points become countries</h2>
+  <ol>
+    <li><strong>Read.</strong> GPX track points, route points and waypoints; Google Timeline visits and timed points (accepted records only); GeoJSON Point, LineString and MultiLineString coordinates; and KML Point and LineString coordinates (not Google Earth’s <code>gx:Track</code> elements). A Country Days CSV already names its countries, so it needs no lookup. The format is detected from the file’s content, not its name.</li>
+    <li><strong>Thin.</strong> To keep long tracks fast, the page keeps one point per 0.01° cell (about 1 km) for each date. Every file’s list shows how many points were read and how many were kept.</li>
+    <li><strong>Look up.</strong> Each point is tested against country outlines stored in this page, using a bounding-box check and then a point-in-polygon test. Nothing is sent to a geocoder or map service. Only the points themselves are tested: the line between two points is not, so a flight is not a visit to the countries it crosses.</li>
+    <li><strong>Border and water.</strong> A point inside one country but within about 10 km of another country’s outline is counted as “near a border”, not as a visit. A point in no outline, such as open water, is “unmatched”. A country that only has such points is listed under “near a border or coast, not counted”, with a button to add it by hand.</li>
+    <li><strong>Dates.</strong> A timestamp with a UTC offset (such as <code>+02:00</code>) uses the date as written. A timestamp ending in <code>Z</code> uses its UTC date. Google Timeline times are read as UTC dates. Each file shows which rule it used. Points with no usable date still count towards the country, but add no date.</li>
+  </ol>
+  <p>The boundaries are <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/">Natural Earth 1:50m Admin 0 – Countries</a>, version 5.1.2, which are in the public domain (<a href="https://www.naturalearthdata.com/about/terms-of-use/">terms of use</a>). We simplified them to a tolerance of about 0.01° (roughly 1 km) and bundled them as a script, <code>/assets/visited-countries-data.mjs</code>: about 420 KB, about 150 KB gzipped, with 240 country and territory outlines (Antarctica included). The file formats are defined in the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema</a>, <a href="https://www.rfc-editor.org/rfc/rfc7946">GeoJSON (RFC 7946)</a> and <a href="https://www.ogc.org/standard/kml/">OGC KML 2.2</a>.</p>
+  <p>Longitudes are wrapped so that 180° and −180° are the same meridian, and the outlines are already split there, so a track that crosses the date line is handled. Points at the poles are tested like any other and usually come out unmatched, except in Antarctica.</p>
+</section>
+
+<section aria-labelledby="which-file">
+  <h2 id="which-file">Which file to use</h2>
+  <div class="table-scroll" role="region" aria-label="Where to get each kind of file" tabindex="0"><table>
+    <caption>Where to get a location file for this page</caption>
+    <thead><tr><th scope="col">Your data is in</th><th scope="col">File to use</th><th scope="col">Where to start</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">iPhone</th><td>Whereday GPX or Country Days CSV; Apple Maps and Significant Locations do not export a file</td><td><a href="/blog/view-location-history-iphone/">Find your iPhone location history</a>, then <a href="/blog/back-up-iphone-location-history/">back it up</a></td></tr>
+      <tr><th scope="row">Google Timeline</th><td>Extracted Timeline JSON (device, semantic or raw)</td><td><a href="/blog/google-timeline-json-formats/">Which Timeline JSON file you have</a>; Google’s <a href="https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&amp;hl=en">Timeline export help</a></td></tr>
+      <tr><th scope="row">A GPS watch or route app</th><td>GPX</td><td><a href="/blog/record-iphone-route-gpx/">Record and export a route as GPX</a></td></tr>
+      <tr><th scope="row">Many daily or trip files</th><td>One merged GPX, or add them all here at once</td><td><a href="/tools/merge-gpx/">Merge GPX files</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>Not sure what is inside a file? Check a GPX in the <a href="/tools/gpx-viewer/">GPX viewer</a> or a Timeline file in the <a href="/tools/google-timeline-inspector/">Timeline inspector</a> first. Renaming a file does not convert it. ZIP archives are not read: extract the JSON first.</p>
+</section>
+
+<section aria-labelledby="count-rules">
+  <h2 id="count-rules">What counts as visited</h2>
+  <p>Here, a country counts if at least one of your points, after thinning, falls inside its outline and not within about 10 km of another country’s outline, or if you add it by hand. Time spent there does not matter, and neither does the reason for the stop. A layover counts only if your phone recorded a point there.</p>
+  <ul>
+    <li><strong>Natural Earth’s list.</strong> Its Admin 0 set includes many territories as their own entries, such as Greenland, Puerto Rico or Hong Kong, and includes Antarctica. Three entries without an ISO code (Northern Cyprus, Somaliland and Siachen Glacier) use Natural Earth’s own three-letter codes. Disputed areas follow Natural Earth’s choices, which not everyone agrees with. Dependencies it does not draw separately may show under another country or be missing.</li>
+    <li><strong>Travel clubs.</strong> Clubs have their own lists. The Travelers’ Century Club, for example, <a href="https://travelerscenturyclub.org/countries-and-territories">counts a specific list of countries and territories</a>, so your number there can differ from this one.</li>
+    <li><strong>UN member states.</strong> The <a href="https://www.un.org/en/about-us/member-states">United Nations member list</a> is shorter than any list that includes territories. This map does not filter to it.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li><strong>Boundaries are simplified.</strong> Outlines are at about 1:50,000,000 and cut down further for size. Points near borders and coastlines can land on the wrong side or in no country. That is why they are flagged rather than guessed. Small islands and very small states may be missing or crude.</li>
+    <li><strong>Coastal cities.</strong> A point in a harbour or on a river mouth can fall just outside the coast outline and be unmatched. When it is within about 10 km of land the country is offered under “near a border or coast”.</li>
+    <li><strong>Airports and layovers.</strong> Flying over a country is not a visit. Only recorded points are tested, and a phone in flight mode records nothing. A stop at an airport counts only if a point was recorded there.</li>
+    <li><strong>Missing coverage.</strong> A file shows only what was recorded. Gaps, switched-off phones and trips before your file began do not appear. Add those by hand.</li>
+    <li><strong>Size.</strong> Each file can be up to 10 MiB and 50,000 points, the same limits as the <a href="/tools/gpx-viewer/">GPX viewer</a>. For more, split the export by date range.</li>
+    <li><strong>Not a residence or tax record.</strong> GPS points show where a phone was, not where a person was. This page does not decide residency, visa days or tax status. For Schengen 90/180 and 183-day questions, use the <a href="/tools/country-days-calculator/">days-in-country calculator</a>, and check the official rules.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="file-privacy">
+  <h2 id="file-privacy">Your file stays in this page</h2>
+  <p>Reading, matching, drawing the map and making the downloads all happen in your browser. This page blocks network connections and does not include the website’s analytics. The web server receives an ordinary request when you open the page and its scripts, but not your files, their names or the result. Clearing the page or closing the tab removes them; your original files are never changed.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Stop rebuilding the map.</h2><p>Whereday records the countries you visit on your iPhone and keeps every day on the map. <strong>Timeline → Country Days</strong> lists the countries with their dates, and the map’s <strong>All</strong> range shows your places with day counts. It does not draw a shaded country map like this page. Viewing Country Days and adding manual stays are free. From version 1.8, new users keep their exports after tracking access expires; existing free users keep their previous export-unlock requirement. See <a href="/#pricing">pricing</a> and <a href="/docs/timeline-outings/">how Country Days works</a>.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/visited-countries.mjs?v=20261120"></script>

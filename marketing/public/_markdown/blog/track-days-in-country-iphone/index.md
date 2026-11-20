@@ -94,7 +94,7 @@ The CSV uses `country_code`, `local_date`, and `source`. Source is `recorded`, `
 ## Remember the country.
 Keep the dates behind the count.
 
-Check your tracking access and review Country Days on your iPhone. Then [check your exported CSV with the days-in-country calculator](https://whereday.com/tools/country-days-calculator/).
+Check your tracking access and review Country Days on your iPhone. Then [check your exported CSV with the days-in-country calculator](https://whereday.com/tools/country-days-calculator/), or [see the countries on a map](https://whereday.com/tools/visited-countries-map/).
 
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 

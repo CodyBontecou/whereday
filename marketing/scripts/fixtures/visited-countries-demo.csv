@@ -1,0 +1,4 @@
+country_code,country,first_date,last_date,distinct_dates,points,source
+ES,Spain,2000-01-03,2000-01-04,2,2,file
+FR,France,2000-01-06,2000-01-07,2,2,file
+PT,Portugal,2000-01-01,2000-01-01,1,1,file

@@ -7,7 +7,13 @@ iPhone location journals
 
 Practical tools for checking your own files before importing or converting them.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 19, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 20, 2026
+
+## [Visited countries map](https://whereday.com/tools/visited-countries-map/)
+
+Turn a GPX, KML, GeoJSON, Google Timeline JSON or Country Days CSV file into a shaded world map with a count and a per-country list of first and last dates. Add or remove countries by hand, then save the map as SVG or PNG and the table as CSV.
+
+Borders and coastlines are simplified, so points near them are listed rather than guessed. Your files stay in your browser.
 
 ## [Merge GPX files](https://whereday.com/tools/merge-gpx/)
 

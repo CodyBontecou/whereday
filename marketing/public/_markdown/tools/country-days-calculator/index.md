@@ -179,6 +179,10 @@ Whereday records the countries you visit on your iPhone and exports this CSV. Vi
 
 ## Read next
 
+- [Map the countries instead of counting days](https://whereday.com/tools/visited-countries-map/)
+
+Shade the countries in a location file and see the dates behind each one.
+
 - [Record the dates automatically](https://whereday.com/blog/track-days-in-country-iphone/)
 
 See how Whereday records country days, adds a missing stay and analyses older records.
