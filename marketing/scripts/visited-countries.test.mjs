@@ -216,3 +216,24 @@ test('the synthetic demo downloads match the expected fixtures', async () => {
   assert.ok(!/<text|watermark/i.test(svg));
   assert.ok(!/https?:\/\/(?!www\.w3\.org)/.test(svg.replace(/https?:\/\/www\.w3\.org[^"]*/g, '')), 'no external references');
 });
+
+test('the PNG export source is a well-formed SVG at the PNG size', () => {
+  // The page draws this exact SVG onto a canvas. Node has no canvas, so the
+  // check is that the source parses and has the PNG's size and aspect ratio.
+  const s = summarize([analyze(read(VISITED_DEMO.text, VISITED_DEMO.name))]);
+  const { width, height } = pngSize();
+  const doc = new XMLParser().parseFromString(mapSVG(s.codes, { count: s.count, width }), 'image/svg+xml');
+  const root = doc.documentElement;
+  assert.equal(root.localName, 'svg');
+  assert.equal(root.getAttribute('width'), String(width));
+  assert.equal(root.getAttribute('height'), String(height));
+  assert.equal(root.getAttribute('viewBox'), '0 0 720 360');
+  // Two tiny outlines collapse below three points at map precision and are not drawn.
+  assert.equal(doc.getElementsByTagName('path').length, 238);
+});
+
+test('visited-countries-data.mjs is the only boundary asset', async () => {
+  const { readdir } = await import('node:fs/promises');
+  const names = await readdir(new URL('../public/assets/', import.meta.url));
+  assert.deepEqual(names.filter(n => /boundar|countries-data|\.geojson|\.topojson/i.test(n)), ['visited-countries-data.mjs']);
+});
