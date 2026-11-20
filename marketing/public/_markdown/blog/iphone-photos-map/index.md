@@ -54,13 +54,17 @@ Causes, how to tell, and what to do
 | Screenshots and screen recordings | The item is in the Screenshots or Screen Recordings album | None needed; they don’t carry GPS. You can [add a location by hand](https://whereday.com/blog/iphone-photos-map/#add-location).
 | Received in a chat app or downloaded from a social site | The photo wasn’t taken on your iPhone, and Info shows no location | Many apps remove location when they send or host a photo. Ask for the original, or add a location by hand.
 | Scans, DSLR or other non-GPS camera imports | The photo came from a scanner or a camera with no GPS | Add a location by hand, or let Whereday [match it by time](https://whereday.com/blog/iphone-photos-map/#whereday) if you were recording that day.
-| Shared with Location turned off | The copy someone received has no location | Your original keeps its location; only the copy you sent has it removed. Choose Options in the share sheet to control this.
+| Shared with Location turned off | The copy someone received has no location | Your original keeps its location; only the copy you sent has it removed. In the share sheet, tap Options and turn off Location to send a copy without it.
 
-Apple explains the Camera permission in [Location Services and privacy](https://support.apple.com/en-us/102515), and sharing with or without location in Apple’s iPhone User Guide.
+Apple explains the Camera permission in [Location Services and privacy](https://support.apple.com/en-us/102515), and sharing with or without location in [Control the location information you share on iPhone](https://support.apple.com/guide/iphone/control-the-location-information-you-share-iph3dd5f9be/ios).
 
 ## Add or change a photo’s location
 
-Open the photo, swipe up or tap Info, then use Add Location (or Adjust if it already has one) and search for a place. Removing a location uses the same screen. Apple documents this in [its iPhone User Guide](https://support.apple.com/guide/iphone/browse-photos-and-videos-by-location-iph390138909/ios) (see the related “Change the date, time, or location” article linked there); Apple’s Info screen is the place to look, and Apple documents the details in its “Change the date, time, or location of a photo or video” article. I haven’t confirmed the exact buttons for every iOS version, so follow that article for yours, including whether you can change several photos at once.
+- Open the photo or video in Photos and tap the More button.
+- Tap Adjust Info, then Adjust Location. (On older iOS versions there is no Adjust Info step: tap Adjust Location directly.)
+- Type where the photo was taken, then tap the place when it appears under Map Locations.
+
+To change several photos at once, tap Select, tap the thumbnails you want, then follow the same steps. To remove a location, choose No Location in the Adjust Location screen. To go back to the original, tap Revert. Apple documents the steps in [See photo and video information on iPhone](https://support.apple.com/guide/iphone/see-photo-and-video-information-iph0edb9c18f/ios) and the removal step in [Manage location metadata in Photos](https://support.apple.com/guide/personal-safety/manage-location-metadata-in-photos-ips0d7a5df82/web).
 
 ## Place photos that have no GPS with Whereday
 
@@ -119,7 +123,7 @@ Photos is the right first stop for geotagged photos. Whereday is for the gaps. L
 
 ### Can others see my photo locations when I share?
 
-They can if the shared photo includes location. In the share sheet, tap Options to choose whether to include it. Your original keeps its location either way.
+They can if the shared photo includes location. In the share sheet, tap Options and turn off Location to send a copy without it, as Apple’s [Manage location metadata in Photos](https://support.apple.com/guide/personal-safety/manage-location-metadata-in-photos-ips0d7a5df82/web) explains. Your original keeps its location either way.
 
 ### Why does a photo show the wrong place?
 
@@ -137,7 +141,7 @@ Record your days with Whereday, then turn on photo moments. It can’t place pho
 
 [Read the photo reference](https://whereday.com/docs/photos/)
 
-Apple steps checked November 20, 2026 against the text of Apple’s iPhone User Guide, “Browse photos and videos by location” (Show Map, swipe up or Info, Show Nearby Photos); not tested on a device. The add-location steps, Camera permission and share-sheet Options are described in general terms and linked to Apple’s pages; check them for your iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.
+Apple steps checked November 20, 2026 against Apple’s iPhone User Guide pages linked above (Show Map, swipe up or Info, Show Nearby Photos, Adjust Location, share-sheet Options), read as published text rather than tested on a device. Menus can vary by iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.
 
 ## Read next
 

@@ -301,15 +301,20 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
       <tr><th scope="row">Screenshots and screen recordings</th><td>The item is in the Screenshots or Screen Recordings album</td><td>None needed; they don’t carry GPS. You can <a href="#add-location">add a location by hand</a>.</td></tr>
       <tr><th scope="row">Received in a chat app or downloaded from a social site</th><td>The photo wasn’t taken on your iPhone, and Info shows no location</td><td>Many apps remove location when they send or host a photo. Ask for the original, or add a location by hand.</td></tr>
       <tr><th scope="row">Scans, DSLR or other non-GPS camera imports</th><td>The photo came from a scanner or a camera with no GPS</td><td>Add a location by hand, or let Whereday <a href="#whereday">match it by time</a> if you were recording that day.</td></tr>
-      <tr><th scope="row">Shared with Location turned off</th><td>The copy someone received has no location</td><td>Your original keeps its location; only the copy you sent has it removed. Choose Options in the share sheet to control this.</td></tr>
+      <tr><th scope="row">Shared with Location turned off</th><td>The copy someone received has no location</td><td>Your original keeps its location; only the copy you sent has it removed. In the share sheet, tap <strong>Options</strong> and turn off <strong>Location</strong> to send a copy without it.</td></tr>
     </tbody>
   </table></div>
-  <p>Apple explains the Camera permission in <a href="https://support.apple.com/en-us/102515">Location Services and privacy</a>, and sharing with or without location in Apple’s iPhone User Guide.</p>
+  <p>Apple explains the Camera permission in <a href="https://support.apple.com/en-us/102515">Location Services and privacy</a>, and sharing with or without location in <a href="https://support.apple.com/guide/iphone/control-the-location-information-you-share-iph3dd5f9be/ios">Control the location information you share on iPhone</a>.</p>
 </section>
 
 <section aria-labelledby="add-location">
   <h2 id="add-location">Add or change a photo’s location</h2>
-  <p>Open the photo, swipe up or tap Info, then use <strong>Add Location</strong> (or <strong>Adjust</strong> if it already has one) and search for a place. Removing a location uses the same screen. Apple documents this in <a href="https://support.apple.com/guide/iphone/browse-photos-and-videos-by-location-iph390138909/ios">its iPhone User Guide</a> (see the related “Change the date, time, or location” article linked there); Apple’s Info screen is the place to look, and Apple documents the details in its “Change the date, time, or location of a photo or video” article. I haven’t confirmed the exact buttons for every iOS version, so follow that article for yours, including whether you can change several photos at once.</p>
+  <ol>
+    <li>Open the photo or video in <strong>Photos</strong> and tap the <strong>More</strong> button.</li>
+    <li>Tap <strong>Adjust Info</strong>, then <strong>Adjust Location</strong>. (On older iOS versions there is no Adjust Info step: tap Adjust Location directly.)</li>
+    <li>Type where the photo was taken, then tap the place when it appears under Map Locations.</li>
+  </ol>
+  <p>To change several photos at once, tap <strong>Select</strong>, tap the thumbnails you want, then follow the same steps. To remove a location, choose <strong>No Location</strong> in the Adjust Location screen. To go back to the original, tap <strong>Revert</strong>. Apple documents the steps in <a href="https://support.apple.com/guide/iphone/see-photo-and-video-information-iph0edb9c18f/ios">See photo and video information on iPhone</a> and the removal step in <a href="https://support.apple.com/guide/personal-safety/manage-location-metadata-in-photos-ips0d7a5df82/web">Manage location metadata in Photos</a>.</p>
 </section>
 
 <section aria-labelledby="whereday">
@@ -371,7 +376,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <section aria-labelledby="faq">
   <h2 id="faq">FAQ</h2>
   <h3>Can others see my photo locations when I share?</h3>
-  <p>They can if the shared photo includes location. In the share sheet, tap <strong>Options</strong> to choose whether to include it. Your original keeps its location either way.</p>
+  <p>They can if the shared photo includes location. In the share sheet, tap <strong>Options</strong> and turn off <strong>Location</strong> to send a copy without it, as Apple’s <a href="https://support.apple.com/guide/personal-safety/manage-location-metadata-in-photos-ips0d7a5df82/web">Manage location metadata in Photos</a> explains. Your original keeps its location either way.</p>
   <h3>Why does a photo show the wrong place?</h3>
   <p>Location can be inaccurate, for example if you took the photo indoors or with a weak GPS fix, or if someone edited it. You can <a href="#add-location">adjust it</a> in the Info panel.</p>
   <h3>Can I export a list of photo locations?</h3>
@@ -385,7 +390,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <p><a href="/docs/photos/">Read the photo reference</a></p>
 </section>
 
-<p class="source-note">Apple steps checked November 20, 2026 against the text of Apple’s iPhone User Guide, “Browse photos and videos by location” (Show Map, swipe up or Info, Show Nearby Photos); not tested on a device. The add-location steps, Camera permission and share-sheet Options are described in general terms and linked to Apple’s pages; check them for your iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.</p>
+<p class="source-note">Apple steps checked November 20, 2026 against Apple’s iPhone User Guide pages linked above (Show Map, swipe up or Info, Show Nearby Photos, Adjust Location, share-sheet Options), read as published text rather than tested on a device. Menus can vary by iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.</p>
 
     </article>
     <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/docs/photos/">Read the photo feature reference</a><p>Matching order, the 15-minute window, privacy and controls.</p></li><li><a href="/blog/view-location-history-iphone/">Looking for where you were?</a><p>Check Apple Maps, Google Timeline and Whereday.</p></li><li><a href="/blog/missing-location-history-iphone/">Gaps on a day?</a><p>Photos can only be matched on days with records; check why records are missing.</p></li></ul></nav>
