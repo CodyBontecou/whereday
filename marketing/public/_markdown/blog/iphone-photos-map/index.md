@@ -49,19 +49,19 @@ The map shows only photos that carry GPS data. These are the common reasons a ph
 
 Causes, how to tell, and what to do
 | Cause | How to tell | Fix
-| Camera location access is off | Recent photos from your own camera have no map in Info | Settings → Privacy & Security → Location Services → Camera → While Using the App. Precise Location is optional. This affects future photos only.
+| Camera location access is off | Recent photos from your own camera have no map in Info | Settings → Privacy & Security → Location Services → Camera → While Using the App. This affects future photos only.
 | Location Services is off entirely | The Location Services switch at the top of that screen is off | Turn it on, then check Camera again. Past photos aren’t changed.
 | Screenshots and screen recordings | The item is in the Screenshots or Screen Recordings album | None needed; they don’t carry GPS. You can [add a location by hand](https://whereday.com/blog/iphone-photos-map/#add-location).
 | Received in a chat app or downloaded from a social site | The photo wasn’t taken on your iPhone, and Info shows no location | Many apps remove location when they send or host a photo. Ask for the original, or add a location by hand.
 | Scans, DSLR or other non-GPS camera imports | The photo came from a scanner or a camera with no GPS | Add a location by hand, or let Whereday [match it by time](https://whereday.com/blog/iphone-photos-map/#whereday) if you were recording that day.
 | Shared with Location turned off | The copy someone received has no location | Your original keeps its location; only the copy you sent has it removed. In the share sheet, tap Options and turn off Location to send a copy without it.
 
-Apple explains the Camera permission in [Location Services and privacy](https://support.apple.com/en-us/102515), and sharing with or without location in [Control the location information you share on iPhone](https://support.apple.com/guide/iphone/control-the-location-information-you-share-iph3dd5f9be/ios).
+Apple’s [Location Services and privacy](https://support.apple.com/en-us/102515) page explains app location permissions in general, and [Manage location metadata in Photos](https://support.apple.com/guide/personal-safety/manage-location-metadata-in-photos-ips0d7a5df82/web) covers sharing without location.
 
 ## Add or change a photo’s location
 
 - Open the photo or video in Photos and tap the More button.
-- Tap Adjust Info, then Adjust Location. (On older iOS versions there is no Adjust Info step: tap Adjust Location directly.)
+- Tap Adjust Info, then Adjust Location.
 - Type where the photo was taken, then tap the place when it appears under Map Locations.
 
 To change several photos at once, tap Select, tap the thumbnails you want, then follow the same steps. To remove a location, choose No Location in the Adjust Location screen. To go back to the original, tap Revert. Apple documents the steps in [See photo and video information on iPhone](https://support.apple.com/guide/iphone/see-photo-and-video-information-iph0edb9c18f/ios) and the removal step in [Manage location metadata in Photos](https://support.apple.com/guide/personal-safety/manage-location-metadata-in-photos-ips0d7a5df82/web).
@@ -141,7 +141,7 @@ Record your days with Whereday, then turn on photo moments. It can’t place pho
 
 [Read the photo reference](https://whereday.com/docs/photos/)
 
-Apple steps checked November 20, 2026 against Apple’s iPhone User Guide pages linked above (Show Map, swipe up or Info, Show Nearby Photos, Adjust Location, share-sheet Options), read as published text rather than tested on a device. Menus can vary by iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.
+Apple steps follow the linked Apple pages as of November 20, 2026: Browse photos and videos by location (Show Map, swipe up or Info, Show Nearby Photos), See photo and video information (Adjust Location, Select, Revert) and Manage location metadata in Photos (No Location, share-sheet Options → Location). The Camera permission path in the table follows Apple’s general Location Services guidance and was not checked against a dedicated Apple page. None of the steps were tested on a device, and menus can vary by iOS version. Whereday behavior follows the published Photos on the map reference and the app source. The screenshot and example use invented data.
 
 ## Read next
 
