@@ -200,6 +200,8 @@ test('worker blocks network connections on every alias of the tool', async () =>
   for (const path of ['/tools/country-days-calculator/', '/tools/country-days-calculator', '/tools/country-days-calculator/index.html']) {
     const response = await worker.fetch(new Request('https://whereday.com' + path), { ASSETS: { fetch: async () => new Response('Country days', { headers: { 'Content-Type': 'text/html' } }) } });
     assert.ok(response.headers.get('Content-Security-Policy').includes("connect-src 'none'"), path);
+    // The site's self-hosted fonts load from /assets/fonts/; default-src 'none' blocks them without this.
+    assert.ok(response.headers.get('Content-Security-Policy').includes("font-src 'self'"), path);
     assert.equal(response.headers.get('Referrer-Policy'), 'no-referrer');
   }
 });
