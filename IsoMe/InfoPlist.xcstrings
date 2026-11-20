@@ -147,6 +147,66 @@
       "comment" : "Privacy - Local Network Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أرسل تسجيلات Scrawl الخاصة بالتطوير إلى جهاز Mac المقترن."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrawl-এর ডেভেলপমেন্ট রেকর্ডিং আপনার পেয়ার করা Mac-এ পাঠান।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envía las grabaciones de desarrollo de Scrawl al Mac enlazado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyez les enregistrements de développement Scrawl à votre Mac jumelé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrawl की डेवलपमेंट रिकॉर्डिंग अपने पेयर किए गए Mac पर भेजें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrawlの開発用収録をペアリング済みのMacに送信します。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wysyłaj nagrania deweloperskie Scrawl do sparowanego Maca."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envie as gravações de desenvolvimento do Scrawl ao Mac emparelhado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправляйте записи Scrawl для разработки на сопряжённый Mac."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将 Scrawl 开发录制内容发送到配对的 Mac。"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -301,6 +361,66 @@
       "comment" : "Privacy - Microphone Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سجّل تعليقًا صوتيًا عند بدء التقاط Scrawl الخاص بالتطوير."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrawl-এর ডেভেলপমেন্ট ক্যাপচার শুরু করার সময় ধারাভাষ্য রেকর্ড করুন।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Graba la narración cuando inicies una captura de desarrollo de Scrawl."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez une narration lorsque vous lancez une capture de développement Scrawl."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrawl का डेवलपमेंट कैप्चर शुरू करने पर कथन रिकॉर्ड करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrawlの開発用キャプチャを開始するときにナレーションを録音します。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagrywaj narrację po rozpoczęciu przechwytywania deweloperskiego Scrawl."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grave a narração ao iniciar uma captura de desenvolvimento do Scrawl."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Записывайте голосовой комментарий при запуске захвата Scrawl для разработки."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始 Scrawl 开发录制时录下旁白。"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",

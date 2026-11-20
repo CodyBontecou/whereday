@@ -2039,6 +2039,66 @@
     },
     "%@ country stays · %@ photo matches" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ إقامات في البلدان · %2$@ صور مطابقة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ দেশে অবস্থান · %2$@ মিলে যাওয়া ছবি"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ estancias por país · %2$@ fotos coincidentes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ séjours par pays · %2$@ photos correspondantes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ देशों में ठहराव · %2$@ मेल खाती फ़ोटो"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "国別の滞在 %1$@件 · 一致する写真 %2$@枚"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ pobytów w krajach · %2$@ dopasowanych zdjęć"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ estadias por país · %2$@ fotos correspondentes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ пребываний в странах · %2$@ совпадений с фото"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 段国家停留 · %2$@ 张匹配照片"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -2681,6 +2741,74 @@
       }
     },
     "%@ new records" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ سجلات جديدة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ নতুন রেকর্ড"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ new records"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ registros nuevos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ nouveaux enregistrements"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ नए रिकॉर्ड"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい記録 %@件"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ nowych rekordów"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ novos registros"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ новых записей"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 条新记录"
+          }
+        }
+      }
 
     },
     "%@ now shows in Atlas." : {
@@ -2966,6 +3094,66 @@
     },
     "%@ OF %@ RECORDS" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ من %2$@ سجلات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ রেকর্ডের মধ্যে %1$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ DE %2$@ REGISTROS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ SUR %2$@ ENREGISTREMENTS"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ रिकॉर्ड में से %1$@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@件中%1$@件の記録"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ Z %2$@ REKORDÓW"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ DE %2$@ REGISTROS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ ИЗ %2$@ ЗАПИСЕЙ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ / %2$@ 条记录"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3116,6 +3304,66 @@
     },
     "%@ outings · %@ saved places" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ نزهات · %2$@ أماكن محفوظة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ আউটিং · %2$@ সংরক্ষিত স্থান"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ salidas · %2$@ lugares guardados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sorties · %2$@ lieux enregistrés"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ आउटिंग · %2$@ सहेजी गई जगहें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外出 %1$@件 · 保存済みの場所 %2$@件"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ podróży · %2$@ zapisanych miejsc"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ passeios · %2$@ lugares salvos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ прогулок · %2$@ сохранённых мест"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 次出行 · %2$@ 个已保存地点"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3618,6 +3866,74 @@
       }
     },
     "%@ records restored" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت استعادة %@ سجلات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ রেকর্ড পুনরুদ্ধার করা হয়েছে"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ records restored"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ registros restaurados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ enregistrements restaurés"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ रिकॉर्ड बहाल किए गए"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@件の記録を復元しました"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywrócono %@ rekordów"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ registros restaurados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановлено записей: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已恢复 %@ 条记录"
+          }
+        }
+      }
 
     },
     "%@ since midnight" : {
@@ -4042,6 +4358,66 @@
     },
     "%@ visits · %@ points" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ زيارات · %2$@ نقاط"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ ভিজিট · %2$@ পয়েন্ট"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ visitas · %2$@ puntos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ visites · %2$@ points"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ विज़िट · %2$@ पॉइंट"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "訪問 %1$@件 · ポイント %2$@件"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ wizyt · %2$@ punktów"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ visitas · %2$@ pontos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ посещений · %2$@ точек"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 次访问 · %2$@ 个位置点"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -4617,6 +4993,66 @@
     },
     "%@: %@ must be a number" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: يجب أن تكون قيمة %2$@ رقمًا"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ অবশ্যই একটি সংখ্যা হতে হবে"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ debe ser un número"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ : %2$@ doit être un nombre"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ एक संख्या होनी चाहिए"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@には数値を指定してください"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ musi być liczbą"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ deve ser um número"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: значение %2$@ должно быть числом"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@：%2$@ 必须为数字"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -16049,6 +16485,74 @@
       }
     },
     "A year in days" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عام بالأيام"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দিনে দিনে এক বছর"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A year in days"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un año en días"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une année en jours"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दिनों में एक साल"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日々で見る1年"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rok w dniach"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um ano em dias"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Год по дням"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一年中的每一天"
+          }
+        }
+      }
 
     },
     "A–Z" : {
@@ -28907,6 +29411,74 @@
       }
     },
     "Build an export as a sentence, choose its format and destination, and save it as a recipe." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أنشئ عملية تصدير على شكل جملة، واختر تنسيقها ووجهتها، ثم احفظها كوصفة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "বাক্যের মতো করে একটি এক্সপোর্ট তৈরি করুন, এর ফরম্যাট ও গন্তব্য বেছে নিন এবং রেসিপি হিসেবে সংরক্ষণ করুন।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build an export as a sentence, choose its format and destination, and save it as a recipe."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea una exportación como una frase, elige su formato y destino y guárdala como receta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Composez une exportation comme une phrase, choisissez son format et sa destination, puis enregistrez-la comme recette."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक वाक्य की तरह एक्सपोर्ट बनाएँ, उसका फ़ॉर्मैट और गंतव्य चुनें, और उसे रेसिपी के रूप में सहेजें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文章を組み立てるようにエクスポートを作成し、形式と保存先を選んで、レシピとして保存できます。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ułóż eksport jak zdanie, wybierz jego format i miejsce docelowe, a następnie zapisz go jako szablon."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monte uma exportação como uma frase, escolha o formato e o destino e salve-a como receita."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Составьте экспорт как предложение, выберите формат и место назначения и сохраните его как рецепт."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "像组句一样创建导出，选择格式和目标位置，再将其保存为配方。"
+          }
+        }
+      }
 
     },
     "Building preview…" : {
@@ -53209,6 +53781,74 @@
       }
     },
     "Existing record IDs are skipped. Nothing on this device is replaced. Photo matches need the original Photos library; image files are not part of the backup." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتم تخطي معرّفات السجلات الموجودة. لا يتم استبدال أي شيء على هذا الجهاز. تتطلب مطابقة الصور مكتبة الصور الأصلية؛ ولا يتضمن النسخ الاحتياطي ملفات الصور."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ইতিমধ্যে থাকা রেকর্ড আইডি বাদ দেওয়া হয়। এই ডিভাইসের কিছুই প্রতিস্থাপন করা হয় না। ছবি মেলানোর জন্য মূল Photos লাইব্রেরি প্রয়োজন; ব্যাকআপে ছবির ফাইল থাকে না।"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing record IDs are skipped. Nothing on this device is replaced. Photo matches need the original Photos library; image files are not part of the backup."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se omiten los ID de registros existentes. No se reemplaza nada en este dispositivo. Las coincidencias de fotos necesitan la fototeca original de Fotos; los archivos de imagen no forman parte de la copia de seguridad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les identifiants de fiches existantes sont ignorés. Rien n’est remplacé sur cet appareil. Les correspondances photo nécessitent la photothèque Photos d’origine ; les fichiers image ne font pas partie de la sauvegarde."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मौजूदा रिकॉर्ड आईडी छोड़ दी जाती हैं। इस डिवाइस पर कुछ भी बदला नहीं जाता। फ़ोटो मिलान के लिए मूल Photos लाइब्रेरी चाहिए; इमेज फ़ाइलें बैकअप में शामिल नहीं होतीं।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "既存の記録IDはスキップされます。このデバイス上のデータは置き換えられません。写真の照合には元の写真ライブラリが必要です。画像ファイルはバックアップに含まれません。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rekordy o istniejących identyfikatorach są pomijane. Żadne dane na tym urządzeniu nie są zastępowane. Dopasowanie zdjęć wymaga oryginalnej biblioteki Zdjęć; pliki zdjęć nie są częścią kopii zapasowej."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registros com IDs já existentes são ignorados. Nada neste dispositivo é substituído. A correspondência de fotos precisa da fototeca original do Fotos; os arquivos de imagem não fazem parte do backup."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Записи с уже существующими идентификаторами пропускаются. Ничего на этом устройстве не заменяется. Для сопоставления фотографий нужна исходная медиатека «Фото»; файлы изображений не входят в резервную копию."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已存在的记录 ID 会被跳过，不会替换此设备上的任何内容。匹配照片需要原来的“照片”图库；备份不包含图像文件。"
+          }
+        }
+      }
 
     },
     "Expand the day" : {
@@ -53633,6 +54273,74 @@
       }
     },
     "Explore your year in Atlas, colored by country. In Places, see how often you return to the places you've named." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore your year in Atlas, colored by country. In Places, see how often you return to the places you've named."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استكشف عامك في الأطلس، ملونًا حسب البلد. في الأماكن، راجع عدد المرات التي تعود فيها إلى الأماكن التي قمت بتسميتها."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দেশ অনুযায়ী রঙিন অ্যাটলাসে আপনার বছর ঘুরে দেখুন। স্থানগুলিতে, আপনি যে জায়গাগুলির নাম দিয়েছেন সেখানে আপনি কত ঘন ঘন ফিরেছেন তা দেখুন৷"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explora tu año en Atlas, con colores por país. En Lugares, descubre con qué frecuencia vuelves a los lugares a los que has puesto nombre."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explorez votre année dans Atlas, colorée par pays. Dans Lieux, voyez à quelle fréquence vous revenez aux lieux que vous avez nommés."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "देश के अनुसार रंगीन एटलस में अपने वर्ष का अन्वेषण करें। स्थानों में, देखें कि आप अपने द्वारा नामित स्थानों पर कितनी बार लौटते हैं।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "国ごとに色分けされたアトラスで一年を振り返れます。「場所」では、名前を付けた場所にどのくらいの頻度で戻っているかを確認できます。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poznaj swój rok w Atlasie, pokolorowany według kraju. W Miejscach możesz sprawdzić, jak często powracasz do wskazanych przez siebie miejsc."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore o seu ano no Atlas, colorido por país. Em Locais, veja com que frequência você retorna aos locais que nomeou."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исследуйте свой год в Атласе, раскрашенном по странам. В разделе «Места» посмотрите, как часто вы возвращаетесь в места, которые назвали."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在按国家或地区着色的地图集中回顾你的一年。在“地点”中，查看你回到已命名地点的频率。"
+          }
+        }
+      }
 
     },
     "Export" : {
@@ -57254,6 +57962,74 @@
       }
     },
     "Exports, in your words" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exports, in your words"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التصدير، بكلماتك"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার ভাষায় এক্সপোর্ট"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportaciones, con tus palabras"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Des exportations, avec vos mots"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक्सपोर्ट, आपके शब्दों में"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの言葉でエクスポート"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eksport twoimi słowami"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportações, com suas palavras"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспорт вашими словами"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用你的话设置导出"
+          }
+        }
+      }
 
     },
     "Failed to end recording session: %@" : {
@@ -88105,6 +88881,74 @@
       }
     },
     "New widgets, a Live Activity for the Lock Screen and Dynamic Island, and a refreshed Apple Watch app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New widgets, a Live Activity for the Lock Screen and Dynamic Island, and a refreshed Apple Watch app."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدوات جديدة، ونشاط مباشر لشاشة القفل وDynamic Island، وتطبيق Apple Watch بتصميم محدّث."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নতুন উইজেট, লক স্ক্রিন ও Dynamic Island-এর জন্য একটি লাইভ অ্যাক্টিভিটি এবং নতুন রূপের Apple Watch অ্যাপ।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevos widgets, una actividad en directo para la pantalla de bloqueo y Dynamic Island, y una app de Apple Watch renovada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De nouveaux widgets, une activité en direct pour l’écran verrouillé et Dynamic Island, ainsi qu’une app Apple Watch repensée."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नए विजेट, लॉक स्क्रीन और Dynamic Island के लिए लाइव ऐक्टिविटी, और नए रूप में Apple Watch ऐप।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいウィジェット、ロック画面とDynamic Islandに対応したライブアクティビティ、そして新しくなったApple Watchアプリ。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe widżety, aktywność na żywo na ekranie blokady i w Dynamic Island oraz odświeżona aplikacja Apple Watch."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novos widgets, uma Atividade ao Vivo para a Tela Bloqueada e a Dynamic Island, e um app do Apple Watch renovado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новые виджеты, Live Activity на экране блокировки и в Dynamic Island, а также обновлённое приложение Apple Watch."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全新小组件、适用于锁定屏幕和灵动岛的实时活动，以及焕然一新的 Apple Watch App。"
+          }
+        }
+      }
 
     },
     "New Yesterday filters make it easier to review or export the previous day’s visits and tracks." : {
@@ -92105,6 +92949,74 @@
       }
     },
     "No shared recording yet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No shared recording yet"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا توجد رحلة مسجّلة مشتركة حتى الآن"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এখনও কোনো শেয়ার করা রুট রেকর্ড নেই"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay un registro compartido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun suivi partagé pour le moment"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अभी तक कोई साझा रूट रिकॉर्ड नहीं है"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだ共有中の記録はありません"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie ma jeszcze wspólnie rejestrowanej trasy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda não há um registro compartilhado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Общей записи маршрута пока нет"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚无共享记录"
+          }
+        }
+      }
 
     },
     "No supported visits or points were found in this file." : {
@@ -99481,6 +100393,74 @@
       }
     },
     "Open straight onto your day. Pull up the day sheet for your stops and moves, or replay a day on the map." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open straight onto your day. Pull up the day sheet for your stops and moves, or replay a day on the map."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يفتح التطبيق على يومك مباشرة. اسحب لوحة اليوم لأعلى لعرض توقفاتك وتنقلاتك، أو أعد عرض يوم على الخريطة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অ্যাপ খুললেই আপনার দিনটি দেখুন। কোথায় থেমেছেন ও চলেছেন তা দেখতে দিনের প্যানেল টেনে তুলুন, অথবা মানচিত্রে একটি দিন রিপ্লে করুন।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre la app directamente en tu día. Desliza hacia arriba el panel del día para ver tus paradas y desplazamientos, o reproduce un día en el mapa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’app s’ouvre directement sur votre journée. Faites remonter le panneau du jour pour voir vos arrêts et déplacements, ou revivez une journée sur la carte."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ऐप खुलते ही अपना दिन देखें। अपने पड़ाव और गतिविधियाँ देखने के लिए दिन का पैनल ऊपर खींचें, या मानचित्र पर किसी दिन को फिर से चलाकर देखें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを開くと、その日の記録がすぐに表示されます。その日のパネルを引き上げて立ち寄りや移動を確認したり、地図上で一日を再生したりできます。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po otwarciu aplikacji od razu zobaczysz swój dzień. Wysuń panel dnia, aby zobaczyć postoje i przemieszczanie się, lub odtwórz dzień na mapie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao abrir o app, veja seu dia imediatamente. Puxe o painel do dia para ver suas paradas e deslocamentos ou reproduza um dia no mapa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Откройте приложение сразу на своём дне. Поднимите панель дня, чтобы увидеть остановки и перемещения, или воспроизведите день на карте."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 App 即可查看当天记录。向上拉出每日面板，查看停留和移动，或在地图上回放某一天。"
+          }
+        }
+      }
 
     },
     "Open the complete outing to rename it, edit notes or delete it." : {
@@ -99766,6 +100746,74 @@
       }
     },
     "Open this app and check location permission and recording access" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open this app and check location permission and recording access"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح هذا التطبيق وتحقق من إذن الموقع وإمكانية تسجيل المسار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই অ্যাপটি খুলে অবস্থানের অনুমতি ও রুট রেকর্ড করার সুবিধা যাচাই করুন"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre esta app y comprueba el permiso de ubicación y el acceso al registro de rutas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrez cette app et vérifiez l’autorisation de localisation et l’accès au suivi"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह ऐप खोलें और स्थान की अनुमति तथा रूट रिकॉर्ड करने की सुविधा जाँचें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリを開き、位置情報の許可と移動経路の記録が利用可能か確認してください"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz tę aplikację i sprawdź uprawnienia lokalizacji oraz dostęp do rejestrowania trasy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abra este app e verifique a permissão de localização e o acesso ao registro do trajeto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Откройте приложение и проверьте разрешение на геолокацию и доступ к записи маршрута"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开此 App，检查位置权限和轨迹记录功能的使用资格"
+          }
+        }
+      }
 
     },
     "Open visit forms with a link" : {
@@ -115884,9 +116932,145 @@
       }
     },
     "Recording controls" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording controls"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عناصر التحكم في تسجيل المسار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রুট রেকর্ডিং নিয়ন্ত্রণ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controles de seguimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commandes de suivi"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रूट रिकॉर्डिंग नियंत्रण"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録の操作"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sterowanie rejestrowaniem trasy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controles de registro do trajeto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление записью маршрута"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轨迹记录控制"
+          }
+        }
+      }
 
     },
     "Recording controls synced" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording controls synced"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت مزامنة عناصر التحكم في تسجيل المسار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রুট রেকর্ডিং নিয়ন্ত্রণ সিঙ্ক হয়েছে"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controles de seguimiento sincronizados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commandes de suivi synchronisées"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रूट रिकॉर्डिंग नियंत्रण सिंक हो गए"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録の操作が同期されました"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zsynchronizowano sterowanie rejestrowaniem trasy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controles de registro do trajeto sincronizados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление записью маршрута синхронизировано"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轨迹记录控制已同步"
+          }
+        }
+      }
 
     },
     "Recording now" : {
@@ -118767,6 +119951,74 @@
       }
     },
     "Restore backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore backup"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استعادة النسخة الاحتياطية"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ব্যাকআপ পুনরুদ্ধার করুন"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar copia de seguridad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurer la sauvegarde"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बैकअप बहाल करें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップを復元する"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywróć kopię zapasową"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar cópia de segurança"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановить резервную копию"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复备份"
+          }
+        }
+      }
 
     },
     "Restore failed: %@" : {
@@ -119121,9 +120373,145 @@
       }
     },
     "Restore your records" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore your records"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استعادة السجلات الخاصة بك"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার রেকর্ড পুনরুদ্ধার করুন"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaura tus registros"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurez vos enregistrements"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपने रिकॉर्ड पुनर्स्थापित करें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録を復元する"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywróć swoje rekordy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaure seus registros"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановите свои записи"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复您的记录"
+          }
+        }
+      }
 
     },
     "Restored %@ records from backup." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restored %@ records from backup."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت استعادة %@ سجلات من النسخة الاحتياطية."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ব্যাকআপ থেকে %@ রেকর্ড পুনরুদ্ধার করা হয়েছে।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ registros restaurados desde la copia de seguridad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ enregistrements restaurés à partir de la sauvegarde."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बैकअप से %@ रिकॉर्ड पुनर्स्थापित किया गया।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップから%@件の記録を復元しました。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywrócono %@ rekordów z kopii zapasowej."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ registros restaurados do backup."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Из резервной копии восстановлено записей: %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已从备份恢复 %@ 条记录。"
+          }
+        }
+      }
 
     },
     "Restores the automatically detected visit name." : {
@@ -119968,6 +121356,74 @@
       }
     },
     "Review this visit as a calendar event." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review this visit as a calendar event."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "راجع هذه الزيارة كحدث في التقويم."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই ভিজিটটি একটি ক্যালেন্ডার ইভেন্ট হিসেবে পর্যালোচনা করুন।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revisa esta visita como un evento del calendario."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examinez cette visite sous forme d’événement du calendrier."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस विज़िट को कैलेंडर इवेंट के रूप में देखें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この訪問をカレンダーの予定として確認します。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprawdź tę wizytę jako wydarzenie w kalendarzu."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revise esta visita como um evento do calendário."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Просмотрите это посещение как событие календаря."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以日历日程的形式查看此次访问。"
+          }
+        }
+      }
 
     },
     "Review visits and movement sessions together by day, with quick controls for today, yesterday, and any date you choose." : {
@@ -121446,6 +122902,74 @@
       }
     },
     "Row %lld: invalid departed_at date" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Row %lld: invalid departed_at date"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الصف %lld: تاريخ departed_at غير صالح"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সারি %lld: departed_at তারিখ অবৈধ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fila %lld: fecha departed_at no válida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligne %lld : date departed_at invalide"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पंक्ति %lld: departed_at तारीख अमान्य है"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行%lld: departed_atの日付が無効です"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiersz %lld: nieprawidłowa data departed_at"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linha %lld: data departed_at inválida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Строка %lld: недопустимая дата departed_at"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 行：departed_at 日期无效"
+          }
+        }
+      }
 
     },
     "Row %lld: invalid latitude" : {
@@ -137231,6 +138755,74 @@
       }
     },
     "Start or stop on either device to update both. Offline changes wait for a connection; location permission and recording access are required on each device. Both devices can collect points for the shared outing. GPS recording uses extra battery; battery duration has not been measured." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start or stop on either device to update both. Offline changes wait for a connection; location permission and recording access are required on each device. Both devices can collect points for the shared outing. GPS recording uses extra battery; battery duration has not been measured."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ تسجيل المسار أو أوقفه على أي من الجهازين لتحديث كليهما. تنتظر التغييرات غير المتصلة توفر اتصال؛ ويجب السماح بالموقع وتوفر إمكانية تسجيل المسار على كل جهاز. يمكن لكلا الجهازين جمع نقاط الموقع للنزهة المشتركة. يستهلك تسجيل GPS طاقة إضافية؛ ولم تُقَس مدة عمل البطارية."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "যেকোনো একটি ডিভাইসে রুট রেকর্ডিং শুরু বা বন্ধ করলে দুটিই আপডেট হয়। অফলাইনের পরিবর্তন সংযোগের জন্য অপেক্ষা করে; প্রতিটি ডিভাইসে অবস্থানের অনুমতি ও রুট রেকর্ড করার সুবিধা প্রয়োজন। দুটি ডিভাইসই শেয়ার করা আউটিংয়ের জন্য অবস্থান পয়েন্ট সংগ্রহ করতে পারে। GPS রেকর্ডিংয়ে বেশি ব্যাটারি খরচ হয়; ব্যাটারি কতক্ষণ চলে তা মাপা হয়নি।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia o detén el registro en cualquiera de los dispositivos para actualizar ambos. Los cambios sin conexión esperan a que haya conexión; cada dispositivo necesita permiso de ubicación y acceso al registro de rutas. Ambos pueden recoger puntos de ubicación para la salida compartida. El registro GPS consume más batería; no se ha medido su duración."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrez ou arrêtez le suivi sur l’un des appareils pour mettre les deux à jour. Les modifications hors ligne attendent une connexion ; chaque appareil doit disposer de l’autorisation de localisation et de l’accès au suivi. Les deux appareils peuvent relever des points de localisation pour la sortie partagée. Le suivi GPS consomme davantage de batterie ; l’autonomie n’a pas été mesurée."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किसी भी एक डिवाइस पर रूट रिकॉर्डिंग शुरू या बंद करने से दोनों अपडेट होते हैं। ऑफ़लाइन बदलाव कनेक्शन मिलने तक प्रतीक्षा करते हैं; हर डिवाइस पर स्थान की अनुमति और रूट रिकॉर्ड करने की सुविधा ज़रूरी है। दोनों डिवाइस साझा आउटिंग के लिए स्थान पॉइंट एकत्र कर सकते हैं। GPS रिकॉर्डिंग में अधिक बैटरी खर्च होती है; बैटरी कितनी देर चलती है, यह मापा नहीं गया है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どちらかのデバイスで記録を開始または停止すると、両方に反映されます。オフライン時の変更は接続されるまで待機します。各デバイスで位置情報の許可と経路記録の利用資格が必要です。両方のデバイスで、共有する外出の位置ポイントを収集できます。GPS記録はバッテリーをより多く消費します。バッテリー持続時間は測定していません。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozpocznij lub zatrzymaj rejestrowanie na jednym z urządzeń, aby zaktualizować oba. Zmiany offline czekają na połączenie; na każdym urządzeniu wymagane są uprawnienia lokalizacji i dostęp do rejestrowania trasy. Oba urządzenia mogą zbierać punkty lokalizacji podczas wspólnej podróży. Rejestrowanie GPS zużywa więcej energii; czas pracy baterii nie został zmierzony."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicie ou pare o registro em qualquer um dos dispositivos para atualizar ambos. As alterações offline aguardam uma conexão; cada dispositivo precisa de permissão de localização e acesso ao registro do trajeto. Ambos podem coletar pontos de localização para o passeio compartilhado. O registro por GPS consome mais bateria; sua duração não foi medida."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начните или остановите запись маршрута на любом из устройств, чтобы обновить оба. Изменения без сети ждут подключения; на каждом устройстве нужны разрешение на геолокацию и доступ к записи маршрута. Оба устройства могут собирать точки местоположения для общей прогулки. Запись GPS расходует больше энергии; время работы от батареи не измерялось."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在任一设备上开始或停止记录，两台设备都会更新。离线更改会等待连接；每台设备都需要位置权限和轨迹记录功能的使用资格。两台设备都可以为共享出行采集位置点。GPS 记录会消耗更多电量；电池续航时间尚未测量。"
+          }
+        }
+      }
 
     },
     "Start or stop Whereday tracking directly on Apple Watch without opening your iPhone." : {
@@ -142998,9 +144590,145 @@
       }
     },
     "The backup contains duplicate record identifiers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The backup contains duplicate record identifiers."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتوي النسخة الاحتياطية على معرفات سجل مكررة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ব্যাকআপে ডুপ্লিকেট রেকর্ড শনাক্তকারী রয়েছে।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La copia de seguridad contiene identificadores de registros duplicados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sauvegarde contient des identifiants d'enregistrement en double."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बैकअप में डुप्लिकेट रिकॉर्ड पहचानकर्ता शामिल हैं।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップには重複したレコード識別子が含まれています。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopia zapasowa zawiera zduplikowane identyfikatory rekordów."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O backup contém identificadores de registros duplicados."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервная копия содержит повторяющиеся идентификаторы записей."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备份包含重复的记录标识符。"
+          }
+        }
+      }
 
     },
     "The backup contains invalid records. Nothing was restored." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The backup contains invalid records. Nothing was restored."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتوي النسخة الاحتياطية على سجلات غير صالحة. لم تتم استعادة أي شيء."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ব্যাকআপে অবৈধ রেকর্ড রয়েছে৷ কিছুই পুনরুদ্ধার করা হয়নি."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La copia de seguridad contiene registros no válidos. No se restauró nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sauvegarde contient des enregistrements invalides. Rien n'a été restauré."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बैकअप में अमान्य रिकॉर्ड हैं. कुछ भी बहाल नहीं किया गया."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップには無効なレコードが含まれています。何も復元されませんでした。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopia zapasowa zawiera nieprawidłowe rekordy. Nic nie zostało przywrócone."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O backup contém registros inválidos. Nada foi restaurado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервная копия содержит недопустимые записи. Ничего не восстановилось."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备份包含无效记录。什么都没有恢复。"
+          }
+        }
+      }
 
     },
     "The CSV file has no saved-place rows." : {
@@ -144337,6 +146065,74 @@
       }
     },
     "The map is now home" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The map is now home"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخريطة هي الشاشة الرئيسية الآن"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "মানচিত্র এখন প্রধান স্ক্রিন"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El mapa es ahora la pantalla de inicio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La carte est désormais l’écran d’accueil"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अब मानचित्र ही होम स्क्रीन है"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地図がホーム画面になりました"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapa jest teraz ekranem głównym"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O mapa agora é a tela inicial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Карта теперь на главном экране"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地图现已成为主屏幕"
+          }
+        }
+      }
 
     },
     "The match radius grows to %@ to cover both." : {
@@ -146306,6 +148102,74 @@
       }
     },
     "This backup version is not supported. Update Whereday before restoring it." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This backup version is not supported. Update Whereday before restoring it."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا الإصدار الاحتياطي غير مدعوم. قم بتحديث Whereday قبل استعادته."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই ব্যাকআপ সংস্করণ সমর্থিত নয়। এটি পুনরুদ্ধার করার আগে Whereday আপডেট করুন।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta versión de copia de seguridad no es compatible. Actualice Whereday antes de restaurarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette version de sauvegarde n'est pas prise en charge. Mettez à jour Whereday avant de le restaurer."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह बैकअप संस्करण समर्थित नहीं है. इसे पुनर्स्थापित करने से पहले Whereday अपडेट करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このバックアップ バージョンはサポートされていません。復元する前にWheredayを更新してください。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta wersja kopii zapasowej nie jest obsługiwana. Zaktualizuj Whereday przed przywróceniem."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta versão de backup não é suportada. Atualize Whereday antes de restaurá-lo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта резервная версия не поддерживается. Обновите Whereday перед его восстановлением."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持此备份版本。在恢复之前更新Whereday 。"
+          }
+        }
+      }
 
     },
     "This can't be undone." : {
@@ -155369,6 +157233,74 @@
       }
     },
     "Use a shorter file or folder name." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use a shorter file or folder name."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدم اسم ملف أو مجلد أقصر."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "একটি ছোট ফাইল বা ফোল্ডার নাম ব্যবহার করুন."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilice un nombre de archivo o carpeta más corto."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisez un nom de fichier ou de dossier plus court."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "छोटे फ़ाइल या फ़ोल्डर नाम का उपयोग करें."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "短いファイル名またはフォルダー名を使用してください。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Użyj krótszej nazwy pliku lub folderu."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use um nome de arquivo ou pasta mais curto."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используйте более короткое имя файла или папки."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用较短的文件或文件夹名称。"
+          }
+        }
+      }
 
     },
     "Use current location instead" : {
@@ -157830,6 +159762,74 @@
       }
     },
     "Visit at index %lld: invalid departedAt date" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit at index %lld: invalid departedAt date"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الزيارة عند الفهرس %lld: تاريخ departedAt غير صالح"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সূচক %lld-এ থাকা ভিজিটের departedAt তারিখ অবৈধ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visita en el índice %lld: fecha departedAt no válida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visite à l’index %lld : date departedAt invalide"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंडेक्स %lld वाली विज़िट: departedAt तारीख अमान्य है"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インデックス%lldの訪問: departedAtの日付が無効です"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wizyta o indeksie %lld: nieprawidłowa data departedAt"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visita no índice %lld: data departedAt inválida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посещение с индексом %lld: недопустимая дата departedAt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "索引 %lld 处的访问：departedAt 日期无效"
+          }
+        }
+      }
 
     },
     "Visit Details" : {
@@ -159730,6 +161730,74 @@
       }
     },
     "Waiting for the other device" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for the other device"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في انتظار الجهاز الآخر"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অন্য ডিভাইসের জন্য অপেক্ষা করা হচ্ছে"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esperando el otro dispositivo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En attente de l'autre appareil"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अन्य डिवाइस की प्रतीक्षा की जा रही है"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "他のデバイスを待っています"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oczekiwanie na drugie urządzenie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esperando pelo outro dispositivo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ожидание другого устройства"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待其他设备"
+          }
+        }
+      }
 
     },
     "Waiting points won't be sent. Your saved location history stays on this iPhone." : {
@@ -163530,6 +165598,74 @@
       }
     },
     "Whereday backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whereday backup"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخة Whereday الاحتياطية"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whereday ব্যাকআপ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia de seguridad de Whereday"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sauvegarde Whereday"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whereday बैकअप"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wheredayのバックアップ"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopia zapasowa Whereday"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup do Whereday"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервная копия Whereday"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whereday 备份"
+          }
+        }
+      }
 
     },
     "Whereday can’t record today." : {
@@ -166339,6 +168475,74 @@
       }
     },
     "Your changes to this stay have not been saved." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your changes to this stay have not been saved."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم حفظ التغييرات التي أجريتها على هذه الإقامة."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই থাকার জন্য আপনার পরিবর্তনগুলি সংরক্ষণ করা হয়নি।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los cambios realizados en esta estancia no se han guardado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos modifications sur ce séjour n'ont pas été enregistrées."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस प्रवास में आपके परिवर्तन सहेजे नहीं गए हैं."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この滞在に対する変更は保存されていません。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoje zmiany w tym pobycie nie zostały zapisane."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suas alterações nesta estadia não foram salvas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваши изменения в этом пребывании не сохранены."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你对此次停留的更改尚未保存。"
+          }
+        }
+      }
 
     },
     "Your data" : {
@@ -166482,9 +168686,145 @@
       }
     },
     "Your day at a glance" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your day at a glance"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يومك في لمحة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এক নজরে আপনার দিন"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu día de un vistazo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre journée en un coup d'œil"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपका दिन एक नज़र में"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの一日が一目でわかる"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój dzień w skrócie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu dia em resumo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коротко о вашем дне"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的一天一目了然"
+          }
+        }
+      }
 
     },
     "Your day, on the map" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your day, on the map"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يومك، على الخريطة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার দিন, মানচিত্রে"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu día, en el mapa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre journée, sur la carte"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपका दिन, मानचित्र पर"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地図上のあなたの一日"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój dzień na mapie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu dia, no mapa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш день на карте"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的一天，在地图上"
+          }
+        }
+      }
 
     },
     "Your existing free tracking access is preserved. Choose a plan to unlock data export." : {
@@ -167618,6 +169958,74 @@
       }
     },
     "Your restored records are available in Whereday. Photo matches need access to the original Photos library." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your restored records are available in Whereday. Photo matches need access to the original Photos library."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سجلاتك المستعادة متاحة في Whereday. تحتاج مطابقات الصور إلى الوصول إلى مكتبة الصور الأصلية."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "আপনার পুনরুদ্ধার করা রেকর্ডগুলি Whereday-এ পাওয়া যাবে। ছবি মেলানোর জন্য মূল Photos লাইব্রেরিতে অ্যাক্সেস প্রয়োজন।"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus registros restaurados están disponibles en Whereday. Las coincidencias de fotos necesitan acceso a la fototeca original de Fotos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos enregistrements restaurés sont disponibles dans Whereday. La correspondance des photos nécessite l’accès à la photothèque Photos d’origine."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके बहाल किए गए रिकॉर्ड Whereday में उपलब्ध हैं। फ़ोटो मिलान के लिए मूल Photos लाइब्रेरी का ऐक्सेस चाहिए।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復元した記録はWheredayで利用できます。写真の照合には元の写真ライブラリへのアクセスが必要です。"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywrócone dane są dostępne w Whereday. Dopasowania zdjęć wymagają dostępu do oryginalnej biblioteki Zdjęć."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seus registros restaurados estão disponíveis no Whereday. As correspondências de fotos precisam de acesso à biblioteca de fotos original."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановленные записи доступны в Whereday. Для совпадения фотографий требуется доступ к исходной библиотеке фотографий."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复的记录可在 Whereday 中查看。匹配照片需要访问原来的“照片”图库。"
+          }
+        }
+      }
 
     },
     "your server" : {
