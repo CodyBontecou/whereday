@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>Synthetic KML example</name>
+    <description>Invented points near 0° N 10° E for the Whereday KML to GPX converter. Not a real recording.</description>
+    <Placemark>
+      <name>Start (synthetic)</name>
+      <description>An invented waypoint.</description>
+      <Point><coordinates>10.0,0.0,10</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Camp (synthetic)</name>
+      <Point><coordinates>10.003,0.0025</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <name>Planned path (synthetic)</name>
+      <LineString><tessellate>1</tessellate><coordinates>10.0,0.0 10.001,0.0005 10.002,0.001</coordinates></LineString>
+    </Placemark>
+    <Placemark>
+      <name>Recorded walk (synthetic)</name>
+      <gx:Track>
+        <altitudeMode>absolute</altitudeMode>
+        <when>2000-01-01T12:00:00Z</when>
+        <when>2000-01-01T12:01:00Z</when>
+        <when>2000-01-01T12:02:00Z</when>
+        <when>2000-01-01T12:03:00Z</when>
+        <when>2000-01-01T12:04:00Z</when>
+        <gx:coord>10.01 0.01 20</gx:coord>
+        <gx:coord>10.011 0.0105 21</gx:coord>
+        <gx:coord>10.012 0.011 22</gx:coord>
+        <gx:coord>10.013 0.0115 23</gx:coord>
+        <gx:coord>10.014 0.012 24</gx:coord>
+      </gx:Track>
+    </Placemark>
+    <Placemark>
+      <name>Park boundary (synthetic)</name>
+      <Polygon><outerBoundaryIs><LinearRing><coordinates>10.02,0.02 10.03,0.02 10.03,0.03 10.02,0.03 10.02,0.02</coordinates></LinearRing></outerBoundaryIs></Polygon>
+    </Placemark>
+  </Document>
+</kml>

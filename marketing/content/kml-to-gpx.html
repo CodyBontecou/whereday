@@ -1,0 +1,153 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/gpx-merge.css">
+<section class="gpx-tool merge-tool" aria-labelledby="kg-heading">
+  <h2 id="kg-heading">Choose a KML, KMZ or GPX file. It stays on this device.</h2>
+  <p>The direction is detected from the file’s content: KML or KMZ becomes GPX, and GPX becomes KML. You see a report of what was kept and what was skipped before you download anything. No account, upload or analytics. Files are read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leave the page.</p>
+  <noscript><p>JavaScript is needed to convert files in your browser. The explanations and sample downloads below work without it.</p></noscript>
+  <div id="kg-tool" hidden>
+    <div id="kg-drop" class="merge-drop">
+      <label for="kg-file"><strong>Choose a KML, KMZ or GPX file</strong> or drop it here · one file, up to 10 MiB and 50,000 points</label>
+      <input id="kg-file" type="file" accept=".kml,.kmz,.gpx,application/vnd.google-earth.kml+xml,application/vnd.google-earth.kmz,application/gpx+xml,application/xml,text/xml" aria-describedby="kg-status">
+    </div>
+    <label class="merge-option" for="kg-gx"><input id="kg-gx" type="checkbox" checked><span><strong>Keep timestamps (gx:Track)</strong><span class="gpx-small">For GPX → KML only. A segment whose points all have a time is written as a Google <code>gx:Track</code>, because a plain KML LineString cannot carry times. Turn this off for plain LineStrings that work everywhere, without times.</span></span></label>
+    <div class="gpx-actions"><button id="kg-demo" type="button">Try the synthetic KML example</button><button id="kg-clear" type="button">Clear</button></div>
+    <p id="kg-status" class="merge-status" role="status" aria-live="polite">Choose a file, or try the synthetic example without using any personal data.</p>
+    <div id="kg-results" hidden>
+      <h3 id="kg-report">Conversion report: <span id="kg-direction"></span></h3>
+      <div id="kg-tables" role="group" aria-labelledby="kg-report"></div>
+      <p id="kg-times" class="gpx-small"></p>
+      <h3>Checks</h3>
+      <ul id="kg-notes"></ul>
+      <h3>Skipped, and why</h3>
+      <ul id="kg-skipped"></ul>
+    </div>
+    <div class="merge-download"><button id="kg-download" type="button" disabled>Download converted file</button><span id="kg-filename" class="gpx-small"></span></div>
+    <p id="kg-viewer" class="gpx-small" hidden>Open result in the <a href="/tools/gpx-viewer/">GPX viewer</a>: save the file first, then choose it there. The viewer reads GPX only, and it also stays on your device.</p>
+  </div>
+</section>
+
+<section aria-labelledby="what-converts">
+  <h2 id="what-converts">What converts to what</h2>
+  <p>KML is Google Earth’s format, standardised as <a href="https://www.ogc.org/standard/kml/">OGC KML 2.2</a>, with Google’s <code>gx:</code> extension for timed tracks. GPX 1.1 is the <a href="https://www.topografix.com/GPX/1/1/">Topografix</a> schema for waypoints (<code>wpt</code>), routes (<code>rte</code>) and tracks (<code>trk</code>, made of <code>trkseg</code> segments). The converter reads and writes exactly these elements; everything else is listed in the report.</p>
+  <h3>KML or KMZ to GPX</h3>
+  <div class="table-scroll" role="region" aria-label="KML to GPX element mapping" tabindex="0"><table>
+    <thead><tr><th scope="col">KML element</th><th scope="col">Becomes in GPX</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>Point</code></th><td><code>&lt;wpt&gt;</code> with the Placemark’s name and description; a Placemark <code>TimeStamp</code> becomes its <code>&lt;time&gt;</code></td><td>Kept</td></tr>
+      <tr><th scope="row"><code>LineString</code></th><td>One <code>&lt;trk&gt;</code> with one <code>&lt;trkseg&gt;</code></td><td>Kept, without times</td></tr>
+      <tr><th scope="row"><code>MultiGeometry</code> of LineStrings</th><td>One <code>&lt;trk&gt;</code> with one segment per LineString; Points inside become waypoints</td><td>Kept</td></tr>
+      <tr><th scope="row"><code>gx:Track</code></th><td><code>&lt;trkpt&gt;</code> per <code>&lt;gx:coord&gt;</code>, with <code>&lt;time&gt;</code> (ISO 8601, UTC) from the matching <code>&lt;when&gt;</code>, and <code>&lt;ele&gt;</code> when an altitude is present</td><td>Kept, with times</td></tr>
+      <tr><th scope="row"><code>gx:MultiTrack</code></th><td>One <code>&lt;trk&gt;</code>, one segment per <code>gx:Track</code></td><td>Kept, with times</td></tr>
+      <tr><th scope="row">Coordinates <code>lon,lat,alt</code></th><td><code>lat="…" lon="…"</code> attributes, the right way round, and <code>&lt;ele&gt;</code></td><td>Changed (order)</td></tr>
+      <tr><th scope="row"><code>Polygon</code>, <code>LinearRing</code></th><td>Nothing</td><td>Dropped, counted</td></tr>
+      <tr><th scope="row"><code>Style</code>, <code>StyleMap</code>, icons</th><td>Nothing</td><td>Dropped, counted</td></tr>
+      <tr><th scope="row"><code>NetworkLink</code>, <code>GroundOverlay</code>, <code>Model</code></th><td>Nothing</td><td>Dropped, counted</td></tr>
+      <tr><th scope="row"><code>ExtendedData</code>, <code>gx:angles</code></th><td>Nothing</td><td>Dropped, counted</td></tr>
+      <tr><th scope="row"><code>Folder</code></th><td>Flattened; names are kept</td><td>Changed</td></tr>
+    </tbody>
+  </table></div>
+  <h3>GPX to KML</h3>
+  <div class="table-scroll" role="region" aria-label="GPX to KML element mapping" tabindex="0"><table>
+    <thead><tr><th scope="col">GPX element</th><th scope="col">Becomes in KML</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>wpt</code></th><td>A <code>Placemark</code> with a <code>Point</code>, name and description; its time goes in a <code>TimeStamp</code></td><td>Kept</td></tr>
+      <tr><th scope="row"><code>trkseg</code>, every point timed</th><td>A <code>gx:Track</code> with <code>&lt;when&gt;</code> and <code>&lt;gx:coord&gt;</code> pairs (several segments in one track become a <code>gx:MultiTrack</code>)</td><td>Kept, with times</td></tr>
+      <tr><th scope="row"><code>trkseg</code>, any point without a time, or the checkbox off</th><td>A <code>LineString</code>; several segments become a <code>MultiGeometry</code></td><td>Kept, times dropped (counted)</td></tr>
+      <tr><th scope="row"><code>rte</code></th><td>A <code>LineString</code></td><td>Kept</td></tr>
+      <tr><th scope="row"><code>ele</code></th><td>The third coordinate, with <code>altitudeMode</code> set to <code>absolute</code></td><td>Kept</td></tr>
+      <tr><th scope="row"><code>sym</code>, <code>cmt</code>, <code>link</code>, <code>extensions</code>, other point fields</th><td>Nothing</td><td>Dropped, counted</td></tr>
+    </tbody>
+  </table></div>
+  <p>The output is the same every time you convert the same file. The <code>xmlns:gx</code> namespace is declared only when a <code>gx:Track</code> is written. A segment with one point is written as a Point, because a LineString needs two.</p>
+</section>
+
+<section aria-labelledby="example">
+  <h2 id="example">Worked example: a synthetic KML</h2>
+  <p>This example is synthetic: the points are invented, near 0° N 10° E, and are not anyone’s recording. <strong>Try the synthetic KML example</strong> loads it. You can also download both files and choose the KML with the file picker:</p>
+  <ul>
+    <li><a href="/samples/synthetic-kml-example.kml" download>synthetic-kml-example.kml</a>: 2 Points, 1 LineString, 1 <code>gx:Track</code> of 5 timed points (with altitudes), and 1 Polygon.</li>
+    <li><a href="/samples/synthetic-kml-example-expected.gpx" download>synthetic-kml-example-expected.gpx</a>: the GPX this page writes for it. The site’s tests check that the output matches this file exactly.</li>
+    <li><a href="/samples/synthetic-kml-example-expected-back.kml" download>synthetic-kml-example-expected-back.kml</a>: the KML written when you convert that GPX back, with the timed segment as a <code>gx:Track</code>.</li>
+  </ul>
+  <div class="table-scroll" role="region" aria-label="Expected counts for the synthetic KML" tabindex="0"><table class="merge-counts">
+    <thead><tr><th scope="col">KML in</th><th scope="col">Count</th><th scope="col">GPX out</th><th scope="col">Count</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Placemarks</th><td>5</td><td>Waypoints</td><td>2</td></tr>
+      <tr><th scope="row">Points</th><td>2</td><td>Tracks</td><td>2</td></tr>
+      <tr><th scope="row">LineStrings</th><td>1</td><td>Track segments</td><td>2</td></tr>
+      <tr><th scope="row"><code>gx:Track</code></th><td>1</td><td>Track points</td><td>8</td></tr>
+      <tr><th scope="row">Points with a time</th><td>5</td><td>Points with a time</td><td>5</td></tr>
+      <tr><th scope="row">Points with an altitude</th><td>6</td><td>Points with elevation</td><td>6</td></tr>
+      <tr><th scope="row">Polygons</th><td>1</td><td>Skipped, listed in the report</td><td>1</td></tr>
+    </tbody>
+  </table></div>
+  <p>The timed track runs from 2000-01-01 12:00 to 12:04 UTC. The 3-point LineString has no times, and that is the one thing a plain LineString cannot give you. Convert the expected GPX back and you get a KML with the same coordinates, times and elevations, with the timed segment written as a <code>gx:Track</code>.</p>
+</section>
+
+<section aria-labelledby="timestamps">
+  <h2 id="timestamps">Why times survive only through gx:Track and GPX &lt;time&gt;</h2>
+  <p>A KML <code>LineString</code> is a list of coordinates and nothing else: there is nowhere to put one time per point. KML does let you attach a single <code>TimeStamp</code> or <code>TimeSpan</code> to a whole feature (see Google’s <a href="https://developers.google.com/kml/documentation/time">time and animation documentation</a>), but that is one time for the whole line. Timed paths in Google Earth use the <code>gx:Track</code> extension instead: one <code>&lt;when&gt;</code> for each <code>&lt;gx:coord&gt;</code>, in order, documented in Google’s <a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack">KML reference</a>. A GPX track point has a <code>&lt;time&gt;</code> of its own.</p>
+  <ul>
+    <li>KML to GPX: <code>gx:Track</code> times become <code>&lt;time&gt;</code> in UTC. Times must be full date-times with a zone (as in <a href="https://www.rfc-editor.org/rfc/rfc3339">RFC 3339</a>, like <code>2000-01-01T12:00:00Z</code>); a time that is a date only or has no zone is not guessed at, and the point is written without a time.</li>
+    <li>KML to GPX, plain LineString: the points have no times and the track has none. A LineString inside a Placemark that has a <code>TimeSpan</code> keeps the points but not the span, and the report says so.</li>
+    <li>GPX to KML: with <strong>Keep timestamps (gx:Track)</strong> on, a fully timed segment keeps every time. A segment where even one point has no time becomes a LineString and loses all its times, counted in the report. Switch the checkbox off to get plain LineStrings.</li>
+    <li>A program that does not understand <code>gx:Track</code> will not show those lines. Switch the checkbox off if your destination only reads standard KML 2.2.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">What is not converted, and the limits</h2>
+  <ul>
+    <li><strong>Polygons.</strong> GPX has no areas. They are listed in the report and not turned into tracks, so a boundary is never mistaken for a route.</li>
+    <li><strong>Styles and icons.</strong> Colours, line widths and icons are dropped; GPX has no styling. Waypoints keep their names and descriptions. Descriptions are copied as plain text, so HTML in a KML description appears as markup.</li>
+    <li><strong>NetworkLinks.</strong> They are never followed, so the converter makes no network request. Open the linked KML separately.</li>
+    <li><strong>ExtendedData, <code>gx:angles</code>, overlays and 3D models.</strong> Not copied, and counted.</li>
+    <li><strong>Altitude.</strong> KML altitudes are copied as <code>&lt;ele&gt;</code> as they are. KML’s default <code>altitudeMode</code> is <code>clampToGround</code>, where altitude is ignored, and many exporters write 0 there. When a file says its altitudeMode is not <code>absolute</code>, the report warns you; check elevation before relying on it.</li>
+    <li><strong>KMZ.</strong> A KMZ is a zip with <code>doc.kml</code> inside. It is unzipped in your browser with the browser’s built-in decompression, with no server and no library. Only the KML is read. Images and other files in the archive, such as custom icons, are ignored. Your browser needs <code>DecompressionStream</code> support (current Chrome, Edge, Safari and Firefox have it); if yours does not, unzip the KMZ and choose <code>doc.kml</code>.</li>
+    <li><strong>Size.</strong> One file, up to 10 MiB (and up to 10 MiB once a KMZ is unzipped) and 50,000 points, the same limits as the other tools.</li>
+    <li><strong>Invalid coordinates</strong> (missing, not a number, latitude beyond ±90, longitude beyond ±180, or a <code>gx:Track</code> with unequal numbers of times and coordinates) are rejected, counted in the report and never written.</li>
+    <li><strong>Not other formats.</strong> Google Timeline JSON, GeoJSON and CSV are not converted here. Use the <a href="/tools/google-timeline-inspector/">Timeline JSON inspector</a> or the <a href="/tools/gpx-viewer/#geojson-output">GPX viewer’s GeoJSON download</a>.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="check">
+  <h2 id="check">Check the result</h2>
+  <p>Open the converted GPX in the <a href="/tools/gpx-viewer/">GPX viewer</a> and compare its counts with the report. The viewer flags missing times, gaps and backwards timestamps; the <a href="/blog/check-gpx-file/">GPX checking tutorial</a> explains each. To combine several converted files, such as one per day, use <a href="/tools/merge-gpx/">Merge GPX</a>. To see which countries a KML or GPX passes through, drop it into the <a href="/tools/visited-countries-map/">visited countries map</a>; it reads KML Points and LineStrings but not <code>gx:Track</code>, so convert a track-based KML to GPX first. For when each format is the right one, read <a href="/blog/gpx-kml-geojson-location-history/#differences">GPX, KML or GeoJSON: what changes between the files</a>.</p>
+  <p>The GPX this tool writes is checked against the official <a href="https://www.topografix.com/GPX/1/1/gpx.xsd">GPX 1.1 XSD</a> in the site’s tests. The KML follows the KML 2.2 element order and uses Google’s <code>gx</code> namespace for timed tracks.</p>
+</section>
+
+<section aria-labelledby="privacy">
+  <h2 id="privacy">Your file stays in this page</h2>
+  <p>Reading, converting, the report and the download all happen in your browser. This page blocks network connections and does not load the website’s analytics. The web server receives an ordinary request when you open the page and its scripts, but not your file, its name or the result. Clear, or closing the tab, removes the file from the page; your original is never changed.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Is my file uploaded?</h3>
+  <p>No. The page reads the file with your browser’s File API and builds the result in memory. Its security policy blocks network connections, so the page could not send your file even if it tried.</p>
+  <h3>Does it keep elevation?</h3>
+  <p>Yes, where the file has it. A KML altitude (the third coordinate, or the third number of a <code>gx:coord</code>) becomes GPX <code>&lt;ele&gt;</code>, and GPX <code>&lt;ele&gt;</code> becomes the third coordinate with <code>altitudeMode</code> <code>absolute</code>. See the altitude note under <a href="#limits">limits</a>: KML files that clamp to the ground often hold zeros.</p>
+  <h3>Can I convert KMZ?</h3>
+  <p>Yes, KMZ to GPX. The KMZ is unzipped in your browser and its KML is converted. Images and other files inside the archive are ignored. GPX to KMZ is not offered; the output is a plain KML.</p>
+  <h3>Why are my times missing?</h3>
+  <p>Usually the KML holds a plain LineString, which has no per-point times, or the times are not complete date-times with a zone. Check the report’s “Points with a time” count. In the other direction, a GPX segment with even one untimed point becomes a LineString, and the report counts the times dropped.</p>
+  <h3>Does Garmin or Google Earth accept the output?</h3>
+  <p>We have not tested the output in specific apps or devices, so we make no claim about them. It is standard GPX 1.1, checked against the GPX 1.1 schema, and KML 2.2 with the <code>gx</code> extension only where timestamps are kept. If your destination does not read <code>gx:Track</code>, turn <strong>Keep timestamps</strong> off.</p>
+  <h3>Does it change my original?</h3>
+  <p>No. The converter reads a copy in memory and saves a new file with the same base name and the new extension.</p>
+</section>
+
+<section aria-labelledby="sources">
+  <h2 id="sources">Sources</h2>
+  <ul>
+    <li><a href="https://www.ogc.org/standard/kml/">OGC KML 2.2 standard (OGC 07-147r2)</a></li>
+    <li><a href="https://developers.google.com/kml/documentation/kmlreference">Google KML reference</a>, including <a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack"><code>gx:Track</code> and <code>gx:MultiTrack</code></a></li>
+    <li><a href="https://developers.google.com/kml/documentation/time">Google KML time and animation documentation</a></li>
+    <li><a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation (Topografix)</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc3339">RFC 3339: Date and Time on the Internet: Timestamps</a></li>
+  </ul>
+  <p>Related: <a href="/blog/record-iphone-route-gpx/">record a route on iPhone and export GPX</a> and the <a href="/docs/export-import/">export and import reference</a>. Whereday exports KML and GPX; its own import accepts supported Whereday files and supported Google Timeline JSON, not KML or GPX.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Record routes once. Export them in the format you need.</h2><p>Record routes once and export them as GPX or KML for any date range. Whereday keeps your location history on your iPhone.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/kml-gpx-page.mjs?v=20261121"></script>

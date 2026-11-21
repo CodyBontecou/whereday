@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday KML-GPX converter (https://whereday.com/tools/kml-to-gpx/)" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata><name>Synthetic KML example</name></metadata>
+  <wpt lat="0.0" lon="10.0"><ele>10</ele><name>Start (synthetic)</name><desc>An invented waypoint.</desc></wpt>
+  <wpt lat="0.0025" lon="10.003"><name>Camp (synthetic)</name></wpt>
+  <trk>
+    <name>Planned path (synthetic)</name>
+    <trkseg>
+      <trkpt lat="0.0" lon="10.0"></trkpt>
+      <trkpt lat="0.0005" lon="10.001"></trkpt>
+      <trkpt lat="0.001" lon="10.002"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>Recorded walk (synthetic)</name>
+    <trkseg>
+      <trkpt lat="0.01" lon="10.01"><ele>20</ele><time>2000-01-01T12:00:00Z</time></trkpt>
+      <trkpt lat="0.0105" lon="10.011"><ele>21</ele><time>2000-01-01T12:01:00Z</time></trkpt>
+      <trkpt lat="0.011" lon="10.012"><ele>22</ele><time>2000-01-01T12:02:00Z</time></trkpt>
+      <trkpt lat="0.0115" lon="10.013"><ele>23</ele><time>2000-01-01T12:03:00Z</time></trkpt>
+      <trkpt lat="0.012" lon="10.014"><ele>24</ele><time>2000-01-01T12:04:00Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

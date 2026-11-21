@@ -121,7 +121,7 @@ pre code { overflow-wrap: normal; }
       "name": "Merge GPX Files Online, Free and Private — Whereday",
       "description": "Combine GPX files into one in your browser. Keep tracks separate or join segments, drop duplicate points and check gaps before you download. Nothing is uploaded.",
       "inLanguage": "en",
-      "dateModified": "2026-11-19",
+      "dateModified": "2026-11-21",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -253,7 +253,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/tools/">Tools</a></li><li>Merge GPX</li></ol></nav>
     
-    <header><p class="eyebrow">iPhone location journals</p><h1 id="article-title">Merge GPX files in your browser. Nothing is uploaded.</h1><p class="lede">Join a recording split across days, devices or app restarts, or turn daily exports into one trip file. Choose what the merge does and check the result first.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-19">November 19, 2026</time></p></header>
+    <header><p class="eyebrow">iPhone location journals</p><h1 id="article-title">Merge GPX files in your browser. Nothing is uploaded.</h1><p class="lede">Join a recording split across days, devices or app restarts, or turn daily exports into one trip file. Choose what the merge does and check the result first.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-21">November 21, 2026</time></p></header>
     <link rel="stylesheet" href="/assets/gpx-viewer.css">
 <link rel="stylesheet" href="/assets/gpx-merge.css">
 <section class="gpx-tool merge-tool" aria-labelledby="merge-files">
@@ -372,7 +372,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
     <li><strong>GPX 1.0 and 1.1 only.</strong> Output is always GPX 1.1. GPX 1.0 fields with no 1.1 equivalent, such as speed and course, are left out and counted.</li>
     <li><strong>Up to 50 files</strong>, each up to 10 MiB and 50,000 points (the same limit as the viewer), and 50 MiB or 250,000 points in total.</li>
     <li><strong>Not Google Timeline JSON.</strong> Convert it to GPX first with the <a href="/tools/google-timeline-inspector/">Timeline JSON inspector</a>.</li>
-    <li><strong>Not KML or GeoJSON.</strong> Renaming a file does not convert it; the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> explains the differences.</li>
+    <li><strong>Not KML or GeoJSON.</strong> Renaming a file does not convert it. Convert KML or KMZ first with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a>; the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> explains the differences.</li>
     <li><strong>Problem files are listed, not merged.</strong> A file that is empty, not GPX, malformed or too large shows its error in the list. The other files still merge.</li>
     <li>Points with missing or out-of-range coordinates, and values that are not valid GPX (such as an unreadable time), are left out and counted in the checks.</li>
   </ul>
@@ -390,7 +390,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <h3>Will times and elevation be kept?</h3>
   <p>Yes. Each point keeps its original time text and elevation, plus other GPX fields such as name, accuracy values and vendor extensions where GPX 1.1 allows them. A value that is not valid GPX, such as a time with no timezone, is left out and counted.</p>
   <h3>Can I merge GPX with KML or GeoJSON?</h3>
-  <p>Not here. This tool accepts GPX only. Convert the other files to GPX in the app that made them, or read the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> to choose one format for everything.</p>
+  <p>Not directly: this tool accepts GPX only. Convert a KML or KMZ file with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a> first, then merge the results here. For GeoJSON, convert it to GPX in the app that made it, or read the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> to choose one format for everything.</p>
   <h3>Why is there a straight line on my map?</h3>
   <p>The merged file probably has one continuous segment across a gap, or your source file already had a gap inside a segment. Merge again with <strong>Keep separate</strong> or <strong>One track, separate segments</strong>. <a href="#gaps">More on gaps</a>.</p>
   <h3>How many files can I merge?</h3>
@@ -401,7 +401,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <script type="module" src="/assets/gpx-merge.mjs?v=20261119b"></script>
 
     
-    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/gpx-viewer/">Check the merged file</a><p>Open it in the GPX viewer and compare points, segments and times.</p></li><li><a href="/blog/check-gpx-file/">Understand GPX warnings</a><p>Follow a worked example of gaps, missing times and segments.</p></li><li><a href="/blog/record-iphone-route-gpx/">Record your next route</a><p>Record in Whereday and export points as GPX.</p></li></ul></nav>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/gpx-viewer/">Check the merged file</a><p>Open it in the GPX viewer and compare points, segments and times.</p></li><li><a href="/tools/kml-to-gpx/">Have a KML file instead?</a><p>Convert KML or KMZ to GPX, or GPX to KML, with a report of what was kept.</p></li><li><a href="/blog/check-gpx-file/">Understand GPX warnings</a><p>Follow a worked example of gaps, missing times and segments.</p></li><li><a href="/blog/record-iphone-route-gpx/">Record your next route</a><p>Record in Whereday and export points as GPX.</p></li></ul></nav>
   </main>
   <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
   

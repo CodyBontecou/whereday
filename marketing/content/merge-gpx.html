@@ -116,7 +116,7 @@
     <li><strong>GPX 1.0 and 1.1 only.</strong> Output is always GPX 1.1. GPX 1.0 fields with no 1.1 equivalent, such as speed and course, are left out and counted.</li>
     <li><strong>Up to 50 files</strong>, each up to 10 MiB and 50,000 points (the same limit as the viewer), and 50 MiB or 250,000 points in total.</li>
     <li><strong>Not Google Timeline JSON.</strong> Convert it to GPX first with the <a href="/tools/google-timeline-inspector/">Timeline JSON inspector</a>.</li>
-    <li><strong>Not KML or GeoJSON.</strong> Renaming a file does not convert it; the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> explains the differences.</li>
+    <li><strong>Not KML or GeoJSON.</strong> Renaming a file does not convert it. Convert KML or KMZ first with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a>; the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> explains the differences.</li>
     <li><strong>Problem files are listed, not merged.</strong> A file that is empty, not GPX, malformed or too large shows its error in the list. The other files still merge.</li>
     <li>Points with missing or out-of-range coordinates, and values that are not valid GPX (such as an unreadable time), are left out and counted in the checks.</li>
   </ul>
@@ -134,7 +134,7 @@
   <h3>Will times and elevation be kept?</h3>
   <p>Yes. Each point keeps its original time text and elevation, plus other GPX fields such as name, accuracy values and vendor extensions where GPX 1.1 allows them. A value that is not valid GPX, such as a time with no timezone, is left out and counted.</p>
   <h3>Can I merge GPX with KML or GeoJSON?</h3>
-  <p>Not here. This tool accepts GPX only. Convert the other files to GPX in the app that made them, or read the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> to choose one format for everything.</p>
+  <p>Not directly: this tool accepts GPX only. Convert a KML or KMZ file with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a> first, then merge the results here. For GeoJSON, convert it to GPX in the app that made it, or read the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> to choose one format for everything.</p>
   <h3>Why is there a straight line on my map?</h3>
   <p>The merged file probably has one continuous segment across a gap, or your source file already had a gap inside a segment. Merge again with <strong>Keep separate</strong> or <strong>One track, separate segments</strong>. <a href="#gaps">More on gaps</a>.</p>
   <h3>How many files can I merge?</h3>

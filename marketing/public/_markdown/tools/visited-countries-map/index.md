@@ -56,7 +56,7 @@ The synthetic example is [synthetic-countries-trip.gpx](https://whereday.com/sam
 
 ## How points become countries
 
-- Read. GPX track points, route points and waypoints; Google Timeline visits and timed points (accepted records only); GeoJSON Point, LineString and MultiLineString coordinates; and KML Point and LineString coordinates (not Google Earth’s `gx:Track` elements). A Country Days CSV already names its countries, so it needs no lookup. The format is detected from the file’s content, not its name.
+- Read. GPX track points, route points and waypoints; Google Timeline visits and timed points (accepted records only); GeoJSON Point, LineString and MultiLineString coordinates; and KML Point and LineString coordinates (not Google Earth’s `gx:Track` elements; to use one of those, [convert the KML to GPX](https://whereday.com/tools/kml-to-gpx/) first). A Country Days CSV already names its countries, so it needs no lookup. The format is detected from the file’s content, not its name.
 - Thin. To keep long tracks fast, the page keeps one point per 0.01° cell (about 1 km) for each date. Every file’s list shows how many points were read and how many were kept.
 - Look up. Each point is tested against country outlines stored in this page, using a bounding-box check and then a point-in-polygon test. Nothing is sent to a geocoder or map service. Only the points themselves are tested: the line between two points is not, so a flight is not a visit to the countries it crosses.
 - Border and water. A point inside one country but within about 10 km of another country’s outline is counted as “near a border”, not as a visit. A point in no outline, such as open water, is “unmatched”. A country that only has such points is listed under “near a border or coast, not counted”, with a button to add it by hand.
@@ -117,5 +117,9 @@ See how Whereday records country days on your iPhone.
 - [Merge several files first](https://whereday.com/tools/merge-gpx/)
 
 Combine daily GPX files into one before you map them.
+
+- [Convert a gx:Track KML to GPX](https://whereday.com/tools/kml-to-gpx/)
+
+Timed Google Earth tracks are not read here, but the converter turns them into GPX.
 
 Source: https://whereday.com/tools/visited-countries-map/
