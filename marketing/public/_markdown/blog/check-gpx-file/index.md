@@ -108,4 +108,8 @@ Keep segments separate so viewers don’t draw lines across gaps.
 
 Compare GPX, KML, GeoJSON and CSV with the same invented trip.
 
+- [Convert KML to GPX](https://whereday.com/tools/kml-to-gpx/)
+
+Switch formats locally and see what was kept.
+
 Source: https://whereday.com/blog/check-gpx-file/

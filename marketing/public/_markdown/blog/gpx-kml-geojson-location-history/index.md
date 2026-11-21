@@ -78,6 +78,8 @@ The CSV includes both `time_utc` and `original_time`. The first is normalized to
 
 The GPX uses two `trkseg` elements. The KML has two timed tracks and `gx:interpolate` set to 0. The GeoJSON has two separate LineString features. In CSV, `group` is 1 for the first three rows and 2 for the last two; point numbering restarts in each group.
 
+Need to switch between the two? [Convert KML ⇄ GPX](https://whereday.com/tools/kml-to-gpx/) locally and see what was kept and what was skipped.
+
 A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.
 
 ## Open a GPX-derived CSV without losing its meaning

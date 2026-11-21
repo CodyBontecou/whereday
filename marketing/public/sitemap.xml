@@ -149,7 +149,7 @@
   </url>
   <url>
     <loc>https://whereday.com/tools/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/tools/country-days-calculator/</loc>
@@ -164,8 +164,12 @@
     <lastmod>2026-10-30</lastmod>
   </url>
   <url>
+    <loc>https://whereday.com/tools/kml-to-gpx/</loc>
+    <lastmod>2026-11-21</lastmod>
+  </url>
+  <url>
     <loc>https://whereday.com/tools/merge-gpx/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/tools/visited-countries-map/</loc>

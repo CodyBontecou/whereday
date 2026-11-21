@@ -7,7 +7,13 @@ iPhone location journals
 
 Practical tools for checking your own files before importing or converting them.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 20, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 21, 2026
+
+## [KML to GPX converter (and GPX to KML)](https://whereday.com/tools/kml-to-gpx/)
+
+Convert a KML, KMZ or GPX file the other way, with a report of what was kept and what was skipped before you download. Google Earth `gx:Track` times and altitudes come through as GPX times and elevations.
+
+Polygons, styles and NetworkLinks are listed, not silently converted. Your file stays in your browser.
 
 ## [Visited countries map](https://whereday.com/tools/visited-countries-map/)
 
@@ -33,7 +39,7 @@ Plot tracks and routes, check timestamps and invalid coordinates, and save CSV o
 
 [Follow the worked inspection tutorial](https://whereday.com/blog/check-gpx-file/) with an invented five-point example.
 
-Have a different file type? [Compare GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it.
+Have a different file type? [Compare GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) before choosing a destination. The current viewer accepts GPX; renaming a file does not convert it, but the [KML to GPX converter](https://whereday.com/tools/kml-to-gpx/) does.
 
 ## [Google Timeline JSON inspector](https://whereday.com/tools/google-timeline-inspector/)
 

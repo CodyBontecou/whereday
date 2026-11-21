@@ -8,7 +8,7 @@ iPhone location journals
 
 Join a recording split across days, devices or app restarts, or turn daily exports into one trip file. Choose what the merge does and check the result first.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 19, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 21, 2026
 
 ## Add your GPX files. They stay on this device.
 
@@ -108,7 +108,7 @@ Open the download in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) an
 - GPX 1.0 and 1.1 only. Output is always GPX 1.1. GPX 1.0 fields with no 1.1 equivalent, such as speed and course, are left out and counted.
 - Up to 50 files, each up to 10 MiB and 50,000 points (the same limit as the viewer), and 50 MiB or 250,000 points in total.
 - Not Google Timeline JSON. Convert it to GPX first with the [Timeline JSON inspector](https://whereday.com/tools/google-timeline-inspector/).
-- Not KML or GeoJSON. Renaming a file does not convert it; the [formats guide](https://whereday.com/blog/gpx-kml-geojson-location-history/) explains the differences.
+- Not KML or GeoJSON. Renaming a file does not convert it. Convert KML or KMZ first with the [KML to GPX converter](https://whereday.com/tools/kml-to-gpx/); the [formats guide](https://whereday.com/blog/gpx-kml-geojson-location-history/) explains the differences.
 - Problem files are listed, not merged. A file that is empty, not GPX, malformed or too large shows its error in the list. The other files still merge.
 - Points with missing or out-of-range coordinates, and values that are not valid GPX (such as an unreadable time), are left out and counted in the checks.
 
@@ -128,7 +128,7 @@ Yes. Each point keeps its original time text and elevation, plus other GPX field
 
 ### Can I merge GPX with KML or GeoJSON?
 
-Not here. This tool accepts GPX only. Convert the other files to GPX in the app that made them, or read the [formats guide](https://whereday.com/blog/gpx-kml-geojson-location-history/) to choose one format for everything.
+Not directly: this tool accepts GPX only. Convert a KML or KMZ file with the [KML to GPX converter](https://whereday.com/tools/kml-to-gpx/) first, then merge the results here. For GeoJSON, convert it to GPX in the app that made it, or read the [formats guide](https://whereday.com/blog/gpx-kml-geojson-location-history/) to choose one format for everything.
 
 ### Why is there a straight line on my map?
 
@@ -149,6 +149,10 @@ Want routes and places recorded automatically, then exported as GPX, KML, GeoJSO
 - [Check the merged file](https://whereday.com/tools/gpx-viewer/)
 
 Open it in the GPX viewer and compare points, segments and times.
+
+- [Have a KML file instead?](https://whereday.com/tools/kml-to-gpx/)
+
+Convert KML or KMZ to GPX, or GPX to KML, with a report of what was kept.
 
 - [Understand GPX warnings](https://whereday.com/blog/check-gpx-file/)
 
