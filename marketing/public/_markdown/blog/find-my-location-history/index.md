@@ -107,6 +107,10 @@ Whereday’s map of a day. This illustrative screenshot uses an invented journal
 
 No. To see yesterday’s places, check [Visited Places in Apple Maps](https://whereday.com/blog/significant-locations-iphone/#visited-places) if it was turned on, or an app that was recording at the time.
 
+### How do I see where I was on a specific date?
+
+Find My can’t. Use the [date-first guide](https://whereday.com/blog/iphone-location-history-by-date/) to check Visited Places, Timeline, photos and receipts.
+
 ### Does iCloud.com show location history?
 
 No. It shows a current or last known location, for up to 24 hours, with no timeline.
@@ -144,5 +148,9 @@ See the two Apple features that do remember places, and why neither exports.
 - [Find any iPhone location history](https://whereday.com/blog/view-location-history-iphone/)
 
 Check Apple Maps, Google Timeline and Whereday, and choose the right download.
+
+- [Looking for one specific day?](https://whereday.com/blog/iphone-location-history-by-date/)
+
+Start from the date and rebuild a day from photos, workouts and receipts.
 
 Source: https://whereday.com/blog/find-my-location-history/

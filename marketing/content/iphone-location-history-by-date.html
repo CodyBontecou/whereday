@@ -1,0 +1,120 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Quick answer: where was I on a certain date?</h2>
+  <ul>
+    <li><strong>Apple Maps:</strong> open <strong>Maps → Places → Visited Places</strong> and filter by date (iOS 26, where available). It only holds days it was turned on for and that your <strong>Keep Visits</strong> setting still retains.</li>
+    <li><strong>Google Maps:</strong> if you used Timeline, open <strong>Google Maps → profile picture → Your Timeline</strong> and pick the date.</li>
+    <li><strong>Neither was on?</strong> Rebuild the day from records that carry a real date: photos, workout route maps, Calendar, Wallet and receipts. They show less than a route, but often enough to answer the question.</li>
+  </ul>
+  <p>Nothing on an iPhone will reveal a day that was never recorded, and changing the phone’s clock doesn’t either (<a href="#date-time-trick">see why</a>). This guide is for your own phone and your own history.</p>
+  <nav class="article-toc" aria-label="In this guide"><strong>In this guide</strong><ol><li><a href="#sources-by-date">Which sources let you jump to a date</a></li><li><a href="#apple-maps-date">Apple Maps Visited Places</a></li><li><a href="#google-timeline-date">Google Maps Timeline</a></li><li><a href="#rebuild-a-day">Rebuild a day from other records</a></li><li><a href="#date-time-trick">The Date &amp; Time trick</a></li><li><a href="#empty-date">Why the date is blank</a></li><li><a href="#next-time">Make the next date answerable</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="sources-by-date">
+  <h2 id="sources-by-date">Sources compared by date</h2>
+  <div class="table-scroll" role="region" aria-label="iPhone sources that can answer where you were on a date" tabindex="0"><table>
+    <caption>What each source can tell you about one date</caption>
+    <thead><tr><th scope="col">Source</th><th scope="col">Jump to a date?</th><th scope="col">How far back</th><th scope="col">Export?</th><th scope="col">Notes</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Apple Maps Visited Places</th><td>Yes, a date filter (iOS 26, where available)</td><td>Your <strong>Keep Visits</strong> choice</td><td>None documented; take a screenshot</td><td>Only if Visited Places was on at the time</td></tr>
+      <tr><th scope="row">Significant Locations &amp; Routes</th><td>No documented date filter</td><td>No retention setting documented</td><td>None documented</td><td>Powers other features; not a day-by-day log. <a href="/blog/significant-locations-iphone/">Details</a></td></tr>
+      <tr><th scope="row">Google Maps Timeline (on device)</th><td>Yes, pick a date in Your Timeline</td><td>Depends on your Timeline retention setting</td><td>Yes, to a JSON file in Files</td><td>Only if you turned Timeline on</td></tr>
+      <tr><th scope="row">Find My</th><td>No</td><td>No history; current or last known location only</td><td>None</td><td><a href="/blog/find-my-location-history/">What Find My keeps</a></td></tr>
+      <tr><th scope="row">Photos</th><td>Yes, Library → Days</td><td>As long as you keep the photo</td><td>Share or export the photo</td><td>Location is where the photo was taken, if it has one</td></tr>
+      <tr><th scope="row">Fitness / Health workouts</th><td>Yes, by workout date</td><td>As long as the workout is kept</td><td>Depends on the app that recorded it</td><td>Route map for outdoor workouts that recorded one</td></tr>
+      <tr><th scope="row">Calendar</th><td>Yes</td><td>As long as the event exists</td><td>Share or screenshot</td><td>An address you typed, not proof you went</td></tr>
+      <tr><th scope="row">Wallet transactions</th><td>Browse by date</td><td>As long as the card issuer lists it</td><td>Statement from the issuer</td><td>Merchant and time, not GPS</td></tr>
+      <tr><th scope="row">Whereday</th><td>Yes: date chips and Pick a day</td><td>From when you started tracking</td><td>GPX, CSV, JSON and more</td><td>Can’t read Apple’s or Google’s history</td></tr>
+    </tbody>
+  </table></div>
+  <p>Apple and Google details are covered in <a href="/blog/view-location-history-iphone/">how to see your location history on iPhone</a>.</p>
+</section>
+
+<section aria-labelledby="apple-maps-date">
+  <h2 id="apple-maps-date">Apple Maps: filter Visited Places by date</h2>
+  <ol>
+    <li>Open <strong>Maps</strong> and tap <strong>Places</strong>, then <strong>Visited Places</strong>.</li>
+    <li>Filter by <strong>date</strong>. You can also filter by category or city, or tap <strong>All Visits</strong>.</li>
+    <li>Open a visit to see what Maps saved for it.</li>
+  </ol>
+  <p><strong>The Keep Visits caveat:</strong> at the bottom of the list, <strong>Keep Visits</strong> sets how long Maps retains visits, so an older date may already be gone. Visited Places also needs to have been turned on; see <a href="/blog/significant-locations-iphone/#visited-places">how to turn it on</a>, which only affects visits from then on.</p>
+  <p><strong>Keeping the answer:</strong> there is no documented export, so a screenshot is the only way to keep it. A screenshot is a picture, not a timestamped route, so write the date next to it.</p>
+  <p>Sources: Apple’s <a href="https://support.apple.com/guide/iphone/view-and-manage-visited-places-iph0c2597c4f/26/ios/26">Visited Places guide for iOS 26</a> and <a href="https://support.apple.com/guide/iphone/clear-location-history-iph32b15b22f/26/ios/26">Clear location history in Maps</a>. Significant Locations &amp; Routes, the Settings feature behind it, has no documented date filter.</p>
+</section>
+
+<section aria-labelledby="google-timeline-date">
+  <h2 id="google-timeline-date">Google Maps: open Timeline on a date</h2>
+  <ol>
+    <li>Open <strong>Google Maps</strong> and tap your profile picture or initial.</li>
+    <li>Tap <strong>Your Timeline</strong>.</li>
+    <li>Use the calendar or date picker to choose the day.</li>
+  </ol>
+  <p>Timeline is now stored on your device, and Google’s retention setting decides how far back it goes. Menus can differ by version, so follow <a href="https://support.google.com/maps/answer/6258979">Google’s Timeline help</a> if yours looks different. If you want an independent copy, <a href="/blog/import-google-timeline-iphone/">our import guide</a> shows how to save and preview Timeline JSON.</p>
+</section>
+
+<section aria-labelledby="rebuild-a-day">
+  <h2 id="rebuild-a-day">Rebuild a day from records you already have</h2>
+  <p>If no location history covers the date, work through these. Each has a real date even if it has no route.</p>
+  <ol>
+    <li><strong>Photos.</strong> Open <strong>Photos → Library</strong> and choose <strong>Days</strong>, then scroll to the date. For a photo that has a location, open its info to see a small map and place name.</li>
+    <li><strong>Workout route maps.</strong> In <strong>Fitness</strong> (or Health), open the workout from that date. Outdoor workouts that recorded a route show it on a map.</li>
+    <li><strong>Calendar.</strong> Look at the date for events, addresses and travel time entries.</li>
+    <li><strong>Wallet.</strong> Open a card in <strong>Wallet</strong> and look through its transactions for the date. You get a merchant and a time, not a coordinate.</li>
+    <li><strong>Receipts and messages.</strong> Search Mail and Messages for the date, a booking or a receipt.</li>
+  </ol>
+  <p><strong>Accuracy:</strong> a photo’s location is where the photo was taken, not where you were all day. A transaction names a merchant, which may be a head office or an online charge. A calendar entry is a plan. Put them together and say what each one shows rather than claiming a route.</p>
+  <p>Apple’s guides for these: the <a href="https://support.apple.com/guide/iphone/welcome/ios">iPhone User Guide</a> chapters on Photos, Fitness and Wallet. For photos shown on a map after you start recording, see <a href="/docs/photos/">Photos on the map</a>.</p>
+</section>
+
+<section aria-labelledby="date-time-trick">
+  <h2 id="date-time-trick">The “change the Date &amp; Time” trick: don’t</h2>
+  <p>Some pages suggest turning off <strong>Set Automatically</strong> and changing the date to see old history. Apple documents no feature that works this way. The clock only changes the time your phone believes it is; it doesn’t reveal records that weren’t saved or that were deleted. It can also cause trouble: sign-in and two-factor codes depend on accurate time, and syncing and secure connections can fail. Leave Set Automatically on.</p>
+</section>
+
+<section aria-labelledby="empty-date">
+  <h2 id="empty-date">Why the date is blank</h2>
+  <ul>
+    <li><strong>The feature was off.</strong> Visited Places, Timeline or a recorder wasn’t on for that day.</li>
+    <li><strong>Keep Visits removed it.</strong> Maps dropped older visits according to your setting.</li>
+    <li><strong>Clear History.</strong> Clearing removes saved places, and Apple says Significant Locations clearing applies on every device on your Apple Account.</li>
+    <li><strong>A new phone</strong> without a restored backup or Timeline backup.</li>
+  </ul>
+  <p>If a Whereday day looks empty, see <a href="/blog/missing-location-history-iphone/">missing visits and route points</a>. Nothing can bring back a day that was never recorded.</p>
+</section>
+
+<section aria-labelledby="next-time">
+  <h2 id="next-time">Next time, open the date and see it</h2>
+  <p>Whereday records your visits and routes on your iPhone. To look at a past day:</p>
+  <ul>
+    <li>Choose a date chip under the map’s header: <strong>Today</strong>, <strong>Yesterday</strong>, <strong>7D</strong>, <strong>30D</strong>, <strong>All</strong>, or the calendar for a custom range.</li>
+    <li>Swipe up the day card and tap <strong>Pick a day</strong> to step through days or pick any date. The day sheet lists your stays and the moves between them. See <a href="/docs/timeline-outings/">Timeline &amp; outings</a>.</li>
+    <li>Open a visit to confirm or correct it. To add a stop from an earlier day, use <strong>+ → Log a past stop</strong> (<a href="/docs/places/">Save and edit places</a>).</li>
+    <li>Export with a date range of today, yesterday or a custom range, as GPX, CSV, JSON and other formats. See <a href="/docs/export-import/">export and restore</a>. You can also <a href="/blog/back-up-iphone-location-history/">back up your history</a>.</li>
+  </ul>
+  <figure class="product-example"><img src="/screenshots/map-home-480.webp" srcset="/screenshots/map-home-480.webp 480w, /screenshots/map-home-720.webp 720w, /screenshots/map-home.webp 900w" sizes="240px" width="1206" height="2622" alt="Whereday’s map home, with an invented day’s route coloured by place" loading="lazy" decoding="async"><figcaption>Whereday’s map of a day. This illustrative screenshot uses an invented journal, not real location data.</figcaption></figure>
+  <p><strong>The honest limit:</strong> Whereday records from the day you install it and start tracking. It can’t fill in earlier days, and it can’t read or recover Apple’s or Google’s history.</p>
+  <p>Access: from version 1.8, new users need an eligible trial, subscription or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Import and Export Preview are free. New users from 1.8 keep exports after tracking access ends; existing free users keep their previous export-unlock requirement.</p>
+  <p>Compare other options in <a href="/compare/location-history-apps-iphone/">location history apps for iPhone</a>.</p>
+</section>
+
+<section aria-labelledby="questions">
+  <h2 id="questions">Common questions</h2>
+  <h3>Can I see where I was a year ago?</h3>
+  <p>Only if something recorded it and still keeps it: Visited Places within your Keep Visits setting, Google Timeline within its retention setting, or photos and receipts from that day.</p>
+  <h3>Does Find My show past locations?</h3>
+  <p>No. It shows a current or last known location only. See <a href="/blog/find-my-location-history/">what Find My keeps</a>.</p>
+  <h3>Can I see the exact time I arrived?</h3>
+  <p>Not reliably from Apple’s Visited Places guide, which documents no arrival time. Photo and transaction timestamps give times for those moments only. A Whereday visit shows its arrival and departure.</p>
+  <h3>Can I export one day?</h3>
+  <p>Apple’s features have no documented export, and Google exports a Timeline file rather than one day. In Whereday you can set the export date range to a single day.</p>
+  <h3>Can I see history for a date before I installed an app?</h3>
+  <p>No. A new app starts from install. It can’t read Apple’s or Google’s history; it can import a Google Timeline file you exported yourself.</p>
+</section>
+
+<section class="closing" aria-labelledby="start-history">
+  <h2 id="start-history">Next time, open the date and see it.</h2>
+  <p>Whereday records your visits and routes on your iPhone from install onward and exports them as GPX, CSV or JSON. It can’t read or recover Apple’s or Google’s history.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+  <p><a href="/docs/tracking/">Read how tracking works</a></p>
+</section>
+
+<p class="source-note">Apple Maps, Significant Locations and Find My steps follow Apple’s iOS 26 iPhone User Guide as already checked in the linked Whereday guides (November 2026). The Photos, Fitness, Wallet and Calendar steps are general descriptions, not re-verified against a device or a specific guide page; menus vary by iOS version and region. Google steps follow Google’s Timeline help, whose page could not be re-read for this update. Personal safety: if you’re worried about someone else tracking you, see Apple’s <a href="https://support.apple.com/guide/personal-safety/manage-location-services-settings-ips9bf20ad2f/web">Personal Safety guide</a>. Whereday details follow the product docs; the screenshot shows invented data.</p>

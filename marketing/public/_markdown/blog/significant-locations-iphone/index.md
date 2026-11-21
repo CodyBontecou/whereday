@@ -134,7 +134,7 @@ Be careful with paid “recovery” or “extraction” tools that claim otherwi
 
 What you can do:
 
-- For one day you need to remember: open Visited Places, filter by that date and take a screenshot. A screenshot is a picture, not a timestamped route, so note the date yourself.
+- For one day you need to remember: open Visited Places, filter by that date and take a screenshot. A screenshot is a picture, not a timestamped route, so note the date yourself. More in [where you were on a specific date](https://whereday.com/blog/iphone-location-history-by-date/).
 - For the future: record your own history with an app that saves it on your iPhone and exports files. See [the next section](https://whereday.com/blog/significant-locations-iphone/#keep-your-own), then the [backup guide](https://whereday.com/blog/back-up-iphone-location-history/) for keeping a copy.
 - If you also used Google Maps: Google Timeline does offer an export. See [how to find it](https://whereday.com/blog/view-location-history-iphone/#google) and the [Google Timeline import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/).
 
