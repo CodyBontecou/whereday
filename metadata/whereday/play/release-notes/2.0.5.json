@@ -1,3 +1,14 @@
 {
-  "en-US": "Whereday no longer asks for a rating when you open the app. It may ask only after something you did worked, like a finished export, an import or a purchase, at most once per version and no more than every 120 days."
+  "en-US": "Reliability improvements and fixes.",
+  "es-ES": "Mejoras de fiabilidad y correcciones.",
+  "es-419": "Mejoras de confiabilidad y correcciones.",
+  "fr-FR": "Améliorations de la fiabilité et corrections.",
+  "pt-BR": "Melhorias de confiabilidade e correções.",
+  "pl-PL": "Poprawki i większa niezawodność.",
+  "ru-RU": "Повышена надёжность и исправлены ошибки.",
+  "ar": "تحسينات في الموثوقية وإصلاحات.",
+  "hi-IN": "विश्वसनीयता में सुधार और फ़िक्स।",
+  "bn-BD": "নির্ভরযোগ্যতার উন্নতি ও সংশোধন।",
+  "ja-JP": "信頼性の向上と不具合の修正。",
+  "zh-CN": "提升了可靠性并修复了问题。"
 }

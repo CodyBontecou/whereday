@@ -1,6 +1,6 @@
 # Whereday iOS 2.0.3 / Android 2.0.5 (8)
 
-**Status (November 21, 2026): prepared, not built.** Nothing has been built, uploaded, tagged, pushed or submitted for this release. These drafts were written on branch `release/2.0.3`.
+**Status (November 21, 2026): approved by the owner, store copy translated.** Release in progress from branch `release/2.0.3`; receipts are recorded below once the builds ship.
 
 - **Source:** `main` at `a39703189acd8520441a0a649f31c8c34319943b` (#144). The release tag goes on the merge of this branch, or on `a3970318` if the docs are merged separately. The docs do not change the binary.
 - **iOS build:** TBD. TestFlight already has 2.0.3 build `202611200111` (`64131dc9-dcae-4538-a4ae-adf66382396b`, VALID, uploaded November 19), but it was built before the merge. Do not attach it. Upload a new build from the release source.
@@ -22,8 +22,8 @@ Android since 2.0.4: only #144. On Android the in-app review flow does nothing u
 
 ## Store copy
 
-- iOS What's New: `metadata/whereday/version/2.0.3/whats-new.json` (en-US only; 10 locales still to translate).
-- Play notes: `metadata/whereday/play/release-notes/2.0.5.json` (en-US only; 11 locales still to translate).
+- iOS What's New: `metadata/whereday/version/2.0.3/whats-new.json`, all 11 locales of 2.0.2 (en-US, es-ES, fr-FR, pt-BR, pl, ru, ja, zh-Hans, ar-SA, hi, bn-BD). English approved by the owner; translations by Claude, Whereday and Apple Watch left untranslated.
+- Play notes: `metadata/whereday/play/release-notes/2.0.5.json`, the 12 locales of 2.0.4. The owner replaced the review-prompt sentence with "Reliability improvements and fixes."; translations by Claude.
 - App Review notes: [`reviewer-notes.txt`](reviewer-notes.txt). They no longer ask for a manual developer release, because the version ships on a 7-day phased release. Keep the 2.0.2 contact (Cody Bontecou, `cody@isolated.tech`, same phone). No demo account is required.
 - Lifetime prices and product IDs are unchanged (`docs/paid-tracking-rollout.md`).
 
