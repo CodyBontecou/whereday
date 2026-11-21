@@ -1,0 +1,13 @@
+Whereday 2.0.3 (build TBD), built from main at a3970318.
+
+This update follows released version 2.0.2. Apple Watch can now check in and out of places: choose a saved place or the current location, and the Watch keeps the time you tapped even while offline, then delivers it to iPhone when it reconnects. Check-in on Watch uses the same recording access as iPhone; if iPhone has not yet confirmed purchase status, the command stays pending and asks you to open Whereday on iPhone. The Watch app also retries after a cold launch, starts recording once location permission is granted later, and delivers large route batches in full.
+
+Timeline refreshes immediately after a visit is edited, and continuous recordings stay bounded to each timeline day. The map's day sheet now tracks the finger while dragged. Whereday no longer requests an App Store review on launch: it uses Apple's review request only after a completed export, import or purchase, at most once per version and 120 days apart, and never over onboarding, the paywall or another sheet or alert.
+
+No Whereday account or demo login is required. Core location history remains on-device. Location permission and purchases are separate: purchasing never grants location permission. Photos remain in the Photos library and automatic photo matching is optional.
+
+Purchase behavior is unchanged from 2.0.2: new users see the required tracking paywall after onboarding and can select Individual or Family, then Weekly, Yearly or Lifetime. Apple controls purchase confirmation and trial eligibility. After a free trial starts, the app asks for notification permission and, if allowed, schedules one local reminder two days before the trial ends; it is removed if the trial is canceled or Lifetime is bought. Restore Purchases, Privacy and Terms remain accessible. Existing verified original builds through 50 retain legacy access; existing Lifetime purchases remain valid. Expired new-cohort subscribers can still view and export existing records, while new recording and manual visits require active access. No product IDs, price schedules, accounts or analytics are introduced.
+
+Custom onboarding and purchase analytics remain removed. Functional export scheduling and user-configured webhooks remain available. No new data types are collected.
+
+Existing localized App Store artwork is retained from 2.0 and depicts fictional sample history, not a customer's location history.
