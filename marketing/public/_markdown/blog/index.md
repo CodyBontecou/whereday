@@ -79,6 +79,14 @@ Find existing Apple or Google records, check why a day is empty, and understand 
 
 [Find your recorded history](https://whereday.com/blog/view-location-history-iphone/)
 
+Date-first guide
+
+### [See where you were on a specific date on iPhone](https://whereday.com/blog/iphone-location-history-by-date/)
+
+Check which sources can jump to a date, rebuild a day from photos, workouts and receipts, and why the Date & Time trick fails.
+
+[Find where you were on a date](https://whereday.com/blog/iphone-location-history-by-date/)
+
 Apple location features
 
 ### [Significant Locations and Visited Places on iPhone](https://whereday.com/blog/significant-locations-iphone/)

@@ -35,6 +35,8 @@ Start with the service that recorded the day
 | Whereday | The Map’s date range, or Pick a day in its day sheet | Whether tracking was enabled for that period
 | No enabled recorder | There may be no route record to open | Start a new recording before the next trip
 
+Looking for one specific day? See [how to see where you were on a specific date on iPhone](https://whereday.com/blog/iphone-location-history-by-date/).
+
 Directions you requested, places you searched for, and a recorded visit are different kinds of information. A search for a restaurant does not by itself establish when you arrived or how you travelled there.
 
 ## Find visited places in Apple Maps
