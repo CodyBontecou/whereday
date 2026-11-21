@@ -52,6 +52,13 @@ struct ImportPreviewView: View {
             .accessibilityIdentifier("import-review-screen")
         }
         .interactiveDismissDisabled(isSaving)
+        .onDisappear {
+            // The review moment is the closed sheet after a committed import, not the summary inside it.
+            // Restoring a backup isn't a review moment.
+            if case .complete(_, let preview) = phase, preview.payload.backup == nil {
+                AppReviewPromptCoordinator.shared.recordSuccess(.historyImport)
+            }
+        }
         .task {
             do {
                 let preview = try await viewModel.prepareImport(from: urls)

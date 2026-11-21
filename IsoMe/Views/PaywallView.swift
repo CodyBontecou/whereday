@@ -568,7 +568,11 @@ struct PaywallView: View {
         Button {
             Task {
                 let result = await storeManager.purchase(option)
-                if result == .succeeded && !isRequired { dismiss() }
+                guard result == .succeeded else { return }
+                if !isRequired { dismiss() }
+                // `purchase` returns after the trial-reminder permission prompt is answered; the review
+                // request waits for this sheet (or the launch paywall) to close and is skipped otherwise.
+                AppReviewPromptCoordinator.shared.recordSuccess(.purchase)
             }
         } label: {
             HStack(spacing: 10) {

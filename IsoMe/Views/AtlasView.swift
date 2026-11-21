@@ -322,6 +322,7 @@ struct AtlasView: View {
         NavigationLink("Country days", value: AtlasRoute.countryDays)
             .buttonStyle(PlacesInkButtonStyle())
             .accessibilityHint("Export, analyze history, and manage manual stays.")
+            .accessibilityIdentifier("atlas-country-days")
         Button("Add a stay") { newStay = AtlasNewStay(day: nil, countryCode: nil) }
             .buttonStyle(PlacesInkButtonStyle(emphasis: .primary))
     }

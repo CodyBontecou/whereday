@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.time.Clock
 
 /** Application-owned billing connection. Activities are used only while opening Play's sheet. */
-class PurchaseController(private val context: Context,private val usage:()->UsageFunnel?={null}) {
+class PurchaseController(private val context: Context,private val usage:()->UsageFunnel?={null},
+    /** A checkout that Play completed and the verifier confirmed; restores and refreshes never report here. */
+    private val onPurchased:()->Unit={}) {
     private val scope=CoroutineScope(SupervisorJob()+Dispatchers.IO)
     private val configuration=PurchaseConfiguration()
     private val identity=PurchaseIdentity()
@@ -29,7 +31,7 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
         checkout.value=false
         if(code==BillingClient.BillingResponseCode.OK && plan!=null && plan.freeTrialDays>0 && result.purchasedAt!=null)
             TrialReminder.schedule(context,result.purchasedAt.plus(java.time.Duration.ofDays(plan.freeTrialDays.toLong())),plan.formattedPrice,plan.plan==StorePlan.yearly)
-        if(code==BillingClient.BillingResponseCode.OK) scope.launch {refreshUsage(attempt)}
+        if(code==BillingClient.BillingResponseCode.OK) scope.launch {if(refreshUsage(attempt)==BillingRefreshResult.verified && plan!=null) runCatching {onPurchased()}}
         else {
             usage()?.purchaseFinished(attempt,if(code==BillingClient.BillingResponseCode.USER_CANCELED) UsageOutcome.cancelled else UsageOutcome.failed,
                 if(code==BillingClient.BillingResponseCode.USER_CANCELED) UsageError.userCancelled else UsageError.unknown)
@@ -101,9 +103,10 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
         }
     }
 
-    private suspend fun refreshUsage(attempt:UsageFunnel.PurchaseAttempt?,userRestore:Boolean=false) {
+    private suspend fun refreshUsage(attempt:UsageFunnel.PurchaseAttempt?,userRestore:Boolean=false):BillingRefreshResult {
         val result=session.refresh(userRestore)
         usage()?.refreshFinished(attempt,result)
+        return result
     }
 
     internal fun close() {scope.cancel();refreshes.close();store.close()}

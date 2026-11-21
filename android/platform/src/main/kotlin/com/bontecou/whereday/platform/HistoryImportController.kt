@@ -29,7 +29,9 @@ data class HistoryImportState(val phase:HistoryImportPhase=HistoryImportPhase.id
  * Reading/parsing is cancellable. Writes use a cooperative token inside one transaction, so a
  * cancel arriving after its final check reports the actual committed result instead of a false rollback.
  */
-class HistoryImportController(private val target:StagedHistoryImportTarget,private val workspaces:HistoryImportWorkspaceFactory) {
+class HistoryImportController(private val target:StagedHistoryImportTarget,private val workspaces:HistoryImportWorkspaceFactory,
+    /** A committed import, reported once per commit (review moment). */
+    private val onCommitted:()->Unit={}) {
     private val scope=CoroutineScope(SupervisorJob()+Dispatchers.IO)
     private val monitor=Any();private val clears=kotlinx.coroutines.sync.Mutex()
     private var blocked=0;private var revision=0L;private var work:Job?=null
@@ -82,7 +84,8 @@ class HistoryImportController(private val target:StagedHistoryImportTarget,priva
             try {
                 val check={if(flag.get()) throw HistoryImportCanceled();Unit}
                 val result=target.apply(SelectedHistoryImportStage(prepared.stage,selection,check),policy,check)
-                synchronized(monitor) {if(ticket==revision) {workspace=null;mutable.value=current.copy(phase=HistoryImportPhase.complete,counts=result)}}
+                val committed=synchronized(monitor) {if(ticket==revision) {workspace=null;mutable.value=current.copy(phase=HistoryImportPhase.complete,counts=result);true} else false}
+                if(committed) runCatching {onCommitted()}
             } catch(error:Exception) {failed(ticket,flag,error)}
             finally {retire(prepared);synchronized(monitor) {if(workspace===prepared) workspace=null}}
         }.also {work=it;val owned=it;it.invokeOnCompletion {synchronized(monitor) {if(work===owned) work=null}};it.start()}

@@ -1072,7 +1072,7 @@ private struct RecordingSessionDetailView: View {
             switch result {
             case .success:
                 ExportToastCenter.shared.show(.success(message: String(localized: "GPX exported")))
-                AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                AppReviewPromptCoordinator.shared.recordSuccess(.outingExport)
             case .failure(let error):
                 ExportToastCenter.shared.show(.failure(message: error.localizedDescription))
             }
@@ -1824,7 +1824,7 @@ private struct RecordingSessionDetailView: View {
                 completion: { completed in
                     guard completed else { return }
                     Task { @MainActor in
-                        AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                        AppReviewPromptCoordinator.shared.recordSuccess(.outingExport)
                     }
                 }
             )
@@ -1851,7 +1851,7 @@ private struct RecordingSessionDetailView: View {
                     filenamePattern: filenamePattern
                 )
                 ExportToastCenter.shared.show(.success(savedURLs: urls))
-                AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                AppReviewPromptCoordinator.shared.recordSuccess(.outingExport)
             } else {
                 let data = try ExportService.outingsData(outings: [session], visits: visits, format: .gpx, options: options)
                 gpxDocument = RouteGPXDocument(data: data)
