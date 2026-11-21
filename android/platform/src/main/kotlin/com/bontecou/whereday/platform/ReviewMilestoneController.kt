@@ -31,7 +31,7 @@ class AndroidReviewMilestoneStore internal constructor(path:File,private val clo
         when(json.get("version").toString()) {
             "1"->{
                 // Single-shot-ever state: keep the use days and start the cooldown now for someone already asked.
-                val dates=json.getAsJsonArray("days");require(dates.size()<=2)
+                val dates=json.getAsJsonArray("days");require(dates.size()<=2);flag("exported")
                 ReviewMilestone.migrated(dates.map {LocalDate.parse(it.asString)}.toSet(),flag("requested"),clock.instant()).also {write(it)}
             }
             "2"->{
