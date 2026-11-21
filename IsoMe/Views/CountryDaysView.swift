@@ -73,6 +73,7 @@ struct CountryDaysView: View {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button("Export", systemImage: "square.and.arrow.up") { export(summaries) }
                     .disabled(summaries.isEmpty)
+                    .accessibilityIdentifier("country-days-export")
                 Button("Add stay", systemImage: "plus") { showingAddStay = true }
             }
         }
@@ -82,7 +83,7 @@ struct CountryDaysView: View {
         .fileExporter(isPresented: $showingExport, document: exportDocument,
                       contentType: .commaSeparatedText, defaultFilename: "iso-me-country-days") { result in
             switch result {
-            case .success: AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+            case .success: AppReviewPromptCoordinator.shared.recordSuccess(.countryDaysExport)
             case .failure(let error): errorMessage = error.localizedDescription
             }
         }
@@ -560,7 +561,7 @@ struct CountryDayDetailView: View {
         .fileExporter(isPresented: $showingExport, document: exportDocument,
                       contentType: .commaSeparatedText, defaultFilename: "iso-me-country-days-\(summary.countryCode.lowercased())") { result in
             switch result {
-            case .success: AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+            case .success: AppReviewPromptCoordinator.shared.recordSuccess(.countryDaysExport)
             case .failure(let error): errorMessage = error.localizedDescription
             }
         }

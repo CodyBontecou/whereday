@@ -22,7 +22,7 @@ class ExportFilesTest {
     private val tree=DocumentsContract.buildTreeDocumentUri(authority,"root")
     private val root=DocumentsContract.buildDocumentUriUsingTree(tree,"root")
     private val time=Instant.parse("2026-03-08T05:00:00Z")
-    private suspend fun fixture(onFileExported:()->Unit={},block:suspend (HistoryDatabase,ExportFiles)->Unit) {
+    private suspend fun fixture(onFileExported:(com.bontecou.whereday.domain.ReviewSuccess)->Unit={},block:suspend (HistoryDatabase,ExportFiles)->Unit) {
         check(context.packageName!="com.bontecou.whereday")
         val name="export-synthetic-${UUID.randomUUID()}.db";val db=HistoryDatabase.create(context,name)
         val files=ExportFiles(context,db,{},onFileExported)

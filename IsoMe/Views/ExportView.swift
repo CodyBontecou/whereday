@@ -1717,7 +1717,7 @@ struct ExportView: View {
                                 Task { @MainActor in
                                     let outcome = await dailyScheduler.runNow()
                                     if outcome.completedExport {
-                                        AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                                        AppReviewPromptCoordinator.shared.recordSuccess(.scheduledExport)
                                     }
                                 }
                             } label: {
@@ -2446,7 +2446,7 @@ struct ExportView: View {
                     filenamePattern: filenamePattern
                 )
                 ExportToastCenter.shared.show(.success(savedURLs: urls))
-                AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                AppReviewPromptCoordinator.shared.recordSuccess(.folderExport)
             } catch {
                 viewModel.exportError = error.localizedDescription
                 ExportToastCenter.shared.show(.failure(message: error.localizedDescription))
@@ -2464,7 +2464,7 @@ struct ExportView: View {
                     completion: { completed in
                         guard completed else { return }
                         Task { @MainActor in
-                            AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                            AppReviewPromptCoordinator.shared.recordSuccess(.shareExport)
                         }
                     }
                 )
@@ -2493,7 +2493,7 @@ struct ExportView: View {
             )
             let urls = try obsidianVault.write(files)
             ExportToastCenter.shared.show(.success(savedURLs: urls))
-            AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+            AppReviewPromptCoordinator.shared.recordSuccess(.obsidianExport)
         } catch {
             viewModel.exportError = error.localizedDescription
             ExportToastCenter.shared.show(.failure(message: error.localizedDescription))

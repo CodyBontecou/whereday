@@ -14,7 +14,7 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val database:HistoryDatabase = HistoryDatabase.open(context)) {
     init {require(roadDisclosure==null || roadDirections!=null)}
     val activityLog=ActivityLog.process
-    val reviewMilestones=ReviewMilestoneController(AndroidReviewMilestoneStore(context.applicationContext),unavailable={activityLog.record(AppEvent.reviewUnavailable)})
+    val reviewMilestones=ReviewMilestoneController(AndroidReviewMilestoneStore(context.applicationContext),appVersion(context),unavailable={activityLog.record(AppEvent.reviewUnavailable)})
     val usageAnalytics by lazy {
         val core=UsageAnalyticsCore(AndroidUsageAnalyticsStore(context.applicationContext),UsageAnalyticsHttpTransport.configured()) {
             @Suppress("DEPRECATION") val info=context.packageManager.getPackageInfo(context.packageName,0)
@@ -24,7 +24,8 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     }
     val usageFunnel by lazy {UsageFunnel(usageAnalytics)}
     val history = HistoryRepository(database)
-    val historyImports=HistoryImportController(DatabaseHistoryImportTarget(database),DiskHistoryImportWorkspaceFactory(java.io.File(context.cacheDir,"history-import-review")))
+    val historyImports=HistoryImportController(DatabaseHistoryImportTarget(database),DiskHistoryImportWorkspaceFactory(java.io.File(context.cacheDir,"history-import-review")),
+        onCommitted={reviewMilestones.succeeded(com.bontecou.whereday.domain.ReviewSuccess.historyImport)})
     // A Whereday backup chosen in the import flow is restored here; any other file goes to historyImports.
     val backupRestore:BackupRestoreController by lazy {BackupRestoreController(DatabaseBackupRestoreTarget(JournalBackupStore(database)),java.io.File(context.cacheDir,"backup-restore")) {!journalClear.state.value.blocked}}
     val journalCommands=JournalCommands(history)
@@ -60,11 +61,11 @@ class AppGraph internal constructor(private val context: Context, roadDirections
     val photoLibrary=PhotoLibraryController(context.applicationContext,database,photos,photoSource,preferences)
     val automaticPhotos=AutomaticPhotoSync(context.applicationContext,preferences,photos,photoLibrary)
     val placeLookup=PlaceLookupService(GeoapifyPlaceLookup.configured(SystemPlaceLookup(context)),preferences.settings.map {it.networkGeocoding},{java.util.Locale.getDefault().toLanguageTag()},elapsedMillis={android.os.SystemClock.elapsedRealtime()})
-    val purchases = PurchaseController(context.applicationContext) {usageFunnel}
+    val purchases = PurchaseController(context.applicationContext,{usageFunnel}) {reviewMilestones.succeeded(com.bontecou.whereday.domain.ReviewSuccess.purchase)}
     val webhooks=WebhookCoordinator(context.applicationContext,database,purchases::requireAccess)
     val webhookWork=WebhookWorkScheduler(androidx.work.WorkManager.getInstance(context.applicationContext),webhooks)
     val webhookController=WebhookController(webhooks,webhookWork,WebhookQueueRepository(database).observe().map {Unit},preferences.settings.map {it.showOutliers})
-    val exports = ExportFiles(context.applicationContext,database,purchases::requireAccess,reviewMilestones::fileExported)
+    val exports = ExportFiles(context.applicationContext,database,purchases::requireAccess,reviewMilestones::succeeded)
     val exportSettings = ExportSettingsController(preferences)
     val exportPicker = ExportPickerController(exports)
     val automaticExports=ScheduledExportCoordinator(context.applicationContext,exports,{
@@ -141,3 +142,8 @@ object RecordingRuntime {
 internal suspend fun recoverOrReport(onFailure:()->Unit,block:suspend ()->Unit):Boolean=try {block();true}
     catch(error:kotlinx.coroutines.CancellationException) {throw error}
     catch(_:Exception) {runCatching(onFailure);false}
+
+/** Marketing version, the unit of "at most once per version" for review requests. */
+private fun appVersion(context:Context):String=runCatching {
+    @Suppress("DEPRECATION") context.packageManager.getPackageInfo(context.packageName,0).versionName
+}.getOrNull().orEmpty().substringBefore('-')

@@ -126,9 +126,13 @@ final class SharedLocationDataTests: XCTestCase {
 
 @MainActor
 final class AppReviewPromptCoordinatorTests: XCTestCase {
+    private typealias Key = AppReviewPromptCoordinator.DefaultsKey
     private var defaults: UserDefaults!
     private var suiteName: String!
     private var calendar: Calendar!
+    private var clock: Date!
+    private var screenIsClear = true
+    private var requestCount = 0
 
     override func setUp() {
         super.setUp()
@@ -136,6 +140,9 @@ final class AppReviewPromptCoordinatorTests: XCTestCase {
         defaults = UserDefaults(suiteName: suiteName)!
         calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        clock = date(day: 1, hour: 9)
+        screenIsClear = true
+        requestCount = 0
     }
 
     override func tearDown() {
@@ -143,85 +150,199 @@ final class AppReviewPromptCoordinatorTests: XCTestCase {
         defaults = nil
         suiteName = nil
         calendar = nil
+        clock = nil
         super.tearDown()
     }
 
-    func testRequiresTwoUseDaysAndFileExportBeforePrompting() {
-        var requestCount = 0
-        let coordinator = makeCoordinator { requestCount += 1; return true }
+    func testAppUseAloneNeverRequestsAReview() {
+        let coordinator = makeCoordinator()
 
-        coordinator.recordAppUse(on: date(day: 1, hour: 9))
-        coordinator.recordAppUse(on: date(day: 2, hour: 9))
+        use(coordinator, day: 1)
+        use(coordinator, day: 2)
+        use(coordinator, day: 3)
 
-        XCTAssertEqual(coordinator.recordedUseDayCount, 2)
-        XCTAssertFalse(coordinator.hasCompletedFileExport)
+        XCTAssertEqual(coordinator.recordedUseDayCount, 3)
         XCTAssertEqual(requestCount, 0)
-
-        coordinator.recordSuccessfulFileExport(on: date(day: 2, hour: 10))
-
-        XCTAssertEqual(requestCount, 1)
-        XCTAssertTrue(coordinator.hasRequestedMilestoneReview)
     }
 
-    func testExportOnFirstDayPromptsWhenSecondUseDayIsRecorded() {
-        var requestCount = 0
-        let coordinator = makeCoordinator { requestCount += 1; return true }
+    func testQualifyingSuccessOnSecondUseDayRequestsAtTheSuccessMoment() {
+        let coordinator = makeCoordinator()
+        use(coordinator, day: 1)
+        succeed(coordinator, .countryDaysExport, day: 1)
+        XCTAssertEqual(requestCount, 0, "one day of use isn't enough")
 
-        coordinator.recordSuccessfulFileExport(on: date(day: 1, hour: 18))
+        use(coordinator, day: 2)
+        XCTAssertEqual(requestCount, 0, "resume on day two must not prompt")
+
+        succeed(coordinator, .countryDaysExport, day: 2)
+        XCTAssertEqual(requestCount, 1)
+        XCTAssertEqual(coordinator.lastRequestedVersion, "1.0")
+        XCTAssertEqual(coordinator.lastRequestDate, clock)
+    }
+
+    func testEveryQualifyingSourceCanRequest() {
+        for source in AppReviewPromptSuccess.allCases where source.qualifies {
+            defaults.removePersistentDomain(forName: suiteName)
+            requestCount = 0
+            let coordinator = makeCoordinator()
+            use(coordinator, day: 1)
+            succeed(coordinator, source, day: 2)
+            XCTAssertEqual(requestCount, 1, "\(source) should request")
+        }
+    }
+
+    func testExcludedSourcesNeitherRequestNorCountAUseDay() {
+        XCTAssertFalse(AppReviewPromptSuccess.backupBeforeClear.qualifies)
+        XCTAssertFalse(AppReviewPromptSuccess.scheduledExport.qualifies)
+        let coordinator = makeCoordinator()
+        use(coordinator, day: 1)
+
+        succeed(coordinator, .backupBeforeClear, day: 2)
+        succeed(coordinator, .scheduledExport, day: 2)
 
         XCTAssertEqual(coordinator.recordedUseDayCount, 1)
-        XCTAssertTrue(coordinator.hasCompletedFileExport)
+        XCTAssertEqual(requestCount, 0)
+        XCTAssertNil(coordinator.lastRequestDate)
+    }
+
+    func testBlockedScreenSkipsWithoutRecordingAndALaterSuccessCanAsk() {
+        let coordinator = makeCoordinator()
+        use(coordinator, day: 1)
+
+        screenIsClear = false
+        succeed(coordinator, .folderExport, day: 2)
+        XCTAssertEqual(requestCount, 0)
+        XCTAssertNil(coordinator.lastRequestDate)
+
+        screenIsClear = true
+        use(coordinator, day: 2)
+        XCTAssertEqual(requestCount, 0, "a skipped request isn't retried on resume")
+
+        succeed(coordinator, .folderExport, day: 2)
+        XCTAssertEqual(requestCount, 1)
+    }
+
+    func testUnavailableSceneDoesNotRecordAnAttempt() {
+        let coordinator = makeCoordinator(requestReview: { false })
+        use(coordinator, day: 1)
+        succeed(coordinator, .shareExport, day: 2)
+        XCTAssertNil(coordinator.lastRequestDate)
+        XCTAssertNil(coordinator.lastRequestedVersion)
+    }
+
+    func testAtMostOncePerVersion() {
+        let coordinator = makeCoordinator()
+        use(coordinator, day: 1)
+        succeed(coordinator, .shareExport, day: 2)
+        XCTAssertEqual(requestCount, 1)
+
+        clock = clock.addingTimeInterval(200 * 86_400)
+        succeed(coordinator, .shareExport, day: clock)
+        XCTAssertEqual(requestCount, 1, "same version never asks twice, even after the cooldown")
+    }
+
+    func testNewVersionWaitsForTheCooldown() {
+        let first = makeCoordinator(version: "1.0")
+        use(first, day: 1)
+        succeed(first, .shareExport, day: 2)
+        XCTAssertEqual(requestCount, 1)
+        let askedAt = clock!
+
+        let second = makeCoordinator(version: "1.1")
+        clock = askedAt.addingTimeInterval(AppReviewPromptCoordinator.cooldown - 60)
+        succeed(second, .shareExport, day: clock)
+        XCTAssertEqual(requestCount, 1, "inside 120 days")
+
+        clock = askedAt.addingTimeInterval(AppReviewPromptCoordinator.cooldown)
+        succeed(second, .shareExport, day: clock)
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(second.lastRequestedVersion, "1.1")
+    }
+
+    func testLegacyAskedUserStartsTheCooldownAtMigration() {
+        defaults.set(true, forKey: Key.legacyRequested)
+        defaults.set(true, forKey: Key.legacyCompletedFileExport)
+        defaults.set(["2026-05-01", "2026-05-02"], forKey: Key.usedDayIDs)
+
+        let coordinator = makeCoordinator()
+        let migratedAt = clock!
+
+        XCTAssertEqual(coordinator.lastRequestDate, migratedAt)
+        XCTAssertNil(coordinator.lastRequestedVersion)
+        XCTAssertNil(defaults.object(forKey: Key.legacyRequested))
+        XCTAssertNil(defaults.object(forKey: Key.legacyCompletedFileExport))
+
+        succeed(coordinator, .shareExport, day: 2)
         XCTAssertEqual(requestCount, 0)
 
-        coordinator.recordAppUse(on: date(day: 2, hour: 9))
-
+        clock = migratedAt.addingTimeInterval(AppReviewPromptCoordinator.cooldown)
+        let later = makeCoordinator()
+        XCTAssertEqual(later.lastRequestDate, migratedAt, "migration runs once")
+        succeed(later, .shareExport, day: clock)
         XCTAssertEqual(requestCount, 1)
-        XCTAssertTrue(coordinator.hasRequestedMilestoneReview)
+    }
+
+    func testLegacyUserWhoWasNeverAskedIsNotPutInCooldown() {
+        defaults.set(true, forKey: Key.legacyCompletedFileExport)
+        let coordinator = makeCoordinator()
+        XCTAssertNil(coordinator.lastRequestDate)
+        use(coordinator, day: 1)
+        succeed(coordinator, .shareExport, day: 2)
+        XCTAssertEqual(requestCount, 1)
+    }
+
+    func testStoredUseDaysAreCapped() {
+        let coordinator = makeCoordinator()
+        for offset in 0..<100 {
+            coordinator.recordAppUse(on: date(day: 1, hour: 9).addingTimeInterval(Double(offset) * 86_400))
+        }
+        XCTAssertEqual(coordinator.recordedUseDayCount, AppReviewPromptCoordinator.maxStoredUseDays)
+        let stored = defaults.stringArray(forKey: Key.usedDayIDs) ?? []
+        XCTAssertEqual(stored.last, "2026-09-08", "the most recent days are kept")
+
+        defaults.set((0..<60).map { String(format: "2025-%02d-%02d", $0 / 28 + 1, $0 % 28 + 1) }, forKey: Key.usedDayIDs)
+        XCTAssertEqual(makeCoordinator().recordedUseDayCount, AppReviewPromptCoordinator.maxStoredUseDays,
+                       "an oversized legacy list is trimmed at migration")
     }
 
     func testMultipleEventsOnSameDayOnlyCountAsOneUseDay() {
-        var requestCount = 0
-        let coordinator = makeCoordinator { requestCount += 1; return true }
-
-        coordinator.recordAppUse(on: date(day: 1, hour: 9))
-        coordinator.recordSuccessfulFileExport(on: date(day: 1, hour: 10))
+        let coordinator = makeCoordinator()
+        use(coordinator, day: 1)
+        succeed(coordinator, .countryDaysExport, day: 1)
         coordinator.recordAppUse(on: date(day: 1, hour: 20))
 
         XCTAssertEqual(coordinator.recordedUseDayCount, 1)
         XCTAssertEqual(requestCount, 0)
-
-        coordinator.recordAppUse(on: date(day: 2, hour: 9))
-
-        XCTAssertEqual(coordinator.recordedUseDayCount, 2)
-        XCTAssertEqual(requestCount, 1)
     }
 
-    func testFailedRequestIsRetriedInsteadOfMarkedComplete() {
-        var requestCount = 0
-        let coordinator = makeCoordinator {
-            requestCount += 1
-            return requestCount > 1
-        }
-
-        coordinator.recordAppUse(on: date(day: 1, hour: 9))
-        coordinator.recordSuccessfulFileExport(on: date(day: 2, hour: 9))
-
-        XCTAssertEqual(requestCount, 1)
-        XCTAssertFalse(coordinator.hasRequestedMilestoneReview)
-
-        coordinator.recordAppUse(on: date(day: 3, hour: 9))
-
-        XCTAssertEqual(requestCount, 2)
-        XCTAssertTrue(coordinator.hasRequestedMilestoneReview)
-    }
-
-    private func makeCoordinator(requestReview: @escaping @MainActor () -> Bool) -> AppReviewPromptCoordinator {
+    private func makeCoordinator(
+        version: String = "1.0",
+        requestReview: (@MainActor () -> Bool)? = nil
+    ) -> AppReviewPromptCoordinator {
         AppReviewPromptCoordinator(
             defaults: defaults,
             calendar: calendar,
+            appVersion: version,
+            now: { [unowned self] in self.clock },
             reviewRequestDelay: 0,
-            requestReview: requestReview
+            canPresent: { [unowned self] in self.screenIsClear },
+            requestReview: requestReview ?? { [unowned self] in self.requestCount += 1; return true }
         )
+    }
+
+    private func use(_ coordinator: AppReviewPromptCoordinator, day: Int) {
+        clock = date(day: day, hour: 9)
+        coordinator.recordAppUse()
+    }
+
+    private func succeed(_ coordinator: AppReviewPromptCoordinator, _ source: AppReviewPromptSuccess, day: Int) {
+        clock = date(day: day, hour: 10)
+        coordinator.recordSuccess(source)
+    }
+
+    private func succeed(_ coordinator: AppReviewPromptCoordinator, _ source: AppReviewPromptSuccess, day: Date) {
+        clock = day
+        coordinator.recordSuccess(source)
     }
 
     private func date(day: Int, hour: Int) -> Date {

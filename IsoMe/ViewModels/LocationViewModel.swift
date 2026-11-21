@@ -1530,7 +1530,7 @@ final class LocationViewModel {
     private static func recordSuccessfulShareExportForReviewPrompt(completed: Bool) {
         guard completed else { return }
         Task { @MainActor in
-            AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+            AppReviewPromptCoordinator.shared.recordSuccess(.shareExport)
         }
     }
 

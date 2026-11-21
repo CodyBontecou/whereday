@@ -135,7 +135,8 @@ struct SettingsView: View {
                 Task { @MainActor in
                     try? FileManager.default.removeItem(at: directory)
                     guard completed else { return }
-                    AppReviewPromptCoordinator.shared.recordSuccessfulFileExport()
+                    // Not a review moment: the destructive Clear All Data confirmation follows.
+                    AppReviewPromptCoordinator.shared.recordSuccess(.backupBeforeClear)
                     LogManager.shared.info("Exported complete backup before clearing", category: .export)
                     showingClearConfirmation = true
                 }

@@ -33,9 +33,10 @@ class PreparedScheduledUpdate internal constructor(val prepared:PreparedExport,v
 data class ScheduledDestination(val parent:Uri,val name:String,val existing:Uri?,val fingerprint:DestinationFingerprint?)
 
 /** All external delivery passes the same paid gate, including delivery after picker return. */
-class ExportFiles(private val context:Context,private val database:HistoryDatabase,private val authorize:suspend (Capability)->Unit,private val onFileExported:()->Unit) {
+class ExportFiles(private val context:Context,private val database:HistoryDatabase,private val authorize:suspend (Capability)->Unit,private val onFileExported:(ReviewSuccess)->Unit) {
     constructor(context:Context,database:HistoryDatabase,authorize:suspend(Capability)->Unit):this(context,database,authorize,{})
-    private fun recordFileExport() {runCatching {onFileExported()}}
+    /** Delivered by the person to a document, folder or picker; scheduled delivery never reports here. */
+    private fun recordFileExport(files:List<PreparedExportFile>) {runCatching {onFileExported(reviewSourceOf(files.map {it.relativePath}))}}
     private val lock=Mutex()
     private val generation=AtomicLong()
     private val root=File(context.cacheDir,"exports")
@@ -389,8 +390,9 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
             throw e
         }
         releaseGrant(completed)
+        val delivered=runCatching {journal.prepared(state.id).files}.getOrDefault(emptyList())
         runCatching {journal.put(completed.copy(persistedGrant=false));removePreparedLocked(state.id)}
-        recordFileExport()
+        recordFileExport(delivered)
         return completed.copy(persistedGrant=false)
     }
 
@@ -480,7 +482,7 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
             withContext(NonCancellable+Dispatchers.IO) {runCatching {DocumentsContract.deleteDocument(context.contentResolver,uri)}}
             throw e
         }
-        recordFileExport()
+        recordFileExport(listOf(file))
     }
 
     /** Manual exports keep both files on collision. Existing user documents are never truncated. */
@@ -507,7 +509,7 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
                 writeNew(file,created.uri,epoch);completed+=created.uri
             }
             completed
-        }.also {recordFileExport()}
+        }.also {recordFileExport(prepared.files)}
     }
 
     private suspend fun writeNew(file:PreparedExportFile,uri:Uri,epoch:Long) {
@@ -572,4 +574,14 @@ class ExportFiles(private val context:Context,private val database:HistoryDataba
         while(true) {val candidate="$base ($suffix)"+(if(extension.isEmpty()) "" else ".$extension");if(used.add(candidate)) return candidate;suffix++}
     }
     private class PreviewFull:RuntimeException()
+}
+
+/** Backups are never a review moment: one is the step right before Clear All Data. */
+internal fun reviewSourceOf(paths:List<String>):ReviewSuccess {
+    val backup=Regex("""Whereday Backup( \d+ of \d+)?\.json""")
+    return when {
+        paths.isNotEmpty() && paths.all {backup.matches(it.substringAfterLast('/'))}->ReviewSuccess.backup
+        paths.isNotEmpty() && paths.all {it.substringAfterLast('/').startsWith("iso-me-country-days")}->ReviewSuccess.countryDaysExport
+        else->ReviewSuccess.fileExport
+    }
 }

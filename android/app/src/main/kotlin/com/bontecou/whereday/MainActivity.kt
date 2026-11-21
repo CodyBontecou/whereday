@@ -79,11 +79,14 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {graph.journalClear.awaitReady()} catch(_:JournalClearPending) {return@repeatOnLifecycle}
+                // Resume only counts a day of use. Review requests come from export, import and purchase successes.
                 graph.reviewMilestones.appUsed()
-                combine(graph.reviewMilestones.state,reviewWindowFocused,graph.preferences.settings.map {it.onboarded}.distinctUntilChanged(),graph.journalClear.state.map {!it.blocked}.distinctUntilChanged()) {milestone,focused,onboarded,ready->
-                    milestone.eligible && focused && onboarded && ready
-                }.distinctUntilChanged().collectLatest {eligible->
-                    if(eligible) {kotlinx.coroutines.delay(1000);graph.reviewMilestones.maybeRequest(PlayReviewHost(this@MainActivity))}
+                combine(graph.reviewMilestones.pendingSuccess,reviewWindowFocused,graph.preferences.settings.map {it.onboarded}.distinctUntilChanged(),graph.journalClear.state.map {!it.blocked}.distinctUntilChanged()) {success,focused,onboarded,ready->
+                    // A paywall, sheet or dialog takes window focus, so a success behind one waits for it to close.
+                    success?.takeIf {focused && onboarded && ready && !trackingPaywall}
+                }.distinctUntilChanged().collectLatest {success->
+                    // Leave the success notice on screen for a moment; the host re-checks focus before asking.
+                    if(success!=null) {kotlinx.coroutines.delay(1000);graph.reviewMilestones.maybeRequest(PlayReviewHost(this@MainActivity))}
                 }
             }
         }

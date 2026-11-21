@@ -15,6 +15,7 @@ struct IsoMeApp: App {
     init() {
         #if DEBUG
         OnboardingLaunchConfiguration.consumeOverride()
+        AppReviewPromptCoordinator.applyDebugSeedIfRequested()
         #endif
         RetiredAnalyticsCleanup.run()
         #if DEBUG && os(iOS)
@@ -69,6 +70,7 @@ struct IsoMeApp: App {
         .onChange(of: scenePhase) { oldPhase, newPhase in
             switch newPhase {
             case .active:
+                // Counts a day of use only; review requests come from success moments.
                 AppReviewPromptCoordinator.shared.recordAppUse()
                 NotificationCenter.default.post(name: .appDidBecomeActive, object: nil)
                 Task { await DailyExportScheduler.shared.runIfDue() }
@@ -124,64 +126,124 @@ enum OnboardingLaunchConfiguration {
 
 // MARK: - App Store Review Prompt
 
+/// A finished task that may lead to a review request. Only work the person just chose to do and saw succeed
+/// qualifies; automatic, background and safety-net work never does.
+enum AppReviewPromptSuccess: String, CaseIterable {
+    case countryDaysExport
+    case folderExport
+    case obsidianExport
+    case shareExport
+    case outingExport
+    case historyImport
+    case purchase
+    /// The backup Settings makes right before Clear All Data: a destructive confirmation follows.
+    case backupBeforeClear
+    /// Scheduled exports, including the manual Run Now of a schedule.
+    case scheduledExport
+
+    var qualifies: Bool {
+        switch self {
+        case .countryDaysExport, .folderExport, .obsidianExport, .shareExport, .outingExport, .historyImport, .purchase:
+            return true
+        case .backupBeforeClear, .scheduledExport:
+            return false
+        }
+    }
+}
+
+/// Asks for an App Store review right after a success, never on launch or resume.
+///
+/// Rules: use on at least two distinct days, a qualifying success, at most once per app version and
+/// 120 days apart. The request waits about a second for the success toast and is skipped unless
+/// the screen is clear (onboarding done, no paywall, sheet, alert or system prompt, app active).
+/// A skipped request isn't retried; the next success can try again.
 @MainActor
 final class AppReviewPromptCoordinator {
     static let shared = AppReviewPromptCoordinator()
+    static let cooldown: TimeInterval = 120 * 24 * 60 * 60
+    static let maxStoredUseDays = 30
+    static let requiredUseDays = 2
 
-    private enum DefaultsKey {
+    enum DefaultsKey {
         static let usedDayIDs = "reviewPrompt.usedDayIDs"
-        static let completedFileExport = "reviewPrompt.completedFileExport"
-        static let requestedSecondDayExportReview = "reviewPrompt.requestedSecondDayExportReview"
+        static let lastRequestedVersion = "reviewPrompt.lastRequestedVersion"
+        static let lastRequestDate = "reviewPrompt.lastRequestDate"
+        /// Pre-cooldown keys: a single request ever, after one export.
+        static let legacyCompletedFileExport = "reviewPrompt.completedFileExport"
+        static let legacyRequested = "reviewPrompt.requestedSecondDayExportReview"
     }
 
     private let defaults: UserDefaults
     private let calendar: Calendar
+    private let appVersion: String
+    private let now: () -> Date
     private let reviewRequestDelay: TimeInterval
+    private let canPresent: @MainActor () -> Bool
     private let requestReview: @MainActor () -> Bool
     private var isReviewRequestScheduled = false
 
     init(
         defaults: UserDefaults = .standard,
         calendar: Calendar = .current,
+        appVersion: String = AppInfo.version,
+        now: @escaping () -> Date = Date.init,
         reviewRequestDelay: TimeInterval = 1,
+        canPresent: @escaping @MainActor () -> Bool = AppReviewPromptCoordinator.screenIsClear,
         requestReview: @escaping @MainActor () -> Bool = AppReviewPromptCoordinator.requestStoreKitReview
     ) {
         self.defaults = defaults
         self.calendar = calendar
+        self.appVersion = appVersion
+        self.now = now
         self.reviewRequestDelay = reviewRequestDelay
+        self.canPresent = canPresent
         self.requestReview = requestReview
+        migrateLegacyState()
     }
 
-    func recordAppUse(on date: Date = Date()) {
-        recordUseDay(on: date)
-        requestReviewIfEligible()
+    /// Counts a day of use. Never requests a review.
+    func recordAppUse(on date: Date? = nil) {
+        recordUseDay(on: date ?? now())
     }
 
-    func recordSuccessfulFileExport(on date: Date = Date()) {
-        defaults.set(true, forKey: DefaultsKey.completedFileExport)
-        recordUseDay(on: date)
-        requestReviewIfEligible()
+    /// Call at the moment a success is shown (after a file is saved, a share completes, a sheet that
+    /// showed the result has closed). Non-qualifying sources are ignored entirely.
+    func recordSuccess(_ source: AppReviewPromptSuccess, on date: Date? = nil) {
+        guard source.qualifies else { return }
+        recordUseDay(on: date ?? now())
+        scheduleReviewRequest()
     }
 
-    var recordedUseDayCount: Int {
-        usedDayIDs.count
-    }
+    var recordedUseDayCount: Int { usedDayIDs.count }
 
-    var hasCompletedFileExport: Bool {
-        defaults.bool(forKey: DefaultsKey.completedFileExport)
-    }
+    var lastRequestedVersion: String? { defaults.string(forKey: DefaultsKey.lastRequestedVersion) }
 
-    var hasRequestedMilestoneReview: Bool {
-        defaults.bool(forKey: DefaultsKey.requestedSecondDayExportReview)
-    }
+    var lastRequestDate: Date? { defaults.object(forKey: DefaultsKey.lastRequestDate) as? Date }
 
-    private var isEligibleForReviewRequest: Bool {
-        !hasRequestedMilestoneReview && hasCompletedFileExport && recordedUseDayCount >= 2
+    func isEligible(at date: Date) -> Bool {
+        guard recordedUseDayCount >= Self.requiredUseDays, lastRequestedVersion != appVersion else { return false }
+        guard let last = lastRequestDate else { return true }
+        return date.timeIntervalSince(last) >= Self.cooldown
     }
 
     private var usedDayIDs: [String] {
         get { defaults.stringArray(forKey: DefaultsKey.usedDayIDs) ?? [] }
-        set { defaults.set(newValue.sorted(), forKey: DefaultsKey.usedDayIDs) }
+        set { defaults.set(Array(newValue.sorted().suffix(Self.maxStoredUseDays)), forKey: DefaultsKey.usedDayIDs) }
+    }
+
+    private func migrateLegacyState() {
+        if defaults.bool(forKey: DefaultsKey.legacyRequested) {
+            // Already asked once under the old rule: the cooldown starts now; any version may ask after it.
+            if lastRequestDate == nil {
+                defaults.set(now(), forKey: DefaultsKey.lastRequestDate)
+            }
+        }
+        defaults.removeObject(forKey: DefaultsKey.legacyRequested)
+        defaults.removeObject(forKey: DefaultsKey.legacyCompletedFileExport)
+        let ids = usedDayIDs
+        if ids.count > Self.maxStoredUseDays {
+            usedDayIDs = ids
+        }
     }
 
     private func recordUseDay(on date: Date) {
@@ -201,8 +263,8 @@ final class AppReviewPromptCoordinator {
         )
     }
 
-    private func requestReviewIfEligible() {
-        guard isEligibleForReviewRequest, !isReviewRequestScheduled else { return }
+    private func scheduleReviewRequest() {
+        guard isEligible(at: now()), !isReviewRequestScheduled else { return }
 
         isReviewRequestScheduled = true
         if reviewRequestDelay <= 0 {
@@ -218,22 +280,56 @@ final class AppReviewPromptCoordinator {
 
     private func performScheduledReviewRequest() {
         isReviewRequestScheduled = false
-        guard isEligibleForReviewRequest else { return }
+        let date = now()
+        guard isEligible(at: date), canPresent() else { return }
 
         if requestReview() {
-            defaults.set(true, forKey: DefaultsKey.requestedSecondDayExportReview)
+            defaults.set(appVersion, forKey: DefaultsKey.lastRequestedVersion)
+            defaults.set(date, forKey: DefaultsKey.lastRequestDate)
         }
+    }
+
+    /// Nothing else on screen: onboarding and the hard paywall are done, no sheet, alert,
+    /// confirmation or share sheet is presented, and no system prompt has made the app inactive.
+    static func screenIsClear() -> Bool {
+        guard UIApplication.shared.applicationState == .active,
+              UserDefaults.standard.bool(forKey: "hasCompletedOnboarding"),
+              StoreManager.shared.hasResolvedEntitlements,
+              !StoreManager.shared.requiresInitialPaywall,
+              let scene = foregroundActiveScene else { return false }
+        return scene.windows.allSatisfy { window in
+            window.isHidden || window.rootViewController?.presentedViewController == nil
+        }
+    }
+
+    private static var foregroundActiveScene: UIWindowScene? {
+        UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
     }
 
     private static func requestStoreKitReview() -> Bool {
-        guard let scene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
-            return false
-        }
-
+        guard let scene = foregroundActiveScene else { return false }
         AppStore.requestReview(in: scene)
         return true
     }
+
+    #if DEBUG
+    /// QA only: `-reviewPromptSeedUseDays N` records N earlier days of use and clears any past request,
+    /// so one success in a fresh install can reach the system review sheet.
+    static func applyDebugSeedIfRequested(defaults: UserDefaults = .standard, calendar: Calendar = .current) {
+        let count = defaults.integer(forKey: "reviewPromptSeedUseDays")
+        guard count > 0 else { return }
+        defaults.removeObject(forKey: DefaultsKey.lastRequestedVersion)
+        defaults.removeObject(forKey: DefaultsKey.lastRequestDate)
+        defaults.removeObject(forKey: DefaultsKey.legacyRequested)
+        let coordinator = AppReviewPromptCoordinator(defaults: defaults, calendar: calendar, canPresent: { false }, requestReview: { false })
+        for offset in 1...min(count, maxStoredUseDays) {
+            if let day = calendar.date(byAdding: .day, value: -offset, to: Date()) {
+                coordinator.recordAppUse(on: day)
+            }
+        }
+    }
+    #endif
 }
 
 // MARK: - Notification Names

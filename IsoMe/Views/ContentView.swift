@@ -464,6 +464,7 @@ private struct WheredayTabBar: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(tab.title))
+        .accessibilityIdentifier("main-tab-\(String(describing: tab))")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityShowsLargeContentViewer {
             Label(tab.title, systemImage: tab.systemImage)
@@ -519,6 +520,7 @@ private struct WheredayNavigationRail: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(tab.title))
+        .accessibilityIdentifier("main-tab-\(String(describing: tab))")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityShowsLargeContentViewer {
             Label(tab.title, systemImage: tab.systemImage)
