@@ -79,6 +79,14 @@ Find existing Apple or Google records, check why a day is empty, and understand 
 
 [Find your recorded history](https://whereday.com/blog/view-location-history-iphone/)
 
+Guide
+
+### [See Your Photos on a Map on iPhone](https://whereday.com/blog/iphone-photos-map/)
+
+Find the Photos map, fix photos missing from it, and place photos that have no GPS.
+
+[Read the photos map guide](https://whereday.com/blog/iphone-photos-map/)
+
 Apple location features
 
 ### [Significant Locations and Visited Places on iPhone](https://whereday.com/blog/significant-locations-iphone/)
