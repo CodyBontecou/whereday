@@ -139,7 +139,6 @@ function readKML(doc) {
     else if (!gx && tag === 'Model') skip('Model');
     else if (!gx && OVERLAYS.has(tag)) skip('Overlay');
     else if (!gx && STYLE_TAGS.has(tag)) skip('Style');
-    else if (!gx && tag === 'Folder') skip('Folder');
     else if (gx && tag === 'angles') skip('Angles');
   }
 
@@ -213,7 +212,6 @@ const SKIP_REASONS = {
   Model: ['3D models', 'GPX has no model type.'],
   Overlay: ['Image overlays', 'GroundOverlay, PhotoOverlay and ScreenOverlay images are not converted.'],
   Style: ['Styles and icons', 'Line colours, widths and icons have no GPX equivalent. Style and StyleMap definitions were dropped.'],
-  Folder: ['Folders', 'GPX has no folders, so everything is listed flat. Names are kept.'],
   ExtendedData: ['ExtendedData', 'Custom fields and data tables on Placemarks are not copied.'],
   Angles: ['gx:angles', 'Heading, tilt and roll values on gx:Track are not copied.'],
   LineTime: ['TimeStamp / TimeSpan on lines', 'A plain LineString has one time for the whole line, not one per point, so it cannot become track-point times.'],

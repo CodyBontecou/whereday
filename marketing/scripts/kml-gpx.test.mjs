@@ -114,7 +114,7 @@ test('skipped elements are listed with counts and never converted', async () => 
     <Placemark><name>Nothing</name></Placemark><GroundOverlay/>
     <Placemark><TimeSpan><begin>2000-01-01T00:00:00Z</begin></TimeSpan><LineString><coordinates>1,1 2,2</coordinates></LineString></Placemark></Folder>`));
   const found = Object.fromEntries(r.report.skipped.map(s => [s.item, s.count]));
-  assert.deepEqual(found, { 'Styles and icons': 2, 'NetworkLinks': 1, 'Image overlays': 1, 'Folders': 1, 'Polygons': 1, 'ExtendedData': 1, 'Placemarks without a geometry': 1, 'TimeStamp / TimeSpan on lines': 1 });
+  assert.deepEqual(found, { 'Styles and icons': 2, 'NetworkLinks': 1, 'Image overlays': 1, 'Polygons': 1, 'ExtendedData': 1, 'Placemarks without a geometry': 1, 'TimeStamp / TimeSpan on lines': 1 });
   assert.equal(r.report.output.tracks, 1); assert.equal(r.report.output.waypoints, 1);
   assert.doesNotMatch(r.output, /lat="1" lon="0"/);
 });
