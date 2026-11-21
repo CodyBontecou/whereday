@@ -71,6 +71,7 @@ This example is synthetic: the points are invented, near 0° N 10° E, and are n
 
 - [synthetic-kml-example.kml](https://whereday.com/samples/synthetic-kml-example.kml): 2 Points, 1 LineString, 1 `gx:Track` of 5 timed points (with altitudes), and 1 Polygon.
 - [synthetic-kml-example-expected.gpx](https://whereday.com/samples/synthetic-kml-example-expected.gpx): the GPX this page writes for it. The site’s tests check that the output matches this file exactly.
+- [synthetic-kml-example-expected-back.kml](https://whereday.com/samples/synthetic-kml-example-expected-back.kml): the KML written when you convert that GPX back, with the timed segment as a `gx:Track`.
 
 | KML in | Count | GPX out | Count
 | Placemarks | 5 | Waypoints | 2

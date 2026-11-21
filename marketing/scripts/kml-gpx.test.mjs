@@ -21,7 +21,6 @@ const gpx = body => `<?xml version="1.0"?><gpx version="1.1" creator="t" xmlns="
 let xmllint = true;
 try { execFileSync('xmllint', ['--version'], { stdio: 'ignore' }); } catch { xmllint = false; }
 function assertValidGPX(xml, label) {
-  if (!xmllint) return;
   const dir = mkdtempSync(join(tmpdir(), 'kml-gpx-'));
   try {
     const file = join(dir, 'out.gpx'); writeFileSync(file, xml);
@@ -40,7 +39,6 @@ test('synthetic KML converts to exactly the committed GPX, with documented count
   assert.deepEqual(r.report.skipped.map(s => [s.item, s.count]), [['Polygons', 1]]);
   assert.equal(r.report.firstTime, '2000-01-01T12:00:00.000Z');
   assert.equal(r.report.lastTime, '2000-01-01T12:04:00.000Z');
-  assertValidGPX(r.output, 'example GPX');
 });
 
 test('the committed GPX converts back to exactly the committed KML, with gx:Track', async () => {
@@ -77,7 +75,6 @@ test('gx:Track times and altitudes become trkpt time and ele; a gx:MultiTrack be
   assert.match(r.output, /<trkpt lat="1.1" lon="10.1"><ele>6<\/ele><time>2000-01-01T12:00:30.500Z<\/time>/);
   assert.match(r.output, /<trkpt lat="2" lon="11"><time>2000-01-02T00:00:00Z<\/time><\/trkpt>/);
   assert.equal(r.output.match(/<trkseg>/g).length, 2);
-  assertValidGPX(r.output, 'gx:MultiTrack GPX');
 });
 
 test('MultiGeometry lines become one track with several segments; points become waypoints', async () => {
@@ -179,7 +176,6 @@ test('round trip: GPX -> KML -> GPX keeps coordinates, times and elevations', as
   assert.deepEqual(b.points.map(key).sort(), a.points.map(key).sort());
   assert.equal(b.firstTime, a.firstTime); assert.equal(b.lastTime, a.lastTime);
   assert.deepEqual([b.segments, b.waypoints], [a.segments, a.waypoints]);
-  assertValidGPX(back.output, 'round-trip GPX');
 });
 
 test('format is detected from content, not the file name or extension', async () => {
@@ -240,4 +236,16 @@ test('KMZ: a zip bomb larger than 10 MiB once unzipped is refused', async () => 
   const archive = zip([['doc.kml', big]]);
   assert.ok(archive.length < 10 * 1024 * 1024);
   await assert.rejects(run(archive), /larger than 10 MiB/);
+});
+
+// Schema validation needs xmllint. Without it this test is reported as skipped, never as passed.
+test('every GPX output validates against the GPX 1.1 XSD', { skip: !xmllint && 'xmllint is not installed' }, async () => {
+  const inputs = [
+    sample('synthetic-kml-example.kml'),
+    kml('<Placemark><name>Multi</name><gx:MultiTrack><gx:Track><altitudeMode>absolute</altitudeMode><when>2000-01-01T12:00:00Z</when><gx:coord>10 1 5.5</gx:coord></gx:Track><gx:Track><when>2000-01-02T00:00:00Z</when><gx:coord>11 2</gx:coord></gx:Track></gx:MultiTrack></Placemark><Placemark><name>A &amp; B</name><Point><coordinates>1,2</coordinates></Point></Placemark>'),
+    zip([['doc.kml', sample('synthetic-kml-example.kml')]]),
+  ];
+  for (const input of inputs) assertValidGPX((await run(input)).output, 'GPX output');
+  const back = await run((await run(sample('synthetic-kml-example-expected.gpx'))).output);
+  assertValidGPX(back.output, 'round-trip GPX');
 });
