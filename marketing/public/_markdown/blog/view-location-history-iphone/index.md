@@ -60,6 +60,8 @@ Apple documents this as a setting used for location-related Maps features. It is
 
 Google’s iPhone guide describes optional encrypted backup and a device selector under Timeline’s cloud icon. A backup can be imported into Google Maps on another device; inspect that device’s date range afterwards. Recent changes can take days to reach a backup.
 
+Timeline empty or moving to a new phone? See the [Google Maps Timeline on iPhone guide](https://whereday.com/blog/google-maps-timeline-iphone/).
+
 For an independent file, use Settings → Location & Privacy → Export Timeline data → Save to Files. Google names the export `location-history.json`. Follow [Google’s current iPhone instructions](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en) if menus differ.
 
 Keep the archive separately. Whereday 1.8 can preview supported Google Timeline JSON; use the [import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/) to check formats, duplicates, and a synthetic example before saving.

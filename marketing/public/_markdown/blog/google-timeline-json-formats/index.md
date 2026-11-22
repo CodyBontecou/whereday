@@ -70,7 +70,7 @@ Source paths stay separate. Rejected components, backwards time, UTC day changes
 
 ## Choose the next step
 
-For a fresh export on iPhone, Google’s [official Timeline help](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en) describes its export controls. Follow our [export-and-import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/) for the Files handoff and Whereday’s actual preview. A Google device-transfer backup and an exported JSON file serve different workflows.
+Not sure where to find Timeline on your iPhone first? Read the [Google Maps Timeline on iPhone guide](https://whereday.com/blog/google-maps-timeline-iphone/). For a fresh export on iPhone, Google’s [official Timeline help](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en) describes its export controls. Follow our [export-and-import walkthrough](https://whereday.com/blog/import-google-timeline-iphone/) for the Files handoff and Whereday’s actual preview. A Google device-transfer backup and an exported JSON file serve different workflows.
 
 If your destination needs a map file, first [compare GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/). The inspector can convert supported coordinate/time records to GPX using the rules above; it does not import a file into Google Maps. For a GPX you already have, use the [GPX viewer](https://whereday.com/tools/gpx-viewer/).
 

@@ -56,6 +56,8 @@ If you want to try Whereday, record a short session and inspect it before relyin
 
 Google’s downloadable archive and its device-transfer backup serve different purposes. Keep the archive before changing your setup; check backup separately if you need history on another device.
 
+For where Timeline lives now and why it can look empty, see the [Google Maps Timeline on iPhone guide](https://whereday.com/blog/google-maps-timeline-iphone/).
+
 - In Google Maps on iPhone, open your profile picture or initial, then Settings → Location & Privacy → Export Timeline data.
 - Choose Save to Files, select a destination, and save `location-history.json`. Keep that original file separately.
 - For Google’s device-transfer backup, open Your Timeline → cloud icon and check Backup. Google says backup requires auto-delete to be off and changes can take a few days to appear.
