@@ -75,6 +75,8 @@ Checked October 26, 2026 in an isolated Debug simulator rebuild of release sourc
 
 Use Add stay in Country Days. Choose the country and first and last dates, add an optional note, and save. Review the affected country’s dates afterwards. You can edit or delete a manual stay when you find a mistake.
 
+To reconstruct past trips first, see how to [find your travel history](https://whereday.com/blog/find-your-travel-history/) from official and personal records.
+
 A manual stay records your account of a trip; it does not create a GPS path. Keep tickets or other original records separately if you need them. Overlapping manual stays do not multiply the same country/date.
 
 ## 4. Identify countries in older locations

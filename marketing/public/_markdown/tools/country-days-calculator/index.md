@@ -163,6 +163,7 @@ A country-date CSV is a summary. It is not a backup of your visits, route points
 
 - Not advice. It is not legal, tax or immigration advice and does not decide your visa or tax status.
 - Official records count. At the Schengen external border, the [Entry/Exit System](https://home-affairs.ec.europa.eu/policies/schengen/smart-borders/entry-exit-system_en) records entries and exits of non-EU short-stay travellers and has replaced passport stamping since 10 April 2026. Where your record and an official record differ, the official record is what counts.
+- Need past trips first? See how to [find your travel history](https://whereday.com/blog/find-your-travel-history/) from official and personal records.
 - Only the dates you give it. Missing records make counts too low. Wrong local dates make them wrong.
 - Not modelled: microstates and special territories (such as Monaco, San Marino, Vatican City, and overseas territories of member states), bilateral visa-waiver agreements, residence permits and long-stay visas, which do not count towards the 90 days, and member-state join dates.
 - Not a tax test. The US weighted test, treaty tie-breaker rules and country-specific day definitions are not built in.

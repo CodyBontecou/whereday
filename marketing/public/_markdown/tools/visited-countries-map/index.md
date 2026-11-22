@@ -91,6 +91,7 @@ Here, a country counts if at least one of your points, after thinning, falls ins
 - Coastal cities. A point in a harbour or on a river mouth can fall just outside the coast outline and be unmatched. When it is within about 10 km of land the country is offered under “near a border or coast”.
 - Airports and layovers. Flying over a country is not a visit. Only recorded points are tested, and a phone in flight mode records nothing. A stop at an airport counts only if a point was recorded there.
 - Missing coverage. A file shows only what was recorded. Gaps, switched-off phones and trips before your file began do not appear. Add those by hand.
+- Trips before your file began. To rebuild them from official and personal records, see how to [find your travel history](https://whereday.com/blog/find-your-travel-history/).
 - Size. Each file can be up to 10 MiB and 50,000 points, the same limits as the [GPX viewer](https://whereday.com/tools/gpx-viewer/). For more, split the export by date range.
 - Not a residence or tax record. GPS points show where a phone was, not where a person was. This page does not decide residency, visa days or tax status. For Schengen 90/180 and 183-day questions, use the [days-in-country calculator](https://whereday.com/tools/country-days-calculator/), and check the official rules.
 

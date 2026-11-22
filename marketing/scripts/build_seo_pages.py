@@ -58,6 +58,7 @@ PAGES = [
         "lede": "Choose a location journal by the way you record, review, and keep a copy of your own history.",
         "source": "google-maps-timeline.html",
     },
+    {"path": "/blog/find-your-travel-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Find your travel history", "type": "BlogPosting", "title": "Find Your Travel History: Every Past Trip and Date — Whereday", "headline": "How to find your travel history, every past trip and date", "description": "Where to find past trips and dates: U.S. CBP I-94 travel history, a CBP records request, passports, email bookings and phone records, then merge them into one checked list.", "lede": "Official records and personal records each miss something. Combine them, check the dates, and keep the list going.", "published": "2026-11-22", "modified": "2026-11-22", "source": "find-your-travel-history.html"},
     {"path": "/blog/what-is-a-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "What is a GPX file", "type": "BlogPosting", "title": "What Is a GPX File? How to Open One on iPhone — Whereday", "headline": "What is a GPX file, and how do you open one on iPhone?", "description": "A GPX file is a text file of GPS points. See what is inside, how tracks, routes and waypoints differ, and how to open one on iPhone, Mac or Windows.", "lede": "What GPX is, what it holds, which kind you have, and how to open it without uploading it.", "published": "2026-11-22", "modified": "2026-11-22", "source": "what-is-a-gpx-file.html"},
     {
         "path": "/blog/view-location-history-iphone/",
@@ -346,6 +347,13 @@ RELATED = {
       'Combine daily or split GPX files into one, without uploading them.'),
      ('/blog/check-gpx-file/', 'Follow the worked GPX check',
       'Expected counts and warnings for an invented five-point file.')],
+ '/blog/find-your-travel-history/': [
+     ('/blog/track-days-in-country-iphone/', 'Record the dates automatically',
+      'See how Whereday records country days and adds a missing stay.'),
+     ('/tools/country-days-calculator/', 'Count the days',
+      'Count days per country from a Country Days CSV.'),
+     ('/tools/visited-countries-map/', 'Map the countries',
+      'Turn a location file into a list of countries visited.')],
  '/blog/what-is-a-gpx-file/': [
      ('/tools/gpx-viewer/', 'Open your GPX file',
       'See the route, point counts and dates locally in your browser.'),
