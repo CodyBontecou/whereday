@@ -97,6 +97,14 @@ Which iPhone sources can jump to a date, and how to rebuild a day from photos, w
 
 Guide
 
+### [Find Your Travel History: Every Past Trip and Date](https://whereday.com/blog/find-your-travel-history/)
+
+Combine CBP records, passports, email and phone history into one checked list of trips and dates.
+
+[Read the travel history guide](https://whereday.com/blog/find-your-travel-history/)
+
+Guide
+
 ### [See Your Photos on a Map on iPhone](https://whereday.com/blog/iphone-photos-map/)
 
 Find the Photos map, fix photos missing from it, and place photos that have no GPS.

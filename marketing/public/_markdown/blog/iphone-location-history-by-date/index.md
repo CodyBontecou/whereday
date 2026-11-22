@@ -72,6 +72,8 @@ When no location history exists for the date, work through these. Each has a rea
 - Wallet and payment history. Card and Apple Pay transactions show a merchant, an amount and a time. They don’t show GPS coordinates.
 - Messages and email. Search for receipts, bookings, ride confirmations and photos you sent, and check their timestamps.
 
+Looking for whole trips rather than one date? See how to [find your travel history](https://whereday.com/blog/find-your-travel-history/).
+
 Accuracy: a photo’s location is where the photo was taken, not where you spent the day. A transaction tells you a merchant and a time, not a coordinate; online payments may not be where you were at all. Treat the result as evidence for a timeline, and say so if you use it for a dispute or a claim. Photos in a time gap can also help place a stop you add later by hand.
 
 ## Don’t change the Date & Time to “see” an old day
