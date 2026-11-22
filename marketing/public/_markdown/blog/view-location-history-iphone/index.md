@@ -51,7 +51,7 @@ For older entries, review Keep Visits at the bottom of Visited Places. A retenti
 
 Open Settings → Privacy & Security → Location Services → System Services → Significant Locations & Routes. Some versions use the shorter label Significant Locations.
 
-Apple documents this as a setting used for location-related Maps features. It is separate from the Visited Places list. For the records in this guide, return to the app that saved them. See [Apple’s Maps location settings](https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios). The [full guide to Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/) covers clearing it, turning it off and why neither feature can be exported. Looking in Find My instead? [Find My keeps no location history](https://whereday.com/blog/find-my-location-history/), only a current or last known location.
+Apple documents this as a setting used for location-related Maps features. It is separate from the Visited Places list. For the records in this guide, return to the app that saved them. See [Apple’s Maps location settings](https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios). The [full guide to Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/) covers clearing it, turning it off and why neither feature can be exported. Looking in Find My instead? [Find My keeps no location history](https://whereday.com/blog/find-my-location-history/), only a current or last known location. Want photos on a map? See [how to see your photos on a map on iPhone](https://whereday.com/blog/iphone-photos-map/).
 
 ## Open Google Maps Timeline
 
@@ -160,5 +160,9 @@ Diagnose recording gaps, hidden points, Watch transfers, and export filters.
 - [Start a journal for future trips](https://whereday.com/blog/private-location-journal-iphone/)
 
 Set up recording before the next trip you want to remember.
+
+- [See your photos on a map](https://whereday.com/blog/iphone-photos-map/)
+
+Use the Photos map and place photos that have no GPS.
 
 Source: https://whereday.com/blog/view-location-history-iphone/

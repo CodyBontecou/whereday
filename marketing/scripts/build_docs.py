@@ -247,6 +247,8 @@ BODIES["photos"] = """
 <li>Tap any marker for a quick view, or open it full-screen to swipe through the day's photos.</li>
 </ul>
 <p>If a photo disappears from your library (with full access), Whereday cleans up its record automatically.</p>
+
+<p>See also: <a href="/blog/iphone-photos-map/">See your photos on a map on iPhone</a>, including why photos go missing from Apple's Photos map.</p>
 """
 
 BODIES["export-import"] = """
