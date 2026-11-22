@@ -16,6 +16,8 @@ See your route shape, check points and timestamps, and save a CSV table or GeoJS
 
 Choose a GPX file · up to 10 MiB / 50,000 points
 
+New to GPX? [What is a GPX file?](https://whereday.com/blog/what-is-a-gpx-file/)
+
 Have a KML file? It must be converted first: [convert KML to GPX](https://whereday.com/tools/kml-to-gpx/).
 
 Try a synthetic exampleClear fileDownload points as CSVDownload as GeoJSON

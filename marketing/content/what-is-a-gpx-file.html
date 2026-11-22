@@ -1,0 +1,111 @@
+<section aria-labelledby="quick-answer">
+  <nav class="article-toc" aria-label="In this guide"><strong>In this guide</strong><ol><li><a href="#quick-answer">What a GPX file is</a></li><li><a href="#inside">What is inside</a></li><li><a href="#which-kind">Track, route or waypoints?</a></li><li><a href="#open-iphone">Open a GPX file on iPhone</a></li><li><a href="#open-computer">Open one on Mac or Windows</a></li><li><a href="#problems">If it won’t open</a></li><li><a href="#convert">Convert or combine</a></li><li><a href="#make-your-own">Make a GPX of your own trips</a></li><li><a href="#faq">Questions</a></li></ol></nav>
+  <h2 id="quick-answer">A GPX file is a text file of GPS points</h2>
+  <p><strong>GPX</strong> (GPS Exchange Format) is an open XML format for GPS data: coordinates, usually with elevation and time. It is plain text, so you can open it in any text editor and read it. Apps that understand GPX draw it as a line or pins on a map.</p>
+  <p>The quickest way to see one is the <a href="/tools/gpx-viewer/">free Whereday GPX viewer</a>. It works in iPhone Safari and on a computer, and reads the file in your browser without uploading it. <a href="/tools/gpx-viewer/"><strong>Open your GPX in the free browser viewer</strong></a>.</p>
+</section>
+
+<section aria-labelledby="inside">
+  <h2 id="inside">What is inside a GPX file</h2>
+  <p>This is an excerpt of an <strong>invented</strong> file: no real person or trip. The full file has five points, one track, two segments, no routes and no waypoints, timed from 12:00 to 12:14 UTC on 2000-01-01. (The real file also holds a metadata block and app-specific extension data, left out here.) <a href="/samples/synthetic-app-export.gpx" download>Download the full invented example</a>.</p>
+<pre><code>&lt;gpx version="1.1" creator="Whereday"
+     xmlns="http://www.topografix.com/GPX/1/1"&gt;
+  &lt;trk&gt;
+    &lt;name&gt;Whereday track&lt;/name&gt;
+    &lt;trkseg&gt;
+      &lt;trkpt lat="0.0000000" lon="0.0000000"&gt;
+        &lt;ele&gt;0.00&lt;/ele&gt;
+        &lt;time&gt;2000-01-01T12:00:00.000Z&lt;/time&gt;
+      &lt;/trkpt&gt;
+      &lt;!-- two more points, to 12:02 --&gt;
+    &lt;/trkseg&gt;
+    &lt;trkseg&gt;
+      &lt;!-- two points, 12:13 and 12:14 --&gt;
+    &lt;/trkseg&gt;
+  &lt;/trk&gt;
+&lt;/gpx&gt;</code></pre>
+  <ul>
+    <li><code>&lt;gpx&gt;</code>: the root element. <code>version="1.1"</code> is the GPX version and <code>creator</code> names the program that wrote the file.</li>
+    <li><code>&lt;trk&gt;</code>: one track, a recorded path.</li>
+    <li><code>&lt;trkseg&gt;</code>: a track segment, a run of points that belongs together. A new segment starts where the recording was broken, so a viewer should not draw a line across the gap. Here there are two.</li>
+    <li><code>&lt;trkpt lat lon&gt;</code>: a track point. <code>lat</code> and <code>lon</code> are decimal degrees; latitude comes first.</li>
+    <li><code>&lt;ele&gt;</code>: elevation, in meters.</li>
+    <li><code>&lt;time&gt;</code>: the date and time of the point, in UTC (the trailing <code>Z</code>).</li>
+  </ul>
+  <p>GPX 1.1 is the current version of the schema; GPX 1.0 files still exist. The element definitions are in the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation</a>, with an overview on the <a href="https://www.topografix.com/gpx.asp">Topografix GPX page</a>.</p>
+  <div class="table-scroll" role="region" aria-label="GPX tracks, routes and waypoints" tabindex="0"><table><caption>The three kinds of data a GPX file can hold</caption><thead><tr><th scope="col">Kind</th><th scope="col">Element</th><th scope="col">What it is</th></tr></thead><tbody>
+    <tr><th scope="row">Track</th><td><code>&lt;trk&gt;</code> with <code>&lt;trkseg&gt;</code> and <code>&lt;trkpt&gt;</code></td><td>A recorded path: points in time order, split into segments.</td></tr>
+    <tr><th scope="row">Route</th><td><code>&lt;rte&gt;</code> with <code>&lt;rtept&gt;</code></td><td>An ordered list of points to travel through, such as turn points. Points may have no times.</td></tr>
+    <tr><th scope="row">Waypoint</th><td><code>&lt;wpt&gt;</code></td><td>A single point of interest, usually with a name.</td></tr>
+  </tbody></table></div>
+</section>
+
+<section aria-labelledby="which-kind">
+  <h2 id="which-kind">Track, route or waypoints: which do you have?</h2>
+  <p>Open the file in a text editor and search for these elements:</p>
+  <ul>
+    <li><code>&lt;trkpt&gt;</code> points, each with a <code>&lt;time&gt;</code>: probably a recording of where someone went.</li>
+    <li><code>&lt;rte&gt;</code> with no times: a planned route to follow.</li>
+    <li>Only <code>&lt;wpt&gt;</code>: a list of places, with no path between them.</li>
+  </ul>
+  <p>It matters because a planned route is not a record of where anyone went, and a waypoint list cannot be drawn as a journey. A file can hold more than one kind. The viewer shows track points, route points and waypoints separately and reports the counts, so you can compare them with what you expected.</p>
+</section>
+
+<section aria-labelledby="open-iphone">
+  <h2 id="open-iphone">How to open a GPX file on iPhone</h2>
+  <ol>
+    <li><strong>Save it to Files first.</strong> From a Mail attachment, a Messages attachment or a Safari download, use the share sheet and look for <strong>Save to Files</strong> (labels can vary by iOS version). Apple describes <a href="https://support.apple.com/guide/iphone/download-email-attachments-iph7fe7a50a7/ios">downloading email attachments</a>, <a href="https://support.apple.com/guide/iphone/find-your-downloaded-files-on-iphone-iphc9cd7266c/ios">finding downloaded files</a> and <a href="https://support.apple.com/guide/iphone/files-basics-iphe9d46e90f/ios">Files basics</a>.</li>
+    <li><strong>Open it in the browser viewer.</strong> In Safari, go to the <a href="/tools/gpx-viewer/">Whereday GPX viewer</a>, choose <strong>Choose a GPX file</strong> and pick the file from Files. It draws the route shape and lists point counts and dates. Nothing is uploaded.</li>
+    <li><strong>Or send it to an app you already use.</strong> If an app says it supports GPX import, send the file to it from the share sheet.</li>
+  </ol>
+  <p>Files stores the file; a GPX-capable app or the viewer draws it. This page does not claim that any built-in Apple app shows a GPX map.</p>
+</section>
+
+<section aria-labelledby="open-computer">
+  <h2 id="open-computer">How to open a GPX file on Mac or Windows</h2>
+  <ul>
+    <li>Use the same <a href="/tools/gpx-viewer/">browser viewer</a>.</li>
+    <li>Open the file in any text editor to read the XML.</li>
+    <li>Desktop mapping software can load GPX. For example, QGIS documents <a href="https://docs.qgis.org/latest/en/docs/user_manual/working_with_gps/plugins_gps.html">loading a GPX file</a>.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="problems">
+  <h2 id="problems">If it won’t open</h2>
+  <ul>
+    <li><strong>Wrong format.</strong> A FIT, KML or JSON file renamed to .gpx is still not GPX. Renaming does not convert it.</li>
+    <li><strong>Too large for the viewer.</strong> The viewer takes files up to 10 MiB and 50,000 points. Export a shorter range.</li>
+    <li><strong>Malformed XML.</strong> A cut-off download or hand edit can break the file. The viewer also rejects DTD and entity declarations.</li>
+    <li><strong>Missing times.</strong> Routes and waypoints often have none, so there is nothing to date.</li>
+  </ul>
+  <p>For the full list of warnings and what to do about each, see <a href="/blog/check-gpx-file/">Check a GPX file before importing it</a>.</p>
+</section>
+
+<section aria-labelledby="convert">
+  <h2 id="convert">Convert or combine GPX files</h2>
+  <p>To choose between GPX, KML, GeoJSON and CSV, read the <a href="/blog/gpx-kml-geojson-location-history/">format comparison</a>. Several GPX files, such as one per day, can be <a href="/tools/merge-gpx/">merged into one</a>. The viewer can also save the points as CSV or GeoJSON. The <a href="/tools/visited-countries-map/">visited countries map</a> accepts GPX as input too. GPX holds coordinates and times, not photos or app-specific notes, and it is not a backup format for a location journal.</p>
+</section>
+
+<section aria-labelledby="make-your-own">
+  <h2 id="make-your-own">Make a GPX of your own trips</h2>
+  <p>Record a trip in Whereday, then export <strong>Points</strong> as <strong>GPX</strong>; the <a href="/blog/record-iphone-route-gpx/">route guide</a> has the steps. Whereday exports GPX but does <strong>not</strong> import GPX into its journal. Its supported imports are Google Timeline JSON and Whereday JSON; see <a href="/docs/export-import/">Export and import</a>.</p>
+  <p>From version 1.8, new users need an eligible trial, subscription or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Is a GPX file safe to open?</h3>
+  <p>It is text in XML, not a program. The browser viewer reads it locally and rejects DTD and entity declarations. Only open files from sources you trust, as with any download.</p>
+  <h3>Does a GPX file include my home address?</h3>
+  <p>It holds coordinates, not addresses, but a personal track that starts or ends at home reveals where home is. Treat personal tracks as private before sharing them.</p>
+  <h3>What is the difference between a GPX track and a route?</h3>
+  <p>A track is a recorded path in time order; a route is a planned list of points to travel through. See <a href="#inside">the table above</a>.</p>
+  <h3>Can I edit a GPX file?</h3>
+  <p>For small fixes, a text editor works. Keep the original and edit a copy.</p>
+</section>
+
+<section class="closing" aria-labelledby="try-recording">
+  <h2 id="try-recording">Open it now.<br>Record your own next.</h2>
+  <p><a href="/tools/gpx-viewer/">Open your GPX in the free browser viewer</a>, then record your own trips and export them as GPX.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>

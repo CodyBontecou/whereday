@@ -62,6 +62,8 @@ Checked October 30, 2026 with the native queue, phone receiver, and export code 
 
 ## 2. Choose Points and GPX
 
+Not sure what a GPX file holds? [What is a GPX file?](https://whereday.com/blog/what-is-a-gpx-file/)
+
 - Open Export and choose Points as the data type. These are the recorded GPS locations that make up a path.
 - Select GPX. If other formats are also selected, the export can produce additional files.
 - Choose the date range for your recording. Review any time-of-day, accuracy, and GPS-glitch filters that could exclude points.

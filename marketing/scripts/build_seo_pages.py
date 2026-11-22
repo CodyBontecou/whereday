@@ -58,6 +58,7 @@ PAGES = [
         "lede": "Choose a location journal by the way you record, review, and keep a copy of your own history.",
         "source": "google-maps-timeline.html",
     },
+    {"path": "/blog/what-is-a-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "What is a GPX file", "type": "BlogPosting", "title": "What Is a GPX File? How to Open One on iPhone — Whereday", "headline": "What is a GPX file, and how do you open one on iPhone?", "description": "A GPX file is a text file of GPS points. See what is inside, how tracks, routes and waypoints differ, and how to open one on iPhone, Mac or Windows.", "lede": "What GPX is, what it holds, which kind you have, and how to open it without uploading it.", "published": "2026-11-22", "modified": "2026-11-22", "source": "what-is-a-gpx-file.html"},
     {
         "path": "/blog/view-location-history-iphone/",
         "section": "Guides",
@@ -345,6 +346,13 @@ RELATED = {
       'Combine daily or split GPX files into one, without uploading them.'),
      ('/blog/check-gpx-file/', 'Follow the worked GPX check',
       'Expected counts and warnings for an invented five-point file.')],
+ '/blog/what-is-a-gpx-file/': [
+     ('/tools/gpx-viewer/', 'Open your GPX file',
+      'See the route, point counts and dates locally in your browser.'),
+     ('/blog/check-gpx-file/', 'Check it before importing',
+      'Follow a worked example of warnings, gaps and segments.'),
+     ('/blog/record-iphone-route-gpx/', 'Record your own route',
+      'Record in Whereday and export Points as GPX.')],
  '/blog/check-gpx-file/': [
      ('/tools/kml-to-gpx/', 'Convert KML to GPX or back',
       'Keep gx:Track times and see what was dropped.'),
