@@ -12,6 +12,8 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed No
 
 ## Inspect the file before importing it
 
+New to GPX? [What a GPX file is](https://whereday.com/blog/what-is-a-gpx-file/).
+
 Open the [free GPX viewer and file inspector](https://whereday.com/tools/gpx-viewer/), choose a GPX, and compare the point counts, segments and available dates with the trip you expected. Your file is read in the browser; there is no upload or account.
 
 Choose a destination that explicitly supports GPX; this viewer does not import the file into Whereday. This tutorial uses invented points from a checked Whereday export. It shows what to verify, not proof that a real journey was recorded correctly. Keep your original GPX before converting or editing it.

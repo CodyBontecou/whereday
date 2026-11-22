@@ -32,6 +32,8 @@ Start with the task, then verify the receiving app
 | GeoJSON | Mapping applications and geographic information systems (GIS) | Geometry type, longitude-first coordinate order, and the meaning of custom properties
 | CSV | Spreadsheets, filtering and row-based analysis | Column names, timezone, units and group identifiers; CSV does not define a universal route model
 
+New to GPX? [What a GPX file is](https://whereday.com/blog/what-is-a-gpx-file/), and how tracks, routes and waypoints differ.
+
 A planned route may have coordinates without recording times. A recorded track can contain several segments. Have several GPX files, such as one per day? [Merge them into one GPX](https://whereday.com/tools/merge-gpx/) and keep their segments separate. Neither a valid file nor a continuous line proves that every part of a real journey was captured.
 
 ## One invented trip, four downloadable files

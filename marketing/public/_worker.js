@@ -19,6 +19,7 @@ const pages = {
   "/blog/significant-locations-iphone/": "/_markdown/blog/significant-locations-iphone/index.md",
   "/blog/track-days-in-country-iphone/": "/_markdown/blog/track-days-in-country-iphone/index.md",
   "/blog/view-location-history-iphone/": "/_markdown/blog/view-location-history-iphone/index.md",
+  "/blog/what-is-a-gpx-file/": "/_markdown/blog/what-is-a-gpx-file/index.md",
   "/compare/google-maps-timeline/": "/_markdown/compare/google-maps-timeline/index.md",
   "/compare/": "/_markdown/compare/index.md",
   "/compare/location-history-apps-iphone/": "/_markdown/compare/location-history-apps-iphone/index.md",
