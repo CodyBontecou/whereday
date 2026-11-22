@@ -260,6 +260,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <p>See your route shape, check points and timestamps, and save a CSV table or GeoJSON file. No account, upload, analytics or external map tiles on this tool page.</p>
   <label for="gpx-file"><strong>Choose a GPX file</strong> · up to 10 MiB / 50,000 points</label>
   <input id="gpx-file" type="file" accept=".gpx,application/gpx+xml,application/xml,text/xml" aria-describedby="gpx-status">
+  <p class="gpx-small">Have a KML file? It must be converted first: <a href="/tools/kml-to-gpx/">convert KML to GPX</a>.</p>
   <div class="gpx-actions"><button id="gpx-demo" type="button">Try a synthetic example</button><button id="gpx-clear" type="button">Clear file</button><button id="gpx-download" type="button" disabled>Download points as CSV</button><button id="gpx-download-geojson" type="button" disabled>Download as GeoJSON</button></div>
   <p id="gpx-status" role="status" aria-live="polite">Choose a file, or try the example without sharing any personal history.</p>
   <noscript><p>JavaScript is needed to read and plot files locally. The guide and sample downloads below work without it.</p></noscript>
@@ -282,7 +283,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <script type="module" src="/assets/gpx-viewer.mjs?v=20261030-geojson"></script>
 
     
-    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/merge-gpx/">Have several files? Merge them first</a><p>Combine daily or split GPX files into one, without uploading them.</p></li><li><a href="/blog/check-gpx-file/">Follow the worked GPX check</a><p>Expected counts and warnings for an invented five-point file.</p></li></ul></nav>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/kml-to-gpx/">Have a KML file? Convert it first</a><p>Convert KML to GPX locally, with a report of what was kept.</p></li><li><a href="/tools/merge-gpx/">Have several files? Merge them first</a><p>Combine daily or split GPX files into one, without uploading them.</p></li><li><a href="/blog/check-gpx-file/">Follow the worked GPX check</a><p>Expected counts and warnings for an invented five-point file.</p></li></ul></nav>
   </main>
   <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
   

@@ -16,6 +16,8 @@ See your route shape, check points and timestamps, and save a CSV table or GeoJS
 
 Choose a GPX file · up to 10 MiB / 50,000 points
 
+Have a KML file? It must be converted first: [convert KML to GPX](https://whereday.com/tools/kml-to-gpx/).
+
 Try a synthetic exampleClear fileDownload points as CSVDownload as GeoJSON
 
 Choose a file, or try the example without sharing any personal history.
@@ -71,6 +73,10 @@ The web server still receives an ordinary request when you visit the page or loa
 Whereday records your own visits and GPS points on iPhone and Apple Watch. See the [recording and GPX export guide](https://whereday.com/blog/record-iphone-route-gpx/) for tracking access, permissions, and file-writing requirements. This browser viewer is free and does not require the app.
 
 ## Read next
+
+- [Have a KML file? Convert it first](https://whereday.com/tools/kml-to-gpx/)
+
+Convert KML to GPX locally, with a report of what was kept.
 
 - [Have several files? Merge them first](https://whereday.com/tools/merge-gpx/)
 

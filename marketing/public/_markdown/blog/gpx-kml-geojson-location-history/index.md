@@ -80,6 +80,8 @@ The GPX uses two `trkseg` elements. The KML has two timed tracks and `gx:interpo
 
 A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.
 
+Need to switch? [Convert KML ⇄ GPX in your browser](https://whereday.com/tools/kml-to-gpx/), with a report of what was kept and dropped, including gx:Track times.
+
 ## Open a GPX-derived CSV without losing its meaning
 
 Start with the [five-row synthetic CSV](https://whereday.com/samples/synthetic-format-trip.csv) above, or open its [source GPX](https://whereday.com/samples/synthetic-format-trip.gpx) in the [local viewer](https://whereday.com/tools/gpx-viewer/) and choose Download points as CSV. This is a point table for inspection, not a Whereday restore file.

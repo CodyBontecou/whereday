@@ -100,6 +100,10 @@ Use the [GPX, KML, GeoJSON and CSV comparison](https://whereday.com/blog/gpx-kml
 
 ## Read next
 
+- [Convert KML to GPX or back](https://whereday.com/tools/kml-to-gpx/)
+
+Keep gx:Track times and see what was dropped.
+
 - [Merge several GPX files into one](https://whereday.com/tools/merge-gpx/)
 
 Keep segments separate so viewers don’t draw lines across gaps.
