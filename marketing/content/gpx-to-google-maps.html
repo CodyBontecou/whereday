@@ -1,0 +1,84 @@
+<section aria-labelledby="short-answer">
+  <nav class="article-toc" aria-label="In this guide"><strong>In this guide</strong><ol><li><a href="#short-answer">Can Google Maps open a GPX file?</a></li><li><a href="#before-you-start">What you need</a></li><li><a href="#import-steps">Import the GPX into My Maps</a></li><li><a href="#view-on-iphone">See it in Google Maps on iPhone</a></li><li><a href="#troubleshooting">If the import fails or looks wrong</a></li><li><a href="#private-alternative">View a GPX without uploading it</a></li><li><a href="#from-whereday">Put a day from your iPhone on Google Maps</a></li><li><a href="#faq">Questions</a></li></ol></nav>
+  <h2 id="short-answer">Can Google Maps open a GPX file?</h2>
+  <p><strong>Not directly.</strong> The Google Maps app has no “open GPX” button. Google’s documented route is <a href="https://support.google.com/mymaps/answer/3024836">Google My Maps</a> on a computer: create a map, add a layer and import the file. The map then appears in the Google Maps app, where you can view it.</p>
+  <p>The steps below are for a <strong>computer</strong>. The Google Maps app on your iPhone only <em>displays</em> the finished map; it is not where you import or edit. A <a href="https://www.topografix.com/GPX/1/1/">GPX file</a> is a text file of GPS points; see <a href="/blog/what-is-a-gpx-file/">what is a GPX file</a> if you are unsure what yours holds.</p>
+</section>
+
+<section aria-labelledby="before-you-start">
+  <h2 id="before-you-start">What you need</h2>
+  <ul>
+    <li>A Google account.</li>
+    <li>The <code>.gpx</code> file on your computer or in Google Drive.</li>
+    <li>A file within Google’s documented limits. <a href="https://support.google.com/mymaps/answer/3024836">Google’s import help</a> lists these file types: CSV, TSV, KML, KMZ, GPX, XLSX, Google Sheets, and images from Drive or Google Photos.</li>
+  </ul>
+  <div class="table-scroll" role="region" aria-label="My Maps import limits" tabindex="0"><table><caption>Import limits from Google’s help</caption><thead><tr><th scope="col">Limit</th><th scope="col">Value</th></tr></thead><tbody>
+    <tr><th scope="row">Rows per import</th><td>2,000</td></tr>
+    <tr><th scope="row">KML or KMZ, unzipped</th><td>5 MB</td></tr>
+    <tr><th scope="row">Other file types</th><td>40 MB</td></tr>
+  </tbody></table></div>
+  <p>Google also notes that there is <a href="https://support.google.com/mymaps/answer/10656656">no standalone My Maps app on Android</a>, which is why this guide uses a computer.</p>
+</section>
+
+<section aria-labelledby="import-steps">
+  <h2 id="import-steps">Import the GPX into My Maps (on a computer)</h2>
+  <ol>
+    <li>On a computer, sign in to <a href="https://www.google.com/mymaps">Google My Maps</a> with your Google account.</li>
+    <li>Create a new map, or open an existing one.</li>
+    <li>In the left panel, choose <strong>Add layer</strong>.</li>
+    <li>Name the layer if you want to. Give each imported file its own layer so you can show, hide or delete one track without touching the others.</li>
+    <li>In the new layer, choose <strong>Import</strong>.</li>
+    <li>Upload the GPX file, or select it from Google Drive.</li>
+  </ol>
+  <p>These steps follow Google’s <a href="https://support.google.com/mymaps/answer/3024836">Import map features from a file</a>. Button labels can change, so if one differs, use Google’s page as the reference. Once the import finishes, the track is a layer on your map.</p>
+</section>
+
+<section aria-labelledby="view-on-iphone">
+  <h2 id="view-on-iphone">See it in the Google Maps app on iPhone</h2>
+  <p>Open the Google Maps app on the iPhone signed in to the same Google account. Your My Maps appear under <strong>Saved</strong> → <strong>Maps</strong>, as described in Google’s <a href="https://support.google.com/maps/answer/3045850">View your My Maps using Google Maps</a>. The page has an iPhone and iPad tab; check it for the current wording of the labels on your version.</p>
+  <ul>
+    <li>Google Maps shows only your <strong>5 most recent</strong> My Maps. An older map may not appear there, but it is still in My Maps on a computer.</li>
+    <li>To edit a map, use My Maps on a computer. The Google Maps app is for viewing it.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="troubleshooting">
+  <h2 id="troubleshooting">If the import fails or the track looks wrong</h2>
+  <ul>
+    <li><strong>The file has more than 2,000 rows.</strong> That is Google’s documented limit per import. Split the track into shorter files, for example one per day, and import each into its own layer. Google does not document how it handles points beyond this, so this page makes no claim about it.</li>
+    <li><strong>A KML or KMZ over 5 MB unzipped.</strong> Google documents 5 MB for unzipped KML/KMZ and 40 MB for other files. If your track is a KML or KMZ, <a href="/tools/kml-to-gpx/">convert it to GPX</a> in your browser and check the result against the limits.</li>
+    <li><strong>You have a KMZ.</strong> A KMZ is a zipped KML. Convert or unzip it first; the <a href="/tools/kml-to-gpx/">KML to GPX tool</a> reads KML.</li>
+    <li><strong>You have several files.</strong> To make one trip file, <a href="/tools/merge-gpx/">merge the GPX files</a>. Or keep them separate, one layer each.</li>
+    <li><strong>You are not sure the file is valid.</strong> Open it in the <a href="/tools/gpx-viewer/">GPX viewer</a> and read <a href="/blog/check-gpx-file/">Check a GPX file before importing it</a> to see the point counts, segments and warnings.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="private-alternative">
+  <h2 id="private-alternative">View a GPX without uploading it</h2>
+  <p>If you only want to look at a track, you don’t need a Google account. The <a href="/tools/gpx-viewer/">Whereday GPX viewer</a> runs in your browser, draws the route shape, and reports point counts and dates. Your file is not uploaded. It can also save the points as CSV or GeoJSON; see <a href="/blog/gpx-kml-geojson-location-history/">how GPX, KML, GeoJSON and CSV differ</a>. The viewer does not show street maps.</p>
+</section>
+
+<section aria-labelledby="from-whereday">
+  <h2 id="from-whereday">Put a day from your iPhone on Google Maps</h2>
+  <p>Record your days on your iPhone with Whereday, then export them whenever you want them on a map. The <a href="/docs/export-import/">export docs</a> list GPX (for GPS tools and route viewers; routes become tracks and visits become waypoints) and KML (for Google Earth and Earth-compatible viewers). You can choose a date range, and “One file per day” if you want daily files. The <a href="/blog/record-iphone-route-gpx/">route guide</a> has the full export steps; choose <strong>Points</strong> to get a path rather than pins.</p>
+  <p>Then follow the <a href="#import-steps">import steps above</a> with the exported file. This is a <strong>synthetic example</strong>, not real data: a one-day export with 2 segments is one track in one file, so it imports as a single layer. If you exported one file per day for a week, you would have 7 files, and each would get its own layer, or you could <a href="/tools/merge-gpx/">merge them</a> first.</p>
+  <p>From version 1.8, new users need an eligible trial, subscription or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Exported coordinates and times can reveal your movements, and a file you upload to Google follows Google’s privacy rules.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Can I import GPX in the Google Maps app on iPhone?</h3>
+  <p>Google’s documented import steps are for My Maps on a computer. The iPhone app displays maps you have already made; see <a href="#view-on-iphone">the iPhone section</a>.</p>
+  <h3>Does My Maps accept KML?</h3>
+  <p>Yes. Google lists KML and KMZ among the supported types, with a 5 MB limit for them unzipped.</p>
+  <h3>Why is only part of my track showing?</h3>
+  <p>Check the file against the 2,000-row limit, and open it in the <a href="/tools/gpx-viewer/">GPX viewer</a> to confirm it holds the points you expect. Google does not document more than that, so the viewer is the way to tell a file problem from a display one.</p>
+  <h3>Why can’t I see my map on the phone?</h3>
+  <p>Google Maps shows your 5 most recent My Maps, under the same Google account you used on the computer.</p>
+</section>
+
+<section class="closing" aria-labelledby="try-recording">
+  <h2 id="try-recording">Record your days.<br>Put them on a map.</h2>
+  <p>Record your days and routes on your iPhone, then export GPX or KML whenever you want them on a map.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+</section>

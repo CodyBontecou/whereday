@@ -99,7 +99,7 @@ Times are written as UTC date-times ([RFC 3339](https://www.rfc-editor.org/rfc/r
 
 ## Check the result
 
-Open the converted GPX in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) and compare its counts with the report; the [GPX checking tutorial](https://whereday.com/blog/check-gpx-file/) explains each warning. Several converted files can be joined with [Merge GPX](https://whereday.com/tools/merge-gpx/). To see which countries a file covers, use the [visited countries map](https://whereday.com/tools/visited-countries-map/). Choosing between formats? Read [how GPX, KML, GeoJSON and CSV differ](https://whereday.com/blog/gpx-kml-geojson-location-history/#differences).
+Open the converted GPX in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) and compare its counts with the report; the [GPX checking tutorial](https://whereday.com/blog/check-gpx-file/) explains each warning. Several converted files can be joined with [Merge GPX](https://whereday.com/tools/merge-gpx/). To see which countries a file covers, use the [visited countries map](https://whereday.com/tools/visited-countries-map/). Want it on Google Maps? See [how to open a GPX file in Google Maps](https://whereday.com/blog/gpx-to-google-maps/). Choosing between formats? Read [how GPX, KML, GeoJSON and CSV differ](https://whereday.com/blog/gpx-kml-geojson-location-history/#differences).
 
 ## Questions
 
@@ -156,5 +156,9 @@ Combine GPX files into one, without uploading them.
 - [Choose between GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/)
 
 See what each format keeps, with the same invented trip.
+
+- [Put it on Google Maps](https://whereday.com/blog/gpx-to-google-maps/)
+
+Import the GPX into My Maps on a computer, then view it on iPhone.
 
 Source: https://whereday.com/tools/kml-to-gpx/

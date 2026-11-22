@@ -59,6 +59,7 @@ PAGES = [
         "source": "google-maps-timeline.html",
     },
     {"path": "/blog/find-your-travel-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Find your travel history", "type": "BlogPosting", "title": "Find Your Travel History: Every Past Trip and Date — Whereday", "headline": "How to find your travel history, every past trip and date", "description": "Where to find past trips and dates: U.S. CBP I-94 travel history, a CBP records request, passports, email bookings and phone records, then merge them into one checked list.", "lede": "Official records and personal records each miss something. Combine them, check the dates, and keep the list going.", "published": "2026-11-22", "modified": "2026-11-22", "source": "find-your-travel-history.html"},
+    {"path": "/blog/gpx-to-google-maps/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Open a GPX file in Google Maps", "type": "BlogPosting", "title": "Open a GPX file in Google Maps (via My Maps) — Whereday", "headline": "How to open a GPX file in Google Maps, via My Maps", "description": "Google Maps has no open-GPX button. Import the file into Google My Maps on a computer, then view it in the Google Maps app on iPhone. Limits and fixes included.", "lede": "The documented route, the import limits, what the iPhone app can and cannot do, and what to check when it fails.", "published": "2026-11-22", "modified": "2026-11-22", "source": "gpx-to-google-maps.html"},
     {"path": "/blog/what-is-a-gpx-file/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "What is a GPX file", "type": "BlogPosting", "title": "What Is a GPX File? How to Open One on iPhone — Whereday", "headline": "What is a GPX file, and how do you open one on iPhone?", "description": "A GPX file is a text file of GPS points. See what is inside, how tracks, routes and waypoints differ, and how to open one on iPhone, Mac or Windows.", "lede": "What GPX is, what it holds, which kind you have, and how to open it without uploading it.", "published": "2026-11-22", "modified": "2026-11-22", "source": "what-is-a-gpx-file.html"},
     {
         "path": "/blog/view-location-history-iphone/",
@@ -312,7 +313,8 @@ RELATED = {
      ('/tools/merge-gpx/', 'Merge several converted files',
       'Combine GPX files into one, without uploading them.'),
      ('/blog/gpx-kml-geojson-location-history/', 'Choose between GPX, KML, GeoJSON and CSV',
-      'See what each format keeps, with the same invented trip.')],
+      'See what each format keeps, with the same invented trip.'),
+     ('/blog/gpx-to-google-maps/', 'Put it on Google Maps', 'Import the GPX into My Maps on a computer, then view it on iPhone.')],
  '/blog/google-maps-timeline-iphone/': [
      ('/blog/import-google-timeline-iphone/', 'Import a saved Google JSON', 'Preview visits and points before saving anything.'),
      ('/tools/google-timeline-inspector/', 'Check what is inside your export', 'Inspect a Timeline JSON locally in your browser.'),
@@ -354,13 +356,21 @@ RELATED = {
       'Count days per country from a Country Days CSV.'),
      ('/tools/visited-countries-map/', 'Map the countries',
       'Turn a location file into a list of countries visited.')],
+ '/blog/gpx-to-google-maps/': [
+     ('/tools/gpx-viewer/', 'View it without uploading',
+      'See the route, point counts and dates locally in your browser.'),
+     ('/tools/merge-gpx/', 'Combine several files first',
+      'Merge daily GPX files into one trip file.'),
+     ('/blog/record-iphone-route-gpx/', 'Record and export your own route',
+      'Record in Whereday and export Points as GPX.')],
  '/blog/what-is-a-gpx-file/': [
      ('/tools/gpx-viewer/', 'Open your GPX file',
       'See the route, point counts and dates locally in your browser.'),
      ('/blog/check-gpx-file/', 'Check it before importing',
       'Follow a worked example of warnings, gaps and segments.'),
      ('/blog/record-iphone-route-gpx/', 'Record your own route',
-      'Record in Whereday and export Points as GPX.')],
+      'Record in Whereday and export Points as GPX.'),
+     ('/blog/gpx-to-google-maps/', 'Put it on Google Maps', 'Import the GPX into My Maps on a computer, then view it on iPhone.')],
  '/blog/check-gpx-file/': [
      ('/tools/kml-to-gpx/', 'Convert KML to GPX or back',
       'Keep gx:Track times and see what was dropped.'),

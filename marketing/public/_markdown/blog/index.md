@@ -97,6 +97,14 @@ Which iPhone sources can jump to a date, and how to rebuild a day from photos, w
 
 Guide
 
+### [Open a GPX File in Google Maps (via My Maps)](https://whereday.com/blog/gpx-to-google-maps/)
+
+Google Maps has no open-GPX button. Import into My Maps on a computer, then view it on iPhone.
+
+[Read the Google Maps guide](https://whereday.com/blog/gpx-to-google-maps/)
+
+Guide
+
 ### [Find Your Travel History: Every Past Trip and Date](https://whereday.com/blog/find-your-travel-history/)
 
 Combine CBP records, passports, email and phone history into one checked list of trips and dates.

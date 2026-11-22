@@ -8,6 +8,7 @@ const pages = {
   "/blog/google-maps-timeline-iphone/": "/_markdown/blog/google-maps-timeline-iphone/index.md",
   "/blog/google-timeline-json-formats/": "/_markdown/blog/google-timeline-json-formats/index.md",
   "/blog/gpx-kml-geojson-location-history/": "/_markdown/blog/gpx-kml-geojson-location-history/index.md",
+  "/blog/gpx-to-google-maps/": "/_markdown/blog/gpx-to-google-maps/index.md",
   "/blog/import-google-timeline-iphone/": "/_markdown/blog/import-google-timeline-iphone/index.md",
   "/blog/": "/_markdown/blog/index.md",
   "/blog/iphone-location-history-by-date/": "/_markdown/blog/iphone-location-history-by-date/index.md",
