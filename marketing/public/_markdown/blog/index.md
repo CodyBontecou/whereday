@@ -81,6 +81,14 @@ Find existing Apple or Google records, check why a day is empty, and understand 
 
 Guide
 
+### [Google Maps Timeline on iPhone: where it is and how to keep it](https://whereday.com/blog/google-maps-timeline-iphone/)
+
+Find Timeline, see why it is empty, back it up, move it to a new iPhone and export a copy.
+
+[Read the Timeline guide](https://whereday.com/blog/google-maps-timeline-iphone/)
+
+Guide
+
 ### [See Your Photos on a Map on iPhone](https://whereday.com/blog/iphone-photos-map/)
 
 Find the Photos map, fix photos missing from it, and place photos that have no GPS.

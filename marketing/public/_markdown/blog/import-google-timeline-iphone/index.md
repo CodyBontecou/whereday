@@ -24,6 +24,8 @@ Keep the original Google archive separately. Imported visits and timed points ar
 - In the share sheet, choose Save to Files, select a location, and save `location-history.json`.
 - Retain an unchanged copy before selecting the file in another app.
 
+Timeline empty or missing days? See the [Google Maps Timeline on iPhone guide](https://whereday.com/blog/google-maps-timeline-iphone/) for backup and checks.
+
 These steps follow [Google’s iPhone export instructions](https://support.google.com/maps/answer/6258979?co=GENIE.Platform%3DiOS&hl=en), checked October 30, 2026. Google notes that settings can vary during rollouts. Its encrypted device-transfer backup is separate from the downloadable JSON.
 
 If you already have a legacy Takeout ZIP, extract it first and select individual supported JSON files. Whereday does not accept a ZIP or an entire folder. Importing does not move or delete Google history and cannot recover records absent from your archive.

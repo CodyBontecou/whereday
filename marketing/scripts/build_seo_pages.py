@@ -225,6 +225,19 @@ PAGES.append({
 })
 
 PAGES.append({
+    "path": "/blog/google-maps-timeline-iphone/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Google Maps Timeline",
+    "type": "BlogPosting",
+    "title": "Google Maps Timeline on iPhone: Find, Back Up, Export — Whereday",
+    "headline": "Google Maps Timeline on iPhone: where it is and how to keep it",
+    "description": "Find Google Maps Timeline on iPhone, see why it is empty, back it up, move it to a new phone and export a copy you control.",
+    "lede": "Where Timeline is on iPhone now, why it looks empty, and how to back it up, move it and export it.",
+    "published": "2026-11-22", "modified": "2026-11-22",
+    "source": "google-maps-timeline-iphone.html",
+    "image": "/screenshots/map-home.png",
+    "image_alt": "Whereday map of a day’s route",
+})
+
+PAGES.append({
     "path": "/blog/iphone-photos-map/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Photos map on iPhone",
     "type": "BlogPosting",
     "title": "See Your Photos on a Map on iPhone — Whereday",
@@ -269,6 +282,10 @@ PAGES.append({
 })
 
 RELATED = {
+ '/blog/google-maps-timeline-iphone/': [
+     ('/blog/import-google-timeline-iphone/', 'Import a saved Google JSON', 'Preview visits and points before saving anything.'),
+     ('/tools/google-timeline-inspector/', 'Check what is inside your export', 'Inspect a Timeline JSON locally in your browser.'),
+     ('/compare/google-maps-timeline/', 'Compare Whereday and Google Timeline', 'Recording, storage, backup and export side by side.')],
  '/blog/iphone-photos-map/': [
      ('/docs/photos/', 'Read the photo feature reference',
       'Matching order, the 15-minute window, privacy and controls.'),
