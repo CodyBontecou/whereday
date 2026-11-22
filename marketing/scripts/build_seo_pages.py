@@ -219,7 +219,7 @@ PAGES.append({
     "headline": "See your photos on a map on iPhone",
     "description": "See where a photo was taken, view all photos on a map, fix photos missing from it, and place photos with no GPS using Whereday.",
     "lede": "How to see one photo’s location and all your photos on a map, why some are missing, and how to place photos that have no GPS.",
-    "published": "2026-11-20", "modified": "2026-11-20",
+    "published": "2026-11-22", "modified": "2026-11-22",
     "source": "iphone-photos-map.html",
     "image": "/screenshots/map-layers.png",
     "image_alt": "Whereday’s Layers sheet showing the Photos row, off by default",
