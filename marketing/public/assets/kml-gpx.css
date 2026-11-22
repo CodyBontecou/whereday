@@ -1,0 +1,9 @@
+.kg-report { display:grid; grid-template-columns:1fr 1fr; gap:16px 24px; margin:12px 0; }
+.kg-report h4 { margin:0 0 6px; font-family:var(--serif); font-size:18px; font-weight:500; }
+.kg-report dl { margin:0; }
+.kg-report dl div { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px solid var(--rule, #D8D2C3); }
+.kg-report dt, .kg-report dd { margin:0; }
+.kg-report dd { font-weight:600; }
+#kg-skipped li, #kg-notes li { margin-bottom:8px; }
+.kg-tool .gpx-actions { margin:8px 0; }
+@media(max-width:640px) { .kg-report { grid-template-columns:1fr; } }

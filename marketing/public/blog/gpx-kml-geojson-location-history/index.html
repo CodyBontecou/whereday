@@ -307,6 +307,7 @@ CSV:     latitude=0, longitude=10</code></pre>
   <h3>Keep the break instead of inventing a connection</h3>
   <p>The GPX uses two <code>trkseg</code> elements. The KML has two timed tracks and <code>gx:interpolate</code> set to 0. The GeoJSON has two separate LineString features. In CSV, <code>group</code> is 1 for the first three rows and 2 for the last two; point numbering restarts in each group.</p>
   <p>A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.</p>
+  <p>Need to switch? <a href="/tools/kml-to-gpx/">Convert KML ⇄ GPX in your browser</a>, with a report of what was kept and dropped, including gx:Track times.</p>
 </section>
 <section aria-labelledby="spreadsheet">
   <h2 id="spreadsheet">Open a GPX-derived CSV without losing its meaning</h2>

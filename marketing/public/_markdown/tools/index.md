@@ -21,6 +21,12 @@ Combine several GPX files into one, such as a week of daily exports. Keep tracks
 
 Then [open the result in the GPX viewer](https://whereday.com/tools/gpx-viewer/). Your files stay in your browser.
 
+## [KML ⇄ GPX converter](https://whereday.com/tools/kml-to-gpx/)
+
+Convert KML to GPX or GPX to KML, including Google Earth `gx:Track` timestamps, with a report of what was kept and skipped before you download. Your file stays in your browser.
+
+Then [check the result in the GPX viewer](https://whereday.com/tools/gpx-viewer/).
+
 ## [Days-in-country calculator](https://whereday.com/tools/country-days-calculator/)
 
 Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.
