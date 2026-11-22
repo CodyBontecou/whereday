@@ -89,6 +89,14 @@ Find Timeline, see why it is empty, back it up, move it to a new iPhone and expo
 
 Guide
 
+### [See where you were on a specific date on iPhone](https://whereday.com/blog/iphone-location-history-by-date/)
+
+Which iPhone sources can jump to a date, and how to rebuild a day from photos, workouts and receipts.
+
+[Read the by-date guide](https://whereday.com/blog/iphone-location-history-by-date/)
+
+Guide
+
 ### [See Your Photos on a Map on iPhone](https://whereday.com/blog/iphone-photos-map/)
 
 Find the Photos map, fix photos missing from it, and place photos that have no GPS.

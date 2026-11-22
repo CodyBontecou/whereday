@@ -14,7 +14,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed Oc
 
 If a Whereday day looks empty, check the selected date and recording state first. Then separate four different problems: missing route points, a missing visit, records still on Apple Watch, or an export that excluded records. Each needs a different check.
 
-This guide is for an existing Whereday journal. For Apple Maps or Google Timeline records, use [the iPhone location-history guide](https://whereday.com/blog/view-location-history-iphone/). For Apple’s own Significant Locations and Visited Places, see [why they can show so little](https://whereday.com/blog/significant-locations-iphone/). Find My can’t fill the gap either: it [keeps no location history](https://whereday.com/blog/find-my-location-history/). Installing Whereday cannot recover a route that another app never recorded.
+This guide is for an existing Whereday journal. For Apple Maps or Google Timeline records, use [the iPhone location-history guide](https://whereday.com/blog/view-location-history-iphone/). For Apple’s own Significant Locations and Visited Places, see [why they can show so little](https://whereday.com/blog/significant-locations-iphone/). Find My can’t fill the gap either: it [keeps no location history](https://whereday.com/blog/find-my-location-history/). For one past date across every source, see [where you were on a specific date](https://whereday.com/blog/iphone-location-history-by-date/). Installing Whereday cannot recover a route that another app never recorded.
 
 Choose the symptom
 - [Match what you see](https://whereday.com/blog/missing-location-history-iphone/#symptoms)

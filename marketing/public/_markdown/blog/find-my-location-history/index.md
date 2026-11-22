@@ -119,6 +119,10 @@ No. The Items tab shows where an AirTag is now or was last seen. There’s no tr
 
 No. You get the last location it sent, which is the Send Last Location point if that was on. The Find My network may locate it for a limited time after it turns off, but that’s still one point, not a route.
 
+### How do I check where I was on a specific date?
+
+See [where you were on a specific date on iPhone](https://whereday.com/blog/iphone-location-history-by-date/), which lists which sources can jump to a date.
+
 ### Is Significant Locations the same as Find My?
 
 No. Significant Locations & Routes is a Location Services setting that learns places that matter to you, and it can’t be exported. Find My locates devices, people and items. See the [Significant Locations guide](https://whereday.com/blog/significant-locations-iphone/).
@@ -136,6 +140,10 @@ Whereday records your own visits and routes on your iPhone from the day you inst
 Apple details checked November 19, 2026 against Apple’s Find My support article (HT210515), the iOS 26 iPhone User Guide page “Add your iPhone to Find My”, “How to find your lost iPhone or iPad” and the Personal Safety User Guide. Menus can vary by iOS version and region. Whereday features follow the published tracking, export and privacy references. The screenshot shows Whereday with invented data.
 
 ## Read next
+
+- [Looking for one specific day?](https://whereday.com/blog/iphone-location-history-by-date/)
+
+Which sources can jump to a date, and how to rebuild a day without them.
 
 - [Check Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/)
 

@@ -9,6 +9,7 @@ const pages = {
   "/blog/gpx-kml-geojson-location-history/": "/_markdown/blog/gpx-kml-geojson-location-history/index.md",
   "/blog/import-google-timeline-iphone/": "/_markdown/blog/import-google-timeline-iphone/index.md",
   "/blog/": "/_markdown/blog/index.md",
+  "/blog/iphone-location-history-by-date/": "/_markdown/blog/iphone-location-history-by-date/index.md",
   "/blog/iphone-location-journal-obsidian/": "/_markdown/blog/iphone-location-journal-obsidian/index.md",
   "/blog/iphone-location-tracking-battery/": "/_markdown/blog/iphone-location-tracking-battery/index.md",
   "/blog/iphone-photos-map/": "/_markdown/blog/iphone-photos-map/index.md",
