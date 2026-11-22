@@ -264,6 +264,19 @@ PAGES.append({
 })
 
 PAGES.append({
+    "path": "/blog/iphone-location-history-by-date/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Location history by date",
+    "type": "BlogPosting",
+    "title": "See where you were on a specific date on iPhone — Whereday",
+    "headline": "See where you were on a specific date on iPhone",
+    "description": "Find where you were on a given date: Apple Maps Visited Places, Google Timeline, photos, workouts and receipts, and why changing the Date & Time won’t work.",
+    "lede": "Which iPhone sources can jump to a date, how to rebuild a day when none were on, and how to make the next date answerable.",
+    "published": "2026-11-22", "modified": "2026-11-22",
+    "source": "iphone-location-history-by-date.html",
+    "image": "/screenshots/map-home.png",
+    "image_alt": "Whereday’s map home, with an invented day’s route coloured by place",
+})
+
+PAGES.append({
     "path": "/tools/visited-countries-map/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "Visited countries map",
     "title": "Visited Countries Map From Your Location File — Whereday",
     "headline": "Map the countries you’ve visited from your own location file",
@@ -317,7 +330,12 @@ RELATED = {
       'Keep segments separate so viewers don’t draw lines across gaps.'),
      ('/blog/gpx-kml-geojson-location-history/', 'Choose another file format',
       'Compare GPX, KML, GeoJSON and CSV with the same invented trip.')],
+ '/blog/iphone-location-history-by-date/': [
+     ('/blog/view-location-history-iphone/', 'Check every kind of iPhone history', 'Apple Maps, Google Timeline and Whereday, by source.'),
+     ('/blog/iphone-photos-map/', 'See your photos on a map', 'Use photos as dated evidence of where you were.'),
+     ('/docs/timeline-outings/', 'Review a day in Whereday', 'Date chips, Pick a day and outings.')],
  '/blog/find-my-location-history/': [
+     ('/blog/iphone-location-history-by-date/', 'Looking for one specific day?', 'Which sources can jump to a date, and how to rebuild a day without them.'),
      ('/blog/significant-locations-iphone/', 'Check Significant Locations and Visited Places',
       'See the two Apple features that do remember places, and why neither exports.'),
      ('/blog/view-location-history-iphone/', 'Find any iPhone location history',

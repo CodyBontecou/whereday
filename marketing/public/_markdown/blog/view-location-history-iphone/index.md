@@ -27,6 +27,8 @@ Choose your next step
 
 ## Which history are you looking for?
 
+Looking for one specific day? See [how to see where you were on a specific date on iPhone](https://whereday.com/blog/iphone-location-history-by-date/).
+
 Start with the service that recorded the day
 | What you used | Where to look | What to check
 | Apple Maps | Places → Visited Places, where available | Whether the feature was enabled and the visit is retained
