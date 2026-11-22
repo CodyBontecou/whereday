@@ -86,11 +86,3 @@
 /samples/synthetic-walk-day-3.gpx
   Content-Disposition: attachment; filename="synthetic-walk-day-3.gpx"
   Content-Type: application/gpx+xml; charset=utf-8
-
-/samples/synthetic-kml-example.kml
-  Content-Disposition: attachment; filename="synthetic-kml-example.kml"
-  Content-Type: application/vnd.google-earth.kml+xml; charset=utf-8
-
-/samples/synthetic-kml-example-expected.gpx
-  Content-Disposition: attachment; filename="synthetic-kml-example-expected.gpx"
-  Content-Type: application/gpx+xml; charset=utf-8
