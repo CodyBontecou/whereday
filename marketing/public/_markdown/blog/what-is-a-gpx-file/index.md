@@ -87,6 +87,7 @@ Files stores the file; a GPX-capable app or the viewer draws it. This page does 
 
 - Use the same [browser viewer](https://whereday.com/tools/gpx-viewer/).
 - Open the file in any text editor to read the XML.
+- To see it on Google Maps, import it into My Maps on a computer; see [how to open a GPX file in Google Maps](https://whereday.com/blog/gpx-to-google-maps/).
 - Desktop mapping software can load GPX. For example, QGIS documents [loading a GPX file](https://docs.qgis.org/latest/en/docs/user_manual/working_with_gps/plugins_gps.html).
 
 ## If it won’t open
@@ -146,5 +147,9 @@ Follow a worked example of warnings, gaps and segments.
 - [Record your own route](https://whereday.com/blog/record-iphone-route-gpx/)
 
 Record in Whereday and export Points as GPX.
+
+- [Put it on Google Maps](https://whereday.com/blog/gpx-to-google-maps/)
+
+Import the GPX into My Maps on a computer, then view it on iPhone.
 
 Source: https://whereday.com/blog/what-is-a-gpx-file/

@@ -42,6 +42,8 @@ It reads GPX 1.0 and 1.1 track points, routes and waypoints. The route plot keep
 
 A time gap can be intentional. A valid file does not prove an accurate GPS recording. This is a practical inspector, not full GPX schema validation, route navigation, file repair, or a complete journal backup tool. Google Timeline JSON, KML, FIT, TCX and ZIP files are not supported.
 
+Want it on Google Maps? See [how to open a GPX file in Google Maps via My Maps](https://whereday.com/blog/gpx-to-google-maps/).
+
 Have several files? [Merge them first](https://whereday.com/tools/merge-gpx/), then open the merged GPX here.
 
 Choosing between file types? Compare [GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/) with the same invented trip in four formats.
