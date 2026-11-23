@@ -64,7 +64,7 @@ A KMZ is a KML file inside a ZIP archive, usually together with images or other 
 ## How to open a KML or KMZ file
 
 - This page. Choose the file above. Nothing is uploaded, and it shows what is inside, including what it skips. It draws shapes only, not a map.
-- Google Earth. Google Earth on the web, on the desktop and in its mobile apps can import KML and KMZ files and draws them with their styles. See [Google Earth Help](https://support.google.com/earth/) for the current import steps.
+- Google Earth. Google Earth is the app KML and KMZ were made for. Check [Google Earth Help](https://support.google.com/earth/) for which versions can import them and the current steps; we have not listed them here.
 - Google My Maps. It can import some files into a map; its supported file types are listed in [Google’s import help](https://support.google.com/mymaps/answer/3024836). For a GPX file, see [how to open a GPX file in Google Maps](https://whereday.com/blog/gpx-to-google-maps/).
 
 We have not compared the results with Google Earth, and this viewer does not claim to match it.
