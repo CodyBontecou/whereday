@@ -24,6 +24,29 @@ UPDATED_PATHS = {
 }
 
 
+def build_kmz_samples():
+    """Write the synthetic KMZ examples next to the KML they wrap. Stored is byte-for-byte reproducible;
+    the deflate file is only rewritten when its doc.kml no longer matches, so zlib versions don't churn it."""
+    import io, struct, zipfile, zlib
+    kml = (PUBLIC / "samples/synthetic-kml-viewer.kml").read_bytes()
+    chunk = lambda kind, data: struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data))
+    png = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", 1, 1, 8, 2, 0, 0, 0)) + chunk(b"IDAT", zlib.compress(b"\x00\xc8\xc8\xc8")) + chunk(b"IEND", b"")
+    for name, method in (("synthetic-kml-viewer.kmz", zipfile.ZIP_DEFLATED), ("synthetic-kml-viewer-stored.kmz", zipfile.ZIP_STORED)):
+        target = PUBLIC / "samples" / name
+        if target.exists():
+            with zipfile.ZipFile(target) as z:
+                if z.read("doc.kml") == kml and [i.compress_type for i in z.infolist()][0] == method and "files/legend.png" in z.namelist():
+                    continue
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as z:
+            for entry, data in (("doc.kml", kml), ("files/legend.png", png)):
+                info = zipfile.ZipInfo(entry, (2000, 1, 1, 0, 0, 0))
+                info.compress_type = method
+                info.external_attr = 0o644 << 16
+                z.writestr(info, data)
+        target.write_bytes(buffer.getvalue())
+
+
 def build():
     for script in ("build_journal_bundle.py", "build_docs.py", "build_seo_pages.py", "build_agentic.py"):
         subprocess.run([sys.executable, str(SCRIPTS / script)], check=True)
@@ -53,6 +76,12 @@ def build():
     (PUBLIC / "assets/gpx-merge-demo.mjs").write_text("export const MERGE_SAMPLES = " + json.dumps(merge_samples) + ";\n")
     kml_gpx = {key: {"name": name, "text": (PUBLIC / "samples" / name).read_text()} for key, name in (("kml", "synthetic-kml-to-gpx.kml"), ("gpx", "synthetic-kml-to-gpx.expected.gpx"))}
     (PUBLIC / "assets/kml-gpx-demo.mjs").write_text("export const KML_GPX_SAMPLES = " + json.dumps(kml_gpx) + ";\n")
+    build_kmz_samples()
+    import base64
+    viewer_samples = {"kml": {"name": "synthetic-kml-viewer.kml", "text": (PUBLIC / "samples/synthetic-kml-viewer.kml").read_text()}}
+    for key, name in (("kmz", "synthetic-kml-viewer.kmz"), ("kmzStored", "synthetic-kml-viewer-stored.kmz")):
+        viewer_samples[key] = {"name": name, "base64": base64.b64encode((PUBLIC / "samples" / name).read_bytes()).decode("ascii")}
+    (PUBLIC / "assets/kml-viewer-demo.mjs").write_text("export const KML_VIEWER_SAMPLES = " + json.dumps(viewer_samples) + ";\n")
     countries_trip = (PUBLIC / "samples/synthetic-countries-trip.gpx").read_text()
     (PUBLIC / "assets/visited-countries-demo.mjs").write_text("export const VISITED_DEMO = " + json.dumps({"name": "synthetic-countries-trip.gpx", "text": countries_trip}) + ";\n")
     (PUBLIC / "assets/country-days-demo.mjs").write_text("export const DEMO_COUNTRY_DAYS = " + json.dumps(country_days) + ";\n")

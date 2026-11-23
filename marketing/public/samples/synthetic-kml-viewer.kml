@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>Synthetic KML viewer example</name>
+    <description>Invented data for testing the viewer. Not a real recording.</description>
+    <Folder>
+      <name>Synthetic folder</name>
+      <description>Invented folder with one of each shape. &lt;b&gt;Markup in a description is shown as text.&lt;/b&gt;</description>
+      <Placemark>
+        <name>Start</name>
+        <description>Invented start point</description>
+        <Point><coordinates>10.001,0.002,12</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Camp</name>
+        <Point><coordinates>10.004,0.005</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Plain line</name>
+        <LineString><coordinates>10.010,0.020,5 10.012,0.021,6 10.015,0.023,7</coordinates></LineString>
+      </Placemark>
+      <Placemark>
+        <name>Field with a pond</name>
+        <description>Invented polygon: one outer ring and one inner ring (the hole)</description>
+        <Polygon>
+          <outerBoundaryIs><LinearRing><coordinates>10.030,0.040,0 10.040,0.040,0 10.040,0.050,0 10.030,0.050,0 10.030,0.040,0</coordinates></LinearRing></outerBoundaryIs>
+          <innerBoundaryIs><LinearRing><coordinates>10.033,0.043,0 10.037,0.043,0 10.037,0.047,0 10.033,0.047,0 10.033,0.043,0</coordinates></LinearRing></innerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Timed track</name>
+        <gx:Track>
+          <when>2000-01-01T12:00:00Z</when>
+          <when>2000-01-01T12:01:00Z</when>
+          <when>2000-01-01T12:02:00Z</when>
+          <when>2000-01-01T12:03:00Z</when>
+          <when>2000-01-01T12:04:00Z</when>
+          <gx:coord>10.020 0.030 20</gx:coord>
+          <gx:coord>10.021 0.031 21</gx:coord>
+          <gx:coord>10.022 0.033 23</gx:coord>
+          <gx:coord>10.024 0.034 22</gx:coord>
+          <gx:coord>10.025 0.036 24</gx:coord>
+        </gx:Track>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

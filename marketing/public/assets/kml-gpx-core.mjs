@@ -23,7 +23,7 @@ const gxName = n => (n.namespaceURI === GX ? n.localName : null);
 const childText = (node, name) => { const n = elementsOf(node).find(e => kmlName(e) === name); return n ? clean(n.textContent) : ''; };
 
 // Strict RFC 3339 / xsd:dateTime with a time zone. Returns UTC milliseconds, or null (nothing is guessed).
-function instant(value) {
+export function instant(value) {
   const m = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.exec(value);
   if (!m) return null;
   const [, y, month, day, h, min, sec] = m.map(Number);
@@ -49,7 +49,7 @@ export function baseName(name) {
 function parseXML(text, Parser) {
   if (typeof text !== 'string') throw new Error('This file could not be read as text.');
   const bare = text.replace(/^\uFEFF/, '');
-  if (bare.startsWith('PK\u0003\u0004')) throw new Error('This looks like a KMZ (zip) file. KMZ is not supported here: unzip it and choose the doc.kml inside.');
+  if (bare.startsWith('PK\u0003\u0004')) throw new Error('This looks like a KMZ (zip) file, which the converter does not read. Have a KMZ? Open it in the KML/KMZ viewer at /tools/kml-viewer/.');
   if (new TextEncoder().encode(bare).length > MAX_BYTES) throw new Error('Choose a file of 10 MiB or less.');
   if (/<!\s*(DOCTYPE|ENTITY)\b/i.test(bare)) throw new Error('DTD and entity declarations are not supported. Keep the original and use a standard export.');
   let doc;

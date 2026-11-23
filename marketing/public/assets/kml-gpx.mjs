@@ -52,7 +52,7 @@ async function load(file) {
   $('kg-status').textContent = 'Reading the file on this device…';
   try {
     const head = new Uint8Array(await file.slice(0, 4).arrayBuffer());
-    if (head[0] === 0x50 && head[1] === 0x4b) { run(); $('kg-status').textContent = 'This looks like a KMZ (zip) file. KMZ is not supported here: unzip it and choose the doc.kml inside.'; return; }
+    if (head[0] === 0x50 && head[1] === 0x4b) { run(); $('kg-status').textContent = 'This looks like a KMZ (zip) file, which the converter does not read. Have a KMZ? Open it in the KML/KMZ viewer at /tools/kml-viewer/.'; return; }
     const text = await file.text();
     if (token !== generation) return;
     detectFormat(text);

@@ -1,0 +1,23 @@
+.kv-tool .gpx-actions { margin:8px 0; }
+.kv-panel { margin-top:20px; }
+#kv-plot { display:block; width:100%; height:auto; background:var(--paper-warm, #F7F4EC); border:1px solid var(--rule, #D8D2C3); border-radius:8px; }
+.kv-line { fill:none; stroke:var(--ink, #1E2B45); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+.kv-poly { fill:none; stroke:var(--ink, #1E2B45); stroke-width:2.5; stroke-linejoin:round; }
+.kv-poly.inner { stroke-dasharray:6 4; }
+.kv-dot { fill:var(--ink, #16203A); stroke:var(--card, #FBF9F4); stroke-width:1.5; }
+#kv-plot .active { stroke:var(--accent, #A8381F); stroke-width:5; }
+#kv-plot circle.active { fill:var(--accent, #A8381F); stroke:var(--accent, #A8381F); stroke-width:2; }
+#kv-plot .dim { opacity:.35; }
+.kv-tool button.kv-pick { min-height:36px; padding:4px 10px; text-align:left; overflow-wrap:anywhere; }
+.kv-tool button.kv-pick[aria-pressed="true"], .kv-tool tr.kv-selected { background:var(--paper-deep, #ECE6D8); }
+.kv-tool tr.kv-selected th, .kv-tool tr.kv-selected td { font-weight:600; }
+.kv-tree, .kv-tree ul { list-style:none; margin:0; padding-left:20px; }
+.kv-tree { padding-left:0; }
+.kv-tree li { margin:6px 0; overflow-wrap:anywhere; }
+.kv-desc { white-space:pre-wrap; overflow-wrap:anywhere; margin:4px 0 0; color:var(--mute, #66645D); font-size:14px; }
+.kv-counts { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px 20px; margin:12px 0; }
+.kv-counts div { display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--rule, #D8D2C3); padding:6px 0; }
+.kv-counts dt, .kv-counts dd { margin:0; }
+.kv-counts dd { font-weight:600; }
+.kv-coords { max-height:240px; overflow:auto; font-size:13px; white-space:pre; padding:12px; background:var(--paper-warm, #F7F4EC); border:1px solid var(--rule, #D8D2C3); border-radius:6px; }
+#kv-skipped li, #kv-entries li, #kv-notes li { margin-bottom:8px; overflow-wrap:anywhere; }
