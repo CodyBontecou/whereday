@@ -45,7 +45,9 @@ import java.time.ZonedDateTime
 
 internal data class OnboardingDecision(val start:Boolean,val authorization:UsageAuthorization,val permit:UsageActionPermit?,
     /** "Send me tonight's page", already limited to installs that may post notifications. */
-    val nightly:Boolean=false)
+    val nightly:Boolean=false,
+    /** Finished from "You're in" after a verified free-week (or plan) checkout, not from the tonight step. */
+    val trial:Boolean=false)
 
 /** One current fix for the stamp step. */
 internal data class OnboardingFix(val latitude:Double,val longitude:Double,val accuracyMeters:Double) {
@@ -72,8 +74,10 @@ internal class OnboardingServices(
 @Composable internal fun Onboarding(requestLocation: () -> Unit, requestNotifications: () -> Unit, analytics:UsageAnalyticsController?=null, authorization:UsageAuthorization=UsageAuthorization.unknown,access:RecordingAccessState?=null,onAccessOptions:(PermissionAccessKind)->Unit={},
     initialPreset:RecordingPreset?=null,choosePreset:(RecordingPreset)->Unit={},services:OnboardingServices=remember {OnboardingServices()},
     initialIntents:Set<OnboardingIntent> = OnboardingIntent.DEFAULT,notificationRequestAvailable:Boolean=android.os.Build.VERSION.SDK_INT>=33,
+    /** What the last step can sell; null or unconfigured billing keeps the tonight step. */
+    offer:OnboardingOffer?=null,initialStep:OnboardingStep=OnboardingStep.cover,
     complete:suspend (OnboardingDecision)->Unit) {
-    var page by rememberSaveable { mutableIntStateOf(0) }
+    var page by rememberSaveable { mutableIntStateOf(initialStep.ordinal) }
     val step=OnboardingStep.at(page)
     // iOS asks "How much should it remember?" before location access. Nothing selected means custom settings, which stay.
     var presetKey by rememberSaveable {mutableStateOf(initialPreset?.key)}
@@ -100,6 +104,15 @@ internal class OnboardingServices(
     var photoDenied by rememberSaveable {mutableStateOf(false)}
     var photoError by remember {mutableStateOf(false)}
     var locationRequested by rememberSaveable {mutableStateOf(false)}
+    // The free week: a checkout started here turns verified access into "You're in"; a restore keeps the tonight step.
+    var checkedOut by rememberSaveable {mutableStateOf(false)}
+    var planKey by rememberSaveable {mutableStateOf<String?>(null)}
+    var boughtKey by rememberSaveable {mutableStateOf<String?>(null)}
+    var plansOpen by rememberSaveable {mutableStateOf(false)}
+    val finale=OnboardingFinale.of(offer?.state,checkedOut)
+    val chosenPlan=offer?.let {OnboardingPlans.selected(it.state.products,planKey?.let {key->com.bontecou.whereday.billing.StorePlan.entries.firstOrNull {it.name==key}})}
+    val chosenProduct=chosenPlan?.let {offer.state.product(it)}
+    val boughtProduct=boughtKey?.let {key->offer?.state?.products?.firstOrNull {it.plan.name==key}}
     val scope=rememberCoroutineScope()
     var startImmediately by rememberSaveable {mutableStateOf(false)}
     var busy by remember {mutableStateOf(false)}
@@ -210,7 +223,19 @@ internal class OnboardingServices(
                         access?.let {RecordingAccessNotice(it,onAccessOptions,location=false,notifications=true,contentPadding=PaddingValues(0.dp))}
                     }
                     OnboardingStep.export->ExportStep(format) {formatKey=it.key}
-                    OnboardingStep.tonight->{
+                    OnboardingStep.tonight->if(finale==OnboardingFinale.freeWeek) {
+                        val stampedName=savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)}
+                        FreeWeekStep(offer!!,chosenPlan,{planKey=it.name},now,
+                            TrialToday.of(stampedName,if(photoEnabled) OnboardingHeatmap.foundDays(photoCounts,today) else 0,recording=canStart),enabled=!busy && !offer.checkout)
+                        if(plansOpen) AllPlansSheet(offer,chosenPlan,intents,today,enabled=!busy && !offer.checkout,busy=offer.checkout || offer.state.busy,
+                            onSelect={planKey=it.name},onBuy={chosenPlan?.let {plan->checkedOut=true;boughtKey=plan.name;offer.buy(plan)}},dismiss={plansOpen=false})
+                    } else if(finale==OnboardingFinale.done) {
+                        TrialDoneStep(boughtProduct,today,canStart,nightly=nightly && notificationsAllowed,nightlyEnabled=(notificationsAllowed || notificationRequestAvailable) && !busy,
+                            notificationsAllowed=notificationsAllowed,tomorrow=com.bontecou.whereday.platform.NightlyPageReminder.tomorrow(now)) {on->
+                            // The only notification request for tonight's page, and only after the purchase.
+                            nightly=on;if(on && !notificationsAllowed) requestNotifications()
+                        }
+                    } else {
                         TonightStep(today,savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)},stamped=fix!=null,
                             canStart=canStart,startImmediately=startImmediately,busy=busy,
                             onStartChange={value->
@@ -235,8 +260,8 @@ internal class OnboardingServices(
             val placeError=stringResource(R.string.onboarding_stamp_error)
             val chosenLabel=placeName?.let {stringResource(it.label)}
             fun next() {page=(page+1).coerceAtMost(OnboardingStep.entries.lastIndex);failure=null}
-            val finish:()->Unit={
-                val decision=OnboardingDecision(startImmediately && canStart,authorization,analytics?.capture(),nightly=nightly && notificationsAllowed)
+            val finish:()->Unit=finish@{
+                val decision=OnboardingFinish.decide(finale,startImmediately,canStart,nightly,notificationsAllowed,authorization,analytics?.capture()) ?: return@finish
                 busy=true;failure=null
                 scope.launch {
                     try {complete(decision)}
@@ -283,7 +308,13 @@ internal class OnboardingServices(
                 OnboardingStep.glance->if(notificationsAllowed || !notificationRequestAvailable) stringResource(R.string.common_continue) to ::next
                     else stringResource(R.string.onboarding_allow_notifications) to {requestNotifications();next()}
                 OnboardingStep.export->stringResource(R.string.common_continue) to {OnboardingFormat.savedDefault(intents)?.let(services.saveExportFormat);next()}
-                OnboardingStep.tonight->stringResource(if(startImmediately && canStart) R.string.onboarding_tonight_start else R.string.onboarding_finish) to finish
+                OnboardingStep.tonight->when(finale) {
+                    OnboardingFinale.tonight->stringResource(if(startImmediately && canStart) R.string.onboarding_tonight_start else R.string.onboarding_finish) to finish
+                    OnboardingFinale.done->stringResource(R.string.onboarding_done_open) to finish
+                    OnboardingFinale.freeWeek->(chosenProduct?.let {freeWeekCta(it)} ?: stringResource(R.string.onboarding_trial_start)) to {
+                        chosenPlan?.let {plan->checkedOut=true;boughtKey=plan.name;offer?.buy(plan)}
+                    }
+                }
             }
             val secondary:Pair<String,()->Unit>? = when(step) {
                 OnboardingStep.perm->if(locationGranted) null else stringResource(R.string.onboarding_not_now) to ::next
@@ -291,18 +322,27 @@ internal class OnboardingServices(
                 OnboardingStep.export->stringResource(R.string.onboarding_export_later) to ::next
                 else->null
             }
+            val selling=step==OnboardingStep.tonight && finale==OnboardingFinale.freeWeek
             val continueButton=@Composable {mod:Modifier->
-                WdButton(primary.first,{if(!busy) primary.second()},mod.testTag("onboarding-continue"),emphasis=WdEmphasis.primary,
+                if(selling) {
+                    val checkout=offer?.checkout==true || offer?.state?.busy==true
+                    WdButton(primary.first,{if(!busy) primary.second()},mod.testTag("onboarding-start-trial"),emphasis=WdEmphasis.primary,
+                        enabled=chosenProduct!=null && offer?.state?.access!=com.bontecou.whereday.billing.AccessState.pending,busy=checkout)
+                } else WdButton(primary.first,{if(!busy) primary.second()},mod.testTag("onboarding-continue"),emphasis=WdEmphasis.primary,
                     busy=busy,trailingIcon=if(busy) null else if(step!=OnboardingStep.tonight) Icons.AutoMirrored.Filled.KeyboardArrowRight else Icons.Outlined.Check)
             }
             val back={if(!busy && page>0) {page--;failure=null}}
-            if(step!=OnboardingStep.cover && !large) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
+            // "You're in" follows a purchase, so there is nothing to go back to.
+            val showBack=step!=OnboardingStep.cover && !(step==OnboardingStep.tonight && finale==OnboardingFinale.done)
+            if(showBack && !large) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
                 OnboardingBack(!busy,onClick=back)
                 continueButton(Modifier.weight(1f))
             } else {
                 continueButton(Modifier)
-                if(step!=OnboardingStep.cover) OnboardingBack(!busy,Modifier.align(Alignment.CenterHorizontally),onClick=back)
+                if(showBack) OnboardingBack(!busy,Modifier.align(Alignment.CenterHorizontally),onClick=back)
             }
+            if(selling && offer!=null) FreeWeekFooter(offer,chosenProduct,today,enabled=!busy && !offer.checkout,onAllPlans={plansOpen=true},
+                onRestore={checkedOut=false;boughtKey=null;offer.restore()})
             secondary?.let {(label,action)->OnboardingQuiet(label,!busy,Modifier.align(Alignment.CenterHorizontally).testTag("onboarding-skip")) {action()}}
             if(step==OnboardingStep.cover && importLauncher!=null) OnboardingQuiet(stringResource(R.string.onboarding_cover_import),!busy,
                 Modifier.align(Alignment.CenterHorizontally).testTag("onboarding-import")) {importLauncher.launch(arrayOf("application/json","text/*","application/octet-stream"))}

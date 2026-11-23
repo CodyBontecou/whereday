@@ -114,7 +114,7 @@ private fun motionEnabled()=ValueAnimator.areAnimatorsEnabled()
 
 // MARK: 2 · intent
 
-private val OnboardingIntent.title get()=when(this) {
+internal val OnboardingIntent.title get()=when(this) {
     OnboardingIntent.days->R.string.onboarding_intent_days;OnboardingIntent.countries->R.string.onboarding_intent_countries
     OnboardingIntent.routes->R.string.onboarding_intent_routes;OnboardingIntent.notes->R.string.onboarding_intent_notes
 }

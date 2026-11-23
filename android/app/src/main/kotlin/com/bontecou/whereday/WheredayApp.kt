@@ -87,17 +87,19 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
         if (!current.onboarded) {
             val onboardingContext=LocalContext.current.applicationContext
             val services=remember(graph) {onboardingServices(graph)}
+            // The last step sells the free week through the same PurchaseController as every paywall; unconfigured billing keeps the tonight step.
+            val offer=OnboardingOffer(purchase,checkout,{buy(it,UsagePaywall.onboarding)},{graph.purchases.restore(UsagePaywall.onboarding)},graph.purchases::refresh)
             JournalWorkspaceFrame(false,primary={Onboarding(onRequestLocation,onRequestNotifications,graph.usageAnalytics,onboardingAuthorization,access,onAccessOptions,
-                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}},services,OnboardingIntent.decode(current.onboardingIntents)) {decision->
+                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}},services,OnboardingIntent.decode(current.onboardingIntents),offer=offer) {decision->
                 val start=decision.start
                 val permit=decision.permit
                 val authorization=decision.authorization
                 val deferred=start && purchase.trackingLocked
                 if(deferred) startAfterAccess=true
                 completeOnboarding(start && !deferred,onOnboardingStart,{
-                    graph.preferences.update {latest->latest.copy(onboarded=true)}
-                    // One local notification; a failure to schedule never blocks finishing setup.
-                    try {if(decision.nightly) NightlyPageReminder.schedule(onboardingContext) else NightlyPageReminder.cancel(onboardingContext)} catch(_:Exception) {}
+                    // Finishing through the free week already chose a plan, so the separate post-onboarding paywall never shows for this install.
+                    graph.preferences.update {latest->latest.copy(onboarded=true,accessGateCleared=latest.accessGateCleared || decision.trial)}
+                    applyNightlyChoice(onboardingContext,decision)
                 }) {
                     graph.usageAnalytics.track(permit) {UsageEvent(UsageEventName.onboardingCompleted,step=UsageStep.ready,authorization=authorization,
                         tracking=if(start) UsageTrackingIntent.startImmediately else if(authorization in setOf(UsageAuthorization.foreground,UsageAuthorization.always)) UsageTrackingIntent.later else UsageTrackingIntent.unavailable)}
@@ -249,6 +251,11 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             if(!(mapShown && inspectedVisit!=null)) Box(Modifier.fillMaxSize().background(wd.surface).statusBarsPadding()) {if(mapShown) timelinePage() else mapPage()}
         })
 
+}
+
+/** One local notification at 9 PM, or none; a failure to schedule never blocks finishing setup. */
+internal fun applyNightlyChoice(context:android.content.Context,decision:OnboardingDecision) {
+    try {if(decision.nightly) NightlyPageReminder.schedule(context) else NightlyPageReminder.cancel(context)} catch(_:Exception) {}
 }
 
 /** True inside the navigation-rail layout, where Today's "Log a stop" lives on the rail instead of a floating button. */

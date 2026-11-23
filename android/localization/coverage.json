@@ -2,16 +2,16 @@
   "scope": "All currently externalized app/platform strings/plurals; hardcoded UI and other languages remain incomplete",
   "locales": {
     "ar": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "5ecc04c24b430eab6f084f56746abde6888be5333ce23fa00a67dbd9c914fac9",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "48a77699bba4ea8179184e78db4386fa4ae58dd5d1444559bf6c06e11c6ef551",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "59bb1a9d836867bf31ff92e191a94570194d61a4005fa26f7430b54e15ba880d",
+      "outputSha256": "394d1cf12208fdc3f19d6bb58538046dab4115da9d47cfe1b901d2a067e35154",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "1eb07f7fcd6a59aacb825a50fd3b05b0a2600eddaf208a466c10caf43de17c83"
+          "resourceCount": 1930,
+          "outputSha256": "b892c4e8a1fe02d101d417339d30c743a078b4fd1e2ed527351f85239aa7d732"
         },
         "platform": {
           "resourceCount": 27,
@@ -20,16 +20,16 @@
       }
     },
     "b+zh+Hans": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "feca58725ad061354452cbac309cd454a203088b5b0fcbba4082ce20fdb10797",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "d13d1bb529e172287ff4433d14d25d960d9eaea2aa1c73704b23eeeb931a1ee6",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "221996890a3e664f4c40a3443991fa89c9f0adfa2a3bb8d67eee86567b1f0ea7",
+      "outputSha256": "66325b2217a80ed1ada249051cdfd85096a704ca82bb4489b803b280cba9368f",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "d96f5c618faaf46b51f86463323ad5769c2fff0650bc8e83886fbd1afc8659d6"
+          "resourceCount": 1930,
+          "outputSha256": "35bd43cc8fd7b09139d4ec73361578be91d8ea87c0c3e431f45ca352d6271b21"
         },
         "platform": {
           "resourceCount": 27,
@@ -38,16 +38,16 @@
       }
     },
     "bn": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "0f3e3d169620a154a8e6a1315dd840d0a28a1e9de88e252501dfde0fe0957200",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "aecd97f21506e0c4a82ab1ab24aa39e06d6f6001217b3e942940fa989767cf2d",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "b2eb5e08e2d924abd0bc0cd53ab19bb0344487b38ef1fb3b26edbe7eb491c8b0",
+      "outputSha256": "c2894ace6e4c99364098e41e133fab6716dd0567f295f2a8c9bac85aa1f4e854",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "ea993aba8498e872806c90b9c413ab40fec7958d41ca5a5b7633094392bfee8a"
+          "resourceCount": 1930,
+          "outputSha256": "21683f77d7dbd2c79c0fbcc12c3a420d090628f06258d1695993b371d3ae5cb3"
         },
         "platform": {
           "resourceCount": 27,
@@ -56,16 +56,16 @@
       }
     },
     "es": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 18,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "7bf717d7fb9a06ba3b0af12c9a3c615df9db2f201e1f92470f8d9f4fc263d05d",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "cb0ad52b5b068e52fe1a0a2f7b79393315fd8fd8a23982514f07eba9bf234c46",
       "selectedCatalogSha256": "df0d04099cf12497ab1094a74cd6a7a8e38dc9ff3ee7f1dcd38653369de718d7",
-      "outputSha256": "164f22e625b25bbf787f07cf84d26c3b71ce5aeff23b79725d21495fbe394620",
+      "outputSha256": "fa5817f88b701eaeffb1515aad2470bb4dfd3ecab7f006892b796ff3643d6c99",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "e629f7bdab0e547f53dccac53fa3c7fe9b96eca0609293849621d6964b51fb1b"
+          "resourceCount": 1930,
+          "outputSha256": "9b65f045182af8a8de0820aed8029a73231b7ee11b19a55026486c19039e8d77"
         },
         "platform": {
           "resourceCount": 27,
@@ -74,16 +74,16 @@
       }
     },
     "fr": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "79fd651866b561478d844d00bec2126ef8a0f79b05a00e485eeb76953f8d2fcc",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "108f88dc2198da38339dfcf5a18dd428cae796c2eb1f98a9a623ddd953a2b48d",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "2dc890d5163b3ba88b599566173ed5ec3b3cb0607b40c3c92bb413b824e941ca",
+      "outputSha256": "fc93c291e8c5278389508f3b7348d64638d09270bf6a89a6492deb90544ca75a",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "9e5afc69cdff0994b85fed40da2d7f021382fdca5e117aac2476af6a75213e06"
+          "resourceCount": 1930,
+          "outputSha256": "27f861ce1bae0865dd1cc380cb17aeb643bd5e9b105f984db9788d48adef5a21"
         },
         "platform": {
           "resourceCount": 27,
@@ -92,16 +92,16 @@
       }
     },
     "hi": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "d6fad094b992c916ece8182fe9c12a605246910a27ad40260222dad0882f7a7a",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "3d5e7f28a997261ed2f3ad1409dc2ba7ead03e3ef3f06caf1d3ce7fa58a00af9",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "bc3ad8b5a352448f6261ee255afd5b521fdac5fb9cadf2c9e1a6d084150946ec",
+      "outputSha256": "53bc8c752573887ebee17156c714fb3346eb14cef5601a39973a2ea39e945dbc",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "b83c22adc1c136bf7d9831ffd902075704e1bee763dbe961cb4ecd7409b753e3"
+          "resourceCount": 1930,
+          "outputSha256": "c4c97e241926c8273ac69310544bf9ca83e5d5f5cfa653e67328f13571f48ed3"
         },
         "platform": {
           "resourceCount": 27,
@@ -110,16 +110,16 @@
       }
     },
     "ja": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "1b751cab3b7a384b7efb51cc9e1509fdda46638a84c267fa67ef512902cbed22",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "3941a3791ac334357ab466379fcdf6c64331759f228b07162b6bff4d247795e6",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "2fee4bbd0fcc9eafce52f316e663525eb0b075ac1464cc9bf2b3d6121dfe2030",
+      "outputSha256": "2ef4cbfb0a58b1f73208909df88e24d5eebe1f275fe217a5b02868dfcd875f2d",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "3ca3d6c480003117e3f98abb23abc069b3a441990903fa6de31f5eede775c023"
+          "resourceCount": 1930,
+          "outputSha256": "bf929d5d96a09c4b8283fbba12e86042cfc9f407549b541bab00669790cbe56d"
         },
         "platform": {
           "resourceCount": 27,
@@ -128,16 +128,16 @@
       }
     },
     "pl": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "6abd48593a7128d43b60cb2e91a947d25b417a686432236e81b8337998508989",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "cafb1bdc1cc57f78d821ea54201c2643bfebe42d66b63e1a701485936a30e2b5",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "6905fd1b4c4930c139f214252096727527115549cfb1611181f3c4b9ffe034a9",
+      "outputSha256": "fb19407c35f1d607f6032a918ee9cadb537be5ee5a6556c8855ed7271589bdfc",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "6ab6a1f2651c0f548e3ac497b117ca1bafb75c1643a20ef4a0908df9a5b1a856"
+          "resourceCount": 1930,
+          "outputSha256": "737dd52c35091901e2e6dbda0ebacf687e702905f474dd035f1716caa51e0b16"
         },
         "platform": {
           "resourceCount": 27,
@@ -146,16 +146,16 @@
       }
     },
     "pt-rBR": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "086803d5ff4c94160f36b79d9f202d0ac8140427e5bef5e9d61ea6d09719fb58",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "00c3bf6562fa501c37479190aea9130f6aa1fee9254a7f9d782e768f33bf309b",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "e90360f141a2e4f6181339427397cdae897f7174914d926e68eee1b809945504",
+      "outputSha256": "82b6c96df8b4d26b521e66b484191beeea283ab4d8203ea798175388ee6ecce6",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "685ad7dcc173e03d8904d6d5468302d5aea7015e06cbcf03b3cb33117190509a"
+          "resourceCount": 1930,
+          "outputSha256": "1e2f45bdae55e4aa30564b1138b454f355d1855dfe300643b29e1a69e89d44d7"
         },
         "platform": {
           "resourceCount": 27,
@@ -164,16 +164,16 @@
       }
     },
     "ru": {
-      "resourceCount": 1909,
+      "resourceCount": 1957,
       "catalogAliases": 13,
-      "defaultSha256": "cde27f08c2cbb20b917c277eed584e137e9bc81db1c4eee4c400a17bbe2003fc",
-      "inputSha256": "df8ee10c114a9e3abae33dd4eb110eb093fefccfc256ef9e8a1d23e6fa07d5db",
+      "defaultSha256": "4d8341ac2d8df3e6144ddd470019fc88b2886c6d761490f13c3c0da4b3845912",
+      "inputSha256": "88132d7f96f7c0cc1c69c49bee064a67ba1b8a3ce2e4f59af91c87e4c2653536",
       "selectedCatalogSha256": "38de8fe20d300d49b908d06ca6ca0cd91db54025999f47182e2f9a34d1fd19b3",
-      "outputSha256": "3e9aedb5577ea174a2c5f9d536f3a2d0dc794c6fe8c3ab3cc581529cd68a074a",
+      "outputSha256": "2b9b84ef71533fb94181af9de832133b8059a8544b6992846f20e31718898290",
       "modules": {
         "app": {
-          "resourceCount": 1882,
-          "outputSha256": "103b95ac369d21d332e6b7ff641d662a6300fca1906b3023b1a1c2141f53f118"
+          "resourceCount": 1930,
+          "outputSha256": "a05b2f2ec3524ec0b1204eae27ed6669f4400483c2f2f8788bf5367b9bca89b5"
         },
         "platform": {
           "resourceCount": 27,
