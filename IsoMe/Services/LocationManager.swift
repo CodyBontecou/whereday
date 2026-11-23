@@ -325,6 +325,12 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.requestLocation()
     }
 
+    /// One fix for onboarding's first stamp. Updates `currentLocation` and records nothing.
+    func requestCurrentLocationFix() {
+        guard hasLocationPermission else { return }
+        locationManager.requestLocation()
+    }
+
     // MARK: - Tracking Control
 
     /// Why tracking started or stopped, for Diagnostics.
