@@ -1,3 +1,8 @@
+# Disposable mapQa only, idle and onboarded, English API35. Foreground location pregranted, notifications denied.
+# Side effects: replays Page One (no place named, nightly page off because notifications are denied), starts one
+# recording in the QA package, then stops it; only QA history may be created.
+requires:
+  platform: android
 steps:
 - echo: Disposable mapQa, idle/onboarded, English API35. Foreground location pregranted, notifications denied. Replay setup, choose immediate
     recording explicitly, require acknowledged active Map status, then stop; only QA history may be created.
@@ -32,11 +37,24 @@ steps:
     text: Replay onboarding
 - await:
     visible:
-      text: Your days, remembered
+      id: onboarding-cover-dial
 - await:
     idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
 - tap:
-    text: Continue
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-intent-days
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
 - tool: button
   args:
     button: home
@@ -45,11 +63,51 @@ steps:
     bundleId: com.bontecou.whereday.mapqa
 - await:
     visible:
-      text: A journal of where you go
+      id: onboarding-scrub
 - await:
     idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
 - tap:
-    text: Continue
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-pen-preview
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- tool: button
+  args:
+    button: home
+- tool: launch-app
+  args:
+    bundleId: com.bontecou.whereday.mapqa
+- echo: Location is pregranted, so the location step shows Continue and the stamp step takes one current fix.
+- await:
+    visible:
+      id: onboarding-perm-compare
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-stamp-map
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
 - tool: button
   args:
     button: home
@@ -58,11 +116,35 @@ steps:
     bundleId: com.bontecou.whereday.mapqa
 - await:
     visible:
-      text: Record in the background
+      id: onboarding-heatmap
 - await:
     idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
 - tap:
-    text: Continue
+    id: onboarding-continue
+- echo: Notifications are denied, so the glance step offers Not now; take it.
+- await:
+    visible:
+      id: onboarding-glance-notification
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-skip
+- tap:
+    id: onboarding-skip
+- await:
+    visible:
+      id: onboarding-export-preview
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-skip
+- tap:
+    id: onboarding-skip
 - tool: button
   args:
     button: home
@@ -71,24 +153,14 @@ steps:
     bundleId: com.bontecou.whereday.mapqa
 - await:
     visible:
-      text: Keep recording within reach
-- await:
-    idle: true
-- tap:
-    text: Continue
-- tool: button
-  args:
-    button: home
-- tool: launch-app
-  args:
-    bundleId: com.bontecou.whereday.mapqa
-- await:
-    visible:
-      text: Ready for your next outing
+      id: onboarding-draft
 - await:
     idle: true
 - await:
     visible:
+      id: onboarding-start-now
+- scroll-to:
+    target:
       id: onboarding-start-now
 - tap:
     id: onboarding-start-now
@@ -100,22 +172,28 @@ steps:
     bundleId: com.bontecou.whereday.mapqa
 - await:
     visible:
-      text: Start recording and open Whereday
+      text: Start my day
+- scroll-to:
+    target:
+      id: onboarding-continue
 - tap:
-    text: Start recording and open Whereday
+    id: onboarding-continue
+- echo: Recording must be acknowledged on the Map (recording status and Stop control), then stop it.
 - await:
     visible:
-      text: Stop recording
+      id: recording-stop
     timeout: 18000
 - await:
     idle: true
 - await:
-    visible:
-      text: Recording continues with the screen off.
+    text:
+      in:
+        id: map-recording-status
+      contains: RECORDING
 - tap:
-    text: Stop recording
+    id: recording-stop
 - await:
     visible:
-      text: Start recording
+      id: recording-start
 - await:
     idle: true

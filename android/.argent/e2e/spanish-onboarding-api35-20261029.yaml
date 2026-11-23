@@ -1,57 +1,45 @@
+# Requires a fresh, unonboarded disposable mapQa install with its app locale set to es (external setup, e.g.
+# `adb shell cmd locale set-app-locales com.bontecou.whereday.mapqa --locales es`), location and notifications not
+# granted. Side effect: marks onboarding complete in that package. Skips every permission request.
+requires:
+  platform: android
 steps:
 - launch: com.bontecou.whereday.mapqa
 - await:
     visible:
-      text: "Recuerda tus d\xEDas"
+      text: "Cada d\xEDa es una p\xE1gina."
 - await:
     idle: true
+- run: onboarding-page-one-walk.yaml
+- await:
+    visible:
+      text: "Tu primera p\xE1gina se cierra esta noche."
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- assert:
+    text:
+      in:
+        id: onboarding-continue
+      contains: Abrir Whereday
 - tap:
-    text: Continuar
+    id: onboarding-continue
+- echo: The journal opens on the redesigned Spanish map home (the older "Tu diario de ubicaciones" home no longer exists).
 - await:
     visible:
-      text: Un diario de los lugares que visitas
+      id: map-header-title
 - await:
     idle: true
-- tap:
-    text: Continuar
+- assert:
+    text:
+      in:
+        id: map-header-title
+      equals: Hoy
 - await:
     visible:
-      text: Graba en segundo plano
-- await:
-    idle: true
-- tap:
-    text: Continuar
+      text: Mapa
 - await:
     visible:
-      text: "Controla tu grabaci\xF3n f\xE1cilmente"
-- await:
-    idle: true
-- tap:
-    text: Continuar
-- await:
-    visible:
-      text: "Todo listo para tu pr\xF3xima salida"
-- await:
-    idle: true
-- tap:
-    text: Abrir Whereday
-- await:
-    visible:
-      text: Tu diario de ubicaciones
-- await:
-    idle: true
-- await:
-    visible:
-      text: "Iniciar grabaci\xF3n"
-- await:
-    idle: true
-- await:
-    visible:
-      text: "L\xEDnea de tiempo"
-- await:
-    idle: true
-- await:
-    visible:
-      text: Ajustes
-- await:
-    idle: true
+      text: Archivo

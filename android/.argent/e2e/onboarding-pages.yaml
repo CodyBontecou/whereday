@@ -1,42 +1,18 @@
-executionPrerequisite: Whereday phone app is open on its first Your days, remembered onboarding page. Reuses the recorded five-page onboarding steps; marks onboarding complete without requesting location or notification permissions. Never reset owner data to rerun this fragment.
+# Fragment: completes Page One onboarding without permissions and opens the journal. Marks onboarding complete
+# without requesting location, notifications or photos and without starting a recording. Prerequisite: the
+# disposable mapQa app is on its first (cover) onboarding step. Never reset owner data to rerun this fragment.
+requires:
+  platform: android
+executionPrerequisite: Disposable com.bontecou.whereday.mapqa is open on its first Page One onboarding step (onboarding-cover-dial visible), with location and notification permissions not granted.
 steps:
-- await:
-    visible:
-      text: Your days, remembered
-- await:
-    idle: true
+- run: onboarding-page-one-walk.yaml
+- scroll-to:
+    target:
+      id: onboarding-continue
 - tap:
-    text: Continue
+    id: onboarding-continue
 - await:
     visible:
-      text: A journal of where you go
-- await:
-    idle: true
-- tap:
-    text: Continue
-- await:
-    visible:
-      text: Record in the background
-- await:
-    idle: true
-- tap:
-    text: Continue
-- await:
-    visible:
-      text: Keep recording within reach
-- await:
-    idle: true
-- tap:
-    text: Continue
-- await:
-    visible:
-      text: Ready for your next outing
-- await:
-    idle: true
-- tap:
-    text: Open Whereday
-- await:
-    visible:
-      text: Start recording
+      id: map-header
 - await:
     idle: true
