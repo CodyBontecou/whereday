@@ -13,6 +13,14 @@ HEADLINES = (
     "Your history,\nyour files.",
     "Page one closes\ntonight.",
     "Page one closes\ntomorrow night.",
+    "You’re in.\nPage one is open.",
+)
+
+# The free-week step's headlines are chosen in OnboardingFreeWeekLogic.swift.
+FREE_WEEK_HEADLINES = (
+    "Page one starts\nnow, on us.",
+    "Page one starts\nnow.",
+    "Page one starts\nnow, for good.",
 )
 
 
@@ -48,14 +56,20 @@ class OnboardingLocalizationTests(unittest.TestCase):
     def setUpClass(cls):
         cls.strings = json.loads((catalog.ROOT / "IsoMe/Localizable.xcstrings").read_text())["strings"]
         cls.source = (catalog.ROOT / "IsoMe/Views/Onboarding/OnboardingView.swift").read_text()
+        cls.free_week_source = (catalog.ROOT / "IsoMe/Views/Onboarding/OnboardingFreeWeekLogic.swift").read_text()
 
     def test_headline_keys_match_the_swiftui_source(self):
         for key in HEADLINES:
             with self.subTest(key=key):
                 self.assertIn(json.dumps(key, ensure_ascii=False), self.source)
 
+    def test_free_week_headline_keys_match_the_swift_source(self):
+        for key in FREE_WEEK_HEADLINES:
+            with self.subTest(key=key):
+                self.assertIn(json.dumps(key, ensure_ascii=False), self.free_week_source)
+
     def test_every_supported_locale_has_a_translated_headline(self):
-        for key in HEADLINES:
+        for key in HEADLINES + FREE_WEEK_HEADLINES:
             for locale in catalog.LOCALES:
                 with self.subTest(key=key, locale=locale):
                     unit = self.strings[key]["localizations"][locale]["stringUnit"]
@@ -81,7 +95,7 @@ class OnboardingLocalizationTests(unittest.TestCase):
                         self.assertNotEqual(unit["value"], key)
 
     def test_headlines_keep_a_deliberate_language_specific_line_break(self):
-        for key in HEADLINES:
+        for key in HEADLINES + FREE_WEEK_HEADLINES:
             for locale in catalog.LOCALES:
                 with self.subTest(key=key, locale=locale):
                     value = self.strings[key]["localizations"][locale]["stringUnit"]["value"]
