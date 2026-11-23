@@ -113,9 +113,10 @@ internal class OnboardingServices(
     val analyticsState=analytics?.state?.collectAsStateWithLifecycle()?.value
     val importing=services.importer?.active?.invoke()==true
     val context=LocalContext.current
-    val importLauncher=rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {uris->
-        if(uris.isNotEmpty()) services.importer?.select?.invoke(context,uris)
-    }
+    // Launchers exist only with their services, so component tests need no activity result registry.
+    val importLauncher=services.importer?.let {importer->rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {uris->
+        if(uris.isNotEmpty()) importer.select(context,uris)
+    }}
     if(importing) {services.importer?.content?.invoke();return}
     if(sharing && analytics!=null) {UsageAnalyticsScreen(analytics) {sharing=false};return}
     LaunchedEffect(page,analyticsState?.enabled,sharing) {
@@ -157,9 +158,9 @@ internal class OnboardingServices(
             catch(_:Exception) {photoError=true}
         }
     }
-    val photoPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-        if(photos?.granted()==true) {photoDenied=false;setPhotos(true)} else photoDenied=true
-    }
+    val photoPermission=photos?.let {source->rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        if(source.granted()) {photoDenied=false;setPhotos(true)} else photoDenied=true
+    }}
     val now=remember(step) {ZonedDateTime.now()}
     val large=LocalDensity.current.fontScale>=1.3f
     Surface(Modifier.fillMaxSize().semantics {testTagsAsResourceId=true}.testTag("onboarding-screen"),color=wd.surface) {
@@ -179,45 +180,48 @@ internal class OnboardingServices(
                 }
             }
             Spacer(Modifier.weight(1f).heightIn(min=if(large) 4.dp else 12.dp))
-            when(step) {
-                OnboardingStep.cover->CoverStep(today)
-                OnboardingStep.intent->IntentStep(intents,enabled=!busy) {choice,on->
-                    val next=if(on) intents+choice else intents-choice
-                    intentKeys=OnboardingIntent.encode(next).joinToString(",")
-                    if(choice==OnboardingIntent.routes) presetKey=(if(on) RecordingPreset.everyStep else RecordingPreset.routes).key
-                }
-                OnboardingStep.scrub->ScrubStep(hour) {hour=it}
-                OnboardingStep.pen->PenStep(preset,enabled=!busy) {presetKey=it.key}
-                OnboardingStep.perm->{
-                    PermissionStep()
-                    access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp))}
-                }
-                OnboardingStep.stamp->StampStep(fix,locating || (locationGranted && services.locate!=null && fix==null && !locateFinished),available=locationGranted && services.locate!=null,placeName,enabled=!busy) {
-                    placeKey=it.key;failure=null
-                }
-                OnboardingStep.backfill->BackfillStep(today,photoCounts,photos!=null,photoEnabled && photos?.granted()==true,photoRunning,photoDenied,photoError,
-                    onToggle={on->
-                        if(!on) setPhotos(false)
-                        else if(photos?.granted()==true) setPhotos(true)
-                        else photos?.let {photoPermission.launch(it.permissions)}
-                    },
-                    onImport=services.importer?.let {{importLauncher.launch(arrayOf("application/json","text/*","application/octet-stream"))}})
-                OnboardingStep.glance->{
-                    GlanceStep(savedName)
-                    access?.let {RecordingAccessNotice(it,onAccessOptions,location=false,notifications=true,contentPadding=PaddingValues(0.dp))}
-                }
-                OnboardingStep.export->ExportStep(format) {formatKey=it.key}
-                OnboardingStep.tonight->{
-                    TonightStep(today,savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)},stamped=fix!=null,
-                        canStart=canStart,startImmediately=startImmediately,busy=busy,
-                        onStartChange={value->
-                            startImmediately=value;failure=null
-                            analytics?.track {UsageEvent(UsageEventName.trackingIntentChanged,step=UsageStep.ready,authorization=authorization,
-                                tracking=if(value) UsageTrackingIntent.startImmediately else UsageTrackingIntent.later)}
+            // Each step is its own pane, so TalkBack and accessibility clients hear and see the step change.
+            Column(Modifier.fillMaxWidth().semantics {paneTitle=stepLabel},verticalArrangement=Arrangement.spacedBy(18.dp)) {
+                when(step) {
+                    OnboardingStep.cover->CoverStep(today)
+                    OnboardingStep.intent->IntentStep(intents,enabled=!busy) {choice,on->
+                        val next=if(on) intents+choice else intents-choice
+                        intentKeys=OnboardingIntent.encode(next).joinToString(",")
+                        if(choice==OnboardingIntent.routes) presetKey=(if(on) RecordingPreset.everyStep else RecordingPreset.routes).key
+                    }
+                    OnboardingStep.scrub->ScrubStep(hour) {hour=it}
+                    OnboardingStep.pen->PenStep(preset,enabled=!busy) {presetKey=it.key}
+                    OnboardingStep.perm->{
+                        PermissionStep()
+                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp))}
+                    }
+                    OnboardingStep.stamp->StampStep(fix,locating || (locationGranted && services.locate!=null && fix==null && !locateFinished),available=locationGranted && services.locate!=null,placeName,enabled=!busy) {
+                        placeKey=it.key;failure=null
+                    }
+                    OnboardingStep.backfill->BackfillStep(today,photoCounts,photos!=null,photoEnabled && photos?.granted()==true,photoRunning,photoDenied,photoError,
+                        onToggle={on->
+                            if(!on) setPhotos(false)
+                            else if(photos?.granted()==true) setPhotos(true)
+                            else photos?.let {photoPermission?.launch(it.permissions)}
                         },
-                        nightly=nightly && notificationsAllowed,nightlyAvailable=notificationsAllowed,tomorrow=com.bontecou.whereday.platform.NightlyPageReminder.tomorrow(now),
-                        onNightlyChange={nightly=it})
-                    access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp))}
+                        onImport=importLauncher?.let {launcher->{launcher.launch(arrayOf("application/json","text/*","application/octet-stream"))}})
+                    OnboardingStep.glance->{
+                        GlanceStep(savedName)
+                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=false,notifications=true,contentPadding=PaddingValues(0.dp))}
+                    }
+                    OnboardingStep.export->ExportStep(format) {formatKey=it.key}
+                    OnboardingStep.tonight->{
+                        TonightStep(today,savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)},stamped=fix!=null,
+                            canStart=canStart,startImmediately=startImmediately,busy=busy,
+                            onStartChange={value->
+                                startImmediately=value;failure=null
+                                analytics?.track {UsageEvent(UsageEventName.trackingIntentChanged,step=UsageStep.ready,authorization=authorization,
+                                    tracking=if(value) UsageTrackingIntent.startImmediately else UsageTrackingIntent.later)}
+                            },
+                            nightly=nightly && notificationsAllowed,nightlyAvailable=notificationsAllowed,tomorrow=com.bontecou.whereday.platform.NightlyPageReminder.tomorrow(now),
+                            onNightlyChange={nightly=it})
+                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp))}
+                    }
                 }
             }
             if(step==OnboardingStep.cover && analyticsState?.available==true) TextButton(onClick={sharing=true},modifier=Modifier.align(Alignment.CenterHorizontally),colors=ButtonDefaults.textButtonColors(contentColor=wd.accent)) {
@@ -300,7 +304,7 @@ internal class OnboardingServices(
                 if(step!=OnboardingStep.cover) OnboardingBack(!busy,Modifier.align(Alignment.CenterHorizontally),onClick=back)
             }
             secondary?.let {(label,action)->OnboardingQuiet(label,!busy,Modifier.align(Alignment.CenterHorizontally).testTag("onboarding-skip")) {action()}}
-            if(step==OnboardingStep.cover && services.importer!=null) OnboardingQuiet(stringResource(R.string.onboarding_cover_import),!busy,
+            if(step==OnboardingStep.cover && importLauncher!=null) OnboardingQuiet(stringResource(R.string.onboarding_cover_import),!busy,
                 Modifier.align(Alignment.CenterHorizontally).testTag("onboarding-import")) {importLauncher.launch(arrayOf("application/json","text/*","application/octet-stream"))}
         }}}
     }

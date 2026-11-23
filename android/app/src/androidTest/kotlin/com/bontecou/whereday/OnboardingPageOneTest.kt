@@ -128,7 +128,7 @@ class OnboardingPageOneTest {
         compose.onNodeWithTag("onboarding-nightly-toggle").performScrollTo().assertIsOff().assertIsNotEnabled()
         compose.runOnIdle {access=RecordingAccessState(LocationPrecision.precise,true)}
         compose.onNodeWithTag("onboarding-nightly-toggle").performScrollTo().assertIsOn().assertIsEnabled()
-        compose.onNodeWithText(target.getString(R.string.onboarding_tonight_first_place)).assertExists()
+        compose.onNodeWithText(target.getString(R.string.onboarding_tonight_first_place),useUnmergedTree=true).assertExists()
         next();compose.waitUntil {decisions.isNotEmpty()}
         assertTrue(decisions.single().nightly);assertFalse(decisions.single().start)
     }
