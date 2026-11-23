@@ -126,7 +126,7 @@ On 14 May the window reaches back to November 2025 and holds all 90 days, so non
 
 - A calendar year. Some domestic rules count days from 1 January to 31 December. The calendar-year table above shows this count.
 - Any 12-month period. Many tax treaties follow the OECD Model Tax Convention, whose Article 15(2) refers to 183 days “in any twelve month period commencing or ending in the fiscal year concerned” ([OECD Model Tax Convention](https://www.oecd-ilibrary.org/taxation/model-tax-convention-on-income-and-on-capital-2017-full-version_ee524f5e-en)). Use the rolling-window check with a 365-day window and a threshold of 183.
-- The US substantial presence test. It is weighted: all days in the current year, one third of the days in the year before and one sixth of the days in the year before that, with at least 31 days in the current year ([IRS, Substantial Presence Test](https://www.irs.gov/individuals/international-taxpayers/substantial-presence-test); [Publication 519](https://www.irs.gov/publications/p519)). This calculator does not compute it.
+- The US substantial presence test. It is weighted: all days in the current year, one third of the days in the year before and one sixth of the days in the year before that, with at least 31 days in the current year ([IRS, Substantial Presence Test](https://www.irs.gov/individuals/international-taxpayers/substantial-presence-test); [Publication 519](https://www.irs.gov/publications/p519)). Use the [substantial presence test calculator](https://whereday.com/tools/substantial-presence-test-calculator/) to apply it to the same CSV.
 
 Reaching 183 days does not make you tax resident, and staying under it does not make you non-resident. Residency rules also look at your home, family, work and other ties, and each country defines its own days and exceptions. Use the count as evidence to discuss with a qualified adviser.
 
@@ -179,6 +179,10 @@ Whereday records the countries you visit on your iPhone and exports this CSV. Vi
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
 ## Read next
+
+- [Apply the US substantial presence test](https://whereday.com/tools/substantial-presence-test-calculator/)
+
+Use the same CSV with the IRS weighted three-year formula.
 
 - [Map the countries instead of counting days](https://whereday.com/tools/visited-countries-map/)
 
