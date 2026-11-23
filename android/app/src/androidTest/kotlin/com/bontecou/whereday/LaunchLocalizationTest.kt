@@ -75,7 +75,7 @@ class LaunchLocalizationTest {
         assertEquals("1 visita",es.resources.getQuantityString(R.plurals.history_import_visit_count,1,1))
         assertEquals("2 visitas",es.resources.getQuantityString(R.plurals.history_import_visit_count,2,2))
         assertEquals("3 puntos",es.resources.getQuantityString(R.plurals.history_import_point_count,3,3))
-        assertEquals("Your days, remembered",context("de").getString(R.string.onboarding_title_welcome))
+        assertEquals("Every day is a page.",context("de").getString(R.string.onboarding_cover_title))
     }
     private fun onboarding(tag:String) {
         val context=context(tag)
@@ -83,21 +83,24 @@ class LaunchLocalizationTest {
         var locations=0;var notifications=0
         val tester=StateRestorationTester(compose)
         tester.setContent {Localized(context) {Onboarding({locations++},{notifications++},authorization=UsageAuthorization.foreground) {completed+=it}}}
-        val titles=listOf(R.string.onboarding_title_welcome,R.string.onboarding_title_journal,R.string.onboarding_title_background,R.string.onboarding_title_notification,R.string.onboarding_title_ready)
-        if(tag=="ar-XB") assertNotEquals("Your days, remembered",context.getString(titles.first()))
+        val titles=listOf(R.string.onboarding_cover_title,R.string.onboarding_intent_title,R.string.onboarding_scrub_title,R.string.onboarding_pen_title,R.string.onboarding_perm_title,
+            R.string.onboarding_stamp_title,R.string.onboarding_backfill_title,R.string.onboarding_glance_title,R.string.onboarding_export_title,R.string.onboarding_tonight_title)
+        assertEquals(OnboardingStep.entries.size,titles.size)
+        if(tag=="ar-XB") assertNotEquals("Every day is a page.",context.getString(titles.first()))
         for(i in titles.indices) {
             val title=context.getString(titles[i])
             compose.onNodeWithText(title).performScrollTo().assertIsDisplayed();noOverflow(title)
-            if(i==2) compose.onNodeWithText(context.getString(R.string.onboarding_allow_location)).performScrollTo().performClick()
-            if(i==3) compose.onNodeWithText(context.getString(R.string.onboarding_allow_notifications)).performScrollTo().performClick()
-            if(i<4) compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
+            if(i>0) compose.onNodeWithTag("onboarding-back").performScrollTo().assertIsDisplayed()
+            if(OnboardingStep.at(i)==OnboardingStep.glance) compose.onNodeWithText(context.getString(R.string.onboarding_allow_notifications)).assertIsDisplayed()
+            // Location is already allowed here, so the permission step continues; the glance primary asks for notifications.
+            if(i<titles.lastIndex) compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
         }
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
         tester.emulateSavedInstanceStateRestore()
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn().assertIsDisplayed()
-        assertTrue(completed.isEmpty());assertEquals(1,locations);assertEquals(1,notifications)
+        assertTrue(completed.isEmpty());assertEquals(0,locations);assertEquals(1,notifications)
         compose.onNodeWithTag("onboarding-continue").performScrollTo().assertIsDisplayed()
-        noOverflow(context.getString(R.string.onboarding_start_finish))
+        noOverflow(context.getString(R.string.onboarding_tonight_start))
         capture(tag)
         compose.onNodeWithTag("onboarding-continue").performClick()
         compose.waitUntil {completed.size==1};assertTrue(completed.single().start)

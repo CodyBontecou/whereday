@@ -39,7 +39,7 @@ class LauncherLifecycleTest {
     @Test fun onboardingDefersRecordingShortcutWithoutGrantOrCommand()=runBlocking {
         AppGraph.from(context).preferences.update {it.copy(onboarded=false)}
         launch(LauncherAction.start).use {
-            compose.waitUntil(15_000) {compose.onAllNodesWithText("Start recording?").fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty() && compose.onAllNodes(hasText("Continue")).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15_000) {compose.onAllNodesWithText("Start recording?").fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty() && compose.onAllNodes(hasTestTag("onboarding-continue")).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             assertFalse(RecordingRuntime.active.value)
             AppGraph.from(context).preferences.update {it.copy(onboarded=true)}
             await("Start recording?")
