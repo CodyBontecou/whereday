@@ -1,3 +1,19 @@
+# Page One onboarding, last screen ("Page one closes tonight") without location access:
+# turn off "Send me tonight's page", tap Start my day, and land on the map with tracking off.
+# Prerequisites: Whereday debug build on an iOS pool simulator (iPhone 18 Pro, portrait,
+# default text size, English); location permission NOT granted (reset or never asked),
+# e.g. `argent settings-permissions reset location`. No place stamped in this run, so the
+# draft names "Your first place".
+# Side effects: sets hasCompletedOnboarding and persists onboardingIntents; no notification is
+# requested or scheduled (toggle off) and tracking does not start (no location permission).
+#
+# Coordinate exceptions: the nightly toggle (onboarding-nightly-toggle) and Start my day
+# (onboarding-next) carry ids, but Argent's iOS runner tree exposes only anonymous
+# AXScrollArea/AXButton nodes there, so taps keep their recorded points (402x874 pt
+# iPhone 18 Pro). The toggle tap lands on the switch track at the row's trailing edge.
+version: 1
+requires:
+  platform: ios
 steps:
   - launch:
       native: com.bontecou.isome
@@ -6,23 +22,44 @@ steps:
         args:
           - -hasCompletedOnboarding
           - NO
-          - --onboarding-page=6
+          - --onboarding-page=9
+          - -isTrackingEnabled
+          - NO
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -webhook.enabled
+          - NO
   - tool: await-ui-element
     args:
       condition: visible
       selector:
-        identifier: onboarding-next
+        text: Your first place · since this morning
+      timeoutMs: 20000
   - await: { idle: true }
-  - echo: Get Started at (0.5975,0.912), discovered from accessibility; native
-      id/text selectors are unavailable for the SwiftUI footer (see
-      onboarding-scrawl-formats). No tracking is requested. Completion must
-      remove onboarding.
+  - echo: "Tonight: turn off Send me tonight's page at (0.85, 0.673), then tap Start my day
+      at (0.5, 0.912); expect the map with tracking off and no notification prompt."
   - tool: gesture-tap
+    args: { x: 0.85, y: 0.673 }
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
     args:
-      x: 0.5975
-      y: 0.912
+      condition: visible
+      selector:
+        identifier: main-tab-map
+      timeoutMs: 15000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Tracking is off.
   - tool: await-ui-element
     args:
       condition: hidden
       selector:
-        identifier: onboarding-next
+        text: Your first place · since this morning

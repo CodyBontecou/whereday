@@ -1,0 +1,214 @@
+# Page One onboarding, cover to "Start my day", on an iOS pool simulator (iPhone 18 Pro,
+# portrait, default text size, English).
+#
+# Prerequisites (set before the run; the test does not change them):
+#   - Whereday debug build installed; location permission "Always" pre-granted
+#     (argent settings-permissions grant location-always, or simctl privacy grant).
+#   - Simulator location set to a fixed synthetic point, e.g.
+#     `xcrun simctl location <udid> set 37.3349,-122.0090`.
+#   - A fresh install: notifications must not have been asked yet, because the run answers
+#     the system notification alert (a SpringBoard alert the runner's `when:` cannot see,
+#     so it is not optional). To replay twice, reinstall the app (and re-grant location)
+#     between runs; `devicepool reset` leaves the next run a fresh install.
+# Side effects (synthetic data only): saves a SavedPlace "Home" at the simulated fix,
+# persists onboardingIntents=days,routes, applies the Every step recording preset,
+# sets hasCompletedOnboarding, starts tracking, and schedules one local notification
+# ("Page one is written") at the next 9 PM. Reset afterwards with
+# `devicepool reset <udid> --bundle com.bontecou.isome`.
+#
+# Coordinate exceptions: SwiftUI buttons carry accessibilityIdentifiers (onboarding-next,
+# onboarding-intent-routes, onboarding-place-home, ...), but Argent's iOS runner tree
+# (projected UIViews) exposes them only as anonymous AXButton/AXScrollArea nodes, so the
+# recorder could derive nothing better than a role-only selector. Each tap therefore keeps
+# the point it was recorded at (taken from the accessibility frame centre), and every tap
+# is followed by an accessibility-tree check of the destination (raw await-ui-element,
+# which reads the tree that does carry the ids). The slider drag is a raw swipe because a
+# slider drag has no selector form. The notification Allow button is a SpringBoard alert.
+# Points are for a 402x874 pt iPhone 18 Pro in portrait.
+#
+# -Notelet.LatestSeenAppVersion 2.0 suppresses the "What's new" sheet for app version 2.0
+# so the map is visible after onboarding; update it when MARKETING_VERSION changes.
+version: 1
+requires:
+  platform: ios
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - -hasCompletedOnboarding
+          - NO
+          - --onboarding-page=0
+          - -onboardingIntents
+          - days
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -webhook.enabled
+          - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-0
+      timeoutMs: 20000
+  - await: { idle: true }
+  - echo: "Cover: tap Write page one at (0.5, 0.855); expect the intent screen
+      (onboarding-step-1)."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.855 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-1
+  - await: { idle: true }
+  - echo: "Intent: tap Record runs and hikes at (0.5, 0.568); expect the note to say
+      2 things."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.568 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: set up 2 things
+  - echo: "Intent: tap Continue at (0.5, 0.912); expect the sample-day scrub screen."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-scrub
+  - await: { idle: true }
+  - echo: "Scrub: drag the time slider thumb from ~9:15 AM past the end of the
+      track (clamps to 11:45 PM; raw swipe because a slider drag has no selector
+      form); expect the card to read Home, Back for the night."
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.723
+      toX: 0.99
+      toY: 0.723
+      durationMs: 600
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Back for the night
+  - echo: "Scrub: tap Got it at (0.5, 0.912); expect Pick a pen with Every step
+      preselected by the routes intent."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-3
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: detailed track with every step
+  - echo: "Pen: tap Use this pen at (0.5, 0.912); expect location access (Always
+      pre-granted, so the primary reads Continue)."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-4
+  - await: { idle: true }
+  - echo: "Permission: tap Continue at (0.5, 0.912); expect the stamp screen with a
+      map fix and name chips."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-place-home
+      timeoutMs: 25000
+  - echo: "The stamp pin pulses (Reduce Motion off), so idle may warn that the screen
+      never held still; the next tap is gated on onboarding-place-home above."
+  - await: { idle: true }
+  - echo: "Stamp: tap the Home chip at (0.151, 0.645); expect the primary to read
+      Save “Home”."
+  - tool: gesture-tap
+    args: { x: 0.151, y: 0.645 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Save “Home”
+  - echo: "Stamp: tap Save “Home” at (0.5, 0.912) (creates a SavedPlace at the
+      simulated fix); expect the backfill heatmap."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-heatmap
+  - await: { idle: true }
+  - echo: "Backfill: leave photos off and tap Skip — start fresh at (0.5, 0.917);
+      expect the glance screen titled Leaving Home."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.917 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Leaving Home
+  - await: { idle: true }
+  - echo: "Glance: tap the primary at (0.5, 0.855) (Show Live Activity, or Continue
+      where Live Activities are off); expect the export screen with GPX
+      preselected by the routes intent."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.855 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: whereday-2026-11-23.gpx
+  - await: { idle: true }
+  - echo: "Export: tap Continue at (0.5, 0.855); expect tonight's draft naming Home."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.855 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Home · since this morning
+  - await: { idle: true }
+  - echo: "Tonight: keep Send me tonight's page on and tap Start my day at (0.5,
+      0.912). iOS then asks for notifications (fresh install); Allow at (0.684,
+      0.592) is a system alert with no app selector."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Would Like to Send You Notifications
+  - tool: gesture-tap
+    args: { x: 0.684, y: 0.592 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: main-tab-map
+      timeoutMs: 15000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        text: Home · since this morning
