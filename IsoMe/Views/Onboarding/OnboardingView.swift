@@ -44,10 +44,13 @@ extension RecordingDetail {
 /// First run, "Page One": learn to read a page, then write the first line of yours.
 struct OnboardingView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let viewModel: LocationViewModel
     let onComplete: (_ startTracking: Bool, _ opensImport: Bool) -> Void
 
     @ObservedObject private var locationManager: LocationManager
+    @ObservedObject private var storeManager: StoreManager
+    @StateObject private var checkout: OnboardingCheckout
 
     @State private var step: OnboardingStep
     @State private var intents: Set<OnboardingIntent>
@@ -62,6 +65,11 @@ struct OnboardingView: View {
     @State private var isConfiguringAutomaticPhotoSync = false
     @State private var exportSample: OnboardingExportSample?
     @State private var nightlyEnabled = true
+    @State private var selectedPlan: OnboardingPlanChoice = .yearly
+    @State private var familyPlan = false
+    @State private var showsAllPlans = false
+    /// Fixed when the last step appears, so its dates don't shift while someone reads them.
+    @State private var checkoutNow = Date()
     @State private var isFinishing = false
     @State private var liveActivitiesAllowed = LiveActivityManager.shared.areActivitiesEnabled
     @AppStorage(LocationViewModel.automaticPhotoSyncEnabledKey) private var automaticPhotoSyncEnabled = false
@@ -69,10 +77,13 @@ struct OnboardingView: View {
 
     private static var stepCount: Int { OnboardingStep.allCases.count }
 
-    init(viewModel: LocationViewModel, onComplete: @escaping (_ startTracking: Bool, _ opensImport: Bool) -> Void) {
+    init(viewModel: LocationViewModel, storeManager: StoreManager = .shared,
+         onComplete: @escaping (_ startTracking: Bool, _ opensImport: Bool) -> Void) {
         self.viewModel = viewModel
         self.onComplete = onComplete
         _locationManager = ObservedObject(initialValue: viewModel.locationManager)
+        _storeManager = ObservedObject(initialValue: storeManager)
+        _checkout = StateObject(wrappedValue: OnboardingCheckout(store: storeManager))
         _step = State(initialValue: Self.initialStepFromLaunchArguments())
         let intents = OnboardingIntentStore.load()
         _intents = State(initialValue: intents)
@@ -93,15 +104,25 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            header
-                .padding(.top, 12)
+            if showsTrialDone {
+                // Paid: there is no going back to the offer.
+                Color.clear.frame(height: 44).padding(.top, 12)
+            } else {
+                header
+                    .padding(.top, 12)
+            }
 
             GeometryReader { geometry in
                 ScrollView {
-                    page
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical, 20)
-                        .frame(minHeight: geometry.size.height, alignment: .center)
+                    VStack(alignment: .leading, spacing: 20) {
+                        page
+                        if controlsScrollWithPage {
+                            controls
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 20)
+                    .frame(minHeight: geometry.size.height, alignment: .center)
                 }
                 .scrollBounceBehavior(.basedOnSize)
                 .scrollDismissesKeyboard(.interactively)
@@ -110,8 +131,10 @@ struct OnboardingView: View {
             .clipped()
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: step)
 
-            controls
-                .padding(.top, 12)
+            if !controlsScrollWithPage {
+                controls
+                    .padding(.top, 12)
+            }
         }
         .padding(.horizontal, 24)
         .padding(.bottom, 16)
@@ -133,7 +156,32 @@ struct OnboardingView: View {
             prepare(newStep)
         }
         .onAppear { prepare(step) }
+        .onChange(of: checkout.isDone) { _, isDone in
+            if isDone { showsAllPlans = false }
+        }
+        .sheet(isPresented: $showsAllPlans) {
+            OnboardingAllPlansSheet(storeManager: storeManager, checkout: checkout,
+                                    plan: $selectedPlan, family: $familyPlan,
+                                    lead: OnboardingPlanLead.intent(for: intents), now: checkoutNow)
+        }
     }
+
+    /// Who the last step asks to pay: see `OnboardingAccessRouting`.
+    private var finalRoute: OnboardingFinalStepRoute {
+        OnboardingAccessRouting.route(
+            hasResolvedEntitlements: storeManager.hasResolvedEntitlements,
+            legacy: storeManager.hasLegacyTrackingAccess,
+            purchased: storeManager.isPurchased,
+            expiration: storeManager.trackingExpiration
+        )
+    }
+
+    private var showsTrialDone: Bool { step == .tonight && checkout.isDone }
+    private var showsFreeWeek: Bool { step == .tonight && !checkout.isDone && finalRoute == .freeWeek }
+
+    /// At accessibility text sizes the purchase controls and their disclosure scroll with the page,
+    /// so the timeline and plans aren't squeezed out.
+    private var controlsScrollWithPage: Bool { showsFreeWeek && dynamicTypeSize.isAccessibilitySize }
 
     @ViewBuilder
     private var page: some View {
@@ -147,7 +195,18 @@ struct OnboardingView: View {
         case .backfill: backfillPage
         case .glance: glancePage
         case .export: exportPage
-        case .tonight: tonightPage
+        case .tonight:
+            if checkout.isDone {
+                trialDonePage
+            } else {
+                switch finalRoute {
+                case .startDay: tonightPage
+                case .checking: checkingPage
+                case .freeWeek:
+                    OnboardingFreeWeekPage(storeManager: storeManager, plan: $selectedPlan, family: familyPlan,
+                                           today: timelineToday, now: checkoutNow)
+                }
+            }
         }
     }
 
@@ -853,7 +912,6 @@ struct OnboardingView: View {
 
     private var tonightPage: some View {
         let fire = NightlyPageSchedule.next(after: .now)
-        let time = ClockTimeFormatter.string(from: fire.date)
         return VStack(alignment: .leading, spacing: 18) {
             titleBlock("YOUR FIRST PAGE", fire.isTomorrow ? "Page one closes\ntomorrow night." : "Page one closes\ntonight.")
             VStack(alignment: .leading, spacing: 14) {
@@ -885,32 +943,112 @@ struct OnboardingView: View {
             .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.dialTick, style: StrokeStyle(lineWidth: 1, dash: [4, 3])))
             .accessibilityElement(children: .combine)
 
-            Toggle(isOn: $nightlyEnabled) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Send me tonight’s page").font(.body.weight(.semibold))
-                    Text(fire.isTomorrow ? "One notification tomorrow at \(time)." : "One notification tonight at \(time).")
-                        .font(.footnote)
-                        .foregroundStyle(TE.textMuted)
-                }
+            nightlyToggle(fire)
+        }
+    }
+
+    private func nightlyToggle(_ fire: NightlyPageSchedule.Fire) -> some View {
+        let time = ClockTimeFormatter.string(from: fire.date)
+        return Toggle(isOn: $nightlyEnabled) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Send me tonight’s page").font(.body.weight(.semibold))
+                Text(fire.isTomorrow ? "One notification tomorrow at \(time)." : "One notification tonight at \(time).")
+                    .font(.footnote)
+                    .foregroundStyle(TE.textMuted)
             }
-            .toggleStyle(TEToggleStyle())
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
-            .background(RoundedRectangle(cornerRadius: 16).fill(TE.card))
-            .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
-            .accessibilityIdentifier("onboarding-nightly-toggle")
+        }
+        .toggleStyle(TEToggleStyle())
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(RoundedRectangle(cornerRadius: 16).fill(TE.card))
+        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
+        .accessibilityIdentifier("onboarding-nightly-toggle")
+    }
+
+    // MARK: 10 · Free week (for someone who needs a plan)
+
+    /// What onboarding really set up; missing values drop their clause.
+    private var timelineToday: OnboardingTrialTimeline.Today {
+        OnboardingTrialTimeline.Today(
+            placeName: stampedPlaceName,
+            earlierPhotoDays: OnboardingTrialTimeline.earlierPhotoDays(in: photoDayCounts),
+            canRecord: locationManager.hasLocationPermission
+        )
+    }
+
+    private var checkingPage: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            titleBlock("YOUR FREE WEEK", "Page one starts\nnow, on us.")
+            ProgressView("Checking purchases…")
+                .font(.footnote)
+                .frame(maxWidth: .infinity, minHeight: 88)
+        }
+    }
+
+    /// After a purchase, trial start or restore: the only place notifications are asked for.
+    private var trialDonePage: some View {
+        let fire = NightlyPageSchedule.next(after: .now)
+        return VStack(alignment: .leading, spacing: 18) {
+            ZStack {
+                Circle().fill(TE.textPrimary)
+                Image(systemName: "checkmark")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundStyle(TE.surface)
+            }
+            .frame(width: 56, height: 56)
+            .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(verbatim: trialDoneKicker)
+                    .font(TE.mono(.caption2))
+                    .tracking(0.9)
+                    .foregroundStyle(TE.inkRust)
+                headline("You’re in.\nPage one is open.", size: 36)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("onboarding-trial-done")
+            Text(locationManager.hasLocationPermission
+                 ? "Recording starts now. Go about your day; Whereday writes it down."
+                 : "Allow location in iPhone Settings and Whereday starts writing your days.")
+                .foregroundStyle(TE.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+            nightlyToggle(fire)
+        }
+    }
+
+    private var trialDoneKicker: String {
+        guard case let .done(completion) = checkout.phase else { return "" }
+        switch completion {
+        case let .trial(ends):
+            let date = OnboardingFreeWeekCopy.shortDate(ends ?? OnboardingFreeWeekCopy.trialEnd(from: checkoutNow))
+            return String(localized: "Free until \(date)").uppercased()
+        case .subscription: return String(localized: "Your plan is active").uppercased()
+        case .lifetime: return String(localized: "Lifetime · purchased").uppercased()
+        case .restored: return String(localized: "Purchase restored").uppercased()
         }
     }
 
     // MARK: Controls
 
+    @ViewBuilder
     private var controls: some View {
+        if showsFreeWeek {
+            OnboardingFreeWeekControls(storeManager: storeManager, checkout: checkout, plan: selectedPlan,
+                                       family: familyPlan, now: checkoutNow) {
+                showsAllPlans = true
+            }
+        } else {
+            standardControls
+        }
+    }
+
+    private var standardControls: some View {
         VStack(spacing: 6) {
             Button(action: handlePrimaryAction) {
                 Text(primaryTitle)
             }
             .buttonStyle(TEActionButtonStyle(emphasis: .primary))
-            .disabled(isFinishing || (step == .backfill && isConfiguringAutomaticPhotoSync))
+            .disabled(isFinishing || (step == .backfill && isConfiguringAutomaticPhotoSync)
+                      || (step == .tonight && !checkout.isDone && finalRoute == .checking))
             .accessibilityIdentifier("onboarding-next")
 
             if let secondaryTitle {
@@ -945,7 +1083,9 @@ struct OnboardingView: View {
             return stampFix == nil && !stampWaiting ? "Continue" : "Skip for now"
         case .backfill, .export: return "Continue"
         case .glance: return liveActivitiesAllowed ? "Show Live Activity" : "Continue"
-        case .tonight: return "Start my day"
+        case .tonight:
+            if checkout.isDone { return "Open today’s map" }
+            return finalRoute == .checking ? "Start my free week" : "Start my day"
         }
     }
 
@@ -988,7 +1128,11 @@ struct OnboardingView: View {
             locationManager.setLiveActivityEnabled(true)
             advance()
         case .tonight:
-            finish()
+            if checkout.isDone {
+                finishAfterPurchase()
+            } else if finalRoute == .startDay {
+                finish()
+            }
         default:
             advance()
         }
@@ -1029,6 +1173,11 @@ struct OnboardingView: View {
             Task { await loadPhotoDays() }
         case .glance:
             liveActivitiesAllowed = LiveActivityManager.shared.areActivitiesEnabled
+        case .tonight:
+            checkoutNow = Date()
+            if storeManager.productsByID.isEmpty {
+                Task { await storeManager.loadProducts() }
+            }
         default:
             break
         }
@@ -1049,6 +1198,18 @@ struct OnboardingView: View {
             if schedulesNotification {
                 await OnboardingNightlyNotification.schedule(at: fire.date)
             }
+            completeOnboarding(opensImport: false)
+        }
+    }
+
+    /// The "You're in" action: notifications are asked for and scheduled only now, after the purchase.
+    private func finishAfterPurchase() {
+        guard !isFinishing else { return }
+        isFinishing = true
+        let fire = NightlyPageSchedule.next(after: .now)
+        let schedulesNotification = nightlyEnabled
+        Task { @MainActor in
+            await checkout.finish(nightlyEnabled: schedulesNotification, nightlyDate: fire.date)
             completeOnboarding(opensImport: false)
         }
     }
