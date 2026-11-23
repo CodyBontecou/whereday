@@ -50,6 +50,7 @@ const pages = {
   "/tools/kml-to-gpx/": "/_markdown/tools/kml-to-gpx/index.md",
   "/tools/kml-viewer/": "/_markdown/tools/kml-viewer/index.md",
   "/tools/merge-gpx/": "/_markdown/tools/merge-gpx/index.md",
+  "/tools/substantial-presence-test-calculator/": "/_markdown/tools/substantial-presence-test-calculator/index.md",
   "/tools/visited-countries-map/": "/_markdown/tools/visited-countries-map/index.md",
   "/zh-hans/": "/_markdown/zh-hans/index.md"
 };

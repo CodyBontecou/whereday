@@ -14,7 +14,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed Oc
 
 In Whereday, open Timeline → Country Days to count local dates represented by your recorded visits, route points, and manual stays. Choose this year, the last 365 days, or all time, then open a country to review its dates. Viewing the counts and adding manual stays are free. From version 1.8, new users retain exports after tracking access expires; existing free users keep their previous export-unlock requirement.
 
-This guide covers Country Days in Whereday 1.7.16. It is a personal travel journal: its rules do not determine tax residency, immigration status, or how a visa counts a day.
+This guide covers Country Days in Whereday 1.7.16. It is a personal travel journal: its rules do not determine tax residency, immigration status, or how a visa counts a day. To apply the IRS 183-day weighted formula to an exported Country Days CSV, use the [substantial presence test calculator](https://whereday.com/tools/substantial-presence-test-calculator/).
 
 Build your country record
 - [Open your country totals](https://whereday.com/blog/track-days-in-country-iphone/#start)

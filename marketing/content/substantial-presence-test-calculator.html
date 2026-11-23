@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/country-days.css">
+<section class="gpx-tool cdc-tool" aria-labelledby="calculator">
+  <h2 id="calculator">Calculate the substantial presence test</h2>
+  <p class="cdc-limits" id="limits-summary"><strong>This is a count, not a ruling.</strong> It is not tax or immigration advice and does not say whether you are a US tax resident. It applies one IRS formula to the days you give it. Missing dates make the count too low, and exceptions such as the closer connection exception or a tax treaty can change the outcome. Take the count to a qualified adviser. <a href="#meeting-the-test-is-not-the-end">Read what the test does not decide</a>.</p>
+  <p>Load a Country Days CSV, add US stays by hand, or type a number of days for a year. Pick the year to test and the page shows the days, the weights, the total and the result. No account, upload or analytics.</p>
+  <noscript><p>JavaScript is needed to read files and count dates in your browser. The explanations and worked examples below work without it.</p></noscript>
+  <div id="spt-tool" hidden>
+    <fieldset>
+      <legend>Load a CSV</legend>
+      <label for="spt-file">Choose a Country Days CSV <span class="gpx-small">(columns <code>country_code</code> and <code>local_date</code>; up to 10 MiB)</span></label>
+      <input id="spt-file" type="file" accept=".csv,text/csv" aria-describedby="spt-status">
+      <p class="gpx-small" id="spt-ignored"></p>
+    </fieldset>
+    <fieldset>
+      <legend>Add a US stay by hand</legend>
+      <form id="spt-stay-form" novalidate>
+        <div class="cdc-row">
+          <div><label for="spt-first">First date</label><input id="spt-first" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="spt-last">Last date <span class="gpx-small">(inclusive)</span></label><input id="spt-last" type="date" min="1900-01-01" max="2100-12-31" required></div>
+        </div>
+        <div class="gpx-actions"><button type="submit">Add stay</button></div>
+        <p id="spt-stay-error" class="cdc-error" role="alert"></p>
+      </form>
+      <h3 id="spt-stays-title">Your US stays</h3>
+      <p id="spt-stays-empty" class="gpx-small">None yet. A stay counts every date from its first to its last date.</p>
+      <ul id="spt-stays" aria-labelledby="spt-stays-title"></ul>
+    </fieldset>
+    <div class="gpx-actions"><button id="spt-irs" type="button">Try the IRS example</button><button id="spt-synthetic" type="button">Try a second synthetic example</button><button id="spt-clear" type="button" disabled>Clear everything</button></div>
+    <p id="spt-status" role="status" aria-live="polite">Choose a file, add a stay or type yearly days. The examples use invented dates.</p>
+    <div id="spt-rejected" hidden>
+      <h3 id="spt-rejected-title">Rows that were not counted</h3>
+      <p id="spt-rejected-note"></p>
+      <div class="table-scroll" role="region" aria-labelledby="spt-rejected-title" tabindex="0"><table><thead><tr><th scope="col">File line</th><th scope="col">Problem</th><th scope="col">Row text</th></tr></thead><tbody id="spt-rejected-rows"></tbody></table></div>
+    </div>
+    <h3 id="spt-working-title">Your working</h3>
+    <label for="spt-year">Year to test</label>
+    <select id="spt-year"></select>
+    <p class="gpx-small">A typed number replaces the counted dates for that year, so nothing is added twice. <strong>Excluded days</strong> are subtracted per year and never take a year below zero. Exempt-individual and medical-condition days can only be excluded if you file Form 8843 (<a href="https://www.irs.gov/forms-pubs/about-form-8843">IRS, About Form 8843</a>). Leave blank if none apply.</p>
+    <div class="table-scroll" role="region" aria-labelledby="spt-working-title" tabindex="0"><table><thead><tr><th scope="col">Year</th><th scope="col">From dates</th><th scope="col">Typed days (optional)</th><th scope="col">Excluded days (optional)</th><th scope="col">Days used</th><th scope="col">Weight</th><th scope="col">Weighted days</th></tr></thead><tbody id="spt-rows"></tbody></table></div>
+    <h3>Result</h3>
+    <div id="spt-result" aria-live="polite"></div>
+    <div id="spt-detail" hidden>
+      <h3>Dates counted</h3>
+      <div id="spt-date-lists"></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="how-the-test-works">
+  <h2 id="how-the-test-works">How the test works</h2>
+  <p>You meet the substantial presence test for a year if both conditions are true (<a href="https://www.irs.gov/individuals/international-taxpayers/substantial-presence-test">IRS, Substantial Presence Test</a>):</p>
+  <ol>
+    <li>You were physically present in the United States on at least <strong>31 days</strong> in the current year.</li>
+    <li>Your weighted days over the 3-year period that includes the current year and the 2 years before it come to at least <strong>183</strong>.</li>
+  </ol>
+  <div class="table-scroll" role="region" aria-labelledby="weights-caption" tabindex="0"><table><caption id="weights-caption">The weights</caption><thead><tr><th scope="col">Year</th><th scope="col">Count</th></tr></thead><tbody>
+    <tr><th scope="row">Current year</th><td>All days</td></tr>
+    <tr><th scope="row">First year before</th><td>1/3 of the days</td></tr>
+    <tr><th scope="row">Second year before</th><td>1/6 of the days</td></tr>
+  </tbody></table></div>
+  <p>The IRS does not say to round, so this page shows the exact decimal: 100 days at one third is 33.33.</p>
+  <p>Any part of a day counts. The IRS treats you as present if you were in the United States at any time during the day (see <a href="https://www.irs.gov/publications/p519">Publication 519</a>). Whereday also counts any record on a local date as a full day, so the two rules line up.</p>
+  <p>For this test, the United States means the 50 states, the District of Columbia and US territorial waters. The IRS says it does not include US territories, so dates in Puerto Rico, Guam, the US Virgin Islands, American Samoa and the Northern Mariana Islands (<code>PR</code>, <code>GU</code>, <code>VI</code>, <code>AS</code>, <code>MP</code>) are ignored here, as is every other code except <code>US</code>.</p>
+</section>
+
+<section aria-labelledby="worked-examples">
+  <h2 id="worked-examples">Worked examples</h2>
+  <p>The first row is the IRS’s own example. The other two are invented for this page. The calculator’s output is checked against this table.</p>
+  <div class="table-scroll" role="region" aria-labelledby="examples-caption" tabindex="0"><table id="spt-examples"><caption id="examples-caption">Three examples (rows 2 and 3 are invented)</caption><thead><tr><th scope="col">Example</th><th scope="col">Year tested</th><th scope="col">Days in that year</th><th scope="col">Year before</th><th scope="col">Two years before</th><th scope="col">Weighted total</th><th scope="col">Result</th></tr></thead><tbody>
+    <tr data-year="2025" data-days="120,120,120" data-total="180.00" data-result="not met"><th scope="row">IRS example (<a href="https://www.irs.gov/individuals/international-taxpayers/substantial-presence-test">IRS</a>)</th><td>2025</td><td>120</td><td>120 (÷3 = 40)</td><td>120 (÷6 = 20)</td><td>120 + 40 + 20 = 180.00</td><td>Not met: 180 is below 183</td></tr>
+    <tr data-year="2026" data-days="150,120,90" data-total="205.00" data-result="met"><th scope="row">Invented: enough days</th><td>2026</td><td>150</td><td>120 (÷3 = 40)</td><td>90 (÷6 = 15)</td><td>150 + 40 + 15 = 205.00</td><td>Met</td></tr>
+    <tr data-year="2025" data-days="30,365,365" data-total="212.50" data-result="not met"><th scope="row">Invented: under 31 days</th><td>2025</td><td>30</td><td>365 (÷3 = 121.67)</td><td>365 (÷6 = 60.83)</td><td>30 + 121.67 + 60.83 = 212.50</td><td>Not met: fewer than 31 days in 2025, whatever the total</td></tr>
+  </tbody></table></div>
+  <p>Press <strong>Try the IRS example</strong> to load the first row, and <strong>Try a second synthetic example</strong> to load the second as dated stays. The synthetic stays also include a few days in Puerto Rico and Canada, which are ignored. The third row is not a realistic itinerary; it only shows that the 31-day condition is checked separately.</p>
+</section>
+
+<section aria-labelledby="days-not-counted">
+  <h2 id="days-not-counted">Days that are not counted</h2>
+  <p>The IRS lists five kinds of day you do not count:</p>
+  <ul>
+    <li>Days you commute to work in the United States from a residence in Canada or Mexico, if you regularly commute from there.</li>
+    <li>Days you are in the United States for less than 24 hours while in transit between two places outside the United States.</li>
+    <li>Days you work as a crew member of a foreign vessel.</li>
+    <li>Days you could not leave because of a medical condition that developed while you were in the United States.</li>
+    <li>Days you are an exempt individual.</li>
+  </ul>
+  <p>“Exempt individual” is a tax term for certain visa holders and athletes, not people exempt from US tax. It covers foreign government-related individuals on A or G visas (except A-3 and G-5), teachers or trainees on J or Q visas, students on F, J, M or Q visas (teachers, trainees and students must substantially comply with their visa requirements), and professional athletes in the United States temporarily to compete in a charitable sports event.</p>
+  <p>To exclude exempt-individual or medical-condition days you attach <a href="https://www.irs.gov/forms-pubs/about-form-8843">Form 8843</a> to your return, or send it by the return due date if you do not have to file one. If you do not file it on time you cannot exclude those days, unless you show by clear and convincing evidence that you took reasonable actions to learn the filing requirements and significant steps to comply. Enter these days in the excluded-days field; this page cannot tell which of your days qualify.</p>
+</section>
+
+<section aria-labelledby="meeting-the-test-is-not-the-end">
+  <h2 id="meeting-the-test-is-not-the-end">Meeting the test is not the end</h2>
+  <p>Meeting the test does not settle your status. Someone who meets it may still be treated as a nonresident under the <a href="https://www.irs.gov/individuals/international-taxpayers/closer-connection-exception-to-the-substantial-presence-test">closer connection exception</a>. Among other conditions, you must have been in the United States fewer than 183 days in the year, kept a tax home in a foreign country for the whole year and had a closer connection to that country, and you must not have taken steps toward a green card. You claim it by filing <a href="https://www.irs.gov/forms-pubs/about-form-8840">Form 8840</a>.</p>
+  <p>A tax treaty can also affect your position. The IRS form for a treaty-based return position is <a href="https://www.irs.gov/forms-pubs/about-form-8833">Form 8833</a>. A green card is a separate route to US tax residency, and this test does not look at it.</p>
+  <p>This page makes no statement about any person’s outcome. Take the count and its dates to a qualified tax or immigration adviser.</p>
+</section>
+
+<section aria-labelledby="where-your-dates-come-from">
+  <h2 id="where-your-dates-come-from">Where your dates come from</h2>
+  <p>The page reads the Whereday Country Days CSV, with columns <code>country_code</code> and <code>local_date</code>. The <a href="/tools/country-days-calculator/#csv-format">CSV format</a> and its row checks are described on the days-in-country calculator, and this page uses the same rules: bad rows are listed with their line numbers, and a repeated country and date counts once.</p>
+  <p>Recorded days only cover the time the app was recording, so gaps make the count too low. Add missing stays by hand, and check the result against your I-94 travel history; <a href="/blog/find-your-travel-history/">find your travel history</a> explains where to look. <a href="/blog/track-days-in-country-iphone/">How Whereday records country days</a> covers travel days and time zones. For other day counts, use the <a href="/tools/country-days-calculator/">days-in-country calculator</a>, or see all <a href="/tools/">tools</a>.</p>
+  <p>Everything happens in your browser. This page blocks network connections and includes no analytics.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Does a layover count?</h3>
+  <p>Days in the United States for less than 24 hours while in transit between two places outside the United States are not counted. A longer stay on a layover is a different case; see the <a href="https://www.irs.gov/individuals/international-taxpayers/substantial-presence-test">IRS page</a>.</p>
+  <h3>Do partial days count?</h3>
+  <p>Yes. Any day you are physically in the United States counts, even briefly, unless one of the exclusions applies.</p>
+  <h3>Does Puerto Rico count?</h3>
+  <p>No. The IRS says the United States for this test does not include US territories, so this calculator ignores <code>PR</code> and the other territory codes.</p>
+  <h3>What if I’m on an F-1 visa?</h3>
+  <p>Students on F, J, M or Q visas who substantially comply with their visa requirements are exempt individuals, and their days are not counted, but you claim this with Form 8843. Enter those days as excluded days. Whether you qualify is for you and your adviser to decide.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Keep the dates behind your count.</h2><p>Whereday records the countries you’re in and keeps the dates on your iPhone. Export Country Days as CSV whenever you need a count.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/spt.mjs?v=20261123a"></script>

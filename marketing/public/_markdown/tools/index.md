@@ -39,6 +39,12 @@ Count the days you spent in each country from a Whereday Country Days CSV or sta
 
 Expand each count to see its dates. [See how Whereday records country days](https://whereday.com/blog/track-days-in-country-iphone/).
 
+## [Substantial presence test calculator](https://whereday.com/tools/substantial-presence-test-calculator/)
+
+Apply the IRS weighted three-year formula (31 days this year, 183 weighted days) to a Country Days CSV, US stays you type in or yearly counts. See the weight for each year, the total and which dates were counted. This is a count, not tax advice. Your file stays in your browser.
+
+Then [count days in other countries](https://whereday.com/tools/country-days-calculator/).
+
 ## [GPX viewer and file inspector](https://whereday.com/tools/gpx-viewer/)
 
 Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.
