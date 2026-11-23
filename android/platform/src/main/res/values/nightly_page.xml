@@ -1,0 +1,5 @@
+<resources>
+    <string name="nightly_page_channel">Tonight\'s page</string>
+    <string name="nightly_page_title">Page one is written</string>
+    <string name="nightly_page_body">See where your day went.</string>
+</resources>

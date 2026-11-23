@@ -23,7 +23,9 @@ data class AppSettings(val onboarded: Boolean = false, val appearance: String = 
     val map:MapLayerSettings=MapLayerSettings(),
     /** How route points are chosen: a [com.bontecou.whereday.domain.RouteSamplingMode] key. */
     val routeSamplingMode:String=com.bontecou.whereday.domain.RouteSamplingMode.distance.key,
-    val routeSampleIntervalSeconds:Int=com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS) {
+    val routeSampleIntervalSeconds:Int=com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS,
+    /** Onboarding's "What should it remember for you?" choices, as stable keys; null until the step is answered. */
+    val onboardingIntents:Set<String>?=null) {
     val routeSampling get()=com.bontecou.whereday.domain.RouteSamplingPolicy(com.bontecou.whereday.domain.RouteSamplingMode.fromKey(routeSamplingMode),distanceFilter,
         routeSampleIntervalSeconds.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS)
     /** The recording preset these settings match exactly, or null when they were tuned by hand (Custom). */
@@ -88,11 +90,13 @@ class AppPreferences internal constructor(private val store:DataStore<Preference
         val mapOnline=booleanPreferencesKey("map_online_tiles")
         val routeMode=stringPreferencesKey("route_sampling_mode")
         val routeInterval=intPreferencesKey("route_sample_interval_seconds")
+        val onboardingIntents=stringSetPreferencesKey("onboarding_intents")
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
         p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
         MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: true),
-        com.bontecou.whereday.domain.RouteSamplingMode.fromKey(p[Keys.routeMode]).key,p[Keys.routeInterval]?.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS)
+        com.bontecou.whereday.domain.RouteSamplingMode.fromKey(p[Keys.routeMode]).key,p[Keys.routeInterval]?.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS,
+        p[Keys.onboardingIntents])
     val settings = store.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { store.edit { p ->
         val previous=read(p)
@@ -122,6 +126,8 @@ class AppPreferences internal constructor(private val store:DataStore<Preference
         }
         p[Keys.roadDisplay]=value.roadDisplayEnabled
         p[Keys.accessGate]=value.accessGateCleared
+        require(value.onboardingIntents==null || (value.onboardingIntents.size<=16 && value.onboardingIntents.all {it.length in 1..32}))
+        value.onboardingIntents?.let {p[Keys.onboardingIntents]=it} ?: p.remove(Keys.onboardingIntents)
         value.map.let {map->
             p[Keys.mapPath]=map.path;p[Keys.mapPoints]=map.points;p[Keys.mapVisits]=map.visits;p[Keys.mapEndpoints]=map.endpoints
             p[Keys.mapStraight]=map.straightGaps;p[Keys.mapLive]=map.liveSession;p[Keys.mapSuggestions]=map.visitSuggestions;p[Keys.mapOnline]=map.online
