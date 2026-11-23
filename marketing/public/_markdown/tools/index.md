@@ -21,6 +21,12 @@ Combine several GPX files into one, such as a week of daily exports. Keep tracks
 
 Then [open the result in the GPX viewer](https://whereday.com/tools/gpx-viewer/). Your files stay in your browser.
 
+## [KML and KMZ viewer](https://whereday.com/tools/kml-viewer/)
+
+Open a KML or KMZ file and see its placemarks, lines, polygons and timed gx:Track points, plus a list of what the viewer skips. Your file stays in your browser.
+
+Then [convert it to GPX](https://whereday.com/tools/kml-to-gpx/) or [check a GPX file](https://whereday.com/tools/gpx-viewer/).
+
 ## [KML ⇄ GPX converter](https://whereday.com/tools/kml-to-gpx/)
 
 Convert KML to GPX or GPX to KML, including Google Earth `gx:Track` timestamps, with a report of what was kept and skipped before you download. Your file stays in your browser.

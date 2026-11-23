@@ -82,7 +82,7 @@ The GPX uses two `trkseg` elements. The KML has two timed tracks and `gx:interpo
 
 A consumer that ignores the group column or merges the lines could draw an extra connection. Preserve the grouping and check the rendered result. A CSV row sequence alone is not a guarantee that a map will understand the break.
 
-Need to switch? [Convert KML ⇄ GPX in your browser](https://whereday.com/tools/kml-to-gpx/), with a report of what was kept and dropped, including gx:Track times.
+Need to switch? [Convert KML ⇄ GPX in your browser](https://whereday.com/tools/kml-to-gpx/), with a report of what was kept and dropped, including gx:Track times. Just want to look inside a KML or KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/).
 
 ## Open a GPX-derived CSV without losing its meaning
 

@@ -12,7 +12,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed No
 
 ## Choose a KML or GPX file. It is converted on this device.
 
-The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s [File API](https://developer.mozilla.org/en-US/docs/Web/API/File_API) and never leaves the page.
+The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s [File API](https://developer.mozilla.org/en-US/docs/Web/API/File_API) and never leaves the page. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/).
 
 JavaScript is needed to convert files in your browser. The explanations and sample downloads below work without it.
 
@@ -90,7 +90,7 @@ Times are written as UTC date-times ([RFC 3339](https://www.rfc-editor.org/rfc/r
 ## Limits
 
 - One file, up to 10 MiB and 50,000 points, the same limits as the [GPX viewer](https://whereday.com/tools/gpx-viewer/).
-- KMZ is not supported. A KMZ is a zip with a `doc.kml` inside; this page has no unzip step. Unzip it yourself and choose the KML. Images inside a KMZ are never converted.
+- KMZ is not supported. A KMZ is a zip with a `doc.kml` inside; this page has no unzip step. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/), or unzip it yourself and choose the KML. Images inside a KMZ are never converted.
 - Polygons are skipped and reported; GPX has no area shape.
 - Styles, icons, ExtendedData, folders and overlays are dropped.
 - NetworkLinks are not followed; this page makes no network requests.
@@ -113,7 +113,7 @@ Yes. KML altitude becomes GPX `<ele>` and back, as written. When only some point
 
 ### Can I convert KMZ?
 
-Not directly. Unzip the KMZ and choose the `doc.kml` inside.
+Not directly. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/), or unzip it and choose the `doc.kml` inside.
 
 ### Why are my times missing?
 
