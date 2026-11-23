@@ -42,7 +42,13 @@ class ReviewMilestoneTest {
         assertNull(never.requestedAt);assertTrue(never.eligible("2.0",now))
     }
     @Test fun onlyChosenSuccessesQualify() {
-        assertEquals(setOf(ReviewSuccess.backup,ReviewSuccess.scheduledExport),ReviewSuccess.entries.filterNot {it.qualifies}.toSet())
+        assertEquals(setOf(ReviewSuccess.backup,ReviewSuccess.scheduledExport,ReviewSuccess.purchase),ReviewSuccess.entries.filterNot {it.qualifies}.toSet())
+    }
+    @Test fun aPurchaseHoldsRequestsForTwentyFourHours() {
+        val used=ReviewMilestone().used(day).used(day.plusDays(1));val bought=used.purchased(now)
+        assertFalse(bought.eligible("1.0",now));assertFalse(bought.eligible("1.0",now.plus(ReviewMilestone.purchaseQuietPeriod).minusSeconds(1)))
+        assertTrue(bought.eligible("1.0",now.plus(ReviewMilestone.purchaseQuietPeriod)))
+        assertEquals(ReviewMilestone(purchasedAt=now),ReviewMilestone().used(day).purchased(now).cleared(),"clear keeps the purchase time")
     }
     @Test fun distinctCivilDatesMatchMidnightAndDSTRatherThanElapsedTwentyFourHours() {
         val zone=ZoneId.of("America/New_York")

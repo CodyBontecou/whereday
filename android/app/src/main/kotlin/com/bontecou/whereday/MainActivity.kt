@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {graph.journalClear.awaitReady()} catch(_:JournalClearPending) {return@repeatOnLifecycle}
-                // Resume only counts a day of use. Review requests come from export, import and purchase successes.
+                // Resume only counts a day of use. Review requests come from export and import successes; a purchase holds them for 24h.
                 graph.reviewMilestones.appUsed()
                 combine(graph.reviewMilestones.pendingSuccess,reviewWindowFocused,graph.preferences.settings.map {it.onboarded}.distinctUntilChanged(),graph.journalClear.state.map {!it.blocked}.distinctUntilChanged()) {success,focused,onboarded,ready->
                     // A paywall, sheet or dialog takes window focus, so a success behind one waits for it to close.

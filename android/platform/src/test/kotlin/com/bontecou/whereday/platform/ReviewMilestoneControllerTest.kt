@@ -62,11 +62,24 @@ class ReviewMilestoneControllerTest {
             controller.maybeRequest(host)
             assertEquals(1,host.launches.get());assertEquals("1.0",store.value.requestedVersion);assertEquals(clock.time,store.value.requestedAt)
             assertNull(controller.pendingSuccess.value)
-            controller.succeedAndWait(ReviewSuccess.purchase);controller.maybeRequest(host)
+            controller.succeedAndWait(ReviewSuccess.historyImport);controller.maybeRequest(host)
             assertEquals("once per version",1,host.launches.get())
         } finally {controller.close()}
     }
-    @Test fun aNewVersionAsksAgainOnlyAfterTheCooldown()=runBlocking {
+    @Test fun aPurchaseNeverAsksAndHoldsLaterSuccessesForTwentyFourHours()=runBlocking {
+        val store=Store(ReviewMilestone(1,day));val clock=TestClock();val controller=controller(store,clock);val host=Host()
+        try {
+            controller.succeeded(ReviewSuccess.purchase)
+            withTimeout(5000) {while(store.value.purchasedAt==null) delay(1)}
+            assertEquals(clock.time,store.value.purchasedAt);assertEquals("a purchase still counts the day",2,store.value.useDays)
+            assertNull("a purchase is not a success moment",controller.pendingSuccess.value)
+            clock.time=clock.time.plus(Duration.ofHours(1));controller.succeedAndWait();controller.maybeRequest(host)
+            assertEquals(0,host.prepares.get());assertNull(store.value.requestedAt)
+            clock.time=clock.time.plus(Duration.ofHours(23));controller.succeedAndWait();controller.maybeRequest(host)
+            assertEquals(1,host.launches.get());assertNotNull(store.value.requestedAt)
+        } finally {controller.close()}
+    }
+        @Test fun aNewVersionAsksAgainOnlyAfterTheCooldown()=runBlocking {
         val clock=TestClock();val store=Store(twoDays.claim("1.0",clock.time));val host=Host()
         val controller=controller(store,clock,version="1.1")
         try {

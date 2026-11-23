@@ -62,7 +62,7 @@ jobs:
         run: >-
           ./android/gradlew -p android :domain:test :export:test :billing:test
           :platform:testReleaseUnitTest :app:testReleaseUnitTest :app:lintRelease :app:bundleRelease
-          "-Pwhereday.versionCode=$VERSION_CODE" "-Pwhereday.versionName=$VERSION_NAME" --no-daemon
+          "-Pwhereday.versionCode=$VERSION_CODE" "-Pwhereday.versionName=$VERSION_NAME" -Pwhereday.playReviewEnabled=true --no-daemon
       - name: Verify packaged release notices
         run: |
           python3 android/scripts/verify_runtime_notice_package.py android/app/build/outputs/bundle/release/app-release.aab android/app/build/generated/runtime-notices/release

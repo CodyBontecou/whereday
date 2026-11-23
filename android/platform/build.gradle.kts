@@ -14,10 +14,16 @@ android {
     sourceSets.getByName("androidTest").java.srcDir("src/sharedTest/kotlin")
     testOptions { unitTests.isIncludeAndroidResources = true }
     buildFeatures { buildConfig=true }
+    // Play's in-app review is on in release and off in debug (mapQa and scrawl fall back to debug).
+    // -Pwhereday.playReviewEnabled=true|false overrides both; release unit tests fail if a release build has it off.
+    val reviewOverride=providers.gradleProperty("whereday.playReviewEnabled").orNull
+    require(reviewOverride==null || reviewOverride in setOf("true","false"))
+    buildTypes {
+        getByName("debug") { buildConfigField("boolean","PLAY_REVIEW_AVAILABLE",reviewOverride ?: "false") }
+        getByName("release") { buildConfigField("boolean","PLAY_REVIEW_AVAILABLE",reviewOverride ?: "true") }
+    }
+    sourceSets.getByName("testRelease").java.srcDir("src/testRelease/kotlin")
     defaultConfig {
-        val reviewEnabled=providers.gradleProperty("whereday.playReviewEnabled").getOrElse("false")
-        require(reviewEnabled in setOf("true","false"))
-        buildConfigField("boolean","PLAY_REVIEW_AVAILABLE",reviewEnabled)
         buildConfigField("String","PURCHASE_PRODUCT_ID",configString(providers.gradleProperty("whereday.purchaseProductId").getOrElse("whereday_export_lifetime")))
         buildConfigField("String","SUBSCRIPTION_PRODUCT_ID",configString(providers.gradleProperty("whereday.subscriptionProductId").getOrElse("whereday_individual")))
         buildConfigField("String","PURCHASE_VERIFIER_URL",configString(providers.gradleProperty("whereday.purchaseVerifierUrl").getOrElse("")))

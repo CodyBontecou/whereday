@@ -36,7 +36,9 @@ class AndroidReviewMilestoneStore internal constructor(path:File,private val clo
             }
             "2"->{
                 val days=number("useDays");require(days!=null && days in 0..ReviewMilestone.maxUseDays.toLong())
-                ReviewMilestone(days.toInt(),text("lastUseDay")?.let(LocalDate::parse),text("requestedVersion"),number("requestedAt")?.let(Instant::ofEpochMilli))
+                // purchasedAt was added later without a version bump: absent means no purchase recorded.
+                ReviewMilestone(days.toInt(),text("lastUseDay")?.let(LocalDate::parse),text("requestedVersion"),number("requestedAt")?.let(Instant::ofEpochMilli),
+                    number("purchasedAt")?.let(Instant::ofEpochMilli))
             }
             else->throw IllegalArgumentException("Unsupported review milestone version")
         }
@@ -52,7 +54,7 @@ class AndroidReviewMilestoneStore internal constructor(path:File,private val clo
         check(file.baseFile.parentFile!!.isDirectory || file.baseFile.parentFile!!.mkdirs())
         val json=com.google.gson.JsonObject().apply {
             addProperty("version",2);addProperty("useDays",value.useDays);addProperty("lastUseDay",value.lastUseDay?.toString())
-            addProperty("requestedVersion",value.requestedVersion);addProperty("requestedAt",value.requestedAt?.toEpochMilli())
+            addProperty("requestedVersion",value.requestedVersion);addProperty("requestedAt",value.requestedAt?.toEpochMilli());addProperty("purchasedAt",value.purchasedAt?.toEpochMilli())
         }.let {com.google.gson.GsonBuilder().serializeNulls().create().toJson(it)}.toByteArray(Charsets.UTF_8)
         val output=file.startWrite()
         try {output.write(json);output.fd.sync();file.finishWrite(output)} catch(error:Exception) {file.failWrite(output);throw error}
@@ -66,7 +68,7 @@ fun interface ReviewPromptLaunch {suspend fun launch()}
 /** A qualifying success that the foreground Activity may turn into a review request once its window is clear. */
 data class ReviewSuccessMoment(val id:Long,val source:ReviewSuccess,val at:Instant)
 
-/** Requests come only from success moments (export, import, purchase), never from launch or resume. */
+/** Requests come only from success moments (export, import), never from launch, resume or a purchase. */
 class ReviewMilestoneController(private val store:ReviewMilestoneStore,private val appVersion:String,private val clock:Clock=Clock.systemUTC(),
     private val zone:()->ZoneId={ZoneId.systemDefault()},private val unavailable:()->Unit={},
     /** A success that can't be shown in this window (another dialog stays up) is dropped; the next success can ask. */
@@ -85,12 +87,12 @@ class ReviewMilestoneController(private val store:ReviewMilestoneStore,private v
         if(!loaded) try {mutable.value=store.read();loaded=true} catch(canceled:CancellationException) {throw canceled} catch(_:Exception) {failed=true;unavailable()}
         return loaded && !failed
     }
-    private fun record(success:ReviewSuccess?) {
-        val ticket=generation.get();val day=clock.instant().atZone(zone()).toLocalDate()
+    private fun record(success:ReviewSuccess?,purchase:Boolean=false) {
+        val now=clock.instant();val ticket=generation.get();val day=now.atZone(zone()).toLocalDate()
         scope.launch {serial.withLock {
             if(ticket!=generation.get() || !load()) return@withLock
             try {
-                val next=mutable.value.used(day)
+                val used=mutable.value.used(day);val next=if(purchase) used.purchased(now) else used
                 if(next!=mutable.value) {store.write(next);mutable.value=next}
             } catch(canceled:CancellationException) {throw canceled} catch(_:Exception) {failed=true;unavailable();return@withLock}
             if(success!=null) pending.value=ReviewSuccessMoment(moments.incrementAndGet(),success,clock.instant())
@@ -98,8 +100,8 @@ class ReviewMilestoneController(private val store:ReviewMilestoneStore,private v
     }
     /** Counts a day of use only. */
     fun appUsed()=record(null)
-    /** Call where the success happens. Non-qualifying sources are ignored entirely. */
-    fun succeeded(source:ReviewSuccess) {if(source.qualifies) record(source)}
+    /** Call where the success happens. A purchase only starts the quiet period; other non-qualifying sources are ignored entirely. */
+    fun succeeded(source:ReviewSuccess) {if(source.qualifies) record(source) else if(source==ReviewSuccess.purchase) record(null,purchase=true)}
     suspend fun maybeRequest(host:ReviewPromptHost) {
         if(!presenting.tryLock()) return
         val ticket=generation.get()
