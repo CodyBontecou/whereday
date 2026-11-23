@@ -1299,6 +1299,8 @@ struct BackPageSegmented<Value: Hashable>: View {
     let label: LocalizedStringKey
     let options: [(Value, LocalizedStringKey)]
     @Binding var selection: Value
+    /// An optional accessibility identifier per option, for UI tests.
+    var identifier: ((Value) -> String)? = nil
 
     var body: some View {
         HStack(spacing: 0) {
@@ -1317,6 +1319,7 @@ struct BackPageSegmented<Value: Hashable>: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
+                .accessibilityIdentifier(identifier?(option.0) ?? "")
             }
         }
         .background(TE.card)

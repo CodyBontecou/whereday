@@ -226,8 +226,13 @@ final class StoreManager: ObservableObject {
         }
     }
 
+    /// A trial reminder whose permission prompt waits for the end of onboarding (see `purchase(_:defersTrialReminder:)`).
+    private var deferredTrialReminder: (trialEnds: Date, displayPrice: String)?
+
+    /// With `defersTrialReminder`, a started trial's reminder is kept until `scheduleDeferredTrialReminder()`,
+    /// so onboarding can ask for notification permission once, on its "You're in" screen.
     @discardableResult
-    func purchase(_ option: IsoMePurchaseOption = .individual) async -> StorePurchaseOutcome {
+    func purchase(_ option: IsoMePurchaseOption = .individual, defersTrialReminder: Bool = false) async -> StorePurchaseOutcome {
         guard !isRestoring, purchasingOption == nil else { return .failed(.storeError) }
         if option == .familyUpgrade && !canBuyFamilyUpgrade {
             purchaseError = String(localized: "Family Upgrade requires an Individual Lifetime purchase.")
@@ -257,7 +262,11 @@ final class StoreManager: ObservableObject {
                 await transaction.finish()
                 await checkEntitlement()
                 if offersTrial, Self.isIntroductoryOffer(transaction), let trialEnds = transaction.expirationDate {
-                    await TrialReminder.schedule(trialEnds: trialEnds, displayPrice: product.displayPrice)
+                    if defersTrialReminder {
+                        deferredTrialReminder = (trialEnds, product.displayPrice)
+                    } else {
+                        await TrialReminder.schedule(trialEnds: trialEnds, displayPrice: product.displayPrice)
+                    }
                 }
                 return .succeeded
             case .userCancelled: return .cancelled
@@ -270,6 +279,13 @@ final class StoreManager: ObservableObject {
             purchaseError = String(localized: "Purchase failed: \(error.localizedDescription)")
             return .failed(.storeError)
         }
+    }
+
+    /// Schedules the reminder a deferred trial purchase kept back, asking for notification permission then.
+    func scheduleDeferredTrialReminder() async {
+        guard let reminder = deferredTrialReminder else { return }
+        deferredTrialReminder = nil
+        await TrialReminder.schedule(trialEnds: reminder.trialEnds, displayPrice: reminder.displayPrice)
     }
 
     @discardableResult

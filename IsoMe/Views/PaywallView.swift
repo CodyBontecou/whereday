@@ -154,7 +154,7 @@ struct PaywallView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 18)
 
-                notes
+                PaywallNotes()
                     .padding(.horizontal, 24)
                     .padding(.top, 18)
             }
@@ -276,7 +276,7 @@ struct PaywallView: View {
                 .accessibilityAddTraits(.isHeader)
             audiencePicker
             if offeredOptions.isEmpty {
-                unavailablePlans
+                PaywallPlansUnavailable(storeManager: storeManager)
             } else {
                 let sideBySide = offeredOptions.count == 2 && !dynamicTypeSize.isAccessibilitySize
                 let layout = sideBySide
@@ -289,21 +289,9 @@ struct PaywallView: View {
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
-            includedList
+            PaywallIncludedList()
             if family {
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "person.3")
-                        .foregroundStyle(TE.textMuted)
-                        .accessibilityHidden(true)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Share with up to 5 family members using Apple Family Sharing")
-                        Text("Family Sharing shares access, not your location journal.")
-                    }
-                    .fixedSize(horizontal: false, vertical: true)
-                }
-                .font(.footnote)
-                .foregroundStyle(TE.textMuted)
-                .accessibilityElement(children: .combine)
+                PaywallFamilyNote()
             }
             if selectedOption.isSubscription, storeManager.product(for: selectedOption) != nil {
                 Text("Cancel in Apple subscription settings at least 24 hours before renewal.")
@@ -311,36 +299,7 @@ struct PaywallView: View {
                     .foregroundStyle(TE.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            notes
-        }
-    }
-
-    private var includedList: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("EVERY PLAN INCLUDES")
-                .font(TE.mono(.caption2))
-                .tracking(1.2)
-                .foregroundStyle(TE.textMuted)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 12, alignment: .leading)],
-                      alignment: .leading, spacing: 8) {
-                includedItem("Automatic recording")
-                includedItem("All 8 export formats")
-                includedItem("Scheduled exports")
-                includedItem("Webhooks")
-            }
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private func includedItem(_ title: LocalizedStringKey) -> some View {
-        HStack(spacing: 8) {
-            Image(systemName: "checkmark")
-                .font(.caption.weight(.bold))
-                .foregroundStyle(TE.placeInks[3])
-                .accessibilityHidden(true)
-            Text(title)
-                .font(.subheadline)
-                .fixedSize(horizontal: false, vertical: true)
+            PaywallNotes()
         }
     }
 
@@ -388,20 +347,6 @@ struct PaywallView: View {
                 selection: $family
             )
         }
-    }
-
-    private var unavailablePlans: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if storeManager.isLoadingProducts {
-                ProgressView("Loading plans…")
-                    .font(.footnote)
-            } else {
-                Button("Retry loading plans") { Task { await storeManager.loadProducts() } }
-                    .buttonStyle(BackPagePillButtonStyle(kind: .outlined, minHeight: 48))
-                    .disabled(storeManager.isLoading)
-            }
-        }
-        .frame(maxWidth: .infinity, minHeight: 88)
     }
 
     private func planCard(_ option: IsoMePurchaseOption) -> some View {
@@ -497,16 +442,6 @@ struct PaywallView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private var notes: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Your existing records remain available to view and export if your subscription ends.")
-            Text("Deleting the app or buying Lifetime does not cancel an existing subscription. Manage it in Apple Account settings.")
-        }
-        .font(.caption)
-        .foregroundStyle(TE.textMuted)
-        .fixedSize(horizontal: false, vertical: true)
-    }
-
     private var footer: some View {
         VStack(spacing: 8) {
             if !managing {
@@ -524,13 +459,7 @@ struct PaywallView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            if let error = storeManager.purchaseError ?? storeManager.productLoadError {
-                Text(error)
-                    .font(.footnote)
-                    .foregroundStyle(TE.inkRust)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            PaywallStoreMessage(storeManager: storeManager)
             if !managing {
                 purchaseButton(selectedOption)
             } else if storeManager.canBuyFamilyUpgrade {
@@ -539,25 +468,7 @@ struct PaywallView: View {
                 Button("Manage subscription") { showSubscriptionManagement = true }
                     .buttonStyle(BackPagePillButtonStyle(kind: .filled, font: .body.weight(.semibold), minHeight: 56))
             }
-            HStack(spacing: 4) {
-                Button("Restore Purchases") { restore() }
-                    .disabled(storeManager.isLoading)
-                    .padding(.horizontal, 10)
-                    .frame(minHeight: 44)
-                if let url = IsoMeURLs.privacyPolicy {
-                    Link("Privacy", destination: url)
-                        .padding(.horizontal, 10)
-                        .frame(minHeight: 44)
-                }
-                if let url = IsoMeURLs.termsOfService {
-                    Link("Terms", destination: url)
-                        .padding(.horizontal, 10)
-                        .frame(minHeight: 44)
-                }
-            }
-            .font(.footnote)
-            .buttonStyle(.plain)
-            .modifier(BackPageWrapIfNeeded())
+            PaywallLegalLinks(isDisabled: storeManager.isLoading, restore: restore)
         }
         .padding(.horizontal, 20)
         .padding(.top, 10)
@@ -639,6 +550,137 @@ nonisolated enum PaywallCopy {
         case .individual, .family, .familyUpgrade:
             return String(localized: "One-time purchase. Yours for good.", bundle: bundle)
         }
+    }
+}
+
+// MARK: - Shared with the onboarding's free-week step
+
+/// "Every plan includes" and its four items.
+struct PaywallIncludedList: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("EVERY PLAN INCLUDES")
+                .font(TE.mono(.caption2))
+                .tracking(1.2)
+                .foregroundStyle(TE.textMuted)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 12, alignment: .leading)],
+                      alignment: .leading, spacing: 8) {
+                item("Automatic recording")
+                item("All 8 export formats")
+                item("Scheduled exports")
+                item("Webhooks")
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func item(_ title: LocalizedStringKey) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "checkmark")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(TE.placeInks[3])
+                .accessibilityHidden(true)
+            Text(title)
+                .font(.subheadline)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
+
+/// What Apple Family Sharing shares, and what it doesn't.
+struct PaywallFamilyNote: View {
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "person.3")
+                .foregroundStyle(TE.textMuted)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Share with up to 5 family members using Apple Family Sharing")
+                Text("Family Sharing shares access, not your location journal.")
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .font(.footnote)
+        .foregroundStyle(TE.textMuted)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Shown in place of plan cards while StoreKit loads them, or after loading failed.
+struct PaywallPlansUnavailable: View {
+    @ObservedObject var storeManager: StoreManager
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if storeManager.isLoadingProducts {
+                ProgressView("Loading plans…")
+                    .font(.footnote)
+            } else {
+                Button("Retry loading plans") { Task { await storeManager.loadProducts() } }
+                    .buttonStyle(BackPagePillButtonStyle(kind: .outlined, minHeight: 48))
+                    .disabled(storeManager.isLoading)
+                    .accessibilityIdentifier("paywall-retry")
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 88)
+    }
+}
+
+/// StoreKit's purchase or loading message: pending approval, a failure, or plans that didn't load.
+struct PaywallStoreMessage: View {
+    @ObservedObject var storeManager: StoreManager
+
+    var body: some View {
+        if let error = storeManager.purchaseError ?? storeManager.productLoadError {
+            Text(error)
+                .font(.footnote)
+                .foregroundStyle(TE.inkRust)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("paywall-message")
+        }
+    }
+}
+
+/// Restore Purchases, Privacy and Terms, side by side (stacked at accessibility sizes).
+struct PaywallLegalLinks: View {
+    var isDisabled: Bool
+    var restore: () -> Void
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Button("Restore Purchases") { restore() }
+                .disabled(isDisabled)
+                .padding(.horizontal, 10)
+                .frame(minHeight: 44)
+                .accessibilityIdentifier("paywall-restore")
+            if let url = IsoMeURLs.privacyPolicy {
+                Link("Privacy", destination: url)
+                    .padding(.horizontal, 10)
+                    .frame(minHeight: 44)
+            }
+            if let url = IsoMeURLs.termsOfService {
+                Link("Terms", destination: url)
+                    .padding(.horizontal, 10)
+                    .frame(minHeight: 44)
+            }
+        }
+        .font(.footnote)
+        .buttonStyle(.plain)
+        .modifier(BackPageWrapIfNeeded())
+    }
+}
+
+/// What happens to records and subscriptions when a plan ends or changes.
+struct PaywallNotes: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Your existing records remain available to view and export if your subscription ends.")
+            Text("Deleting the app or buying Lifetime does not cancel an existing subscription. Manage it in Apple Account settings.")
+        }
+        .font(.caption)
+        .foregroundStyle(TE.textMuted)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
