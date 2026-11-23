@@ -16,6 +16,8 @@ struct OnboardingRingSegment: Identifiable {
 struct OnboardingRing: View {
     let segments: [OnboardingRingSegment]
     var progress: [Int: Double] = [:]
+    /// Off when rings are stacked, so a later track never paints over an earlier arc.
+    var showsTrack = true
     var lineWidthRatio: CGFloat = 22.0 / 260.0
     var insetRatio: CGFloat = 30.0 / 260.0
 
@@ -25,9 +27,11 @@ struct OnboardingRing: View {
             let lineWidth = size * lineWidthRatio
             let inset = size * insetRatio
             ZStack {
-                Circle()
-                    .inset(by: inset)
-                    .stroke(TE.dialTrack, lineWidth: lineWidth)
+                if showsTrack {
+                    Circle()
+                        .inset(by: inset)
+                        .stroke(TE.dialTrack, lineWidth: lineWidth)
+                }
                 ForEach(segments) { segment in
                     let fraction = progress[segment.id] ?? 1
                     Circle()
@@ -56,8 +60,9 @@ struct OnboardingCoverDial: View {
 
     var body: some View {
         ZStack {
+            OnboardingRing(segments: [])
             ForEach(segments) { segment in
-                OnboardingRing(segments: [segment], progress: [segment.id: drawn ? 1 : 0])
+                OnboardingRing(segments: [segment], progress: [segment.id: drawn ? 1 : 0], showsTrack: false)
                     .animation(reduceMotion ? nil : .easeOut(duration: 1.6).delay(segment.delay), value: drawn)
             }
             VStack(spacing: 2) {
@@ -90,14 +95,15 @@ struct OnboardingScrubDial: View {
     var body: some View {
         GeometryReader { geometry in
             let size = min(geometry.size.width, geometry.size.height)
-            let radius = size * 100 / 260
+            // A slightly smaller ring than the cover leaves room for the hour labels around it.
+            let radius = size * 92 / 260
             let angle = hour / 24 * 2 * Double.pi
             ZStack {
-                OnboardingRing(segments: segments)
-                hourLabel(0, size: size, at: CGPoint(x: 0.5, y: 17 / 260))
-                hourLabel(6, size: size, at: CGPoint(x: 250 / 260, y: 0.5))
-                hourLabel(12, size: size, at: CGPoint(x: 0.5, y: 249 / 260))
-                hourLabel(18, size: size, at: CGPoint(x: 10 / 260, y: 0.5))
+                OnboardingRing(segments: segments, insetRatio: 38.0 / 260.0)
+                hourLabel(0, size: size, at: CGPoint(x: 0.5, y: 12 / 260))
+                hourLabel(6, size: size, at: CGPoint(x: 245 / 260, y: 0.5))
+                hourLabel(12, size: size, at: CGPoint(x: 0.5, y: 248 / 260))
+                hourLabel(18, size: size, at: CGPoint(x: 15 / 260, y: 0.5))
                 Circle()
                     .fill(TE.surface)
                     .overlay(Circle().strokeBorder(TE.textPrimary, lineWidth: size * 3 / 260))

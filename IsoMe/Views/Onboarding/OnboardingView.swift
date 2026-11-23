@@ -106,6 +106,8 @@ struct OnboardingView: View {
                 .scrollBounceBehavior(.basedOnSize)
                 .scrollDismissesKeyboard(.interactively)
             }
+            // The stamp map is a UIKit view; keep it from drawing over the header while scrolled.
+            .clipped()
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: step)
 
             controls
@@ -951,7 +953,11 @@ struct OnboardingView: View {
         switch step {
         case .cover: return "I already have data — import"
         case .permission:
-            return locationManager.authorizationStatus == .authorizedWhenInUse ? "Continue without Always" : "Not now"
+            switch locationManager.authorizationStatus {
+            case .authorizedAlways: return nil
+            case .authorizedWhenInUse: return "Continue without Always"
+            default: return "Not now"
+            }
         case .backfill: return "Skip — start fresh"
         case .glance: return "Not now"
         case .export: return "Set up later"
