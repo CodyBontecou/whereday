@@ -1,0 +1,85 @@
+# Legacy cohort: an install that existed before paid tracking never pays in onboarding. With the
+# real StoreKit path on (--use-storekit, so no Debug development unlock), the last step is the
+# old "Page one closes tonight" page with "Start my day", not the free week, and finishing lands
+# on the map without the required paywall.
+#
+# Prerequisites: an iOS pool simulator (iPhone 18 Pro, portrait, default text size, English)
+# with a FRESH install that has never launched: the cohort is decided on the first launch, and
+# -hasCompletedOnboarding NO there is what marks the install as legacy (the same signal an
+# update from a pre-paid build gives). Use the local StoreKit catalog with no purchases, so a
+# leftover purchase can't be what skips payment: `scripts/qa-storekit-session.sh <udid>`, then
+# uninstall and reinstall the Debug build (xcrun simctl uninstall/install) before the run.
+# Location need not be granted.
+# Side effects: marks the install as the legacy cohort, sets hasCompletedOnboarding; no
+# purchase, no notification requested (toggle off), tracking does not start without location.
+#
+# Coordinate exceptions: the nightly toggle (onboarding-nightly-toggle) and Start my day
+# (onboarding-next) carry ids, but Argent's iOS runner tree exposes only anonymous
+# AXScrollArea/AXButton nodes there, so the taps keep their recorded points (402x874 pt
+# iPhone 18 Pro); the toggle tap lands on the switch track at the row's trailing edge. Each
+# tap is followed by an accessibility-tree check.
+version: 1
+requires:
+  platform: ios
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --use-storekit
+          - -hasCompletedOnboarding
+          - NO
+          - --onboarding-page=9
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -webhook.enabled
+          - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-9
+      timeoutMs: 20000
+  - await: { idle: true }
+  - echo: "Last step for a legacy install: Start my day and the tonight page, no plan
+      chooser."
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: onboarding-next
+      expectedText: Start my day
+      textMatch: equals
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Page one closes
+  - echo: "Turn off Send me tonight's page at (0.85, 0.673) so no notification alert
+      appears, then tap Start my day at (0.5, 0.912); expect the map, not a paywall."
+  - tool: gesture-tap
+    args: { x: 0.85, y: 0.673 }
+  - tool: await-ui-element
+    args:
+      condition: exists
+      selector:
+        identifier: onboarding-nightly-toggle
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: main-tab-map
+      timeoutMs: 15000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        text: Page one closes

@@ -28,6 +28,12 @@
 #
 # -Notelet.LatestSeenAppVersion 2.0 suppresses the "What's new" sheet for app version 2.0
 # so the map is visible after onboarding; update it when MARKETING_VERSION changes.
+#
+# Last step: these launches pass -hasCompletedOnboarding NO (legacy cohort) and no --use-storekit
+# (Debug development unlock), so the install already has access and the last step is the old
+# "Page one closes tonight" page with Start my day. The paying path (Start my free week) is
+# covered by onboarding-free-week.yaml; onboarding-legacy-skips-payment.yaml checks the legacy
+# route with real StoreKit.
 version: 1
 requires:
   platform: ios
@@ -198,6 +204,9 @@ steps:
       condition: visible
       selector:
         text: Would Like to Send You Notifications
+  - echo: "Let the system alert finish appearing before tapping Allow; an early tap
+      can land while it animates in and be dropped."
+  - await: { idle: true }
   - tool: gesture-tap
     args: { x: 0.684, y: 0.592 }
   - tool: await-ui-element

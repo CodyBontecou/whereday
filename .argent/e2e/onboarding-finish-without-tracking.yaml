@@ -11,6 +11,12 @@
 # (onboarding-next) carry ids, but Argent's iOS runner tree exposes only anonymous
 # AXScrollArea/AXButton nodes there, so taps keep their recorded points (402x874 pt
 # iPhone 18 Pro). The toggle tap lands on the switch track at the row's trailing edge.
+#
+# Last step: these launches pass -hasCompletedOnboarding NO (legacy cohort) and no --use-storekit
+# (Debug development unlock), so the install already has access and the last step is the old
+# "Page one closes tonight" page with Start my day. The paying path (Start my free week) is
+# covered by onboarding-free-week.yaml; onboarding-legacy-skips-payment.yaml checks the legacy
+# route with real StoreKit.
 version: 1
 requires:
   platform: ios
