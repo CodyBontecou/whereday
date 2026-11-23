@@ -22,16 +22,9 @@ struct PaywallView: View {
     @State private var planDays: [Int?]?
 
     private var managing: Bool { context == .settings && storeManager.isPurchased }
-    /// Yearly and Lifetime are the choices on offer. Weekly is kept only for someone already
-    /// subscribed to Weekly, so their current plan stays visible and purchasable from here.
+    /// Yearly, Weekly and Lifetime are offered to everyone, in the same order as onboarding's chooser.
     private var options: [IsoMePurchaseOption] {
-        let weekly: IsoMePurchaseOption = family ? .familyWeekly : .individualWeekly
-        let base: [IsoMePurchaseOption] = family ? [.familyYearly, .family] : [.individualYearly, .individual]
-        return isSubscribedToWeekly ? [weekly] + base : base
-    }
-    private var isSubscribedToWeekly: Bool {
-        let active = storeManager.activePurchaseOption
-        return active == .individualWeekly || active == .familyWeekly
+        family ? [.familyYearly, .familyWeekly, .family] : [.individualYearly, .individualWeekly, .individual]
     }
     /// Only plans the App Store actually returned are offered.
     private var offeredOptions: [IsoMePurchaseOption] {
