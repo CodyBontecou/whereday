@@ -51,7 +51,7 @@ For older entries, review Keep Visits at the bottom of Visited Places. A retenti
 
 ## Find Significant Locations in iPhone Settings
 
-Open Settings → Privacy & Security → Location Services → System Services → Significant Locations & Routes. Some versions use the shorter label Significant Locations.
+Open Settings → Privacy & Security → Location Services → System Services → Significant Locations & Routes. Some versions use the shorter label Significant Locations. Older guides call this setting [Frequent Locations](https://whereday.com/blog/significant-locations-iphone/#frequent-locations).
 
 Apple documents this as a setting used for location-related Maps features. It is separate from the Visited Places list. For the records in this guide, return to the app that saved them. See [Apple’s Maps location settings](https://support.apple.com/guide/iphone/set-up-maps-iph10d7bdf26/ios). The [full guide to Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/) covers clearing it, turning it off and why neither feature can be exported. Looking in Find My instead? [Find My keeps no location history](https://whereday.com/blog/find-my-location-history/), only a current or last known location. Want photos on a map? See [how to see your photos on a map on iPhone](https://whereday.com/blog/iphone-photos-map/).
 

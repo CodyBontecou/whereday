@@ -14,7 +14,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed No
 
 No. Find My doesn’t keep a location history. It shows where a device is now or, if the device is offline, the last location it sent to Apple. It never shows a route or a list of places the device has been, and iCloud.com/find doesn’t either.
 
-If you want to see where your iPhone has been in the past, look in [Significant Locations and Apple Maps Visited Places](https://whereday.com/blog/significant-locations-iphone/) instead, or start recording your own history from today. Nothing can bring back places from before a feature was turned on.
+If you want to see where your iPhone has been in the past, look in [Significant Locations and Apple Maps Visited Places](https://whereday.com/blog/significant-locations-iphone/) (including [Frequent Locations, now Significant Locations](https://whereday.com/blog/significant-locations-iphone/#frequent-locations)) instead, or start recording your own history from today. Nothing can bring back places from before a feature was turned on.
 
 In this post
 - [What Find My does show](https://whereday.com/blog/find-my-location-history/#what-find-my-shows)

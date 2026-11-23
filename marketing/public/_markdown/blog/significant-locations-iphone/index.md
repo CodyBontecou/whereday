@@ -4,14 +4,15 @@
 
 Practical iPhone guides
 
-# Significant Locations and Visited Places on iPhone
+# Frequent Locations (Significant Locations) and Visited Places on iPhone
 
-Where each feature lives in iOS 26, why it often shows only a few places, how to clear or turn it off, and how to keep a history you can export from now on.
+Frequent Locations is the older name for Significant Locations. Where each feature lives in iOS 26, why it often shows only a few places, how to clear or turn it off, and how to keep a history you can export from now on.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 19, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 23, 2026
 
 ## Quick answer: two features, two places to look
 
+- Looking for Frequent Locations? That was the older name. On current iPhones it’s Significant Locations & Routes, at Settings → Privacy & Security → Location Services → System Services.
 - Significant Locations & Routes is a system setting. Open Settings → Privacy & Security → Location Services → System Services → Significant Locations & Routes. Some iOS versions and Apple pages use the shorter label Significant Locations.
 - Visited Places is a list in the Maps app. Open Maps → Places → Visited Places. Apple’s iPhone User Guide documents it from iOS 26, and it isn’t available in every country or region.
 - Neither one can be exported. Apple doesn’t document a download, GPX, CSV or JSON export for either feature. If you want a history you can keep as a file, you have to record it yourself from now on.
@@ -19,6 +20,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed No
 Menu paths on this page follow Apple’s iOS 26 iPhone User Guide. Apple’s iOS 27 guide uses the same Maps → Places → Visited Places path. If a label on your iPhone is different, use the linked Apple page for your version.
 
 In this guide
+- [Where did Frequent Locations go?](https://whereday.com/blog/significant-locations-iphone/#frequent-locations)
 - [Compare the two features](https://whereday.com/blog/significant-locations-iphone/#compare)
 - [Open and manage Significant Locations](https://whereday.com/blog/significant-locations-iphone/#significant-locations)
 - [Open and manage Visited Places](https://whereday.com/blog/significant-locations-iphone/#visited-places)
@@ -27,6 +29,21 @@ In this guide
 - [Can you export it?](https://whereday.com/blog/significant-locations-iphone/#export)
 - [Keep your own history from now on](https://whereday.com/blog/significant-locations-iphone/#keep-your-own)
 - [Common questions](https://whereday.com/blog/significant-locations-iphone/#questions)
+
+## Where did Frequent Locations go?
+
+Older guides call this System Service Frequent Locations. Today it’s Significant Locations & Routes, sometimes shown as Significant Locations. Apple describes what the current feature does in [Location Services & Privacy](https://www.apple.com/legal/privacy/data/en/location-services/). We don’t say which iOS version changed the name, because Apple doesn’t document it.
+
+That’s also why old screenshots may not match your phone. Older guides and videos show a list of cities and visits. Apple’s current guides document only the switch and Clear History, and possibly a short summary, with no browsable day-by-day history. A count or summary with no details can be normal. See [why it shows little or nothing](https://whereday.com/blog/significant-locations-iphone/#not-showing).
+
+Old guide says → do this now
+| Old guide says | Do this now
+| “Frequent Locations” | Look for Significant Locations & Routes
+| “Settings → Privacy” | Settings → Privacy & Security
+| “See your visits by date” | Maps → Places → Visited Places (iOS 26 or later, where available). See [Visited Places](https://whereday.com/blog/significant-locations-iphone/#visited-places).
+| “Turn it off” | See [turn it off, and what that affects](https://whereday.com/blog/significant-locations-iphone/#significant-off), including the Stolen Device Protection caveat
+
+Want a history you can browse by day and export? Whereday records one on your iPhone from the day you start. See [keep your own history](https://whereday.com/blog/significant-locations-iphone/#keep-your-own).
 
 ## Significant Locations vs Visited Places
 
@@ -173,6 +190,18 @@ Whereday’s map of the day. This illustrative screenshot uses an invented journ
 
 ## Common questions
 
+### Is Frequent Locations the same as Significant Locations?
+
+Yes. It’s the same System Service under an older name. Today it’s Significant Locations & Routes. See [where Frequent Locations went](https://whereday.com/blog/significant-locations-iphone/#frequent-locations).
+
+### How do I see where my iPhone has been?
+
+Use [Visited Places in Maps](https://whereday.com/blog/significant-locations-iphone/#visited-places) (iOS 26 or later, where available) to browse by date. Find My shows no history; see [what Find My keeps](https://whereday.com/blog/find-my-location-history/). For one specific day, read [where you were on a specific date](https://whereday.com/blog/iphone-location-history-by-date/), and for other places a history can live, the [iPhone location history guide](https://whereday.com/blog/view-location-history-iphone/). To keep a record you can export, use Whereday from now on.
+
+### How do I turn off Frequent Locations?
+
+Use the same switch: [turn off Significant Locations & Routes](https://whereday.com/blog/significant-locations-iphone/#significant-off). Turning it off isn’t documented as deleting anything; [Clear History](https://whereday.com/blog/significant-locations-iphone/#significant-clear) deletes the records.
+
 ### Why does Significant Locations only show home and work?
 
 The feature learns places that matter to you over time, from how often and when you go there. Places you visit often, such as home and work, are what it’s built to recognize. A new phone, a recent Clear History or a recent Reset Location & Privacy also leaves it with little to show.
@@ -207,7 +236,7 @@ Start recording today, review and correct each day on your iPhone, and save it a
 
 [Read how tracking works](https://whereday.com/docs/tracking/)
 
-Apple steps checked November 19, 2026 against Apple’s iOS 26 iPhone User Guide (Visited Places; Clear location history in Maps), Apple’s Location Services & Privacy page, the Personal Safety guide and the Stolen Device Protection article. Apple’s iOS 27 guide uses the same Visited Places path. Menus can vary by version and region. Whereday features follow the published tracking, places, export and privacy references. The screenshot shows Whereday with invented data.
+Apple steps checked November 23, 2026 against Apple’s iOS 26 iPhone User Guide (Visited Places; Clear location history in Maps), Apple’s Location Services & Privacy page, the Personal Safety guide and the Stolen Device Protection article. Apple’s iOS 27 guide uses the same Visited Places path. The old “Frequent Locations” label is described as the name older guides use; we couldn’t load a primary source for it, so we don’t date the rename. Menus can vary by version and region. Whereday features follow the published tracking, places, export and privacy references. The screenshot shows Whereday with invented data.
 
 ## Read next
 

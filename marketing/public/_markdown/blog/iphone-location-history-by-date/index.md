@@ -16,7 +16,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed No
 - Google Maps: if you used Timeline, tap your profile picture, then Your Timeline, and select the date.
 - If neither was on, rebuild the day from records that carry a real date: photos, workouts, calendar events, receipts and messages. They show where you were probably, not a route.
 
-Don’t use Significant Locations & Routes for this: Apple documents no date filter for it. Find My keeps no history at all.
+Don’t use Significant Locations & Routes for this: Apple documents no date filter for it. (Older guides call it [Frequent Locations](https://whereday.com/blog/significant-locations-iphone/#frequent-locations).) Find My keeps no history at all.
 
 In this guide
 - [Every source, by date](https://whereday.com/blog/iphone-location-history-by-date/#sources-by-date)
