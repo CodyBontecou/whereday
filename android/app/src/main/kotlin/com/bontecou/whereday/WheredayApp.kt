@@ -85,14 +85,20 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             }
         }
         if (!current.onboarded) {
+            val onboardingContext=LocalContext.current.applicationContext
+            val services=remember(graph) {onboardingServices(graph)}
             JournalWorkspaceFrame(false,primary={Onboarding(onRequestLocation,onRequestNotifications,graph.usageAnalytics,onboardingAuthorization,access,onAccessOptions,
-                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}}) {decision->
+                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}},services,OnboardingIntent.decode(current.onboardingIntents)) {decision->
                 val start=decision.start
                 val permit=decision.permit
                 val authorization=decision.authorization
                 val deferred=start && purchase.trackingLocked
                 if(deferred) startAfterAccess=true
-                completeOnboarding(start && !deferred,onOnboardingStart,{graph.preferences.update {latest->latest.copy(onboarded=true)}}) {
+                completeOnboarding(start && !deferred,onOnboardingStart,{
+                    graph.preferences.update {latest->latest.copy(onboarded=true)}
+                    // One local notification; a failure to schedule never blocks finishing setup.
+                    try {if(decision.nightly) NightlyPageReminder.schedule(onboardingContext) else NightlyPageReminder.cancel(onboardingContext)} catch(_:Exception) {}
+                }) {
                     graph.usageAnalytics.track(permit) {UsageEvent(UsageEventName.onboardingCompleted,step=UsageStep.ready,authorization=authorization,
                         tracking=if(start) UsageTrackingIntent.startImmediately else if(authorization in setOf(UsageAuthorization.foreground,UsageAuthorization.always)) UsageTrackingIntent.later else UsageTrackingIntent.unavailable)}
                 }
