@@ -1,4 +1,4 @@
-"""Coverage checks for the onboarding's editorial headlines (the 2.0 three-page flow)."""
+"""Coverage checks for the onboarding's editorial headlines (the "Page One" first-run flow)."""
 import json
 import unittest
 
@@ -7,8 +7,12 @@ import localization_catalog as catalog
 
 HEADLINES = (
     "Every day\nis a page.",
-    "It stays\non this phone.",
-    "How much\nshould it remember?",
+    "What should\nit remember for you?",
+    "Let it write while\nit’s in your pocket.",
+    "Check without\nopening it.",
+    "Your history,\nyour files.",
+    "Page one closes\ntonight.",
+    "Page one closes\ntomorrow night.",
 )
 
 
@@ -43,12 +47,12 @@ class OnboardingLocalizationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.strings = json.loads((catalog.ROOT / "IsoMe/Localizable.xcstrings").read_text())["strings"]
-        cls.source = (catalog.ROOT / "IsoMe/Views/ContentView.swift").read_text()
+        cls.source = (catalog.ROOT / "IsoMe/Views/Onboarding/OnboardingView.swift").read_text()
 
     def test_headline_keys_match_the_swiftui_source(self):
         for key in HEADLINES:
             with self.subTest(key=key):
-                self.assertIn(json.dumps(key), self.source)
+                self.assertIn(json.dumps(key, ensure_ascii=False), self.source)
 
     def test_every_supported_locale_has_a_translated_headline(self):
         for key in HEADLINES:
