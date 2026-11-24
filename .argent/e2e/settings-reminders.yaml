@@ -147,12 +147,14 @@ steps:
       condition: hidden
       selector:
         text: Tap to see the week.
+  # The week's names and their ranking depend on the weekday (the seeded week so far), but Today
+  # always shows at least 4 places on the seeded day, so a names list always ends "and N more.".
   - tool: await-ui-element
     args:
       condition: text
       selector:
         identifier: reminders-preview-body
-      expectedText: Ferry Building Errand
+      expectedText: more.
   - echo: Back to Every evening (reminders-frequency-daily) at (0.5, 0.5); expect
       the daily preview (Daily 10:00 PM) still showing place names.
   - tool: gesture-tap
