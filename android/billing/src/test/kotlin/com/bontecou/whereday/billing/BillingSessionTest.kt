@@ -43,13 +43,43 @@ class BillingSessionTest {
         val bad=listOf(lease(device="other-device"),lease(packageName="other.app"),lease(duration=Duration.ofDays(8)),pieces[0]+"."+Base64.getUrlEncoder().withoutPadding().encodeToString("{}".toByteArray())+"."+pieces[2])
         bad.forEach { value -> try { checker().verify(value);fail("Expected grant rejection") } catch(expected:Exception) { } }
     }
-    @Test fun pendingAndUnconfiguredBuildsNeverUnlockOrAcknowledgePurchases()=runBlocking {
+    @Test fun pendingPurchasesNeverUnlockAndUnconfiguredBuildsNeverQueryOrAcknowledge()=runBlocking {
         val cache=Cache();var calls=0
         val pending=session(cache,{ owned(purchase.copy(state=StorePurchaseState.pending)) },{ calls++;PurchaseVerification.Active(lease()) })
         assertEquals(BillingRefreshResult.pending,pending.refresh());assertEquals(AccessState.pending,pending.state.value.access);assertEquals(BillingNotice.pendingPayment,pending.state.value.notice);assertEquals(0,calls);denied(pending)
         val disabled=session(cache,{ fail("Must not query Play before configuration");owned() },{ fail("Must not verify");PurchaseVerification.Revoked },false)
-        assertEquals(BillingRefreshResult.unavailable,disabled.refresh());assertEquals(AccessState.unavailable,disabled.state.value.access);assertEquals(BillingNotice.unavailable,disabled.state.value.notice);denied(disabled);assertEquals(AccessState.unavailable,disabled.state.value.access);assertEquals(BillingNotice.unavailable,disabled.state.value.notice)
-        listOf(Capability.recording,Capability.historyImport,Capability.preview).forEach { disabled.requireAccess(it) }
+        assertEquals(BillingRefreshResult.unavailable,disabled.refresh());assertEquals(AccessState.unavailable,disabled.state.value.access)
+        // No "Purchases are not available" notice: there is nothing to buy, and nothing is locked.
+        assertNull(disabled.state.value.notice);assertFalse(disabled.state.value.enforced);assertTrue(disabled.state.value.unlocked)
+        Capability.entries.forEach { disabled.requireAccess(it) }
+        assertEquals(BillingState(AccessState.unavailable,enforced=false),disabled.state.value)
+        assertNull(cache.value)
+    }
+    @Test fun unconfiguredBuildsOpenExportAndEveryOtherCapability()=runBlocking {
+        val disabled=session(Cache(),{ fail("Unconfigured builds must not query Play");owned() },{ fail("Must not verify");PurchaseVerification.Revoked },false)
+        // Open from the first frame, before any refresh, and after it.
+        assertTrue(disabled.state.value.unlocked);assertFalse(disabled.state.value.trackingLocked)
+        disabled.requireAccess(Capability.fileExport);disabled.requireAccessWithRefresh(Capability.fileExport)
+        disabled.refresh()
+        Capability.entries.forEach { capability ->
+            disabled.requireAccess(capability);disabled.requireAccessWithRefresh(capability);assertTrue(disabled.hasAccess(capability))
+        }
+        assertTrue(disabled.state.value.unlocked);assertNull(disabled.state.value.notice)
+    }
+    @Test fun configuredBuildsWithoutAGrantKeepExportLocked()=runBlocking {
+        val none=session(Cache(),{StoreSnapshot(emptyList(),emptyList())},{fail("No purchase to verify");PurchaseVerification.Revoked})
+        assertFalse(none.state.value.unlocked)
+        assertEquals(BillingRefreshResult.notFound,none.refresh());assertEquals(AccessState.free,none.state.value.access);assertFalse(none.state.value.unlocked)
+        listOf(Capability.fileExport,Capability.scheduledExport,Capability.webhook,Capability.recording).forEach { capability ->
+            assertFalse(none.hasAccess(capability))
+            try { none.requireAccess(capability);fail("Expected locked $capability") } catch(_:VerifiedAccessRequired) { }
+            try { none.requireAccessWithRefresh(capability);fail("Expected locked $capability") } catch(_:VerifiedAccessRequired) { }
+        }
+        assertEquals(BillingNotice.verificationFailed,none.state.value.notice)
+        // Imports and previews stay free with billing configured.
+        none.requireAccess(Capability.historyImport);none.requireAccess(Capability.preview)
+        val verified=session(Cache(),{owned()},{PurchaseVerification.Active(lease())})
+        verified.refresh();assertTrue(verified.state.value.unlocked);verified.requireAccess(Capability.fileExport)
     }
     @Test fun storePurchasedStateRequiresServerSignatureBeforeGrantingAccess()=runBlocking {
         val cache=Cache()
@@ -69,7 +99,8 @@ class BillingSessionTest {
     }
     @Test fun hasAccessReadsOnlyTheCachedGrantAndLeavesStateAlone()=runBlocking {
         val disabled=session(Cache(),{ fail("Must not query Play");owned() },{ fail("Must not verify");PurchaseVerification.Revoked },false)
-        assertTrue(disabled.hasAccess(Capability.recording));assertFalse(disabled.hasAccess(Capability.fileExport))
+        assertTrue(disabled.hasAccess(Capability.recording));assertTrue(disabled.hasAccess(Capability.fileExport))
+        assertEquals(BillingState(enforced=false),disabled.state.value)
         val none=session(Cache(),{ fail("Must not query Play");owned() },{ fail("Must not verify");PurchaseVerification.Revoked })
         assertFalse(none.hasAccess(Capability.recording));assertEquals(BillingState(enforced=true),none.state.value)
         val cache=Cache();cache.value=CachedGrant(lease(),clock.now)
@@ -125,8 +156,9 @@ class BillingSessionTest {
         val revoked=session(cache,{owned()},{PurchaseVerification.Revoked})
         try {revoked.requireAccessWithRefresh(Capability.scheduledExport);fail()} catch(_:IllegalStateException) {}
         assertNull(cache.value)
+        // Unconfigured builds open scheduled exports without ever asking Play.
         val disabled=session(Cache(),{fail("Unconfigured builds must not query Play");owned()},{PurchaseVerification.Revoked},false)
-        try {disabled.requireAccessWithRefresh(Capability.scheduledExport);fail()} catch(_:IllegalStateException) {}
+        disabled.requireAccessWithRefresh(Capability.scheduledExport)
     }
     @Test fun explicitEmptyRestoreHasFeedbackWithoutChangingTheFreePolicy()=runBlocking {
         val current=session(Cache(),{StoreSnapshot(emptyList(),emptyList())},{fail("No purchase to verify");PurchaseVerification.Revoked})

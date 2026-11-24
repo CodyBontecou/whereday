@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
+  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
   "catalog": {
     "common_continue": "Continue",
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
@@ -2177,6 +2177,11 @@
     "widget_stop": "Detener",
     "widget_today_description": "Dónde estás y el día hasta ahora",
     "widget_today_label": "Hoy",
-    "workspace_visit_wait": "Termina de editar esta visita para abrir la visita seleccionada."
+    "workspace_visit_wait": "Termina de editar esta visita para abrir la visita seleccionada.",
+    "automatic_export_policy_free": "Las ejecuciones diarias sobrescriben el día completo hasta el momento. Los días anteriores omitidos pueden exportarse manualmente.",
+    "export_delivery_folder_policy_free": "Si un nombre ya existe, las exportaciones a una carpeta conservan ambos archivos. Elige una carpeta en Ajustes.",
+    "export_delivery_help_free": "Elige dónde compartir o guardar este archivo.",
+    "onboarding_export_note_free": "Prográmala a diario en una carpeta o exporta una sola vez.",
+    "support_preview_portability_free": "Previsualiza ocho formatos de exportación e importa archivos de historial compatibles."
   }
 }

@@ -41,7 +41,7 @@ import java.time.format.FormatStyle
     val clear by graph.journalClear.state.collectAsStateWithLifecycle()
     val activity=androidx.activity.compose.LocalActivity.current
     var plans by rememberSaveable {mutableStateOf(false)}
-    val locked=exportDeliveryLocked(purchase.access)
+    val locked=exportDeliveryLocked(purchase)
     Column(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("backup-screen")
         .verticalScroll(rememberScrollState()).padding(bottom=32.dp)) {
         SettingsBackHeader(stringResource(R.string.backup_title),stringResource(R.string.common_back),back,backTag="backup-back",eyebrow=stringResource(R.string.redesign_settings_eyebrow))

@@ -43,6 +43,8 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
         { LeaseVerifier(configuration.publicKey,context.packageName,configuration.productIds.toSet(),identity.hash()) },
         PurchaseGrantCache(context),Clock.systemUTC())
     val state=session.state
+    /** Whether this build sells plans (Play billing configured). Fixed for the process; without it every capability is free. */
+    val enforced:Boolean=state.value.enforced
 
     init { scope.launch { for(signal in refreshes) {session.refresh();reconcileReminder()} } }
     /** A canceled or replaced trial keeps no reminder; Play itself reports cancellation as auto-renew off. */

@@ -105,6 +105,7 @@
     <string name="automatic_export_pending">Ожидающий экспорт: %1$s. При повторе сохраняются этот период и место назначения.</string>
     <string name="automatic_export_plan_policy">Нужен активный тариф Whereday. Ежедневные запуски перезаписывают весь текущий день. Пропущенные прошлые дни можно экспортировать вручную.</string>
     <string name="automatic_export_points">Точки</string>
+    <string name="automatic_export_policy_free">Ежедневные запуски перезаписывают весь текущий день. Пропущенные прошлые дни можно экспортировать вручную.</string>
     <string name="automatic_export_repeat">Повтор</string>
     <string name="automatic_export_reset">Сбросить автоэкспорт</string>
     <string name="automatic_export_reset_body">Расписание будет отключено, а его сохранённые запросы удалены. Экспортированные документы и резервные копии останутся в своей папке.</string>
@@ -390,7 +391,9 @@
     <string name="export_delivery_folder">Сохранить файл в папку экспорта</string>
     <string name="export_delivery_folder_help">Чтобы сохранять в папку, выберите папку экспорта в настройках.</string>
     <string name="export_delivery_folder_plan_policy">Для экспорта файлов нужен активный тариф Whereday. При экспорте в папку сохраняются оба файла, если имя уже занято. Выберите папку в Настройках.</string>
+    <string name="export_delivery_folder_policy_free">При экспорте в папку сохраняются оба файла, если имя уже занято. Выберите папку в Настройках.</string>
     <string name="export_delivery_folder_required">Сначала выберите папку экспорта в настройках.</string>
+    <string name="export_delivery_help_free">Выберите, куда отправить или сохранить файл.</string>
     <string name="export_delivery_interrupted">Сохранение прервано. Возобновите или отмените сохранённый запрос.</string>
     <string name="export_delivery_locked">Экспорт включён во все планы: недельный, годовой или пожизненный.</string>
     <string name="export_delivery_multiple">Для нескольких файлов используйте «Поделиться» или папку экспорта.</string>
@@ -926,6 +929,7 @@
     <string name="onboarding_export_later">Настроить позже</string>
     <string name="onboarding_export_note">Настройте ежедневный экспорт в папку или экспортируйте один раз. Экспорт входит в каждый тариф Whereday.</string>
     <string name="onboarding_export_note_csv">Подойдёт для таблицы или скрипта.</string>
+    <string name="onboarding_export_note_free">Настройте ежедневный экспорт в папку или экспортируйте один раз.</string>
     <string name="onboarding_export_note_gpx">Открывается в Strava, gpx.studio и большинстве картографических программ.</string>
     <string name="onboarding_export_note_json">Полная запись, которую можно снова импортировать на новом телефоне.</string>
     <string name="onboarding_export_note_markdown">Одна заметка на день, с папками по датам вроде {year}/{month}.</string>
@@ -1793,6 +1797,7 @@
     <string name="support_preview_journal">Записывайте прогулки, просматривайте карту и хронологию, редактируйте посещения и сохранённые места, изучайте «Дни в странах» и моменты с фото.</string>
     <string name="support_preview_notice">Эта сборка ещё проходит проверку перед выпуском для Android.</string>
     <string name="support_preview_plan_portability">Просматривайте восемь форматов экспорта и импортируйте поддерживаемые файлы истории. Экспорт файлов, экспорт по расписанию и вебхуки включены во все планы Whereday: недельный, годовой и пожизненный.</string>
+    <string name="support_preview_portability_free">Просматривайте восемь форматов экспорта и импортируйте поддерживаемые файлы истории.</string>
     <string name="support_preview_title">Предварительная версия для Android</string>
     <string name="support_privacy">Политика конфиденциальности</string>
     <string name="support_rate_app">Оценить Whereday в Google Play</string>

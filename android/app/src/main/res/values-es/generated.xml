@@ -95,6 +95,7 @@
     <string name="automatic_export_pending">Exportación pendiente: %1$s. El reintento conserva este intervalo y destino capturados.</string>
     <string name="automatic_export_plan_policy">Las exportaciones programadas están incluidas en todos los planes de Whereday. Las ejecuciones diarias sobrescriben el día completo hasta el momento. Los días anteriores omitidos pueden exportarse manualmente.</string>
     <string name="automatic_export_points">Puntos</string>
+    <string name="automatic_export_policy_free">Las ejecuciones diarias sobrescriben el día completo hasta el momento. Los días anteriores omitidos pueden exportarse manualmente.</string>
     <string name="automatic_export_repeat">Repetición</string>
     <string name="automatic_export_reset">Restablecer las exportaciones automáticas</string>
     <string name="automatic_export_reset_body">Se desactiva la programación y se borran sus solicitudes guardadas. Los documentos exportados y las copias de seguridad conservadas permanecen en su carpeta.</string>
@@ -372,7 +373,9 @@
     <string name="export_delivery_folder">Guardar archivo en la carpeta de exportación</string>
     <string name="export_delivery_folder_help">Elige una carpeta de exportación en Ajustes para guardar allí los archivos.</string>
     <string name="export_delivery_folder_plan_policy">Las exportaciones de archivos están incluidas en todos los planes de Whereday. Si un nombre ya existe, las exportaciones a una carpeta conservan ambos archivos. Elige una carpeta en Ajustes.</string>
+    <string name="export_delivery_folder_policy_free">Si un nombre ya existe, las exportaciones a una carpeta conservan ambos archivos. Elige una carpeta en Ajustes.</string>
     <string name="export_delivery_folder_required">Primero elige una carpeta de exportación en Ajustes.</string>
+    <string name="export_delivery_help_free">Elige dónde compartir o guardar este archivo.</string>
     <string name="export_delivery_interrupted">El guardado se ha interrumpido. Reanuda o cancela la solicitud guardada.</string>
     <string name="export_delivery_locked">Las exportaciones están incluidas en todos los planes: Semanal, Anual o De por vida.</string>
     <string name="export_delivery_multiple">Usa Compartir o la carpeta de exportación para varios archivos.</string>
@@ -874,6 +877,7 @@
     <string name="onboarding_export_later">Configurar más tarde</string>
     <string name="onboarding_export_note">Prográmala a diario en una carpeta o exporta una sola vez. Las exportaciones están incluidas en todos los planes de Whereday.</string>
     <string name="onboarding_export_note_csv">Llévalo a una hoja de cálculo o a un script.</string>
+    <string name="onboarding_export_note_free">Prográmala a diario en una carpeta o exporta una sola vez.</string>
     <string name="onboarding_export_note_gpx">Se abre en Strava, gpx.studio y la mayoría de herramientas de mapas.</string>
     <string name="onboarding_export_note_json">Un registro completo que puedes volver a importar en un teléfono nuevo.</string>
     <string name="onboarding_export_note_markdown">Una nota por día, con carpetas con fecha como {year}/{month}.</string>
@@ -1701,6 +1705,7 @@
     <string name="support_preview_journal">Graba salidas, consulta el mapa y la línea de tiempo, edita visitas y lugares guardados y explora los días por país y los momentos fotográficos.</string>
     <string name="support_preview_notice">Esta versión aún se está validando para su lanzamiento en Android.</string>
     <string name="support_preview_plan_portability">Previsualiza ocho formatos de exportación e importa archivos de historial compatibles. La exportación a archivos, las exportaciones programadas y los webhooks están incluidos en todos los planes de Whereday: Semanal, Anual o De por vida.</string>
+    <string name="support_preview_portability_free">Previsualiza ocho formatos de exportación e importa archivos de historial compatibles.</string>
     <string name="support_preview_title">Versión de desarrollo para Android</string>
     <string name="support_privacy">Política de privacidad</string>
     <string name="support_rate_app">Valorar Whereday en Google Play</string>

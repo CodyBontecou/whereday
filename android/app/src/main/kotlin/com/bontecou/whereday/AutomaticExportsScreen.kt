@@ -53,12 +53,13 @@ internal data class AutomaticExportActions(
     val controller=graph.automaticExportController
     val actions=remember(controller) {AutomaticExportActions({controller.updateSettings(it)},controller::setEnabled,{controller.runNow()},{controller.retry()},controller::cancelPending,controller::reset,{controller.refresh()})}
     LaunchedEffect(controller) {controller.refresh()}
-    AutomaticExportsContent(ui,folderConfigured,actions,back)
+    AutomaticExportsContent(ui,folderConfigured,actions,back,plans=graph.purchases.enforced)
 }
 
+/** [plans] is false in a build without Play billing, whose footer leaves out the plan sentence. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable internal fun AutomaticExportsContent(ui:AutomaticExportUiState,folderConfigured:Boolean,actions:AutomaticExportActions,back:()->Unit,
-    chooseTime:((Int,Int,(Int,Int)->Unit)->Unit)?=null) {
+    chooseTime:((Int,Int,(Int,Int)->Unit)->Unit)?=null,plans:Boolean=true) {
     val context=LocalContext.current
     val locale=LocalConfiguration.current.locales[0]
     val number=NumberFormat.getIntegerInstance(locale)
@@ -153,7 +154,7 @@ internal data class AutomaticExportActions(
             }
             if(settings.outings) WdSectionFooter(stringResource(R.string.automatic_export_outings_help))
             if(settings.schedule.intervalHours>0 && settings.format in setOf(ExportFormat.gpx,ExportFormat.kml)) WdSectionFooter(stringResource(R.string.automatic_export_container_help))
-            WdSectionFooter(stringResource(R.string.automatic_export_plan_policy))
+            WdSectionFooter(stringResource(if(plans) R.string.automatic_export_plan_policy else R.string.automatic_export_policy_free))
             // Status: the last successful export, any pending window, then Run now beside Cancel.
             Column(Modifier.exportInset().padding(top=16.dp).clip(RoundedCornerShape(16.dp)).background(if(state.lastSuccess!=null) wd.containerLow else wd.noticeContainer).padding(16.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
                 Text(state.lastSuccess?.let {stringResource(R.string.automatic_export_last_success,date(it))} ?: stringResource(R.string.automatic_export_no_success),style=MaterialTheme.typography.bodyMedium,

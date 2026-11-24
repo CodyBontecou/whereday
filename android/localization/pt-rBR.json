@@ -1,7 +1,7 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
+  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -2238,6 +2238,11 @@
     "widget_stop": "Parar",
     "widget_today_description": "Onde você está e o dia até agora",
     "widget_today_label": "Hoje",
-    "workspace_visit_wait": "Termine de editar esta visita para abrir a visita selecionada."
+    "workspace_visit_wait": "Termine de editar esta visita para abrir a visita selecionada.",
+    "automatic_export_policy_free": "As execuções diárias reescrevem o dia completo até agora. Dias anteriores perdidos podem ser exportados manualmente.",
+    "export_delivery_folder_policy_free": "Exportações para pastas mantêm os dois arquivos quando o nome já existe. Escolha uma pasta em Configurações.",
+    "export_delivery_help_free": "Escolha onde compartilhar ou salvar este arquivo.",
+    "onboarding_export_note_free": "Agende uma exportação diária para uma pasta ou exporte uma vez.",
+    "support_preview_portability_free": "Veja prévias de oito formatos de exportação e importe arquivos de histórico compatíveis."
   }
 }

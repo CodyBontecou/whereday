@@ -58,11 +58,34 @@ jobs:
           python3 -m unittest discover -s android/scripts -p test_native_provenance.py
           python3 android/scripts/generate_localized_resources.py --check
           python3 android/scripts/test_localized_resources.py
+      # Without the purchase verifier every capability is free, so a store bundle must carry it. The Gradle
+      # checkReleasePurchaseVerifier task enforces the same rule; this step only fails sooner and names the variables.
+      - name: Require purchase verifier configuration
+        env:
+          WHEREDAY_PURCHASE_VERIFIER_URL: ${{ vars.WHEREDAY_PURCHASE_VERIFIER_URL }}
+          WHEREDAY_PURCHASE_VERIFIER_PUBLIC_KEY: ${{ vars.WHEREDAY_PURCHASE_VERIFIER_PUBLIC_KEY }}
+          WHEREDAY_PLAY_CLOUD_PROJECT_NUMBER: ${{ vars.WHEREDAY_PLAY_CLOUD_PROJECT_NUMBER }}
+        run: |
+          missing=""
+          for name in WHEREDAY_PURCHASE_VERIFIER_URL WHEREDAY_PURCHASE_VERIFIER_PUBLIC_KEY WHEREDAY_PLAY_CLOUD_PROJECT_NUMBER; do
+            if [ -z "${!name}" ]; then missing="$missing $name"; fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Set these variables on the android-release environment before building a store bundle:$missing (without the purchase verifier every Whereday feature would ship free)."
+            exit 1
+          fi
       - name: Build and lint release variant
+        env:
+          WHEREDAY_PURCHASE_VERIFIER_URL: ${{ vars.WHEREDAY_PURCHASE_VERIFIER_URL }}
+          WHEREDAY_PURCHASE_VERIFIER_PUBLIC_KEY: ${{ vars.WHEREDAY_PURCHASE_VERIFIER_PUBLIC_KEY }}
+          WHEREDAY_PLAY_CLOUD_PROJECT_NUMBER: ${{ vars.WHEREDAY_PLAY_CLOUD_PROJECT_NUMBER }}
         run: >-
           ./android/gradlew -p android :domain:test :export:test :billing:test
           :platform:testReleaseUnitTest :app:testReleaseUnitTest :app:lintRelease :app:bundleRelease
-          "-Pwhereday.versionCode=$VERSION_CODE" "-Pwhereday.versionName=$VERSION_NAME" --no-daemon
+          "-Pwhereday.versionCode=$VERSION_CODE" "-Pwhereday.versionName=$VERSION_NAME"
+          "-Pwhereday.purchaseVerifierUrl=$WHEREDAY_PURCHASE_VERIFIER_URL"
+          "-Pwhereday.purchaseVerifierPublicKey=$WHEREDAY_PURCHASE_VERIFIER_PUBLIC_KEY"
+          "-Pwhereday.playCloudProjectNumber=$WHEREDAY_PLAY_CLOUD_PROJECT_NUMBER" --no-daemon
       - name: Verify packaged release notices
         run: |
           python3 android/scripts/verify_runtime_notice_package.py android/app/build/outputs/bundle/release/app-release.aab android/app/build/generated/runtime-notices/release

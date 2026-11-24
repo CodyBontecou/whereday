@@ -115,6 +115,7 @@
     <string name="automatic_export_pending">تصدير معلّق: %1$s. تحتفظ إعادة المحاولة بهذه الفترة الملتقطة وبالوجهة.</string>
     <string name="automatic_export_plan_policy">يتطلب خطة Whereday نشطة. يعيد التشغيل اليومي كتابة اليوم كاملًا حتى الآن. يمكن تصدير الأيام السابقة الفائتة يدويًا.</string>
     <string name="automatic_export_points">نقاط</string>
+    <string name="automatic_export_policy_free">يعيد التشغيل اليومي كتابة اليوم كاملًا حتى الآن. يمكن تصدير الأيام السابقة الفائتة يدويًا.</string>
     <string name="automatic_export_repeat">تكرار</string>
     <string name="automatic_export_reset">إعادة ضبط التصدير التلقائي</string>
     <string name="automatic_export_reset_body">يؤدي هذا إلى تعطيل الجدول ومسح طلباته المحفوظة. تبقى المستندات المصدّرة والنسخ الاحتياطية المحفوظة في مجلدها.</string>
@@ -408,7 +409,9 @@
     <string name="export_delivery_folder">حفظ الملف في مجلد التصدير</string>
     <string name="export_delivery_folder_help">اختر مجلد تصدير في الإعدادات لاستخدام التسليم إلى مجلد.</string>
     <string name="export_delivery_folder_plan_policy">يتطلب تصدير الملفات خطة Whereday نشطة. يحتفظ التصدير إلى مجلد بالملفين عند وجود الاسم مسبقًا. اختر مجلدًا من الإعدادات.</string>
+    <string name="export_delivery_folder_policy_free">يحتفظ التصدير إلى مجلد بالملفين عند وجود الاسم مسبقًا. اختر مجلدًا من الإعدادات.</string>
     <string name="export_delivery_folder_required">اختر مجلد تصدير في الإعدادات أولًا.</string>
+    <string name="export_delivery_help_free">اختر مكان مشاركة هذا الملف أو حفظه.</string>
     <string name="export_delivery_interrupted">انقطع الحفظ. استأنف الطلب المحفوظ أو ألغِه.</string>
     <string name="export_delivery_locked">التصدير مشمول في كل الخطط: الأسبوعية أو السنوية أو مدى الحياة.</string>
     <string name="export_delivery_multiple">استخدم المشاركة أو مجلد التصدير لعدة ملفات.</string>
@@ -978,6 +981,7 @@
     <string name="onboarding_export_later">الإعداد لاحقًا</string>
     <string name="onboarding_export_note">جدوِل التصدير يوميًا إلى مجلد، أو صدّر مرة واحدة. التصدير مشمول في كل خطط Whereday.</string>
     <string name="onboarding_export_note_csv">ضعه في جدول بيانات أو نص برمجي.</string>
+    <string name="onboarding_export_note_free">جدوِل التصدير يوميًا إلى مجلد، أو صدّر مرة واحدة.</string>
     <string name="onboarding_export_note_gpx">يُفتح في Strava وgpx.studio ومعظم أدوات الخرائط.</string>
     <string name="onboarding_export_note_json">سجل كامل يمكنك استيراده مجددًا على هاتف جديد.</string>
     <string name="onboarding_export_note_markdown">ملاحظة واحدة لكل يوم، في مجلدات مؤرخة مثل {year}/{month}.</string>
@@ -1885,6 +1889,7 @@
     <string name="support_preview_journal">سجّل النزهات، وراجع خريطتك وجدولك الزمني، وعدّل الزيارات والأماكن المحفوظة، واستكشف أيام الدول ولحظات الصور.</string>
     <string name="support_preview_notice">لا يزال هذا الإصدار قيد التحقق لإصداره على Android.</string>
     <string name="support_preview_plan_portability">عاين ثمانية تنسيقات للتصدير واستورد ملفات السجل المدعومة. تصدير الملفات والتصدير المجدول وwebhooks مشمولة في كل خطط Whereday: الأسبوعية أو السنوية أو مدى الحياة.</string>
+    <string name="support_preview_portability_free">عاين ثمانية تنسيقات للتصدير واستورد ملفات السجل المدعومة.</string>
     <string name="support_preview_title">معاينة تطوير Android</string>
     <string name="support_privacy">سياسة الخصوصية</string>
     <string name="support_rate_app">قيّم Whereday على Google Play</string>

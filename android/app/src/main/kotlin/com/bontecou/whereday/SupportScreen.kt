@@ -75,7 +75,7 @@ internal object SupportIntents {
     fun open(intent:Intent) {try {context.startActivity(intent);error=false} catch(_:android.content.ActivityNotFoundException) {error=true} catch(_:SecurityException) {error=true}}
     when(route) {
         "logs"->{val entries by graph.activityLog.entries.collectAsStateWithLifecycle();ActivityLogsScreen(entries,info,{route="support"},graph.activityLog::clear) {SupportIntents.copy(context,it)};return}
-        "releases"->{AndroidReleaseNotes {route="support"};return}
+        "releases"->{AndroidReleaseNotes(plans=graph.purchases.enforced) {route="support"};return}
     }
     BackHandler(onBack=dismiss)
     SupportForm(info,error,dismiss,{route="logs"},{route="releases"},{open(SupportIntents.link(it))},{open(SupportIntents.feedback(info))},{SupportIntents.copy(context,SupportIntents.EMAIL)},PlayReviews.available) {
@@ -169,14 +169,15 @@ internal object SupportIntents {
     if(clearing) WorkspaceAlertDialog(onDismissRequest={clearing=false},title={Text(stringResource(R.string.support_clear_logs_question))},text={Text(stringResource(R.string.support_clear_logs_description))},confirmButton={TextButton(onClick={clear();clearing=false;copied=false},colors=ButtonDefaults.textButtonColors(contentColor=wd.inkRust)) {Text(stringResource(R.string.support_clear_logs))}},dismissButton={TextButton(onClick={clearing=false}) {Text(stringResource(R.string.support_cancel))}})
 }
 
-@Composable internal fun AndroidReleaseNotes(dismiss:()->Unit) {
+/** [plans] is false in a build without Play billing, which has no plans to describe. */
+@Composable internal fun AndroidReleaseNotes(plans:Boolean=true,dismiss:()->Unit) {
     BackHandler(onBack=dismiss)
     LazyColumn(Modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("android-release-notes"),contentPadding=PaddingValues(bottom=32.dp)) {
         item {SettingsBackHeader(stringResource(R.string.support_release_notes),stringResource(R.string.support_back),dismiss)}
         item {WdCard(Modifier.padding(horizontal=16.dp)) {Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             Text(stringResource(R.string.support_preview_title),style=WdType.title3,color=wd.textPrimary,modifier=Modifier.semantics {heading()})
             Text(stringResource(R.string.support_preview_notice),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
-            listOf(R.string.support_preview_journal,R.string.support_preview_plan_portability,R.string.support_preview_automation).forEach {
+            listOf(R.string.support_preview_journal,if(plans) R.string.support_preview_plan_portability else R.string.support_preview_portability_free,R.string.support_preview_automation).forEach {
                 WdDivider()
                 Text(stringResource(it),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
             }

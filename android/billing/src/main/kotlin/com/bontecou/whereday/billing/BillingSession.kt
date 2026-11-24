@@ -27,6 +27,7 @@ class VerifiedAccessRequired:IllegalStateException("Verified Whereday access is 
 enum class BillingRefreshResult {verified,pending,notFound,unavailable,failed}
 enum class AccessState { checking, free, pending, active, verificationRequired, unavailable }
 enum class BillingNotice(val diagnostic:String) {
+    /** No longer emitted: a build without Play billing opens every capability instead of explaining that it can't sell them. */
     unavailable("Purchases are not available in this build. Imports and export previews remain free."),
     pendingPayment("Your purchase is pending in Google Play. Access starts after payment is completed and verified."),
     verified("Whereday access is verified."),
@@ -44,6 +45,9 @@ data class BillingState(val access: AccessState=AccessState.checking,val product
     fun product(plan:StorePlan)=products.firstOrNull { it.plan==plan }
     /** Builds without Play billing keep recording free; only configured builds put tracking behind access. */
     val trackingLocked get()=enforced && access!=AccessState.active
+    /** Whether paid features (exports, scheduled exports, webhooks, recording) are open now. A build without Play billing
+     *  (debug and QA builds; release builds refuse to build without the verifier) opens everything, so nothing reads as locked. */
+    val unlocked get()=!enforced || access==AccessState.active
 }
 
 /** [productIds] lists every product that grants access, most durable first: an owned Lifetime is verified ahead of a subscription. */
@@ -60,7 +64,7 @@ class BillingSession(private val productIds: List<String>,private val configured
         mutable.value=mutable.value.copy(busy=true,notice=null)
         try {
             loadCache()
-            if(!configured) { mutable.value=BillingState(AccessState.unavailable,notice=BillingNotice.unavailable,enforced=false); return@withLock BillingRefreshResult.unavailable }
+            if(!configured) { mutable.value=BillingState(AccessState.unavailable,enforced=false); return@withLock BillingRefreshResult.unavailable }
             val snapshot=store.snapshot()
             mutable.value=mutable.value.copy(products=snapshot.products)
             val owned=snapshot.purchases.filter { it.productId in productIds }.sortedBy { productIds.indexOf(it.productId) }
@@ -102,14 +106,15 @@ class BillingSession(private val productIds: List<String>,private val configured
         catch(e:Exception) { if(e is CancellationException) throw e; clearGrant() }
     }
     private suspend fun clearGrant() { grant=null;signed=null;lastSeen=Instant.EPOCH;cache.clear();mutable.value=mutable.value.copy(activeProductId=null,autoRenewing=false) }
-    private fun free(capability:Capability)=capability in FREE_CAPABILITIES || (!configured && capability==Capability.recording)
+    /** Without Play billing there is nothing to sell, so every capability is free there (release builds refuse to build unconfigured). */
+    private fun free(capability:Capability)=!configured || capability in FREE_CAPABILITIES
     /** Whether [capability] is open now, from the cached signed grant alone: no Play query, no verifier request and no change
-     *  to [state]. For background work such as the evening recap; unconfigured builds keep recording free, as everywhere. */
+     *  to [state]. For background work such as the evening recap; unconfigured builds open everything, as everywhere. */
     suspend fun hasAccess(capability:Capability):Boolean {
         if(free(capability)) return true
         return mutex.withLock {
             loadCache()
-            configured && grant?.allows(clock.instant(),lastSeen)==true
+            grant?.allows(clock.instant(),lastSeen)==true
         }
     }
     suspend fun requireAccess(capability: Capability) {
@@ -117,8 +122,8 @@ class BillingSession(private val productIds: List<String>,private val configured
         mutex.withLock {
         loadCache()
         val now=clock.instant()
-        if(!configured || grant?.allows(now,lastSeen)!=true) {
-            mutable.value=mutable.value.copy(access=if(configured) AccessState.verificationRequired else AccessState.unavailable,notice=if(configured) BillingNotice.verificationFailed else BillingNotice.unavailable)
+        if(grant?.allows(now,lastSeen)!=true) {
+            mutable.value=mutable.value.copy(access=AccessState.verificationRequired,notice=BillingNotice.verificationFailed)
             throw VerifiedAccessRequired()
         }
         lastSeen=maxOf(lastSeen,now)
@@ -128,7 +133,7 @@ class BillingSession(private val productIds: List<String>,private val configured
     /** Cold workers can renew expired grants; valid offline leases and free features need no network. */
     suspend fun requireAccessWithRefresh(capability:Capability) {
         try {requireAccess(capability);return}
-        catch(e:Exception) {if(e is CancellationException || !configured || free(capability)) throw e}
+        catch(e:Exception) {if(e is CancellationException || free(capability)) throw e}
         renewal.withLock {
             try {requireAccess(capability);return@withLock}
             catch(e:Exception) {if(e is CancellationException) throw e}
@@ -137,6 +142,6 @@ class BillingSession(private val productIds: List<String>,private val configured
         }
     }
     fun notice(value:BillingNotice) { mutable.value=mutable.value.copy(notice=value) }
-    // Recording is paid once Play billing is configured; history, imports and previews never are.
+    // Recording, exports and webhooks are paid once Play billing is configured; history, imports and previews never are.
     companion object { private val FREE_CAPABILITIES=setOf(Capability.historyImport,Capability.preview) }
 }
