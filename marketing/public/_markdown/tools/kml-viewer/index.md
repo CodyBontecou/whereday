@@ -138,4 +138,8 @@ View a GPX route, points and timestamps without uploading it.
 
 See what each format keeps, with the same invented trip.
 
+- [Open a GeoJSON file](https://whereday.com/tools/geojson-viewer/)
+
+View a GeoJSON file locally and save points and lines as GPX or KML.
+
 Source: https://whereday.com/tools/kml-viewer/

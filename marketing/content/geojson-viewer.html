@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/gpx-merge.css">
+<link rel="stylesheet" href="/assets/kml-viewer.css">
+<section class="gpx-tool merge-tool kv-tool" aria-labelledby="kv-title">
+  <h2 id="kv-title">Choose a GeoJSON file. It is opened on this device.</h2>
+  <p>See how many features of each geometry type are inside, which times were found, and a plain list of anything skipped. Then save the points and lines as GPX or KML. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leaves the page.</p>
+  <p class="gpx-small">Not GeoJSON? A Google Timeline <code>.json</code> export needs the <a href="/tools/google-timeline-inspector/">Timeline JSON inspector</a> instead.</p>
+  <noscript><p>JavaScript is needed to open files in your browser. The explanations and the sample download below work without it.</p></noscript>
+  <div id="kv-tool" hidden>
+    <div id="kv-drop" class="merge-drop">
+      <label for="kv-file"><strong>Choose a .geojson or .json file</strong> or drop it here · one file, up to 10 MiB and 50,000 positions</label>
+      <input id="kv-file" type="file" accept=".geojson,.json,.geojsonl,.ndjson,application/geo+json,application/json" aria-describedby="kv-status">
+    </div>
+    <p><label for="kv-paste"><strong>Or paste GeoJSON text</strong></label></p>
+    <textarea id="kv-paste" rows="4" spellcheck="false" autocomplete="off" style="width:100%;box-sizing:border-box;font-family:monospace"></textarea>
+    <div class="gpx-actions"><button id="kv-open-text" type="button">Open pasted text</button><button id="kv-demo" type="button">Try a synthetic example</button><button id="kv-clear" type="button" disabled>Clear</button></div>
+    <p id="kv-status" class="merge-status" role="status" aria-live="polite">Choose a file, paste text, or try the synthetic example first.</p>
+    <div id="kv-results" hidden>
+      <h3 id="kv-name">File</h3>
+      <p id="kv-source" class="gpx-small"></p>
+      <dl id="kv-counts" class="kv-counts"></dl>
+      <p id="kv-times"></p>
+      <div class="kv-panel">
+        <svg id="kv-plot" viewBox="0 0 800 360" role="img" aria-label="Plot of the opened GeoJSON geometry in local coordinates, without a map"></svg>
+        <p id="kv-plot-note" class="gpx-small"></p>
+        <div id="kv-detail" class="kv-panel" hidden></div>
+      </div>
+      <h3>Feature table</h3>
+      <p class="gpx-small">Names and properties are shown as plain text. Coordinates are longitude,latitude[,altitude], as in GeoJSON. Times are UTC, or “unknown” when none could be read.</p>
+      <div class="table-scroll" role="region" aria-label="Features in the opened file" tabindex="0"><table><thead><tr><th scope="col">Name</th><th scope="col">Geometry</th><th scope="col">Positions</th><th scope="col">First → last time</th><th scope="col">Bounding box (west,south to east,north)</th></tr></thead><tbody id="kv-rows"></tbody></table></div>
+      <p id="kv-rows-note" class="gpx-small"></p>
+      <h3>Skipped</h3>
+      <p class="gpx-small">Content found in the file that is not drawn, with the reason. Nothing is dropped silently.</p>
+      <ul id="kv-skipped"></ul>
+      <ul id="kv-notes"></ul>
+      <h3>Convert</h3>
+      <div class="gpx-actions"><button id="kv-gpx" type="button" disabled>Download GPX</button><button id="kv-kml" type="button" disabled>Download KML</button></div>
+      <h4>GPX</h4><ul id="kv-gpx-summary"></ul>
+      <h4>KML</h4><ul id="kv-kml-summary"></ul>
+      <h3>Next steps</h3>
+      <p><a href="/tools/gpx-viewer/">Check the GPX in the GPX viewer</a> · <a href="/tools/kml-viewer/">Check the KML in the KML viewer</a> · <a href="/tools/merge-gpx/">Merge GPX files</a></p>
+    </div>
+  </div>
+</section>
+
+<nav class="article-toc" aria-label="On this page"><strong>On this page</strong><ol>
+  <li><a href="#what-is-geojson">What is GeoJSON?</a></li><li><a href="#how-to-open">How to open one</a></li><li><a href="#what-it-shows">What it shows</a></li><li><a href="#example">Synthetic example</a></li><li><a href="#convert">Convert to GPX or KML</a></li><li><a href="#problems">Common problems</a></li><li><a href="#limits">Limits</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#make-your-own">Make your own</a></li><li><a href="#sources">Sources</a></li>
+</ol></nav>
+
+<section aria-labelledby="what-is-geojson">
+  <h2 id="what-is-geojson">What is a GeoJSON file?</h2>
+  <p>GeoJSON is a JSON format for geographic data, defined in <a href="https://www.rfc-editor.org/rfc/rfc7946">RFC 7946</a>. A file holds one GeoJSON object: a <strong>FeatureCollection</strong> (a list of features), a single <strong>Feature</strong> (a geometry plus a <code>properties</code> object such as a name), or a bare <strong>Geometry</strong>. The geometry types are Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection (RFC 7946 §3.1).</p>
+  <p>A position is <code>[longitude, latitude]</code>, optionally followed by an altitude: longitude first (§3.1.1). RFC 7946 uses the WGS 84 coordinate system only and removed the older <code>crs</code> member (§4). Files often use <code>.geojson</code> or <code>.json</code>; the extension does not change the content.</p>
+  <p>For how GeoJSON compares with GPX, KML and CSV, see <a href="/blog/gpx-kml-geojson-location-history/">which format to choose</a>.</p>
+</section>
+
+<section aria-labelledby="how-to-open">
+  <h2 id="how-to-open">How to open a GeoJSON file</h2>
+  <ul>
+    <li><strong>This page.</strong> Choose the file or paste its text above. Nothing is uploaded. It draws shapes only, not a map, and lists what it skips.</li>
+    <li><strong>QGIS (desktop).</strong> The <a href="https://docs.qgis.org/latest/en/docs/user_manual/managing_data_source/opening_data.html">QGIS manual</a> lists GeoJSON among the vector formats it opens. Use <em>Layer ► Add Layer ► Add Vector Layer</em>, choose <em>File</em>, browse to the file and press <em>Add</em>, or drag the file into the Layers panel.</li>
+    <li><strong>iPhone Files app.</strong> We have not checked whether the Files preview draws GeoJSON on a map, so we make no claim about it; expect it to show the text at most. Use a computer for this page’s tested route.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="what-it-shows">
+  <h2 id="what-it-shows">What the viewer shows and what it skips</h2>
+  <div class="table-scroll" role="region" aria-label="Geometry types drawn and exported" tabindex="0"><table>
+    <thead><tr><th scope="col">Geometry type</th><th scope="col">Drawn</th><th scope="col">GPX</th><th scope="col">KML</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>Point</code>, <code>MultiPoint</code></th><td>Dots</td><td>Waypoints</td><td>Point (MultiGeometry for several)</td></tr>
+      <tr><th scope="row"><code>LineString</code></th><td>Line</td><td>One track, one segment</td><td>LineString, or gx:Track when every position has a time</td></tr>
+      <tr><th scope="row"><code>MultiLineString</code></th><td>Lines</td><td>One track, one segment per part</td><td>MultiGeometry of LineStrings, or gx:MultiTrack when all parts are timed</td></tr>
+      <tr><th scope="row"><code>Polygon</code>, <code>MultiPolygon</code></th><td>Outlines; holes dashed; not filled</td><td>Not exported; counted in the summary only</td><td>Polygon with its inner rings</td></tr>
+      <tr><th scope="row"><code>GeometryCollection</code></th><td>Each member drawn</td><td>Points and lines inside; polygons counted only</td><td>One Placemark with a MultiGeometry</td></tr>
+      <tr><th scope="row"><code>null</code> geometry</th><td>Nothing; listed as “No geometry”</td><td>Nothing</td><td>Nothing</td></tr>
+    </tbody>
+  </table></div>
+  <p>The Skipped panel counts and explains: entries that are not Features or have a missing <code>type</code>, null or unknown geometries, empty or too-short lines and rings, invalid positions (and how many would fit if latitude came first, or look like projected metres), 3D positions drawn in 2D, <code>crs</code> members, and time values that could not be read.</p>
+  <p><strong>Times.</strong> The viewer looks for <code>time</code>, <code>timestamp</code> or <code>datetime</code> in a feature’s properties, and for a <code>coordTimes</code> or <code>times</code> array (also <code>coordinateProperties.times</code>). Only date-times with a time zone, such as <code>2020-05-01T10:00:00Z</code>, are read. A number, or a date with no zone, is shown as “unknown” and is never guessed. Per-position times are used in exports only when the array has exactly one entry per position.</p>
+</section>
+
+<section aria-labelledby="example">
+  <h2 id="example">Synthetic example</h2>
+  <p>Invented data near 0° N 10° E, not anyone’s recording: <a href="/samples/synthetic-geojson-viewer.geojson" download>synthetic-geojson-viewer.geojson</a>. The button above loads it. Expected result:</p>
+  <ul>
+    <li><strong>Viewer:</strong> 4 features (2 Points, 1 MultiPoint of 3 positions, 1 MultiLineString of two parts), 10 positions, 6 readable times, first <code>2000-01-01T12:00:00Z</code>, last <code>2000-01-01T12:21:00Z</code>. “Camp” and “Cairns” have no time and show “unknown”. The one 3D position is listed under Skipped.</li>
+    <li><strong>GPX:</strong> 5 waypoints, 1 track with 2 segments and 5 track points; 6 positions with a time. The extra <code>note</code> property is dropped.</li>
+    <li><strong>KML:</strong> 4 Placemarks: 5 Points (3 of them in one MultiGeometry) and 1 gx:MultiTrack of 2 gx:Tracks; 6 times written.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="convert">
+  <h2 id="convert">Convert GeoJSON to GPX or KML</h2>
+  <ul>
+    <li><strong>GPX 1.1:</strong> points become waypoints. A LineString becomes a track with one segment; a MultiLineString becomes one track with a segment per part. A line that jumps more than 180° of longitude is cut there into separate segments (RFC 7946 §3.1.9 describes cutting at the antimeridian); no point is invented at the cut.</li>
+    <li><strong>KML 2.2:</strong> points, lines and polygons become Placemark geometries. Lines whose every position has a time become Google’s <code>gx:Track</code>; a single timed Point gets a <code>TimeStamp</code>.</li>
+    <li><strong>What is lost:</strong> polygons never go into GPX (GPX 1.1 has waypoints, routes and tracks only), every property except <code>name</code> and time is dropped, and altitude is written only where it is present (in KML, only when every position in the line has one). Times that cannot be attached to a position are not written. The page lists exact counts for your file before you download.</li>
+  </ul>
+  <p>Check the output in the <a href="/tools/gpx-viewer/">GPX viewer</a> or <a href="/tools/kml-viewer/">KML viewer</a>, convert KML or GPX with the <a href="/tools/kml-to-gpx/">KML ⇄ GPX converter</a>, or combine GPX results with <a href="/tools/merge-gpx/">Merge GPX</a>. For the GPX format itself, read <a href="/blog/what-is-a-gpx-file/">what a GPX file is</a>.</p>
+</section>
+
+<section aria-labelledby="problems">
+  <h2 id="problems">Common problems</h2>
+  <ul>
+    <li><strong>Latitude and longitude swapped.</strong> GeoJSON is longitude first. A point written latitude first lands in the wrong place, or its second number is beyond ±90 and it is skipped. The Skipped panel counts positions that would fit if swapped, but the viewer never swaps them for you.</li>
+    <li><strong>Projected coordinates.</strong> Values like <code>500000, 4649776</code> are far outside ±180 and ±90 and are probably metres in a projected system. RFC 7946 allows only WGS 84 degrees, so they are skipped and counted, not converted.</li>
+    <li><strong>Very large files.</strong> The page reads one file of up to 10 MiB and 50,000 positions. Split or simplify bigger files first.</li>
+    <li><strong>A <code>.json</code> that is not GeoJSON.</strong> If the top-level object has no GeoJSON <code>type</code>, the page says so. Google Timeline exports are a different structure: open them in the <a href="/tools/google-timeline-inspector/">Timeline JSON inspector</a>.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li><strong>One file</strong> or pasted text, up to 10 MiB and 50,000 positions, in line with the other tools here.</li>
+    <li><strong>Newline-delimited GeoJSON</strong> (one object per line, <code>.geojsonl</code> or <code>.ndjson</code>) is read when the text is not a single JSON value.</li>
+    <li><strong>No styling.</strong> Simplestyle properties such as colour and marker symbols are ignored, and nothing is filled.</li>
+    <li><strong>No editing, no tiles.</strong> The plot is a simple local projection with no map, streets or labels.</li>
+    <li><strong>No reprojection.</strong> Positions are read as WGS 84 longitude, latitude. Polygons that cross the antimeridian are drawn as written.</li>
+    <li>A plot draws up to 5,000 shapes and the table lists up to 500 features; counts and exports cover the whole file.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="privacy">
+  <h2 id="privacy">Privacy: your file stays in the browser</h2>
+  <p>Parsing, plotting and conversion all happen in this page. Its content security policy blocks network connections, the page loads no analytics and no map tiles, and property values are inserted as text, not HTML. The web server sees an ordinary request for the page and its scripts, not your file or pasted text. Following a link leaves this page. Clear removes the result from the page and never changes your original file.</p>
+</section>
+
+<section aria-labelledby="make-your-own">
+  <h2 id="make-your-own">Make your own GeoJSON of where you’ve been</h2>
+  <p>Whereday keeps your location history on your iPhone and exports GeoJSON, GPX, KML, CSV and more; see the <a href="/docs/export-import/">export and import reference</a>. Browse all the <a href="/tools/">location file tools</a>.</p>
+  <section class="closing" aria-labelledby="record-next"><h2 id="record-next">Make your own GeoJSON of where you’ve been.</h2><p>Whereday keeps your location history on your iPhone and exports it in the format you need.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+</section>
+
+<section aria-labelledby="sources">
+  <h2 id="sources">Sources</h2>
+  <ul>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc7946">RFC 7946, The GeoJSON Format</a> (geometry types §3.1, position order §3.1.1, antimeridian §3.1.9, <code>crs</code> removed §4)</li>
+    <li><a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation</a></li>
+    <li><a href="https://www.ogc.org/standard/kml/">OGC KML 2.2 standard</a> and Google’s <a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack">gx:Track reference</a></li>
+    <li><a href="https://docs.qgis.org/latest/en/docs/user_manual/managing_data_source/opening_data.html">QGIS manual: opening data</a></li>
+    <li><a href="/docs/export-import/">Whereday export and import reference</a></li>
+  </ul>
+</section>
+<script type="module" src="/assets/geojson-viewer.mjs?v=20261124a"></script>

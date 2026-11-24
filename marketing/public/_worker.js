@@ -45,6 +45,7 @@ const pages = {
   "/privacy": "/_markdown/privacy.md",
   "/terms": "/_markdown/terms.md",
   "/tools/country-days-calculator/": "/_markdown/tools/country-days-calculator/index.md",
+  "/tools/geojson-viewer/": "/_markdown/tools/geojson-viewer/index.md",
   "/tools/google-timeline-inspector/": "/_markdown/tools/google-timeline-inspector/index.md",
   "/tools/gpx-viewer/": "/_markdown/tools/gpx-viewer/index.md",
   "/tools/": "/_markdown/tools/index.md",

@@ -130,6 +130,10 @@ New-user tracking access and native file-writing access depend on your plan and 
 
 Use the [GPX 1.1 schema documentation](https://www.topografix.com/GPX/1/1/) for point and segment structure, the [KML track reference](https://developers.google.com/kml/documentation/kmlreference#gxtrack) for timed tracks and interpolation, and [GeoJSON RFC 7946](https://www.rfc-editor.org/rfc/rfc7946) for positions, geometry and properties. App support must be checked separately from the format’s capabilities.
 
+## Open a GeoJSON file locally
+
+To see what is inside a GeoJSON file, or save its points and lines as GPX or KML, use the [local GeoJSON viewer](https://whereday.com/tools/geojson-viewer/). Nothing is uploaded.
+
 ## Convert an existing GPX locally
 
 The [GPX viewer now offers GeoJSON download](https://whereday.com/tools/gpx-viewer/#geojson-output). Its custom properties differ from this article’s controlled comparison file: use the [worked converter tutorial](https://whereday.com/blog/check-gpx-file/#geojson) and exact generated example to check its field mapping. The converter keeps parts disconnected at invalid coordinates and dateline jumps, and preserves elevation in a property array rather than assuming a height reference for geometry.
