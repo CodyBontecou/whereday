@@ -1,45 +1,121 @@
+# Single-outing export from Outing details on the disposable QA package com.bontecou.whereday.mapqa (NEVER the
+# owner's com.bontecou.whereday), in a build with UNCONFIGURED Play billing.
+# Prerequisites: mapQa onboarded, idle (not recording), English UI (MM/DD/YYYY date input), device time zone
+# America/Puerto_Rico (the pool emulator's), inferred outings on (Settings defaults: 30 min gap, no minimum), outing
+# file format JSON, and exactly one outing on 2026-10-27: the public-coordinate fixture
+# android/.argent/fixtures/replay-route.csv (12 synthetic points near the Eiffel Tower) imported once through
+# Archive › Import history file. Stage it with
+#   adb -s <qa-emulator> push android/.argent/fixtures/replay-route.csv /sdcard/Download/whereday-replay-qa-20261027.csv
+# then import it in mapQa (it stays imported; this test does not add or delete history).
+# Side effects (mapQa only): opens the 2026-10-27 timeline, changes the outing format to Markdown and restores JSON;
+# prepares one .md file in mapQa's cache for the share sheet (dismissed with Back, nothing shared); opens the Save
+# picker and cancels it (no file written); returns the timeline to today and ends on the Map.
+# 2026-11-24 re-recorded live (argent 0.34.0) for PR #177: unconfigured builds unlock exports, so Share file and Save
+# file as… now reach the system share sheet and Save picker instead of the "Verified lifetime export access is
+# required." denial. The outing is reached through Pick a day instead of "Previous" (yesterday), so the fixture does
+# not have to be re-dated every day. Retargeted from the owner package to mapQa.
+# Raw steps: `button: back` dismisses system UI (share sheet, DocumentsUI), each followed by a hidden check; the date
+# field is cleared with ten raw backspace key presses (no directive clears a field) and the typed value is proven by
+# the picker's "Entered date" headline.
+# Coordinate exceptions: none in the final YAML. Live, the Map back button was kept as a point and the JSON menu item
+# as role-only (stale pre-tap trees); they are replaced by the ids/text of the elements under those points
+# (timeline-close, ^JSON$). The date field tap used today's date as text; it is replaced by a MM/DD/YYYY pattern.
+# The live devtools tree went stale after every screen change; it was refreshed with
+# `adb shell am force-stop com.argent.androiddevtools` before each recorded step (not part of the test).
+version: 1
+requires:
+  platform: android
 steps:
-  - echo: Requires onboarded idle app, JSON export format, unconfigured lifetime access, and one stopped unnamed outing yesterday. Changes format to Markdown and restores JSON; preserves all history and returns to today.
-  - launch: com.bontecou.whereday
-  - await: { visible: { id: map-header } }
+  - echo: Disposable mapQa only (never com.bontecou.whereday), unconfigured billing. Requires the 2026-10-27 replay fixture outing.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: map-day-peek }
+  - await: { visible: { id: map-open-timeline } }
   - tap: { id: map-open-timeline }
-  - await: { visible: { text: Previous } }
-  - tap: { text: Previous }
-  - await: { visible: { text: View outing } }
-  - tap: { text: View outing }
-  - await: { visible: { text: Outing details } }
-  - scroll-to: { target: { text: Export outing }, direction: down }
-  - await: { visible: { text: Outing file format } }
-  - tap: { text: { matches: '^Json$' } }
-  - await: { visible: { text: { matches: '^Csv$' } } }
+  - await: { visible: { id: timeline-content } }
+  - await: { idle: true }
+  - echo: On the timeline. Pick 10/27/2026 (the public replay fixture's day) by typing it into the date picker.
+  - tap: { id: today-pick-day }
+  - await: { visible: { text: Switch to text input mode } }
+  - tap: { text: Switch to text input mode }
+  - tap: { text: { matches: '^\d{2}/\d{2}/\d{4}$' } }
+  - tool: run-sequence
+    args:
+      steps:
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+  - tool: keyboard
+    args:
+      text: '10272026'
+  - await: { visible: { text: 'Entered date: Tuesday, October 27, 2026' } }
+  - tap: { text: { matches: '^Show day$' } }
+  - await: { visible: { text: 'October 27, 2026' } }
+  - await: { idle: true }
+  - tap: { text: Inferred outing }
+  - await: { visible: { id: outing-detail-content } }
+  - await: { idle: true }
+  - await: { text: { in: { id: outing-point-summary }, contains: 12 points } }
+  - echo: Open the outing file format menu; every format is offered. Choose Markdown.
+  - scroll-to: { target: { text: { matches: '^Outing file format$' } }, direction: down }
+  - tap: { text: { matches: '^JSON$' } }
+  - await: { visible: { text: { matches: '^CSV$' } } }
   - await: { visible: { text: { matches: '^Markdown$' } } }
-  - await: { visible: { text: { matches: '^Geojson$' } } }
-  - await: { visible: { text: { matches: '^Gpx$' } } }
-  - await: { visible: { text: { matches: '^Kml$' } } }
-  - await: { visible: { text: { matches: '^Owntracks$' } } }
+  - await: { visible: { text: { matches: '^GeoJSON$' } } }
+  - await: { visible: { text: { matches: '^GPX$' } } }
+  - await: { visible: { text: { matches: '^KML$' } } }
+  - await: { visible: { text: { matches: '^OwnTracks$' } } }
   - await: { visible: { text: { matches: '^Overland$' } } }
   - tap: { text: { matches: '^Markdown$' } }
+  - echo: Choosing a format scrolls the screen back to the top; scroll back to the export section.
+  - scroll-to: { target: { id: history-export-open }, direction: down }
   - await: { visible: { text: { matches: '^Markdown$' } } }
+  - echo: 'Outing export is unlocked: Export outing, then Share file opens the Android share sheet with a .md file (dismissed with Back).'
+  - tap: { id: history-export-open }
+  - await: { visible: { text: { matches: '^Share file$' } } }
   - await: { idle: true }
-  - tap: { text: { matches: '^Export outing$' } }
-  - await: { visible: { text: Share file } }
-  - tap: { text: Share file }
-  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - tap: { text: { matches: '^Share file$' } }
+  - await: { visible: { id: 'com.android.intentresolver:id/content_preview_filename' }, timeout: 15000 }
+  - await: { text: { in: { id: 'com.android.intentresolver:id/content_preview_filename' }, contains: outings - Outing 1.md } }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.android.intentresolver:id/content_preview_filename' } }
+  - echo: Save file as… opens the system Save picker; cancel it with Back so no file is written.
+  - scroll-to: { target: { id: history-export-open }, direction: down }
+  - tap: { id: history-export-open }
+  - await: { visible: { text: Save file as… } }
+  - await: { idle: true }
   - tap: { text: Save file as… }
-  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
-  - scroll-to: { target: { text: { matches: '^Done$' } }, direction: down }
-  - tap: { text: { matches: '^Done$' } }
-  - await: { visible: { text: Outing file format } }
+  - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
+  - scroll-to: { target: { id: history-export-picker-notice }, direction: down }
+  - await: { text: { in: { id: history-export-picker-notice }, contains: Outing 1.md · Export canceled. } }
+  - echo: Restore the outing file format to JSON.
+  - scroll-to: { target: { text: { matches: '^Outing file format$' } }, direction: down }
   - tap: { text: { matches: '^Markdown$' } }
-  - await: { visible: { text: { matches: '^Json$' } } }
-  - tap: { text: { matches: '^Json$' } }
-  - await: { visible: { text: { matches: '^Json$' } } }
-  - await: { idle: true }
+  - await: { visible: { text: { matches: '^JSON$' } } }
+  - tap: { text: { matches: '^JSON$' } }
+  - scroll-to: { target: { text: { matches: '^Outing file format$' } }, direction: down }
+  - await: { visible: { text: { matches: '^JSON$' } } }
+  - echo: Back to the Oct 27 timeline, then go to today and return to the Map.
   - scroll-to: { target: { text: Back to timeline }, direction: up }
   - tap: { text: Back to timeline }
-  - await: { visible: { text: Next } }
-  - tap: { text: Next }
-  - await: { visible: { text: No outings or visits for this day. } }
+  - await: { visible: { id: timeline-today } }
+  - await: { idle: true }
+  - tap: { id: timeline-today }
+  - await: { hidden: { id: timeline-today } }
+  - tap: { id: timeline-close }
+  - await: { visible: { id: map-header-title } }
   - await: { idle: true }
