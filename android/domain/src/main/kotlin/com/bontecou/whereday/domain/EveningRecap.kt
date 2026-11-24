@@ -4,6 +4,7 @@ import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
 import java.time.ZonedDateTime
 
 /** How often the evening recap notification is sent (Settings › Reminders › Day recap). The keys are stored. */
@@ -67,20 +68,30 @@ object RecapSchedule {
      *  ending on that Sunday (Monday 00:00 onward). It ends at the fire time. */
     fun period(frequency:RecapFrequency,fire:ZonedDateTime):RecapPeriod {
         val first=if(frequency==RecapFrequency.weekly) fire.toLocalDate().minusDays(6) else fire.toLocalDate()
-        return RecapPeriod(first,fire.toLocalDate(),first.atStartOfDay(fire.zone).toInstant(),fire.toInstant())
+        return RecapPeriod(first,fire.toLocalDate(),first.atStartOfDay(fire.zone).toInstant(),fire.toInstant(),fire.zone)
     }
 }
 
-data class RecapPeriod(val firstDay:LocalDate,val lastDay:LocalDate,val from:Instant,val until:Instant) {
+/** [zone] is the one the days are civil days in, as Today's are. */
+data class RecapPeriod(val firstDay:LocalDate,val lastDay:LocalDate,val from:Instant,val until:Instant,val zone:ZoneId) {
     val range:HistoryRange get()=HistoryRange(from,maxOf(until,from.plusMillis(1)))
+    val days:List<LocalDate> get()=generateSequence(firstDay) {it.plusDays(1)}.takeWhile {it<=lastDay}.toList()
+    /** Each day of the period as Today shows it at the recap time ([until]): its stays, clipped to that day. Points are left
+     *  out; the distance comes from the period's point summary (see [RecapFacts.distanceMeters]). */
+    fun stories(visits:List<Visit>):List<DayStory> =days.map {DayStory.build(it,zone,visits,emptyList(),until,0.0)}
 }
 
 /** What a recap knows about its period, read from the journal when it runs. */
 data class RecapFacts(
-    /** Distinct places, counted as Today counts them ([placeKey]: the name, or the visit itself when unnamed). */
+    /** Distinct places, counted by Today's own rule ([DayStory.places]): each stay Today shows on the period's days, keyed by
+     *  [placeKey] (the name, or the visit itself when unnamed). A stay that began before the period (a night at home) counts;
+     *  one that only touches its start, or lasts no time, does not, as on Today. For a week, the union of the seven days. */
     val placeCount:Int,
-    /** Named places in order of first arrival, without repeats. */
+    /** Named places in order of first arrival, without repeats ([DayStory.placeNames]; for a week, day by day). */
     val names:List<String>,
+    /** The point summary's path length over the period, the figure Today shows: for a day, Today's distance at the recap
+     *  time; for a week, the map's 7-day total, where a leg across midnight counts too (so it can be a little more than the
+     *  sum of seven Today figures, which each start fresh at midnight). */
     val distanceMeters:Double,
     /** Distinct countries from Country Days; null when unknown. */
     val countries:Int?=null,
@@ -93,11 +104,14 @@ data class RecapFacts(
     companion object {
         /** [visits] overlap the period; [earlier] are the visits that arrived before it; [points] and [recordings] count the period's fixes and recordings. */
         fun of(period:RecapPeriod,visits:List<Visit>,earlier:List<Visit>,distanceMeters:Double,points:Long,recordings:Int,countries:Int?=null):RecapFacts {
-            val sorted=visits.sortedWith(compareBy({it.arrivedAt},{it.id}))
-            val names=sorted.mapNotNull {it.name?.trim()?.takeIf {name->name.isNotEmpty()}}.distinct()
+            // Today's derivation, day by day, so the recap never disagrees with what Today showed.
+            val stays=period.stories(visits).flatMap {it.stays}
+            val places=stays.map {placeKey(it.visit)}.distinct()
+            val names=stays.mapNotNull {it.name}.distinct()
+            val sorted=stays.map {it.visit}.distinctBy {it.id}
             val prior=earlier.filter {it.arrivedAt<period.from}.map {it.coordinate}
             val fresh=sorted.any {visit->visit.arrivedAt>=period.from && prior.none {it.distanceTo(visit.coordinate)<=RecapRules.NEW_PLACE_RADIUS_METERS}}
-            return RecapFacts(sorted.map(::placeKey).distinct().size,names,distanceMeters.takeIf {it.isFinite() && it>0} ?: 0.0,countries,
+            return RecapFacts(places.size,names,distanceMeters.takeIf {it.isFinite() && it>0} ?: 0.0,countries,
                 recorded=sorted.isNotEmpty() || points>0,tracked=points>0 || recordings>0 || sorted.any {it.source==VisitSource.automatic},newPlace=fresh)
         }
         /** Distinct countries on the period's days, from Country Days presences; null when none are known. */
@@ -116,7 +130,7 @@ enum class RecapSkip {
     nothingRecorded,
     /** Only hand-added or imported visits: tracking never ran in the period. */
     trackingOff,
-    /** Whereday was in the foreground that evening, from 18:00 until the recap time. */
+    /** Whereday was in the foreground that evening, from 18:00 until the recap time; not on the evening onboarding turned recaps on. */
     openedThisEvening,
     /** Skip quiet days is on and the period was quiet ([RecapRules.quiet]). */
     quiet,
@@ -133,20 +147,22 @@ object RecapRules {
     /** Quiet: no visit to a new place and under 1 km moved. Same rule for a week. */
     fun quiet(facts:RecapFacts)=!facts.newPlace && facts.distanceMeters<QUIET_DISTANCE_METERS
 
-    /** True when [lastForeground] falls between 18:00 and [fire] on the fire day; a recap set before 18:00 never counts. */
-    fun openedThisEvening(lastForeground:Instant?,fire:ZonedDateTime):Boolean {
-        if(lastForeground==null) return false
+    /** True when [lastForeground] falls between 18:00 and [fire] on the fire day; a recap set before 18:00 never counts.
+     *  [onboardingDay] is the local day onboarding turned recaps on: that evening is exempt, because the switch promised a
+     *  recap "starting tonight" and finishing onboarding is itself an evening open (iOS `firstEveningDay`). */
+    fun openedThisEvening(lastForeground:Instant?,fire:ZonedDateTime,onboardingDay:LocalDate?=null):Boolean {
+        if(lastForeground==null || onboardingDay==fire.toLocalDate()) return false
         val start=ZonedDateTime.of(fire.toLocalDate(),EVENING_START,fire.zone).toInstant()
         return lastForeground>=start && lastForeground<fire.toInstant()
     }
 
     /** [anyDay] is for the QA trigger only: it runs a frequency's recap on a day that frequency would not fire. */
-    fun skip(settings:RecapSettings,fire:ZonedDateTime,facts:RecapFacts,hasAccess:Boolean,lastForeground:Instant?,anyDay:Boolean=false):RecapSkip?=when {
+    fun skip(settings:RecapSettings,fire:ZonedDateTime,facts:RecapFacts,hasAccess:Boolean,lastForeground:Instant?,anyDay:Boolean=false,onboardingDay:LocalDate?=null):RecapSkip?=when {
         !settings.enabled || (!anyDay && !RecapSchedule.firesOn(settings.frequency,fire.toLocalDate()))->RecapSkip.off
         !hasAccess->RecapSkip.noAccess
         !facts.recorded->RecapSkip.nothingRecorded
         !facts.tracked->RecapSkip.trackingOff
-        openedThisEvening(lastForeground,fire)->RecapSkip.openedThisEvening
+        openedThisEvening(lastForeground,fire,onboardingDay)->RecapSkip.openedThisEvening
         settings.skipQuietDays && quiet(facts)->RecapSkip.quiet
         else->null
     }

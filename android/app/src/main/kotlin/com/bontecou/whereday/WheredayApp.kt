@@ -101,7 +101,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                     // Finishing through the free week already chose a plan, so the separate post-onboarding paywall never shows for this install.
                     graph.preferences.update {latest->latest.copy(onboarded=true,accessGateCleared=latest.accessGateCleared || decision.trial,
                         recapFrequency=OnboardingRecap.frequency(decision).key)}
-                    scheduleRecap(onboardingContext,graph.preferences)
+                    scheduleRecap(onboardingContext,graph.preferences,onboarding=decision.recap)
                 }) {
                     graph.usageAnalytics.track(permit) {UsageEvent(UsageEventName.onboardingCompleted,step=UsageStep.ready,authorization=authorization,
                         tracking=if(start) UsageTrackingIntent.startImmediately else if(authorization in setOf(UsageAuthorization.foreground,UsageAuthorization.always)) UsageTrackingIntent.later else UsageTrackingIntent.unavailable)}
@@ -256,7 +256,9 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
 }
 
 /** Schedules (or cancels) the evening recap from Settings › Reminders; a failure to schedule never blocks finishing setup. */
-internal suspend fun scheduleRecap(context:android.content.Context,preferences:AppPreferences) {
+/** [onboarding]: onboarding's switch just turned recaps on, so tonight's evening opens don't skip the first one. */
+internal suspend fun scheduleRecap(context:android.content.Context,preferences:AppPreferences,onboarding:Boolean=false) {
+    if(onboarding) EveningRecap.markOnboardingEvening(context)
     try {EveningRecap.schedule(context,preferences.settings.first().recap)}
     catch(error:kotlinx.coroutines.CancellationException) {throw error} catch(_:Exception) {}
 }

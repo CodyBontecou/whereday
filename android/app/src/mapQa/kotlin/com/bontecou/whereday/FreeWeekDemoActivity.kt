@@ -59,7 +59,7 @@ class FreeWeekDemoActivity:androidx.activity.ComponentActivity() {
                     initialIntents=intents,offer=OnboardingOffer(purchase,checkout,billing::buy,billing::restore,billing::load),initialStep=OnboardingStep.tonight) {decision->
                     val preferences=com.bontecou.whereday.platform.AppGraph.from(this@FreeWeekDemoActivity).preferences
                     preferences.update {it.copy(recapFrequency=OnboardingRecap.frequency(decision).key)}
-                    scheduleRecap(this@FreeWeekDemoActivity,preferences)
+                    scheduleRecap(this@FreeWeekDemoActivity,preferences,onboarding=decision.recap)
                     result="QA onboarding finished: start=${decision.start} recap=${decision.recap} trial=${decision.trial}"
                 }
             }

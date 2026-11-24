@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.first
 import java.text.NumberFormat
 import java.time.Duration
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.Locale
@@ -39,6 +40,7 @@ object EveningRecap {
     private const val STORE="evening-recap"
     private const val FOREGROUND="last_foreground"
     private const val RESULT="last_result"
+    private const val ONBOARDING_DAY="onboarding_day"
 
     // MARK: Notification permission
 
@@ -55,6 +57,13 @@ object EveningRecap {
         store(context).edit().putLong(FOREGROUND,now.toEpochMilli()).apply()
     }
     fun lastForeground(context:Context):Instant?=store(context).getLong(FOREGROUND,0L).takeIf {it>0}?.let(Instant::ofEpochMilli)
+
+    /** Onboarding turned recaps on [now]. That evening's opens (finishing onboarding is one) don't skip the first recap the
+     *  switch promised "starting tonight"; every other skip rule still applies ([RecapRules.openedThisEvening]). */
+    fun markOnboardingEvening(context:Context,now:ZonedDateTime=ZonedDateTime.now()) {
+        store(context).edit().putString(ONBOARDING_DAY,now.toLocalDate().toString()).apply()
+    }
+    fun onboardingEvening(context:Context):LocalDate?=store(context).getString(ONBOARDING_DAY,null)?.let {runCatching {LocalDate.parse(it)}.getOrNull()}
 
     // MARK: Scheduling
 
@@ -124,7 +133,7 @@ object EveningRecap {
         val weekly=settings.frequency==RecapFrequency.weekly
         val facts=facts(graph,RecapSchedule.period(settings.frequency,fire),weekly)
         val access=graph.purchases.hasAccess(com.bontecou.whereday.billing.Capability.recording)
-        val skip=RecapRules.skip(settings,fire,facts,access,if(qa) null else lastForeground(context),anyDay=qa)
+        val skip=RecapRules.skip(settings,fire,facts,access,if(qa) null else lastForeground(context),anyDay=qa,onboardingDay=onboardingEvening(context))
         if(skip!=null) return RunResult(skip.name)
         val content=RecapContent.of(facts,weekly,settings.placeNames)
         val metric=graph.preferences.settings.first().metric

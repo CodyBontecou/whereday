@@ -106,6 +106,77 @@ class EveningRecapTest {
         assertEquals(3,facts.placeCount);assertEquals(listOf("Home","Corner café"),facts.names)
         assertTrue(facts.recorded);assertTrue(facts.tracked);assertTrue(facts.newPlace)
     }
+    // MARK: The recap and Today agree
+
+    private fun stay(coordinate:Coordinate,from:ZonedDateTime,until:ZonedDateTime?,name:String?=null)=
+        Visit(coordinate=coordinate,arrivedAt=from.toInstant(),departedAt=until?.toInstant(),name=name)
+    private fun points(from:ZonedDateTime,count:Int,stepMinutes:Long=20,outlierAt:Int=-1)=(0 until count).map {i->
+        TrackPoint(coordinate=Coordinate(home.latitude+i*0.002,home.longitude),time=from.plusMinutes(i*stepMinutes).toInstant(),accuracy=5.0,outlier=i==outlierAt)}
+    private fun summary(points:List<TrackPoint>,period:RecapPeriod)=PointSummaryBuilder().apply {points.filter {it.time>=period.from && it.time<period.until}.forEach(::add)}.build()
+    private val office=Coordinate(37.7897,-122.3942)
+    private val gym=Coordinate(37.7700,-122.4500)
+
+    /** A day as Today shows it at 21:00: the night at the saved place Home that began yesterday, a café, the office, an
+     *  unnamed stop and Home again (open). Not counted, by Today or the recap: a stay that ended exactly at midnight and one
+     *  that lasted no time. */
+    private val day=listOf(
+        stay(home,at("2026-11-22","22:00"),at("2026-11-23","07:30"),"Home"),
+        stay(gym,at("2026-11-22","20:00"),at("2026-11-23","00:00"),"Gym"),
+        stay(cafe,at("2026-11-23","08:00"),at("2026-11-23","08:30"),"Corner café"),
+        stay(office,at("2026-11-23","09:00"),at("2026-11-23","17:00"),"Office"),
+        stay(park,at("2026-11-23","17:30"),at("2026-11-23","17:50")),
+        stay(park,at("2026-11-23","18:10"),at("2026-11-23","18:10"),"Dog park"),
+        stay(home,at("2026-11-23","19:00"),null,"Home"))
+
+    @Test fun theDailyRecapCountsAndNamesPlacesExactlyAsTodayDoes() {
+        val fire=at("2026-11-23","21:00")
+        val period=RecapSchedule.period(RecapFrequency.daily,fire)
+        val route=points(at("2026-11-23","07:30"),30,outlierAt=7)
+        // What Today builds at the recap time (TimelineScreen and the map's day sheet): the day's window and its summary.
+        val today=DayStory.build(fire.toLocalDate(),zone,day,route,fire.toInstant(),summary(route,period).distanceMeters)
+        val facts=RecapFacts.of(period,day,emptyList(),summary(route,period).distanceMeters,route.size.toLong(),0)
+        assertEquals(today.placeCount,facts.placeCount);assertEquals(today.placeNames,facts.names)
+        // Home, a saved place whose stay began yesterday, is part of both counts; the unnamed stop counts without a name.
+        assertEquals(4,facts.placeCount);assertEquals(listOf("Home","Corner café","Office"),facts.names)
+        assertEquals(today.distanceMeters,facts.distanceMeters,0.0)
+        // Today's own path length (no summary passed) is the same figure: outliers are skipped either way.
+        assertEquals(DayStory.build(fire.toLocalDate(),zone,day,route,fire.toInstant()).distanceMeters,facts.distanceMeters,1e-6)
+        // The café, office and stop are new here; seen last week, nothing is (the overnight Home stay never is).
+        assertTrue(facts.newPlace)
+        val lastWeek=day.map {it.copy(id=it.id+"-before",arrivedAt=it.arrivedAt.minus(Duration.ofDays(7)),departedAt=it.departedAt?.minus(Duration.ofDays(7)))}
+        assertFalse(RecapFacts.of(period,day,lastWeek,0.0,1,0).newPlace)
+    }
+    @Test fun theWeeklyRecapIsTheUnionOfTheWeeksTodays() {
+        val fire=at("2026-11-29","21:00")
+        val week=RecapSchedule.period(RecapFrequency.weekly,fire)
+        val visits=listOf(
+            stay(home,at("2026-11-22","22:00"),at("2026-11-23","07:30"),"Home"),
+            stay(cafe,at("2026-11-23","08:00"),at("2026-11-23","08:30"),"Corner café"),
+            stay(home,at("2026-11-25","18:00"),at("2026-11-26","08:00"),"Home"),
+            stay(park,at("2026-11-26","12:00"),at("2026-11-26","12:40")),
+            stay(office,at("2026-11-28","09:00"),at("2026-11-28","17:00"),"Office"),
+            stay(cafe,at("2026-11-29","10:00"),at("2026-11-29","10:20"),"Corner café"))
+        val todays=week.days.map {DayStory.build(it,zone,visits,emptyList(),fire.toInstant(),0.0)}
+        val facts=RecapFacts.of(week,visits,emptyList(),0.0,0,0)
+        assertEquals(todays.flatMap {it.places}.distinct().size,facts.placeCount)
+        assertEquals(todays.flatMap {it.placeNames}.distinct(),facts.names)
+        assertEquals(4,facts.placeCount);assertEquals(listOf("Home","Corner café","Office"),facts.names)
+    }
+    @Test fun theWeeklyDistanceIsTheMapsSevenDayTotal() {
+        val week=RecapSchedule.period(RecapFrequency.weekly,at("2026-11-29","21:00"))
+        // Fixes every 20 minutes from Monday 23:00, so legs cross midnight; one glitch.
+        val route=points(at("2026-11-23","23:00"),12,outlierAt=4)
+        val days=DayDistanceAccumulator(zone).apply {route.forEach(::add)}.distances()
+        assertEquals(days.values.sum(),summary(route,week).distanceMeters,1e-6)
+    }
+    @Test fun aRecapPeriodsDaysAreItsCivilDays() {
+        assertEquals(listOf(LocalDate.of(2026,11,23)),RecapSchedule.period(RecapFrequency.daily,at("2026-11-23","21:00")).days)
+        assertEquals(7,RecapSchedule.period(RecapFrequency.weekly,at("2026-11-29","21:00")).days.size)
+        // A recap at midnight covers no time, so it has no stays.
+        val midnight=RecapSchedule.period(RecapFrequency.daily,at("2026-11-23","00:00"))
+        assertEquals(0,RecapFacts.of(midnight,day,emptyList(),0.0,0,0).placeCount)
+    }
+
     @Test fun newPlaceMeansNoEarlierVisitWithin150Metres() {
         val period=RecapSchedule.period(RecapFrequency.daily,at("2026-11-23","21:00"))
         val today=listOf(visit(home,at("2026-11-23","07:00"),"Home"))
@@ -172,6 +243,23 @@ class EveningRecapTest {
         assertNull(skip(foreground=at("2026-11-23","21:00").toInstant()))
         // A recap set before 18:00 has no evening to check.
         assertNull(skip(settings=settings(RecapFrequency.daily,17*60),at=at("2026-11-23","17:00"),foreground=at("2026-11-23","16:30").toInstant()))
+    }
+    @Test fun theEveningOnboardingTurnedRecapsOnIsNotSkippedForAnOpen() {
+        val opened=at("2026-11-23","19:30").toInstant()
+        // Finishing onboarding at 19:30 is itself an evening open; the switch promised "starting tonight".
+        assertNull(RecapRules.skip(settings(RecapFrequency.daily),fire,busy,true,opened,onboardingDay=LocalDate.of(2026,11,23)))
+        assertFalse(RecapRules.openedThisEvening(opened,fire,LocalDate.of(2026,11,23)))
+        // Only that evening: the next one, or an onboarding day before, skips as usual.
+        val tomorrow=at("2026-11-24","21:00")
+        assertEquals(RecapSkip.openedThisEvening,RecapRules.skip(settings(RecapFrequency.daily),tomorrow,busy,true,at("2026-11-24","19:30").toInstant(),onboardingDay=LocalDate.of(2026,11,23)))
+        assertEquals(RecapSkip.openedThisEvening,RecapRules.skip(settings(RecapFrequency.daily),fire,busy,true,opened,onboardingDay=LocalDate.of(2026,11,22)))
+        // Every other rule still applies that evening, in order.
+        val onboarded=LocalDate.of(2026,11,23)
+        assertEquals(RecapSkip.noAccess,RecapRules.skip(settings(RecapFrequency.daily),fire,busy,false,opened,onboardingDay=onboarded))
+        assertEquals(RecapSkip.nothingRecorded,RecapRules.skip(settings(RecapFrequency.daily),fire,RecapFacts(0,emptyList(),0.0,null,recorded=false,tracked=false,newPlace=false),true,opened,onboardingDay=onboarded))
+        assertEquals(RecapSkip.trackingOff,RecapRules.skip(settings(RecapFrequency.daily),fire,busy.copy(tracked=false),true,opened,onboardingDay=onboarded))
+        assertEquals(RecapSkip.quiet,RecapRules.skip(settings(RecapFrequency.daily),fire,busy.copy(newPlace=false,distanceMeters=10.0),true,opened,onboardingDay=onboarded))
+        assertEquals(RecapSkip.off,RecapRules.skip(settings(RecapFrequency.weekly),fire,busy,true,opened,onboardingDay=onboarded))
     }
     @Test fun quietDaysAreSkippedOnlyWithTheSettingOn() {
         val quiet=busy.copy(newPlace=false,distanceMeters=999.0)
