@@ -93,6 +93,8 @@ You can save a CSV with `country_code`, `local_date` and `source` columns. Viewi
 
 Record trips as you take them, so the next list is a review rather than a search.
 
+Want to keep a journal of future trips? See [travel journal apps for iPhone compared](https://whereday.com/compare/travel-journal-apps-iphone/).
+
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
 ## Read next

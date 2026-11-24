@@ -31,6 +31,8 @@ In this post
 
 ## How we compared
 
+Looking for a travel journal rather than a location log? Read [travel journal apps for iPhone compared](https://whereday.com/compare/travel-journal-apps-iphone/).
+
 This page answers “which app should record my history from now on?” To find where your existing history already is, read [how to see your location history on iPhone](https://whereday.com/blog/view-location-history-iphone/).
 
 Every app gets the same nine criteria: routes or stops only, where the data lives, whether you need an account, what you can see if you stop paying, export formats, Apple Watch recording, Google Timeline JSON import, and price model. Competitor cells come from the app’s own App Store listing, developer pages or documentation. Where we found no such statement, the cell says “Not documented”. We link App Store listings instead of copying prices, because prices change. Sources were checked on November 20, 2026.

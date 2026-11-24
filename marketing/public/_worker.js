@@ -25,6 +25,7 @@ const pages = {
   "/compare/google-maps-timeline/": "/_markdown/compare/google-maps-timeline/index.md",
   "/compare/": "/_markdown/compare/index.md",
   "/compare/location-history-apps-iphone/": "/_markdown/compare/location-history-apps-iphone/index.md",
+  "/compare/travel-journal-apps-iphone/": "/_markdown/compare/travel-journal-apps-iphone/index.md",
   "/contact": "/_markdown/contact.md",
   "/docs/apple-watch/": "/_markdown/docs/apple-watch/index.md",
   "/docs/automatic-exports/": "/_markdown/docs/automatic-exports/index.md",

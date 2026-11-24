@@ -14,7 +14,7 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed Oc
 
 To read Whereday location history in Obsidian, export Visits as Markdown, save the `.md` file, and copy it into a folder inside your Obsidian vault. Open the note and check the dates and visit table. No Whereday-specific Obsidian plugin is needed for this manual file workflow.
 
-This guide covers a manual handoff to an existing desktop vault. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. It does not set up automatic iPhone-to-vault sync.
+This guide covers a manual handoff to an existing desktop vault. From version 1.8, new users need an eligible trial, subscription, or Lifetime purchase to track. Existing users keep free tracking and prior purchase rights. Supported import and Export Preview are free. New users from 1.8 retain exports after tracking access expires; existing free users keep their previous export-unlock requirement. It does not set up automatic iPhone-to-vault sync. Comparing journal apps instead? See [travel journal apps for iPhone compared](https://whereday.com/compare/travel-journal-apps-iphone/).
 
 From location history to a readable note
 - [Choose visits or route points](https://whereday.com/blog/iphone-location-journal-obsidian/#choose)
