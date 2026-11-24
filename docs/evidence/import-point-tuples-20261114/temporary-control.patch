@@ -1,0 +1,27 @@
+diff --git a/android/platform/src/androidTest/kotlin/com/bontecou/whereday/platform/DiskHistoryImportScaleTest.kt b/android/platform/src/androidTest/kotlin/com/bontecou/whereday/platform/DiskHistoryImportScaleTest.kt
+index c3863508..8a160c5f 100644
+--- a/android/platform/src/androidTest/kotlin/com/bontecou/whereday/platform/DiskHistoryImportScaleTest.kt
++++ b/android/platform/src/androidTest/kotlin/com/bontecou/whereday/platform/DiskHistoryImportScaleTest.kt
+@@ -29,6 +29,14 @@ class DiskHistoryImportScaleTest {
+     @Test fun millionCsvPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.csv)}
+     @Test fun millionMarkdownPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.markdown)}
+     @Test fun tenThousandJsonPointsReviewCommitDeduplicateAndClear()=runBlocking {exercise(ExportFormat.json,10_000)}
++    /** Additional diagnostic control; the original million-record methods/timeout/assertions above are unchanged. */
++    @Test fun hundredThousandJsonPointsLayoutControl()=runBlocking<Unit> {
++        val started=System.nanoTime();val cpu=android.os.Process.getElapsedCpuTime()
++        exercise(ExportFormat.json,100_000)
++        android.util.Log.i("WdLayoutProbe",org.json.JSONObject().put("controlPoints",100_000)
++            .put("completeMs",(System.nanoTime()-started)/1_000_000).put("processCpuMs",android.os.Process.getElapsedCpuTime()-cpu)
++            .put("pointEncoding",ImportStageCodec.gson.toJson(com.bontecou.whereday.domain.TrackPoint(id="diagnostic",coordinate=com.bontecou.whereday.domain.Coordinate(18.0,-66.0),time=Instant.EPOCH,accuracy=0.0)).take(1)).toString())
++    }
+     private suspend fun exercise(format:ExportFormat,count:Int=1_000_000)=coroutineScope {
+         val context=InstrumentationRegistry.getInstrumentation().targetContext;check(context.packageName=="com.bontecou.whereday.platform.test")
+         val name="import-scale-${UUID.randomUUID()}.db";val directory=File(context.cacheDir,"import-scale-${UUID.randomUUID()}")
+@@ -103,6 +111,7 @@ class DiskHistoryImportScaleTest {
+                 controller.clearAll {db.clearAllTables()}
+                 assertEquals(0L,db.history().totalPointCount());assertTrue(directory.listFiles().orEmpty().isEmpty())
+                 println("$format complete: ${(System.nanoTime()-started)/1_000_000} ms; sampled Java peak ${peak.get()}; heap limit ${Runtime.getRuntime().maxMemory()}")
++                if(count==100_000)android.util.Log.i("WdLayoutProbe",org.json.JSONObject().put("phase","heap").put("peakBytes",peak.get()).put("heapLimitBytes",Runtime.getRuntime().maxMemory()).toString())
+             }
+         } finally {sampler.cancelAndJoin();controller.close();db.close();context.deleteDatabase(name);directory.deleteRecursively()}
+     }

@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.core.app.ActivityOptionsCompat
@@ -54,6 +56,7 @@ class SavedPlacesLocalizationTest {
         oldLocales=target.getSystemService(LocaleManager::class.java).applicationLocales
         applyQaAppLocales(compose,LocaleList.forLanguageTags("es"))
         graph=AppGraph.from(target)
+        graph.savedPlaceImportReview.discard()
         graph.photoPlaces.clearCache {withContext(Dispatchers.IO) {graph.database.clearAllTables()}}
         graph.history.dao.put(VisitRow(visit));graph.history.dao.put(PointRow(point,null))
         Unit
@@ -62,7 +65,10 @@ class SavedPlacesLocalizationTest {
         oldLocales?.let {applyQaAppLocales(compose,it)}
         val target=InstrumentationRegistry.getInstrumentation().targetContext
         for(uri in documents) target.contentResolver.delete(uri,null,null)
-        if(::graph.isInitialized) graph.photoPlaces.clearCache {withContext(Dispatchers.IO) {graph.database.clearAllTables()}}
+        if(::graph.isInitialized) {
+            graph.savedPlaceImportReview.discard()
+            graph.photoPlaces.clearCache {withContext(Dispatchers.IO) {graph.database.clearAllTables()}}
+        }
         Unit
     }
     private fun screen() {
@@ -164,11 +170,16 @@ class SavedPlacesLocalizationTest {
         assertTrue(graph.history.dao.places().isEmpty());unchangedJournal()
     }
     @Test fun turkishChooserCaseHandlingPreservesTheOriginalName()=runBlocking {
-        applyQaAppLocales(compose,LocaleList.forLanguageTags("tr"))
+        // Turkish folding is a data-matching contract, not an advertised app translation.
+        // LocaleManager correctly falls back for languages outside the generated locale config.
+        val configuration=android.content.res.Configuration(compose.activity.resources.configuration).apply {setLocales(LocaleList.forLanguageTags("tr"))}
+        val context=compose.activity.createConfigurationContext(configuration)
         val place=SavedPlace("turkish","İSTANBUL QA",Coordinate(18.0,-66.0),"Original address")
         graph.history.dao.put(PlaceRow(place));graph.history.dao.put(PlaceRow(place.copy(id="other",name="Other QA")))
         var selected:SavedPlace?=null
-        compose.setContent {MaterialTheme {SavedPlaceChooser(graph,{}, {selected=it})}}
+        compose.setContent {CompositionLocalProvider(LocalContext provides context,LocalConfiguration provides configuration) {
+            MaterialTheme {SavedPlaceChooser(graph,{}, {selected=it})}
+        }}
         compose.onNodeWithTag("saved-chooser-search").performTextInput("istanbul")
         compose.waitUntil(5000) {compose.onAllNodesWithText(place.name).fetchSemanticsNodes().isNotEmpty()}
         compose.onNodeWithText("Other QA").assertDoesNotExist()

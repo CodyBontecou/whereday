@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.bontecou.whereday.platform.DiskHistoryImportScaleTest" tests="4" failures="0" errors="0" skipped="0" time="2386.534" timestamp="2026-11-14T08:10:02" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 15" />
+    <property name="flavor" value="" />
+    <property name="project" value=":platform" />
+  </properties>
+  <testcase name="tenThousandJsonPointsReviewCommitDeduplicateAndClear" classname="com.bontecou.whereday.platform.DiskHistoryImportScaleTest" time="7.973" />
+  <testcase name="millionMarkdownPointsReviewCommitDeduplicateAndClear" classname="com.bontecou.whereday.platform.DiskHistoryImportScaleTest" time="920.583" />
+  <testcase name="millionCsvPointsReviewCommitDeduplicateAndClear" classname="com.bontecou.whereday.platform.DiskHistoryImportScaleTest" time="732.981" />
+  <testcase name="millionJsonPointsReviewCommitDeduplicateAndClear" classname="com.bontecou.whereday.platform.DiskHistoryImportScaleTest" time="724.206" />
+</testsuite>

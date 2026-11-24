@@ -164,9 +164,9 @@ class AutomaticExportLocalizationTest {
         val en=compose.activity.createConfigurationContext(android.content.res.Configuration(compose.activity.resources.configuration).apply {setLocales(LocaleList.forLanguageTags("en-US"))})
         var spanish by mutableStateOf(true)
         compose.setContent {val context=if(spanish) es else en;CompositionLocalProvider(LocalContext provides context,LocalConfiguration provides context.resources.configuration) {Column {Text(automaticExportFailureText(AutomaticExportFailure.purchase));Text(automaticExportNoticeText(AutomaticExportNotice.jsonRewritten));Text(automaticExportActionText(AutomaticExportActionNotice.verified))}}}
-        compose.onNodeWithText("Exportación guardada y verificada.").assertExists();compose.onNodeWithText("Se requiere un acceso de por vida a las exportaciones verificado.").assertExists()
+        compose.onNodeWithText("Exportación guardada y verificada.").assertExists();compose.onNodeWithText("Las exportaciones programadas requieren un plan de Whereday activo.").assertExists()
         compose.runOnIdle {spanish=false}
-        compose.onNodeWithText("Export saved and verified.").assertExists();compose.onNodeWithText("The existing JSON could not be merged; the complete captured day was rewritten.").assertExists()
+        compose.onNodeWithText("Export saved and verified.").assertExists();compose.onNodeWithText("Scheduled exports need an active Whereday plan.").assertExists();compose.onNodeWithText("The existing JSON could not be merged; the complete captured day was rewritten.").assertExists()
     }
     private fun capture() {
         if(InstrumentationRegistry.getArguments().getString("requireLargeFont")=="true") assertTrue(target.resources.configuration.fontScale>=1.8f)

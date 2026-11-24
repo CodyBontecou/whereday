@@ -1,0 +1,224 @@
+{
+  "location-owner-red-1": {
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": false,
+      "emulatorPID": 72607,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "runnerExit": 1,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "instrumentationSha256": "6c1d18eff6accaae92238514eba3728b809a05df912aa3df777f66fb06a76e78"
+  },
+  "location-owner-green-1": {
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": true,
+      "emulatorPID": 75143,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "runnerExit": 0,
+      "cleanup": [
+        {
+          "metricCollectorStopped": true
+        },
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "verification": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "app",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 2,
+      "passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.RoadActivityLifecycleTest",
+          "test": "realActivityRecreationBackgroundAndDestroyReleaseOnlyTheirOwnSessions"
+        },
+        {
+          "class": "com.bontecou.whereday.RoadActivityLifecycleTest",
+          "test": "serviceStartsResolveTheCurrentOwnerAfterRealActivityRecreation"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+          "package": "com.bontecou.whereday.mapqa",
+          "sha256": "5104ad12d6cd67fa9df9254f8297c43a185611a2d6436c1f397ff55ce419671d"
+        },
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+          "package": "com.bontecou.whereday.mapqa.test",
+          "sha256": "fc45c1f5dea594f741680daf47f394f3a743f1ec64b48edfb2a9cec0ca089287"
+        }
+      ]
+    },
+    "instrumentationSha256": "dd6fb2e5d7a4c1f9e162c5102bafe16364864b87afb8f987371b151d4ebc85ce"
+  },
+  "location-owner-both-reboot-1": {
+    "session": {
+      "scope": "owned read-only native instrumentation, no physical devices",
+      "passed": true,
+      "emulatorPID": 78794,
+      "emulatorCommand": [
+        "/Users/codybontecou/Library/Android/sdk/emulator/emulator",
+        "-avd",
+        "whereday-priority-20261111-api35",
+        "-port",
+        "5586",
+        "-read-only",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-window",
+        "-no-audio",
+        "-no-boot-anim",
+        "-gpu",
+        "swiftshader_indirect",
+        "-memory",
+        "2048",
+        "-cores",
+        "2"
+      ],
+      "runnerExit": 0,
+      "cleanup": [
+        {
+          "setting": "window_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "transition_animation_scale",
+          "restored": true
+        },
+        {
+          "setting": "animator_duration_scale",
+          "restored": true
+        },
+        {
+          "emulatorGracefulExit": 0
+        },
+        {
+          "privateAdbStop": 0
+        }
+      ],
+      "originalSettings": {
+        "window_animation_scale": "1.0",
+        "transition_animation_scale": "1.0",
+        "animator_duration_scale": "null"
+      }
+    },
+    "verification": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "mode": "both",
+      "termination": "reboot",
+      "bootBefore": 5,
+      "bootAfter": 6,
+      "proof": {
+        "bootCount": 5,
+        "phase": "recovered",
+        "mode": "both",
+        "pid": 2885,
+        "session": "2e8dbf98-4ccc-4cde-8b75-d380fb34e049",
+        "visitGeneration": "7154fe5d-14c6-4264-9707-760fcf5e8be4",
+        "recoveredPid": 1477,
+        "recoveredBootCount": 6,
+        "permissionsRegranted": true,
+        "preservedPoints": 1
+      },
+      "apkSha256": "5104ad12d6cd67fa9df9254f8297c43a185611a2d6436c1f397ff55ce419671d",
+      "testApkSha256": "58bcf281364f1ec8cdedf26e1c54f7328868f2694c99b151412bd8b023e3357b"
+    },
+    "instrumentationSha256": "10cc3aa9107e44735b9b01752ad862621cb370beb789241f44d5d4acba14c510"
+  }
+}

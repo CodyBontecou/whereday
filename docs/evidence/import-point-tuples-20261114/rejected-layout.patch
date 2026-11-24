@@ -1,0 +1,14 @@
+diff --git a/android/platform/src/main/kotlin/com/bontecou/whereday/platform/DiskHistoryImportStage.kt b/android/platform/src/main/kotlin/com/bontecou/whereday/platform/DiskHistoryImportStage.kt
+index e2a999e2..91180cb8 100644
+--- a/android/platform/src/main/kotlin/com/bontecou/whereday/platform/DiskHistoryImportStage.kt
++++ b/android/platform/src/main/kotlin/com/bontecou/whereday/platform/DiskHistoryImportStage.kt
+@@ -21,7 +21,8 @@ internal class DiskHistoryImportStage(private val file:File,maximumPages:Int?=nu
+         try {
+             db.rawQuery("PRAGMA journal_mode=DELETE",null).use {check(it.moveToFirst())}
+             db.execSQL("PRAGMA synchronous=OFF");db.execSQL("PRAGMA cache_size=-1024");db.execSQL("PRAGMA temp_store=FILE")
+-            db.execSQL("CREATE TABLE records(kind INTEGER NOT NULL,id TEXT NOT NULL,payload TEXT NOT NULL,baseline TEXT,provided_id INTEGER NOT NULL,PRIMARY KEY(kind,id)) WITHOUT ROWID")
++            // Append payloads locally; the primary-key index still enforces kind/id identity.
++            db.execSQL("CREATE TABLE records(kind INTEGER NOT NULL,id TEXT NOT NULL,payload TEXT NOT NULL,baseline TEXT,provided_id INTEGER NOT NULL,PRIMARY KEY(kind,id))")
+             db.execSQL("CREATE TABLE google_order(kind INTEGER NOT NULL,id TEXT NOT NULL,seconds INTEGER NOT NULL,nanos INTEGER NOT NULL,sequence INTEGER NOT NULL,PRIMARY KEY(kind,id)) WITHOUT ROWID")
+             db.execSQL("CREATE INDEX google_chronology ON google_order(kind,seconds,nanos,sequence)")
+             db.execSQL("CREATE TABLE google_matches(kind INTEGER NOT NULL,bucket INTEGER NOT NULL,latitude REAL NOT NULL,longitude REAL NOT NULL,time TEXT NOT NULL,departure TEXT)")

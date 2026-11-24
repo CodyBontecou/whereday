@@ -1,0 +1,199 @@
+[
+  {
+    "session": "layout-control-before-2",
+    "measurements": [
+      {
+        "controlPoints": 100000,
+        "completeMs": 41381,
+        "processCpuMs": 39431
+      }
+    ],
+    "settingsRestored": true,
+    "nativeVerdict": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "platform",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+          "test": "hundredThousandJsonPointsLayoutControl"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+          "package": "com.bontecou.whereday.platform.test",
+          "sha256": "c1b13063c15ac4b2c6c0cc81bcb02d722b7d2a7e1546f769c876a8f8e66eea40"
+        }
+      ]
+    }
+  },
+  {
+    "session": "layout-control-after-1",
+    "measurements": [
+      {
+        "controlPoints": 100000,
+        "completeMs": 41554,
+        "processCpuMs": 38901
+      }
+    ],
+    "settingsRestored": true,
+    "nativeVerdict": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "platform",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+          "test": "hundredThousandJsonPointsLayoutControl"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+          "package": "com.bontecou.whereday.platform.test",
+          "sha256": "a0d19979d25c78e43bda82251a6653d36b687c54365ead54a81226bea37aeb2b"
+        }
+      ]
+    }
+  },
+  {
+    "session": "point-control-after-1",
+    "measurements": [
+      {
+        "controlPoints": 100000,
+        "completeMs": 37844,
+        "processCpuMs": 34335
+      }
+    ],
+    "settingsRestored": true,
+    "nativeVerdict": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "platform",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+          "test": "hundredThousandJsonPointsLayoutControl"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+          "package": "com.bontecou.whereday.platform.test",
+          "sha256": "fc6aa690664778d293cd456ff40e8c0c689abad3b169ca0ea481800cbf44e2c3"
+        }
+      ]
+    }
+  },
+  {
+    "session": "point-control-before-3",
+    "measurements": [
+      {
+        "phase": "heap",
+        "peakBytes": 55278160,
+        "heapLimitBytes": 201326592
+      },
+      {
+        "controlPoints": 100000,
+        "completeMs": 40242,
+        "processCpuMs": 39601,
+        "pointEncoding": "{"
+      }
+    ],
+    "settingsRestored": true,
+    "nativeVerdict": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "platform",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+          "test": "hundredThousandJsonPointsLayoutControl"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+          "package": "com.bontecou.whereday.platform.test",
+          "sha256": "2e6ba6aecc59f11e9ddd70423b36a7226856966a28106193013a571718891f36"
+        }
+      ]
+    }
+  },
+  {
+    "session": "point-control-after-2",
+    "measurements": [
+      {
+        "phase": "heap",
+        "peakBytes": 50133424,
+        "heapLimitBytes": 201326592
+      },
+      {
+        "controlPoints": 100000,
+        "completeMs": 35657,
+        "processCpuMs": 33966,
+        "pointEncoding": "["
+      }
+    ],
+    "settingsRestored": true,
+    "nativeVerdict": {
+      "serial": "emulator-5586",
+      "avd": "whereday-priority-20261111-api35",
+      "module": "platform",
+      "adbServerPort": 5064,
+      "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+      "tests": 1,
+      "passed": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "ignoredCases": [],
+      "cases": [
+        {
+          "class": "com.bontecou.whereday.platform.DiskHistoryImportScaleTest",
+          "test": "hundredThousandJsonPointsLayoutControl"
+        }
+      ],
+      "apks": [
+        {
+          "path": "/Users/codybontecou/dev/whereday-pr114-ready/android/platform/build/outputs/apk/androidTest/debug/platform-debug-androidTest.apk",
+          "package": "com.bontecou.whereday.platform.test",
+          "sha256": "7fce43adb7e552b6c24e3222a3360c298158666bd7f751be9471e1f13c3467e5"
+        }
+      ]
+    }
+  }
+]

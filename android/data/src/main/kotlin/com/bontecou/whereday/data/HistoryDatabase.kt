@@ -84,6 +84,8 @@ data class TimelineImportCandidate(val ordinal:Long,val coordinate:Coordinate,va
 interface HistoryDao {
     @Query("SELECT EXISTS(SELECT 1 FROM visits WHERE value_id=:id)") suspend fun importVisitIdentityExists(id:String):Boolean
     @Query("SELECT EXISTS(SELECT 1 FROM points WHERE value_id=:id)") suspend fun importPointIdentityExists(id:String):Boolean
+    @Query("SELECT value_id FROM visits WHERE value_id IN (:ids)") suspend fun importVisitIds(ids:List<String>):List<String>
+    @Query("SELECT value_id FROM points WHERE value_id IN (:ids)") suspend fun importPointIds(ids:List<String>):List<String>
     @Query("SELECT rowid AS ordinal,value_coordinate AS coordinate,value_arrivedAt AS time,value_departedAt AS departure FROM visits WHERE value_arrivedAt>=:from AND value_arrivedAt<=:until AND (:afterTime IS NULL OR (value_arrivedAt,rowid)>(:afterTime,:afterOrdinal)) ORDER BY value_arrivedAt,rowid LIMIT 200")
     suspend fun timelineImportVisits(from:Instant,until:Instant,afterTime:Instant?,afterOrdinal:Long):List<TimelineImportCandidate>
     @Query("SELECT rowid AS ordinal,value_coordinate AS coordinate,value_time AS time,NULL AS departure FROM points WHERE value_time>=:from AND value_time<=:until AND (:afterTime IS NULL OR (value_time,rowid)>(:afterTime,:afterOrdinal)) ORDER BY value_time,rowid LIMIT 200")

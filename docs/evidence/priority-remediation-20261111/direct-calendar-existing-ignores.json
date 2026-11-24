@@ -1,0 +1,78 @@
+{
+  "serial": "emulator-5558",
+  "avd": "whereday-priority-20261111-api35",
+  "module": "app",
+  "adbServerPort": 5037,
+  "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+  "tests": 14,
+  "passed": 12,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 2,
+  "ignoredCases": [
+    "com.bontecou.whereday.CalendarEventFlowTest#timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor",
+    "com.bontecou.whereday.CalendarEventFlowTest#timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence"
+  ],
+  "cases": [
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "androidIntentHasExactDraftFieldsWithoutNotesAttendeesOrCalendarPermissions"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "oneClickCapturesNowAndDoubleDeliveryCannotOpenTwoEditors"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "replacedSourceRejectsHeldActionsAndLatePreparation"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "exactOutingHandsOffStoredBoundsAndFullRouteFirstPointWithoutMutation"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "disposedActionCannotOpenAnEditor"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "savedVisitCalendarActionIgnoresDirtyEditorFieldsAndKeepsHistory"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "latePausedPreparationCannotClearTheBusyFenceOfANewerRequest"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "missingCalendarShowsSpanishRecoveryAndCanRetry"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "preparationFailureDoesNotLaunchOrExposePrivateError"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "backgroundReturnCannotLaunchAPreviouslyPreparedEvent"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "unsavedVisitDoesNotOfferCalendarExport"
+    },
+    {
+      "class": "com.bontecou.whereday.CalendarEventFlowTest",
+      "test": "inferredOutingHandsOffItsRangeWithoutCreatingAStoredSession"
+    }
+  ],
+  "apks": [
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+      "package": "com.bontecou.whereday.mapqa",
+      "sha256": "9ee6eff49dd371706516ee4728c411118096022499f263aae7f8db276f91eb9e"
+    },
+    {
+      "path": "/private/tmp/whereday-priorities-20261111/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+      "package": "com.bontecou.whereday.mapqa.test",
+      "sha256": "193b86ac654986f5c4b9a6f898e0b2048b8b0fac9b13edb11d0fc526e44dc6a4"
+    }
+  ]
+}

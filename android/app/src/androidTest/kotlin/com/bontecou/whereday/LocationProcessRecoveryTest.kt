@@ -49,10 +49,8 @@ class LocationProcessRecoveryTest {
                 if(android.os.Build.VERSION.SDK_INT>=33) listOf(Manifest.permission.POST_NOTIFICATIONS) else emptyList()
             for(permission in permissions) instrumentation.uiAutomation.grantRuntimePermission(context.packageName,permission)
         }
-        suspend fun start(activity:ComponentActivity) {
-            waitFor("visible window") {activity.hasWindowFocus()}
-            if(visits) graph.visitMonitoringCommands.startVisible(activity,graph.journalClear.state.value.generation)
-            if(route) graph.recordingCommands.startVisible(activity)
+        suspend fun <A:ComponentActivity> start(scenario:ActivityScenario<A>) {
+            startSelectedLocationServices(scenario,graph,route,visits,recoveryTimeoutMs)
             waitFor {RecordingRuntime.active.value==route && VisitMonitoringRuntime.state.value==
                 if(visits) {if(route) VisitMonitoringMode.route else VisitMonitoringMode.balanced} else VisitMonitoringMode.off}
         }
@@ -63,8 +61,7 @@ class LocationProcessRecoveryTest {
                 graph.preferences.update {it.copy(onboarded=true,networkGeocoding=false)}
                 grantLocationAndNotifications()
                 val activity=ActivityScenario.launch(ComponentActivity::class.java)
-                var host:ComponentActivity?=null;activity.onActivity {host=it}
-                start(checkNotNull(host))
+                start(activity)
                 val session=graph.history.dao.recording()?.sessionId
                 val point=TrackPoint("process-proof-point",Coordinate(0.0,0.0),Instant.EPOCH,5.0)
                 // A known durable row proves preservation even when FLP has not delivered a fix.
@@ -131,20 +128,19 @@ class LocationProcessRecoveryTest {
                     }
                     if(visits) assertEquals(if(rebooted) "visits.restarted" else "visits.interrupted",graph.history.dao.visitMonitoring()!!.interruption)
                     waitFor {context.getSystemService(NotificationManager::class.java).activeNotifications.none {it.id in setOf(40,41)}}
-                    var host:MainActivity?=null;main.onActivity {host=it}
                     val hasLocation=listOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION).any {
                         androidx.core.content.ContextCompat.checkSelfPermission(context,it)==android.content.pm.PackageManager.PERMISSION_GRANTED
                     }
                     if(!hasLocation) {
                         // Instrumentation-granted permissions may not survive the reboot.
                         // Prove denial is safe, then model explicit permission approval.
-                        val failure=runCatching {start(checkNotNull(host))}.exceptionOrNull()
+                        val failure=runCatching {start(main)}.exceptionOrNull()
                         assertTrue("Restart without location must fail explicitly",failure is RecordingNeedsLocation)
                         assertFalse(RecordingRuntime.active.value);assertEquals(VisitMonitoringMode.off,VisitMonitoringRuntime.state.value)
                         assertFalse(graph.history.dao.recording()?.requested==true);assertFalse(graph.history.dao.visitMonitoring()?.requested==true)
                         grantLocationAndNotifications()
                     }
-                    start(checkNotNull(host))
+                    start(main)
                     if(route) {
                         assertNotEquals(session!!.id,graph.history.dao.recording()!!.sessionId)
                         assertEquals(1L,graph.history.dao.openSessionCount())

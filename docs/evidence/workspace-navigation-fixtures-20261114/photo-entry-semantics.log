@@ -1,0 +1,260 @@
+--------- beginning of main
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=141251330 restore saved=null
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=141251330 snapshot saved=JournalMapCamera(target=Coordinate(latitude=0.0, longitude=0.0), zoom=1.3219280948873624, bearing=-0.0, tilt=0.0, fitted=false, appliedFocus=null)
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=141251330 snapshot saved=JournalMapCamera(target=Coordinate(latitude=18.000401306452176, longitude=-66.00042452835896), zoom=18.185557821435697, bearing=-0.0, tilt=0.0, fitted=true, appliedFocus=null)
+I/WdCameraProbe( 2602): [DEBUG-photo-entry] target=Printing with useUnmergedTree = 'false'
+I/WdCameraProbe( 2602): Node #135 at (l=115.0, t=188.0, r=386.0, b=243.0)px, Tag: 'browse-photo-places'
+I/WdCameraProbe( 2602): Focused = 'false'
+I/WdCameraProbe( 2602): Role = 'Button'
+I/WdCameraProbe( 2602): Text = '[Browse all photo places]'
+I/WdCameraProbe( 2602): Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602): MergeDescendants = 'true'
+I/WdCameraProbe( 2602): [DEBUG-photo-entry] displayed=true root=Printing with useUnmergedTree = 'false'
+I/WdCameraProbe( 2602): Node #1 at (l=0.0, t=0.0, r=800.0, b=1600.0)px
+I/WdCameraProbe( 2602):  |-Node #9 at (l=0.0, t=0.0, r=800.0, b=1600.0)px, Tag: 'journal-workspace'
+I/WdCameraProbe( 2602):     |-Node #14 at (l=0.0, t=0.0, r=800.0, b=1600.0)px, Tag: 'workspace-primary'
+I/WdCameraProbe( 2602):        |-Node #18 at (l=0.0, t=0.0, r=100.0, b=1600.0)px
+I/WdCameraProbe( 2602):        | TestTagsAsResourceId = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #19 at (l=15.0, t=55.0, r=85.0, b=124.0)px, Tag: 'navigation-map'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'true'
+I/WdCameraProbe( 2602):        |  | Text = '[Map]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #23 at (l=15.0, t=139.0, r=85.0, b=208.0)px, Tag: 'navigation-atlas'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'false'
+I/WdCameraProbe( 2602):        |  | Text = '[Atlas]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #27 at (l=15.0, t=223.0, r=85.0, b=292.0)px, Tag: 'navigation-places'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'false'
+I/WdCameraProbe( 2602):        |  | Text = '[Places]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #31 at (l=15.0, t=307.0, r=85.0, b=376.0)px, Tag: 'navigation-archive'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'false'
+I/WdCameraProbe( 2602):        |  | Text = '[Archive]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #36 at (l=15.0, t=423.0, r=85.0, b=492.0)px, Tag: 'navigation-settings'
+I/WdCameraProbe( 2602):        |    Focused = 'false'
+I/WdCameraProbe( 2602):        |    Role = 'Tab'
+I/WdCameraProbe( 2602):        |    Selected = 'false'
+I/WdCameraProbe( 2602):        |    Text = '[Settings]'
+I/WdCameraProbe( 2602):        |    Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |    MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |-Node #40 at (l=100.0, t=0.0, r=800.0, b=1600.0)px
+I/WdCameraProbe( 2602):          IsContainer = 'true'
+I/WdCameraProbe( 2602):           |-Node #49 at (l=100.0, t=0.0, r=800.0, b=1600.0)px
+I/WdCameraProbe( 2602):             TestTagsAsResourceId = 'true'
+I/WdCameraProbe( 2602):              |-Node #51 at (l=100.0, t=0.0, r=800.0, b=1600.0)px, Tag: 'journal-native-map'
+I/WdCameraProbe( 2602):              | CustomActions = '[CustomAccessibilityAction(label=Inspect recorded points, action=com.bontecou.whereday.MapHomeMapKt$$ExternalSyntheticLambda12@755041f), CustomAccessibilityAction(label=Visits on map, action=com.bontecou.whereday.MapHomeMapKt$$ExternalSyntheticLambda13@56e636c)]'
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #135 at (l=115.0, t=188.0, r=386.0, b=243.0)px, Tag: 'browse-photo-places'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Text = '[Browse all photo places]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #131 at (l=113.0, t=1304.0, r=226.0, b=1319.0)px, Tag: 'map-scale'
+I/WdCameraProbe( 2602):              | Text = '[20 m]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #54 at (l=121.0, t=1325.0, r=391.0, b=1339.0)px
+I/WdCameraProbe( 2602):              | Text = '[© OpenFreeMap · OpenMapTiles · OpenStreetMap]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              |-Node #56 at (l=133.0, t=50.0, r=775.0, b=105.0)px, Tag: 'map-header'
+I/WdCameraProbe( 2602):              | Has 3 children
+I/WdCameraProbe( 2602):              |-Node #62 at (l=115.0, t=123.0, r=545.0, b=178.0)px, Tag: 'map-range-chips'
+I/WdCameraProbe( 2602):              | HorizontalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+I/WdCameraProbe( 2602):              | IsTraversalGroup = 'true'
+I/WdCameraProbe( 2602):              | Actions = [ScrollBy, ScrollByOffset]
+I/WdCameraProbe( 2602):              | Has 6 children
+I/WdCameraProbe( 2602):              |-Node #86 at (l=715.0, t=188.0, r=785.0, b=258.0)px, Tag: 'map-replay-dial'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Replay the day]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #92 at (l=723.0, t=274.0, r=778.0, b=329.0)px, Tag: 'map-layers'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Map layers]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #95 at (l=723.0, t=329.0, r=778.0, b=384.0)px, Tag: 'map-fit'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Fit the range]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #97 at (l=723.0, t=384.0, r=778.0, b=439.0)px, Tag: 'map-follow-location'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Follow my location]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Selected = 'false'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #100 at (l=115.0, t=1342.0, r=346.0, b=1397.0)px, Tag: 'recording-access-pill'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | LiveRegion = 'Polite'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Text = '[Location is off]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #105 at (l=135.0, t=1413.0, r=709.0, b=1461.0)px, Tag: 'map-recording-pill'
+I/WdCameraProbe( 2602):              | LiveRegion = 'Polite'
+I/WdCameraProbe( 2602):              | Text = '[STANDBY, NOT RECORDING]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              | Has 1 child
+I/WdCameraProbe( 2602):              |-Node #114 at (l=725.0, t=1407.0, r=785.0, b=1467.0)px, Tag: 'map-add'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Add a place]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #116 at (l=115.0, t=1477.0, r=785.0, b=1557.0)px, Tag: 'map-day-peek'
+I/WdCameraProbe( 2602):                ContentDescription = '[Last stop · 06:41. Actual resize visit. 153 m. 1 place]'
+I/WdCameraProbe( 2602):                Focused = 'false'
+I/WdCameraProbe( 2602):                Role = 'Button'
+I/WdCameraProbe( 2602):                Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):                MergeDescendants = 'true'
+I/WdCameraProbe( 2602):                ClearAndSetSemantics = 'true'
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=147534729 restore saved=null
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=147534729 snapshot-suppressed disposed=false ready=false
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=147534729 snapshot saved=JournalMapCamera(target=Coordinate(latitude=18.000401306452176, longitude=-66.00042452835896), zoom=18.185557821435697, bearing=-0.0, tilt=0.0, fitted=true, appliedFocus=null)
+I/WdCameraProbe( 2602): [DEBUG-workspace-camera] renderer=147534729 snapshot saved=JournalMapCamera(target=Coordinate(latitude=18.000401306452176, longitude=-66.00042452835896), zoom=18.185557821435697, bearing=-0.0, tilt=0.0, fitted=true, appliedFocus=null)
+I/WdCameraProbe( 2602): [DEBUG-photo-entry] target=Printing with useUnmergedTree = 'false'
+I/WdCameraProbe( 2602): Node #272 at (l=115.0, t=188.0, r=386.0, b=243.0)px, Tag: 'browse-photo-places'
+I/WdCameraProbe( 2602): Focused = 'false'
+I/WdCameraProbe( 2602): Role = 'Button'
+I/WdCameraProbe( 2602): Text = '[Browse all photo places]'
+I/WdCameraProbe( 2602): Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602): MergeDescendants = 'true'
+I/WdCameraProbe( 2602): [DEBUG-photo-entry] displayed=true root=Printing with useUnmergedTree = 'false'
+I/WdCameraProbe( 2602): Node #138 at (l=0.0, t=0.0, r=800.0, b=1600.0)px
+I/WdCameraProbe( 2602):  |-Node #146 at (l=0.0, t=0.0, r=800.0, b=1600.0)px, Tag: 'journal-workspace'
+I/WdCameraProbe( 2602):     |-Node #151 at (l=0.0, t=0.0, r=800.0, b=1600.0)px, Tag: 'workspace-primary'
+I/WdCameraProbe( 2602):        |-Node #155 at (l=0.0, t=0.0, r=100.0, b=1600.0)px
+I/WdCameraProbe( 2602):        | TestTagsAsResourceId = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #156 at (l=15.0, t=55.0, r=85.0, b=124.0)px, Tag: 'navigation-map'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'true'
+I/WdCameraProbe( 2602):        |  | Text = '[Map]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #160 at (l=15.0, t=139.0, r=85.0, b=208.0)px, Tag: 'navigation-atlas'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'false'
+I/WdCameraProbe( 2602):        |  | Text = '[Atlas]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #164 at (l=15.0, t=223.0, r=85.0, b=292.0)px, Tag: 'navigation-places'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'false'
+I/WdCameraProbe( 2602):        |  | Text = '[Places]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #168 at (l=15.0, t=307.0, r=85.0, b=376.0)px, Tag: 'navigation-archive'
+I/WdCameraProbe( 2602):        |  | Focused = 'false'
+I/WdCameraProbe( 2602):        |  | Role = 'Tab'
+I/WdCameraProbe( 2602):        |  | Selected = 'false'
+I/WdCameraProbe( 2602):        |  | Text = '[Archive]'
+I/WdCameraProbe( 2602):        |  | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |  | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |  |-Node #173 at (l=15.0, t=423.0, r=85.0, b=492.0)px, Tag: 'navigation-settings'
+I/WdCameraProbe( 2602):        |    Focused = 'false'
+I/WdCameraProbe( 2602):        |    Role = 'Tab'
+I/WdCameraProbe( 2602):        |    Selected = 'false'
+I/WdCameraProbe( 2602):        |    Text = '[Settings]'
+I/WdCameraProbe( 2602):        |    Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):        |    MergeDescendants = 'true'
+I/WdCameraProbe( 2602):        |-Node #177 at (l=100.0, t=0.0, r=800.0, b=1600.0)px
+I/WdCameraProbe( 2602):          IsContainer = 'true'
+I/WdCameraProbe( 2602):           |-Node #186 at (l=100.0, t=0.0, r=800.0, b=1600.0)px
+I/WdCameraProbe( 2602):             TestTagsAsResourceId = 'true'
+I/WdCameraProbe( 2602):              |-Node #188 at (l=100.0, t=0.0, r=800.0, b=1600.0)px, Tag: 'journal-native-map'
+I/WdCameraProbe( 2602):              | CustomActions = '[CustomAccessibilityAction(label=Inspect recorded points, action=com.bontecou.whereday.MapHomeMapKt$$ExternalSyntheticLambda12@822f2af), CustomAccessibilityAction(label=Visits on map, action=com.bontecou.whereday.MapHomeMapKt$$ExternalSyntheticLambda13@f2cd6bc)]'
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #272 at (l=115.0, t=188.0, r=386.0, b=243.0)px, Tag: 'browse-photo-places'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Text = '[Browse all photo places]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #261 at (l=113.0, t=1304.0, r=226.0, b=1319.0)px, Tag: 'map-scale'
+I/WdCameraProbe( 2602):              | Text = '[20 m]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #191 at (l=121.0, t=1325.0, r=391.0, b=1339.0)px
+I/WdCameraProbe( 2602):              | Text = '[© OpenFreeMap · OpenMapTiles · OpenStreetMap]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              |-Node #193 at (l=133.0, t=50.0, r=775.0, b=105.0)px, Tag: 'map-header'
+I/WdCameraProbe( 2602):              | Has 3 children
+I/WdCameraProbe( 2602):              |-Node #199 at (l=115.0, t=123.0, r=545.0, b=178.0)px, Tag: 'map-range-chips'
+I/WdCameraProbe( 2602):              | HorizontalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+I/WdCameraProbe( 2602):              | IsTraversalGroup = 'true'
+I/WdCameraProbe( 2602):              | Actions = [ScrollBy, ScrollByOffset]
+I/WdCameraProbe( 2602):              | Has 6 children
+I/WdCameraProbe( 2602):              |-Node #223 at (l=715.0, t=188.0, r=785.0, b=258.0)px, Tag: 'map-replay-dial'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Replay the day]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #229 at (l=723.0, t=274.0, r=778.0, b=329.0)px, Tag: 'map-layers'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Map layers]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #232 at (l=723.0, t=329.0, r=778.0, b=384.0)px, Tag: 'map-fit'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Fit the range]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #234 at (l=723.0, t=384.0, r=778.0, b=439.0)px, Tag: 'map-follow-location'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Follow my location]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Selected = 'false'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #237 at (l=115.0, t=1342.0, r=346.0, b=1397.0)px, Tag: 'recording-access-pill'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | LiveRegion = 'Polite'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Text = '[Location is off]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #242 at (l=135.0, t=1413.0, r=709.0, b=1461.0)px, Tag: 'map-recording-pill'
+I/WdCameraProbe( 2602):              | LiveRegion = 'Polite'
+I/WdCameraProbe( 2602):              | Text = '[STANDBY, NOT RECORDING]'
+I/WdCameraProbe( 2602):              | Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              | Has 1 child
+I/WdCameraProbe( 2602):              |-Node #251 at (l=725.0, t=1407.0, r=785.0, b=1467.0)px, Tag: 'map-add'
+I/WdCameraProbe( 2602):              | ContentDescription = '[Add a place]'
+I/WdCameraProbe( 2602):              | Focused = 'false'
+I/WdCameraProbe( 2602):              | Role = 'Button'
+I/WdCameraProbe( 2602):              | Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):              | MergeDescendants = 'true'
+I/WdCameraProbe( 2602):              |-Node #253 at (l=115.0, t=1477.0, r=785.0, b=1557.0)px, Tag: 'map-day-peek'
+I/WdCameraProbe( 2602):                ContentDescription = '[Last stop · 06:41. Actual resize visit. 153 m. 1 place]'
+I/WdCameraProbe( 2602):                Focused = 'false'
+I/WdCameraProbe( 2602):                Role = 'Button'
+I/WdCameraProbe( 2602):                Actions = [OnClick, RequestFocus]
+I/WdCameraProbe( 2602):                MergeDescendants = 'true'
+I/WdCameraProbe( 2602):                ClearAndSetSemantics = 'true'

@@ -31,15 +31,23 @@ class DatabaseHistoryImportTarget(private val database:HistoryDatabase):StagedHi
     override suspend fun inspectPlan(stage:HistoryImportStage,check:()->Unit):HistoryImportInspection=database.readSnapshot {dao->
         var replaceable=0
         if(stage.source==HistoryImportSource.whereday) stage.batches(check) {rows->
-            matched(dao,rows,check) {batch,visits,points->stage.baselines(batch.map {row->
-                check();val current=if(row.kind==ImportRecordKind.visit) visits[row.id] else points[row.id]
-                if(current!=null) replaceable=Math.addExact(replaceable,1)
-                row.copy(baseline=current?.let(ImportStageCodec::hash))
-            })}
+            matched(dao,rows,check) {batch,visits,points->
+                val changed=batch.mapNotNull {row->
+                    check();val current=if(row.kind==ImportRecordKind.visit) visits[row.id] else points[row.id]
+                    if(current!=null) replaceable=Math.addExact(replaceable,1)
+                    val baseline=current?.let(ImportStageCodec::hash)
+                    // Most first-import rows already have a null baseline. Preserve
+                    // stale-match clearing without rewriting unchanged scratch rows.
+                    if(row.baseline==baseline) null else row.copy(baseline=baseline)
+                }
+                if(changed.isNotEmpty()) stage.baselines(changed)
+            }
         }
         val hasVisits=dao.totalVisitCount()>0;val hasPoints=dao.totalPointCount()>0
         stage.inspectTimeline(check) {row->
-            if(if(row.kind==ImportRecordKind.visit) hasVisits else hasPoints) historyMatch(dao,row,check) else false
+            // These baselines were loaded above in this same read snapshot.
+            if(stage.source==HistoryImportSource.whereday && row.baseline!=null) true
+            else if(if(row.kind==ImportRecordKind.visit) hasVisits else hasPoints) historyMatch(dao,row,check) else false
         }.copy(replaceable=replaceable)
     }
     override suspend fun apply(stage:HistoryImportStage,policy:HistoryImportPolicy,check:()->Unit):HistoryImportCounts {
@@ -95,16 +103,34 @@ class DatabaseHistoryImportTarget(private val database:HistoryDatabase):StagedHi
             val dao=database.history();var visits=0;var points=0;var kept=0
             val emptyVisits=dao.totalVisitCount()==0L;val emptyPoints=dao.totalPointCount()==0L
             var lastVisitTime:Instant?=null;var lastPointBucket:Long?=null
-            stage.chronologicalBatches(check) {rows->for(item in rows) {
-                val row=item.row;check()
-                // Fresh matching inside the write transaction includes records added since review.
-                val match=if(row.kind==ImportRecordKind.visit) TimelineImportMatch.from(row.visit()) else TimelineImportMatch.from(row.point())
-                val newTimeBucket=if(match.visit) emptyVisits && (lastVisitTime==null || java.time.Duration.between(lastVisitTime,match.time)>java.time.Duration.ofSeconds(60))
-                    else emptyPoints && (lastPointBucket==null || match.bucket>lastPointBucket!!)
-                if(!newTimeBucket && historyMatch(dao,row,check)) kept++
-                else if(row.kind==ImportRecordKind.visit) {dao.put(VisitRow(row.visit()));visits++;lastVisitTime=match.time}
-                else {dao.put(PointRow(row.point(),null));points++;lastPointBucket=match.bucket}
-            }}
+            stage.chronologicalBatches(check) {rows->
+                check()
+                val visitIds=rows.filter {it.row.kind==ImportRecordKind.visit}.map {it.row.id}
+                val pointIds=rows.filter {it.row.kind==ImportRecordKind.point}.map {it.row.id}
+                // Fresh membership is bounded to this page and read inside the
+                // write transaction; review baselines cannot establish it here.
+                val existingVisits=if(!emptyVisits && visitIds.isNotEmpty()) dao.importVisitIds(visitIds).toHashSet() else emptySet()
+                val existingPoints=if(!emptyPoints && pointIds.isNotEmpty()) dao.importPointIds(pointIds).toHashSet() else emptySet()
+                // Bound pending writes to the existing stage page. Matching must see
+                // earlier accepted points, including another point in the same bucket.
+                val pendingPoints=ArrayList<PointRow>(rows.size)
+                suspend fun flushPoints() {
+                    if(pendingPoints.isNotEmpty()) {check();dao.putPoints(pendingPoints);pendingPoints.clear()}
+                }
+                for(item in rows) {
+                    val row=item.row;check()
+                    if(if(row.kind==ImportRecordKind.visit) row.id in existingVisits else row.id in existingPoints) {kept++;continue}
+                    // Fresh matching inside the write transaction includes records added since review.
+                    val match=if(row.kind==ImportRecordKind.visit) TimelineImportMatch.from(row.visit()) else TimelineImportMatch.from(row.point())
+                    val newTimeBucket=if(match.visit) emptyVisits && (lastVisitTime==null || java.time.Duration.between(lastVisitTime,match.time)>java.time.Duration.ofSeconds(60))
+                        else emptyPoints && (lastPointBucket==null || match.bucket>lastPointBucket!!)
+                    if(!newTimeBucket) flushPoints()
+                    if(!newTimeBucket && historyMatch(dao,row,check)) kept++
+                    else if(row.kind==ImportRecordKind.visit) {flushPoints();dao.put(VisitRow(row.visit()));visits++;lastVisitTime=match.time}
+                    else {pendingPoints+=PointRow(row.point(),null);points++;lastPointBucket=match.bucket}
+                }
+                flushPoints()
+            }
             stage.verify(check);check();HistoryImportCounts(visits,points,kept)
         }
     } catch(error:Exception) {

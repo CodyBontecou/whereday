@@ -1,0 +1,118 @@
+{
+  "run": 43575545218,
+  "head": "763d6346",
+  "artifact": 14108333739,
+  "default": {
+    "serial": "emulator-5554",
+    "avd": "whereday-heavy-database-api35",
+    "module": "app",
+    "adbServerPort": 5037,
+    "execution": "Direct AndroidJUnitRunner; no Gradle device discovery",
+    "tests": 594,
+    "passed": 592,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "ignoredCases": [
+      "com.bontecou.whereday.CalendarEventFlowTest#timelineVisitActionHandsOffWithoutOpeningOrSavingTheEditor",
+      "com.bontecou.whereday.CalendarEventFlowTest#timelineOutingActionLoadsTheFullRouteStartAndKeepsItsSequence"
+    ],
+    "apks": [
+      {
+        "path": "/home/runner/work/whereday/whereday/android/app/build/outputs/apk/mapQa/app-mapQa.apk",
+        "package": "com.bontecou.whereday.mapqa",
+        "sha256": "a7da6df1096e4274e773657e178758468b1459b89a6ccfd7efa3a0881cfc618f"
+      },
+      {
+        "path": "/home/runner/work/whereday/whereday/android/app/build/outputs/apk/androidTest/mapQa/app-mapQa-androidTest.apk",
+        "package": "com.bontecou.whereday.mapqa.test",
+        "sha256": "88cd3a2667bd989b6f5fbf34c4f3332f4dcf941978acc4377fbee22c336584ff"
+      }
+    ]
+  },
+  "laterSelections": [
+    {
+      "file": "app/build/outputs/androidTest-results/connected/mapQa/TEST-emulator-5554 - 15-_app-.xml",
+      "suite": {
+        "name": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+        "tests": "23",
+        "failures": "8",
+        "errors": "0",
+        "skipped": "0",
+        "time": "245.912",
+        "timestamp": "2026-11-14T09:40:31",
+        "hostname": "localhost"
+      },
+      "failures": [
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "timelineOutingNavigationAndNativeMapRecoverAfterRealWindowRecreation",
+          "message": "java.lang.AssertionError: Failed: assertExists."
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "restoredCameraDoesNotReplayAnAlreadyAppliedVisitFocusButAcceptsANewRequest",
+          "message": "java.lang.AssertionError: expected:<18.2> but was:<18.000000045385168>"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations",
+          "message": "java.lang.AssertionError: Semantic Node has no parent layout with a Scroll SemanticsAction"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "mapPhotoCollectionAndLastViewedAssetSurviveBothActualRecreations",
+          "message": "java.lang.AssertionError: Semantic Node has no parent layout with a Scroll SemanticsAction"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes",
+          "message": "java.lang.AssertionError: Action performScrollTo() failed."
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "libraryCurrentPhotoSurvivesActualRecreationBeyondItsOpeningAsset",
+          "message": "java.lang.IllegalArgumentException: performMeasureAndLayout called during measure layout"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "manuallyPositionedCameraSurvivesBothActualWindowRecreationDirections",
+          "message": "java.lang.AssertionError: expected:<18.2> but was:<18.188158208335>"
+        },
+        {
+          "class": "com.bontecou.whereday.WorkspaceActivityResizeTest",
+          "test": "stoppedAndOldResumedPlaceAndOutingSaveActionsCannotWrite",
+          "message": "androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms"
+        }
+      ]
+    },
+    {
+      "file": "build/reports/app-qa-snapshots/short-workspace-keyboard/TEST-emulator-5554 - 15-_app-.xml",
+      "suite": {
+        "name": "com.bontecou.whereday.WorkspaceKeyboardTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "8.525",
+        "timestamp": "2026-11-14T09:35:52",
+        "hostname": "localhost"
+      },
+      "failures": []
+    },
+    {
+      "file": "build/reports/app-qa-snapshots/expanded-workspace/TEST-emulator-5554 - 15-_app-.xml",
+      "suite": {
+        "name": "com.bontecou.whereday.WorkspaceAnchorClockTest",
+        "tests": "32",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "122.068",
+        "timestamp": "2026-11-14T09:35:11",
+        "hostname": "localhost"
+      },
+      "failures": []
+    }
+  ]
+}

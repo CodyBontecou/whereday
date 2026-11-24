@@ -177,12 +177,20 @@ class WorkspaceActivityResizeTest {
             compose.waitUntil(15000) {compose.onAllNodesWithText(outing.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
             resize(true);awaitTag("outing-title");awaitTag("workspace-companion")
-            compose.onNodeWithTag("timeline-content").assertExists()
+            // Outing detail replaces the timeline list; Back must recover that list.
+            compose.onNodeWithTag("outing-detail-content").assertIsDisplayed()
             compose.onNodeWithTag("outing-title").assertTextEquals(outing.name!!)
             awaitNativeMaps()
+            androidx.test.espresso.Espresso.pressBack();awaitTag("timeline-content")
+            compose.onNodeWithTag("timeline-content").assertIsDisplayed()
+            compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
             resize(false);awaitTag("outing-title")
-            compose.onNodeWithTag("timeline-content").assertExists()
+            compose.onNodeWithTag("outing-detail-content").assertIsDisplayed()
+            compose.onNodeWithTag("outing-title").assertTextEquals(outing.name!!)
             compose.onNodeWithTag("workspace-companion").assertDoesNotExist()
+            androidx.test.espresso.Espresso.pressBack();awaitTag("timeline-content")
+            compose.onNodeWithTag("timeline-content").assertIsDisplayed()
+            compose.onNodeWithText(outing.name!!).performScrollTo().assertIsDisplayed()
             assertEquals(original,graph.history.dao.visit(original.id)!!.value)
             assertEquals(2L,graph.history.dao.totalPointCount())
         }
@@ -200,7 +208,8 @@ class WorkspaceActivityResizeTest {
         launch().use {
             val (_,map)=nativeMap()
             val requested=org.maplibre.android.camera.CameraPosition.Builder().target(org.maplibre.android.geometry.LatLng(18.2,-66.2)).zoom(11.0).bearing(25.0).tilt(30.0).build()
-            instrumentation.runOnMainSync {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
+            // A literal target is a screen-center request only without inherited auto-fit padding.
+            instrumentation.runOnMainSync {map.setPadding(0,0,0,0);map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
             fun assertCamera(actual:org.maplibre.android.camera.CameraPosition) {
                 assertEquals(requested.target!!.latitude,actual.target!!.latitude,0.000001)
                 assertEquals(requested.target!!.longitude,actual.target!!.longitude,0.000001)
@@ -212,6 +221,31 @@ class WorkspaceActivityResizeTest {
             resize(true);val (_,wide)=nativeMap();compose.runOnIdle {assertCamera(wide.cameraPosition)}
             capture("wide-camera")
             resize(false);val (_,compact)=nativeMap();compose.runOnIdle {assertCamera(compact.cameraPosition)}
+            assertEquals(original,graph.history.dao.visit(original.id)!!.value)
+        }
+    }
+
+    @Test fun paddedManualCameraPreservesVisualCenterThroughBothActualRecreations():Unit=runBlocking {
+        launch().use {
+            val (view,map)=nativeMap()
+            val requested=org.maplibre.android.camera.CameraPosition.Builder().target(org.maplibre.android.geometry.LatLng(18.2,-66.2)).zoom(11.0).bearing(25.0).tilt(30.0).build()
+            instrumentation.runOnMainSync {map.moveCamera(org.maplibre.android.camera.CameraUpdateFactory.newCameraPosition(requested))}
+            compose.waitForIdle()
+            val expected=compose.runOnIdle {
+                assertTrue("Exercise inherited floating-chrome padding",map.cameraPosition.padding?.any {it!=0.0}==true)
+                assertEquals(18.2,map.cameraPosition.target!!.latitude,0.000001)
+                map.projection.fromScreenLocation(android.graphics.PointF(view.width/2f,view.height/2f))
+            }
+            fun assertVisualCenter(view:org.maplibre.android.maps.MapView,map:org.maplibre.android.maps.MapLibreMap) {
+                val actual=map.projection.fromScreenLocation(android.graphics.PointF(view.width/2f,view.height/2f))
+                assertEquals(expected.latitude,actual.latitude,0.000001)
+                assertEquals(expected.longitude,actual.longitude,0.000001)
+                assertEquals(requested.zoom,map.cameraPosition.zoom,0.000001)
+                assertEquals(requested.bearing,map.cameraPosition.bearing,0.000001)
+                assertEquals(requested.tilt,map.cameraPosition.tilt,0.000001)
+            }
+            resize(true);val (wideView,wide)=nativeMap();compose.runOnIdle {assertVisualCenter(wideView,wide)}
+            resize(false);val (compactView,compact)=nativeMap();compose.runOnIdle {assertVisualCenter(compactView,compact)}
             assertEquals(original,graph.history.dao.visit(original.id)!!.value)
         }
     }
@@ -460,6 +494,8 @@ class WorkspaceActivityResizeTest {
         awaitTag("place-detail-edit");compose.onNodeWithTag("place-detail-edit").performClick();awaitTag("saved-name")
     }
     private fun openStoredOuting() {
+        // A previous independent editor flow may have left Settings selected.
+        awaitTag("navigation-map");compose.onNodeWithTag("navigation-map").performClick()
         awaitTag("map-day-peek");compose.openTimeline()
         compose.waitUntil(10000) {compose.onAllNodesWithText(outing.name!!).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
         compose.onNodeWithText(outing.name!!).performScrollTo().performClick();awaitTag("outing-title")
@@ -533,7 +569,8 @@ class WorkspaceActivityResizeTest {
     private fun openMapPhotoPlaces() {
         awaitTag("navigation-map")
         compose.waitUntil(15000) {nodes("browse-photo-places").size==1}
-        compose.onNodeWithTag("browse-photo-places").performScrollTo().performClick();awaitDirectoryPage(1)
+        // This is floating map chrome, not a child of a scrolling layout.
+        compose.onNodeWithTag("browse-photo-places").assertIsDisplayed().performClick();awaitDirectoryPage(1)
     }
     @Test fun mapPhotoDirectoryPageAndPlaceReturnSurviveBothActualRecreations():Unit=runBlocking {
         seedPhotoFixture(52,true);graph.preferences.update {it.copy(showPhotoMarkers=true,showPhotoImages=false)}
@@ -592,8 +629,8 @@ class WorkspaceActivityResizeTest {
     }
     @Test fun mapReplayRetainsOpeningRangeWhileTheLiveWindowRefreshes():Unit=runBlocking {
         launch().use {
-            awaitTag("navigation-map")
-            compose.onNodeWithText("Replay route").performScrollTo().performClick();awaitTag("replay-progress")
+            awaitTag("navigation-map");awaitTag("map-replay-dial")
+            compose.onNodeWithTag("map-replay-dial").assertIsDisplayed().performClick();awaitTag("replay-progress")
             compose.onNodeWithTag("replay-end").performScrollTo().performClick();awaitReplayPoint(2,2)
             // Observe the real 30-second live-window cadence, without changing its selection.
             val journal=model();val openingUntil=(journal.mapWindow.value as WindowState.Ready).window.range.until

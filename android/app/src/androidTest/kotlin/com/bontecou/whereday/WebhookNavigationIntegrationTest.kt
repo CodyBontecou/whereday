@@ -29,7 +29,7 @@ class WebhookNavigationIntegrationTest {
             withTimeout(10_000) {while(graph.webhookController.state.value.message!="Webhook settings saved." || graph.webhookController.state.value.busy) delay(25)}
             compose.onNodeWithTag("webhook-enabled").performScrollTo().performClick()
             compose.onNodeWithText("Save webhook settings").performScrollTo().performClick()
-            compose.onNodeWithText("Included with every plan").assertIsDisplayed()
+            compose.onNodeWithText("Whereday plans").assertIsDisplayed()
             compose.onNodeWithText("Close").performClick();compose.waitForIdle()
             androidx.test.espresso.Espresso.pressBack()
             compose.waitUntil(5000) {runCatching {compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()}.isSuccess}

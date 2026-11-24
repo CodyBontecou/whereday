@@ -1,0 +1,3 @@
+{"trial":0,"rows":200000,"readsPerRow":3,"pageLimit":200,"wallNanos":398415417,"threadCpuNanos":388482000,"checksum":74074073400000}
+{"trial":1,"rows":200000,"readsPerRow":3,"pageLimit":200,"wallNanos":385684000,"threadCpuNanos":377986000,"checksum":74074073400000}
+{"trial":2,"rows":200000,"readsPerRow":3,"pageLimit":200,"wallNanos":380392708,"threadCpuNanos":374114000,"checksum":74074073400000}

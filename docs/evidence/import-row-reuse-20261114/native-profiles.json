@@ -1,0 +1,29 @@
+[
+  {
+    "session": "row-profile-after-1",
+    "completeMs": 9831,
+    "javaPeakBytes": 70385040,
+    "heapLimitBytes": 201326592,
+    "sampledCpuNanoseconds": 4160000000,
+    "samples": 832,
+    "sha256": "de5529622f399cd4ea6a48ace3fb1ade243e48870b7e2727d97a05614abaa490"
+  },
+  {
+    "session": "row-profile-before-1",
+    "completeMs": 11346,
+    "javaPeakBytes": 47803824,
+    "heapLimitBytes": 201326592,
+    "sampledCpuNanoseconds": 4600000000,
+    "samples": 920,
+    "sha256": "779a062c880531cb71ab1f4b53a5d80b9e4301936b5215af68002a81c3f09da2"
+  },
+  {
+    "session": "row-profile-after-2",
+    "completeMs": 11005,
+    "javaPeakBytes": 116053520,
+    "heapLimitBytes": 201326592,
+    "sampledCpuNanoseconds": 4610000000,
+    "samples": 922,
+    "sha256": "7cc6bab81c411d9441e45a0d9c8db7096780078d5793ce8a1a31ad43a47d464d"
+  }
+]
