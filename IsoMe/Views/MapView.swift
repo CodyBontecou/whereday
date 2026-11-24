@@ -4627,18 +4627,6 @@ enum MapDatePreset: CaseIterable, Hashable {
         }
     }
 
-    /// "map-range-7d" and so on: the range chip's accessibility identifier.
-    var identifierSuffix: String {
-        switch self {
-        case .today: return "today"
-        case .yesterday: return "yesterday"
-        case .sevenDays: return "7d"
-        case .thisMonth: return "month"
-        case .thirtyDays: return "30d"
-        case .all: return "all"
-        }
-    }
-
     var accessibilityLabel: String {
         switch self {
         case .today: return String(localized: "Today")
@@ -5863,3 +5851,19 @@ struct HingePresenceProbe: UIViewRepresentable {
     }
 }
 #endif
+
+// Kept outside `MapDatePreset`'s body: android/scripts/generate_map_date_fixtures.py and
+// verify_custom_date_reference.py hash that body, and this is UI-test plumbing, not date logic.
+extension MapDatePreset {
+    /// "map-range-7d" and so on: the range chip's accessibility identifier.
+    var identifierSuffix: String {
+        switch self {
+        case .today: return "today"
+        case .yesterday: return "yesterday"
+        case .sevenDays: return "7d"
+        case .thisMonth: return "month"
+        case .thirtyDays: return "30d"
+        case .all: return "all"
+        }
+    }
+}
