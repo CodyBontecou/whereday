@@ -581,7 +581,7 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
     suspend fun readDayTotals(range:HistoryRange,zone:java.time.ZoneId):DayTotals = database.readSnapshot {
         val accumulator=DayDistanceAccumulator(zone)
         forEachPoint(range) {accumulator.add(it)}
-        DayTotals(accumulator.distances(),accumulator.counts())
+        DayTotals(accumulator.distances(),accumulator.counts(),accumulator.crossings())
     }
     fun observeDayTotals(range:()->HistoryRange,zone:java.time.ZoneId):Flow<DayTotals> = database.invalidationTracker.createFlow("points")
         .conflate().map {readDayTotals(range(),zone)}
@@ -704,4 +704,5 @@ class HistoryRepository(val database: HistoryDatabase, private val clock: Clock 
 
 data class CountryDayReport(val days: List<CountryPresence>, val stays: List<CountryStay>, val unresolvedPoints: Long, val unresolvedVisits: Long)
 
-data class DayTotals(val distances:Map<java.time.LocalDate,Double>,val counts:Map<java.time.LocalDate,Long>)
+/** [distances] are each day's own path (its day sheet's figure); [crossings] are the legs across midnight, by the day they end on. */
+data class DayTotals(val distances:Map<java.time.LocalDate,Double>,val counts:Map<java.time.LocalDate,Long>,val crossings:Map<java.time.LocalDate,Double> = emptyMap())

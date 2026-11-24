@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings › Reminders: the evening recap notification. -->
+    <string name="reminders_title">Reminders</string>
+    <!-- Settings row value: %1$s is the frequency ("Every evening"), %2$s the time ("9:00 PM"). -->
+    <string name="reminders_summary">%1$s · %2$s</string>
+    <string name="reminders_day_recap">Day recap</string>
+    <string name="reminders_off">Off</string>
+    <string name="reminders_off_hint">Never send a recap.</string>
+    <string name="reminders_daily">Every evening</string>
+    <string name="reminders_daily_hint">A short recap each night.</string>
+    <string name="reminders_weekdays">Weekdays</string>
+    <string name="reminders_weekdays_hint">Monday to Friday evenings.</string>
+    <string name="reminders_weekly">Weekly, on Sunday</string>
+    <string name="reminders_weekly_hint">Your week in one notification.</string>
+    <string name="reminders_time">Time</string>
+    <string name="reminders_time_custom">Custom</string>
+    <!-- %1$s: the custom time, e.g. "10:30 PM". -->
+    <string name="reminders_time_custom_value">Custom · %1$s</string>
+    <string name="reminders_time_dialog">Recap time</string>
+    <string name="reminders_time_confirm">Set time</string>
+    <string name="reminders_quiet">Skip quiet days</string>
+    <string name="reminders_quiet_detail">Nothing new, no notification.</string>
+    <string name="reminders_names">Show place names</string>
+    <string name="reminders_names_detail">Visible on your lock screen. Off shows counts only.</string>
+    <!-- Preview's schedule: %1$s is the time. -->
+    <string name="reminders_when_daily">Daily %1$s</string>
+    <string name="reminders_when_weekdays">Mon–Fri %1$s</string>
+    <string name="reminders_when_weekly">Sun %1$s</string>
+    <string name="reminders_preview_off">No recap notifications. Today and Archive always show your days.</string>
+    <string name="reminders_preview_example">Example. Nothing is recorded yet for this recap.</string>
+    <string name="reminders_blocked">Notifications are off for Whereday, so recaps can\'t be sent.</string>
+    <string name="reminders_blocked_action">Open notification settings</string>
+    <string name="reminders_footer">No recap when nothing was recorded, recording was off, your plan has lapsed, or you already opened Whereday that evening. Quiet: no new place and under 1 km moved.</string>
+</resources>

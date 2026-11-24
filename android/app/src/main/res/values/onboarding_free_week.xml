@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The free week as onboarding's last step, shown only when billing is configured and there is no access yet.
+         Prices, periods and trial lengths always come from Google Play. -->
+    <string name="onboarding_trial_kicker">Your free week</string>
+    <string name="onboarding_trial_kicker_trial">Your free trial</string>
+    <string name="onboarding_trial_kicker_plan">Your plan</string>
+    <string name="onboarding_trial_title">Recording starts now, on us.</string>
+    <string name="onboarding_trial_title_lifetime">Recording starts now, for good.</string>
+    <string name="onboarding_trial_title_plan">Recording starts now.</string>
+
+    <!-- %1$s: the evening recap time from Settings › Reminders, e.g. "9:00 PM". -->
+    <string name="onboarding_trial_when_evening">Every evening · %1$s</string>
+    <string name="onboarding_trial_when_day">Day %1$d · %2$s</string>
+    <string name="onboarding_trial_when_renews">Renews · %1$s</string>
+    <string name="onboarding_trial_when_for_good">For good</string>
+    <string name="onboarding_trial_today_place">%1$s is stamped.</string>
+    <plurals name="onboarding_trial_today_photos">
+        <item quantity="one">%1$d earlier day is in from Photos.</item>
+        <item quantity="other">%1$d earlier days are in from Photos.</item>
+    </plurals>
+    <string name="onboarding_trial_today_recording">Recording starts now.</string>
+    <string name="onboarding_trial_today_no_location">Recording starts once you allow location.</string>
+    <string name="onboarding_trial_evening_body">A short recap of your day: where you went and how far.</string>
+    <string name="onboarding_trial_for_good_body">One payment of %1$s. No renewals, no reminders.</string>
+    <string name="onboarding_trial_timeline">Timeline. %1$s</string>
+    <string name="onboarding_trial_timeline_entry">%1$s: %2$s</string>
+
+    <string name="onboarding_trial_plans">Plan</string>
+    <string name="onboarding_plan_price_weekly">%1$s/wk</string>
+    <string name="onboarding_plan_price_yearly">%1$s/yr</string>
+    <string name="onboarding_trial_start">Start my free week</string>
+    <string name="onboarding_trial_buy_lifetime">Buy Lifetime · %1$s</string>
+    <string name="onboarding_trial_all_plans">All plans</string>
+    <string name="onboarding_trial_plans_failed">Plans could not load from Google Play.</string>
+    <string name="onboarding_trial_retry">Try again</string>
+    <string name="onboarding_trial_free_until">Free until %1$s.</string>
+    <string name="onboarding_trial_cancel">Cancel anytime in Google Play under Payments &amp; subscriptions. Cancel before the trial ends and you won\'t be charged.</string>
+    <string name="onboarding_trial_cancel_plan">Cancel anytime in Google Play under Payments &amp; subscriptions.</string>
+
+    <string name="onboarding_lead_kicker">Because you picked “%1$s”</string>
+    <string name="onboarding_lead_notes_title">A Markdown note for every day, in your vault.</string>
+    <string name="onboarding_lead_notes_detail">Automatic exports write one dated file a day to a folder you choose, such as your Obsidian vault.</string>
+    <string name="onboarding_lead_routes_title">Every step, on the map.</string>
+    <string name="onboarding_lead_routes_detail">Every-step recording follows the route closely; GPX exports open in Strava and gpx.studio.</string>
+    <string name="onboarding_lead_countries_title">Every date abroad, counted for you.</string>
+    <string name="onboarding_lead_countries_detail">Country Days fills in from recordings; export the dates as CSV.</string>
+    <string name="onboarding_lead_days_title">Every day written down, without check-ins.</string>
+    <string name="onboarding_lead_days_detail">Visits and routes record in the background, on your phone only.</string>
+
+    <string name="onboarding_done_kicker_trial">Free until %1$s</string>
+    <string name="onboarding_done_kicker_lifetime">Lifetime · purchased</string>
+    <string name="onboarding_done_kicker_plan">%1$s plan · active</string>
+    <string name="onboarding_done_title">You\'re in.</string>
+    <string name="onboarding_done_icon">Done</string>
+    <string name="onboarding_done_body">Recording starts now. Go about your day; Whereday writes it down.</string>
+    <string name="onboarding_done_body_no_location">Allow location when you\'re ready, and recording starts from the map.</string>
+    <string name="onboarding_done_notifications_ask">Turn this on and Android will ask to allow notifications.</string>
+    <string name="onboarding_done_open">Open today\'s map</string>
+</resources>

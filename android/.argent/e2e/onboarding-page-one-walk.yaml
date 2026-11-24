@@ -1,0 +1,103 @@
+# Fragment: walks all ten Page One onboarding steps by stable test tags (locale-independent) and stops on the
+# final "tonight" step without finishing. Requests no location, notification or photo access, names no place and
+# saves no export format. Prerequisite: a fresh, unonboarded disposable mapQa install showing the cover step,
+# with location and notifications not granted. Never run against the owner's com.bontecou.whereday package.
+requires:
+  platform: android
+executionPrerequisite: Disposable com.bontecou.whereday.mapqa is open on the Page One cover step (onboarding-cover-dial visible), unonboarded, with location and notification permissions not granted.
+steps:
+- await:
+    visible:
+      id: onboarding-cover-dial
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-intent-days
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-scrub
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-pen-preview
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-perm-compare
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-skip
+- tap:
+    id: onboarding-skip
+- await:
+    visible:
+      id: onboarding-stamp-map
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-heatmap
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-continue
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-glance-notification
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-skip
+- tap:
+    id: onboarding-skip
+- await:
+    visible:
+      id: onboarding-export-preview
+- await:
+    idle: true
+- scroll-to:
+    target:
+      id: onboarding-skip
+- tap:
+    id: onboarding-skip
+- await:
+    visible:
+      id: onboarding-draft
+- await:
+    idle: true

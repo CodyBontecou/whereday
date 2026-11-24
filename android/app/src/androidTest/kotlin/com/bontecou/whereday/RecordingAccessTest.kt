@@ -108,7 +108,7 @@ class RecordingAccessTest {
     @Test fun approximateOnboardingKeepsImmediateRecordingAnExplicitDefaultOffChoice() {
         var completed:OnboardingDecision?=null
         compose.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground,access=RecordingAccessState(LocationPrecision.approximate,false)) {completed=it}}}
-        repeat(4) {compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()}
+        compose.walkOnboarding()
         compose.onNodeWithText(target.getString(R.string.permission_approximate_body)).performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
         assertNull(completed)

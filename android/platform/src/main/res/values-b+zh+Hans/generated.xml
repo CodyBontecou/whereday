@@ -19,6 +19,26 @@
     <string name="notification_recording_stop">停止</string>
     <string name="notification_recording_stop_full">停止记录</string>
     <string name="notification_recording_title">Whereday 正在记录</string>
+    <string name="recap_channel">晚间回顾</string>
+    <plurals name="recap_countries">
+        <item quantity="other">%1$s 个国家/地区</item>
+    </plurals>
+    <string name="recap_daily_body">%1$s，%2$s。轻点即可在地图上查看。</string>
+    <string name="recap_daily_title">你的一天</string>
+    <string name="recap_named">%1$s。%2$s。</string>
+    <string name="recap_named_countries">%1$s。%2$s，横跨 %3$s。</string>
+    <string name="recap_names_four">%1$s、%2$s、%3$s和%4$s</string>
+    <plurals name="recap_names_more">
+        <item quantity="other">另外 %1$s 个</item>
+    </plurals>
+    <string name="recap_names_three">%1$s、%2$s和%3$s</string>
+    <string name="recap_names_two">%1$s和%2$s</string>
+    <plurals name="recap_places">
+        <item quantity="other">%1$s 个地点</item>
+    </plurals>
+    <string name="recap_weekly_body">%1$s，%2$s，%3$s。轻点即可查看这一周。</string>
+    <string name="recap_weekly_body_no_countries">%1$s，%2$s。轻点即可查看这一周。</string>
+    <string name="recap_weekly_title">你的一周</string>
     <string name="trial_reminder_body_weekly">你的 Whereday 方案将以每周 %1$s 开始。在此之前于 Google Play 中取消，就不会被收费。</string>
     <string name="trial_reminder_body_yearly">你的 Whereday 方案将以每年 %1$s 开始。在此之前于 Google Play 中取消，就不会被收费。</string>
     <string name="trial_reminder_channel">免费试用提醒</string>

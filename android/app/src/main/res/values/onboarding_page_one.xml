@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Page One onboarding. Copy follows the iOS prototype, adapted where Android differs. -->
+    <string name="onboarding_brand" translatable="false">Whereday</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_not_now">Not now</string>
+
+    <string name="onboarding_cover_title">Every day is a page.</string>
+    <string name="onboarding_cover_body">Whereday quietly writes down where you go. In the next minute you\'ll learn to read a page, then write the first line of yours.</string>
+    <string name="onboarding_cover_start">Start my journal</string>
+    <string name="onboarding_cover_import">I already have data — import</string>
+    <string name="onboarding_cover_dial">Today\'s page, %1$s: a 24-hour dial with midnight at the top, drawing itself.</string>
+
+    <string name="onboarding_intent_kicker">Pick any · shapes your setup</string>
+    <string name="onboarding_intent_title">What should it remember for you?</string>
+    <string name="onboarding_intent_days">Remember my days</string>
+    <string name="onboarding_intent_days_summary">Look back at any day, place or trip.</string>
+    <string name="onboarding_intent_countries">Count days in countries</string>
+    <string name="onboarding_intent_countries_summary">Travel days, residency, visas.</string>
+    <string name="onboarding_intent_routes">Record runs and hikes</string>
+    <string name="onboarding_intent_routes_summary">Every step, in high detail.</string>
+    <string name="onboarding_intent_notes">Send it to my notes</string>
+    <string name="onboarding_intent_notes_summary">Daily Markdown for Obsidian and friends.</string>
+    <string name="onboarding_intent_note">We\'ll shape your setup around these. Everything else stays one tap away.</string>
+    <string name="onboarding_intent_none">Pick at least one, or skip and set things up later.</string>
+
+    <string name="onboarding_scrub_kicker">How to read a page · sample day</string>
+    <string name="onboarding_scrub_title">Drag through a day.</string>
+    <string name="onboarding_scrub_label">Time of day</string>
+    <string name="onboarding_scrub_hint">Each colour is a place. Gaps are travel. Midnight sits at the top.</string>
+    <string name="onboarding_scrub_done">Got it</string>
+    <string name="onboarding_scrub_dial">Sample day dial: home overnight, a café in the morning, the office all day, a park in the evening, then home. Now showing %1$s.</string>
+    <string name="onboarding_scrub_value">%1$s, %2$s</string>
+    <string name="onboarding_sample_home">Home</string>
+    <string name="onboarding_sample_walking">Walking</string>
+    <string name="onboarding_sample_cycling">Cycling</string>
+    <string name="onboarding_sample_cafe">Corner café</string>
+    <string name="onboarding_sample_office">Office</string>
+    <string name="onboarding_sample_park">Riverside park</string>
+    <string name="onboarding_sample_home_morning">Asleep, then coffee at the counter</string>
+    <string name="onboarding_sample_home_night">Back for the night</string>
+    <string name="onboarding_sample_walk_one">Travel · 0.9 km</string>
+    <string name="onboarding_sample_walk_two">Travel · 0.4 km</string>
+    <string name="onboarding_sample_walk_three">Travel · 1.1 km</string>
+    <string name="onboarding_sample_cycle">Travel · 3.2 km</string>
+    <string name="onboarding_sample_cafe_detail">Visit · 55 min · 2 photos</string>
+    <string name="onboarding_sample_office_detail">Visit · 7 h 30 min</string>
+    <string name="onboarding_sample_park_detail">Visit · 1 h 15 min · 5 photos</string>
+
+    <string name="onboarding_pen_kicker">Recording detail</string>
+    <string name="onboarding_pen_title">Pick a pen.</string>
+    <string name="onboarding_pen_use">Use this pen</string>
+    <string name="onboarding_pen_tag_places">100 m</string>
+    <string name="onboarding_pen_tag_routes">Recommended</string>
+    <string name="onboarding_pen_tag_every_step">5 m · 2 h</string>
+    <string name="onboarding_pen_places">Lightest on battery. Where you stopped, roughly how you got there.</string>
+    <string name="onboarding_pen_routes">Every visit and the streets between them. 25 m detail.</string>
+    <string name="onboarding_pen_every_step">For hikes and runs. Turns itself off after 2 hours.</string>
+    <string name="onboarding_pen_preview_places">Route preview: three stops joined by a few sparse points.</string>
+    <string name="onboarding_pen_preview_routes">Route preview: three stops joined along the streets.</string>
+    <string name="onboarding_pen_preview_every_step">Route preview: three stops joined by a dense, step-by-step track.</string>
+    <string name="onboarding_pen_preview_custom">Route preview for your custom recording settings.</string>
+
+    <string name="onboarding_perm_kicker">Location access</string>
+    <string name="onboarding_perm_title">Let it write while it\'s in your pocket.</string>
+    <string name="onboarding_perm_allowed">Allowed</string>
+    <string name="onboarding_perm_allowed_detail">the whole day, screen off</string>
+    <string name="onboarding_perm_denied">Not allowed</string>
+    <string name="onboarding_perm_denied_detail">only stops you add by hand</string>
+    <string name="onboarding_perm_compare">With location allowed, the whole day is written down, even with the screen off. Without it, only the stops you add by hand.</string>
+    <string name="onboarding_privacy_account">No account. Nothing to sign up for.</string>
+    <string name="onboarding_privacy_server">No server keeps a copy of where you\'ve been.</string>
+    <string name="onboarding_privacy_export">Export anytime in open formats.</string>
+    <string name="onboarding_perm_note">Android asks once. Choose Precise for useful routes. While it records, Whereday keeps a notification on screen.</string>
+
+    <string name="onboarding_stamp_kicker">First stamp · just now</string>
+    <string name="onboarding_stamp_title">You\'re here.</string>
+    <string name="onboarding_stamp_question">What is this place?</string>
+    <string name="onboarding_place_home">Home</string>
+    <string name="onboarding_place_work">Work</string>
+    <string name="onboarding_place_cafe">Café</string>
+    <string name="onboarding_place_gym">Gym</string>
+    <string name="onboarding_place_other">Somewhere else</string>
+    <string name="onboarding_stamp_note">Name it once, and every visit here is labeled automatically.</string>
+    <string name="onboarding_stamp_note_named">Next time you\'re here, the visit is named for you.</string>
+    <string name="onboarding_stamp_note_other">You can name it later from the map.</string>
+    <string name="onboarding_stamp_save">Save “%1$s”</string>
+    <string name="onboarding_stamp_skip">Skip for now</string>
+    <string name="onboarding_stamp_locating">Finding where you are…</string>
+    <string name="onboarding_stamp_unavailable">Without a current location there is nothing to stamp yet. You can name places later from the map.</string>
+    <string name="onboarding_stamp_coordinates">%1$s, %2$s · ±%3$s m</string>
+    <string name="onboarding_stamp_map">Sketch of your current location, %1$s.</string>
+    <string name="onboarding_stamp_map_empty">Map sketch without a location.</string>
+    <string name="onboarding_stamp_error">This place could not be saved. Try again, or skip for now.</string>
+
+    <string name="onboarding_backfill_kicker">Don\'t start on a blank page</string>
+    <string name="onboarding_backfill_title">Fill earlier pages.</string>
+    <string name="onboarding_backfill_body">Your photos already know where you\'ve been. Whereday pins them to days and places. They never leave your phone.</string>
+    <string name="onboarding_backfill_weeks">Last 12 weeks</string>
+    <string name="onboarding_backfill_today">Today only</string>
+    <string name="onboarding_backfill_found">Photo days: %1$d</string>
+    <string name="onboarding_backfill_scanning">Matching photos…</string>
+    <string name="onboarding_backfill_heatmap_today">Last 12 weeks: only today so far.</string>
+    <string name="onboarding_backfill_heatmap_found">Last 12 weeks: earlier days with photos: %1$d. Today is marked.</string>
+    <string name="onboarding_backfill_toggle">Match photos to places</string>
+    <string name="onboarding_backfill_toggle_detail">Asks for photo access. You can turn it off later.</string>
+    <string name="onboarding_backfill_denied">Photo access wasn\'t granted, so only today is shown. You can allow it later in Photos.</string>
+    <string name="onboarding_backfill_error">Photo matching could not be changed. Try again later in Photos.</string>
+    <string name="onboarding_backfill_import">Import a Google Timeline or Whereday backup</string>
+
+    <string name="onboarding_glance_kicker">Notification shade · lock screen</string>
+    <string name="onboarding_glance_title">Check without opening it.</string>
+    <string name="onboarding_glance_caption">Ongoing notification while you record</string>
+    <string name="onboarding_glance_since">Recording since 08:31</string>
+    <string name="onboarding_glance_at">At %1$s since 08:50</string>
+    <string name="onboarding_glance_recording">Whereday is recording</string>
+    <string name="onboarding_glance_detail">2.40 km · 1h 12m · 312 points · auto-off in 100 min</string>
+    <string name="onboarding_glance_stop">Stop recording</string>
+    <string name="onboarding_glance_log">Log a stop</string>
+    <string name="onboarding_glance_card_title">Stop without opening the app</string>
+    <string name="onboarding_glance_card_body">Stop recording and Log a stop sit right in the notification, with the place, distance and points so far.</string>
+    <string name="onboarding_glance_illustration">Example notification. %1$s. %2$s. Actions: Stop recording, Log a stop.</string>
+
+    <string name="onboarding_export_kicker">Open formats · no lock-in</string>
+    <string name="onboarding_export_title">Your history, your files.</string>
+    <string name="onboarding_export_formats">Export format</string>
+    <string name="onboarding_export_sample">Sample day</string>
+    <string name="onboarding_export_note_markdown">One note per day, with dated folders like {year}/{month}.</string>
+    <string name="onboarding_export_note_gpx">Opens in Strava, gpx.studio and most mapping tools.</string>
+    <string name="onboarding_export_note_csv">Drop it into a spreadsheet or a script.</string>
+    <string name="onboarding_export_note_json">A full record you can import again on a new phone.</string>
+    <string name="onboarding_export_note">Schedule it daily to a folder, or export once. Exports are included with every Whereday plan.</string>
+    <string name="onboarding_export_later">Set up later</string>
+    <string name="onboarding_export_preview">Sample %1$s file: %2$s</string>
+    <string name="onboarding_format_markdown" translatable="false">Markdown</string>
+    <string name="onboarding_format_gpx" translatable="false">GPX</string>
+    <string name="onboarding_format_csv" translatable="false">CSV</string>
+    <string name="onboarding_format_json" translatable="false">JSON</string>
+    <string name="onboarding_sample_file_markdown" translatable="false">Daily Track - 2026-11-23.md</string>
+    <string name="onboarding_sample_file_gpx" translatable="false">whereday-2026-11-23.gpx</string>
+    <string name="onboarding_sample_file_csv" translatable="false">visits-2026-11.csv</string>
+    <string name="onboarding_sample_file_json" translatable="false">whereday-2026-11-23.json</string>
+    <string name="onboarding_sample_body_markdown" translatable="false"># Mon, Nov 23\n\n- 08:50 Corner café · 55 min\n- 10:00 Office · 7 h 30 min\n- 18:00 Riverside park · 1 h 15 min\n\n5.6 km moved</string>
+    <string name="onboarding_sample_body_gpx" translatable="false">&lt;trk>&lt;name>Mon, Nov 23&lt;/name>&lt;trkseg>\n  &lt;trkpt lat=\"…\" lon=\"…\">\n    &lt;time>2026-11-23T08:31:04Z&lt;/time>\n  &lt;/trkpt>\n  …\n&lt;/trkseg>&lt;/trk></string>
+    <string name="onboarding_sample_body_csv" translatable="false">date,arrival,departure,place\n2026-11-23,08:50,09:45,Corner café\n2026-11-23,10:00,17:30,Office\n2026-11-23,18:00,19:15,Riverside park</string>
+    <string name="onboarding_sample_body_json" translatable="false">{\n  \"visits\": [\n    { \"place\": \"Corner café\",\n      \"arrival\": \"2026-11-23T08:50\" }\n  ]\n}</string>
+
+    <string name="onboarding_tonight_kicker">Your first day</string>
+    <string name="onboarding_tonight_title">Your day starts now.</string>
+    <string name="onboarding_tonight_drafting">Drafting</string>
+    <string name="onboarding_tonight_place">%1$s · stamped just now</string>
+    <string name="onboarding_tonight_first_place">Your first place</string>
+    <string name="onboarding_tonight_fill">Places, distance and photos fill in as you go.</string>
+    <string name="onboarding_tonight_draft">Draft of today\'s page, %1$s. %2$s.</string>
+    <!-- The last step's switch for Settings › Reminders › Day recap (on: Every evening; off: Off). -->
+    <string name="onboarding_recap_toggle">Evening recap</string>
+    <string name="onboarding_recap_detail">Every night at %1$s, starting tonight. Change it in Settings › Reminders.</string>
+    <string name="onboarding_recap_detail_tomorrow">Every night at %1$s, starting tomorrow. Change it in Settings › Reminders.</string>
+    <string name="onboarding_tonight_notifications_off">Notifications are off, so nothing will be sent. You can allow them in Settings.</string>
+    <string name="onboarding_tonight_start">Start my day</string>
+</resources>

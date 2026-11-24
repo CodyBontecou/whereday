@@ -1,48 +1,84 @@
+# Owner first-run path on the com.bontecou.whereday package: grants foreground location and notifications through
+# the system dialogs and completes Page One. Only for a fresh install on a QA device; never on the owner's phone.
+# Not replayed in automation (the main package is off-limits for QA runs).
+requires:
+  platform: android
 steps:
 - launch: com.bontecou.whereday
 - await:
     visible:
-      text: Your days, remembered
+      id: onboarding-cover-dial
 - await:
     idle: true
 - tap:
-    text: Continue
+    id: onboarding-continue
 - await:
     visible:
-      text: A journal of where you go
+      id: onboarding-intent-days
 - await:
     idle: true
 - tap:
-    text: Continue
+    id: onboarding-continue
 - await:
     visible:
-      text: Record in the background
+      id: onboarding-scrub
 - await:
     idle: true
 - tap:
-    text: Allow location
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-pen-preview
+- await:
+    idle: true
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-perm-compare
+- await:
+    idle: true
+- tap:
+    id: onboarding-continue
 - tap:
     id: com.android.permissioncontroller:id/permission_allow_foreground_only_button
-- tap:
-    text: Continue
 - await:
     visible:
-      text: Keep recording within reach
+      id: onboarding-stamp-map
 - await:
     idle: true
 - tap:
-    text: Allow notifications
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-heatmap
+- await:
+    idle: true
+- tap:
+    id: onboarding-continue
+- await:
+    visible:
+      id: onboarding-glance-notification
+- await:
+    idle: true
+- tap:
+    id: onboarding-continue
 - tap:
     id: com.android.permissioncontroller:id/permission_allow_button
-- tap:
-    text: Continue
 - await:
     visible:
-      text: Ready for your next outing
+      id: onboarding-export-preview
 - await:
     idle: true
 - tap:
-    text: Open Whereday
+    id: onboarding-skip
+- await:
+    visible:
+      id: onboarding-draft
+- await:
+    idle: true
+- tap:
+    id: onboarding-continue
 - await:
     visible:
       text: Your location journal

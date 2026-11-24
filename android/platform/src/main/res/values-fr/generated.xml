@@ -23,6 +23,32 @@
     <string name="notification_recording_stop">Arrêter</string>
     <string name="notification_recording_stop_full">Arrêter l’enregistrement</string>
     <string name="notification_recording_title">Whereday enregistre</string>
+    <string name="recap_channel">Récap du soir</string>
+    <plurals name="recap_countries">
+        <item quantity="one">%1$s pays</item>
+        <item quantity="many">%1$s de pays</item>
+        <item quantity="other">%1$s pays</item>
+    </plurals>
+    <string name="recap_daily_body">%1$s et %2$s. Touchez pour voir la carte.</string>
+    <string name="recap_daily_title">Votre journée</string>
+    <string name="recap_named">%1$s. %2$s.</string>
+    <string name="recap_named_countries">%1$s. %2$s dans %3$s.</string>
+    <string name="recap_names_four">%1$s, %2$s, %3$s et %4$s</string>
+    <plurals name="recap_names_more">
+        <item quantity="one">%1$s autre</item>
+        <item quantity="many">%1$s d’autres</item>
+        <item quantity="other">%1$s autres</item>
+    </plurals>
+    <string name="recap_names_three">%1$s, %2$s et %3$s</string>
+    <string name="recap_names_two">%1$s et %2$s</string>
+    <plurals name="recap_places">
+        <item quantity="one">%1$s lieu</item>
+        <item quantity="many">%1$s de lieux</item>
+        <item quantity="other">%1$s lieux</item>
+    </plurals>
+    <string name="recap_weekly_body">%1$s, %2$s et %3$s. Touchez pour voir la semaine.</string>
+    <string name="recap_weekly_body_no_countries">%1$s et %2$s. Touchez pour voir la semaine.</string>
+    <string name="recap_weekly_title">Votre semaine</string>
     <string name="trial_reminder_body_weekly">Votre formule Whereday commence à %1$s par semaine. Annulez avant dans Google Play et vous ne serez pas débité.</string>
     <string name="trial_reminder_body_yearly">Votre formule Whereday commence à %1$s par an. Annulez avant dans Google Play et vous ne serez pas débité.</string>
     <string name="trial_reminder_channel">Rappels d’essai gratuit</string>

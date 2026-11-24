@@ -26,6 +26,23 @@ class AppPreferencesTest {
         } finally { preferences.update { original } }
     }
 
+    @Test fun eveningRecapDefaultsOffUntilSetAndPersists()=runBlocking {
+        val preferences=AppPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
+        val original=preferences.settings.first()
+        try {
+            preferences.update {it.copy(recapFrequency=null)}
+            val fresh=preferences.settings.first()
+            assertNull(fresh.recapFrequency);assertEquals(com.bontecou.whereday.domain.RecapSettings(),fresh.recap)
+            val chosen=com.bontecou.whereday.domain.RecapSettings(com.bontecou.whereday.domain.RecapFrequency.weekly,22*60+30,skipQuietDays=false,placeNames=true)
+            preferences.update {it.withRecap(chosen)}
+            val saved=preferences.settings.first()
+            assertEquals("weekly",saved.recapFrequency);assertEquals(chosen,saved.recap)
+            try {preferences.update {it.copy(recapFrequency="nightly")};fail("Unknown frequency saved")} catch(_:IllegalArgumentException) { }
+            try {preferences.update {it.copy(recapMinute=24*60)};fail("Out-of-range time saved")} catch(_:IllegalArgumentException) { }
+            assertEquals(chosen,preferences.settings.first().recap)
+        } finally {preferences.update {original}}
+    }
+
     @Test fun routeSamplingDefaultsToDistanceAndPersists()=runBlocking {
         val preferences=AppPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
         val original=preferences.settings.first()
