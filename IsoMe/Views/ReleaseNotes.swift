@@ -481,6 +481,7 @@ enum IsoMeReleaseNotes {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--seed-screenshot-data") { return nil }
         #endif
+        if RecordingHandoffStore.isReplay { return nil }
 
         return AppInfo.version
     }

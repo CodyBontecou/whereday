@@ -1,0 +1,173 @@
+# Watch ↔ iPhone overlap merge and "which device records" UI (#173).
+#
+# Prerequisites: iOS simulator with a Debug build of Whereday (com.bontecou.isome)
+# installed. Notification permission must already be answered (or never requested)
+# on the simulator; a pool sim with daily export scheduled may otherwise show the
+# system prompt over the first screen.
+# Side effects: launches with --watch-handoff-replay (Debug simulator builds only),
+# which wipes and uses Documents/WatchHandoffReplay/phone.store and the
+# "WatchHandoffReplay" defaults suite. The normal journal is not touched.
+# Not covered: real Watch↔iPhone proximity, lease delivery over WatchConnectivity,
+# battery. See docs/testing/watch-handoff-replay.md.
+#
+# Selector notes (same constraint as onboarding-map-walkthrough.yaml): SwiftUI ids
+# and text are exposed to accessibility but absent from the native runner tree, so
+# checks are raw accessibility `await-ui-element` steps and navigation taps/swipes
+# are coordinates in iPhone Duo (pool sim, unfolded portrait) geometry. Each
+# coordinate step is followed by a raw accessibility identity check. `await: idle`
+# is omitted: it reads the runner tree, which this pool sim can't target while
+# system helper apps also report foreground.
+#
+# Selector notes (same constraint as onboarding-map-walkthrough.yaml): SwiftUI ids
+# and text are exposed to accessibility but absent from the native runner tree, so
+# checks are raw accessibility `await-ui-element` steps and navigation taps/swipes
+# are coordinates in iPhone Duo (pool sim, unfolded portrait) geometry. Each
+# coordinate step is followed by a raw accessibility identity check. `await: idle`
+# is omitted: it reads the runner tree, which this pool sim can't target while
+# system helper apps also report foreground.
+#
+# Selector notes (same constraint as onboarding-map-walkthrough.yaml): SwiftUI ids
+# and text are exposed to accessibility but absent from the native runner tree, so
+# checks are raw accessibility `await-ui-element` steps and navigation taps/swipes
+# are coordinates in iPhone Duo (pool sim, unfolded portrait) geometry. Each
+# coordinate step is followed by a raw accessibility identity check. `await: idle`
+# is omitted: it reads the runner tree, which this pool sim can't target while
+# system helper apps also report foreground.
+version: 1
+requires:
+  platform: ios
+steps:
+  - echo: Launch Whereday with --watch-handoff-replay (isolated store; synthetic
+      iPhone 09:00-09:10 + Watch 09:00-09:20 import); expect the map home
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --watch-handoff-replay
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: "main-tab-map"
+      timeoutMs: 15000
+  - echo: "Acceptance: the same 09:00-09:10 recorded on both devices is stored once
+      - map shows 1 visit and 21 path points (11 iPhone + 10 Watch gap-fill),
+      not 2 visits / 32 points"
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        text: "Location map"
+      expectedText: "1 visit. 21 path points"
+      timeoutMs: 10000
+  - echo: "Coordinate tap: Archive tab (main-tab-archive; id absent from runner tree)"
+  - tool: gesture-tap
+    args:
+      x: 0.6855
+      y: 0.9
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: "archive-listening-link"
+      timeoutMs: 15000
+  - echo: "Coordinate tap: How Whereday listens row (archive-listening-link), top half clear of the Export button"
+  - tool: gesture-tap
+    args:
+      x: 0.4
+      y: 0.698
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "RECORDING · WHAT STAYS ON THIS IPHONE"
+      timeoutMs: 15000
+  - echo: "Coordinate swipes: scroll How Whereday listens to the Apple Watch row to the end of the page; extra swipes at the bottom are no-ops, so the row lands at a fixed spot (scroll-to needs the runner tree)"
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.75
+      toX: 0.4
+      toY: 0.1
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "Apple Watch"
+      timeoutMs: 15000
+  - echo: "Fixed wait: let the end-of-page bounce settle so the tap opens the row instead of stopping the scroll"
+  - wait: 1000
+  - echo: "Coordinate tap: Apple Watch row (iPhone Duo geometry at the end of the page)"
+  - tool: gesture-tap
+    args:
+      x: 0.3
+      y: 0.528
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: "SYNC · FROM YOUR WRIST"
+      timeoutMs: 15000
+  - echo: "Acceptance: the iPhone shows which device records (Watch reported
+      recording, phone not recording -> Apple Watch), and the merge counts 11
+      overlapping Watch points folded, 10 gap-fill kept, 21 points / 1 visit
+      after a duplicate redelivery"
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: "watchSyncRecordingDevices"
+      expectedText: "Recording on, Apple Watch"
+      textMatch: equals
+      timeoutMs: 10000
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: "watchSyncHandoffReplay"
+      expectedText: "merged 11 · kept 10 · points 21 · visits 1"
+      timeoutMs: 10000

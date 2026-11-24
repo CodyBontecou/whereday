@@ -563,6 +563,7 @@ struct WatchSyncSnapshot {
 /// Watch route transfers and acknowledged, bidirectional recording control.
 struct WatchSyncDetailView: View {
     @ObservedObject private var recordingControl = SharedRecordingControl.shared
+    @ObservedObject private var handoff = RecordingHandoffStore.shared
     @AppStorage(WatchSyncStatus.lastImportDateKey) private var lastWatchImport: Double = 0
     @State private var waitingPointCount: Int?
     @State private var isSyncing = false
@@ -587,6 +588,19 @@ struct WatchSyncDetailView: View {
                         statusRow("In range now", value: snapshot.reachableText)
                         BackPageDivider()
                         statusRow("Recording controls", value: recordingControl.statusDescription)
+                        BackPageDivider()
+                        // Which device collects fixes, so a shared recording is stored once (#173).
+                        statusRow("Recording on", value: handoff.recordingDevicesDescription(
+                            phoneIsRecording: LocationManager.shared?.isRecordingForHandoff ?? false,
+                            now: context.date))
+                            .accessibilityIdentifier("watchSyncRecordingDevices")
+                        #if DEBUG && targetEnvironment(simulator)
+                        if let summary = handoff.replaySummary {
+                            BackPageDivider()
+                            statusRow("Hand-off replay", value: summary)
+                                .accessibilityIdentifier("watchSyncHandoffReplay")
+                        }
+                        #endif
                     }
                     .padding(.horizontal, 16)
 

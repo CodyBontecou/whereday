@@ -1,3 +1,4 @@
+import Combine
 import CoreLocation
 import Foundation
 import WidgetKit
@@ -10,6 +11,8 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     @Published private(set) var locationData: SharedLocationData
     @Published private(set) var authorizationStatus: CLAuthorizationStatus
     @Published var lastErrorMessage: String?
+    /// Who collects fixes right now: this Watch, or the iPhone with the Watch on standby (#173).
+    @Published private(set) var recordingRole: RecordingDeviceRole = .idle
 
     private let locationManager = CLLocationManager()
     private let syncClient = WatchLocationSyncClient.shared
@@ -19,6 +22,12 @@ final class WatchLocationTracker: NSObject, ObservableObject {
     private var accessExpiration: Date?
     private var entitlementUpdates: Task<Void, Never>?
     private var accessTimer: Timer?
+    private let handoffPolicy = RecordingHandoffPolicy()
+    private var phoneLease: PhoneRecordingLease?
+    private var phoneLeaseReceivedAt: Date?
+    private var isRequestingLease = false
+    private var handoffTimer: Timer?
+    private var reachabilityObserver: AnyCancellable?
 
     private let minimumMovementDistance: CLLocationDistance = 10
     private let visitDistanceThreshold: CLLocationDistance = 100
@@ -50,11 +59,85 @@ final class WatchLocationTracker: NSObject, ObservableObject {
             for await _ in Transaction.updates { await self?.refreshTrackingAccess() }
         }
         syncClient.syncPending(force: true)
+        reachabilityObserver = syncClient.$isPhoneReachable.removeDuplicates().sink { [weak self] _ in
+            Task { @MainActor in self?.evaluateHandoff() }
+        }
     }
 
     deinit {
         entitlementUpdates?.cancel()
         accessTimer?.invalidate()
+        handoffTimer?.invalidate()
+    }
+
+    // MARK: - Hand-off (#173)
+
+    /// Re-decides who records. Leaving standby always promotes the buffered
+    /// fixes first, so nothing taken after the iPhone's last coverage is lost.
+    private func evaluateHandoff(now: Date = Date(), requestsLease: Bool = true) {
+        let isRecording = locationData.isTrackingEnabled
+        let next = handoffPolicy.role(isRecording: isRecording, isPhoneReachable: syncClient.isPhoneReachable,
+                                      lease: phoneLease, leaseReceivedAt: phoneLeaseReceivedAt, now: now)
+        if next != recordingRole {
+            let previous = recordingRole
+            recordingRole = next
+            if previous == .standingBy {
+                syncClient.promoteStandby(phoneCoveredUntil: phoneLease?.coveredUntil)
+            }
+            if next == .standingBy {
+                syncClient.endVisitForHandoff(at: now)
+            }
+            applyLocationPowerLevel()
+        }
+        if isRecording {
+            if handoffTimer == nil {
+                handoffTimer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { [weak self] _ in
+                    Task { @MainActor in self?.evaluateHandoff() }
+                }
+            }
+        } else {
+            handoffTimer?.invalidate()
+            handoffTimer = nil
+            phoneLease = nil
+            phoneLeaseReceivedAt = nil
+        }
+        if requestsLease, isRecording, syncClient.isPhoneReachable, !isRequestingLease,
+           handoffPolicy.needsLeaseRefresh(leaseReceivedAt: phoneLeaseReceivedAt, now: now) {
+            requestPhoneLease()
+        }
+    }
+
+    private func requestPhoneLease() {
+        isRequestingLease = true
+        let report = WatchHandoffReport(deviceID: syncClient.deviceID, role: recordingRole, reportedAt: Date())
+        syncClient.requestLease(report: report) { [weak self] lease in
+            guard let self else { return }
+            isRequestingLease = false
+            if let lease {
+                phoneLease = lease
+                phoneLeaseReceivedAt = Date()
+            }
+            evaluateHandoff(requestsLease: false)
+        }
+    }
+
+    /// Standby keeps a coarse, low-power stream so the app stays alive and can take over.
+    private func applyLocationPowerLevel() {
+        if recordingRole == .standingBy {
+            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager.distanceFilter = 50
+        } else {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.distanceFilter = minimumMovementDistance
+        }
+    }
+
+    var recordingDeviceDescription: String {
+        switch recordingRole {
+        case .standingBy: return String(localized: "Recording on iPhone")
+        case .recording: return String(localized: "Recording on Apple Watch")
+        case .idle: return String(localized: "Not recording")
+        }
     }
 
     var canUseLocation: Bool {
@@ -130,6 +213,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         let id = syncClient.ensureActiveSession(startedAt: startedAt)
         saveLocationData()
         startLocationUpdates()
+        evaluateHandoff()
         if !wasTracking {
             SharedRecordingControl.shared.publish(isRecording: true, sessionID: id, startedAt: startedAt)
         }
@@ -141,6 +225,10 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         let id = syncClient.activeSessionID ?? control.intent?.sessionID
         let startedAt = locationData.trackingStartTime ?? control.intent?.startedAt ?? Date()
         let endedAt = control.isApplying ? (control.intent?.changedAt ?? Date()) : Date()
+        if recordingRole == .standingBy {
+            // The iPhone may have stopped covering before this stop: keep what it missed.
+            syncClient.promoteStandby(phoneCoveredUntil: phoneLease?.coveredUntil)
+        }
         locationData.isTrackingEnabled = false
         locationData.trackingStartTime = nil
         locationData.stopAfterHours = nil
@@ -148,6 +236,7 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         syncClient.endActiveSession(endedAt: endedAt)
         saveLocationData()
         locationManager.stopUpdatingLocation()
+        evaluateHandoff()
         if (wasTracking || control.intent?.isRecording == true), let id {
             control.publish(isRecording: false, sessionID: id, startedAt: startedAt, now: endedAt)
         }
@@ -249,10 +338,15 @@ final class WatchLocationTracker: NSObject, ObservableObject {
         locationData.usesMetricDistanceUnits = usesMetricDistanceUnits
 
         if locationData.isTrackingEnabled {
+            evaluateHandoff()
             locationData.todayPointsCount += 1
             accumulateDistance(using: location)
             updateVisitCount(using: location)
-            syncClient.recordLocation(location)
+            if recordingRole == .standingBy {
+                syncClient.bufferStandbyLocation(location)
+            } else {
+                syncClient.recordLocation(location)
+            }
         }
 
         persistedState.lastLatitude = location.coordinate.latitude

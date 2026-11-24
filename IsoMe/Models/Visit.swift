@@ -46,6 +46,10 @@ final class Visit {
     var countryResolutionAttemptedAt: Date?
     /// nil on legacy visits; only an observed or user-entered departure proves a multi-day stay.
     var countryDepartureIsInferred: Bool?
+    /// true for a stay recorded by Apple Watch and imported over sync; nil for
+    /// iPhone and legacy visits. The Watch/iPhone merge (#173) only folds a
+    /// Watch visit into a visit this iPhone recorded, never into another Watch visit.
+    var recordedOnWatch: Bool?
 
     init(
         id: UUID = UUID(),

@@ -27,7 +27,8 @@ struct ContentView: View {
 
     private var bypassOnboardingForWatchReplay: Bool {
         #if DEBUG && targetEnvironment(simulator)
-        ProcessInfo.processInfo.arguments.contains("--watch-sync-replay")
+        ProcessInfo.processInfo.arguments.contains("--watch-sync-replay") ||
+            RecordingHandoffStore.isReplay
         #else
         false
         #endif

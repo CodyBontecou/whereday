@@ -11,6 +11,8 @@ struct WatchLocationSyncState: Codable {
     var pendingTransfers: [WatchLocationPendingTransfer] = []
     var lastTransferDate: Date?
     var lastAckedSequence: Int?
+    /// Low-power fixes taken while the iPhone records (#173); never sent unless promoted.
+    var standby = WatchStandbyBuffer()
     private var visitRecordingVersion = 1
 
     /// Keep the open visit after acknowledging arrival so departure can follow.
@@ -31,6 +33,16 @@ struct WatchLocationSyncState: Codable {
             horizontalAccuracy: point.horizontalAccuracy
         ))
         return true
+    }
+
+    /// The Watch takes over recording: keep the standby fixes the iPhone did not cover.
+    @discardableResult
+    mutating func promoteStandby(phoneCoveredUntil: Date?,
+                                 policy: RecordingHandoffPolicy = RecordingHandoffPolicy()) -> Int {
+        let promoted = policy.promotableStandbyPoints(standby.points, phoneCoveredUntil: phoneCoveredUntil)
+        standby.removeAll()
+        promoted.forEach { recordPoint($0) }
+        return promoted.count
     }
 
     mutating func endVisit(at date: Date) {
@@ -103,6 +115,7 @@ struct WatchLocationSyncState: Codable {
         case pendingTransfers
         case lastTransferDate
         case lastAckedSequence
+        case standby
         case visitRecordingVersion
     }
 
@@ -117,6 +130,7 @@ struct WatchLocationSyncState: Codable {
         pendingTransfers = try container.decodeIfPresent([WatchLocationPendingTransfer].self, forKey: .pendingTransfers) ?? []
         lastTransferDate = try container.decodeIfPresent(Date.self, forKey: .lastTransferDate)
         lastAckedSequence = try container.decodeIfPresent(Int.self, forKey: .lastAckedSequence)
+        standby = try container.decodeIfPresent(WatchStandbyBuffer.self, forKey: .standby) ?? WatchStandbyBuffer()
         let previousVersion = try container.decodeIfPresent(Int.self, forKey: .visitRecordingVersion) ?? 0
         if previousVersion == 0, visits.isEmpty, !points.isEmpty {
             // Older releases retained route points but never created visits.
