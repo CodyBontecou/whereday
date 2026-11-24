@@ -49,6 +49,8 @@ Read the CBP page for the current process before you start. This guide does not 
 
 ## 4. Records on your phone and Google account
 
+First [check your iPhone location history](https://whereday.com/blog/view-location-history-iphone/), then look at these sources.
+
 - Google Maps Timeline. If you used it, your history may be on your device or exportable. See [Google Maps Timeline on iPhone](https://whereday.com/blog/google-maps-timeline-iphone/), and check an export with the [Google Timeline inspector](https://whereday.com/tools/google-timeline-inspector/).
 - Photo locations. Photos carry a date and often a place. See [your photos on a map](https://whereday.com/blog/iphone-photos-map/).
 - Significant Locations. Apple’s feature has limits and does not export. See [what it keeps](https://whereday.com/blog/significant-locations-iphone/).

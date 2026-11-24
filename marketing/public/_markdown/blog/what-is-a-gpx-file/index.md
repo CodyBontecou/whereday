@@ -148,6 +148,10 @@ Follow a worked example of warnings, gaps and segments.
 
 Record in Whereday and export Points as GPX.
 
+- [Find your iPhone location history](https://whereday.com/blog/view-location-history-iphone/)
+
+See where Apple Maps, Google Timeline and Whereday keep your visits.
+
 - [Put it on Google Maps](https://whereday.com/blog/gpx-to-google-maps/)
 
 Import the GPX into My Maps on a computer, then view it on iPhone.
