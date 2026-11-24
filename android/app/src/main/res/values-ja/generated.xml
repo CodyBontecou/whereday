@@ -975,7 +975,7 @@
     <string name="onboarding_tonight_notifications_off">通知がオフのため、何も送信されません。「設定」で許可できます。</string>
     <string name="onboarding_tonight_place">%1$s · たった今スタンプ</string>
     <string name="onboarding_tonight_start">今日を始める</string>
-    <string name="onboarding_tonight_title">今日が1ページ目。</string>
+    <string name="onboarding_tonight_title">あなたの1日が、いま始まります。</string>
     <string name="onboarding_trial_all_plans">すべてのプラン</string>
     <string name="onboarding_trial_buy_lifetime">買い切りで購入 · %1$s</string>
     <string name="onboarding_trial_cancel">Google Playの「お支払いと定期購入」からいつでも解約できます。トライアル終了前に解約すれば料金はかかりません。</string>

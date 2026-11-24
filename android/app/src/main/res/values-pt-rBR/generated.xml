@@ -1027,7 +1027,7 @@
     <string name="onboarding_tonight_notifications_off">As notificações estão desativadas, então nada será enviado. Você pode permiti-las nas Configurações.</string>
     <string name="onboarding_tonight_place">%1$s · carimbado agora mesmo</string>
     <string name="onboarding_tonight_start">Começar meu dia</string>
-    <string name="onboarding_tonight_title">Hoje é a página um.</string>
+    <string name="onboarding_tonight_title">Seu dia começa agora.</string>
     <string name="onboarding_trial_all_plans">Todos os planos</string>
     <string name="onboarding_trial_buy_lifetime">Comprar acesso vitalício · %1$s</string>
     <string name="onboarding_trial_cancel">Cancele quando quiser no Google Play, em Pagamentos e assinaturas. Cancele antes do fim do teste e você não será cobrado.</string>

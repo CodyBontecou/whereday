@@ -1027,7 +1027,7 @@
     <string name="onboarding_tonight_notifications_off">Les notifications sont désactivées, rien ne sera donc envoyé. Vous pouvez les autoriser dans les Paramètres.</string>
     <string name="onboarding_tonight_place">%1$s · tamponné à l’instant</string>
     <string name="onboarding_tonight_start">Commencer ma journée</string>
-    <string name="onboarding_tonight_title">Aujourd’hui est la première page.</string>
+    <string name="onboarding_tonight_title">Votre journée commence maintenant.</string>
     <string name="onboarding_trial_all_plans">Toutes les formules</string>
     <string name="onboarding_trial_buy_lifetime">Acheter l’accès à vie · %1$s</string>
     <string name="onboarding_trial_cancel">Résiliez à tout moment dans Google Play, sous Paiements et abonnements. Résiliez avant la fin de l’essai et vous ne serez pas débité.</string>

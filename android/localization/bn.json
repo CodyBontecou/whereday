@@ -1,6 +1,6 @@
 {
   "locale": "bn",
-  "defaultSourceSha256": "d5d6650daf8fc62b1a83d96393163e35edb4f80921eac7e43afea52911c8148d",
+  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1039,7 +1039,7 @@
     "onboarding_tonight_notifications_off": "নোটিফিকেশন বন্ধ আছে, তাই কিছু পাঠানো হবে না। আপনি সেটিংসে এগুলো চালু করতে পারেন।",
     "onboarding_tonight_place": "%1$s · এইমাত্র ছাপ দেওয়া হয়েছে",
     "onboarding_tonight_start": "আমার দিন শুরু করুন",
-    "onboarding_tonight_title": "আজই প্রথম পাতা।",
+    "onboarding_tonight_title": "আপনার দিন এখন শুরু।",
     "onboarding_trial_all_plans": "সব প্ল্যান",
     "onboarding_trial_buy_lifetime": "আজীবনের জন্য কিনুন · %1$s",
     "onboarding_trial_cancel": "Google Play-এর পেমেন্ট ও সাবস্ক্রিপশন থেকে যেকোনো সময় বাতিল করুন। ট্রায়াল শেষ হওয়ার আগে বাতিল করলে কোনো চার্জ হবে না।",

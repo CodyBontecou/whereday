@@ -1053,7 +1053,7 @@
     <string name="onboarding_tonight_notifications_off">Уведомления отключены, поэтому ничего не будет отправлено. Включить их можно в настройках.</string>
     <string name="onboarding_tonight_place">%1$s · отмечено только что</string>
     <string name="onboarding_tonight_start">Начать мой день</string>
-    <string name="onboarding_tonight_title">Сегодня — первая страница.</string>
+    <string name="onboarding_tonight_title">Ваш день начинается сейчас.</string>
     <string name="onboarding_trial_all_plans">Все тарифы</string>
     <string name="onboarding_trial_buy_lifetime">Купить бессрочный доступ · %1$s</string>
     <string name="onboarding_trial_cancel">Отменить можно в любое время в Google Play в разделе «Платежи и подписки». Отмените до конца пробного периода, и списания не будет.</string>

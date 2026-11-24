@@ -1053,7 +1053,7 @@
     <string name="onboarding_tonight_notifications_off">Powiadomienia są wyłączone, więc nic nie zostanie wysłane. Możesz na nie zezwolić w Ustawieniach.</string>
     <string name="onboarding_tonight_place">%1$s · oznaczone przed chwilą</string>
     <string name="onboarding_tonight_start">Zacznij mój dzień</string>
-    <string name="onboarding_tonight_title">Dziś jest strona pierwsza.</string>
+    <string name="onboarding_tonight_title">Twój dzień zaczyna się teraz.</string>
     <string name="onboarding_trial_all_plans">Wszystkie plany</string>
     <string name="onboarding_trial_buy_lifetime">Kup dostęp dożywotni · %1$s</string>
     <string name="onboarding_trial_cancel">Anuluj w dowolnej chwili w Google Play w sekcji Płatności i subskrypcje. Jeśli anulujesz przed końcem okresu próbnego, nie zostaniesz obciążony.</string>

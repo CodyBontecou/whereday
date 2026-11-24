@@ -975,7 +975,7 @@
     <string name="onboarding_tonight_notifications_off">通知已关闭，因此不会发送任何内容。你可以在“设置”中允许。</string>
     <string name="onboarding_tonight_place">%1$s · 刚刚盖章</string>
     <string name="onboarding_tonight_start">开始我的一天</string>
-    <string name="onboarding_tonight_title">今天就是第一页。</string>
+    <string name="onboarding_tonight_title">你的一天，从现在开始。</string>
     <string name="onboarding_trial_all_plans">全部方案</string>
     <string name="onboarding_trial_buy_lifetime">购买终身版 · %1$s</string>
     <string name="onboarding_trial_cancel">可随时在 Google Play 的“付款和订阅”中取消。在试用结束前取消，就不会扣费。</string>

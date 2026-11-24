@@ -1,6 +1,6 @@
 {
   "locale": "ru",
-  "defaultSourceSha256": "d5d6650daf8fc62b1a83d96393163e35edb4f80921eac7e43afea52911c8148d",
+  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1095,7 +1095,7 @@
     "onboarding_tonight_notifications_off": "Уведомления отключены, поэтому ничего не будет отправлено. Включить их можно в настройках.",
     "onboarding_tonight_place": "%1$s · отмечено только что",
     "onboarding_tonight_start": "Начать мой день",
-    "onboarding_tonight_title": "Сегодня — первая страница.",
+    "onboarding_tonight_title": "Ваш день начинается сейчас.",
     "onboarding_trial_all_plans": "Все тарифы",
     "onboarding_trial_buy_lifetime": "Купить бессрочный доступ · %1$s",
     "onboarding_trial_cancel": "Отменить можно в любое время в Google Play в разделе «Платежи и подписки». Отмените до конца пробного периода, и списания не будет.",

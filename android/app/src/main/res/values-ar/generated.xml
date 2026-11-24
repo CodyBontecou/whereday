@@ -1105,7 +1105,7 @@
     <string name="onboarding_tonight_notifications_off">الإشعارات متوقفة، لذا لن يُرسل شيء. يمكنك السماح بها في الإعدادات.</string>
     <string name="onboarding_tonight_place">%1$s · خُتم الآن</string>
     <string name="onboarding_tonight_start">ابدأ يومي</string>
-    <string name="onboarding_tonight_title">اليوم هو الصفحة الأولى.</string>
+    <string name="onboarding_tonight_title">يومك يبدأ الآن.</string>
     <string name="onboarding_trial_all_plans">كل الخطط</string>
     <string name="onboarding_trial_buy_lifetime">اشترِ الوصول مدى الحياة · %1$s</string>
     <string name="onboarding_trial_cancel">ألغِ في أي وقت من Google Play ضمن الدفعات والاشتراكات. إذا ألغيت قبل انتهاء الفترة التجريبية، فلن تُحاسَب.</string>

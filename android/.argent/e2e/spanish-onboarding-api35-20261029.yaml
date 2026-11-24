@@ -13,7 +13,7 @@ steps:
 - run: onboarding-page-one-walk.yaml
 - await:
     visible:
-      text: "Hoy es la primera p\xE1gina."
+      text: "Tu d\xEDa empieza ahora."
 - await:
     idle: true
 - scroll-to:

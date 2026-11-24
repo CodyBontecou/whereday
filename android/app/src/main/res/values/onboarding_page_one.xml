@@ -146,7 +146,7 @@
     <string name="onboarding_sample_body_json" translatable="false">{\n  \"visits\": [\n    { \"place\": \"Corner café\",\n      \"arrival\": \"2026-11-23T08:50\" }\n  ]\n}</string>
 
     <string name="onboarding_tonight_kicker">Your first day</string>
-    <string name="onboarding_tonight_title">Today is page one.</string>
+    <string name="onboarding_tonight_title">Your day starts now.</string>
     <string name="onboarding_tonight_drafting">Drafting</string>
     <string name="onboarding_tonight_place">%1$s · stamped just now</string>
     <string name="onboarding_tonight_first_place">Your first place</string>

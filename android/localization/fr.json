@@ -1,6 +1,6 @@
 {
   "locale": "fr",
-  "defaultSourceSha256": "d5d6650daf8fc62b1a83d96393163e35edb4f80921eac7e43afea52911c8148d",
+  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1067,7 +1067,7 @@
     "onboarding_tonight_notifications_off": "Les notifications sont désactivées, rien ne sera donc envoyé. Vous pouvez les autoriser dans les Paramètres.",
     "onboarding_tonight_place": "%1$s · tamponné à l’instant",
     "onboarding_tonight_start": "Commencer ma journée",
-    "onboarding_tonight_title": "Aujourd’hui est la première page.",
+    "onboarding_tonight_title": "Votre journée commence maintenant.",
     "onboarding_trial_all_plans": "Toutes les formules",
     "onboarding_trial_buy_lifetime": "Acheter l’accès à vie · %1$s",
     "onboarding_trial_cancel": "Résiliez à tout moment dans Google Play, sous Paiements et abonnements. Résiliez avant la fin de l’essai et vous ne serez pas débité.",

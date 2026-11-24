@@ -1001,7 +1001,7 @@
     <string name="onboarding_tonight_notifications_off">सूचनाएँ बंद हैं, इसलिए कुछ नहीं भेजा जाएगा। आप सेटिंग्स में इन्हें चालू कर सकते हैं।</string>
     <string name="onboarding_tonight_place">%1$s · अभी-अभी मुहर लगी</string>
     <string name="onboarding_tonight_start">मेरा दिन शुरू करें</string>
-    <string name="onboarding_tonight_title">आज पहला पेज है।</string>
+    <string name="onboarding_tonight_title">आपका दिन अभी शुरू होता है।</string>
     <string name="onboarding_trial_all_plans">सभी प्लान</string>
     <string name="onboarding_trial_buy_lifetime">आजीवन एक्सेस खरीदें · %1$s</string>
     <string name="onboarding_trial_cancel">Google Play में पेमेंट और सदस्यताएं में जाकर कभी भी रद्द करें। ट्रायल खत्म होने से पहले रद्द करने पर कोई शुल्क नहीं लगेगा।</string>

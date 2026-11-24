@@ -72,10 +72,10 @@ steps:
   - tap: { id: onboarding-continue }
   - await: { visible: { id: onboarding-draft } }
   - await: { idle: true }
-  - echo: The draft names the stamped place, the step makes no "page tonight" promise, and the Evening recap
+  - echo: The draft names the stamped place, the title reads "Your day starts now." (no "page one" or "page tonight" promise), and the Evening recap
       switch is on now that notifications are allowed.
   - await: { visible: { text: Home · stamped just now } }
-  - assert: { visible: { text: Today is page one. } }
+  - assert: { visible: { text: Your day starts now. } }
   - await: { text: { in: { id: onboarding-recap-toggle }, contains: Change it in Settings › Reminders. } }
   - tap: { id: onboarding-continue }
   - await: { visible: { id: map-header-title }, timeout: 15000 }
