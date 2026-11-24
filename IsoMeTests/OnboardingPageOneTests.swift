@@ -107,4 +107,20 @@ final class OnboardingPageOneTests: XCTestCase {
         XCTAssertEqual(OnboardingSampleStop.stop(at: 9.25).start, 8.83)
         XCTAssertEqual(OnboardingSampleStop.stop(at: 23.75).end, 24)
     }
+
+    // MARK: Cover
+
+    func testCoverButtonReadsStartMyJournalInEveryShippedLocale() throws {
+        let english = try XCTUnwrap(Bundle(url: Bundle.main.bundleURL.appendingPathComponent("en.lproj")))
+        XCTAssertEqual(english.localizedString(forKey: "Start my journal", value: nil, table: nil), "Start my journal")
+        for locale in ["ar", "bn", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"] {
+            let url = Bundle.main.bundleURL.appendingPathComponent("\(locale).lproj")
+            let bundle = try XCTUnwrap(Bundle(url: url), "Missing compiled locale: \(locale)")
+            let title = bundle.localizedString(forKey: "Start my journal", value: nil, table: nil)
+            XCTAssertNotEqual(title, "Start my journal", locale)
+            XCTAssertFalse(title.isEmpty, locale)
+            // The retired "Write page one" key is gone, so it falls back to the key itself.
+            XCTAssertEqual(bundle.localizedString(forKey: "Write page one", value: nil, table: nil), "Write page one", locale)
+        }
+    }
 }

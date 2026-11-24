@@ -1073,7 +1073,7 @@ struct OnboardingView: View {
 
     private var primaryTitle: LocalizedStringKey {
         switch step {
-        case .cover: return "Write page one"
+        case .cover: return "Start my journal"
         case .intent: return intents.isEmpty ? "Skip" : "Continue"
         case .scrub: return "Got it"
         case .pen: return "Use this pen"

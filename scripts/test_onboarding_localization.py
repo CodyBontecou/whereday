@@ -97,6 +97,21 @@ class OnboardingLocalizationTests(unittest.TestCase):
                         # This plan label is naturally identical in these languages.
                         self.assertNotEqual(unit["value"], key)
 
+    def test_cover_button_reads_start_my_journal_in_every_locale(self):
+        self.assertIn('case .cover: return "Start my journal"', self.source)
+        self.assertNotIn("Write page one", self.source)
+        self.assertNotIn("Write page one", self.strings)
+        for locale in catalog.LOCALES:
+            with self.subTest(locale=locale):
+                unit = self.strings["Start my journal"]["localizations"][locale]["stringUnit"]
+                self.assertEqual(unit["state"], "translated")
+                self.assertTrue(unit["value"].strip())
+                if locale == "en":
+                    self.assertEqual(unit["value"], "Start my journal")
+                else:
+                    self.assertNotEqual(unit["value"], "Start my journal")
+                    self.assertNotRegex(unit["value"].lower(), r"page|página|page un|страниц|ページ|页")
+
     def test_headlines_keep_a_deliberate_language_specific_line_break(self):
         for key in HEADLINES + FREE_WEEK_HEADLINES:
             for locale in catalog.LOCALES:
