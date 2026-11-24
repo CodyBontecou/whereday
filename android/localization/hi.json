@@ -1,6 +1,6 @@
 {
   "locale": "hi",
-  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
+  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -2177,6 +2177,11 @@
     "widget_stop": "रोकें",
     "widget_today_description": "आप कहाँ हैं और अब तक का दिन",
     "widget_today_label": "आज",
-    "workspace_visit_wait": "चुनी गई विज़िट खोलने के लिए इस विज़िट का संपादन पूरा करें।"
+    "workspace_visit_wait": "चुनी गई विज़िट खोलने के लिए इस विज़िट का संपादन पूरा करें।",
+    "automatic_export_policy_free": "दिन में एक बार के रन अब तक का पूरा दिन फिर से लिखते हैं। छूटे हुए पिछले दिन हाथ से निर्यात किए जा सकते हैं।",
+    "export_delivery_folder_policy_free": "नाम पहले से मौजूद होने पर फ़ोल्डर निर्यात दोनों फ़ाइलें रखता है। सेटिंग्स में फ़ोल्डर चुनें।",
+    "export_delivery_help_free": "चुनें कि यह फ़ाइल कहाँ साझा या सहेजनी है।",
+    "onboarding_export_note_free": "इसे रोज़ किसी फ़ोल्डर में शेड्यूल करें, या एक बार निर्यात करें।",
+    "support_preview_portability_free": "आठ एक्सपोर्ट फ़ॉर्मैट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें इम्पोर्ट करें।"
   }
 }

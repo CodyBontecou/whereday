@@ -120,6 +120,21 @@ class OnboardingPageOneTest {
         compose.onNodeWithTag("onboarding-format-csv").assertIsSelected() // An explicit chip survives.
         next();assertEquals(listOf(ExportFormat.markdown),formats)
     }
+    /** The id and the selected state sit on one node, the one accessibility clients (Argent, UiAutomator) report as
+     *  resource-id; the Pixel e2e test onboarding-pixel-unconfigured-billing checks that tree on hardware. */
+    @Test fun selectedFormatChipKeepsItsId() {
+        compose.setContent {MaterialTheme {Onboarding({},{}) {}}}
+        compose.walkOnboarding(OnboardingStep.export.ordinal);at(OnboardingStep.export)
+        compose.onNodeWithTag("onboarding-export-step").assertExists()
+        // Markdown is preselected for the default "Remember my days" intent; selected or not, each chip keeps its id.
+        compose.onNode(hasTestTag("onboarding-format-markdown") and isSelected(),useUnmergedTree=true).assertIsDisplayed()
+        compose.onNodeWithTag("onboarding-format-json").performClick()
+        compose.onNode(hasTestTag("onboarding-format-json") and isSelected(),useUnmergedTree=true).assertIsDisplayed()
+        compose.onNode(hasTestTag("onboarding-format-markdown") and isNotSelected(),useUnmergedTree=true).assertIsDisplayed()
+        // Without a plan-selling offer the note leaves out the plan sentence.
+        compose.onNodeWithText(target.getString(R.string.onboarding_export_note_free),substring=true).assertExists()
+        compose.onNodeWithText(target.getString(R.string.onboarding_export_note),substring=true).assertDoesNotExist()
+    }
     @Test fun eveningRecapNeedsNotificationsAndIsPartOfTheDecision() {
         val decisions=mutableListOf<OnboardingDecision>()
         var access by androidx.compose.runtime.mutableStateOf(RecordingAccessState(LocationPrecision.precise,false))
@@ -134,7 +149,7 @@ class OnboardingPageOneTest {
         compose.onNodeWithText("Page one closes tonight",substring=true,useUnmergedTree=true).assertDoesNotExist()
         compose.onNodeWithText(target.getString(R.string.onboarding_tonight_first_place),useUnmergedTree=true).assertExists()
         next();compose.waitUntil {decisions.isNotEmpty()}
-        assertTrue(decisions.single().recap);assertFalse(decisions.single().start)
+        assertTrue(decisions.single().recap);assertTrue(decisions.single().start) // "Start recording immediately" is on by default.
         assertEquals(com.bontecou.whereday.domain.RecapFrequency.daily,OnboardingRecap.frequency(decisions.single()))
     }
     @Test fun everyStepAfterCoverOffersBackAndAccessibleIllustrations() {

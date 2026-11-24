@@ -90,6 +90,7 @@
     <string name="automatic_export_pending">待处理的导出：%1$s。重试会保留此捕获时间段和目标位置。</string>
     <string name="automatic_export_plan_policy">需要有效的 Whereday 方案。每天一次的运行会重写当天至今的完整内容。错过的历史日期可以手动导出。</string>
     <string name="automatic_export_points">位置点</string>
+    <string name="automatic_export_policy_free">每天一次的运行会重写当天至今的完整内容。错过的历史日期可以手动导出。</string>
     <string name="automatic_export_repeat">重复</string>
     <string name="automatic_export_reset">重置自动导出</string>
     <string name="automatic_export_reset_body">这会停用计划并清除其已保存的请求。已导出的文档和保留的备份仍会留在其文件夹中。</string>
@@ -363,7 +364,9 @@
     <string name="export_delivery_folder">将文件保存到导出文件夹</string>
     <string name="export_delivery_folder_help">请在“设置”中选择导出文件夹，以使用文件夹导出。</string>
     <string name="export_delivery_folder_plan_policy">导出文件需要有效的 Whereday 方案。导出到文件夹时，如果名称已存在，会保留两个文件。请在设置中选择文件夹。</string>
+    <string name="export_delivery_folder_policy_free">导出到文件夹时，如果名称已存在，会保留两个文件。请在设置中选择文件夹。</string>
     <string name="export_delivery_folder_required">请先在“设置”中选择导出文件夹。</string>
+    <string name="export_delivery_help_free">请选择分享或保存此文件的位置。</string>
     <string name="export_delivery_interrupted">保存已中断。请继续或取消已保存的请求。</string>
     <string name="export_delivery_locked">所有方案均包含导出功能：周付、年付或终身。</string>
     <string name="export_delivery_multiple">多个文件请使用“共享”或导出文件夹。</string>
@@ -848,6 +851,7 @@
     <string name="onboarding_export_later">稍后设置</string>
     <string name="onboarding_export_note">可每天定时导出到文件夹，也可只导出一次。所有 Whereday 套餐都包含导出功能。</string>
     <string name="onboarding_export_note_csv">可直接放进电子表格或脚本。</string>
+    <string name="onboarding_export_note_free">可每天定时导出到文件夹，也可只导出一次。</string>
     <string name="onboarding_export_note_gpx">可在 Strava、gpx.studio 和大多数地图工具中打开。</string>
     <string name="onboarding_export_note_json">完整记录，可在新手机上重新导入。</string>
     <string name="onboarding_export_note_markdown">每天一篇笔记，按 {year}/{month} 这样的日期文件夹存放。</string>
@@ -1655,6 +1659,7 @@
     <string name="support_preview_journal">记录出行，查看地图和时间轴，编辑到访和已保存的地点，探索“国家天数”和照片时刻。</string>
     <string name="support_preview_notice">此版本仍在为 Android 正式发布进行验证。</string>
     <string name="support_preview_plan_portability">预览八种导出格式并导入支持的历史文件。文件导出、定时导出和Webhook均包含在所有Whereday方案中：周付、年付或终身。</string>
+    <string name="support_preview_portability_free">预览八种导出格式并导入支持的历史文件。</string>
     <string name="support_preview_title">Android 开发预览版</string>
     <string name="support_privacy">隐私政策</string>
     <string name="support_rate_app">在 Google Play 上为 Whereday 评分</string>

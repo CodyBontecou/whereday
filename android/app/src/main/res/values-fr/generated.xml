@@ -100,6 +100,7 @@
     <string name="automatic_export_pending">Export en attente : %1$s. La nouvelle tentative conserve cette période capturée et cette destination.</string>
     <string name="automatic_export_plan_policy">Nécessite une formule Whereday active. Les exécutions quotidiennes réécrivent l’intégralité de la journée en cours. Les jours passés manqués peuvent être exportés manuellement.</string>
     <string name="automatic_export_points">Points</string>
+    <string name="automatic_export_policy_free">Les exécutions quotidiennes réécrivent l’intégralité de la journée en cours. Les jours passés manqués peuvent être exportés manuellement.</string>
     <string name="automatic_export_repeat">Répéter</string>
     <string name="automatic_export_reset">Réinitialiser les exports automatiques</string>
     <string name="automatic_export_reset_body">Cela désactive la planification et efface ses demandes enregistrées. Les documents exportés et les sauvegardes conservées restent dans leur dossier.</string>
@@ -381,7 +382,9 @@
     <string name="export_delivery_folder">Enregistrer dans le dossier d’export</string>
     <string name="export_delivery_folder_help">Choisissez un dossier d’export dans les Paramètres pour utiliser l’envoi vers un dossier.</string>
     <string name="export_delivery_folder_plan_policy">Les exports de fichiers nécessitent une formule Whereday active. Les exports vers un dossier conservent les deux fichiers si le nom existe déjà. Choisissez un dossier dans Paramètres.</string>
+    <string name="export_delivery_folder_policy_free">Les exports vers un dossier conservent les deux fichiers si le nom existe déjà. Choisissez un dossier dans Paramètres.</string>
     <string name="export_delivery_folder_required">Choisissez d’abord un dossier d’export dans les Paramètres.</string>
+    <string name="export_delivery_help_free">Choisissez où partager ou enregistrer ce fichier.</string>
     <string name="export_delivery_interrupted">L’enregistrement a été interrompu. Reprenez ou annulez la demande enregistrée.</string>
     <string name="export_delivery_locked">Les exports sont inclus dans chaque formule : hebdomadaire, annuelle ou à vie.</string>
     <string name="export_delivery_multiple">Utilisez Partager ou le dossier d’export pour plusieurs fichiers.</string>
@@ -900,6 +903,7 @@
     <string name="onboarding_export_later">Configurer plus tard</string>
     <string name="onboarding_export_note">Programmez-le chaque jour vers un dossier, ou exportez une seule fois. Les exports sont inclus dans toutes les offres Whereday.</string>
     <string name="onboarding_export_note_csv">À glisser dans un tableur ou un script.</string>
+    <string name="onboarding_export_note_free">Programmez-le chaque jour vers un dossier, ou exportez une seule fois.</string>
     <string name="onboarding_export_note_gpx">S’ouvre dans Strava, gpx.studio et la plupart des outils de cartographie.</string>
     <string name="onboarding_export_note_json">Un enregistrement complet que vous pouvez réimporter sur un nouveau téléphone.</string>
     <string name="onboarding_export_note_markdown">Une note par jour, avec des dossiers datés comme {year}/{month}.</string>
@@ -1747,6 +1751,7 @@
     <string name="support_preview_journal">Enregistrez vos sorties, consultez votre carte et votre chronologie, modifiez les visites et les lieux enregistrés, et explorez les Jours par pays et les moments photo.</string>
     <string name="support_preview_notice">Cette version est encore en cours de validation pour une publication Android.</string>
     <string name="support_preview_plan_portability">Prévisualisez huit formats d’export et importez les fichiers d’historique pris en charge. Les exports de fichiers, les exports programmés et les webhooks sont inclus dans chaque formule Whereday : hebdomadaire, annuelle ou à vie.</string>
+    <string name="support_preview_portability_free">Prévisualisez huit formats d’export et importez les fichiers d’historique pris en charge.</string>
     <string name="support_preview_title">Préversion de développement Android</string>
     <string name="support_privacy">Politique de confidentialité</string>
     <string name="support_rate_app">Noter Whereday sur Google Play</string>

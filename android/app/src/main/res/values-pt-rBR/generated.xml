@@ -100,6 +100,7 @@
     <string name="automatic_export_pending">Exportação pendente: %1$s. A nova tentativa mantém este período e destino capturados.</string>
     <string name="automatic_export_plan_policy">Requer um plano do Whereday ativo. As execuções diárias reescrevem o dia completo até agora. Dias anteriores perdidos podem ser exportados manualmente.</string>
     <string name="automatic_export_points">Pontos</string>
+    <string name="automatic_export_policy_free">As execuções diárias reescrevem o dia completo até agora. Dias anteriores perdidos podem ser exportados manualmente.</string>
     <string name="automatic_export_repeat">Repetir</string>
     <string name="automatic_export_reset">Redefinir exportações automáticas</string>
     <string name="automatic_export_reset_body">Isso desativa o agendamento e apaga as solicitações salvas. Documentos exportados e backups preservados continuam na pasta.</string>
@@ -381,7 +382,9 @@
     <string name="export_delivery_folder">Salvar arquivo na pasta de exportação</string>
     <string name="export_delivery_folder_help">Escolha uma pasta de exportação nas Configurações para usar o envio para pasta.</string>
     <string name="export_delivery_folder_plan_policy">Exportações de arquivos requerem um plano do Whereday ativo. Exportações para pastas mantêm os dois arquivos quando o nome já existe. Escolha uma pasta em Configurações.</string>
+    <string name="export_delivery_folder_policy_free">Exportações para pastas mantêm os dois arquivos quando o nome já existe. Escolha uma pasta em Configurações.</string>
     <string name="export_delivery_folder_required">Escolha primeiro uma pasta de exportação nas Configurações.</string>
+    <string name="export_delivery_help_free">Escolha onde compartilhar ou salvar este arquivo.</string>
     <string name="export_delivery_interrupted">O salvamento foi interrompido. Retome ou cancele a solicitação salva.</string>
     <string name="export_delivery_locked">As exportações estão incluídas em todos os planos: semanal, anual ou vitalício.</string>
     <string name="export_delivery_multiple">Use Compartilhar ou a pasta de exportação para vários arquivos.</string>
@@ -900,6 +903,7 @@
     <string name="onboarding_export_later">Configurar depois</string>
     <string name="onboarding_export_note">Agende uma exportação diária para uma pasta ou exporte uma vez. A exportação está incluída em todos os planos do Whereday.</string>
     <string name="onboarding_export_note_csv">Use em uma planilha ou em um script.</string>
+    <string name="onboarding_export_note_free">Agende uma exportação diária para uma pasta ou exporte uma vez.</string>
     <string name="onboarding_export_note_gpx">Abre no Strava, no gpx.studio e na maioria das ferramentas de mapas.</string>
     <string name="onboarding_export_note_json">Um registro completo que você pode importar de novo em um telefone novo.</string>
     <string name="onboarding_export_note_markdown">Uma nota por dia, com pastas datadas como {year}/{month}.</string>
@@ -1747,6 +1751,7 @@
     <string name="support_preview_journal">Grave passeios, revise seu mapa e sua linha do tempo, edite visitas e lugares salvos e explore Dias por país e momentos em fotos.</string>
     <string name="support_preview_notice">Esta versão ainda está sendo validada para um lançamento no Android.</string>
     <string name="support_preview_plan_portability">Veja prévias de oito formatos de exportação e importe arquivos de histórico compatíveis. Exportações de arquivos, exportações agendadas e webhooks estão incluídos em todos os planos Whereday: semanal, anual ou vitalício.</string>
+    <string name="support_preview_portability_free">Veja prévias de oito formatos de exportação e importe arquivos de histórico compatíveis.</string>
     <string name="support_preview_title">Prévia de desenvolvimento para Android</string>
     <string name="support_privacy">Política de privacidade</string>
     <string name="support_rate_app">Avaliar o Whereday no Google Play</string>

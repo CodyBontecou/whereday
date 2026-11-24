@@ -82,7 +82,8 @@ class ExportDeliveryFlowTest {
         show {calls.incrementAndGet();files.prepareCountryDays(CountryDayBounds())};open()
         compose.onNodeWithText("Compartir archivo").assertExists()
         compose.onNodeWithTag("history-export-folder").assertIsNotEnabled()
-        compose.onNodeWithText("Las exportaciones completas de archivos están incluidas en todos los planes de Whereday. Elige dónde compartir o guardar este archivo.").assertExists()
+        // Billing is unconfigured in this QA build, so the sheet carries no plan sentence.
+        compose.onNodeWithText("Elige dónde compartir o guardar este archivo.").assertExists()
         assertEquals(0,calls.get());assertEquals(1,runBlocking {graph.history.dao.stays().size})
         if(InstrumentationRegistry.getArguments().getString("captureExportDelivery")=="true") capture()
         compose.onNodeWithText("Listo").performScrollTo().performClick()
@@ -97,8 +98,17 @@ class ExportDeliveryFlowTest {
         compose.waitUntil(5000) {canceled.get()==1}
         assertEquals(1,calls.get());assertNull(runBlocking {files.pickerState()})
     }
-    @Test fun actualPurchaseGateHasLocalizedFailureAndDoesNotStageAFile() {
-        show {graph.exports.prepareCountryDays(CountryDayBounds())};open();action("history-export-save")
+    @Test fun unconfiguredBillingLetsTheRealGatePrepareTheExport()=runBlocking {
+        // This QA build has no purchase verifier, so the production gate (graph.purchases::requireAccess) opens file export.
+        check(!PurchaseConfiguration().configured)
+        val prepared=graph.exports.prepareCountryDays(CountryDayBounds())
+        assertTrue(prepared.files.single().file.exists())
+        graph.exports.clearCache()
+    }
+    @Test fun purchaseGateHasLocalizedFailureAndDoesNotStageAFile() {
+        // Configured billing without a grant: the gate refuses as BillingSession.requireAccess does there.
+        val gated=ExportFiles(target,graph.database) {throw com.bontecou.whereday.billing.VerifiedAccessRequired()}
+        show {gated.prepareCountryDays(CountryDayBounds())};open();action("history-export-save")
         compose.onNodeWithTag("history-export-sheet-notice").assertTextEquals("Para exportar se necesita un plan de Whereday activo: Semanal, Anual o De por vida. Las importaciones y las vistas previas de exportación son gratuitas.")
         assertNull(runBlocking {graph.exports.pickerState()})
         assertTrue(File(target.cacheDir,"exports").listFiles().orEmpty().isEmpty())

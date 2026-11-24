@@ -105,6 +105,7 @@
     <string name="automatic_export_pending">Oczekujący eksport: %1$s. Ponowienie zachowuje ten zapisany zakres i miejsce docelowe.</string>
     <string name="automatic_export_plan_policy">Wymaga aktywnego planu Whereday. Uruchomienia raz dziennie zapisują od nowa cały dotychczasowy dzień. Pominięte wcześniejsze dni można wyeksportować ręcznie.</string>
     <string name="automatic_export_points">Punkty</string>
+    <string name="automatic_export_policy_free">Uruchomienia raz dziennie zapisują od nowa cały dotychczasowy dzień. Pominięte wcześniejsze dni można wyeksportować ręcznie.</string>
     <string name="automatic_export_repeat">Powtarzaj</string>
     <string name="automatic_export_reset">Resetuj automatyczne eksporty</string>
     <string name="automatic_export_reset_body">To wyłączy harmonogram i usunie zapisane żądania. Wyeksportowane dokumenty i zachowane kopie zapasowe pozostaną w folderze.</string>
@@ -390,7 +391,9 @@
     <string name="export_delivery_folder">Zapisz plik w folderze eksportu</string>
     <string name="export_delivery_folder_help">Wybierz folder eksportu w Ustawieniach, aby zapisywać do folderu.</string>
     <string name="export_delivery_folder_plan_policy">Eksport plików wymaga aktywnego planu Whereday. Eksport do folderu zachowuje oba pliki, gdy nazwa już istnieje. Wybierz folder w Ustawieniach.</string>
+    <string name="export_delivery_folder_policy_free">Eksport do folderu zachowuje oba pliki, gdy nazwa już istnieje. Wybierz folder w Ustawieniach.</string>
     <string name="export_delivery_folder_required">Najpierw wybierz folder eksportu w Ustawieniach.</string>
+    <string name="export_delivery_help_free">Wybierz, gdzie udostępnić lub zapisać ten plik.</string>
     <string name="export_delivery_interrupted">Zapis został przerwany. Wznów lub anuluj zapisane żądanie.</string>
     <string name="export_delivery_locked">Eksport jest dostępny w każdym planie: tygodniowym, rocznym i dożywotnim.</string>
     <string name="export_delivery_multiple">Dla wielu plików użyj Udostępnij lub folderu eksportu.</string>
@@ -926,6 +929,7 @@
     <string name="onboarding_export_later">Skonfiguruj później</string>
     <string name="onboarding_export_note">Zaplanuj codzienny eksport do folderu lub wyeksportuj jednorazowo. Eksport jest dostępny w każdym planie Whereday.</string>
     <string name="onboarding_export_note_csv">Wrzuć do arkusza kalkulacyjnego lub skryptu.</string>
+    <string name="onboarding_export_note_free">Zaplanuj codzienny eksport do folderu lub wyeksportuj jednorazowo.</string>
     <string name="onboarding_export_note_gpx">Otwiera się w Strava, gpx.studio i większości narzędzi do map.</string>
     <string name="onboarding_export_note_json">Pełny zapis, który możesz ponownie zaimportować na nowym telefonie.</string>
     <string name="onboarding_export_note_markdown">Jedna notatka na dzień, w folderach z datami, np. {year}/{month}.</string>
@@ -1793,6 +1797,7 @@
     <string name="support_preview_journal">Rejestruj podróże, przeglądaj mapę i oś czasu, edytuj wizyty i zapisane miejsca oraz odkrywaj Dni w krajach i chwile ze zdjęć.</string>
     <string name="support_preview_notice">Ta wersja jest wciąż weryfikowana pod kątem wydania na Androida.</string>
     <string name="support_preview_plan_portability">Przeglądaj osiem formatów eksportu i importuj obsługiwane pliki historii. Eksport plików, zaplanowany eksport i webhooki są dostępne w każdym planie Whereday: tygodniowym, rocznym i dożywotnim.</string>
+    <string name="support_preview_portability_free">Przeglądaj osiem formatów eksportu i importuj obsługiwane pliki historii.</string>
     <string name="support_preview_title">Wersja deweloperska na Androida</string>
     <string name="support_privacy">Polityka prywatności</string>
     <string name="support_rate_app">Oceń Whereday w Google Play</string>

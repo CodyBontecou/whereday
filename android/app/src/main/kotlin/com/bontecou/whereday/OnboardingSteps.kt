@@ -457,8 +457,8 @@ private val OnboardingFormat.body get()=when(this) {OnboardingFormat.markdown->R
 private val OnboardingFormat.note get()=when(this) {OnboardingFormat.markdown->R.string.onboarding_export_note_markdown;OnboardingFormat.gpx->R.string.onboarding_export_note_gpx;OnboardingFormat.csv->R.string.onboarding_export_note_csv;OnboardingFormat.json->R.string.onboarding_export_note_json}
 
 @OptIn(ExperimentalLayoutApi::class)
-@Composable internal fun ExportStep(format:OnboardingFormat,choose:(OnboardingFormat)->Unit) {
-    Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
+@Composable internal fun ExportStep(format:OnboardingFormat,plans:Boolean=true,choose:(OnboardingFormat)->Unit) {
+    Column(Modifier.testTag("onboarding-export-step"),verticalArrangement=Arrangement.spacedBy(16.dp)) {
         StepHeading(R.string.onboarding_export_kicker,R.string.onboarding_export_title)
         val group=stringResource(R.string.onboarding_export_formats)
         FlowRow(Modifier.selectableGroup().semantics {contentDescription=group},horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
@@ -477,7 +477,8 @@ private val OnboardingFormat.note get()=when(this) {OnboardingFormat.markdown->R
             WdDivider()
             Text(body,Modifier.fillMaxWidth().heightIn(min=128.dp).padding(14.dp),style=WdType.caption.copy(lineHeight=19.sp),color=wd.textPrimary)
         }
-        Muted("${stringResource(format.note)} ${stringResource(R.string.onboarding_export_note)}")
+        // [plans] is false in a build without Play billing, which has no plan to mention.
+        Muted("${stringResource(format.note)} ${stringResource(if(plans) R.string.onboarding_export_note else R.string.onboarding_export_note_free)}")
     }
 }
 

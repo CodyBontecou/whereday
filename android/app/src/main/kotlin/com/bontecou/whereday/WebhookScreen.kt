@@ -64,7 +64,7 @@ internal data class WebhookActions(
         graph.webhookController::sendHistory,graph.webhookController::flush,graph.webhookController::retry,
         graph.webhookController::discard,graph.webhookController::foreground,graph.webhookController::refresh,
     )}
-    WebhookSettingsContent(ui,editor,actions,purchase.access==AccessState.active,back) {
+    WebhookSettingsContent(ui,editor,actions,purchase.unlocked,back) {
         LaunchedEffect(Unit) {graph.usageFunnel.paywall(com.bontecou.whereday.platform.UsagePaywall.webhook)}
         Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.webhook_purchase_body),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)

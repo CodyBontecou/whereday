@@ -43,16 +43,25 @@ class OnboardingFreeWeekTest {
     }
     private fun startTrial()=compose.onNodeWithTag("onboarding-start-trial").performScrollTo()
 
-    @Test fun unconfiguredBillingKeepsTheTonightStep() {
-        billing=BillingState(AccessState.unavailable,notice=BillingNotice.unavailable,enforced=false)
+    @Test fun unconfiguredBillingKeepsTheTonightStepAndStartsRecordingByDefault() {
+        billing=BillingState(AccessState.unavailable,enforced=false)
         show()
         compose.onNodeWithTag("onboarding-draft").assertExists()
-        compose.onNodeWithTag("onboarding-start-now").assertExists()
+        // As on iOS the last step starts recording: the switch is on and the primary reads "Start my day".
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
         compose.onNodeWithTag("onboarding-start-trial").assertDoesNotExist()
         compose.onNodeWithTag("onboarding-trial-timeline").assertDoesNotExist()
+        compose.onNodeWithTag("onboarding-continue").performScrollTo().assertTextEquals(target.getString(R.string.onboarding_tonight_start)).performClick()
+        compose.waitUntil {finished.isNotEmpty()}
+        assertFalse(finished.single().trial);assertTrue(finished.single().start)
+    }
+    @Test fun unconfiguredBillingStillLetsSomeoneFinishWithoutRecording() {
+        billing=BillingState(AccessState.unavailable,enforced=false)
+        show()
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn().performClick().assertIsOff()
         compose.onNodeWithTag("onboarding-continue").performScrollTo().assertTextEquals(target.getString(R.string.onboarding_finish)).performClick()
         compose.waitUntil {finished.isNotEmpty()}
-        assertFalse(finished.single().trial);assertFalse(finished.single().start)
+        assertFalse(finished.single().start)
     }
     @Test fun existingAccessKeepsTheTonightStep() {
         billing=BillingState(AccessState.active,catalog(),enforced=true,activeProductId="whereday_export_lifetime")

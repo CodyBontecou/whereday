@@ -22,6 +22,7 @@
     <string name="automatic_export_folder_ready">Export folder selected. Uses the filename template from Export.</string>
     <string name="automatic_export_folder_missing">Choose an export folder in Settings before running.</string>
     <string name="automatic_export_plan_policy">Scheduled exports are included with every Whereday plan. Once-daily runs rewrite the complete day so far. Missed historical days can be exported manually.</string>
+    <string name="automatic_export_policy_free">Once-daily runs rewrite the complete day so far. Missed historical days can be exported manually.</string>
     <string name="automatic_export_last_success">Last successful export: %1$s</string>
     <string name="automatic_export_no_success">No successful automatic export yet.</string>
     <string name="automatic_export_next">Next planned run: %1$s. Android may delay it.</string>

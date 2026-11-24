@@ -1,6 +1,7 @@
 package com.bontecou.whereday
 
 import com.bontecou.whereday.billing.AccessState
+import com.bontecou.whereday.billing.BillingState
 import com.bontecou.whereday.export.ExportFormat
 import com.bontecou.whereday.export.HistoryImportProblem
 import com.bontecou.whereday.export.HistoryImportRecordKind
@@ -23,6 +24,19 @@ class ArchiveStateTest {
         assertFalse(exportDeliveryLocked(AccessState.active))
         assertFalse(exportDeliveryLocked(AccessState.checking))
         assertFalse(exportDeliveryLocked(AccessState.verificationRequired))
+    }
+
+    @Test fun unconfiguredBillingNeverLocksExportWhileConfiguredBillingWithoutAGrantDoes() {
+        // Without the purchase verifier every capability is free, so Share / Save never show a lock, in any state.
+        AccessState.entries.forEach {access->assertFalse(access.name,exportDeliveryLocked(BillingState(access,enforced=false)))}
+        assertFalse(exportDeliveryLocked(BillingState(AccessState.unavailable,enforced=false)))
+        assertTrue(BillingState(AccessState.unavailable,enforced=false).unlocked)
+        // Configured billing without a grant keeps them locked, exactly as before.
+        assertTrue(exportDeliveryLocked(BillingState(AccessState.free,enforced=true)))
+        assertTrue(exportDeliveryLocked(BillingState(AccessState.pending,enforced=true)))
+        assertFalse(BillingState(AccessState.free,enforced=true).unlocked)
+        assertFalse(exportDeliveryLocked(BillingState(AccessState.active,enforced=true)))
+        assertTrue(BillingState(AccessState.active,enforced=true).unlocked)
     }
 
     @Test fun everyFormatHasAProductNameRatherThanItsEnumName() {

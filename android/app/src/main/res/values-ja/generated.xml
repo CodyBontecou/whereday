@@ -90,6 +90,7 @@
     <string name="automatic_export_pending">保留中のエクスポート: %1$s。再試行しても、取得した期間と保存先は変わりません。</string>
     <string name="automatic_export_plan_policy">有効な Whereday プランが必要です。1日1回の実行では、その日のここまでの内容をすべて書き直します。実行されなかった過去の日は手動でエクスポートできます。</string>
     <string name="automatic_export_points">ポイント</string>
+    <string name="automatic_export_policy_free">1日1回の実行では、その日のここまでの内容をすべて書き直します。実行されなかった過去の日は手動でエクスポートできます。</string>
     <string name="automatic_export_repeat">繰り返し</string>
     <string name="automatic_export_reset">自動エクスポートをリセット</string>
     <string name="automatic_export_reset_body">スケジュールを無効にし、保存されたリクエストを消去します。エクスポート済みのドキュメントと保持されたバックアップはフォルダに残ります。</string>
@@ -363,7 +364,9 @@
     <string name="export_delivery_folder">ファイルをエクスポート先フォルダに保存</string>
     <string name="export_delivery_folder_help">フォルダに保存するには、設定でエクスポート先フォルダを選択してください。</string>
     <string name="export_delivery_folder_plan_policy">ファイルのエクスポートには有効な Whereday プランが必要です。フォルダへのエクスポートでは、同じ名前がある場合も両方のファイルを残します。フォルダは設定で選べます。</string>
+    <string name="export_delivery_folder_policy_free">フォルダへのエクスポートでは、同じ名前がある場合も両方のファイルを残します。フォルダは設定で選べます。</string>
     <string name="export_delivery_folder_required">先に設定でエクスポート先フォルダを選択してください。</string>
+    <string name="export_delivery_help_free">このファイルの共有先または保存先を選んでください。</string>
     <string name="export_delivery_interrupted">保存が中断されました。保存されたリクエストを再開するかキャンセルしてください。</string>
     <string name="export_delivery_locked">エクスポートはすべてのプランに含まれます：週間、年間、買い切り。</string>
     <string name="export_delivery_multiple">複数のファイルには、共有またはエクスポート先フォルダを使用してください。</string>
@@ -848,6 +851,7 @@
     <string name="onboarding_export_later">あとで設定</string>
     <string name="onboarding_export_note">毎日フォルダに自動で書き出すことも、一度だけエクスポートすることもできます。エクスポートはすべての Whereday プランに含まれています。</string>
     <string name="onboarding_export_note_csv">スプレッドシートやスクリプトにそのまま使えます。</string>
+    <string name="onboarding_export_note_free">毎日フォルダに自動で書き出すことも、一度だけエクスポートすることもできます。</string>
     <string name="onboarding_export_note_gpx">Strava、gpx.studio、ほとんどの地図ツールで開けます。</string>
     <string name="onboarding_export_note_json">新しいスマートフォンで再び読み込める完全な記録です。</string>
     <string name="onboarding_export_note_markdown">1日1ノートで、{year}/{month} のような日付フォルダに保存します。</string>
@@ -1655,6 +1659,7 @@
     <string name="support_preview_journal">外出を記録し、地図とタイムラインを確認し、訪問と保存した場所を編集し、国別の滞在日数や写真の思い出を見てみましょう。</string>
     <string name="support_preview_notice">このビルドは Android でのリリースに向けて検証中です。</string>
     <string name="support_preview_plan_portability">8種類のエクスポート形式をプレビューし、対応する履歴ファイルをインポートできます。ファイルのエクスポート、自動エクスポート、Webhookは、週間・年間・買い切りのすべてのWheredayプランに含まれます。</string>
+    <string name="support_preview_portability_free">8種類のエクスポート形式をプレビューし、対応する履歴ファイルをインポートできます。</string>
     <string name="support_preview_title">Android 開発プレビュー</string>
     <string name="support_privacy">プライバシーポリシー</string>
     <string name="support_rate_app">Google Play で Whereday を評価</string>

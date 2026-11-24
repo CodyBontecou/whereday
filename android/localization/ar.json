@@ -1,6 +1,6 @@
 {
   "locale": "ar",
-  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
+  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -2417,6 +2417,11 @@
     "widget_stop": "إيقاف",
     "widget_today_description": "مكانك الحالي واليوم حتى الآن",
     "widget_today_label": "اليوم",
-    "workspace_visit_wait": "أنهِ تعديل هذه الزيارة لفتح الزيارة المحددة."
+    "workspace_visit_wait": "أنهِ تعديل هذه الزيارة لفتح الزيارة المحددة.",
+    "automatic_export_policy_free": "يعيد التشغيل اليومي كتابة اليوم كاملًا حتى الآن. يمكن تصدير الأيام السابقة الفائتة يدويًا.",
+    "export_delivery_folder_policy_free": "يحتفظ التصدير إلى مجلد بالملفين عند وجود الاسم مسبقًا. اختر مجلدًا من الإعدادات.",
+    "export_delivery_help_free": "اختر مكان مشاركة هذا الملف أو حفظه.",
+    "onboarding_export_note_free": "جدوِل التصدير يوميًا إلى مجلد، أو صدّر مرة واحدة.",
+    "support_preview_portability_free": "عاين ثمانية تنسيقات للتصدير واستورد ملفات السجل المدعومة."
   }
 }

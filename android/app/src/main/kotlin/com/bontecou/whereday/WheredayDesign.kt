@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -285,9 +286,29 @@ private val WdShapes=Shapes(
     WdRow(modifier,divider,onClick,enabled) {
         val ink=when {!enabled->wd.textMuted; destructive->wd.inkRust; else->wd.textPrimary}
         if(icon!=null) Icon(icon,null,Modifier.size(20.dp),tint=if(destructive) wd.inkRust else wd.textMuted)
-        Text(label,style=MaterialTheme.typography.bodyLarge,color=ink,modifier=Modifier.weight(1f))
-        if(value!=null) Text(value,style=WdType.caption,color=wd.textMuted,maxLines=1,overflow=TextOverflow.Ellipsis,modifier=Modifier.widthIn(max=160.dp))
+        val labelText=@Composable {Text(label,style=MaterialTheme.typography.bodyLarge,color=ink)}
+        if(value==null) Box(Modifier.weight(1f)) {labelText()}
+        else LabelAndValue(labelText,{Text(value,style=WdType.caption,color=wd.textMuted,textAlign=TextAlign.End,maxLines=3,overflow=TextOverflow.Ellipsis)},Modifier.weight(1f))
         if(!destructive) Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,null,Modifier.size(18.dp),tint=wd.textMuted)
+    }
+}
+
+/** A row's label and trailing value on one line when both fit. Otherwise the value keeps at least [valueShare] of the width
+ *  and wraps (right-aligned) instead of being cut off, as "Every evening · 9:00 PM" would be on a 411 dp phone or with large text. */
+@Composable private fun LabelAndValue(label:@Composable ()->Unit,value:@Composable ()->Unit,modifier:Modifier=Modifier,gap:Dp=16.dp,valueShare:Float=0.55f) {
+    Layout(contents=listOf(label,value),modifier=modifier) {(labels,values),constraints->
+        val labelMeasurable=labels.single();val valueMeasurable=values.single()
+        val space=(constraints.maxWidth-gap.roundToPx()).coerceAtLeast(0)
+        val wantLabel=labelMeasurable.maxIntrinsicWidth(constraints.maxHeight)
+        val wantValue=valueMeasurable.maxIntrinsicWidth(constraints.maxHeight)
+        val valueWidth=if(wantLabel+wantValue<=space) wantValue else maxOf(space-wantLabel,(space*valueShare).toInt()).coerceAtMost(wantValue)
+        val labelPlaceable=labelMeasurable.measure(androidx.compose.ui.unit.Constraints(maxWidth=(space-valueWidth).coerceAtLeast(0)))
+        val valuePlaceable=valueMeasurable.measure(androidx.compose.ui.unit.Constraints(maxWidth=valueWidth))
+        val height=maxOf(labelPlaceable.height,valuePlaceable.height).coerceIn(constraints.minHeight,constraints.maxHeight)
+        layout(constraints.maxWidth,height) {
+            labelPlaceable.placeRelative(0,(height-labelPlaceable.height)/2)
+            valuePlaceable.placeRelative(constraints.maxWidth-valuePlaceable.width,(height-valuePlaceable.height)/2)
+        }
     }
 }
 
@@ -376,10 +397,13 @@ internal enum class WdEmphasis {primary,secondary,destructive}
     }
 }
 
-/** A Material 3 filter chip: 8dp corners, outlined at rest, secondary container with a check when selected. */
+/** A Material 3 filter chip: 8dp corners, outlined at rest, secondary container with a check when selected.
+ *  The modifier chain is the same in both states, so the caller's testTag (resource-id) and the node stay put when the
+ *  chip is selected; the selection itself is the node's selected state. */
 @Composable internal fun WdChip(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true,icon:ImageVector?=null) {
     val shape=RoundedCornerShape(8.dp)
-    Row(modifier.heightIn(min=32.dp).clip(shape).then(if(selected) Modifier.background(wd.secondaryContainer) else Modifier.border(1.dp,wd.outline.copy(alpha=if(enabled) 1f else 0.5f),shape))
+    Row(modifier.heightIn(min=32.dp).clip(shape).background(if(selected) wd.secondaryContainer else Color.Transparent)
+        .border(1.dp,if(selected) Color.Transparent else wd.outline.copy(alpha=if(enabled) 1f else 0.5f),shape)
         .selectable(selected,enabled=enabled,role=Role.Tab,onClick=onClick).padding(start=if(selected || icon!=null) 8.dp else 16.dp,end=16.dp),
         verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
         val ink=when {!enabled->wd.textMuted; selected->wd.onSecondaryContainer; else->wd.textPrimary}

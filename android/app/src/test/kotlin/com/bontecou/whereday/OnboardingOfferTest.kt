@@ -20,8 +20,8 @@ class OnboardingOfferTest {
 
     @Test fun nothingToSellKeepsTheTonightStep() {
         assertEquals(OnboardingFinale.tonight,OnboardingFinale.of(null,checkedOut=false))
-        // Today's real state: the verifier isn't deployed, so BillingSession reports unavailable and does not enforce.
-        assertEquals(OnboardingFinale.tonight,OnboardingFinale.of(BillingState(AccessState.unavailable,notice=BillingNotice.unavailable,enforced=false),checkedOut=false))
+        // Today's real state: the verifier isn't deployed, so BillingSession reports unavailable (with no notice) and does not enforce.
+        assertEquals(OnboardingFinale.tonight,OnboardingFinale.of(BillingState(AccessState.unavailable,enforced=false),checkedOut=false))
         assertEquals(OnboardingFinale.tonight,OnboardingFinale.of(BillingState(enforced=false),checkedOut=false))
         // Legacy, purchased or restored access.
         assertEquals(OnboardingFinale.tonight,OnboardingFinale.of(billing(AccessState.active),checkedOut=false))

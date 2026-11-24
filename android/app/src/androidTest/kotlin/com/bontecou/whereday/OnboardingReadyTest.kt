@@ -24,24 +24,27 @@ class OnboardingReadyTest {
         compose.onNodeWithText("Open Whereday").performScrollTo().performClick()
         compose.waitUntil {finished.isNotEmpty()};assertEquals(listOf(false),finished)
     }
-    @Test fun permissionAllowsAnExplicitDefaultOffChoiceThatSurvivesBackNavigation() {
+    @Test fun permissionStartsRecordingByDefaultAndAnOffChoiceSurvivesBackNavigation() {
         val finished=mutableListOf<Boolean>()
         val restoration=StateRestorationTester(compose)
         restoration.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground) {finished+=it.start}}}
-        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
+        // On by default, as iOS's last step starts recording: the primary reads "Start my day".
+        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
+        compose.onNodeWithTag("onboarding-continue").performScrollTo().assertTextEquals("Start my day")
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().performClick()
         compose.onNodeWithTag("onboarding-back").performScrollTo().performClick()
         compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
         restoration.emulateSavedInstanceStateRestore()
-        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
-        assertTrue(finished.isEmpty()) // Restoring a choice is not permission to execute it.
-        compose.onNodeWithText("Start my day").performScrollTo().performClick()
-        compose.waitUntil {finished.isNotEmpty()};assertEquals(listOf(true),finished)
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff()
+        assertTrue(finished.isEmpty())
+        compose.onNodeWithText("Open Whereday").performScrollTo().performClick()
+        compose.waitUntil {finished.isNotEmpty()};assertEquals(listOf(false),finished)
     }
     @Test fun revokingPermissionBeforeFinishCannotUseAnEarlierStartChoice() {
         var authorization by mutableStateOf(UsageAuthorization.foreground)
         val finished=mutableListOf<Boolean>()
         compose.setContent {MaterialTheme {Onboarding({},{},authorization=authorization) {finished+=it.start}}}
-        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().performClick()
+        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
         compose.runOnIdle {authorization=UsageAuthorization.unknown}
         compose.onNodeWithTag("onboarding-start-now").assertDoesNotExist()
         compose.onNodeWithText("Open Whereday").performScrollTo().performClick()
@@ -52,8 +55,7 @@ class OnboardingReadyTest {
         compose.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground) {
             entered+=it.start;if(it.start) {acknowledgment.await();throw OnboardingStartFailed()}
         }}}
-        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().performClick()
-        compose.onNodeWithText("Start my day").performScrollTo().performClick()
+        ready();compose.onNodeWithText("Start my day").performScrollTo().performClick()
         compose.onNodeWithTag("onboarding-continue").assertIsNotEnabled()
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsNotEnabled()
         assertEquals(listOf(true),entered)
@@ -68,7 +70,7 @@ class OnboardingReadyTest {
         compose.setContent {val density=LocalDensity.current;CompositionLocalProvider(LocalDensity provides Density(density.density,1.6f)) {
             MaterialTheme(colorScheme=darkColorScheme()) {Onboarding({},{},authorization=UsageAuthorization.always) {started=it.start}}
         }}
-        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
+        ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
         compose.onNodeWithText("Start my day").performScrollTo().performClick()
         compose.waitUntil {started}
     }

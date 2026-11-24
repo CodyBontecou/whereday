@@ -116,7 +116,8 @@ internal class OnboardingServices(
     val chosenProduct=chosenPlan?.let {offer.state.product(it)}
     val boughtProduct=boughtKey?.let {key->offer?.state?.products?.firstOrNull {it.plan.name==key}}
     val scope=rememberCoroutineScope()
-    var startImmediately by rememberSaveable {mutableStateOf(false)}
+    // On by default, as iOS's last step starts recording with "Start my day"; the switch still lets someone finish without it.
+    var startImmediately by rememberSaveable {mutableStateOf(true)}
     var busy by remember {mutableStateOf(false)}
     var failure by remember {mutableStateOf<String?>(null)}
     val canStart=authorization==UsageAuthorization.foreground || authorization==UsageAuthorization.always
@@ -208,7 +209,8 @@ internal class OnboardingServices(
                     OnboardingStep.pen->PenStep(preset,enabled=!busy) {presetKey=it.key}
                     OnboardingStep.perm->{
                         PermissionStep()
-                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp))}
+                        // The step itself asks; "access is off" only after the person said no (or Android won't ask again).
+                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp),deniedOnly=true)}
                     }
                     OnboardingStep.stamp->StampStep(fix,locating || (locationGranted && services.locate!=null && fix==null && !locateFinished),available=locationGranted && services.locate!=null,placeName,enabled=!busy) {
                         placeKey=it.key;failure=null
@@ -222,9 +224,10 @@ internal class OnboardingServices(
                         onImport=importLauncher?.let {launcher->{launcher.launch(arrayOf("application/json","text/*","application/octet-stream"))}})
                     OnboardingStep.glance->{
                         GlanceStep(savedName)
-                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=false,notifications=true,contentPadding=PaddingValues(0.dp))}
+                        access?.let {RecordingAccessNotice(it,onAccessOptions,location=false,notifications=true,contentPadding=PaddingValues(0.dp),deniedOnly=true)}
                     }
-                    OnboardingStep.export->ExportStep(format) {formatKey=it.key}
+                    // Only a build that sells plans says exports come with one.
+                    OnboardingStep.export->ExportStep(format,plans=offer?.state?.enforced==true) {formatKey=it.key}
                     OnboardingStep.tonight->if(finale==OnboardingFinale.freeWeek) {
                         val stampedName=savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)}
                         FreeWeekStep(offer!!,chosenPlan,{planKey=it.name},now,recapTime,

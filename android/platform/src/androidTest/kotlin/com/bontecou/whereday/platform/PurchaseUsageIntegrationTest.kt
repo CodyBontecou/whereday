@@ -17,7 +17,7 @@ class PurchaseUsageIntegrationTest {
         try {
             withTimeout(5_000) {requireNotNull(purchases.restore(UsagePaywall.export)).join()}
             assertEquals(AccessState.unavailable,purchases.state.value.access)
-            assertEquals(com.bontecou.whereday.billing.BillingNotice.unavailable,purchases.state.value.notice)
+            assertNull(purchases.state.value.notice);assertTrue(purchases.state.value.unlocked) // Unconfigured: everything open, no notice.
         } finally {purchases.close();PurchaseGrantCache(context).clear()}
     }
     @Test fun explicitRestoreReportsUnavailableButAutomaticRefreshNeverCreatesRestoreEvents():Unit=runBlocking {
@@ -49,7 +49,7 @@ class PurchaseUsageIntegrationTest {
             withTimeout(5_000) {requireNotNull(purchases.restore(UsagePaywall.export)).join()}
             assertTrue(backing.value.pending.isEmpty());assertNull(backing.value.consentId)
             assertEquals(AccessState.unavailable,purchases.state.value.access)
-            assertEquals(com.bontecou.whereday.billing.BillingNotice.unavailable,purchases.state.value.notice)
+            assertNull(purchases.state.value.notice);assertTrue(purchases.state.value.unlocked) // Unconfigured: everything open, no notice.
         } finally {purchases.close();analytics.close();PurchaseGrantCache(context).clear()}
     }
 }

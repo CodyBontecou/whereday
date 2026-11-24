@@ -8,6 +8,7 @@
     <string name="export_delivery_cancel_pending">Cancel pending export</string>
     <string name="export_delivery_discard">Discard interrupted export</string>
     <string name="export_delivery_plan_help">Complete file exports are included with every Whereday plan. Choose where to share or save this file.</string>
+    <string name="export_delivery_help_free">Choose where to share or save this file.</string>
     <string name="export_delivery_share">Share file</string>
     <string name="export_delivery_save_as">Save file as…</string>
     <string name="export_delivery_folder">Save file to export folder</string>
@@ -38,6 +39,7 @@
     <string name="export_delivery_share_title">Share history export</string>
     <string name="export_delivery_progress">Visits prepared: %1$s. Points prepared: %2$s.</string>
     <string name="export_delivery_folder_plan_policy">File exports are included with every Whereday plan. Folder exports keep both files when a name already exists. Choose a folder in Settings.</string>
+    <string name="export_delivery_folder_policy_free">Folder exports keep both files when a name already exists. Choose a folder in Settings.</string>
     <plurals name="export_delivery_saved_files">
         <item quantity="one">%1$s export file saved and verified.</item>
         <item quantity="other">%1$s export files saved and verified.</item>

@@ -91,11 +91,14 @@ class ExportOptionsFlowTest {
         return text("export-preview-result")
     }
     private fun text(tag:String)=compose.onNodeWithTag(tag).fetchSemanticsNode().config[SemanticsProperties.Text].joinToString("") {it.text}
-    @Test fun pointCountsAndUnavailablePurchaseAreLocalizedWithoutChangingStoredData():Unit=runBlocking {
+    @Test fun pointCountsAreLocalizedAndUnconfiguredBillingLeavesExportOpenWithoutChangingStoredData():Unit=runBlocking {
         graph.photoPlaces.clearCache {withContext(Dispatchers.IO) {graph.database.clearAllTables()}}
         graph.history.dao.put(PointRow(TrackPoint("one",Coordinate(0.0,0.0),at,5.0),null));show()
         compose.waitUntil(5000) {text("export-history-count")=="1 punto de ruta guardado en este teléfono."}
-        compose.onNodeWithTag("export-access-notice").assertTextEquals("Las compras no están disponibles en esta versión. La grabación, las importaciones y las vistas previas siguen siendo gratuitas.")
+        // Without the purchase verifier every capability is free: no plan card, no "purchases are not available" notice, no lock.
+        compose.onNodeWithTag("export-access").assertDoesNotExist();compose.onNodeWithTag("export-access-notice").assertDoesNotExist()
+        compose.onNodeWithTag("export-locked").assertDoesNotExist()
+        assertTrue(graph.purchases.state.value.unlocked);assertNull(graph.purchases.state.value.notice)
         graph.history.dao.putPoints((0 until 1000).map {PointRow(TrackPoint("count-$it",Coordinate(0.0,0.0),at.plusSeconds(it.toLong()+1),5.0),null)})
         compose.waitUntil(5000) {text("export-history-count")=="1.001 puntos de ruta guardados en este teléfono."}
         assertEquals(1001L,graph.history.dao.totalPointCount());assertEquals(AccessState.unavailable,graph.purchases.state.value.access)

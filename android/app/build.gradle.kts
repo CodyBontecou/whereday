@@ -1,3 +1,9 @@
+import java.net.URI
+import java.security.KeyFactory
+import java.security.interfaces.RSAPublicKey
+import java.security.spec.X509EncodedKeySpec
+import java.util.Base64
+
 plugins { alias(libs.plugins.android.application); alias(libs.plugins.kotlin.android); alias(libs.plugins.kotlin.compose) }
 apply(from = rootProject.file("gradle/runtime-notices.gradle.kts"))
 android {
@@ -68,6 +74,37 @@ android {
 tasks.matching {it.name in setOf("preDebugBuild","preMapQaBuild","preScrawlBuild","preReleaseBuild")}.configureEach {
     dependsOn(if(name=="preReleaseBuild") "generateReleaseRuntimeNoticeAssets" else "generateDebugRuntimeNoticeAssets")
 }
+// Without the purchase verifier BillingSession treats every capability as free (debug and mapQa builds rely on that),
+// so a store build without it would give everything away. Every release build (assembleRelease, bundleRelease and
+// anything built on them, such as a Play upload) stops here instead. The checks mirror PurchaseConfiguration.configured.
+val checkReleasePurchaseVerifier = tasks.register("checkReleasePurchaseVerifier") {
+    group = "verification"
+    description = "Fails a release build that lacks the Play purchase verifier configuration."
+    val url = providers.gradleProperty("whereday.purchaseVerifierUrl").orElse("")
+    val key = providers.gradleProperty("whereday.purchaseVerifierPublicKey").orElse("")
+    val projectNumber = providers.gradleProperty("whereday.playCloudProjectNumber").orElse("")
+    inputs.property("purchaseVerifierUrl", url)
+    inputs.property("purchaseVerifierPublicKey", key)
+    inputs.property("playCloudProjectNumber", projectNumber)
+    doLast {
+        val problems = buildList {
+            val endpoint = runCatching { URI(url.get().trim()) }.getOrNull()
+            if (endpoint == null || endpoint.scheme != "https" || endpoint.host.isNullOrBlank() || endpoint.rawUserInfo != null || endpoint.query != null || endpoint.fragment != null)
+                add("whereday.purchaseVerifierUrl (an https URL without user info, query or fragment)")
+            val rsa = runCatching {
+                KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(Base64.getDecoder().decode(key.get().trim()))) as RSAPublicKey
+            }.getOrNull()
+            if (rsa == null || rsa.modulus.bitLength() < 2048) add("whereday.purchaseVerifierPublicKey (a base64 X.509 RSA public key of at least 2048 bits)")
+            if ((projectNumber.get().trim().toLongOrNull() ?: 0L) <= 0L) add("whereday.playCloudProjectNumber (the positive Google Cloud project number used for Play Integrity)")
+        }
+        if (problems.isNotEmpty()) throw GradleException(
+            "Release builds require the Play purchase verifier. Missing or invalid Gradle properties:\n" +
+                problems.joinToString("\n") { "  - $it" } +
+                "\nWithout them every Whereday feature would ship free. Set them in ~/.gradle/gradle.properties or pass -P<name>=<value>; " +
+                "debug and mapQa builds don't need them.")
+    }
+}
+tasks.matching { it.name == "preReleaseBuild" || it.name.matches(Regex("publish\\w*Release\\w*")) }.configureEach { dependsOn(checkReleasePurchaseVerifier) }
 kotlin { jvmToolchain(17) }
 // ScrawlKit in the scrawl build type: hold three fingers to record the screen, your voice and touches and
 // send them to your coding agent through Scrawl on the Mac. It comes from ~/.m2

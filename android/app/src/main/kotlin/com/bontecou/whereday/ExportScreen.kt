@@ -174,7 +174,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
     LaunchedEffect(Unit) {graph.usageFunnel.paywall(com.bontecou.whereday.platform.UsagePaywall.export)}
     val deliverable=!busy && ready && picker.loaded && !picker.busy && pending==null
     // Without a plan the pinned buttons show a lock and open the plans, rather than failing with a notice far down the page.
-    val locked=exportDeliveryLocked(purchase.access)
+    val locked=exportDeliveryLocked(purchase)
     var plans by rememberSaveable {mutableStateOf(false)}
     val buy:(com.bontecou.whereday.billing.StorePlan)->Unit={plan->
         val activity=generateSequence(context) {(it as? android.content.ContextWrapper)?.baseContext}.filterIsInstance<android.app.Activity>().firstOrNull()
@@ -211,7 +211,8 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             }
             count?.let {stored->Text(pluralStringResource(R.plurals.export_stored_points,stored.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(stored)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)}
             if(history==ArchiveHistory.empty) ExportCallout(stringResource(R.string.export_redesign_empty_body),Modifier.exportInset().padding(top=16.dp),title=stringResource(R.string.export_redesign_empty_title))
-            Box(Modifier.exportInset().padding(top=16.dp)) {
+            // A build without Play billing has nothing to sell and nothing locked, so it shows no plan card.
+            if(purchase.enforced) Box(Modifier.exportInset().padding(top=16.dp)) {
                 val uriHandler=androidx.compose.ui.platform.LocalUriHandler.current
                 ExportAccessCard(purchase,checkout,buy=buy,restore=restore,
                     manage=if(purchase.access==com.bontecou.whereday.billing.AccessState.active && purchase.activeProductId==graph.purchases.subscriptionId)
@@ -249,7 +250,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
             ExportCard {
                 WdNavRow(stringResource(R.string.export_delivery_export_folder),icon=Icons.Outlined.Folder,divider=false,enabled=deliverable && settings.exportFolder!=null) {deliverOrUnlock("folder")}
             }
-            WdSectionFooter(stringResource(R.string.export_delivery_folder_plan_policy))
+            WdSectionFooter(stringResource(if(purchase.enforced) R.string.export_delivery_folder_plan_policy else R.string.export_delivery_folder_policy_free))
             picker.notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),Modifier.exportInset().padding(top=12.dp),warning=it.isFailure)}
             if(pending!=null) {
                 ExportCallout(stringResource(R.string.export_delivery_pending_help),Modifier.exportInset().padding(top=12.dp),title=stringResource(R.string.export_delivery_pending,pending.displayName)) {

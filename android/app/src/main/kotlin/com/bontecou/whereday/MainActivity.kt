@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
     private var locationDeclined=false
     private var preciseDeclined=false
     private var notificationsDeclined=false
+    private val permissionLog by lazy {PermissionRequestLog(this)}
     private var accessFailure:PermissionAccessFailure?=null
     private var locationAttempt:UsageFunnel.PermissionAttempt?=null
     private var notificationAttempt:UsageFunnel.PermissionAttempt?=null
@@ -193,7 +194,13 @@ class MainActivity : ComponentActivity() {
         if(snapshot.location!=LocationPrecision.none) locationDeclined=false
         if(snapshot.location==LocationPrecision.precise) preciseDeclined=false
         if(snapshot.notifications) notificationsDeclined=false
-        access=snapshot.copy(locationDeclined=locationDeclined,failure=accessFailure)
+        // Refused means asked and still off: a system dialog that is still open is not an answer yet.
+        val locationRefused=snapshot.location==LocationPrecision.none && pendingLocation==null && (locationDeclined || permissionLog.asked(PermissionAccessKind.location) ||
+            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION))
+        // Before Android 13 notifications are on unless someone turned them off in Settings, which is itself the refusal.
+        val notificationsRefused=!snapshot.notifications && pendingNotifications==null && (notificationsDeclined || Build.VERSION.SDK_INT<33 ||
+            permissionLog.asked(PermissionAccessKind.notifications) || shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS))
+        access=snapshot.copy(locationDeclined=locationDeclined,failure=accessFailure,locationRefused=locationRefused,notificationsRefused=notificationsRefused)
     }
     private fun interactive()=!isFinishing && !isDestroyed && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && !graph.journalClear.state.value.blocked
     private fun permissionResultCurrent(ticket:PendingPermission)=interactive() && ticket.current(graph.journalClear.state.value.generation,foregroundEpoch,graph.journalClear.state.value.blocked)
@@ -212,6 +219,7 @@ class MainActivity : ComponentActivity() {
         if(access?.location==LocationPrecision.precise || (!precise && access?.location!=LocationPrecision.none)) {if(start) beginRecording();return}
         pendingLocation=PendingPermission(graph.journalClear.state.value.generation,foregroundEpoch,start,precise)
         locationAttempt=if(onboarding) graph.usageFunnel.permission(UsageRequestKind.foreground,locationAuthorization()) else null
+        permissionLog.record(PermissionAccessKind.location)
         try {locationPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION))}
         catch(_:Exception) {pendingLocation=null;locationAttempt=null;accessFailure=PermissionAccessFailure.request;refreshAccess()}
     }
@@ -297,6 +305,7 @@ class MainActivity : ComponentActivity() {
         if(access?.notifications==true) return
         pendingNotifications=PendingPermission(graph.journalClear.state.value.generation,foregroundEpoch)
         notificationAttempt=if(onboarding) graph.usageFunnel.permission(UsageRequestKind.notifications,UsageAuthorization.unknown) else null
+        permissionLog.record(PermissionAccessKind.notifications)
         try {notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)}
         catch(_:Exception) {pendingNotifications=null;notificationAttempt=null;accessFailure=PermissionAccessFailure.request;refreshAccess()}
     }

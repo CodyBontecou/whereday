@@ -130,6 +130,7 @@
     <string name="onboarding_export_note_csv">Drop it into a spreadsheet or a script.</string>
     <string name="onboarding_export_note_json">A full record you can import again on a new phone.</string>
     <string name="onboarding_export_note">Schedule it daily to a folder, or export once. Exports are included with every Whereday plan.</string>
+    <string name="onboarding_export_note_free">Schedule it daily to a folder, or export once.</string>
     <string name="onboarding_export_later">Set up later</string>
     <string name="onboarding_export_preview">Sample %1$s file: %2$s</string>
     <string name="onboarding_format_markdown" translatable="false">Markdown</string>

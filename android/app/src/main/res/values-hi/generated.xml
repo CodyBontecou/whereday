@@ -95,6 +95,7 @@
     <string name="automatic_export_pending">लंबित निर्यात: %1$s। दोबारा कोशिश करने पर यही कैप्चर की गई अवधि और गंतव्य रहता है।</string>
     <string name="automatic_export_plan_policy">सक्रिय Whereday प्लान ज़रूरी है। दिन में एक बार के रन अब तक का पूरा दिन फिर से लिखते हैं। छूटे हुए पिछले दिन हाथ से निर्यात किए जा सकते हैं।</string>
     <string name="automatic_export_points">पॉइंट</string>
+    <string name="automatic_export_policy_free">दिन में एक बार के रन अब तक का पूरा दिन फिर से लिखते हैं। छूटे हुए पिछले दिन हाथ से निर्यात किए जा सकते हैं।</string>
     <string name="automatic_export_repeat">दोहराएँ</string>
     <string name="automatic_export_reset">स्वचालित निर्यात रीसेट करें</string>
     <string name="automatic_export_reset_body">इससे शेड्यूल बंद हो जाता है और इसके सहेजे गए अनुरोध साफ़ हो जाते हैं। निर्यात किए गए दस्तावेज़ और सुरक्षित बैकअप अपने फ़ोल्डर में बने रहते हैं।</string>
@@ -372,7 +373,9 @@
     <string name="export_delivery_folder">फ़ाइल निर्यात फ़ोल्डर में सहेजें</string>
     <string name="export_delivery_folder_help">फ़ोल्डर डिलीवरी उपयोग करने के लिए सेटिंग्स में निर्यात फ़ोल्डर चुनें।</string>
     <string name="export_delivery_folder_plan_policy">फ़ाइल निर्यात के लिए सक्रिय Whereday प्लान ज़रूरी है। नाम पहले से मौजूद होने पर फ़ोल्डर निर्यात दोनों फ़ाइलें रखता है। सेटिंग्स में फ़ोल्डर चुनें।</string>
+    <string name="export_delivery_folder_policy_free">नाम पहले से मौजूद होने पर फ़ोल्डर निर्यात दोनों फ़ाइलें रखता है। सेटिंग्स में फ़ोल्डर चुनें।</string>
     <string name="export_delivery_folder_required">पहले सेटिंग्स में निर्यात फ़ोल्डर चुनें।</string>
+    <string name="export_delivery_help_free">चुनें कि यह फ़ाइल कहाँ साझा या सहेजनी है।</string>
     <string name="export_delivery_interrupted">सहेजना बाधित हो गया। सहेजा गया अनुरोध फिर शुरू करें या रद्द करें।</string>
     <string name="export_delivery_locked">सभी प्लान में एक्सपोर्ट शामिल है: साप्ताहिक, वार्षिक या आजीवन।</string>
     <string name="export_delivery_multiple">कई फ़ाइलों के लिए शेयर या निर्यात फ़ोल्डर उपयोग करें।</string>
@@ -874,6 +877,7 @@
     <string name="onboarding_export_later">बाद में सेट करें</string>
     <string name="onboarding_export_note">इसे रोज़ किसी फ़ोल्डर में शेड्यूल करें, या एक बार निर्यात करें। निर्यात हर Whereday प्लान में शामिल है।</string>
     <string name="onboarding_export_note_csv">इसे स्प्रेडशीट या स्क्रिप्ट में डालें।</string>
+    <string name="onboarding_export_note_free">इसे रोज़ किसी फ़ोल्डर में शेड्यूल करें, या एक बार निर्यात करें।</string>
     <string name="onboarding_export_note_gpx">Strava, gpx.studio और ज़्यादातर मैपिंग टूल में खुलता है।</string>
     <string name="onboarding_export_note_json">पूरा रिकॉर्ड, जिसे आप नए फ़ोन पर फिर इंपोर्ट कर सकते हैं।</string>
     <string name="onboarding_export_note_markdown">हर दिन का एक नोट, {year}/{month} जैसे तारीख़ वाले फ़ोल्डरों में।</string>
@@ -1701,6 +1705,7 @@
     <string name="support_preview_journal">आउटिंग रिकॉर्ड करें, अपना मानचित्र और टाइमलाइन देखें, विज़िट और सहेजी गई जगहें बदलें, और देशों में दिन व फ़ोटो पल देखें।</string>
     <string name="support_preview_notice">यह बिल्ड अभी Android रिलीज़ के लिए जाँचा जा रहा है।</string>
     <string name="support_preview_plan_portability">आठ एक्सपोर्ट फ़ॉर्मैट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें इम्पोर्ट करें। फ़ाइल एक्सपोर्ट, निर्धारित एक्सपोर्ट और वेबहुक सभी Whereday प्लान में शामिल हैं: साप्ताहिक, वार्षिक या आजीवन।</string>
+    <string name="support_preview_portability_free">आठ एक्सपोर्ट फ़ॉर्मैट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें इम्पोर्ट करें।</string>
     <string name="support_preview_title">Android डेवलपमेंट प्रीव्यू</string>
     <string name="support_privacy">गोपनीयता नीति</string>
     <string name="support_rate_app">Google Play पर Whereday को रेट करें</string>
