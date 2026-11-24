@@ -75,15 +75,20 @@ import java.time.*
     var editing by rememberSaveable(stateSaver=VisitEditorVisitSaver) { mutableStateOf<Visit?>(null) }
     var adding by rememberSaveable { mutableStateOf(false) }
     var openedVisitId by rememberSaveable { mutableStateOf<String?>(null) }
+    // Settings saves (an outing's export format) and returning from another activity (the Save picker) restart
+    // timelineWindow, which emits Loading first. Keep the last loaded window so an open inferred outing does not flip to
+    // the "missing" notice and back, which would rebuild its detail screen and reset its scroll to the top.
+    val lastWindow=remember {arrayOfNulls<HistoryWindow>(1)}
+    val loadedWindow=(state as? WindowState.Ready)?.window?.also {lastWindow[0]=it} ?: lastWindow[0]
     if(selectedSession != null) {
-        val header=(state as? WindowState.Ready)?.window?.inferred?.find { it.id==selectedSession }
+        val header=loadedWindow?.inferred?.find { it.id==selectedSession }
         if(selectedSession!!.startsWith("inferred:") && header==null) {
             Column(Modifier.fillMaxSize().background(wd.surface).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
                 WdBackChip(stringResource(R.string.timeline_back),{ selectedSession=null })
                 WdNotice(stringResource(R.string.timeline_inferred_missing),icon=Icons.Outlined.Info)
             }
         } else {
-            val window=(state as? WindowState.Ready)?.window
+            val window=loadedWindow
             val chronological=(window?.sessions.orEmpty().map {it.id to it.startedAt}+window?.inferred.orEmpty().map {it.id to it.startedAt})
                 .sortedWith(compareBy({it.second},{it.first}))
             val sequence=(chronological.indexOfFirst {it.first==selectedSession}+1).coerceAtLeast(1)
