@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">Exportar %1$s como %2$s, %3$s.</string>
     <string name="archive_recipe_single">tudo em um arquivo</string>
     <string name="archive_recipe_split">um arquivo por dia</string>
+    <string name="archive_recipe_split_outing">um arquivo por saída</string>
     <string name="atlas_add_stay">Adicionar estadia</string>
     <string name="atlas_all_countries">Todos os países</string>
     <string name="atlas_all_years">Todos os anos</string>
@@ -122,6 +123,7 @@
     <string name="automation_command_cancel">Cancelar</string>
     <string name="automation_command_help">Você pode cancelar e verificar o diário se o resultado for interrompido.</string>
     <string name="automation_command_title">Concluindo comando do Whereday</string>
+    <string name="automation_detail_exports">Arquivos completos com os filtros solicitados.</string>
     <string name="automation_detail_exports_plan">Arquivos completos com os filtros solicitados. Também é necessário um plano do Whereday ativo.</string>
     <string name="automation_detail_manual_visits">Faça check-in em um lugar salvo, em coordenadas ou na sua localização atual, e faça check-out de visitas manuais. Retorna o nome, o endereço e os horários da visita. A localização atual exige que o Whereday esteja aberto e já tenha acesso à localização.</string>
     <string name="automation_detail_outings">Nomes e horários de início/fim dos passeios registrados.</string>
@@ -292,6 +294,7 @@
     <string name="country_period_rolling">Últimos 365 dias</string>
     <string name="country_period_year">Este ano</string>
     <string name="country_preview">Pré-visualizar CSV de países</string>
+    <string name="country_preview_help">A prévia mostra as primeiras 100 datas locais. Exportar o CSV de países inclui todas as datas do período selecionado.</string>
     <string name="country_preview_plan_help">A prévia mostra as primeiras 100 datas locais. Exportar o CSV de países inclui todas as datas do período selecionado e requer um plano do Whereday ativo.</string>
     <string name="country_preview_title">Prévia do CSV de países</string>
     <string name="country_retry">Tentar novamente</string>

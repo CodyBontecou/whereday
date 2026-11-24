@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class WebhookNavigationIntegrationTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
-    @Test fun realSettingsAndPurchaseSheetKeepTheSystemBackDraftGuard():Unit=runBlocking {
+    @Test fun realSettingsAndEnableConfirmationKeepTheSystemBackDraftGuard():Unit=runBlocking {
         val context=InstrumentationRegistry.getInstrumentation().targetContext
         check(context.packageName=="com.bontecou.whereday.mapqa")
         val graph=AppGraph.from(context)
@@ -29,8 +29,9 @@ class WebhookNavigationIntegrationTest {
             withTimeout(10_000) {while(graph.webhookController.state.value.message!="Webhook settings saved." || graph.webhookController.state.value.busy) delay(25)}
             compose.onNodeWithTag("webhook-enabled").performScrollTo().performClick()
             compose.onNodeWithText("Save webhook settings").performScrollTo().performClick()
-            compose.onNodeWithText("Included with every plan").assertIsDisplayed()
-            compose.onNodeWithText("Close").performClick();compose.waitForIdle()
+            // mapQa has no Play billing, so webhooks are unlocked and saving asks to confirm delivery instead of showing plans.
+            compose.onNodeWithText("Enable webhook delivery?").assertIsDisplayed()
+            compose.onNodeWithText("Cancel").performClick();compose.waitForIdle()
             androidx.test.espresso.Espresso.pressBack()
             compose.waitUntil(5000) {runCatching {compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()}.isSuccess}
             compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()

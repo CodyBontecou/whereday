@@ -1,7 +1,7 @@
 {
   "locale": "pt-rBR",
   "catalogLocale": "pt-BR",
-  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
+  "defaultSourceSha256": "241c437bab5c5fb70dcb8b02a800c5b2ce3fc993f0ea47b0fa243af2c8dda98e",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -2243,6 +2243,9 @@
     "export_delivery_folder_policy_free": "Exportações para pastas mantêm os dois arquivos quando o nome já existe. Escolha uma pasta em Configurações.",
     "export_delivery_help_free": "Escolha onde compartilhar ou salvar este arquivo.",
     "onboarding_export_note_free": "Agende uma exportação diária para uma pasta ou exporte uma vez.",
-    "support_preview_portability_free": "Veja prévias de oito formatos de exportação e importe arquivos de histórico compatíveis."
+    "support_preview_portability_free": "Veja prévias de oito formatos de exportação e importe arquivos de histórico compatíveis.",
+    "automation_detail_exports": "Arquivos completos com os filtros solicitados.",
+    "country_preview_help": "A prévia mostra as primeiras 100 datas locais. Exportar o CSV de países inclui todas as datas do período selecionado.",
+    "archive_recipe_split_outing": "um arquivo por saída"
   }
 }

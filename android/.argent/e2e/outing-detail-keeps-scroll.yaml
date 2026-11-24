@@ -1,0 +1,101 @@
+# Regression for the Outing details scroll jump, on the disposable QA package com.bontecou.whereday.mapqa (NEVER the
+# owner's com.bontecou.whereday). Reproduction: on an inferred outing's details, scroll down to the export section,
+# then (a) choose another outing file format, or (b) open Export outing › Save file as… and cancel the system picker.
+# Before the fix the screen jumped back to the top (map) both times.
+# Root cause: both actions restart JournalViewModel.timelineWindow (an export-format save emits a new
+# preferences.settings value; leaving for the picker stops the WhileSubscribed(0) flow), and the restarted flow
+# emits WindowState.Loading first. TimelineScreen looked the inferred header up only in a Ready window, so for an
+# "inferred:" id it briefly showed the "inferred outing missing" notice instead of OutingDetailScreen; when Ready came
+# back, OutingDetailScreen was composed anew with a fresh rememberScrollState() at 0. Fixed in TimelineScreen by keeping
+# the last loaded window while the next one loads.
+# Prerequisites: mapQa onboarded, idle (not recording), English UI (MM/DD/YYYY date input), device time zone
+# America/Puerto_Rico, inferred outings on (Settings defaults), outing file format JSON, and the public replay fixture
+# android/.argent/fixtures/replay-route.csv imported once (one inferred outing on 2026-10-27; staging steps in
+# outing-export-access.yaml).
+# Side effects (mapQa only): changes the outing format to Markdown and back to JSON; opens and cancels the Save picker
+# (no file written); returns the timeline to today and ends on the Map.
+# Evidence: on the pre-fix c96225a8 build this test fails at the first post-format "history-export-open visible"
+# check; on the fixed build it passes. Recorded live 2026-11-24 (argent 0.34.0) on the fixed build.
+# Raw steps: `button: back` cancels the DocumentsUI picker (followed by a hidden check); the date field is cleared with
+# raw backspace presses and the typed value is proven by the picker's "Entered date" headline.
+# Coordinate exceptions: none in the final YAML. Live, the JSON menu item was recorded role-only and the Map back button
+# as a point (stale pre-tap trees); they are replaced by ^JSON$ and the id timeline-close, the elements under those
+# points. The date field's live text (today's date) is replaced by a MM/DD/YYYY pattern.
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Disposable mapQa only (never com.bontecou.whereday). Requires the 2026-10-27 replay fixture outing.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
+  - await: { idle: true }
+  - tap: { id: map-day-peek }
+  - await: { visible: { id: map-open-timeline } }
+  - tap: { id: map-open-timeline }
+  - await: { visible: { id: timeline-content } }
+  - await: { idle: true }
+  - echo: Pick 10/27/2026 (the fixture's day) by typing it into the date picker.
+  - tap: { id: today-pick-day }
+  - await: { visible: { text: Switch to text input mode } }
+  - tap: { text: Switch to text input mode }
+  - tap: { text: { matches: '^\d{2}/\d{2}/\d{4}$' } }
+  - tool: run-sequence
+    args:
+      steps:
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+  - tool: keyboard
+    args:
+      text: '10272026'
+  - await: { visible: { text: 'Entered date: Tuesday, October 27, 2026' } }
+  - tap: { text: { matches: '^Show day$' } }
+  - await: { visible: { text: 'October 27, 2026' } }
+  - await: { idle: true }
+  - tap: { text: Inferred outing }
+  - await: { visible: { id: outing-detail-content } }
+  - await: { idle: true }
+  - echo: On Outing details. Scroll down to the export section (below the map) so the map and back chip are off screen.
+  - scroll-to: { target: { id: history-export-open }, direction: down }
+  - await: { visible: { id: history-export-open } }
+  - echo: Export section on screen. Change the outing format JSON -> Markdown; the screen must stay scrolled to the export section.
+  - tap: { text: { matches: '^JSON$' } }
+  - await: { visible: { text: { matches: '^Markdown$' } } }
+  - tap: { text: { matches: '^Markdown$' } }
+  - await: { visible: { id: history-export-open } }
+  - await: { visible: { text: { matches: '^Markdown$' } } }
+  - echo: Still at the export section. Export outing, Save file as…, cancel the system picker with Back; the screen must stay at the export section.
+  - tap: { id: history-export-open }
+  - await: { visible: { text: Save file as… } }
+  - await: { idle: true }
+  - tap: { text: Save file as… }
+  - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
+  - await: { visible: { id: history-export-open } }
+  - await: { text: { in: { id: history-export-picker-notice }, contains: Outing 1.md · Export canceled. } }
+  - echo: Restore the outing format to JSON (scroll stays), then go back to today's timeline and the Map.
+  - tap: { text: { matches: '^Markdown$' } }
+  - await: { visible: { text: { matches: '^JSON$' } } }
+  - tap: { text: { matches: '^JSON$' } }
+  - await: { visible: { id: history-export-open } }
+  - await: { visible: { text: { matches: '^JSON$' } } }
+  - scroll-to: { target: { text: Back to timeline }, direction: up }
+  - await: { visible: { text: Back to timeline } }
+  - tap: { text: Back to timeline }
+  - await: { visible: { id: timeline-today } }
+  - await: { idle: true }
+  - tap: { id: timeline-today }
+  - await: { hidden: { id: timeline-today } }
+  - tap: { id: timeline-close }
+  - await: { visible: { id: map-header-title } }
+  - await: { idle: true }

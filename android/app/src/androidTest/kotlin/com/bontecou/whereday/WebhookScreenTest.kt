@@ -31,10 +31,10 @@ class WebhookScreenTest {
     private val calls=mutableListOf<String>()
     private val actions=WebhookActions({a,b,c->saves.add(Save(a,b,c))},{calls.add("disable")},{calls.add("reset")},{calls.add("test")},{calls.add("history")},{calls.add("flush")},{calls.add("retry:$it")},{calls.add("discard:$it")},{calls.add("resume")},{calls.add("refresh")})
     @Before fun isolated() {check(InstrumentationRegistry.getInstrumentation().targetContext.packageName=="com.bontecou.whereday.mapqa")}
-    private fun show(config:WebhookConfiguration=saved,paid:Boolean=true,head:WebhookBatchRow?=null,busy:Boolean=false) {
+    private fun show(config:WebhookConfiguration=saved,paid:Boolean=true,head:WebhookBatchRow?=null,busy:Boolean=false,plans:Boolean=true) {
         busyState.value=busy
         val snapshot=WebhookQueueSnapshot(null,if(head==null) 0 else head.pointCount,if(head==null) 0 else 1,null,head)
-        compose.setContent {MaterialTheme {WebhookSettingsContent(WebhookUiState(loaded=true,state=WebhookState(config,snapshot),busy=busyState.value),editor,actions,paid,{calls.add("back")}) {androidx.compose.material3.Text("Synthetic purchase panel")}}}
+        compose.setContent {MaterialTheme {WebhookSettingsContent(WebhookUiState(loaded=true,state=WebhookState(config,snapshot),busy=busyState.value),editor,actions,paid,{calls.add("back")},plans) {androidx.compose.material3.Text("Synthetic purchase panel")}}}
         compose.waitUntil(5000) {editor.baseline!=null}
     }
     private fun click(text:String)=compose.onNodeWithText(text).performScrollTo().performClick()
@@ -70,9 +70,17 @@ class WebhookScreenTest {
         compose.onNodeWithContentDescription("Show Password").assertExists()
         compose.runOnIdle {assertEquals("",editor.draft.credentials.value);assertEquals("",editor.draft.credentials.username);assertTrue(saves.isEmpty())}
     }
+    @Test fun buildWithoutBillingHidesThePlansRowAndRunsTheConnectionTest() {
+        show(paid=true,plans=false)
+        compose.onNodeWithText("Reset webhook settings").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("Plans and purchases").assertDoesNotExist()
+        click("Test connection")
+        compose.onNodeWithText("Synthetic purchase panel").assertDoesNotExist()
+        compose.runOnIdle {assertEquals(listOf("test"),calls)}
+    }
     @Test fun freeConnectionTestOpensPurchaseInformationWithoutCallingDelivery() {
         show(paid=false);click("Test connection")
-        compose.onNodeWithText("Included with every plan").assertIsDisplayed()
+        compose.onNodeWithText("Whereday plans").assertIsDisplayed()
         compose.onNodeWithText("Synthetic purchase panel").assertIsDisplayed()
         compose.runOnIdle {assertTrue(calls.isEmpty());assertTrue(saves.isEmpty())}
         compose.onNodeWithText("Close").performClick();compose.onNodeWithTag("webhook-screen").assertExists()
@@ -113,7 +121,7 @@ class WebhookScreenTest {
     }
     @Test fun systemBackAfterPurchaseInformationStillGuardsUnsavedEdits() {
         show(paid=false);compose.onNodeWithTag("webhook-enabled").performClick();click("Save webhook settings")
-        compose.onNodeWithText("Included with every plan").assertIsDisplayed();compose.onNodeWithText("Close").performClick()
+        compose.onNodeWithText("Whereday plans").assertIsDisplayed();compose.onNodeWithText("Close").performClick()
         compose.waitForIdle();androidx.test.espresso.Espresso.pressBack()
         compose.waitUntil(5000) {runCatching {compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed()}.isSuccess}
         compose.onNodeWithText("Discard unsaved webhook edits?").assertIsDisplayed();compose.onNodeWithTag("webhook-screen").assertExists()

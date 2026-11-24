@@ -1,45 +1,73 @@
+# Automatic exports schedule settings on the disposable QA package com.bontecou.whereday.mapqa (NEVER the owner's
+# com.bontecou.whereday), in a build with UNCONFIGURED Play billing (debug/mapQa).
+# Prerequisites: mapQa onboarded, idle (not recording), English UI, Automatic exports on defaults (disabled, Once
+# daily, 9:00 PM anchor, JSON, All), no export folder chosen. Example: fresh install, then `argent e2e run map-qa-onboarding`.
+# Side effects (mapQa only): opens and cancels the anchor time picker; selects Every 3 hours, relaunches to prove it
+# persisted, restores Once daily; enables automatic exports (schedules a WorkManager run) and disables them again.
+# Nothing is exported and no folder is written. Settings end on their defaults.
+# 2026-11-24 re-recorded live (argent 0.34.0) for PR #177: unconfigured builds unlock scheduled exports. The old
+# check "Enable is denied with 'Verified lifetime export access is required.'" became "Enable is accepted": the
+# next-run card appears and the footer is the billing-free policy text (exact match, so the plan sentence is absent).
+# Retargeted from the owner package to mapQa.
+# Coordinate exceptions: none. The live devtools tree went stale after every screen change; it was refreshed with
+# `adb shell am force-stop com.argent.androiddevtools` before each recorded step (not part of the test).
+version: 1
+requires:
+  platform: android
 steps:
-  - echo: Requires completed onboarding, idle recording, disabled default 21:00 once-daily automatic exports and unconfigured purchase verification. Temporarily selects three hours, verifies persistence, restores once daily and checks denied enable. No destination writes.
-  - launch: com.bontecou.whereday
-  - await: { visible: { id: map-header } }
+  - echo: Disposable mapQa only (never com.bontecou.whereday), unconfigured billing. Restart; expect the Map.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - tap: { id: archive-settings }
-  - await: { visible: { text: Distance filter } }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
   - tap: { text: { matches: '^Automatic exports$' } }
-  - await: { visible: { text: Enable automatic exports } }
+  - await: { visible: { id: automatic-exports-screen } }
   - await: { idle: true }
-  - tap: { text: 'Daily anchor: 21:00' }
-  - await: { visible: { id: 'android:id/timePicker' } }
-  - tap: { id: 'android:id/button2' }
-  - await: { visible: { text: { matches: '^Once daily$' } } }
+  - echo: 'No plan copy in an unconfigured build: the footer is exactly the billing-free policy sentence.'
+  - await: { text: { in: { text: Once-daily runs rewrite }, equals: Once-daily runs rewrite the complete day so far. Missed historical days can be exported manually. } }
+  - echo: Open the daily anchor time picker and cancel it.
+  - tap: { id: automatic-export-anchor }
+  - await: { visible: { id: 'android:id/hours' } }
+  - tap: { text: { matches: '^Cancel$' } }
+  - await: { hidden: { id: 'android:id/hours' } }
+  - echo: Change Repeat from Once daily to Every 3 hours; expect the Update day file row.
   - tap: { text: { matches: '^Once daily$' } }
   - await: { visible: { text: { matches: '^Every 3 hours$' } } }
   - tap: { text: { matches: '^Every 3 hours$' } }
   - await: { visible: { text: Update day file } }
-  - await: { idle: true }
-  - launch: com.bontecou.whereday
-  - await: { visible: { id: map-header } }
+  - echo: Every 3 hours selected. Relaunch and reopen Automatic exports; expect the choice to persist.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - tap: { id: archive-settings }
-  - await: { visible: { text: Distance filter } }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
   - tap: { text: { matches: '^Automatic exports$' } }
-  - await: { visible: { text: { matches: '^Every 3 hours$' } } }
+  - await: { visible: { id: automatic-exports-screen } }
   - await: { idle: true }
+  - await: { visible: { text: { matches: '^Every 3 hours$' } } }
+  - await: { visible: { text: Update day file } }
+  - echo: Restore Once daily; the Update day file row goes away.
   - tap: { text: { matches: '^Every 3 hours$' } }
   - await: { visible: { text: { matches: '^Once daily$' } } }
   - tap: { text: { matches: '^Once daily$' } }
   - await: { hidden: { text: Update day file } }
-  - await: { idle: true }
-  - tap: { text: Enable automatic exports }
-  - scroll-to: { target: { text: { matches: '^Verified lifetime export access is required\.$' } }, direction: down }
-  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - echo: 'Unconfigured billing unlocks scheduled exports: Enable is accepted (next-run card appears, no plan denial), then disable it again.'
+  - tap: { id: automatic-export-enabled }
+  - await: { visible: { text: NEXT PLANNED RUN } }
+  - tap: { id: automatic-export-enabled }
+  - await: { hidden: { text: NEXT PLANNED RUN } }
   - await: { visible: { text: No successful automatic export yet. } }
-  - await: { idle: true }
-  - scroll-to: { target: { text: Back to settings }, direction: up }
-  - tap: { text: Back to settings }
-  - await: { visible: { text: Distance filter } }
+  - tap: { id: top-bar-back }
+  - await: { visible: { id: settings-screen } }
   - await: { idle: true }

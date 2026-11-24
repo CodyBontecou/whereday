@@ -1,45 +1,95 @@
+# Country Days CSV delivery on the disposable QA package com.bontecou.whereday.mapqa (NEVER the owner's
+# com.bontecou.whereday), in a build with UNCONFIGURED Play billing.
+# Prerequisites: mapQa onboarded, idle (not recording), English UI, no country days and no manual stays (the
+# Country Days summary reads "0 countries"; imported points stay unresolved because the test never analyzes them).
+# Side effects (mapQa only): adds one default one-day manual stay (today, the device-locale default country) and
+# deletes it again; prepares iso-me-country-days.csv in mapQa's cache for the share sheet (dismissed with Back,
+# nothing shared); opens the Save picker and cancels it (no file written). Does not analyze or export history.
+# 2026-11-24 re-recorded live (argent 0.34.0) for PR #177: unconfigured builds unlock exports, so Share file and
+# Save file as… now reach the system share sheet and Save picker instead of the "Verified lifetime export access is
+# required." denial. The share sheet closes the delivery sheet, so it is reopened for Save file as…. Retargeted from
+# the owner package to mapQa.
+# The Country CSV preview help must be exactly the plan-free sentence (before c96225a8 it ended "... and needs an
+# active Whereday plan."); the exact-match check was recorded live 2026-11-24.
+# Raw `button: back` steps dismiss system UI (share sheet, DocumentsUI), which no directive expresses; each is followed
+# by a hidden check on the system UI that was visible before it.
+# Coordinate exceptions: none. The live tap on the Country Days row was recorded role-only (the pre-tap tree was
+# stale); it is replaced by the row's fixed text, the element under that point.
+# The live devtools tree went stale after every screen change; it was refreshed with
+# `adb shell am force-stop com.argent.androiddevtools` before each recorded step (not part of the test).
+version: 1
+requires:
+  platform: android
 steps:
-  - echo: Requires completed onboarding, idle recording, no country days or manual stays, and unconfigured lifetime access. Adds and removes one default one-day manual stay; does not analyze or export personal history.
-  - launch: com.bontecou.whereday
-  - await: { visible: { id: map-header } }
+  - echo: Disposable mapQa only (never com.bontecou.whereday), unconfigured billing. Requires no country days or manual stays.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - tap: { id: archive-settings }
-  - await: { visible: { text: Distance filter } }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Country Days$' } }, direction: down }
   - tap: { text: { matches: '^Country Days$' } }
-  - await: { visible: { text: No country days yet } }
+  - await: { visible: { id: country-days-content } }
   - await: { idle: true }
-  - tap: { text: Add country stay }
-  - await: { visible: { text: Save stay } }
-  - tap: { text: Save stay }
-  - await: { visible: { text: View dates } }
-  - scroll-to: { target: { text: { matches: '^Export country CSV$' } }, direction: down }
-  - tap: { text: { matches: '^Export country CSV$' } }
-  - await: { visible: { text: Share file } }
+  - echo: Baseline is no country days.
+  - assert: { text: { in: { id: country-summary-countries }, equals: 0 countries } }
+  - echo: Add one default one-day manual stay.
+  - tap: { id: country-add-stay }
+  - await: { visible: { id: stay-save } }
   - await: { idle: true }
-  - tool: screenshot
-    args: { scale: 0.5 }
-  - tap: { text: Share file }
-  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - tap: { id: stay-save }
+  - await: { text: { in: { id: country-summary-countries }, equals: 1 country } }
+  - await: { idle: true }
+  - echo: 'Country CSV delivery is unlocked: Share file opens the Android share sheet (dismissed with Back, nothing shared).'
+  - scroll-to: { target: { id: history-export-open }, direction: down }
+  - tap: { id: history-export-open }
+  - await: { visible: { text: { matches: '^Share file$' } } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^Share file$' } }
+  - await: { visible: { id: 'com.android.intentresolver:id/content_preview_filename' }, timeout: 15000 }
+  - await: { text: { in: { id: 'com.android.intentresolver:id/content_preview_filename' }, contains: .csv } }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.android.intentresolver:id/content_preview_filename' } }
+  - echo: Save file as… opens the system Save picker; cancel it with Back so no file is written.
+  - scroll-to: { target: { id: history-export-open }, direction: down }
+  - tap: { id: history-export-open }
+  - await: { visible: { text: Save file as… } }
   - await: { idle: true }
   - tap: { text: Save file as… }
-  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
-  - scroll-to: { target: { text: { matches: '^Done$' } }, direction: down }
-  - tap: { text: { matches: '^Done$' } }
-  - await: { visible: { text: Preview country CSV } }
-  - tap: { text: Preview country CSV }
+  - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
+  - await: { text: { in: { id: history-export-picker-notice }, contains: iso-me-country-days.csv · Export canceled. } }
+  - echo: Preview the country CSV; expect its header row.
+  - scroll-to: { target: { id: country-preview }, direction: up }
+  - tap: { id: country-preview }
   - await: { visible: { text: Country CSV preview } }
-  - await: { visible: { text: { matches: '^country_code,local_date,source' } } }
+  - await: { text: { in: { text: Preview shows the first 100 local dates }, equals: Preview shows the first 100 local dates. Export country CSV includes all dates in the selected period. } }
+  - await: { visible: { text: 'country_code,local_date,source' } }
   - tap: { text: { matches: '^Done$' } }
-  - await: { visible: { text: Edit stay } }
-  - tap: { text: Edit stay }
-  - await: { visible: { text: Edit country stay } }
-  - tap: { text: Delete country stay }
-  - await: { visible: { text: Delete this country stay? } }
-  - tap: { text: Delete stay }
+  - await: { hidden: { text: Country CSV preview } }
+  - echo: Delete the manual stay to restore the baseline.
+  - tap: { text: Edit country stay }
+  - await: { visible: { text: { matches: '^Edit country stay$' } } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: stay-delete }, direction: down }
+  - tap: { id: stay-delete }
+  - await: { visible: { id: stay-delete-confirm } }
+  - tap: { id: stay-delete-confirm }
+  - await: { visible: { id: country-days-content } }
+  - await: { idle: true }
   - await: { visible: { text: No country days yet } }
-  - scroll-to: { target: { text: Back to settings }, direction: up }
-  - tap: { text: Back to settings }
-  - await: { visible: { text: Distance filter } }
+  - scroll-to: { target: { id: country-summary-countries }, direction: up }
+  - await: { text: { in: { id: country-summary-countries }, equals: 0 countries } }
+  - scroll-to: { target: { id: country-back }, direction: up }
+  - tap: { id: country-back }
+  - await: { visible: { id: settings-screen } }
   - await: { idle: true }

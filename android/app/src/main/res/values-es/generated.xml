@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">Exportar mis %1$s como %2$s, %3$s.</string>
     <string name="archive_recipe_single">todo en un archivo</string>
     <string name="archive_recipe_split">un archivo por día</string>
+    <string name="archive_recipe_split_outing">un archivo por salida</string>
     <string name="atlas_add_stay">Añadir estancia</string>
     <string name="atlas_all_countries">Todos los países</string>
     <string name="atlas_all_years">Todos los años</string>
@@ -117,6 +118,7 @@
     <string name="automation_command_cancel">Cancelar</string>
     <string name="automation_command_help">Puedes cancelar y consultar el diario si se interrumpe el resultado.</string>
     <string name="automation_command_title">Completando el comando de Whereday</string>
+    <string name="automation_detail_exports">Archivos completos con los filtros solicitados.</string>
     <string name="automation_detail_exports_plan">Archivos completos con los filtros solicitados. También se requiere un plan de Whereday activo.</string>
     <string name="automation_detail_manual_visits">Registra la llegada a un lugar guardado, unas coordenadas o tu ubicación actual, y finaliza visitas manuales. Devuelve el nombre, la dirección y los horarios de la visita. Para usar la ubicación actual, Whereday debe estar abierta y tener acceso a la ubicación.</string>
     <string name="automation_detail_outings">Nombres de las salidas registradas y horas de inicio y fin.</string>
@@ -284,6 +286,7 @@
     <string name="country_period_rolling">Últimos 365 días</string>
     <string name="country_period_year">Este año</string>
     <string name="country_preview">Vista previa del CSV de países</string>
+    <string name="country_preview_help">La vista previa muestra las primeras 100 fechas locales. La exportación del CSV de países incluye todas las fechas del periodo seleccionado.</string>
     <string name="country_preview_plan_help">La vista previa muestra las primeras 100 fechas locales. La exportación del CSV de países incluye todas las fechas del periodo seleccionado y requiere un plan de Whereday activo.</string>
     <string name="country_preview_title">Vista previa del CSV de países</string>
     <string name="country_retry">Reintentar</string>

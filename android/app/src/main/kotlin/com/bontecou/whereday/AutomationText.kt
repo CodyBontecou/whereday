@@ -15,7 +15,8 @@ import com.bontecou.whereday.platform.*
     AutomationScope.manualVisits->R.string.automation_scope_manual_visits
     AutomationScope.exports->R.string.automation_scope_exports
 })
-@Composable internal fun AutomationScope.detail():String=stringResource(when(this) {
+/** [plans] is false in builds without Play billing, where exports need no plan. */
+@Composable internal fun AutomationScope.detail(plans:Boolean=true):String=stringResource(when(this) {
     AutomationScope.summary->R.string.automation_detail_summary
     AutomationScope.visits->R.string.automation_detail_visits
     AutomationScope.outings->R.string.automation_detail_outings
@@ -24,7 +25,7 @@ import com.bontecou.whereday.platform.*
     AutomationScope.recording->R.string.automation_detail_recording
     AutomationScope.places->R.string.automation_detail_places
     AutomationScope.manualVisits->R.string.automation_detail_manual_visits
-    AutomationScope.exports->R.string.automation_detail_exports_plan
+    AutomationScope.exports->if(plans) R.string.automation_detail_exports_plan else R.string.automation_detail_exports
 })
 @Composable internal fun automationFailureText(failure:AutomationFailure)=stringResource(when(failure) {
     AutomationFailure.save->R.string.automation_failure_save

@@ -1,10 +1,20 @@
+# Filename preset persistence in Archive › Filters and fields, on the disposable QA package
+# com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday). Prerequisites: mapQa onboarded, idle,
+# English UI, Readable filename preset. Side effects: switches to Compact, relaunches, restores Readable.
+# 2026-11-24: retargeted from the owner package to mapQa, and the Archive identity gate changed from the
+# "Lifetime export access" card (gone in unconfigured builds since PR #177) to export-history-count; verified with
+# the CLI runner, not re-recorded.
+version: 1
+requires:
+  platform: android
 steps:
-  - echo: Requires completed onboarding, idle recording and the Readable filename preset. Changes to Compact, verifies it after restart, then restores Readable. Does not buy or write a destination file.
-  - launch: com.bontecou.whereday
+  - echo: Disposable mapQa only (never com.bontecou.whereday). Requires completed onboarding, idle recording and the Readable filename preset. Changes to Compact, verifies it after restart, then restores Readable. Does not buy or write a destination file.
+  - launch: com.bontecou.whereday.mapqa
   - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { id: navigation-archive }
-  - await: { visible: { text: Lifetime export access } }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
   - tap: { text: { matches: '^Filters and fields$' } }
   - scroll-to: { target: { text: { matches: '^Readable$' } }, direction: down }
@@ -14,11 +24,12 @@ steps:
   - tap: { text: { matches: '^Compact$' } }
   - await: { visible: { text: 'isome_{type}_{datetime}' } }
   - await: { idle: true }
-  - launch: com.bontecou.whereday
+  - launch: com.bontecou.whereday.mapqa
   - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { id: navigation-archive }
-  - await: { visible: { text: Lifetime export access } }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
   - tap: { text: { matches: '^Filters and fields$' } }
   - scroll-to: { target: { text: { matches: '^Compact$' } }, direction: down }

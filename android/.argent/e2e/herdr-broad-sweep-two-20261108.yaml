@@ -1,4 +1,8 @@
 steps:
+# Prerequisites (re-documented 2026-11-24): onboarded idle English mapQa with exactly 25 route points, 1 visit and
+# 1 saved place, no grants and no recording. One synthetic way to seed it on a fresh install: import
+# android/.argent/fixtures/visit-navigation.json (1 visit, 12 points) and any 13-point synthetic public-coordinate CSV
+# through Archive › Import history file, and current-saved-place-20261029.csv through Places › Import CSV.
 - echo: 'English mapQa only; original25points1visit1place, no grants and no recording.
     Distinct second sweep: large draft lifecycle; long local search; network-geocoding-off
     policy/offline map/cancel/restart/restore; absent Automate repeated actions. No
@@ -474,11 +478,15 @@ steps:
     target:
       id: automation-scope-exports
     direction: down
+# 2026-11-24: the exports scope detail used to end with a plan sentence ("Verified access to a Whereday plan is also
+# required.", later "An active Whereday plan is also required."). Builds without Play billing (this mapQa) show no plan
+# wording since c96225a8, so the check now requires the detail to end right after "requested filters." (the same
+# check, recorded live on this screen, as in plan-copy-unconfigured-billing). Re-recorded check only, not the sweep.
 - await:
     text:
       in:
         identifier: automation-scope-exports
-      contains: Verified access to a Whereday plan is also required.
+      matches: 'requested filters\.$'
 - await:
     idle: true
 - scroll-to:

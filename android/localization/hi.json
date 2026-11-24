@@ -1,6 +1,6 @@
 {
   "locale": "hi",
-  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
+  "defaultSourceSha256": "241c437bab5c5fb70dcb8b02a800c5b2ce3fc993f0ea47b0fa243af2c8dda98e",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -2182,6 +2182,9 @@
     "export_delivery_folder_policy_free": "नाम पहले से मौजूद होने पर फ़ोल्डर निर्यात दोनों फ़ाइलें रखता है। सेटिंग्स में फ़ोल्डर चुनें।",
     "export_delivery_help_free": "चुनें कि यह फ़ाइल कहाँ साझा या सहेजनी है।",
     "onboarding_export_note_free": "इसे रोज़ किसी फ़ोल्डर में शेड्यूल करें, या एक बार निर्यात करें।",
-    "support_preview_portability_free": "आठ एक्सपोर्ट फ़ॉर्मैट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें इम्पोर्ट करें।"
+    "support_preview_portability_free": "आठ एक्सपोर्ट फ़ॉर्मैट का प्रीव्यू देखें और समर्थित इतिहास फ़ाइलें इम्पोर्ट करें।",
+    "automation_detail_exports": "अनुरोधित फ़िल्टर के साथ पूरी फ़ाइलें।",
+    "country_preview_help": "प्रीव्यू पहली 100 स्थानीय तारीखें दिखाता है। देशों का CSV निर्यात चुनी गई अवधि की सभी तारीखें शामिल करता है।",
+    "archive_recipe_split_outing": "हर आउटिंग की एक फ़ाइल"
   }
 }

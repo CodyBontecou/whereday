@@ -1,147 +1,73 @@
-executionPrerequisite: At the Map in the onboarded idle isolated com.bontecou.whereday.mapqa
-  app, with webhook settings reset and no endpoint. Unconfigured purchases and English
-  UI. No recording, permissions, real credentials or owner-package access.
+# Fragment: Map -> Archive -> Settings -> Webhooks on the disposable mapQa package with UNCONFIGURED billing, where
+# every capability is free since PR #177 (BillingState.unlocked), so webhooks are unlocked. Saves a disabled public
+# .invalid endpoint, runs Test connection (it now runs instead of opening the "Whereday plans" dialog and fails
+# because the host cannot resolve), turns delivery on and taps Save, which now asks "Enable webhook delivery?"
+# instead of showing the plans. Cancels that, so it ends on the webhook screen with an unsaved enable toggle
+# ("Unsaved changes"), which webhook-settings-complete-qa relies on.
+# Prerequisite (executionPrerequisite below): mapQa onboarded and idle at the Map right after a launch (Archive keeps
+# its own back stack and scroll position, so a tab left on Webhooks breaks the entry), webhook settings reset (no
+# endpoint), English UI. NEVER the owner's com.bontecou.whereday.
+# Side effects (mapQa only): saves webhook settings with endpoint https://example.invalid/qa, delivery disabled
+# (reset them afterwards, as webhook-settings-complete-qa does); the connection test makes one request attempt to
+# example.invalid, which can never resolve (RFC 2606), so no data leaves the device. Nothing is enabled or queued.
+# Absence checks: "Whereday plans" (the purchase dialog) is checked hidden after Test connection and after Save; in
+# an unconfigured build it opens only from the "Plans and purchases" row, which this test does not tap, so the
+# checks are backed by positive evidence: the connection-failed feedback and the enable confirmation appear instead.
+# Authoring notes: 2026-11-24, argent 0.34.0, API 35 pool emulator. Recorded live; the live describe/await tree went
+# stale after in-window Compose changes and was refreshed with `adb shell am force-stop com.argent.androiddevtools`.
+# The old raw `button: home` + `launch-app` steps (a workaround for that stale tree) are gone: the CLI runner reads
+# the current tree. Coordinate exceptions: none. The Webhooks row tap was captured as a raw point because the
+# pre-tap tree was stale; it is `text: Webhooks` (the row's label), verified by CLI replay.
+version: 1
+requires:
+  platform: android
+executionPrerequisite: At the Map in the onboarded idle isolated com.bontecou.whereday.mapqa app, freshly launched
+  (the Archive tab at its root, not left on Settings or Webhooks), with webhook settings reset and no endpoint. Unconfigured purchases (every capability unlocked) and English UI. No recording,
+  permissions, real credentials or owner-package access.
 steps:
-- tap:
-    id: navigation-archive
-- tap:
-    id: archive-settings
-- await:
-    visible:
-      text: Distance filter
-- await:
-    idle: true
-- scroll-to:
-    target:
-      text: Webhooks
-    direction: down
-- tool: button
-  args:
-    button: home
-- tool: launch-app
-  args:
-    bundleId: com.bontecou.whereday.mapqa
-- await:
-    visible:
-      text: Webhooks
-- await:
-    idle: true
-- tap:
-    text: Webhooks
-- await:
-    visible:
-      id: webhook-screen
-- await:
-    idle: true
-- type:
-    into:
-      id: webhook-url
-    text: https://example.invalid/qa
-    submit: true
-- tap:
-    text: Show Endpoint URL
-- await:
-    visible:
-      text: Hide Endpoint URL
-- tap:
-    text: Hide Endpoint URL
-- scroll-to:
-    target:
-      text: Save webhook settings
-    direction: down
-- tool: button
-  args:
-    button: home
-- tool: launch-app
-  args:
-    bundleId: com.bontecou.whereday.mapqa
-- await:
-    visible:
-      text: Save webhook settings
-- await:
-    idle: true
-- tap:
-    text: Save webhook settings
-- tool: button
-  args:
-    button: home
-- tool: launch-app
-  args:
-    bundleId: com.bontecou.whereday.mapqa
-- await:
-    visible:
-      text: Webhook settings saved.
-- await:
-    idle: true
-- tap:
-    text: Test connection
-- await:
-    visible:
-      text: Lifetime export access
-- await:
-    idle: true
-- await:
-    visible:
-      text: Purchases are not available in this build.
-- tap:
-    text: Restore purchases
-- await:
-    visible:
-      text: Purchases are not available in this build.
-- tap:
-    text: Close
-- await:
-    hidden:
-      text: Lifetime export access
-- await:
-    visible:
-      id: webhook-screen
-- await:
-    idle: true
-- scroll-to:
-    target:
-      id: webhook-enabled
-    direction: up
-- tool: button
-  args:
-    button: home
-- tool: launch-app
-  args:
-    bundleId: com.bontecou.whereday.mapqa
-- await:
-    visible:
-      id: webhook-enabled
-- await:
-    idle: true
-- await:
-    visible:
-      text: Show Endpoint URL
-- tap:
-    id: webhook-enabled
-- scroll-to:
-    target:
-      text: Save webhook settings
-    direction: down
-- tool: button
-  args:
-    button: home
-- tool: launch-app
-  args:
-    bundleId: com.bontecou.whereday.mapqa
-- await:
-    visible:
-      text: Unsaved changes
-- tap:
-    text: Save webhook settings
-- await:
-    visible:
-      text: Lifetime export access
-- await:
-    idle: true
-- tap:
-    text: Close
-- await:
-    visible:
-      id: webhook-screen
-- await:
-    idle: true
+  - echo: At the Map. Open Archive, then its Settings gear; expect Settings (Distance filter).
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
+  - tap: { id: archive-settings }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
+  - await: { visible: { text: Distance filter } }
+  - echo: On Settings. Scroll to Webhooks and open it; expect the webhook screen.
+  - scroll-to: { target: { text: Webhooks }, direction: down }
+  - tap: { text: Webhooks }
+  - await: { visible: { id: webhook-screen } }
+  - await: { idle: true }
+  - echo: On Webhooks (disabled, empty). Type the public .invalid endpoint and submit; then reveal and hide it.
+  - type: { into: { id: webhook-url }, text: 'https://example.invalid/qa', submit: true }
+  - tap: { text: Show Endpoint URL }
+  - await: { visible: { text: Hide Endpoint URL } }
+  - tap: { text: Hide Endpoint URL }
+  - await: { visible: { text: Show Endpoint URL } }
+  - echo: Save the disabled endpoint; expect "Webhook settings saved.".
+  - scroll-to: { target: { text: Save webhook settings }, direction: down }
+  - tap: { text: Save webhook settings }
+  - scroll-to: { target: { text: Webhook settings saved. }, direction: down }
+  - await: { visible: { text: Webhook settings saved. } }
+  - echo: 'Webhooks are unlocked: Test connection runs instead of opening the "Whereday plans" dialog. The .invalid
+      host cannot resolve, so expect "Connection failed. Check the endpoint and network." replacing the saved notice.'
+  - tap: { text: Test connection }
+  - await: { visible: { text: Connection failed. Check the endpoint and network. }, timeout: 20000 }
+  - await: { hidden: { text: Webhook settings saved. } }
+  - assert: { hidden: { text: Whereday plans } }
+  - echo: Scroll up and turn on webhook delivery (unsaved).
+  - scroll-to: { target: { id: webhook-enabled }, direction: up }
+  - await: { visible: { text: Show Endpoint URL } }
+  - tap: { id: webhook-enabled }
+  - echo: 'Scroll to Save (Unsaved changes shown) and tap it; unlocked, expect the "Enable webhook delivery?"
+      confirmation rather than the plans dialog. Cancel it so nothing is enabled.'
+  - scroll-to: { target: { text: Save webhook settings }, direction: down }
+  - await: { visible: { text: Unsaved changes } }
+  - tap: { text: Save webhook settings }
+  - await: { visible: { text: Enable webhook delivery? } }
+  - assert: { hidden: { text: Whereday plans } }
+  - tap: { text: Cancel }
+  - await: { hidden: { text: Enable webhook delivery? } }
+  - await: { visible: { text: Unsaved changes } }
+  - await: { visible: { id: webhook-screen } }
+  - await: { idle: true }

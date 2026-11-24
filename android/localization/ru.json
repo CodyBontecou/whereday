@@ -1,6 +1,6 @@
 {
   "locale": "ru",
-  "defaultSourceSha256": "e85bbd315f4ba61c285b93226cef1421471c14bd9e19cba74aa0ba2c400ba271",
+  "defaultSourceSha256": "241c437bab5c5fb70dcb8b02a800c5b2ce3fc993f0ea47b0fa243af2c8dda98e",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -2302,6 +2302,9 @@
     "export_delivery_folder_policy_free": "При экспорте в папку сохраняются оба файла, если имя уже занято. Выберите папку в Настройках.",
     "export_delivery_help_free": "Выберите, куда отправить или сохранить файл.",
     "onboarding_export_note_free": "Настройте ежедневный экспорт в папку или экспортируйте один раз.",
-    "support_preview_portability_free": "Просматривайте восемь форматов экспорта и импортируйте поддерживаемые файлы истории."
+    "support_preview_portability_free": "Просматривайте восемь форматов экспорта и импортируйте поддерживаемые файлы истории.",
+    "automation_detail_exports": "Полные файлы с выбранными фильтрами.",
+    "country_preview_help": "Предпросмотр показывает первые 100 местных дат. Экспорт CSV по странам включает все даты выбранного периода.",
+    "archive_recipe_split_outing": "по файлу на выход"
   }
 }

@@ -38,14 +38,14 @@ private fun AutomationFailure?.accessUnavailable()=this!=null && this!=Automatio
     val state by graph.automationController.state.collectAsStateWithLifecycle()
     val context=LocalContext.current
     LaunchedEffect(Unit) {graph.automationController.reload()}
-    AutomationForm(state,back,graph.automationController::approve,graph.automationController::disable,graph.automationController::reload) {
+    AutomationForm(state,back,graph.automationController::approve,graph.automationController::disable,graph.automationController::reload,plans=graph.purchases.enforced,install={
         try {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse("https://play.google.com/store/apps/details?id=com.llamalab.automate")))}
         catch(_:Exception) {graph.automationController.installUnavailable()}
-    }
+    })
 }
 
 @Composable internal fun AutomationForm(state:AutomationUiState,back:()->Unit,approve:(AutomationIdentity,Set<AutomationScope>)->Unit,
-    disable:()->Unit,reload:()->Unit,install:()->Unit) {
+    disable:()->Unit,reload:()->Unit,install:()->Unit,plans:Boolean=true) {
     val installed=state.installed;val approval=state.approval
     val current by rememberUpdatedState(state)
     val binding=automationBinding(state);val key=automationReviewKey(state)
@@ -122,7 +122,7 @@ private fun AutomationFailure?.accessUnavailable()=this!=null && this!=Automatio
                             colors=CheckboxDefaults.colors(checkedColor=wd.accent,uncheckedColor=wd.textMuted,checkmarkColor=wd.surface))
                         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
                             Text(scope.title(),style=MaterialTheme.typography.bodyLarge,color=if(rowEnabled) wd.textPrimary else wd.textMuted)
-                            Text(scope.detail(),style=WdType.caption2,color=wd.textMuted)
+                            Text(scope.detail(plans),style=WdType.caption2,color=wd.textMuted)
                         }
                     }
                 }

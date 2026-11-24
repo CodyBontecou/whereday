@@ -1,0 +1,129 @@
+# A canceled Save picker's notice stays on the screen that opened it, on the disposable QA package
+# com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday).
+# Reproduction: Country Days › Export country CSV › Save file as…, cancel the system picker → Country Days shows
+# "iso-me-country-days.csv · Export canceled." Then open an outing's details: before ed7410d7 its export card showed
+# the same Country Days notice (the canceled request stays non-null, so c96225a8's `picker.request!=null` gate let it
+# through). Now Outing details shows no picker notice, and returning to Country Days still shows it there.
+# Evidence: fails on 180d0e56 at the Outing details "history-export-picker-notice hidden" check; passes on ed7410d7.
+# Prerequisites: mapQa onboarded, idle (not recording), English UI (MM/DD/YYYY date input), device time zone
+# America/Puerto_Rico, inferred outings on, no country days or manual stays, and the public replay fixture
+# android/.argent/fixtures/replay-route.csv imported once (one inferred outing on 2026-10-27; staging steps in
+# outing-export-access.yaml).
+# Side effects (mapQa only): adds one default one-day manual stay and deletes it again; prepares
+# iso-me-country-days.csv in mapQa's cache and cancels the Save picker (no file written); opens the 2026-10-27
+# timeline and returns it to today; ends on the Map.
+# Recorded live 2026-11-24 (argent 0.34.0) on ed7410d7. Settings reopens on its last destination, so the second
+# Archive › Settings lands directly on Country Days.
+# Raw steps: `button: back` cancels DocumentsUI (followed by a hidden check); the date field is cleared with raw
+# backspace presses and the value is proven by the picker's "Entered date" headline.
+# Coordinate exceptions: none in the final YAML. Live, the Country Days row was recorded role-only (stale pre-tap
+# tree) and the date field by today's date; they are replaced by ^Country Days$ and a MM/DD/YYYY pattern.
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Disposable mapQa only (never com.bontecou.whereday). Requires no country days and the 2026-10-27 replay fixture outing.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
+  - tap: { id: archive-settings }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: { matches: '^Country Days$' } }, direction: down }
+  - tap: { text: { matches: '^Country Days$' } }
+  - await: { visible: { id: country-days-content } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: country-summary-countries }, equals: 0 countries } }
+  - echo: Add a one-day stay, then cancel Save file as… for the country CSV; the canceled notice shows on Country Days.
+  - tap: { id: country-add-stay }
+  - await: { visible: { id: stay-save } }
+  - await: { idle: true }
+  - tap: { id: stay-save }
+  - await: { text: { in: { id: country-summary-countries }, equals: 1 country } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: history-export-open }, direction: down }
+  - tap: { id: history-export-open }
+  - await: { visible: { text: Save file as… } }
+  - await: { idle: true }
+  - tap: { text: Save file as… }
+  - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
+  - scroll-to: { target: { id: history-export-picker-notice }, direction: down }
+  - await: { text: { in: { id: history-export-picker-notice }, contains: iso-me-country-days.csv · Export canceled. } }
+  - echo: Open the 2026-10-27 outing's details; its export card must not show the Country Days notice.
+  - tap: { id: navigation-map }
+  - await: { visible: { id: map-day-peek } }
+  - await: { idle: true }
+  - tap: { id: map-day-peek }
+  - await: { visible: { id: map-open-timeline } }
+  - tap: { id: map-open-timeline }
+  - await: { visible: { id: timeline-content } }
+  - await: { idle: true }
+  - tap: { id: today-pick-day }
+  - await: { visible: { text: Switch to text input mode } }
+  - tap: { text: Switch to text input mode }
+  - tap: { text: { matches: '^\d{2}/\d{2}/\d{4}$' } }
+  - tool: run-sequence
+    args:
+      steps:
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+        - { tool: keyboard, args: { key: backspace } }
+  - tool: keyboard
+    args:
+      text: '10272026'
+  - await: { visible: { text: 'Entered date: Tuesday, October 27, 2026' } }
+  - tap: { text: { matches: '^Show day$' } }
+  - await: { visible: { text: 'October 27, 2026' } }
+  - await: { idle: true }
+  - tap: { text: Inferred outing }
+  - await: { visible: { id: outing-detail-content } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Delete outing }, direction: down }
+  - await: { visible: { id: history-export-open } }
+  - await: { hidden: { id: history-export-picker-notice } }
+  - echo: Back to today and the Map, then reopen Country Days; the canceled notice is still shown on the screen that opened the picker.
+  - scroll-to: { target: { text: Back to timeline }, direction: up }
+  - tap: { text: Back to timeline }
+  - await: { visible: { id: timeline-today } }
+  - await: { idle: true }
+  - tap: { id: timeline-today }
+  - await: { hidden: { id: timeline-today } }
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
+  - tap: { id: archive-settings }
+  - await: { visible: { id: country-days-content } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: history-export-picker-notice }, direction: down }
+  - await: { text: { in: { id: history-export-picker-notice }, contains: iso-me-country-days.csv · Export canceled. } }
+  - echo: Delete the manual stay to restore the baseline, then return to the Map.
+  - tap: { text: Edit country stay }
+  - await: { visible: { text: { matches: '^Edit country stay$' } } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: stay-delete }, direction: down }
+  - tap: { id: stay-delete }
+  - await: { visible: { id: stay-delete-confirm } }
+  - tap: { id: stay-delete-confirm }
+  - await: { visible: { text: No country days yet } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: country-back }, direction: up }
+  - tap: { id: country-back }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
+  - tap: { id: navigation-map }
+  - await: { visible: { id: map-header-title } }
+  - await: { idle: true }
