@@ -1,5 +1,6 @@
 """Coverage checks for the onboarding's editorial headlines (the "Page One" first-run flow)."""
 import json
+import re
 import unittest
 
 import localization_catalog as catalog
@@ -104,6 +105,27 @@ class OnboardingLocalizationTests(unittest.TestCase):
                     self.assertEqual(value.count("\n"), 1)
                     self.assertTrue(all(line == line.strip() and line for line in value.split("\n")))
                     self.assertNotIn("\\n", value)
+
+    def test_no_copy_still_promises_tonights_page(self):
+        # The evening recap replaced the one-shot "page one" notification; the cover's metaphor stays.
+        self.assertIn("Every day\nis a page.", self.strings)
+        promises = re.compile(r"page one (arrives|closes|is (open|written|ready))|tonight[’']s page|today is page one|"
+                              r"closes tonight|your first page", re.IGNORECASE)
+        sources = [self.source, self.free_week_source,
+                   (catalog.ROOT / "IsoMe/Views/RemindersSettingsView.swift").read_text(),
+                   (catalog.ROOT / "IsoMe/Services/RecapReminders.swift").read_text()]
+        for key, entry in self.strings.items():
+            if entry.get("extractionState") == "stale":
+                continue
+            with self.subTest(key=key):
+                self.assertIsNone(promises.search(key))
+        for source in sources:
+            # Comments may describe the legacy notification; string literals may not promise it.
+            literals = re.findall(r'"(?:[^"\\\n]|\\.)*"', "\n".join(
+                line for line in source.splitlines() if not line.lstrip().startswith("//")))
+            for literal in literals:
+                with self.subTest(literal=literal):
+                    self.assertIsNone(promises.search(literal))
 
 
 if __name__ == "__main__":
