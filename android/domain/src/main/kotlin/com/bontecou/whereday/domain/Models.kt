@@ -65,8 +65,8 @@ object TrackQuality {
     fun flaggedIds(previous: List<TrackPoint>, next: TrackPoint): Set<String> {
         val last = previous.lastOrNull() ?: return emptySet()
         val flagged = mutableSetOf<String>()
-        val seconds = (next.time.toEpochMilli() - last.time.toEpochMilli()) / 1000.0
-        if (seconds > 0 && last.coordinate.distanceTo(next.coordinate) / seconds > 40) flagged += next.id
+        // Speed alone never flags a point: fast travel such as a flight is real movement.
+        // Only an out-and-back spike (the middle point jumps away and the track returns) is a glitch.
         previous.getOrNull(previous.lastIndex - 1)?.let { before ->
             if (before.coordinate.distanceTo(last.coordinate) > 100 && last.coordinate.distanceTo(next.coordinate) > 100 && before.coordinate.distanceTo(next.coordinate) < 30) flagged += last.id
         }
