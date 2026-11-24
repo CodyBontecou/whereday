@@ -11,20 +11,22 @@ HEADLINES = (
     "Let it write while\nit’s in your pocket.",
     "Check without\nopening it.",
     "Your history,\nyour files.",
-    "Page one closes\ntonight.",
-    "Page one closes\ntomorrow night.",
-    "You’re in.\nPage one is open.",
+    "Recording starts\nnow.",
 )
 
 # The free-week step's headlines are chosen in OnboardingFreeWeekLogic.swift.
 FREE_WEEK_HEADLINES = (
-    "Page one starts\nnow, on us.",
-    "Page one starts\nnow.",
-    "Page one starts\nnow, for good.",
+    "Recording starts\nnow, on us.",
+    "Recording starts\nnow.",
+    "Recording starts\nnow, for good.",
 )
 
 
 FLOW_COPY = (
+    "You’re in.", "Evening recap", "Every evening · %@",
+    "Every night at %@, starting tonight. Change it in Settings › Reminders.",
+    "Every night at %@, starting tomorrow. Change it in Settings › Reminders.",
+    "A short recap of your day: where you went and how far.",
     "Back", "Next", "Get Started", "Step %lld of %lld", "Checking purchases…", "Loading...",
     "A life of places.\nYours to keep.", "Your Whereday plan",
     "Manage your purchase and Family Sharing.",
