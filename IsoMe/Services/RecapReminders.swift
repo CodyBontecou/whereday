@@ -224,6 +224,7 @@ enum RecapAggregation {
         var places: [(place: RecapPlace, latitude: Double, longitude: Double)] = []
         for visit in visits.sorted(by: { $0.arrivedAt < $1.arrivedAt }) {
             let duration = max(0, min(visit.departedAt ?? periodEnd, periodEnd).timeIntervalSince(visit.arrivedAt))
+            // (A stay that began before the period counts its full length; only the ranking uses it.)
             if let index = places.firstIndex(where: { isSamePlace(visit, name: $0.place.name, latitude: $0.latitude, longitude: $0.longitude) }) {
                 places[index].place.visitCount += 1
                 places[index].place.duration += duration

@@ -330,7 +330,10 @@ actor RecapDataReader {
         let start = period.start
         let end = period.end
         do {
-            var visitQuery = FetchDescriptor<Visit>(predicate: #Predicate { $0.arrivedAt >= start && $0.arrivedAt < end })
+            // Every stay that overlaps the period, as Today counts them (a night at home that began yesterday too).
+            var visitQuery = FetchDescriptor<Visit>(predicate: #Predicate {
+                $0.arrivedAt < end && ($0.departedAt ?? end) > start
+            })
             visitQuery.sortBy = [SortDescriptor(\.arrivedAt)]
             let visits = try modelContext.fetch(visitQuery)
 
