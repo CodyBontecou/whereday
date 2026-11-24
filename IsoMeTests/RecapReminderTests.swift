@@ -1,3 +1,4 @@
+import SwiftData
 import XCTest
 @testable import IsoMe
 
@@ -186,32 +187,111 @@ final class RecapReminderTests: XCTestCase {
                                                  willAutoRenew: true, now: now))
     }
 
-    // MARK: - Aggregation
+    // MARK: - Aggregation (the same places as Today)
 
     private let home = (37.3349, -122.0090)
     private let cafe = (37.3400, -122.0090)   // ~570 m north
     private let office = (37.3500, -122.0090) // ~1.7 km north
+    private let gym = (37.3349, -121.9990)    // ~880 m east
 
-    private func visit(_ name: String?, _ place: (Double, Double), _ day: Int, _ hour: Int, minutes: Int = 60) -> RecapVisit {
+    private var savedHome: SavedPlace { SavedPlace(name: "Home", latitude: home.0, longitude: home.1, radiusMeters: 150, kind: .home) }
+
+    private func model(_ name: String?, _ place: (Double, Double), _ day: Int, _ hour: Int, minutes: Int = 60,
+                       custom: String? = nil, open: Bool = false) -> Visit {
         let arrived = date(2026, 11, day, hour)
-        return RecapVisit(name: name, latitude: place.0, longitude: place.1, arrivedAt: arrived,
-                          departedAt: arrived.addingTimeInterval(TimeInterval(minutes * 60)))
+        return Visit(latitude: place.0, longitude: place.1, arrivedAt: arrived,
+                     departedAt: open ? nil : arrived.addingTimeInterval(TimeInterval(minutes * 60)),
+                     customName: custom, locationName: name, geocodingCompleted: true)
     }
 
-    func testPlacesAreDistinctAndNewOnesAreMarked() {
+    /// Points every 10 minutes from `from` to `to`, walking in a straight line between two places.
+    private func track(_ day: Int, from: (hour: Int, minute: Int), to: (hour: Int, minute: Int),
+                       _ a: (Double, Double), _ b: (Double, Double)) -> [LocationPoint] {
+        let start = date(2026, 11, day, from.hour, from.minute)
+        let end = date(2026, 11, day, to.hour, to.minute)
+        let steps = max(1, Int(end.timeIntervalSince(start) / 600))
+        return (0...steps).map { step in
+            let f = Double(step) / Double(steps)
+            return LocationPoint(latitude: a.0 + (b.0 - a.0) * f, longitude: a.1 + (b.1 - a.1) * f,
+                                 timestamp: start.addingTimeInterval(Double(step) * 600), horizontalAccuracy: 5)
+        }
+    }
+
+    /// The recap's summary for the models, through the same conversion `RecapDataReader` uses.
+    private func recap(_ kind: RecapPeriodKind = .day, visits: [Visit], earlier: [Visit] = [], points: [LocationPoint],
+                       home: SavedPlace?, period: DateInterval, now: Date) -> RecapSummary {
+        RecapAggregation.summary(
+            kind: kind,
+            visits: visits.enumerated().map { DayStayVisit($1, index: $0) },
+            earlierVisits: earlier.enumerated().map { DayStayVisit($1, index: $0) },
+            points: points.map { RecapPoint(latitude: $0.latitude, longitude: $0.longitude, timestamp: $0.timestamp, isOutlier: $0.isOutlier) },
+            home: home.map(DayStayHome.init), countryCount: nil, trackingWasOn: true,
+            period: period, now: now, calendar: calendar)
+    }
+
+    /// Today's day model for the same data (`TodayDay(viewModel:now:)` with these visits and points).
+    private func today(visits: [Visit], points: [LocationPoint], home: SavedPlace?, now: Date) -> TodayDay {
+        let startOfDay = calendar.startOfDay(for: now)
+        let shown = visits.filter { $0.arrivedAt <= now && ($0.departedAt ?? now) >= startOfDay }.sorted { $0.arrivedAt < $1.arrivedAt }
+        return TodayDay(visits: shown, points: points.filter { !$0.isOutlier && $0.timestamp >= startOfDay }, startOfDay: startOfDay,
+                        now: now, home: home, isCurrentVisit: { $0.departedAt == nil })
+    }
+
+    /// The seeded-day case from #170: the night at Home shows only as Home's stretch (no Home visit), so Today
+    /// counts Home and the recap must too.
+    private func dayWithHomeStretch() -> (visits: [Visit], points: [LocationPoint], now: Date) {
         let visits = [
-            visit("Home", home, 23, 7),
-            visit("Corner café", cafe, 23, 9),
-            visit(nil, (home.0 + 0.0003, home.1), 23, 18), // ~33 m from home, unnamed: same place
-            visit("Office", office, 23, 10)
+            model("Corner café", cafe, 23, 9),
+            model("Office", office, 23, 11, minutes: 300),
+            model(nil, gym, 23, 17),                          // not geocoded yet: "Unknown Location"
+            model("812 Elm St", (home.0 + 0.0003, home.1), 23, 19, open: true) // inside Home: reads "Home"
         ]
-        let summary = RecapAggregation.summary(kind: .day, visits: visits, earlierVisits: [visit("Home", home, 20, 8)],
-                                               points: [], countryCount: nil, trackingWasOn: true,
-                                               periodEnd: date(2026, 11, 23, 21))
-        XCTAssertEqual(summary.places.map(\.name), ["Home", "Corner café", "Office"])
-        XCTAssertEqual(summary.places.map(\.isNew), [false, true, true])
-        XCTAssertEqual(summary.places[0].visitCount, 2)
-        XCTAssertEqual(summary.newPlaceCount, 2)
+        let points = track(23, from: (0, 0), to: (8, 40), home, home)
+            + track(23, from: (8, 40), to: (9, 0), home, cafe)
+            + track(23, from: (10, 0), to: (11, 0), cafe, office)
+            + track(23, from: (16, 0), to: (17, 0), office, gym)
+            + track(23, from: (18, 0), to: (19, 0), gym, home)
+        return (visits, points, date(2026, 11, 23, 20, 30))
+    }
+
+    func testDayRecapCountsAndNamesPlacesLikeToday() {
+        let day = dayWithHomeStretch()
+        let todayDay = today(visits: day.visits, points: day.points, home: savedHome, now: day.now)
+        let summary = recap(visits: day.visits, points: day.points, home: savedHome,
+                            period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: day.now)
+
+        // Today: Home (the stretch from midnight, and the evening visit inside Home), Corner café, Office, Unknown Location.
+        XCTAssertEqual(todayDay.placeNames, ["Home", "Corner café", "Office", "Unknown Location"])
+        XCTAssertEqual(todayDay.placeCount, 4)
+        XCTAssertEqual(summary.placeCount, todayDay.placeCount)
+        // Same names in Today's order; the ungeocoded stop counts but isn't read out.
+        XCTAssertEqual(summary.places.map(\.name), ["Home", "Corner café", "Office", nil])
+        XCTAssertEqual(summary.recordedVisitCount, 4)
+        XCTAssertEqual(content(summary, names: true).body.components(separatedBy: ". ").first, "Home, Corner café, Office, and 1 more")
+        XCTAssertTrue(content(summary).body.hasPrefix("4 places and "))
+    }
+
+    func testDayRecapAgreesWithTodayWithoutASavedHome() {
+        let day = dayWithHomeStretch()
+        let todayDay = today(visits: day.visits, points: day.points, home: nil, now: day.now)
+        let summary = recap(visits: day.visits, points: day.points, home: nil,
+                            period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: day.now)
+        XCTAssertEqual(todayDay.placeNames, ["Corner café", "Office", "Unknown Location", "812 Elm St"])
+        XCTAssertEqual(summary.places.map(\.name), ["Corner café", "Office", nil, "812 Elm St"])
+        XCTAssertEqual(summary.placeCount, todayDay.placeCount)
+    }
+
+    func testRecapDistanceIsTodaysMoved() {
+        let day = dayWithHomeStretch()
+        var points = day.points
+        // An imported GPS glitch: Today and the map drop outliers, and so does the recap.
+        points.append(LocationPoint(latitude: 38.0, longitude: -122.0, timestamp: date(2026, 11, 23, 12, 5),
+                                    horizontalAccuracy: 5, isOutlier: true))
+        let summary = recap(visits: day.visits, points: points, home: savedHome,
+                            period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: day.now)
+        let moved = TodayDay.pathDistance(points.filter { !$0.isOutlier }.sorted { $0.timestamp < $1.timestamp })
+        XCTAssertGreaterThan(moved, 3_000)
+        XCTAssertEqual(summary.distanceMeters, moved, accuracy: 0.01)
     }
 
     func testDistanceSkipsGlitches() {
@@ -220,24 +300,101 @@ final class RecapReminderTests: XCTestCase {
             RecapPoint(latitude: 38.0, longitude: -122.0, timestamp: date(2026, 11, 23, 8, 1), isOutlier: true),
             RecapPoint(latitude: cafe.0, longitude: cafe.1, timestamp: date(2026, 11, 23, 8, 10))
         ]
-        XCTAssertEqual(RecapAggregation.distance(along: points), 567, accuracy: 10)
-        XCTAssertEqual(RecapAggregation.distance(along: []), 0)
+        XCTAssertEqual(RecapAggregation.distance(along: points, calendar: calendar), 567, accuracy: 10)
+        XCTAssertEqual(RecapAggregation.distance(along: [], calendar: calendar), 0)
+        // Like the map's 7D totals, the overnight gap between two days isn't travel.
+        let overnight = [
+            RecapPoint(latitude: home.0, longitude: home.1, timestamp: date(2026, 11, 23, 23, 50)),
+            RecapPoint(latitude: office.0, longitude: office.1, timestamp: date(2026, 11, 24, 8))
+        ]
+        XCTAssertEqual(RecapAggregation.distance(along: overnight, calendar: calendar), 0)
     }
 
-    func testWeeklyAggregationLeadsWithTheMostVisitedPlaces() {
+    func testNewPlacesFollowEarlierVisits() {
+        let day = dayWithHomeStretch()
+        let earlier = [model("Office", office, 20, 9), model("Somewhere", gym, 21, 9)]
+        let summary = recap(visits: day.visits, earlier: earlier, points: day.points, home: savedHome,
+                            period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: day.now)
+        // Home's stretch is never new; the evening visit inside Home has no earlier visit within 150 m, so Home is.
+        XCTAssertEqual(summary.places.map(\.isNew), [true, true, false, false])
+        XCTAssertEqual(summary.newPlaceCount, 2)
+    }
+
+    func testWeeklyRecapCountsDistinctPlacesAcrossTodaysDays() {
         let visits = [
-            visit("Corner café", cafe, 23, 9),
-            visit("Office", office, 24, 10), visit("Office", office, 25, 10), visit("Office", office, 26, 10),
-            visit("Home", home, 23, 18, minutes: 600), visit("Home", home, 24, 18, minutes: 600)
+            model("Corner café", cafe, 23, 9),
+            model("Office", office, 24, 10), model("Office", office, 25, 10), model("Office", office, 26, 10),
+            model("Gym", gym, 26, 18)
         ]
-        let summary = RecapAggregation.summary(kind: .week, visits: visits, earlierVisits: [], points: [],
-                                               countryCount: 2, trackingWasOn: true, periodEnd: date(2026, 11, 29, 21))
-        XCTAssertEqual(summary.places.map(\.name), ["Office", "Home", "Corner café"])
-        XCTAssertEqual(summary.countryCount, 2)
+        // Each morning begins at Home, so every day shows Home's stretch.
+        let points = [23, 24, 25, 26].flatMap { track($0, from: (0, 0), to: (8, 30), home, home) }
+        let now = date(2026, 11, 26, 20)
+        let summary = recap(.week, visits: visits, points: points, home: savedHome,
+                            period: RecapSchedule.period(endingAt: date(2026, 11, 29, 21), kind: .week, calendar: calendar), now: now)
+
+        // Each day as Today (or the map's day sheet for a past day) shows it.
+        var names: [String] = []
+        for dayNumber in [23, 24, 25, 26] {
+            let start = date(2026, 11, dayNumber, 0)
+            let midnight = calendar.date(byAdding: .day, value: 1, to: start)!
+            let dayNow = dayNumber == 26 ? now : midnight
+            let shown = visits.filter { $0.arrivedAt <= dayNow && ($0.departedAt ?? dayNow) >= start }
+            let dayPoints = points.filter { $0.timestamp >= start && $0.timestamp < midnight }
+            let end = dayNumber == 26 ? now : DayStayPlanner.pastDayEnd(visits: shown.map { DayStayVisit($0) },
+                                                                         points: dayPoints.map(DayStayPoint.init), endOfDay: midnight)
+            names += TodayDay(visits: shown, points: dayPoints, startOfDay: start, now: end, home: savedHome,
+                              isCurrentVisit: { _ in false }).placeNames
+        }
+        XCTAssertEqual(Set(names), ["Home", "Corner café", "Office", "Gym"])
+        XCTAssertEqual(summary.placeCount, Set(names).count)
+        // Most visited first: Home on 4 mornings, Office 3 times.
+        XCTAssertEqual(summary.places.map(\.name), ["Home", "Office", "Corner café", "Gym"])
+        XCTAssertEqual(summary.places.first?.visitCount, 4)
         // A day recap never reports countries.
-        let day = RecapAggregation.summary(kind: .day, visits: visits, earlierVisits: [], points: [],
-                                           countryCount: 2, trackingWasOn: true, periodEnd: date(2026, 11, 29, 21))
+        let day = RecapAggregation.summary(kind: .day, visits: [], earlierVisits: [], points: [], home: nil, countryCount: 2,
+                                           trackingWasOn: true, period: DateInterval(start: date(2026, 11, 26, 0), end: now),
+                                           now: now, calendar: calendar)
         XCTAssertNil(day.countryCount)
+    }
+
+    func testANightAtHomeAloneIsStillNothingRecorded() {
+        // Points only at Home: Today shows Home's stretch (1 place), but no visit was recorded and nothing moved.
+        let points = track(23, from: (0, 0), to: (20, 0), home, home)
+        let now = date(2026, 11, 23, 20, 30)
+        let todayDay = today(visits: [], points: points, home: savedHome, now: now)
+        let summary = recap(visits: [], points: points, home: savedHome,
+                            period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: now)
+        XCTAssertEqual(todayDay.placeCount, 1)
+        XCTAssertEqual(summary.placeCount, 1)
+        XCTAssertEqual(summary.recordedVisitCount, 0)
+        XCTAssertEqual(reason(summary), .nothingRecorded)
+        // And a day at Home with a recorded Home visit is quiet, not empty.
+        let atHome = recap(visits: [model("812 Elm St", home, 23, 8, minutes: 600)], earlier: [model("812 Elm St", home, 20, 8)],
+                           points: points, home: savedHome,
+                           period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: now)
+        XCTAssertEqual(atHome.places.map(\.name), ["Home"])
+        XCTAssertEqual(reason(atHome), .quietDay)
+    }
+
+    func testReaderMatchesTodayFromTheStore() async throws {
+        let schema = Schema([Visit.self, LocationPoint.self, RecordingSession.self, PhotoMoment.self, SavedPlace.self, CountryStay.self])
+        let container = try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)])
+        let context = ModelContext(container)
+        let day = dayWithHomeStretch()
+        context.insert(savedHome)
+        context.insert(SavedPlace(name: "Aardvark Office", latitude: office.0, longitude: office.1, kind: .work))
+        for visit in day.visits { context.insert(visit) }
+        for point in day.points { context.insert(point) }
+        try context.save()
+
+        let period = RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar)
+        let reader = RecapDataReader(modelContainer: container)
+        let stored = await reader.summary(kind: .day, period: period, now: day.now, trackingEnabledNow: true, calendar: calendar)
+        let summary = try XCTUnwrap(stored)
+        let todayDay = today(visits: day.visits, points: day.points, home: savedHome, now: day.now)
+        XCTAssertEqual(summary.placeCount, todayDay.placeCount)
+        XCTAssertEqual(summary.places.map(\.name), ["Home", "Corner café", "Office", nil])
+        XCTAssertEqual(summary.distanceMeters, TodayDay.pathDistance(day.points.sorted { $0.timestamp < $1.timestamp }), accuracy: 0.01)
     }
 
     // MARK: - Content
@@ -245,7 +402,7 @@ final class RecapReminderTests: XCTestCase {
     private func summary(_ kind: RecapPeriodKind = .day, names: [String?], meters: Double, countries: Int? = nil) -> RecapSummary {
         RecapSummary(kind: kind,
                      places: names.map { RecapPlace(name: $0, isNew: false, visitCount: 1, duration: 600, firstArrival: Date()) },
-                     distanceMeters: meters, countryCount: countries, trackingWasOn: true)
+                     distanceMeters: meters, countryCount: countries, trackingWasOn: true, recordedVisitCount: names.count)
     }
 
     private func content(_ summary: RecapSummary, names: Bool = false, metric: Bool = true) -> RecapContent {

@@ -360,23 +360,26 @@ actor RecapDataReader {
                 countryCount = countries.isEmpty ? nil : countries.count
             }
 
+            // Today's Home: the first saved place of kind Home, in the view model's name order.
+            var placeQuery = FetchDescriptor<SavedPlace>()
+            placeQuery.sortBy = [SortDescriptor(\.name, order: .forward)]
+            let home = try modelContext.fetch(placeQuery).first { $0.kind == .home }
+
             return RecapAggregation.summary(
                 kind: kind,
-                visits: visits.map(Self.recapVisit),
-                earlierVisits: earlier.map(Self.recapVisit),
+                visits: visits.enumerated().map { DayStayVisit($1, index: $0) },
+                earlierVisits: earlier.enumerated().map { DayStayVisit($1, index: $0) },
                 points: points.map { RecapPoint(latitude: $0.latitude, longitude: $0.longitude, timestamp: $0.timestamp, isOutlier: $0.isOutlier) },
+                home: home.map(DayStayHome.init),
                 countryCount: countryCount,
                 trackingWasOn: trackingWasOn,
-                periodEnd: min(end, now)
+                period: period,
+                now: now,
+                calendar: calendar
             )
         } catch {
             return nil
         }
-    }
-
-    private static func recapVisit(_ visit: Visit) -> RecapVisit {
-        RecapVisit(name: visit.normalizedCustomName ?? visit.locationName, latitude: visit.latitude, longitude: visit.longitude,
-                   arrivedAt: visit.arrivedAt, departedAt: visit.departedAt)
     }
 }
 

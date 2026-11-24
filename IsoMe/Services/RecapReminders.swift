@@ -172,15 +172,6 @@ enum RecapSchedule {
 
 // MARK: - What happened
 
-/// One visit, as the recap needs it. Built from `Visit` by the scheduler.
-struct RecapVisit: Equatable, Sendable {
-    var name: String?
-    var latitude: Double
-    var longitude: Double
-    var arrivedAt: Date
-    var departedAt: Date?
-}
-
 /// One route point, as the recap needs it.
 struct RecapPoint: Equatable, Sendable {
     var latitude: Double
@@ -189,10 +180,12 @@ struct RecapPoint: Equatable, Sendable {
     var isOutlier = false
 }
 
-/// A distinct place in the period, with how much of the period it took.
+/// A distinct place in the period, as Today names and counts it, with how much of the period it took.
 struct RecapPlace: Equatable, Sendable {
+    /// The name the place is shown with in the recap; nil when Today can only call it "Unknown Location".
     var name: String?
-    /// No visit before the period started was within `RecapAggregation.samePlaceRadius`.
+    /// One of its visits had no visit within `RecapAggregation.samePlaceRadius` before the period started.
+    /// Home's stretch before the first stop is never new.
     var isNew: Bool
     var visitCount: Int
     var duration: TimeInterval
@@ -201,41 +194,100 @@ struct RecapPlace: Equatable, Sendable {
 
 struct RecapSummary: Equatable, Sendable {
     var kind: RecapPeriodKind
-    /// Distinct places: in visiting order for a day, most visited first for a week.
+    /// Distinct places: in Today's order for a day, most visited first for a week.
     var places: [RecapPlace]
     var distanceMeters: Double
     /// Distinct countries from Country Days data; nil when unknown (or for a day recap).
     var countryCount: Int?
     /// Any route point, recording session or tracking during the period.
     var trackingWasOn: Bool
+    /// Visits recorded in the period (Today's stays that come from a visit). Home's stretch before the first stop
+    /// is a place but not a recorded visit, so it doesn't turn a day with nothing recorded into a recap.
+    var recordedVisitCount: Int
 
     var placeCount: Int { places.count }
     var newPlaceCount: Int { places.filter(\.isNew).count }
 }
 
 enum RecapAggregation {
-    /// Two visits closer than this are the same place; also the "seen before" radius.
+    /// A visit with no earlier visit closer than this was to a place never seen before.
     /// Matches the default saved-place radius.
     static let samePlaceRadius: CLLocationDistance = 150
 
-    static func summary(kind: RecapPeriodKind, visits: [RecapVisit], earlierVisits: [RecapVisit],
-                        points: [RecapPoint], countryCount: Int?, trackingWasOn: Bool,
-                        periodEnd: Date) -> RecapSummary {
-        var places: [(place: RecapPlace, latitude: Double, longitude: Double)] = []
-        for visit in visits.sorted(by: { $0.arrivedAt < $1.arrivedAt }) {
-            let duration = max(0, min(visit.departedAt ?? periodEnd, periodEnd).timeIntervalSince(visit.arrivedAt))
-            // (A stay that began before the period counts its full length; only the ranking uses it.)
-            if let index = places.firstIndex(where: { isSamePlace(visit, name: $0.place.name, latitude: $0.latitude, longitude: $0.longitude) }) {
-                places[index].place.visitCount += 1
-                places[index].place.duration += duration
-                if places[index].place.name == nil { places[index].place.name = cleaned(visit.name) }
+    /// The period as Today and the map show it. Each day's places come from `DayStayPlanner`, the same planner
+    /// behind Today's "N PLACES": its stays, named as Today names them (Home inside the saved Home, and Home's
+    /// stretch before the first stop), counted by distinct name. The day still going on runs to `now`, like
+    /// Today; earlier days of a week end with their last record, like the map's day sheet for a picked day.
+    /// A week counts each name once across its days.
+    ///
+    /// - Parameters:
+    ///   - visits: every visit overlapping the period; `index` must be unique.
+    ///   - earlierVisits: visits that began before the period, for "new place".
+    ///   - points: the period's route points; outliers are dropped, as Today and the map drop them.
+    static func summary(kind: RecapPeriodKind, visits: [DayStayVisit], earlierVisits: [DayStayVisit],
+                        points: [RecapPoint], home: DayStayHome?, countryCount: Int?, trackingWasOn: Bool,
+                        period: DateInterval, now: Date, calendar: Calendar = .autoupdatingCurrent) -> RecapSummary {
+        let periodEnd = min(period.end, now)
+        let kept = points.filter { !$0.isOutlier }.sorted { $0.timestamp < $1.timestamp }
+        let visitsByIndex = Dictionary(visits.map { ($0.index, $0) }, uniquingKeysWith: { first, _ in first })
+
+        struct Place {
+            var name: String
+            var listedName: String?
+            var isNew = false
+            var visitIndexes = Set<Int>()
+            var homeStretches = 0
+            var duration: TimeInterval = 0
+            var firstArrival: Date
+        }
+        var order: [String] = []
+        var places: [String: Place] = [:]
+
+        var dayStart = calendar.startOfDay(for: period.start)
+        while dayStart < periodEnd {
+            let nextMidnight = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? dayStart.addingTimeInterval(86_400)
+            defer { dayStart = nextMidnight }
+            let dayPoints = kept
+                .filter { $0.timestamp >= dayStart && $0.timestamp < nextMidnight }
+                .map { DayStayPoint(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) }
+            let dayVisits: [DayStayVisit]
+            let dayEnd: Date
+            if now < nextMidnight {
+                // Today, live: TodayDay(viewModel:now:).
+                dayVisits = DayStayPlanner.visits(visits, overlapping: dayStart, now)
+                dayEnd = now
             } else {
-                let isNew = !earlierVisits.contains { distance(visit.latitude, visit.longitude, $0.latitude, $0.longitude) < samePlaceRadius }
-                places.append((RecapPlace(name: cleaned(visit.name), isNew: isNew, visitCount: 1, duration: duration,
-                                          firstArrival: visit.arrivedAt), visit.latitude, visit.longitude))
+                // A finished day: TodayDay(pastDay:).
+                dayVisits = DayStayPlanner.visits(visits, overlapping: dayStart, nextMidnight)
+                dayEnd = DayStayPlanner.pastDayEnd(visits: dayVisits, points: dayPoints, endOfDay: nextMidnight)
+            }
+            let stays = DayStayPlanner.stays(visits: dayVisits, points: dayPoints, startOfDay: dayStart, now: dayEnd, home: home)
+            for stay in stays {
+                let visit = stay.visitIndex.flatMap { visitsByIndex[$0] }
+                if places[stay.name] == nil {
+                    order.append(stay.name)
+                    places[stay.name] = Place(name: stay.name, firstArrival: visit?.arrivedAt ?? stay.start)
+                }
+                var place = places[stay.name]!
+                // "Unknown Location" isn't worth reading in a notification; the place still counts.
+                let known = visit.map { $0.hasKnownName || stay.name != $0.displayName } ?? true
+                if place.listedName == nil, known { place.listedName = stay.name }
+                place.duration += stay.end.timeIntervalSince(stay.start)
+                if let visit {
+                    place.visitIndexes.insert(visit.index)
+                    place.firstArrival = min(place.firstArrival, visit.arrivedAt)
+                    if !place.isNew, isNew(visit, earlierVisits: earlierVisits) { place.isNew = true }
+                } else {
+                    place.homeStretches += 1
+                }
+                places[stay.name] = place
             }
         }
-        var ordered = places.map(\.place)
+
+        var ordered = order.compactMap { places[$0] }.map { place in
+            RecapPlace(name: place.listedName, isNew: place.isNew, visitCount: place.visitIndexes.count + place.homeStretches,
+                       duration: place.duration, firstArrival: place.firstArrival)
+        }
         if kind == .week {
             // Lead with the places that filled the week.
             ordered.sort {
@@ -244,29 +296,27 @@ enum RecapAggregation {
                 return $0.firstArrival < $1.firstArrival
             }
         }
-        return RecapSummary(kind: kind, places: ordered, distanceMeters: distance(along: points),
-                            countryCount: kind == .week ? countryCount : nil, trackingWasOn: trackingWasOn)
+        let recorded = Set(places.values.flatMap(\.visitIndexes)).count
+        return RecapSummary(kind: kind, places: ordered, distanceMeters: distance(along: kept, calendar: calendar),
+                            countryCount: kind == .week ? countryCount : nil, trackingWasOn: trackingWasOn,
+                            recordedVisitCount: recorded)
     }
 
-    /// Sum of straight segments between consecutive points, skipping GPS glitches.
-    static func distance(along points: [RecapPoint]) -> Double {
-        let kept = points.filter { !$0.isOutlier }.sorted { $0.timestamp < $1.timestamp }
-        guard kept.count > 1 else { return 0 }
-        var total = 0.0
-        for index in 1..<kept.count {
-            total += distance(kept[index - 1].latitude, kept[index - 1].longitude, kept[index].latitude, kept[index].longitude)
-        }
-        return total
+    /// Straight segments between consecutive points, summed within each day and skipping GPS glitches: the
+    /// map's range totals (`MultiDayAggregator`). For one day it is Today's "MOVED".
+    static func distance(along points: [RecapPoint], calendar: Calendar = .autoupdatingCurrent) -> Double {
+        let kept = points.filter { !$0.isOutlier }
+        guard kept.count > 1, let first = kept.map(\.timestamp).min(), let last = kept.map(\.timestamp).max() else { return 0 }
+        return MultiDayAggregator.summarize(
+            visits: [],
+            points: kept.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
+            range: first...last,
+            calendar: calendar
+        ).totalDistanceMeters
     }
 
-    private static func isSamePlace(_ visit: RecapVisit, name: String?, latitude: Double, longitude: Double) -> Bool {
-        if let lhs = cleaned(visit.name)?.lowercased(), let rhs = name?.lowercased(), lhs == rhs { return true }
-        return distance(visit.latitude, visit.longitude, latitude, longitude) < samePlaceRadius
-    }
-
-    private static func cleaned(_ name: String?) -> String? {
-        guard let trimmed = name?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmed.isEmpty else { return nil }
-        return trimmed
+    private static func isNew(_ visit: DayStayVisit, earlierVisits: [DayStayVisit]) -> Bool {
+        !earlierVisits.contains { distance(visit.latitude, visit.longitude, $0.latitude, $0.longitude) < samePlaceRadius }
     }
 
     private static func distance(_ lat1: Double, _ lon1: Double, _ lat2: Double, _ lon2: Double) -> Double {
@@ -299,12 +349,15 @@ enum RecapSkipRules {
 
     /// Quiet, deterministically: no visit to a place never seen before the period started,
     /// and less than `quietDistanceMeters` moved. A commute is not quiet; a day at home is.
+    /// (A place is new when any of its visits is, so grouping visits by Today's names doesn't change this.)
     static func isQuiet(_ summary: RecapSummary) -> Bool {
         summary.newPlaceCount == 0 && summary.distanceMeters < quietDistanceMeters
     }
 
+    /// Nothing recorded: no recorded visit and essentially no movement. Counted from recorded visits, not
+    /// Today's places, so a night at Home that only Home's stretch shows still reads as nothing recorded.
     static func isEmpty(_ summary: RecapSummary) -> Bool {
-        summary.placeCount == 0 && summary.distanceMeters < nothingRecordedMeters
+        summary.recordedVisitCount == 0 && summary.distanceMeters < nothingRecordedMeters
     }
 
     /// The evening window: from 6 PM on the fire's day until the fire. Empty when the fire is at or before 6 PM.
@@ -431,13 +484,14 @@ enum RecapContentBuilder {
         case .day:
             return RecapSummary(kind: .day,
                                 places: names.map { RecapPlace(name: $0, isNew: false, visitCount: 1, duration: 3_600, firstArrival: start) },
-                                distanceMeters: 5_600, countryCount: nil, trackingWasOn: true)
+                                distanceMeters: 5_600, countryCount: nil, trackingWasOn: true, recordedVisitCount: names.count)
         case .week:
             let named = names.enumerated().map { index, name in
                 RecapPlace(name: name, isNew: false, visitCount: 7 - index, duration: 3_600, firstArrival: start)
             }
             let others = (0..<7).map { _ in RecapPlace(name: nil, isNew: true, visitCount: 1, duration: 3_600, firstArrival: start) }
-            return RecapSummary(kind: .week, places: named + others, distanceMeters: 1_520_000, countryCount: 2, trackingWasOn: true)
+            return RecapSummary(kind: .week, places: named + others, distanceMeters: 1_520_000, countryCount: 2, trackingWasOn: true,
+                                recordedVisitCount: named.count + others.count)
         }
     }
 }
