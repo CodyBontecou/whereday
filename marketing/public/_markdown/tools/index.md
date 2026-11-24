@@ -27,6 +27,12 @@ Open a KML or KMZ file and see its placemarks, lines, polygons and timed gx:Trac
 
 Then [convert it to GPX](https://whereday.com/tools/kml-to-gpx/) or [check a GPX file](https://whereday.com/tools/gpx-viewer/).
 
+## [GeoJSON viewer](https://whereday.com/tools/geojson-viewer/)
+
+Open a GeoJSON file and see feature counts by geometry type, per-feature times and a list of what was skipped. Save points and lines as GPX or KML, with the dropped fields named. Your file stays in your browser.
+
+Then [check a GPX file](https://whereday.com/tools/gpx-viewer/) or [open a KML file](https://whereday.com/tools/kml-viewer/).
+
 ## [KML ⇄ GPX converter](https://whereday.com/tools/kml-to-gpx/)
 
 Convert KML to GPX or GPX to KML, including Google Earth `gx:Track` timestamps, with a report of what was kept and skipped before you download. Your file stays in your browser.
