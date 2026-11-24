@@ -1,16 +1,22 @@
-# Page One onboarding, last screen ("Page one closes tonight") without location access:
-# turn off "Send me tonight's page", tap Start my day, and land on the map with tracking off.
+# Page One onboarding, last screen ("Recording starts now.") without location access:
+# turn off "Evening recap", tap Start my day, and land on the map with tracking off.
 # Prerequisites: Whereday debug build on an iOS pool simulator (iPhone 18 Pro, portrait,
 # default text size, English); location permission NOT granted (reset or never asked),
 # e.g. `argent settings-permissions reset location`. No place stamped in this run, so the
 # draft names "Your first place".
 # Side effects: sets hasCompletedOnboarding and persists onboardingIntents; no notification is
-# requested or scheduled (toggle off) and tracking does not start (no location permission).
+# requested or scheduled (toggle off sets the recap to Off) and tracking does not start (no location permission).
 #
-# Coordinate exceptions: the nightly toggle (onboarding-nightly-toggle) and Start my day
+# Coordinate exceptions: the Evening recap toggle (onboarding-recap-toggle) and Start my day
 # (onboarding-next) carry ids, but Argent's iOS runner tree exposes only anonymous
 # AXScrollArea/AXButton nodes there, so taps keep their recorded points (402x874 pt
 # iPhone 18 Pro). The toggle tap lands on the switch track at the row's trailing edge.
+#
+# Last step: these launches pass -hasCompletedOnboarding NO (legacy cohort) and no --use-storekit
+# (Debug development unlock), so the install already has access and the last step is the old
+# Start my day step ("Recording starts now.", with the Evening recap toggle). The paying path (Start my free week) is
+# covered by onboarding-free-week.yaml; onboarding-legacy-skips-payment.yaml checks the legacy
+# route with real StoreKit.
 version: 1
 requires:
   platform: ios
@@ -40,7 +46,7 @@ steps:
         text: Your first place · since this morning
       timeoutMs: 20000
   - await: { idle: true }
-  - echo: "Tonight: turn off Send me tonight's page at (0.85, 0.673), then tap Start my day
+  - echo: "Start my day: turn off Evening recap at (0.85, 0.673), then tap Start my day
       at (0.5, 0.912); expect the map with tracking off and no notification prompt."
   - tool: gesture-tap
     args: { x: 0.85, y: 0.673 }

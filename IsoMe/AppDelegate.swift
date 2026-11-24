@@ -27,6 +27,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         // Register the daily-export background task before applicationDidFinishLaunching returns.
         DailyExportScheduler.registerBackgroundTask()
 
+        // Evening recaps: migrate the old one-shot and rebuild the next request, also on background launches.
+        RecapReminderScheduler.shared.start(container: AppModelStore.openFailure == nil ? AppModelStore.shared : nil)
+
         // Check if app was launched due to a location event
         if let locationKey = launchOptions?[.location] as? Bool, locationKey {
             // App was launched in background due to location event
@@ -99,6 +102,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let request = response.notification.request
+        if request.identifier == RecapReminderScheduler.requestIdentifier {
+            let kind = (request.content.userInfo[RecapReminderScheduler.userInfoKindKey] as? String)
+                .flatMap(RecapPeriodKind.init(rawValue:)) ?? .day
+            Task { @MainActor in
+                RecapOpenRequest.shared.open(kind)
+                RecapReminderScheduler.shared.setNeedsRefresh(after: 1)
+            }
+        }
         if DailyExportNotificationPayload.isDailyExportNotification(
             identifier: request.identifier,
             userInfo: request.content.userInfo
@@ -113,6 +124,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if notification.request.identifier == RecapReminderScheduler.requestIdentifier {
+            // Whereday is open, so the day is already on screen; schedule the following recap instead.
+            Task { @MainActor in RecapReminderScheduler.shared.setNeedsRefresh(after: 1) }
+            completionHandler([])
+            return
+        }
         completionHandler([.banner, .sound])
     }
 

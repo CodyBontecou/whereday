@@ -130,6 +130,7 @@ struct MapRangeChips: View {
         .accessibilityLabel(preset.accessibilityLabel)
         .accessibilityAddTraits(isOn ? .isSelected : [])
         .accessibilityHint("Filters the map date range.")
+        .accessibilityIdentifier("map-range-\(preset.identifierSuffix)")
     }
 }
 
@@ -420,6 +421,7 @@ struct MapPeekCard: View {
         .accessibilityLabel("Open the day so far")
         .accessibilityValue("\(content.kicker), \(content.title). \(content.value), \(content.caption)")
         .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("map-peek-card")
     }
 
     private var regular: some View {
@@ -467,6 +469,7 @@ struct MapPeekCard: View {
         .accessibilityLabel("Open the day so far")
         .accessibilityValue("\(content.kicker), \(content.title). \(content.value), \(content.caption)")
         .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("map-peek-card")
     }
 }
 

@@ -13,44 +13,6 @@ final class OnboardingPageOneTests: XCTestCase {
         calendar.date(from: DateComponents(year: year, month: month, day: day, hour: hour, minute: minute))!
     }
 
-    // MARK: Nightly notification time
-
-    func testNightlyFiresAtNineTonightBeforeTheCutoff() {
-        let fire = NightlyPageSchedule.next(after: date(2026, 11, 23, 14, 5), calendar: calendar)
-        XCTAssertEqual(fire.date, date(2026, 11, 23, 21, 0))
-        XCTAssertFalse(fire.isTomorrow)
-    }
-
-    func testNightlyJustBeforeCutoffStaysTonight() {
-        let fire = NightlyPageSchedule.next(after: date(2026, 11, 23, 20, 29), calendar: calendar)
-        XCTAssertEqual(fire.date, date(2026, 11, 23, 21, 0))
-        XCTAssertFalse(fire.isTomorrow)
-    }
-
-    func testNightlyMovesToTomorrowFromHalfPastEight() {
-        let atCutoff = NightlyPageSchedule.next(after: date(2026, 11, 23, 20, 30), calendar: calendar)
-        XCTAssertEqual(atCutoff.date, date(2026, 11, 24, 21, 0))
-        XCTAssertTrue(atCutoff.isTomorrow)
-
-        let lateNight = NightlyPageSchedule.next(after: date(2026, 11, 23, 23, 50), calendar: calendar)
-        XCTAssertEqual(lateNight.date, date(2026, 11, 24, 21, 0))
-        XCTAssertTrue(lateNight.isTomorrow)
-    }
-
-    func testNightlyAcrossMonthEndAndEarlyMorning() {
-        XCTAssertEqual(NightlyPageSchedule.next(after: date(2026, 11, 30, 22, 0), calendar: calendar).date,
-                       date(2026, 12, 1, 21, 0))
-        XCTAssertEqual(NightlyPageSchedule.next(after: date(2026, 12, 1, 0, 10), calendar: calendar).date,
-                       date(2026, 12, 1, 21, 0))
-    }
-
-    func testNightlyKeepsLocalNineAcrossDaylightSavingChange() {
-        // US clocks fall back on 2026-11-01; the next fire is still 9 PM local time.
-        let fire = NightlyPageSchedule.next(after: date(2026, 10, 31, 22, 0), calendar: calendar)
-        XCTAssertEqual(calendar.component(.hour, from: fire.date), 21)
-        XCTAssertEqual(calendar.component(.day, from: fire.date), 1)
-    }
-
     // MARK: Intents
 
     func testIntentsDefaultToRememberMyDays() {
@@ -144,5 +106,21 @@ final class OnboardingPageOneTests: XCTestCase {
         }
         XCTAssertEqual(OnboardingSampleStop.stop(at: 9.25).start, 8.83)
         XCTAssertEqual(OnboardingSampleStop.stop(at: 23.75).end, 24)
+    }
+
+    // MARK: Cover
+
+    func testCoverButtonReadsStartMyJournalInEveryShippedLocale() throws {
+        let english = try XCTUnwrap(Bundle(url: Bundle.main.bundleURL.appendingPathComponent("en.lproj")))
+        XCTAssertEqual(english.localizedString(forKey: "Start my journal", value: nil, table: nil), "Start my journal")
+        for locale in ["ar", "bn", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"] {
+            let url = Bundle.main.bundleURL.appendingPathComponent("\(locale).lproj")
+            let bundle = try XCTUnwrap(Bundle(url: url), "Missing compiled locale: \(locale)")
+            let title = bundle.localizedString(forKey: "Start my journal", value: nil, table: nil)
+            XCTAssertNotEqual(title, "Start my journal", locale)
+            XCTAssertFalse(title.isEmpty, locale)
+            // The retired "Write page one" key is gone, so it falls back to the key itself.
+            XCTAssertEqual(bundle.localizedString(forKey: "Write page one", value: nil, table: nil), "Write page one", locale)
+        }
     }
 }

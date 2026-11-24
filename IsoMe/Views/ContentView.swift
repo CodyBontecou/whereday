@@ -264,6 +264,12 @@ private struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: .manualVisitsChanged)) { _ in
             viewModel.loadData()
         }
+        .onReceive(RecapOpenRequest.shared.$pending) { kind in
+            // A tapped evening recap opens the map; MapView picks the range.
+            guard kind != nil else { return }
+            showsTimeline = false
+            selectedTab = MainTab.map.rawValue
+        }
         .overlay(alignment: .top) {
             if let toast = exportToastCenter.toast {
                 ExportToastBanner(toast: toast)
@@ -834,6 +840,9 @@ private enum ScreenshotFeatureDemoSeeder {
             ]
 
             pointSets.flatMap { $0 }.forEach { context.insert($0) }
+            if ProcessInfo.processInfo.arguments.contains("--seed-gps-jump") {
+                seedGPSJump(in: context, at: ago)
+            }
 
             let visits = [
                 Visit(
@@ -897,6 +906,23 @@ private enum ScreenshotFeatureDemoSeeder {
             try context.save()
         } catch {
             assertionFailure("Failed to seed screenshot demo data: \(error)")
+        }
+    }
+
+    /// With --seed-gps-jump: one long GPS jump on the seeded day, as real recording at the simulator's Cupertino fix
+    /// mixed into the San Francisco seed (#170). Two fixes at Cupertino between lunch and the evening errand arrive
+    /// unflagged (two fixes there, so the save-time out-and-back spike check doesn't catch them; speed never flags
+    /// a fix), so the day goes out and back: about 122 km more. A flagged GPS outlier north of the city must not count.
+    private static func seedGPSJump(in context: ModelContext, at ago: (Double) -> Date) {
+        let fixes: [(latitude: Double, longitude: Double, hoursAgo: Double, isOutlier: Bool)] = [
+            (37.9000, -122.3000, 4.0, true),
+            (37.3349, -122.0090, 1.2, false),
+            (37.3349, -122.0090, 1.15, false)
+        ]
+        for fix in fixes {
+            let point = LocationPoint(latitude: fix.latitude, longitude: fix.longitude, timestamp: ago(fix.hoursAgo),
+                                      altitude: 12, speed: 0, horizontalAccuracy: 6, isOutlier: fix.isOutlier)
+            context.insert(point)
         }
     }
 

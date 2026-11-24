@@ -12,8 +12,8 @@
 #     between runs; `devicepool reset` leaves the next run a fresh install.
 # Side effects (synthetic data only): saves a SavedPlace "Home" at the simulated fix,
 # persists onboardingIntents=days,routes, applies the Every step recording preset,
-# sets hasCompletedOnboarding, starts tracking, and schedules one local notification
-# ("Page one is written") at the next 9 PM. Reset afterwards with
+# sets hasCompletedOnboarding, starts tracking, and turns the evening recap on (Every evening
+# at 9 PM; a request is scheduled only once something has been recorded). Reset afterwards with
 # `devicepool reset <udid> --bundle com.bontecou.isome`.
 #
 # Coordinate exceptions: SwiftUI buttons carry accessibilityIdentifiers (onboarding-next,
@@ -28,6 +28,12 @@
 #
 # -Notelet.LatestSeenAppVersion 2.0 suppresses the "What's new" sheet for app version 2.0
 # so the map is visible after onboarding; update it when MARKETING_VERSION changes.
+#
+# Last step: these launches pass -hasCompletedOnboarding NO (legacy cohort) and no --use-storekit
+# (Debug development unlock), so the install already has access and the last step is the old
+# Start my day step ("Recording starts now.", with the Evening recap toggle). The paying path (Start my free week) is
+# covered by onboarding-free-week.yaml; onboarding-legacy-skips-payment.yaml checks the legacy
+# route with real StoreKit.
 version: 1
 requires:
   platform: ios
@@ -57,7 +63,12 @@ steps:
         identifier: onboarding-step-0
       timeoutMs: 20000
   - await: { idle: true }
-  - echo: "Cover: tap Write page one at (0.5, 0.855); expect the intent screen
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Start my journal
+  - echo: "Cover: tap Start my journal at (0.5, 0.855); expect the intent screen
       (onboarding-step-1)."
   - tool: gesture-tap
     args: { x: 0.5, y: 0.855 }
@@ -179,7 +190,7 @@ steps:
       selector:
         text: whereday-2026-11-23.gpx
   - await: { idle: true }
-  - echo: "Export: tap Continue at (0.5, 0.855); expect tonight's draft naming Home."
+  - echo: "Export: tap Continue at (0.5, 0.855); expect the Start my day step with today's draft naming Home."
   - tool: gesture-tap
     args: { x: 0.5, y: 0.855 }
   - tool: await-ui-element
@@ -188,7 +199,7 @@ steps:
       selector:
         text: Home · since this morning
   - await: { idle: true }
-  - echo: "Tonight: keep Send me tonight's page on and tap Start my day at (0.5,
+  - echo: "Start my day: keep Evening recap on and tap Start my day at (0.5,
       0.912). iOS then asks for notifications (fresh install); Allow at (0.684,
       0.592) is a system alert with no app selector."
   - tool: gesture-tap
@@ -198,6 +209,9 @@ steps:
       condition: visible
       selector:
         text: Would Like to Send You Notifications
+  - echo: "Let the system alert finish appearing before tapping Allow; an early tap
+      can land while it animates in and be dropped."
+  - await: { idle: true }
   - tool: gesture-tap
     args: { x: 0.684, y: 0.592 }
   - tool: await-ui-element

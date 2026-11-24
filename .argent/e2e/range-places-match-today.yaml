@@ -1,0 +1,62 @@
+# The map's 7D range counts today's places the way Today does (#170): on the synthetic seeded day,
+# Today's peek card shows 4 PLACES (Home's stretch from midnight, Valencia Street Stop, Client
+# Lunch — The Grove, Ferry Building Errand). After switching to 7D, today's day chip and the range
+# card must also read "…km, 4 places". Before DayStayPlanner drove the range summary, the chip
+# counted only visits that arrived that day and read 3 (Home's stretch was missing), and a stay
+# that began the evening before was missing from the following day.
+#
+# Prerequisites: an iOS pool simulator (iPhone 18 Pro, portrait, default text size, English) with
+# a Debug install that has finished onboarding or not (the seed sets hasCompletedOnboarding).
+# Side effects (synthetic data only): --seed-screenshot-data replaces all data with the synthetic
+# San Francisco screenshot days and sets hasCompletedOnboarding; the map's range is left on 7D.
+# Distances in the chip depend on where the simulator is and whether recording is on, so only the
+# place count is checked.
+#
+# Coordinate exception: the 7D chip has no id, and Argent's iOS runner tree exposes it only as an
+# anonymous AXScrollArea (the recorder derived a role-only selector), so the tap keeps its recorded
+# point (the chip's accessibility frame centre on a 402x874 pt iPhone 18 Pro) and is followed by a
+# tree check of the "Last 7 days" heading. The waits stay raw await-ui-element steps: the runner
+# tree does not carry these SwiftUI labels.
+version: 1
+requires:
+  platform: ios
+steps:
+  - echo: Launch the Debug build with the synthetic screenshot days; expect the map on Today with 4 PLACES.
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --seed-screenshot-data
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -usesMetricDistanceUnits
+          - YES
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 4 PLACES
+      timeoutMs: 20000
+  - await: { idle: true }
+  - echo: "Tap the 7D range chip at (0.459, 0.174); expect the Last 7 days heading."
+  - tool: gesture-tap
+    args: { x: 0.459, y: 0.174 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Last 7 days
+      timeoutMs: 10000
+  - await: { idle: true }
+  - echo: "7D: today's chip (selected) and the range card read …km, 4 places, the same count as Today."
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: km, 4 places
+      timeoutMs: 10000

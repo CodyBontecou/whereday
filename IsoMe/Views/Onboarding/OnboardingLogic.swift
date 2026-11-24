@@ -92,30 +92,6 @@ extension ExportPreferencesStore {
     }
 }
 
-/// When the one "tonight's page" notification fires.
-enum NightlyPageSchedule {
-    static let hour = 21
-    /// After this time today, the notification moves to tomorrow night.
-    static let cutoffHour = 20
-    static let cutoffMinute = 30
-    static let notificationIdentifier = "onboarding.page-one"
-
-    struct Fire: Equatable {
-        let date: Date
-        let isTomorrow: Bool
-    }
-
-    static func next(after now: Date, calendar: Calendar = .current) -> Fire {
-        let today = calendar.startOfDay(for: now)
-        let cutoff = calendar.date(bySettingHour: cutoffHour, minute: cutoffMinute, second: 0, of: today) ?? now
-        let isTomorrow = now >= cutoff
-        let day = isTomorrow ? (calendar.date(byAdding: .day, value: 1, to: today) ?? today) : today
-        let fire = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: day)
-            ?? day.addingTimeInterval(TimeInterval(hour * 3600))
-        return Fire(date: fire, isTomorrow: isTomorrow)
-    }
-}
-
 /// Days with geotagged photos over the last 12 weeks, for the backfill heatmap.
 enum PhotoDayHistogram {
     static let dayCount = 84

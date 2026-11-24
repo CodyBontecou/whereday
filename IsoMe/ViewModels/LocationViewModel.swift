@@ -50,6 +50,19 @@ final class LocationViewModel {
     private var presentedPhotoAccess: PhotoLibraryAccessState?
     /// Raw count for the current map date range, before downsampling.
     var mapLocationPointCount: Int = 0
+    /// Each day's distance in the map's date range, from every stored fix (not the downsampled ones), by the
+    /// same rules as Today's "MOVED" (`DayDistance`). The range chips, day sheet and peek card read it.
+    private(set) var mapDayDistances = DayDistances()
+    /// Bumped when `mapDayDistances` is recomputed, so a slow background read can't overwrite a newer one.
+    private var mapDistanceGeneration = 0
+    private var mapDistanceAccumulator = DayDistanceAccumulator()
+    /// The last fix each running distance counted; when it is later flagged as an outlier, or a fix arrives out of
+    /// order, the distance is recomputed instead of extended.
+    private var mapDistanceTail: LocationPoint?
+    /// False while `mapDayDistances` came from a background read or a sample, which new fixes can't extend.
+    private var mapDistanceCanExtend = true
+    private var todayDistanceAccumulator = DayDistanceAccumulator()
+    private var todayDistanceTail: LocationPoint?
     var mapPhotoMomentCount: Int = 0
     var totalLocationPointCount: Int = 0
 
@@ -263,11 +276,57 @@ final class LocationViewModel {
             }
             mapLocationPointCount = rawCount
             mapLocationPoints = downsample(points: points, maxCount: maximumMapPointCount)
+            // Distances come from every fix: the sampled fetch and the drawn points would shorten the path.
+            refreshMapDayDistances(range: range, loadedPoints: rawCount > maximumRawMapPointFetchCount ? nil : points)
         } catch {
             print("Failed to fetch map location points: \(error)")
             mapLocationPointCount = 0
             mapLocationPoints = []
+            setMapDayDistances(DayDistances(), tail: nil)
         }
+    }
+
+    /// Recomputes `mapDayDistances` for the map's range. With every fix of the range already loaded it is
+    /// immediate; otherwise the stored fixes are read in the background, and meanwhile the loaded sample stands in.
+    private func refreshMapDayDistances(range: ClosedRange<Date>? = nil, loadedPoints: [LocationPoint]? = nil) {
+        let range = range ?? mapDateRange
+        let points: [LocationPoint]
+        if let loadedPoints {
+            points = loadedPoints
+        } else {
+            let start = range.lowerBound
+            let end = range.upperBound
+            let predicate = #Predicate<LocationPoint> { $0.timestamp >= start && $0.timestamp <= end }
+            let count = (try? modelContext.fetchCount(FetchDescriptor<LocationPoint>(predicate: predicate))) ?? 0
+            if count <= maximumRawMapPointFetchCount {
+                var descriptor = FetchDescriptor<LocationPoint>(predicate: predicate)
+                descriptor.sortBy = [SortDescriptor(\.timestamp, order: .forward)]
+                points = (try? modelContext.fetch(descriptor)) ?? []
+            } else {
+                setMapDayDistances(DayDistance.distances(mapLocationPoints), tail: nil)
+                let generation = mapDistanceGeneration
+                let container = modelContext.container
+                Task { [weak self] in
+                    let reader = DayDistanceReader(modelContainer: container)
+                    guard let distances = await reader.distances(in: range, calendar: .current) else { return }
+                    guard let self, self.mapDistanceGeneration == generation, self.mapDateRange == range else { return }
+                    self.setMapDayDistances(distances, tail: nil)
+                }
+                return
+            }
+        }
+        var accumulator = DayDistanceAccumulator()
+        for fix in DayDistance.ordered(points.map(DistanceFix.init)) { accumulator.add(fix) }
+        setMapDayDistances(accumulator.distances, tail: points.last { !$0.isOutlier }, accumulator: accumulator)
+    }
+
+    private func setMapDayDistances(_ distances: DayDistances, tail: LocationPoint?, accumulator: DayDistanceAccumulator? = nil) {
+        mapDistanceGeneration += 1
+        mapDayDistances = distances
+        mapDistanceTail = tail
+        // Without the fixes in hand (a long range), new fixes can't extend it; the next load recomputes.
+        mapDistanceAccumulator = accumulator ?? DayDistanceAccumulator()
+        mapDistanceCanExtend = accumulator != nil || distances == DayDistances()
     }
 
     func refreshPhotoLibraryAuthorizationState() {
@@ -743,14 +802,16 @@ final class LocationViewModel {
         let startOfToday = calendar.startOfDay(for: Date())
         let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
         var didAppendMapPoint = false
+        var todayNeedsRecompute = todayDistanceTail?.isOutlier == true
+        var mapNeedsRecompute = mapDistanceTail?.isOutlier == true
 
         for point in orderedPoints {
             if point.timestamp >= startOfToday && point.timestamp < endOfToday {
-                let previousTodayPoint = todayLocationPoints.last
+                if let last = todayLocationPoints.last, point.timestamp < last.timestamp { todayNeedsRecompute = true }
                 todayLocationPoints.append(point)
-
-                if let previousTodayPoint {
-                    todayDistanceTraveledCache += previousTodayPoint.distance(to: point)
+                if !todayNeedsRecompute, !point.isOutlier {
+                    todayDistanceAccumulator.add(DistanceFix(point))
+                    todayDistanceTail = point
                 }
 
                 if let sessionStart = locationManager.trackingStartTime,
@@ -766,7 +827,24 @@ final class LocationViewModel {
                 mapLocationPointCount += 1
                 mapLocationPoints.append(point)
                 didAppendMapPoint = true
+                if let tail = mapDistanceTail, point.timestamp < tail.timestamp { mapNeedsRecompute = true }
+                if mapDistanceCanExtend, !mapNeedsRecompute, !point.isOutlier {
+                    mapDistanceAccumulator.add(DistanceFix(point))
+                    mapDistanceTail = point
+                }
             }
+        }
+
+        if todayNeedsRecompute {
+            todayLocationPoints.sort { $0.timestamp < $1.timestamp }
+            refreshDerivedPointCaches()
+        } else {
+            todayDistanceTraveledCache = todayDistanceAccumulator.distances.meters(on: startOfToday, calendar: calendar)
+        }
+        if mapNeedsRecompute {
+            refreshMapDayDistances()
+        } else if didAppendMapPoint, mapDistanceCanExtend {
+            mapDayDistances = mapDistanceAccumulator.distances
         }
 
         if didAppendMapPoint {
@@ -776,7 +854,12 @@ final class LocationViewModel {
     }
 
     private func refreshDerivedPointCaches() {
-        todayDistanceTraveledCache = totalDistance(in: todayLocationPoints)
+        // Today's "MOVED": the shared day distance (`DayDistance`), which the map's chips and the recap use too.
+        var accumulator = DayDistanceAccumulator()
+        for fix in DayDistance.ordered(todayLocationPoints.map(DistanceFix.init)) { accumulator.add(fix) }
+        todayDistanceAccumulator = accumulator
+        todayDistanceTail = todayLocationPoints.last { !$0.isOutlier }
+        todayDistanceTraveledCache = accumulator.distances.meters(on: Date())
 
         guard let sessionStart = locationManager.trackingStartTime else {
             sessionLocationPointsCache = []
@@ -1578,11 +1661,15 @@ final class LocationViewModel {
             mapPhotoMomentCount = 0
             totalLocationPointCount = 0
             todayDistanceTraveledCache = 0
+            todayDistanceAccumulator = DayDistanceAccumulator()
+            todayDistanceTail = nil
+            setMapDayDistances(DayDistances(), tail: nil)
             sessionDistanceTraveledCache = 0
             hasLoadedAllLocationPoints = false
             mapFocusRequest = nil
             locationManager.forgetActiveRecordingSession()
             loadData()
+            RecapReminderScheduler.shared.resetForClearedData()
         } catch {
             print("Failed to clear data: \(error)")
         }

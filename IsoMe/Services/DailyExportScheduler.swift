@@ -199,6 +199,8 @@ final class DailyExportScheduler: ObservableObject {
 
     private func handleBackgroundTask(_ task: BGAppRefreshTask?) async {
         let outcome = await runIfDue(triggeredByScheduledWake: true)
+        // The app's only background refresh; it also brings the evening recap's counts up to date.
+        await RecapReminderScheduler.shared.refresh()
         if isEnabled {
             switch outcome {
             case .exported, .failed:
