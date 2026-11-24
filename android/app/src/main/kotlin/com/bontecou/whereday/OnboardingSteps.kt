@@ -114,7 +114,7 @@ private fun motionEnabled()=ValueAnimator.areAnimatorsEnabled()
 
 // MARK: 2 · intent
 
-private val OnboardingIntent.title get()=when(this) {
+internal val OnboardingIntent.title get()=when(this) {
     OnboardingIntent.days->R.string.onboarding_intent_days;OnboardingIntent.countries->R.string.onboarding_intent_countries
     OnboardingIntent.routes->R.string.onboarding_intent_routes;OnboardingIntent.notes->R.string.onboarding_intent_notes
 }
@@ -484,7 +484,7 @@ private val OnboardingFormat.note get()=when(this) {OnboardingFormat.markdown->R
 // MARK: 10 · tonight
 
 @Composable internal fun TonightStep(today:LocalDate,place:String?,stamped:Boolean,canStart:Boolean,startImmediately:Boolean,busy:Boolean,onStartChange:(Boolean)->Unit,
-    nightly:Boolean,nightlyAvailable:Boolean,tomorrow:Boolean,onNightlyChange:(Boolean)->Unit) {
+    recap:Boolean,recapAvailable:Boolean,time:java.time.LocalTime,tomorrow:Boolean,onRecapChange:(Boolean)->Unit) {
     Column(verticalArrangement=Arrangement.spacedBy(18.dp)) {
         StepHeading(R.string.onboarding_tonight_kicker,R.string.onboarding_tonight_title)
         val dashed=wd.dialTick
@@ -527,13 +527,7 @@ private val OnboardingFormat.note get()=when(this) {OnboardingFormat.markdown->R
             }
         }
         if(!canStart) Muted(stringResource(R.string.onboarding_allow_later))
-        val time=DateTimeFormatter.ofPattern(if(android.text.format.DateFormat.is24HourFormat(LocalContext.current)) "H:mm" else "h:mm a",locale())
-            .format(com.bontecou.whereday.platform.NightlyPageReminder.at)
-        WdCard(radius=16.dp) {
-            WdToggleRow(stringResource(if(tomorrow) R.string.onboarding_tonight_toggle_tomorrow else R.string.onboarding_tonight_toggle),nightly,onNightlyChange,
-                Modifier.testTag("onboarding-nightly-toggle"),enabled=nightlyAvailable && !busy,divider=false,
-                detail=stringResource(if(tomorrow) R.string.onboarding_tonight_toggle_detail_tomorrow else R.string.onboarding_tonight_toggle_detail,time))
-        }
-        if(!nightlyAvailable) Muted(stringResource(R.string.onboarding_tonight_notifications_off))
+        RecapToggleCard(recap,recapAvailable && !busy,time,tomorrow,onRecapChange)
+        if(!recapAvailable) Muted(stringResource(R.string.onboarding_tonight_notifications_off))
     }
 }

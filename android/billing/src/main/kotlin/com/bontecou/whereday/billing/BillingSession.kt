@@ -103,6 +103,15 @@ class BillingSession(private val productIds: List<String>,private val configured
     }
     private suspend fun clearGrant() { grant=null;signed=null;lastSeen=Instant.EPOCH;cache.clear();mutable.value=mutable.value.copy(activeProductId=null,autoRenewing=false) }
     private fun free(capability:Capability)=capability in FREE_CAPABILITIES || (!configured && capability==Capability.recording)
+    /** Whether [capability] is open now, from the cached signed grant alone: no Play query, no verifier request and no change
+     *  to [state]. For background work such as the evening recap; unconfigured builds keep recording free, as everywhere. */
+    suspend fun hasAccess(capability:Capability):Boolean {
+        if(free(capability)) return true
+        return mutex.withLock {
+            loadCache()
+            configured && grant?.allows(clock.instant(),lastSeen)==true
+        }
+    }
     suspend fun requireAccess(capability: Capability) {
         if(free(capability)) return
         mutex.withLock {

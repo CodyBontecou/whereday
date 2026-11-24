@@ -25,7 +25,18 @@ data class AppSettings(val onboarded: Boolean = false, val appearance: String = 
     val routeSamplingMode:String=com.bontecou.whereday.domain.RouteSamplingMode.distance.key,
     val routeSampleIntervalSeconds:Int=com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS,
     /** Onboarding's "What should it remember for you?" choices, as stable keys; null until the step is answered. */
-    val onboardingIntents:Set<String>?=null) {
+    val onboardingIntents:Set<String>?=null,
+    /** Settings › Reminders › Day recap, a [com.bontecou.whereday.domain.RecapFrequency] key; null until first set or migrated. */
+    val recapFrequency:String?=null,
+    /** The recap's local time, minutes after midnight (21:00 by default). */
+    val recapMinute:Int=com.bontecou.whereday.domain.RecapSettings.DEFAULT_MINUTE,
+    val recapSkipQuiet:Boolean=true,
+    /** Place names on the lock screen; counts only when off. */
+    val recapPlaceNames:Boolean=false) {
+    /** The evening recap as the scheduler reads it; an unset frequency is Off. */
+    val recap get()=com.bontecou.whereday.domain.RecapSettings(com.bontecou.whereday.domain.RecapFrequency.fromKey(recapFrequency) ?: com.bontecou.whereday.domain.RecapFrequency.off,
+        recapMinute.takeIf {it in 0 until 24*60} ?: com.bontecou.whereday.domain.RecapSettings.DEFAULT_MINUTE,recapSkipQuiet,recapPlaceNames)
+    fun withRecap(value:com.bontecou.whereday.domain.RecapSettings)=copy(recapFrequency=value.frequency.key,recapMinute=value.minuteOfDay,recapSkipQuiet=value.skipQuietDays,recapPlaceNames=value.placeNames)
     val routeSampling get()=com.bontecou.whereday.domain.RouteSamplingPolicy(com.bontecou.whereday.domain.RouteSamplingMode.fromKey(routeSamplingMode),distanceFilter,
         routeSampleIntervalSeconds.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS)
     /** The recording preset these settings match exactly, or null when they were tuned by hand (Custom). */
@@ -91,12 +102,17 @@ class AppPreferences internal constructor(private val store:DataStore<Preference
         val routeMode=stringPreferencesKey("route_sampling_mode")
         val routeInterval=intPreferencesKey("route_sample_interval_seconds")
         val onboardingIntents=stringSetPreferencesKey("onboarding_intents")
+        val recapFrequency=stringPreferencesKey("recap_frequency")
+        val recapMinute=intPreferencesKey("recap_minute")
+        val recapQuiet=booleanPreferencesKey("recap_skip_quiet")
+        val recapNames=booleanPreferencesKey("recap_place_names")
     }
     private fun read(p: Preferences) = AppSettings(p[Keys.onboarded] ?: false, p[Keys.appearance] ?: "system", p[Keys.metric] ?: true, p[Keys.distance] ?: 5, p[Keys.hours] ?: 0, p[Keys.geocoding] ?: true, p[Keys.folder],
         p[Keys.inferred] ?: true,p[Keys.inferredGap] ?: 30,p[Keys.inferredDuration] ?: 0,p[Keys.inferredPoints] ?: 1,p[Keys.exports],p[Keys.outliers] ?: false,p[Keys.photoEpoch].orEmpty(),p[Keys.photos] ?: false,p[Keys.photoImages] ?: true,p[Keys.photoLocations] ?: false,p[Keys.autoPhotos] ?: false,p[Keys.roadDisplay] ?: false,p[Keys.roadRevision].orEmpty(),p[Keys.photoDots] ?: false,p[Keys.accessGate] ?: false,
         MapLayerSettings(p[Keys.mapPath] ?: true,p[Keys.mapPoints] ?: false,p[Keys.mapVisits] ?: true,p[Keys.mapEndpoints] ?: true,p[Keys.mapStraight] ?: false,p[Keys.mapLive] ?: true,p[Keys.mapSuggestions] ?: false,p[Keys.mapOnline] ?: true),
         com.bontecou.whereday.domain.RouteSamplingMode.fromKey(p[Keys.routeMode]).key,p[Keys.routeInterval]?.takeIf {it in com.bontecou.whereday.domain.RouteSamplingPolicy.INTERVAL_OPTIONS} ?: com.bontecou.whereday.domain.RouteSamplingPolicy.DEFAULT_INTERVAL_SECONDS,
-        p[Keys.onboardingIntents])
+        p[Keys.onboardingIntents],p[Keys.recapFrequency],p[Keys.recapMinute]?.takeIf {it in 0 until 24*60} ?: com.bontecou.whereday.domain.RecapSettings.DEFAULT_MINUTE,
+        p[Keys.recapQuiet] ?: true,p[Keys.recapNames] ?: false)
     val settings = store.data.map(::read)
     suspend fun update(transform: (AppSettings) -> AppSettings) { store.edit { p ->
         val previous=read(p)
@@ -128,6 +144,10 @@ class AppPreferences internal constructor(private val store:DataStore<Preference
         p[Keys.accessGate]=value.accessGateCleared
         require(value.onboardingIntents==null || (value.onboardingIntents.size<=16 && value.onboardingIntents.all {it.length in 1..32}))
         value.onboardingIntents?.let {p[Keys.onboardingIntents]=it} ?: p.remove(Keys.onboardingIntents)
+        require(value.recapFrequency==null || com.bontecou.whereday.domain.RecapFrequency.fromKey(value.recapFrequency)!=null)
+        require(value.recapMinute in 0 until 24*60)
+        value.recapFrequency?.let {p[Keys.recapFrequency]=it} ?: p.remove(Keys.recapFrequency)
+        p[Keys.recapMinute]=value.recapMinute;p[Keys.recapQuiet]=value.recapSkipQuiet;p[Keys.recapNames]=value.recapPlaceNames
         value.map.let {map->
             p[Keys.mapPath]=map.path;p[Keys.mapPoints]=map.points;p[Keys.mapVisits]=map.visits;p[Keys.mapEndpoints]=map.endpoints
             p[Keys.mapStraight]=map.straightGaps;p[Keys.mapLive]=map.liveSession;p[Keys.mapSuggestions]=map.visitSuggestions;p[Keys.mapOnline]=map.online

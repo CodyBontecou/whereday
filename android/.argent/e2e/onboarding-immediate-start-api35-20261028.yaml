@@ -1,5 +1,5 @@
 # Disposable mapQa only, idle and onboarded, English API35. Foreground location pregranted, notifications denied.
-# Side effects: replays Page One (no place named, nightly page off because notifications are denied), starts one
+# Side effects: replays Page One (no place named, evening recap off because notifications are denied), starts one
 # recording in the QA package, then stops it; only QA history may be created.
 requires:
   platform: android

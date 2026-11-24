@@ -49,12 +49,27 @@ class HistoryRulesTest {
         assertEquals(open.visitId, result.departedId)
         assertNull(result.state.visitId)
     }
-    @Test fun outAndBackFlagsMiddlePointAndTeleportFlagsNewPoint() {
+    @Test fun outAndBackSpikeFlagsOnlyTheMiddlePoint() {
         val a = point(0)
         val b = point(10, Coordinate(18.4755, -66.1057))
         val c = point(20)
-        assertTrue(b.id in TrackQuality.flaggedIds(listOf(a), b))
-        assertTrue(b.id in TrackQuality.flaggedIds(listOf(a, b), c))
+        // About 1.1 km in 10 s (over 40 m/s) is not flagged on its own.
+        assertTrue(TrackQuality.flaggedIds(listOf(a), b).isEmpty())
+        // The track returns to the start, so the middle point is the glitch.
+        assertEquals(setOf(b.id), TrackQuality.flaggedIds(listOf(a, b), c))
+    }
+    @Test fun fastOneWayTravelLikeAFlightIsNotFlaggedAndCountsTowardDistance() {
+        // Each step is 0.1° of latitude (about 11.1 km) per minute, about 185 m/s; nothing comes back.
+        val flight = (0..5).map { point(it * 60L, Coordinate(18.4655 + it * 0.1, -66.1057)) }
+        val stored = mutableListOf<TrackPoint>()
+        for (next in flight) {
+            val flagged = TrackQuality.flaggedIds(stored, next)
+            assertTrue(flagged.isEmpty())
+            stored += next
+        }
+        val expected = flight.zipWithNext().sumOf { (a, b) -> a.coordinate.distanceTo(b.coordinate) }
+        assertTrue(expected > 50_000)
+        assertEquals(expected, TrackQuality.distance(stored), 0.001)
     }
     @Test fun correctionsKeepFirstOriginalThroughRepeatedEdits() {
         val original = Visit(coordinate = origin, arrivedAt = start, name = "Detected", address = "Original address")

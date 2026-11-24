@@ -49,7 +49,7 @@ import com.bontecou.whereday.data.*
 import com.bontecou.whereday.domain.*
 import com.bontecou.whereday.platform.*
 
-internal enum class SettingsDestination {listening,usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly,backup}
+internal enum class SettingsDestination {listening,usage,support,countries,licenses,software,exports,automation,webhooks,photos,places,addPlace,roads,visitsOnly,backup,reminders}
 
 @Composable fun SettingsScreen(graph:AppGraph,settings:AppSettings,places:List<SavedPlace>,count:Long,onClose:(()->Unit)?=null) {
     val context=LocalContext.current
@@ -75,6 +75,7 @@ internal enum class SettingsDestination {listening,usage,support,countries,licen
             return
         }
         SettingsDestination.usage->{UsageAnalyticsScreen(graph.usageAnalytics,back);return}
+        SettingsDestination.reminders->{RemindersScreen(graph,settings.recap,settings.metric,back);return}
         SettingsDestination.roads->{RoadSettingsScreen(graph,back);return}
         SettingsDestination.visitsOnly->{VisitMonitoringScreen(graph,back);return}
         SettingsDestination.support->{SupportScreen(graph,back);return}

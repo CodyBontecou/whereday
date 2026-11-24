@@ -74,6 +74,10 @@ internal val BillingNotice.isPaywallWarning:Boolean get()=this in setOf(BillingN
 /** The free trial the carousel can promise: only one Play actually offers this account. */
 internal val BillingState.trialProduct:StoreProduct? get()=(product(StorePlan.yearly)?.takeIf {it.freeTrialDays>0}) ?: product(StorePlan.weekly)?.takeIf {it.freeTrialDays>0}
 
+/** The chosen plan while Play offers it, otherwise the first of Yearly, Weekly, Lifetime that it does. */
+internal fun defaultPlan(available:List<StorePlan>,chosen:StorePlan?):StorePlan?=
+    chosen?.takeIf {it in available} ?: listOf(StorePlan.yearly,StorePlan.weekly,StorePlan.lifetime).firstOrNull {it in available}
+
 /** The full-screen plan carousel opened from tracking and export entry points. */
 @Composable internal fun PaywallDialog(purchase:BillingState,checkout:Boolean,buy:(StorePlan)->Unit,restore:()->Unit,dismiss:()->Unit,
     entry:PaywallEntry=PaywallEntry.tracking,reviews:List<PaywallReview> = paywallReviews) {
@@ -94,8 +98,7 @@ internal val BillingState.trialProduct:StoreProduct? get()=(product(StorePlan.ye
     val pager=rememberPagerState(initialPage.coerceAtMost(pages.lastIndex)) {pages.size}
     var selectedName by rememberSaveable {mutableStateOf<String?>(null)}
     val available=purchase.products.map {it.plan}
-    val selected=selectedName?.let {name->StorePlan.entries.firstOrNull {it.name==name}}?.takeIf {it in available}
-        ?: listOf(StorePlan.yearly,StorePlan.weekly,StorePlan.lifetime).firstOrNull {it in available}
+    val selected=defaultPlan(available,selectedName?.let {name->StorePlan.entries.firstOrNull {it.name==name}})
     val largeText=LocalDensity.current.fontScale>=1.5f
     Column(modifier.fillMaxSize().background(wd.surface).semantics {testTagsAsResourceId=true}.testTag("paywall")) {
         Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start=8.dp,end=20.dp,top=16.dp).heightIn(min=44.dp),verticalAlignment=Alignment.CenterVertically,
@@ -245,7 +248,7 @@ private val formatChips=listOf(FormatChip("GPX",0),FormatChip("GeoJSON",1),Forma
     return runCatching {NumberFormat.getCurrencyInstance(locale).apply {currency=Currency.getInstance(product.currencyCode)}.format(product.priceMicros/12.0/1_000_000)}.getOrNull()
 }
 
-@Composable private fun planName(plan:StorePlan)=stringResource(when(plan) {StorePlan.weekly->R.string.paywall_plan_weekly;StorePlan.yearly->R.string.paywall_plan_yearly;StorePlan.lifetime->R.string.paywall_plan_lifetime})
+@Composable internal fun planName(plan:StorePlan)=stringResource(when(plan) {StorePlan.weekly->R.string.paywall_plan_weekly;StorePlan.yearly->R.string.paywall_plan_yearly;StorePlan.lifetime->R.string.paywall_plan_lifetime})
 
 @Composable private fun planDetail(product:StoreProduct)=when(product.plan) {
     StorePlan.weekly->stringResource(R.string.paywall_plan_weekly_detail)
@@ -268,7 +271,20 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
         }
         else->Text(stringResource(R.string.paywall_buy_unavailable),Modifier.testTag("paywall-no-plans"),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
     }
-    WdCard {
+    PaywallIncludedCard()
+    when(purchase.access) {
+        AccessState.pending->PaywallStatus(stringResource(R.string.paywall_pending),wd.accent,Icons.Outlined.Schedule,Modifier.testTag("paywall-pending"))
+        AccessState.active->PaywallStatus(stringResource(R.string.paywall_verified),wd.success,Icons.Outlined.CheckCircle,Modifier.testTag("paywall-verified"),strong=true)
+        else->Column(verticalArrangement=Arrangement.spacedBy(6.dp)) {
+            Text(stringResource(R.string.paywall_records_note),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
+            Text(stringResource(R.string.paywall_cancel_note),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
+        }
+    }
+}
+
+/** "Every plan includes", shared with onboarding's All plans sheet. */
+@Composable internal fun PaywallIncludedCard(modifier:Modifier=Modifier) {
+    WdCard(modifier) {
         Text(stringResource(R.string.paywall_includes).uppercase(),Modifier.padding(start=16.dp,end=16.dp,top=12.dp,bottom=4.dp),
             style=WdType.caption2.copy(letterSpacing=0.13.em),color=wd.textMuted)
         includedRows.forEachIndexed {index,label->
@@ -280,17 +296,9 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
             if(index<includedRows.lastIndex) WdDivider()
         }
     }
-    when(purchase.access) {
-        AccessState.pending->PaywallStatus(stringResource(R.string.paywall_pending),wd.accent,Icons.Outlined.Schedule,Modifier.testTag("paywall-pending"))
-        AccessState.active->PaywallStatus(stringResource(R.string.paywall_verified),wd.success,Icons.Outlined.CheckCircle,Modifier.testTag("paywall-verified"),strong=true)
-        else->Column(verticalArrangement=Arrangement.spacedBy(6.dp)) {
-            Text(stringResource(R.string.paywall_records_note),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
-            Text(stringResource(R.string.paywall_cancel_note),style=MaterialTheme.typography.bodySmall,color=wd.textMuted)
-        }
-    }
 }
 
-@Composable private fun PaywallPlanCard(product:StoreProduct,selected:Boolean,onSelect:()->Unit) {
+@Composable internal fun PaywallPlanCard(product:StoreProduct,selected:Boolean,onSelect:()->Unit) {
     val shape=RoundedCornerShape(16.dp)
     val name=planName(product.plan);val detail=planDetail(product)
     val ring=wd.inkRust
@@ -319,7 +327,7 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
     }
 }
 
-@Composable private fun PaywallStatus(text:String,ink:Color,icon:ImageVector,modifier:Modifier=Modifier,strong:Boolean=false) {
+@Composable internal fun PaywallStatus(text:String,ink:Color,icon:ImageVector,modifier:Modifier=Modifier,strong:Boolean=false) {
     // Board: pending sits on the primary container, verified on a sage container, both without outlines.
     val shape=RoundedCornerShape(16.dp)
     val container=if(strong) (if(wd.dark) Color(0xFF2E4230) else Color(0xFFD9E6D4)) else wd.primaryContainer
@@ -397,7 +405,7 @@ private val includedRows=listOf(R.string.paywall_included_recording,R.string.pay
     }
 }
 
-@Composable private fun PaywallLink(text:String,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true) {
+@Composable internal fun PaywallLink(text:String,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true) {
     Box(modifier.heightIn(min=48.dp).clip(RoundedCornerShape(12.dp)).clickable(enabled=enabled,role=Role.Button,onClick=onClick).padding(horizontal=12.dp),
         contentAlignment=Alignment.Center) {
         Text(text,style=MaterialTheme.typography.bodyMedium.copy(fontWeight=FontWeight.Medium),color=if(enabled) wd.textPrimary else wd.textMuted)

@@ -67,6 +67,16 @@ class BillingSessionTest {
         assertEquals(BillingNotice.verificationFailed,offline.state.value.notice)
         clock.now=clock.now.plusSeconds(8*86400);denied(offline)
     }
+    @Test fun hasAccessReadsOnlyTheCachedGrantAndLeavesStateAlone()=runBlocking {
+        val disabled=session(Cache(),{ fail("Must not query Play");owned() },{ fail("Must not verify");PurchaseVerification.Revoked },false)
+        assertTrue(disabled.hasAccess(Capability.recording));assertFalse(disabled.hasAccess(Capability.fileExport))
+        val none=session(Cache(),{ fail("Must not query Play");owned() },{ fail("Must not verify");PurchaseVerification.Revoked })
+        assertFalse(none.hasAccess(Capability.recording));assertEquals(BillingState(enforced=true),none.state.value)
+        val cache=Cache();cache.value=CachedGrant(lease(),clock.now)
+        val cached=session(cache,{ fail("Must not query Play");owned() },{ fail("Must not verify");PurchaseVerification.Revoked })
+        assertTrue(cached.hasAccess(Capability.recording));assertEquals(AccessState.checking,cached.state.value.access)
+        clock.now=clock.now.plusSeconds(8*86400);assertFalse(cached.hasAccess(Capability.recording))
+    }
     @Test fun refundOrFreshEmptyPlayOwnershipClearsDurableCache()=runBlocking {
         val cache=Cache();cache.value=CachedGrant(lease(),clock.now)
         val revoked=session(cache,{ owned() },{ PurchaseVerification.Revoked })
