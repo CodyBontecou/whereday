@@ -96,6 +96,9 @@ struct WatchLocationSyncAck: Codable {
     var importedSessionCount: Int
     var importedPointCount: Int
     var importedVisitCount: Int
+    /// Watch points/visits the iPhone had already recorded itself and folded in (#173).
+    var mergedPointCount: Int
+    var mergedVisitCount: Int
     var importedAt: Date
     var succeeded: Bool
     var errorMessage: String?
@@ -106,6 +109,8 @@ struct WatchLocationSyncAck: Codable {
         importedSessionCount: Int = 0,
         importedPointCount: Int = 0,
         importedVisitCount: Int = 0,
+        mergedPointCount: Int = 0,
+        mergedVisitCount: Int = 0,
         importedAt: Date = Date(),
         succeeded: Bool = true,
         errorMessage: String? = nil
@@ -115,6 +120,8 @@ struct WatchLocationSyncAck: Codable {
         self.importedSessionCount = importedSessionCount
         self.importedPointCount = importedPointCount
         self.importedVisitCount = importedVisitCount
+        self.mergedPointCount = mergedPointCount
+        self.mergedVisitCount = mergedVisitCount
         self.importedAt = importedAt
         self.succeeded = succeeded
         self.errorMessage = errorMessage
@@ -126,6 +133,8 @@ struct WatchLocationSyncAck: Codable {
         case importedSessionCount
         case importedPointCount
         case importedVisitCount
+        case mergedPointCount
+        case mergedVisitCount
         case importedAt
         case succeeded
         case errorMessage
@@ -138,6 +147,8 @@ struct WatchLocationSyncAck: Codable {
         importedSessionCount = try container.decodeIfPresent(Int.self, forKey: .importedSessionCount) ?? 0
         importedPointCount = try container.decodeIfPresent(Int.self, forKey: .importedPointCount) ?? 0
         importedVisitCount = try container.decodeIfPresent(Int.self, forKey: .importedVisitCount) ?? 0
+        mergedPointCount = try container.decodeIfPresent(Int.self, forKey: .mergedPointCount) ?? 0
+        mergedVisitCount = try container.decodeIfPresent(Int.self, forKey: .mergedVisitCount) ?? 0
         importedAt = try container.decode(Date.self, forKey: .importedAt)
         succeeded = try container.decode(Bool.self, forKey: .succeeded)
         errorMessage = try container.decodeIfPresent(String.self, forKey: .errorMessage)

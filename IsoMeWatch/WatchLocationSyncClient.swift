@@ -20,6 +20,8 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
     @Published private(set) var todayContext: WatchTodayContext?
     /// Result of the latest "Mark", e.g. "Marked Mission Office."
     @Published private(set) var markStatus: String?
+    /// Whether the paired iPhone can be messaged right now (in range).
+    @Published private(set) var isPhoneReachable = false
 
     /// Marks waiting for an activated session; WatchConnectivity queues them after that.
     private var pendingMarkRequests: [WatchMarkPlaceRequest] = []
@@ -206,10 +208,49 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
         syncPending(force: true)
     }
 
-    @discardableResult
-    func recordLocation(_ location: CLLocation) -> Bool {
-        let sessionID = ensureActiveSession(startedAt: location.timestamp)
-        let point = WatchLocationSyncPoint(
+    var deviceID: UUID { state.deviceID }
+
+    // MARK: - Hand-off (#173)
+
+    /// While the iPhone records: keep the fix locally only, in case the iPhone stops.
+    func bufferStandbyLocation(_ location: CLLocation) {
+        state.standby.append(makePoint(location, sessionID: ensureActiveSession(startedAt: location.timestamp)))
+        saveState()
+    }
+
+    /// The Watch records again: queue the standby fixes the iPhone didn't cover.
+    func promoteStandby(phoneCoveredUntil: Date?) {
+        guard !state.standby.points.isEmpty else { return }
+        state.promoteStandby(phoneCoveredUntil: phoneCoveredUntil)
+        saveState()
+        syncPending(force: true)
+    }
+
+    /// The iPhone takes over: close the Watch's open stay so it can't span the hand-off.
+    func endVisitForHandoff(at date: Date) {
+        state.endVisit(at: date)
+        saveState()
+        syncPending(force: true)
+    }
+
+    /// Asks the iPhone whether it is recording. Completes with nil when it can't answer.
+    func requestLease(report: WatchHandoffReport, completion: @escaping @MainActor (PhoneRecordingLease?) -> Void) {
+        guard WCSession.isSupported(), WCSession.default.activationState == .activated,
+              WCSession.default.isReachable, let data = try? encoder.encode(report) else {
+            completion(nil)
+            return
+        }
+        WCSession.default.sendMessage([RecordingHandoffTransport.leaseRequestKey: data], replyHandler: { reply in
+            let lease = (reply[RecordingHandoffTransport.leaseReplyKey] as? Data)
+                .flatMap { try? JSONDecoder().decode(PhoneRecordingLease.self, from: $0) }
+            Task { @MainActor in completion(lease) }
+        }, errorHandler: { _ in
+            Task { @MainActor in completion(nil) }
+        })
+    }
+
+    private func makePoint(_ location: CLLocation, sessionID: UUID) -> WatchLocationSyncPoint {
+        WatchLocationSyncPoint(
             id: UUID(),
             sessionID: sessionID,
             latitude: location.coordinate.latitude,
@@ -219,7 +260,11 @@ final class WatchLocationSyncClient: NSObject, ObservableObject {
             speed: location.speed >= 0 ? location.speed : nil,
             horizontalAccuracy: location.horizontalAccuracy
         )
+    }
 
+    @discardableResult
+    func recordLocation(_ location: CLLocation) -> Bool {
+        let point = makePoint(location, sessionID: ensureActiveSession(startedAt: location.timestamp))
         let createdVisit = state.recordPoint(point)
         saveState()
 
@@ -393,7 +438,9 @@ extension WatchLocationSyncClient: WCSessionDelegate {
             return
         }
         let receivedContext = session.receivedApplicationContext
+        let reachable = session.isReachable
         DispatchQueue.main.async { [weak self] in
+            self?.isPhoneReachable = reachable
             self?.removeOrphanedPayloadFiles(over: WCSession.default)
             SharedRecordingControl.shared.flush()
             self?.applyApplicationContext(receivedContext)
@@ -409,7 +456,9 @@ extension WatchLocationSyncClient: WCSessionDelegate {
     }
 
     nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
-        guard session.isReachable else { return }
+        let reachable = session.isReachable
+        DispatchQueue.main.async { [weak self] in self?.isPhoneReachable = reachable }
+        guard reachable else { return }
         DispatchQueue.main.async { [weak self] in
             SharedRecordingControl.shared.flush()
             self?.syncPending(force: true)

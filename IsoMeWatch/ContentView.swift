@@ -205,6 +205,15 @@ struct ContentView: View {
             .lineLimit(1)
             .minimumScaleFactor(0.7)
 
+            // Which device collects this route's fixes (#173).
+            Label(tracker.recordingDeviceDescription,
+                  systemImage: tracker.recordingRole == .standingBy ? "iphone" : "applewatch")
+                .font(WatchTE.mono(size: 10, weight: .medium, relativeTo: .caption2))
+                .foregroundStyle(tracker.recordingRole == .standingBy ? WatchTE.ochre : WatchTE.textPrimary)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("watchRecordingDevice")
+
             HStack(spacing: 6) {
                 Image(systemName: "arrow.triangle.2.circlepath")
                     .font(.caption2.weight(.semibold))

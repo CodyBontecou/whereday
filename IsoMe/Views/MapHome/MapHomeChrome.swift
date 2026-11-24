@@ -212,6 +212,7 @@ struct MapRecordingBar: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Bindable var viewModel: LocationViewModel
     @ObservedObject var locationManager: LocationManager
+    @ObservedObject private var handoff = RecordingHandoffStore.shared
     let isTracking: Bool
     let onPrimaryTap: () -> Void
     @State private var pulses = false
@@ -240,12 +241,22 @@ struct MapRecordingBar: View {
                         .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
                         .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.7)
                         .opacity(isTracking ? 1 : 0.8)
+                    if let watchLine {
+                        Text(watchLine)
+                            .font(WheredayFont.mono(size: 9, relativeTo: .caption2))
+                            .tracking(1.2)
+                            .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
+                            .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.7)
+                            .opacity(0.8)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(isTracking ? Text("Session summary") : Text("Tracking is off."))
-            .accessibilityValue(isTracking ? viewModel.sessionAccessibilitySummary : "")
+            .accessibilityValue(isTracking
+                ? [viewModel.sessionAccessibilitySummary, watchLine].compactMap { $0 }.joined(separator: ". ")
+                : "")
 
             Button(action: onPrimaryTap) {
                 Group {
@@ -291,6 +302,16 @@ struct MapRecordingBar: View {
         guard isTracking else { return String(localized: "STANDBY") }
         let points = viewModel.sessionLocationPoints.count.formatted()
         return String(localized: "RECORDING · \(points) PTS")
+    }
+
+    /// Which device records when Apple Watch is in the loop (#173).
+    private var watchLine: String? {
+        guard isTracking else { return nil }
+        switch handoff.watchRole() {
+        case .standingBy?: return String(localized: "ON IPHONE · WATCH ON STANDBY")
+        case .recording?: return String(localized: "ON IPHONE AND WATCH")
+        default: return nil
+        }
     }
 
     private var detail: String {

@@ -178,6 +178,10 @@
 		C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE0304212F000000000304 /* CountryDayTests.swift */; };
 		C0DE04010000000000000002 /* WatchLocationSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04010000000000000001 /* WatchLocationSyncState.swift */; };
 		C0DE04010000000000000003 /* WatchLocationSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04010000000000000001 /* WatchLocationSyncState.swift */; };
+		D1730000000000000000A002 /* RecordingHandoff.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1730000000000000000A001 /* RecordingHandoff.swift */; };
+		D1730000000000000000A003 /* RecordingHandoff.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1730000000000000000A001 /* RecordingHandoff.swift */; };
+		D1730000000000000000B002 /* RecordingHandoffStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1730000000000000000B001 /* RecordingHandoffStore.swift */; };
+		D1730000000000000000C002 /* RecordingHandoffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1730000000000000000C001 /* RecordingHandoffTests.swift */; };
 		C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DE04020000000000000001 /* WatchLocationSyncTests.swift */; };
 		76AB00000000000000000002 /* ManualVisitStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AB00000000000000000001 /* ManualVisitStore.swift */; };
 		76AB00000000000000000012 /* IsoMeManualVisitIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AB00000000000000000011 /* IsoMeManualVisitIntents.swift */; };
@@ -458,6 +462,9 @@
 		C0DE0303212F000000000303 /* CountryDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDaysView.swift; sourceTree = "<group>"; };
 		C0DE0304212F000000000304 /* CountryDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDayTests.swift; sourceTree = "<group>"; };
 		C0DE04010000000000000001 /* WatchLocationSyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncState.swift; sourceTree = "<group>"; };
+		D1730000000000000000A001 /* RecordingHandoff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHandoff.swift; sourceTree = "<group>"; };
+		D1730000000000000000B001 /* RecordingHandoffStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHandoffStore.swift; sourceTree = "<group>"; };
+		D1730000000000000000C001 /* RecordingHandoffTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHandoffTests.swift; sourceTree = "<group>"; };
 		C0DE04020000000000000001 /* WatchLocationSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLocationSyncTests.swift; sourceTree = "<group>"; };
 		76AB00000000000000000001 /* ManualVisitStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualVisitStore.swift; sourceTree = "<group>"; };
 		76AB00000000000000000011 /* IsoMeManualVisitIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeManualVisitIntents.swift; sourceTree = "<group>"; };
@@ -670,6 +677,7 @@
 				D6000001212F000000000001 /* PushRegistrationManager.swift */,
 				E4E900BDC375415EB884300D /* WebhookManager.swift */,
 				C0DE0206212F000000000206 /* WatchLocationSyncReceiver.swift */,
+				D1730000000000000000B001 /* RecordingHandoffStore.swift */,
 				75CA00000000000000000101 /* WatchVisitCommandProcessor.swift */,
 			);
 			path = Services;
@@ -800,6 +808,7 @@
 				A100001D212F00000000001E /* DistanceFormatter.swift */,
 				C0DE0201212F000000000201 /* WatchLocationSyncPayload.swift */,
 				C0DE04010000000000000001 /* WatchLocationSyncState.swift */,
+				D1730000000000000000A001 /* RecordingHandoff.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -811,6 +820,7 @@
 				A06500000000000000000001 /* PhotoMapMarkerTests.swift */,
 				C0DE0304212F000000000304 /* CountryDayTests.swift */,
 				C0DE04020000000000000001 /* WatchLocationSyncTests.swift */,
+				D1730000000000000000C001 /* RecordingHandoffTests.swift */,
 				CA1E00860000000000000004 /* CalendarEventDraftTests.swift */,
 				D24C10C00000000000000002 /* ClockTextTests.swift */,
 				CA1E00870000000000000002 /* TEActionContrastTests.swift */,
@@ -1188,6 +1198,8 @@
 				C0DE0202212F000100000202 /* WatchLocationSyncPayload.swift in Sources */,
 				C0DE04010000000000000002 /* WatchLocationSyncState.swift in Sources */,
 				C0DE0207212F000100000207 /* WatchLocationSyncReceiver.swift in Sources */,
+				D1730000000000000000A002 /* RecordingHandoff.swift in Sources */,
+				D1730000000000000000B002 /* RecordingHandoffStore.swift in Sources */,
 				75CA00000000000000000102 /* WatchVisitCommandProcessor.swift in Sources */,
 				90802146303082A8BE935D64 /* SessionPathMapView.swift in Sources */,
 				5F000001212F000100000001 /* ExportFolderManager.swift in Sources */,
@@ -1256,6 +1268,7 @@
 				A300001E212F00010000001E /* DistanceFormatter.swift in Sources */,
 				C0DE0203212F000100000203 /* WatchLocationSyncPayload.swift in Sources */,
 				C0DE04010000000000000003 /* WatchLocationSyncState.swift in Sources */,
+				D1730000000000000000A003 /* RecordingHandoff.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1278,6 +1291,7 @@
 				A06500000000000000000002 /* PhotoMapMarkerTests.swift in Sources */,
 				C0DE0304212F000100000304 /* CountryDayTests.swift in Sources */,
 				C0DE04020000000000000002 /* WatchLocationSyncTests.swift in Sources */,
+				D1730000000000000000C002 /* RecordingHandoffTests.swift in Sources */,
 				CA1E00860000000000000003 /* CalendarEventDraftTests.swift in Sources */,
 				D24C10C00000000000000001 /* ClockTextTests.swift in Sources */,
 				CA1E00870000000000000001 /* TEActionContrastTests.swift in Sources */,

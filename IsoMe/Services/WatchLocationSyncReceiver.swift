@@ -10,6 +10,8 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
     private var modelContext: ModelContext?
     private var isActivated = false
     private var visitObservers: [NSObjectProtocol] = []
+    /// Phone coverage and Watch visit aliases for the overlap merge (#173). Tests inject their own.
+    var handoff: RecordingHandoffStore = .shared
 
     func configure(modelContainer: ModelContainer, activatesConnectivity: Bool = true) {
         modelContext = modelContainer.mainContext
@@ -25,11 +27,50 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
             replaySimulatorSnapshot()
             return
         }
+        if RecordingHandoffStore.isReplay {
+            replayHandoffOverlap()
+            return
+        }
         #endif
         if activatesConnectivity { activate() }
     }
 
     #if DEBUG && targetEnvironment(simulator)
+    /// #173 replay: this iPhone recorded 09:00–09:10 today, then died; the Watch
+    /// recorded 09:00–09:20 too. Imports the Watch batch through the real merge,
+    /// then a lost-ack redelivery, and shows what was kept on the Apple Watch screen.
+    private func replayHandoffOverlap() {
+        guard let modelContext else { return }
+        let start = Calendar.current.startOfDay(for: Date()).addingTimeInterval(9 * 3600)
+        let sessionID = UUID()
+        for minute in 0...10 {
+            let date = start.addingTimeInterval(Double(minute) * 60)
+            modelContext.insert(LocationPoint(latitude: 35.6586, longitude: 139.7454, timestamp: date, horizontalAccuracy: 5))
+            handoff.recordPhoneCoverage(at: date)
+        }
+        modelContext.insert(Visit(latitude: 35.6586, longitude: 139.7454, arrivedAt: start.addingTimeInterval(60)))
+        handoff.closePhoneCoverage()
+        try? modelContext.save()
+
+        var queue = WatchLocationSyncState(deviceID: UUID())
+        for minute in 0...20 {
+            queue.recordPoint(WatchLocationSyncPoint(
+                id: UUID(), sessionID: sessionID, latitude: 35.6586, longitude: 139.7454,
+                timestamp: start.addingTimeInterval(Double(minute) * 60), altitude: nil, speed: nil,
+                horizontalAccuracy: 8))
+        }
+        queue.endVisit(at: start.addingTimeInterval(20 * 60))
+        guard let payload = queue.makePayload() else { return }
+        let first = importPayload(payload)
+        let retry = importPayload(payload)
+        let points = (try? modelContext.fetchCount(FetchDescriptor<LocationPoint>())) ?? -1
+        let visits = (try? modelContext.fetchCount(FetchDescriptor<Visit>())) ?? -1
+        handoff.receive(WatchHandoffReport(deviceID: queue.deviceID, role: .recording, reportedAt: Date()))
+        handoff.replaySummary = first.succeeded && retry.succeeded
+            ? "merged \(first.mergedPointCount) · kept \(first.importedPointCount) · points \(points) · visits \(visits)"
+            : "failed"
+    }
+
     /// Explicit opt-in, isolated simulator store; never enabled on a phone or in Release.
     private func replaySimulatorSnapshot() {
         let directory = URL.documentsDirectory.appendingPathComponent("WatchSyncReplay")
@@ -212,7 +253,11 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
             var importedSessionCount = 0
             var importedPointCount = 0
             var importedVisitCount = 0
+            var mergedPointCount = 0
+            var mergedVisitCount = 0
             var updatedVisit = false
+            // Moments this iPhone recorded itself are stored once: its own points win.
+            let redundantPointIDs = RecordingOverlapMerge.redundantPointIDs(payload.points, coverage: handoff.coverage)
 
             for sessionDTO in payload.sessions {
                 if let session = try recordingSession(withID: sessionDTO.id, in: modelContext) {
@@ -246,6 +291,10 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
 
             for pointDTO in payload.points {
                 guard try locationPoint(withID: pointDTO.id, in: modelContext) == nil else { continue }
+                if redundantPointIDs.contains(pointDTO.id) {
+                    mergedPointCount += 1
+                    continue
+                }
                 modelContext.insert(
                     LocationPoint(
                         id: pointDTO.id,
@@ -278,22 +327,44 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
                             updatedVisit = true
                         }
                     }
+                } else if let target = try phoneVisit(duplicating: visitDTO, in: modelContext) {
+                    // The iPhone recorded this stay too: keep one visit and let the
+                    // Watch fill only what the iPhone missed.
+                    if handoff.phoneVisitID(forWatchVisit: visitDTO.id) == nil { mergedVisitCount += 1 }
+                    handoff.setPhoneVisitID(target.id, forWatchVisit: visitDTO.id)
+                    let merged = RecordingOverlapMerge.mergedTimes(
+                        target: mergeVisit(target), watch: visitDTO, coverage: handoff.coverage)
+                    if merged.arrivedAt != target.arrivedAt || merged.departedAt != target.departedAt {
+                        target.arrivedAt = merged.arrivedAt
+                        target.departedAt = merged.departedAt
+                        updatedVisit = true
+                    }
+                } else if handoff.phoneVisitID(forWatchVisit: visitDTO.id) != nil {
+                    // Folded earlier into an iPhone visit the user has since deleted; don't recreate it.
+                    continue
                 } else {
-                    modelContext.insert(
-                        Visit(
-                            id: visitDTO.id,
-                            latitude: visitDTO.latitude,
-                            longitude: visitDTO.longitude,
-                            arrivedAt: visitDTO.arrivedAt,
-                            departedAt: visitDTO.departedAt,
-                            geocodingCompleted: false
-                        )
+                    let visit = Visit(
+                        id: visitDTO.id,
+                        latitude: visitDTO.latitude,
+                        longitude: visitDTO.longitude,
+                        arrivedAt: visitDTO.arrivedAt,
+                        departedAt: visitDTO.departedAt,
+                        geocodingCompleted: false
                     )
+                    visit.recordedOnWatch = true
+                    modelContext.insert(visit)
                     importedVisitCount += 1
                 }
             }
 
             try modelContext.save()
+
+            if mergedPointCount > 0 || mergedVisitCount > 0 {
+                LogManager.shared.info(
+                    "Apple Watch overlap: \(mergedPointCount) points and \(mergedVisitCount) visits were already recorded on this iPhone",
+                    category: .watch
+                )
+            }
 
             if importedSessionCount > 0 || importedPointCount > 0 || importedVisitCount > 0 || updatedVisit || updatedSession {
                 LocationManager.shared?.syncDataToWatch()
@@ -310,7 +381,9 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
                 sequence: payload.sequence,
                 importedSessionCount: importedSessionCount,
                 importedPointCount: importedPointCount,
-                importedVisitCount: importedVisitCount
+                importedVisitCount: importedVisitCount,
+                mergedPointCount: mergedPointCount,
+                mergedVisitCount: mergedVisitCount
             )
         } catch {
             return WatchLocationSyncAck(
@@ -365,6 +438,18 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
         publishManualVisitSnapshot()
     }
 
+    /// Answers a Watch lease request: whether this iPhone is recording right now.
+    static func leaseReply(for requestData: Data, store: RecordingHandoffStore = .shared,
+                           now: Date = Date()) -> [String: Any] {
+        let report = try? JSONDecoder().decode(WatchHandoffReport.self, from: requestData)
+        let manager = LocationManager.shared
+        let isRecording = manager?.isRecordingForHandoff ?? false
+        let lease = store.lease(answering: report, isRecording: isRecording,
+                                sessionID: manager?.handoffSessionID, now: now)
+        guard let data = try? JSONEncoder().encode(lease) else { return [:] }
+        return [RecordingHandoffTransport.leaseReplyKey: data]
+    }
+
     private func sendAck(_ ack: WatchLocationSyncAck) {
         guard ack.succeeded else { return }
         guard WCSession.isSupported(), WCSession.default.activationState == .activated else { return }
@@ -395,6 +480,31 @@ final class WatchLocationSyncReceiver: NSObject, ObservableObject {
         var descriptor = FetchDescriptor<LocationPoint>(predicate: predicate)
         descriptor.fetchLimit = 1
         return try context.fetch(descriptor).first
+    }
+
+    private func mergeVisit(_ visit: Visit) -> RecordingMergeVisit {
+        RecordingMergeVisit(id: visit.id, latitude: visit.latitude, longitude: visit.longitude,
+                            arrivedAt: visit.arrivedAt, departedAt: visit.departedAt,
+                            isAutomatic: visit.source == .automatic && visit.recordedOnWatch != true)
+    }
+
+    /// The iPhone-recorded visit a new Watch visit duplicates: an earlier alias
+    /// first, then the same place at an overlapping time.
+    private func phoneVisit(duplicating dto: WatchLocationSyncVisit, in context: ModelContext) throws -> Visit? {
+        if let aliasID = handoff.phoneVisitID(forWatchVisit: dto.id) {
+            return try visit(withID: aliasID, in: context)
+        }
+        // An open stay runs until now; a Watch clock ahead of this one never shortens it.
+        let now = max(Date(), dto.departedAt ?? dto.arrivedAt)
+        let windowStart = dto.arrivedAt.addingTimeInterval(-2 * 24 * 60 * 60)
+        let windowEnd = (dto.departedAt ?? now).addingTimeInterval(RecordingOverlapMerge.arrivalTolerance)
+        let predicate = #Predicate<Visit> { visit in
+            visit.arrivedAt >= windowStart && visit.arrivedAt <= windowEnd
+        }
+        let nearby = try context.fetch(FetchDescriptor<Visit>(predicate: predicate))
+        guard let id = RecordingOverlapMerge.duplicateVisitID(
+            for: dto, among: nearby.map(mergeVisit), now: now) else { return nil }
+        return nearby.first { $0.id == id }
     }
 
     private func visit(withID id: UUID, in context: ModelContext) throws -> Visit? {
@@ -470,6 +580,10 @@ extension WatchLocationSyncReceiver: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         if message[SharedRecordingControl.messageKey] != nil || message[SharedRecordingControl.ackKey] != nil {
             Task { @MainActor in replyHandler(SharedRecordingControl.shared.receive(message)) }
+            return
+        }
+        if let requestData = message[RecordingHandoffTransport.leaseRequestKey] as? Data {
+            Task { @MainActor in replyHandler(Self.leaseReply(for: requestData)) }
             return
         }
         if message[WatchVisitTransport.snapshotRequestKey] as? Bool == true {

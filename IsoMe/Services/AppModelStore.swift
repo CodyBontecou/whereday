@@ -68,6 +68,13 @@ enum AppModelStore {
             try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             return ModelConfiguration(schema: schema, url: directory.appendingPathComponent("phone.store"))
         }
+        if RecordingHandoffStore.isReplay {
+            // A fresh, isolated store each launch so the replay is deterministic.
+            let directory = URL.documentsDirectory.appendingPathComponent("WatchHandoffReplay")
+            try? FileManager.default.removeItem(at: directory)
+            try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            return ModelConfiguration(schema: schema, url: directory.appendingPathComponent("phone.store"))
+        }
         #endif
         return ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, allowsSave: true)
     }

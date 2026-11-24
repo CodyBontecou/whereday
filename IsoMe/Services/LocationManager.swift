@@ -143,6 +143,8 @@ final class LocationManager: NSObject, ObservableObject {
         super.init()
         if registersAsShared {
             Self.shared = self
+            // A new process never inherits coverage: the phone may have been off.
+            RecordingHandoffStore.shared.closePhoneCoverage()
             SharedRecordingControl.shared.apply = { [weak self] intent in
                 self?.applySharedRecordingIntent(intent) ?? false
             }
@@ -212,6 +214,14 @@ final class LocationManager: NSObject, ObservableObject {
             startTracking(reason: .relaunch)
         }
     }
+
+    /// Whether a paired Apple Watch may stand by (#173): recording here with
+    /// permission and access, so this iPhone collects the fixes itself.
+    var isRecordingForHandoff: Bool {
+        isTrackingEnabled && hasLocationPermission && StoreManager.shared.canTrack
+    }
+
+    var handoffSessionID: UUID? { activeRecordingSessionID }
 
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
@@ -406,6 +416,7 @@ final class LocationManager: NSObject, ObservableObject {
             }
         }
         endActiveRecordingSession(at: endedAt)
+        if Self.shared === self { RecordingHandoffStore.shared.closePhoneCoverage() }
 
         isTrackingEnabled = false
         defaults.set(false, forKey: "isTrackingEnabled")
@@ -1391,6 +1402,12 @@ extension LocationManager: CLLocationManagerDelegate {
                     "Skipped \(staleCount) cached fix\(staleCount == 1 ? "" : "es") from before recording started",
                     category: .location
                 )
+            }
+
+            // This iPhone recorded these moments, whether or not the sampler keeps every fix.
+            if Self.shared === self, !recordable.isEmpty {
+                let store = RecordingHandoffStore.shared
+                recordable.map(\.timestamp).sorted().forEach(store.recordPhoneCoverage(at:))
             }
 
             // Distance mode passes every fix through; time modes keep one per interval.
