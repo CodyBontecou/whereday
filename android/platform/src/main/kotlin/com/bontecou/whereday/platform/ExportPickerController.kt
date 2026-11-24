@@ -16,6 +16,11 @@ class ExportPickerController(private val files:ExportFiles) {
     private val serial=Mutex()
     private val mutable=MutableStateFlow(ExportPickerUiState())
     val state=mutable.asStateFlow()
+    private val ownerMap=MutableStateFlow<Map<String,String>>(emptyMap())
+    /** Which export card (by its owner key) opened or showed each request, so a finished request's notice stays on that
+     *  card. Kept here rather than in the card because a card leaving composition loses its own saved state. */
+    val owners=ownerMap.asStateFlow()
+    fun claim(id:String,owner:String) {ownerMap.update {if(it[id]==owner) it else it+(id to owner)}}
     init {refresh()}
     fun refresh()=run {files.pickerState()}
     fun result(id:String?,uri:Uri?,flags:Int)=run {files.pickerResult(id,uri,flags) ?: files.pickerState()}

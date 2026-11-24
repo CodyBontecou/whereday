@@ -47,14 +47,14 @@ import kotlinx.coroutines.*
     var notice by remember {mutableStateOf<ExportDeliveryNotice?>(null)}
     var savedFiles by remember {mutableStateOf<Int?>(null)}
     var requestId by rememberSaveable {mutableStateOf<String?>(null)}
-    // The picker controller is app-wide. A canceled, saved or failed request's notice belongs to the card that opened the
-    // request or showed it as pending (a canceled request stays non-null, so the request alone can't tell). A request
-    // still waiting to be resumed, or one interrupted mid-write, stays visible on every export card.
-    var ownedRequest by rememberSaveable {mutableStateOf<String?>(null)}
-    LaunchedEffect(pending?.id) {pending?.let {ownedRequest=it.id}}
+    // The picker controller is app-wide. A canceled, saved or failed request's notice belongs to the card (keyed by its
+    // label) that opened the request or showed it as pending; a canceled request stays non-null, so the request alone
+    // can't tell. A request still waiting to be resumed, or one interrupted mid-write, stays visible on every export card.
+    val owners by pickerController.owners.collectAsStateWithLifecycle()
+    LaunchedEffect(pending?.id,label) {pending?.let {pickerController.claim(it.id,label)}}
     val pickerNotice=picker.notice?.takeIf {notice ->
         val request=picker.request
-        request?.active==true || notice==ExportDeliveryNotice.interrupted || if(request==null) ownedRequest!=null else request.id==ownedRequest
+        request==null || request.active || notice==ExportDeliveryNotice.interrupted || owners[request.id]==label
     }
     var job by remember {mutableStateOf<Job?>(null)}
     val lifecycle=LocalLifecycleOwner.current.lifecycle
@@ -83,7 +83,7 @@ import kotlinx.coroutines.*
                     }
                     else -> {
                         val request=files.beginPicker(prepared);retained=true;requestId=request.id
-                        ownedRequest=request.id;pickerController.refresh();sheet=false;saver.launch(files.pickerIntent(request.id))
+                        pickerController.claim(request.id,label);pickerController.refresh();sheet=false;saver.launch(files.pickerIntent(request.id))
                     }
                 }
             } catch(e:Exception) {if(e is CancellationException) throw e;notice=exportDeliveryNotice(e)}
@@ -109,7 +109,7 @@ import kotlinx.coroutines.*
                 Text(stringResource(R.string.export_delivery_pending_help),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
                 if(request.destination!=null) WdButton(stringResource(R.string.export_delivery_resume),{pickerController.resume(request.id)},Modifier.testTag("history-export-resume"),emphasis=WdEmphasis.primary,enabled=!picker.busy)
                 WdButton(stringResource(R.string.export_delivery_choose),{scope.launch {
-                    try {requestId=request.id;ownedRequest=request.id;saver.launch(files.pickerIntent(request.id));pickerController.refresh()}
+                    try {requestId=request.id;pickerController.claim(request.id,label);saver.launch(files.pickerIntent(request.id));pickerController.refresh()}
                     catch(e:Exception) {if(e is CancellationException) throw e;notice=exportDeliveryNotice(e,ExportDeliveryNotice.unavailable)}
                 }},enabled=!picker.busy)
                 ExportLink(stringResource(R.string.export_delivery_cancel_pending),{pickerController.cancel(request.id)},Modifier.testTag("history-export-cancel-pending"),destructive=true)
