@@ -1,0 +1,50 @@
+# Plan copy in Settings › Automatic exports and Settings › Automation access, in a build with UNCONFIGURED Play
+# billing, on the disposable QA package com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday).
+# Replaces herdr-plan-access-copy-20261108, renamed and re-scoped on 2026-11-24 (argent 0.34.0, recorded live):
+# that test asserted the locked-state wording "Verified access to a Whereday plan is required." on both screens, a
+# state that no longer exists in unconfigured builds since PR #177 (all paid features unlocked, no plan UI). It also
+# gated on "25 route points", a data dependency unrelated to the copy; this version needs no particular history.
+# What it checks now:
+#   - Automatic exports: the footer is exactly the billing-free policy sentence, so the plan sentence ("Scheduled
+#     exports are included with every Whereday plan.") is absent.
+#   - Automation access: the "Create export files" scope is listed (identity only).
+# KNOWN APP BUG (reported, not asserted): the Automation access exports scope still reads "Complete files using the
+# requested filters. An active Whereday plan is also required." in unconfigured builds, although
+# AutomationResults' export gate (purchases.requireAccess(fileExport)) passes there. When that copy is fixed, add a
+# check here that the plan sentence is absent from automation-scope-exports.
+# Prerequisites: mapQa onboarded, idle (not recording), English UI, Automate not installed.
+# Side effects: none (read-only navigation; nothing is toggled or saved).
+# Coordinate exceptions: none. The live devtools tree went stale after every screen change; it was refreshed with
+# `adb shell am force-stop com.argent.androiddevtools` before each recorded step (not part of the test).
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Disposable mapQa only (never com.bontecou.whereday), unconfigured billing. Read-only check of plan copy.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
+  - tap: { id: archive-settings }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
+  - tap: { text: { matches: '^Automatic exports$' } }
+  - await: { visible: { id: automatic-exports-screen } }
+  - await: { idle: true }
+  - echo: 'Automatic exports: the footer is exactly the billing-free policy (no "included with every Whereday plan").'
+  - await: { text: { in: { text: Once-daily runs rewrite }, equals: Once-daily runs rewrite the complete day so far. Missed historical days can be exported manually. } }
+  - tap: { id: top-bar-back }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: { matches: '^Automation access$' } }, direction: down }
+  - tap: { text: { matches: '^Automation access$' } }
+  - await: { visible: { id: automation-screen } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: automation-scope-exports }, direction: down }
+  - await: { text: { in: { id: automation-scope-exports }, contains: Create export files } }
+  - tap: { id: navigation-map }
+  - await: { visible: { id: map-auto-off } }
+  - await: { idle: true }

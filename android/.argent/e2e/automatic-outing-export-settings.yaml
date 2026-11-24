@@ -1,42 +1,59 @@
+# Automatic exports "Export data: Outings" persistence on the disposable QA package com.bontecou.whereday.mapqa
+# (NEVER the owner's com.bontecou.whereday), in a build with UNCONFIGURED Play billing (debug/mapQa).
+# Prerequisites: mapQa onboarded, idle (not recording), English UI, Automatic exports on defaults (disabled, Once
+# daily, JSON, All), no export folder chosen. Example: fresh install, then `argent e2e run map-qa-onboarding`.
+# Side effects (mapQa only): selects Outings, relaunches to prove it persisted, restores All; enables automatic
+# exports (schedules a WorkManager run) and disables them again. Nothing is exported. Settings end on their defaults.
+# 2026-11-24 re-recorded live (argent 0.34.0) for PR #177: unconfigured builds unlock scheduled exports, so the old
+# final check "Enable is denied with 'Verified lifetime export access is required.'" became "Enable is accepted"
+# (next-run card appears and goes away when disabled). Retargeted from the owner package to mapQa.
+# Coordinate exceptions: none. The live devtools tree went stale after every screen change; it was refreshed with
+# `adb shell am force-stop com.argent.androiddevtools` before each recorded step (not part of the test).
+version: 1
+requires:
+  platform: android
 steps:
-  - echo: Requires completed onboarding, idle recording, disabled default 21:00 once-daily automatic exports and unconfigured purchase verification. Selects Outings, verifies persistence across restart, restores All and checks denied enable. No destination writes.
-  - launch: com.bontecou.whereday
-  - await: { visible: { id: map-header } }
+  - echo: Disposable mapQa only (never com.bontecou.whereday), unconfigured billing. Restart; expect the Map.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - tap: { id: archive-settings }
-  - await: { visible: { text: Distance filter } }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
   - tap: { text: { matches: '^Automatic exports$' } }
-  - await: { visible: { text: Enable automatic exports } }
+  - await: { visible: { id: automatic-exports-screen } }
   - await: { idle: true }
-  - tap: { text: { matches: '^All$' } }
-  - await: { visible: { text: { matches: '^Outings$' } } }
+  - echo: Export data is All. Select Outings; expect the outings help text.
   - tap: { text: { matches: '^Outings$' } }
-  - await: { visible: { text: { matches: '^Outings$' } } }
-  - await: { idle: true }
-  - launch: com.bontecou.whereday
-  - await: { visible: { id: map-header } }
+  - await: { visible: { text: Outings are selected by their start time } }
+  - echo: Outings selected. Relaunch and reopen Automatic exports; expect Outings to persist.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
   - tap: { id: archive-settings }
-  - await: { visible: { text: Distance filter } }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
   - scroll-to: { target: { text: { matches: '^Automatic exports$' } }, direction: down }
   - tap: { text: { matches: '^Automatic exports$' } }
-  - await: { visible: { text: Enable automatic exports } }
+  - await: { visible: { id: automatic-exports-screen } }
   - await: { idle: true }
-  - await: { visible: { text: { matches: '^Outings$' } } }
-  - tap: { text: { matches: '^Outings$' } }
-  - await: { visible: { text: { matches: '^All$' } } }
+  - await: { visible: { text: Outings are selected by their start time } }
+  - echo: Restore All; the outings help text goes away.
   - tap: { text: { matches: '^All$' } }
-  - await: { visible: { text: { matches: '^All$' } } }
-  - await: { idle: true }
-  - tap: { text: Enable automatic exports }
-  - scroll-to: { target: { text: { matches: '^Verified lifetime export access is required\.$' } }, direction: down }
-  - await: { visible: { text: { matches: '^Verified lifetime export access is required\.$' } } }
+  - await: { hidden: { text: Outings are selected by their start time } }
+  - echo: 'Unconfigured billing unlocks scheduled exports: Enable is accepted (next-run card), then disable it again.'
+  - tap: { id: automatic-export-enabled }
+  - await: { visible: { text: NEXT PLANNED RUN } }
+  - tap: { id: automatic-export-enabled }
+  - await: { hidden: { text: NEXT PLANNED RUN } }
   - await: { visible: { text: No successful automatic export yet. } }
-  - await: { idle: true }
-  - scroll-to: { target: { text: Back to settings }, direction: up }
-  - tap: { text: Back to settings }
-  - await: { visible: { text: Distance filter } }
+  - tap: { id: top-bar-back }
+  - await: { visible: { id: settings-screen } }
   - await: { idle: true }

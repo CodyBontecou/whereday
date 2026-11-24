@@ -1,32 +1,35 @@
-# Archive export access and the Filters and fields controls, on the disposable QA package
-# com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday), with UNCONFIGURED billing.
-# Prerequisites: mapQa onboarded, idle, English UI, Archive defaults (JSON, All, Time of day off, 08:00 start).
-# Side effects: prepares one export file in mapQa's cache for the share sheet (dismissed, nothing shared), opens and
-# cancels the Save picker (no file written), opens and cancels the time and date pickers; settings end unchanged.
-# 2026-11-24: since PR #177 unconfigured builds unlock exports, so the "Lifetime export access" card and the
-# "Verified lifetime export access is required." denials are gone. The Share/Save span now expects the system share
-# sheet and Save picker; those steps were recorded live in billing-unconfigured-all-unlocked on the same screen and
-# copied here, then verified here with the CLI runner (not re-recorded in this file). The hidden export-locked and
-# "Verified lifetime..." checks are configured-only absence checks, backed by Share/Save reaching the system UI.
+# Archive export access and the Filters and fields controls on the disposable QA package
+# com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday), in a build with UNCONFIGURED Play billing.
+# Prerequisites: mapQa onboarded, idle (not recording), English UI, Archive on defaults (JSON, All, all dates, Time
+# of day off), at least one stored point so the preview renders (e.g. the public replay-route.csv fixture imported
+# once; see outing-export-access.yaml).
+# Side effects (mapQa only): prepares one export file in mapQa's cache for the share sheet (dismissed with Back,
+# nothing shared); opens the Save picker and cancels it (no file written); turns Time of day on, opens and cancels
+# the From time picker, turns it off; opens and cancels the date chooser; renders a preview. Settings end unchanged.
+# 2026-11-24 re-recorded live end to end (argent 0.34.0). Since PR #177 unconfigured builds unlock exports, so Share
+# and Save now reach the system share sheet and Save picker (no "Verified lifetime export access" denial). The From
+# time row is targeted by its id (export-time-from) instead of the "From time: 08:00" label, whose value text depends
+# on the clock format (it reads "From time: 8:00 AM" on a 12-hour emulator; the picker title is "From time").
 # Raw `button: back` steps dismiss system UI (share sheet, DocumentsUI), which no directive expresses; each is followed
-# by a hidden check. Retargeted from the owner package to mapQa.
-# KNOWN STALE (not billing): the CLI runner passes steps 1-24 (launch, open Archive, Share/Save unlocked, Time of day
-# toggle) and fails at step 25, `scroll-to "From time: 08:00"`: the row label is now "From time" without the value
-# (export_from_time). That span needs a live re-record; it also leaves Time of day ON when it fails.
+# by a hidden check on the system UI that was visible before it.
+# Coordinate exceptions: none in the final YAML. The live tap on All dates was kept as a point by the recorder (its
+# role fallback was ambiguous); it is replaced by the row's id export-date-range, the element under that point.
+# The live devtools tree went stale after every screen change; it was refreshed with
+# `adb shell am force-stop com.argent.androiddevtools` before each recorded step (not part of the test).
 version: 1
 requires:
   platform: android
 steps:
-  - echo: Disposable mapQa only (never com.bontecou.whereday). Requires completed onboarding, idle recording and an unconfigured purchase verifier, where exports are unlocked. Does not buy, start recording, share or write a destination file.
+  - echo: Disposable mapQa only (never com.bontecou.whereday), unconfigured billing where exports are unlocked. Does not buy, record, share or write a destination file.
   - launch: com.bontecou.whereday.mapqa
-  - await: { visible: { id: map-header } }
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
   - await: { idle: true }
   - tap: { id: navigation-archive }
   - await: { visible: { id: export-history-count } }
   - await: { idle: true }
-  - assert: { hidden: { id: export-locked } }
+  - await: { visible: { id: export-share } }
   - echo: 'Share is unlocked: expect the Android share sheet, dismissed with Back without sharing.'
-  - tap: { text: { matches: '^Share export$' } }
+  - tap: { id: export-share }
   - await: { visible: { id: 'com.android.intentresolver:id/content_preview_filename' }, timeout: 15000 }
   - tool: button
     args:
@@ -34,7 +37,7 @@ steps:
   - await: { hidden: { id: 'com.android.intentresolver:id/content_preview_filename' } }
   - await: { visible: { id: export-save-as } }
   - echo: 'Save is unlocked: expect the system Save picker, cancelled with Back so no file is written.'
-  - tap: { text: Save export as… }
+  - tap: { id: export-save-as }
   - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
   - tool: button
     args:
@@ -42,33 +45,35 @@ steps:
   - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
   - scroll-to: { target: { text: Export canceled. }, direction: down }
   - await: { visible: { text: Export canceled. Files already written remain in the destination. } }
-  - assert: { hidden: { text: Verified lifetime export access is required } }
-  - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
-  - tap: { text: { matches: '^Filters and fields$' } }
-  - scroll-to: { target: { text: { matches: '^Time of day$' } }, direction: down }
-  - await: { idle: true }
-  - tap: { text: { matches: '^Time of day$' } }
-  - scroll-to: { target: { text: 'From time: 08:00' }, direction: down }
-  - await: { visible: { text: 'From time: 08:00' } }
-  - tap: { text: 'From time: 08:00' }
-  - await: { visible: { id: 'android:id/timePicker' } }
-  - tap: { id: 'android:id/button2' }
-  - await: { visible: { text: { matches: '^Time of day$' } } }
-  - tap: { text: { matches: '^Time of day$' } }
-  - await: { idle: true }
-  - await: { hidden: { text: 'From time:' } }
-  - scroll-to: { target: { text: { matches: '^All dates$' } }, direction: up }
-  - tap: { text: { matches: '^All dates$' } }
+  - echo: Open Filters and fields.
+  - scroll-to: { target: { id: export-advanced }, direction: down }
+  - tap: { id: export-advanced }
+  - scroll-to: { target: { id: export-time-enabled }, direction: down }
+  - await: { visible: { id: export-time-enabled } }
+  - echo: Turn Time of day on; expect From time; open and cancel its picker; turn Time of day off again.
+  - tap: { id: export-time-enabled }
+  - await: { visible: { id: export-time-from } }
+  - tap: { id: export-time-from }
+  - await: { visible: { id: 'android:id/hours' } }
+  - tap: { text: { matches: '^Cancel$' } }
+  - await: { hidden: { id: 'android:id/hours' } }
+  - tap: { id: export-time-enabled }
+  - await: { hidden: { id: export-time-from } }
+  - echo: Open the date chooser from All dates and cancel it; the range stays All dates.
+  - tap: { id: export-date-range }
   - await: { visible: { text: Choose dates } }
   - tap: { text: { matches: '^Cancel$' } }
-  - scroll-to: { target: { text: { matches: '^Hide filters and fields$' } }, direction: up }
-  - tap: { text: { matches: '^Hide filters and fields$' } }
-  - scroll-to: { target: { text: { matches: '^Preview export$' } }, direction: up }
-  - tap: { text: { matches: '^Preview export$' } }
-  - scroll-to: { target: { text: '"exportDate"' }, direction: down }
-  - await: { visible: { text: '"exportDate"' } }
-  - await: { idle: true }
-  - tap: { id: navigation-archive }
-  - tap: { id: archive-settings }
-  - await: { visible: { text: Distance filter } }
+  - await: { hidden: { text: Choose dates } }
+  - await: { text: { in: { id: export-date-range }, contains: All dates } }
+  - tap: { id: export-advanced }
+  - await: { hidden: { id: export-time-enabled } }
+  - echo: Preview the export; expect JSON with "exportDate".
+  # Scroll up to the history count (as done live), not just to the button: a scroll-to on export-preview-start stops
+  # with the button half under the top bar, where the tap lands on the bar.
+  - scroll-to: { target: { id: export-history-count }, direction: up }
+  - await: { visible: { id: export-preview-start } }
+  - tap: { id: export-preview-start }
+  - await: { text: { in: { id: export-preview-result }, contains: '"exportDate"' } }
+  - tap: { id: navigation-map }
+  - await: { visible: { id: map-header-title } }
   - await: { idle: true }
