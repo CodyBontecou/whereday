@@ -8,16 +8,6 @@
     <string name="shell_archive">Archive</string>
     <string name="common_continue">Continue</string>
     <string name="common_back">Back</string>
-    <string name="onboarding_title_welcome">Your days, remembered</string>
-    <string name="onboarding_title_journal">A journal of where you go</string>
-    <string name="onboarding_title_background">Record in the background</string>
-    <string name="onboarding_title_notification">Keep recording within reach</string>
-    <string name="onboarding_title_ready">Ready for your next outing</string>
-    <string name="onboarding_body_welcome">Whereday keeps your location history on this phone. No account is needed to record your day.</string>
-    <string name="onboarding_body_journal">Record routes, remember visits and make your history your own with saved places and notes.</string>
-    <string name="onboarding_body_background">Location access lets Whereday record a route while your screen is off. Choose precise location for useful routes. You can use the rest of the app without granting access.</string>
-    <string name="onboarding_body_notification">An ongoing notification shows your recording status and lets you stop without opening the app. Allow notifications to keep these controls visible.</string>
-    <string name="onboarding_body_ready">Start a recording whenever you are ready. You can change distance, auto-stop and appearance in Settings.</string>
     <string name="onboarding_allow_location">Allow location</string>
     <string name="onboarding_allow_notifications">Allow notifications</string>
     <string name="recording_journal_title">Your location journal</string>

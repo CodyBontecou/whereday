@@ -84,7 +84,7 @@ private val timestampDraftSaver=listSaver<VisitTimestampDraft?,String>(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable private fun visitTimePickerColors()=TimePickerDefaults.colors(
+@Composable internal fun visitTimePickerColors()=TimePickerDefaults.colors(
     clockDialColor=wd.dialTrack,clockDialSelectedContentColor=wd.surface,clockDialUnselectedContentColor=wd.textPrimary,selectorColor=wd.accent,
     containerColor=wd.card,periodSelectorBorderColor=wd.border,periodSelectorSelectedContainerColor=wd.accent,periodSelectorUnselectedContainerColor=wd.card,
     periodSelectorSelectedContentColor=wd.surface,periodSelectorUnselectedContentColor=wd.textMuted,timeSelectorSelectedContainerColor=wd.accent,

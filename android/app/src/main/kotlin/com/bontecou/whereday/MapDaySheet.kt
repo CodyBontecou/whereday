@@ -135,7 +135,8 @@ internal enum class DaySheetDetent {peek,half,full}
     val day=selected?.let(summary::day)
     val open=stringResource(R.string.map_home_open_days)
     Column(modifier.fillMaxWidth().wdFloating(RoundedCornerShape(22.dp),colors,8.dp).padding(12.dp).testTag("map-range-card"),verticalArrangement=Arrangement.spacedBy(10.dp)) {
-        Row(Modifier.fillMaxWidth().clickable(role=Role.Button,onClickLabel=open,onClick=onOpen),verticalAlignment=Alignment.Top,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+        // The row merges its texts, so the selected day's summary is matched by this tag (map-range-day-summary is inside it).
+        Row(Modifier.fillMaxWidth().testTag("map-range-selected-day").clickable(role=Role.Button,onClickLabel=open,onClick=onOpen),verticalAlignment=Alignment.Top,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
             Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(2.dp)) {
                 Text(day?.let {rangeDayKicker(it.day,locale)} ?: "",style=WdType.caption2.copy(fontSize=9.5.sp,letterSpacing=0.13.em,fontWeight=FontWeight.Medium),color=colors.textMuted,maxLines=1)
                 Text(day?.let {stringResource(R.string.map_home_range_day_summary,dayDistance(it.distanceMeters,metric,locale),pluralStringResource(R.plurals.map_home_places_lower,it.placeCount,it.placeCount))} ?: "",

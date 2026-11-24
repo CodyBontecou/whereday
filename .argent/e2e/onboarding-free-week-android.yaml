@@ -1,0 +1,59 @@
+# Free week as onboarding's last step on Android, with a FAKE configured billing.
+# Real Play billing can't run here (the purchase verifier isn't deployed), so this drives the mapQa-only
+# FreeWeekDemoActivity: the real Onboarding composable on its last step, fed synthetic Play products
+# (Yearly $29.99 and Weekly $0.99, each with a 7-day trial, and Lifetime $49.99) and a checkout that
+# succeeds after about 0.8 s. The routing, timeline, plan chooser, All plans sheet, disclosure, "You're in"
+# screen and the post-purchase notification request are the production code; the store is not.
+# Prerequisites: a fresh install of the disposable QA package com.bontecou.whereday.mapqa (never the owner's
+# com.bontecou.whereday) on an English API 33+ pool emulator, notifications not granted.
+# Side effects (QA package only): grants POST_NOTIFICATIONS to mapQa, sets its Settings › Reminders to Every
+# evening (21:00) and queues the next evening recap through the app's scheduleRecap. No journal or Play writes.
+# No coordinate exceptions.
+version: 1
+requires:
+  platform: android
+executionPrerequisite: Fresh install of the disposable QA package com.bontecou.whereday.mapqa (never
+  com.bontecou.whereday) on an English API 33+ pool emulator, notifications not granted. The test opens
+  the mapQa-only FreeWeekDemoActivity with its defaults (fake configured billing with synthetic Yearly and
+  Weekly 7-day trials and Lifetime; checkout succeeds).
+steps:
+  - echo: Open the mapQa fake-billing host on onboarding's last step; expect the free week with the trial
+      timeline once the synthetic catalog loads.
+  - tool: restart-app
+    args:
+      bundleId: com.bontecou.whereday.mapqa
+      activity: com.bontecou.whereday.FreeWeekDemoActivity
+  - await: { visible: { id: onboarding-trial-timeline }, timeout: 10000 }
+  - await: { idle: true }
+  - assert: { text: { in: { id: onboarding-start-trial }, equals: Start my free week } }
+  - assert: { visible: { text: "Recording starts now, on us." } }
+  - assert: { text: { in: { id: onboarding-trial-timeline }, contains: "A short recap of your day: where you went and how far." } }
+  - echo: Yearly is preselected. Pick Lifetime; expect "Buy Lifetime · $49.99" as the primary.
+  - tap: { id: onboarding-plan-lifetime }
+  - await: { text: { in: { id: onboarding-start-trial }, equals: Buy Lifetime · $49.99 } }
+  - tap: { id: onboarding-plan-yearly }
+  - await: { text: { in: { id: onboarding-start-trial }, equals: Start my free week } }
+  - echo: Open All plans; expect the sheet led by the "Remember my days" card (default intent), then choose
+      Weekly there and close it.
+  - tap: { id: onboarding-all-plans }
+  - await: { visible: { id: paywall-sheet } }
+  - await: { idle: true }
+  - await: { visible: { text: "Every day written down, without check-ins." } }
+  - tap: { id: paywall-plan-weekly }
+  - tap: { id: paywall-sheet-close }
+  - await: { hidden: { id: paywall-sheet } }
+  - await: { text: { in: { id: onboarding-trial-disclosure }, contains: $0.99 per week } }
+  - echo: Weekly is chosen. Start the free week (fake checkout succeeds after ~0.8 s); expect "You're in"
+      with the Evening recap switch off because notifications aren't granted.
+  - tap: { id: onboarding-start-trial }
+  - await: { visible: { id: onboarding-trial-done } }
+  - await: { idle: true }
+  - assert: { visible: { text: "You're in." } }
+  - echo: 'Turn on "Evening recap": the only notification request, made after the purchase. Allow it in the
+      system dialog.'
+  - tap: { id: onboarding-recap-toggle }
+  - await: { visible: { id: permission_allow_button } }
+  - tap: { id: com.android.permissioncontroller:id/permission_allow_button }
+  - await: { hidden: { id: permission_allow_button } }
+  - tap: { id: onboarding-continue }
+  - await: { text: { in: { id: qa-onboarding-result }, equals: "QA onboarding finished: start=true recap=true trial=true" } }

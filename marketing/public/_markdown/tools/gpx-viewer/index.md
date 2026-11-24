@@ -66,6 +66,8 @@ Geometry is two-dimensional. The custom properties `point_numbers`, `times_utc`,
 
 These property arrays are this tool’s convention, not a standard GeoJSON time or elevation model. A receiving app can ignore them. Elevation stays in properties rather than becoming a third geometry coordinate with an assumed height reference. File metadata, track/route names, styling and extensions are omitted. This is not a lossless conversion, route repair or Whereday restore file. Keep your GPX and [follow the worked GeoJSON check](https://whereday.com/blog/check-gpx-file/#geojson) before using a personal archive.
 
+Have a GeoJSON file instead? [Open a GeoJSON file](https://whereday.com/tools/geojson-viewer/) in the local GeoJSON viewer.
+
 ## Your location file stays in this page
 
 File parsing, plotting, CSV and GeoJSON creation happen in your browser. This page blocks network connections and does not include the website’s analytics listener. There are no external map tiles: the plot shows coordinates and shape, not street names. Clear removes the result from the page; it never deletes your original file.
@@ -89,5 +91,9 @@ Combine daily or split GPX files into one, without uploading them.
 - [Follow the worked GPX check](https://whereday.com/blog/check-gpx-file/)
 
 Expected counts and warnings for an invented five-point file.
+
+- [Open a GeoJSON file](https://whereday.com/tools/geojson-viewer/)
+
+View a GeoJSON file locally and save points and lines as GPX or KML.
 
 Source: https://whereday.com/tools/gpx-viewer/

@@ -1,0 +1,173 @@
+# Settings › Reminders on a seeded Debug install: open it from the map (Archive › Settings ›
+# Reminders), turn the evening recap on (answering the notification alert), switch to Weekly,
+# change the time to 10 PM, turn on place names, switch back to Every evening, and check that
+# the live preview of the next notification changes each time.
+#
+# Prerequisites: an iOS pool simulator (iPhone 18 Pro, portrait, default text size, English)
+# with a FRESH Debug install (`devicepool reset <udid> --bundle com.bontecou.isome
+# --keep-running`, then `xcrun simctl install <udid> <Debug IsoMe.app>`): notifications must not
+# have been asked, because the run answers the system alert. No --use-storekit, so the Debug
+# development unlock grants tracking access. Not on a Sunday evening (6 PM until the recap time),
+# when the weekly preview gains a "not sent" note that moves the rows below it.
+# Side effects (synthetic data only): --seed-screenshot-data replaces all data with the
+# synthetic San Francisco screenshot day and sets hasCompletedOnboarding; notifications are
+# allowed; the recap settings end as Every evening, 10 PM, place names on. --log-recap-schedule
+# (DEBUG) writes each rebuilt pending recap request (fire date and text) to the app log.
+#
+# Coordinate exceptions: every Reminders control carries an id (settings-reminders,
+# reminders-frequency-*, reminders-time-*, reminders-place-names), and the preview body is
+# reminders-preview-body, but Argent's iOS runner tree exposes the SwiftUI controls only as
+# anonymous AXScrollArea/AXButton nodes, so each tap keeps its recorded point (accessibility
+# frame centres on a 402x874 pt iPhone 18 Pro) and is followed by an accessibility-tree check
+# (raw await-ui-element). The Archive tab tap is a point too: the recorder derived
+# `text: Map` for it, which would tap the wrong tab. The notification Allow button is a
+# SpringBoard alert.
+version: 1
+requires:
+  platform: ios
+steps:
+  - echo: Launch the Debug build with the synthetic screenshot day seeded; expect
+      the map.
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --seed-screenshot-data
+          - --log-recap-schedule
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -usesMetricDistanceUnits
+          - YES
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: main-tab-archive
+      timeoutMs: 20000
+  - await: { idle: true }
+  - echo: "Map: tap the Archive tab (main-tab-archive) at (0.838, 0.922); expect the
+      Archive page with its Settings gear."
+  - tool: gesture-tap
+    args: { x: 0.838, y: 0.922 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: archive-listening-link
+  - await: { idle: true }
+  - echo: "Archive: tap the Settings gear at (0.885, 0.117); expect Settings with
+      the Reminders row (settings-reminders)."
+  - tool: gesture-tap
+    args: { x: 0.885, y: 0.117 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: settings-reminders
+      expectedText: Reminders
+  - await: { idle: true }
+  - echo: "Settings: tap Reminders (settings-reminders, Off on a seeded install) at
+      (0.5, 0.535); expect Reminders with the frequency list and the Off
+      preview."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.535 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: reminders-preview-off
+  - await: { idle: true }
+  - echo: "Reminders: tap Every evening (reminders-frequency-daily) at (0.5, 0.457).
+      Choosing a recap while notifications are undetermined asks iOS; expect the
+      system notification alert."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.457 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Would Like to Send You Notifications
+  - echo: "Let the alert finish appearing before tapping Allow; an early tap can be dropped."
+  - await: { idle: true }
+  - echo: "System alert: wait for it to settle, then tap Allow at (0.684, 0.592)
+      (SpringBoard, no app selector); expect the alert gone and the daily
+      preview counting the seeded day."
+  - tool: gesture-tap
+    args: { x: 0.684, y: 0.592 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: SO FAR TODAY
+      timeoutMs: 10000
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: reminders-preview-body
+      expectedText: Tap to see it on the map.
+  - echo: "Reminders: tap Weekly, on Sunday (reminders-frequency-weekly) at (0.5,
+      0.645); expect the preview to become the weekly recap (Your week, Sun, Tap
+      to see the week)."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.645 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: reminders-preview-body
+      expectedText: Tap to see the week.
+      timeoutMs: 10000
+  - echo: "Weekly preview: tap 10 PM (reminders-time-ten) at (0.478, 0.718); expect
+      the preview time to read Sun 10:00 PM."
+  - tool: gesture-tap
+    args: { x: 0.478, y: 0.718 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Sun 10:00
+  - echo: "Weekly preview with counts: turn on Show place names
+      (reminders-place-names) at (0.5, 0.859); expect the body to lead with
+      place names, so the counts sentence (Tap to see the week.) goes away."
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Tap to see the week.
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.859 }
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        text: Tap to see the week.
+  # The week's names and their ranking depend on the weekday (the seeded week so far), but Today
+  # always shows at least 4 places on the seeded day, so a names list always ends "and N more.".
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: reminders-preview-body
+      expectedText: more.
+  - echo: Back to Every evening (reminders-frequency-daily) at (0.5, 0.5); expect
+      the daily preview (Daily 10:00 PM) still showing place names.
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.5 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Daily 10:00
+      timeoutMs: 10000
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: reminders-preview-body
+      expectedText: Valencia Street Stop

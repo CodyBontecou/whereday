@@ -16,7 +16,7 @@ import org.junit.Assert.*
 class OnboardingReadyTest {
     @get:Rule val compose=createComposeRule()
     @Before fun guard() {check(InstrumentationRegistry.getInstrumentation().targetContext.packageName=="com.bontecou.whereday.mapqa")}
-    private fun ready() {repeat(4) {compose.onNodeWithText("Continue").performScrollTo().performClick()}}
+    private fun ready()=compose.walkOnboarding()
     @Test fun withoutPermissionFinishesWithoutAStartChoice() {
         val finished=mutableListOf<Boolean>()
         compose.setContent {MaterialTheme {Onboarding({},{}) {finished+=it.start}}}
@@ -29,12 +29,12 @@ class OnboardingReadyTest {
         val restoration=StateRestorationTester(compose)
         restoration.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground) {finished+=it.start}}}
         ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
-        compose.onNodeWithText("Back").performScrollTo().performClick()
-        compose.onNodeWithText("Continue").performScrollTo().performClick()
+        compose.onNodeWithTag("onboarding-back").performScrollTo().performClick()
+        compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
         restoration.emulateSavedInstanceStateRestore()
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
         assertTrue(finished.isEmpty()) // Restoring a choice is not permission to execute it.
-        compose.onNodeWithText("Start recording and open Whereday").performScrollTo().performClick()
+        compose.onNodeWithText("Start my day").performScrollTo().performClick()
         compose.waitUntil {finished.isNotEmpty()};assertEquals(listOf(true),finished)
     }
     @Test fun revokingPermissionBeforeFinishCannotUseAnEarlierStartChoice() {
@@ -53,7 +53,7 @@ class OnboardingReadyTest {
             entered+=it.start;if(it.start) {acknowledgment.await();throw OnboardingStartFailed()}
         }}}
         ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().performClick()
-        compose.onNodeWithText("Start recording and open Whereday").performScrollTo().performClick()
+        compose.onNodeWithText("Start my day").performScrollTo().performClick()
         compose.onNodeWithTag("onboarding-continue").assertIsNotEnabled()
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsNotEnabled()
         assertEquals(listOf(true),entered)
@@ -69,7 +69,7 @@ class OnboardingReadyTest {
             MaterialTheme(colorScheme=darkColorScheme()) {Onboarding({},{},authorization=UsageAuthorization.always) {started=it.start}}
         }}
         ready();compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
-        compose.onNodeWithText("Start recording and open Whereday").performScrollTo().performClick()
+        compose.onNodeWithText("Start my day").performScrollTo().performClick()
         compose.waitUntil {started}
     }
 }

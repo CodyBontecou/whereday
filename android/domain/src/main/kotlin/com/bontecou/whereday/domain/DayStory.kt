@@ -54,8 +54,12 @@ data class DaySegment(val id:String,val start:Double,val end:Double,val ink:Int)
 /** iOS TodayDay: one day's stays clipped to midnight and now, the moves between them, the dial segments and time away. */
 data class DayStory(val day:LocalDate,val stays:List<DayStay>,val entries:List<DayEntry>,val segments:List<DaySegment>,val awayDuration:Duration?,val distanceMeters:Double) {
     val currentStay:DayStay? get()=stays.lastOrNull {it.current}
-    /** Distinct places, counted by the same key that gives them their ink. */
-    val placeCount:Int get()=stays.map {placeKey(it.visit)}.distinct().size
+    /** Distinct places in order of first arrival, by the same key that gives them their ink ([placeKey]). */
+    val places:List<String> get()=stays.map {placeKey(it.visit)}.distinct()
+    /** Today's place count. The evening recap counts with this too ([RecapFacts.of]). */
+    val placeCount:Int get()=places.size
+    /** The named [places] in the same order, as "The day so far" lists them. A named stay's key is its name, so each name is one place. */
+    val placeNames:List<String> get()=stays.mapNotNull {it.name}.distinct()
 
     companion object {
         /** [points] are the day's fixes (outliers are ignored); [distanceMeters] defaults to their path length. */

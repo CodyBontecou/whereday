@@ -81,17 +81,19 @@ class MapFirstHomeTest {
         val accumulator=DayDistanceAccumulator(zone)
         val d1=day;val d2=day.plusDays(1)
         listOf(point("a",at(9),0.0),point("b",at(10),0.01),point("o",at(10,30),3.0,outlier=true),
-            point("c",d2.atTime(9,0).toInstant(zone),0.01),point("d",d2.atTime(9,30).toInstant(zone),0.03)).forEach(accumulator::add)
+            point("c",d2.atTime(9,0).toInstant(zone),0.02),point("d",d2.atTime(9,30).toInstant(zone),0.03)).forEach(accumulator::add)
         val distances=accumulator.distances()
         assertEquals(Coordinate(37.0,0.0).distanceTo(Coordinate(37.0,0.01)),distances.getValue(d1),0.001)
-        // The overnight leg counts toward the day it ends on, and outliers never add distance.
-        assertEquals(Coordinate(37.0,0.01).distanceTo(Coordinate(37.0,0.03)),distances.getValue(d2),0.001)
+        // Each day is its own fixes' path, as its day sheet shows; the overnight leg is a crossing into the day it ends on.
+        // Outliers never add distance.
+        assertEquals(Coordinate(37.0,0.02).distanceTo(Coordinate(37.0,0.03)),distances.getValue(d2),0.001)
+        assertEquals(Coordinate(37.0,0.01).distanceTo(Coordinate(37.0,0.02)),accumulator.crossings().getValue(d2),0.001)
         assertEquals(3L,accumulator.counts().getValue(d1))
 
         val visits=listOf(visit("1","Cafe",at(9),at(10)),visit("2","Cafe",at(12),at(13)),
             visit("3","Cafe",d2.atTime(8,0).toInstant(zone),d2.atTime(9,0).toInstant(zone)),visit("4","Park",d2.atTime(11,0).toInstant(zone),d2.atTime(12,0).toInstant(zone)))
         val range=HistoryRange.days(d1,d2.plusDays(1),zone)
-        val summary=MapRangeAggregation.summarize(range,zone,d2.plusDays(1).atTime(12,0).toInstant(zone),visits,distances,accumulator.counts())
+        val summary=MapRangeAggregation.summarize(range,zone,d2.plusDays(1).atTime(12,0).toInstant(zone),visits,distances,accumulator.counts(),accumulator.crossings())
         assertEquals(listOf(d1,d2,d2.plusDays(1)),summary.days.map {it.day})
         val cafe=summary.places.first {it.key=="Cafe"}
         assertEquals(2,cafe.days);assertEquals(3,cafe.visits);assertEquals(0,cafe.ink)
@@ -100,7 +102,60 @@ class MapFirstHomeTest {
         assertEquals(listOf(1,2,0),summary.days.map {it.placeCount})
         assertEquals(4,summary.visitCount)
         assertEquals(d2,summary.latestActiveDay)
-        assertEquals(distances.values.sum(),summary.distanceMeters,0.0001)
+        // The range total keeps the overnight leg, so it is the range's whole path.
+        assertEquals(distances.values.sum()+accumulator.crossings().values.sum(),summary.distanceMeters,0.0001)
+    }
+
+    @Test fun anOvernightStayCountsOnBothDaysItCovers() {
+        // The synthetic SF Tuesday: Home from 19:18 the evening before, then Ferry Building, Mission Office, Tartine and Mission Office again.
+        val monday=day;val tuesday=day.plusDays(1)
+        fun tue(hour:Int,minute:Int=0)=tuesday.atTime(hour,minute).toInstant(zone)
+        val visits=listOf(visit("lunch","Tartine Manufactory",at(12),at(13),0.01),visit("home","Home",at(19,18),tue(7,30),0.0),
+            visit("ferry","Ferry Building",tue(8,10),tue(9,0),0.02),visit("office","Mission Office",tue(9,30),tue(12,0),0.03),
+            visit("tartine","Tartine Manufactory",tue(12,20),tue(13,0),0.01),visit("office2","Mission Office",tue(13,20),null,0.03))
+        val now=tue(18)
+        val summary=MapRangeAggregation.summarize(HistoryRange.days(monday,tuesday.plusDays(1),zone),zone,now,visits,emptyMap())
+        val today=DayStory.build(tuesday,zone,visits,emptyList(),now)
+        assertEquals(4,today.placeCount)
+        assertEquals(today.placeCount,summary.day(tuesday)!!.placeCount)
+        assertEquals(today.places,summary.day(tuesday)!!.places)
+        assertEquals(listOf("Home","Ferry Building","Mission Office","Tartine Manufactory"),summary.day(tuesday)!!.places)
+        assertEquals(listOf("Tartine Manufactory","Home"),summary.day(monday)!!.places)
+        // Arrivals still belong to the day they happened on.
+        assertEquals(listOf(2,4),summary.days.map {it.visitCount})
+        assertEquals(2,summary.places.first {it.key=="Home"}.days)
+    }
+
+    @Test fun weekChipsEqualEachDaysStoryAndDaySheetDistance() {
+        val first=day;val last=day.plusDays(6)
+        fun t(offset:Long,hour:Int,minute:Int=0)=day.plusDays(offset).atTime(hour,minute).toInstant(zone)
+        val now=t(6,20)
+        val visits=listOf(
+            visit("before","Home",t(-1,18),t(0,8),0.0),            // began before the range
+            visit("cafe","Cafe",t(0,9),t(0,9),0.01),               // lasts no time
+            visit("stop",null,t(0,11),t(0,12),0.02),               // unnamed
+            visit("hotel","Hotel",t(1,22),t(3,0),0.05),            // two nights, ends exactly at midnight
+            visit("park","Park",t(3,10),t(3,11),0.03),
+            visit("home","Home",t(4,19),t(5,7),0.0),
+            visit("office","Office",t(5,9),t(5,17),0.04),
+            visit("home2","Home",t(5,18),null,0.0))                // still there now
+        val points=(0 until 6*24*3).map {i->point("p$i",t(0,0).plusSeconds(i*1200L),(i%17)/1000.0,outlier=i%29==5)}
+        val accumulator=DayDistanceAccumulator(zone).apply {points.forEach(::add)}
+        val summary=MapRangeAggregation.summarize(HistoryRange.days(first,last.plusDays(1),zone),zone,now,visits,accumulator.distances(),accumulator.counts(),accumulator.crossings())
+        assertEquals((0L..6L).map {first.plusDays(it)},summary.days.map {it.day})
+        summary.days.forEach {chip->
+            val start=chip.day.atStartOfDay(zone).toInstant();val end=chip.day.plusDays(1).atStartOfDay(zone).toInstant()
+            val sheet=PointSummaryBuilder().apply {points.filter {it.time>=start && it.time<end}.forEach(::add)}.build()
+            val story=DayStory.build(chip.day,zone,visits.filter {it.arrivedAt<end && (it.departedAt==null || it.departedAt!!>=start)},emptyList(),now,sheet.distanceMeters)
+            assertEquals("${chip.day} places",story.placeCount,chip.placeCount)
+            assertEquals("${chip.day} place list",story.places,chip.places)
+            assertEquals("${chip.day} distance",story.distanceMeters,chip.distanceMeters,1e-6)
+        }
+        assertEquals(listOf(2,1,1,1,1,2,1),summary.days.map {it.placeCount})
+        // The total is the week's whole path, legs across midnight included.
+        val week=PointSummaryBuilder().apply {points.forEach(::add)}.build()
+        assertEquals(week.distanceMeters,summary.distanceMeters,1e-6)
+        assertTrue(summary.distanceMeters>summary.days.sumOf {it.distanceMeters})
     }
 
     @Test fun overnightStaysCountForEveryDayTheyCover() {

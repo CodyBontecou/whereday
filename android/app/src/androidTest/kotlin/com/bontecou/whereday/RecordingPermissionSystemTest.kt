@@ -31,13 +31,13 @@ abstract class RecordingPermissionSystemScenario {
         assertEquals(PackageManager.PERMISSION_DENIED,target.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION))
         assertEquals(PackageManager.PERMISSION_DENIED,target.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS))
         runBlocking {graph.journalClear.awaitReady();assertFalse(graph.preferences.settings.first().onboarded);assertEquals(0L,graph.history.dao.totalPointCount())}
-        compose.onNodeWithText("Your days, remembered").assertExists()
+        compose.onNodeWithText("Every day is a page.").assertExists()
     }
     @After fun stopOwnRecording() {
         if(target.packageName=="com.bontecou.whereday.mapqa") runBlocking {graph.recordingCommands.stop()}
     }
     protected fun onboardWithoutPermissions() {
-        repeat(4) {compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()}
+        compose.walkOnboarding()
         compose.onNodeWithTag("onboarding-start-now").assertDoesNotExist()
         compose.onNodeWithText("Open Whereday").performScrollTo().performClick()
         appFocused();compose.onNodeWithText("Start recording").assertExists()

@@ -5,7 +5,7 @@ steps:
 - launch: com.bontecou.whereday.mapqa
 - await:
     visible:
-      text: Your days, remembered
+      id: onboarding-cover-dial
 - await:
     idle: true
 - run: map-qa-onboarding.yaml

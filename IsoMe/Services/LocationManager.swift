@@ -77,7 +77,7 @@ final class LocationManager: NSObject, ObservableObject {
     private var lastGeocodedLocation: CLLocation?
     private var pendingManualLocationRequest = false
 
-    // Sliding window of recently saved points for outlier detection
+    // Sliding window of recently saved points for out-and-back spike detection
     private var pointBeforeLast: LocationPoint?
     private var lastSavedPoint: LocationPoint?
 
@@ -332,6 +332,12 @@ final class LocationManager: NSObject, ObservableObject {
             preciseFixRequestedAt = Date()
             applyRoutePowerLevel()
         }
+        locationManager.requestLocation()
+    }
+
+    /// One fix for onboarding's first stamp. Updates `currentLocation` and records nothing.
+    func requestCurrentLocationFix() {
+        guard hasLocationPermission else { return }
         locationManager.requestLocation()
     }
 
@@ -849,12 +855,15 @@ final class LocationManager: NSObject, ObservableObject {
             try context.save()
             reconcileOpenVisits()
             syncDataToWatch()
+            if Self.shared === self { RecapReminderScheduler.shared.noteDataChanged(.visit) }
 
             if let visitToGeocodeID,
                let visitToGeocode = try visit(withID: visitToGeocodeID, in: context),
                !visitToGeocode.geocodingCompleted {
                 Task {
                     await geocodeVisit(visitToGeocode)
+                    // The recap's place names may have changed.
+                    if Self.shared === self { RecapReminderScheduler.shared.noteDataChanged(.visit) }
                     if newArrivalAwaitingName {
                         // Logged once the place has a name, when Apple Maps found one.
                         let name = visitToGeocode.isDeleted ? nil : (visitToGeocode.normalizedCustomName ?? visitToGeocode.locationName)
@@ -1112,20 +1121,9 @@ final class LocationManager: NSObject, ObservableObject {
         var nextLastSavedPoint = lastSavedPoint
 
         for location in validLocations {
+            // Speed alone never flags a fix: a plane or train is real movement and its distance counts.
+            // Only the out-and-back spike below marks a GPS glitch.
             let point = LocationPoint(from: location)
-
-            // Flag obvious teleports: implied speed from the last saved point exceeds
-            // what a human moves (~40 m/s / ~90 mph). Cheap check, catches end-of-trail spikes.
-            if let last = nextLastSavedPoint {
-                let dt = point.timestamp.timeIntervalSince(last.timestamp)
-                if dt > 0 {
-                    let impliedSpeed = last.distance(to: point) / dt
-                    if impliedSpeed > 40 {
-                        point.isOutlier = true
-                    }
-                }
-            }
-
             context.insert(point)
 
             // Re-evaluate the previously saved point now that we have a point after it.
@@ -1152,6 +1150,7 @@ final class LocationManager: NSObject, ObservableObject {
             lastSavedLocationPoint = savedPoints.last
             lastSavedLocationPoints = savedPoints
             locationPointsSavedCount += savedPoints.count
+            if Self.shared === self { RecapReminderScheduler.shared.noteDataChanged(.points) }
             // Sync to watch widget (throttled by WidgetKit)
             syncDataToWatch()
             return savedPoints

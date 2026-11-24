@@ -1,0 +1,303 @@
+# Page One onboarding for a new user, cover to a StoreKit free-trial purchase and the map with
+# recording on, on an iOS pool simulator (iPhone 18 Pro, portrait, default text size, English).
+#
+# Prerequisites (set before the run; the test does not change them):
+#   - A FRESH install that is NOT in the legacy cohort: no -hasCompletedOnboarding launch
+#     argument, and location not granted before the app's first launch (either one puts the
+#     install in the free legacy cohort, which never sees the free week).
+#   - The local StoreKit catalog active with no purchases and purchase dialogs off:
+#     `scripts/qa-storekit-session.sh <udid>`. It installs the Debug build and launches it once
+#     as the test host, which also fixes the cohort as "new" before location is granted.
+#   - Then location "Always" granted (argent settings-permissions grant location-always) and the
+#     simulator location set to a fixed synthetic point:
+#     `xcrun simctl location <udid> set 37.3349,-122.0090`.
+#   - Notifications never asked: the run answers the system notification alert, which must
+#     appear only on the "You're in" screen.
+#   Reset before a second run with `devicepool reset <udid> --bundle com.bontecou.isome`, then
+#   repeat the steps above.
+# Side effects (synthetic data and the local StoreKit catalog only): saves a SavedPlace "Home"
+# at the simulated fix, applies the Every step recording preset, starts a 7-day free trial of
+# Individual Yearly in the local StoreKit session (not the App Store sandbox), grants
+# notifications, schedules the trial reminder (Day 5), turns the evening recap on (Every evening
+# at 9 PM; its request exists only once something is recorded), sets hasCompletedOnboarding and
+# starts tracking.
+#
+# Coordinate exceptions: the SwiftUI controls carry accessibilityIdentifiers (onboarding-next,
+# onboarding-start-trial, onboarding-all-plans, paywall-audience-family, paywall-close, ...),
+# but Argent's iOS runner tree (projected UIViews) exposes them only as anonymous
+# AXButton/AXScrollArea nodes, so the recorder could only derive role-only selectors. Each tap
+# therefore keeps the point it was recorded at (accessibility frame centres on a 402x874 pt
+# iPhone 18 Pro) and is followed by an accessibility-tree check of its outcome (raw
+# await-ui-element, which reads the tree that carries the ids). The notification Allow button
+# is a SpringBoard alert. Prices checked in the sheet come from IsoMe.storekit.
+#
+# -Notelet.LatestSeenAppVersion 2.0 suppresses the "What's new" sheet for app version 2.0 so the
+# map is visible after onboarding; update it when MARKETING_VERSION changes.
+version: 1
+requires:
+  platform: ios
+steps:
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --use-storekit
+          - --onboarding-page=0
+          - -onboardingIntents
+          - days
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -webhook.enabled
+          - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-0
+      timeoutMs: 20000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Start my journal
+  - echo: "Cover: tap Start my journal at (0.5, 0.855); expect the intent screen
+      (onboarding-step-1)."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.855 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-1
+  - await: { idle: true }
+  - echo: "Intent: tap Record runs and hikes at (0.5, 0.568); expect the note to say
+      2 things."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.568 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: set up 2 things
+  - echo: "Intent: tap Continue at (0.5, 0.912); expect the sample-day scrub screen."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-scrub
+  - await: { idle: true }
+  - echo: "Scrub: tap Got it at (0.5, 0.912); expect Pick a pen (onboarding-step-3)."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-3
+  - await: { idle: true }
+  - echo: "Pen: tap Use this pen at (0.5, 0.912); expect location access (Always
+      pre-granted, so the primary reads Continue)."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-step-4
+  - await: { idle: true }
+  - echo: "Permission: tap Continue at (0.5, 0.912); expect the stamp screen with a map
+      fix and name chips."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-place-home
+      timeoutMs: 25000
+  - echo: "The stamp pin pulses (Reduce Motion off), so idle may warn that the screen
+      never held still; the next tap is gated on onboarding-place-home above."
+  - await: { idle: true }
+  - echo: "Stamp: tap the Home chip at (0.151, 0.645); expect the primary to read
+      Save “Home”."
+  - tool: gesture-tap
+    args: { x: 0.151, y: 0.645 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Save “Home”
+  - echo: "Stamp: tap Save “Home” at (0.5, 0.912) (creates a SavedPlace at the
+      simulated fix); expect the backfill heatmap."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-heatmap
+  - await: { idle: true }
+  - echo: "Backfill: leave photos off and tap Skip — start fresh at (0.5, 0.917);
+      expect the glance screen titled Leaving Home."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.917 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Leaving Home
+  - await: { idle: true }
+  - echo: "Glance: tap the primary at (0.5, 0.855); expect the export screen with GPX
+      preselected by the routes intent."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.855 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: whereday-2026-11-23.gpx
+  - await: { idle: true }
+  - echo: "Export: tap Continue at (0.5, 0.855); expect the free-week step (this
+      install has no plan) with its timeline and the plans from StoreKit."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.855 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-trial-timeline
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-plan-yearly
+      timeoutMs: 15000
+  - await: { idle: true }
+  - echo: "Free week: the evening recap row replaces the old tonight's-page row."
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: onboarding-trial-recap
+      expectedText: A short recap of your day
+  - echo: "Free week: Today names the stamped place; no photo clause because photos
+      were skipped."
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: onboarding-trial-today
+      expectedText: Home is stamped. Recording starts now.
+  - echo: "Free week: tap All plans and Family at (0.5, 0.813); expect the All plans
+      sheet leading with the routes intent."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.813 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: paywall-lead-routes
+  - await: { idle: true }
+  - echo: "Sheet: tap Family · up to 6 at (0.404, 0.352); expect the Family Sharing
+      note and the Family Yearly price."
+  - tool: gesture-tap
+    args: { x: 0.404, y: 0.352 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Family Sharing shares access, not your location journal.
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: paywall-plan-yearly
+      expectedText: $49.99
+  - echo: "Sheet: tap Just me at (0.156, 0.352); expect the Individual Yearly price."
+  - tool: gesture-tap
+    args: { x: 0.156, y: 0.352 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: paywall-plan-yearly
+      expectedText: $29.99
+  - echo: "Sheet: tap Close at (0.886, 0.119); expect the sheet gone and the free-week
+      button again."
+  - tool: gesture-tap
+    args: { x: 0.886, y: 0.119 }
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        identifier: paywall-lead-routes
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: onboarding-start-trial
+      expectedText: Start my free week
+  - await: { idle: true }
+  - echo: "Free week: tap Start my free week at (0.5, 0.754). The local StoreKit session
+      has purchase dialogs off, so the Yearly free trial starts without a sheet;
+      expect the You're in screen."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.754 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: onboarding-trial-done
+      timeoutMs: 20000
+  - await: { idle: true }
+  - echo: "You're in: the Evening recap toggle is shown, on by default."
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: onboarding-recap-toggle
+      expectedText: Evening recap
+  - echo: "You're in: keep Evening recap on and tap Open today's map at (0.5,
+      0.912). Only now does iOS ask for notifications (trial reminder and the
+      evening recap); Allow at (0.684, 0.592) is a system alert with no app selector.
+      Expect the map."
+  - tool: gesture-tap
+    args: { x: 0.5, y: 0.912 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Would Like to Send You Notifications
+  - echo: "Let the system alert finish appearing before tapping Allow; an early tap
+      can land while it animates in and be dropped."
+  - await: { idle: true }
+  - tool: gesture-tap
+    args: { x: 0.684, y: 0.592 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: main-tab-map
+      timeoutMs: 15000
+  - await: { idle: true }
+  - echo: "Map: recording is on (the Stop tracking control is shown) and onboarding
+      is gone."
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Stop tracking
+      timeoutMs: 10000
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        identifier: onboarding-trial-done

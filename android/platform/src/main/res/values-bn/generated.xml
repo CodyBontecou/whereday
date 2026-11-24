@@ -21,6 +21,29 @@
     <string name="notification_recording_stop">থামান</string>
     <string name="notification_recording_stop_full">রেকর্ডিং থামান</string>
     <string name="notification_recording_title">Whereday রেকর্ড করছে</string>
+    <string name="recap_channel">সন্ধ্যার সারসংক্ষেপ</string>
+    <plurals name="recap_countries">
+        <item quantity="one">%1$sটি দেশ</item>
+        <item quantity="other">%1$sটি দেশ</item>
+    </plurals>
+    <string name="recap_daily_body">%1$s এবং %2$s। মানচিত্রে দেখতে ট্যাপ করুন।</string>
+    <string name="recap_daily_title">আপনার দিন</string>
+    <string name="recap_named">%1$s। %2$s।</string>
+    <string name="recap_named_countries">%1$s। %3$s জুড়ে %2$s।</string>
+    <string name="recap_names_four">%1$s, %2$s, %3$s এবং %4$s</string>
+    <plurals name="recap_names_more">
+        <item quantity="one">আরও %1$sটি</item>
+        <item quantity="other">আরও %1$sটি</item>
+    </plurals>
+    <string name="recap_names_three">%1$s, %2$s এবং %3$s</string>
+    <string name="recap_names_two">%1$s এবং %2$s</string>
+    <plurals name="recap_places">
+        <item quantity="one">%1$sটি জায়গা</item>
+        <item quantity="other">%1$sটি জায়গা</item>
+    </plurals>
+    <string name="recap_weekly_body">%1$s, %2$s এবং %3$s। সপ্তাহটি দেখতে ট্যাপ করুন।</string>
+    <string name="recap_weekly_body_no_countries">%1$s এবং %2$s। সপ্তাহটি দেখতে ট্যাপ করুন।</string>
+    <string name="recap_weekly_title">আপনার সপ্তাহ</string>
     <string name="trial_reminder_body_weekly">আপনার Whereday প্ল্যান সপ্তাহে %1$s দিয়ে শুরু হবে। এর আগে Google Play-এ বাতিল করলে আপনাকে চার্জ করা হবে না।</string>
     <string name="trial_reminder_body_yearly">আপনার Whereday প্ল্যান বছরে %1$s দিয়ে শুরু হবে। এর আগে Google Play-এ বাতিল করলে আপনাকে চার্জ করা হবে না।</string>
     <string name="trial_reminder_channel">বিনামূল্যের ট্রায়ালের রিমাইন্ডার</string>

@@ -1,0 +1,39 @@
+# The 7-day map's day summary for today matches Today's place count (Android).
+# Regression for the 7D chip reading "3 places" while Today, the day sheet and the evening recap read 4: the range
+# summary counted each visit only on the day it arrived, so the Home stay from the evening before was missing.
+# It now uses the same DayStory derivation per day.
+# Prerequisites: the disposable QA package com.bontecou.whereday.mapqa (never the owner's com.bontecou.whereday)
+# installed on an English API 35 pool emulator booted with guest Vulkan, app locale unset. Not shortly after
+# midnight: the synthetic "today" is scaled to fit the hours since midnight.
+# Side effects (QA package only): DemoJournalActivity clears the QA journal, seeds the synthetic San Francisco week,
+# marks onboarding complete and turns network geocoding and inferred outings off. Leaves the map on 7D.
+# No coordinate exceptions. The last count check stays a raw await-ui-element step: the range card's summary row
+# merges its texts, and only the recorder's tree reads the merged label (the runner elects the kicker text).
+version: 1
+requires:
+  platform: android
+executionPrerequisite: The disposable QA package com.bontecou.whereday.mapqa (never the owner's
+  com.bontecou.whereday) is installed on an English API 35 pool emulator booted with guest Vulkan, with its app
+  locale unset. Any onboarding state; the demo journal marks it onboarded and replaces its history.
+steps:
+  - echo: Seed the synthetic San Francisco week with the mapQa DemoJournalActivity (it replaces the QA journal
+      and opens the map on Today). Expect Today's day peek to read 4 places (Home since last evening, Ferry
+      Building, Mission Office, Tartine Manufactory).
+  - tool: restart-app
+    args:
+      bundleId: com.bontecou.whereday.mapqa
+      activity: com.bontecou.whereday.mapqa/com.bontecou.whereday.DemoJournalActivity
+  - await: { visible: { id: map-day-peek }, timeout: 30000 }
+  - await: { idle: true }
+  - await: { text: { in: { id: map-day-peek }, contains: 4 places } }
+  - echo: Today reads 4 places. Open the 7-day range; expect the range card to select today's chip (the latest
+      active day) and read "4 places" too, not 3 (the overnight Home stay now counts on the day it continues into).
+  - tap: { id: map-range-7-days }
+  - await: { visible: { id: map-range-selected-day }, timeout: 20000 }
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: map-range-selected-day
+      expectedText: 4 places

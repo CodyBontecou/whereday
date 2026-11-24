@@ -248,6 +248,11 @@ enum ExportPreferencesStore {
         return (options, selectedFormats)
     }
 
+    /// Whether the export screen (or onboarding) has saved preferences yet.
+    static func hasSavedPreferences(defaults: UserDefaults = .standard) -> Bool {
+        defaults.data(forKey: key) != nil
+    }
+
     static func save(
         options: ExportOptions,
         selectedFormats: Set<ExportFormat>,

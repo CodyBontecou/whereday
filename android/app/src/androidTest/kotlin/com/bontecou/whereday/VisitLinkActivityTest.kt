@@ -36,7 +36,7 @@ class VisitLinkActivityTest {
     @Test fun onboardingRetainsTheLinkAcrossRecreationWithoutStartingRecording()=runBlocking {
         graph.preferences.update {it.copy(onboarded=false)}
         ActivityScenario.launch<MainActivity>(intent("isome://log-visit?name=After%20onboarding")).use {scenario->
-            compose.waitUntil(15000) {compose.onAllNodesWithText(context.getString(R.string.common_continue)).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
+            compose.waitUntil(15000) {compose.onAllNodesWithTag("onboarding-continue").fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()}
             scenario.recreate()
             graph.preferences.update {it.copy(onboarded=true)}
             awaitName("After onboarding")

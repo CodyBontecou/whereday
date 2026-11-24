@@ -109,6 +109,9 @@ class MainActivity : ComponentActivity() {
                 // Unguarded, a failure here crashed every launch until storage (and the journal) was cleared.
                 if(!graph.reconcileLocationServicesSafely())
                     android.widget.Toast.makeText(this@MainActivity,getString(R.string.recording_reconciliation_failed),android.widget.Toast.LENGTH_LONG).show()
+                // Migrates #166's one-shot page and keeps the next evening recap queued for the current settings and time zone.
+                try {com.bontecou.whereday.platform.EveningRecap.reconcile(this@MainActivity,graph)}
+                catch(canceled:kotlinx.coroutines.CancellationException) {throw canceled} catch(_:Exception) {}
                 try { kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { graph.history.reconcileVisits() } }
                 catch(canceled:kotlinx.coroutines.CancellationException) {throw canceled}
                 catch(_:Exception) {
@@ -150,7 +153,7 @@ class MainActivity : ComponentActivity() {
         super.onSaveInstanceState(outState)
     }
     override fun onResume() {
-        super.onResume();refreshAccess();(roadSession ?: graph.roadDisplay.createSession().also {roadSession=it}).foreground()
+        super.onResume();refreshAccess();com.bontecou.whereday.platform.EveningRecap.markForeground(this);(roadSession ?: graph.roadDisplay.createSession().also {roadSession=it}).foreground()
         // A preserved window can already have focus without another focus-change callback.
         window.decorView.post {
             if(!isFinishing && !isDestroyed && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
@@ -158,7 +161,7 @@ class MainActivity : ComponentActivity() {
         }
     }
     override fun onStop() {roadSession?.background();foregroundEpoch++;permissionReview=null;permissionHandoff?.cancel();WheredayWidgets.refresh(this);super.onStop()}
-    override fun onPause() {roadSession?.background();graph.automaticPhotos.background();super.onPause()}
+    override fun onPause() {com.bontecou.whereday.platform.EveningRecap.markForeground(this);roadSession?.background();graph.automaticPhotos.background();super.onPause()}
     override fun onDestroy() {roadSession?.close();roadSession=null;super.onDestroy()}
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); handleIntent(intent) }
     private fun handleIntent(intent: Intent?) {

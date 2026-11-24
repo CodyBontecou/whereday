@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Evening recap notifications (Settings › Reminders). Counts come from the journal when the recap fires. -->
+    <string name="recap_channel">Evening recap</string>
+    <string name="recap_daily_title">Your day</string>
+    <string name="recap_weekly_title">Your week</string>
+    <plurals name="recap_places">
+        <item quantity="one">%1$s place</item>
+        <item quantity="other">%1$s places</item>
+    </plurals>
+    <plurals name="recap_countries">
+        <item quantity="one">%1$s country</item>
+        <item quantity="other">%1$s countries</item>
+    </plurals>
+    <!-- %1$s: "4 places"; %2$s: "5.6 km". -->
+    <string name="recap_daily_body">%1$s and %2$s. Tap to see it on the map.</string>
+    <!-- %1$s: "11 places"; %2$s: "1,520 km"; %3$s: "2 countries". -->
+    <string name="recap_weekly_body">%1$s, %2$s and %3$s. Tap to see the week.</string>
+    <string name="recap_weekly_body_no_countries">%1$s and %2$s. Tap to see the week.</string>
+    <!-- With Show place names: %1$s: "Home, Corner café and Riverside park"; %2$s: "5.6 km". -->
+    <string name="recap_named">%1$s. %2$s.</string>
+    <!-- %3$s: "2 countries". -->
+    <string name="recap_named_countries">%1$s. %2$s across %3$s.</string>
+    <string name="recap_names_two">%1$s and %2$s</string>
+    <string name="recap_names_three">%1$s, %2$s and %3$s</string>
+    <string name="recap_names_four">%1$s, %2$s, %3$s and %4$s</string>
+    <!-- The last item of the list of names: "2 more". -->
+    <plurals name="recap_names_more">
+        <item quantity="one">%1$s more</item>
+        <item quantity="other">%1$s more</item>
+    </plurals>
+</resources>

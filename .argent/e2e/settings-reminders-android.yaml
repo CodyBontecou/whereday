@@ -1,0 +1,49 @@
+# Settings › Reminders on Android (evening recap): open it, change the frequency and time, turn on place names,
+# and check the live preview of the next notification at each step.
+# Prerequisites: the disposable QA package com.bontecou.whereday.mapqa (never the owner's com.bontecou.whereday)
+# on an English API 35 pool emulator with a 12-hour clock, onboarded with the Evening recap on (Every evening,
+# 9:00 PM, Skip quiet days on, Show place names off), e.g. straight after onboarding-page-one-android on a fresh
+# install, and nothing recorded today or this week (so the preview shows its example).
+# Side effects (QA package only): leaves Settings › Reminders at Weekly on Sunday, 10:00 PM, place names on, and
+# re-queues the next recap for that. Reinstall the QA package (or set it back) before running it again.
+# No coordinate exceptions: the recorded scroll became scroll-to, and the recorded raw tap on the Weekly row
+# became its id (reminders-frequency-weekly).
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Restart the onboarded mapQa app; expect the map home.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 15000 }
+  - await: { idle: true }
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: archive-settings } }
+  - await: { idle: true }
+  - tap: { id: archive-settings }
+  - await: { visible: { id: settings-reminders } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: settings-reminders }, contains: Every evening } }
+  - echo: Settings shows Reminders set to Every evening (from onboarding). Open Settings › Reminders.
+  - tap: { id: settings-reminders }
+  - await: { visible: { id: reminders-screen } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: reminders-preview-when }, equals: Daily 9:00 PM } }
+  - echo: Every evening at 9 PM with an example "Your day" preview (nothing recorded). Choose Weekly, on Sunday;
+      expect a "Your week" preview on Sundays.
+  - tap: { id: reminders-frequency-weekly }
+  - await: { text: { in: { id: reminders-preview-when }, equals: Sun 9:00 PM } }
+  - assert: { text: { in: { id: reminders-preview-body }, equals: "11 places, 1,520 km and 2 countries. Tap to see the week." } }
+  - echo: Weekly preview shows "Your week" with countries. Choose 10 PM; expect "Sun 10:00 PM".
+  - tap: { id: reminders-time-22 }
+  - await: { text: { in: { id: reminders-preview-when }, equals: Sun 10:00 PM } }
+  - echo: Turn on Show place names; expect the example preview to list names and the countries.
+  - scroll-to: { target: { id: reminders-footer } }
+  - tap: { id: reminders-names }
+  - await: { text: { in: { id: reminders-preview-body }, equals: "Home, Corner café, Riverside park and 8 more. 1,520 km across 2 countries." } }
+  - echo: Go back to Settings; expect the Reminders row to read "Weekly, on Sunday · 10:00 PM" (saved).
+  - tool: button
+    args:
+      button: back
+  - await: { visible: { id: settings-reminders } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: settings-reminders }, contains: "Weekly, on Sunday" } }

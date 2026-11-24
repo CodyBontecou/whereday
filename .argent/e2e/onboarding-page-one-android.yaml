@@ -1,0 +1,82 @@
+# Page One onboarding on Android, end to end, through every one of the ten steps.
+# Prerequisites: a FRESH, unonboarded install of the disposable QA package com.bontecou.whereday.mapqa
+# (never the owner's com.bontecou.whereday) on an English API 35 pool emulator, with no location,
+# notification or photo grants, and a simulated GPS fix set first, e.g.
+#   adb -s <serial> emu geo fix -122.4194 37.7749
+# Side effects (QA package only): grants foreground location, notifications and photo access to mapQa;
+# saves one place named "Home" at the simulated fix (default 150 m radius); turns on automatic photo
+# matching; persists the routes intent (and the Every step preset); turns on the evening recap (Settings ›
+# Reminders: Every evening at 21:00) and queues its next run; marks onboarding complete. No recording is started.
+# Coordinate exception: the slider drag on the scrub step is a raw gesture-swipe, because a Slider thumb
+# has no selector-based drag; its result is checked by the "Office" card that follows.
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Fresh disposable mapQa install (no location or notification grants). Launch; expect the Page One cover dial.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: onboarding-cover-dial }, timeout: 20000 }
+  - await: { idle: true }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-intent-days } }
+  - await: { idle: true }
+  - echo: Add "Record runs and hikes" to the preselected "Remember my days", then continue.
+  - tap: { id: onboarding-intent-routes }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-scrub } }
+  - await: { idle: true }
+  - echo: "Drag the time-of-day slider thumb from 9:15 toward midday (raw drag: a slider thumb has no selector-based drag); expect the you-were-at card to read Office."
+  - tool: gesture-swipe
+    args:
+      fromX: 0.4
+      fromY: 0.724
+      toX: 0.53
+      toY: 0.724
+      durationMs: 600
+      momentum: false
+  - await: { visible: { text: Office } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-pen-preview } }
+  - await: { idle: true }
+  - echo: The routes intent preselected the Every step pen; its preview describes the dense track.
+  - await: { visible: { text: step-by-step track } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-perm-compare } }
+  - await: { idle: true }
+  - echo: Allow location while using the app; granting it moves on to the stamp step by itself.
+  - tap: { id: onboarding-continue }
+  - tap: { id: "com.android.permissioncontroller:id/permission_allow_foreground_only_button" }
+  - await: { visible: { id: onboarding-stamp-map } }
+  - await: { idle: true }
+  - echo: One current fix arrives and the place chips appear; name it Home and save.
+  - await: { visible: { id: onboarding-place-home }, timeout: 40000 }
+  - tap: { id: onboarding-place-home }
+  - await: { text: { in: { id: onboarding-continue }, contains: Save “Home” } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-heatmap } }
+  - await: { idle: true }
+  - echo: Turn on photo matching and allow photo access.
+  - tap: { id: onboarding-photos-toggle }
+  - tap: { id: "com.android.permissioncontroller:id/permission_allow_all_button" }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-glance-notification } }
+  - await: { idle: true }
+  - echo: Allow notifications from the glance step; that moves on to the export step.
+  - tap: { id: onboarding-continue }
+  - tap: { id: "com.android.permissioncontroller:id/permission_allow_button" }
+  - await: { visible: { text: whereday-2026-11-23.gpx } }
+  - await: { idle: true }
+  - echo: The routes intent preselected GPX; switch the sample to JSON.
+  - tap: { id: onboarding-format-json }
+  - await: { visible: { text: whereday-2026-11-23.json } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-draft } }
+  - await: { idle: true }
+  - echo: The draft names the stamped place, the title reads "Your day starts now." (no "page one" or "page tonight" promise), and the Evening recap
+      switch is on now that notifications are allowed.
+  - await: { visible: { text: Home · stamped just now } }
+  - assert: { visible: { text: Your day starts now. } }
+  - await: { text: { in: { id: onboarding-recap-toggle }, contains: Change it in Settings › Reminders. } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: map-header-title }, timeout: 15000 }
+  - await: { idle: true }

@@ -82,6 +82,8 @@ def build():
     for key, name in (("kmz", "synthetic-kml-viewer.kmz"), ("kmzStored", "synthetic-kml-viewer-stored.kmz")):
         viewer_samples[key] = {"name": name, "base64": base64.b64encode((PUBLIC / "samples" / name).read_bytes()).decode("ascii")}
     (PUBLIC / "assets/kml-viewer-demo.mjs").write_text("export const KML_VIEWER_SAMPLES = " + json.dumps(viewer_samples) + ";\n")
+    geojson_sample = {"name": "synthetic-geojson-viewer.geojson", "text": (PUBLIC / "samples/synthetic-geojson-viewer.geojson").read_text()}
+    (PUBLIC / "assets/geojson-viewer-demo.mjs").write_text("export const GEOJSON_VIEWER_SAMPLE = " + json.dumps(geojson_sample) + ";\n")
     countries_trip = (PUBLIC / "samples/synthetic-countries-trip.gpx").read_text()
     (PUBLIC / "assets/visited-countries-demo.mjs").write_text("export const VISITED_DEMO = " + json.dumps({"name": "synthetic-countries-trip.gpx", "text": countries_trip}) + ";\n")
     (PUBLIC / "assets/country-days-demo.mjs").write_text("export const DEMO_COUNTRY_DAYS = " + json.dumps(country_days) + ";\n")
