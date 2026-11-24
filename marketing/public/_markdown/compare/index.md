@@ -15,6 +15,12 @@ Apple’s built-in features, Whereday, Arc Timeline 4, Google Maps Timeline, sel
 
 [Compare location history apps](https://whereday.com/compare/location-history-apps-iphone/)
 
+## [Travel journal apps for iPhone](https://whereday.com/compare/travel-journal-apps-iphone/)
+
+Polarsteps, FindPenguins, Journi, Day One, Apple Journal and Whereday, compared on automatic recording, where the journal lives, export formats and price.
+
+[Compare travel journal apps](https://whereday.com/compare/travel-journal-apps-iphone/)
+
 ## [Whereday and Google Timeline](https://whereday.com/compare/google-maps-timeline/)
 
 A comparison of recording controls, device storage, backup, export formats, and payment. Learn where each fits and why your existing Google archive needs to be kept separately.
