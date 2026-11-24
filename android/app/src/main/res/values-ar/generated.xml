@@ -962,7 +962,7 @@
     <string name="onboarding_cover_body">يدوّن Whereday بهدوء الأماكن التي تذهب إليها. في الدقيقة القادمة ستتعلم قراءة الصفحة، ثم تكتب السطر الأول من صفحتك.</string>
     <string name="onboarding_cover_dial">صفحة اليوم، %1$s: قرص من 24 ساعة، منتصف الليل في أعلاه، يرسم نفسه.</string>
     <string name="onboarding_cover_import">لدي بيانات بالفعل — استيراد</string>
-    <string name="onboarding_cover_start">اكتب الصفحة الأولى</string>
+    <string name="onboarding_cover_start">ابدأ يومياتي</string>
     <string name="onboarding_cover_title">كل يوم صفحة.</string>
     <string name="onboarding_done_body">يبدأ التسجيل الآن. عِش يومك؛ وWhereday يدوّنه.</string>
     <string name="onboarding_done_body_no_location">اسمح بالوصول إلى الموقع متى شئت، وسيبدأ التسجيل من الخريطة.</string>

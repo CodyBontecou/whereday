@@ -1,6 +1,6 @@
 {
   "locale": "es",
-  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
+  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
   "catalog": {
     "common_continue": "Continue",
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
@@ -900,7 +900,7 @@
     "onboarding_cover_body": "Whereday anota discretamente por dónde te mueves. En el próximo minuto aprenderás a leer una página y luego escribirás la primera línea de la tuya.",
     "onboarding_cover_dial": "La página de hoy, %1$s: un reloj de 24 horas con la medianoche arriba, dibujándose solo.",
     "onboarding_cover_import": "Ya tengo datos: importar",
-    "onboarding_cover_start": "Escribe la primera página",
+    "onboarding_cover_start": "Empezar mi diario",
     "onboarding_cover_title": "Cada día es una página.",
     "onboarding_done_body": "La grabación empieza ahora. Sigue con tu día; Whereday lo anota.",
     "onboarding_done_body_no_location": "Permite la ubicación cuando quieras y la grabación empezará desde el mapa.",

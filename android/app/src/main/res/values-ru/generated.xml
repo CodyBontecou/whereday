@@ -910,7 +910,7 @@
     <string name="onboarding_cover_body">Whereday незаметно записывает, где вы бываете. В ближайшую минуту вы научитесь читать страницу, а затем напишете первую строку своей.</string>
     <string name="onboarding_cover_dial">Страница за сегодня, %1$s: 24-часовой циферблат с полуночью вверху, рисующийся сам.</string>
     <string name="onboarding_cover_import">У меня уже есть данные — импортировать</string>
-    <string name="onboarding_cover_start">Написать первую страницу</string>
+    <string name="onboarding_cover_start">Начать мой дневник</string>
     <string name="onboarding_cover_title">Каждый день — страница.</string>
     <string name="onboarding_done_body">Запись начинается сейчас. Живите своим днём — Whereday его запишет.</string>
     <string name="onboarding_done_body_no_location">Разрешите доступ к местоположению, когда будете готовы, и запись начнётся с карты.</string>

@@ -1,7 +1,7 @@
 {
   "locale": "b+zh+Hans",
   "catalogLocale": "zh-Hans",
-  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
+  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -869,7 +869,7 @@
     "onboarding_cover_body": "Whereday 会默默记下你去过的地方。接下来一分钟，你将学会阅读一页日记，再写下属于你的第一行。",
     "onboarding_cover_dial": "今天的日记页，%1$s：一个 24 小时表盘，午夜在顶部，正在自行绘制。",
     "onboarding_cover_import": "我已有数据 — 导入",
-    "onboarding_cover_start": "写下第一页",
+    "onboarding_cover_start": "开始我的日记",
     "onboarding_cover_title": "每一天都是一页。",
     "onboarding_done_body": "现在开始记录。照常过你的一天，Whereday 会帮你写下来。",
     "onboarding_done_body_no_location": "准备好后允许位置权限，就能从地图开始记录。",

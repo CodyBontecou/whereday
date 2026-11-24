@@ -1,6 +1,6 @@
 {
   "locale": "fr",
-  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
+  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -924,7 +924,7 @@
     "onboarding_cover_body": "Whereday note discrètement où vous allez. Dans la minute qui suit, vous apprendrez à lire une page, puis vous écrirez la première ligne de la vôtre.",
     "onboarding_cover_dial": "La page d’aujourd’hui, %1$s : un cadran de 24 heures avec minuit en haut, qui se dessine tout seul.",
     "onboarding_cover_import": "J’ai déjà des données — importer",
-    "onboarding_cover_start": "Écrire la première page",
+    "onboarding_cover_start": "Commencer mon journal",
     "onboarding_cover_title": "Chaque jour est une page.",
     "onboarding_done_body": "L’enregistrement commence maintenant. Vivez votre journée ; Whereday la note.",
     "onboarding_done_body_no_location": "Autorisez la localisation quand vous voulez, et l’enregistrement démarrera depuis la carte.",

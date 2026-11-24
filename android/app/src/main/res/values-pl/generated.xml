@@ -910,7 +910,7 @@
     <string name="onboarding_cover_body">Whereday dyskretnie zapisuje, dokąd się udajesz. W ciągu najbliższej minuty nauczysz się czytać stronę, a potem napiszesz pierwszą linijkę swojej.</string>
     <string name="onboarding_cover_dial">Dzisiejsza strona, %1$s: 24-godzinna tarcza z północą na górze, rysująca się samoczynnie.</string>
     <string name="onboarding_cover_import">Mam już dane — importuj</string>
-    <string name="onboarding_cover_start">Napisz stronę pierwszą</string>
+    <string name="onboarding_cover_start">Zacznij mój dziennik</string>
     <string name="onboarding_cover_title">Każdy dzień to jedna strona.</string>
     <string name="onboarding_done_body">Nagrywanie zaczyna się teraz. Żyj swoim dniem; Whereday go zapisze.</string>
     <string name="onboarding_done_body_no_location">Zezwól na lokalizację, kiedy zechcesz, a nagrywanie ruszy z mapy.</string>

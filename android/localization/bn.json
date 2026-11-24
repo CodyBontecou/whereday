@@ -1,6 +1,6 @@
 {
   "locale": "bn",
-  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
+  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -896,7 +896,7 @@
     "onboarding_cover_body": "Whereday চুপচাপ লিখে রাখে আপনি কোথায় যান। পরের এক মিনিটে আপনি একটি পাতা পড়তে শিখবেন, তারপর নিজের প্রথম লাইনটি লিখবেন।",
     "onboarding_cover_dial": "আজকের পাতা, %1$s: মধ্যরাত উপরে রাখা ২৪ ঘণ্টার ডায়াল, যা নিজে নিজে আঁকা হচ্ছে।",
     "onboarding_cover_import": "আমার কাছে আগে থেকেই ডেটা আছে — ইমপোর্ট করুন",
-    "onboarding_cover_start": "প্রথম পাতা লিখুন",
+    "onboarding_cover_start": "আমার জার্নাল শুরু করুন",
     "onboarding_cover_title": "প্রতিটি দিন একটি পাতা।",
     "onboarding_done_body": "রেকর্ডিং এখনই শুরু হচ্ছে। আপনার দিন কাটান; Whereday তা লিখে রাখবে।",
     "onboarding_done_body_no_location": "প্রস্তুত হলে লোকেশনের অনুমতি দিন, তারপর মানচিত্র থেকে রেকর্ডিং শুরু হবে।",

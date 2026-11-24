@@ -832,7 +832,7 @@
     <string name="onboarding_cover_body">Whereday 会默默记下你去过的地方。接下来一分钟，你将学会阅读一页日记，再写下属于你的第一行。</string>
     <string name="onboarding_cover_dial">今天的日记页，%1$s：一个 24 小时表盘，午夜在顶部，正在自行绘制。</string>
     <string name="onboarding_cover_import">我已有数据 — 导入</string>
-    <string name="onboarding_cover_start">写下第一页</string>
+    <string name="onboarding_cover_start">开始我的日记</string>
     <string name="onboarding_cover_title">每一天都是一页。</string>
     <string name="onboarding_done_body">现在开始记录。照常过你的一天，Whereday 会帮你写下来。</string>
     <string name="onboarding_done_body_no_location">准备好后允许位置权限，就能从地图开始记录。</string>

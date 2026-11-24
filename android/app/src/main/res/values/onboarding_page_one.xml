@@ -7,7 +7,7 @@
 
     <string name="onboarding_cover_title">Every day is a page.</string>
     <string name="onboarding_cover_body">Whereday quietly writes down where you go. In the next minute you\'ll learn to read a page, then write the first line of yours.</string>
-    <string name="onboarding_cover_start">Write page one</string>
+    <string name="onboarding_cover_start">Start my journal</string>
     <string name="onboarding_cover_import">I already have data — import</string>
     <string name="onboarding_cover_dial">Today\'s page, %1$s: a 24-hour dial with midnight at the top, drawing itself.</string>
 

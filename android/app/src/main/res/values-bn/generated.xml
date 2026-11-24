@@ -858,7 +858,7 @@
     <string name="onboarding_cover_body">Whereday চুপচাপ লিখে রাখে আপনি কোথায় যান। পরের এক মিনিটে আপনি একটি পাতা পড়তে শিখবেন, তারপর নিজের প্রথম লাইনটি লিখবেন।</string>
     <string name="onboarding_cover_dial">আজকের পাতা, %1$s: মধ্যরাত উপরে রাখা ২৪ ঘণ্টার ডায়াল, যা নিজে নিজে আঁকা হচ্ছে।</string>
     <string name="onboarding_cover_import">আমার কাছে আগে থেকেই ডেটা আছে — ইমপোর্ট করুন</string>
-    <string name="onboarding_cover_start">প্রথম পাতা লিখুন</string>
+    <string name="onboarding_cover_start">আমার জার্নাল শুরু করুন</string>
     <string name="onboarding_cover_title">প্রতিটি দিন একটি পাতা।</string>
     <string name="onboarding_done_body">রেকর্ডিং এখনই শুরু হচ্ছে। আপনার দিন কাটান; Whereday তা লিখে রাখবে।</string>
     <string name="onboarding_done_body_no_location">প্রস্তুত হলে লোকেশনের অনুমতি দিন, তারপর মানচিত্র থেকে রেকর্ডিং শুরু হবে।</string>

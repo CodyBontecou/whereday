@@ -1,6 +1,6 @@
 {
   "locale": "ar",
-  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
+  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -1008,7 +1008,7 @@
     "onboarding_cover_body": "يدوّن Whereday بهدوء الأماكن التي تذهب إليها. في الدقيقة القادمة ستتعلم قراءة الصفحة، ثم تكتب السطر الأول من صفحتك.",
     "onboarding_cover_dial": "صفحة اليوم، %1$s: قرص من 24 ساعة، منتصف الليل في أعلاه، يرسم نفسه.",
     "onboarding_cover_import": "لدي بيانات بالفعل — استيراد",
-    "onboarding_cover_start": "اكتب الصفحة الأولى",
+    "onboarding_cover_start": "ابدأ يومياتي",
     "onboarding_cover_title": "كل يوم صفحة.",
     "onboarding_done_body": "يبدأ التسجيل الآن. عِش يومك؛ وWhereday يدوّنه.",
     "onboarding_done_body_no_location": "اسمح بالوصول إلى الموقع متى شئت، وسيبدأ التسجيل من الخريطة.",

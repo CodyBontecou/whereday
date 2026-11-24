@@ -1,6 +1,6 @@
 {
   "locale": "ja",
-  "defaultSourceSha256": "d03d170114f240a8114ff321f6509769535715c1340388427b0e825736f15147",
+  "defaultSourceSha256": "6a0f41b5b3277eed3e0bf0e4caaa1214b9537bd76a2b1fb99dbf5fcde4335a60",
   "catalog": {
     "outing_complete_explanation": "Open the complete outing to rename it, edit notes or delete it.",
     "outing_day_scope": "The route, statistics, visits and exports here cover this day only.",
@@ -868,7 +868,7 @@
     "onboarding_cover_body": "Whereday は、あなたが訪れた場所をそっと書き留めます。これからの1分で、ページの読み方を学び、最初の1行を書いてみましょう。",
     "onboarding_cover_dial": "今日のページ、%1$s: 真夜中を上にした24時間ダイヤルが、自らを描いていきます。",
     "onboarding_cover_import": "すでにデータがあります — 読み込む",
-    "onboarding_cover_start": "1ページ目を書く",
+    "onboarding_cover_start": "日記をはじめる",
     "onboarding_cover_title": "毎日が、1ページ。",
     "onboarding_done_body": "記録は今から始まります。いつも通り過ごしてください。Whereday が書き留めます。",
     "onboarding_done_body_no_location": "準備ができたら位置情報を許可してください。地図から記録を始められます。",

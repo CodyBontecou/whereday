@@ -884,7 +884,7 @@
     <string name="onboarding_cover_body">Whereday note discrètement où vous allez. Dans la minute qui suit, vous apprendrez à lire une page, puis vous écrirez la première ligne de la vôtre.</string>
     <string name="onboarding_cover_dial">La page d’aujourd’hui, %1$s : un cadran de 24 heures avec minuit en haut, qui se dessine tout seul.</string>
     <string name="onboarding_cover_import">J’ai déjà des données — importer</string>
-    <string name="onboarding_cover_start">Écrire la première page</string>
+    <string name="onboarding_cover_start">Commencer mon journal</string>
     <string name="onboarding_cover_title">Chaque jour est une page.</string>
     <string name="onboarding_done_body">L’enregistrement commence maintenant. Vivez votre journée ; Whereday la note.</string>
     <string name="onboarding_done_body_no_location">Autorisez la localisation quand vous voulez, et l’enregistrement démarrera depuis la carte.</string>

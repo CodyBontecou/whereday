@@ -884,7 +884,7 @@
     <string name="onboarding_cover_body">O Whereday anota discretamente por onde você anda. No próximo minuto você aprende a ler uma página e depois escreve a primeira linha da sua.</string>
     <string name="onboarding_cover_dial">Página de hoje, %1$s: um mostrador de 24 horas com a meia-noite no topo, desenhando a si mesmo.</string>
     <string name="onboarding_cover_import">Já tenho dados — importar</string>
-    <string name="onboarding_cover_start">Escrever a página um</string>
+    <string name="onboarding_cover_start">Começar meu diário</string>
     <string name="onboarding_cover_title">Cada dia é uma página.</string>
     <string name="onboarding_done_body">A gravação começa agora. Siga seu dia; o Whereday anota tudo.</string>
     <string name="onboarding_done_body_no_location">Permita a localização quando quiser, e a gravação começa pelo mapa.</string>

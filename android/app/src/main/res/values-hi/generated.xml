@@ -858,7 +858,7 @@
     <string name="onboarding_cover_body">Whereday चुपचाप लिखता रहता है कि आप कहाँ जाते हैं। अगले एक मिनट में आप पेज पढ़ना सीखेंगे, फिर अपना पहला वाक्य लिखेंगे।</string>
     <string name="onboarding_cover_dial">आज का पेज, %1$s: आधी रात ऊपर वाला 24 घंटे का डायल, जो खुद बन रहा है।</string>
     <string name="onboarding_cover_import">मेरे पास पहले से डेटा है — इंपोर्ट करें</string>
-    <string name="onboarding_cover_start">पहला पेज लिखें</string>
+    <string name="onboarding_cover_start">मेरी जर्नल शुरू करें</string>
     <string name="onboarding_cover_title">हर दिन एक पेज है।</string>
     <string name="onboarding_done_body">रिकॉर्डिंग अभी शुरू होती है। अपना दिन बिताइए; Whereday उसे लिख लेगा।</string>
     <string name="onboarding_done_body_no_location">जब चाहें लोकेशन की अनुमति दें, फिर रिकॉर्डिंग मैप से शुरू होगी।</string>

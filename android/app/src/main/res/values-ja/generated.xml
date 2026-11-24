@@ -832,7 +832,7 @@
     <string name="onboarding_cover_body">Whereday は、あなたが訪れた場所をそっと書き留めます。これからの1分で、ページの読み方を学び、最初の1行を書いてみましょう。</string>
     <string name="onboarding_cover_dial">今日のページ、%1$s: 真夜中を上にした24時間ダイヤルが、自らを描いていきます。</string>
     <string name="onboarding_cover_import">すでにデータがあります — 読み込む</string>
-    <string name="onboarding_cover_start">1ページ目を書く</string>
+    <string name="onboarding_cover_start">日記をはじめる</string>
     <string name="onboarding_cover_title">毎日が、1ページ。</string>
     <string name="onboarding_done_body">記録は今から始まります。いつも通り過ごしてください。Whereday が書き留めます。</string>
     <string name="onboarding_done_body_no_location">準備ができたら位置情報を許可してください。地図から記録を始められます。</string>
