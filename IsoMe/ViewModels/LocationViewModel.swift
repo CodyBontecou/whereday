@@ -1583,6 +1583,7 @@ final class LocationViewModel {
             mapFocusRequest = nil
             locationManager.forgetActiveRecordingSession()
             loadData()
+            RecapReminderScheduler.shared.resetForClearedData()
         } catch {
             print("Failed to clear data: \(error)")
         }

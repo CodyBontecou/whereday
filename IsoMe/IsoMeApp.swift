@@ -74,6 +74,7 @@ struct IsoMeApp: App {
                 AppReviewPromptCoordinator.shared.recordAppUse()
                 NotificationCenter.default.post(name: .appDidBecomeActive, object: nil)
                 Task { await DailyExportScheduler.shared.runIfDue() }
+                RecapReminderScheduler.shared.noteForeground()
             case .inactive:
                 break
             case .background:
@@ -81,6 +82,7 @@ struct IsoMeApp: App {
                 LaunchGuard.confirmLaunch()
                 NotificationCenter.default.post(name: .appDidEnterBackground, object: nil)
                 DailyExportScheduler.shared.scheduleNextBackgroundRun()
+                RecapReminderScheduler.shared.noteBackground()
             @unknown default:
                 break
             }

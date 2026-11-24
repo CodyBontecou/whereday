@@ -338,6 +338,11 @@ struct LocationMapView: View {
             .onReceive(routeReplayTimer) { _ in
                 advanceRouteReplayIfNeeded()
             }
+            .onReceive(RecapOpenRequest.shared.$revision) { _ in
+                // A tapped evening recap: Today, or the last 7 days for the weekly one.
+                guard let kind = RecapOpenRequest.shared.consume() else { return }
+                selectPreset(kind == .week ? .sevenDays : .today)
+            }
             .onReceive(NotificationCenter.default.publisher(for: .appDidBecomeActive)) { _ in
                 viewModel.refreshPhotoLibraryAuthorizationState()
                 viewModel.loadMapPhotoMoments(in: viewModel.mapDateRange)

@@ -844,12 +844,15 @@ final class LocationManager: NSObject, ObservableObject {
             try context.save()
             reconcileOpenVisits()
             syncDataToWatch()
+            if Self.shared === self { RecapReminderScheduler.shared.noteDataChanged(.visit) }
 
             if let visitToGeocodeID,
                let visitToGeocode = try visit(withID: visitToGeocodeID, in: context),
                !visitToGeocode.geocodingCompleted {
                 Task {
                     await geocodeVisit(visitToGeocode)
+                    // The recap's place names may have changed.
+                    if Self.shared === self { RecapReminderScheduler.shared.noteDataChanged(.visit) }
                     if newArrivalAwaitingName {
                         // Logged once the place has a name, when Apple Maps found one.
                         let name = visitToGeocode.isDeleted ? nil : (visitToGeocode.normalizedCustomName ?? visitToGeocode.locationName)
@@ -1147,6 +1150,7 @@ final class LocationManager: NSObject, ObservableObject {
             lastSavedLocationPoint = savedPoints.last
             lastSavedLocationPoints = savedPoints
             locationPointsSavedCount += savedPoints.count
+            if Self.shared === self { RecapReminderScheduler.shared.noteDataChanged(.points) }
             // Sync to watch widget (throttled by WidgetKit)
             syncDataToWatch()
             return savedPoints

@@ -264,6 +264,12 @@ private struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: .manualVisitsChanged)) { _ in
             viewModel.loadData()
         }
+        .onReceive(RecapOpenRequest.shared.$pending) { kind in
+            // A tapped evening recap opens the map; MapView picks the range.
+            guard kind != nil else { return }
+            showsTimeline = false
+            selectedTab = MainTab.map.rawValue
+        }
         .overlay(alignment: .top) {
             if let toast = exportToastCenter.toast {
                 ExportToastBanner(toast: toast)
