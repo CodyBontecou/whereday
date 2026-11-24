@@ -47,10 +47,11 @@ import kotlinx.coroutines.*
     var notice by remember {mutableStateOf<ExportDeliveryNotice?>(null)}
     var savedFiles by remember {mutableStateOf<Int?>(null)}
     var requestId by rememberSaveable {mutableStateOf<String?>(null)}
-    // The picker controller is app-wide. A finished picker's notice belongs to the screen that opened it, so another
-    // screen's export card does not show it; a request still waiting to be resumed stays visible everywhere.
+    // The picker controller is app-wide. A canceled, saved or failed picker's notice belongs to the screen that opened it
+    // (a canceled request stays non-null, so the request alone can't tell). A request still waiting to be resumed, or one
+    // interrupted mid-write, stays visible on every export card so it can be finished or discarded.
     var openedPicker by rememberSaveable {mutableStateOf(false)}
-    val pickerNotice=picker.notice?.takeIf {picker.request!=null || openedPicker}
+    val pickerNotice=picker.notice?.takeIf {openedPicker || picker.request?.active==true || it==ExportDeliveryNotice.interrupted}
     var job by remember {mutableStateOf<Job?>(null)}
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
