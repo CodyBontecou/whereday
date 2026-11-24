@@ -7,11 +7,10 @@
 # What it checks now:
 #   - Automatic exports: the footer is exactly the billing-free policy sentence, so the plan sentence ("Scheduled
 #     exports are included with every Whereday plan.") is absent.
-#   - Automation access: the "Create export files" scope is listed (identity only).
-# KNOWN APP BUG (reported, not asserted): the Automation access exports scope still reads "Complete files using the
-# requested filters. An active Whereday plan is also required." in unconfigured builds, although
-# AutomationResults' export gate (purchases.requireAccess(fileExport)) passes there. When that copy is fixed, add a
-# check here that the plan sentence is absent from automation-scope-exports.
+#   - Automation access: the "Create export files" scope ends with "Complete files using the requested filters." and
+#     no plan sentence follows it (fixed in c96225a8; before that it read "... An active Whereday plan is also
+#     required."). The check is an anchored regex because the runner tree joins the row's title and detail text
+#     differently from describe; the recorded live wait was an exact match on the same element.
 # Prerequisites: mapQa onboarded, idle (not recording), English UI, Automate not installed.
 # Side effects: none (read-only navigation; nothing is toggled or saved).
 # Coordinate exceptions: none. The live devtools tree went stale after every screen change; it was refreshed with
@@ -45,6 +44,8 @@ steps:
   - await: { idle: true }
   - scroll-to: { target: { id: automation-scope-exports }, direction: down }
   - await: { text: { in: { id: automation-scope-exports }, contains: Create export files } }
+  - echo: 'No plan sentence after the scope detail in an unconfigured build.'
+  - await: { text: { in: { id: automation-scope-exports }, matches: 'requested filters\.$' } }
   - tap: { id: navigation-map }
   - await: { visible: { id: map-auto-off } }
   - await: { idle: true }

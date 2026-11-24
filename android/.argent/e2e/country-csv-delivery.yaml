@@ -9,8 +9,8 @@
 # Save file as… now reach the system share sheet and Save picker instead of the "Verified lifetime export access is
 # required." denial. The share sheet closes the delivery sheet, so it is reopened for Save file as…. Retargeted from
 # the owner package to mapQa.
-# KNOWN APP BUG (reported, not asserted): the Country CSV preview still says "Export country CSV ... needs an active
-# Whereday plan." in unconfigured builds; this test checks only the CSV header in that dialog.
+# The Country CSV preview help must be exactly the plan-free sentence (before c96225a8 it ended "... and needs an
+# active Whereday plan."); the exact-match check was recorded live 2026-11-24.
 # Raw `button: back` steps dismiss system UI (share sheet, DocumentsUI), which no directive expresses; each is followed
 # by a hidden check on the system UI that was visible before it.
 # Coordinate exceptions: none. The live tap on the Country Days row was recorded role-only (the pre-tap tree was
@@ -72,6 +72,7 @@ steps:
   - scroll-to: { target: { id: country-preview }, direction: up }
   - tap: { id: country-preview }
   - await: { visible: { text: Country CSV preview } }
+  - await: { text: { in: { text: Preview shows the first 100 local dates }, equals: Preview shows the first 100 local dates. Export country CSV includes all dates in the selected period. } }
   - await: { visible: { text: 'country_code,local_date,source' } }
   - tap: { text: { matches: '^Done$' } }
   - await: { hidden: { text: Country CSV preview } }

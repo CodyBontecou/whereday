@@ -12,9 +12,8 @@
 # persistence check after relaunch is now executable: Share export carries 2 files ("Sharing 2 files", the per-outing
 # JSON plus the extra CSV). With the split on, Save export as… is disabled, so that path is only exercised before it.
 # Retargeted from the owner package to mapQa.
-# KNOWN APP COPY ISSUE (reported, not asserted): with Data = Outings and the split on, the Archive recipe sentence
-# reads "Export my outings as JSON, one file per day." although the toggle is "One file per outing"; this test checks
-# only "Export my outings as JSON".
+# With Data = Outings and the split on, the Archive recipe sentence must read "Export my outings as JSON, one file
+# per outing." (it said "one file per day" before c96225a8); checked after the relaunch, recorded live 2026-11-24.
 # Raw `button: back` steps dismiss system UI (share sheet, DocumentsUI), each followed by a hidden check.
 # Coordinate exceptions: none in the final YAML. Live, the All menu item was recorded role-only (stale pre-tap
 # tree); it is replaced by its fixed text ^All$, the element under that point.
@@ -70,7 +69,7 @@ steps:
   - tap: { id: navigation-archive }
   - await: { visible: { id: export-history-count } }
   - await: { idle: true }
-  - await: { visible: { text: Export my outings as JSON } }
+  - await: { visible: { text: 'Export my outings as JSON, one file per outing.' } }
   - tap: { id: export-share }
   - await: { visible: { id: 'com.android.intentresolver:id/headline' }, timeout: 15000 }
   - await: { text: { in: { id: 'com.android.intentresolver:id/headline' }, equals: Sharing 2 files } }
