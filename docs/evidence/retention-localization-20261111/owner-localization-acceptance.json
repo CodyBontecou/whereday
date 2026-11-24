@@ -1,0 +1,63 @@
+{
+  "instruction": "Accept all localizations.",
+  "recordedAt": "2026-11-11T16:14:38.569582+00:00",
+  "acceptedBy": "Repository owner via chat",
+  "sourceCommit": "8765f32aab85f5675c7721aaea7d016fd941bbb8",
+  "scope": "All current localizations accepted by owner instruction; this receipt pins the Android English input and ten current translation packs.",
+  "defaultSourceSha256": "c51e9e040e508666eba95d739349163d10e635a684d823c75b867a45e4a3f2aa",
+  "resourceCount": 1779,
+  "nativeFluencyReviewClaimed": false,
+  "spokenTalkBackVerified": false,
+  "translationPacks": [
+    {
+      "locale": "ar",
+      "source": "android/localization/ar.json",
+      "sha256": "e307d2da6f8a4d5bcec1129324147784479c540d93e448d156f716f1f55ddf9f"
+    },
+    {
+      "locale": "b+zh+Hans",
+      "source": "android/localization/b+zh+Hans.json",
+      "sha256": "967d3316cd3ab66815a044e3675cff338d6ee0fd11cdab312a6e48a90eb3205e"
+    },
+    {
+      "locale": "bn",
+      "source": "android/localization/bn.json",
+      "sha256": "bcf0f66a68f9e5c20120bcedc3bc2d96bd144b877783947f619faa71f24fb6e4"
+    },
+    {
+      "locale": "es",
+      "source": "android/localization/es.json",
+      "sha256": "b35bdb186c2e042778f5d7c8709aeb62748743e847742f7507c4a996c9e1fea1"
+    },
+    {
+      "locale": "fr",
+      "source": "android/localization/fr.json",
+      "sha256": "af250c00b36c2cb73c3b21a8b438aaf11c451d2cdb9275f47683573990db6a8b"
+    },
+    {
+      "locale": "hi",
+      "source": "android/localization/hi.json",
+      "sha256": "c0e865cc2fd6e491ce05698c28f2872e08b7a4f8461e4959a57cc05d9b24bcd7"
+    },
+    {
+      "locale": "ja",
+      "source": "android/localization/ja.json",
+      "sha256": "6cb45fbc626daeeb8ad935c1e27fc5e952f252b6032e8d622d01eff61cc66f7c"
+    },
+    {
+      "locale": "pl",
+      "source": "android/localization/pl.json",
+      "sha256": "4802b65866924a52dd7280669ee311e3386f7c4cdd39fc786786b292d3da3b75"
+    },
+    {
+      "locale": "pt-rBR",
+      "source": "android/localization/pt-rBR.json",
+      "sha256": "50a7798745a6a42886f0535cc9c44f961fae7c7b3ab8f0891314473f1b008a20"
+    },
+    {
+      "locale": "ru",
+      "source": "android/localization/ru.json",
+      "sha256": "2df713d611792ce3e03e26b0e49afe8e809e155292cf2ce1a978033b4deb2fc4"
+    }
+  ]
+}

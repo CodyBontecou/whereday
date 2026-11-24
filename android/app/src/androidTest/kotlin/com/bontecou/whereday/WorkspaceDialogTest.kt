@@ -24,7 +24,7 @@ class WorkspaceDialogTest {
     private val testDensity get()=if(InstrumentationRegistry.getArguments().getString("useSystemDensity")=="true") InstrumentationRegistry.getInstrumentation().targetContext.resources.displayMetrics.density else 1f
     private val automation get()=InstrumentationRegistry.getInstrumentation().uiAutomation
     @Before fun guard() {check(InstrumentationRegistry.getInstrumentation().targetContext.packageName=="com.bontecou.whereday.mapqa")}
-    private fun screen():android.graphics.Rect {
+    private fun screen(expectedOwner:String?=null):android.graphics.Rect {
         compose.waitForIdle()
         var found:android.graphics.Rect?=null
         compose.waitUntil(5000) {
@@ -38,7 +38,15 @@ class WorkspaceDialogTest {
             }
             val root=automation.rootInActiveWindow
             found=if(root==null) null else try {find(root)} finally {root.recycle()}
-            found?.isEmpty==false
+            val bounds=found
+            if(bounds==null || bounds.isEmpty) false
+            else if(expectedOwner==null) true
+            else {
+                val owner=pane(expectedOwner)
+                // Native accessibility bounds can still describe the preceding
+                // posture after Compose has measured the new owning pane.
+                owner.contains(bounds)
+            }
         }
         return checkNotNull(found)
     }
@@ -74,7 +82,7 @@ class WorkspaceDialogTest {
         }}}
         for(value in WorkspaceFoldAxis.entries) {
             compose.runOnIdle {axis.value=value}
-            owns(screen(),pane("workspace-companion"));compose.onNodeWithText("Confirm").assertIsDisplayed()
+            owns(screen("workspace-companion"),pane("workspace-companion"));compose.onNodeWithText("Confirm").assertIsDisplayed()
         }
     }
     @Test fun rtlPrimaryAndSingleRegionFallbackKeepModalOutOfBookHinge() {

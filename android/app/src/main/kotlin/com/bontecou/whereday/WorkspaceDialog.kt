@@ -22,12 +22,15 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.view.WindowInsetsControllerCompat
 import kotlin.math.roundToInt
 
 internal val LocalWorkspaceDialogsReady=staticCompositionLocalOf {true}
@@ -165,7 +168,18 @@ private val WorkspaceSheetShape=RoundedCornerShape(28.dp)
     val body=rememberWorkspaceContent {states.SaveableStateProvider("sheet-body") {Column(content=content)}}
     // A full-height sheet opens expanded, like an iOS .large detent.
     val sheetState=rememberModalBottomSheetState(skipPartiallyExpanded=fullHeight)
-    if(LocalWorkspaceDialogRegion.current==null) ModalBottomSheet(onDismissRequest,sheetState=sheetState,containerColor=wd.card,contentColor=wd.textPrimary,tonalElevation=0.dp) {body()}
+    if(LocalWorkspaceDialogRegion.current==null) ModalBottomSheet(onDismissRequest,sheetState=sheetState,containerColor=wd.card,contentColor=wd.textPrimary,tonalElevation=0.dp) {
+        val view=LocalView.current
+        val dark=wd.dark
+        // Material 3's dialog follows the OS theme; Whereday can override it.
+        // Style only the sheet's own window so dismissal preserves its owner.
+        SideEffect {(view.parent as? DialogWindowProvider)?.window?.let {window->
+            WindowInsetsControllerCompat(window,view).apply {
+                isAppearanceLightStatusBars=!dark;isAppearanceLightNavigationBars=!dark
+            }
+        }}
+        body()
+    }
     else WorkspaceDialog(onDismissRequest,bottomAligned=true) {
         Surface(shape=BottomSheetDefaults.ExpandedShape,color=wd.card,contentColor=wd.textPrimary,border=BorderStroke(1.dp,wd.border)) {body()}
     }

@@ -1,0 +1,142 @@
+{
+  "ar.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "b+zh+Hans.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "bn.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "es.json": {
+    "parentTranslationsPreserved": [
+      1774,
+      1776
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1825,
+    "mergedAliases": 18,
+    "resources": 1843
+  },
+  "fr.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "hi.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "ja.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "pl.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "pt-rBR.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  },
+  "ru.json": {
+    "parentTranslationsPreserved": [
+      1779,
+      1781
+    ],
+    "retiredByMain": [
+      "listening_mode_routes",
+      "listening_mode_routes_body",
+      "settings_recording_help"
+    ],
+    "mergedTranslations": 1830,
+    "mergedAliases": 13,
+    "resources": 1843
+  }
+}
