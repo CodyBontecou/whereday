@@ -31,10 +31,10 @@ class WebhookScreenTest {
     private val calls=mutableListOf<String>()
     private val actions=WebhookActions({a,b,c->saves.add(Save(a,b,c))},{calls.add("disable")},{calls.add("reset")},{calls.add("test")},{calls.add("history")},{calls.add("flush")},{calls.add("retry:$it")},{calls.add("discard:$it")},{calls.add("resume")},{calls.add("refresh")})
     @Before fun isolated() {check(InstrumentationRegistry.getInstrumentation().targetContext.packageName=="com.bontecou.whereday.mapqa")}
-    private fun show(config:WebhookConfiguration=saved,paid:Boolean=true,head:WebhookBatchRow?=null,busy:Boolean=false) {
+    private fun show(config:WebhookConfiguration=saved,paid:Boolean=true,head:WebhookBatchRow?=null,busy:Boolean=false,plans:Boolean=true) {
         busyState.value=busy
         val snapshot=WebhookQueueSnapshot(null,if(head==null) 0 else head.pointCount,if(head==null) 0 else 1,null,head)
-        compose.setContent {MaterialTheme {WebhookSettingsContent(WebhookUiState(loaded=true,state=WebhookState(config,snapshot),busy=busyState.value),editor,actions,paid,{calls.add("back")}) {androidx.compose.material3.Text("Synthetic purchase panel")}}}
+        compose.setContent {MaterialTheme {WebhookSettingsContent(WebhookUiState(loaded=true,state=WebhookState(config,snapshot),busy=busyState.value),editor,actions,paid,{calls.add("back")},plans) {androidx.compose.material3.Text("Synthetic purchase panel")}}}
         compose.waitUntil(5000) {editor.baseline!=null}
     }
     private fun click(text:String)=compose.onNodeWithText(text).performScrollTo().performClick()
@@ -69,6 +69,14 @@ class WebhookScreenTest {
         compose.onNodeWithTag("webhook-auth-value").performScrollTo().assert(SemanticsMatcher.expectValue(SemanticsProperties.Password,Unit))
         compose.onNodeWithContentDescription("Show Password").assertExists()
         compose.runOnIdle {assertEquals("",editor.draft.credentials.value);assertEquals("",editor.draft.credentials.username);assertTrue(saves.isEmpty())}
+    }
+    @Test fun buildWithoutBillingHidesThePlansRowAndRunsTheConnectionTest() {
+        show(paid=true,plans=false)
+        compose.onNodeWithText("Reset webhook settings").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("Plans and purchases").assertDoesNotExist()
+        click("Test connection")
+        compose.onNodeWithText("Synthetic purchase panel").assertDoesNotExist()
+        compose.runOnIdle {assertEquals(listOf("test"),calls)}
     }
     @Test fun freeConnectionTestOpensPurchaseInformationWithoutCallingDelivery() {
         show(paid=false);click("Test connection")

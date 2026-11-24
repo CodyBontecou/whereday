@@ -64,7 +64,7 @@ internal data class WebhookActions(
         graph.webhookController::sendHistory,graph.webhookController::flush,graph.webhookController::retry,
         graph.webhookController::discard,graph.webhookController::foreground,graph.webhookController::refresh,
     )}
-    WebhookSettingsContent(ui,editor,actions,purchase.unlocked,back) {
+    WebhookSettingsContent(ui,editor,actions,purchase.unlocked,back,plans=purchase.enforced) {
         LaunchedEffect(Unit) {graph.usageFunnel.paywall(com.bontecou.whereday.platform.UsagePaywall.webhook)}
         Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.webhook_purchase_body),style=MaterialTheme.typography.bodyMedium,color=wd.textPrimary)
@@ -83,7 +83,7 @@ internal data class WebhookActions(
 }
 
 @Composable internal fun WebhookSettingsContent(ui:WebhookUiState,editor:WebhookEditorViewModel,actions:WebhookActions,
-    hasAccess:Boolean,back:()->Unit,purchasePanel:@Composable ()->Unit={}) {
+    hasAccess:Boolean,back:()->Unit,plans:Boolean=true,purchasePanel:@Composable ()->Unit={}) {
     val currentUi by rememberUpdatedState(ui)
     val currentAccess by rememberUpdatedState(hasAccess)
     val config=ui.state?.configuration
@@ -210,7 +210,8 @@ internal data class WebhookActions(
         }
         WdSectionHeader(stringResource(R.string.export_redesign_section_more))
         ExportCard {
-            WdNavRow(stringResource(R.string.webhook_plan_purchases),icon=Icons.Outlined.WorkspacePremium,enabled=!ui.busy) {focus.clearFocus();dialog="purchase"}
+            // Builds without Play billing (plans=false) unlock webhooks outright, so there is no plan to show or restore.
+            if(plans) WdNavRow(stringResource(R.string.webhook_plan_purchases),icon=Icons.Outlined.WorkspacePremium,enabled=!ui.busy) {focus.clearFocus();dialog="purchase"}
             ExportActionRow(stringResource(R.string.webhook_reset_action),{focus.clearFocus();dialog="reset"},divider=false,destructive=true)
         }
     }
