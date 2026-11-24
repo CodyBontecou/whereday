@@ -1088,13 +1088,26 @@ struct LocationMapView: View {
         let lastPoint: Double = points.last?.timestamp.timeIntervalSinceReferenceDate ?? 0
         let departures: [Double] = visits.map { ($0.departedAt ?? Date.distantFuture).timeIntervalSinceReferenceDate }
         let names: String = visits.map { day.placeKey(for: $0) }.joined(separator: ",")
+        // Each day's places are counted as Today and the day sheet count them: every visit overlapping the
+        // range (the map's minimum-stay filter doesn't apply to Today) and the non-outlier points.
+        let now = Date()
+        let stayVisits = viewModel.visitsOverlappingDateRange(range, referenceDate: now)
+        let home = homePlace.map(DayStayHome.init)
         var key = "\(range.lowerBound.timeIntervalSinceReferenceDate)|\(range.upperBound.timeIntervalSinceReferenceDate)"
         key += "|\(points.count)|\(lastPoint)|\(visits.count)|\(departures.max() ?? 0)|\(names)"
+        key += "|\(stayVisits.count)|\(viewModel.mapLocationPoints.count)|\(String(describing: home))"
+        key += "|\(Calendar.current.startOfDay(for: now).timeIntervalSinceReferenceDate)"
         if rangeCache.key == key, let summary = rangeCache.summary { return summary }
         let summary = MultiDayAggregator.summarize(
             visits: visits.map { DayVisitSample(placeKey: day.placeKey(for: $0), arrivedAt: $0.arrivedAt) },
             points: points.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
-            range: range.lowerBound...min(range.upperBound, Date())
+            range: range.lowerBound...min(range.upperBound, now),
+            stays: DayStayInput(
+                visits: stayVisits.enumerated().map { DayStayVisit($1, index: $0) },
+                points: viewModel.mapLocationPoints.filter { !$0.isOutlier }.map(DayStayPoint.init),
+                home: home,
+                now: now
+            )
         )
         rangeCache.key = key
         rangeCache.summary = summary

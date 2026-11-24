@@ -195,6 +195,24 @@ enum DayStayPlanner {
         return nil
     }
 
+    /// One calendar day's stays as the app shows that day. The day still going on runs to `now`, like Today
+    /// (`TodayDay(viewModel:now:)`); a finished day ends with its last record, like the day sheet for a picked
+    /// day (`TodayDay(pastDay:)`). A day after `now` has none. `visits` and `points` may cover other days too
+    /// (points are expected without outliers); only what overlaps this day is used, so a stay that began the
+    /// evening before counts here.
+    static func dayStays(visits: [DayStayVisit], points: [DayStayPoint], dayStart: Date, nextMidnight: Date,
+                         now: Date, home: DayStayHome?) -> [DayStayPlan] {
+        guard dayStart < now else { return [] }
+        let dayPoints = points.filter { $0.timestamp >= dayStart && $0.timestamp < nextMidnight }
+        if now < nextMidnight {
+            let dayVisits = Self.visits(visits, overlapping: dayStart, now)
+            return stays(visits: dayVisits, points: dayPoints, startOfDay: dayStart, now: now, home: home)
+        }
+        let dayVisits = Self.visits(visits, overlapping: dayStart, nextMidnight)
+        let end = pastDayEnd(visits: dayVisits, points: dayPoints, endOfDay: nextMidnight)
+        return stays(visits: dayVisits, points: dayPoints, startOfDay: dayStart, now: end, home: home)
+    }
+
     /// Distinct place names in the order Today first shows them; its count is Today's "N PLACES".
     static func placeNames(_ stays: [DayStayPlan]) -> [String] {
         distinctNames(stays.map(\.name))

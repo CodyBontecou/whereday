@@ -250,18 +250,10 @@ enum RecapAggregation {
             let dayPoints = kept
                 .filter { $0.timestamp >= dayStart && $0.timestamp < nextMidnight }
                 .map { DayStayPoint(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) }
-            let dayVisits: [DayStayVisit]
-            let dayEnd: Date
-            if now < nextMidnight {
-                // Today, live: TodayDay(viewModel:now:).
-                dayVisits = DayStayPlanner.visits(visits, overlapping: dayStart, now)
-                dayEnd = now
-            } else {
-                // A finished day: TodayDay(pastDay:).
-                dayVisits = DayStayPlanner.visits(visits, overlapping: dayStart, nextMidnight)
-                dayEnd = DayStayPlanner.pastDayEnd(visits: dayVisits, points: dayPoints, endOfDay: nextMidnight)
-            }
-            let stays = DayStayPlanner.stays(visits: dayVisits, points: dayPoints, startOfDay: dayStart, now: dayEnd, home: home)
+            // Today runs to now (TodayDay(viewModel:now:)); a finished day ends with its last record
+            // (TodayDay(pastDay:)). The map's per-day counts use the same call.
+            let stays = DayStayPlanner.dayStays(visits: visits, points: dayPoints, dayStart: dayStart,
+                                                nextMidnight: nextMidnight, now: now, home: home)
             for stay in stays {
                 let visit = stay.visitIndex.flatMap { visitsByIndex[$0] }
                 if places[stay.name] == nil {
