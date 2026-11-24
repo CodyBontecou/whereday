@@ -1,0 +1,149 @@
+# One day's distance reads the same on Today, the map's 7D range and the evening recap (#170).
+# Before, the three disagreed on a day with a long GPS jump (owner's QA: Today 74 km, 7D chip
+# 135.2 km, recap 257.7 km), because each summed its own point set its own way: Today counted
+# flagged outliers and extended a running total in arrival order, the chips summed the map's
+# downsampled (and outlier-layer dependent) points, and the recap refetched and re-summed. All of
+# them now read DayDistance (IsoMe/Models/DayDistance.swift).
+# --seed-gps-jump adds to the synthetic San Francisco day two unflagged fixes at Cupertino
+# (out and back, ~122 km) and one flagged outlier north of the city. Expected on that day:
+# Today's peek card and day sheet MOVED, the 7D day list row and chip summary, and the recap
+# preview all read 134.9 km (before this change: Today 163.3 km, 7D chip and recap 135 km).
+# The 7D total is the days plus the legs across midnight: 150.3 KM (5.6 km Monday, 1.6 km
+# Sunday, 134.9 km today, and 8.2 km of overnight legs).
+#
+# Prerequisites: an iOS pool simulator (iPhone 18 Pro, portrait, default text size, English) with
+# a Debug install; no simulated location and no Always location (live fixes would add to the
+# day). Run after 6:15 AM local time: the seeded day starts 6.2 hours before launch, so an
+# earlier run splits it at midnight and the figures change. Not between 6 PM and 9 PM if you
+# also want a recap scheduled that evening (opening the app then skips it; the preview still
+# shows the counts).
+# Side effects (synthetic data only): --seed-screenshot-data replaces all data with the
+# synthetic screenshot days and sets hasCompletedOnboarding; the recap is set to Every evening
+# with place names off; the map's range is left on 7D and the app on Settings > Reminders.
+#
+# Coordinate exceptions: Argent's iOS runner tree does not carry these SwiftUI ids or labels
+# (it exposes the controls as anonymous AXScrollArea/AXButton nodes), so every tap keeps its
+# recorded point (accessibility frame centres on a 402x874 pt iPhone 18 Pro: the peek card
+# map-peek-card, the 7D chip map-range-7d, today's row in the day list, the Archive tab
+# main-tab-archive, the Settings gear, the Reminders row settings-reminders) and is followed by
+# a raw await-ui-element check on the accessibility tree. The recorder derived `text: Map` for
+# the peek card and Archive taps and `role: AXScrollArea` for the 7D chip, which would hit the
+# wrong control, so those were replaced by the recorded points.
+version: 1
+requires:
+  platform: ios
+steps:
+  - echo: Launch the Debug build with the synthetic screenshot day plus one long GPS
+      jump (--seed-gps-jump) and an evening recap; expect the map on Today with
+      its peek card.
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - --seed-screenshot-data
+          - --seed-gps-jump
+          - --log-recap-schedule
+          - -Notelet.LatestSeenAppVersion
+          - "2.0"
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -usesMetricDistanceUnits
+          - YES
+          - -recapReminder.frequency
+          - daily
+          - -recapReminder.showPlaceNames
+          - NO
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: map-peek-card
+      timeoutMs: 20000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: map-peek-card
+      expectedText: 134.9 km, 4 PLACES
+  - echo: "Peek card (map-peek-card): tap at (0.5, 0.832) to open the day sheet;
+      expect Today's MOVED stat (today-moved) at the same 134.9 km."
+  - tap: { x: 0.5, y: 0.832 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: today-moved
+      expectedText: 134.9 km
+      timeoutMs: 10000
+  - await: { idle: true }
+  - echo: Tap the 7D range chip (map-range-7d) at (0.459, 0.174); expect the range
+      card with today's chip selected reading 134.9 km, the same as Today.
+  - tap: { x: 0.459, y: 0.174 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Last 7 days
+      timeoutMs: 10000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: 134.9 km, 4 places
+      timeoutMs: 10000
+  - echo: "Day by day list (sheet kept open from the day sheet): tap today's row at
+      (0.5, 0.497); expect the sheet to close to the range card, whose day
+      summary (map-range-day-summary) reads 134.9 km, 4 places, and whose totals
+      (map-range-totals) add the week's other days."
+  - tap: { x: 0.5, y: 0.497 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: map-range-day-summary
+      expectedText: 134.9 km, 4 places
+      timeoutMs: 10000
+  - await: { idle: true }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: map-range-totals
+      expectedText: 150.3 KM · 13 VISITS
+  - echo: "Open the recap preview: tap the Archive tab (main-tab-archive) at (0.838,
+      0.922); expect the Archive page."
+  - tap: { x: 0.838, y: 0.922 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: archive-listening-link
+      timeoutMs: 10000
+  - await: { idle: true }
+  - echo: "Archive: tap the Settings gear at (0.885, 0.117); expect Settings with
+      the Reminders row (settings-reminders)."
+  - tap: { x: 0.885, y: 0.117 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: settings-reminders
+      expectedText: Reminders
+      timeoutMs: 10000
+  - await: { idle: true }
+  - echo: "Settings: tap Reminders (settings-reminders) at (0.5, 0.535); expect the
+      SO FAR TODAY recap preview (reminders-preview-body) to read 4 places and
+      134.9 km, Today's figure."
+  - tap: { x: 0.5, y: 0.535 }
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: reminders-preview-body
+      expectedText: 4 places and 134.9 km.
+      timeoutMs: 10000
