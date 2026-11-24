@@ -23,6 +23,9 @@ class ReviewMilestoneStoreTest {
             val saved=ReviewMilestone(2,LocalDate.of(2026,10,29),"1.4.0",now)
             store.write(saved);assertEquals(saved,AndroidReviewMilestoneStore(path,clock).read());assertTrue(path.length()<4096)
             val unasked=ReviewMilestone(1,LocalDate.of(2026,10,29));store.write(unasked);assertEquals(unasked,store.read())
+            val bought=saved.purchased(now);store.write(bought);assertEquals(bought,AndroidReviewMilestoneStore(path,clock).read())
+            path.writeText("""{"version":2,"useDays":2,"lastUseDay":"2026-10-29","requestedVersion":null,"requestedAt":null}""")
+            assertEquals("state written before purchasedAt existed still reads",ReviewMilestone(2,LocalDate.of(2026,10,29)),store.read())
             store.write(saved)
             val controller=ReviewMilestoneController(store,"1.4.0",clock)
             try {controller.clearJournalMilestones();assertEquals(ReviewMilestone(requestedVersion="1.4.0",requestedAt=now),store.read())} finally {controller.close()}
